@@ -1,0 +1,56 @@
+{
+  "name": "leaderboard-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/GLMS/leaderboard-service",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/GLMS/leaderboard-service"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/GLMS/leaderboard-service"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "leaderboard-service:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "leaderboard-service:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "leaderboard-service:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "leaderboard-service:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/GLMS/leaderboard-service/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,54 @@
+{
+  "name": "challenge-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/GLMS/challenge-service",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/GLMS/challenge-service"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/GLMS/challenge-service"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "challenge-service:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "challenge-service:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "challenge-service:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "challenge-service:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/GLMS/challenge-service/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}
