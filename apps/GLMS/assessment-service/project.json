@@ -1,0 +1,56 @@
+{
+  "name": "assessment-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/GLMS/assessment-service",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/GLMS/assessment-service"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/GLMS/assessment-service"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "assessment-service:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "assessment-service:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "assessment-service:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "assessment-service:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/GLMS/assessment-service/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

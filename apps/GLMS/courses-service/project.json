@@ -1,0 +1,54 @@
+{
+  "name": "courses-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/GLMS/courses-service",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/GLMS/courses-service"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/GLMS/courses-service"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "courses-service:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "courses-service:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "courses-service:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "courses-service:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/GLMS/courses-service/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}
