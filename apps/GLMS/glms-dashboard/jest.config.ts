@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'glsm-dashboard',
+  displayName: 'glms-dashboard',
   preset: '../../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
@@ -8,4 +8,17 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/apps/GLMS/glms-dashboard',
+  setupFilesAfterEnv: ['jest-canvas-mock'],
+  collectCoverageFrom: [
+    '!src/app/**/*.tsx',
+    'src/domains/**/components/*.tsx',
+    '!**/node_modules/**',
+    '!**/generated.ts',
+    '!**/generated/*.ts',
+    '*-schema.ts',
+    '!**/*-schema.ts',
+    '*.graphql',
+    '!codegen.ts',
+    '!src/pages/api/graphql.ts',
+  ],
 };

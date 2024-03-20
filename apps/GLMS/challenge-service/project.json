@@ -16,14 +16,16 @@
           "outputPath": "apps/GLMS/challenge-service"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "challenge-service:build",
-        "dev": true
+        "dev": true,
+        "port": 4100
       },
       "configurations": {
         "development": {
@@ -33,6 +35,29 @@
         "production": {
           "buildTarget": "challenge-service:build:production",
           "dev": false
+        }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config apps/GLMS/challenge-service/codegen.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/challenge-service/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
         }
       }
     },

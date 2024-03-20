@@ -16,7 +16,8 @@
           "outputPath": "apps/GLMS/profile-service"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -28,14 +29,39 @@
       "configurations": {
         "development": {
           "buildTarget": "profile-service:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4500
         },
         "production": {
           "buildTarget": "profile-service:build:production",
           "dev": false
         }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config apps/GLMS/profile-service/codegen.ts"
+        ]
       }
     },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/profile-service/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      }
+    },
+
     "export": {
       "executor": "@nx/next:export",
       "options": {
