@@ -16,7 +16,8 @@
           "outputPath": "apps/GLMS/courses-service"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -28,18 +29,42 @@
       "configurations": {
         "development": {
           "buildTarget": "courses-service:build:development",
+          "port": 4300,
           "dev": true
         },
         "production": {
           "buildTarget": "courses-service:build:production",
           "dev": false
         }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config apps/GLMS/courses-service/codegen.ts"
+        ]
       }
     },
     "export": {
       "executor": "@nx/next:export",
       "options": {
         "buildTarget": "courses-service:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/courses-service/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
       }
     },
     "lint": {

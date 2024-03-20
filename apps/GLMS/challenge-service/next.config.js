@@ -12,6 +12,17 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  reactStrictMode: true,
+  swcMinify: true,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.graphql$/,
+      exclude: /node_modules/,
+      use: ['webpack-graphql-loader'],
+    });
+
+    return config;
+  },
 };
 
 const plugins = [

@@ -42,3 +42,23 @@ Thumbs.db
 
 # Next.js
 .next
+/coverage
+
+# Codegen
+
+**/generated/*.tsx
+**/generated/*.ts
+**/generated/**/*.tsx
+**/generated.ts
+**/generated.tsx
+generated.ts
+generated.tsx
+
+#cypress
+
+**/cypress/results
+
+# Code Coverage
+
+**/coverage/
+**/.nyc_output/

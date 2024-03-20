@@ -16,7 +16,8 @@
           "outputPath": "apps/GLMS/leaderboard-service"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -28,11 +29,35 @@
       "configurations": {
         "development": {
           "buildTarget": "leaderboard-service:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4400
         },
         "production": {
           "buildTarget": "leaderboard-service:build:production",
           "dev": false
+        }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config apps/GLMS/leaderboard-service/codegen.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/leaderboard-service/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
         }
       }
     },

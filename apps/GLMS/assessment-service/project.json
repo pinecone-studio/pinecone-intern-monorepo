@@ -16,7 +16,8 @@
           "outputPath": "apps/GLMS/assessment-service"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -28,18 +29,42 @@
       "configurations": {
         "development": {
           "buildTarget": "assessment-service:build:development",
+          "port": 4000,
           "dev": true
         },
         "production": {
           "buildTarget": "assessment-service:build:production",
           "dev": false
         }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config apps/GLMS/assessment-service/codegen.ts"
+        ]
       }
     },
     "export": {
       "executor": "@nx/next:export",
       "options": {
         "buildTarget": "assessment-service:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/assessment-service/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
       }
     },
     "lint": {

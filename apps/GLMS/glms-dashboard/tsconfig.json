@@ -11,6 +11,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
+    "baseUrl": "../../..",
+    "paths": {
+      "@/domains/*": ["apps/GLMS/glms-dashboard/src/domains/*"]
+    },
     "plugins": [
       {
         "name": "next"

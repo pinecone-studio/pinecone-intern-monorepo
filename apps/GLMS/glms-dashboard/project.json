@@ -18,6 +18,19 @@
         "production": {}
       }
     },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/glms-dashboard/jest.config.ts",
+        "codeCoverage": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      }
+    },
     "serve": {
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
