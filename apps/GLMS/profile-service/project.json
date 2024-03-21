@@ -74,6 +74,27 @@
       "options": {
         "lintFilePatterns": ["apps/GLMS/profile-service/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "development": {
+          "groups": ["profile-service"],
+          "env": "dev"
+        },
+        "production": {
+          "groups": ["profile-service"],
+          "env": "prod"
+        },
+        "testing": {
+          "groups": ["profile-service"],
+          "env": "test"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
     }
   },
   "tags": []
