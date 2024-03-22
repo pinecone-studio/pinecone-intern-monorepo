@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "esModuleInterop": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2020", "dom"],
@@ -15,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pinecone-intern-monorepo/secrets": ["packages/secrets/src/index.ts"]
+      "@pinecone-intern-monorepo/secrets": ["packages/secrets/src/index.ts"],
+      "@pinecone-intern-monorepo/scripts": ["libs/scripts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

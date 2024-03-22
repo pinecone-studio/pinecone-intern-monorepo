@@ -45,7 +45,7 @@
     "e2e": {
       "inputs": ["default", "^production"]
     },
-    "@nx/js:tsc": {
+    "@nx/esbuild:esbuild": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]

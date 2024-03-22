@@ -73,6 +73,98 @@
       "options": {
         "lintFilePatterns": ["apps/GLMS/challenge-service/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "rm -rf .vercel",
+          "rm -rf dist/apps/GLMS/challenge-service"
+        ]
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/GLMS/challenge-service/.env | xargs)"],
+        "parallel": false
+      }
+    },
+    "deploy-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_rgOPWpQQcu6muOm2cdlEzGoF9X0W -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_rgOPWpQQcu6muOm2cdlEzGoF9X0W -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_j6xfgTh02uBRrH6KgMAkSb8ZBypV -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_j6xfgTh02uBRrH6KgMAkSb8ZBypV -- vercel --prebuilt --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "deploy-testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_j6xfgTh02uBRrH6KgMAkSb8ZBypV -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_j6xfgTh02uBRrH6KgMAkSb8ZBypV -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_l5c3X9wVg7Jq4N3wu0LPAq3QGUPO -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_l5c3X9wVg7Jq4N3wu0LPAq3QGUPO -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
     }
   },
   "tags": []
