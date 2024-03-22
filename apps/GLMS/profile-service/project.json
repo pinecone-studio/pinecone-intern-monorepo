@@ -61,20 +61,6 @@
         }
       }
     },
-
-    "export": {
-      "executor": "@nx/next:export",
-      "options": {
-        "buildTarget": "profile-service:build:production"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/GLMS/profile-service/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
     "get-secrets": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
       "defaultConfiguration": "development",
@@ -95,6 +81,108 @@
     },
     "add-secrets": {
       "executor": "@pinecone-intern-monorepo/secrets:add"
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "profile-service:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/GLMS/profile-service/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf .vercel", "rm -rf dist/apps/GLMS/profile-service"]
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/GLMS/profile-service/.env | xargs)"],
+        "parallel": false
+      }
+    },
+    "deploy-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_m8PMv7FEalptEBsDuVemb85pMZOz -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_m8PMv7FEalptEBsDuVemb85pMZOz -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DiAfm2IETj7KKkDoeoTKVbv9yluB -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DiAfm2IETj7KKkDoeoTKVbv9yluB -- vercel --prebuilt --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "deploy-testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DiAfm2IETj7KKkDoeoTKVbv9yluB -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DiAfm2IETj7KKkDoeoTKVbv9yluB -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DFWQDPyNin5E4ZJJ0JGhVEI6FVxq -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_DFWQDPyNin5E4ZJJ0JGhVEI6FVxq -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
     }
   },
   "tags": []
