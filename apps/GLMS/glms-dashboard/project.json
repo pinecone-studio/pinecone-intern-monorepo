@@ -1,5 +1,5 @@
 {
-  "name": "glsm-dashboard",
+  "name": "glms-dashboard",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/GLMS/glms-dashboard",
   "projectType": "application",
@@ -35,16 +35,16 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "glsm-dashboard:build",
+        "buildTarget": "glms-dashboard:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "glsm-dashboard:build:development",
+          "buildTarget": "glms-dashboard:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "glsm-dashboard:build:production",
+          "buildTarget": "glms-dashboard:build:production",
           "dev": false
         }
       }
@@ -52,7 +52,7 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "glsm-dashboard:build:production"
+        "buildTarget": "glms-dashboard:build:production"
       }
     },
     "lint": {
@@ -60,6 +60,48 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/GLMS/glms-dashboard/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "cypress:run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "bunx nx cypress:clean glms-dashboard",
+          "bunx nx cypress:test glms-dashboard",
+          "bunx mochawesome-merge --reportDir apps/GLMS/glms-dashboard/cypress/results/*.json -o apps/GLMS/glms-dashboard/.cy/report.json",
+          "bunx marge apps/GLMS/glms-dashboard/.cy/report.json -o apps/GLMS/glms-dashboard/.cy"
+        ],
+        "parallel": false
+      }
+    },
+    "cypress:clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "rm -rf apps/GLMS/glms-dashboard/cypress/results",
+          "rm -rf apps/GLMS/glms-dashboard/.nyc_output",
+          "rm -rf apps/GLMS/glms-dashboard/.cy"
+        ],
+        "parallel": false
+      }
+    },
+    "cypress:test": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/GLMS/glms-dashboard/cypress.config.ts",
+        "testingType": "e2e",
+        "reporter": "mochawesome",
+        "devServerTarget": "glms-dashboard:serve:development"
+      }
+    },
+    "cypress:dev": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/GLMS/glms-dashboard/cypress.config.ts",
+        "testingType": "e2e",
+        "reporter": "mochawesome",
+        "devServerTarget": "glms-dashboard:serve:development",
+        "watch": true
       }
     }
   },

@@ -1,4 +1,4 @@
-import { ProfileButton } from '../components/ProfileButton';
+import { ProfileButton } from '../_components';
 
 export const ProfileMain = () => {
   return (

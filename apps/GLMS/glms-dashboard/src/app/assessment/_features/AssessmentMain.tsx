@@ -1,4 +1,4 @@
-import { AssessmentButton } from '../components';
+import { AssessmentButton } from '../_components';
 
 export const AssessmentMain = () => {
   return (

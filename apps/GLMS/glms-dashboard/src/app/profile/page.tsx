@@ -1,13 +1,13 @@
 'use client';
 
-import { ProfileMain } from '@/domains/profile';
 import Link from 'next/link';
+import { ProfileMain } from './_features';
 
 const ProfilePage = () => {
   return (
     <>
       <div>
-        hello from GLMS dashboard Profile Page
+        <h1>hello from GLMS dashboard Profile Page</h1>
         <ProfileMain />
         <Link href="/">
           <button>Go back to home page</button>

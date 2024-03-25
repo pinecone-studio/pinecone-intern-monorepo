@@ -57,6 +57,7 @@ generated.tsx
 #cypress
 
 **/cypress/results
+.cy
 
 # Code Coverage
 
