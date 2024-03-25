@@ -1,7 +1,7 @@
 'use client';
 
-import { AssessmentMain } from '@/domains/assessment';
 import { useRouter } from 'next/navigation';
+import { AssessmentMain } from './_features';
 
 const AssessmentPage = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const AssessmentPage = () => {
   return (
     <>
       <div>
-        hello from GLMS dashboard Assessment Page
+        <h1>hello from GLMS dashboard Assessment Page</h1>
         <AssessmentMain />
         <button onClick={handleNavigateToHomePageButton}>
           Go back to home page

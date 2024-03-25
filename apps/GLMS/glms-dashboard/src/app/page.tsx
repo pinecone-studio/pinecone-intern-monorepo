@@ -16,7 +16,8 @@ export default async function Index() {
   return (
     <>
       <div>
-        hello from GLMS dashboard
+        <h1>hello from GLMS dashboard</h1>
+
         <button onClick={handleProfilePageButton}>Go to profile page</button>
         <button onClick={handleAssessmentPageButton}>
           Go to assessment page

@@ -13,7 +13,9 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
-      "@/domains/*": ["apps/GLMS/glms-dashboard/src/domains/*"]
+      "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
+
+      "libs/test/*": ["libs/test/*"]
     },
     "plugins": [
       {
