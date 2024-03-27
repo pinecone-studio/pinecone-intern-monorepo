@@ -7,7 +7,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bunx nx test scripts"
+        "command": "npx nx test scripts"
       }
     },
     "lint": {
@@ -36,6 +36,13 @@
       "options": {
         "command": "ts-node libs/scripts/src/commands/dev-local-federation-command.ts"
       }
+    },
+    "preview-action": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/preview/preview-action.ts"
+      },
+      "dependsOn": [{ "target": "export-env" }]
     },
     "pre-commit": {
       "executor": "nx:run-commands",

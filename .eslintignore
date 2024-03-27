@@ -13,3 +13,4 @@ tmp/
 coverage/
 coverage-report/
 **/cypress/results/
+.cy/

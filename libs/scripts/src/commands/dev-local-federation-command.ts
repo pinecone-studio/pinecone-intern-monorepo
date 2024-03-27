@@ -1,11 +1,5 @@
 import chalk from 'chalk';
-import {
-  copyDevToLocalEnv,
-  getAffectedApps,
-  getAffectedFederationServices,
-  runFederationLocally,
-  runSelectedServices,
-} from '../utils';
+import { copyDevToLocalEnv, getAffectedApps, getAffectedFederationServices, runFederationLocally, runSelectedServices } from '../utils';
 
 const FEDERATION_DEV_ENV_PATH = 'apps/federation/.env.development';
 const FEDERATION_LOCAL_ENV_PATH = 'apps/federation/.env.local';
@@ -14,10 +8,9 @@ const getAffectedOrSelectedServices = () => {
   const [, , ...selectedServices] = process.argv;
   const affectedServices = getAffectedApps();
   const allServices = [...affectedServices, ...selectedServices];
-  const affectedFederationServices = getAffectedFederationServices(allServices);
-  return affectedFederationServices.filter(
-    (service) => service !== 'federation'
-  );
+  const uniqueServices = new Set(allServices);
+  const affectedFederationServices = getAffectedFederationServices([...uniqueServices]);
+  return affectedFederationServices.filter((service) => service !== 'federation');
 };
 
 export const runDevLocalCommandOnFederation = async () => {
@@ -29,9 +22,7 @@ export const runDevLocalCommandOnFederation = async () => {
     }
     runFederationLocally();
   } catch (err) {
-    console.log(
-      chalk.red(`error occurred when running federation locally, ${err}`)
-    );
+    console.log(chalk.red(`error occurred when running federation locally, ${err}`));
     process.exit(1);
   }
 };

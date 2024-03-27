@@ -46,9 +46,7 @@ describe('without NX HEAD and BASE', () => {
 
     const gitDiffStatus = affectedApps.getChangedFiles();
 
-    expect(execSyncMock).toHaveBeenCalledWith(
-      'git diff --cached --name-status'
-    );
+    expect(execSyncMock).toHaveBeenCalledWith('git diff --cached --name-status');
     expect(gitDiffStatus).toBe('M file1.txt\nA file2.txt\nD file3.txt');
   });
   it('2. Should return changed projects', () => {
@@ -59,9 +57,7 @@ describe('without NX HEAD and BASE', () => {
 
     const affectedProjectsList = affectedApps.getAffectedProjectsList();
 
-    expect(execSyncMock).toHaveBeenCalledWith(
-      'bunx nx show projects --affected '
-    );
+    expect(execSyncMock).toHaveBeenCalledWith('npx nx show projects --affected ');
     expect(affectedProjectsList).toEqual(['test']);
   });
 });
@@ -101,9 +97,7 @@ describe('getNxHeadAndBase', () => {
 
     const gitDiffStatus = affectedApps.getChangedFiles();
 
-    expect(execSyncMock).toHaveBeenCalledWith(
-      `git diff --name-status ${mockEnv.base}...${mockEnv.head}`
-    );
+    expect(execSyncMock).toHaveBeenCalledWith(`git diff --name-status ${mockEnv.base}...${mockEnv.head}`);
     expect(gitDiffStatus).toBe('M file1.txt\nA file2.txt\nD file3.txt');
   });
   it('4. Should return changed projects', () => {
@@ -145,9 +139,7 @@ describe('getProjectPath', () => {
 
     const result = affectedApps.getProjectPath('sampleProject');
 
-    expect(execAndTrimMock).toHaveBeenCalledWith(
-      'bunx nx show project sampleProject'
-    );
+    expect(execAndTrimMock).toHaveBeenCalledWith('npx nx show project sampleProject');
     expect(result).toBe('/path/to/project');
   });
 
@@ -158,9 +150,7 @@ describe('getProjectPath', () => {
     const firstResult = affectedApps.getProjectPath('sampleProject');
     const secondResult = affectedApps.getProjectPath('sampleProject');
 
-    expect(execAndTrimMock).toHaveBeenCalledWith(
-      'bunx nx show project sampleProject'
-    );
+    expect(execAndTrimMock).toHaveBeenCalledWith('npx nx show project sampleProject');
     expect(firstResult).toBe('/path/to/project');
     expect(secondResult).toBe('/path/to/project');
   });
@@ -197,14 +187,10 @@ describe('checkMatchingRoot', () => {
 
 describe('processChangedFiles', () => {
   it('1. Should process and return matching directories from a list of changed files', () => {
-    const files =
-      'M path/to/directory1/file.txt\nA path/to/directory2/file.txt\nD path/to/directory1/other.txt';
+    const files = 'M path/to/directory1/file.txt\nA path/to/directory2/file.txt\nD path/to/directory1/other.txt';
     const directories = ['directory1', 'directory2', 'directory3'];
 
-    const getProjectPathMock = jest.spyOn(
-      affectedApps,
-      'findMatchingDirectory'
-    );
+    const getProjectPathMock = jest.spyOn(affectedApps, 'findMatchingDirectory');
     getProjectPathMock.mockReturnValueOnce('directory1');
 
     const result = affectedApps.processChangedFiles(files, directories);
@@ -224,29 +210,20 @@ describe('getAffectedApps', () => {
     const mockGitDiffStatus = 'M app1/file1.txt\nA app2/file2.txt';
     const mockProcessedFiles = ['app1', 'app2'];
 
-    const affectedProjectsListMock = jest.spyOn(
-      affectedApps,
-      'getAffectedProjectsList'
-    );
+    const affectedProjectsListMock = jest.spyOn(affectedApps, 'getAffectedProjectsList');
     affectedProjectsListMock.mockReturnValue(mockAffectedProjectsList);
 
     const gitDiffStatusMock = jest.spyOn(affectedApps, 'getChangedFiles');
     gitDiffStatusMock.mockReturnValue(mockGitDiffStatus);
 
-    const processChangedFilesMock = jest.spyOn(
-      affectedApps,
-      'processChangedFiles'
-    );
+    const processChangedFilesMock = jest.spyOn(affectedApps, 'processChangedFiles');
     processChangedFilesMock.mockReturnValue(mockProcessedFiles);
 
     const result = affectedApps.getAffectedApps();
 
     expect(affectedProjectsListMock).toHaveBeenCalled();
     expect(gitDiffStatusMock).toHaveBeenCalled();
-    expect(processChangedFilesMock).toHaveBeenCalledWith(
-      mockGitDiffStatus,
-      mockAffectedProjectsList
-    );
+    expect(processChangedFilesMock).toHaveBeenCalledWith(mockGitDiffStatus, mockAffectedProjectsList);
     expect(result).toEqual(mockProcessedFiles);
   });
 });
