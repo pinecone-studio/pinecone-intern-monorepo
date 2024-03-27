@@ -96,6 +96,7 @@
     "@nx/next": {
       "application": {
         "appDir": true,
+        "src": true,
         "style": "none",
         "linter": "eslint",
         "e2eTestRunner": "none"
