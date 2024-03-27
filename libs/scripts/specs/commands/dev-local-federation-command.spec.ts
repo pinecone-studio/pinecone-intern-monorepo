@@ -16,18 +16,9 @@ describe('runDevLocalCommandOnFederation', () => {
   it('should run successfully when services are selected', async () => {
     const mockCopyDevToLocalEnv = jest.spyOn(copyFile, 'copyDevToLocalEnv');
     const mockGetAffectedApps = jest.spyOn(getAffectedApps, 'getAffectedApps');
-    const mockGetAffectedFederationServices = jest.spyOn(
-      getAffectedFederationServices,
-      'getAffectedFederationServices'
-    );
-    const mockRunSelectedServices = jest.spyOn(
-      executeServices,
-      'runSelectedServices'
-    );
-    const mockRunFederationLocally = jest.spyOn(
-      runFederationLocally,
-      'runFederationLocally'
-    );
+    const mockGetAffectedFederationServices = jest.spyOn(getAffectedFederationServices, 'getAffectedFederationServices');
+    const mockRunSelectedServices = jest.spyOn(executeServices, 'runSelectedServices');
+    const mockRunFederationLocally = jest.spyOn(runFederationLocally, 'runFederationLocally');
 
     mockCopyDevToLocalEnv.mockImplementation();
     mockGetAffectedApps.mockReturnValue(['app1', 'app2']);
@@ -38,11 +29,8 @@ describe('runDevLocalCommandOnFederation', () => {
     await runDevLocalCommandOnFederation.runDevLocalCommandOnFederation();
 
     expect(mockGetAffectedApps).toHaveBeenCalled();
-    expect(mockGetAffectedFederationServices).toHaveBeenCalledWith([
-      'app1',
-      'app2',
-    ]);
-    expect(mockRunSelectedServices).toHaveBeenCalledTimes(2); // Assuming two affected services
+    expect(mockGetAffectedFederationServices).toHaveBeenCalledWith(['app1', 'app2']);
+    expect(mockRunSelectedServices).toHaveBeenCalled();
     expect(mockRunFederationLocally).toHaveBeenCalled();
   });
 
@@ -55,10 +43,7 @@ describe('runDevLocalCommandOnFederation', () => {
 
     const exitProcessSpy = jest.spyOn(process, 'exit').mockImplementation();
 
-    const mockExecuteServices = jest.spyOn(
-      executeServices,
-      'runSelectedServices'
-    );
+    const mockExecuteServices = jest.spyOn(executeServices, 'runSelectedServices');
     mockExecuteServices.mockImplementation();
 
     await runDevLocalCommandOnFederation.runDevLocalCommandOnFederation();

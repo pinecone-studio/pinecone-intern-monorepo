@@ -36,6 +36,12 @@
       "options": {
         "command": "ts-node libs/scripts/src/commands/dev-local-federation-command.ts"
       }
+    },
+    "pre-commit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/pre-commit/pre-commit-script.ts"
+      }
     }
   },
   "tags": []

@@ -1,10 +1,9 @@
 import { ExecutorContext } from '@nx/devkit';
 import { SecretGroupModel } from '../../models';
 import { connectToDatabase, disconnectFromDatabase } from '../../utils';
+import * as yup from 'yup';
 
-// pass: "X7vfUp1FelZcaPk5"
-
-export type Executor<Options> = (options: Options, context: ExecutorContext) => Promise<{ success: boolean }>;
+export type Executor<Options> = (_options: Options, _context: ExecutorContext) => Promise<{ success: boolean }>;
 
 export type AddSecretExecutorOptions = {
   group?: string;
@@ -15,17 +14,27 @@ export type AddSecretExecutorOptions = {
   value?: string;
 };
 
+const validatation = yup.object({
+  group: yup.string().required('Group is required'),
+  env: yup.string().oneOf(['dev', 'prod', 'test'], 'Invalid env').required('Env is required'),
+  username: yup.string().required('Username is required'),
+  password: yup.string().required('Password is required'),
+  key: yup.string().required('Key is required'),
+  value: yup.string().required('Value is required'),
+});
+
 const runAddSecretExecutor: Executor<AddSecretExecutorOptions> = async (options) => {
   try {
     const { group = '', env = '', username = '', password = '', key = '', value = '' } = options;
 
-    if (!group) {
-      throw new Error('Group is not provided');
-    }
-
-    if (!['dev', 'prod', 'test'].includes(env)) {
-      throw new Error('Env is not provided');
-    }
+    await validatation.validate({
+      group,
+      env,
+      username,
+      password,
+      key,
+      value,
+    });
 
     await connectToDatabase({
       username,
@@ -47,7 +56,7 @@ const runAddSecretExecutor: Executor<AddSecretExecutorOptions> = async (options)
       });
     }
 
-    const secrets = secretGroup.secrets ? secretGroup.secrets[env] ?? {} : {};
+    const secrets = secretGroup.secrets[env];
 
     await SecretGroupModel.updateOne(
       {

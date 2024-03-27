@@ -16,8 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pinecone-intern-monorepo/secrets": ["packages/secrets/src/index.ts"],
-      "@pinecone-intern-monorepo/scripts": ["libs/scripts/src/index.ts"]
+      "@pinecone-intern-monorepo/scripts": ["libs/scripts/src/index.ts"],
+      "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
