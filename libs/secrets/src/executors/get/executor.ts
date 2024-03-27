@@ -1,22 +1,20 @@
-import { ExecutorContext } from '@nx/devkit';
 import { writeFile } from 'fs/promises';
 import { SecretGroupModel } from '../../models';
 import { connectToDatabase, disconnectFromDatabase } from '../../utils';
-
-export type Executor<Options> = (
-  options: Options,
-  context: ExecutorContext
-) => Promise<{ success: boolean }>;
+import { Executor } from '../add/executor';
+import * as yup from 'yup';
 
 export type GetSecretsExecutorOptions = {
   groups?: string[];
   env?: 'dev' | 'prod' | 'test';
 };
 
-const runGetSecretsExecutor: Executor<GetSecretsExecutorOptions> = async (
-  options,
-  context
-) => {
+const validatation = yup.object({
+  groups: yup.array(yup.string()).min(1, 'Groups are empty').required('Groups are required'),
+  env: yup.string().oneOf(['dev', 'prod', 'test'], 'Invalid env').required('Env is required'),
+});
+
+const runGetSecretsExecutor: Executor<GetSecretsExecutorOptions> = async (options, context) => {
   try {
     const {
       projectName,
@@ -27,23 +25,16 @@ const runGetSecretsExecutor: Executor<GetSecretsExecutorOptions> = async (
 
     const { groups = [], env = 'dev' } = options;
 
-    if (!groups.length) {
-      throw new Error('Groups are empty');
-    }
-
-    if (!['dev', 'prod', 'test'].includes(env)) {
-      throw new Error('Invalid env');
-    }
+    await validatation.validate({
+      groups,
+      env,
+    });
 
     await connectToDatabase({});
 
     const secretGroups = await SecretGroupModel.find({
       groupName: { $in: groups },
     });
-
-    if (secretGroups.length === 0) {
-      throw new Error('No secrets found');
-    }
 
     const secrets = secretGroups.reduce((acc, group) => {
       const secrets = group.secrets[env];

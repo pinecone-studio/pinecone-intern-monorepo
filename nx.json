@@ -5,10 +5,10 @@
   },
   "workspaceLayout": {
     "appsDir": "apps",
-    "libsDir": "packages"
+    "libsDir": "libs"
   },
   "appsDir": "apps",
-  "libsDir": "packages",
+  "libsDir": "libs",
   "tasksRunnerOptions": {
     "default": {}
   },
@@ -38,17 +38,17 @@
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
     },
     "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/tools/eslint-rules/**/*"
-      ]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore", "{workspaceRoot}/tools/eslint-rules/**/*"]
     },
     "e2e": {
       "inputs": ["default", "^production"]
     },
     "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/js:tsc": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]

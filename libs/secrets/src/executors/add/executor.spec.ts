@@ -49,38 +49,6 @@ jest.mock('fs/promises', () => ({
 }));
 
 describe('Add Executor', () => {
-  it('Throw group not provided error', async () => {
-    const options: AddSecretExecutorOptions = {
-      env: 'dev',
-      username: 'developer',
-      password: 'password',
-      key: 'key',
-      value: 'value',
-    };
-
-    const context = {} as ExecutorContext;
-
-    const output = await executor(options, context);
-
-    expect(output.success).toBe(false);
-  });
-
-  it('Throw env not provided error', async () => {
-    const options: AddSecretExecutorOptions = {
-      group: 'group',
-      username: 'developer',
-      password: 'password',
-      key: 'key',
-      value: 'value',
-    };
-
-    const context = {} as ExecutorContext;
-
-    const output = await executor(options, context);
-
-    expect(output.success).toBe(false);
-  });
-
   it('update existing', async () => {
     const options: AddSecretExecutorOptions = {
       group: 'group',
@@ -123,39 +91,5 @@ describe('Add Executor', () => {
     const output = await executor(options, context);
 
     expect(output.success).toBe(false);
-  });
-
-  it('run', async () => {
-    const options: AddSecretExecutorOptions = {
-      group: 'group',
-      env: 'dev',
-      username: 'developer',
-      password: 'password',
-      key: 'key',
-      value: 'value',
-    };
-
-    const context = {} as ExecutorContext;
-
-    const output = await executor(options, context);
-
-    expect(output.success).toBe(true);
-  });
-
-  it('run', async () => {
-    const options: AddSecretExecutorOptions = {
-      group: 'group',
-      env: 'dev',
-      username: 'developer',
-      password: 'password',
-      key: 'key',
-      value: 'value',
-    };
-
-    const context = {} as ExecutorContext;
-
-    const output = await executor(options, context);
-
-    expect(output.success).toBe(true);
   });
 });

@@ -10,14 +10,17 @@ const SecretGroupSchema = new Schema({
     test: {
       type: Schema.Types.Mixed,
       required: true,
+      default: {},
     },
     prod: {
       type: Schema.Types.Mixed,
       required: true,
+      default: {},
     },
     dev: {
       type: Schema.Types.Mixed,
       required: true,
+      default: {},
     },
   },
   updatedAt: {
