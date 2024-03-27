@@ -8,5 +8,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/libs/scripts/src',
-  collectCoverageFrom: ['*.ts', '**/*.ts', '!jest.config.ts'],
+  collectCoverageFrom: ['*.ts', '**/*.ts', '!jest.config.ts', '!**/index.ts'],
 };

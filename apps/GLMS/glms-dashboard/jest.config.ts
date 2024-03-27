@@ -11,7 +11,8 @@ export default {
   setupFilesAfterEnv: ['jest-canvas-mock'],
   collectCoverageFrom: [
     '!src/app/**/*.tsx',
-    'src/domains/**/components/*.tsx',
+    'src/**/_components/*.tsx',
+    '!**/*.spec.tsx',
     '!**/node_modules/**',
     '!**/generated.ts',
     '!**/generated/*.ts',
