@@ -89,6 +89,19 @@
         }
       }
     },
+    "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["federation"],
+          "env": "prod"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
+    },
     "deploy-dev": {
       "executor": "nx:run-commands",
       "options": {
@@ -102,7 +115,7 @@
         ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "clean" }, { "target": "export-env" }]
+      "dependsOn": [{ "target": "clean" }, { "target": "get-secrets" }, { "target": "export-env" }]
     },
     "preview": {
       "executor": "nx:run-commands",
@@ -117,7 +130,7 @@
         ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "clean" }, { "target": "export-env" }]
+      "dependsOn": [{ "target": "clean" }, { "target": "get-secrets" }, { "target": "export-env" }]
     },
     "deploy-testing": {
       "executor": "nx:run-commands",
@@ -132,7 +145,7 @@
         ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "clean" }, { "target": "export-env" }]
+      "dependsOn": [{ "target": "clean" }, { "target": "get-secrets" }, { "target": "export-env" }]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -147,7 +160,7 @@
         ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "clean" }, { "target": "export-env" }]
+      "dependsOn": [{ "target": "clean" }, { "target": "get-secrets" }, { "target": "export-env" }]
     }
   },
   "tags": []

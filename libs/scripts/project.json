@@ -31,6 +31,13 @@
         }
       }
     },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat libs/scripts/.env | xargs)"],
+        "parallel": false
+      }
+    },
     "dev-local-federation": {
       "executor": "nx:run-commands",
       "options": {
@@ -49,6 +56,27 @@
       "options": {
         "command": "ts-node libs/scripts/src/pre-commit/pre-commit-script.ts"
       }
+    },
+    "deploy-dev-action": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/deployment/deploy-dev-action.ts"
+      },
+      "dependsOn": [{ "target": "export-env" }]
+    },
+    "deploy-testing-action": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/deployment/deploy-testing-action.ts"
+      },
+      "dependsOn": [{ "target": "export-env" }]
+    },
+    "deploy-prod-action": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/deployment/deploy-prod-action.ts"
+      },
+      "dependsOn": [{ "target": "export-env" }]
     }
   },
   "tags": []
