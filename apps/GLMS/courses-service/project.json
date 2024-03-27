@@ -42,9 +42,7 @@
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "graphql-codegen --config apps/GLMS/courses-service/codegen.ts"
-        ]
+        "commands": ["graphql-codegen --config apps/GLMS/courses-service/codegen.ts"]
       }
     },
     "export": {
@@ -80,6 +78,39 @@
         "commands": ["rm -rf .vercel", "rm -rf dist/apps/GLMS/courses-service"]
       }
     },
+    "get-secrets:development": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "development": {
+          "groups": ["courses-service"],
+          "env": "dev"
+        }
+      }
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
+        "testing": {
+          "groups": ["courses-service"],
+          "env": "test"
+        }
+      }
+    },
+    "get-secrets:production": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["courses-service"],
+          "env": "prod"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
+    },
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
@@ -102,6 +133,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:development"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -119,6 +153,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
         },
         {
           "target": "export-env"
@@ -140,6 +177,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:testing"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -157,6 +197,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:production"
         },
         {
           "target": "export-env"

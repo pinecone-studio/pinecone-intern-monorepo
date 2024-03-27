@@ -42,9 +42,7 @@
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "graphql-codegen --config apps/GLMS/assessment-service/codegen.ts"
-        ]
+        "commands": ["graphql-codegen --config apps/GLMS/assessment-service/codegen.ts"]
       }
     },
     "export": {
@@ -71,18 +69,46 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/GLMS/assessment-service/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/GLMS/assessment-service/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "get-secrets:development": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "development": {
+          "groups": ["assessment-service"],
+          "env": "dev"
+        }
+      }
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
+        "testing": {
+          "groups": ["assessment-service"],
+          "env": "test"
+        }
+      }
+    },
+    "get-secrets:production": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["assessment-service"],
+          "env": "prod"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "rm -rf .vercel",
-          "rm -rf dist/apps/GLMS/assessment-service"
-        ]
+        "commands": ["rm -rf .vercel", "rm -rf dist/apps/GLMS/assessment-service"]
       }
     },
     "export-env": {
@@ -107,6 +133,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:development"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -124,6 +153,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
         },
         {
           "target": "export-env"
@@ -145,6 +177,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:testing"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -162,6 +197,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:production"
         },
         {
           "target": "export-env"

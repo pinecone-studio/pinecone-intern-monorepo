@@ -9,7 +9,6 @@ import * as githubUtils from '../../../src/utils/github/github-utils';
 import * as updateComment from '../../../src/utils/github/update-comment';
 import * as handleError from '../../../src/utils/handle-errors/handle-api-error';
 import * as logAndThrowError from '../../../src/utils/handle-errors/log-and-throw-error';
-import * as sendMessageToTeams from '../../../src/utils/teams/send-message-to-teams';
 
 jest.mock('@actions/github', () => ({
   getOctokit: jest.fn(),
@@ -127,7 +126,6 @@ describe('addCommentToPullRequest', () => {
     const findExistingCommentMock = jest.spyOn(addCommentToPullRequest, 'findExistingComment');
     const updateOrCreateCommentMock = jest.spyOn(addCommentToPullRequest, 'updateOrCreateComment');
     const getPullRequestDataMock = jest.spyOn(getPullRequestData, 'getPullRequestData');
-    const sendMessageToTeamsMock = jest.spyOn(sendMessageToTeams, 'sendMessageToTeams');
 
     getPullRequestNumberMock.mockImplementation();
     getGetGithubOctokitMock.mockImplementation();
@@ -136,7 +134,6 @@ describe('addCommentToPullRequest', () => {
     findExistingCommentMock.mockReturnValue(null);
     updateOrCreateCommentMock.mockResolvedValue();
     getPullRequestDataMock.mockResolvedValueOnce(mockPullRequestGetData.data);
-    sendMessageToTeamsMock.mockResolvedValue();
 
     await addCommentToPullRequest.addCommentToPullRequest(mockProjects);
 
@@ -144,8 +141,6 @@ describe('addCommentToPullRequest', () => {
     expect(getExistingCommentsMock).toHaveBeenCalled();
     expect(findExistingCommentMock).toHaveBeenCalled();
     expect(updateOrCreateCommentMock).toHaveBeenCalled();
-    expect(getPullRequestDataMock).toHaveBeenCalled();
-    expect(sendMessageToTeamsMock).toHaveBeenCalled();
   });
 
   it('2. Should handle errors', async () => {

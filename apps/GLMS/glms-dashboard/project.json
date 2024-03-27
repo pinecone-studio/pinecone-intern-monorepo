@@ -30,6 +30,10 @@
         {
           "target": "clean",
           "params": "forward"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
         }
       ]
     },
@@ -61,10 +65,7 @@
     "dev": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "npx nx codegen glms-dashboard --configuration=development",
-          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development nx serve glms-dashboard --configuration=development"
-        ],
+        "commands": ["npx nx codegen glms-dashboard --configuration=development", "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development nx serve glms-dashboard --configuration=development"],
         "parallel": false
       },
       "dependsOn": [
@@ -77,10 +78,7 @@
     "dev-local": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "npx nx codegen dashboard --configuration=local",
-          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"
-        ],
+        "commands": ["npx nx codegen dashboard --configuration=local", "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"],
         "parallel": false
       }
     },
@@ -138,11 +136,7 @@
     "cypress:clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "rm -rf apps/GLMS/glms-dashboard/cypress/results",
-          "rm -rf apps/GLMS/glms-dashboard/.nyc_output",
-          "rm -rf apps/GLMS/glms-dashboard/.cy"
-        ],
+        "commands": ["rm -rf apps/GLMS/glms-dashboard/cypress/results", "rm -rf apps/GLMS/glms-dashboard/.nyc_output", "rm -rf apps/GLMS/glms-dashboard/.cy"],
         "parallel": false
       }
     },
@@ -167,29 +161,34 @@
     },
     "codegen": {
       "executor": "nx:run-commands",
-      "defaultConfiguration": "local",
+      "defaultConfiguration": "development",
       "configurations": {
         "local": {
-          "commands": [
-            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
-          ]
+          "commands": ["npx env-cmd -f apps/GLMS/glms-dashboard/.env.local graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"]
         },
         "development": {
-          "commands": [
-            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
-          ]
+          "commands": ["npx env-cmd -f apps/GLMS/glms-dashboard/.env.development graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"]
         },
         "preview": {
-          "commands": [
-            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.preview graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
-          ]
+          "commands": ["npx env-cmd -f apps/GLMS/glms-dashboard/.env.preview graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"]
         },
         "production": {
-          "commands": [
-            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.production graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
-          ]
+          "commands": ["npx env-cmd -f apps/GLMS/glms-dashboard/.env.production graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"]
         }
       }
+    },
+    "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["glms-dashboard"],
+          "env": "prod"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
     },
     "preview-all": {
       "executor": "nx:run-commands",
@@ -205,6 +204,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets"
         },
         {
           "target": "export-env"
@@ -227,6 +229,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -246,7 +251,9 @@
         {
           "target": "clean"
         },
-
+        {
+          "target": "get-secrets"
+        },
         {
           "target": "export-env"
         }

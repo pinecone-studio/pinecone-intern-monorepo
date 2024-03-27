@@ -75,7 +75,6 @@
       }
     }
   ],
-  "nxCloudAccessToken": "NWI5NGU3ZjUtNmIxYS00MDJhLWE0ZjUtMjQ4NWRkMzFiYmM3fHJlYWQtd3JpdGU=",
   "generators": {
     "@nx/react": {
       "application": {

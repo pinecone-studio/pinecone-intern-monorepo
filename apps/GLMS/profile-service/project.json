@@ -42,9 +42,7 @@
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "graphql-codegen --config apps/GLMS/profile-service/codegen.ts"
-        ]
+        "commands": ["graphql-codegen --config apps/GLMS/profile-service/codegen.ts"]
       }
     },
     "test": {
@@ -61,21 +59,33 @@
         }
       }
     },
-    "get-secrets": {
+    "get-secrets:development": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
           "groups": ["profile-service"],
           "env": "dev"
-        },
-        "production": {
-          "groups": ["profile-service"],
-          "env": "prod"
-        },
+        }
+      }
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
         "testing": {
           "groups": ["profile-service"],
           "env": "test"
+        }
+      }
+    },
+    "get-secrets:production": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["profile-service"],
+          "env": "prod"
         }
       }
     },
@@ -123,6 +133,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:development"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -140,6 +153,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
         },
         {
           "target": "export-env"
@@ -161,6 +177,9 @@
           "target": "clean"
         },
         {
+          "target": "get-secrets:testing"
+        },
+        {
           "target": "export-env"
         }
       ]
@@ -178,6 +197,9 @@
       "dependsOn": [
         {
           "target": "clean"
+        },
+        {
+          "target": "get-secrets:production"
         },
         {
           "target": "export-env"
