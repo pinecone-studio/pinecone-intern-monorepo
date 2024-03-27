@@ -55,7 +55,7 @@ describe('executeFederation', () => {
   it('1. Should execute federation server', () => {
     runFederationLocally();
     expect(spawn).toHaveBeenCalledWith(
-      'bunx env-cmd -f apps/federation/.env.local nx serve federation --configuration=local',
+      'npx env-cmd -f apps/federation/.env.local nx serve federation --configuration=local',
       [],
       { shell: true }
     );

@@ -7,36 +7,39 @@
     "build": {
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "defaultConfiguration": "local",
       "options": {
         "outputPath": "dist/apps/GLMS/glms-dashboard"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/GLMS/glms-dashboard"
+          "outputPath": "apps/GLMS/glms-dashboard",
+          "envFiles": [".env.development"]
         },
-        "production": {}
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/GLMS/glms-dashboard/jest.config.ts",
-        "codeCoverage": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true
+        "preview": {
+          "envFiles": [".env.preview"]
+        },
+        "local": {
+          "envFiles": [".env.local"]
+        },
+        "production": {
+          "envFiles": [".env.production"]
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "clean",
+          "params": "forward"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "glms-dashboard:build",
-        "dev": true
+        "dev": true,
+        "envFiles": [".env.development"]
       },
       "configurations": {
         "development": {
@@ -55,6 +58,59 @@
         "buildTarget": "glms-dashboard:build:production"
       }
     },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx codegen glms-dashboard --configuration=development",
+          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development nx serve glms-dashboard --configuration=development"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean",
+          "params": "forward"
+        }
+      ]
+    },
+    "dev-local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx codegen dashboard --configuration=local",
+          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"
+        ],
+        "parallel": false
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/GLMS/glms-dashboard/jest.config.ts",
+        "codeCoverage": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/GLMS/glms-dashboard", "rm -rf .vercel"]
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/GLMS/glms-dashboard/.env | xargs)"],
+        "parallel": false
+      }
+    },
+
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
@@ -66,13 +122,18 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "bunx nx cypress:clean glms-dashboard",
-          "bunx nx cypress:test glms-dashboard",
-          "bunx mochawesome-merge --reportDir apps/GLMS/glms-dashboard/cypress/results/*.json -o apps/GLMS/glms-dashboard/.cy/report.json",
-          "bunx marge apps/GLMS/glms-dashboard/.cy/report.json -o apps/GLMS/glms-dashboard/.cy"
+          "npx nx cypress glms-dashboard",
+          "npx mochawesome-merge --reportDir apps/GLMS/glms-dashboard/cypress/results/*.json -o apps/GLMS/glms-dashboard/.cy/report.json",
+          "npx marge apps/GLMS/glms-dashboard/.cy/report.json -o apps/GLMS/glms-dashboard/.cy"
         ],
         "parallel": false
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "cypress:clean",
+          "params": "forward"
+        }
+      ]
     },
     "cypress:clean": {
       "executor": "nx:run-commands",
@@ -85,7 +146,7 @@
         "parallel": false
       }
     },
-    "cypress:test": {
+    "cypress": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/GLMS/glms-dashboard/cypress.config.ts",
@@ -94,7 +155,7 @@
         "devServerTarget": "glms-dashboard:serve:development"
       }
     },
-    "cypress:dev": {
+    "cypress:open": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/GLMS/glms-dashboard/cypress.config.ts",
@@ -103,6 +164,93 @@
         "devServerTarget": "glms-dashboard:serve:development",
         "watch": true
       }
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "local",
+      "configurations": {
+        "local": {
+          "commands": [
+            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
+          ]
+        },
+        "development": {
+          "commands": [
+            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
+          ]
+        },
+        "preview": {
+          "commands": [
+            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.preview graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
+          ]
+        },
+        "production": {
+          "commands": [
+            "npx env-cmd -f apps/GLMS/glms-dashboard/.env.production graphql-codegen --config ./apps/GLMS/glms-dashboard/graphql-codegen.yml"
+          ]
+        }
+      }
+    },
+    "preview-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx codegen glms-dashboard --configuration=preview",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.preview vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx codegen glms-dashboard --configuration=development",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx codegen glms-dashboard --configuration=production",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx env-cmd -f apps/GLMS/glms-dashboard/.env.production vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+
+        {
+          "target": "export-env"
+        }
+      ]
     }
   },
   "tags": []

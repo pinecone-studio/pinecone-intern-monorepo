@@ -1,6 +1,9 @@
 import * as copyFile from '../../src/utils/commands/federation/copy-dev-to-local-env';
 import * as executeServices from '../../src/utils/commands/federation/run-selected-services';
+import * as runFederationLocally from '../../src/utils/commands/federation/run-federation-locally';
 import * as runDevLocalCommandOnFederation from './../../src/commands/dev-local-federation-command';
+import * as getAffectedApps from '../../src/utils/affected/get-affected-apps';
+import * as getAffectedFederationServices from '../../src/utils/affected/get-affected-federation-services';
 
 jest.mock('../../src/utils/commands/federation/run-selected-services');
 
@@ -8,6 +11,39 @@ describe('runDevLocalCommandOnFederation', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+  });
+
+  it('should run successfully when services are selected', async () => {
+    const mockCopyDevToLocalEnv = jest.spyOn(copyFile, 'copyDevToLocalEnv');
+    const mockGetAffectedApps = jest.spyOn(getAffectedApps, 'getAffectedApps');
+    const mockGetAffectedFederationServices = jest.spyOn(
+      getAffectedFederationServices,
+      'getAffectedFederationServices'
+    );
+    const mockRunSelectedServices = jest.spyOn(
+      executeServices,
+      'runSelectedServices'
+    );
+    const mockRunFederationLocally = jest.spyOn(
+      runFederationLocally,
+      'runFederationLocally'
+    );
+
+    mockCopyDevToLocalEnv.mockImplementation();
+    mockGetAffectedApps.mockReturnValue(['app1', 'app2']);
+    mockGetAffectedFederationServices.mockReturnValue(['service1', 'service2']);
+    mockRunSelectedServices.mockResolvedValue();
+    mockRunFederationLocally.mockImplementation();
+
+    await runDevLocalCommandOnFederation.runDevLocalCommandOnFederation();
+
+    expect(mockGetAffectedApps).toHaveBeenCalled();
+    expect(mockGetAffectedFederationServices).toHaveBeenCalledWith([
+      'app1',
+      'app2',
+    ]);
+    expect(mockRunSelectedServices).toHaveBeenCalledTimes(2); // Assuming two affected services
+    expect(mockRunFederationLocally).toHaveBeenCalled();
   });
 
   it('1. Should handle error during runDevLocalCommandOnFederation', async () => {

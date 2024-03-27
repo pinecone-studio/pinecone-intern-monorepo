@@ -4,7 +4,7 @@ import fs from 'fs';
 
 export const runSelectedServices = (serviceName) => {
   return new Promise<void>((resolve, reject) => {
-    const command = `bunx nx serve ${serviceName}`;
+    const command = `npx nx serve ${serviceName}`;
     const serverProcess = spawn(command, [], { shell: true });
     let localhostURL = null;
 
