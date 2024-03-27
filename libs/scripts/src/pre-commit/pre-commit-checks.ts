@@ -2,7 +2,7 @@ import { blue, green } from 'chalk';
 import { spawnSync } from 'child_process';
 import { getAffectedApps } from '../utils';
 
-const runCommandOnAffectedProject = (projectName: string, command: string): void => {
+export const runCommandOnAffectedProject = (projectName: string, command: string): void => {
   console.log(blue(`\n > Running ${command} for ${projectName} ... \n`));
   const args = ['nx', command, projectName];
   const output = spawnSync('npx', args, { stdio: 'inherit' });
@@ -14,7 +14,7 @@ const runCommandOnAffectedProject = (projectName: string, command: string): void
   }
 };
 
-const runChecksOnAffectedApps = (target: string, action: string) => {
+export const runChecksOnAffectedApps = (target: string, action: string) => {
   const affectedApps = getAffectedApps(`--with-target ${target}`);
   for (const app of affectedApps) {
     runCommandOnAffectedProject(app, action);
