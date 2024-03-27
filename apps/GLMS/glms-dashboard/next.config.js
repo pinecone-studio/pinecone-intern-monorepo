@@ -12,6 +12,10 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  env: {
+    FEDERATION_ENDPOINT: process.env.FEDERATION_ENDPOINT || '',
+    ENVIRONMENT: process.env.ENVIRONMENT || '',
+  },
 };
 
 const plugins = [

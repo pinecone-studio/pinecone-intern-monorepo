@@ -1,3 +1,4 @@
+import { FederationProvider } from '../common';
 import './global.css';
 
 export const metadata = {
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <FederationProvider>
+        <body>{children}</body>
+      </FederationProvider>
     </html>
   );
 }

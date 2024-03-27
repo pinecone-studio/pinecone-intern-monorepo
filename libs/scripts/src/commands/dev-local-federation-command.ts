@@ -1,18 +1,32 @@
 import chalk from 'chalk';
 import {
   copyDevToLocalEnv,
+  getAffectedApps,
+  getAffectedFederationServices,
   runFederationLocally,
   runSelectedServices,
 } from '../utils';
 
+const FEDERATION_DEV_ENV_PATH = 'apps/federation/.env.development';
+const FEDERATION_LOCAL_ENV_PATH = 'apps/federation/.env.local';
+
+const getAffectedOrSelectedServices = () => {
+  const [, , ...selectedServices] = process.argv;
+  const affectedServices = getAffectedApps();
+  const allServices = [...affectedServices, ...selectedServices];
+  const affectedFederationServices = getAffectedFederationServices(allServices);
+  return affectedFederationServices.filter(
+    (service) => service !== 'federation'
+  );
+};
+
 export const runDevLocalCommandOnFederation = async () => {
   try {
-    copyDevToLocalEnv(
-      'apps/federation/.env.development',
-      'apps/federation/.env.local'
-    );
-    const selectedServices = process.argv.slice(3);
-    await Promise.all(selectedServices.map(runSelectedServices));
+    copyDevToLocalEnv(FEDERATION_DEV_ENV_PATH, FEDERATION_LOCAL_ENV_PATH);
+    const services = getAffectedOrSelectedServices();
+    if (services.length !== 0) {
+      await Promise.all(services.map(runSelectedServices));
+    }
     runFederationLocally();
   } catch (err) {
     console.log(

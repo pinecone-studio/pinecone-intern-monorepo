@@ -28,7 +28,6 @@ export default defineConfig({
     numTestsKeptInMemory: 0,
     trashAssetsBeforeRuns: true,
     requestTimeout: 30000,
-    // Location change defend on location of application
     reporter: '../../../node_modules/cypress-multi-reporters',
     reporterOptions: {
       reporterEnabled: 'mochawesome',

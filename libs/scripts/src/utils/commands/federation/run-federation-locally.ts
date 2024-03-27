@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 
 export const runFederationLocally = () => {
   const command =
-    'bunx env-cmd -f apps/federation/.env.local nx serve federation --configuration=local';
+    'npx env-cmd -f apps/federation/.env.local nx serve federation --configuration=local';
   const serverProcess = spawn(command, [], { shell: true });
   serverProcess.stdout.on('data', (data) => {
     const log = data.toString();

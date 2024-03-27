@@ -14,15 +14,13 @@ export default async function Index() {
   };
 
   return (
-    <>
-      <div>
-        <h1>hello from GLMS dashboard</h1>
-
-        <button onClick={handleProfilePageButton}>Go to profile page</button>
-        <button onClick={handleAssessmentPageButton}>
-          Go to assessment page
-        </button>
-      </div>
-    </>
+    <div>
+      <h1>hello from GLMS dashboard</h1>
+      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
+      <button onClick={handleProfilePageButton}>Go to profile page</button>
+      <button onClick={handleAssessmentPageButton}>
+        Go to assessment page
+      </button>
+    </div>
   );
 }
