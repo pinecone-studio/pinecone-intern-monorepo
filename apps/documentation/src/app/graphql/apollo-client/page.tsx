@@ -34,7 +34,7 @@ const Page = () => {
           allowFullScreen
         ></iframe>
       </Stack>
-      
+
       <References items={references} />
       <NextPageButton label="Codegen" path="/graphql/codegen" />
     </Stack>

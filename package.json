@@ -10,7 +10,8 @@
     "e2e": "nx e2e",
     "prepare": "husky install",
     "pre-commit": "npx nx pre-commit scripts",
-    "commit": "cz"
+    "commit": "cz",
+    "docs": "nx serve documentation"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
     "@nx/devkit": "18.0.8",
+    "@testing-library/jest-dom": "^6.4.2",
     "@vercel/kv": "1.0.0",
     "apollo-graphql": "0.9.7",
     "axios": "^1.6.0",
