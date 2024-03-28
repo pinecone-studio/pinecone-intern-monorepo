@@ -10,7 +10,8 @@
     "e2e": "nx e2e",
     "prepare": "husky install",
     "pre-commit": "npx nx pre-commit scripts",
-    "commit": "cz"
+    "commit": "cz",
+    "docs": "nx serve documentation"
   },
   "private": true,
   "dependencies": {

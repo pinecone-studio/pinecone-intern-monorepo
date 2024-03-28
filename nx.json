@@ -75,7 +75,7 @@
       "application": {
         "appDir": true,
         "src": true,
-        "style": "none",
+        "style": "css",
         "linter": "eslint",
         "e2eTestRunner": "none"
       }
