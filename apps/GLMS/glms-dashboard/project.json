@@ -78,7 +78,7 @@
     "dev-local": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx codegen dashboard --configuration=local", "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"],
+        "commands": ["npx nx codegen glms-dashboard --configuration=local", "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"],
         "parallel": false
       }
     },

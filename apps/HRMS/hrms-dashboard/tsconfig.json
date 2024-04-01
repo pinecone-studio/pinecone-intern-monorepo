@@ -13,25 +13,17 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
-      "@/apps/*": [
-        "apps/GLMS/glms-dashboard/src/apps/*"
-      ],
-      "@/generated/*": [
-        "apps/GLMS/glms-dashboard/src/generated/*"
-      ],
-      "@/common/*": [
-        "apps/GLMS/glms-dashboard/src/common/*"
-      ]
+      "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
+      "@/generated/*": ["apps/GLMS/glms-dashboard/src/generated/*"],
+      "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],
+      "@/file-management": ["libs/file-management/src/index.ts"]
     },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
   "include": [
     "**/*.ts",
@@ -41,12 +33,8 @@
     "../../../apps/GLMS/glms-dashboard/.next/types/**/*.ts",
     "../../../dist/apps/GLMS/glms-dashboard/.next/types/**/*.ts",
     "next-env.d.ts",
-    "../../../apps/HRMS/hrms-dashboard/.next/types/**/*.ts"
+    "../../../apps/HRMS/hrms-dashboard/.next/types/**/*.ts",
+    "../../../dist/apps/HRMS/hrms-dashboard/.next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
 }
