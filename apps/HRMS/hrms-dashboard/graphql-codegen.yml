@@ -1,0 +1,17 @@
+overwrite: true
+schema: '${FEDERATION_ENDPOINT_FOR_CODEGEN}'
+
+documents: './apps/HRMS/hrms-dashboard/src/**/*.graphql'
+
+generates:
+  apps/HRMS/hrms-dashboard/src/generated/index.ts:
+    config:
+      reactApolloVersion: 3
+      withHOC: true
+      withHooks: true
+    plugins:
+      - add:
+          content: '// @ts-nocheck'
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

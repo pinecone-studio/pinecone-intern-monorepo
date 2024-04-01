@@ -2,7 +2,9 @@ import * as fs from 'fs';
 import * as cleanEnvFiles from '../../../src/utils/actions/clean-generated-preview-env-files';
 
 jest.mock('fs');
-jest.mock('fs');
+jest.mock('../../../src/utils/affected/get-affected-federation-services', () => ({
+  getAffectedFederationServices: jest.fn().mockReturnValue(['app1']),
+}));
 
 describe('cleanGeneratedPreviewEnvFiles', () => {
   beforeEach(() => {
@@ -29,5 +31,23 @@ describe('cleanGeneratedPreviewEnvFiles', () => {
     cleanEnvFiles.cleanGeneratedPreviewEnvFiles();
 
     expect(mockUnlinkSync).not.toHaveBeenCalled();
+  });
+});
+
+describe('shouldAddFederationToAffected', () => {
+  it('Should return affectedServices when it includes federation', () => {
+    const affected = ['app1', 'federation'];
+
+    const result = cleanEnvFiles.shouldAddFederationToAffected(affected);
+
+    expect(result).toStrictEqual(affected);
+  });
+
+  it('Should add federation', () => {
+    const affected = ['assessment-service'];
+
+    const result = cleanEnvFiles.shouldAddFederationToAffected(affected);
+
+    expect(result).toContainEqual('federation');
   });
 });

@@ -1,8 +1,4 @@
-import {
-  ApolloGateway,
-  IntrospectAndCompose,
-  RemoteGraphQLDataSource,
-} from '@apollo/gateway';
+import { ApolloGateway, IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { json } from 'body-parser';
@@ -44,6 +40,22 @@ const gateway = new ApolloGateway({
       {
         name: 'profile',
         url: process.env.PROFILE_SERVICE,
+      },
+      {
+        name: 'leaving',
+        url: process.env.LEAVING_SERVICE,
+      },
+      {
+        name: 'payroll',
+        url: process.env.PAYROLL_SERVICE,
+      },
+      {
+        name: 'recruiting',
+        url: process.env.RECRUITING_SERVICE,
+      },
+      {
+        name: 'employee-details',
+        url: process.env.EMPLOYEE_DETAILS_SERVICE,
       },
     ],
   }),
