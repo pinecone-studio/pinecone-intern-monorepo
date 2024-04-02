@@ -1,0 +1,63 @@
+{
+  "name": "documentation",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/documentation",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/documentation"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/documentation"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "documentation:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "documentation:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "documentation:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "documentation:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/documentation/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/documentation/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
