@@ -57,6 +57,22 @@ const gateway = new ApolloGateway({
         name: 'employee-details',
         url: process.env.EMPLOYEE_DETAILS_SERVICE,
       },
+      {
+        name: 'articles',
+        url: process.env.ARTICLES_SERVICE,
+      },
+      {
+        name: 'comments',
+        url: process.env.COMMENTS_SERVICE,
+      },
+      {
+        name: 'documents',
+        url: process.env.DOCUMENTS_SERVICE,
+      },
+      {
+        name: 'reactions',
+        url: process.env.REACTIONS_SERVICE,
+      },
     ],
   }),
   buildService({ url }) {

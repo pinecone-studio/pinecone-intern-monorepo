@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@pinecone-intern-monorepo/file-management": ["libs/file-management/src/index.ts"],
       "@pinecone-intern-monorepo/scripts": ["libs/scripts/src/index.ts"],
       "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"]
     }

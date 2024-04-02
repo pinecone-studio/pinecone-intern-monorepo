@@ -65,3 +65,4 @@ generated.tsx
 **/.nyc_output/
 .vercel
 .env
+.env.preview
