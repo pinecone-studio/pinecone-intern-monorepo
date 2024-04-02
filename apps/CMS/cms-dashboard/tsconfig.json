@@ -1,0 +1,40 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "baseUrl": "../../..",
+    "paths": {
+      "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
+      "@/generated/*": ["apps/GLMS/glms-dashboard/src/generated/*"],
+      "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],
+      "@/file-management": ["libs/file-management/src/index.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../../apps/GLMS/glms-dashboard/.next/types/**/*.ts",
+    "../../../dist/apps/GLMS/glms-dashboard/.next/types/**/*.ts",
+    "next-env.d.ts",
+    "../../../apps/CMS/cms-dashboard/.next/types/**/*.ts",
+    "../../../dist/apps/CMS/cms-dashboard/.next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+}

@@ -1,0 +1,17 @@
+overwrite: true
+schema: '${FEDERATION_ENDPOINT_FOR_CODEGEN}'
+
+documents: './apps/CMS/cms-dashboard/src/**/*.graphql'
+
+generates:
+  apps/CMS/cms-dashboard/src/generated/index.ts:
+    config:
+      reactApolloVersion: 3
+      withHOC: true
+      withHooks: true
+    plugins:
+      - add:
+          content: '// @ts-nocheck'
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
