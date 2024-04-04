@@ -24,7 +24,7 @@ const Page = () => {
 
       <References items={references} />
 
-      <NextPageButton label="Unit testing" path="/testing/unit-test" />
+      <NextPageButton label="Unit testing" path="/testing/unit" />
     </Stack>
   );
 };
