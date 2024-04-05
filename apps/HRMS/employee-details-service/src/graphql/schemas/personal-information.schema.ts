@@ -24,9 +24,4 @@ export const personalInformationTypeDefs = gql`
     phone: String
     hobby: [String]
   }
-
-  type Mutation {
-    addPersonalInformation(employeeId: ID, input: UpdatePersonalInformationInput): PersonalInformation!
-    updatePersonalInformation(employeeId: ID, input: UpdatePersonalInformationInput): PersonalInformation!
-  }
 `;
