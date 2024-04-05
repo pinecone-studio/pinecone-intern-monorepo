@@ -1,4 +1,6 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { helloEmployeeDetailsSchema } from './hello.schema';
+import { employeeTypeDefs } from './employee.schema';
+import { personalInformationTypeDefs } from './personal-information.schema';
+import { familyTypeDefs } from './family.schema';
 
-export const typeDefs = mergeTypeDefs([helloEmployeeDetailsSchema]);
+export const typeDefs = mergeTypeDefs([employeeTypeDefs, personalInformationTypeDefs, familyTypeDefs]);
