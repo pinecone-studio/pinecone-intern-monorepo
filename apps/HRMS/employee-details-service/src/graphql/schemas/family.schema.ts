@@ -30,9 +30,4 @@ export const familyTypeDefs = gql`
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
-
-  type Mutation {
-    addFamilyInformation(employeeId: ID, input: UpdateFamilyInformationInput): FamilyInformation!
-    updateFamilyInformation(employeeId: ID, input: UpdateFamilyInformationInput): FamilyInformation!
-  }
 `;

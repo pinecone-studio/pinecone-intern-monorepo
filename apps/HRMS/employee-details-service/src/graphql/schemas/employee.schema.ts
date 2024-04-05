@@ -105,16 +105,6 @@ input UpdateFamilyInformation {
     relative:[Dependent]
 }
 
-  type Query {
-    getEmployees:[Employee!]!
-    getEmployeeDetail(id:ID):Employee!
-    searchByEmploymentStatus(status:EmploymentStatus):[Employee]
-    filterByJobTitle():[Employee]
-  }
 
-  type Mutation {
-    createEmployee(input:CreateEmployeeInput):Employee!
-    updateEmployee(input:UpdateEmployeeInput):Employee!
-    }
 
 `;
