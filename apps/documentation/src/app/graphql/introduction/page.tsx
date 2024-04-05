@@ -43,10 +43,17 @@ const Page = () => {
         query. The client can also make mutations to update or create data on the server.
       </Typography>
 
-      <Stack my={2} borderRadius={2} overflow="hidden">
-        <video controls>
-          <source src="http://localhost:4200/videos/video1.mov" type="video/mp4" />
-        </video>
+      <Stack my={2}>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/3HBdtwg4cmc?si=PE3hVlRIlKwTurNZ"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
       </Stack>
 
       <References items={references} />
