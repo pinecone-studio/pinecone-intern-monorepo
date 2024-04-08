@@ -1,2 +1,2 @@
 export * from './hello-mutation';
-export * from './userCreate';
+export * from './user-create';
