@@ -10,4 +10,18 @@ export const helloEmployeeDetailsSchema = gql`
   type Mutation {
     helloMutationFromEmployeeDetailsService: String
   }
+  type Mutation {
+    userCreate: String
+  }
 `;
+export const test1 = gql`
+  type Query {
+    test1: String
+  }
+
+  # ******************** Mutations ********************
+  type Mutation {
+    helloMutationFromEmployeeDetailsService: String
+  }
+`;
+

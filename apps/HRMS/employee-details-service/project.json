@@ -37,7 +37,16 @@
           "dev": false
         }
       },
-      "dependsOn": [{ "target": "graphql-codegen" }]
+      "dependsOn": [
+        {
+          "target": "clean",
+          "params": "forward"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "graphql-codegen": {
       "executor": "nx:run-commands",

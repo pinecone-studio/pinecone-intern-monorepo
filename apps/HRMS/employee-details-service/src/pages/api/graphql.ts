@@ -1,9 +1,11 @@
+import { connectToDatabase } from '@/config/database';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import { ApolloServer } from 'apollo-server-cloud-functions';
 import { resolvers, typeDefs } from '../../graphql';
 
+connectToDatabase();
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
     typeDefs,
