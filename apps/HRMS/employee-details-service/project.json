@@ -75,7 +75,8 @@
         "ci": {
           "ci": true
         }
-      }
+      },
+      "dependsOn": [{ "target": "get-secrets" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

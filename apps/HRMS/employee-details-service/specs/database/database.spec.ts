@@ -1,4 +1,4 @@
-import { connectDB } from '../../src/config/database';
+import { connectDB } from '@/config/connectDB';
 import mongoose from 'mongoose';
 
 jest.mock('mongoose', () => ({
