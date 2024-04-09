@@ -12,8 +12,7 @@ const userSchema = new Schema({
   },
   avatar: {
     type: String,
-  },
- 
+  },  
 });
 
 export const UserModel = mongoose.models.user || model("user", userSchema) ;
