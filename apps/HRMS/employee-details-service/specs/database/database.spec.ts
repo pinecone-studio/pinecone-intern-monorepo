@@ -1,5 +1,4 @@
-
-import { connectToDatabase } from '@/config/database';
+import { connectDB } from '../../src/config/database';
 import mongoose from 'mongoose';
 
 jest.mock('mongoose', () => ({
@@ -15,16 +14,16 @@ describe('Database connection check', () => {
     jest.resetAllMocks();
   });
 
-  it('1. should call connectToDatabase', async () => {
+  it('1. should call connectDB', async () => {
     (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
-    await connectToDatabase();
+    await connectDB();
     expect(mongoose.connect).toBeCalled();
   });
 
   it('2. should handle error', async () => {
     (mongoose.connect as jest.Mock).mockRejectedValue(new Error('error'));
     try {
-      await connectToDatabase();
+      await connectDB();
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
     }
@@ -43,6 +42,6 @@ describe('Database url null check', () => {
   });
 
   it('1. should return when data base url is undefined', async () => {
-    await connectToDatabase();
+    await connectDB();
   });
 });
