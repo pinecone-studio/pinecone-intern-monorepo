@@ -29,7 +29,7 @@
       "configurations": {
         "development": {
           "buildTarget": "articles-service:build:development",
-          "port": 3000,
+          "port": 3001,
           "dev": true
         },
         "production": {
@@ -63,7 +63,8 @@
         "ci": {
           "ci": true
         }
-      },"dependsOn": [{"target": "get-secrets:testing"}]
+      },
+      "dependsOn": [{ "target": "get-secrets:testing" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
