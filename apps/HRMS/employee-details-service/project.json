@@ -39,6 +39,9 @@
       },
       "dependsOn": [
         {
+          "target": "graphql-codegen"
+        },
+        {
           "target": "clean",
           "params": "forward"
         },
