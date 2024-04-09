@@ -1,47 +1,48 @@
-const { MongoClient } = require('mongodb');
-const { faker } = require('@faker-js/faker');
 
-jest.setTimeout(30000);
+import { connectToDatabase } from '@/config/database';
+import mongoose from 'mongoose';
 
-const uri = 'mongodb+srv://nakii:4jPCRcULEheHUSD2@cluster0.l6kcwbb.mongodb.net/HRMS?retryWrites=true&w=majority&appName=Cluster0';
+jest.mock('mongoose', () => ({
+  connect: jest.fn(),
+}));
 
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+describe('Database connection check', () => {
+  beforeAll(() => {
+    jest.clearAllMocks();
+  });
+  afterAll(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  it('1. should call connectToDatabase', async () => {
+    (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
+    await connectToDatabase();
+    expect(mongoose.connect).toBeCalled();
+  });
+
+  it('2. should handle error', async () => {
+    (mongoose.connect as jest.Mock).mockRejectedValue(new Error('error'));
+    try {
+      await connectToDatabase();
+    } catch (e) {
+      expect(e).toBeInstanceOf(Error);
+    }
+  });
 });
 
-describe('Database Tests', () => {
-  let usersCollection: string;
-
-  beforeAll(async () => {
-    try {
-      await client.connect();
-      const db = client.db('mytestdb');
-      usersCollection = db.collection('users');
-    } catch (err) {
-      console.error('Error connecting to the database:', err);
-    }
+describe('Database url null check', () => {
+  beforeAll(() => {
+    process.env = { ...process.env, MONGODB_URI: undefined };
   });
 
-  test('Test CREATE', async () => {
-    let newUsers = [];
-    let total_users_to_add = 3;
-
-    for (let i = 0; i < total_users_to_add; i++) {
-      newUsers.push({
-        name: faker.person.firstName(),
-        email: faker.internet.email(),
-      });
-    }
-    const result = await usersCollection.insertMany(newUsers);
-    expect(result.insertedCount).toBe(total_users_to_add);
-  }, 30000);
-
-  afterEach(async () => {
-    await usersCollection.deleteMany({});
+  afterAll(() => {
+    process.env = { ...process.env };
+    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
-  afterAll(async () => {
-    await client.close();
+  it('1. should return when data base url is undefined', async () => {
+    await connectToDatabase();
   });
 });
