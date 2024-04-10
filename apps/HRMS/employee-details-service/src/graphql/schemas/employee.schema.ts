@@ -36,7 +36,7 @@ export const employeeDetailsSchema = gql`
     relative: [Dependent]
   }
   type Dependent {
-    id: ID
+    _id: ID
     firstname: String
     lastname: String
     phone: String
@@ -101,5 +101,9 @@ export const employeeDetailsSchema = gql`
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Department]
+  }
+
+  type Mutation {
+    createDependent(firstname: String, lastname: String, phone: String, dependency: String): Dependent
   }
 `;
