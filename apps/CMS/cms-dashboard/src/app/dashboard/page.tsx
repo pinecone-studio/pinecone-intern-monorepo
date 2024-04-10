@@ -1,9 +1,10 @@
-import React from 'react';
+import { FooterButtons } from './_features';
 
 const Home = () => {
   return (
     <>
-      <div>Welcome to Cms Dashboard hello </div>
+      <h1>hi footer page</h1>
+      <FooterButtons />
     </>
   );
 };
