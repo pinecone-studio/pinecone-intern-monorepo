@@ -9,7 +9,6 @@ export type Dependent = {
 };
 
 const DependentSchema = new Schema<Dependent>({
-  _id: String,
   firstName: {
     type: String,
   },
