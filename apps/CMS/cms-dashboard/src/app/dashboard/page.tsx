@@ -3,7 +3,7 @@ import { FooterButtons } from './_features';
 const Home = () => {
   return (
     <>
-      <h1>hi footer page</h1>
+      <h1>hi footer pages</h1>
       <FooterButtons />
     </>
   );
