@@ -3,7 +3,7 @@ import { Button, Container, Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
 
-export default function DashboardOtherLab() {
+const DashboardOtherLab = () => {
   return (
     <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} height={'100vh'}>
       <Stack bgcolor={'white'} width={'100%'}>
@@ -58,4 +58,5 @@ export default function DashboardOtherLab() {
       </Stack>
     </Stack>
   );
-}
+};
+export default DashboardOtherLab;
