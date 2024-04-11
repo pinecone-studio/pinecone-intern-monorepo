@@ -1,3 +1,4 @@
+'use client';
 import { FooterButtons } from './_features';
 
 const Home = () => {
