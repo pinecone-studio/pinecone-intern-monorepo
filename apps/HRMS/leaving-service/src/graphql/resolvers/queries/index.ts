@@ -1,1 +1,3 @@
 export * from './hello-query';
+export * from './get-requests';
+export * from './get-request-id';
