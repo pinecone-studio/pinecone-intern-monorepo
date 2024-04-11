@@ -9,7 +9,6 @@ jest.mock('@/model/create-course-model', () => ({
       const courses: any[] = [{ title: 'Course 1' }, { title: 'Course 2' }];
       (courseModel.find as jest.Mock).mockResolvedValue(courses);
       const result = await getCourses();
-      console.log(result);
       expect(result).toEqual(courses);
   
       expect(courseModel.find).toHaveBeenCalledTimes(1);

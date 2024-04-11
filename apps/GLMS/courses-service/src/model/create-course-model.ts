@@ -1,17 +1,31 @@
 import { Schema, model } from 'mongoose';
+
 const courseSchema = new Schema({
   title: {
     type: String,
-    required: true,
   },
-  content: {
-    type: String,
-    required: true,
-  },
+  content: [
+    {
+      title: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
+    },
+  ],
   thumbnail: {
     type: String,
-    required: true,
   },
-});
-const courseModel = model('course', courseSchema);
+  position: {
+    type: Number,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+}); 
+
+const courseModel = model('Course', courseSchema);
+
 export default courseModel;

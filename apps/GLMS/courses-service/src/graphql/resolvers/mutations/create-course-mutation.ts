@@ -1,8 +1,7 @@
 import { MutationResolvers } from '@/graphql/generated';
 import courseModel from '@/model/create-course-model';
 
-export const createCourse: MutationResolvers['createCourse'] = async (_, { title, content, thumbnail }) => {
-  const newObj = new courseModel({ title, content, thumbnail });
-  await newObj.save();
-  return newObj;
+export const createCourse: MutationResolvers['createCourse'] = async (_, { content,title,thumbnail,position}) => {
+  const newObj = await courseModel.create({ content,title,thumbnail,position});
+  return newObj.toObject();
 };

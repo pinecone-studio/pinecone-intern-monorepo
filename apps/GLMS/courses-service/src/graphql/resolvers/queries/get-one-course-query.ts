@@ -1,4 +1,4 @@
-import {QueryResolvers } from '@/graphql/generated';
+import { QueryResolvers } from '@/graphql/generated';
 import courseModel from '@/model/create-course-model';
 
 export const getCourseById: QueryResolvers['getCourseById'] = async (_, { _id }) => {
@@ -7,8 +7,8 @@ export const getCourseById: QueryResolvers['getCourseById'] = async (_, { _id })
     if (!course) {
       throw new Error('Course not found');
     }
-    return course;
+    return course.toObject()
   } catch (error) {
-    throw new Error(`Course not found:`);
+    throw new Error('Course not found');
   }
 };
