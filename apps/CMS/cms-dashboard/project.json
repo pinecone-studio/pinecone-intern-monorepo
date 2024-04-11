@@ -151,11 +151,7 @@
         "reporter": "mochawesome",
         "devServerTarget": "cms-dashboard:serve:development"
       },
-      "dependsOn": [
-        {
-          "target": "codegen"
-        }
-      ]
+      "dependsOn": [{ "target": "codegen" }]
     },
     "cypress:open": {
       "executor": "@nx/cypress:cypress",

@@ -15,9 +15,11 @@ describe('FilterByUsingCalendar component', () => {
     const test = fireEvent.click(button);
     expect(test).toBeTruthy();
   });
+
   it('checking for displaying calendar when clicking on button', () => {
     const { getByTestId } = render(<FilterByUsingCalendar />);
     fireEvent.click(getByTestId('calendar-test-id'));
     expect(getByTestId('date-range-picker')).toBeDefined();
   });
+  
 });
