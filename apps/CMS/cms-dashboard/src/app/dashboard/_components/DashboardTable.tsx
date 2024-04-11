@@ -7,7 +7,7 @@ const DashboardTable = () => {
   return (
     <Container>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 800 }}>
+        <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Нийтлэл</TableCell>
