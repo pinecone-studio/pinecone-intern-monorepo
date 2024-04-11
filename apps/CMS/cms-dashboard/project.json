@@ -133,9 +133,6 @@
         },
         {
           "target": "codegen"
-        },
-        {
-          "target": "codegen"
         }
       ]
     },
