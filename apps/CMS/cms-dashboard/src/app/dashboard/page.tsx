@@ -1,3 +1,4 @@
+import { Container, Stack } from '@mui/material';
 import React from 'react';
 import { FooterButtons, MenuBar } from './_features';
 
