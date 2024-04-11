@@ -16,7 +16,13 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
+    enum: ['admin', 'user', 'author'],
+    default: 'user',
   },
+  otp: {
+    type:String,
+    required:false
+  }
 });
 
 export const UserModel = mongoose.models.user || model('user', userSchema);
