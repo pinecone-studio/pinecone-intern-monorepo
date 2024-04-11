@@ -1,10 +1,17 @@
-import React from "react";
-import { SearchInput } from "../../src/app/dashboard/_components/SearchInput";
-import { render } from "@testing-library/react";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import SearchInput from '../../src/app/dashboard/_components/SearchInput';
 
 describe('SearchInput', () => {
-    it('Should call searchInput component', async () => {
-        const { Search } = render(<SearchInput />);
-        expect(Search).toBeDefined();
+    it('Should render searchinput', () => {
+        const { container } = render(<SearchInput />);
+        expect(container).toBeDefined();
     });
-  });
+
+    it('renders with placeholder text', () => {
+        render(<SearchInput />);
+        const inputElement = screen.getByPlaceholderText('Нийтлэл, шошгоор хайх');
+        expect(inputElement).toBeDefined();
+    });
+
+});
