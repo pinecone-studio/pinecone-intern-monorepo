@@ -1,7 +1,5 @@
 import React from 'react';
 import DashBoardArticleDetail from '../../src/app/dashboard/_components/DashboardTableDetail';
-
-import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 describe('DashBoardArticleDetail component', () => {
   const props = {
