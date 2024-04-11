@@ -8,9 +8,9 @@ export const articleSchema = gql`
     coverPhoto: String
     content: String!
     author: User!
-    category: Category
-    status: ArticleStatus
-    slug: String
+    category: Category!
+    status: ArticleStatus!
+    slug: String!
     createdAt: Date
     publishAt: Date
     updatedAt: Date

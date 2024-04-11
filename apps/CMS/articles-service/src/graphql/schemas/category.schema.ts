@@ -4,7 +4,7 @@ export const categorySchema = gql`
   scalar Date
   type Category {
     id: ID!
-    name: String
+    name: String!
     createdAt: Date
   }
 `;

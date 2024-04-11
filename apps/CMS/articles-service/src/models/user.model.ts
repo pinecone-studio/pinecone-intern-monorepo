@@ -19,6 +19,10 @@ const userSchema = new Schema({
     enum: ['admin', 'user', 'author'],
     default: 'user',
   },
+  otp: {
+    type:String,
+    required:false
+  }
 });
 
 export const UserModel = mongoose.models.user || model('user', userSchema);

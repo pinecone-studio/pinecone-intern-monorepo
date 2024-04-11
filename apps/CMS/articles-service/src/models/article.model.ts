@@ -6,19 +6,28 @@ const articleSchema = new Schema({
     required: true,
   },
   coverPhoto: String,
-  content: String,
+  content: {
+    type:String,
+    required: true
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user', 
+    ref: 'user',
+    required:true
   },
   cateogry: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'category',
+    required:true
   }],
   status: {
     type: String,
+    required:true
   },
-  slug: String,
+  slug: {
+    type:String,
+    required:true
+  },
   createdAt: {
     type: Date,
     default: Date.now,
