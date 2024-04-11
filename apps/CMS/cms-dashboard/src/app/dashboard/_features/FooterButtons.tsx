@@ -25,7 +25,7 @@ export const FooterButtons = () => {
         <FooterButton text="Сэтгэгдэл" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
         <FooterButton text="Статистик" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
         <Divider orientation="vertical" variant="middle" flexItem></Divider>
-        <FooterButtonWithIcon text="Контент нэмэх" icon={<AddIcon />} />
+        <FooterButtonWithIcon text="Контент нэмэх test" icon={<AddIcon />} />
       </Stack>
     </>
   );
