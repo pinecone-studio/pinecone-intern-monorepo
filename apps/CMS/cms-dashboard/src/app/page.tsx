@@ -2,6 +2,7 @@
 
 import { fileManagement } from '@/file-management';
 import { useRouter } from 'next/navigation';
+import DashBoardArticleDetail from './dashboard/_components/DashboardTableDetail';
 
 export default async function Index() {
   const router = useRouter();
