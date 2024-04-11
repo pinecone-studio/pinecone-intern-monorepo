@@ -1,29 +1,33 @@
-'use client';
+import { Stack, Typography } from '@mui/material';
 
-import { fileManagement } from '@/file-management';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import SignUpModal from './articles/_components/_signupComps/SignUpModal';
 
-export default async function Index() {
-  const router = useRouter();
-
-  const handleArticlesPageButton = () => {
-    router.push('/articles');
-  };
-
-  const handleCommentsPageButton = () => {
-    router.push('/comments');
-  };
-
-  const fileManagementLib = fileManagement();
-
-  console.log(fileManagementLib);
-
+const Home = () => {
   return (
-    <div>
-      <h1>hello from CMS dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-      <button onClick={handleArticlesPageButton}>Go to Articles page</button>
-      <button onClick={handleCommentsPageButton}>Go to Comments page</button>
-    </div>
+    <Stack width={'100%'} height={'100vh'} flexDirection={'row'}>
+      <Stack width={'50%'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
+        <Stack width={400}>
+          <SignUpModal />
+        </Stack>
+      </Stack>
+      <Stack width={'50%'} justifyContent={'center'} alignItems={'center'} bgcolor={'primary.main'}>
+        <Stack flexDirection={'column'} alignItems={'flex-end'}>
+          <Stack flexDirection={'row'} gap={1} alignItems={'center'}>
+            <Stack height={40} position={'relative'} sx={{ aspectRatio: '1/0.9' }}>
+              <Image src={'/PineconeLogo.png'} alt="Pinecone logo" fill />
+            </Stack>
+            <Typography fontSize={50} lineHeight={1} fontWeight={600} color={'primary.contrastText'}>
+              Pinecone
+            </Typography>
+          </Stack>
+          <Typography lineHeight={1} fontSize={20} fontWeight={600} color={'#00CC44'}>
+            {'< academy />'}
+          </Typography>
+        </Stack>
+      </Stack>
+    </Stack>
   );
-}
+};
+
+export default Home;

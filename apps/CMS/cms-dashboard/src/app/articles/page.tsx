@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useHelloQueryFromArticlesServiceQuery } from '../../generated';
 import { ArticlesMain } from './_features';
+import { Stack } from '@mui/material';
+import SignUpModal from './_components/_signupComps/SignUpModal';
 
 const ArticlesPage = () => {
-  const { data } = useHelloQueryFromArticlesServiceQuery();
   const router = useRouter();
 
   const handleNavigateToHomePageButton = () => router.push('/');
@@ -14,8 +14,10 @@ const ArticlesPage = () => {
     <div>
       <h1>hello from CMS dashboard Articles Page</h1>
       <h1>
+        <Stack width={800} border={1}>
+          <SignUpModal />
+        </Stack>
         hello from Articles Service Query
-        {data?.helloQueryFromArticlesService}
       </h1>
       <ArticlesMain />
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
