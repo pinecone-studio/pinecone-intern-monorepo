@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import SignUpModal from './articles/_components/_signupComps/SignUpModal';
 
 const Home = () => {

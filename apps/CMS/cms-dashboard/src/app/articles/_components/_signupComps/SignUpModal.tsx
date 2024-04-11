@@ -2,8 +2,6 @@
 import { CircularProgress, Stack, Typography } from '@mui/material';
 import { ArrowForward, NavigateBefore } from '@mui/icons-material';
 import { CustomInput } from './CustomInput';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { useState } from 'react';
 
 const SignUpModal = () => {
