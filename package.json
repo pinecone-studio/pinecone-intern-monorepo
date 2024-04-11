@@ -26,10 +26,10 @@
     "@as-integrations/next": "^3.0.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
+    "@emotion/styled": "^11.11.0",
     "@graphql-tools/merge": "9.0.0",
     "@mui/icons-material": "^5.15.14",
-    "@mui/material": "^5.15.15",
+    "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@nx/devkit": "18.0.8",
@@ -48,9 +48,7 @@
     "next": "13.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "styled-components": "^6.1.8",
     "tslib": "^2.3.0",
-    "winston": "3.11.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
