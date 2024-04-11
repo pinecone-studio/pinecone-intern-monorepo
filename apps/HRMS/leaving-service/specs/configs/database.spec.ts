@@ -17,7 +17,7 @@ describe('Database connection check', () => {
   it('1. should call connectDataBase', async () => {
     (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
     await connectDataBase();
-    expect(mongoose.connect).toBeTruthy();
+    expect(mongoose.connect).toBeCalled();
   });
 
   it('2. should handle error', async () => {

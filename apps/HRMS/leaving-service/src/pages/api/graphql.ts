@@ -5,13 +5,7 @@ import { ApolloServer } from 'apollo-server-cloud-functions';
 import { resolvers, typeDefs } from '../../graphql';
 import { connectDataBase } from '@/graphql/configs/database';
 
-connectDataBase()
-  .then(() => {
-    console.log('Database connected');
-  })
-  .catch((error) => {
-    console.error('Error connecting to the database:', error);
-  });
+connectDataBase();
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
