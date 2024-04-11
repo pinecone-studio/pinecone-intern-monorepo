@@ -1,12 +1,15 @@
-import { Dependent, DependentModel } from '../../../models/dependent';
-import { MutationResolvers } from '../../generated';
+import { MutationCreateDependentArgs, MutationResolvers } from '@/graphql/generated';
+import { DependentModel } from '../../../models/dependent';
 
-export const createDependent = async (_: any, { firstname, lastname, phone, dependency }: Dependent) => {
-  try {
-    const create = await DependentModel.create({ firstname: firstname, lastname: lastname, phone: phone, dependency: dependency });
-    console.log(create);
-    return create;
-  } catch (error) {
+export const createDependent: MutationResolvers['Dependent'] = async (_: string, { firstName, lastName, phone, dependency }: MutationCreateDependentArgs) => {
+  const create = await DependentModel.create({
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
+    dependency: dependency,
+  });
+  if (!create) {
     throw new Error('failed create dependent');
   }
+  return create;
 };

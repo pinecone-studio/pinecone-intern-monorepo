@@ -4,6 +4,7 @@ import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import { ApolloServer } from 'apollo-server-cloud-functions';
 import { resolvers, typeDefs } from '../../graphql';
 import { connectDB } from '@/config/database';
+
 connectDB();
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
