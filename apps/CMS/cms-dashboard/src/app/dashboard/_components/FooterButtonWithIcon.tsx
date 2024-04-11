@@ -11,7 +11,7 @@ export const FooterButtonWithIcon = (props: FooterButtonWithIconProps) => {
   const { text, icon } = props;
   return (
     // TODO: When server implementation need to change href of Link
-    <Link href={'/'}>
+    <Link href={'/'} data-testid="footer-button-with-icon-test-id">
       <Stack direction={'row'} borderRadius={'50px'} padding={2} gap={1} justifyContent={'center'} alignItems={'center'} sx={{ color: '#fff', backgroundColor: '#121316', cursor: 'pointer' }}>
         {icon}
         <Typography>{text}</Typography>
