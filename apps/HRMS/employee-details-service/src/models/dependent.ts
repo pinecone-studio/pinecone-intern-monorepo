@@ -1,12 +1,5 @@
+import { Dependent } from '@/graphql/generated';
 import { Schema, model, models, Model } from 'mongoose';
-
-export type Dependent = {
-  _id: String;
-  firstName: String;
-  lastName: String;
-  phone: String;
-  dependency: String;
-};
 
 const DependentSchema = new Schema<Dependent>({
   firstName: {
