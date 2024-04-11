@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 
-export function SearchInput() {
+const SearchInput = () => {
     return(
         <Stack sx={{ width:'70%' }}>
             <TextField
@@ -18,4 +18,5 @@ export function SearchInput() {
             />
         </Stack>
     )
-}
+} 
+export default SearchInput
