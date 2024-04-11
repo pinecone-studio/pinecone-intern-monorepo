@@ -19,6 +19,7 @@ export const FooterButtons = () => {
         boxShadow={'0 0 10px rgba(0, 0, 0, 0.1)'}
         justifyContent={'space-between'}
         sx={{ borderRadius: '50px' }}
+        bgcolor={'white'}
       >
         <FooterButton text="Нүүр" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
         <FooterButton text="Контент" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
