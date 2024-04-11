@@ -37,8 +37,8 @@ export const employeeDetailsSchema = gql`
   }
   type Dependent {
     _id: ID
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     phone: String
     dependency: String
   }
@@ -104,6 +104,6 @@ export const employeeDetailsSchema = gql`
   }
 
   type Mutation {
-    createDependent(firstname: String, lastname: String, phone: String, dependency: String): Dependent
+    createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
   }
 `;
