@@ -130,6 +130,9 @@
         {
           "target": "cypress:clean",
           "params": "forward"
+        },
+        {
+          "target": "codegen"
         }
       ]
     },
@@ -147,7 +150,8 @@
         "testingType": "e2e",
         "reporter": "mochawesome",
         "devServerTarget": "cms-dashboard:serve:development"
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "cypress:open": {
       "executor": "@nx/cypress:cypress",
@@ -157,7 +161,8 @@
         "reporter": "mochawesome",
         "devServerTarget": "cms-dashboard:serve:development",
         "watch": true
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "codegen": {
       "executor": "nx:run-commands",
