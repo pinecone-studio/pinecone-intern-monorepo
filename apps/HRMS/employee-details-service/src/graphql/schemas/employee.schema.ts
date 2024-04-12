@@ -22,6 +22,7 @@ export const employeeDetailsSchema = gql`
     personalInformation: PersonalInformation
     familyInformation: FamilyInformation
   }
+
   type PersonalInformation {
     gender: Gender
     dateOfBirth: Date
@@ -29,12 +30,14 @@ export const employeeDetailsSchema = gql`
     phone: String
     hobby: [String]
   }
+
   type FamilyInformation {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
+
   type Dependent {
     _id: ID
     firstName: String
@@ -42,17 +45,20 @@ export const employeeDetailsSchema = gql`
     phone: String
     dependency: String
   }
+
   enum Gender {
     MALE
     FEMALE
     OTHER
   }
+
   enum MaritalStatus {
     SINGLE
     MARRIED
     DIVORCED
     WIDOWED
   }
+
   enum EmploymentStatus {
     FULL_TIME
     PART_TIME
@@ -60,12 +66,14 @@ export const employeeDetailsSchema = gql`
     TEMPORARY
     ARCHIVE
   }
+
   enum Department {
     SOFTWARE
     DESIGN
     MARKETING
     BACK_OFFICE
   }
+
   input CreateEmployeeInput {
     firstname: String
     lastname: String
@@ -77,6 +85,7 @@ export const employeeDetailsSchema = gql`
     dateOfEmployment: Date
     employmentStatus: EmploymentStatus
   }
+
   input UpdateEmployeeInput {
     id: ID
     email: String
@@ -89,6 +98,7 @@ export const employeeDetailsSchema = gql`
     dateOfReleased: Date
     employmentStatus: EmploymentStatus
   }
+
   input UpdatePersonalInformationInput {
     gender: Gender
     dateOfBirth: Date
@@ -96,6 +106,7 @@ export const employeeDetailsSchema = gql`
     phone: String
     hobby: [String]
   }
+
   input UpdateFamilyInformationInput {
     homeAddress: String
     numberOfFamilyMembers: Int
