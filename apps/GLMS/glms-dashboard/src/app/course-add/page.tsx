@@ -5,7 +5,7 @@ import LeftArrow from './assets/LeftArrow';
 import { useCreateCourseMutation } from '@/generated/index';
 
 const courseAdd = () => {
-  const [createCourse, { loading, error }] = useCreateCourseMutation();
+  const [createCourse] = useCreateCourseMutation();
   const input = useRef({
     title: '',
     thumbnail: '',
@@ -29,6 +29,7 @@ const courseAdd = () => {
           ],
         },
       });
+      throw data;
     } catch (error) {
       throw error;
     }
@@ -68,7 +69,7 @@ const courseAdd = () => {
                 <Input
                   onChange={(e) => handleBack('contentTitle', e.target.value)}
                   type="content description"
-                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none' ,width:"440px", height:'220px' }}
+                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
                   placeholder="Энд бичнэ үү..."
                 ></Input>
               </Box>
@@ -77,7 +78,7 @@ const courseAdd = () => {
                 <Input
                   onChange={(e) => handleBack('contentDesc', e.target.value)}
                   type="content title"
-                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none',width:"440px",height:'220px' }}
+                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
                   placeholder="Энд бичнэ үү..."
                 ></Input>
               </Box>
