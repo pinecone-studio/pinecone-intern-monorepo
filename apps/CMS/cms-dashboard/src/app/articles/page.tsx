@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useHelloQueryFromArticlesServiceQuery } from '../../generated';
+// import { useHelloQueryFromArticlesServiceQuery } from '../../generated';
 import { ArticlesMain } from './_features';
 
 const ArticlesPage = () => {
-  const { data } = useHelloQueryFromArticlesServiceQuery();
+  // const { data } = useHelloQueryFromArticlesServiceQuery();
   const router = useRouter();
 
   const handleNavigateToHomePageButton = () => router.push('/');
@@ -15,7 +15,7 @@ const ArticlesPage = () => {
       <h1>hello from CMS dashboard Articles Page</h1>
       <h1>
         hello from Articles Service Query
-        {data?.helloQueryFromArticlesService}
+        {/* {data?.helloQueryFromArticlesService} */}
       </h1>
       <ArticlesMain />
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
