@@ -1,4 +1,7 @@
 import { connect } from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const connectDataBase = async () => {
   const DatabaseUri = process.env.MONGODB_URI;
@@ -8,6 +11,6 @@ export const connectDataBase = async () => {
     }
     await connect(DatabaseUri);
   } catch (error) {
-    throw new Error('connection failed');
+    throw new Error('Connection failed');
   }
 };
