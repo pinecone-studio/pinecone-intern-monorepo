@@ -6,12 +6,6 @@ import { useState } from 'react';
 
 const SignUpModal = () => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const signUp = async () => {
-    setIsLoading(true);
-    setIsLoading(false);
-  };
-
   return (
     <Stack data-testid="sign-up-modal-container" width={'100%'} alignItems={'center'} bgcolor={'white'} padding={5} borderRadius={3} border={'1px solid #ECEDF0'} gap={3}>
       <Typography data-testid="sign-up-modal-title" fontWeight={700} fontSize={36}>
@@ -31,9 +25,6 @@ const SignUpModal = () => {
           borderRadius={2}
           padding={'8px 10px'}
           sx={{ cursor: 'pointer' }}
-          onClick={() => {
-            signUp();
-          }}
         >
           <NavigateBefore color="primary" />
           <Typography data-testid="sign-up-modal-next-btn" fontSize={14} fontWeight={600} color={'primary.contrastText'}>
