@@ -1,11 +1,9 @@
 'use client';
-import { CircularProgress, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { ArrowForward, NavigateBefore } from '@mui/icons-material';
 import { CustomInput } from './CustomInput';
-import { useState } from 'react';
 
 const SignUpModal = () => {
-  const [isLoading, setIsLoading] = useState(false);
   return (
     <Stack data-testid="sign-up-modal-container" width={'100%'} alignItems={'center'} bgcolor={'white'} padding={5} borderRadius={3} border={'1px solid #ECEDF0'} gap={3}>
       <Typography data-testid="sign-up-modal-title" fontWeight={700} fontSize={36}>
@@ -30,7 +28,7 @@ const SignUpModal = () => {
           <Typography data-testid="sign-up-modal-next-btn" fontSize={14} fontWeight={600} color={'primary.contrastText'}>
             Дараах
           </Typography>
-          {isLoading ? <CircularProgress data-testid="sign-up-modal-icon1" size={18} color="secondary" thickness={5} /> : <ArrowForward data-testid="sign-up-modal-icon2" color="secondary" />}
+          {<ArrowForward data-testid="sign-up-modal-icon2" color="secondary" />}
         </Stack>
         <Typography data-testid="sign-up-modal-login-btn" fontSize={14} fontWeight={600} color="primary" sx={{ cursor: 'pointer' }}>
           Нэвтрэх
