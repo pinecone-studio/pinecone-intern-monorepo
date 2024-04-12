@@ -19,9 +19,7 @@ const FilterByUsingCalendar = () => {
     if (!ranges) {
       throw new Error('Ranges do not exist');
     }
-
     const { startDate, endDate } = ranges.selection;
-
     if (startDate && endDate) {
       setDate({
         startDate,
