@@ -1,11 +1,20 @@
 'use client';
-import { Button, Container, Stack, Typography } from '@mui/material';
+import { Button, Container, Grid, Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
+import Course from './_components/Course';
 
-const DashboardOtherLab = () => {
+const data = [
+  { image: 'js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34 },
+  { image: 'js.png', title: 'hii', information: 'welcome to my course but first you have to drink some vodka ', lessonCount: 34 },
+  { image: 'js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34 },
+  { image: 'js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34 },
+  { image: 'js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34 },
+];
+
+export default function DashboardOtherLab() {
   return (
-    <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} height={'100vh'}>
+    <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'}>
       <Stack bgcolor={'white'} width={'100%'}>
         <Stack borderBottom={'1px solid #0000001A'} borderTop={'1px solid #0000001A'}>
           <Container maxWidth="lg" sx={{ display: 'flex' }}>
@@ -56,7 +65,17 @@ const DashboardOtherLab = () => {
           </Container>
         </Stack>
       </Stack>
+      <Stack width={'100%'}>
+        <Container maxWidth="lg" sx={{ py: 3 }}>
+          <Grid container spacing={4}>
+            {data.map((data) => (
+              <Grid item lg={3} md={4} sm={6} xs={12} key={data.title}>
+                <Course image={data.image} title={data.title} information={data.information} lessonCount={data.lessonCount} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Stack>
     </Stack>
   );
-};
-export default DashboardOtherLab;
+}
