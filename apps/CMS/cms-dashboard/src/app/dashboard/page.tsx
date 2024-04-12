@@ -1,4 +1,4 @@
-import { Container, Stack } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 import React from 'react';
 import DashboardTable from './_components/DashboardTable';
 import { FooterButtons, MenuBar } from './_features';
@@ -25,6 +25,7 @@ const Home = () => {
 
             <Stack alignItems={'center'}>
               <FooterButtons />
+              <Typography />
             </Stack>
           </Stack>
         </Container>
