@@ -4,36 +4,34 @@ import React, { useRef } from 'react';
 import LeftArrow from './assets/LeftArrow';
 import { useCreateCourseMutation } from '@/generated/index';
 
-const courseAdd = () => {
+const CourseAdd = () => {
   const [createCourse] = useCreateCourseMutation();
-  const input = useRef({
+  const CourseInput = useRef({
     title: '',
     thumbnail: '',
     contentTitle: '',
     contentDesc: '',
   });
   const handleBack = (field: string, value: string | number) => {
-    input.current = { ...input.current, [field]: value };
+    CourseInput.current = { ...CourseInput.current, [field]: value };
   };
+
   const handleSubmit = async () => {
-    try {
-      const { data } = await createCourse({
-        variables: {
-          title: input.current.title,
-          thumbnail: input.current.thumbnail,
-          content: [
-            {
-              title: input.current.contentTitle,
-              description: input.current.contentDesc,
-            },
-          ],
-        },
-      });
-      throw data;
-    } catch (error) {
-      throw error;
-    }
+    const { data } = await createCourse({
+      variables: {
+        title: CourseInput.current.title,
+        thumbnail: CourseInput.current.thumbnail,
+        content: [
+          {
+            title: CourseInput.current.contentTitle,
+            description: CourseInput.current.contentDesc,
+          },
+        ],
+      },
+    });
+    throw data;
   };
+
   return (
     <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }}>
       <Box>
@@ -94,4 +92,4 @@ const courseAdd = () => {
   );
 };
 
-export default courseAdd;
+export default CourseAdd;
