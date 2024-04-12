@@ -35,7 +35,7 @@ const DashboardTable = () => {
           <TableBody>
             {data.map((item, index) => {
               return (
-                <TableRow>
+                <TableRow key={index}>
                   <TableCell sx={{ fontSize: '15px', fontWeight: 600, color: '#121316' }}>{item.name}</TableCell>
                   <TableCell>
                     <Typography sx={{ fontSize: '14px', fontWeight: 400, color: '#0A4E22', borderRadius: 3, bgcolor: '#C1E6CF', width: '70%', textAlign: 'center', py: 0.3 }}>{item.date}</Typography>
