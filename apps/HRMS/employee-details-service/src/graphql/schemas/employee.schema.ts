@@ -6,8 +6,8 @@ export const employeeDetailsSchema = gql`
 
   type Employee {
     id: ID
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     email: String
     department: ID
     jobTitle: [String]
