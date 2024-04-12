@@ -5,6 +5,6 @@ const Home = () => {
     <>
       <div>Welcome to Cms Dashboard hello </div>
     </>
-  );
+  ); 
 };
 export default Home;
