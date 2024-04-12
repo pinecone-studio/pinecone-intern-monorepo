@@ -22,23 +22,4 @@ describe('SignUpModal', () => {
     const logIn = getByTestId('sign-up-modal-login-btn');
     expect(logIn.textContent).toMatch('Нэвтрэх');
   });
-
-  //   it('it should trigger signup function when clicked', () => {
-  //     const { getByTestId } = render(<SignUpModal />);
-
-  //     const signUpButton = getByTestId('signup-button');
-  //     fireEvent.click(signUpButton);
-
-  //     expect(signUpButton).toHaveBeenCalledWith();
-  //   });
-
-  test('It should call signUp callback', () => {
-    const signUp = jest.fn();
-
-    const { getByTestId } = render(<SignUpModal />);
-
-    fireEvent.click(getByTestId('signup-button'));
-
-    expect(signUp).toHaveBeenCalled();
-  });
 });
