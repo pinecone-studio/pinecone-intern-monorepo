@@ -1,0 +1,11 @@
+mutation CreateCourse($content: [ContentInput]!, $title: String!, $thumbnail: String!, $position: Int) {
+  createCourse(content: $content, title: $title, thumbnail: $thumbnail, position: $position) {
+    _id
+    title
+    thumbnail
+    content {
+      title
+      description
+    }
+  }
+}

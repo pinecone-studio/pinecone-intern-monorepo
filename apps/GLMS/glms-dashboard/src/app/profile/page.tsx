@@ -1,12 +1,11 @@
 'use client';
 
-import { useHelloQueryFromProfileServiceQuery } from '@/generated/index';
+import { useHelloQueryFromProfileServiceQuery}from '@/generated/index';
 import Link from 'next/link';
 import { ProfileMain } from './_features';
 
 const ProfilePage = () => {
   const { data } = useHelloQueryFromProfileServiceQuery();
-
   return (
     <div>
       <h1>hello from GLMS dashboard Profile Page</h1>
