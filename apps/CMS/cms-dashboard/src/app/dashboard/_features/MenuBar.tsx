@@ -35,16 +35,10 @@ export const MenuBar = () => {
   return (
     <Stack
       sx={{
-        display: 'flex',
-        marginX: 'auto',
-        width: '1200px',
         backgroundColor: 'white',
-        height: '70px',
-        paddingX: '20px',
-        alignItems: 'start',
-        justifyContent: 'end',
-        fontSize: '20px',
         borderRadius: 2,
+        border: 1,
+        borderColor: '#D6D8DB',
       }}
     >
       <Stack flexDirection={'row'} sx={{ textDecorationColor: 'gray', width: '65%', justifyContent: 'space-between', cursor: 'pointer' }}>

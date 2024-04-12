@@ -4,16 +4,21 @@ import DashboardTable from './_components/DashboardTable';
 import { FooterButtons, MenuBar } from './_features';
 import DashBoardArticleDetail from './_components/DashboardTableDetail';
 import SearchInput from './_components/SearchInput';
+import { Navbar } from './_components/Navbar';
 
 const Home = () => {
   return (
     <>
-      <Stack bgcolor={'#f5f2f2'}>
+      <Stack bgcolor={'#ECEDF0'}>
+        <Navbar />
+
         <Container sx={{ p: 3 }}>
           <Stack gap={4}>
             <SearchInput />
+
             <MenuBar />
-            <Stack py={4} bgcolor={'#FFF'} height={'80vh'} borderRadius={2}>
+
+            <Stack bgcolor={'#FFF'} height={'61vh'} borderRadius={2}>
               <DashboardTable />
               <DashBoardArticleDetail rate={2} comment={3} share={3} />
             </Stack>
