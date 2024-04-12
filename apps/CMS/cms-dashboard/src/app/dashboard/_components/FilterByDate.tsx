@@ -1,7 +1,7 @@
 'use client';
 import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker, RangeKeyDict } from 'react-date-range';
 import { format } from 'date-fns';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import 'react-date-range/dist/styles.css';
@@ -15,8 +15,20 @@ const FilterByUsingCalendar = () => {
     key: 'selection',
   });
 
-  const handleChange = (ranges: any) => {
-    setDate(ranges.selection);
+  const handleChange = (ranges: RangeKeyDict) => {
+    if (!ranges) {
+      throw new Error('Ranges do not exist');
+    }
+
+    const { startDate, endDate } = ranges.selection;
+
+    if (startDate && endDate) {
+      setDate({
+        startDate,
+        endDate,
+        key: 'selection',
+      });
+    }
   };
 
   const displayCalendar = () => {
