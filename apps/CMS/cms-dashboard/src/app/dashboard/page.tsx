@@ -3,6 +3,7 @@ import React from 'react';
 import DashboardTable from './_components/DashboardTable';
 import { FooterButtons, MenuBar } from './_features';
 import DashBoardArticleDetail from './_components/DashboardTableDetail';
+import SearchInput from './_components/SearchInput';
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Stack bgcolor={'#f5f2f2'}>
         <Container sx={{ p: 3 }}>
           <Stack gap={4}>
+            <SearchInput />
             <MenuBar />
             <Stack py={4} bgcolor={'#FFF'} height={'80vh'} borderRadius={2}>
               <DashboardTable />
