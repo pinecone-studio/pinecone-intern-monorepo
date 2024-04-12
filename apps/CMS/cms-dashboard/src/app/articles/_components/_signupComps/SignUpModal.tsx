@@ -13,22 +13,12 @@ const SignUpModal = () => {
         <CustomInput name="emailOrPhoneNumber" label="Таны имэйл эсвэл утасны дугаар" placeholder="80884200" />
         <CustomInput name="password" label="Нууц үг" placeholder="*******" />
         <CustomInput name="rePassword" label="Нууц үг давтах" placeholder="Нууц үгээ оруулна уу" />
-        <Stack
-          data-testid="signup-button"
-          width={'100%'}
-          flexDirection={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          bgcolor={'primary.main'}
-          borderRadius={2}
-          padding={'8px 10px'}
-          sx={{ cursor: 'pointer' }}
-        >
+        <Stack width={'100%'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} bgcolor={'primary.main'} borderRadius={2} padding={'8px 10px'} sx={{ cursor: 'pointer' }}>
           <NavigateBefore color="primary" />
           <Typography data-testid="sign-up-modal-next-btn" fontSize={14} fontWeight={600} color={'primary.contrastText'}>
             Дараах
           </Typography>
-          {<ArrowForward data-testid="sign-up-modal-icon2" color="secondary" />}
+          <ArrowForward data-testid="sign-up-modal-icon2" color="secondary" />
         </Stack>
         <Typography data-testid="sign-up-modal-login-btn" fontSize={14} fontWeight={600} color="primary" sx={{ cursor: 'pointer' }}>
           Нэвтрэх

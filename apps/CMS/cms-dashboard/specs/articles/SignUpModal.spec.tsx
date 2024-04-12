@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import SignUpModal from '../../src/app/articles/_components/_signupComps/SignUpModal';
 
