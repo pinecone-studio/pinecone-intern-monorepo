@@ -1,5 +1,5 @@
 {
-  "name": "@pinecone-intern-monorepo/source",
+  "name": "clear",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -120,6 +120,17 @@
     }
   },
   "main": "index.js",
-  "repository": "https://github.com/pinecone-studio/pinecone-intern-monorepo.git",
-  "author": "Ganuuh <145634432+Ganuuh@users.noreply.github.com>"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinecone-studio/pinecone-intern-monorepo.git"
+  },
+  "author": "Ganuuh <145634432+Ganuuh@users.noreply.github.com>",
+  "description": "<a alt=\"Nx logo\" href=\"https://nx.dev\" target=\"_blank\" rel=\"noreferrer\"><img src=\"https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png\" width=\"45\"></a>",
+  "bugs": {
+    "url": "https://github.com/pinecone-studio/pinecone-intern-monorepo/issues"
+  },
+  "homepage": "https://github.com/pinecone-studio/pinecone-intern-monorepo#readme",
+  "directories": {
+    "doc": "docs"
+  }
 }
