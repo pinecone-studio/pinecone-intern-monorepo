@@ -73,6 +73,15 @@
         "targetName": "e2e",
         "componentTestingTargetName": "component-test"
       }
+    },
+    {
+      "plugin": "@nx/next/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "startTargetName": "start",
+        "serveStaticTargetName": "serve-static"
+      }
     }
   ],
   "generators": {
@@ -104,5 +113,7 @@
     "@nx/workspace:move": {
       "projectNameAndRootFormat": "as-provided"
     }
-  }
+  },
+  "defaultBase": "main",
+  "nxCloudAccessToken": "NDVmNzIyOTAtNmU1YS00MDIxLTk4NzQtMDg3ZmVhMTkyMzdhfHJlYWQtd3JpdGU="
 }

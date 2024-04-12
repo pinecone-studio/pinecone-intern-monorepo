@@ -1,29 +1,24 @@
 'use client';
-
-import { fileManagement } from '@/file-management';
-import { useRouter } from 'next/navigation';
-
-export default async function Index() {
-  const router = useRouter();
-
-  const handleArticlesPageButton = () => {
-    router.push('/articles');
-  };
-
-  const handleCommentsPageButton = () => {
-    router.push('/comments');
-  };
-
-  const fileManagementLib = fileManagement();
-
-  console.log(fileManagementLib);
-
+import { Stack } from '@mui/material';
+import SignUpModal from './articles/_components/_signupComps/SignUpModal';
+import Image from 'next/image';
+const Home = () => {
   return (
-    <div>
-      <h1>hello from CMS dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-      <button onClick={handleArticlesPageButton}>Go to Articles page</button>
-      <button onClick={handleCommentsPageButton}>Go to Comments page</button>
-    </div>
+    <Stack width={'100%'} height={'100vh'} flexDirection={'row'}>
+      <Stack width={'50%'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
+        <Stack width={400}>
+          <SignUpModal />
+        </Stack>
+      </Stack>
+      <Stack width={'50%'} height={'100%'} justifyContent={'center'} alignItems={'center'} bgcolor={'primary.main'}>
+        <Stack alignItems={'flex-end'}>
+          <Stack flexDirection={'row'} gap={1}>
+            <Image src={'/Academy.svg'} alt="Pinecone logo" height={128} width={440} />
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
   );
-}
+};
+
+export default Home;
