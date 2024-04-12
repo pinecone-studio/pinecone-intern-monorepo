@@ -28,7 +28,6 @@ const DashBoardArticleDetail = (props: DashBoardArticleDetailType) => {
         </Stack>
         <Stack>
           <span data-testid="close-icon">
-            {' '}
             <HighlightOffIcon />
           </span>
         </Stack>
