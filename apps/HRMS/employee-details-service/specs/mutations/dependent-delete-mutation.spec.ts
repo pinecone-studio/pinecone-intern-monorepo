@@ -1,7 +1,5 @@
 import { deleteDependent } from '@/graphql/resolvers/mutations';
-// import { DependentModel } from '@/models/dependent';
-import { DependentModel } from '../../src/models/dependent';
-import { Dependent } from '@/graphql/generated';
+
 jest.mock('@/models/dependent', () => ({
   DependentModel: {
     findByIdAndDelete: jest

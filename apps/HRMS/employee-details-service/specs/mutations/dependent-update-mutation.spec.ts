@@ -1,5 +1,4 @@
 import { updateDependent } from '@/graphql/resolvers/mutations';
-import { DependentModel } from '@/models/dependent';
 
 jest.mock('@/models/dependent', () => ({
   DependentModel: {

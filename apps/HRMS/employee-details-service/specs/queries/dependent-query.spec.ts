@@ -1,5 +1,4 @@
 import { getDependent } from '@/graphql/resolvers/queries';
-import { DependentModel } from '@/models/dependent';
 
 jest.mock('@/models/dependent', () => ({
   DependentModel: {
