@@ -114,7 +114,14 @@ export const employeeDetailsSchema = gql`
     relative: [Department]
   }
 
+  type Query {
+    getDependent(_id: ID): Dependent!
+    getAllDependents: [Dependent!]
+  }
+
   type Mutation {
     createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
+    deleteDependent(_id: ID!): Dependent!
+    updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
   }
 `;
