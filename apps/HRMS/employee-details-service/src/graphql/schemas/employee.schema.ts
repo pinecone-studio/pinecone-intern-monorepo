@@ -14,7 +14,7 @@ export const employeeDetailsSchema = gql`
     ladderLevel: String
     salary: Float
     bankName: String
-    bankAccountName: String
+    bankAccountNumber: String
     bankAccountHolderName: String
     dateOfEmployment: Date
     dateOfReleased: Date
@@ -75,8 +75,8 @@ export const employeeDetailsSchema = gql`
   }
 
   input CreateEmployeeInput {
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     email: String
     department: ID
     jobTitle: [String]
@@ -120,6 +120,7 @@ export const employeeDetailsSchema = gql`
   }
 
   type Mutation {
+    createEmployee(firstName: String!, lastName: String!, email: String!, department: String!, jobTitle: String!, ladderLevel: Int!, salary: Float!, employmentStatus: String!): Employee!
     createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
     deleteDependent(_id: ID!): Dependent!
     updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
