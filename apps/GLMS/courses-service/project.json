@@ -63,7 +63,12 @@
         "ci": {
           "ci": true
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
