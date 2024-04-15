@@ -17,7 +17,7 @@ export default function DashboardOtherLab() {
     <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'}>
       <Stack bgcolor={'white'} width={'100%'}>
         <Stack borderBottom={'1px solid #0000001A'} borderTop={'1px solid #0000001A'}>
-          <Container maxWidth="lg" sx={{ display: 'flex' }}>
+          <Container maxWidth="xl" sx={{ display: 'flex' }}>
             <Stack width={'50%'} py={'34px'} gap={4}>
               <Stack>
                 <Typography data-testid="title1" color={'#121316'} fontSize={36} fontWeight={500}>

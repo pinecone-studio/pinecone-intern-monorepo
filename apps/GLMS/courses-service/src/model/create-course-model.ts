@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const courseSchema = new Schema({
+const lessonSchema = new Schema({
   title: {
     type: String,
   },
@@ -26,6 +26,6 @@ const courseSchema = new Schema({
   },
 }); 
 
-const courseModel = model('Course', courseSchema);
+const lessonModel = model('Lesson', lessonSchema);
 
-export default courseModel;
+export default lessonModel;
