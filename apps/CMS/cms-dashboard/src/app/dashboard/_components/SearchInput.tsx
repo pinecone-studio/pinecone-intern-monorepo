@@ -5,7 +5,7 @@ const SearchInput = () => {
     return(
         <Stack sx={{ width:'70%' }}>
             <TextField
-            placeholder='Нийтлэл, шошгоор хайх'
+            placeholder='Нийтлэл, шошгоор хайх '
             InputProps={{
                 startAdornment: (
                 <InputAdornment position="start">
