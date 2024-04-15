@@ -3,9 +3,5 @@ query getCourses {
     _id
     title
     thumbnail
-    content {
-      title
-      description
-    }
   }
 }
