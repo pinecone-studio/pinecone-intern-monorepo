@@ -1,16 +1,16 @@
 import { Button, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 
 type MainBannerFromArticlesProps = {
   date: string;
   categories: string;
   ArticlesTitle: string;
+  cover: string;
 };
 const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
-  const { date, categories, ArticlesTitle } = props;
+  const { date, categories, ArticlesTitle, cover } = props;
   return (
     <Stack data-testid="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <img data-testid="articlesCover" src="https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg" alt="article-cover" style={{ objectFit: 'cover' }} />
+      <img data-testid="cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
         data-testid="innerComp"
         position={'absolute'}
