@@ -10,7 +10,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, ArticlesTitle } = props;
   return (
     <Stack data-testid="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <Image data-testid="articlesCover" src={'/earth.jpeg'} fill alt="article-cover" style={{ objectFit: 'cover' }} />
+      <img data-testid="articlesCover" src="https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg" alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
         data-testid="innerComp"
         position={'absolute'}
