@@ -7,7 +7,7 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 
 const MoreOverlay = () => {
   return (
-    <Stack width={190} border={1} bgcolor={'white'} borderRadius={2} p={1}>
+    <Stack width={190} border={1} bgcolor={'white'} borderRadius={2} p={1.1}>
       <Stack direction={'row'} gap={1.5} p={1}>
         <VisibilityOutlinedIcon />
         <Typography fontSize={14} fontWeight={400} color={'#121316'}>
