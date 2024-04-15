@@ -31,6 +31,19 @@ describe('createContents resolver', () => {
       expect(contentModel.create).toHaveBeenCalledWith(mockInput);
       expect(result).toEqual(mockNewContent.toObject());
   });
+  it('should throw an error if content creation fails', async () => {
+    const mockInput = {
+        title: 'Test Title',
+        description: 'Test Description',
+        contentImage: 'Test Image URL'
+    };
+
+    const mockError = new Error('Mock error message');
+
+    (contentModel.create as jest.Mock).mockRejectedValue(mockError);
+
+    await expect(createContents({}, mockInput)).rejects.toThrow(mockError);
+});
 
 
   it('should throw an unknown error if the error type is not recognized', async () => {
@@ -39,9 +52,7 @@ describe('createContents resolver', () => {
           description: 'Test Description',
           contentImage: 'Test Image URL'
       };
-
       (contentModel.create as jest.Mock).mockRejectedValue('Unknown error');
-
       await expect(createContents({}, mockInput)).rejects.toThrow('An unknown error occurred');
   });
 });
