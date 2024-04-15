@@ -1,6 +1,4 @@
 import { Stack, Typography } from '@mui/material';
-import { props } from 'cypress/types/bluebird';
-import Image from 'next/image';
 
 type ArticlesProps = {
   cover: string;
@@ -15,7 +13,7 @@ const ArticleCard = (props: ArticlesProps) => {
   return (
     <Stack data-testid="main-container" width={'100%'} height={404} overflow={'hidden'}>
       <Stack width={'100%'} height={'50%'} position={'relative'} borderRadius={1.5} overflow={'hidden'}>
-        <Image src={'/ganu.jpeg'} alt="article-cover" fill style={{ objectFit: 'cover' }} />
+        <img src="https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg" alt="article-cover" style={{ objectFit: 'cover' }} />
       </Stack>
       <Stack gap={1.5} p={3}>
         <Stack direction={'row'} alignItems={'center'} gap={1}>

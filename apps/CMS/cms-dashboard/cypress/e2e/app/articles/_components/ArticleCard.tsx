@@ -1,1 +1,3 @@
-describe('it should renders with correct style', () => {});
+describe('it should renders with correct style', () => {
+  cy.get('');
+});
