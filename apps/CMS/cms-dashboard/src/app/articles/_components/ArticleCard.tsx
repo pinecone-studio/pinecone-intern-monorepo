@@ -20,7 +20,7 @@ const ArticleCard = (props: ArticlesProps) => {
       <Stack gap={1.5} p={3}>
         <Stack direction={'row'} alignItems={'center'} gap={1}>
           <Typography color={'#3F4145'}>{date}</Typography>
-          <Stack height={4} width={4} bgcolor={'#000'} borderRadius={'100%'} />
+          <Stack height={4} width={4} bgcolor={'#3F4145'} borderRadius={'100%'} />
           <Typography color={'#3F4145'}>#{category}</Typography>
         </Stack>
         <Typography fontSize={24} fontWeight={700}>

@@ -31,6 +31,16 @@ const nextConfig = {
 const plugins = [
   // Add more Next.js plugins to this list if needed.
   withNx,
+  // images:{
+  //   remotePatterns:[
+  //     {
+  //       protocol: 'https',
+  //       hostname: 'getwallpapers.com',
+  //       port: 'http://localhost:4200/',
+  //       pathname: '/account123/**',
+  //     }
+  //   ]
+  // }
 ];
 
 module.exports = composePlugins(...plugins)(nextConfig);
