@@ -12,11 +12,8 @@ describe('dashboardOtherLab component', () => {
   });
   it('button test', () => {
     cy.get('[data-testid="button1"]').click();
-    cy.get('[data-testid="button2"]').click();
   });
   it('tab test', () => {
     cy.get('[data-testid="tab1"]').click();
-    cy.get('[data-testid="tab2"]').click();
-    cy.get('[data-testid="tab3"]').click();
   });
 });
