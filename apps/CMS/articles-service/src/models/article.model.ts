@@ -15,11 +15,11 @@ const articleSchema = new Schema({
     ref: 'user',
     required:true
   },
-  category: [{
+  category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'category',
     required:true
-  }],
+  },
   status: {
     type: String,
     required:true
