@@ -5,8 +5,8 @@ jest.mock('@/model/create-content-model', () => ({
   find: jest.fn(),
 }));
 describe('getContents', () => {
-  it('should return content from courseModel', async () => {
-    const content: any[] = [{ title: 'Course 1' }, { title: 'Course 2' }];
+  it('should return content from contentModel', async () => {
+    const content: any[] = [{ title: 'content 1' }, { title: 'content 2' }];
     (contentModel.find as jest.Mock).mockResolvedValue(content);
     const result = await getContents();
     expect(result).toEqual(content);
