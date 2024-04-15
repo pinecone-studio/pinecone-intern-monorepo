@@ -54,7 +54,13 @@
           "buildTarget": "hrms-dashboard:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",

@@ -43,7 +43,7 @@ const gateway = new ApolloGateway({
       },
       {
         name: 'leaving',
-        url: process.env.LEAVING_SERVICE,
+        url: 'http://localhost:5600/api/graphql',
       },
       {
         name: 'payroll',

@@ -38,6 +38,8 @@ export const LeaveRequestTypeDefs = gql`
     status: RequestStatus!
     description: String!
     declinedReasoning: String
+    createdAt: Date
+    decidedAt: Date
   }
 
   type Query {
