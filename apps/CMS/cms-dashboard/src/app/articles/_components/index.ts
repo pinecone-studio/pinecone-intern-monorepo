@@ -1,2 +1,2 @@
 export * from './ArticlesButton';
-export * from './MainBannerFromArticles';
+export * from './ArticleCard';
