@@ -1,25 +1,20 @@
-import React from 'react';
+import FilterByUsingCalendar from '../../../cms-dashboard/src/app/dashboard/_components/FilterByDate';
 import { render, fireEvent } from '@testing-library/react';
-import FilterByUsingCalendar from '@/../../apps/CMS/cms-dashboard/src/app/dashboard/_components/FilterByDate';
-describe('checking filter by date', () => {
-  it('should render calendar button and date range', () => {
-    const result = render(<FilterByUsingCalendar />);
-    expect(result).toBeDefined();
-  });
-});
+import React from 'react';
 
-describe('FilterByUsingCalendar component', () => {
-  it('toggle isOpen state when displayCalendar is called', () => {
-    const { getByTestId } = render(<FilterByUsingCalendar />);
-    const button = getByTestId('calendar-test-id');
-    const test = fireEvent.click(button);
-    expect(test).toBeTruthy();
-  });
+jest.mock('react-date-range', () => ({
+  DateRangePicker: jest.fn().mockImplementation(() => <div data-testid="mocked-date-range-picker" />),
+}));
 
-  it('checking for displaying calendar when clicking on button', () => {
+describe('verifying date range picker', () => {
+  it('renders DateRangePicker when calendar button is clicked', () => {
     const { getByTestId } = render(<FilterByUsingCalendar />);
-    fireEvent.click(getByTestId('calendar-test-id'));
-    expect(getByTestId('date-range-picker')).toBeDefined();
+    const calendarButton = getByTestId('calendar-test-id');
+
+    fireEvent.click(calendarButton);
+
+    const dateRangePicker = getByTestId('mocked-date-range-picker');
+
+    expect(dateRangePicker).toBeDefined();
   });
-  
 });
