@@ -1,24 +1,23 @@
 import { gql } from 'graphql-tag';
 
-export const courseSchema = gql`
+export const lessonSchema = gql`
   scalar Date
 
   type Query {
-    getCourses: [Course!]!
-    getCourseById(_id: ID!): Course
+    getLessons: [Lessons!]!
+    getLessonById(_id: ID!): Lessons
   }
 
-  type Course {
+  type Lessons {
     _id: ID
     title: String
     thumbnail: String
     position: Int
     createdAt: Date
   }
-
   type Mutation {
-    createCourse(title: String!, thumbnail: String!, position: Int): Course!
-    updateCourse(_id: ID!, title: String!, thumbnail: String!): Course
-    deleteCourse(_id: String!): Course
+    createLessons(title: String!, thumbnail: String!, position: Int): Lessons!
+    updateLessons(_id: ID!, title: String!, thumbnail: String!): Lessons
+    deleteLessons(_id: String!): Lessons
   }
 `;

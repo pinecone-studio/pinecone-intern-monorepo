@@ -1,5 +1,6 @@
-import { createCourse } from '@/graphql/resolvers/mutations';
-import courseModel from '@/model/create-course-model';
+import { createLessons } from '@/graphql/resolvers/mutations';
+import lessonModel from '@/model/create-course-model';
+
 
 jest.mock('@/model/create-course-model', () => ({
   create: jest.fn(),
@@ -21,10 +22,10 @@ describe('createCourse resolver', () => {
       toObject: jest.fn(),
     };
 
-    (courseModel.create as jest.Mock).mockResolvedValue(mockNewCourse);
+    (lessonModel.create as jest.Mock).mockResolvedValue(mockNewCourse);
 
-    const result = await createCourse(null, mockInput);
-    expect(courseModel.create).toHaveBeenCalledWith(mockInput);
+    const result = await createLessons(null, mockInput);
+    expect(lessonModel.create).toHaveBeenCalledWith(mockInput);
 
     expect(result).toEqual(mockNewCourse.toObject());
   });
