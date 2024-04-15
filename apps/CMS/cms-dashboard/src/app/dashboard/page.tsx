@@ -13,19 +13,19 @@ const Home = () => {
         <Navbar />
 
         <Container sx={{ p: 3 }}>
-          <Stack gap={4}>
-            <SearchInput />
+          <Stack gap={2.5}>
+            <Stack gap={0.7}>
+              <SearchInput />
+              <MenuBar />
+            </Stack>
 
-            <MenuBar />
-
-            <Stack bgcolor={'#FFF'} height={'61vh'} borderRadius={2}>
+            <Stack bgcolor={'#FFF'} height={'68vh'} borderRadius={2}>
               <DashboardTable />
               <DashBoardArticleDetail rate={2} comment={3} share={3} />
             </Stack>
 
             <Stack alignItems={'center'}>
               <FooterButtons />
-              <Typography />
             </Stack>
           </Stack>
         </Container>

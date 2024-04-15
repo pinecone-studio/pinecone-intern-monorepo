@@ -32,6 +32,7 @@ const menuMock = [
 
 export const MenuBar = () => {
   const [selected, setSelected] = useState('Бүгд');
+
   return (
     <Stack
       sx={{
