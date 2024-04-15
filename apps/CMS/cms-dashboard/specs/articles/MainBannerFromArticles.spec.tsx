@@ -8,9 +8,6 @@ describe('MainBannerFromArticles', () =>
       <MainBannerFromArticles date="2024.04.12" ArticlesTitle="Welcome" categories="Coding" cover="https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg" />
     );
 
-    // const articlesCover = getByTestId('articlesCover');
-    // expect(articlesCover.textContent).toMatch('https://hdqwalls.com/wallpapers/earth-space-hd.jpg');
-
     const articlesTitle = getByTestId('articlesTitle');
     expect(articlesTitle.textContent).toMatch('Welcome');
 

@@ -14,7 +14,6 @@ describe('mainBannerComp', () => {
     cy.get('[data-testid="mainBannerComp"]').should('have.css', 'height', 656);
     cy.get('[data-testid="mainBannerComp"]').children().should('have.length', 1);
 
-    // cy.get('[data-testid="articlesCover"]').should('exist').and('have.text', props.ArticlesCover.toString());
     cy.get('[data-testid="articlesTitle"]').should('exist').and('have.text', props.ArticlesTitle.toString());
     cy.get('[data-testid="date"]').should('exist').and('have.text', props.date.toString());
     cy.get('[data-testid="categories"]').should('exist').and('have.text', props.categories.toString());
