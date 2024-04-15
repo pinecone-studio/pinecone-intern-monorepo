@@ -11,4 +11,4 @@ const categorySchema = new Schema({
   },
 });
 
-export const categoryModel = mongoose.models.user || model('category', categorySchema);
+export const categoryModel = mongoose.models.category || model('category', categorySchema);
