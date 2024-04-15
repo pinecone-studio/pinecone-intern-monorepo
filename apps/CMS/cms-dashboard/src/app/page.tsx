@@ -2,7 +2,11 @@
 import { Stack } from '@mui/material';
 import SignUpModal from './articles/_components/_signupComps/SignUpModal';
 import Image from 'next/image';
-const Home = () => {
+import { fileManagement } from '@/file-management';
+const Home = async () => {
+  const fileManagementLib = fileManagement();
+  console.log(fileManagementLib);
+
   return (
     <Stack width={'100%'} height={'100vh'} flexDirection={'row'}>
       <Stack width={'50%'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
