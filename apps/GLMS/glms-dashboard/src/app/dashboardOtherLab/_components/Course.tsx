@@ -1,6 +1,5 @@
 'use client';
 import { Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 
 type CourseType = {
   image: string;
