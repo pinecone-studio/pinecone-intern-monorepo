@@ -1,4 +1,5 @@
 import { gql } from 'graphql-tag';
+import { Article } from '../generated';
 
 export const articleSchema = gql`
   scalar Date
