@@ -14,7 +14,7 @@ describe('createContents resolver', () => {
       const mockInput = {
           title: 'Test Title',
           description: 'Test Description',
-          contentImage: 'Test Image URL'
+          contentImage: 'Test Image URl'
       };
 
       const mockNewContent = {
