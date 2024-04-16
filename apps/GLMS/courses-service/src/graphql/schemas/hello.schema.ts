@@ -5,7 +5,6 @@ export const helloCoursesSchema = gql`
     helloQueryFromCoursesService: String
   }
 
-  # ******************** Mutations ********************
   type Mutation {
     helloMutationFromCoursesService: String
   }
