@@ -16,6 +16,6 @@ const lessonSchema = new Schema({
   },
 }); 
 
-const lessonModel = model('Course', lessonSchema);
+const lessonModel = model('lesson', lessonSchema);
 
 export default lessonModel;

@@ -10,21 +10,27 @@ describe('deleteCourse resolver', () => {
     jest.clearAllMocks();
   });
 
-  it('returns null if course to delete is not found', async () => {
+  it('returns null if lesson to delete is not found', async () => {
+
     lessonModel.findByIdAndDelete.mockResolvedValueOnce(null);
+
 
     const result = await deleteLesson(null, { id: 'nonExistentId' });
 
     expect(result).toBeNull();
+
     expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('nonExistentId');
   });
+  it('returns deleted lesson if found', async () => {
 
-  it('throws an error when an error occurs during deletion', async () => {
-    const error = new Error('Database error');
-    lessonModel.findByIdAndDelete.mockRejectedValueOnce(error);
+    const deletedLesson = { _id: 'lessonId', title: 'Deleted Lesson' };
+    lessonModel.findByIdAndDelete.mockResolvedValueOnce(deletedLesson);
 
-    await expect(deleteLesson(null, { id: 'someId' })).rejects.toThrow('Failed to delete course.');
 
-    expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('someId');
+    const result = await deleteLesson(null, { id: 'validLessonId' });
+
+    expect(result).toEqual(deletedLesson);
+
+    expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('validLessonId');
   });
 });
