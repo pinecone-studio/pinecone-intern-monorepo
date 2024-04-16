@@ -9,8 +9,6 @@ const CourseAdd = () => {
   const CourseInput = useRef({
     title: '',
     thumbnail: '',
-    contentTitle: '',
-    contentDesc: '',
   });
   const handleBack = (field: string, value: string | number) => {
     CourseInput.current = { ...CourseInput.current, [field]: value };
@@ -20,18 +18,11 @@ const CourseAdd = () => {
     const { data } = await createCourse({
       variables: {
         title: CourseInput.current.title,
-        thumbnail: CourseInput.current.thumbnail,
-        content: [
-          {
-            title: CourseInput.current.contentTitle,
-            description: CourseInput.current.contentDesc,
-          },
-        ],
+        thumbnail: CourseInput.current.thumbnail
       },
     });
     throw data;
   };
-
   return (
     <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }}>
       <Box>
@@ -65,7 +56,6 @@ const CourseAdd = () => {
               <Box>
                 <Typography>Content Title</Typography>
                 <Input
-                  onChange={(e) => handleBack('contentTitle', e.target.value)}
                   type="content description"
                   sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
                   placeholder="Энд бичнэ үү..."
@@ -74,7 +64,6 @@ const CourseAdd = () => {
               <Box>
                 <Typography>Content Description</Typography>
                 <Input
-                  onChange={(e) => handleBack('contentDesc', e.target.value)}
                   type="content title"
                   sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
                   placeholder="Энд бичнэ үү..."
@@ -83,7 +72,6 @@ const CourseAdd = () => {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            {' '}
             <Button onClick={handleSubmit}>Үргэлжлүүлэх</Button>
           </Box>
         </Box>
