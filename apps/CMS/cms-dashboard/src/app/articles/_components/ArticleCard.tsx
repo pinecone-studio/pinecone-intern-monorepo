@@ -14,7 +14,7 @@ const ArticleCard = (props: ArticlesProps) => {
   return (
     <Stack data-testid="main-container" width={'100%'} height={404} overflow={'hidden'}>
       <Stack width={'100%'} height={'50%'} position={'relative'} borderRadius={1.5} overflow={'hidden'}>
-        <Image src={cover} alt="article-cover" fill style={{ objectFit: 'cover' }} />
+        <Image data-testid="cover" src={cover} alt="cover" fill style={{ objectFit: 'cover' }} />
       </Stack>
       <Stack gap={1.5} p={3}>
         <Stack direction={'row'} alignItems={'center'} gap={1}>
