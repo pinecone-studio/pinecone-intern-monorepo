@@ -9,12 +9,42 @@ jest.mock('react-date-range', () => ({
 describe('verifying date range picker', () => {
   it('renders DateRangePicker when calendar button is clicked', () => {
     const { getByTestId } = render(<FilterByUsingCalendar />);
-    const calendarButton = getByTestId('calendar-test-id');
 
+    const calendarButton = getByTestId('calendar-test-id');
     fireEvent.click(calendarButton);
 
     const dateRangePicker = getByTestId('mocked-date-range-picker');
-
     expect(dateRangePicker).toBeDefined();
+  });
+});
+
+describe('checking updates are set correctly', () => {
+  it('handleChange updates date state correctly', () => {    
+    const initialDate = {
+      startDate: new Date('2024-03-01'),
+      endDate: new Date('2024-03-15'), 
+      key: 'selection',
+    };    
+    const { getByTestId } = render(<FilterByUsingCalendar />);
+    
+    const calendarButton = getByTestId('calendar-test-id');
+    fireEvent.click(calendarButton);
+
+    const dateRangePicker = getByTestId('date-range-picker');
+    
+    const mockRange = {
+      selection: {
+        startDate: new Date('2024-04-01'),
+        endDate: new Date('2024-04-15'),
+        key: 'selection',
+      },
+    };    
+    fireEvent.change(dateRangePicker, { value: mockRange });
+
+    const startDateElement = getByTestId('start-date');
+    const endDateElement = getByTestId('end-date');
+    
+    expect(startDateElement.textContent).toBe('01.04.2024');
+    expect(endDateElement.textContent).toBe('15.04.2024');
   });
 });

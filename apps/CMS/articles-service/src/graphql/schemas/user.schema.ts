@@ -10,4 +10,8 @@ export const userSchema = gql`
     articles: [Article]
     otp: String
   }
+
+  type Query {
+    getAllUsers: [User]
+  }
 `;

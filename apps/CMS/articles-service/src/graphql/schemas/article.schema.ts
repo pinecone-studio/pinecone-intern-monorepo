@@ -21,4 +21,9 @@ export const articleSchema = gql`
     ARCHIVED
     SCHEDULED
   }
+
+  type Query {
+    articleQuery: String
+    getAllArticles: [Article]
+  }
 `;

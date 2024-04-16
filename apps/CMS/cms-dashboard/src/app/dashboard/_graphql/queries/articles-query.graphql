@@ -1,0 +1,13 @@
+query getAllArticles {
+  getAllArticles {
+    id
+    title
+    coverPhoto
+    content
+    status
+    slug
+    createdAt
+    publishAt
+    updatedAt
+  }
+}

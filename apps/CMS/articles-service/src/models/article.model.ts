@@ -15,11 +15,11 @@ const articleSchema = new Schema({
     ref: 'user',
     required:true
   },
-  cateogry: [{
+  category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'category',
     required:true
-  }],
+  },
   status: {
     type: String,
     required:true
@@ -32,8 +32,9 @@ const articleSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  publishAt: Date,
+  publishedAt: Date,
   updatedAt: Date,
+  scheduledAt:Date
 });
 
 export const articleModel = mongoose.models.article || model('article', articleSchema);
