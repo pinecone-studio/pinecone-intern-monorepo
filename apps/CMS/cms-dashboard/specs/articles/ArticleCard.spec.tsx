@@ -26,7 +26,7 @@ describe('ArticlesCard', () => {
     const description = getByTestId('description');
     expect(description.textContent).toMatch('It is just description');
 
-    const cover = document.querySelector('img') as HTMLImageElement;
-    expect(cover.src).toContain('https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg');
+    const cover = getByTestId('cover');
+    expect(cover.getAttribute('src')).toContain('https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg');
   });
 });
