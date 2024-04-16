@@ -4,11 +4,10 @@ export const courseSchema = gql`
   scalar Date
 
   type Query {
-    getCourses: [Course!]!
-    getCourseById(_id: ID!): Course
+    getLessons: [Lesson!]!
   }
 
-  type Course {
+  type Lesson {
     _id: ID
     title: String
     thumbnail: String
@@ -17,8 +16,7 @@ export const courseSchema = gql`
   }
 
   type Mutation {
-    createCourse(title: String!, thumbnail: String!, position: Int): Course!
-    updateCourse(_id: ID!, title: String!, thumbnail: String!): Course
-    deleteCourse(_id: String!): Course
+    createLesson(title: String!, thumbnail: String!, position: Int): Lesson!
+    deleteLesson(_id: String!): Lesson
   }
 `;

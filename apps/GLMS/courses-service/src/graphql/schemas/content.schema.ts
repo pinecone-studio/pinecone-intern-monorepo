@@ -1,16 +1,17 @@
 import { gql } from 'graphql-tag';
 export const contentSchema = gql`
   type Query {
-    getContent: [Content!]!
+    getContents: [Content!]!
   }
 
   type Content {
     _Id: ID
     title: String
     description: String
-    LessonImage: String
+    contentImage: String
+    createdAt:Date
   }
   type Mutation {
-    createContent(title: String, description: String!, LessonImage: String!): Content!
+    createContents(title: String, description: String!, contentImage: String!): Content!
   }
 `;
