@@ -18,7 +18,7 @@ const data = [
 const buttonsTop = ['Хичээл', 'Сорил'];
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
-export default function DashboardOtherLab() {
+const DashboardOtherLab = () => {
   const [actionTab, setActionTab] = useState('Хичээл');
   const converter = () => {
     if (actionTab == 'Хичээл') {
@@ -107,4 +107,5 @@ export default function DashboardOtherLab() {
       </Stack>
     </Stack>
   );
-}
+};
+export default DashboardOtherLab();

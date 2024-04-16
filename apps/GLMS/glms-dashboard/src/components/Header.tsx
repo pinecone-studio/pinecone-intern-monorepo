@@ -1,7 +1,7 @@
 import { InputAdornment, Stack, TextField } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import SearchIcon from '@mui/icons-material/Search';
-export default function Header() {
+const Header = () => {
   return (
     <Stack data-testid="header-artivle-detail" direction="row" height="48px" bgcolor="#F7F7F8" width="100%" alignItems="center" px="24px" justifyContent="space-between">
       <img width="32px" height="24px" src="svgCompanyLogo.png" />
@@ -31,4 +31,5 @@ export default function Header() {
       </Stack>
     </Stack>
   );
-}
+};
+export default Header();
