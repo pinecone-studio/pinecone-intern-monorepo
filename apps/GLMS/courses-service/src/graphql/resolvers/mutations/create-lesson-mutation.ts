@@ -7,7 +7,7 @@ export const createLesson: MutationResolvers['createLesson'] = async (_, { title
     const newLesson = await lessonModel.create({ title, thumbnail, position });
     return newLesson.toObject();
   } catch (error) {
-    throw new GraphQLError('Mock error message'); 
+    throw new GraphQLError('An unknown error occurred'); 
 
   }
   }

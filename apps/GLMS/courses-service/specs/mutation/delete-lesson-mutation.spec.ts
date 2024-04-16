@@ -1,5 +1,6 @@
 import lessonModel from '@/model/create-lesson-model';
-import {  deleteLesson } from '../../src/graphql/resolvers/mutations/delete-course-mutation';
+import { deleteLesson } from '../../src/graphql/resolvers/mutations/delete-course-mutation';
+import { GraphQLError } from 'graphql';
 
 jest.mock('@/model/create-lesson-model', () => ({
   findByIdAndDelete: jest.fn(),
@@ -11,9 +12,7 @@ describe('deleteCourse resolver', () => {
   });
 
   it('returns null if lesson to delete is not found', async () => {
-
     lessonModel.findByIdAndDelete.mockResolvedValueOnce(null);
-
 
     const result = await deleteLesson(null, { id: 'nonExistentId' });
 
@@ -21,11 +20,10 @@ describe('deleteCourse resolver', () => {
 
     expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('nonExistentId');
   });
-  it('returns deleted lesson if found', async () => {
 
+  it('returns deleted lesson if found', async () => {
     const deletedLesson = { _id: 'lessonId', title: 'Deleted Lesson' };
     lessonModel.findByIdAndDelete.mockResolvedValueOnce(deletedLesson);
-
 
     const result = await deleteLesson(null, { id: 'validLessonId' });
 

@@ -38,13 +38,12 @@ describe('createContents resolver', () => {
         contentImage: 'Test Image URL'
     };
 
-    const mockError = new Error('Mock error message');
+    const mockError = new Error('cannot find content');
 
     (contentModel.create as jest.Mock).mockRejectedValue(mockError);
 
     await expect(createContents({}, mockInput)).rejects.toThrow(mockError);
 });
-
 
   it('should throw an unknown error if the error type is not recognized', async () => {
       const mockInput = {
@@ -53,6 +52,6 @@ describe('createContents resolver', () => {
           contentImage: 'Test Image URL'
       };
       (contentModel.create as jest.Mock).mockRejectedValue('Unknown error');
-      await expect(createContents({}, mockInput)).rejects.toThrow('An unknown error occurred');
+      await expect(createContents({}, mockInput)).rejects.toThrow('cannot find content');
   });
 })

@@ -35,7 +35,7 @@ describe('createCourse resolver', () => {
         contentImage: 'Test Image URL'
     };
 
-    const mockError = new Error('Mock error message');
+    const mockError = new Error('An unknown error occurred');
 
     (lessonModel.create as jest.Mock).mockRejectedValue(mockError);
 
