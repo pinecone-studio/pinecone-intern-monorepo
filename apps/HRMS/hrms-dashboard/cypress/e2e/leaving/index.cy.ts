@@ -1,12 +1,25 @@
 describe('Leaving page', () => {
   beforeEach(() => cy.visit('/leaving'));
 
-  it('Should display welcome message', () => {
-    cy.get('h1').contains('hello from HRMS dashboard Leaving Page');
+  it('1.Should display Leave Request btn', () => {
+    cy.get('[data-cy="submit"]');
   });
 
-  it('Should navigate to home page when clicks on the home page button', () => {
-    cy.get('[data-cy="Home-Page-Button"]').should('exist').click();
-    cy.url().should('contain', '/');
+  it('2. Should be clicked and show Leave Request modal', () => {
+    cy.get('button').contains('Чөлөөний хуудас бөглөх').click();
+    cy.get('div').contains('Чөлөөний хуудас бөглөх');
   });
+  // it('should be clicked and close the modal', () => {
+  //   cy.get('button').then(($button) => {
+  //     if ($button.find('svg').length > 0) {
+  //       cy.wrap($button).click();
+  //     } else {
+  //       cy.log('Button does not contain svg file');
+  //     }
+  //   });
+  // });
+
+  // it('should be disabled when inputs are empty', () => {
+  //   cy.get('button').contains('дараах').click().should('be.disabled');
+  // });
 });
