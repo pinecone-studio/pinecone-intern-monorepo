@@ -131,6 +131,7 @@ export const employeeDetailsSchema = gql`
   type Query {
     getDependent(id: ID!): Dependent!
     getAllDependents: [Dependent!]
+    getEmployee(_id: ID): Employee!
   }
 
   type Mutation {
