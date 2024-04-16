@@ -1,10 +1,10 @@
 import { MutationResolvers } from '@/graphql/generated';
-import courseModel from '@/model/create-course-model';
+import lessonModel from '@/model/create-lesson-model';
 
-export const deleteCourse: MutationResolvers['deleteCourse'] = async (_, { _id }) => {
+export const deleteLesson: MutationResolvers['deleteLesson'] = async (_, { _id }) => {
   try {
-    const deletedCourse = await courseModel.findByIdAndDelete(_id);
-    return deletedCourse?.toObject() ?? null;
+    const deletedLesson = await lessonModel.findByIdAndDelete(_id);
+    return deletedLesson?.toObject() ?? null;
   } catch (error) {
     throw new Error('Failed to delete course.');
   }

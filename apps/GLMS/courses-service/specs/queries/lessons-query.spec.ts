@@ -1,7 +1,7 @@
-import { getCourses } from '../../src/graphql/resolvers/queries/courses-query';
-import courseModel from '@/model/create-course-model';
+import { getCourses } from '../../src/graphql/resolvers/queries/lessons-query';
+import courseModel from '@/model/create-lesson-model';
 
-jest.mock('@/model/create-course-model', () => ({
+jest.mock('@/model/create-lesson-model', () => ({
     find: jest.fn(),
   }));
   describe('getCourses', () => {

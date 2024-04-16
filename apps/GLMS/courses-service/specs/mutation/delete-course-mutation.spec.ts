@@ -1,7 +1,7 @@
-import { deleteCourse } from '../../src/graphql/resolvers/mutations/delete-course-mutation';
-import courseModel from '@/model/create-course-model';
+import lessonModel from '@/model/create-lesson-model';
+import {  deleteLesson } from '../../src/graphql/resolvers/mutations/delete-course-mutation';
 
-jest.mock('@/model/create-course-model', () => ({
+jest.mock('@/model/create-lesson-model', () => ({
   findByIdAndDelete: jest.fn(),
 }));
 
@@ -11,20 +11,20 @@ describe('deleteCourse resolver', () => {
   });
 
   it('returns null if course to delete is not found', async () => {
-    courseModel.findByIdAndDelete.mockResolvedValueOnce(null);
+    lessonModel.findByIdAndDelete.mockResolvedValueOnce(null);
 
-    const result = await deleteCourse(null, { _id: 'nonExistentId' });
+    const result = await deleteLesson(null, { _id: 'nonExistentId' });
 
     expect(result).toBeNull();
-    expect(courseModel.findByIdAndDelete).toHaveBeenCalledWith('nonExistentId');
+    expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('nonExistentId');
   });
 
   it('throws an error when an error occurs during deletion', async () => {
     const error = new Error('Database error');
-    courseModel.findByIdAndDelete.mockRejectedValueOnce(error);
+    lessonModel.findByIdAndDelete.mockRejectedValueOnce(error);
 
-    await expect(deleteCourse(null, { _id: 'someId' })).rejects.toThrow('Failed to delete course.');
+    await expect(deleteLesson(null, { _id: 'someId' })).rejects.toThrow('Failed to delete course.');
 
-    expect(courseModel.findByIdAndDelete).toHaveBeenCalledWith('someId');
+    expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('someId');
   });
 });
