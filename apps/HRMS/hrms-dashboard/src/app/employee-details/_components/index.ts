@@ -1,1 +1,2 @@
-// components÷
+export * from './PersonalInformation';
+export * from './UpdateButton';
