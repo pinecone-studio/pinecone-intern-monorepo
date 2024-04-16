@@ -29,7 +29,7 @@ export const CreateLeaveReqStep1 = () => {
 
   const formik = useFormik({
     initialValues: {
-      step1Date: dayjs(new Date()),
+      step1Date: dayjs(),
       step1UserName: '',
       step1LeaveType: '',
     },
