@@ -2,10 +2,10 @@
 import { Box, Input, Stack, Typography, Button } from '@mui/material';
 import React, { useRef } from 'react';
 import LeftArrow from './assets/LeftArrow';
-import { useCreateContentsMutation} from '@/generated/index';
+import { useCreateCourseMutation } from '@/generated/index';
 
 const CourseAdd = () => {
-  const [createCourse] = useCreateContentsMutation();
+  const [createCourse] = useCreateCourseMutation();
   const CourseInput = useRef({
     title: '',
     thumbnail: '',
