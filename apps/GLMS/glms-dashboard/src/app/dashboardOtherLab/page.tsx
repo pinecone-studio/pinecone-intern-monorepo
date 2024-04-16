@@ -108,4 +108,4 @@ const DashboardOtherLab = () => {
     </Stack>
   );
 };
-export default DashboardOtherLab();
+export default DashboardOtherLab;
