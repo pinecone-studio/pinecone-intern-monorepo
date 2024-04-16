@@ -5,7 +5,7 @@ export const contentSchema = gql`
   }
 
   type Content {
-    _Id: ID
+    id: ID
     title: String
     description: String
     contentImage: String

@@ -18,7 +18,7 @@ describe('createContents resolver', () => {
       };
 
       const mockNewContent = {
-          _id: '321321',
+          id: '321321',
           title:mockInput.title,
           description:mockInput.description,
           contentImage:mockInput.contentImage,
