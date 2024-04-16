@@ -7,14 +7,14 @@ describe('mainBannerComp', () => {
     const props = {
       date: 'string',
       categories: 'string',
-      ArticlesTitle: 'string',
+      articlesTitle: 'string',
       cover: 'https://getwallpapers.com/wallpaper/full/2/6/e/1179758-cool-cat-hd-wallpapers-1080p-1920x1080.jpg',
     };
     cy.get('[data-testid="mainBannerComp"]').should('exist');
     cy.get('[data-testid="mainBannerComp"]').should('have.css', 'height', 656);
     cy.get('[data-testid="mainBannerComp"]').children().should('have.length', 1);
 
-    cy.get('[data-testid="articlesTitle"]').should('exist').and('have.text', props.ArticlesTitle.toString());
+    cy.get('[data-testid="articlesTitle"]').should('exist').and('have.text', props.articlesTitle.toString());
     cy.get('[data-testid="date"]').should('exist').and('have.text', props.date.toString());
     cy.get('[data-testid="categories"]').should('exist').and('have.text', props.categories.toString());
     cy.get('[data-testid="cover"]').should('exist').and('have.text', props.categories.toString());
