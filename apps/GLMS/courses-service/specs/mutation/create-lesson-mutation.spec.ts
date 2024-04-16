@@ -14,7 +14,7 @@ describe('createCourse resolver', () => {
     };
 
     const mockNewCourse = {
-      _id: '12345',
+      id: '12345',
       title: mockInput.title,
       thumbnail: mockInput.thumbnail,
       position: mockInput.position,
@@ -28,4 +28,26 @@ describe('createCourse resolver', () => {
 
     expect(result).toEqual(mockNewCourse.toObject());
   });
+  it('should throw an error if content creation fails', async () => {
+    const mockInput = {
+        title: 'Test Title',
+        description: 'Test Description',
+        contentImage: 'Test Image URL'
+    };
+
+    const mockError = new Error('Mock error message');
+
+    (lessonModel.create as jest.Mock).mockRejectedValue(mockError);
+
+    await expect(createLesson({}, mockInput)).rejects.toThrow(mockError);
+});
+it('should throw an unknown error if the error type is not recognized', async () => {
+  const mockInput = {
+      title: 'Test Title',
+      description: 'Test Description',
+      contentImage: 'Test Image URL'
+  };
+  (lessonModel.create as jest.Mock).mockRejectedValue('Unknown error');
+  await expect(createLesson({}, mockInput)).rejects.toThrow('An unknown error occurred');
+});
 });

@@ -13,7 +13,7 @@ describe('deleteCourse resolver', () => {
   it('returns null if course to delete is not found', async () => {
     lessonModel.findByIdAndDelete.mockResolvedValueOnce(null);
 
-    const result = await deleteLesson(null, { _id: 'nonExistentId' });
+    const result = await deleteLesson(null, { id: 'nonExistentId' });
 
     expect(result).toBeNull();
     expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('nonExistentId');
@@ -23,7 +23,7 @@ describe('deleteCourse resolver', () => {
     const error = new Error('Database error');
     lessonModel.findByIdAndDelete.mockRejectedValueOnce(error);
 
-    await expect(deleteLesson(null, { _id: 'someId' })).rejects.toThrow('Failed to delete course.');
+    await expect(deleteLesson(null, { id: 'someId' })).rejects.toThrow('Failed to delete course.');
 
     expect(lessonModel.findByIdAndDelete).toHaveBeenCalledWith('someId');
   });

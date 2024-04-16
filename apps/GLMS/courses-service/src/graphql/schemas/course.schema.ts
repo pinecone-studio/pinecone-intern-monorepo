@@ -8,7 +8,7 @@ export const courseSchema = gql`
   }
 
   type Lesson {
-    _id: ID
+    id: ID
     title: String
     thumbnail: String
     position: Int
@@ -17,6 +17,6 @@ export const courseSchema = gql`
 
   type Mutation {
     createLesson(title: String!, thumbnail: String!, position: Int): Lesson!
-    deleteLesson(_id: String!): Lesson
+    deleteLesson(id: String!): Lesson
   }
 `;

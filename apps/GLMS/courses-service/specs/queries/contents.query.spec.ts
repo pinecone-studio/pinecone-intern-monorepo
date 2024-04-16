@@ -14,4 +14,12 @@ describe('getContents', () => {
 
     expect(contentModel.find).toHaveBeenCalledTimes(1);
   });
+  it('should handle error when contentModel.find fails', async () => {
+  
+    (contentModel.find as jest.Mock).mockRejectedValue(new Error('cannot find content'));
+
+    await expect(getContents()).rejects.toThrow('cannot find content');
+
+    expect(contentModel.find).toHaveBeenCalledTimes(2);
+  });
 });
