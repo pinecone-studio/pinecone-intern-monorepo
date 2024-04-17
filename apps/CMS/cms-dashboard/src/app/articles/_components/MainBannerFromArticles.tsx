@@ -24,7 +24,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
         p={3}
         paddingBottom={'50px'}
         sx={{
-          background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,2,1) 29%, rgba(0,0,0,1) 60%, rgba(255,255,255,0) 100%)',
+          background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,2,1) 29%, rgba(0,0,0,1) 40%, rgba(255,255,255,0) 100%)',
         }}
       >
         <Stack direction={'row'} gap={1} alignItems={'center'}>
@@ -34,7 +34,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
           <Stack width={4} height={4} borderRadius={'100%'} bgcolor={'#fff'}></Stack>
 
           <Typography data-testid="categories" color={'#fff'}>
-            `#${categories}`
+            #{categories}
           </Typography>
         </Stack>
         <Typography data-testid="articlesTitle" fontWeight={700} fontSize={32} color={'#fff'} maxWidth={'850px'} textAlign={'center'}>
