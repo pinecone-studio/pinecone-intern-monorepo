@@ -13,6 +13,9 @@ export default async function Index() {
   const handlePayrollPageButton = () => {
     router.push('/payroll');
   };
+  const handleRecruitPageButton = () => {
+    router.push('/recruiting');
+  };
 
   const fileManagementLib = fileManagement();
 
@@ -24,6 +27,7 @@ export default async function Index() {
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
       <button onClick={handleLeavingPageButton}>Go to Leaving page</button>
       <button onClick={handlePayrollPageButton}>Go to Payroll page</button>
+      <button onClick={handleRecruitPageButton}>Go to Recruit page</button>
     </div>
   );
 }
