@@ -15,7 +15,7 @@
     "paths": {
       "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
       "@/generated/*": ["apps/GLMS/glms-dashboard/src/generated/*"],
-      "@/common/*": ["apps/GLMs/glms-dashboard/src/common/*"],
+      "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],
       "@/file-management": ["libs/file-management/src/index.ts"]
     },
     "plugins": [
