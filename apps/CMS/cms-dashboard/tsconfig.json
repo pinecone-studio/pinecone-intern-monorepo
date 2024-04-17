@@ -15,7 +15,7 @@
     "paths": {
       "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
       "@/generated/*": ["apps/GLMS/glms-dashboard/src/generated/*"],
-      "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],
+      "@/common/*": ["apps/GLMs/glms-dashboard/src/common/*"],
       "@/file-management": ["libs/file-management/src/index.ts"]
     },
     "plugins": [
@@ -36,5 +36,5 @@
     "../../../apps/CMS/cms-dashboard/.next/types/**/*.ts",
     "../../../dist/apps/CMS/cms-dashboard/.next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+  "exclude": ["node_modules", "jest.config.ts"]
 }

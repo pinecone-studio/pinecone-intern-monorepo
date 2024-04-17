@@ -1,5 +1,5 @@
 import React from 'react';
-import DashBoardArticleDetail from '../../../cms-dashboard/src/app/dashboard/_components/DashboardTableDetail';
+import DashBoardArticleDetail from '../../src/app/dashboard/_components/DashboardTableDetail';
 import { render } from '@testing-library/react';
 describe('DashBoardArticleDetail component', () => {
   const props = {
