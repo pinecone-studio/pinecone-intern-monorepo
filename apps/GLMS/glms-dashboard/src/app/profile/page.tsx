@@ -1,7 +1,12 @@
 'use client';
-import SignIn from './_components/SignIn';
+
+import { useHelloQueryFromProfileServiceQuery}from '@/generated/index';
+import Link from 'next/link';
+import { ProfileMain } from './_features';
 
 const ProfilePage = () => {
+  const { data } = useHelloQueryFromProfileServiceQuery();
+
   return (
     <div>
       <SignIn />

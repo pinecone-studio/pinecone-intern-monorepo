@@ -6,15 +6,15 @@ export const employeeDetailsSchema = gql`
 
   type Employee {
     id: ID
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     email: String
     department: ID
     jobTitle: [String]
     ladderLevel: String
     salary: Float
     bankName: String
-    bankAccountName: String
+    bankAccountNumber: String
     bankAccountHolderName: String
     dateOfEmployment: Date
     dateOfReleased: Date
@@ -22,6 +22,7 @@ export const employeeDetailsSchema = gql`
     personalInformation: PersonalInformation
     familyInformation: FamilyInformation
   }
+
   type PersonalInformation {
     gender: Gender
     dateOfBirth: Date
@@ -29,30 +30,35 @@ export const employeeDetailsSchema = gql`
     phone: String
     hobby: [String]
   }
+
   type FamilyInformation {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
+
   type Dependent {
-    id: ID
-    firstname: String
-    lastname: String
+    _id: ID
+    firstName: String
+    lastName: String
     phone: String
     dependency: String
   }
+
   enum Gender {
     MALE
     FEMALE
     OTHER
   }
+
   enum MaritalStatus {
     SINGLE
     MARRIED
     DIVORCED
     WIDOWED
   }
+
   enum EmploymentStatus {
     FULL_TIME
     PART_TIME
@@ -60,15 +66,17 @@ export const employeeDetailsSchema = gql`
     TEMPORARY
     ARCHIVE
   }
+
   enum Department {
     SOFTWARE
     DESIGN
     MARKETING
     BACK_OFFICE
   }
+
   input CreateEmployeeInput {
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     email: String
     department: ID
     jobTitle: [String]
@@ -77,6 +85,7 @@ export const employeeDetailsSchema = gql`
     dateOfEmployment: Date
     employmentStatus: EmploymentStatus
   }
+
   input UpdateEmployeeInput {
     id: ID
     email: String
@@ -89,6 +98,7 @@ export const employeeDetailsSchema = gql`
     dateOfReleased: Date
     employmentStatus: EmploymentStatus
   }
+
   input UpdatePersonalInformationInput {
     gender: Gender
     dateOfBirth: Date
@@ -96,10 +106,23 @@ export const employeeDetailsSchema = gql`
     phone: String
     hobby: [String]
   }
+
   input UpdateFamilyInformationInput {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Department]
+  }
+
+  type Query {
+    getDependent(_id: ID): Dependent!
+    getAllDependents: [Dependent!]
+  }
+
+  type Mutation {
+    createEmployee(firstName: String!, lastName: String!, email: String!, department: String!, jobTitle: String!, ladderLevel: Int!, salary: Float!, employmentStatus: String!): Employee!
+    createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
+    deleteDependent(_id: ID!): Dependent!
+    updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
   }
 `;

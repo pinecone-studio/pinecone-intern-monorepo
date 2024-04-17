@@ -16,6 +16,16 @@ const nextConfig = {
     FEDERATION_ENDPOINT: process.env.FEDERATION_ENDPOINT || '',
     ENVIRONMENT: process.env.ENVIRONMENT || '',
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*',
+        port: '*',
+        pathname: '*',
+      },
+    ],
+  },
 };
 
 const plugins = [

@@ -3,7 +3,7 @@
 import { fileManagement } from '@/file-management';
 import { useRouter } from 'next/navigation';
 
-export default async function Index() {
+export default async function Home() {
   const router = useRouter();
 
   const handleArticlesPageButton = () => {
