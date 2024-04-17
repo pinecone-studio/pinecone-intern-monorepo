@@ -13,8 +13,6 @@ describe('MenuBar', () => {
     expect(title).toBeDefined();
     expect(number).toBeDefined();
 
-    
-
     await act(() =>{ fireEvent.click(getByTestId('menu-btn-test-id')) })
 
     expect(setSelected).toHaveBeenCalledWith(menu)
