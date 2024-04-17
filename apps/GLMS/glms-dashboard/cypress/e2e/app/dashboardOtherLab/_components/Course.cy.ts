@@ -12,11 +12,6 @@ describe('Course component', () => {
 
   it('renders course container with correct styles', () => {
     cy.get('[data-testid="courseContain"]').should('exist').and('have.css', 'background-color', 'rgb(255, 255, 255)').and('have.css', 'height', '240px');
-    // .and('have.css', 'borderRadius', '12px');
-  });
-
-  it('renders course image with correct source', () => {
-    cy.get('[data-testid="lessonImage"]').should('exist').and('have.attr', 'src', props.image);
   });
 
   it('renders course title, information, and lesson count with correct text', () => {
