@@ -1,6 +1,5 @@
 'use client';
 import { Button, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 
 type MainBannerFromArticlesProps = {
   date: string;
@@ -12,7 +11,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
   return (
     <Stack data-testid="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <Image data-testid="cover" src={cover} alt="article-cover" fill style={{ objectFit: 'cover' }} />
+      <img width={'100%'} height={'100%'} data-testid="cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
         data-testid="innerComp"
         position={'absolute'}

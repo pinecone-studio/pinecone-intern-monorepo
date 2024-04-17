@@ -6,48 +6,75 @@ import { useState } from 'react';
 
 type GroupArticlesCompProps = {
   title: string;
-  columnNumber: number;
 };
 
 const data = [
-  { title: 'Morphosis', cover: '/ganu.jpeg', date: '2024.04.16', category: 'Coding', description: 'it is just a description' },
-  { title: 'Morphosis', cover: '/ganu.jpeg', date: '2024.04.16', category: 'Coding', description: 'it is just a description' },
-  { title: 'Morphosis', cover: '/ganu.jpeg', date: '2024.04.16', category: 'Coding', description: 'it is just a description' },
-  { title: 'Morphosis', cover: '/ganu.jpeg', date: '2024.04.16', category: 'Coding', description: 'it is just a description' },
-  { title: 'Morphosis', cover: '/ganu.jpeg', date: '2024.04.16', category: 'Coding', description: 'it is just a description' },
+  {
+    title: 'Morphosis',
+    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
+    date: '2024.04.16',
+    category: 'Coding',
+    description: 'it is just a description',
+  },
+  {
+    title: 'Morphosis',
+    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
+    date: '2024.04.16',
+    category: 'Coding',
+    description: 'it is just a description',
+  },
+  {
+    title: 'Morphosis',
+    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
+    date: '2024.04.16',
+    category: 'Coding',
+    description: 'it is just a description',
+  },
+  {
+    title: 'Morphosis',
+    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
+    date: '2024.04.16',
+    category: 'Coding',
+    description: 'it is just a description',
+  },
+  {
+    title: 'Morphosis',
+    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
+    date: '2024.04.16',
+    category: 'Coding',
+    description: 'it is just a description',
+  },
 ];
 
 const GroupArticlesComp = (props: GroupArticlesCompProps) => {
-  const { title, columnNumber } = props;
+  const { title } = props;
   const [isClicked, setIsClicked] = useState(false);
-  const [articleNumber, setArticleNumber] = useState(columnNumber);
+
+  const clickHandler = () => {
+    setIsClicked((prev) => !prev);
+  };
 
   return (
-    <Stack p={'40px 24px'} gap={4} bgcolor={'#fff'} borderRadius={2}>
-      <Typography fontSize={28} fontWeight={700} color={'primary:main'}>
+    <Stack data-testid="group-container" p={'40px 24px'} gap={4} bgcolor={'#fff'} borderRadius={2}>
+      <Typography data-testid="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
         {title}
       </Typography>
-      <Grid container spacing={4}>
+      <Grid data-testid="group-grid" container spacing={4}>
         {data.map((item, index) => {
-          if (articleNumber > index) {
-            return (
-              <Grid item xs={6} key={index}>
-                <ArticleCard title={item.title} cover={item.cover} date={item.date} category={item.category} description={item.description} />
-              </Grid>
-            );
-          }
+          return (
+            <Grid data-testid="group-grid-item" item xs={6} key={index}>
+              <ArticleCard title={item.title} cover={item.cover} date={item.date} category={item.category} description={item.description} />
+            </Grid>
+          );
         })}
       </Grid>
-      <Stack width="100%" alignItems="center">
+      <Stack data-testid="group-innerCon" width="100%" alignItems="center">
         <IconButton
+          data-testid="group-icon-button"
           onClick={() => {
-            if (isClicked) {
-              setArticleNumber(columnNumber);
-              setIsClicked(false);
-            } else {
-              articleNumber >= data.length ? setIsClicked(true) : setArticleNumber((prev) => prev + 2);
-            }
+            clickHandler();
           }}
+          sx={{ cursor: 'pointer' }}
         >
           {isClicked ? <KeyboardArrowUp sx={{ width: 49, height: 40 }} /> : <KeyboardArrowDown sx={{ width: 49, height: 40 }} />}
         </IconButton>
