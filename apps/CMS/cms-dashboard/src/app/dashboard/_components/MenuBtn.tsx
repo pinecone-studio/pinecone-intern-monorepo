@@ -1,7 +1,6 @@
 import { Stack, Box, Divider } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 
-
 interface MenuBtnProps {
   menu: string;
   number: number;
