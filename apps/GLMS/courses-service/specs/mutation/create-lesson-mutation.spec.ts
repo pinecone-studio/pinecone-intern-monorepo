@@ -8,16 +8,19 @@ jest.mock('@/model/create-lesson-model', () => ({
 describe('createCourse resolver', () => {
   it('should create a new course and return its data', async () => {
     const mockInput = {
-      title: 'Course Title',
-      thumbnail: 'course-thumbnail.jpg',
-      position: 1,
+      LessonInput:{
+        title: 'Course Title',
+        thumbnail: 'course-thumbnail.jpg',
+        position: 1,
+      }
+
     };
 
     const mockNewCourse = {
       id: '12345',
-      title: mockInput.title,
-      thumbnail: mockInput.thumbnail,
-      position: mockInput.position,
+      title: mockInput.LessonInput.title,
+      thumbnail: mockInput.LessonInput.thumbnail,
+      position: mockInput.LessonInput.position,
       toObject: jest.fn(),
     };
 
