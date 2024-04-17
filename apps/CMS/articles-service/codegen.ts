@@ -8,7 +8,7 @@ const config: CodegenConfig = {
       config: {
         useIndexSignature: true,
         makeResolverTypeCallable: true,
-        maybeValue: 'T'
+        maybeValue: 'T',
       },
       plugins: ['typescript-resolvers', 'typescript', 'typescript-operations', 'typescript-react-apollo'],
     },

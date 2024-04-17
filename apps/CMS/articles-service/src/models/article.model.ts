@@ -1,5 +1,5 @@
 import { Article } from '@/graphql/generated';
-import mongoose, { Schema, model, Model, models } from 'mongoose';
+import { Schema, model, Model, models } from 'mongoose';
 
 const articleSchema = new Schema({
   title: {
@@ -12,12 +12,12 @@ const articleSchema = new Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'category',
     required: true,
   },
