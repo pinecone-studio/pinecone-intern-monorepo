@@ -18,13 +18,13 @@ const CourseAdd = () => {
     const { data } = await createCourse({
       variables: {
         title: CourseInput.current.title,
-        thumbnail: CourseInput.current.thumbnail
+        thumbnail: CourseInput.current.thumbnail,
       },
     });
     throw data;
   };
   return (
-    <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }}>
+    <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }} data-cy="Course-Add-Page">
       <Box>
         <LeftArrow />
       </Box>
@@ -63,11 +63,7 @@ const CourseAdd = () => {
               </Box>
               <Box>
                 <Typography>Content Description</Typography>
-                <Input
-                  type="content title"
-                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
-                  placeholder="Энд бичнэ үү..."
-                ></Input>
+                <Input type="content title" sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }} placeholder="Энд бичнэ үү..."></Input>
               </Box>
             </Box>
           </Box>

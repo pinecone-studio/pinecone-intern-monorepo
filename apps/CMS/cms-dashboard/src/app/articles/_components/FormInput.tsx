@@ -1,6 +1,7 @@
 // Custom input
 import { Stack, TextField, TextFieldProps, Typography } from '@mui/material';
-export const CustomInput = (props: TextFieldProps) => {
+
+export const FormInput = (props: TextFieldProps) => {
   const { label, helperText, ...rest } = props;
   return (
     <Stack width={'100%'} gap={1} data-testid="Custom-Input">

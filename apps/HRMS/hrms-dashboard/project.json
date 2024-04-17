@@ -130,6 +130,9 @@
         {
           "target": "cypress:clean",
           "params": "forward"
+        },
+        {
+          "target": "codegen"
         }
       ]
     },
@@ -157,7 +160,16 @@
         "reporter": "mochawesome",
         "devServerTarget": "hrms-dashboard:serve:development",
         "watch": true
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "cypress:clean",
+          "params": "forward"
+        },
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",

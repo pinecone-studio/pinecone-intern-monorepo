@@ -1,1 +1,1 @@
-export * from './ArticlesMain';
+export * from './SignUpForm';

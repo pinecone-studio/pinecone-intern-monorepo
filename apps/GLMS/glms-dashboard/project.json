@@ -130,6 +130,10 @@
         {
           "target": "cypress:clean",
           "params": "forward"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
         }
       ]
     },
@@ -157,7 +161,17 @@
         "reporter": "mochawesome",
         "devServerTarget": "glms-dashboard:serve:development",
         "watch": true
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "cypress:clean",
+          "params": "forward"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",

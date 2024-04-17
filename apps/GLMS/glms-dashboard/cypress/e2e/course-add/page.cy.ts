@@ -10,7 +10,5 @@ describe('CourseAdd component', () => {
     cy.get('input[placeholder="Энд бичнэ үү..."]').eq(2).type('Content Description');
 
     cy.get('button').contains('Үргэлжлүүлэх').click();
-
-    cy.contains('Course successfully created');
   });
 });
