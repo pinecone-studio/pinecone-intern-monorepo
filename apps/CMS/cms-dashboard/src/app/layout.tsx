@@ -1,7 +1,6 @@
 'use client';
 import { ThemeProvider } from '@mui/material';
 import { FederationProvider } from '../common';
-import { Navbar } from './dashboard/_components/Navbar';
 import './global.css';
 import { theme } from '../theme';
 

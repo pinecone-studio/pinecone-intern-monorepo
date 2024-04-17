@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 export const FooterButtons = () => {
   const [selectedButton, setSelectedButton] = useState('Нүүр');
+
   return (
     <>
       <Stack

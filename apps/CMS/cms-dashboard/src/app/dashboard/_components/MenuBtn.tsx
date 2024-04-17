@@ -1,4 +1,4 @@
-import { Stack, Box, Divider, Typography } from '@mui/material';
+import { Stack, Divider, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 
 interface MenuBtnProps {

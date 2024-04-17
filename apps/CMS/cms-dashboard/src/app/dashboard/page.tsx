@@ -1,10 +1,10 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import React from 'react';
-import DashboardTable from './_components/DashboardTable';
-import { FooterButtons, MenuBar } from './_features';
 import DashBoardArticleDetail from './_components/DashboardTableDetail';
 import SearchInput from './_components/SearchInput';
 import { Navbar } from './_components/Navbar';
+import { FooterButtons, MenuBar } from './_features';
+import DashboardTable from './_components/DashboardTable';
 
 const Home = () => {
   return (
