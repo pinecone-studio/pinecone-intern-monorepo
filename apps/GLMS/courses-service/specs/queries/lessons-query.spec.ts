@@ -14,7 +14,7 @@ jest.mock('@/model/create-lesson-model', () => ({
   
       expect(courseModel.find).toHaveBeenCalledTimes(1);
     });
-    it('should handle errorr when lessonModel.find fails', async () => {
+    it('should handle error when lessonModel.find fails', async () => {
   
       (lessonModel.find as jest.Mock).mockRejectedValue(new Error('cannot find lesson'));
   
