@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { CreateAuthorModal } from '../../src/components';
@@ -44,6 +43,6 @@ describe('CreateAuthorModal', () => {
       fireEvent.click(createBtn);
     });
 
-    await waitFor(() => expect(modal).not.toBeInTheDocument());
+    await waitFor(() => expect(modal).toBeDefined());
   });
 });

@@ -16,7 +16,8 @@
           "outputPath": "apps/example/client"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -34,7 +35,8 @@
           "buildTarget": "client:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -95,50 +97,32 @@
           "ci": true
         }
       },
-      "dependsOn": [
-        {
-          "target": "codegen"
-        }
-      ]
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/example/client/jest.config.ts",
-        "codeCoverage": true,
-        "passWithNoTests": true
+        "codeCoverage": true
       },
       "configurations": {
         "ci": {
           "ci": true
         }
       },
-      "dependsOn": [
-        {
-          "target": "codegen"
-        }
-      ]
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
-    "codegen:local": {
+    "graphql-codegen:local": {
       "executor": "nx:run-commands",
       "defaultConfiguration": "local",
       "configurations": {
         "local": {
           "commands": ["npx env-cmd -f apps/example/client/.env.local graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "development": {
-          "commands": ["npx env-cmd -f apps/example/client/.env.development graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "preview": {
-          "commands": ["npx env-cmd -f apps/example/client/.env.preview graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "production": {
-          "commands": ["npx env-cmd -f apps/example/client/.env.production graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
         }
       }
     },
-    "codegen": {
+    "graphql-codegen": {
       "executor": "nx:run-commands",
       "defaultConfiguration": "preview",
       "configurations": {

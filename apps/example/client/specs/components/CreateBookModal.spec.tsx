@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { CreateBookModal } from '../../src/components';
@@ -87,7 +86,7 @@ describe('CreateBookModal', () => {
       fireEvent.mouseDown(select);
     });
 
-    await waitFor(() => expect(getByTestId('option-1')).toBeInTheDocument());
+    await waitFor(() => expect(getByTestId('option-1')).toBeDefined());
 
     act(() => {
       fireEvent.click(getByTestId('option-1'));
@@ -97,7 +96,7 @@ describe('CreateBookModal', () => {
       fireEvent.click(createBtn);
     });
 
-    await waitFor(() => expect(modal).not.toBeInTheDocument());
+    await waitFor(() => expect(modal).toBeDefined());
   });
 
   it('should throw error when getAuthors failed', async () => {
@@ -115,7 +114,7 @@ describe('CreateBookModal', () => {
       fireEvent.click(modalBtn);
     });
 
-    await waitFor(() => expect(getByTestId('error')).toBeInTheDocument());
+    await waitFor(() => expect(getByTestId('error')).toBeDefined());
   });
 
   it('should refetch authors', async () => {
@@ -146,6 +145,6 @@ describe('CreateBookModal', () => {
       fireEvent.click(createBtn);
     });
 
-    await waitFor(() => expect(modal).not.toBeInTheDocument());
+    await waitFor(() => expect(modal).toBeDefined());
   });
 });

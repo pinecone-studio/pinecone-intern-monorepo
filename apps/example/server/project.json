@@ -16,7 +16,8 @@
           "outputPath": "apps/example/server"
         },
         "production": {}
-      }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -38,7 +39,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen:local"
+          "target": "graphql-codegen:local"
         }
       ]
     },
@@ -55,7 +56,7 @@
         "lintFilePatterns": ["apps/example/server/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "codegen:local": {
+    "graphql-codegen:local": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config apps/example/server/codegen.ts"]
@@ -66,7 +67,7 @@
         }
       ]
     },
-    "codegen": {
+    "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config apps/example/server/codegen.ts"]
@@ -125,7 +126,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen"
+          "target": "graphql-codegen"
         }
       ]
     },
@@ -151,7 +152,7 @@
           "target": "clean"
         },
         {
-          "target": "codegen:local"
+          "target": "graphql-codegen:local"
         },
         {
           "target": "export-env"
@@ -173,7 +174,7 @@
           "target": "clean"
         },
         {
-          "target": "codegen"
+          "target": "graphql-codegen"
         },
         {
           "target": "export-env"
@@ -195,7 +196,7 @@
           "target": "clean"
         },
         {
-          "target": "codegen"
+          "target": "graphql-codegen"
         },
         {
           "target": "export-env"
