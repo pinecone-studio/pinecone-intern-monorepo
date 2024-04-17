@@ -31,7 +31,7 @@ const CourseAdd = () => {
     <Stack bgcolor={'#ECEDF0'} padding={'12px'}>
       <Stack
         onClick={() => {
-          router.push('../dashboardOtherLab');
+          router.push('/dashboardOtherLab');
         }}
         direction={'row'}
         gap={3}
