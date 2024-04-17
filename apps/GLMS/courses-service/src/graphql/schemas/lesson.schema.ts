@@ -14,9 +14,13 @@ export const courseSchema = gql`
     position: Int
     createdAt: Date
   }
+  input LessonInput{
+    title: String
+    thumbnail: String
+    position: Int
+  }
 
   type Mutation {
-    createLesson(title: String!, thumbnail: String!, position: Int): Lesson!
-    deleteLesson(id: String!): Lesson
+    createLesson(LessonInput:LessonInput!): Lesson!
   }
 `;

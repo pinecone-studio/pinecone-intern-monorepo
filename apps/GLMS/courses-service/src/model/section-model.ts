@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const contentSchema = new Schema({
+const sectionSchema = new Schema({
     title: {
         type: String,
       },
@@ -15,5 +15,5 @@ const contentSchema = new Schema({
         default: Date.now,
       },
 })
-const contentModel = model('content',contentSchema)
-export default contentModel 
+const sectionModel = model('section',sectionSchema)
+export default sectionModel 

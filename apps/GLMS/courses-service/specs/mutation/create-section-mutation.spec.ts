@@ -1,7 +1,7 @@
-import { createContents } from '@/graphql/resolvers/mutations';
-import contentModel from '@/model/create-content-model';
+import { createSection } from '@/graphql/resolvers/mutations';
+import sectionModel from '@/model/section-model';
 
-jest.mock('@/model/create-content-model', () => ({
+jest.mock('@/model/section-model', () => ({
   create: jest.fn(),
 }));
 
@@ -12,23 +12,25 @@ describe('createContents resolver', () => {
 
   it('should create content with provided data', async () => {
       const mockInput = {
+        SectionInput: {
           title: 'Test Title',
           description: 'Test Description',
-          contentImage: 'Test Image URl'
+          contentImage: 'Test Image URL'
+        }
       };
 
       const mockNewContent = {
           id: '321321',
-          title:mockInput.title,
-          description:mockInput.description,
-          contentImage:mockInput.contentImage,
+          title:mockInput.SectionInput.title,
+          description:mockInput.SectionInput.description,
+          contentImage:mockInput.SectionInput.contentImage,
             toObject: jest.fn(),
       };
 
-      (contentModel.create as jest.Mock).mockResolvedValue(mockNewContent);
-      const result = await createContents({}, mockInput);
+      (sectionModel.create as jest.Mock).mockResolvedValue(mockNewContent);
+      const result = await createSection({}, mockInput);
 
-      expect(contentModel.create).toHaveBeenCalledWith(mockInput);
+      expect(sectionModel.create).toHaveBeenCalledWith(mockInput);
       expect(result).toEqual(mockNewContent.toObject());
   });
   it('should throw an error if content creation fails', async () => {
@@ -40,9 +42,9 @@ describe('createContents resolver', () => {
 
     const mockError = new Error('cannot find content');
 
-    (contentModel.create as jest.Mock).mockRejectedValue(mockError);
+    (sectionModel.create as jest.Mock).mockRejectedValue(mockError);
 
-    await expect(createContents({}, mockInput)).rejects.toThrow(mockError);
+    await expect(createSection({}, mockInput)).rejects.toThrow(mockError);
 });
 
   it('should throw an unknown error if the error type is not recognized', async () => {
@@ -51,7 +53,7 @@ describe('createContents resolver', () => {
           description: 'Test Description',
           contentImage: 'Test Image URL'
       };
-      (contentModel.create as jest.Mock).mockRejectedValue('Unknown error');
-      await expect(createContents({}, mockInput)).rejects.toThrow('cannot find content');
+      (sectionModel.create as jest.Mock).mockRejectedValue('Unknown error');
+      await expect(createSection({}, mockInput)).rejects.toThrow('cannot find content');
   });
 })

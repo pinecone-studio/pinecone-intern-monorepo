@@ -37,7 +37,7 @@
           "dev": false
         }
       },
-      "dependsOn": [{ "target": "graphql-codegen" }]
+      "dependsOn": [{ "target": "graphql-" }]
     },
     "graphql-codegen": {
       "executor": "nx:run-commands",
