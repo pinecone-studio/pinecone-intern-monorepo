@@ -2,7 +2,6 @@ type ProfileButtonProps = {
   text: string;
 };
 
-export const RecruitingButton: React.FC<ProfileButtonProps> = (props) => {
-  const { text } = props;
+export const RecruitingButton = ({ text }: ProfileButtonProps) => {
   return <button>{text}</button>;
 };
