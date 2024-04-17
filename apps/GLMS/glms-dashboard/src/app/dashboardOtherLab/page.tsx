@@ -4,6 +4,7 @@ import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
 import Course from './_components/Course';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const data = [
   { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
@@ -19,9 +20,12 @@ const buttonsTop = ['Хичээл', 'Сорил'];
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 
-const  DashboardOtherLab =() => {
+
+
+const DashboardOtherLab = () => {
 
   const [actionTab, setActionTab] = useState('Хичээл');
+  const router = useRouter();
   const converter = () => {
     if (actionTab == 'Хичээл') {
       return 'course';
@@ -54,6 +58,9 @@ const  DashboardOtherLab =() => {
                     key={title}
                     variant="outlined"
                     color="inherit"
+                    onClick={() => {
+                      buttonsTop[0] ? router.push('../courseAdd') : null;
+                    }}
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
@@ -109,6 +116,7 @@ const  DashboardOtherLab =() => {
       </Stack>
     </Stack>
   );
+
 
 };
 export default DashboardOtherLab;

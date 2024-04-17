@@ -10,14 +10,14 @@ export const courseSchema = gql`
 
   type Course {
     _id: ID
-    title: String
-    thumbnail: String
-    position: Int
+    title: String!
+    thumbnail: String!
+    position: Int!
     createdAt: Date
   }
 
   type Mutation {
-    createCourse(title: String!, thumbnail: String!, position: Int): Course!
+    createCourse(title: String!, thumbnail: String!, position: Int!): Course!
     updateCourse(_id: ID!, title: String!, thumbnail: String!): Course
     deleteCourse(_id: String!): Course
   }

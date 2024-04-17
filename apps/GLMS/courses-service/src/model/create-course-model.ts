@@ -1,31 +1,24 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model, models } from 'mongoose';
 
 const courseSchema = new Schema({
   title: {
     type: String,
+    required: true,
   },
-  content: [
-    {
-      title: {
-        type: String,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
   thumbnail: {
     type: String,
+    required: true,
   },
   position: {
     type: Number,
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-}); 
+});
 
-const courseModel = model('Course', courseSchema);
+const courseModel = models.Course || model('Course', courseSchema);
 
 export default courseModel;
