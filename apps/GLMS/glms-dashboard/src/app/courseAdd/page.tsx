@@ -1,7 +1,7 @@
 'use client';
 
 import { East, KeyboardBackspace } from '@mui/icons-material';
-import { Button, Stack, TextField, TextareaAutosize, Typography } from '@mui/material';
+import { Button, Stack, TextField, Typography } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
@@ -21,7 +21,9 @@ const CourseAdd = () => {
       image: '',
     },
     validationSchema: validatinSchema,
-    onSubmit: () => {},
+    onSubmit: () => {
+      alert('hii');
+    },
   });
 
   const router = useRouter();
