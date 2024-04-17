@@ -32,7 +32,7 @@ export const MenuBar = () => {
       <Stack flexDirection={'row'} sx={{ textDecorationColor: 'gray', width: '65%', justifyContent: 'space-between', cursor: 'pointer' }}>
         { menuMock && menuMock.map((e: any, index) => {
           return (
-            <MenuBtn selected={selected} setSelected={setSelected} number={e.number} menu={e.menu}/>
+            <MenuBtn selected={selected} setSelected={setSelected} number={e.number} menu={e.menu} key={index}/>
           )
         })}
       </Stack>
