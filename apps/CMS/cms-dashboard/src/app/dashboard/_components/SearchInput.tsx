@@ -3,7 +3,7 @@ import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 
 const SearchInput = () => {
   return (
-    <Stack sx={{ width: '70%', bgcolor: '#FFF', borderRadius: 1.1 }}>
+    <Stack sx={{ width: '75%', bgcolor: '#FFF' }} border={'1px solid #D6D8DB'}>
       <TextField
         placeholder="Нийтлэл, шошгоор хайх"
         InputProps={{

@@ -5,6 +5,7 @@ import SearchInput from './_components/SearchInput';
 import { Navbar } from './_components/Navbar';
 import { FooterButtons, MenuBar } from './_features';
 import DashboardTable from './_components/DashboardTable';
+import { FilterByDate } from './_components/FilterByDate';
 
 const Home = () => {
   return (
@@ -15,7 +16,10 @@ const Home = () => {
         <Container sx={{ p: 3 }}>
           <Stack gap={2.5}>
             <Stack gap={0.7}>
-              <SearchInput />
+              <Stack direction={'row'} justifyContent={'space-between'}>
+                <SearchInput />
+                <FilterByDate />
+              </Stack>
               <MenuBar />
             </Stack>
 
