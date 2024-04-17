@@ -8,7 +8,7 @@ jest.mock('@/model/section-model', () => ({
 }));
 describe('getContents', () => {
   it('should return content from contentModel', async () => {
-    const content: any[] = [{ title: 'Course 1' }, { title: 'Course 2' }];
+    const content = [{ title: 'Course 1' }, { title: 'Course 2' }];
     (sectionModel.find as jest.Mock).mockResolvedValue(content);
     const result = await getSections();
     expect(result).toEqual(content);

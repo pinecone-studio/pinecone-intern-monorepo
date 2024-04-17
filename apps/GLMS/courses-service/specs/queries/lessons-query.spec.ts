@@ -7,7 +7,7 @@ jest.mock('@/model/create-lesson-model', () => ({
   }));
   describe('getCourses', () => {
     it('should return courses from courseModel', async () => {
-      const courses: any[] = [{ title: 'Course 1' }, { title: 'Course 2' }];
+      const courses = [{ title: 'Course 1' }, { title: 'Course 2' }];
       (courseModel.find as jest.Mock).mockResolvedValue(courses);
       const result = await getLessons();
       expect(result).toEqual(courses);
