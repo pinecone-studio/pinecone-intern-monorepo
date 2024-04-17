@@ -1,5 +1,5 @@
 import { Article } from '@/graphql/generated';
-import mongoose, { Schema, model, Model } from 'mongoose';
+import mongoose, { Schema, model, Model, models } from 'mongoose';
 
 const articleSchema = new Schema({
   title: {
@@ -39,4 +39,4 @@ const articleSchema = new Schema({
   scheduledAt: Date,
 });
 
-export const ArticleModel: Model<Article> = mongoose.models.article || model<Article>('article', articleSchema);
+export const ArticleModel: Model<Article> = models.article || model<Article>('article', articleSchema);
