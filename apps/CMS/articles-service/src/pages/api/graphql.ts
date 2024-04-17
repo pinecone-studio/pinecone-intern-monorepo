@@ -13,7 +13,7 @@ const server = new ApolloServer({
   }),
   introspection: true,
   csrfPrevention: true,
-  // cache: new InMemoryLRUCache(),
+  cache: new InMemoryLRUCache(),
   context: ({ req, res }: { req: Request; res: Response }) => ({
     headers: req.headers,
     req,
