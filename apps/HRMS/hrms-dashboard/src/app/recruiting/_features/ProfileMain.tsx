@@ -4,7 +4,7 @@ export const RecruitMain = () => {
   return (
     <div>
       hello from Domain Recruiting and Features recruiting main with
-      <RecruitingButton text={'Recruit button'} />
+      <RecruitingButton text={'Recruit button'}  />
     </div>
   );
 };
