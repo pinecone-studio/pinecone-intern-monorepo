@@ -10,9 +10,9 @@ const getCharacterValidationError = (str: string) => {
 };
 
 const validationSchema = object({
-  emailOrPhoneNumber: string().required(`Хоосон байж болохгүй`),
+  emailOrPhoneNumber: string().required(`Email or Phone Number Хоосон байж болохгүй`),
   password: string()
-    .required(`Хоосон байж болохгүй`)
+    .required(`Password xоосон байж болохгүй`)
     .min(8, 'Password must have at least 8 characters')
     .matches(/[0-9]/, getCharacterValidationError('digit'))
     .matches(/[a-z]/, getCharacterValidationError('lowercase'))
@@ -36,7 +36,7 @@ const SignUpForm = () => {
     onSubmit: (values) => {
       handleLogin(values);
     },
-    validateOnChange: false,
+    validateOnChange: true,
     initialValues: { password: '', confirmPassword: '', emailOrPhoneNumber: '' },
     validationSchema: validationSchema,
   });
@@ -72,7 +72,15 @@ const SignUpForm = () => {
             </Typography>
             <ArrowForward data-testid="sign-up-modal-icon2" color="secondary" />
           </Stack>
-          <Button type="submit" component={'button'} data-testid="sign-up-modal-login-btn" color="primary" sx={{ cursor: !isValid ? 'not-allowed' : 'pointer' }} disabled={!isValid}>
+          <Button
+            data-cy="Login-Button"
+            type="submit"
+            component={'button'}
+            data-testid="sign-up-modal-login-btn"
+            color="primary"
+            sx={{ cursor: !isValid ? 'not-allowed' : 'pointer' }}
+            disabled={!isValid}
+          >
             Нэвтрэх
           </Button>
         </Stack>

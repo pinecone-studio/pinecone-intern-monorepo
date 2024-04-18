@@ -155,6 +155,8 @@ jobs:
       - name: Install Nx CLI
         run: bun add --global @nrwl/cli@latest
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Cypress
+        run: bunx cypress install
       - name: Setup Canvas
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
         run: npm rebuild canvas
