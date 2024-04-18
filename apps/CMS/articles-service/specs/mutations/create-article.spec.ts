@@ -1,6 +1,6 @@
-import { GraphQLError, GraphQLResolveInfo } from 'graphql';
+/* eslint-disable no-secrets/no-secrets */
+import {  GraphQLResolveInfo } from 'graphql';
 import { createArticle } from '../../src/graphql/resolvers/mutations';
-import { articleModel } from '../../src/models/article.model';
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 
 const mockData = {
@@ -36,7 +36,7 @@ describe('create Article', () => {
   
   it('qwert', async () => {
     try {
-      const result = await createArticle!({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
+       await createArticle!({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({message: 'cannot created article'},errorTypes.INTERVAL_SERVER_ERROR));
     }
