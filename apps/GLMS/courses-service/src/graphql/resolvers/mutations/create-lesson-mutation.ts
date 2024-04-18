@@ -8,6 +8,5 @@ export const createLesson: MutationResolvers['createLesson'] = async (_, { Lesso
     return newLesson.toObject();
   } catch (error) {
     throw new GraphQLError('An unknown error occurred'); 
-
   }
   }
