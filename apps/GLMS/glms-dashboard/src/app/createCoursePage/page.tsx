@@ -2,7 +2,7 @@
 
 import { East, KeyboardBackspace } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
-import Textarea from '@mui/joy/Textarea';
+
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -62,7 +62,7 @@ const CourseAdd = () => {
                 <Typography fontWeight={600} fontSize={16} color={'#121316'}>
                   {'Дэлгэрэнгүй'}
                 </Typography>
-                <Textarea
+                <TextField
                   data-testid="description"
                   name="description"
                   onChange={formik.handleChange}
