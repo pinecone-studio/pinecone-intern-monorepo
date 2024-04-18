@@ -13,7 +13,7 @@ jest.mock('../../src/models/dependent', () => ({
         phone: '90909090',
         dependency: 'brother',
       })
-      .mockReturnValueOnce(null),
+      .mockRejectedValue(null),
   },
 }));
 
