@@ -26,6 +26,7 @@ export default defineConfig({
     responseTimeout: 120e3,
     screenshotOnRunFailure: true,
     numTestsKeptInMemory: 0,
+    retries: 2,
     trashAssetsBeforeRuns: true,
     requestTimeout: 30000,
     reporter: '../../../node_modules/cypress-multi-reporters',

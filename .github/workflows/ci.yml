@@ -124,8 +124,8 @@ jobs:
 
   preview:
     runs-on: ubuntu-latest
-    if: "${{ github.event.label.name == 'PR status: code ready' }}"
-    timeout-minutes: 20
+    needs: [lint, test, build]
+    timeout-minutes: 60
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
@@ -155,6 +155,8 @@ jobs:
       - name: Install Nx CLI
         run: bun add --global @nrwl/cli@latest
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Cypress
+        run: bunx cypress install
       - name: Setup Canvas
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
         run: npm rebuild canvas

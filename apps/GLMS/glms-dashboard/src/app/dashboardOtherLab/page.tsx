@@ -18,9 +18,7 @@ const data = [
 const buttonsTop = ['Хичээл', 'Сорил'];
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
-
-const  DashboardOtherLab =() => {
-
+const DashboardOtherLab = () => {
   const [actionTab, setActionTab] = useState('Хичээл');
   const converter = () => {
     if (actionTab == 'Хичээл') {
@@ -34,7 +32,7 @@ const  DashboardOtherLab =() => {
     }
   };
   return (
-    <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'}>
+    <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'} data-cy="Dashboard-Lab-Page">
       <Stack bgcolor={'white'} width={'100%'}>
         <Stack borderBottom={'1px solid #0000001A'} borderTop={'1px solid #0000001A'}>
           <Container maxWidth="xl" sx={{ display: 'flex' }}>
@@ -109,7 +107,5 @@ const  DashboardOtherLab =() => {
       </Stack>
     </Stack>
   );
-
 };
 export default DashboardOtherLab;
-
