@@ -12,12 +12,12 @@ const topDiv = {
   justifyContent: 'space-between',
 };
 
-const JobDash = () => {
+export const JobDash = () => {
   return (
     <div style={bigDiv}>
       <div style={topDiv}>
         <h1> Ажлын зар</h1>
-        <button>Зар нэмэх</button>
+        <p>Зар нэмэх</p>
       </div>
       <div>
         <div style={{ marginTop: '20px', borderBottom: '1px solid gray', width: '100%' }}>
@@ -34,7 +34,7 @@ const JobDash = () => {
                 <p>Байршил: Гурван гол оффис центр</p>
               </div>
               <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
-                <button style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</button>
+                <p style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</p>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@ const JobDash = () => {
                 <p>Байршил: Гурван гол оффис центр</p>
               </div>
               <div style={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
-                <button style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</button>
+                <p style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</p>
               </div>
             </div>
           </div>
@@ -54,5 +54,3 @@ const JobDash = () => {
     </div>
   );
 };
-
-export default JobDash;
