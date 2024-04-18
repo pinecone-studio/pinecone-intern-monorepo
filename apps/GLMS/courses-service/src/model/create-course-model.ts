@@ -4,16 +4,6 @@ const courseSchema = new Schema({
   title: {
     type: String,
   },
-  content: [
-    {
-      title: {
-        type: String,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
   thumbnail: {
     type: String,
   },
@@ -24,7 +14,7 @@ const courseSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-}); 
+});
 
 const courseModel = model('Course', courseSchema);
 
