@@ -28,6 +28,7 @@ const articleSchema = new Schema({
     type:String,
     required:true
   },
+  commentPermission: Boolean,
   createdAt: {
     type: Date,
     default: Date.now,
