@@ -13,6 +13,7 @@ describe('RecruitingButton', () => {
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
     const { getByText } = render(<RecruitingButton text="hello test" />);
     const button = getByText('hello test');
+
     fireEvent.click(button);
     expect(mockPush).toHaveBeenCalledWith('/jobrecruit');
   });
