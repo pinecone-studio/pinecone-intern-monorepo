@@ -1,13 +1,12 @@
 import React from 'react';
-import { FooterButtons, MenuBar } from './_features';
+import DashboardTable from './_components/DashboardTable';
 
 const Home = () => {
   return (
-    <div data-cy="Dashboard-Welcome-Message">
-      <MenuBar />
-      Welcome to Cms Dashboard hello
-      <FooterButtons />
-    </div>
+    <>
+      {/* <div>Welcome to Cms Dashboard hello</div> */}
+      <DashboardTable />
+    </>
   );
 };
 export default Home;

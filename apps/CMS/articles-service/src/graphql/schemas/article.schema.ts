@@ -24,21 +24,7 @@ export const articleSchema = gql`
     SCHEDULED
   }
 
-  input CreateArticleInput {
-    title: String!
-    coverPhoto: String!
-    content: String!
-    author: ID!
-    category: ID!
-    status: String!
-    slug: String!
-    commentPermission: Boolean!
-  }
-
-  type Mutation {
-    createArticle(articleInput: CreateArticleInput!): Article!
-  }
   type Query {
-    getArticlesQuery: [Article]!
+    articles: [Article]
   }
 `;
