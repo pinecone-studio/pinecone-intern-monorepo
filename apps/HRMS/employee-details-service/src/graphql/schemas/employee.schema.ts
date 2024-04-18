@@ -114,6 +114,13 @@ export const employeeDetailsSchema = gql`
     relative: [Department]
   }
 
+  input CreateDependetInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+
   type Query {
     getDependent(_id: ID): Dependent!
     getAllDependents: [Dependent!]
@@ -121,7 +128,7 @@ export const employeeDetailsSchema = gql`
 
   type Mutation {
     createEmployee(firstName: String!, lastName: String!, email: String!, department: String!, jobTitle: String!, ladderLevel: Int!, salary: Float!, employmentStatus: String!): Employee!
-    createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
+    createDependent(input: CreateDependetInput): Dependent!
     deleteDependent(_id: ID!): Dependent!
     updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
   }
