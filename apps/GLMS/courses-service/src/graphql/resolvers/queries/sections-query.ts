@@ -7,5 +7,4 @@ export const getSections = async () => {
     } catch (error) {
         throw new GraphQLError('cannot find content'); 
     }
-
 };
