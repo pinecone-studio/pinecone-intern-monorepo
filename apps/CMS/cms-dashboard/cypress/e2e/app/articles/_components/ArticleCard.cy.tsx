@@ -10,7 +10,7 @@ describe('it should renders with correct style', () => {
     category: 'String',
   };
   cy.get('[data-testid="main-container"]').should('exist');
-  cy.get('[data-testid="main-container"]').should('have.css', 'height', 404);
+  cy.get('[data-testid="main-container"]').should('have.css', 'height', '404px');
   cy.get('[data-testid="main-container"]').children().should('have.length', 1);
 
   cy.get('[data-testid="article-date"]').should('exist').and('have.text', props.date.toString());
