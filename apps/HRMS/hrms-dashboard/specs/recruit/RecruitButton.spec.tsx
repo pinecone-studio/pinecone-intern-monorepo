@@ -14,6 +14,6 @@ describe('RecruitingButton', () => {
     const { getByText } = render(<RecruitingButton text="hello test" />);
     const button = getByText('hello test');
     fireEvent.click(button);
-    expect(mockPush).toHaveBeenCalledWith('/recruiting/jobrecruit');
+    expect(mockPush).toHaveBeenCalledWith('/jobrecruit');
   });
 });

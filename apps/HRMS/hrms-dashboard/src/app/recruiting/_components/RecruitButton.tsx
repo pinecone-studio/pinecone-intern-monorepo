@@ -7,5 +7,5 @@ type ProfileButtonProps = {
 
 export const RecruitingButton = ({ text }: ProfileButtonProps) => {
   const router = useRouter();
-  return <button onClick={() => router.push('/recruiting/jobrecruit')}>{text}</button>;
+  return <button onClick={() => router.push('/jobrecruit')}>{text}</button>;
 };
