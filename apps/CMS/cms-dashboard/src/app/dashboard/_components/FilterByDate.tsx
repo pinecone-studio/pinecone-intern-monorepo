@@ -48,7 +48,7 @@ export const FilterByDate = () => {
 
         {open && (
           <Stack position={'absolute'} height={'100%'} right={0} top={'56px'}>
-            <Stack>
+            <Stack border={1} borderRadius={1} zIndex={1}>
               <DateRangePicker
                 retainEndDateOnFirstSelection
                 startDatePlaceholder="Start date"
@@ -62,7 +62,7 @@ export const FilterByDate = () => {
                 ]}
                 onChange={handleDateChange}
               />
-              <Button data-testid="close-calendar-button-test-id" onClick={openCalendar} sx={{ color: '#3F4145', width: '100%' }}>
+              <Button data-testid="close-calendar-button-test-id" onClick={openCalendar} sx={{ color: '#3F4145', width: '100%', borderTop: 1 }}>
                 Close
               </Button>
             </Stack>

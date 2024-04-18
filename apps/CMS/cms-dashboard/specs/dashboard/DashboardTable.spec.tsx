@@ -18,23 +18,30 @@ describe('DashboardTable', () => {
     });
 
     expect(container.getElementsByTagName('div')[0]).toBeDefined();
-  });
-
-  it('3. DashboardTable close morevert button', async () => {
-    const { container } = render(<DashboardTable />);
-
-    const moreVertButton = container.getElementsByTagName('button')[0];
 
     await act(() => {
       fireEvent.click(moreVertButton);
     });
+  });
 
-    // const closeButton = container.getElementsByTagName('button')[0].getElementsByTagName('div')[0];
-    const closeButton = container.getElementsByTagName('button')[0].getElementsByTagName('div')[0];
-    console.log(closeButton);
+  it('3. DashboardTable close morevert button', async () => {
+    const { container, getAllByTestId } = render(<DashboardTable />);
 
-    await act(() => {
-      fireEvent.click(closeButton);
+    const moreVertButton = container.getElementsByTagName('button')[0];
+
+    await act(async () => {
+      await fireEvent.click(moreVertButton);
+    });
+
+    const menuItem = getAllByTestId('close-button-menu-test-id')[0];
+    const menuIcon = getAllByTestId('item-icon')[0];
+    const test = getAllByTestId('drop-down-menu-test-id')[0];
+    console.log(test);
+    expect(menuItem).toBeTruthy();
+    expect(menuIcon).toBeTruthy();
+
+    await act(async () => {
+      await fireEvent.click(menuItem);
     });
   });
 });
