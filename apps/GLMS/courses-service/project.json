@@ -39,17 +39,6 @@
       },
       "dependsOn": [{ "target": "graphql-codegen" }]
     },
-    "graphql-codegen:local": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config apps/example/server/codegen.ts"]
-      },
-      "dependsOn": [
-        {
-          "target": "get-secrets:development"
-        }
-      ]
-    },
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
