@@ -23,6 +23,11 @@ const nextConfig = {
 
     return config;
   },
+  env: {
+    MONGODB_URL: process.env.MONGODB_URL ?? '',
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN || '',
+    ENVIRONMENTT: process.env.ENVIRONMENTT || '',
+  },
 };
 
 const plugins = [
