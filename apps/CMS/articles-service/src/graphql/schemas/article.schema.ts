@@ -12,9 +12,8 @@ export const articleSchema = gql`
     status: ArticleStatus!
     slug: String!
     createdAt: Date
-    publishedAt: Date
+    publishAt: Date
     updatedAt: Date
-    scheduledAt: Date
   }
   enum ArticleStatus {
     DRAFT

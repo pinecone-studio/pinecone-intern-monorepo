@@ -7,34 +7,35 @@ const articleSchema = new Schema({
   },
   coverPhoto: String,
   content: {
-    type:String,
-    required: true
+    type: String,
+    required: true,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required:true
+    required: true,
   },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'category',
-    required:true
-  },
+  cateogry: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'category',
+      required: true,
+    },
+  ],
   status: {
     type: String,
-    required:true
+    required: true,
   },
   slug: {
-    type:String,
-    required:true
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  publishedAt: Date,
+  publishAt: Date,
   updatedAt: Date,
-  scheduledAt:Date
 });
 
 export const articleModel = mongoose.models.article || model('article', articleSchema);

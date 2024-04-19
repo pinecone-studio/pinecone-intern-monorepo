@@ -18,6 +18,8 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
   }
 }
 
+console.log(process.env.ARTICLES_SERVICE);
+
 const gateway = new ApolloGateway({
   supergraphSdl: new IntrospectAndCompose({
     subgraphs: [

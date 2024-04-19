@@ -7,6 +7,7 @@ export const connectToDatabase = async () => {
       return;
     }
     await connect(databaseUri);
+    console.log('success');
   } catch (error) {
     throw new Error('connection failed');
   }

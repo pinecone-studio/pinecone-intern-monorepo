@@ -1,0 +1,10 @@
+query GetCommentsByArticleId($articleId: ID!) {
+  getCommentsByArticleId(articleId: $articleId) {
+    comment
+    id
+    userName
+    createdAt
+    ipAddress
+    articleId
+  }
+}

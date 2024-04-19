@@ -9,6 +9,7 @@ export type DashBoardArticleDetailType = {
 
 const DashBoardArticleDetail = (props: DashBoardArticleDetailType) => {
   const { rate, comment, share } = props;
+
   return (
     <Stack data-testid="dashboard-article-detail" width={'100%'} bgcolor={'#F7F7F8'} height={44} justifyContent={'center'} px={2}>
       <Stack flexDirection={'row'} justifyContent={'space-between'}>
