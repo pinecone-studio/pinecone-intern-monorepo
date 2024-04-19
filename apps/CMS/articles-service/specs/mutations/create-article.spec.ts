@@ -30,13 +30,13 @@ jest.mock('../../src/models/article.model', () => ({
 
 describe('create Article', () => {
   it('should create a article', async () => {
-    const result = await createArticle!({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
+    const result = await createArticle({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(mockData);
   });
   
   it('should throw error if cannot create article', async () => {
     try {
-       await createArticle!({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
+       await createArticle({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({message: 'cannot created article'},errorTypes.INTERVAL_SERVER_ERROR));
     }
