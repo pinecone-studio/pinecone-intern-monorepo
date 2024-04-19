@@ -1,3 +1,3 @@
 export * from './hello-query';
-export * from './courses-query';
-
+export * from './lessons-query';
+export * from './sections-query';

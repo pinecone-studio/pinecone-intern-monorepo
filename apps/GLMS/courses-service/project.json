@@ -43,7 +43,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config apps/GLMS/courses-service/codegen.ts"]
-      }
+      },"dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
+
     },
     "export": {
       "executor": "@nx/next:export",
