@@ -34,7 +34,7 @@ const DashboardTable = () => {
 
   return (
     <TableContainer component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
-      <Table sx={{ minWidth: 650 }}>
+      <Table sx={{ minWidth: 660 }}>
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Нийтлэл</TableCell>
