@@ -3,7 +3,7 @@ import { gql } from 'graphql-tag';
 export const articleSchema = gql`
   scalar Date
   type Article {
-    id: ID!
+    id: ID
     title: String!
     coverPhoto: String
     content: String!
@@ -11,6 +11,7 @@ export const articleSchema = gql`
     category: Category!
     status: ArticleStatus!
     slug: String!
+    commentPermission: Boolean!
     createdAt: Date
     publishedAt: Date
     updatedAt: Date
@@ -21,5 +22,20 @@ export const articleSchema = gql`
     PUBLISHED
     ARCHIVED
     SCHEDULED
+  }
+
+  input CreateArticleInput {
+    title: String!
+    coverPhoto: String!
+    content: String!
+    author: ID!
+    category: ID!
+    status: String!
+    slug: String!
+    commentPermission:Boolean!
+  }
+
+  type Mutation {
+    createArticle(articleInput: CreateArticleInput!): Article!
   }
 `;
