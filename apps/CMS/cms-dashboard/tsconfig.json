@@ -36,5 +36,5 @@
     "../../../apps/CMS/cms-dashboard/.next/types/**/*.ts",
     "../../../dist/apps/CMS/cms-dashboard/.next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+  "exclude": ["node_modules", "jest.config.ts"]
 }
