@@ -25,6 +25,6 @@ export const articleSchema = gql`
   }
 
   type Query {
-    articles: [Article]
+    getArticles: [Article]
   }
 `;
