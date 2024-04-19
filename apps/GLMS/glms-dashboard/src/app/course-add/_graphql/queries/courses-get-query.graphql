@@ -1,7 +1,7 @@
-query getCourses {
-  getCourses {
-    _id
-    title
-    thumbnail
-  }
-}
+# query getCourses {
+#   getCourses {
+#     _id
+#     title
+#     thumbnail
+#   }
+# }
