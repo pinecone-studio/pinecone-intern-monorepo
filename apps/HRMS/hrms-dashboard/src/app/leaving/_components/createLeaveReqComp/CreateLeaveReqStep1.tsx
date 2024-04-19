@@ -27,6 +27,9 @@ export const CreateLeaveReqStep1 = () => {
   const labels = [label1, label2, label3];
   const leaveReasons = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
 
+  const newDateType = new Date();
+  const dayjstype = dayjs('2000-12-12');
+
   const formik = useFormik({
     initialValues: {
       step1Date: dayjs(),
@@ -35,7 +38,7 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values.step1Date);
       setStepNo(1);
     },
   });
@@ -50,11 +53,12 @@ export const CreateLeaveReqStep1 = () => {
                 {item}
               </Typography>
               {item == label1 ? (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} />
+                <LocalizationProvider data-cy="datepicker-input" dateAdapter={AdapterDayjs}>
+                  <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
                 </LocalizationProvider>
               ) : item == label2 ? (
                 <TextField
+                  data-cy="name-select-input"
                   select
                   name="step1UserName"
                   value={formik.values.step1UserName}

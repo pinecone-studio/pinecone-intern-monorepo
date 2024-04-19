@@ -12,7 +12,7 @@ export const CreateLeaveReqMain = () => {
 
   return (
     <Box>
-      <Button data-cy="submit" onClick={handleOpen}>
+      <Button data-cy="open-request" onClick={handleOpen}>
         Чөлөөний хуудас бөглөх
       </Button>
       <CreateLeaveReqModal />
