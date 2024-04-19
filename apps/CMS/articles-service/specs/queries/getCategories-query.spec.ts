@@ -13,7 +13,7 @@ describe('Category', () => {
         const categories = [{ name: 'Entertainment' }, { name: 'Hollywood' }];
         (categoryModel.find as jest.Mock).mockResolvedValue(categories);
 
-        const result = await getCategories!({}, {}, {}, {} as GraphQLResolveInfo);
+        const result = await getCategories!({undefined}, {undefined}, {undefined}, {} as GraphQLResolveInfo);
 
         expect(result).toEqual(categories);
         expect(categoryModel.find).toHaveBeenCalledTimes(1);
@@ -23,7 +23,7 @@ describe('Category', () => {
         
         (categoryModel.find as jest.Mock).mockRejectedValue(mockError);
     
-        await expect(getCategories!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+        await expect(getCategories!({undefined}, {undefined}, {undefined}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
     
         expect(categoryModel.find).toHaveBeenCalledTimes(2);
     })
