@@ -30,5 +30,5 @@ const LeaveRequestSchema = new mongoose.Schema({
   decidedAt: Date,
 });
 
-const LeaveRequestModel = mongoose.models.LeaveRequest || mongoose.model('LeaveRequest', LeaveRequestSchema);
-export { LeaveRequestModel };
+export const LeaveRequestModel = mongoose.models.LeaveRequest || mongoose.model('LeaveRequest', LeaveRequestSchema);
+
