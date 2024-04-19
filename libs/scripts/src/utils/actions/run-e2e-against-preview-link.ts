@@ -22,7 +22,7 @@ export const isCommandFailed = (code: number) => {
 
 export const runE2ECommand = async (projectWithE2E: string | undefined, project: ProjectPreview) => {
   if (projectWithE2E) {
-    const command = `bunx nx cypress:run ${project.name} --verbose --config baseUrl=${project.url}`;
+    const command = `bunx nx cypress:run ${project.name} --verbose --baseUrl=${project.url} --skipServe --devServerTarget=""`;
     const childProcess = spawn(command, [], { shell: true });
     childProcess.stdout.on('data', (data) => {
       console.log(data.toString());
