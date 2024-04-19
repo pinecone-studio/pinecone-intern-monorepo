@@ -1,10 +1,17 @@
-import { Dependent, MutationResolvers } from '@/graphql/generated';
+import { QueryResolvers } from '@/graphql/generated';
 import { DependentModel } from '@/models/dependent';
+import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const getDependent: MutationResolvers['Dependent'] = async (_: string, { _id }: Dependent) => {
-  const getDependent = await DependentModel.findById(_id);
-  if (!getDependent) {
-    throw new Error('failed get dependent');
+export const getDependent: QueryResolvers['getDependent'] = async (_, { id }) => {
+  try {
+    const getDependent = await DependentModel.findById(id);
+
+    if (!getDependent) {
+      throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
+    }
+
+    return getDependent;
+  } catch (error) {
+    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR);
   }
-  return getDependent;
 };

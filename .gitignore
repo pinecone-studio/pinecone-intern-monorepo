@@ -66,3 +66,11 @@ generated.tsx
 .vercel
 .env
 .env.preview
+
+# Terraform
+
+**/.terraform
+**/.terraform.lock.hcl
+**/.terraform.tfstate.lock.info
+**/*.tfstate
+**/*.tfstate.*

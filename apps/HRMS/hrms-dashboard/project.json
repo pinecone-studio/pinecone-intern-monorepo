@@ -128,8 +128,7 @@
       },
       "dependsOn": [
         {
-          "target": "cypress:clean",
-          "params": "forward"
+          "target": "cypress:clean"
         },
         {
           "target": "codegen"
@@ -163,8 +162,7 @@
       },
       "dependsOn": [
         {
-          "target": "cypress:clean",
-          "params": "forward"
+          "target": "cypress:clean"
         },
         {
           "target": "codegen"
@@ -207,9 +205,9 @@
       "options": {
         "commands": [
           "npx nx codegen hrms-dashboard --configuration=preview",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/HRMS/hrms-dashboard/.env.preview vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -230,9 +228,9 @@
       "options": {
         "commands": [
           "npx nx codegen hrms-dashboard --configuration=development",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/HRMS/hrms-dashboard/.env.development vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -253,9 +251,9 @@
       "options": {
         "commands": [
           "npx nx codegen hrms-dashboard --configuration=production",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/HRMS/hrms-dashboard/.env.production vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_93uWVrxwSkFT4TxAYWQFaEbA4xdG -- vercel --archive=tgz --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_N6bIYczHoE9hntCfwQkzroFzDDQn -- vercel --archive=tgz --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },

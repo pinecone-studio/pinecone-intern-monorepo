@@ -1,7 +1,11 @@
 import { GraphQLError } from 'graphql';
 import { ApolloServerErrorCode } from '@apollo/server/errors';
- 
+
 export const errorTypes = {
+  BAD_USER_INPUT: {
+    errorCode: ApolloServerErrorCode.BAD_USER_INPUT,
+    errorStatus: 400,
+  },
   BAD_REQUEST: {
     errorCode: ApolloServerErrorCode.BAD_REQUEST,
     errorStatus: 400,
@@ -21,9 +25,9 @@ export const errorTypes = {
   UNAUTHENTICATED: {
     errorCode: 'UNAUTHENTICATED',
     errorStatus: 401,
-  }
+  },
 };
- 
+
 export const graphqlErrorHandler = (errorMessage: { message: string }, errorType: { errorCode: string; errorStatus: number }) => {
   return new GraphQLError(errorMessage.message, {
     extensions: {
@@ -31,4 +35,4 @@ export const graphqlErrorHandler = (errorMessage: { message: string }, errorType
       http: { status: errorType.errorStatus },
     },
   });
-}
+};

@@ -1,10 +1,16 @@
-import { Dependent, MutationResolvers } from '@/graphql/generated';
+import { MutationResolvers } from '@/graphql/generated';
 import { DependentModel } from '@/models/dependent';
+import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const deleteDependent: MutationResolvers['DependentDelete'] = async (_: string, { _id }: Dependent) => {
-  const deleteDependentId = await DependentModel.findByIdAndDelete(_id);
-  if (!deleteDependentId) {
-    throw new Error('failed delete dependent');
+export const deletedDependent: MutationResolvers['deletedDependent'] = async (_, { id }) => {
+  try {
+    const deletedDependent = await DependentModel.findByIdAndDelete(id);
+    if (!deletedDependent) {
+      throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
+    }
+
+    return deletedDependent;
+  } catch (error) {
+    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
-  return deleteDependentId;
 };

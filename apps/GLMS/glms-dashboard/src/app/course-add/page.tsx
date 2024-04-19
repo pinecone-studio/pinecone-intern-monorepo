@@ -1,31 +1,32 @@
 'use client';
-import { Box, Input, Stack, Typography, Button } from '@mui/material';
-import React, { useRef } from 'react';
-import LeftArrow from './assets/LeftArrow';
-import { useCreateCourseMutation } from '@/generated/index';
+// import { Box, Input, Stack, Typography, Button } from '@mui/material';
+import { Stack } from '@mui/material';
+import React from 'react';
+// import LeftArrow from './assets/LeftArrow';
+// import { useCreateCourseMutation } from '@/generated/index';
 
 const CourseAdd = () => {
-  const [createCourse] = useCreateCourseMutation();
-  const CourseInput = useRef({
-    title: '',
-    thumbnail: '',
-  });
-  const handleBack = (field: string, value: string | number) => {
-    CourseInput.current = { ...CourseInput.current, [field]: value };
-  };
+  // const [createCourse] = useCreateCourseMutation();
+  // const CourseInput = useRef({
+  //   title: '',
+  //   thumbnail: '',
+  // });
+  // const handleBack = (field: string, value: string | number) => {
+  //   CourseInput.current = { ...CourseInput.current, [field]: value };
+  // };
 
-  const handleSubmit = async () => {
-    const { data } = await createCourse({
-      variables: {
-        title: CourseInput.current.title,
-        thumbnail: CourseInput.current.thumbnail,
-      },
-    });
-    throw data;
-  };
+  // const handleSubmit = async () => {
+  //   const { data } = await createCourse({
+  //     variables: {
+  //       title: CourseInput.current.title,
+  //       thumbnail: CourseInput.current.thumbnail,
+  //     },
+  //   });
+  //   throw data;
+  // };
   return (
     <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }} data-cy="Course-Add-Page">
-      <Box>
+      {/* <Box>
         <LeftArrow />
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -71,7 +72,7 @@ const CourseAdd = () => {
             <Button onClick={handleSubmit}>Үргэлжлүүлэх</Button>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Stack>
   );
 };
