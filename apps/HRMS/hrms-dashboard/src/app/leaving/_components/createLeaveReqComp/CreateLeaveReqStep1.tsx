@@ -27,9 +27,6 @@ export const CreateLeaveReqStep1 = () => {
   const labels = [label1, label2, label3];
   const leaveReasons = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
 
-  const newDateType = new Date();
-  const dayjstype = dayjs('2000-12-12');
-
   const formik = useFormik({
     initialValues: {
       step1Date: dayjs(),
@@ -38,7 +35,6 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values.step1Date);
       setStepNo(1);
     },
   });
@@ -46,9 +42,9 @@ export const CreateLeaveReqStep1 = () => {
   return (
     <Box>
       <Stack sx={{ gap: '16px' }}>
-        {labels.map((item) => {
+        {labels.map((item, index) => {
           return (
-            <Stack sx={{ gap: '4px' }}>
+            <Stack key={index} sx={{ gap: '4px' }}>
               <Typography fontSize={16} fontWeight={400} color={'#121316'}>
                 {item}
               </Typography>
@@ -72,6 +68,7 @@ export const CreateLeaveReqStep1 = () => {
                 </TextField>
               ) : item == label3 ? (
                 <TextField
+                  data-cy="type-select-input"
                   select
                   name="step1LeaveType"
                   value={formik.values.step1LeaveType}
@@ -97,6 +94,7 @@ export const CreateLeaveReqStep1 = () => {
           <ArrowBack sx={{ color: 'white' }} />
         </IconButton>
         <Button
+          data-cy="next-btn"
           onClick={() => {
             formik.handleSubmit();
           }}

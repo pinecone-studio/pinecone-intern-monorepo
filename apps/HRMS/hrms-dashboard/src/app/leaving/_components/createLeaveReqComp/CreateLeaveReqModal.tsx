@@ -35,7 +35,7 @@ export const CreateLeaveReqModal = () => {
           <Typography fontSize={18} fontWeight={600} color={'#000'}>
             Чөлөөний хуудас бөглөх
           </Typography>
-          <IconButton>
+          <IconButton data-cy="modal-closing-btn">
             <Clear onClick={handleClose} sx={{ color: '#121316' }} />
           </IconButton>
         </Box>
