@@ -45,7 +45,7 @@ export const CreateLeaveReqStep1 = () => {
         {labels.map((item, index) => {
           return (
             <Stack key={index} sx={{ gap: '4px' }}>
-              <Typography fontSize={16} fontWeight={400} color={'#121316'}>
+              <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
                 {item}
               </Typography>
               {item == label1 ? (
