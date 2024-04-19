@@ -25,7 +25,7 @@ describe('GetArticleByID', () => {
     });
 
     it('should return the article when found', async () => {
-        const result = await getArticleByID!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+        const result = await getArticleByID!({undefined}, { id: '1' }, {undefined}, {} as GraphQLResolveInfo);
         expect(result).toEqual({
             _id: '1',
             title: "Test title",
@@ -36,10 +36,10 @@ describe('GetArticleByID', () => {
             status: "ARCHIVED"
         });
       });
-    
+
       it("should throw an error when an error occurs during fetching", async () => {
         try {
-            await getArticleByID!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+            await getArticleByID!({undefined}, { id: '1' }, {undefined}, {} as GraphQLResolveInfo);
         } catch (error) {
             expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR))
         }
