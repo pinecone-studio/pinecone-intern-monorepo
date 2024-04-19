@@ -2,6 +2,7 @@
 import { headers } from '../_features/utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, Stack, Box } from '@mui/material';
+import Status from '../_components/Status';
 
 const Requests = () => {
   const { data, loading, error } = useGetRequestsQuery();
@@ -50,22 +51,7 @@ const Requests = () => {
                       <TableCell>{dat.totalHour}</TableCell>
                       <TableCell>{dat.totalHour}</TableCell>
                       <TableCell>
-                        <Typography
-                          style={{
-                            borderRadius: '15px',
-                            textAlign: 'center',
-                            background: dat.status.toLowerCase() === 'approved' ? 'rgba(193, 230, 207, 1)' : dat.status.toLowerCase() === 'declined' ? 'rgba(252, 186, 190, 1)' : '',
-                            border: dat.status.toLowerCase() === 'pending' ? '1px solid rgba(214, 216, 219, 1)' : '',
-                          }}
-                        >
-                          {dat.status.toLowerCase() === 'approved'
-                            ? 'Зөвшөөрсөн'
-                            : dat.status.toLowerCase() === 'declined'
-                            ? 'Татгалзсан'
-                            : dat.status.toLowerCase() === 'pending'
-                            ? 'Шинэ хүсэлт'
-                            : dat.status.toLowerCase()}
-                        </Typography>
+                        <Status dat={dat} />
                       </TableCell>
                     </TableRow>
                   ))}
