@@ -4,8 +4,8 @@ import { GraphQLError } from "graphql";
 
 export const getCategories:QueryResolvers['getCategories'] = async () => {
     try {
-        const data = await categoryModel.find({})
-        return data
+        const categories = await categoryModel.find({})
+        return categories
     } catch (error) {
         throw new GraphQLError('error')
     }
