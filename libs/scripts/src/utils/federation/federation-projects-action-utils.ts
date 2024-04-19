@@ -43,7 +43,7 @@ export const generatePreviewLinksForProjects = async (projects: Project[]): Prom
     const previewLinks: ProjectPreview[] = await Promise.all(
       projects.map(async ({ name }) => {
         const previewLink = await deployProject({ app: name, deploymentCommand: 'preview' });
-        return { name: `${name} without federation preview`, url: previewLink };
+        return { name: name, url: previewLink };
       })
     );
     return previewLinks;
@@ -59,7 +59,7 @@ export const processProject = async (project: Project, federationPreviewUrl: str
   deleteExistingPreviewFile(envPreviewPath);
   await generateFederationEnvFile(project, federationPreviewUrl);
   const federationProjectPreviewLink = await deployProject({ app: projectName, deploymentCommand: 'preview-all' });
-  return { name: `${projectName} with federation preview`, url: federationProjectPreviewLink };
+  return { name: projectName, url: federationProjectPreviewLink };
 };
 
 const generateAffectedProjectsPreviewLinks = async (projects: Project[], federationPreviewUrl: string): Promise<ProjectPreview[]> => {

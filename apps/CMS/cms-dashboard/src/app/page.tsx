@@ -22,7 +22,7 @@ export default async function Home() {
     <div>
       <h1>hello from CMS dashboard</h1>
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-      <button onClick={handleArticlesPageButton}>Go to Articles page</button>
+      <button onClick={handleArticlesPageButton}>Go to Articles page!</button>
       <button onClick={handleCommentsPageButton}>Go to Comments page</button>
     </div>
   );
