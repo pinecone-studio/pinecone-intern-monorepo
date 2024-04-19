@@ -20,9 +20,9 @@ const userSchema = new Schema({
     default: 'user',
   },
   otp: {
-    type:String,
-    required:false
-  }
+    type: String,
+    required: false,
+  },
 });
 
 export const userModel = mongoose.models.user || model('user', userSchema);

@@ -32,10 +32,13 @@ export const articleSchema = gql`
     category: ID!
     status: String!
     slug: String!
-    commentPermission:Boolean!
+    commentPermission: Boolean!
   }
 
   type Mutation {
     createArticle(articleInput: CreateArticleInput!): Article!
+  }
+  type Query {
+    getArticlesQuery: [Article]!
   }
 `;
