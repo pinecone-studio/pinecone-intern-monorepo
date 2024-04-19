@@ -12,13 +12,21 @@ const DashboardTable = () => {
   return (
     <Container>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
+        <Table sx={{ minWidth: 655 }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Нийтлэл</TableCell>
-              <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Огноо</TableCell>
-              <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Статус</TableCell>
-              <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Шошго</TableCell>
+              <TableCell data-testid="text-test-id" sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>
+                Нийтлэл
+              </TableCell>
+              <TableCell data-testid="text-test-id" sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>
+                Огноо
+              </TableCell>
+              <TableCell data-testid="text-test-id" sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>
+                Статус
+              </TableCell>
+              <TableCell data-testid="text-test-id" sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>
+                Шошго
+              </TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
