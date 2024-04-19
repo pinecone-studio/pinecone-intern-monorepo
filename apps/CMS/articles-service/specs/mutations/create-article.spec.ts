@@ -15,7 +15,7 @@ const mockData = {
 };
 
 jest.mock('../../src/models/article.model', () => ({
-  articleModel: {
+  ArticleModel: {
     create: jest
       .fn()
       .mockReturnValueOnce({
