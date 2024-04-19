@@ -2,7 +2,8 @@
 import { useRouter } from 'next/navigation';
 import RequestsMain from './_features/RequestsMain';
 import { LeavingMain } from './_features';
-import Requests from './_components/Requests';
+
+import Requests from './_features/Requests';
 
 const LeavingPage = () => {
   const router = useRouter();
@@ -16,7 +17,6 @@ const LeavingPage = () => {
       <RequestsMain />
       {/* <LeavingMain /> */}
       <Requests />
-
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
     </div>
   );

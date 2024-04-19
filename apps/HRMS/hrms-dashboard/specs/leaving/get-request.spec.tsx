@@ -1,6 +1,7 @@
+import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import Requests from '../../src/app/leaving/_components/Requests';
+import Requests from '../../src/app/leaving/_features/Requests';
 import { useGetRequestsQuery } from '../../src/generated/index';
 
 const mockData = {
