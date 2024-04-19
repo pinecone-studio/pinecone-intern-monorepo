@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler, } from '@/graphql/resolvers/error';
-import { getArticleByID } from '../../src/graphql/resolvers/queries/get-by-id';
+import { getArticleByID } from '../../src/graphql/resolvers/queries/get-article-by-id-query';
 import { GraphQLResolveInfo } from 'graphql';
 import {  } from "../../src/models/article.model";
 
