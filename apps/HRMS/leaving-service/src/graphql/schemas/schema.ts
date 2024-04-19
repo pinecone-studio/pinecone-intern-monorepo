@@ -16,27 +16,32 @@ export const LeaveRequestTypeDefs = gql`
     APPROVED
     DECLINED
   }
+  enum DurationType{
+    Hour
+    Day
+  }
 
   input LeaveRequestInput {
-    employeeId: ID
-    date: Date
-    startHour: Date
-    totalHour: Int
+    employeeId: String
+    startDateString: Date
+    endDateString: Date
     description: String!
-    declinedReasoning: String
     leaveType: LeaveType!
-    supervisor: String
+    superVisor: String
+    durationType: DurationType!
+    declinedReasoning: String
   }
 
   type LeaveRequest {
-    _id: ID!
-    leaveType: LeaveType!
-    employeeId: ID!
-    startHour: Date
-    totalHour: Int
-    supervisor: String
-    status: RequestStatus!
+    _id: ID
+    employeeId: String
+    startDate: Date
+    endDate: Date
     description: String!
+    leaveType: LeaveType!
+    superVisor: String
+    durationType: DurationType!
+    status: RequestStatus!
     declinedReasoning: String
   }
 
@@ -46,7 +51,8 @@ export const LeaveRequestTypeDefs = gql`
   }
 
   type Mutation {
-    createLeaveRequest(requestInput: LeaveRequestInput!): LeaveRequest
+    createLeaveRequestHours(requestInput: LeaveRequestInput!): LeaveRequest!
+    createLeaveRequestDays(requestInput: LeaveRequestInput!): [LeaveRequest]!
     deleteLeaveRequest(_id: ID!): LeaveRequest
     approveRequest(_id: ID!): LeaveRequest!
     declineRequest(_id: ID!): LeaveRequest!
