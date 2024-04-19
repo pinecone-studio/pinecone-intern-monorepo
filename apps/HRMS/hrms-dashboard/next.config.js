@@ -15,6 +15,7 @@ const nextConfig = {
 
   env: {
     FEDERATION_ENDPOINT: process.env.FEDERATION_ENDPOINT || '',
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN || '',
     ENVIRONMENT: process.env.ENVIRONMENT || '',
   },
 
