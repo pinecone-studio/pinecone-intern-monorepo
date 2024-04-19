@@ -5,7 +5,7 @@ export const employeeDetailsSchema = gql`
   scalar Date
 
   type Employee {
-    id: ID
+    id: ID!
     firstName: String
     lastName: String
     email: String
@@ -39,7 +39,7 @@ export const employeeDetailsSchema = gql`
   }
 
   type Dependent {
-    _id: ID
+    id: ID!
     firstName: String
     lastName: String
     phone: String
@@ -121,15 +121,22 @@ export const employeeDetailsSchema = gql`
     dependency: String
   }
 
+  input UpdateDependentInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+
   type Query {
-    getDependent(_id: ID): Dependent!
+    getDependent(id: ID!): Dependent!
     getAllDependents: [Dependent!]
   }
 
   type Mutation {
     createEmployee(firstName: String!, lastName: String!, email: String!, department: String!, jobTitle: String!, ladderLevel: Int!, salary: Float!, employmentStatus: String!): Employee!
     createDependent(input: CreateDependetInput): Dependent!
-    deleteDependent(_id: ID!): Dependent!
-    updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
+    deletedDependent(id: ID!): Dependent!
+    updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
   }
 `;
