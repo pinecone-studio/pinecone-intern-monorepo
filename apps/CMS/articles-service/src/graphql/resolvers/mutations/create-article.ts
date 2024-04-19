@@ -1,6 +1,6 @@
 import { articleModel } from '../../../models/article.model';
 import { MutationResolvers } from '@/graphql/generated';
-import graphqlErrorHandler, { errorTypes} from '../error';
+import  { errorTypes, graphqlErrorHandler} from '../error';
 
 export const createArticle: MutationResolvers['createArticle'] = async (_, { articleInput }) => {
   const { title, coverPhoto, content, author, category, status, slug, commentPermission } = articleInput;

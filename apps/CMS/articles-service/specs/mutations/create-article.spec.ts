@@ -1,7 +1,7 @@
 /* eslint-disable no-secrets/no-secrets */
 import {  GraphQLResolveInfo } from 'graphql';
 import { createArticle } from '../../src/graphql/resolvers/mutations';
-import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
+import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 
 const mockData = {
   title: 'Leap',
@@ -34,7 +34,7 @@ describe('create Article', () => {
     expect(result).toEqual(mockData);
   });
   
-  it('qwert', async () => {
+  it('should throw error if cannot create article', async () => {
     try {
        await createArticle!({}, { articleInput: mockData }, {}, {} as GraphQLResolveInfo);
     } catch (error) {

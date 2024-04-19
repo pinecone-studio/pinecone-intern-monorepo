@@ -24,7 +24,7 @@ export const errorTypes = {
   }
 };
  
-export default function graphqlErrorHandler(errorMessage: { message: string }, errorType: { errorCode: string; errorStatus: number }) {
+export const graphqlErrorHandler = (errorMessage: { message: string }, errorType: { errorCode: string; errorStatus: number }) => {
   return new GraphQLError(errorMessage.message, {
     extensions: {
       code: errorType.errorCode,
