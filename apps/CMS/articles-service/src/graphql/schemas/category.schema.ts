@@ -8,6 +8,6 @@ export const categorySchema = gql`
     createdAt: Date
   }
   type Query {
-    categoryQuery:[Category!]
-  } 
+    categoryQuery: [Category!] 
+  }
 `;

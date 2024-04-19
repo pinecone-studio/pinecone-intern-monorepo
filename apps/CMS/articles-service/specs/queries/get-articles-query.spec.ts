@@ -1,4 +1,4 @@
-import { getArticlesQuery } from '@/graphql/resolvers/queries';
+import { getArticlesQuery } from "@/graphql/resolvers/queries/get-articles-query";
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/article.model', () => ({

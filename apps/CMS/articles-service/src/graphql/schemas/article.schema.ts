@@ -15,7 +15,6 @@ export const articleSchema = gql`
     createdAt: Date
     publishedAt: Date
     updatedAt: Date
-    scheduledAt: Date
   }
   enum ArticleStatus {
     DRAFT

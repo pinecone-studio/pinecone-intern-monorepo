@@ -34,9 +34,8 @@ const articleSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  publishedAt: Date,
+  publishAt: Date,
   updatedAt: Date,
-  scheduledAt: Date,
 });
 
 export const ArticleModel: Model<Article> = models.article || model<Article>('article', articleSchema);
