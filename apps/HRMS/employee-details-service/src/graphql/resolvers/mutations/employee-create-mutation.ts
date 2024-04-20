@@ -1,19 +1,12 @@
-import { CreateEmployeeInput, MutationResolvers } from '@/graphql/generated';
+import { MutationResolvers } from '@/graphql/generated';
 import { EmployeeModel } from '@/models/employee';
+import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const createEmployee: MutationResolvers['Employee'] = async (_: string, { firstName, lastName, email, department, jobTitle, ladderLevel, salary, employmentStatus }: CreateEmployeeInput) => {
-  const createEmloyee = await EmployeeModel.create({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    department: department,
-    jobTitle: jobTitle,
-    ladderLevel: ladderLevel,
-    salary: salary,
-    employmentStatus: employmentStatus,
-  });
-  if (!createEmloyee) {
-    throw new Error('failed create employee');
+export const createEmployee: MutationResolvers['createEmployee'] = async (_, { input }) => {
+  try {
+    const createEmloyee = await EmployeeModel.create(input);
+    return createEmloyee;
+  } catch (error) {
+    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
-  return createEmloyee;
 };
