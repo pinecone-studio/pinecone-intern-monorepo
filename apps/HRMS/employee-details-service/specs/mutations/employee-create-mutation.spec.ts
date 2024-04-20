@@ -35,7 +35,7 @@ describe('create employee', () => {
     });
   });
 
-  it("should throw an error if the employee doesn't exist", async () => {
+  it("should throw an error if the employee doesn't exist ", async () => {
     try {
       await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
