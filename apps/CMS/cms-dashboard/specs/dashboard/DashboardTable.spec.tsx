@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import DashboardTable from '../../src/app/dashboard/_components/DashboardTable';
 import { useGetArticlesQuery } from '../../src/generated/';
 
@@ -12,9 +12,14 @@ describe('Dashboard Table', () => {
     const mockData = {
       getArticles: [
         {
-          title: 'ss',
-          status: 's',
-          createdAt: 's',
+          title: 'Title 1',
+          status: 'Published 1',
+          createdAt: 'today',
+        },
+        {
+          title: 'Title 2',
+          status: 'Published 2',
+          createdAt: 'today',
         },
       ],
     };
@@ -23,7 +28,6 @@ describe('Dashboard Table', () => {
       data: mockData,
     });
 
-    const { container } = render(<DashboardTable />);
-    expect(container).toBeDefined();
+    render(<DashboardTable />);
   });
 });

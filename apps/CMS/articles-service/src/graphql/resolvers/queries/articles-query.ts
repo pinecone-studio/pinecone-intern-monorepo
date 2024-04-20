@@ -1,8 +1,8 @@
 import { QueryResolvers } from '@/graphql/generated';
-import { articleModel } from '@/models/article.model';
+import { ArticleModel } from '@/models/article.model';
 
 export const getArticles: QueryResolvers['getArticles'] = async () => {
-  const articles = await articleModel.find({});
+  const articles = await ArticleModel.find({});
 
   return articles;
 };
