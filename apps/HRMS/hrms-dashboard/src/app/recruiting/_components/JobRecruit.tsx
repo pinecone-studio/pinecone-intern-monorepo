@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { CreateErrorModal } from './CreateErrorModal';
+import { CreateErrorModal } from './CreateerrorModal';
 
 const bigDiv = {
   container: 'inherit',

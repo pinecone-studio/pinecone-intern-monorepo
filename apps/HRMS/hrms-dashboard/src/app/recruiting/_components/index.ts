@@ -1,2 +1,2 @@
 export * from './JobRecruit';
-export * from './CreateErrorModal';
+export * from './CreateerrorModal';
