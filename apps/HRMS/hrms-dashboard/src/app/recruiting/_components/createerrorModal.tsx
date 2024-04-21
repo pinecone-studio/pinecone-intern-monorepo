@@ -9,7 +9,7 @@ type Props = {
   label: string;
 };
 
-export const CreateErrorModal = ({ text, label }: Props) => {
+export const CreateerrorModal = ({ text, label }: Props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [open, setOpen] = React.useState(false);

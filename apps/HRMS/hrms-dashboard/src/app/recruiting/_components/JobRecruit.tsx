@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateErrorModal } from './CreateerrorModal';
+import { CreateerrorModal } from './CreateerrorModal';
 
 const bigDiv = {
   container: 'inherit',
@@ -19,7 +19,7 @@ export const JobDash = () => {
       <div style={topDiv}>
         <h1> Ажлын зар</h1>
         <div data-testid="open-button">
-          <CreateErrorModal text={'Aмжилттай faildlee'} label={'Зар hasah'} />
+          <CreateerrorModal text={'Aмжилттай faildlee'} label={'Зар hasah'} />
         </div>
       </div>
       <div>
