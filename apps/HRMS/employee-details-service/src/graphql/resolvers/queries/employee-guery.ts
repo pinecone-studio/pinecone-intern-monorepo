@@ -1,14 +1,15 @@
-import { Employee, QueryResolvers } from '@/graphql/generated';
+import { QueryResolvers } from '@/graphql/generated';
 import { EmployeeModel } from '@/models/employee';
+import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const getEmployee: QueryResolvers['getEmployees'] = async (_:string, { _id }:Employee) => {
+export const getEmployee: QueryResolvers['getEmployee'] = async (_, { id }) => {
   try {
-    const employee = await EmployeeModel.findById({ _id });
+    const employee = await EmployeeModel.findById(id);
     if (!employee) {
-      return null;
+      throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR);
     }
-    return employee.toObject();
+    return employee;
   } catch (error) {
-    throw new Error('Employee not found');
+    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR);
   }
 };
