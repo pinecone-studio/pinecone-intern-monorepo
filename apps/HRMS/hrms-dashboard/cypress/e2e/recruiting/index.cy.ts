@@ -31,10 +31,6 @@ describe('Recruiting Page', () => {
       cy.contains('p', 'Дэлгэрэнгүй').first().click();
     });
     describe('CreateErrorModal Component', () => {
-      beforeEach(() => {
-        cy.visit('http://localhost:4200/recruiting'); // Update with your actual URL
-      });
-
       it('should open dialog when button is clicked', () => {
         cy.get('[data-testid="error-modal-button"]').click();
         cy.get('[data-testid="error-modal"]').should('be.visible');
