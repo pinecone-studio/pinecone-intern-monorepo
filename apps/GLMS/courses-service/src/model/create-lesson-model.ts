@@ -14,7 +14,11 @@ const lessonSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-}); 
+  sections: [{
+    type: Schema.Types.ObjectId,
+    ref: 'section',
+  }],
+});
 
 const lessonModel = model('lesson', lessonSchema);
 

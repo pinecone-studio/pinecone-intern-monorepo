@@ -30,7 +30,7 @@ describe('createContents resolver', () => {
       (sectionModel.create as jest.Mock).mockResolvedValue(mockNewContent);
       const result = await createSection({}, mockInput);
 
-      expect(sectionModel.create).toHaveBeenCalledWith(mockInput);
+      expect(sectionModel.create).toHaveBeenCalledWith(mockInput.SectionInput);
       expect(result).toEqual(mockNewContent.toObject());
   });
   it('should throw an error if content creation fails', async () => {
