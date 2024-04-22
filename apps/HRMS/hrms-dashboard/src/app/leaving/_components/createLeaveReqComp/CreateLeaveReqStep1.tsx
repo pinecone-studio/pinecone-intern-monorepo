@@ -20,10 +20,9 @@ const validationSchema = yup.object({
 export const CreateLeaveReqStep1 = () => {
   const { setStepNo } = useContext(LeaveReqCreationContext);
 
-  const labels = [
-    { label: 'Нэрээ сонгоно уу', textFieldDataCy: 'name-select-input', textFieldName: 'step1UserName', options: ['WorkerName'] },
-    { label: 'Шалтгаанаа сонгоно уу', textFieldDataCy: 'type-select-input', textFieldName: 'step1LeaveType', options: ['shit happened', 'remote', 'medical', 'family emergency', 'others'] },
-  ];
+  const workerName = { name: 'WorkerName' };
+
+  const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
 
   const formik = useFormik({
     initialValues: {
@@ -49,24 +48,29 @@ export const CreateLeaveReqStep1 = () => {
             <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
           </LocalizationProvider>
         </Stack>
-        {labels.map((item, index) => {
-          return (
-            <Stack key={index} sx={{ gap: '4px' }}>
-              <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
-                {item.label}
-              </Typography>
-              <TextField data-cy={item.textFieldDataCy} select name={item.textFieldName} value={`formik.values.${item.textFieldName}`} onChange={formik.handleChange}>
-                {item.options.map((option, index) => {
-                  return (
-                    <MenuItem key={index} value={option}>
-                      {option}
-                    </MenuItem>
-                  );
-                })}
-              </TextField>
-            </Stack>
-          );
-        })}
+
+        <Stack sx={{ gap: '4px' }}>
+          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+            Нэрээ сонгоно уу
+          </Typography>
+          <TextField data-cy="name-select-input" select name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+            <MenuItem value={workerName.name}>{workerName.name}</MenuItem>
+          </TextField>
+        </Stack>
+        <Stack sx={{ gap: '4px' }}>
+          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+            Шалтгаанаа сонгоно уу
+          </Typography>
+          <TextField data-cy="type-select-input" select name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
+            {leaveTypes.map((option, index) => {
+              return (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              );
+            })}
+          </TextField>
+        </Stack>
       </Stack>
       <Box paddingTop={'40px'} display={'flex'} justifyContent={'space-between'}>
         <IconButton sx={{ visibility: 'hidden', bgcolor: 'white' }}>
