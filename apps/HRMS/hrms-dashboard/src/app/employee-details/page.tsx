@@ -1,6 +1,5 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { CreateEmployeeForm } from './_features/CreateEmployeeForm';
 
 const EmployeeDetailsPage = () => {
   const router = useRouter();
@@ -9,8 +8,7 @@ const EmployeeDetailsPage = () => {
 
   return (
     <div>
-      <h1>hello from HRMS dashboard Employee details Page</h1>
-      <CreateEmployeeForm />
+      <h1>hello from HRMS dashboard Employee details Page1</h1>
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
     </div>
   );

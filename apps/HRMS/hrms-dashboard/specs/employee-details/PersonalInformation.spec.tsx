@@ -7,7 +7,7 @@ describe('personalInfromation', () => {
     email: 'Zoloosoko0526@gmail.com',
   };
   it('should render perdonalInfromation components', () => {
-    const { container } = render(<PersonalInformation email={props.email} lastName={props.lastName} />);
+    const { container } = render(<PersonalInformation id="1" email={props.email} lastName={props.lastName} />);
     expect(container).toBeDefined();
   });
 });
