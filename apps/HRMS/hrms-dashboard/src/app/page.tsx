@@ -1,12 +1,6 @@
 'use client';
 
-import { fileManagement } from '@/file-management';
-
 export default async function Index() {
-  const fileManagementLib = fileManagement();
-
-  console.log(fileManagementLib);
-
   return (
     <div>
       <h1>hello from HRMS dashboard</h1>
