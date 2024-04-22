@@ -11,6 +11,9 @@ const Home = () => {
   const handleAssessmentPageButton = () => {
     router.push('/assessment');
   };
+  const lesson = () => {
+    router.push('/lesson-add');
+  };
 
   return (
     <div>
@@ -18,6 +21,7 @@ const Home = () => {
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
       <button onClick={handleProfilePageButton}>Go to profile page</button>
       <button onClick={handleAssessmentPageButton}>Go to assessment page</button>
+      <button onClick={lesson}>Lesson</button>
     </div>
   );
 };
