@@ -122,7 +122,8 @@
         "commands": [
           "npx nx cypress cms-dashboard",
           "npx mochawesome-merge --reportDir apps/CMS/cms-dashboard/cypress/results/*.json -o apps/CMS/cms-dashboard/.cy/report.json",
-          "npx marge apps/CMS/cms-dashboard/.cy/report.json -o apps/CMS/cms-dashboard/.cy"
+          "npx marge apps/CMS/cms-dashboard/.cy/report.json -o apps/CMS/cms-dashboard/.cy",
+          "npx nx check-cypress-code-coverage scripts apps/CMS/cms-dashboard"
         ],
         "parallel": false
       },

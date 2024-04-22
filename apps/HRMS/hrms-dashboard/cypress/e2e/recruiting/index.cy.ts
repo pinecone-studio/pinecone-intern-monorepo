@@ -30,6 +30,7 @@ describe('Recruiting Page', () => {
     it('displays detailed information when "Дэлгэрэнгүй" button is clicked', () => {
       cy.contains('p', 'Дэлгэрэнгүй').first().click();
     });
+
     describe('CreateErrorModal Component', () => {
       it('should open dialog when button is clicked', () => {
         cy.get('[data-testid="error-modal-button"]').click();

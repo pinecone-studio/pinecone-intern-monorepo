@@ -18,7 +18,9 @@ const LeavingPage = () => {
         {data?.helloQueryFromLeavingService}
       </h1>
       <LeavingMain />
-      <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
+      <button onClick={handleNavigateToHomePageButton} data-cy="Home-Page-Button">
+        Go back to home page
+      </button>
     </div>
   );
 };

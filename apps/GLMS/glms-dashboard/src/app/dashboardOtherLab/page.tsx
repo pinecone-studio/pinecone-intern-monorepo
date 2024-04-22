@@ -31,6 +31,7 @@ const DashboardOtherLab = () => {
       return 'html';
     }
   };
+
   return (
     <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'} data-cy="Dashboard-Lab-Page">
       <Stack bgcolor={'white'} width={'100%'}>
@@ -77,6 +78,7 @@ const DashboardOtherLab = () => {
             {buttonsBottom.map((name) => (
               <Button
                 data-testid="tab1"
+                data-cy={name}
                 onClick={() => {
                   setActionTab(name);
                 }}

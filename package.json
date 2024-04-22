@@ -27,6 +27,7 @@
     "@as-integrations/next": "3.0.0",
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.4",
+    "cheerio": "1.0.0-rc.12",
     "@emotion/styled": "11.11.5",
     "@graphql-tools/merge": "9.0.0",
     "@mui/icons-material": "5.15.15",
@@ -128,4 +129,3 @@
     }
   }
 }
-

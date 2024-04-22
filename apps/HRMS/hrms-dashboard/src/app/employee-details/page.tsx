@@ -9,7 +9,9 @@ const EmployeeDetailsPage = () => {
   return (
     <div>
       <h1>hello from HRMS dashboard Employee details Page1</h1>
-      <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
+      <button onClick={handleNavigateToHomePageButton} data-cy="Home-Page-Button">
+        Go back to home page
+      </button>
     </div>
   );
 };
