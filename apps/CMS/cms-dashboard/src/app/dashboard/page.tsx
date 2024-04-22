@@ -1,13 +1,13 @@
+import { Stack } from '@mui/material';
 import React from 'react';
-import { FooterButtons, MenuBar } from './_features';
+import { PaginationFooter } from './_components/PaginationFooter';
 
 const Home = () => {
   return (
-    <div data-cy="Dashboard-Welcome-Message">
-      <MenuBar />
+    <Stack data-cy="dashboard-page-cy-id">
       Welcome to Cms Dashboard hello
-      <FooterButtons />
-    </div>
+      <PaginationFooter />
+    </Stack>
   );
 };
 export default Home;
