@@ -3,8 +3,10 @@ import { headers } from '../_features/utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, Stack, Box } from '@mui/material';
 import Status from '../_components/Status';
+import { useRouter } from 'next/navigation';
 
 const Requests = () => {
+  const router = useRouter();
   const { data, loading, error } = useGetRequestsQuery();
   const currentDate = new Date().toLocaleDateString();
 
@@ -44,7 +46,7 @@ const Requests = () => {
               <TableBody>
                 {data &&
                   data.getRequests.map((dat, index) => (
-                    <TableRow key={index} style={{ cursor: 'pointer' }}>
+                    <TableRow key={index} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)}>
                       <TableCell>{dat._id}</TableCell>
                       <TableCell>{dat.declinedReasoning}</TableCell>
                       <TableCell>{dat.description}</TableCell>
