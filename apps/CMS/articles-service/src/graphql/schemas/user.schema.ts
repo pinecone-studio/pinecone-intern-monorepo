@@ -22,4 +22,7 @@ export const userSchema = gql`
   type Mutation {
     signUp(input: SignUpInput!): Message!
   }
+  type Query {
+    getUser: [User]!
+  }
 `;
