@@ -31,8 +31,7 @@ export const CreateLeaveReqStep1 = () => {
       step1LeaveType: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: () => {
       setStepNo(1);
     },
   });
