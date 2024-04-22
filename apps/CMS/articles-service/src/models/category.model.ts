@@ -1,4 +1,5 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Category } from '@/graphql/generated';
+import { Schema, model, Model, models } from 'mongoose';
 
 const categorySchema = new Schema({
   name: {
@@ -11,4 +12,4 @@ const categorySchema = new Schema({
   },
 });
 
-export const categoryModel = mongoose.models.category || model('category', categorySchema);
+export const CategoryModel: Model<Category> = models.category || model<Category>('category', categorySchema);

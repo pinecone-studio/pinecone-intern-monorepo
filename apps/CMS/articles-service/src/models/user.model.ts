@@ -1,7 +1,7 @@
-/* eslint-disable no-secrets/no-secrets */
-import { Schema, model, models } from 'mongoose';
+import { User } from '@/graphql/generated';
+import { Schema, model, Model, models } from 'mongoose';
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -31,9 +31,8 @@ const UserSchema = new Schema({
   },
   avatar: {
     type: String,
-    required: true,
-    default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+    required: false,
   },
 });
 
-export const UserModel = models.User || model('User', UserSchema);
+export const UserModel: Model<User> = models.user || model<User>('user', userSchema);
