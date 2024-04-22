@@ -9,7 +9,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
-import { LeaveReqCreationContext } from 'apps/HRMS/hrms-dashboard/src/common/providers/index';
+import { LeaveReqCreationContext } from '../../../../common/providers/index';
 
 const validationSchema = yup.object({
   step1Date: yup.date().required(),
