@@ -12,7 +12,7 @@ describe('createLesson resolver', () => {
 
   it('should create a new lesson and return its data', async () => {
     const mockInput = {
-      LessonInput: {
+      lessonInput: {
         title: 'Lesson Title',
         description: 'Lesson Description',
         contentImage: 'lesson-image.jpg',
@@ -21,16 +21,16 @@ describe('createLesson resolver', () => {
 
     const mockNewLesson = {
       id: '12345',
-      title: mockInput.LessonInput.title,
-      description: mockInput.LessonInput.description,
-      contentImage: mockInput.LessonInput.contentImage,
+      title: mockInput.lessonInput.title,
+      description: mockInput.lessonInput.description,
+      contentImage: mockInput.lessonInput.contentImage,
       toObject: jest.fn(),
     };
 
     (lessonModel.create as jest.Mock).mockResolvedValue(mockNewLesson);
 
     const result = await createLesson(null, mockInput);
-    expect(lessonModel.create).toHaveBeenCalledWith(mockInput.LessonInput);
+    expect(lessonModel.create).toHaveBeenCalledWith(mockInput.lessonInput);
     expect(result).toEqual(mockNewLesson.toObject());
   });
 

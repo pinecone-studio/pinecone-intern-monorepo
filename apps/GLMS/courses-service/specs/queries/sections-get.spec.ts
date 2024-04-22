@@ -1,5 +1,5 @@
 
-import { getSections } from '@/graphql/resolvers/queries/sections-query';
+import { getSections } from '@/graphql/resolvers/queries/sections-get';
 import sectionModel from '@/model/section-model';
 
 
