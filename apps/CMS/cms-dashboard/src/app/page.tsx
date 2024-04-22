@@ -1,29 +1,27 @@
 'use client';
 
-import { fileManagement } from '@/file-management';
-import { useRouter } from 'next/navigation';
+import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
+import { Stack } from '@mui/material';
 
-export default async function Home() {
-  const router = useRouter();
+import GroupArticlesComp from './articles/_components/GroupArticlesComp';
 
-  const handleArticlesPageButton = () => {
-    router.push('/articles');
-  };
-
-  const handleCommentsPageButton = () => {
-    router.push('/comments');
-  };
-
-  const fileManagementLib = fileManagement();
-
-  console.log(fileManagementLib);
-
+const Home = () => {
   return (
     <div>
-      <h1>hello from CMS dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-      <button onClick={handleArticlesPageButton}>Go to Articles page!</button>
-      <button onClick={handleCommentsPageButton}>Go to Comments page</button>
+      <Stack width={'100vw'} gap={6} bgcolor={'#F7F7F8'}>
+        <MainBannerFromArticles
+          articlesTitle="Marphosis Хөтөлбөр: Гадны зах зээлд ажиллах сонирхолтой инженерүүдэд"
+          cover="https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg"
+          date="2024.04.16"
+          categories="Coding"
+        />
+        <Stack px={12} gap={6}>
+          <GroupArticlesComp title="Шинэ контентууд" />
+          <GroupArticlesComp title="Хөтөлбөр болон эвентүүд" />
+          <GroupArticlesComp title="Сонирхолтой түүхүүд" />
+        </Stack>
+      </Stack>
     </div>
   );
-}
+};
+export default Home;
