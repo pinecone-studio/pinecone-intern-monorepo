@@ -2,8 +2,8 @@ import React from 'react';
 import { EmployeePagination } from '../../src/app/employee-details/_components';
 import { fireEvent, render } from '@testing-library/react';
 
-describe('render', () => {
-  it('hhe', () => {
+describe('pagination component', () => {
+  it('pagination component render and click', () => {
     const { container, getByTestId } = render(<EmployeePagination />);
     expect(container).toBeDefined();
 

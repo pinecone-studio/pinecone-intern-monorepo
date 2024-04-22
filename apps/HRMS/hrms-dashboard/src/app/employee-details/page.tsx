@@ -4,7 +4,6 @@ import { EmployeePagination } from './_components';
 
 const EmployeeDetailsPage = () => {
   const router = useRouter();
-
   const handleNavigateToHomePageButton = () => router.push('/');
 
   return (

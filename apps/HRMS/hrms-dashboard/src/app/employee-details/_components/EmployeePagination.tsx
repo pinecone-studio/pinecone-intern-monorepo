@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
-import React from 'react';
 import Pagination from '@mui/material/Pagination';
+
 export const EmployeePagination = () => {
   return (
     <Stack>
