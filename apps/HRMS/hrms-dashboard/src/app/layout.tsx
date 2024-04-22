@@ -1,5 +1,4 @@
-import { ThemeProviderHRMS } from '../common/providers/ThemeProvider';
-import { FederationProvider } from '../common';
+import { FederationProvider, ThemeProviderHRMS } from '../common';
 import './global.css';
 
 export const metadata = {
