@@ -1,2 +1,2 @@
 export * from './hello-query';
-export * from './get-challenge';
+export * from './get-challenges';
