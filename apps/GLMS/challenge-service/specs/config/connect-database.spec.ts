@@ -1,47 +1,35 @@
-import { connectDatabase } from '@/config/connect-database';
 import mongoose from 'mongoose';
+import { connectDatabase, connection } from '../../src/config/connect-database';
 
 jest.mock('mongoose', () => ({
   connect: jest.fn(),
 }));
 
-describe('Database connection check', () => {
-  beforeAll(() => {
+describe('connectDatabase', () => {
+  beforeEach(() => {
     jest.clearAllMocks();
-  });
-  afterAll(() => {
-    jest.clearAllMocks();
-    jest.resetAllMocks();
+    connection.isConnected = 0;
   });
 
-  it('1. should call connectDatabase', async () => {
+  it('1. Should connect to database', async () => {
     (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
     await connectDatabase();
     expect(mongoose.connect).toBeCalled();
   });
 
-  it('2. should handle error', async () => {
-    (mongoose.connect as jest.Mock).mockRejectedValue(new Error('error'));
+  it('2. Should not reconnect mongodb once connected', async () => {
+    connection.isConnected = 1;
+    await connectDatabase();
+    expect(connection.isConnected).toBe(1);
+    expect(mongoose.connect).not.toHaveBeenCalled();
+  });
+
+  it('3. Should handle error', async () => {
+    (mongoose.connect as jest.Mock).mockRejectedValue(new Error(''));
     try {
       await connectDatabase();
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
     }
-  });
-});
-
-describe('Database url null check', () => {
-  beforeAll(() => {
-    process.env = { ...process.env, MONGODB_URI: undefined };
-  });
-
-  afterAll(() => {
-    process.env = { ...process.env };
-    jest.clearAllMocks();
-    jest.resetAllMocks();
-  });
-
-  it('1. should return when data base url is undefined', async () => {
-    await connectDatabase();
   });
 });

@@ -21,7 +21,7 @@ jest.mock('../../src/model/challenge.model.ts', () => ({
   },
 }));
 describe('This query should return challenge', () => {
-  it('It should return challenges from database', async () => {
+  it('1. It should return challenges from database', async () => {
     const challenges = await getChallenges!();
     expect(challenges).toEqual([
       {
@@ -34,13 +34,13 @@ describe('This query should return challenge', () => {
     ]);
   });
 
-  it('It should return empty array if challenges does no exist', async () => {
+  it('2. It should return empty array if challenges does no exist', async () => {
     const challenges = await getChallenges!();
 
     expect(challenges).toEqual([]);
   });
 
-  it('It should return error', async () => {
+  it('3. It should return error', async () => {
     try {
       await getChallenges!();
     } catch (error) {
