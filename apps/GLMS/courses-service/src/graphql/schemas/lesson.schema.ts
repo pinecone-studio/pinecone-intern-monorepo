@@ -20,7 +20,6 @@ export const lessonSchema = gql`
     title: String
     thumbnail: String
     position: Int
-    sections: sectionIds
   }
   type Mutation {
     createLesson(lessonInput:LessonInput!): Lesson!
