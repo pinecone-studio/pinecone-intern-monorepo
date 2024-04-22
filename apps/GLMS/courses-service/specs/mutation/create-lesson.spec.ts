@@ -10,7 +10,7 @@ describe('createLesson resolver', () => {
     jest.clearAllMocks();
 });
 
-  it('should create a new lesson and return its data', async () => {
+  it('should create a new lesson and return its dataa', async () => {
     const mockInput = {
       lessonInput: {
         title: 'Lesson Title',
