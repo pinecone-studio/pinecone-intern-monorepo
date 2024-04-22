@@ -1,1 +1,1 @@
-export * from './create-lesson-model';
+export * from './lesson-model';

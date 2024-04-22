@@ -12,7 +12,7 @@ describe('createContents resolver', () => {
 
   it('should create content with provided data', async () => {
       const mockInput = {
-        SectionInput: {
+        sectionInput: {
           title: 'Test Title',
           description: 'Test Description',
           contentImage: 'Test Image URL'
@@ -21,16 +21,16 @@ describe('createContents resolver', () => {
 
       const mockNewContent = {
           id: '321321',
-          title:mockInput.SectionInput.title,
-          description:mockInput.SectionInput.description,
-          contentImage:mockInput.SectionInput.contentImage,
+          title:mockInput.sectionInput.title,
+          description:mockInput.sectionInput.description,
+          contentImage:mockInput.sectionInput.contentImage,
             toObject: jest.fn(),
       };
 
       (sectionModel.create as jest.Mock).mockResolvedValue(mockNewContent);
       const result = await createSection({}, mockInput);
 
-      expect(sectionModel.create).toHaveBeenCalledWith(mockInput);
+      expect(sectionModel.create).toHaveBeenCalledWith(mockInput.sectionInput);
       expect(result).toEqual(mockNewContent.toObject());
   });
   it('should throw an error if content creation fails', async () => {

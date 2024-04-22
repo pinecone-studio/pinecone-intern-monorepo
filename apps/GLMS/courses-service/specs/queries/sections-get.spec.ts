@@ -1,5 +1,5 @@
 
-import { getSections } from '@/graphql/resolvers/queries/sections-query';
+import { getSections } from '@/graphql/resolvers/queries/sections-get';
 import sectionModel from '@/model/section-model';
 
 
@@ -17,7 +17,7 @@ describe('getContents', () => {
   });
   it('should handle error when sectionModel.find fails', async () => {
 
-    (sectionModel.find as jest.Mock).mockRejectedValue(new Error('cannot find content'));
+    (sectionModel.find as jest.Mock).mockRejectedValue(new Error('dataBase error'));
 
     await expect(getSections()).rejects.toThrow('cannot find content');
 

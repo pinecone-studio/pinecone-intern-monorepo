@@ -1,4 +1,4 @@
-import lessonModel from '@/model/create-lesson-model';
+import lessonModel from '@/model/lesson-model';
 import { GraphQLError } from 'graphql';
 export const getLessons = async () => {
   try {

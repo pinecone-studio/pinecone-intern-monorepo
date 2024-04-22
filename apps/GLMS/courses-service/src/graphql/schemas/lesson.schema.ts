@@ -11,13 +11,17 @@ export const lessonSchema = gql`
     thumbnail: String
     position: Int
     createdAt: Date
+    sections: [Section]
   }
   input LessonInput{
     title: String
     thumbnail: String
     position: Int
   }
+  input sectionIds{
+    sectionIds:[ID]
+  }
   type Mutation {
-    createLesson(LessonInput:LessonInput!): Lesson!
+    createLesson(lessonInput:LessonInput!): Lesson!
   }
 `;
