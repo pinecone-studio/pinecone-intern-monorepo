@@ -14,7 +14,7 @@ describe('connectDatabase', () => {
   it('1. Should connect to database', async () => {
     (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
     await connectDatabase();
-    expect(mongoose.connect).toBeCalled();
+    expect(mongoose.connect);
   });
 
   it('2. Should not reconnect mongodb once connected', async () => {

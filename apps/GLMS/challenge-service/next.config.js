@@ -23,6 +23,9 @@ const nextConfig = {
 
     return config;
   },
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI || '',
+  },
 };
 
 const plugins = [
