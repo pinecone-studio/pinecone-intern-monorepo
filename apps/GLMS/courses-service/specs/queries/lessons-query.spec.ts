@@ -7,16 +7,16 @@ jest.mock('@/model/create-lesson-model', () => ({
   }));
   describe('getCourses', () => {
     it('should return courses from courseModel', async () => {
-      const courses = [{ title: 'Course 1' }, { title: 'Course 2' }];
-      (courseModel.find as jest.Mock).mockResolvedValue(courses);
+      const mockLessons = [{ id: '1', title: 'Lesson 1', sections: [] }];
+      (courseModel.find as jest.Mock).mockResolvedValue(mockLessons);
       const result = await getLessons();
-      expect(result).toEqual(courses);
+      expect(result).toEqual(mockLessons);
 
       expect(courseModel.find).toHaveBeenCalledTimes(1);
     });
     it('should handle error when lessonModel.find fails', async () => {
 
-      (lessonModel.find as jest.Mock).mockRejectedValue(new Error('cannot find lesson'));
+      (lessonModel.find as jest.Mock).mockRejectedValue(new Error('dataBase error'));
 
       await expect(getLessons()).rejects.toThrow('cannot find lesson');
 
