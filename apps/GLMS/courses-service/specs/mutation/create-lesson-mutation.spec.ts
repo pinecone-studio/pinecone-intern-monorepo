@@ -6,6 +6,10 @@ jest.mock('@/model/create-lesson-model', () => ({
 }));
 
 describe('createLesson resolver', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+});
+
   it('should create a new lesson and return its data', async () => {
     const mockInput = {
       LessonInput: {
