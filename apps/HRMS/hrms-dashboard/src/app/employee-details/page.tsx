@@ -1,12 +1,17 @@
-import { Stack } from '@mui/material';
-import { PersonalInformation } from './_components';
+'use client';
+import { useRouter } from 'next/navigation';
 
-const EmployeeDetaills = () => {
+const EmployeeDetailsPage = () => {
+  const router = useRouter();
+
+  const handleNavigateToHomePageButton = () => router.push('/');
+
   return (
-    <Stack data-cy="Employee-Details-Page">
-      <PersonalInformation lastName={'М.Ганбат'} email={'Zoloosoko0526@gmail.com'} id={'test'} />
-    </Stack>
+    <div>
+      <h1>hello from HRMS dashboard Employee details Page1</h1>
+      <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
+    </div>
   );
 };
 
-export default EmployeeDetaills;
+export default EmployeeDetailsPage;
