@@ -15,7 +15,7 @@ const Home = () => {
 
         <Container sx={{ p: 3 }}>
           <Stack gap={2.5}>
-            <Stack gap={0.7}>
+            <Stack gap={0.8}>
               <Stack direction={'row'} justifyContent={'space-between'}>
                 <SearchInput />
                 <FilterByDate />
