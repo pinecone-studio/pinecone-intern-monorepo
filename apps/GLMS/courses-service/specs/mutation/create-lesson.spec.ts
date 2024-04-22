@@ -1,33 +1,35 @@
 import { createLesson } from '@/graphql/resolvers/mutations';
-import lessonModel from '@/model/create-lesson-model';
+import lessonModel from '@/model/lesson-model';
 
-jest.mock('@/model/create-lesson-model', () => ({
+jest.mock('@/model/lesson-model', () => ({
   create: jest.fn(),
 }));
 
 describe('createCourse resolver', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+});
   it('should create a new course and return its data', async () => {
     const mockInput = {
-      LessonInput:{
+      lessonInput:{
         title: 'Course Title',
         thumbnail: 'course-thumbnail.jpg',
         position: 1,
       }
 
     };
-
     const mockNewCourse = {
       id: '12345',
-      title: mockInput.LessonInput.title,
-      thumbnail: mockInput.LessonInput.thumbnail,
-      position: mockInput.LessonInput.position,
+      title: mockInput.lessonInput.title,
+      thumbnail: mockInput.lessonInput.thumbnail,
+      position: mockInput.lessonInput.position,
       toObject: jest.fn(),
     };
 
     (lessonModel.create as jest.Mock).mockResolvedValue(mockNewCourse);
 
     const result = await createLesson(null, mockInput);
-    expect(lessonModel.create).toHaveBeenCalledWith(mockInput);
+    expect(lessonModel.create).toHaveBeenCalledWith(mockInput.lessonInput);
 
     expect(result).toEqual(mockNewCourse.toObject());
   });
