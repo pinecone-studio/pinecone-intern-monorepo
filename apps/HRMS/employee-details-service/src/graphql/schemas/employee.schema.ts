@@ -135,7 +135,7 @@ export const employeeDetailsSchema = gql`
   }
 
   type Mutation {
-    createEmployee(firstName: String!, lastName: String!, email: String!, department: String!, jobTitle: String!, ladderLevel: Int!, salary: Float!, employmentStatus: String!): Employee!
+    createEmployee(input: CreateEmployeeInput!): Employee!
     createDependent(input: CreateDependetInput): Dependent!
     deletedDependent(id: ID!): Dependent!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!

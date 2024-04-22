@@ -1,4 +1,6 @@
+import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { createEmployee } from '@/graphql/resolvers/mutations';
+import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/employee', () => ({
   EmployeeModel: {
@@ -11,13 +13,19 @@ jest.mock('@/models/employee', () => ({
         email: 'bataa@gmail.com',
         department: 'SOFTWARE',
       })
-      .mockReturnValueOnce(null),
+      .mockRejectedValueOnce(null),
   },
 }));
 
+const input = {
+  firstName: 'bataa',
+  lastName: 'od',
+  email: 'bataa@gmail.com',
+  department: 'SOFTWARE',
+};
 describe('create employee', () => {
   it('should create a employee', async () => {
-    const result = await createEmployee!({} as string, { firstName: 'bataa', lastName: 'od', email: 'bataa@gmail.com', department: 'SOFTWARE' });
+    const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '2',
       firstName: 'bataa',
@@ -27,11 +35,11 @@ describe('create employee', () => {
     });
   });
 
-  it("should throw an error if the dependent doesn't exist", async () => {
+  it("should throw an error if the employee doesn't exist ", async () => {
     try {
-      await createEmployee!({} as string, { firstName: 'bataa', lastName: 'od', email: 'bataa@gmail.com', department: 'SOFTWARE' });
+      await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new Error('failed create employee'));
+      expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
     }
   });
 });
