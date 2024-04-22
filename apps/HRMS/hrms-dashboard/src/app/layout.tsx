@@ -1,4 +1,4 @@
-import { FederationProvider } from '../common';
+import { FederationProvider, ThemeProviderHRMS } from '../common';
 import './global.css';
 
 export const metadata = {
@@ -10,7 +10,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <FederationProvider>
-        <body>{children}</body>
+        <ThemeProviderHRMS>
+          <body>{children}</body>
+        </ThemeProviderHRMS>
       </FederationProvider>
     </html>
   );
