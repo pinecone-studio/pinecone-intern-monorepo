@@ -1,5 +1,5 @@
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
-import { getReactionsByArticleId } from '../../../articles-service/src/graphql/resolvers/queries/get-reactions-query';
+import { getReactionsByArticleId } from '../../src/graphql/resolvers/queries/get-reactions';
 
 jest.mock('../../../articles-service/src/models/reaction.model', () => ({
   reactionModel: {
