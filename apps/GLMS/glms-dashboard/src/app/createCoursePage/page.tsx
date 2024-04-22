@@ -28,7 +28,7 @@ const CourseAdd = () => {
 
   const router = useRouter();
   return (
-    <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3}>
+    <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3} minHeight={'100vh'}>
       <Container maxWidth="xl">
         <Stack
           onClick={() => {
