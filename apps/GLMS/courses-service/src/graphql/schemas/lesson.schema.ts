@@ -13,16 +13,16 @@ export const lessonSchema = gql`
     createdAt: Date
     sections: [Section]
   }
-  input SectionIds{
+  input sectionIds{
     sectionIds:[ID]
   }
   input LessonInput {
     title: String
     thumbnail: String
     position: Int
-    sections: SectionIds
+    sections: sectionIds
   }
   type Mutation {
-    createLesson(LessonInput: LessonInput!): Lesson!
+    createLesson(lessonInput:LessonInput!): Lesson!
   }
 `;

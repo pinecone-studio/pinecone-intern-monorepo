@@ -1,5 +1,5 @@
 import lessonModel from '@/model/create-lesson-model';
-import { getLessons} from '../../src/graphql/resolvers/queries/lessons-query';
+import { getLessons} from '../../src/graphql/resolvers/queries/lessons-get';
 import courseModel from '@/model/create-lesson-model';
 
 jest.mock('@/model/create-lesson-model', () => ({
