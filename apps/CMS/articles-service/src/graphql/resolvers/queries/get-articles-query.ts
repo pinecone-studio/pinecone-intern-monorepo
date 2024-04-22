@@ -7,6 +7,8 @@ export const getArticlesQuery: QueryResolvers['getArticlesQuery'] = async () => 
     const articles = await ArticleModel.find({}).populate('category').populate('author');
     return articles;
   } catch (error) {
+    console.log(error);
+
     throw new GraphQLError('Error in get articles query');
   }
 };
