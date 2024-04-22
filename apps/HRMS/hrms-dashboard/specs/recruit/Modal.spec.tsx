@@ -4,8 +4,8 @@ import { CreateErrorModal } from '../../src/app/recruiting/_features';
 
 describe('<CreateErrorModal />', () => {
   test('modal closes when close button is clicked', () => {
-    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text="Aмжилттай faildlee" label="Зар hasah" />);
-    const buttonElement = getByText('Зар hasah');
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text="Aмжилттай faildlee" label="Зар нэмэх" />);
+    const buttonElement = getByText('Зар нэмэх');
     fireEvent.click(buttonElement);
     const modalElementBefore = queryByTestId('error-modal');
     expect(modalElementBefore).toBeDefined();

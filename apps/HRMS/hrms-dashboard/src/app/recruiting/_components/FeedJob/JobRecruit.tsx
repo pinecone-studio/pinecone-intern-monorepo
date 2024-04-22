@@ -1,25 +1,21 @@
 import React from 'react';
 import { CreateErrorModal } from '../../_features';
 
-const bigDiv = {
+const containerStyle = {
   container: 'inherit',
   marginBlock: '20px',
   marginInline: '50px',
   backgroundColor: 'white',
   borderRadius: '50px',
 };
-const topDiv = {
-  display: 'flex',
-  justifyContent: 'space-between',
-};
 
 export const JobDash = () => {
   return (
-    <div style={bigDiv}>
-      <div style={topDiv}>
+    <div style={containerStyle}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h1> Ажлын зар</h1>
         <div data-testid="open-button">
-          <CreateErrorModal text={'Aмжилттай faildlee'} label={'Зар hasah'} />
+          <CreateErrorModal text={'Aмжилттай үүслээ'} label={'Зар нэмэх'} />
         </div>
       </div>
       <div>
