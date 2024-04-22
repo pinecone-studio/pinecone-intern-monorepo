@@ -1,4 +1,5 @@
-import { FederationProvider, ThemeProviderHRMS } from '../common';
+import { Stack } from '@mui/material';
+import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
 
 export const metadata = {
@@ -11,7 +12,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <FederationProvider>
         <ThemeProviderHRMS>
-          <body>{children}</body>
+          <body>
+            <Stack flex={1}>
+              <Header />
+              {children}
+            </Stack>
+          </body>
         </ThemeProviderHRMS>
       </FederationProvider>
     </html>
