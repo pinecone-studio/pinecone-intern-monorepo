@@ -37,13 +37,6 @@ const data = [
     category: 'Coding',
     description: 'it is just a description',
   },
-  {
-    title: 'Morphosis',
-    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
-    date: '2024.04.16',
-    category: 'Coding',
-    description: 'it is just a description',
-  },
 ];
 
 const GroupArticlesComp = (props: GroupArticlesCompProps) => {
