@@ -47,7 +47,7 @@ const CourseAdd = () => {
         <Stack width={'100%'} bgcolor={'white'} borderRadius={'12px'} px={3} paddingBottom={7} paddingTop={5}>
           <Stack marginBottom={8}>
             <Typography fontSize={28} fontWeight={700} color={'#121316'}>
-              {'Сэдвийн ерөнхий мэдээлэл'}
+              {'Сэдвийн ерөнхий мэдээлэл '}
             </Typography>
           </Stack>
           <Stack direction={'row'} gap={'74px'}>
