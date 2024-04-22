@@ -1,2 +1,2 @@
 export * from './hello-query';
-export * from './get-reactions';
+export * from './get-reactions-query';

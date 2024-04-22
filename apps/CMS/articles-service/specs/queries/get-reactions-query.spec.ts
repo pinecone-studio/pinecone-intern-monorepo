@@ -1,5 +1,5 @@
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
-import { getReactionByArticleId } from '../../../articles-service/src/graphql/resolvers/queries/get-reactions';
+import { getReactionsByArticleId } from '../../src/graphql/resolvers/queries/get-reactions-query';
 
 jest.mock('../../../articles-service/src/models/reaction.model', () => ({
   reactionModel: {
@@ -24,10 +24,9 @@ jest.mock('../../../articles-service/src/models/reaction.model', () => ({
 }));
 
 const articleId = '661c87fd6837efa536464d26';
-
 describe('fetching reactions for specific article', () => {
   it('1. should fetch data using fetch query', async () => {
-    const result = await getReactionByArticleId!({}, { articleId }, {}, {} as GraphQLResolveInfo);
+    const result = await getReactionsByArticleId!({}, { articleId }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual([
       {
         emoji: 'like',
@@ -41,7 +40,7 @@ describe('fetching reactions for specific article', () => {
 
   it('2. throw an error message if there is not promising query', async () => {
     try {
-      await getReactionByArticleId!({}, { articleId: 'a' }, {}, {} as GraphQLResolveInfo);
+      await getReactionsByArticleId!({}, { articleId: 'a' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new GraphQLError('Failed to get reactions for specific article'));
     }

@@ -7,7 +7,4 @@ export const categorySchema = gql`
     name: String!
     createdAt: Date
   }
-  type Query {
-    categoryQuery: [Category!] 
-  }
 `;
