@@ -2,7 +2,6 @@
 
 import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
 import { Stack } from '@mui/material';
-
 import GroupArticlesComp from './articles/_components/GroupArticlesComp';
 
 const Home = () => {

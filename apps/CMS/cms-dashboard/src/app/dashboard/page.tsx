@@ -1,3 +1,5 @@
+'use client';
+
 import { Stack } from '@mui/material';
 import React from 'react';
 import { PaginationFooter } from './_components/PaginationFooter';
