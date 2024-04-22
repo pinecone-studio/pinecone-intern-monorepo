@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useHelloQueryFromRecruitingServiceQuery } from '../../generated';
-import { JobDash } from './_components';
+import { JobRecruitDashboard } from './_components/feedJob/JobRecruit';
 
 const RecruitPage = () => {
   const { data } = useHelloQueryFromRecruitingServiceQuery();
@@ -10,7 +10,7 @@ const RecruitPage = () => {
   return (
     <div>
       <h1>hello from Recruiting Service Query {data?.helloQueryFromRecruitingService}</h1>
-      <JobDash />
+      <JobRecruitDashboard />
       <Link href="/">
         <button>Go back to home page</button>
       </Link>

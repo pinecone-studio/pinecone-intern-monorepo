@@ -1,5 +1,6 @@
 import React from 'react';
 import { CreateErrorModal } from '../../_features';
+import { Grid } from '@mui/material';
 
 const containerStyle = {
   container: 'inherit',
@@ -9,15 +10,15 @@ const containerStyle = {
   borderRadius: '50px',
 };
 
-export const JobDash = () => {
+export const JobRecruitDashboard = () => {
   return (
-    <div style={containerStyle}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Grid sx={containerStyle}>
+      <Grid sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <h1> Ажлын зар</h1>
         <div data-testid="open-button">
           <CreateErrorModal text={'Aмжилттай үүслээ'} label={'Зар нэмэх'} />
         </div>
-      </div>
+      </Grid>
       <div>
         <div style={{ marginTop: '20px', borderBottom: '1px solid gray', width: '100%' }}>
           <div style={{ display: 'flex', paddingBottom: '10px', gap: '20px' }}>
@@ -25,8 +26,8 @@ export const JobDash = () => {
             <p>Ирсэн өргөдөл</p>
           </div>
         </div>
-        <div style={{ marginTop: '50px', display: 'flex', gap: '10px' }}>
-          <div style={{ border: '1px solid gray', width: '100%' }}>
+        <Grid style={{ marginTop: '50px', display: 'flex', gap: '10px' }}>
+          <Grid style={{ border: '1px solid gray', width: '100%' }}>
             <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
                 <h1>Staff Software Engineer, Machine Learning, Core</h1>
@@ -36,8 +37,8 @@ export const JobDash = () => {
                 <p style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</p>
               </div>
             </div>
-          </div>
-          <div style={{ border: '1px solid gray', width: '100%' }}>
+          </Grid>
+          <Grid style={{ border: '1px solid gray', width: '100%' }}>
             <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
                 <h1>Staff Software Engineer, Machine Learning, Core</h1>
@@ -47,9 +48,9 @@ export const JobDash = () => {
                 <p style={{ backgroundColor: 'black', color: 'white' }}>Дэлгэрэнгүй</p>
               </div>
             </div>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
-    </div>
+    </Grid>
   );
 };
