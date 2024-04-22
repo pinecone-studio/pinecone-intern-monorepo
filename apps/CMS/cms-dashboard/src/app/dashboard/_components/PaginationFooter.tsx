@@ -8,7 +8,7 @@ import { NextPageIcon } from './NextPageIcon';
 
 export const PaginationFooter = () => {
   return (
-    <Stack width={'100%'}>
+    <Stack width={'100%'} data-cy="pagination-footer-cy-id">
       <Pagination
         count={2}
         shape="rounded"
