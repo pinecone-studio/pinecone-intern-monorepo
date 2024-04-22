@@ -8,7 +8,6 @@ export const userSchema = gql`
     phoneNumber: String
     avatar: String!
     role: String!
-    articles: [Article]
     otp: String
   }
   input SignUpInput {
@@ -19,6 +18,7 @@ export const userSchema = gql`
   type Message {
     message: String!
   }
+
   type Mutation {
     signUp(input: SignUpInput!): Message!
   }
