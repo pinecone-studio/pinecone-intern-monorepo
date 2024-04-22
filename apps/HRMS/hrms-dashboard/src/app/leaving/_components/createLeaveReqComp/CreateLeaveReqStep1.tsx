@@ -2,14 +2,14 @@
 
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import dayjs, { Dayjs } from 'dayjs';
-import { LeaveReqCreationContext } from 'apps/HRMS/hrms-dashboard/src/common/providers/LeaveReqCreationProvider';
+import dayjs from 'dayjs';
+import { LeaveReqCreationContext } from 'apps/HRMS/hrms-dashboard/src/common/providers/index';
 
 const validationSchema = yup.object({
   step1Date: yup.date().required(),
@@ -20,12 +20,10 @@ const validationSchema = yup.object({
 export const CreateLeaveReqStep1 = () => {
   const { setStepNo } = useContext(LeaveReqCreationContext);
 
-  const loggedUser = { name: 'WorkerName' };
-  const label1 = 'Огноо';
-  const label2 = 'Нэрээ сонгоно уу';
-  const label3 = 'Шалтгаанаа сонгоно уу';
-  const labels = [label1, label2, label3];
-  const leaveReasons = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
+  const labels = [
+    { label: 'Нэрээ сонгоно уу', textFieldDataCy: 'name-select-input', textFieldName: 'step1UserName', options: ['WorkerName'] },
+    { label: 'Шалтгаанаа сонгоно уу', textFieldDataCy: 'type-select-input', textFieldName: 'step1LeaveType', options: ['shit happened', 'remote', 'medical', 'family emergency', 'others'] },
+  ];
 
   const formik = useFormik({
     initialValues: {
@@ -35,6 +33,7 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log(values);
       setStepNo(1);
     },
   });
@@ -42,49 +41,29 @@ export const CreateLeaveReqStep1 = () => {
   return (
     <Box>
       <Stack sx={{ gap: '16px' }}>
+        <Stack sx={{ gap: '4px' }}>
+          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+            Огноо
+          </Typography>
+          <LocalizationProvider data-cy="datepicker-input" dateAdapter={AdapterDayjs}>
+            <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
+          </LocalizationProvider>
+        </Stack>
         {labels.map((item, index) => {
           return (
             <Stack key={index} sx={{ gap: '4px' }}>
               <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
-                {item}
+                {item.label}
               </Typography>
-              {item == label1 ? (
-                <LocalizationProvider data-cy="datepicker-input" dateAdapter={AdapterDayjs}>
-                  <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
-                </LocalizationProvider>
-              ) : item == label2 ? (
-                <TextField
-                  data-cy="name-select-input"
-                  select
-                  name="step1UserName"
-                  value={formik.values.step1UserName}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.touched.step1UserName && Boolean(formik.errors.step1UserName))}
-                  helperText={formik.touched.step1UserName && formik.errors.step1UserName}
-                >
-                  <MenuItem key={loggedUser.name} value={loggedUser.name}>
-                    {loggedUser.name}
-                  </MenuItem>
-                </TextField>
-              ) : item == label3 ? (
-                <TextField
-                  data-cy="type-select-input"
-                  select
-                  name="step1LeaveType"
-                  value={formik.values.step1LeaveType}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.touched.step1LeaveType && Boolean(formik.errors.step1LeaveType))}
-                  helperText={formik.touched.step1LeaveType && formik.errors.step1LeaveType}
-                >
-                  {leaveReasons.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {item}
+              <TextField data-cy={item.textFieldDataCy} select name={item.textFieldName} value={`formik.values.${item.textFieldName}`} onChange={formik.handleChange}>
+                {item.options.map((option, index) => {
+                  return (
+                    <MenuItem key={index} value={option}>
+                      {option}
                     </MenuItem>
-                  ))}
-                </TextField>
-              ) : (
-                ''
-              )}
+                  );
+                })}
+              </TextField>
             </Stack>
           );
         })}
