@@ -22,15 +22,20 @@ const CourseAdd = () => {
     },
     validationSchema: validatinSchema,
     onSubmit: () => {
-      alert('hii');
+      console.log('hi lalra');
     },
   });
+
+  const submitHandler = () => {
+    formik.handleSubmit();
+  };
 
   const router = useRouter();
   return (
     <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3} minHeight={'100vh'}>
       <Container maxWidth="xl">
         <Stack
+          data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboardOtherLab');
           }}
@@ -56,7 +61,7 @@ const CourseAdd = () => {
                 <Typography fontWeight={600} fontSize={16} color={'#121316'}>
                   {'Гарчиг'}
                 </Typography>
-                <TextField data-testid="title" name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Энд бичнэ үү..." />
+                <TextField name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Энд бичнэ үү..." />
               </Stack>
               <Stack width={'100%'} gap={1}>
                 <Typography fontWeight={600} fontSize={16} color={'#121316'}>
@@ -94,11 +99,14 @@ const CourseAdd = () => {
           </Stack>
           <Stack width={'100%'} alignItems={'center'}>
             <Button
-              data-cy="create-button"
-              onClick={() => formik.handleSubmit()}
+              data-testid="create-button"
+              onClick={() => {
+                submitHandler();
+              }}
               variant="contained"
               sx={{ width: 'fit-content', bgcolor: '#121316', gap: 2 }}
-              disabled={!formik.values.title || !formik.values.description || !formik.values.image}
+              // disabled={!formik.values.title || !formik.values.description || !formik.values.image}
+              disabled={false}
             >
               {'Үргэлжлүүлэх'} <East />
             </Button>
