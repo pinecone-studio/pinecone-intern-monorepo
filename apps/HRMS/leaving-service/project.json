@@ -59,6 +59,9 @@
         "codeCoverage": true,
         "passWithNoTests": true
       },
+      "dependsOn": [{
+        "target": "codegen"
+      }],
       "configurations": {
         "ci": {
           "ci": true
