@@ -105,8 +105,7 @@ const CourseAdd = () => {
               }}
               variant="contained"
               sx={{ width: 'fit-content', bgcolor: '#121316', gap: 2 }}
-              // disabled={!formik.values.title || !formik.values.description || !formik.values.image}
-              disabled={false}
+              disabled={!formik.values.title || !formik.values.description || !formik.values.image}
             >
               {'Үргэлжлүүлэх'} <East />
             </Button>
