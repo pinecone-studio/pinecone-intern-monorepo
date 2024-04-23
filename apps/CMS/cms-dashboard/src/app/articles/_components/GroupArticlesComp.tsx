@@ -3,44 +3,17 @@ import { Grid, IconButton, Stack, Typography } from '@mui/material';
 import ArticleCard from './ArticleCard';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { useState } from 'react';
+import { QueryQuery } from '../../../generated';
+
+type Data = { __typename?: 'Article' | undefined; title: string; content: string; coverPhoto?: string | null | undefined; publishedAt?: any };
 
 type GroupArticlesCompProps = {
   title: string;
+  data: QueryQuery;
 };
 
-const data = [
-  {
-    title: 'Morphosis',
-    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
-    date: '2024.04.16',
-    category: 'Coding',
-    description: 'it is just a description',
-  },
-  {
-    title: 'Morphosis',
-    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
-    date: '2024.04.16',
-    category: 'Coding',
-    description: 'it is just a description',
-  },
-  {
-    title: 'Morphosis',
-    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
-    date: '2024.04.16',
-    category: 'Coding',
-    description: 'it is just a description',
-  },
-  {
-    title: 'Morphosis',
-    cover: 'https://www.pixelstalk.net/wp-content/uploads/2016/11/Photos-Earth-From-Space-HD.jpg',
-    date: '2024.04.16',
-    category: 'Coding',
-    description: 'it is just a description',
-  },
-];
-
 const GroupArticlesComp = (props: GroupArticlesCompProps) => {
-  const { title } = props;
+  const { title, data } = props;
   const [isClicked, setIsClicked] = useState(false);
 
   const clickHandler = () => {
@@ -48,18 +21,20 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
   };
 
   return (
-    <Stack data-testid="group-container" p={'40px 24px'} gap={4} bgcolor={'#fff'} borderRadius={2}>
+    <Stack data-testid="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
       <Typography data-testid="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
         {title}
       </Typography>
       <Grid data-testid="group-grid" container spacing={4}>
-        {data.map((item, index) => {
-          return (
-            <Grid data-testid="group-grid-item" item xs={6} key={index}>
-              <ArticleCard title={item.title} cover={item.cover} date={item.date} category={item.category} description={item.description} />
-            </Grid>
-          );
-        })}
+        {data.getArticlesQuery.length === 0
+          ? null
+          : data.getArticlesQuery.map((item, index) => {
+              return (
+                <Grid item xs={6}>
+                  <ArticleCard key={index} title={item?.title} cover={item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
+                </Grid>
+              );
+            })}
       </Grid>
       <Stack data-testid="group-innerCon" width="100%" alignItems="center">
         <IconButton

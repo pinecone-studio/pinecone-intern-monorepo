@@ -3,19 +3,19 @@ import { gql } from 'graphql-tag';
 export const articleSchema = gql`
   scalar Date
   type Article {
-    id: ID
+    id: ID!
     title: String!
-    coverPhoto: String
+    coverPhoto: String!
     content: String!
     author: User!
     category: Category!
     status: ArticleStatus!
     slug: String!
     commentPermission: Boolean!
-    createdAt: Date
-    publishedAt: Date
-    updatedAt: Date
-    scheduledAt: Date
+    createdAt: Date!
+    publishedAt: Date!
+    updatedAt: Date!
+    scheduledAt: Date!
   }
   enum ArticleStatus {
     DRAFT

@@ -1,0 +1,12 @@
+query Query {
+  getArticlesQuery {
+    category {
+      name
+    }
+    content
+    coverPhoto
+    publishedAt
+    id
+    title
+  }
+}

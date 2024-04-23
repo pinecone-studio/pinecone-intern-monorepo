@@ -2,10 +2,10 @@
 import { Button, Stack, Typography } from '@mui/material';
 
 type MainBannerFromArticlesProps = {
-  date: string;
-  categories: string;
-  articlesTitle: string;
-  cover: string;
+  date?: string;
+  categories?: string;
+  articlesTitle?: string;
+  cover?: string;
 };
 const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
