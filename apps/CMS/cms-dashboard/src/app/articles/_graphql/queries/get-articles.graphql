@@ -10,3 +10,16 @@ query Query {
     title
   }
 }
+
+query GetArticlesByCategory($categoryId: String!, $getAll: Boolean!) {
+  getArticlesByCategory(categoryId: $categoryId, getAll: $getAll) {
+    content
+    coverPhoto
+    publishedAt
+    id
+    title
+    category {
+      name
+    }
+  }
+}

@@ -3,38 +3,44 @@ import { Grid, IconButton, Stack, Typography } from '@mui/material';
 import ArticleCard from './ArticleCard';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { useState } from 'react';
-import { QueryQuery } from '../../../generated';
-
-type Data = { __typename?: 'Article' | undefined; title: string; content: string; coverPhoto?: string | null | undefined; publishedAt?: any };
+import { useGetArticlesByCategoryQuery } from '../../../generated';
 
 type GroupArticlesCompProps = {
   title: string;
-  data: QueryQuery;
+  categoryId:string;
 };
 
 const GroupArticlesComp = (props: GroupArticlesCompProps) => {
-  const { title, data } = props;
+  const { title,categoryId} = props;
   const [isClicked, setIsClicked] = useState(false);
-
+  const [isAll, setIsAll] = useState(false);
+  const { data, loading, refetch } = useGetArticlesByCategoryQuery({
+    variables: {
+      categoryId: categoryId,
+      getAll: isAll,
+    },
+  });
   const clickHandler = () => {
     setIsClicked((prev) => !prev);
+    setIsAll((prev)=>!prev)
+    refetch()
   };
 
   return (
     <Stack data-testid="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
+      {loading?<Stack>Loading</Stack>:
+      <Stack data-testid="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
       <Typography data-testid="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
         {title}
       </Typography>
       <Grid data-testid="group-grid" container spacing={4}>
-        {data.getArticlesQuery.length === 0
-          ? null
-          : data.getArticlesQuery.map((item, index) => {
-              return (
-                <Grid item xs={6}>
-                  <ArticleCard key={index} title={item?.title} cover={item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
-                </Grid>
-              );
-            })}
+        {data?.getArticlesByCategory.map((item) => {
+          return (
+            <Grid item xs={6} key={item?.id}>
+              <ArticleCard  title={item?.title} cover={item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
+            </Grid>
+          );
+        })}
       </Grid>
       <Stack data-testid="group-innerCon" width="100%" alignItems="center">
         <IconButton
@@ -47,6 +53,7 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
           {isClicked ? <KeyboardArrowUp sx={{ width: 49, height: 40 }} /> : <KeyboardArrowDown sx={{ width: 49, height: 40 }} />}
         </IconButton>
       </Stack>
+      </Stack>}
     </Stack>
   );
 };

@@ -12,10 +12,10 @@ describe('ArticlesCard', () => {
     const title = getByTestId('article-title');
     expect(title.textContent).toMatch('Morphosis');
 
-    const category = getByTestId('category');
+    const category = getByTestId('article-category');
     expect(category.textContent).toMatch('Coding');
 
-    const description = getByTestId('description');
+    const description = getByTestId('article-description');
     expect(description.textContent).toMatch('It is just description');
 
     const cover = getByTestId('article-cover');

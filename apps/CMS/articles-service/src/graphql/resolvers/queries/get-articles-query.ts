@@ -16,7 +16,7 @@ export const getArticlesByCategory: QueryResolvers['getArticlesByCategory'] = as
     const articles = await ArticleModel.find({ category: categoryId })
       .populate('category')
       .populate('author')
-      .limit(getAll ? 0 : 4);
+      .limit(getAll ? 0 : 2);
 
     return articles;
   } catch (error) {

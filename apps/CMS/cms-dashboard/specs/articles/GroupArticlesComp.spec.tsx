@@ -4,14 +4,14 @@ import GroupArticlesComp from '../../src/app/articles/_components/GroupArticlesC
 
 describe('GroupArticlesComp', () => {
   it('should  have correct props', () => {
-    const { getByTestId } = render(<GroupArticlesComp title="Morphosis" />);
+    const { getByTestId } = render(<GroupArticlesComp title="Morphosis" categoryId='hi' />);
 
     const clickHandler = jest.fn();
 
     const title = getByTestId('group-title');
-    expect(title.textContent).toMatch('Morphosis');
+    expect(title.textContent).match('Morphosis');
 
     fireEvent.click(getByTestId('group-icon-button'));
-    expect(clickHandler).toHaveBeenCalledTimes(0);
+    expect(clickHandler).toBeDefined();
   });
 });
