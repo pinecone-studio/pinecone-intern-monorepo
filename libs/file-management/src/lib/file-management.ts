@@ -42,7 +42,7 @@ export const handleUpload = async (file: File, folder: string) => {
   return accessUrl;
 };
 
-export const fileManagement = async (fileList: any, folder: string) => {
+export const fileManagement = async (fileList, folder: string) => {
   const accessUrls: string[] = [];
 
   await Promise.all(
