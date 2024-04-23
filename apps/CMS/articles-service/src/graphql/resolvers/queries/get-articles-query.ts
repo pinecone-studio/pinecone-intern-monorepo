@@ -8,7 +8,6 @@ export const getArticlesQuery: QueryResolvers['getArticlesQuery'] = async () => 
     return articles;
   } catch (error) {
     console.log(error);
-
     throw new GraphQLError('Error in get articles query');
   }
 };
