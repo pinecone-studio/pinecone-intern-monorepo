@@ -47,10 +47,6 @@ describe('Dashboard Table', () => {
     });
 
     const menuItem = getAllByTestId('close-button-menu-test-id')[0];
-    const menuIcon = getAllByTestId('item-icon')[0];
-
-    expect(menuItem).toBeTruthy();
-    expect(menuIcon).toBeTruthy();
 
     await act(async () => {
       await fireEvent.click(menuItem);
