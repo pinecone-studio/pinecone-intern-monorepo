@@ -54,7 +54,11 @@ const DashboardTable = () => {
         <TableHead>
           <TableRow>
             {tableItems.map((item, index) => {
-              return <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>{item}</TableCell>;
+              return (
+                <TableCell key={index} sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>
+                  {item}
+                </TableCell>
+              );
             })}
             <TableCell></TableCell>
           </TableRow>
