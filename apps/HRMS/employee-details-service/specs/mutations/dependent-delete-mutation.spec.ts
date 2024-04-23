@@ -36,7 +36,7 @@ describe('delete dependent', () => {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND));
     }
   });
-  it('should throw an error if an error occurs during a dependent retrieval', async () => {
+  it('should throw an error if an error occurs during dependent retrieval', async () => {
     try {
       await deletedDependent!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
