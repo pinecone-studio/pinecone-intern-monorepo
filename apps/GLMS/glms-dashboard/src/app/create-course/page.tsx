@@ -21,9 +21,7 @@ const CourseAdd = () => {
       image: '',
     },
     validationSchema: validatinSchema,
-    onSubmit: () => {
-      console.log('hi lalra');
-    },
+    onSubmit: () => {},
   });
 
   const submitHandler = () => {
@@ -61,22 +59,13 @@ const CourseAdd = () => {
                 <Typography fontWeight={600} fontSize={16} color={'#121316'}>
                   {'Гарчиг'}
                 </Typography>
-                <TextField name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Энд бичнэ үү..." />
+                <TextField id="title-test" name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Энд бичнэ үү..." />
               </Stack>
               <Stack width={'100%'} gap={1}>
                 <Typography fontWeight={600} fontSize={16} color={'#121316'}>
                   {'Дэлгэрэнгүй'}
                 </Typography>
-                <TextField
-                  data-testid="description"
-                  name="description"
-                  onChange={formik.handleChange}
-                  value={formik.values.description}
-                  variant="outlined"
-                  minRows={2}
-                  placeholder="Оруулна уу..."
-                  sx={{ bgcolor: 'white' }}
-                />
+                <TextField id="description-test" name="description" onChange={formik.handleChange} value={formik.values.description} type="text" placeholder="Оруулна уу..." />
               </Stack>
             </Stack>
             <Stack width={'100%'} gap={1} marginBottom={'108px'}>
@@ -85,7 +74,7 @@ const CourseAdd = () => {
               </Typography>
               <Stack width={'100%'} height={422} border={'2px #D6D8DB dashed'} borderRadius={'8px'} display={'grid'} sx={{ placeContent: 'center' }}>
                 <TextField
-                  data-testid="file"
+                  id="file-test"
                   name="image"
                   onChange={formik.handleChange}
                   value={formik.values.image}
