@@ -3,36 +3,43 @@ import { LeaveRequestModel } from '@/graphql/model/leave-request';
 import { errorTypes, graphqlErrorHandler } from '../error';
 
 export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"] = async (_, { requestInput }) => {
-  try{
+  try {
     const { employeeId, startDateString, endDateString, description, leaveType, superVisor, durationType } = requestInput;
-  
-    const startDate = new Date(startDateString)
-    const endDate = new Date(endDateString)
-  
-    const createdLeaveRequests = []
-    const totalHour = 8;
-    const daysTime = Math.abs(endDate.getTime() - startDate.getTime());
-        
-    const absenceDays = Math.ceil(daysTime / (1000 * 60 * 60 * 24));
-    for (let i = 0; i < absenceDays; i++) {
-        const clonedStartDate = new Date(startDate);
-        if (clonedStartDate.getDay() !== 6 && clonedStartDate.getDay() !== 0) {
-            const create = await LeaveRequestModel.create({
-                employeeId,
-                startDate: clonedStartDate,
-                description,
-                leaveType,
-                superVisor,
-                totalHour,
-                durationType
-            });
-            createdLeaveRequests.push(create)
-          }
-      startDate.setDate(startDate.getDate() + 1);
+
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+
+    const workDays = allWorkDays(startDate, endDate);
+
+    const createdLeaveRequests = await Promise.all(workDays.map(async (date) => {
+      const create = await LeaveRequestModel.create({
+        employeeId,
+        startDate: date,
+        description,
+        leaveType,
+        superVisor,
+        totalHour: 8,
+        durationType
+      });
+      return create;
+    }));
+
+    return createdLeaveRequests;
+  } catch (error) {
+    throw graphqlErrorHandler({ message: "Bolsonguie" }, errorTypes.BAD_USER_INPUT);
+  }
+};
+
+function allWorkDays(startDate: Date, endDate: Date): Date[] {
+  const workDays: Date[] = [];
+  const oneDay = 24 * 60 * 60 * 1000;
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+      workDays.push(new Date(currentDate));
     }
-  
-    return createdLeaveRequests
-  }catch(error){
-    throw graphqlErrorHandler({message:"Bolsonguie"}, errorTypes.BAD_USER_INPUT)
+    currentDate.setTime(currentDate.getTime() + oneDay);
   }
-  }
+  return workDays;
+}

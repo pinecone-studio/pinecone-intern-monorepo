@@ -1,6 +1,4 @@
-import { maybe } from '@apollo/client/utilities';
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import { makeResolver } from 'next/dist/server/router';
 
 const config: CodegenConfig = {
   overwrite: true,

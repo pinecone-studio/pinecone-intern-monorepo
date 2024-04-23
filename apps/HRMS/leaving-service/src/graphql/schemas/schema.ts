@@ -36,13 +36,15 @@ export const LeaveRequestTypeDefs = gql`
     _id: ID
     employeeId: String
     startDate: Date
-    endDate: Date
     description: String!
     leaveType: LeaveType!
     superVisor: String
     durationType: DurationType!
     status: RequestStatus!
     declinedReasoning: String
+    startHour: Int
+    endHour: Int
+    totalHour: Int!
   }
 
   type Query {
