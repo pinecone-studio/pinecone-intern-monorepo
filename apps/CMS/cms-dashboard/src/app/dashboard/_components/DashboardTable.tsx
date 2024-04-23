@@ -8,8 +8,8 @@ import morevert from './MoreVertMap';
 import { useGetArticlesQueryQuery } from '../../../generated';
 
 const DashboardTable = () => {
-  const { data } = useGetArticlesQueryQuery();
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
+  const { data } = useGetArticlesQueryQuery();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -20,7 +20,7 @@ const DashboardTable = () => {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+    <TableContainer data-cy="dashboard-table-cy" component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
@@ -48,7 +48,7 @@ const DashboardTable = () => {
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
                     <Stack>
-                      <IconButton data-testid="morevert-button-test-id" sx={{ cursor: 'pointer' }} onClick={handleClick}>
+                      <IconButton data-testid="morevert-button-test-id" data-cy="morevert-button-test-cy" sx={{ cursor: 'pointer' }} onClick={handleClick}>
                         <MoreVertOutlinedIcon sx={{ width: 22, height: 22 }} />
                       </IconButton>
 
@@ -58,6 +58,7 @@ const DashboardTable = () => {
                             <Stack
                               className={`close-test-class-name-${index}`}
                               data-testid="close-button-menu-test-id"
+                              data-cy="drop-down-menu-test-cy"
                               key={index}
                               direction={'row'}
                               alignItems={'center'}
