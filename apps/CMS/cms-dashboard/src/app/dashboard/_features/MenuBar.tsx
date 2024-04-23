@@ -5,6 +5,7 @@ import { MenuBtn } from '../_components/MenuBtn';
 import { Article } from '../../../generated';
 import { MenuAllBtn } from '../_components/MenuAllBtn';
 
+
 const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: string) => {
   return articles?.filter((item) => item.status === status).length;
 };
