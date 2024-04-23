@@ -130,6 +130,7 @@ export const employeeDetailsSchema = gql`
 
   type Query {
     getDependent(id: ID!): Dependent!
+    getAllEmployee: [Employee]
     getAllDependents: [Dependent!]
     getEmployee(id: ID): Employee
   }
