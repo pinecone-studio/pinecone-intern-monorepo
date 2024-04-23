@@ -40,5 +40,6 @@ export const articleSchema = gql`
   }
   type Query {
     getArticlesQuery: [Article]!
+    getArticleByID(id:ID!):Article!
   }
 `;
