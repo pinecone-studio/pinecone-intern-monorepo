@@ -5,7 +5,7 @@ import graphqlErrorHandler, { errorTypes } from '../error';
 export const deleteEmployee: MutationResolvers['EmployeeDelete'] = async (_: string, { id }: Employee) => {
   try {
     const deleteEmployeeId = await EmployeeModel.findByIdAndDelete(id);
-    if (!deleteEmployee) {
+    if (!deleteEmployeeId) {
       throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
     }
     return deleteEmployeeId;
