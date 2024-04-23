@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler, } from '@/graphql/resolvers/error';
-import { getArticleByID } from '../../src/graphql/resolvers/queries/get-article-by-id-query';
+import { getArticleByID } from '../../src/graphql/resolvers/queries/get-article-by-id';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../src/models/article.model', () => ({

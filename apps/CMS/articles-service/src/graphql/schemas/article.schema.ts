@@ -35,14 +35,11 @@ export const articleSchema = gql`
     commentPermission: Boolean!
   }
 
-  type Query {
-    getArticleByID(id:ID!):Article!
-  }
-
   type Mutation {
     createArticle(articleInput: CreateArticleInput!): Article!
   }
   type Query {
+    getArticleByID(id:ID!):Article!
     getArticlesQuery: [Article]!
   }
 `;
