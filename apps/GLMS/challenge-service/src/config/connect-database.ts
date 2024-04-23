@@ -5,7 +5,7 @@ export const connection = {
 };
 
 export async function connectDatabase() {
-  const DATABASE_URI = process.env.MONGODB_URI || '';
+  const DATABASE_URI = process.env.MONGODB_URI!;
 
   if (connection.isConnected > 0) {
     return;
