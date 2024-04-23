@@ -15,11 +15,12 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <Stack minWidth={242} bgcolor={'common.white'} height={'100vh'} pt={2}>
+    <Stack data-cy="dashboardSidebar" minWidth={242} bgcolor={'common.white'} height={'100vh'} pt={2}>
       {sidebarItems.map((item, index) => {
         return (
           <Stack
             key={index}
+            data-cy={`sidebarItem-${index}`}
             onClick={() => {
               router.push(item.pathName);
             }}
