@@ -12,7 +12,7 @@ const R2 = new S3Client({
   },
 });
 
-export async function createSignedUrl(folder: string) {
+export const createSignedUrl = async (folder: string) => {
   try {
     const key = v4();
     const urls = await getSignedUrl(
@@ -29,7 +29,7 @@ export async function createSignedUrl(folder: string) {
   } catch (error) {
     throw new Error('No signed or access url');
   }
-}
+};
 export const handleUpload = async (file: File, folder: string) => {
   const data = await createSignedUrl(folder);
 
