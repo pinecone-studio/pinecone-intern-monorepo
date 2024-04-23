@@ -5,34 +5,33 @@ import { v4 } from 'uuid';
 
 const R2 = new S3Client({
   region: 'auto',
-  endpoint: 'https://693b861e974f74c04e3709ef18e3e982.r2.cloudflarestorage.com/test' || '',
+  endpoint: process.env.ENDPOINT,
   credentials: {
-    accessKeyId: '270a917dcb895a4250528286caf766f6' || '',
-    secretAccessKey: '72c710c7031bdf6c4858b55ea03c7460ef91b4937c3bdd7471de5ab1d1a490b7' || '',
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
   },
 });
 
-export async function createSignedUrl() {
+export async function createSignedUrl(folder: string) {
   try {
     const key = v4();
     const urls = await getSignedUrl(
       R2,
       new PutObjectCommand({
-        Bucket: 'test',
-        Key: key,
+        Bucket: 'file-management',
+        Key: `${folder}/` + `${key}`,
         ACL: 'public-read',
       }),
       { expiresIn: 3600 }
     );
 
-    return { signedUrl: urls, accessUrl: 'https://pub-86686b615a9b4350980e59c4dd335476.r2.dev/test/' + key };
+    return { signedUrl: urls, accessUrl: process.env.PUB_URL + `${folder}/` + key };
   } catch (error) {
-    return { error };
+    throw new Error('No signed or access url');
   }
 }
-
-export const handleUpload = async (file: File) => {
-  const data = await createSignedUrl();
+export const handleUpload = async (file: File, folder: string) => {
+  const data = await createSignedUrl(folder);
 
   const { accessUrl, signedUrl } = data;
   await axios.put(signedUrl, file, {
@@ -40,16 +39,15 @@ export const handleUpload = async (file: File) => {
       'Content-Type': file.type,
     },
   });
-
   return accessUrl;
 };
-export const fileManagement = async (fileList) => {
-  if (!fileList) return;
+
+export const fileManagement = async (fileList: any, folder: string) => {
   const accessUrls: string[] = [];
 
   await Promise.all(
-    fileList.map(async (file) => {
-      const accessUrl = await handleUpload(file);
+    fileList.map(async (file: File) => {
+      const accessUrl = await handleUpload(file, folder);
       if (accessUrl) {
         accessUrls.push(accessUrl);
       }
