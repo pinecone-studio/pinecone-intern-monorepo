@@ -1,7 +1,7 @@
 'use client'
 import { Stack } from '@mui/material';
 import { PaginationFooter } from './_components/PaginationFooter';
-import { MenuBar } from './_features';
+import { MenuBar } from '../dashboard/_features/MenuBar';
 import { useGetArticlesQuery, Article } from "../../generated";
 import { useState } from 'react';
 
@@ -14,9 +14,9 @@ const Home = () => {
   return ( 
     <Stack data-cy="dashboard-page-cy-id">
       <MenuBar articles={articles} setStatus={setStatus} status={status}/>
-      Welcome to Cms Dashboard hello
       <PaginationFooter />
     </Stack>
   );
 };
-export default Home;
+
+export default Home
