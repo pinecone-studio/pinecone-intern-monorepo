@@ -16,7 +16,7 @@ describe('Database connection check', () => {
 
   it('should connect to the database when URI is provided', async () => {
     const mockURI = 'mock-uri';
-    process.env.MONGODB_URL = mockURI;
+    process.env.MONGODB_URI = mockURI;
 
     await connectDataBase();
 
@@ -25,7 +25,7 @@ describe('Database connection check', () => {
   });
 
   it('should not connect to the database when URI is not provided', async () => {
-    delete process.env.MONGODB_URL;
+    delete process.env.MONGODB_URI;
 
     await connectDataBase();
 
@@ -35,7 +35,7 @@ describe('Database connection check', () => {
   it('should throw an error when connection fails', async () => {
     const mockURI = 'mock-uri';
     const mockError = new Error('Connection failed');
-    process.env.MONGODB_URL = mockURI;
+    process.env.MONGODB_URI = mockURI;
     (connect as jest.Mock).mockRejectedValue(mockError);
 
     await expect(connectDataBase()).rejects.toThrowError('Connection failed');
