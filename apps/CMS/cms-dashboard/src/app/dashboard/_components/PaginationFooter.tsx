@@ -17,10 +17,10 @@ export const PaginationFooter = () => {
             padding: 0,
           },
           '.MuiPagination-ul': {
-            'li:first-child': {
+            'li:first-of-type': {
               flexGrow: 1,
             },
-            'li:last-child': {
+            'li:last-of-type': {
               flexGrow: 1,
               display: 'flex',
               justifyContent: 'flex-end',
