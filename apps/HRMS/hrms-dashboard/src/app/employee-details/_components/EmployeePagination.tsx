@@ -13,7 +13,6 @@ export const EmployeePagination = () => {
         sx={{
           'Button.MuiPaginationItem-previousNext': {
             border: 'none',
-            color: `primary.main`,
             fontWeight: 700,
           },
           'Button.MuiPaginationItem-page': {
