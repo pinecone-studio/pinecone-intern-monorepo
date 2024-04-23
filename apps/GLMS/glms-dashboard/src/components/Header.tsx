@@ -1,7 +1,7 @@
 import { Container, InputAdornment, Stack, TextField } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconColor, BackgroundMain } from './Primary';
+import { IconColor, BackgroundMain } from './primary/page';
 import Logo from '../../public/Logo';
 const Header = () => {
   return (
@@ -28,8 +28,8 @@ const Header = () => {
             placeholder="Search"
           />
           <AppsIcon sx={{ color: { IconColor }, width: '36xp', height: '36px' }} />
-          <Stack width="32px" height="32px" borderRadius="100%">
-            <img src="Avatar.png" />
+          <Stack width="32px" height="32px">
+            <img style={{ borderRadius: '100%' }} src="Profile.png" />
           </Stack>
         </Stack>
       </Container>
