@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Container } from '@mui/material';
-import DashboardTable from './_components/DashboardTable';
+import DashboardTable from './_features/DashboardTable';
 
 const Home = () => {
   return (

@@ -4,8 +4,37 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import morevert from './MoreVertMap';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { useGetArticlesQueryQuery } from '../../../generated';
+
+const menuItems = [
+  {
+    icons: <VisibilityOutlinedIcon />,
+    label: 'Статистик харах',
+  },
+  {
+    icons: <ShareOutlinedIcon />,
+    label: 'Хуваалцах',
+  },
+  {
+    icons: <ArchiveOutlinedIcon />,
+    label: 'Архив',
+  },
+  {
+    icons: <ModeEditOutlinedIcon />,
+    label: 'Засварлах',
+  },
+  {
+    icons: <LinkOutlinedIcon />,
+    label: 'Линк хуулах',
+  },
+];
+
+const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 
 const DashboardTable = () => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
@@ -24,10 +53,9 @@ const DashboardTable = () => {
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Нийтлэл</TableCell>
-            <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Статус</TableCell>
-            <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Огноо</TableCell>
-            <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>Ангилал</TableCell>
+            {tableItems.map((item, index) => {
+              return <TableCell sx={{ fontSize: '14px', fontWeight: 600, color: '#3F4145' }}>{item}</TableCell>;
+            })}
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -53,7 +81,7 @@ const DashboardTable = () => {
                       </IconButton>
 
                       <Menu data-testid="drop-down-menu-test-id" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                        {morevert.map((item, index) => {
+                        {menuItems.map((item, index) => {
                           return (
                             <Stack
                               className={`close-test-class-name-${index}`}
