@@ -2,7 +2,7 @@ import { Employee, MutationResolvers } from '@/graphql/generated';
 import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const deleteEmployee: MutationResolvers['EmployeeDelete'] = async (_: string, { id }: Employee) => {
+export const deleteEmployee: MutationResolvers['deleteEmployee'] = async (_, { id }) => {
   try {
     const deleteEmployeeId = await EmployeeModel.findByIdAndDelete(id);
     if (!deleteEmployeeId) {
