@@ -1,4 +1,5 @@
 'use client';
+import { EmployeePagination } from './_components';
 
 const EmployeeDetailsPage = () => {
   return (

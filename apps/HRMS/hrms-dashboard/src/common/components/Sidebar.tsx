@@ -20,7 +20,7 @@ export const Sidebar = () => {
         return (
           <Stack
             key={index}
-            data-cy={`sidebarItem-${index}`}
+            data-cy="sidebarItem"
             onClick={() => {
               router.push(item.pathName);
             }}
