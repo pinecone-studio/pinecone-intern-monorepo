@@ -12,7 +12,12 @@ const ApproveButton = ({ id }) => {
   };
 
   return (
-    <Button variant="text" onClick={handleApprove} sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}>
+    <Button
+      variant="text"
+      onClick={handleApprove}
+      sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}
+      data-testid="approve-button"
+    >
       Зөвшөөрөх
     </Button>
   );

@@ -1,8 +1,7 @@
-'use client';
 import { headers } from '../_features/utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, Stack, Box } from '@mui/material';
-import Status from '../_components/Status';
+import Status from './Status';
 import { useRouter } from 'next/navigation';
 
 const Requests = () => {
@@ -14,7 +13,7 @@ const Requests = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Stack sx={{ bgcolor: 'rgba(247, 247, 248, 1)', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', paddingY: '30px' }}>
+    <Stack sx={{ bgcolor: 'rgba(247, 247, 248, 1)', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', paddingY: '30px' }} data-testid="requests">
       <Stack sx={{ width: '1154px', bgcolor: 'white', borderRadius: '10px', padding: '16px', display: 'flex', gap: '12px' }}>
         <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography sx={{ fontWeight: '700', fontSize: '24px' }}>Чөлөө</Typography>
@@ -38,15 +37,15 @@ const Requests = () => {
             <Table>
               <TableHead sx={{ backgroundColor: 'rgba(247, 247, 248, 1)' }}>
                 <TableRow>
-                  {headers.map((data, index) => (
-                    <TableCell key={index}>{data}</TableCell>
+                  {headers.map((header, index) => (
+                    <TableCell key={index}>{header}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data &&
                   data.getRequests.map((dat, index) => (
-                    <TableRow key={index} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)}>
+                    <TableRow key={index} data-testid={`request-${index}`} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)}>
                       <TableCell>{dat._id}</TableCell>
                       <TableCell>{dat.declinedReasoning}</TableCell>
                       <TableCell>{dat.description}</TableCell>
@@ -65,4 +64,5 @@ const Requests = () => {
     </Stack>
   );
 };
+
 export default Requests;

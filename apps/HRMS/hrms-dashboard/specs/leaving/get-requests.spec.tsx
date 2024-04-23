@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { useGetRequestsQuery } from '../../src/generated';
 import { useRouter } from 'next/navigation';
-import Requests from '../../src/app/leaving/_features/Requests';
+import Requests from '../../src/app/leaving/_components/Requests';
 
 jest.mock('../../src/generated', () => ({
   useGetRequestsQuery: jest.fn(),
