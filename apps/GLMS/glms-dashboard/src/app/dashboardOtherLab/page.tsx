@@ -4,6 +4,7 @@ import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
 import Course from './_components/Course';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const data = [
   { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
@@ -19,6 +20,7 @@ const buttonsTop = ['Хичээл', 'Сорил'];
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
+  const router = useRouter();
   const [actionTab, setActionTab] = useState('Хичээл');
   const converter = () => {
     if (actionTab == 'Хичээл') {
@@ -50,6 +52,7 @@ const DashboardOtherLab = () => {
                 {buttonsTop.map((title) => (
                   <Button
                     data-testid="button1"
+                    onClick={() => router.push('/create-course')}
                     key={title}
                     variant="outlined"
                     color="inherit"
