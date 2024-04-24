@@ -1,20 +1,10 @@
 'use client';
 
 import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
-<<<<<<< HEAD
-import { Stack} from '@mui/material';
-import GroupArticlesComp from './articles/_components/GroupArticlesComp';
-
-
-const Home = () => {
-  console.log('hi');
-  
-=======
 import { Stack } from '@mui/material';
 import GroupArticlesComp from './articles/_features/GroupArticlesComp';
 
 const Home = () => {
->>>>>>> d9bd321 (feat(cms-dashboard): article page)
   return (
     <div>
       <Stack width={'100vw'} gap={6} bgcolor={'#F7F7F8'} suppressHydrationWarning={true} alignItems={'center'} pb={3}>
@@ -25,15 +15,9 @@ const Home = () => {
           categories="Porsche"
         />
         <Stack px={12} gap={6} width={'85%'}>
-<<<<<<< HEAD
-          <GroupArticlesComp title="Шинэ контентууд" categoryId='662776d1ebfd0e7cf0eed309' />
-          <GroupArticlesComp title="Хөтөлбөр болон эвентүүд" categoryId='661c677c6837efa536464cab' />
-          <GroupArticlesComp title="Сонирхолтой түүхүүд" categoryId='662771aaebfd0e7cf0eed302' />
-=======
           <GroupArticlesComp title="Шинэ контентууд" categoryId="662776d1ebfd0e7cf0eed309" />
           <GroupArticlesComp title="Хөтөлбөр болон эвентүүд" categoryId="661c677c6837efa536464cab" />
           <GroupArticlesComp title="Сонирхолтой түүхүүд" categoryId="662771aaebfd0e7cf0eed302" />
->>>>>>> d9bd321 (feat(cms-dashboard): article page)
         </Stack>
       </Stack>
     </div>
