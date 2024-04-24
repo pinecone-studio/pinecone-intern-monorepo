@@ -36,7 +36,7 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
             {title}
           </Typography>
           <Grid data-testid="group-grid" container spacing={4}>
-            {data?.getArticlesByCategory.map((item) => {
+            {data?.getArticlesByCategory.length === 0 ? <Stack></Stack> : data?.getArticlesByCategory?.map((item) => {
               return (
                 <Grid item xs={6} key={item?.id}>
                   <ArticleCard title={item?.title} cover={item?.coverPhoto===null?'/earth.jpeg':item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
