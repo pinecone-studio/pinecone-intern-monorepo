@@ -1,1 +1,11 @@
 # write query
+query GetAllEmployee {
+  getAllEmployee {
+    firstName
+    lastName
+    jobTitle
+    email
+    department
+    employmentStatus
+  }
+}

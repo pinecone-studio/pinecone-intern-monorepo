@@ -11,9 +11,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <FederationProvider>
-        <ThemeProviderHRMS>
-          <body>
+      <body>
+        <FederationProvider>
+          <ThemeProviderHRMS>
             <Stack flex={1}>
               <Header />
               <Stack flexDirection={'row'}>
@@ -21,9 +21,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 {children}
               </Stack>
             </Stack>
-          </body>
-        </ThemeProviderHRMS>
-      </FederationProvider>
+          </ThemeProviderHRMS>
+        </FederationProvider>
+      </body>
     </html>
   );
 };
