@@ -1,7 +1,7 @@
 import { Container, InputAdornment, Stack, TextField } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconColor, BackgroundMain } from './primary/page';
+import { IconColor, BackgroundMain, Icon } from './primary/page';
 import Logo from '../../public/Logo';
 const Header = () => {
   return (
@@ -20,7 +20,7 @@ const Header = () => {
               },
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon sx={{ color: {Icon} }} />
+                  <SearchIcon sx={{ color: { Icon } }} />
                 </InputAdornment>
               ),
             }}
