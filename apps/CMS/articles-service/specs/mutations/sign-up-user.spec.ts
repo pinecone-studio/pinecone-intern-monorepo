@@ -1,4 +1,4 @@
-import { GraphQLError, GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { signUp } from '../../src/graphql/resolvers/mutations/sign-up-user';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 const input = {

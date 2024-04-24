@@ -1,5 +1,4 @@
 import { MutationResolvers } from '@/graphql/generated';
-import { GraphQLError } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../error';
 import { UserModel } from '@/models';
 
