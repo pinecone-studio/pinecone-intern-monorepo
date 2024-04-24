@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { RadioButton, SelectButton, Button } from './_components';
 import { AddChallengeModal } from './_feature/AddChallengeModal';
 import { Box } from '@mui/material';
+import { ChooseTypeButton } from './_component/ChooseTypeButton';
 
 const Page = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
@@ -24,10 +25,10 @@ const Page = () => {
       <SelectButton data-cy="select-button" handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
       <Box>
         <AddChallengeModal data-cy="add-challenge-button" />
+        <ChooseTypeButton />;
       </Box>
       <Button label={'text'} />
     </Box>
   );
 };
-
 export default Page;
