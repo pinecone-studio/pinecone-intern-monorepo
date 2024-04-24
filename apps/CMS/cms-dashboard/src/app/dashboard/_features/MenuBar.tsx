@@ -1,46 +1,46 @@
-'use client'
-import React, { useState } from 'react';
+'use client';
+import { Dispatch, SetStateAction } from 'react';
 import { Stack } from '@mui/material';
 import { MenuBtn } from '../_components/MenuBtn';
+import { Article } from '../../../generated';
+import { MenuAllBtn } from '../_components/MenuAllBtn';
 
 
-type menuType = {
-  menu:string,
-  number:number
+const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: string) => {
+  return articles?.filter((item) => item.status === status).length;
+};
+
+type MenuBarTypes = {
+  articles: Article[] | undefined;
+  setStatus: Dispatch<SetStateAction<string>>;
+  status: string;
 }
-const menuMock = [
-  {
-    menu: 'Бүгд',
-    number: 18
-  },
-  {
-    menu: 'Нийтэлсэн',
-    number: 10
-  },
-  {
-    menu: 'Ноорог',
-    number: 4
-  },{
-    menu: 'Архив',
-    number: 2
-  },
-  {
-    menu: 'Төлөвлөсөн',
-    number: 2
-  },
-]
 
-export const MenuBar = () => {
-  const [selected, setSelected] = useState('Бүгд');
+export const MenuBar = (props: MenuBarTypes) => {
+  const { articles, setStatus, status } = props;
   return (
-    <Stack sx={{ display: 'flex', marginX: 'auto', width: '1200px', backgroundColor: 'white', height: '70px', paddingX: '20px', alignItems: 'start', justifyContent: 'end', fontSize: '20px', borderRadius: 2 }}>
+    <Stack
+      data-cy="menu-bar-cy-id"
+      sx={{
+        display: 'flex',
+        marginX: 'auto',
+        width: '1200px',
+        backgroundColor: 'white',
+        height: '70px',
+        paddingX: '20px',
+        alignItems: 'start',
+        justifyContent: 'end',
+        fontSize: '20px',
+        borderRadius: 2,
+      }}
+    >
       <Stack flexDirection={'row'} sx={{ textDecorationColor: 'gray', width: '65%', justifyContent: 'space-between', cursor: 'pointer' }}>
-        { menuMock && menuMock.map((e: menuType, index) => {
-          return (
-            <MenuBtn selected={selected} setSelected={setSelected} number={e.number} menu={e.menu} key={index}/>
-          )
+        <MenuAllBtn status={status} setStatus={setStatus} number={articles?.length} statusName={'Бүгд'}/>
+        {articles && articles.map((item, index) => {
+          const myQty = getNumberOfArticlesByStatus(articles, item.status);
+          return <MenuBtn status={status} setStatus={setStatus} number={myQty} statusName={item.status} key={index} />;
         })}
       </Stack>
     </Stack>
-  )
-}
+  );
+};

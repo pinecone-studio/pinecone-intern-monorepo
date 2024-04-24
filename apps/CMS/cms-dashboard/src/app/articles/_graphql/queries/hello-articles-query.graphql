@@ -1,3 +1,31 @@
 query HelloQueryFromArticlesService {
   helloQueryFromArticlesService
 }
+
+query getCategories  {
+  getCategories {
+    name
+  }
+}
+
+query getArticles {
+  getArticlesQuery {
+    id
+    title
+    coverPhoto
+    content
+    author {
+      name
+    }
+    status
+    slug
+    commentPermission
+    createdAt
+    publishedAt
+    updatedAt
+    scheduledAt
+    category {
+      name
+    }
+  }
+}
