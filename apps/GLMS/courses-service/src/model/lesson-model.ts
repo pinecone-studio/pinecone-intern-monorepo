@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose';
+import { Lesson } from '@/graphql/generated';
+import { Model, Schema, model, models } from 'mongoose';
 
 const lessonSchema = new Schema({
   title: {
@@ -20,6 +21,6 @@ const lessonSchema = new Schema({
   }],
 }); 
 
-const lessonModel = model('lesson', lessonSchema);
+const lessonModel: Model<Lesson> = models.lesson || model<Lesson>('lesson' ,lessonSchema)
 
 export default lessonModel;
