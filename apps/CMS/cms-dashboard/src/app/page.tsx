@@ -10,7 +10,7 @@ const Home = () => {
       <Stack width={'100vw'} gap={6} bgcolor={'#F7F7F8'} suppressHydrationWarning={true} alignItems={'center'} pb={3}>
         <MainBannerFromArticles
           articlesTitle="PORSCHE 911 GT3"
-          cover="https://pictures.porsche.com/rtt/iris?COSY-EU-100-1711coMvsi60AAt5FwcmBEgA4qP8iBUDxPE3Cb9pNXABuN9dMGF4tl3U0%25z8rMH1spbWvanYb%255y%25oq%25vSTmjMXD4qAZeoNBPUSfUx4RmWBisGK7Zlp0KtYYF%25mVSW8uAVbsqYSt4T0iO5Mi17HcTCkcQoKf2GLfVtSPQrIP7jMNYw3zqx7e2HEq%251UzQKI8rbsqYSf9V0iDRrNSgCR8gfieAHOxJK51%25cdUOoNsMR3"
+          cover="/earth.jpeg"
           date="2024.04.22"
           categories="Porsche"
         />
