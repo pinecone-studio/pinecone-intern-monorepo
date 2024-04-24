@@ -5,6 +5,10 @@ const commentsSchema = new Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
   comment: {
     type: String,
     required: true,
@@ -21,7 +25,7 @@ const commentsSchema = new Schema({
     type: Date,
     required: true,
   },
-  ipAdress: {
+  ipAddress: {
     type: String,
     required: true,
   },
@@ -30,7 +34,8 @@ const commentsSchema = new Schema({
     required: true,
   },
   articleId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'article',
     required: true,
   },
 });

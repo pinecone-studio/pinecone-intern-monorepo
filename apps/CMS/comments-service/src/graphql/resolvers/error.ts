@@ -2,6 +2,10 @@ import { GraphQLError } from 'graphql';
 import { ApolloServerErrorCode } from '@apollo/server/errors';
 
 export const errorTypes = {
+  BAD_USER_INPUT: {
+    errorCode: ApolloServerErrorCode.BAD_USER_INPUT,
+    errorStatus: 400,
+  },
   BAD_REQUEST: {
     errorCode: ApolloServerErrorCode.BAD_REQUEST,
     errorStatus: 400,

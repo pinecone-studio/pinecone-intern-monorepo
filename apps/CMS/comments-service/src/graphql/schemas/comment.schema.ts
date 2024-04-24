@@ -1,12 +1,24 @@
 import gql from 'graphql-tag';
-
 export const commentsSchema = gql`
-  type CommentType {
-    _id: ID
-    comment: String
+  scalar Date
+  input CreateCommentInput {
+    entityType: String!
+    entityId: String!
+    comment: String!
+    name: String!
+    email: String!
+    articleId: String!
   }
-
-  type Query {
-    getComments: [CommentType]
+  type Comment {
+    _id: ID!
+    name: String!
+    email: String
+    comment: String!
+    ipAddress: String!
+    createdAt: Date!
+    articleId: String!
+  }
+  type Mutation {
+    publishComment(createInput: CreateCommentInput!): ID
   }
 `;
