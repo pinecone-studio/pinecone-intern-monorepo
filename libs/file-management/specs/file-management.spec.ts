@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createSignedUrl, handleUpload, fileManagement } from '../src';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import fs from 'fs/promises';
 
 jest.mock('axios');
 jest.mock('@aws-sdk/s3-request-presigner', () => ({
@@ -12,7 +13,12 @@ describe('File Upload Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
+  const mockFile = {
+    size: 5,
+    type: 'text/plain',
+    name: 'test1.txt',
+    lastModified: 1713939374306,
+  };
   test('createSignedUrl should return signed URL and access URL', async () => {
     const mockFolder = 'folder';
     const result = await createSignedUrl(mockFolder);
@@ -23,7 +29,10 @@ describe('File Upload Tests', () => {
   });
 
   test('handleUpload should upload file and return access URL', async () => {
-    const mockFile = new File(['test1'], 'test1.txt', { type: 'text/plain' });
+    await fs.writeFile('text.txt', 'text');
+    const x = await fs.readFile('text.txt');
+
+    // const mockFile = new File(['test1'], 'test1.txt', { type: 'text/plain' });
     const mockFolder = 'folder';
     const mockSignedUrl = 'https://example.com/signed-url';
 
@@ -35,7 +44,7 @@ describe('File Upload Tests', () => {
   });
 
   test('fileManagement should upload all files and return access URLs', async () => {
-    const mockFileList = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' })];
+    const mockFileList = [mockFile, mockFile];
     const mockFolder = 'folder';
     const result = await fileManagement(mockFileList, mockFolder);
 

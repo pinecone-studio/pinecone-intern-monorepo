@@ -11,7 +11,12 @@ const R2 = new S3Client({
     secretAccessKey: process.env.SECRET_ACCESS_KEY,
   },
 });
-
+type fileType = {
+  size: number;
+  type: string;
+  name: string;
+  lastModified: number;
+};
 export const createSignedUrl = async (folder: string) => {
   try {
     const key = v4();
@@ -30,7 +35,7 @@ export const createSignedUrl = async (folder: string) => {
     throw new Error('No signed or access url');
   }
 };
-export const handleUpload = async (file: File, folder: string) => {
+export const handleUpload = async (file: fileType, folder: string) => {
   const data = await createSignedUrl(folder);
 
   const { accessUrl, signedUrl } = data;
@@ -46,7 +51,7 @@ export const fileManagement = async (fileList, folder: string) => {
   const accessUrls: string[] = [];
 
   await Promise.all(
-    fileList.map(async (file: File) => {
+    fileList.map(async (file: fileType) => {
       const accessUrl = await handleUpload(file, folder);
       if (accessUrl) {
         accessUrls.push(accessUrl);
