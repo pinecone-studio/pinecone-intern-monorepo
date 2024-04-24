@@ -1,0 +1,9 @@
+mutation createSection($title: String, $description: String, $contentImage: String) {
+  createSection(sectionInput: { title: $title, description: $description, contentImage: $contentImage }) {
+    id
+    title
+    description
+    contentImage
+    createdAt
+  }
+}
