@@ -38,4 +38,14 @@ describe('CoreButton tests are here', () => {
 
     expect(styles.fontSize).toBe('14px');
   });
+
+  it('Should render button with fontSize', () => {
+    const buttonText = 'Click Me';
+
+    const { getByText } = render(<Button label={buttonText} />);
+    const buttonElement = getByText(buttonText);
+    const styles = getComputedStyle(buttonElement);
+
+    expect(styles.borderRadius).toBe('20px');
+  });
 });

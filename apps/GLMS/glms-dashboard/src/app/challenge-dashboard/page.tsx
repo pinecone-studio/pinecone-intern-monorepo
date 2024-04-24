@@ -10,6 +10,7 @@ const DashboardOtherLab = () => {
         <Button disabled label="Click Me" radius={30} h={20} w={40} fontSize={5}></Button>
         <Button disabled label="Click Me" h={50} w={200} radius={100} color="#18ba51"></Button>
         <Button label="Button"></Button>
+        <Button label="Button" color="#28282B"></Button>
       </Container>
     </Stack>
   );
