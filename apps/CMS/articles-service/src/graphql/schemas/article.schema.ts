@@ -38,7 +38,11 @@ export const articleSchema = gql`
   type Mutation {
     createArticle(articleInput: CreateArticleInput!): Article!
   }
+
   type Query {
     getArticlesQuery: [Article]!
+    getArticleByID(id: ID!): Article!
+    getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article]!
+    getArticlesByQuantity(quantity: Int!): [Article]!
   }
 `;

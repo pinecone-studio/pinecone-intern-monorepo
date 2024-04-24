@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose';
+import { Section } from '@/graphql/generated';
+import { Model,Schema, model, models } from 'mongoose';
 
 const sectionSchema = new Schema({
     title: {
@@ -15,5 +16,5 @@ const sectionSchema = new Schema({
         default: Date.now,
       },
 })
-const sectionModel = model('section',sectionSchema)
+const sectionModel: Model<Section> =  models.section || model<Section>('section',sectionSchema) 
 export default sectionModel 

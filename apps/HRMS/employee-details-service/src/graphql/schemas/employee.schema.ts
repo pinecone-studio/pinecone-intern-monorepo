@@ -130,6 +130,7 @@ export const employeeDetailsSchema = gql`
 
   type Query {
     getDependent(id: ID!): Dependent!
+    getAllEmployee: [Employee]
     getAllDependents: [Dependent!]
     getEmployee(id: ID): Employee
   }
@@ -138,6 +139,7 @@ export const employeeDetailsSchema = gql`
     createEmployee(input: CreateEmployeeInput!): Employee!
     createDependent(input: CreateDependetInput): Dependent!
     deletedDependent(id: ID!): Dependent!
+    deleteEmployee(id: ID!): Employee!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
   }
 `;

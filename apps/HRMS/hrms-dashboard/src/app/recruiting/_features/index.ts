@@ -1,1 +1,1 @@
-export * from './ProfileMain';
+export * from './modal';

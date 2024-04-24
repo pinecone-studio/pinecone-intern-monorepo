@@ -1,6 +1,7 @@
 import { Stack } from '@mui/material';
 import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
+import { Sidebar } from '../common/components/Sidebar';
 
 export const metadata = {
   title: 'Welcome to hrms-dashboard',
@@ -15,7 +16,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <body>
             <Stack flex={1}>
               <Header />
-              {children}
+              <Stack flexDirection={'row'}>
+                <Sidebar />
+                {children}
+              </Stack>
             </Stack>
           </body>
         </ThemeProviderHRMS>

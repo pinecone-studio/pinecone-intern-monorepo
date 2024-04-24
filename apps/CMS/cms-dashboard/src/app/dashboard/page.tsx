@@ -1,13 +1,15 @@
-import { Stack } from '@mui/material';
+'use client';
+
 import React from 'react';
-import { PaginationFooter } from './_components/PaginationFooter';
+import { Container } from '@mui/material';
+import DashboardTable from './_features/DashboardTable';
 
 const Home = () => {
   return (
-    <Stack data-cy="dashboard-page-cy-id">
-      Welcome to Cms Dashboard hello
-      <PaginationFooter />
-    </Stack>
+    <Container data-cy="dashboard-page-cy-id" maxWidth="lg">
+      <DashboardTable />
+    </Container>
   );
 };
+
 export default Home;

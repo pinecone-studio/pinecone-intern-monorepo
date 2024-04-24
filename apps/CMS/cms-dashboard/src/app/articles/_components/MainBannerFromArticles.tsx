@@ -1,6 +1,5 @@
 'use client';
 import { Button, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 
 type MainBannerFromArticlesProps = {
   date: string;
@@ -12,7 +11,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
   return (
     <Stack data-testid="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <Image data-testid="cover" src={cover} alt="article-cover" fill style={{ objectFit: 'cover' }} />
+      <img width={'100%'} height={'100%'} data-testid="cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
         data-testid="innerComp"
         position={'absolute'}
@@ -24,7 +23,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
         p={3}
         paddingBottom={'50px'}
         sx={{
-          background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,2,1) 29%, rgba(0,0,0,1) 60%, rgba(255,255,255,0) 100%)',
+          background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,2,1) 29%, rgba(0,0,0,1) 40%, rgba(255,255,255,0) 100%)',
         }}
       >
         <Stack direction={'row'} gap={1} alignItems={'center'}>
@@ -34,7 +33,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
           <Stack width={4} height={4} borderRadius={'100%'} bgcolor={'#fff'}></Stack>
 
           <Typography data-testid="categories" color={'#fff'}>
-            `#${categories}`
+            #{categories}
           </Typography>
         </Stack>
         <Typography data-testid="articlesTitle" fontWeight={700} fontSize={32} color={'#fff'} maxWidth={'850px'} textAlign={'center'}>

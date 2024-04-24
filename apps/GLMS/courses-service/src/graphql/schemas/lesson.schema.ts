@@ -4,6 +4,7 @@ export const lessonSchema = gql`
   scalar Date
   type Query {
     getLessons: [Lesson!]!
+    getLessonById(id: ID!): Lesson!
   }
   type Lesson {
     id: ID
@@ -13,15 +14,15 @@ export const lessonSchema = gql`
     createdAt: Date
     sections: [Section]
   }
-  input LessonInput{
+  input LessonInput {
     title: String
     thumbnail: String
     position: Int
   }
-  input sectionIds{
-    sectionIds:[ID]
+  input sectionIds {
+    sectionIds: [ID]
   }
   type Mutation {
-    createLesson(lessonInput:LessonInput!): Lesson!
+    createLesson(lessonInput: LessonInput!): Lesson!
   }
 `;

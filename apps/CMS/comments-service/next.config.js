@@ -12,6 +12,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI ?? '',
+  },
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config) => {

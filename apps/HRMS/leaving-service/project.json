@@ -59,6 +59,7 @@
         "codeCoverage": true,
         "passWithNoTests": true
       },
+      "dependsOn": [{ "target": "graphql-codegen" }],
       "configurations": {
         "ci": {
           "ci": true

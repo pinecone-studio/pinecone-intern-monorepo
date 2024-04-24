@@ -24,6 +24,6 @@
     ".tsx",
     ".jsx"
   ],
-  "report-dir": ".cy",
+  "report-dir": "./coverage",
   "cache": false
 }

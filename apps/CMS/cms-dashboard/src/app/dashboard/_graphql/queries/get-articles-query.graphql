@@ -1,0 +1,10 @@
+query GetArticlesQuery {
+  getArticlesQuery {
+    title
+    status
+    createdAt
+    category {
+      name
+    }
+  }
+}

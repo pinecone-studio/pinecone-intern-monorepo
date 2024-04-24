@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { FilterByDate } from '../../src/app/dashboard/_components/FilterByDate';
+import { FilterByDate } from '../../src/app/dashboard/_features/FilterByDate';
 
 describe('FilterByDate', () => {
   it('1. Should render FilterByDate component', () => {
