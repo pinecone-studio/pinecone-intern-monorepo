@@ -24,10 +24,6 @@ const CourseAdd = () => {
     onSubmit: () => {},
   });
 
-  const submitHandler = () => {
-    formik.handleSubmit();
-  };
-
   const router = useRouter();
   return (
     <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3} minHeight={'100vh'}>
@@ -91,11 +87,6 @@ const CourseAdd = () => {
                       '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': { padding: 0 },
                       position: 'absolute',
                     }}
-                    // variant="standard"
-                    // inputProps={{}}
-                    // InputProps={{ disableUnderline: true }}
-                    // sx={{ visibility: 'hidden' }}
-                    // sx={{ position: 'absolute' }}
                   />
                 </Stack>
               </Stack>
@@ -105,7 +96,7 @@ const CourseAdd = () => {
             <Button
               data-testid="create-button"
               onClick={() => {
-                submitHandler();
+                formik.handleSubmit();
               }}
               variant="contained"
               sx={{

@@ -11,7 +11,7 @@ describe('createCoursePage', () => {
   it('3. create button', () => {
     cy.get('[data-testid="create-button"]').should('exist').should('be.disabled');
   });
-  it('5', () => {
+  it('4. check create button be enable and inputs', () => {
     cy.get('#title-test').type('some text');
     cy.get('#description-test').type('some more text');
     cy.get('#file-test').click();
