@@ -198,7 +198,7 @@
       "defaultConfiguration": "production",
       "configurations": {
         "production": {
-          "groups": ["cms-dashboard"],
+          "groups": ["cms-dashboard", "file-management"],
           "env": "prod"
         }
       }

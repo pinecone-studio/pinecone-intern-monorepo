@@ -1,9 +1,7 @@
 'use client';
-
-import { fileManagement } from '@/file-management';
 import { useRouter } from 'next/navigation';
 
-export default async function Index() {
+const Home = () => {
   const router = useRouter();
 
   const handleProfilePageButton = () => {
@@ -14,16 +12,13 @@ export default async function Index() {
     router.push('/assessment');
   };
 
-  const fileManagementLib = fileManagement();
-
-  console.log(fileManagementLib);
-
   return (
     <div>
-      <h1>hello from GLMS dashboardd</h1>
+      <h1>hello from GLMS dashboard</h1>
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
       <button onClick={handleProfilePageButton}>Go to profile page</button>
       <button onClick={handleAssessmentPageButton}>Go to assessment page</button>
     </div>
   );
-}
+};
+export default Home;
