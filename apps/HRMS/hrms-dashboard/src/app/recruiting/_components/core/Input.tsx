@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { FormControl, FormLabel, TextField, FormHelperText } from '@mui/material';
 
 interface InputProps {
@@ -8,10 +8,7 @@ interface InputProps {
   value?: string;
   row?: string;
   errorText?: string | undefined;
-  onChange?: (
-    // eslint-disable-next-line no-unused-vars
-    e: ChangeEvent<HTMLInputElement>
-  ) => void;
+  onChange?: (_: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({ name, label, placeholder, onChange, row, value, errorText }: InputProps) => {
@@ -37,4 +34,5 @@ export const Input = ({ name, label, placeholder, onChange, row, value, errorTex
     </>
   );
 };
+
 Input.displayName = 'Input';
