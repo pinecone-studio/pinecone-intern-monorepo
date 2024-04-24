@@ -30,9 +30,6 @@ describe('File Upload Tests', () => {
 
   test('handleUpload should upload file and return access URL', async () => {
     await fs.writeFile('text.txt', 'text');
-    const x = await fs.readFile('text.txt');
-
-    // const mockFile = new File(['test1'], 'test1.txt', { type: 'text/plain' });
     const mockFolder = 'folder';
     const mockSignedUrl = 'https://example.com/signed-url';
 
