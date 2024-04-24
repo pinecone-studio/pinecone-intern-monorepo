@@ -1,7 +1,13 @@
 'use client';
+import PublishRightSide from './_components/PublishRightSide';
+
 
 const ArticlesPage = () => {
-  return <div></div>;
+  return (
+    <div>
+      <PublishRightSide/>
+    </div>
+  );
 };
 
 export default ArticlesPage;
