@@ -7,7 +7,6 @@ export const getComments: QueryResolvers['getComment'] = async () => {
     const comments = await CommentsModel.find({});
     return comments;
   } catch (error) {
-    console.log('first', error);
     throw new GraphQLError('Error in GetComments Query');
   }
 };

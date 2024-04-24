@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-
+import { connect } from 'mongoose';
 export const connection = {
   isConnected: 0,
 };
@@ -12,7 +11,7 @@ export async function connectDatabase() {
   }
 
   try {
-    const dbConnection = await mongoose.connect(DATABASE_URI);
+    const dbConnection = await connect(DATABASE_URI);
     connection.isConnected = dbConnection.connections[0].readyState;
   } catch (error) {
     throw new Error('Failed to connect to database');
