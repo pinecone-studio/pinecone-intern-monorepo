@@ -39,7 +39,21 @@
 
 ### Pre-Commit Explained 📝
 
+</br> Pre-Commit will be check Eslint, Test, Build, Preview.
+
+   <ul>
+    <li>Eslint -  check error and warning from your changes</li>
+    <li>Test - check code coverage which is must be 100%, (E2E will be on dashboard, Unit testing on Service's)</li>
+    <li>Build - check build error for deploying preview and production</li>
+    <li>Preview - check error when deploying your changes on deploy url</li>
+   </ul>
+
 ### Pull Request Actions Explained 🚀
+
+</br> When you create pull request you need to add code-ready on the label. Which is running pull request action.
+So the pull request action is check Eslint, Test, Build, Preview on the the preview environment. Sometimes your local pre-commit will be pass that 4 checks and it can be fail on the pull request action. The reason is different version of node and other dependency or it will be failed on the Apollo Graphql Federation. So we need to check that error from ci action.
+
+[What is CI](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration)
 
 ### Monorepo workflow Explained 🔄
 
