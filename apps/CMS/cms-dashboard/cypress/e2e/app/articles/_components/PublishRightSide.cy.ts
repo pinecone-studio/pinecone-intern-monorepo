@@ -1,6 +1,6 @@
 describe('CustomInput component', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:3000/');
+      cy.visit('/articles');
     });
 
     it('should select an option from a dropdown', () => {
