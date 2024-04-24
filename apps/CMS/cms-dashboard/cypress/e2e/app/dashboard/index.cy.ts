@@ -1,7 +1,6 @@
 describe('dashboard page', () => {
   beforeEach(() => cy.visit('/dashboard'));
 
-  // Menu bar feature
   it('1. Should display welcome message', () => {
     cy.get('[data-cy="dashboard-table-cy"]').should('exist').should('be.visible');
   });
