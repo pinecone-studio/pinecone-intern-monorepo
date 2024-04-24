@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {Button} from '../../src/app/challenge/_components/CoreButton';
+import { Button } from '../../../src/app/challenge-dashboard/_components/CoreButton';
 
 describe('CoreButton tests are here', () => {
   it('Should render assessment button component', () => {
