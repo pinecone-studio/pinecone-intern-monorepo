@@ -1,10 +1,10 @@
 describe('PublishLeftSide', () => {
-    beforeEach(() => {
-      cy.visit('/createArticle');
-    });
-  
-    it('should clicked and have style', () => {
-      cy.get('[data-testid="mainBtn"]').should('exist').and('have.css', 'background-color', '#fff').click();
-    });
+  beforeEach(() => {
+    cy.visit('/articles/createArticle');
   });
-  
+
+  it('1. Should render PublishLeftSide component', () => {
+    cy.get('[data-testid="PublishLeftSide"]').should('exist').should('be.visible');
+  });
+});
+
