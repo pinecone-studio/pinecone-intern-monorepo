@@ -20,7 +20,7 @@ const Header = () => {
               },
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon sx={{ color: 'black' }} />
+                  <SearchIcon sx={{ color: {Icon} }} />
                 </InputAdornment>
               ),
             }}
