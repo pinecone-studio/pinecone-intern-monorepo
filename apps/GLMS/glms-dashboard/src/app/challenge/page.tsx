@@ -1,6 +1,6 @@
 'use client';
 import { Container, Stack } from '@mui/material';
-import {Button} from './_components/CoreButton';
+import {Button} from './_components/coreButton';
 
 const DashboardOtherLab = () => {
   return (
