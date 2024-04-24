@@ -4,7 +4,7 @@ import { QueryResolvers } from '../../generated';
 
 export const getLessonById: QueryResolvers['getLessonById'] = async (_, { id }) => {
   try {
-    const lessonId = await lessonModel.findById(id);
+    const lessonId = await lessonModel.findById(id).populate('sections');
     if (!lessonId) {
       throw new GraphQLError('cannot find lesson');
     }
