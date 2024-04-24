@@ -16,7 +16,7 @@ describe('createCoursePage', () => {
     cy.get('#description-test').type('some more text');
     cy.get('#file-test').click();
     cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-testid="create-button"]').should('be.enabled');
+    cy.get('[data-testid="create-button"]').should('not.be.disabled');
     cy.get('[data-testid="create-button"]').click();
   });
 });
