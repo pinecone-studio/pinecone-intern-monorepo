@@ -15,6 +15,6 @@ export const connectToDatabase = async () => {
     const connectedDB = await mongoose.connect(databaseUri!);
     connection.isConnected = connectedDB.connections[0].readyState;
   } catch (error) {
-    throw new Error('connection failed');
+    throw new Error('Database connection failed');
   }
 };
