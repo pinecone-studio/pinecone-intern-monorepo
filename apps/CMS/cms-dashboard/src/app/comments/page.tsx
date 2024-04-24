@@ -8,7 +8,7 @@ const CommentsPage = () => {
   const { data } = useHelloQueryFromCommentsServiceQuery();
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'grey' }}>
       <h1>hello from CMS dashboard Comments Page</h1>
       <h1>hello from Comments Service Query {data?.helloQueryFromCommentsService}</h1>
       <CommentsMain />
@@ -18,5 +18,4 @@ const CommentsPage = () => {
     </div>
   );
 };
-
 export default CommentsPage;
