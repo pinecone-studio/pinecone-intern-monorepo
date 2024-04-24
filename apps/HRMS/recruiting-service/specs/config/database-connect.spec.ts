@@ -14,10 +14,13 @@ describe('Database connection check', () => {
     jest.resetAllMocks();
   });
 
-  it('1. should call connectToDatabase', async () => {
-    (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
+  it('should call connectToDatabase when connection is successful', async () => {
+    const mongooseConnectMock = mongoose.connect as jest.Mock;
+    mongooseConnectMock.mockResolvedValue({ connections: [{ readyState: 1 }] });
+
     await connectToDatabase();
-    expect(mongoose.connect);
+
+    expect(mongooseConnectMock.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('2. should handle error', async () => {
