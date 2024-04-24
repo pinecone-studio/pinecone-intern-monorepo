@@ -39,7 +39,7 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
             {data?.getArticlesByCategory.map((item) => {
               return (
                 <Grid item xs={6} key={item?.id}>
-                  <ArticleCard title={item?.title} cover={item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
+                  <ArticleCard title={item?.title} cover={item?.coverPhoto===null?'/earth.jpeg':item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
                 </Grid>
               );
             })}
