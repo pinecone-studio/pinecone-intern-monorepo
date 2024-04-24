@@ -43,7 +43,7 @@
 
    <ul>
     <li>Eslint -  check error and warning from your changes</li>
-    <li>Test - check code coverage which is must be 100%, (E2E will be on dashboard, Unit testing on Service's)</li>
+    <li>Test - check code coverage which is must be 100%, (E2E will be on dashboar12d, Unit testing on Service's)</li>
     <li>Build - check build error for deploying preview and production</li>
     <li>Preview - check error when deploying your changes on deploy url</li>
    </ul>
