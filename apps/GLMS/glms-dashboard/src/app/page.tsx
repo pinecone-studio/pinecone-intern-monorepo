@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-export default function Index() {
+const Home = () => {
   const router = useRouter();
 
   const handleProfilePageButton = () => {
@@ -20,4 +20,5 @@ export default function Index() {
       <button onClick={handleAssessmentPageButton}>Go to assessment page</button>
     </div>
   );
-}
+};
+export default Home;
