@@ -1,14 +1,17 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { EmployeePagination } from './_components';
-import { AdditionalInformation } from './_features';
+import { Stack, Typography } from '@mui/material';
+import { EmployeesListTable } from './_features/EmployeesListTable';
 
 const EmployeeDetailsPage = () => {
   return (
     <div>
       <h1>hello from HRMS dashboard Employee details Page1</h1>
       <EmployeePagination />
-      <AdditionalInformation phone={'98989898'} dependency={'father'} id="1" />
-      <button data-cy="Home-Page-Button">Go back to home page</button>
+      <button onClick={handleNavigateToHomePageButton} data-cy="Home-Page-Button">
+        Go back to home page
+      </button>
     </div>
   );
 };
