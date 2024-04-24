@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 import { signUp } from '../../src/graphql/resolvers/mutations/sign-up-user';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 const input = {
@@ -35,6 +35,13 @@ describe('Sign up', () => {
       await signUp!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
+    }
+  });
+  it('it should throw graphql error', async () => {
+    try {
+      await signUp!({}, { input }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toBeInstanceOf(graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч байна' }, errorTypes.ALREADY_EXISTS));
     }
   });
 });

@@ -1,45 +1,60 @@
+// eslint-disable-next-line complexity
+
 'use client';
 
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { ArrowForward } from '@mui/icons-material';
 import { Button, Stack, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { Loader } from '../_components/Loader';
 import { FormInput } from '../_components/FormInput';
-import { object, ref, string } from 'yup';
-import { useHelloMutationFromArticlesServiceMutation } from '../../../generated';
-
-const getCharacterValidationError = (str: string) => {
-  return `Your password must have at least 1 ${str} character`;
-};
-
-const validationSchema = object({
-  emailOrPhoneNumber: string().required(`Email or Phone Number Хоосон байж болохгүй`),
-  password: string()
-    .required(`Password xоосон байж болохгүй`)
-    .min(8, 'Password must have at least 8 characters')
-    .matches(/[0-9]/, getCharacterValidationError('digit'))
-    .matches(/[a-z]/, getCharacterValidationError('lowercase'))
-    .matches(/[A-Z]/, getCharacterValidationError('uppercase')),
-  confirmPassword: string()
-    .required('Нууц үгээ давтаж оруулна уу')
-    .oneOf([ref('password')], 'Нууц үг буруу байна '),
-});
+import { useAuth } from '../provider/AuthProvider';
+import * as yup from 'yup';
 
 const SignUpForm = () => {
-  const [useHelloMutationFromArticlesService, { loading: creationLoading }] = useHelloMutationFromArticlesServiceMutation();
-  const handleLogin = (values: { password: string; confirmPassword: string; emailOrPhoneNumber: string }) => {
-    console.log('this is getting called');
-    console.log(values);
-  };
+  const { handleSignUp, creationLoading } = useAuth();
+  const validationSchema = yup.object({
+    emailOrPhoneNumber: yup
+      .string()
+      .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг байх ёстой', function (value) {
+        if (!value) {
+          return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const isEmail = emailRegex.test(value);
+
+        const phoneRegex = /^\d{8}$|^\d{10}$/;
+
+        const isPhoneNumber = phoneRegex.test(value);
+
+        return isEmail || isPhoneNumber;
+      })
+      .required('Утас эсвэл имэйл хаяг оруулна уу'),
+    password: yup
+      .string()
+      .required('Нууц үгээ оруулна уу')
+      .min(8, 'Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой')
+      .matches(/[a-z]/, 'Жижэг үсэг байх ёстой')
+      .matches(/[A-Z]/, 'Том үсэг байх ёстой')
+      .matches(/^(?=.*[!@#$%^&*])/, 'Тусгай тэмдэгт байх ёстой'),
+    confirmPassword: yup
+      .string()
+      .required('Нууц үгээ давтаж оруулна уу')
+      .oneOf([yup.ref('password')], 'Нууц үг буруу байна'),
+  });
 
   const formik = useFormik({
-    onSubmit: (values) => {
-      handleLogin(values);
+    initialValues: {
+      emailOrPhoneNumber: '',
+      password: '',
+      confirmPassword: '',
     },
-    validateOnChange: true,
-    initialValues: { password: '', confirmPassword: '', emailOrPhoneNumber: '' },
     validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      handleSignUp(values.emailOrPhoneNumber, values.password);
+    },
   });
 
   return (
@@ -47,7 +62,7 @@ const SignUpForm = () => {
       <Typography data-testid="sign-up-modal-title" mb={1} textAlign={'center'} fontSize={36} fontWeight={700}>
         Бүртгүүлэх
       </Typography>
-      <Stack gap={2}>
+      <Stack gap={1}>
         <FormInput
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
@@ -55,8 +70,8 @@ const SignUpForm = () => {
           type="text"
           onChange={formik.handleChange}
           value={formik.values.emailOrPhoneNumber}
-          error={formik.touched.emailOrPhoneNumber && Boolean(formik.errors.emailOrPhoneNumber)}
-          helperText={formik.touched.emailOrPhoneNumber && formik.errors.emailOrPhoneNumber}
+          error={Boolean(formik.errors.emailOrPhoneNumber)}
+          helperText={formik.errors.emailOrPhoneNumber}
           onBlur={formik.handleBlur}
         />
         <FormInput
@@ -66,8 +81,8 @@ const SignUpForm = () => {
           type="password"
           onChange={formik.handleChange}
           value={formik.values.password}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
+          error={Boolean(formik.errors.password)}
+          helperText={formik.errors.password}
           onBlur={formik.handleBlur}
         />
         <FormInput
@@ -77,8 +92,8 @@ const SignUpForm = () => {
           type="password"
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
-          error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-          helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+          error={Boolean(formik.errors.confirmPassword)}
+          helperText={formik.errors.confirmPassword}
           onBlur={formik.handleBlur}
         />
       </Stack>
@@ -87,14 +102,15 @@ const SignUpForm = () => {
           onClick={() => {
             formik.handleSubmit();
           }}
+          data-cy="Sign-Up-Button"
+          data-testid="Sign-Up-Button-Loader"
           disabled={!formik.isValid || creationLoading}
           fullWidth
           variant="contained"
           sx={{
             justifyContent: 'flex-end',
-            py: '14px',
-            px: '16px',
-            background: '#121316',
+            py: '14.5px',
+            background: '#000',
             color: 'white',
             gap: '8px',
             '&:hover': {
@@ -106,17 +122,24 @@ const SignUpForm = () => {
           }}
         >
           {creationLoading && <Loader />}
-          <Typography data-cy="Login-Button" mr={'23%'} fontSize={16} fontWeight={600}>
+          <Typography mr={'23%'} fontSize={16} fontWeight={600}>
             Бүртгүүлэх
           </Typography>
-          <ArrowForwardIcon data-testid="sign-up-modal-icon2" fontSize="medium" />
+          <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" />
         </Button>
       </Stack>
       <Stack border={1} borderColor="#ECEDF0"></Stack>
       <Stack direction={'row'} justifyContent={'center'} gap={1}>
         <Typography>Бүртгэлтэй юу?</Typography>
 
-        <Typography data-testid="sign-up-modal-to-signin" color={'#551a8b'} borderBottom={'1px solid #551a8b'}>
+        <Typography
+          data-testid="sign-up-modal-to-signin"
+          color={'#551a8b'}
+          borderBottom={'1px solid #551a8b'}
+          sx={{
+            cursor: 'pointer',
+          }}
+        >
           <Link href={'/'}>Нэвтрэх</Link>
         </Typography>
       </Stack>

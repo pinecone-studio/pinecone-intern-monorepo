@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, Stack, TextField, TextFieldProps, Typograph
 import { useState } from 'react';
 
 export const FormInput = (props: TextFieldProps) => {
-  const { label, type = 'text', ...rest } = props;
+  const { label, type = 'text', helperText, ...rest } = props;
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -33,11 +33,16 @@ export const FormInput = (props: TextFieldProps) => {
           },
           endAdornment: type === 'password' && (
             <InputAdornment position="end">
-              <IconButton onClick={handleShowPassword}>{showPassword ? <VisibilityOff /> : <Visibility />}</IconButton>
+              <IconButton data-testid="visibilityToggle" onClick={handleShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
             </InputAdornment>
           ),
         }}
       />
+      <Typography data-testid="helperText" fontSize={12} color={'error'}>
+        {helperText}
+      </Typography>
     </Stack>
   );
 };

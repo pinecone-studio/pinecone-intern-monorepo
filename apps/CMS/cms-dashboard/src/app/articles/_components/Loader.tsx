@@ -13,5 +13,5 @@ const Loading = styled('div')({
 });
 
 export const Loader = () => {
-  return <Loading />;
+  return <Loading data-testid="Loader" />;
 };

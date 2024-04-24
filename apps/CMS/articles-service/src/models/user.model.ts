@@ -1,5 +1,5 @@
+import { User } from '@/graphql/generated';
 import { Schema, model, Model, models } from 'mongoose';
-import { User } from '../../../cms-dashboard/src/generated';
 
 const userSchema = new Schema({
   name: {

@@ -1,12 +1,12 @@
 'use client';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { FederationProvider } from '../common';
 import './global.css';
 import { theme } from '../theme';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from '../common/providers/AuthProvider';
+import { AuthProvider } from './articles/provider/AuthProvider';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -15,8 +15,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <FederationProvider>
-              <AuthProvider>{children}</AuthProvider>
-              <ToastContainer />
+              <AuthProvider>
+                {children}
+                <ToastContainer />
+              </AuthProvider>
             </FederationProvider>
           </ThemeProvider>
           <CssBaseline />
