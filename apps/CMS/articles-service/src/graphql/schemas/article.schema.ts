@@ -44,5 +44,7 @@ export const articleSchema = gql`
     getArticleByID(id: ID!): Article!
     getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article]!
     getArticlesByQuantity(quantity: Int!): [Article]!
+    getNewestArticle: Article!
+    getArticlesByAuthorId(_id: ID!): [Article]!
   }
 `;
