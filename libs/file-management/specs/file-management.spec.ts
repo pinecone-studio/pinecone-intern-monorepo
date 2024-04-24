@@ -8,12 +8,6 @@ jest.mock('@aws-sdk/s3-request-presigner', () => ({
 }));
 jest.mock('@aws-sdk/client-s3');
 
-class MockFile extends File {
-  constructor(content: string, fileName: string, options?: FilePropertyBag) {
-    super([content], fileName, options);
-  }
-}
-
 describe('File Upload Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -29,7 +23,7 @@ describe('File Upload Tests', () => {
   });
 
   test('handleUpload should upload file and return access URL', async () => {
-    const mockFile = new MockFile('test1', 'test1.txt', { type: 'text/plain' });
+    const mockFile = new File(['test1'], 'test1.txt', { type: 'text/plain' });
     const mockFolder = 'folder';
     const mockSignedUrl = 'https://example.com/signed-url';
 
@@ -41,7 +35,7 @@ describe('File Upload Tests', () => {
   });
 
   test('fileManagement should upload all files and return access URLs', async () => {
-    const mockFileList = [new MockFile('test1', 'test1.txt', { type: 'text/plain' }), new MockFile('test2', 'test2.txt', { type: 'text/plain' })];
+    const mockFileList = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' })];
     const mockFolder = 'folder';
     const result = await fileManagement(mockFileList, mockFolder);
 
