@@ -1,5 +1,8 @@
-import { FederationProvider } from '../common';
+'use client';
 import './global.css';
+import { Button, ThemeProvider } from '@mui/material';
+import { FederationProvider } from '../common';
+import { theme } from '../common/theme';
 
 export const metadata = {
   title: 'Welcome to glms-dashboard',
@@ -9,9 +12,11 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <FederationProvider>
-        <body>{children}</body>
-      </FederationProvider>
+      <ThemeProvider theme={theme}>
+        <FederationProvider>
+          <body>{children}</body>
+        </FederationProvider>
+      </ThemeProvider>
     </html>
   );
 };
