@@ -3,7 +3,7 @@ import { render , fireEvent} from '@testing-library/react/';
 import { Input } from "../../../src/app/challenge-dashboard/_components"
 
 
-describe('test', () => {
+describe('Input', () => {
     it("Should render input component", async()=>{
       const { getByTestId } = render(<Input/>)
       const field  = getByTestId('search-text-field').querySelector('input')
