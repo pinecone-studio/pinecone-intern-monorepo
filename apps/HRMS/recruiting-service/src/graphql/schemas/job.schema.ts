@@ -27,8 +27,30 @@ export const Job = gql`
     CLOSED
   }
 
+  input CreateJobInput {
+    title: String!
+    description: String!
+    requirements: RequirementInput!
+    minSalary: String!
+    maxSalary: String!
+    status: JobStatus!
+  }
+
+  input RequirementInput {
+    skill: String
+    education: String
+    language: String
+    qualification: String
+    workExperience: String
+    others: String
+  }
+
   type Query {
     getJobs: [Job!]!
     getJobById(jobId: ID!): Job
+  }
+
+  type Mutation {
+    createJobRecruit(input: CreateJobInput!): Job!
   }
 `;
