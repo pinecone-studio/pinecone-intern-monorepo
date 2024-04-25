@@ -4,7 +4,7 @@ import { Input } from "../../../src/app/challenge-dashboard/_components"
 
 
 describe('test', () => {
-    it("hello", async()=>{
+    it("Should render input component", async()=>{
       const { getByTestId } = render(<Input/>)
       const field  = getByTestId('search-text-field').querySelector('input')
       expect(field).toBeDefined()
