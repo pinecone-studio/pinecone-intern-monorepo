@@ -27,6 +27,24 @@ export const Job = gql`
     CLOSED
   }
 
+  input CreateJobInput {
+    title: String!
+    description: String!
+    requirements: RequirementInput!
+    minSalary: String!
+    maxSalary: String!
+    status: JobStatus!
+  }
+
+  input RequirementInput {
+    skill: String
+    education: String
+    language: String
+    qualification: String
+    workExperience: String
+    others: String
+  }
+
   type Query {
     getJobs: [Job!]!
     getJobById(jobId: ID!): Job
@@ -34,5 +52,6 @@ export const Job = gql`
 
   type Mutation {
     deleteJob(id: ID!): Job!
+    createJobRecruit(input: CreateJobInput!): Job!
   }
 `;

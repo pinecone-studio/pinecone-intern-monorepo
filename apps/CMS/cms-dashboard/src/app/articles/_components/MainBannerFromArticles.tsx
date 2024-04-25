@@ -11,10 +11,10 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
   
   return (
-    <Stack data-testid="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <img width={'100%'} height={'100%'} data-testid="cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
+    <Stack data-cy="mainBannerComp" width={'100%'} height={656} position={'relative'}>
+      <img width={'100%'} height={'100%'} data-cy="main-cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
-        data-testid="innerComp"
+        data-cy="innerComp"
         position={'absolute'}
         bottom={0}
         width={'100%'}
@@ -28,20 +28,20 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
         }}
       >
         <Stack direction={'row'} gap={1} alignItems={'center'}>
-          <Typography data-testid="date" fontWeight={500} fontSize={15} color={'#fff'}>
+          <Typography data-cy="main-date" fontWeight={500} fontSize={15} color={'#fff'}>
             {date}
           </Typography>
           <Stack width={4} height={4} borderRadius={'100%'} bgcolor={'#fff'}></Stack>
 
-          <Typography data-testid="categories" color={'#fff'}>
+          <Typography data-cy="main-categories" color={'#fff'}>
             #{categories}
           </Typography>
         </Stack>
-        <Typography data-testid="articlesTitle" fontWeight={700} fontSize={32} color={'#fff'} maxWidth={'850px'} textAlign={'center'}>
+        <Typography data-cy="articlesTitle" fontWeight={700} fontSize={32} color={'#fff'} maxWidth={'850px'} textAlign={'center'}>
           {articlesTitle}
         </Typography>
         <Button
-          data-testid="mainBtn"
+          data-cy="mainBtn"
           sx={{
             borderRadius: '999px',
             bgcolor: '#fff',
