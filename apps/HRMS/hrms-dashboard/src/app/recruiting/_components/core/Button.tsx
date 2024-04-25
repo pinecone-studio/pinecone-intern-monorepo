@@ -10,6 +10,7 @@ interface IButtonProps {
   btnType?: 'contained' | 'outlined';
   onClick?: () => void;
   plusIcon?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const Button = ({ label, onClick, disabled = false, btnType = 'contained', href, plusIcon }: IButtonProps) => {
@@ -26,7 +27,7 @@ export const Button = ({ label, onClick, disabled = false, btnType = 'contained'
         padding: '10px 14px',
         color: btnType === 'outlined' ? '#121316' : 'white',
         border: btnType === 'outlined' ? 1 : 0,
-        borderColor: btnType === 'outlined' ? '#1976d2' : '',
+        borderColor: btnType === 'outlined' ? '#121316' : '',
         borderRadius: '8px',
         display: 'flex',
         alignItems: 'center',
