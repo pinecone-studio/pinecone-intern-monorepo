@@ -1,10 +1,13 @@
+
 'use client';
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
+import React, { useMemo, useState } from 'react';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { useCreateArticleMutation } from "../../../generated";
+import { useCreateArticleMutation } from "../../../../generated";
+import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 const modules = {
   toolbar :[
@@ -23,30 +26,30 @@ const modules = {
   ],
 };
 
-const PublishLeftSide = () => {
+const NewArticle = () => {
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const coverPhoto = "zurag";
+  const coverPhoto = "https://content.ikon.mn/news/2022/9/27/ahrmi8_pine2_x974.jpg";
   const author = "661c68e36837efa536464cb5";
   const category = "661c677c6837efa536464cab";
   const status = "PUBLISHED";
   const slug = "slug";
   const commentPermission = true;
   const [createArticle, { loading: creationLoading }] = useCreateArticleMutation();
-
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
   const handleCreateArticle = async () => {
+    console.log("we", typeof(content));
     await createArticle({
       variables: {
         articleInput: {title,coverPhoto, content, author, category, status, slug, commentPermission}
       },
     });
-    setTitle('');
-    setContent('');
   };
 
   return (
-    <Stack data-testid="PublishLeftSide" data-cy="PublishLeftSide" width={'100%'} height={'100vh'} flexDirection={'column'} pl={12} pt={8} pr={10} gap={6} bgcolor={'#F7F7F8'}>
+    <Stack data-testid="create-article-main-container" width={'100%'} height={'100vh'} flexDirection={'column'} pl={12} pt={8} pr={10} gap={6} bgcolor={'#F7F7F8'}>
       <Stack gap={2}>
         <ArrowBack data-testid="publish-arrowBack" color="primary" />
         <Stack data-testid="publish-arrowBack" flexDirection={'column'} gap={2}>
@@ -59,10 +62,15 @@ const PublishLeftSide = () => {
       </Stack>
       <Stack sx={{'& .ql-toolbar':{backgroundColor:"white", width:"fit-content"}, '& .ql-container':{backgroundColor:"white", border:"none", borderRadius:"18px", minHeight:"237px", overflowY:"scroll", fontSize:"18px"}}} data-testid = "content" flexDirection={'column'}  gap={2}>
         <Typography fontSize={18}>{'Нийтлэлээ бичих'}</Typography>
+        
         <ReactQuill data-testid="content" theme="snow" value={content} onChange={setContent} style={{ display:"flex", flexDirection:"column-reverse", gap:"40px"}}  modules={modules}/>
       </Stack>
-      <Button data-testid="create-article-btn" variant='contained' color='primary' sx={{height:"40px", display:"flex", flexDirection:"column"}} disabled={creationLoading} onClick={handleCreateArticle}>Нийтлэх</Button>   
+      <Button data-testid="create-article-btn" variant='contained'  color='primary' sx={{height:"40px", display:"flex", flexDirection:"column"}} disabled={creationLoading} onClick={() => {
+        handleCreateArticle()
+        router.push("/");
+      }}>Нийтлэх</Button>   
     </Stack>
   );
 };
-export default PublishLeftSide;
+export default NewArticle;
+

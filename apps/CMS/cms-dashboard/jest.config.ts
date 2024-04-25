@@ -15,6 +15,7 @@ export default {
     '!**/*.spec.tsx',
     '!**/node_modules/**',
     '!**/generated.ts',
+    '!src/generated/*.ts',
     '!**/generated/*.ts',
     '*-schema.ts',
     '!**/*-schema.ts',
