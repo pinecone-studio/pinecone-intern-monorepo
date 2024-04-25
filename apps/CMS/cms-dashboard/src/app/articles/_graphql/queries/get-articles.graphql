@@ -1,0 +1,37 @@
+query Query {
+  getArticlesQuery {
+    category {
+      name
+    }
+    content
+    coverPhoto
+    publishedAt
+    id
+    title
+  }
+}
+
+query GetArticlesByCategory($categoryId: String!, $getAll: Boolean!) {
+  getArticlesByCategory(categoryId: $categoryId, getAll: $getAll) {
+    content
+    coverPhoto
+    publishedAt
+    id
+    title
+    category {
+      name
+    }
+  }
+}
+
+query getNewestArticle {
+  getNewestArticle {
+    category {
+      name
+    }
+    content
+    coverPhoto
+    publishedAt
+    title
+  }
+}

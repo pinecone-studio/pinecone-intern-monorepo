@@ -1,23 +1,44 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { DateRangePicker, RangeKeyDict } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const FilterByDate = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+
   const openCalendar = () => setOpen((prev) => !prev);
 
   const handleDateChange = (rangeDate: RangeKeyDict) => {
     setStartDate(rangeDate.selection.startDate);
     setEndDate(rangeDate.selection.endDate);
+
+    const formmatedStartDate = format(rangeDate?.selection?.startDate?? new Date(), 'yyyy.MM.dd');
+    const formmatedEndDate = format(rangeDate.selection.endDate ?? new Date(), 'yyyy.MM.dd');
+
+    router.push(pathName + '?' + createQueryString(formmatedStartDate, formmatedEndDate));
   };
+
+  const createQueryString = useCallback(
+    (firstDate: string, lastDate: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('start-from', firstDate);
+      params.set('to', lastDate);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   return (
     <Stack position={'relative'}>
       <Stack width={'fit-content'} direction={'row'} justifyContent={'center'} alignItems={'center'} height={56} gap={'10px'} border={'2px solid #D6D8DB'} borderRadius={'8px'} padding={'10px'}>

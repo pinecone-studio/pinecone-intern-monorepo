@@ -1,1 +1,2 @@
 // features
+export * from './AdditionalInformation';

@@ -1,10 +1,22 @@
 'use client';
+import { useState } from 'react';
+import { SelectButton, RadioButton } from './_components';
+import { AddChallengeModal } from './_feature/AddChallengeModal';
 
-export default async function Index() {
+const Page = () => {
+  const [selectedOption, setSelectedOption] = useState<string>('');
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+  };
+
   return (
     <div>
-      <h1>hello from GLMS dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
+      <RadioButton value={false} checked={true} onClick={() => {}} />
+      <SelectButton handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
+      <AddChallengeModal />
     </div>
   );
-}
+};
+
+export default Page;

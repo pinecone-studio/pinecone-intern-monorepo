@@ -10,6 +10,7 @@ export const quizInput = [
       { choise: 'true', iscorrect: true },
       { choise: 'false', iscorrect: false },
     ],
+    choisesType: 'TEXT',
   },
   {
     _id: '2',
@@ -18,6 +19,7 @@ export const quizInput = [
       { choice: 'true', iscorrect: true },
       { choice: 'false', iscorrect: false },
     ],
+    choisesType: 'TEXT',
   },
 ] as QuizInput;
 

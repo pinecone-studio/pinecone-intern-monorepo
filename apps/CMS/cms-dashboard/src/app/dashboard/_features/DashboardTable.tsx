@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem, Container } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
@@ -38,7 +38,15 @@ const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангил�
 
 const DashboardTable = () => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
-  const { data } = useGetArticlesQueryQuery();
+  const { data, loading } = useGetArticlesQueryQuery();
+
+  if (loading) {
+    return (
+      <Container maxWidth={'lg'} data-cy="loading-page-cy">
+        <Stack py={8}>Loading.</Stack>
+      </Container>
+    );
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -73,9 +81,9 @@ const DashboardTable = () => {
                 </TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>{item?.createdAt.slice(0, 10)}</TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>
-                  <Typography sx={{ fontSize: '14px', fontWeight: 400, color: '#1F2126', borderRadius: 3, bgcolor: '#ECEDF0', textAlign: 'center', py: 0.3, whiteSpace: 'nowrap', width: '65%' }}>
-                    {item?.category.name}
-                  </Typography>
+                  <Typography
+                    sx={{ fontSize: '14px', fontWeight: 400, color: '#1F2126', borderRadius: 3, bgcolor: '#ECEDF0', textAlign: 'center', py: 0.3, whiteSpace: 'nowrap', width: '65%' }}
+                  ></Typography>
                 </TableCell>
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>

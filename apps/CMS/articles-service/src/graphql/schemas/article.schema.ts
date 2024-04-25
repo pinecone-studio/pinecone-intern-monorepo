@@ -3,17 +3,17 @@ import { gql } from 'graphql-tag';
 export const articleSchema = gql`
   scalar Date
   type Article {
-    id: ID
+    id: ID!
     title: String!
-    coverPhoto: String
+    coverPhoto: String!
     content: String!
     author: User!
     category: Category!
     status: ArticleStatus!
     slug: String!
     commentPermission: Boolean!
-    createdAt: Date
-    publishedAt: Date
+    createdAt: Date!
+    publishedAt: Date!
     updatedAt: Date
     scheduledAt: Date
   }
@@ -42,7 +42,9 @@ export const articleSchema = gql`
   type Query {
     getArticlesQuery: [Article]!
     getArticleByID(id: ID!): Article!
-    getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article]!
+    getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article!]!
     getArticlesByQuantity(quantity: Int!): [Article]!
+    getNewestArticle: Article!
+    getArticlesByAuthorId(_id: ID!): [Article]!
   }
 `;

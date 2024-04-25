@@ -23,7 +23,6 @@ describe('createCourse resolver', () => {
       title: mockInput.lessonInput.title,
       thumbnail: mockInput.lessonInput.thumbnail,
       position: mockInput.lessonInput.position,
-      toObject: jest.fn(),
     };
 
     (lessonModel.create as jest.Mock).mockResolvedValue(mockNewCourse);
@@ -31,7 +30,7 @@ describe('createCourse resolver', () => {
     const result = await createLesson(null, mockInput);
     expect(lessonModel.create).toHaveBeenCalledWith(mockInput.lessonInput);
 
-    expect(result).toEqual(mockNewCourse.toObject());
+    expect(result).toEqual(mockNewCourse);
   });
   it('should throw an error if content creation fails', async () => {
     const mockInput = {

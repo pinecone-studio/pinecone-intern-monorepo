@@ -1,10 +1,12 @@
 'use client';
-import { Dispatch, SetStateAction } from 'react';
+ 
 import { Stack } from '@mui/material';
 import { MenuBtn } from '../_components/MenuBtn';
-import { Article } from '../../../generated';
+import { Article, ArticleStatus } from '../../../generated';
 import { MenuAllBtn } from '../_components/MenuAllBtn';
-
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useCallback } from 'react';
 
 const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: string) => {
   return articles?.filter((item) => item.status === status).length;
@@ -12,12 +14,19 @@ const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: st
 
 type MenuBarTypes = {
   articles: Article[] | undefined;
-  setStatus: Dispatch<SetStateAction<string>>;
-  status: string;
 }
-
+ 
 export const MenuBar = (props: MenuBarTypes) => {
-  const { articles, setStatus, status } = props;
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const { articles } = props;
+  const createQueryString = useCallback((name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+ 
+      return params.toString();
+  }, [searchParams])
+  const currentStatus = searchParams.get('status') || ''
   return (
     <Stack
       data-cy="menu-bar-cy-id"
@@ -35,10 +44,16 @@ export const MenuBar = (props: MenuBarTypes) => {
       }}
     >
       <Stack flexDirection={'row'} sx={{ textDecorationColor: 'gray', width: '65%', justifyContent: 'space-between', cursor: 'pointer' }}>
-        <MenuAllBtn status={status} setStatus={setStatus} number={articles?.length} statusName={'Бүгд'}/>
-        {articles && articles.map((item, index) => {
-          const myQty = getNumberOfArticlesByStatus(articles, item.status);
-          return <MenuBtn status={status} setStatus={setStatus} number={myQty} statusName={item.status} key={index} />;
+        <Link href={ pathname + '?' + createQueryString('status', 'ALL' ) }>
+          <MenuAllBtn status={currentStatus} number={articles?.length} statusName={'ALL'}/>
+        </Link>
+        { articles && Object.values(ArticleStatus).map((item, index) => {
+          const myQty = getNumberOfArticlesByStatus(articles, item);
+          return (
+            <Link href={ pathname + '?' + createQueryString('status', item ) } key={index}>
+              <MenuBtn status={currentStatus} number={myQty} statusName={item}/>
+            </Link>
+          )
         })}
       </Stack>
     </Stack>
