@@ -9,4 +9,8 @@ describe('dashboard page', () => {
     cy.get('[data-cy="morevert-button-test-cy"]').eq(0).should('exist').click();
     cy.get('[data-cy="drop-down-menu-test-cy"]').eq(0).should('exist').click({ force: true });
   });
+
+  it('3. MenuBar should be visible', () => {
+    cy.get('[data-cy="menu-bar-cy-id"]').should('exist').should('be.visible')
+  })
 });
