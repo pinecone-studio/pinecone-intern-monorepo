@@ -11,6 +11,7 @@ export const createChallenge: MutationResolvers[`createChallenge`] = async (_, {
     const challenge = await ChallengeModel.create({ ...challengeInput, quiz: quizIds });
     return challenge._id;
   } catch (error) {
+    console.log('ERROR IN CREATE CHALLENGE', error);
     throw graphqlErrorHandler({ message: 'cannot create challenge' }, errorTypes.INTERVAL_SERVER_ERROR);
   }
 };
