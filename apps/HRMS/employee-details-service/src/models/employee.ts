@@ -4,6 +4,7 @@ const EmployeeSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: String,
+  imgUrl: String,
   department: {
     type: String,
     enum: ['SOFTWARE', 'DESIGN', 'MARKETING', 'BACK_OFFICE'],
