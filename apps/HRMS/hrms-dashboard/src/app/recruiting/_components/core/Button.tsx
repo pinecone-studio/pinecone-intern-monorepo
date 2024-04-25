@@ -26,7 +26,7 @@ export const Button = ({ label, onClick, disabled = false, btnType = 'contained'
         padding: '10px 14px',
         color: btnType === 'outlined' ? '#121316' : 'white',
         border: btnType === 'outlined' ? 1 : 0,
-        borderColor: btnType === 'outlined' ? '#D6D8DB' : '',
+        borderColor: btnType === 'outlined' ? '#1976d2' : '',
         borderRadius: '8px',
         display: 'flex',
         alignItems: 'center',
