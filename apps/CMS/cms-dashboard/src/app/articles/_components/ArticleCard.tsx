@@ -12,9 +12,9 @@ type ArticlesProps = {
 const ArticleCard = (props: ArticlesProps) => {
   const { cover, date, title, category, description } = props;
   return (
-    <Stack data-testid="main-container" width={'100%'} height={504} overflow={'hidden'}>
+    <Stack data-cy="article-main-container" width={'100%'} height={504} overflow={'hidden'}>
       <Stack width={'100%'} height={'50%'} position={'relative'} borderRadius={1.5} overflow={'hidden'}>
-        <img data-testid="article-cover" src={cover } height={'100%'} style={{ objectFit: 'cover' }} />
+        <img data-cy="article-cover" src={cover } height={'100%'} style={{ objectFit: 'cover' }} />
       </Stack>
       <Stack gap={1.5} p={3}>
         <Stack direction={'row'} alignItems={'center'} gap={1}>

@@ -23,3 +23,15 @@ query GetArticlesByCategory($categoryId: String!, $getAll: Boolean!) {
     }
   }
 }
+
+query getNewestArticle {
+  getNewestArticle {
+    category {
+      name
+    }
+    content
+    coverPhoto
+    publishedAt
+    title
+  }
+}

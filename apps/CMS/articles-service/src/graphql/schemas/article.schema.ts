@@ -14,8 +14,8 @@ export const articleSchema = gql`
     commentPermission: Boolean!
     createdAt: Date!
     publishedAt: Date!
-    updatedAt: Date!
-    scheduledAt: Date!
+    updatedAt: Date
+    scheduledAt: Date
   }
   enum ArticleStatus {
     DRAFT
