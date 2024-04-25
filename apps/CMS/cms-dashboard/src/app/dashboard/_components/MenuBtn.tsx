@@ -23,8 +23,8 @@ const articleEnum: articleStatus = {
 
 export const MenuBtn = ({ statusName, number, status }: MenuBtnProps) => {
   return (
-    <Stack data-testid="menu-btn-test-id" px={2.3} py={2}>
-      <Stack direction={'row'} gap={0.7}>
+    <Stack data-testid="menu-btn-test-id">
+      <Stack direction={'row'} gap={0.7} px={2.3} py={2.3}>
         <Typography data-testid="title-test-id" fontSize={15} fontWeight={600} color={'#3F4145'} style={{ fontWeight: status === statusName ? 'bold' : 'normal' }}>
           {articleEnum[statusName as keyof articleStatus]}
         </Typography>

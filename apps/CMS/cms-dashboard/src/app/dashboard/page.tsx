@@ -12,7 +12,7 @@ const Home = () => {
   const articles = article?.getArticlesQuery as Article[] | undefined;
   return (
     <Container data-cy="dashboard-page-cy-id" maxWidth="lg">
-      <Stack gap={2}>
+      <Stack gap={2} py={4}>
         <MenuBar articles={articles} />
         <DashboardTable articles={articles} />
         <SearchInput />
