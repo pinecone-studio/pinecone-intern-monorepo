@@ -1,7 +1,7 @@
 'use client';
 
 import { Button as MuiButton } from '@mui/material';
-import SvgIcon from '@mui/material/SvgIcon';
+import PlusIcon from '../icons/PlusIcon';
 
 interface IButtonProps {
   label: string;
@@ -30,17 +30,12 @@ export const Button = ({ label, onClick, disabled = false, btnType = 'contained'
         borderRadius: '8px',
         display: 'flex',
         alignItems: 'center',
+        gap: '8px',
       }}
       size="medium"
     >
       {label}
-      {plusIcon && (
-        <SvgIcon fontSize="small" sx={{ marginLeft: '8px' }}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.2} stroke="currentColor">
-            <path strokeLinecap="square" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </SvgIcon>
-      )}
+      {plusIcon && <PlusIcon />}
     </MuiButton>
   );
 };
