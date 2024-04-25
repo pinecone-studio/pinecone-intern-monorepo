@@ -12,6 +12,11 @@ const Home = () => {
     router.push('/assessment');
   };
 
+<<<<<<< Updated upstream
+=======
+  const fileManagementLib = fileManagement();
+
+>>>>>>> Stashed changes
   return (
     <div>
       <h1>hello from GLMS dashboard</h1>

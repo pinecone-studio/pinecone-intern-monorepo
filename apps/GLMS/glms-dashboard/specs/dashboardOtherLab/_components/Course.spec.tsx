@@ -14,10 +14,6 @@ describe('Course component', () => {
   it('renders with correct props and structure', () => {
 
     const { getByTestId } = render(<Course {...props} />);
-
-
-    
-
     expect(getByTestId('courseContain')).toBeDefined();
   });
 });
