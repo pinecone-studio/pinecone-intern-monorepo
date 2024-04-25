@@ -1,16 +1,16 @@
 import { MutationResolvers } from '@/graphql/generated';
 import { LeaveRequestModel } from '@/graphql/model/leave-request';
 import { errorTypes, graphqlErrorHandler } from '../error';
+import { sendMail } from '@/mail/mail-sender';
 
 export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"] = async (_, { requestInput }) => {
   try {
-    const { employeeId, startDateString, endDateString, description, leaveType, superVisor, durationType } = requestInput;
+    const { employeeId, startDateString, endDateString, description, leaveType, superVisor, durationType, email, substitute } = requestInput;
 
     const startDate = new Date(startDateString);
     const endDate = new Date(endDateString);
 
     const workDays = allWorkDays(startDate, endDate);
-
     const createdLeaveRequests = await Promise.all(workDays.map(async (date) => {
       const create = await LeaveRequestModel.create({
         employeeId,
@@ -21,6 +21,7 @@ export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"]
         totalHour: 8,
         durationType
       });
+      await sendMail(email!, description, substitute!, leaveType, endDate)
       return create;
     }));
 
