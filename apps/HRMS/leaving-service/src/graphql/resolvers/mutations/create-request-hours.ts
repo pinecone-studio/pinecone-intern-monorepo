@@ -25,7 +25,8 @@ export const createLeaveRequestHours: MutationResolvers["createLeaveRequestHours
         totalHour,
         durationType
     });
-    await sendMail(email!, description, substitute!, leaveType, endDate)
+    const newEndDate = endDateString.slice(0,9)
+    await sendMail(email!, description, substitute!, leaveType, newEndDate)
     return create;
   }catch(error) {
     throw graphqlErrorHandler({message:"Bolsonguie"}, errorTypes.BAD_USER_INPUT)

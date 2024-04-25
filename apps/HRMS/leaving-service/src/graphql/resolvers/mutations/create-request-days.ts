@@ -21,7 +21,8 @@ export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"]
         totalHour: 8,
         durationType
       });
-      await sendMail(email!, description, substitute!, leaveType, endDate)
+      const newEndDate = endDateString.slice(0,9)
+      await sendMail(email!, description, substitute!, leaveType, newEndDate)
       return create;
     }));
 
