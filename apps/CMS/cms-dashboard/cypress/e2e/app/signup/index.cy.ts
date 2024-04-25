@@ -118,7 +118,7 @@ describe('Sign-up full workflow', () => {
     cy.contains('Хэрэглэгч амжилттай үүслээ').should('be.visible');
   });
 
-  it("13. When user clicks on the signup button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Бүртгэлтэй хэрэглэгч байна' message ", () => {
+  it("13. When user clicks on the signup button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Хэрэглэгч амжилттай үүслээ' and 'Бүртгэлтэй хэрэглэгч байна' message ", () => {
     cy.get('[data-cy="Sign-Up-Button"]').should('exist').click();
     cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
     cy.get('input[name="emailOrPhoneNumber"]').type(testEmailAddress);
@@ -129,6 +129,6 @@ describe('Sign-up full workflow', () => {
     cy.contains('Хэрэглэгч амжилттай үүслээ').should('be.visible');
     cy.get('[data-cy="Sign-Up-Button"]').click();
     cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
-    cy.contains('Бүртгэлтэй хэрэглэгч байна').should('exist').should('be.visible');
+    cy.contains('Бүртгэлтэй хэрэглэгч байна').should('be.visible');
   });
 });

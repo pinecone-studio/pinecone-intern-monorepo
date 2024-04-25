@@ -16,7 +16,7 @@ export const teardownUser = async (email: string) => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       data: data,
-      url: process.env.FEDERATION_ENDPOINT,
+      url: 'https://intern-federation-testing.vercel.app/graphql',
     };
     await axios(options);
     console.log('successfully removed user');
