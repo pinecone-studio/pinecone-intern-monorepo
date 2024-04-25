@@ -26,6 +26,7 @@ const Status = ({ dat }) => {
         background: backgroundColor,
         border: borderStyle,
       }}
+      data-testid="request-status"
     >
       {statusText === 'approved' ? 'Зөвшөөрсөн' : statusText === 'declined' ? 'Татгалзсан' : statusText === 'pending' ? 'Шинэ хүсэлт' : ''}
     </Typography>

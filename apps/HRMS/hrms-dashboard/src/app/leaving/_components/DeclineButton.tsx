@@ -12,7 +12,12 @@ const DeclineButton = ({ id }) => {
   };
 
   return (
-    <Button variant="text" onClick={handleDecline} sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}>
+    <Button
+      variant="text"
+      onClick={handleDecline}
+      sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}
+      data-testid="decline-button"
+    >
       Татгалзах
     </Button>
   );
