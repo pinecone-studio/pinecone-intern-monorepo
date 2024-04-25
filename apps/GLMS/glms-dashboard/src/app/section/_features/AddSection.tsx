@@ -28,10 +28,9 @@ const AddSection = () => {
           contentImage: sectionInput.current.contentImage
         },
       });
-      console.log('Section created successfully:', data);
+     throw data
     } catch (error) {
-      console.error('Error creating section:', error);
-      throw error;
+      throw error
     }
   };
   
