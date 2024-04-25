@@ -37,4 +37,11 @@ describe('Sign up', () => {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
     }
   });
+  it('it should throw graphql error', async () => {
+    try {
+      await signUp!({}, { input }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toBeInstanceOf(graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч байна' }, errorTypes.ALREADY_EXISTS));
+    }
+  });
 });

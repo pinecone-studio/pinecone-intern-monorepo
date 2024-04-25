@@ -1,11 +1,11 @@
 import { MutationResolvers } from '@/graphql/generated';
-import { UserModel } from '@/models';
-import { GraphQLError } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../error';
+import { UserModel } from '@/models';
 
 export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
   try {
     const { email, phoneNumber, password } = input;
+
     const orFilter = [{ email }, { phoneNumber }];
 
     const userExists = await UserModel.findOne({
@@ -15,15 +15,13 @@ export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
     });
 
     if (userExists) {
-      throw graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч байна' }, errorTypes.ALREADY_EXISTS);
+      return graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч байна' }, errorTypes.ALREADY_EXISTS);
     }
 
     await UserModel.create({ email, phoneNumber, password });
 
     return { message: 'Хэрэглэгч амжилттай үүслээ' };
   } catch (error) {
-    if (error instanceof GraphQLError) throw error;
-
-    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
+    return graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
 };

@@ -13,28 +13,17 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
-      "@/apps/*": [
-        "apps/GLMS/glms-dashboard/src/apps/*"
-      ],
-      "@/generated/*": [
-        "apps/GLMS/glms-dashboard/src/generated/*"
-      ],
-      "@/common/*": [
-        "apps/GLMS/glms-dashboard/src/common/*"
-      ],
-      "@/file-management": [
-        "libs/file-management/src/index.ts"
-      ]
+      "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
+      "@/generated/*": ["apps/GLMS/glms-dashboard/src/generated/*"],
+      "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],
+      "@/file-management": ["libs/file-management/src/index.ts"]
     },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
   "include": [
     "**/*.ts",
