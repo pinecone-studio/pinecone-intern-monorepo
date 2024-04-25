@@ -1,11 +1,12 @@
 "use client"
-
 import { TextField } from '@mui/material'
-import React from 'react'
+import {  useState } from 'react';
 
 export const Input = () => {
-    const [quizeInput, setQuizeInput] = React.useState("");
-    
+    const [quizeInput, setQuizeInput] = useState("");
+    const  onChangeHandler=(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+      setQuizeInput(event.target.value)
+    }
   return (
     <form  noValidate autoComplete='off' >
     <TextField sx={{
@@ -20,7 +21,7 @@ export const Input = () => {
     aria-label="inputQuize"
     placeholder='Оруулна уу...'
     fullWidth
-    onChange={(e)=>setQuizeInput(e.target.value)}
+    onChange={ (e)=>onChangeHandler(e)}
     />
 </form>
   )
