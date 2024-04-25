@@ -4,6 +4,7 @@ import { FooterButton } from '../_components/FooterButton';
 import { Divider, Stack } from '@mui/material';
 import { FooterButtonWithIcon } from '../_components/FooterButtonWithIcon';
 import AddIcon from '@mui/icons-material/Add';
+import Link from 'next/link';
 
 export const FooterButtons = () => {
   const [selectedButton, setSelectedButton] = useState('Нүүр');
@@ -20,8 +21,12 @@ export const FooterButtons = () => {
         justifyContent={'space-between'}
         sx={{ borderRadius: '50px' }}
       >
-        <FooterButton text="Нүүр" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
-        <FooterButton text="Контент" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
+        <Link href={'/'}>
+          <FooterButton text="Нүүр" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
+        </Link>
+        <Link href={'/dashboard'}>
+          <FooterButton text="Контент" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
+        </Link>
         <FooterButton text="Сэтгэгдэл" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
         <FooterButton text="Статистик" selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
         <Divider orientation="vertical" variant="middle" flexItem></Divider>
