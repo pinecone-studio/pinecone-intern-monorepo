@@ -9,7 +9,7 @@ export const employeeDetailsSchema = gql`
     firstName: String
     lastName: String
     email: String
-    imgUrl: String
+    imageUrl: String
     department: ID
     jobTitle: [String]
     ladderLevel: String
@@ -79,7 +79,7 @@ export const employeeDetailsSchema = gql`
     firstName: String
     lastName: String
     email: String
-    imgUrl: String
+    imageUrl: String
     department: ID
     jobTitle: [String]
     ladderLevel: String
