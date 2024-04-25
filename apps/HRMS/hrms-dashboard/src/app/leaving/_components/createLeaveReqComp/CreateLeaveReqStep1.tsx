@@ -9,7 +9,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
-import { LeaveReqCreationContext } from '../../../../common/providers/index';
+import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
 
 const validationSchema = yup.object({
   step1Date: yup.date().required(),
@@ -18,7 +18,7 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveReqStep1 = () => {
-  const { setStepNo } = useContext(LeaveReqCreationContext);
+  const { setStepNumber } = useContext(LeaveReqCreationContext);
 
   const workerName = { name: 'WorkerName' };
 
@@ -32,18 +32,18 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: () => {
-      setStepNo(1);
+      setStepNumber(1);
     },
   });
 
   return (
     <Box>
       <Stack sx={{ gap: '16px' }}>
-        <Stack sx={{ gap: '4px' }}>
+        <Stack sx={{ gap: '4px' }} data-testid="date-picker-container">
           <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
             Огноо
           </Typography>
-          <LocalizationProvider data-cy="datepicker-input" dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
           </LocalizationProvider>
         </Stack>
@@ -52,18 +52,20 @@ export const CreateLeaveReqStep1 = () => {
           <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
             Нэрээ сонгоно уу
           </Typography>
-          <TextField data-cy="name-select-input" select name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
-            <MenuItem value={workerName.name}>{workerName.name}</MenuItem>
+          <TextField data-cy="name-select-input" data-testid="name-select-input" select name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+            <MenuItem data-testid={workerName.name} value={workerName.name}>
+              {workerName.name}
+            </MenuItem>
           </TextField>
         </Stack>
         <Stack sx={{ gap: '4px' }}>
           <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
             Шалтгаанаа сонгоно уу
           </Typography>
-          <TextField data-cy="type-select-input" select name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
+          <TextField data-cy="type-select-input" data-testid="type-select-input" select name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
             {leaveTypes.map((option, index) => {
               return (
-                <MenuItem key={index} value={option}>
+                <MenuItem data-testid={`type-${index}`} key={index} value={option}>
                   {option}
                 </MenuItem>
               );
@@ -77,6 +79,7 @@ export const CreateLeaveReqStep1 = () => {
         </IconButton>
         <Button
           data-cy="next-btn"
+          data-testid="nextButton"
           onClick={() => {
             formik.handleSubmit();
           }}

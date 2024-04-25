@@ -69,7 +69,7 @@ describe('assessment page', () => {
     cy.get('input[name="step1UserName"]')
       .invoke('val')
       .then((selectedValue) => {
-        expect(selectedValue).to.exist;
+        return expect(selectedValue).to.exist;
       });
   });
 
@@ -81,7 +81,7 @@ describe('assessment page', () => {
     cy.get('input[name="step1LeaveType"]')
       .invoke('val')
       .then((selectedValue) => {
-        expect(selectedValue).to.exist;
+        return expect(selectedValue).to.exist;
       });
   });
 

@@ -3,10 +3,10 @@
 import { Clear } from '@mui/icons-material';
 import { Box, Container, IconButton, Modal, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { LeaveReqCreationContext } from '../../../../common/providers/LeaveReqCreationProvider';
+import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
 
 export const CreateLeaveReqModal = () => {
-  const { isOpen, setIsOpen, leaveReqStep, stepNo } = useContext(LeaveReqCreationContext);
+  const { isOpen, setIsOpen, leaveReqStep, stepNumber } = useContext(LeaveReqCreationContext);
   const steps = ['Ерөнхий', 'Хугацаа', 'Нэмэлт'];
 
   const handleClose = () => {
@@ -14,7 +14,7 @@ export const CreateLeaveReqModal = () => {
   };
 
   return (
-    <Modal data-cy="request-modal" open={isOpen} onClose={handleClose}>
+    <Modal data-cy="request-modal" data-testid="leaveRequestModal" open={isOpen} onClose={handleClose}>
       <Container
         sx={{
           width: '600px',
@@ -35,11 +35,11 @@ export const CreateLeaveReqModal = () => {
           <Typography fontSize={18} fontWeight={600} color={'#000'}>
             Чөлөөний хуудас бөглөх
           </Typography>
-          <IconButton data-cy="modal-closing-btn">
-            <Clear onClick={handleClose} sx={{ color: '#121316' }} />
+          <IconButton aria-label="modalClosingButton" data-cy="modal-closing-btn" data-testid="modalClosingButton" onClick={handleClose}>
+            <Clear sx={{ color: '#121316' }} />
           </IconButton>
         </Box>
-        <Stepper activeStep={stepNo} alternativeLabel>
+        <Stepper activeStep={stepNumber} alternativeLabel>
           {steps.map((item) => (
             <Step
               sx={{

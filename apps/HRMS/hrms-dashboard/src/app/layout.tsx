@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
 import { Sidebar } from '../common/components/Sidebar';
+import { LeaveReqCreationProvider } from './leaving/_providers/LeaveReqCreationProvider';
 
 export const metadata = {
   title: 'Welcome to hrms-dashboard',

@@ -1,20 +1,13 @@
 'use client';
 
-import { Box, Button } from '@mui/material';
-import { useContext } from 'react';
+import { Box } from '@mui/material';
 import { CreateLeaveReqModal } from '../_components';
-import { LeaveReqCreationContext } from '../../../common';
+import { HomePageHeader } from '../_components/HomePageHeader';
 
 export const CreateLeaveReqMain = () => {
-  const { setIsOpen } = useContext(LeaveReqCreationContext);
-
-  const handleOpen = () => setIsOpen(true);
-
   return (
     <Box>
-      <Button data-cy="open-request" onClick={handleOpen}>
-        Чөлөөний хуудас бөглөх
-      </Button>
+      <HomePageHeader />
       <CreateLeaveReqModal />
     </Box>
   );
