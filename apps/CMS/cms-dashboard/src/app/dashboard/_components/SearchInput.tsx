@@ -1,22 +1,39 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 
-const SearchInput = () => {
-    return(
-        <Stack sx={{ width:'70%' }}>
-            <TextField
-            placeholder='Нийтлэл, шошгоор хайх'
-            InputProps={{
-                startAdornment: (
-                <InputAdornment position="start">
-                    <IconButton>
-                        <SearchIcon />
-                    </IconButton>
-                </InputAdornment>
-                )
-            }}
-            />
-        </Stack>
-    )
-} 
-export default SearchInput
+export const SearchInput = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+  return (
+    <Stack sx={{ width: '70%' }}>
+      <TextField
+        placeholder="Нийтлэл, шошгоор хайх"
+        onChange={(e) => {
+          router.push(pathname + '?' + createQueryString('searchedValue', e.target.value));
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+    </Stack>
+  );
+};
