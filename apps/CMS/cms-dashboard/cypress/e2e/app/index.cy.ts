@@ -1,23 +1,6 @@
 describe('app page.tsx', () => {
   beforeEach(() => cy.visit('/'));
-  it('1. it should display both options of ternary', () => {
-    cy.intercept('POST', 'http://localhost:3333/graphql', (req) => {
-      const hasOperationName = (req: any, operationName: any) => {
-        const { body } = req;
-        return Object.prototype.hasOwnProperty.call(body, 'operationName') && body.operationName === operationName;
-      };
 
-      if (hasOperationName(req, 'GetArticlesByCategory')) {
-        req.alias = 'gqlGetArticlesByCategory';
-
-        req.reply((res) => {
-          res.body.data.GetArticlesByCategory.coverPhoto = null;
-        });
-      }
-    });
-
-    //   cy.get('[data-cy="article-cover"]').should('have.attr',"src".toString,'/earth.jpeg')
-  });
 
   it('2. it should display Main Banner', () => {
     cy.get('[data-cy="mainBannerComp"]').should('exist');
