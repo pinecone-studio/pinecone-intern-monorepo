@@ -1,0 +1,9 @@
+query GetSections {
+  getSections {
+    id
+    title
+    description
+    contentImage
+    createdAt
+  }
+}

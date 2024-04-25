@@ -14,6 +14,13 @@ const Home = () => {
   const lesson = () => {
     router.push('/lesson-add');
   };
+<<<<<<< HEAD
+=======
+
+  const fileManagementLib = fileManagement();
+
+  console.log(fileManagementLib);
+>>>>>>> e7f573c9dff2e3d17e3960063e72c3e45772a755
 
   return (
     <div>
