@@ -36,7 +36,7 @@ describe('FilterByDate', () => {
     expect(container).toBeDefined();
   });
 
-  it('5. null check', async () => {
+  it('2. null check', async () => {
     const { getByTestId } = render(<FilterByDate />);
     const openCalendarButton = getByTestId('open-calendar-button-test-id');
     fireEvent.click(openCalendarButton);
