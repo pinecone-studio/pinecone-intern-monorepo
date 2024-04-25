@@ -13,7 +13,7 @@ jest.mock('@/models/comment.model', () => ({
   },
 }));
 
-describe('publishComment resolver', () => {
+describe('1. publishComment resolver', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -30,6 +30,11 @@ describe('publishComment resolver', () => {
 
     const result = await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual('test');
+  });
+});
+describe('2. publishComment resolver', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should throw an error if comment creation fails', async () => {
