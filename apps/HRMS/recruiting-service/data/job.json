@@ -1,0 +1,89 @@
+{
+  "jobs": [
+    {
+      "id": "1",
+      "title": "Software Engineer",
+      "description": "Develop software applications and solutions.",
+      "requirements": {
+        "skill": "Java, Python",
+        "education": "Bachelor's degree in Computer Science",
+        "language": "English",
+        "qualification": "Certified Developer",
+        "workExperience": "3+ years",
+        "others": "Experience with web development frameworks"
+      },
+      "minSalary": "60000",
+      "maxSalary": "90000",
+      "status": "PUBLISHED",
+      "applicant": "John Doe"
+    },
+    {
+      "id": "2",
+      "title": "Marketing Manager",
+      "description": "Plan and execute marketing strategies.",
+      "requirements": {
+        "skill": "Marketing, Social Media Management",
+        "education": "Bachelor's degree in Marketing",
+        "language": "English, Spanish",
+        "qualification": "Marketing Certification",
+        "workExperience": "5+ years",
+        "others": "Strong analytical skills"
+      },
+      "minSalary": "70000",
+      "maxSalary": "100000",
+      "status": "PUBLISHED",
+      "applicant": "Jane Smith"
+    },
+    {
+      "id": "3",
+      "title": "Data Analyst",
+      "description": "Analyze data to provide insights for business decisions.",
+      "requirements": {
+        "skill": "SQL, Data Visualization",
+        "education": "Bachelor's degree in Statistics",
+        "language": "English",
+        "qualification": "Certified Data Analyst",
+        "workExperience": "2+ years",
+        "others": "Experience with BI tools"
+      },
+      "minSalary": "50000",
+      "maxSalary": "80000",
+      "status": "PUBLISHED",
+      "applicant": "Alice Johnson"
+    },
+    {
+      "id": "4",
+      "title": "Graphic Designer",
+      "description": "Create visual concepts using computer software.",
+      "requirements": {
+        "skill": "Adobe Illustrator, Photoshop",
+        "education": "Bachelor's degree in Graphic Design",
+        "language": "English",
+        "qualification": "Certified Graphic Designer",
+        "workExperience": "3+ years",
+        "others": "Portfolio of previous work"
+      },
+      "minSalary": "55000",
+      "maxSalary": "85000",
+      "status": "PUBLISHED",
+      "applicant": "David Brown"
+    },
+    {
+      "id": "5",
+      "title": "HR Manager",
+      "description": "Oversee recruitment, training, and employee relations.",
+      "requirements": {
+        "skill": "HR Management, Recruitment",
+        "education": "Bachelor's degree in Human Resources",
+        "language": "English, French",
+        "qualification": "HR Certification",
+        "workExperience": "4+ years",
+        "others": "Knowledge of labor laws"
+      },
+      "minSalary": "65000",
+      "maxSalary": "95000",
+      "status": "PUBLISHED",
+      "applicant": "Sarah Wilson"
+    }
+  ]
+}
