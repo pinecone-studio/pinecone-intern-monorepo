@@ -25,28 +25,39 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
     setIsAll((prev) => !prev);
     refetch();
   };
+  console.log(data?.getArticlesByCategory);
 
   return (
-    <Stack data-testid="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
+    <Stack p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
       {loading ? (
         <Stack>Loading</Stack>
       ) : (
-        <Stack data-testid="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
-          <Typography data-testid="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
+        <Stack data-cy="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
+          <Typography data-cy="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
             {title}
           </Typography>
-          <Grid data-testid="group-grid" container spacing={4}>
-            {data?.getArticlesByCategory.length === 0 ? <Stack></Stack> : data?.getArticlesByCategory?.map((item) => {
-              return (
-                <Grid item xs={6} key={item?.id}>
-                  <ArticleCard title={item?.title} cover={item?.coverPhoto===null?'/earth.jpeg':item?.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
-                </Grid>
-              );
-            })}
+          <Grid data-cy="group-grid" container spacing={4}>
+            {data?.getArticlesByCategory.length === 0 ? (
+              <Stack></Stack>
+            ) : (
+              data?.getArticlesByCategory?.map((item) => {
+                return (
+                  <Grid item xs={6} key={item?.id}>
+                    <ArticleCard
+                      title={item?.title}
+                      cover={item?.coverPhoto === null ? '/earth.jpeg' : item?.coverPhoto}
+                      description={item?.content}
+                      category={item?.category.name}
+                      date={item?.publishedAt}
+                    />
+                  </Grid>
+                );
+              })
+            )}
           </Grid>
-          <Stack data-testid="group-innerCon" width="100%" alignItems="center">
+          <Stack data-cy="group-innerCon" width="100%" alignItems="center">
             <IconButton
-              data-testid="group-icon-button"
+              data-cy="group-icon-button"
               onClick={() => {
                 clickHandler();
               }}
