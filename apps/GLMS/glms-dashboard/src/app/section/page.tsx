@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import AddSection from "./_components/AddSection";
+import AddSection from "./_features/AddSection";
+
 
 const section = () => {
     return(
