@@ -24,14 +24,14 @@ describe('createContents resolver', () => {
           title:mockInput.sectionInput.title,
           description:mockInput.sectionInput.description,
           contentImage:mockInput.sectionInput.contentImage,
-            toObject: jest.fn(),
+
       };
 
       (sectionModel.create as jest.Mock).mockResolvedValue(mockNewContent);
       const result = await createSection({}, mockInput);
 
       expect(sectionModel.create).toHaveBeenCalledWith(mockInput.sectionInput);
-      expect(result).toEqual(mockNewContent.toObject());
+      expect(result).toEqual(mockNewContent);
   });
   it('should throw an error if content creation fails', async () => {
     const mockInput = {
