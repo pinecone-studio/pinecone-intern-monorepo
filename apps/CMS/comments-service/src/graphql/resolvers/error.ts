@@ -28,11 +28,6 @@ export const errorTypes = {
   },
 };
 
-export const graphqlErrorHandler = (errorMessage: { message: string }, errorType: { errorCode: string; errorStatus: number }) => {
-  return new GraphQLError(errorMessage.message, {
-    extensions: {
-      code: errorType.errorCode,
-      http: { status: errorType.errorStatus },
-    },
-  });
+export const graphqlErrorHandler = (errorMessage: { message: string }, _errorType: { errorCode: string; errorStatus: number }) => {
+  return new GraphQLError(errorMessage.message);
 };

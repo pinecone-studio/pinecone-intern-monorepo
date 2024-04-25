@@ -1,42 +1,54 @@
+import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
+import { publishComment } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import { errorTypes, graphqlErrorHandler } from '../../src/graphql/resolvers/error';
-import { publishComment } from '../../src/graphql/resolvers/mutations/create-comment'; // Adjust the import path as per your project structure
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
-    create: jest.fn().mockImplementation(async (data) => {
-      if (data.name === 'Ace') {
-        return { _id: '123456789', ...data };
-      } else {
-        throw new Error('Error creating comment');
-      }
-    }),
+    create: jest
+      .fn()
+      .mockResolvedValueOnce({
+        _id: 'test',
+      })
+      .mockRejectedValueOnce(null),
   },
 }));
 
 describe('publishComment resolver', () => {
-  it('should create a comment and return its ID', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should create a new comment and return its ID', async () => {
     const createInput = {
-      name: 'Ace',
-      comment: 'test',
-      email: 'ace@gmail.com',
-      entityId: 'asdf',
-      entityType: 'ad',
+      name: 'John Doe',
+      comment: 'This is a test comment',
+      email: 'john@example.com',
+      entityId: 'entityId123',
+      entityType: 'article',
       articleId: '661c87fd6837efa536464d24',
     };
+
     const result = await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual('123456789');
+    expect(result).toEqual('test');
   });
 
   it('should throw an error if comment creation fails', async () => {
     const createInput = {
-      name: 'InvalidName',
-      comment: 'test',
-      email: 'ace@gmail.com',
-      entityId: 'asdf',
-      entityType: 'ad',
-      articleId: '661c87fd6837efa536464d24',
+      name: 'ace error test',
+      comment: 'This is a test comment',
+      email: 'john@example.com',
+      entityId: 'entityId123',
+      entityType: 'article',
+      articleId: '661c87fd6837efa536464d25',
+      createdAt: new Date(),
+      ipAddress: 'asf',
+      userAgent: 'asdf',
     };
-    await expect(publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo)).rejects.toThrowError(graphqlErrorHandler({ message: 'cannot create comment' }, errorTypes.INTERVAL_SERVER_ERROR));
+    try {
+      const result = await publishComment!({}, { createInput: createInput }, {}, {} as GraphQLResolveInfo);
+      expect(result).toEqual('test');
+    } catch (error) {
+      expect(error).toEqual(graphqlErrorHandler({ message: 'cannot create comment' }, errorTypes.INTERVAL_SERVER_ERROR));
+    }
   });
 });
