@@ -5,6 +5,10 @@ export const challengeTypeDefs = gql`
     DRAFT
     APPROVED
   }
+  enum ChoicesType {
+    IMAGE
+    TEXT
+  }
 
   type Choices {
     _id: ID
@@ -16,6 +20,7 @@ export const challengeTypeDefs = gql`
     _id: ID
     question: String
     choices: [Choices]
+    choicesType: ChoicesType
   }
 
   type Challenge {
@@ -35,6 +40,7 @@ export const challengeTypeDefs = gql`
   input QuizInput {
     question: String
     choices: [ChoicesInput]
+    choicesType: ChoicesType
   }
 
   input ChallengeInput {
