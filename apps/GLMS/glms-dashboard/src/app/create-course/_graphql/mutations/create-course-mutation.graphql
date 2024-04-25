@@ -1,0 +1,7 @@
+mutation CreateCourse($courseInput: CourseInput!) {
+  createCourse(courseInput: $courseInput) {
+    title
+    description
+    thumbnail
+  }
+}

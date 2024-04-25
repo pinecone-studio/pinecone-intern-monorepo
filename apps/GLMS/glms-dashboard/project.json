@@ -54,7 +54,8 @@
           "buildTarget": "glms-dashboard:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "export": {
       "executor": "@nx/next:export",

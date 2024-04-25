@@ -2,10 +2,10 @@
 
 import { East, KeyboardBackspace } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
-
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { useCreateCourseMutation } from '@/generated/index';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
@@ -14,6 +14,9 @@ const validatinSchema = yup.object({
 });
 
 const CourseAdd = () => {
+  const router = useRouter();
+  const [createCourse] = useCreateCourseMutation();
+
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -21,10 +24,19 @@ const CourseAdd = () => {
       image: '',
     },
     validationSchema: validatinSchema,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      createCourse({
+        variables: {
+          courseInput: {
+            title: values.title,
+            description: values.description,
+            thumbnail: values.image,
+          },
+        },
+      });
+    },
   });
 
-  const router = useRouter();
   return (
     <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3} minHeight={'100vh'}>
       <Container maxWidth="xl">
@@ -97,6 +109,7 @@ const CourseAdd = () => {
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
+                router.push('/dashboardOtherLab');
               }}
               variant="contained"
               sx={{
