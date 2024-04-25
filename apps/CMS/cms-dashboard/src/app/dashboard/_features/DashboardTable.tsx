@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem, Container } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
@@ -9,7 +9,8 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import { useGetArticlesQueryQuery } from '../../../generated';
+import { Article } from '../../../generated';
+import { useSearchParams } from 'next/navigation';
 
 const menuItems = [
   {
@@ -36,17 +37,20 @@ const menuItems = [
 
 const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 
-const DashboardTable = () => {
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
-  const { data, loading } = useGetArticlesQueryQuery();
+type DashboardTablesTypes = {
+  articles: Article[] | undefined;
+};
 
-  if (loading) {
-    return (
-      <Container maxWidth={'lg'} data-cy="loading-page-cy">
-        <Stack py={8}>Loading.</Stack>
-      </Container>
-    );
-  }
+const DashboardTable = (props: DashboardTablesTypes) => {
+  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
+  const { articles } = props;
+  const searchParams = useSearchParams();
+  const statusFilter = searchParams.get('status');
+
+  const result = articles?.filter((item) => {
+    if (statusFilter === null || statusFilter === 'ALL') return item;
+    return item.status == statusFilter;
+  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -72,7 +76,7 @@ const DashboardTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.getArticlesQuery.map((item, index) => {
+          {result?.map((item, index) => {
             return (
               <TableRow key={index}>
                 <TableCell sx={{ fontSize: '15px', fontWeight: 600, color: '#121316' }}>{item?.title}</TableCell>

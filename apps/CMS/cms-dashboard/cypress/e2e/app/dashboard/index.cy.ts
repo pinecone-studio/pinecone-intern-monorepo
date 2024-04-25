@@ -11,6 +11,6 @@ describe('dashboard page', () => {
   });
 
   it('3. MenuBar should be visible', () => {
-    cy.get('[data-cy="menu-bar-cy-id"]').should('exist').should('be.visible')
-  })
+    cy.get('[data-cy="menu-bar-cy-id"]').should('exist').should('be.visible');
+  });
 });

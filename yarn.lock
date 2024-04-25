@@ -3818,10 +3818,17 @@
 
 "@nrwl/next@17.1.3":
   version "17.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/next/-/next-17.1.3.tgz#3287617637faf8f77fe92556e0e72a18a0a37bb5"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/@nrwl/next/-/next-17.1.3.tgz"
   integrity sha512-E1V7hv1+6rgUo15yZglovO5buG6YstTjoFOwW4+fv+pfT2la9AIoS6a6MN+vRhT0231S6ycYqraFXX+WhcWOpw==
   dependencies:
     "@nx/next" "17.1.3"
+=======
+  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-17.1.3.tgz#e40d46f29364c3921b8f86591e6464c13061b5b7"
+  integrity sha512-J/iIDuuLwM6NR0TIWEHXQmre9SdlkHbFtstae9nuTqATcZEBShBLYdR8I9piQT+QGMvwKIoWej5a3g21JBQhlg==
+  dependencies:
+    "@nx/node" "17.1.3"
+>>>>>>> 2397c54 (feat(cms-dashboard): cms-dashboard filter article)
 
 "@nrwl/node@17.1.3":
   version "17.1.3"

@@ -1,5 +1,6 @@
 'use client';
-import { Container } from '@mui/material';
+
+import { Container, Stack } from '@mui/material';
 import DashboardTable from './_features/DashboardTable';
 import { MenuBar } from './_features/MenuBar';
 import { useGetArticlesQueryQuery, Article } from '../../generated';
@@ -11,9 +12,11 @@ const Home = () => {
   const articles = article?.getArticlesQuery as Article[] | undefined;
   return (
     <Container data-cy="dashboard-page-cy-id" maxWidth="lg">
-      <MenuBar articles={articles} />
-      <SearchInput />
-      <DashboardTable />
+      <Stack gap={2}>
+        <MenuBar articles={articles} />
+        <DashboardTable articles={articles} />
+        <SearchInput />
+      </Stack>
     </Container>
   );
 };
