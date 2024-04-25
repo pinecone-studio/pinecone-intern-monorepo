@@ -4,6 +4,8 @@ import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
 import Course from './_components/Course';
 import { useState } from 'react';
+import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
+import { useRouter } from 'next/navigation';
 
 const data = [
   { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
@@ -15,10 +17,11 @@ const data = [
   { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
   { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
 ];
-const buttonsTop = ['Хичээл', 'Сорил'];
+
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
+  const router = useRouter();
   const [actionTab, setActionTab] = useState('Хичээл');
   const converter = () => {
     if (actionTab == 'Хичээл') {
@@ -47,25 +50,24 @@ const DashboardOtherLab = () => {
                 </Typography>
               </Stack>
               <Stack direction={'row'} gap={2}>
-                {buttonsTop.map((title) => (
-                  <Button
-                    data-testid="button1"
-                    key={title}
-                    variant="outlined"
-                    color="inherit"
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      border: 'solid 2px #121316',
-                      borderRadius: '8px',
-                      gap: '2px',
-                      '&:hover': { background: 'black', color: 'white' },
-                    }}
-                  >
-                    {title} <Add />
-                  </Button>
-                ))}
+                <Button
+                  data-testid="button1"
+                  onClick={() => router.push('/create-course')}
+                  variant="outlined"
+                  color="inherit"
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    border: 'solid 2px #121316',
+                    borderRadius: '8px',
+                    gap: '2px',
+                    '&:hover': { background: 'black', color: 'white' },
+                  }}
+                >
+                  Хичээл <Add />
+                </Button>
+                <AddChallengeModal />
               </Stack>
             </Stack>
             <Stack width={'50%'} alignItems={'center'}>
