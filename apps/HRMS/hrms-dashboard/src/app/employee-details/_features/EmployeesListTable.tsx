@@ -1,12 +1,14 @@
 'use client';
-import * as React from 'react';
 import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useGetAllEmployeeQuery } from '../../../generated';
 
 export const EmployeesListTable = () => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const { data, loading } = useGetAllEmployeeQuery();
+  const router = useRouter();
+
   if (loading)
     return (
       <Stack minHeight={200} width={'100%'} justifyContent={'center'} alignItems={'center'}>
@@ -36,14 +38,21 @@ export const EmployeesListTable = () => {
           <TableBody>
             {allEmployees?.map((row, index) => (
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 }, borderBottom: '1px solid #ECEDF0' }}>
-                <TableCell component="th" scope="row">
+                <TableCell
+                  onClick={() => {
+                    router.push('/employee-details/editDetails');
+                  }}
+                  sx={{ cursor: 'pointer', '&:hover': { fontWeight: 900 } }}
+                  component="th"
+                  scope="row"
+                >
                   <Stack flexDirection={'row'} alignItems={'left'} gap={1.5}>
                     <Stack position={'relative'} borderRadius={'50%'} overflow={'hidden'} height={'50px'} sx={{ aspectRatio: 1 / 1 }}>
                       <Image src="/profile.png" style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
                     </Stack>
                     <Stack justifyContent={'center'}>
                       <Typography fontSize={14} fontWeight={600} color={'primary.dark'}>
-                        {row?.firstName}
+                        {row?.lastName?.slice(0, 1).toUpperCase() + '.' + row?.firstName}
                       </Typography>
                     </Stack>
                   </Stack>

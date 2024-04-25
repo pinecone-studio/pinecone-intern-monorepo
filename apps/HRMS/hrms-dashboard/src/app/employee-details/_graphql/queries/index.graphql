@@ -1,6 +1,7 @@
 # write query
 query GetAllEmployee {
   getAllEmployee {
+    id
     firstName
     lastName
     jobTitle
