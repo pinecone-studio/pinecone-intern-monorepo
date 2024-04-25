@@ -31,4 +31,8 @@ export const Job = gql`
     getJobs: [Job!]!
     getJobById(jobId: ID!): Job
   }
+
+  type Mutation {
+    deleteJob(id: ID!): Job!
+  }
 `;
