@@ -4,7 +4,8 @@ import { TextField } from '@mui/material'
 import React from 'react'
 
 export const Input = () => {
-    const [quizeInput, setQuizeInput] = React.useState("")
+    const [quizeInput, setQuizeInput] = React.useState("");
+    
   return (
     <form  noValidate autoComplete='off' >
     <TextField sx={{
@@ -14,6 +15,7 @@ export const Input = () => {
         borderRadius:"50px",
         backgroundColor:"white"
     }}
+    value={quizeInput}
     data-testid='search-text-field'
     aria-label="inputQuize"
     placeholder='Оруулна уу...'

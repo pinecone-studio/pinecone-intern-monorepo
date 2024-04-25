@@ -4,7 +4,7 @@ import { Input } from "./_components"
 const Page = () => {
   return (
     <>
-    <Input/>
+      <Input/>
     </>
   )
 }
