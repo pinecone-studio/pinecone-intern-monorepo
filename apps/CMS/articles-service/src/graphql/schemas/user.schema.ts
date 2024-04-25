@@ -15,11 +15,17 @@ export const userSchema = gql`
     phoneNumber: String
     password: String!
   }
+
+  input deleteUserInput {
+    email: String!
+  }
+
   type Message {
     message: String!
   }
 
   type Mutation {
     signUp(input: SignUpInput!): Message!
+    deleteUser(input: deleteUserInput!): Message!
   }
 `;

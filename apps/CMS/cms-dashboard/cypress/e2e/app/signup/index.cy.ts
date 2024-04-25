@@ -1,3 +1,5 @@
+const testEmailAddress = 'pineconeTestUser@gmail.com';
+
 describe('articles page', () => {
   beforeEach(() => cy.visit('/sign-up'));
 
@@ -92,12 +94,23 @@ describe('articles page', () => {
     cy.get('input[name="confirmPassword"]').type('12345678aB!');
     cy.get('[data-cy="Sign-Up-Button"]').should('not.be.disabled');
   });
+});
+
+describe('Sign-up full workflow', () => {
+  before(() => {
+    cy.task('teardownRegisteredUser', 'pineconeTestUser@gmail.com', { timeout: 20000 });
+  });
+
+  beforeEach(() => cy.visit('/sign-up'));
+
+  afterEach(() => {
+    cy.task('teardownRegisteredUser', 'pineconeTestUser@gmail.com', { timeout: 20000 });
+  });
 
   it("12. When user clicks on the signup button, it should create new user and shows 'Хэрэглэгч амжилттай үүслээ' message", () => {
-    const randomNumber = Math.floor(Math.random() * 6) + 1;
     cy.get('[data-cy="Sign-Up-Button"]').should('exist').click();
     cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
-    cy.get('input[name="emailOrPhoneNumber"]').type(`pineconeTestUser${randomNumber}@gmail.com`);
+    cy.get('input[name="emailOrPhoneNumber"]').type(testEmailAddress);
     cy.get('input[name="password"]').type('12345678aB!');
     cy.get('input[name="confirmPassword"]').type('12345678aB!');
     cy.get('[data-cy="Sign-Up-Button"]').should('not.be.disabled');
@@ -108,10 +121,12 @@ describe('articles page', () => {
   it("13. When user clicks on the signup button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Бүртгэлтэй хэрэглэгч байна' message ", () => {
     cy.get('[data-cy="Sign-Up-Button"]').should('exist').click();
     cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
-    cy.get('input[name="emailOrPhoneNumber"]').type('pinecone10k@gmail.com');
+    cy.get('input[name="emailOrPhoneNumber"]').type(testEmailAddress);
     cy.get('input[name="password"]').type('12345678aB!');
     cy.get('input[name="confirmPassword"]').type('12345678aB!');
     cy.get('[data-cy="Sign-Up-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-Up-Button"]').click();
+    cy.contains('Хэрэглэгч амжилттай үүслээ').should('be.visible');
     cy.get('[data-cy="Sign-Up-Button"]').click();
     cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
     cy.contains('Бүртгэлтэй хэрэглэгч байна').should('exist').should('be.visible');

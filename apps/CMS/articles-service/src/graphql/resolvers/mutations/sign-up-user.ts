@@ -22,7 +22,6 @@ export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
 
     return { message: 'Хэрэглэгч амжилттай үүслээ' };
   } catch (error) {
-    console.log(error);
     return graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
 };
