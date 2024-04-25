@@ -34,6 +34,7 @@ const CourseAdd = () => {
           },
         },
       });
+      router.push('/dashboardOtherLab');
     },
   });
 
@@ -109,7 +110,6 @@ const CourseAdd = () => {
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
-                router.push('/dashboardOtherLab');
               }}
               variant="contained"
               sx={{
