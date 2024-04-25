@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { RadioButton } from './_components';
-import { SelectButton } from './_components/Select';
+import { SelectButton } from './_components';
 import { AddChallengeModal } from './_feature/AddChallengeModal';
 
 const Page = () => {

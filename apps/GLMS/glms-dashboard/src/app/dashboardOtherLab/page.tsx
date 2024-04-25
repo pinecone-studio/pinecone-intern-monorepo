@@ -64,8 +64,9 @@ const DashboardOtherLab = () => {
                     gap: '2px',
                     '&:hover': { background: 'black', color: 'white' },
                   }}
+                  endIcon={<Add />}
                 >
-                  Хичээл <Add />
+                  Хичээл
                 </Button>
                 <AddChallengeModal />
               </Stack>

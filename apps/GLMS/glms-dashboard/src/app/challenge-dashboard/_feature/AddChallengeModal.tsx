@@ -60,8 +60,8 @@ export const AddChallengeModal = () => {
 
   return (
     <Stack sx={{ borderRadius: '30px' }}>
-      <Button data-testid="challenge-button" variant="outlined" onClick={handleClickOpen} sx={ButtonStyle}>
-        Сорил <Add />
+      <Button data-testid="challenge-button" variant="outlined" onClick={handleClickOpen} sx={ButtonStyle} endIcon={<Add />}>
+        Сорил
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <div style={{ padding: '4px 15px 8px 15px' }}>
