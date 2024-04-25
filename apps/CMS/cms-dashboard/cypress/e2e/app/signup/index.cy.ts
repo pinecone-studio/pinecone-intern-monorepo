@@ -1,5 +1,5 @@
 describe('articles page', () => {
-  beforeEach(() => cy.visit('/articles'));
+  beforeEach(() => cy.visit('/sign-up'));
 
   it('1. Should display signup form', () => {
     cy.get('[data-testid="sign-up-form-container"]').should('exist').should('be.visible');

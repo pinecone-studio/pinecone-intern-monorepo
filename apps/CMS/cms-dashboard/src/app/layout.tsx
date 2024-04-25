@@ -5,7 +5,7 @@ import './global.css';
 import { theme } from '../theme';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from './articles/provider/AuthProvider';
+import { AuthProvider } from '../common/providers/AuthProvider';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

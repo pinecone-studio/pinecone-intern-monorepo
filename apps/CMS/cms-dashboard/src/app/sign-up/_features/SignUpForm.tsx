@@ -1,5 +1,3 @@
-// eslint-disable-next-line complexity
-
 'use client';
 
 import { ArrowForward } from '@mui/icons-material';
@@ -8,7 +6,7 @@ import { useFormik } from 'formik';
 import Link from 'next/link';
 import { Loader } from '../_components/Loader';
 import { FormInput } from '../_components/FormInput';
-import { useAuth } from '../provider/AuthProvider';
+import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 
 const SignUpForm = () => {
@@ -17,17 +15,13 @@ const SignUpForm = () => {
     emailOrPhoneNumber: yup
       .string()
       .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг байх ёстой', function (value) {
-        if (!value) {
-          return false;
-        }
-
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        const isEmail = emailRegex.test(value);
+        const isEmail = emailRegex.test(value as string);
 
         const phoneRegex = /^\d{8}$|^\d{10}$/;
 
-        const isPhoneNumber = phoneRegex.test(value);
+        const isPhoneNumber = phoneRegex.test(value as string);
 
         return isEmail || isPhoneNumber;
       })

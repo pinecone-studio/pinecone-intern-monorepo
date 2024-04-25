@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { FormInput } from '../../src/app/articles/_components/FormInput';
+import { FormInput } from '../../src/app/sign-up/_components/FormInput';
 
 describe('ArticlesCard', () => {
   it('1. it should render with correct props', () => {

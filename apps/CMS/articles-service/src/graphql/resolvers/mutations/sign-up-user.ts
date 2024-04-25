@@ -5,6 +5,7 @@ import { UserModel } from '@/models';
 export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
   try {
     const { email, phoneNumber, password } = input;
+
     const orFilter = [{ email }, { phoneNumber }];
 
     const userExists = await UserModel.findOne({
@@ -21,6 +22,7 @@ export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
 
     return { message: 'Хэрэглэгч амжилттай үүслээ' };
   } catch (error) {
+    console.log(error);
     return graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
 };

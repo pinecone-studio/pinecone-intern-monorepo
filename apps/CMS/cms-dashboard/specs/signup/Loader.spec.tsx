@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { Loader } from '../../src/app/articles/_components/Loader';
+import { Loader } from '../../src/app/sign-up/_components/Loader';
 import '@testing-library/jest-dom';
 
 describe('Loader', () => {

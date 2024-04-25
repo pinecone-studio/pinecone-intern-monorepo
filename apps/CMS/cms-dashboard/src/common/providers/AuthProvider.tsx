@@ -2,7 +2,7 @@
 'use client';
 
 import { PropsWithChildren, useContext, createContext } from 'react';
-import { useSignUpMutation } from '../../../generated';
+import { useSignUpMutation } from '../../generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
 
