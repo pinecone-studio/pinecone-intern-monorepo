@@ -6,7 +6,6 @@ import { Button, Stack, TextField, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useCreateArticleMutation } from "../../../generated";
 
-
 const modules = {
   toolbar :[
         [{header:[1,2,3,4,5,6,false]}],
@@ -37,35 +36,32 @@ const PublishLeftSide = () => {
   const [createArticle, { loading: creationLoading }] = useCreateArticleMutation();
 
   const handleCreateArticle = async () => {
-    console.log("garchig", title);
-    console.log("content", content);
     await createArticle({
       variables: {
         articleInput: {title,coverPhoto, content, author, category, status, slug, commentPermission}
       },
     });
-
     setTitle('');
     setContent('');
   };
 
   return (
     <Stack data-testid="PublishLeftSide" data-cy="PublishLeftSide" width={'100%'} height={'100vh'} flexDirection={'column'} pl={12} pt={8} pr={10} gap={6} bgcolor={'#F7F7F8'}>
-      <Stack data-testid="title" gap={2}>
+      <Stack gap={2}>
         <ArrowBack data-testid="publish-arrowBack" color="primary" />
         <Stack data-testid="publish-arrowBack" flexDirection={'column'} gap={2}>
           <Typography fontSize={18}>{'Гарчиг өгөх'}</Typography>
-          <TextField variant='standard' sx={{  height: '64px', backgroundColor: "white", paddingX:"24px", alignItems:"center", paddingY:"18px", fontSize:"18px", borderRadius:"16px"}} fullWidth placeholder="Энд гарчгаа бичнэ үү..." InputProps={{disableUnderline: true}}    value={title}
+          <TextField data-testid="title" variant='standard' sx={{  height: '64px', backgroundColor: "white", paddingX:"24px", alignItems:"center", paddingY:"18px", fontSize:"18px", borderRadius:"16px"}} fullWidth placeholder="Энд гарчгаа бичнэ үү..." InputProps={{disableUnderline: true}}    value={title}
               onChange={(event) => {
                 setTitle(event.target.value);
               }}/>
         </Stack>
       </Stack>
-      <Stack data-testid = "content" flexDirection={'column'}  gap={2}>
+      <Stack sx={{'& .ql-toolbar':{backgroundColor:"white", width:"fit-content"}, '& .ql-container':{backgroundColor:"white", border:"none", borderRadius:"18px", minHeight:"237px", overflowY:"scroll", fontSize:"18px"}}} data-testid = "content" flexDirection={'column'}  gap={2}>
         <Typography fontSize={18}>{'Нийтлэлээ бичих'}</Typography>
-        <ReactQuill theme="snow" value={content} onChange={setContent}  modules={modules}/>;
+        <ReactQuill data-testid="content" theme="snow" value={content} onChange={setContent} style={{ display:"flex", flexDirection:"column-reverse", gap:"40px"}}  modules={modules}/>
       </Stack>
-      <Button data-testid="create-article-btn" variant='contained' color='primary' sx={{height:"40px"}} disabled={creationLoading} onClick={handleCreateArticle}>Нийтлэх</Button>   
+      <Button data-testid="create-article-btn" variant='contained' color='primary' sx={{height:"40px", display:"flex", flexDirection:"column"}} disabled={creationLoading} onClick={handleCreateArticle}>Нийтлэх</Button>   
     </Stack>
   );
 };
