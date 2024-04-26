@@ -25,7 +25,7 @@ describe('Button Component', () => {
     const { getByText } = render(<Button label="Дэлгэрэнгүй" btnType="outlined" />);
     const button = getByText('Дэлгэрэнгүй');
     const computedStyles = window.getComputedStyle(button);
-    expect(computedStyles.border).toEqual('1px solid');
+    expect(computedStyles.border).toEqual('1px solid #1976d2');
   });
 
   it('5. Renders icon when plusIcon prop is true', () => {
