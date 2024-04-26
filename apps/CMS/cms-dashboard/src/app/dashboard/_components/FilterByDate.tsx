@@ -23,7 +23,7 @@ export const FilterByDate = () => {
     setStartDate(rangeDate.selection.startDate);
     setEndDate(rangeDate.selection.endDate);
 
-    const formmatedStartDate = format(rangeDate?.selection?.startDate?? new Date(), 'yyyy.MM.dd');
+    const formmatedStartDate = format(rangeDate?.selection?.startDate ?? new Date(), 'yyyy.MM.dd');
     const formmatedEndDate = format(rangeDate.selection.endDate ?? new Date(), 'yyyy.MM.dd');
 
     router.push(pathName + '?' + createQueryString(formmatedStartDate, formmatedEndDate));
@@ -32,15 +32,15 @@ export const FilterByDate = () => {
   const createQueryString = useCallback(
     (firstDate: string, lastDate: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set('start-from', firstDate);
-      params.set('to', lastDate);
+      params.set('startDate', firstDate);
+      params.set('endDate', lastDate);
       return params.toString();
     },
     [searchParams]
   );
 
   return (
-    <Stack position={'relative'}>
+    <Stack data-cy="filter-by-date-cy-id" position={'relative'}>
       <Stack width={'fit-content'} direction={'row'} justifyContent={'center'} alignItems={'center'} height={56} gap={'10px'} border={'2px solid #D6D8DB'} borderRadius={'8px'} padding={'10px'}>
         <Button data-testid="open-calendar-button-test-id" onClick={openCalendar} sx={{ color: '#3F4145' }}>
           <CalendarTodayIcon />
@@ -54,7 +54,7 @@ export const FilterByDate = () => {
         </Stack>
       </Stack>
       {open && (
-        <Stack position={'absolute'} height={'100%'} right={0} top={'56px'}>
+        <Stack position={'absolute'} height={'100%'} right={0} top={'56px'} zIndex={5}>
           <Stack>
             <DateRangePicker
               retainEndDateOnFirstSelection
