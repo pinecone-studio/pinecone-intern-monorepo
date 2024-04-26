@@ -1,5 +1,5 @@
 'use client';
-import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useGetAllEmployeeQuery } from '../../../generated';
 
@@ -7,7 +7,12 @@ export const EmployeesListTable = () => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const { data, loading } = useGetAllEmployeeQuery();
   const allEmployees = data?.getAllEmployee;
-
+  if (loading)
+    return (
+      <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} py={8}>
+        <CircularProgress />
+      </Stack>
+    );
   return (
     <Stack data-cy="employeesList" my={2} borderRadius={'12px'} overflow={'hidden'}>
       <TableContainer component={Paper}>
