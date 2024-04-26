@@ -1,27 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useHelloQueryFromLeavingServiceQuery } from '../../generated';
-import { LeavingMain } from './_features';
+import { Box } from '@mui/material';
+import { CreateLeaveReqMain } from './_features';
 
 const LeavingPage = () => {
-  const { data } = useHelloQueryFromLeavingServiceQuery();
-  const router = useRouter();
-
-  const handleNavigateToHomePageButton = () => router.push('/');
-
   return (
-    <div>
-      <h1>hello from HRMS dashboard Leaving Page</h1>
-      <h1>
-        hello from Leaving Service Query
-        {data?.helloQueryFromLeavingService}
-      </h1>
-      <LeavingMain />
-      <button onClick={handleNavigateToHomePageButton} data-cy="Home-Page-Button">
-        Go back to home page
-      </button>
-    </div>
+    <Box>
+      <CreateLeaveReqMain />
+    </Box>
   );
 };
 

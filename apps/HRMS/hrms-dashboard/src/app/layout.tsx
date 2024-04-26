@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
 import { Sidebar } from '../common/components/Sidebar';
+import { LeaveReqCreationProvider } from './leaving/_providers/LeaveReqCreationProvider';
 
 export const metadata = {
   title: 'Welcome to hrms-dashboard',
@@ -11,19 +12,21 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body>
-        <FederationProvider>
-          <ThemeProviderHRMS>
-            <Stack flex={1}>
-              <Header />
-              <Stack flexDirection={'row'}>
-                <Sidebar />
-                {children}
+      <FederationProvider>
+        <ThemeProviderHRMS>
+          <LeaveReqCreationProvider>
+            <body>
+              <Stack flex={1}>
+                <Header />
+                <Stack flexDirection={'row'}>
+                  <Sidebar />
+                  {children}
+                </Stack>
               </Stack>
-            </Stack>
-          </ThemeProviderHRMS>
-        </FederationProvider>
-      </body>
+            </body>
+          </LeaveReqCreationProvider>
+        </ThemeProviderHRMS>
+      </FederationProvider>
     </html>
   );
 };
