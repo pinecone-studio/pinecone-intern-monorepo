@@ -17,8 +17,9 @@ export const SearchInput = () => {
     },
     [searchParams]
   );
+
   return (
-    <Stack sx={{ width: '70%' }}>
+    <Stack data-cy="search-input-cy-id" bgcolor={'#fff'} sx={{ width: '75%' }}>
       <TextField
         placeholder="Нийтлэл, шошгоор хайх"
         onChange={(e) => {

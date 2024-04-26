@@ -45,12 +45,28 @@ const DashboardTable = (props: DashboardTablesTypes) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
   const { articles } = props;
   const searchParams = useSearchParams();
-  const statusFilter = searchParams.get('status');
+  const statusFilter = searchParams.get('status') ?? '';
+  const searchedValueFilter = searchParams.get('searchedValue') ?? '';
+  const startDate = searchParams.get('startDate') ?? '';
+  const endDate = searchParams.get('endDate') ?? '';
 
-  const result = articles?.filter((item) => {
-    if (statusFilter === null || statusFilter === 'ALL') return item;
-    return item.status == statusFilter;
-  });
+  const result = articles
+    ?.filter((item) => {
+      if (!statusFilter) return item;
+      if (statusFilter === null || statusFilter === 'ALL') return item;
+      return item.status == statusFilter;
+    })
+    .filter((item) => {
+      if (!searchedValueFilter) return item;
+      return item.title.toLowerCase().includes(searchedValueFilter?.toLocaleLowerCase() ?? '');
+    })
+    .filter((item) => {
+      if (!startDate || !endDate) return item;
+      const itemDate = new Date(item['createdAt']);
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      return itemDate >= start && itemDate <= end;
+    });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -61,7 +77,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
   };
 
   return (
-    <TableContainer data-cy="dashboard-table-cy" component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+    <TableContainer data-cy="dashboard-table-cy-id" component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
