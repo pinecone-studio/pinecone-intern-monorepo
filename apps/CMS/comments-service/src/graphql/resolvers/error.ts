@@ -2,6 +2,10 @@ import { GraphQLError } from 'graphql';
 import { ApolloServerErrorCode } from '@apollo/server/errors';
 
 export const errorTypes = {
+  BAD_USER_INPUT: {
+    errorCode: ApolloServerErrorCode.BAD_USER_INPUT,
+    errorStatus: 400,
+  },
   BAD_REQUEST: {
     errorCode: ApolloServerErrorCode.BAD_REQUEST,
     errorStatus: 400,
@@ -24,11 +28,6 @@ export const errorTypes = {
   },
 };
 
-export const graphqlErrorHandler = (errorMessage: { message: string }, errorType: { errorCode: string; errorStatus: number }) => {
-  return new GraphQLError(errorMessage.message, {
-    extensions: {
-      code: errorType.errorCode,
-      http: { status: errorType.errorStatus },
-    },
-  });
+export const graphqlErrorHandler = (errorMessage: { message: string }, _errorType: { errorCode: string; errorStatus: number }) => {
+  return new GraphQLError(errorMessage.message);
 };

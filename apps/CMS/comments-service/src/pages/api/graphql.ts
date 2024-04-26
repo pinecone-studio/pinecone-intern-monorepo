@@ -3,9 +3,7 @@ import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import { ApolloServer } from 'apollo-server-cloud-functions';
 import { resolvers, typeDefs } from '../../graphql';
-import { connectDatabase } from '../../config/connect-to-database';
-
-connectDatabase();
+import { connectDatabase } from '@/config/connect-to-database';
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
@@ -15,11 +13,14 @@ const server = new ApolloServer({
   introspection: true,
   csrfPrevention: true,
   cache: new InMemoryLRUCache(),
-  context: ({ req, res }: { req: Request; res: Response }) => ({
-    headers: req.headers,
-    req,
-    res,
-  }),
+  context: ({ req, res }: { req: Request; res: Response }) => {
+    connectDatabase();
+    return {
+      headers: req.headers,
+      req,
+      res,
+    };
+  },
 });
 
 export const config = { api: { bodyParser: false, externalResolver: true } };
