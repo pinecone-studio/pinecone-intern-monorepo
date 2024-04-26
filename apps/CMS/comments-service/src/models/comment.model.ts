@@ -23,14 +23,17 @@ const commentsSchema = new Schema({
   },
   createdAt: {
     type: Date,
+    default: new Date(),
     required: true,
   },
   ipAddress: {
     type: String,
+    default: 'ipAddress default',
     required: true,
   },
   userAgent: {
     type: String,
+    default: 'userAgent default',
     required: true,
   },
   articleId: {
