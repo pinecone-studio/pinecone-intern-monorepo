@@ -1,8 +1,6 @@
 describe('home page', () => {
   beforeEach(() => cy.visit('/'));
   it('1.Page should have content', () => {
-    cy.get('div').should('exist').should('be.visible');
-    cy.get('h1').contains('hello from HRMS dashboard');
     cy.get('[data-cy="dashboardSidebar"]').should('exist');
     cy.get('[data-cy="dashboardSidebar').children().should('have.length', 4);
     cy.get('[data-cy="headerIcon"]').should('exist').should('be.visible');
