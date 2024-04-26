@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { RadioButton } from './_components';
-import { SelectButton } from './_components';
+import { RadioButton, SelectButton, Button } from './_components';
 import { AddChallengeModal } from './_feature/AddChallengeModal';
 
 const Page = () => {
@@ -16,6 +15,7 @@ const Page = () => {
       <RadioButton value={false} checked={true}  />
       <SelectButton handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
       <AddChallengeModal />
+      <Button label={'text'} />
     </div>
   );
 };
