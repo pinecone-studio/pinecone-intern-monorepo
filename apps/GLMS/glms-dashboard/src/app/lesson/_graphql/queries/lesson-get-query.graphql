@@ -1,0 +1,8 @@
+query getLessons {
+  getLessons {
+    id
+    title
+    thumbnail
+    position
+  }
+}

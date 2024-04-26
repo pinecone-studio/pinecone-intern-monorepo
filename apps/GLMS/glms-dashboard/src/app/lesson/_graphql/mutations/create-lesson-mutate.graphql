@@ -1,0 +1,8 @@
+mutation CreateLesson($title: String!, $thumbnail: String, $position: Int) {
+  createLesson(lessonInput: { title: $title, thumbnail: $thumbnail, position: $position }) {
+    id
+    title
+    thumbnail
+    position
+  }
+}
