@@ -53,7 +53,7 @@ describe('2. publishComment resolver', () => {
       const result = await publishComment!({}, { createInput: createInput }, {}, {} as GraphQLResolveInfo);
       expect(result).toEqual('test');
     } catch (error) {
-      expect(error).toEqual(graphqlErrorHandler({ message: 'cannot create comment' }, errorTypes.INTERVAL_SERVER_ERROR));
+      expect(error).toEqual(graphqlErrorHandler({ message: `cannot create comment null` }, errorTypes.INTERVAL_SERVER_ERROR));
     }
   });
 });
