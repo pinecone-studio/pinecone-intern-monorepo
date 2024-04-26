@@ -28,7 +28,7 @@ const Status = ({ dat }) => {
       }}
       data-testid="request-status"
     >
-      {statusText === 'approved' ? 'Зөвшөөрсөн' : statusText === 'declined' ? 'Татгалзсан' : statusText === 'pending' ? 'Шинэ хүсэлт' : ''}
+      {statusText}
     </Typography>
   );
 };

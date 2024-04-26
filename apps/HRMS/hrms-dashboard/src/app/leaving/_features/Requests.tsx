@@ -1,17 +1,17 @@
 'use client';
-import { headers } from '../_features/utils/Table';
+import { headers } from './utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Button, Typography, Stack, Box } from '@mui/material';
-import Status from './Status';
+import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
 
 const Requests = () => {
   const router = useRouter();
-  const { data, loading, error } = useGetRequestsQuery();
+  const { data, loading } = useGetRequestsQuery();
   const currentDate = new Date().toLocaleDateString();
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Stack sx={{ bgcolor: 'rgba(247, 247, 248, 1)', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', paddingY: '30px' }} data-testid="requests-component">
@@ -51,7 +51,7 @@ const Requests = () => {
                     <TableCell>{dat.description}</TableCell>
                     <TableCell>{dat.totalHour}</TableCell>
                     <TableCell>{dat.totalHour}</TableCell>
-                    <TableCell>
+                    <TableCell data-testid="request-status">
                       <Status dat={dat} />
                     </TableCell>
                   </TableRow>

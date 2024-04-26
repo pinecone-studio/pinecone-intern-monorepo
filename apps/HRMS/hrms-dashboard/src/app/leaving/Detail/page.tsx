@@ -11,15 +11,13 @@ import RequestDetails from '../_components/RequestDetails';
 const Detail = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const requestId = searchParams.get('requestId');
-  const id = requestId || '';
+  const id = searchParams.get('requestId');
 
-  const { data, loading, error } = useGetRequestByIdQuery({
+  const { data, loading } = useGetRequestByIdQuery({
     variables: { id },
   });
-
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Stack sx={{ display: 'flex', alignItems: 'center', bgcolor: 'rgba(247, 247, 248, 1)', gap: '24px', width: '100vw', height: '100vh' }}>
@@ -50,7 +48,9 @@ const Detail = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
               <Box sx={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
                 <Typography>Бат-Энх</Typography>
-                <Typography sx={{ color: 'rgba(22, 169, 74, 1)' }}>{data?.getRequestById?.status}</Typography>
+                <Typography sx={{ color: 'rgba(22, 169, 74, 1)' }} data-testid="request-status">
+                  {data?.getRequestById?.status}
+                </Typography>
               </Box>
               <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <DeclineButton id={id} />

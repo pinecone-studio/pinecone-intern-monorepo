@@ -5,6 +5,5 @@ query GetRequests {
     description
     totalHour
     status
-    createdAt
   }
 }
