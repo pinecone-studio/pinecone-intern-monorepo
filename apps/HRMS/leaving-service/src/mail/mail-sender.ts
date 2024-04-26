@@ -1,4 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 interface MailOptions {
   from: string;
@@ -15,8 +18,8 @@ export const sendMail = async (email: string, description: string, substitute: s
       port: 465,
       secure: true,
       auth: {
-        user: 'internpinecone@gmail.com',
-        pass: 'gcmxgpemfoabphsz',
+        user: process.env.ENV_MAIL_USER,
+        pass: process.env.ENV_MAIL_PASS,
       },
     });
 
