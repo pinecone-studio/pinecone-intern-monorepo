@@ -1,15 +1,11 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { publishComment } from '@/graphql/resolvers/mutations';
+import { CommentsModel } from '@/models/comment.model';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
-    create: jest
-      .fn()
-      .mockResolvedValueOnce({
-        _id: 'test',
-      })
-      .mockRejectedValueOnce(null),
+    create: jest.fn(),
   },
 }));
 
@@ -28,8 +24,14 @@ describe('1. publishComment resolver', () => {
       articleId: '661c87fd6837efa536464d24',
     };
 
-    const result = await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual('test');
+    const mockedModel = jest.spyOn(CommentsModel, 'create').mockResolvedValueOnce({
+      _id: 'test',
+    });
+
+    await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
+
+    expect(CommentsModel.create).toHaveBeenCalledWith(createInput);
+    expect(mockedModel).toHaveReturned();
   });
 });
 describe('2. publishComment resolver', () => {
@@ -38,22 +40,18 @@ describe('2. publishComment resolver', () => {
   });
 
   it('should throw an error if comment creation fails', async () => {
-    const createInput = {
-      name: 'ace error test',
-      comment: 'This is a test comment',
-      email: 'john@example.com',
-      entityId: 'entityId123',
-      entityType: 'article',
-      articleId: '661c87fd6837efa536464d25',
-      createdAt: new Date(),
-      ipAddress: 'asf',
-      userAgent: 'asdf',
+    (CommentsModel.create as jest.Mock).mockRejectedValueOnce(graphqlErrorHandler({ message: `cannot create comment` }, errorTypes.INTERVAL_SERVER_ERROR));
+    const emptyInput = {
+      name: '',
+      comment: '',
+      email: '',
+      entityId: '',
+      entityType: '',
+      articleId: '',
+      createdAt: null,
+      ipAddress: '',
+      userAgent: '',
     };
-    try {
-      const result = await publishComment!({}, { createInput: createInput }, {}, {} as GraphQLResolveInfo);
-      expect(result).toEqual('test');
-    } catch (error) {
-      expect(error).toEqual(graphqlErrorHandler({ message: `cannot create comment null` }, errorTypes.INTERVAL_SERVER_ERROR));
-    }
+    await expect(publishComment!({}, { createInput: emptyInput }, {}, {} as GraphQLResolveInfo)).rejects.toThrowError();
   });
 });

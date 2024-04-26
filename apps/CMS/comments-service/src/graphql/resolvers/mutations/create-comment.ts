@@ -6,6 +6,6 @@ export const publishComment: MutationResolvers['publishComment'] = async (_, { c
     const newComment = await CommentsModel.create(createInput);
     return newComment._id;
   } catch (e) {
-    throw graphqlErrorHandler({ message: `cannot create comment ${e}` }, errorTypes.INTERVAL_SERVER_ERROR);
+    throw graphqlErrorHandler({ message: `cannot create comment` }, errorTypes.INTERVAL_SERVER_ERROR);
   }
 };
