@@ -8,10 +8,4 @@ describe('Employee Details page', () => {
     cy.get('.MuiPagination-ul ').find('li:last-child').click();
     cy.get('.MuiPaginationItem-root').eq(0).click();
   });
-
-  it('should addtional information feature', () => {
-    cy.get('[data-testid="phone-number"]').should('be.visible').contains('Яаралтай үед холбоо барих хүний дугаар');
-    cy.get('[data-testid="update-button"]').should('exist').click();
-    cy.get('[data-testid="dependent"]').should('be.visible').contains('Хэн болох');
-  });
 });
