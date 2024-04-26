@@ -6,6 +6,10 @@ jest.mock('../../../src/utils/deploy-project', () => ({
   deployProject: jest.fn(),
 }));
 
+jest.mock('../../../src/utils/actions/run-e2e-against-preview-link', () => ({
+  runE2EActionAgainstPreviewLink: jest.fn(),
+}));
+
 jest.mock('../../../src/utils/federation/federation-services-action-utils', () => ({
   generateFederationPreview: jest.fn(),
 }));

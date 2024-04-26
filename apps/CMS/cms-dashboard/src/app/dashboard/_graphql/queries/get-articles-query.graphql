@@ -1,0 +1,7 @@
+query GetArticlesQuery {
+  getArticlesQuery {
+    title
+    status
+    createdAt
+  }
+}

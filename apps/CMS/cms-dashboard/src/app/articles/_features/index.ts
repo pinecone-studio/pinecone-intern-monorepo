@@ -1,1 +1,1 @@
-export * from './ArticlesMain';
+export * from './create-article/NewArticle';

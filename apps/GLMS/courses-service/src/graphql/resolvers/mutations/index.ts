@@ -1,3 +1,5 @@
 export * from './hello-mutation';
-export * from './create-course-mutation';
-export * from './delete-course-mutation';
+export * from './create-lesson';
+export * from './update-lesson';
+export * from './create-section';
+export * from './create-course';

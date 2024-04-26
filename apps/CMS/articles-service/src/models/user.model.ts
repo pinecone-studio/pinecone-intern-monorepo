@@ -1,17 +1,27 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { User } from '@/graphql/generated';
+import { Schema, model, Model, models } from 'mongoose';
 
 const userSchema = new Schema({
   name: {
     type: String,
     required: true,
+    default: 'Хэрэглэгч',
   },
   email: {
     type: String,
-    unique: true,
+    required: false,
+  },
+  phoneNumber: {
+    type: String,
+    required: false,
+  },
+  password: {
+    type: String,
     required: true,
   },
-  avatar: {
+  otp: {
     type: String,
+    required: false,
   },
   role: {
     type: String,
@@ -19,10 +29,10 @@ const userSchema = new Schema({
     enum: ['admin', 'user', 'author'],
     default: 'user',
   },
-  otp: {
-    type:String,
-    required:false
-  }
+  avatar: {
+    type: String,
+    required: false,
+  },
 });
 
-export const UserModel = mongoose.models.user || model('user', userSchema);
+export const UserModel: Model<User> = models.user || model<User>('user', userSchema);

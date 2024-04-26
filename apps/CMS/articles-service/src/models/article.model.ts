@@ -1,4 +1,5 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Article } from '@/graphql/generated';
+import { Schema, model, Model, models } from 'mongoose';
 
 const articleSchema = new Schema({
   title: {
@@ -7,33 +8,35 @@ const articleSchema = new Schema({
   },
   coverPhoto: String,
   content: {
-    type:String,
-    required: true
+    type: String,
+    required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'user',
-    required:true
+    required: true,
   },
-  cateogry: [{
-    type: mongoose.Schema.Types.ObjectId,
+  category: {
+    type: Schema.Types.ObjectId,
     ref: 'category',
-    required:true
-  }],
+    required: true,
+  },
   status: {
     type: String,
-    required:true
+    required: true,
   },
   slug: {
-    type:String,
-    required:true
+    type: String,
+    required: true,
   },
+  commentPermission: Boolean,
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  publishAt: Date,
+  publishedAt: Date,
   updatedAt: Date,
+  scheduledAt: Date,
 });
 
-export const articleModel = mongoose.models.article || model('article', articleSchema);
+export const ArticleModel: Model<Article> = models.article || model<Article>('article', articleSchema);

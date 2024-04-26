@@ -1,10 +1,9 @@
-import { CommentsButton } from '../_components';
+import CommentsCard from '../_components/CommentsCard';
 
 export const CommentsMain = () => {
   return (
     <div>
-      hello from Domain Comments and Features Comments main with
-      <CommentsButton text={'Comments button'} />
+      <CommentsCard />
     </div>
   );
 };

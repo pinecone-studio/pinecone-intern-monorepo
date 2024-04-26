@@ -2,12 +2,30 @@ import { gql } from 'graphql-tag';
 
 export const userSchema = gql`
   type User {
-    id: ID!
+    id: ID
     name: String!
-    email: String!
-    avatar: String
+    email: String
+    phoneNumber: String
+    avatar: String!
     role: String!
-    articles: [Article]
     otp: String
+  }
+  input SignUpInput {
+    email: String
+    phoneNumber: String
+    password: String!
+  }
+
+  input deleteUserInput {
+    email: String!
+  }
+
+  type Message {
+    message: String!
+  }
+
+  type Mutation {
+    signUp(input: SignUpInput!): Message!
+    deleteUser(input: deleteUserInput!): Message!
   }
 `;
