@@ -16,7 +16,7 @@ describe('CoreButton tests are here', () => {
     const buttonElement = getByText(buttonText);
     const styles = getComputedStyle(buttonElement);
 
-    expect(styles.backgroundColor).toBe('rgb(245, 245, 245)');
+    expect(styles.backgroundColor).toBe('rgb(40, 40, 43');
   });
 
   it('Should render button with no backgroundColor', () => {
@@ -26,7 +26,7 @@ describe('CoreButton tests are here', () => {
     const buttonElement = getByText(buttonText);
     const styles = getComputedStyle(buttonElement);
 
-    expect(styles.backgroundColor).toBe('rgb(245, 245, 245)');
+    expect(styles.backgroundColor).toBe('rgb(75, 72, 68)');
   });
 
   it('Should render button with fontSize', () => {
