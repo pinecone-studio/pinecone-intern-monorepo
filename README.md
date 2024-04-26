@@ -172,7 +172,51 @@ There are two scenarios for working on the frontend:
     nx dev-local cms-dashboard
     ```
 
-    This will start federation locally with desired service running locally and dashboard using local federation
+    This will start federation locally with the desired service running locally and a dashboard using the local federation
+
+### Adding secrets to ENV:
+
+Run the following command with your specific value:
+
+1. Add this to your project.json
+
+```json
+
+ "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
+    },
+```
+
+```json
+
+yarn nx run {project-name}:add-secrets --group {project-name} --env {which environment: values are [dev, testing, prod ] } --username admin --password X7vfUp1FelZcaPk5 --key {secret key name (MUST BE CAPITAL LETTERS AND USE UNDERSCORE) } --value {secret key value}
+
+```
+
+2. How to retrieve secrets to your project: Add the following to your project.json
+
+```json
+
+ "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production", // which env
+      "configurations": {
+        "production": {
+          "groups": ["hrms-dashboard", "file-management"], // project-name
+          "env": "prod" // which environment
+        }
+      }
+    },
+
+```
+
+3. To check secrets, run following command
+
+```json
+npx nx get-secrets { project-name }
+
+```
+
 
 
 # Happy Coding! 🚀
