@@ -9,7 +9,7 @@ jest.mock('@/models/comment.model', () => ({
   },
 }));
 
-describe('1. updateComment resolver', () => {
+describe('1. should update comment', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -29,7 +29,7 @@ describe('1. updateComment resolver', () => {
   });
 });
 
-describe('2. updateComment resolver', () => {
+describe('2. should throw error', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
