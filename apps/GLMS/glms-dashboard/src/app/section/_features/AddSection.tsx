@@ -20,7 +20,7 @@ const AddSection = () => {
   };
 
   const handleSubmit = async () => {
-    try {
+  
       const { data } = await createSection({
         variables: {
           title: sectionInput.current.title,
@@ -29,9 +29,6 @@ const AddSection = () => {
         },
       });
      throw data
-    } catch (error) {
-      throw error
-    }
   };
   
     return(
