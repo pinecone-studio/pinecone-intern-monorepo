@@ -1,7 +1,7 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { publishComment } from '@/graphql/resolvers/mutations';
-import { CommentsModel } from '@/models/comment.model';
+import { publishComment } from '../../src/graphql/resolvers/mutations/create-comment';
 import { GraphQLResolveInfo } from 'graphql';
+import { CommentsModel } from '@/models/comment.model';
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {

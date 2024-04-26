@@ -18,7 +18,14 @@ export const commentsSchema = gql`
     createdAt: Date!
     articleId: String!
   }
+  input UpdateCommentInput {
+    _id: ID!
+    comment: String!
+    name: String!
+    token: String
+  }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID
+    updateComment(updateInput: UpdateCommentInput!): ID
   }
 `;
