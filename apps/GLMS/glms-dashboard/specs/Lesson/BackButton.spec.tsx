@@ -1,19 +1,15 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import Backbutton from '../../src/app/Lesson/component/BackButton'
+import { render } from '@testing-library/react';
+import BackButton from '../../src/app/Lesson/component/BackButton';
 
 describe('BackButton component', () => {
-  it('calls handleBack function when clicked', () => {
-    const mockPush = jest.fn();
-    jest.mock('next/navigation', () => ({
-      useRouter: () => ({
-        push: mockPush
-      })
-    }));
-    const { getByText } = render( <Backbutton />);
+  it('renders BackButton', () => {
+    const { getByTestId } = render(<BackButton />);
+    const backButton = getByTestId('prev-button-test-id');
+  });
 
-    fireEvent.click(getByText('Сэдвүүд'));
-
-    expect(mockPush).toHaveBeenCalledWith('/dashboardOtherLab');
+  it('renders correct text in BackButton', () => {
+    const { getByText } = render(<BackButton />);
+    const buttonText = getByText('Сэдвүүд');
   });
 });

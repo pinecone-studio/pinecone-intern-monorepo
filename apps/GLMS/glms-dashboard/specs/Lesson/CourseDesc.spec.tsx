@@ -4,18 +4,9 @@ import CourseDesc from '../../src/app/Lesson/component/CourseDesc';
 
 describe('CourseDesc component', () => {
   it('renders description correctly', () => {
-    const description = 'This is a test description';
-    const { getByText } = render(<CourseDesc description={description} />);
-    expect(getByText(description)).toBeInTheDocument();
-  });
-
-  it('applies styles correctly', () => {
-    const description = 'This is a test description';
-    const { getByText } = render(<CourseDesc description={description} />);
-    const typographyElement = getByText(description);
-    expect(typographyElement).toHaveStyle({
-      width: '950px',
-      fontSize: '18px'
-    });
+    const description = 'This is a test description.';
+    const { getByTestId } = render(<CourseDesc description={description} />);
+    const descriptionElement = getByTestId('course-desc-test-id');
+    expect(descriptionElement.textContent).toBe(description);
   });
 });

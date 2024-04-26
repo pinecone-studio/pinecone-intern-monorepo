@@ -4,7 +4,7 @@ import React from 'react'
 
 const CourseTitle = ({title}:Section) => {
   return (
-    <Typography fontSize="32px" fontWeight="700">
+    <Typography data-testid="course-title-test-id" fontSize="32px" fontWeight="700">
     
     {title}
   </Typography>

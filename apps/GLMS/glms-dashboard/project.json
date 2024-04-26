@@ -82,7 +82,7 @@
         "commands": ["npx nx codegen glms-dashboard --configuration=local", "npx env-cmd -f apps/GLMS/glms-dashboard/.env.local nx serve glms-dashboard"],
         "parallel": false
       }
-    },
+    },    
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
