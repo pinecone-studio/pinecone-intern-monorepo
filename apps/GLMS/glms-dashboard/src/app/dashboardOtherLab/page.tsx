@@ -8,14 +8,14 @@ import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeM
 import { useRouter } from 'next/navigation';
 
 const data = [
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/css.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'css' },
-  { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
-  { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
+  { image: '/html.png', title: 'HTML', information: 'welcome to my course', lessonCount: 34, type: 'course' },
+  { image: '/css.png', title: 'CSS', information: 'welcome to my course', lessonCount: 34, type: 'course' },
+  { image: '/js.png', title: 'Javascript', information: 'welcome to my course', lessonCount: 34, type: 'course' },
+  { image: '/css.png', title: 'React', information: 'welcome to my course', lessonCount: 34, type: 'course' },
+  { image: '/js.png', title: 'Next', information: 'welcome to my course', lessonCount: 34, type: 'course' },
+  { image: '/css.png', title: 'MongoDB', information: 'welcome to my course', lessonCount: 34, type: 'css' },
+  { image: '/html.png', title: 'Graphql', information: 'welcome to my course', lessonCount: 34, type: 'html' },
+  { image: '/html.png', title: 'Cypress', information: 'welcome to my course', lessonCount: 34, type: 'html' },
 ];
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
@@ -97,7 +97,7 @@ const DashboardOtherLab = () => {
           </Container>
         </Stack>
       </Stack>
-      <Stack width={'100%'}>
+      <Stack sx={{backgroundColor:"#F7F7F8" , paddingY:10}} width={'100%'}>
         <Container maxWidth="xl">
           <Grid container width={'100%'}>
             {data
