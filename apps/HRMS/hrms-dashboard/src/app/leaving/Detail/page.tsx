@@ -17,7 +17,6 @@ const Detail = () => {
     variables: { id },
   });
   if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Stack sx={{ display: 'flex', alignItems: 'center', bgcolor: 'rgba(247, 247, 248, 1)', gap: '24px', width: '100vw', height: '100vh' }}>

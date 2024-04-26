@@ -11,7 +11,6 @@ const Requests = () => {
   const currentDate = new Date().toLocaleDateString();
 
   if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Stack sx={{ bgcolor: 'rgba(247, 247, 248, 1)', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', paddingY: '30px' }} data-testid="requests-component">
