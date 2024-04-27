@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # bun ./bun.lockb --hash: 19413428F4A59981-6289f1a459a3febe-DA7C67158A58AE77-3b7e450f14fa7cb9
 =======
 <<<<<<< HEAD
@@ -14,6 +15,8 @@
 # bun ./bun.lockb --hash: F2B4FF7FB39360C5-88c1507f9aaa78bd-34FB2367C234F544-4d4d1d49240742e9
 
 >>>>>>> 8668f24 (feat(glms-dashboard): addsection component)
+=======
+>>>>>>> bd9c040 (feat(glms-dashboard): "create section")
 
 =======
 >>>>>>> 5028762 (feat(glms-dashboard): "add section push")
