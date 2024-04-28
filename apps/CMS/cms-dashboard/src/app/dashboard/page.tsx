@@ -12,7 +12,7 @@ const Home = () => {
   const { data: article } = useGetArticlesQueryQuery();
   const articles = article?.getArticlesQuery as Article[] | undefined;
   return (
-    <Stack data-cy="dashboard-page-cy-id" bgcolor={'#f0f2f5'}>
+    <Stack data-cy="dashboard-page-cy-id" bgcolor={'#ECEDF0'}>
       <Navbar />
       <Stack>
         <Container maxWidth="lg">

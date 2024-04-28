@@ -3,5 +3,8 @@ query GetArticlesQuery {
     title
     status
     createdAt
+    category {
+      name
+    }
   }
 }
