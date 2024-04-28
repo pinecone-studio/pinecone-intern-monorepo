@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import  SectionInputForm  from "../../src/app/section/_components/SectionInputForm"
 
 describe('SectionInputForm Component' , () => {
