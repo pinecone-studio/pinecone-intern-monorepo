@@ -2,7 +2,7 @@
 import { Alert, Button, Divider, Stack, TextField, Typography } from '@mui/material';
 import PhotoOutlinedIcon from '@mui/icons-material/PhotoOutlined';
 import { useCreateSectionMutation } from '../../../generated';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import SectionInputForm from '../_components/SectionInputForm';
@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 
 const AddSection = () => {
 
-  const [createSection , {loading}] = useCreateSectionMutation();
+  const [createSection ] = useCreateSectionMutation();
   const [successMessage, setSuccessMessage] = useState('');
 
   const validationScema = yup.object({
@@ -28,15 +28,11 @@ const AddSection = () => {
     },
     validationSchema : validationScema,
     onSubmit:  async (values , {resetForm}) => {
-      try {
-        const { data } = await createSection({
+         await createSection({
           variables: values
         });
         setSuccessMessage('Хичээл амжилттай үүсгэгдлээ!');
         resetForm()
-      } catch (error) {
-        throw error
-      }
     }
    });
 
