@@ -1,6 +1,6 @@
 import { Stack, TextField, TextFieldProps, Typography } from "@mui/material"
 const SectionInputForm = (props : TextFieldProps) => {
-    const { label, type = 'text', helperText, ...rest } = props;
+    const { label, helperText, ...rest } = props;
     return(
         <Stack data-testid="inputForm">
             <Typography fontWeight={"bold"} data-testid="label">{label}</Typography>
