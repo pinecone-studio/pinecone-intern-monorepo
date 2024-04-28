@@ -1,6 +1,7 @@
 describe('Detail Feature', () => {
+  const testId = '6627615b0e17dca819034a5a';
   beforeEach(() => {
-    cy.visit('/leaving/Detail?requestId=6627615b0e17dca819034a5a');
+    cy.visit(`/leaving/Detail?requestId=${testId}`);
   });
 
   it('1.should approve request when approve button is clicked', () => {
