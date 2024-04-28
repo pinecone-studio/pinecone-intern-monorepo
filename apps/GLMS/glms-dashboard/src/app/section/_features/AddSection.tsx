@@ -57,7 +57,7 @@ const AddSection = () => {
          value={formik.values.title}
          onChange={formik.handleChange}
          onBlur={formik.handleBlur}
-         error={formik.touched.title && Boolean(formik.errors.title)}
+         error={Boolean(formik.errors.title)}
          helperText={formik.touched.title && formik.errors.title}  />
         <SectionInputForm
          name='description'
@@ -67,7 +67,7 @@ const AddSection = () => {
          value={formik.values.description}
          onChange={formik.handleChange}
          onBlur={formik.handleBlur}
-         error={formik.touched.description && Boolean(formik.errors.description)}
+         error={Boolean(formik.errors.description)}
          helperText={formik.touched.description && formik.errors.description} />
         <Stack>
           <Typography sx={{ fontWeight: 'bold' }}> Хичээлийн зураг</Typography>
