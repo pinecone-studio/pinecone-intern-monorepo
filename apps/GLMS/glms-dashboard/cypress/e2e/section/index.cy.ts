@@ -23,7 +23,7 @@ describe('section page', () => {
     it('4. When teaches types on the description input, an error message should disappear', () => {
       cy.get('[data-cy="add-section-handle-btn"]').should('exist').click()
       cy.get('[data-cy="add-section-handle-btn"]').should('be.disabled')
-      cy.get('[data-testid="helperText"]').eq(0).should('exist').should('contain', 'Дэлгэрэнгүй мэдээлэл оруулна уу...');
+      cy.get('[data-testid="helperText"]').eq(1).should('exist').should('contain', 'Дэлгэрэнгүй мэдээлэл оруулна уу...');
       cy.get('input[name="description"]').type('html introduction');
       cy.contains('Дэлгэрэнгүй мэдээлэл оруулна уу...').should('not.exist');
     });
@@ -35,10 +35,17 @@ describe('section page', () => {
       cy.get('input[name="description"]').type('html introduction');
       cy.get('[data-cy="add-section-handle-btn"]').should('not.be.disabled');
       cy.get('[data-cy="add-section-handle-btn"]').click();
-      cy.get('[data-testid="success"]').should('be.visible');
-      cy.contains('Хичээл амжилттай үүсгэгдлээ!').should('be.visible');
     })
 
-});
+      it('6. When section created successfully alert appear and disappear after 3000ms', () => {
+        cy.get('[data-cy="add-section-handle-btn"]').click();
+        cy.get('input[name="title"]').type('html');
+        cy.get('input[name="description"]').type('html introduction');
+        cy.get('[data-cy="add-section-handle-btn"]').should('not.be.disabled');
+        cy.get('[data-cy="add-section-handle-btn"]').click();
+        cy.get('[data-testid="success"]').should('exist').should('be.visible');
+        cy.get('[data-testid="success"]').should('not.exist', { timeout: 3000 });
+      });
+    })
 
 
