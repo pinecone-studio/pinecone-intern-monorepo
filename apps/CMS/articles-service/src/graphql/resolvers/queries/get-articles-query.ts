@@ -33,3 +33,12 @@ export const getArticlesByQuantity: QueryResolvers['getArticlesByQuantity'] = as
     throw new GraphQLError('Error in getArticlesByQuantity');
   }
 };
+
+export const getArticlesByCategoryNoLimit: QueryResolvers['getArticlesByCategoryNoLimit'] = async (_, { categoryId }) => {
+  try {
+    const articles = await ArticleModel.find({ category: categoryId }).populate('category');
+    return articles;
+  } catch (error) {
+    throw new GraphQLError('Can not get articles by category (no limit)');
+  }
+};
