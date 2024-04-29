@@ -1,6 +1,5 @@
 import { getArticlesByCategoryNoLimit } from '@/graphql/resolvers/queries';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
-import { ArticleModel } from '../../src/models/article.model';
 
 jest.mock('../../src/models/article.model', () => ({
   ArticleModel: {
