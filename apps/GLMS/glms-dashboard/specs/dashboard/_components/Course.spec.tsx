@@ -1,5 +1,4 @@
-// import '@types/jest';
-import Course from '../../../src/app/dashboardOtherLab/_components/Course';
+import Course from '../../../src/app/dashboard/_components/Course';
 import { render } from '@testing-library/react';
 import React from 'react';
 
