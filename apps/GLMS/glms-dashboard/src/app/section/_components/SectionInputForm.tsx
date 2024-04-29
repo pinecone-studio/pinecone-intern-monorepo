@@ -1,4 +1,3 @@
-"use client"
 import { Stack, TextField, TextFieldProps, Typography } from "@mui/material"
 const SectionInputForm = (props : TextFieldProps) => {
     const { label, helperText, ...rest } = props;
