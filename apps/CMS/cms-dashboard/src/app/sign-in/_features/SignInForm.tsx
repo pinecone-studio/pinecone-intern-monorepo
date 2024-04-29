@@ -124,7 +124,7 @@ const SignInForm = () => {
             cursor: 'pointer',
           }}
         >
-          <Link href={'/'}>Бүртгүүлэх</Link>
+          <Link href={'/sign-up'}>Бүртгүүлэх</Link>
         </Typography>
       </Stack>
     </Stack>
