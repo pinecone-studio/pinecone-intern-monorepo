@@ -1,6 +1,7 @@
 'use client';
-import { Stack, TextField, Typography } from '@mui/material';
+import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { fileManagement } from '@/file-management';
+import { RemoveCircle } from '@mui/icons-material';
 
 type FormikTypes = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -28,24 +29,37 @@ const FileUploader = (props: FormikTypes) => {
       borderRadius={'8px'}
       sx={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}
     >
-      <Typography fontWeight={400} fontSize={18} color={'#3F414580'}>
-        Зургийг чирж буулгах эсвэл
-      </Typography>
-      <Stack width={80} overflow={'hidden'} position={'relative'} alignItems={'center'}>
-        <Typography sx={{ textDecoration: 'underline' }} fontSize={18} fontWeight={600} color={'#3F4145'}>
-          Browse
-        </Typography>
-        <TextField
-          id="file-test"
-          onChange={handleUpload}
-          type="file"
-          sx={{
-            opacity: 0,
-            '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': { padding: 0 },
-            position: 'absolute',
+      {!thumbnail ? (
+        <Stack>
+          <Typography fontWeight={400} fontSize={18} color={'#3F414580'}>
+            Зургийг чирж буулгах эсвэл
+          </Typography>
+          <Stack width={80} overflow={'hidden'} position={'relative'} alignItems={'center'}>
+            <Typography sx={{ textDecoration: 'underline' }} fontSize={18} fontWeight={600} color={'#3F4145'}>
+              Browse
+            </Typography>
+            <TextField
+              id="file-test"
+              onChange={handleUpload}
+              type="file"
+              sx={{
+                opacity: 0,
+                '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': { padding: 0 },
+                position: 'absolute',
+              }}
+            />
+          </Stack>
+        </Stack>
+      ) : (
+        <IconButton
+          sx={{ position: 'absolute', width: '40px', height: '40px' }}
+          onClick={() => {
+            setFieldValue('thumbnail', '');
           }}
-        />
-      </Stack>
+        >
+          <RemoveCircle />
+        </IconButton>
+      )}
     </Stack>
   );
 };

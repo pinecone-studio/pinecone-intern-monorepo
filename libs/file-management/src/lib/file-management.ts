@@ -5,10 +5,10 @@ import { v4 } from 'uuid';
 
 const R2 = new S3Client({
   region: 'auto',
-  endpoint: process.env.ENDPOINT,
+  endpoint: process.env.ENDPOINT || '',
   credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    accessKeyId: process.env.ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.SECRET_ACCESS_KEY || '',
   },
 });
 type fileType = {
@@ -47,7 +47,7 @@ export const handleUpload = async (file: fileType, folder: string) => {
   return accessUrl;
 };
 
-export const fileManagement = async (fileList, folder: string) => {
+export const fileManagement = async (fileList: fileType[], folder: string) => {
   const accessUrls: string[] = [];
 
   await Promise.all(
