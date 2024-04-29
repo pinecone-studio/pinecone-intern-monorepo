@@ -5,8 +5,8 @@ import { IconColor, BackgroundMain, Icon } from '../_components/colors/index';
 import Logo from '../../../../public/Logo';
 const Header = () => {
   return (
-    <Stack bgcolor={BackgroundMain}>
-      <Container data-testid="header-artivle-detail" maxWidth="xl" sx={{ display: 'flex', height: '48px', alignItems: 'center', justifyContent: 'space-between' }}>
+    <Stack data-testid="header-artivle-detail" bgcolor={BackgroundMain}>
+      <Container maxWidth="xl" sx={{ display: 'flex', height: '48px', alignItems: 'center', justifyContent: 'space-between' }}>
         <Logo />
         <Stack direction="row" gap="8px" alignItems="center">
           <TextField
