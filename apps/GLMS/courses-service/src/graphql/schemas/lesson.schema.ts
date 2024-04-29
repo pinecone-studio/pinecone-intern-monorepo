@@ -13,11 +13,13 @@ export const lessonSchema = gql`
     position: Int
     createdAt: Date
     sections: [Section]
+    courseId:ID
   }
   input LessonInput {
     title: String
     thumbnail: String
     position: Int
+    courseId:ID
   }
 
   type Mutation {
