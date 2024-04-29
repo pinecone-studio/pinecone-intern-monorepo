@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
@@ -9,12 +9,11 @@ import ArticleEditButton from '../_components/ArticleEditButton';
 
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
-  loading: boolean;
 };
 const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 
 const DashboardTable = (props: DashboardTablesTypes) => {
-  const { articles, loading } = props;
+  const { articles } = props;
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') ?? '';
   const searchedValueFilter = searchParams.get('searchedValue') ?? '';

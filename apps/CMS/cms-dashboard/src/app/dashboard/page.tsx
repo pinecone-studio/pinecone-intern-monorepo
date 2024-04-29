@@ -9,7 +9,7 @@ import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
 
 const Home = () => {
-  const { data: article, loading } = useGetArticlesQueryQuery();
+  const { data: article } = useGetArticlesQueryQuery();
   const articles = article?.getArticlesQuery as Article[] | undefined;
 
   return (
@@ -25,7 +25,7 @@ const Home = () => {
 
             <Stack gap={2.7}>
               <MenuBar articles={articles} />
-              <DashboardTable articles={articles} loading={loading} />
+              <DashboardTable articles={articles} />
             </Stack>
           </Stack>
         </Container>
