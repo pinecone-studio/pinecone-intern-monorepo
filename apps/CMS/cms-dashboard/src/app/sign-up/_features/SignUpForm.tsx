@@ -11,7 +11,8 @@ import * as yup from 'yup';
 import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
-  const { handleSignUp, creationLoading } = useAuth();
+  const router = useRouter();
+  const { handleSignUp, signUpLoading } = useAuth();
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -50,6 +51,7 @@ const SignUpForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       handleSignUp(values.emailOrPhoneNumber, values.password);
+      router.push('/sign-in');
     },
   });
 
@@ -100,7 +102,7 @@ const SignUpForm = () => {
           }}
           data-cy="Sign-Up-Button"
           data-testid="Sign-Up-Button-Loader"
-          disabled={!formik.isValid || creationLoading}
+          disabled={!formik.isValid || signUpLoading}
           fullWidth
           variant="contained"
           sx={{
@@ -117,7 +119,7 @@ const SignUpForm = () => {
             cursor: !formik.isValid ? 'not-allowed' : 'pointer',
           }}
         >
-          {creationLoading && <Loader />}
+          {signUpLoading && <Loader />}
           <Typography mr={'23%'} fontSize={16} fontWeight={600}>
             Бүртгүүлэх
           </Typography>

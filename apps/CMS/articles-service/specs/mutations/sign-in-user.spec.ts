@@ -1,33 +1,40 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { signIn } from '@/graphql/resolvers/mutations';
+import { UserModel } from '@/models';
+import { GraphQLResolveInfo } from 'graphql';
+import jwt from 'jsonwebtoken';
 
-const input = {
-  emailOrPhoneNumber: 'mockData3@gmail.com',
-  password: '11111111aB!',
-};
+jest.mock('jsonwebtoken');
 
 jest.mock('../../src/models/user.model.ts', () => ({
   UserModel: {
-    findOne: jest
-      .fn()
-      .mockReturnValueOnce({
-        message: 'Амжилттай нэвтэрлээ',
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTQwNTg3NTR9.LqevD4tmdH-Q6f0I9vTUhVpaYvkmgxxHYPyqi8PQ5oI',
-      })
-      .mockResolvedValueOnce(null)
-      .mockRejectedValueOnce(null),
+    findOne: jest.fn().mockReturnValueOnce({ email: 'test', _id: 'user-id', name: 'test' }).mockResolvedValueOnce(null).mockRejectedValueOnce(null),
   },
 }));
 
-describe('Sign up', () => {
-  it('it should generate token and return', async () => {
+const input = {
+  emailOrPhoneNumber: 'test@test.com',
+  password: 'password',
+};
+
+describe('Sign in', () => {
+  it('it should sign-in and return token', async () => {
+    UserModel.findOne as jest.Mock;
+
+    (jwt.sign as jest.Mock).mockReturnValueOnce('testToken');
+
     const result = await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);
 
-    expect(result).toEqual({
-      message: 'Амжилттай нэвтэрлээ',
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTQwNTg3NTR9.LqevD4tmdH-Q6f0I9vTUhVpaYvkmgxxHYPyqi8PQ5oI',
+    expect(UserModel.findOne).toHaveBeenCalledWith({
+      $or: [
+        { email: 'test@test.com', password: 'password' },
+        { phoneNumber: 'test@test.com', password: 'password' },
+      ],
     });
+
+    expect(jwt.sign as jest.Mock).toHaveBeenCalledWith({ id: 'user-id', name: 'test', email: 'test' }, 'secret-key');
+
+    expect(result).toEqual({ token: 'testToken', message: 'Амжилттай нэвтэрлээ' });
   });
 
   it('it should throw user not found error', async () => {
@@ -37,6 +44,7 @@ describe('Sign up', () => {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч алга' }, errorTypes.NOT_FOUND));
     }
   });
+
   it('it should throw error', async () => {
     try {
       await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);

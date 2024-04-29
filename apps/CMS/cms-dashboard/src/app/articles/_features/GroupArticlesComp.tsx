@@ -25,7 +25,6 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
     setIsAll((prev) => !prev);
     refetch();
   };
-  console.log(data?.getArticlesByCategory);
 
   return (
     <Stack p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>

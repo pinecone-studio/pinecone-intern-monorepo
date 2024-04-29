@@ -1,16 +1,15 @@
 'use client';
+
 import { Button, Stack, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { FormInput, Loader } from '../_component';
 import { useAuth } from '../../../common';
+import { FormInput, Loader } from '../../sign-up/_components';
 
 const SignInForm = () => {
-  const { handleSignIn, creationLoading, isLoggedIn } = useAuth();
-  const router = useRouter();
+  const { handleSignIn, loginLoading } = useAuth();
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -91,7 +90,7 @@ const SignInForm = () => {
           data-testid="Sign-Up-Button-Loader"
           fullWidth
           variant="contained"
-          disabled={!formik.isValid || creationLoading}
+          disabled={!formik.isValid || loginLoading}
           sx={{
             justifyContent: 'flex-end',
             py: '14.5px',
@@ -106,7 +105,7 @@ const SignInForm = () => {
             cursor: !formik.isValid ? 'not-allowed' : 'pointer',
           }}
         >
-          {creationLoading && <Loader />}
+          {loginLoading && <Loader />}
           <Typography mr={'28%'} fontSize={16} fontWeight={600}>
             Нэвтрэх
           </Typography>
