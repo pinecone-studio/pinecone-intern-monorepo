@@ -10,4 +10,7 @@ export const categorySchema = gql`
   type Query {
     getCategories:[Category]!
   } 
+  type Mutation {
+    createCategory(name: String!): Category!
+  }
 `;
