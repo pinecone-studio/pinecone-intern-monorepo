@@ -1,6 +1,6 @@
 import { Stack, TextField } from '@mui/material';
 
-const CustomInpute = () => {
+const CustomInput = () => {
   return (
     <Stack data-testid="input">
       <TextField
@@ -20,4 +20,4 @@ const CustomInpute = () => {
     </Stack>
   );
 };
-export default CustomInpute;
+export default CustomInput;
