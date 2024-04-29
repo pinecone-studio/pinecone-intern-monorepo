@@ -26,7 +26,6 @@ export const commentsSchema = gql`
   }
   input DeleteCommentInput {
     _id: ID!
-    token: String
   }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID
