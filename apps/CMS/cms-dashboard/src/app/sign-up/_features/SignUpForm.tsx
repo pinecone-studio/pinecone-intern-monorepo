@@ -8,10 +8,8 @@ import { Loader } from '../_components/Loader';
 import { FormInput } from '../_components/FormInput';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
-import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
-  const router = useRouter();
   const { handleSignUp, signUpLoading } = useAuth();
 
   const validationSchema = yup.object({
@@ -51,7 +49,6 @@ const SignUpForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       handleSignUp(values.emailOrPhoneNumber, values.password);
-      router.push('/sign-in');
     },
   });
 
