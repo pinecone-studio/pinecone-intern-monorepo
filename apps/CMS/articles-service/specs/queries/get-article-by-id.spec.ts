@@ -1,55 +1,64 @@
-import { errorTypes, graphqlErrorHandler, } from '@/graphql/resolvers/error';
-import { getArticleByID } from '../../src/graphql/resolvers/queries/get-article-by-id';
-import { GraphQLResolveInfo } from 'graphql';
+import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
+import { getArticleByID, getArticlesByCategoryNoLimit } from '@/graphql/resolvers/queries';
+import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../src/models/article.model', () => ({
-    ArticleModel: {
-        findById: jest.fn()
-        .mockReturnValueOnce({
-            _id: '1',
-            title: "Test title",
-            coverPhoto: "Image",
-            content: "This is test text",
-            author: "authorID",
-            category: "categoryID",
-            status: "ARCHIVED"
-          })
-          .mockResolvedValueOnce(undefined)
-          .mockRejectedValueOnce(null),
-    },
+  ArticleModel: {
+    findById: jest.fn().mockReturnValue({
+      populate: jest
+        .fn()
+        .mockResolvedValueOnce({
+          id: 'testId',
+          title: 'Title',
+          coverPhoto: 'image_uri',
+          content: 'article',
+          author: '#id1',
+          category: '#id1',
+          status: 'status',
+          slug: 'slug',
+          createdAt: '2024-09-09',
+          publishedAt: '2024-09-09',
+          updatedAt: '2024-09-09',
+          scheduledAt: '2024-09-09',
+        })
+        .mockResolvedValueOnce(undefined)
+        .mockRejectedValueOnce(null),
+    }),
+  },
 }));
 
-describe('GetArticleByID', () => {
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
+const mockData = {
+  id: 'testId',
+  title: 'Title',
+  coverPhoto: 'image_uri',
+  content: 'article',
+  author: '#id1',
+  category: '#id1',
+  status: 'status',
+  slug: 'slug',
+  createdAt: '2024-09-09',
+  publishedAt: '2024-09-09',
+  updatedAt: '2024-09-09',
+  scheduledAt: '2024-09-09',
+};
+describe('This function should return article with matching category', () => {
+  it('It should return all articles with matching categories', async () => {
+    const articles = await getArticleByID!({}, { id: 'testId' }, {}, {} as GraphQLResolveInfo);
 
-    it('should return the article when found', async () => {
-        const result = await getArticleByID!({undefined}, { id: '1' }, {undefined}, {} as GraphQLResolveInfo);
-        expect(result).toEqual({
-            _id: '1',
-            title: "Test title",
-            coverPhoto: "Image",
-            content: "This is test text",
-            author: "authorID",
-            category: "categoryID",
-            status: "ARCHIVED"
-        });
-      });
-
-      it('should throw an error if the article cannot be found', async () => {
-        try {
-          await getArticleByID!({}, { id: '2' }, {}, {} as GraphQLResolveInfo);
-        } catch (error) {
-          expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR));
-        }
-      });
-
-      it("should throw an error when an error occurs during fetching", async () => {
-        try {
-            await getArticleByID!({undefined}, { id: '1' }, {undefined}, {} as GraphQLResolveInfo);
-        } catch (error) {
-            expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR))
-        }
-      })
+    expect(articles).toEqual(mockData);
   });
+  it('should throw an error if the article cannot be found', async () => {
+    try {
+      await getArticleByID!({}, { id: '2' }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR));
+    }
+  });
+  it('should throw an error when an error occurs during fetching', async () => {
+    try {
+      await getArticleByID!({ undefined }, { id: '1' }, { undefined }, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR));
+    }
+  });
+});
