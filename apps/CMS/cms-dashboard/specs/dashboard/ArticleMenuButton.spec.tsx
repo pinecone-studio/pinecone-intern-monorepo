@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import MenuButton from '../../src/app/dashboard/_components/MenuButton';
+import MenuButton from '../../src/app/dashboard/_components/ArticleMenuButton';
 
 describe('Should render menu icon-button', () => {
   it('1. Should render icon', () => {

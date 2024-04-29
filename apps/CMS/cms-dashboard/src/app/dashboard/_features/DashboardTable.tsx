@@ -1,19 +1,20 @@
 'use client';
 
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography } from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-import MenuButton from '../_components/MenuButton';
+import MenuButton from '../_components/ArticleMenuButton';
+import ArticleEditButton from '../_components/ArticleEditButton';
 
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
+  loading: boolean;
 };
 const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 
 const DashboardTable = (props: DashboardTablesTypes) => {
-  const { articles } = props;
+  const { articles, loading } = props;
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') ?? '';
   const searchedValueFilter = searchParams.get('searchedValue') ?? '';
@@ -66,6 +67,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {result?.map((item, index) => {
             return (
@@ -93,9 +95,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
                     <MenuButton />
-                    <IconButton aria-label="delete" sx={{ cursor: 'pointer' }}>
-                      <EditOutlinedIcon sx={{ width: 22, height: 22 }} />
-                    </IconButton>
+                    <ArticleEditButton id={item.id} />
                   </Stack>
                 </TableCell>
               </TableRow>

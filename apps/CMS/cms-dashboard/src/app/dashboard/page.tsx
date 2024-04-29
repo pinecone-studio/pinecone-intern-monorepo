@@ -9,8 +9,9 @@ import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
 
 const Home = () => {
-  const { data: article } = useGetArticlesQueryQuery();
+  const { data: article, loading } = useGetArticlesQueryQuery();
   const articles = article?.getArticlesQuery as Article[] | undefined;
+
   return (
     <Stack data-cy="dashboard-page-cy-id" bgcolor={'#ECEDF0'}>
       <Navbar />
@@ -24,7 +25,7 @@ const Home = () => {
 
             <Stack gap={2.7}>
               <MenuBar articles={articles} />
-              <DashboardTable articles={articles} />
+              <DashboardTable articles={articles} loading={loading} />
             </Stack>
           </Stack>
         </Container>
