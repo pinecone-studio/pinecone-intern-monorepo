@@ -1,13 +1,13 @@
-describe('dashboardOtherLab component', () => {
+describe('dashboard component', () => {
   beforeEach(() => {
-    cy.visit('/dashboardOtherLab');
+    cy.visit('/dashboard');
   });
 
   it('Should display Dashboard Lab page', () => {
     cy.get('[data-cy="Dashboard-Lab-Page"]').should('exist').should('be.visible');
   });
 
-  it('Should display Ноорог section on Dashboard Lab page', () => {
+  it('Should display Ноорог section on Dashboard  page', () => {
     cy.get('[data-cy="Ноорог"]').should('exist').should('be.visible');
     cy.get('[data-cy="Ноорог"]').click();
   });
