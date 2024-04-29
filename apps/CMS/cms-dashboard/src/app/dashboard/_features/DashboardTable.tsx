@@ -6,10 +6,20 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-import menuItems from '../_components/MenuItemMap';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+const menuItems = [
+  {
+    icons: <ArchiveOutlinedIcon />,
+    label: 'Архив',
+  },
+  {
+    icons: <LinkOutlinedIcon />,
+    label: 'Линк хуулах',
+  },
+];
 
 const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
-
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
 };
@@ -55,7 +65,6 @@ const DashboardTable = (props: DashboardTablesTypes) => {
     ARCHIVED: string;
     SCHEDULED: string;
   };
-
   const articleEnum: articleStatus = {
     PUBLISHED: 'Нийтэлсэн',
     DRAFT: 'Ноорог',
