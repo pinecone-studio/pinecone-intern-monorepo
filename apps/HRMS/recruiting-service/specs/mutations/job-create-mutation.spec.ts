@@ -19,6 +19,8 @@ jest.mock('@/models/job', () => ({
         },
         minSalary: '70000',
         maxSalary: '100000',
+        lastRequestingDay: '2024-04-29',
+        createdAt: '2024-04-29',
         status: 'DRAFTED',
       })
       .mockRejectedValue(null),
@@ -38,6 +40,8 @@ const input = {
   },
   minSalary: '70000',
   maxSalary: '100000',
+  lastRequestingDay: '2024-04-29',
+  createdAt: '2024-04-29',
   status: 'DRAFTED',
 };
 
@@ -58,6 +62,8 @@ describe('Create Job Recruit', () => {
       },
       minSalary: '70000',
       maxSalary: '100000',
+      lastRequestingDay: '2024-04-29',
+      createdAt: '2024-04-29',
       status: 'DRAFTED',
     });
   });
@@ -65,7 +71,7 @@ describe('Create Job Recruit', () => {
     try {
       await createJobRecruit!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERNAL_SERVER_ERROR));
+      expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
     }
   });
 });
