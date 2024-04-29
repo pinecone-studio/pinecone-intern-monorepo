@@ -2,9 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { AssessmentButton } from '../../src/app/assessment/_components/AssessmentButton';
 
-describe('AssessmentButton', () => {
-  it('Should render assessment button component', () => {
-    const { container } = render(<AssessmentButton text="hello test" />);
-    expect(container).toBeDefined();
+describe('AssessmentButton component', () => {
+  test('renders button with correct text', () => {
+    const buttonText = 'Click me';
+    const { getByText } = render(<AssessmentButton text={buttonText} />);
+    const buttonElement = getByText(buttonText);
+    
+    expect(buttonElement.tagName).toBe('BUTTON');
   });
 });
