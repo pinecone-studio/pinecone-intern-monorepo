@@ -2,6 +2,7 @@
 query GetAllEmployee {
   getAllEmployee {
     id
+    imageUrl
     firstName
     lastName
     jobTitle
