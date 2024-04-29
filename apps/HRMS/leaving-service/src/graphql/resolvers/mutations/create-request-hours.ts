@@ -11,7 +11,7 @@ export const createLeaveRequestHours: MutationResolvers["createLeaveRequestHours
     const startHour = startDate.getHours()
     const endHour =  endDate.getHours()
   
-    const totalHour = endHour - startHour;
+    const totalHour = Math.abs(endHour - startHour);
   
     const create = await LeaveRequestModel.create({
         employeeId,
