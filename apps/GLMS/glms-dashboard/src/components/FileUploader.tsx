@@ -3,13 +3,13 @@ import { Stack, TextField, Typography } from '@mui/material';
 import { fileManagement } from '@/file-management';
 
 type FormikTypes = {
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
   thumbnail: string;
 };
 const FileUploader = (props: FormikTypes) => {
   const { setFieldValue, thumbnail } = props;
-  const handleUpload = async (e: any) => {
-    if (e.target.files || thumbnail !== '') {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
       const file = Array.from(e.target.files);
       const accessUrl = await fileManagement(file, 'GLMS-dashboard');
       setFieldValue('thumbnail', accessUrl[0], true);
