@@ -35,3 +35,25 @@ query getNewestArticle {
     title
   }
 }
+
+query GetArticleByID($getArticleByIdId: ID!) {
+  getArticleByID(id: $getArticleByIdId) {
+    id
+    title
+    coverPhoto
+    content
+    scheduledAt
+    updatedAt
+    publishedAt
+    createdAt
+    commentPermission
+    slug
+    status
+    category {
+      name
+    }
+    author {
+      name
+    }
+  }
+}
