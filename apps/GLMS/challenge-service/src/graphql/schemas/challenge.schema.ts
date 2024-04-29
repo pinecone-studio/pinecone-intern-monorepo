@@ -52,6 +52,7 @@ export const challengeTypeDefs = gql`
   }
   type Query {
     getChallenges: [Challenge]
+    getChallengesByStatus: [Challenge]
   }
 
   type Mutation {
