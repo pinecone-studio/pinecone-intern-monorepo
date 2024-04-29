@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { SelectButton } from './Select';
 
 type ISelectPropsType = {
-  label: String;
+  label: string;
   options: string[];
   selectedOption: string;
   onSelect: (_: React.ChangeEvent<HTMLSelectElement>) => void;
