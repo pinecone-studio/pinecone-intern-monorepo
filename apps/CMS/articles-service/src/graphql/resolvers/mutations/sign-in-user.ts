@@ -20,7 +20,10 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
     }
 
     const id = user._id;
-    const token = jwt.sign({ id }, 'secret-key');
+    const name = user.name;
+    const email = user.email;
+
+    const token = jwt.sign({ id, name, email }, 'secret-key');
 
     return { token, message: 'Амжилттай нэвтэрлээ' };
   } catch (error) {

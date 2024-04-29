@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 'use client';
 
-import { PropsWithChildren, useContext, createContext, useState, Dispatch, SetStateAction } from 'react';
+import { PropsWithChildren, useContext, createContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { useSignInMutation, useSignUpMutation } from '../../generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
-import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
   handleSignUp: (emailOrPhoneNumber: string, password: string) => Promise<void>;
   handleSignIn: (emailOrPhoneNumber: string, password: string) => Promise<void>;
-  creationLoading: boolean;
+  signUpLoading: boolean;
+  loginLoading: boolean;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
@@ -18,9 +18,8 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const router = useRouter();
-  const [signUp, { loading: creationLoading }] = useSignUpMutation();
-  const [signIn] = useSignInMutation();
+  const [signUp, { loading: signUpLoading }] = useSignUpMutation();
+  const [signIn, { loading: loginLoading }] = useSignInMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSignUp = async (emailOrPhoneNumber: string, password: string) => {
@@ -79,14 +78,23 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         handleSignUp,
         handleSignIn,
-        creationLoading,
+        signUpLoading,
         isLoggedIn,
         setIsLoggedIn,
+        loginLoading,
       }}
     >
       {children}
