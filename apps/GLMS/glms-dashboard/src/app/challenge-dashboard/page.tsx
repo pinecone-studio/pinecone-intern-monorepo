@@ -13,7 +13,7 @@ const Page = () => {
 
   return (
     <div>
-      <RadioButton value={false} checked={true} onClick={() => {}} />
+      <RadioButton value={false} checked={true}  />
       <SelectButton handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
       <AddChallengeModal />
     </div>

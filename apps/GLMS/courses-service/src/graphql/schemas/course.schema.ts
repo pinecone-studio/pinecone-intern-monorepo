@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const courseSchema = gql`
   scalar Date
   type Query {
+    getCourses:[Course!]!
     getCourseById(id: ID!): Course!
   }
   type Course {
