@@ -138,7 +138,7 @@ const SignUpForm = () => {
             cursor: 'pointer',
           }}
         >
-          <Link href={'/'}>Нэвтрэх</Link>
+          <Link href={'/sign-in'}>Нэвтрэх</Link>
         </Typography>
       </Stack>
     </Stack>
