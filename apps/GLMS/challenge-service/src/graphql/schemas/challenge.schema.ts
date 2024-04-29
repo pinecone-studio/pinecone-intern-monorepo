@@ -68,6 +68,6 @@ export const challengeTypeDefs = gql`
 
   type Mutation {
     createChallenge(quizInput: [QuizInput], challengeInput: ChallengeInput): ID
-    updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz!
+    updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
   }
 `;
