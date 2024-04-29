@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Stack, DialogContent, DialogTitle, Button, Dialog, DialogActions, IconButton, Typography, Divider } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Stack, DialogContent, Button, Dialog, DialogActions, Divider } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { SelectButton } from '../_components';
+import { DialogHeader, SelectWithLabel } from '../_components';
 
 export const AddChallengeModal = () => {
   const [selectedCourse, setSelectedCourse] = useState<string>('');
@@ -26,21 +25,16 @@ export const AddChallengeModal = () => {
   };
 
   const classesMockData = ['HTML intro', 'HTML tags', 'HTML syntax', 'HTML symentic tags'];
-  const TopicsMockData = ['HTML intro', 'HTML tags', 'HTML syntax', 'HTML symentic tags'];
+  const topicsMockData = ['HTML intro', 'HTML tags', 'HTML syntax', 'HTML symentic tags'];
 
-  const textStyle = {
-    fontWeight: 600,
-    fontSize: '14px',
-    color: '#121316',
-  };
-  const DialogStyle = {
+  const dialogStyle = {
     height: '200px',
     width: '430px',
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
   };
-  const ButtonStyle = {
+  const buttonStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -50,7 +44,7 @@ export const AddChallengeModal = () => {
     color: 'black',
     '&:hover': { background: 'black', color: 'white' },
   };
-  const NextBtnStyle = {
+  const nextButtonStyle = {
     backgroundColor: 'black',
     color: 'white',
     marginBottom: '12px',
@@ -59,39 +53,19 @@ export const AddChallengeModal = () => {
   };
 
   return (
-    <Stack sx={{ borderRadius: '30px' }}>
-      <Button data-testid="challenge-button" variant="outlined" onClick={handleClickOpen} sx={ButtonStyle} endIcon={<Add />}>
+    <Stack sx={{ borderRadius: '30px' }} data-cy="add-challenge-button">
+      <Button data-testid="challenge-button" variant="outlined" onClick={handleClickOpen} sx={buttonStyle} endIcon={<Add />}>
         Сорил
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <div style={{ padding: '4px 15px 8px 15px' }}>
-          <DialogTitle sx={{ fontWeight: 700, fontSize: 24 }}> Сорил нэмэх</DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: 'absolute',
-              right: 20,
-              top: 20,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
+      <Dialog data-testid="challenge-dialog" open={open} onClose={handleClose}>
+        <DialogHeader title={'Сорил нэмэх'} onClose={handleClose} />
         <Divider />
-        <DialogContent sx={DialogStyle}>
-          <>
-            <Typography sx={textStyle}>Сэдэв сонгох</Typography>
-            <SelectButton options={classesMockData} selectedOption={selectedTopic} handleSelectChange={handleSelectTopic} />
-          </>
-          <>
-            <Typography sx={textStyle}>Хичээл сонгох</Typography>
-            <SelectButton options={TopicsMockData} selectedOption={selectedCourse} handleSelectChange={handleSelectCourse} />
-          </>
+        <DialogContent sx={dialogStyle}>
+          <SelectWithLabel label="Сэдэв сонгох" options={classesMockData} selectedOption={selectedTopic} onSelect={handleSelectTopic} />
+          <SelectWithLabel label="Хичээл сонгох" options={topicsMockData} selectedOption={selectedCourse} onSelect={handleSelectCourse} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus style={NextBtnStyle}>
+          <Button data-cy="next-page-btn" onClick={handleClose} autoFocus style={nextButtonStyle}>
             Оруулах
           </Button>
         </DialogActions>
