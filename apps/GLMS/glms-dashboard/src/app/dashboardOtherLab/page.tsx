@@ -2,38 +2,18 @@
 import { Button, Container, Grid, Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
-import Course from './_components/Course';
+import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { useRouter } from 'next/navigation';
-
-const data = [
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/js.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'course' },
-  { image: '/css.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'css' },
-  { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
-  { image: '/html.png', title: 'hii', information: 'welcome to my course', lessonCount: 34, type: 'html' },
-];
+import { useGetCoursesQuery } from '@/generated/index';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
+  const {data} = useGetCoursesQuery() 
   const router = useRouter();
   const [actionTab, setActionTab] = useState('Хичээл');
-  const converter = () => {
-    if (actionTab == 'Хичээл') {
-      return 'course';
-    }
-    if (actionTab == 'Ноорог') {
-      return 'css';
-    }
-    if (actionTab == 'Архив') {
-      return 'html';
-    }
-  };
 
   return (
     <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'} data-cy="Dashboard-Lab-Page">
@@ -100,11 +80,10 @@ const DashboardOtherLab = () => {
       <Stack width={'100%'}>
         <Container maxWidth="xl">
           <Grid container width={'100%'}>
-            {data
-              .filter((data) => data.type == converter())
+            {data?.getCourses
               .map((data) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data.title} p={1}>
-                  <Course image={data.image} title={data.title} information={data.information} lessonCount={data.lessonCount} />
+                  <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
                 </Grid>
               ))}
           </Grid>
