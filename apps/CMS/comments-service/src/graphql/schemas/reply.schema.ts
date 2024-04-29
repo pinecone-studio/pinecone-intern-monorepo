@@ -5,7 +5,7 @@ export const replySchema = gql`
   type Reply {
     _id: ID!
     reply: String!
-    comment: Comment!
+    commentId: String!
     name: String!
     parent: Reply
     createdAt: Date
@@ -20,5 +20,8 @@ export const replySchema = gql`
   }
   type Mutation {
     publishReply(createInput: CreateReplyInput): ID!
+  }
+  type Query {
+    getRepliesByCommentId(commentId: String): [Reply]
   }
 `;
