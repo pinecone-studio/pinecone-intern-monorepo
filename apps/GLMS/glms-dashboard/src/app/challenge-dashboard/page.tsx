@@ -12,14 +12,14 @@ const Page = () => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
-  const handleRadioButtonChecked = (value: boolean) => {
-    setChecked(value);
+  const handleRadioButtonChecked = () => {
+    setChecked(!checked);
   };
 
   return (
     <Box data-testid="challenge-dashboard-page">
       <Box data-cy="radio-button">
-        <RadioButton value={checked} checked={true} onClick={handleRadioButtonChecked} />
+        <RadioButton checked={checked} handleRadioButtonChecked={handleRadioButtonChecked} />
       </Box>
       <SelectButton data-cy="select-button" handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
       <Box>
