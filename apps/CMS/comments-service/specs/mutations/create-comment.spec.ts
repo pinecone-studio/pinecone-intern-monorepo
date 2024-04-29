@@ -23,15 +23,16 @@ describe('1. publishComment resolver', () => {
       entityType: 'article',
       articleId: '661c87fd6837efa536464d24',
     };
-
-    const mockedModel = jest.spyOn(CommentsModel, 'create').mockResolvedValueOnce({
+    const mockCreatedComment = {
       _id: 'test',
-    });
+      ...createInput,
+    };
+    (CommentsModel.create as jest.Mock).mockResolvedValueOnce(mockCreatedComment);
 
-    await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
+    const result = await publishComment!({}, { createInput }, {}, {} as GraphQLResolveInfo);
 
     expect(CommentsModel.create).toHaveBeenCalledWith(createInput);
-    expect(mockedModel).toHaveReturned();
+    expect(result).toEqual(mockCreatedComment._id);
   });
 });
 describe('2. publishComment resolver', () => {
