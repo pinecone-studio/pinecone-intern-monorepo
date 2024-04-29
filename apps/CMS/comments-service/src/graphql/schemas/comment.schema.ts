@@ -24,9 +24,13 @@ export const commentsSchema = gql`
     name: String!
     token: String
   }
+  input DeleteCommentInput {
+    _id: ID!
+  }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID
     updateComment(updateInput: UpdateCommentInput!): ID
+    deleteComment(deleteInput: DeleteCommentInput!): ID
   }
   type Query {
     getComments: [Comment]
