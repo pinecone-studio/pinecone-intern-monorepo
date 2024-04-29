@@ -1,31 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import React from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography } from '@mui/material';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import ArticleEditButton from '../_components/ArticleEditButton';
-const menuItems = [
-  {
-    icons: <ArchiveOutlinedIcon />,
-    label: 'Архив',
-  },
-  {
-    icons: <LinkOutlinedIcon />,
-    label: 'Линк хуулах',
-  },
-];
+import MenuButton from '../_components/MenuButton';
 
-const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
 };
+const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
 
 const DashboardTable = (props: DashboardTablesTypes) => {
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
   const { articles } = props;
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') ?? '';
@@ -50,14 +37,6 @@ const DashboardTable = (props: DashboardTablesTypes) => {
       const end = new Date(endDate);
       return itemDate >= start && itemDate <= end;
     });
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   type articleStatus = {
     PUBLISHED: string;
@@ -113,35 +92,10 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                 </TableCell>
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
-                    <Stack>
-                      <IconButton data-testid="morevert-button-test-id" data-cy="morevert-button-test-cy" sx={{ cursor: 'pointer' }} onClick={handleClick}>
-                        <MoreVertOutlinedIcon sx={{ width: 22, height: 22 }} />
-                      </IconButton>
-
-                      <Menu data-testid="drop-down-menu-test-id" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                        {menuItems.map((item, index) => {
-                          return (
-                            <Stack
-                              className={`close-test-class-name-${index}`}
-                              data-testid="close-button-menu-test-id"
-                              data-cy="drop-down-menu-test-cy"
-                              key={index}
-                              direction={'row'}
-                              alignItems={'center'}
-                              px={1}
-                              py={0.3}
-                              onClick={handleClose}
-                            >
-                              <IconButton data-testid="item-icon" sx={{ color: '#000' }}>
-                                {item.icons}
-                              </IconButton>
-                              <MenuItem sx={{ padding: 1 }}>{item.label}</MenuItem>
-                            </Stack>
-                          );
-                        })}
-                      </Menu>
-                    </Stack>
-                    <ArticleEditButton id={item.id} />
+                    <MenuButton />
+                    <IconButton aria-label="delete" sx={{ cursor: 'pointer' }}>
+                      <EditOutlinedIcon sx={{ width: 22, height: 22 }} />
+                    </IconButton>
                   </Stack>
                 </TableCell>
               </TableRow>
