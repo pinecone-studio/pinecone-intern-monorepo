@@ -34,7 +34,8 @@
     "../../../dist/apps/GLMS/glms-dashboard/.next/types/**/*.ts",
     "next-env.d.ts",
     "../../../apps/CMS/cms-dashboard/.next/types/**/*.ts",
-    "../../../dist/apps/CMS/cms-dashboard/.next/types/**/*.ts"
+    "../../../dist/apps/CMS/cms-dashboard/.next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+  "exclude": ["node_modules", "jest.config.ts"]
 }

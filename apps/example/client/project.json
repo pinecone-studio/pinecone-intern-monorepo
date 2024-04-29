@@ -1,0 +1,145 @@
+{
+  "name": "client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example/client",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/example/client"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/example/client"
+        },
+        "production": {}
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "client:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "client:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "client:build:production",
+          "dev": false
+        }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "client:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/example/client/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "get-secrets:development": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "development": {
+          "groups": ["client"],
+          "env": "dev"
+        }
+      }
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
+        "testing": {
+          "groups": ["client"],
+          "env": "test"
+        }
+      }
+    },
+    "get-secrets:production": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["client"],
+          "env": "prod"
+        }
+      }
+    },
+    "add-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:add"
+    },
+    "test:local": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example/client/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example/client/jest.config.ts",
+        "codeCoverage": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      },
+      "dependsOn": [{ "target": "graphql-codegen" }]
+    },
+    "graphql-codegen:local": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "local",
+      "configurations": {
+        "local": {
+          "commands": ["npx env-cmd -f apps/example/client/.env.local graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
+        }
+      }
+    },
+    "graphql-codegen": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "preview",
+      "configurations": {
+        "local": {
+          "commands": ["npx env-cmd -f apps/example/client/.env.local graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
+        },
+        "development": {
+          "commands": ["npx env-cmd -f apps/example/client/.env.development graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
+        },
+        "preview": {
+          "commands": ["npx env-cmd -f apps/example/client/.env.preview graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
+        },
+        "production": {
+          "commands": ["npx env-cmd -f apps/example/client/.env.production graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,3 +1,9 @@
 mutation HelloMutationFromArticlesService {
   helloMutationFromArticlesService
 }
+
+mutation CreateArticle($articleInput: CreateArticleInput!) {
+  createArticle(articleInput: $articleInput) {
+    content
+  }
+}

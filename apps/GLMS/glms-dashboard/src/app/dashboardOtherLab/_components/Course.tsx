@@ -11,11 +11,11 @@ type CourseType = {
 const Course = (props: CourseType) => {
   const { image, title, information, lessonCount } = props;
   return (
-    <Stack data-testid="courseContain" height={240} width={282} overflow={'hidden'} border={'solid 1px #0000001A'} borderRadius={'12px'} bgcolor={'white'}>
-      <Stack height={'50%'} width={'100%'} borderRadius={'6px'}>
+    <Stack data-testid="courseContain" height={240} width={'100%'} overflow={'hidden'} border={'solid 1px #0000001A'} borderRadius={'12px'} bgcolor={'white'}>
+      <Stack width={'100%'} height={120} borderRadius={'6px'} overflow={'hidden'}>
         <img data-testid="lessonImage" src={image} alt="lessonImage" />
       </Stack>
-      <Stack height={'50%'} width={'100%'} py={1} px={'21px'} justifyContent={'space-between'}>
+      <Stack height={120} width={'100%'} py={1} px={'21px'} justifyContent={'space-between'}>
         <Typography data-testid="titleTest" color={'#121316'} fontSize={16} fontWeight={600}>
           {title}
         </Typography>

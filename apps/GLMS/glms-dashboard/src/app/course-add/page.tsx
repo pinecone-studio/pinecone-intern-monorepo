@@ -1,40 +1,32 @@
 'use client';
-import { Box, Input, Stack, Typography, Button } from '@mui/material';
-import React, { useRef } from 'react';
-import LeftArrow from './assets/LeftArrow';
-import { useCreateCourseMutation } from '@/generated/index';
+// import { Box, Input, Stack, Typography, Button } from '@mui/material';
+import { Stack } from '@mui/material';
+import React from 'react';
+// import LeftArrow from './assets/LeftArrow';
+// import { useCreateCourseMutation } from '@/generated/index';
 
 const CourseAdd = () => {
-  const [createCourse] = useCreateCourseMutation();
-  const CourseInput = useRef({
-    title: '',
-    thumbnail: '',
-    contentTitle: '',
-    contentDesc: '',
-  });
-  const handleBack = (field: string, value: string | number) => {
-    CourseInput.current = { ...CourseInput.current, [field]: value };
-  };
+  // const [createCourse] = useCreateCourseMutation();
+  // const CourseInput = useRef({
+  //   title: '',
+  //   thumbnail: '',
+  // });
+  // const handleBack = (field: string, value: string | number) => {
+  //   CourseInput.current = { ...CourseInput.current, [field]: value };
+  // };
 
-  const handleSubmit = async () => {
-    const { data } = await createCourse({
-      variables: {
-        title: CourseInput.current.title,
-        thumbnail: CourseInput.current.thumbnail,
-        content: [
-          {
-            title: CourseInput.current.contentTitle,
-            description: CourseInput.current.contentDesc,
-          },
-        ],
-      },
-    });
-    throw data;
-  };
-
+  // const handleSubmit = async () => {
+  //   const { data } = await createCourse({
+  //     variables: {
+  //       title: CourseInput.current.title,
+  //       thumbnail: CourseInput.current.thumbnail,
+  //     },
+  //   });
+  //   throw data;
+  // };
   return (
-    <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }}>
-      <Box>
+    <Stack sx={{ backgroundColor: '#F7F7F8', height: '1024px' }} data-cy="Course-Add-Page">
+      {/* <Box>
         <LeftArrow />
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -65,7 +57,6 @@ const CourseAdd = () => {
               <Box>
                 <Typography>Content Title</Typography>
                 <Input
-                  onChange={(e) => handleBack('contentTitle', e.target.value)}
                   type="content description"
                   sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
                   placeholder="Энд бичнэ үү..."
@@ -73,21 +64,15 @@ const CourseAdd = () => {
               </Box>
               <Box>
                 <Typography>Content Description</Typography>
-                <Input
-                  onChange={(e) => handleBack('contentDesc', e.target.value)}
-                  type="content title"
-                  sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }}
-                  placeholder="Энд бичнэ үү..."
-                ></Input>
+                <Input type="content title" sx={{ border: '1px solid #D6D8DB', borderRadius: '4px', borderBottom: 'none', width: '440px', height: '220px' }} placeholder="Энд бичнэ үү..."></Input>
               </Box>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            {' '}
             <Button onClick={handleSubmit}>Үргэлжлүүлэх</Button>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Stack>
   );
 };

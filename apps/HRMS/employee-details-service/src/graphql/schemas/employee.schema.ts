@@ -5,16 +5,17 @@ export const employeeDetailsSchema = gql`
   scalar Date
 
   type Employee {
-    id: ID
+    id: ID!
     firstName: String
     lastName: String
     email: String
+    imageUrl: String
     department: ID
     jobTitle: [String]
     ladderLevel: String
     salary: Float
     bankName: String
-    bankAccountName: String
+    bankAccountNumber: String
     bankAccountHolderName: String
     dateOfEmployment: Date
     dateOfReleased: Date
@@ -39,7 +40,7 @@ export const employeeDetailsSchema = gql`
   }
 
   type Dependent {
-    _id: ID
+    id: ID!
     firstName: String
     lastName: String
     phone: String
@@ -75,9 +76,10 @@ export const employeeDetailsSchema = gql`
   }
 
   input CreateEmployeeInput {
-    firstname: String
-    lastname: String
+    firstName: String
+    lastName: String
     email: String
+    imageUrl: String
     department: ID
     jobTitle: [String]
     ladderLevel: String
@@ -114,14 +116,32 @@ export const employeeDetailsSchema = gql`
     relative: [Department]
   }
 
+  input CreateDependetInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+
+  input UpdateDependentInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+
   type Query {
-    getDependent(_id: ID): Dependent!
+    getDependent(id: ID!): Dependent!
+    getAllEmployee: [Employee]
     getAllDependents: [Dependent!]
+    getEmployee(id: ID): Employee
   }
 
   type Mutation {
-    createDependent(firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
-    deleteDependent(_id: ID!): Dependent!
-    updateDependent(_id: ID!, firstName: String!, lastName: String!, phone: String!, dependency: String!): Dependent!
+    createEmployee(input: CreateEmployeeInput!): Employee!
+    createDependent(input: CreateDependetInput): Dependent!
+    deletedDependent(id: ID!): Dependent!
+    deleteEmployee(id: ID!): Employee!
+    updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
   }
 `;

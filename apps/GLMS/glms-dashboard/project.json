@@ -54,7 +54,8 @@
           "buildTarget": "glms-dashboard:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -122,14 +123,17 @@
         "commands": [
           "npx nx cypress glms-dashboard",
           "npx mochawesome-merge --reportDir apps/GLMS/glms-dashboard/cypress/results/*.json -o apps/GLMS/glms-dashboard/.cy/report.json",
-          "npx marge apps/GLMS/glms-dashboard/.cy/report.json -o apps/GLMS/glms-dashboard/.cy"
+          "npx marge apps/GLMS/glms-dashboard/.cy/report.json -o apps/GLMS/glms-dashboard/.cy",
+          "npx nx check-cypress-code-coverage scripts apps/GLMS/glms-dashboard"
         ],
         "parallel": false
       },
       "dependsOn": [
         {
-          "target": "cypress:clean",
-          "params": "forward"
+          "target": "cypress:clean"
+        },
+        {
+          "target": "codegen"
         }
       ]
     },
@@ -157,7 +161,15 @@
         "reporter": "mochawesome",
         "devServerTarget": "glms-dashboard:serve:development",
         "watch": true
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "cypress:clean"
+        },
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",
@@ -182,7 +194,7 @@
       "defaultConfiguration": "production",
       "configurations": {
         "production": {
-          "groups": ["glms-dashboard"],
+          "groups": ["glms-dashboard", "file-management"],
           "env": "prod"
         }
       }
@@ -195,9 +207,9 @@
       "options": {
         "commands": [
           "npx nx codegen glms-dashboard --configuration=preview",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/GLMS/glms-dashboard/.env.preview vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -218,9 +230,9 @@
       "options": {
         "commands": [
           "npx nx codegen glms-dashboard --configuration=development",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/GLMS/glms-dashboard/.env.development vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -241,9 +253,9 @@
       "options": {
         "commands": [
           "npx nx codegen glms-dashboard --configuration=production",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/GLMS/glms-dashboard/.env.production vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3Ahfi5JdkyDM0kzJzD5vm3hK8uVh -- vercel --archive=tgz --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_NcX1qhsfPjyRNpfc7L18F8yFwcAA -- vercel --archive=tgz --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },

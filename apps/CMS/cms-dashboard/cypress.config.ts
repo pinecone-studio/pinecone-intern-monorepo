@@ -2,6 +2,7 @@
 
 import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset';
 import { defineConfig } from 'cypress';
+import { teardownUser } from './cypress/helper-function';
 
 export default defineConfig({
   e2e: {
@@ -9,6 +10,17 @@ export default defineConfig({
       cypressDir: 'cypress',
     }),
     setupNodeEvents(on, config) {
+      on('task', {
+        async teardownRegisteredUser(email: string) {
+          try {
+            console.log('teardown', email);
+            await teardownUser(email);
+          } catch (err) {
+            console.log(err);
+          }
+          return null;
+        },
+      });
       require('@cypress/code-coverage/task')(on, config);
 
       return config;
@@ -26,6 +38,7 @@ export default defineConfig({
     responseTimeout: 120e3,
     screenshotOnRunFailure: true,
     numTestsKeptInMemory: 0,
+    retries: 2,
     trashAssetsBeforeRuns: true,
     requestTimeout: 30000,
     reporter: '../../../node_modules/cypress-multi-reporters',

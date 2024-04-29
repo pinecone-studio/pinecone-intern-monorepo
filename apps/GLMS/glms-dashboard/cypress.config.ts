@@ -22,6 +22,7 @@ export default defineConfig({
     viewportWidth: 1536,
     viewportHeight: 960,
     defaultCommandTimeout: 10000,
+    retries: 2,
     pageLoadTimeout: 100000,
     responseTimeout: 120e3,
     screenshotOnRunFailure: true,

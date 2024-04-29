@@ -12,9 +12,22 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+
   env: {
     FEDERATION_ENDPOINT: process.env.FEDERATION_ENDPOINT || '',
     ENVIRONMENT: process.env.ENVIRONMENT || '',
+    ENDPOINT: process.env.ENDPOINT || '',
+    ACCESS_KEY_ID: process.env.ACCESS_KEY_ID || '',
+    SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || '',
+    PUB_URL: process.env.PUB_URL || '',
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        hostname: '*',
+      },
+    ],
   },
 };
 

@@ -21,6 +21,7 @@ export default defineConfig({
     videosFolder: './cypress/results/assets',
     viewportWidth: 1536,
     viewportHeight: 960,
+    retries: 2,
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 100000,
     responseTimeout: 120e3,

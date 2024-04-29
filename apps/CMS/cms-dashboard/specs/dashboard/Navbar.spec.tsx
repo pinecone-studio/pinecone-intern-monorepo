@@ -7,6 +7,5 @@ describe('Navbar test', () => {
     const { getByTestId } = render(<Navbar />);
     const buttonElement = getByTestId('navbar');
     expect(buttonElement).toBeDefined();
-
   });
 });

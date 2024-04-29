@@ -1,1 +1,3 @@
-export * from './create-course-model';
+export * from './lesson-model';
+export * from './course-model';
+export * from './section-model';
