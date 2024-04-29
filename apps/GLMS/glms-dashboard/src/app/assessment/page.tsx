@@ -11,7 +11,7 @@ const AssessmentPage = () => {
   const handleNavigateToHomePageButton = () => router.push('/');
 
   return (
-    <div>
+    <div data-testid="assessment-main">
       <h1>hello from GLMS dashboard Assessment Page</h1>
       <h1>
         hello from Assessment Service Query
