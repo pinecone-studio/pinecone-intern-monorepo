@@ -97,7 +97,12 @@ const DashboardTable = (props: DashboardTablesTypes) => {
               <TableRow key={index}>
                 <TableCell sx={{ fontSize: '15px', fontWeight: 600, color: '#121316' }}>{item?.title}</TableCell>
                 <TableCell>
-                  <Typography sx={{ fontSize: '14px', fontWeight: 400, color: '#0A4E22', borderRadius: 3, bgcolor: '#C1E6CF', width: '63%', textAlign: 'center', py: 0.4 }}>{item?.status}</Typography>
+                  <Typography
+                    sx={{ fontSize: '14px', fontWeight: 400, color: '#0A4E22', borderRadius: 3, bgcolor: '#C1E6CF', width: '63%', textAlign: 'center', py: 0.4 }}
+                    style={{ backgroundColor: item?.status === 'DRAFT' ? '#ECEDF0' : item?.status === 'ARCHIVED' ? '#FDF4B6' : item?.status === 'SCHEDULED' ? '#B7DDFF' : '' }}
+                  >
+                    {item?.status}
+                  </Typography>
                 </TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>{item?.createdAt.slice(0, 10)}</TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>
