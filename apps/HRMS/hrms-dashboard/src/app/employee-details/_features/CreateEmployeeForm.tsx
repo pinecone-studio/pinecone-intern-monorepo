@@ -23,7 +23,7 @@ const departmentList = Object.values(Department);
 const employmentStatusList = Object.values(EmploymentStatus);
 export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
   const { handleCloseNewEmployee } = props;
-  const [createEmployee, {}] = useCreateEmployeeMutation();
+  const [createEmployee] = useCreateEmployeeMutation();
   const formik = useFormik({
     initialValues: {
       lastName: '',
