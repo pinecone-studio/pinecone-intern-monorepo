@@ -8,7 +8,7 @@ const { id, thumbnail, title, description, position } = props;
   return (
     <Stack key={id} sx={{cursor:'pointer'}} data-testid="courseContain"  height={240} width={'100%'} overflow={'hidden'} border={'solid 1px #0000001A'} borderRadius={'12px'} bgcolor={'white'}>
       <Stack width={'100%'} height={120} borderRadius={'6px'} overflow={'hidden'}>
-        <img data-testid="lessonImage" src={thumbnail} alt="lessonImage" />
+        <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
       </Stack>
       <Stack height={120} width={'100%'} py={1} px={'21px'} justifyContent={'space-between'}>
         <Typography data-testid="titleTest" color={'#121316'} fontSize={16} fontWeight={600}>
