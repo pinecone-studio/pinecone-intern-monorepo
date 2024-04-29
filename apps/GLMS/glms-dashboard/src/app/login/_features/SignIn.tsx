@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import CustomInpute from '../_components/CustomInpute';
+import CustomInpute from '../_components/CustomInput';
 
 const SignIn = () => {
   return (
