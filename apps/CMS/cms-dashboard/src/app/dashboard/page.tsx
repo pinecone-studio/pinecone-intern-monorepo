@@ -15,7 +15,7 @@ const Home = () => {
     <Stack data-cy="dashboard-page-cy-id" bgcolor={'#f0f2f5'}>
       <Navbar />
       <Stack>
-        <Container maxWidth="lg" sx={{ height: 800 }}>
+        <Container maxWidth="lg">
           <Stack gap={1} py={3}>
             <Stack direction={'row'} justifyContent={'space-between'}>
               <SearchInput />

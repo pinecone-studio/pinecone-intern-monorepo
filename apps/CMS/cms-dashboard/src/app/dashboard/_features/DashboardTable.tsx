@@ -4,30 +4,14 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 const menuItems = [
-  {
-    icons: <VisibilityOutlinedIcon />,
-    label: 'Статистик харах',
-  },
-  {
-    icons: <ShareOutlinedIcon />,
-    label: 'Хуваалцах',
-  },
   {
     icons: <ArchiveOutlinedIcon />,
     label: 'Архив',
-  },
-  {
-    icons: <ModeEditOutlinedIcon />,
-    label: 'Засварлах',
   },
   {
     icons: <LinkOutlinedIcon />,
@@ -36,7 +20,6 @@ const menuItems = [
 ];
 
 const tableItems = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
-
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
 };
@@ -76,6 +59,19 @@ const DashboardTable = (props: DashboardTablesTypes) => {
     setAnchorEl(null);
   };
 
+  type articleStatus = {
+    PUBLISHED: string;
+    DRAFT: string;
+    ARCHIVED: string;
+    SCHEDULED: string;
+  };
+  const articleEnum: articleStatus = {
+    PUBLISHED: 'Нийтэлсэн',
+    DRAFT: 'Ноорог',
+    ARCHIVED: 'Архив',
+    SCHEDULED: 'Төлөвлөсөн',
+  };
+
   return (
     <TableContainer data-cy="dashboard-table-cy-id" component={Paper} sx={{ borderRadius: 2, overflow: 'hidden' }}>
       <Table sx={{ minWidth: 650 }}>
@@ -97,7 +93,17 @@ const DashboardTable = (props: DashboardTablesTypes) => {
               <TableRow key={index}>
                 <TableCell sx={{ fontSize: '15px', fontWeight: 600, color: '#121316' }}>{item?.title}</TableCell>
                 <TableCell>
-                  <Typography sx={{ fontSize: '14px', fontWeight: 400, color: '#0A4E22', borderRadius: 3, bgcolor: '#C1E6CF', width: '63%', textAlign: 'center', py: 0.4 }}>{item?.status}</Typography>
+                  <Stack alignItems={'center'} width={'46%'}>
+                    <Typography
+                      sx={{ fontSize: '14px', fontWeight: 400, color: '#0A4E22', borderRadius: 3, width: 'fit-content', textAlign: 'center', py: 0.4, justifyContent: 'center', px: 1 }}
+                      style={{
+                        backgroundColor:
+                          item?.status === 'DRAFT' ? '#ECEDF0' : item?.status === 'ARCHIVED' ? '#FDF4B6' : item?.status === 'SCHEDULED' ? '#B7DDFF' : item?.status === 'PUBLISHED' ? '#C1E6CF' : '',
+                      }}
+                    >
+                      {articleEnum[item?.status as keyof articleStatus]}
+                    </Typography>
+                  </Stack>
                 </TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>{item?.createdAt.slice(0, 10)}</TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>
