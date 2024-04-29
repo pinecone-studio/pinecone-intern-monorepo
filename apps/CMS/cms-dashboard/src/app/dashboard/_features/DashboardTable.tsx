@@ -107,9 +107,9 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                 </TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>{item?.createdAt.slice(0, 10)}</TableCell>
                 <TableCell sx={{ fontSize: '14px', fontWeight: 400, color: '#121316' }}>
-                  <Typography
-                    sx={{ fontSize: '14px', fontWeight: 400, color: '#1F2126', borderRadius: 3, bgcolor: '#ECEDF0', textAlign: 'center', py: 0.3, whiteSpace: 'nowrap', width: '65%' }}
-                  ></Typography>
+                  <Typography sx={{ fontSize: '14px', fontWeight: 400, color: '#1F2126', borderRadius: 3, bgcolor: '#ECEDF0', py: 0.3, whiteSpace: 'nowrap', textAlign: 'center', width: '66%' }}>
+                    {item.category.name}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
