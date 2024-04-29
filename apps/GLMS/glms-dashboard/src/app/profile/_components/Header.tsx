@@ -1,8 +1,8 @@
 import { Container, InputAdornment, Stack, TextField } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconColor, BackgroundMain, Icon } from './colors/index';
-import Logo from '../../public/Logo';
+import { IconColor, BackgroundMain, Icon } from '../_components/colors/index';
+import Logo from '../../../../public/Logo';
 const Header = () => {
   return (
     <Stack bgcolor={BackgroundMain}>

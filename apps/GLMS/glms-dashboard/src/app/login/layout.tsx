@@ -1,19 +1,15 @@
 'use client';
-import './global.css';
+
 import { ThemeProvider } from '@mui/material';
-import { FederationProvider } from '../common';
-import { theme } from '../common/theme';
-import Header from './profile/_components/Header';
+import { FederationProvider } from '@/common/providers';
+import { theme } from '@/common/theme';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <ThemeProvider theme={theme}>
         <FederationProvider>
-          <body>
-            <Header />
-            {children}
-          </body>
+          <body>{children}</body>
         </FederationProvider>
       </ThemeProvider>
     </html>
