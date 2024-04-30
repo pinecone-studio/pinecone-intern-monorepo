@@ -19,7 +19,7 @@ export const EmployeesListTable = ({ setPaginationPageCount, start, end }: Props
 
   useEffect(() => {
     setPaginationPageCount(Math.ceil(allEmployeeslength / employeeDataPagination.limit));
-  }, [allEmployees, allEmployeeslength]);
+  }, [data, allEmployeeslength]);
 
   if (loading)
     return (
