@@ -30,6 +30,8 @@ export const LeaveRequestTypeDefs = gql`
     superVisor: String
     durationType: DurationType!
     declinedReasoning: String
+    email: String!
+    substitute: String
   }
 
   type LeaveRequest {

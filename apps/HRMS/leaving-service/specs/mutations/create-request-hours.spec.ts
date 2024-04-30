@@ -33,6 +33,8 @@ const requestInput = {
   leaveType: LeaveType.ShitHappened,
   superVisor: 'BOSS',
   durationType: DurationType.Hour,
+  email: 'amoramgl@gmail.com',
+  substitute: 'andad ogov',
 };
 
 describe('createLeaveRequestHours', () => {
