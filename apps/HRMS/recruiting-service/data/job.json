@@ -14,8 +14,9 @@
       },
       "minSalary": "60000",
       "maxSalary": "90000",
-      "status": "PUBLISHED",
-      "applicant": "John Doe"
+      "dueDate": "2024-04-29",
+      "createdAt": "2024-04-29",
+      "status": "PUBLISHED"
     },
     {
       "id": "2",
@@ -31,8 +32,9 @@
       },
       "minSalary": "70000",
       "maxSalary": "100000",
-      "status": "PUBLISHED",
-      "applicant": "Jane Smith"
+      "dueDate": "2024-04-29",
+      "createdAt": "2024-04-29",
+      "status": "PUBLISHED"
     },
     {
       "id": "3",
@@ -48,8 +50,9 @@
       },
       "minSalary": "50000",
       "maxSalary": "80000",
-      "status": "PUBLISHED",
-      "applicant": "Alice Johnson"
+      "dueDate": "2024-04-29",
+      "createdAt": "2024-04-29",
+      "status": "PUBLISHED"
     },
     {
       "id": "4",
@@ -66,7 +69,8 @@
       "minSalary": "55000",
       "maxSalary": "85000",
       "status": "PUBLISHED",
-      "applicant": "David Brown"
+      "dueDate": "2024-04-29",
+      "createdAt": "2024-04-29"
     },
     {
       "id": "5",
@@ -83,7 +87,8 @@
       "minSalary": "65000",
       "maxSalary": "95000",
       "status": "PUBLISHED",
-      "applicant": "Sarah Wilson"
+      "dueDate": "2024-04-29",
+      "createdAt": "2024-04-29"
     }
   ]
 }

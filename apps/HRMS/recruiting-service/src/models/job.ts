@@ -26,6 +26,15 @@ const jobSchema = new Schema({
     type: String,
     require: true,
   },
+  dueDate: {
+    type: Date,
+    default: new Date(),
+    require: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   status: {
     type: String,
     require: true,
