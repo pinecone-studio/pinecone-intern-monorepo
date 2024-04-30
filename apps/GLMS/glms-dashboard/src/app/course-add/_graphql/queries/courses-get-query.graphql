@@ -1,7 +1,0 @@
-# query getCourses {
-#   getCourses {
-#     _id
-#     title
-#     thumbnail
-#   }
-# }
