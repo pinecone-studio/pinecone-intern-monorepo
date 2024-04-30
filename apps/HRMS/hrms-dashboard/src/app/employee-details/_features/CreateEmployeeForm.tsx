@@ -15,8 +15,9 @@ const validationSchema = yup.object({
   email: yup.string().email('Хүчинтэй и-мэйл оруулна уу').required('И-мэйл оруулна уу'),
   jobTitle: yup.string().required('Албан тушаал оруулна уу'),
   salary: yup.number().typeError('Тоо оруулна уу').required('Цалин оруулна уу').min(100000, 'Цалин 100 мянгаас их байх'),
-  ladderLevel: yup.string().required(),
+  ladderLevel: yup.string().required('Түвшин оруулна уу'),
   department: yup.string().required('Хэлтэс сонгоно уу'),
+  dateOfEmployment:yup.date().required('Огноо оруулна уу'),
   employmentStatus: yup.string().required('Төлөв сонгоно уу'),
 });
 const departmentList = Object.values(Department);
@@ -38,7 +39,6 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: () => {
-      console.log(formik.values);
       createEmployee({
         variables: {
           input: {
@@ -54,10 +54,12 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           },
         },
       });
+      handleCloseNewEmployee()
     },
   });
+
   return (
-    <Stack p={5} maxWidth={'650px'} width={'100%'} borderRadius={'16px'} border={1} borderColor={'#D6D8DB'} bgcolor={'common.white'}>
+    <Stack data-cy='addEmployeeForm' p={5} maxWidth={'650px'} width={'100%'} borderRadius={'16px'} border={1} borderColor={'#D6D8DB'} bgcolor={'common.white'}>
       <Stack flexDirection={'row'} justifyContent={'space-between'}>
         <Typography data-testid="addEmployeeTitle" color={'common.black'} fontSize={18} fontWeight={600}>
           Ажилтан нэмэх
@@ -70,39 +72,39 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
       <Stack justifyContent="center" px={5} pt={5} gap={2}>
         <Grid container spacing={3}>
           <Grid item md={6}>
-            <CustomInput label={'Овог'} type="text" placeholder={'Овог оруулна уу'} name="lastName" value={formik.values.lastName} error={Boolean(formik.errors.lastName)} helperText={formik.errors.lastName} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Овог'} type="text" placeholder={'Овог оруулна уу'} name="lastName" value={formik.values.lastName} error={Boolean(formik.errors.lastName)} helperText={formik.errors.lastName} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Нэр'} type="text" placeholder={'Нэр оруулна уу'} name="firstName" value={formik.values.firstName} error={Boolean(formik.errors.firstName)} helperText={formik.errors.firstName} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Нэр'} type="text" placeholder={'Нэр оруулна уу'} name="firstName" value={formik.values.firstName} error={Boolean(formik.errors.firstName)} helperText={formik.errors.firstName} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'И-мэйл'} type="text" placeholder={'И-мэйл оруулна уу'} name="email" value={formik.values.email} error={Boolean(formik.errors.email)} helperText={formik.errors.email} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'И-мэйл'} type="text" placeholder={'И-мэйл оруулна уу'} name="email" value={formik.values.email} error={Boolean(formik.errors.email)} helperText={formik.errors.email} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Хэлтэс'} type="select" placeholder={'Хэлэс сонгоно уу'} name="department" value={formik.values.department} error={Boolean(formik.errors.department)} helperText={formik.errors.department} onBlur={formik.handleBlur} onChange={formik.handleChange}>
+            <CustomInput data-cy='customInput' label={'Хэлтэс'} type="select" placeholder={'Хэлэс сонгоно уу'} name="department" value={formik.values.department} error={Boolean(formik.errors.department)} helperText={formik.errors.department} onBlur={formik.handleBlur} onChange={formik.handleChange}>
               {departmentList.map((item, index) => (
-                <MenuItem key={index} value={item}>
+                <MenuItem data-cy='departmentList' key={index} value={item}>
                   {item}
                 </MenuItem>
               ))}
             </CustomInput>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Албан тушаал'} type="text" placeholder={'Албан тушаал оруулна уу'} name="jobTitle" value={formik.values.jobTitle} error={Boolean(formik.errors.jobTitle)} helperText={formik.errors.jobTitle} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Албан тушаал'} type="text" placeholder={'Албан тушаал оруулна уу'} name="jobTitle" value={formik.values.jobTitle} error={Boolean(formik.errors.jobTitle)} helperText={formik.errors.jobTitle} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Түвшин'} type="text" placeholder={'Түвшин оруулна уу'} name="ladderLevel" value={formik.values.ladderLevel} error={Boolean(formik.errors.ladderLevel)} helperText={formik.errors.ladderLevel} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Түвшин'} type="text" placeholder={'Түвшин оруулна уу'} name="ladderLevel" value={formik.values.ladderLevel} error={Boolean(formik.errors.ladderLevel)} helperText={formik.errors.ladderLevel} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Цалин'} type="number" placeholder={'Цалин оруулна уу'} name="salary" value={formik.values.salary} error={Boolean(formik.errors.salary)} helperText={formik.errors.salary} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Цалин'} type="number" placeholder={'Цалин оруулна уу'} name="salary" value={formik.values.salary} error={Boolean(formik.errors.salary)} helperText={formik.errors.salary} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Ажилд орсон огноо'} type="date" placeholder={'Огноо оруулна уу'} name="dateOfEmployment" value={formik.values.dateOfEmployment} error={Boolean(formik.errors.dateOfEmployment)} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+            <CustomInput data-cy='customInput' label={'Ажилд орсон огноо'} type="date" placeholder={'Огноо оруулна уу'} name="dateOfEmployment" value={formik.values.dateOfEmployment} error={Boolean(formik.errors.dateOfEmployment)} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
           </Grid>
           <Grid item md={6}>
-            <CustomInput label={'Төлөв'} type="select" placeholder={'Төлөв сонгоно уу'} name="employmentStatus" value={formik.values.employmentStatus} error={Boolean(formik.errors.employmentStatus)} onBlur={formik.handleBlur} onChange={formik.handleChange}>
+            <CustomInput data-cy='customInput' label={'Төлөв'} type="select" placeholder={'Төлөв сонгоно уу'} name="employmentStatus" value={formik.values.employmentStatus} error={Boolean(formik.errors.employmentStatus)} onBlur={formik.handleBlur} onChange={formik.handleChange}>
               {employmentStatusList.map((item, index) => (
-                <MenuItem key={index} value={item}>
+                <MenuItem data-cy='employmentStatusList' key={index} value={item}>
                   {item}
                 </MenuItem>
               ))}
@@ -110,13 +112,13 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           </Grid>
         </Grid>
 
-        <Stack color={'red'} alignItems={'flex-end'}>
+        <Stack alignItems={'flex-end'}>
           <Button
             disabled={Boolean(!formik.isValid)}
             onClick={() => {
               formik.handleSubmit();
             }}
-            data-testid="addEmployeeBtn"
+            data-testid="createEmployeeBtn"
             variant="contained"
             color="primary"
             sx={{ width: 'fit-content' }}
