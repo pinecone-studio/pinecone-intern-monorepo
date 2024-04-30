@@ -7,7 +7,7 @@ import { useGetArticlesQueryQuery, Article } from '../../generated';
 import { SearchInput } from './_components/SearchInput';
 import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
-import FileUpload from './_components/FileUpload';
+import { FileUpload } from './_components/FileUpload';
 
 const Home = () => {
   const { data: article } = useGetArticlesQueryQuery();
@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <Stack data-cy="dashboard-page-cy-id" bgcolor={'#ECEDF0'}>
       <Navbar />
-      <Stack>
+      {/* <Stack>
         <Container maxWidth="lg" sx={{ height: '100vh' }}>
           <Stack gap={1} py={3}>
             <Stack direction={'row'} justifyContent={'space-between'}>
@@ -29,9 +29,9 @@ const Home = () => {
             </Stack>
           </Stack>
         </Container>
-      </Stack>
+      </Stack> */}
 
-      {/* <FileUpload /> */}
+      <FileUpload />
     </Stack>
   );
 };
