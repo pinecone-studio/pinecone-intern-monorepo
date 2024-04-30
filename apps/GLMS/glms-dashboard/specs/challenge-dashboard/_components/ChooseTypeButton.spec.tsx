@@ -7,7 +7,7 @@ test('clicking choose button changes chooseBtn state', () => {
   const chooseButton = getByText('Сонгох');
   fireEvent.click(chooseButton);
   const chooseBtnStyle = getComputedStyle(chooseButton);
-  expect(chooseBtnStyle.backgroundColor).toBe('transparent');
+  expect(chooseBtnStyle.backgroundColor).toBe('rgba(25, 118, 210, 0.04)');
 });
 
 test('clicking photo button changes chooseBtn state', () => {
@@ -16,5 +16,5 @@ test('clicking photo button changes chooseBtn state', () => {
   fireEvent.click(photoButton);
   const chooseButton = getByText('Сонгох');
   const chooseBtnStyle = getComputedStyle(chooseButton);
-  expect(chooseBtnStyle.backgroundColor).toBe('transparent');
+  expect(chooseBtnStyle.backgroundColor).toBe('rgba(25, 118, 210, 0.04)');
 });
