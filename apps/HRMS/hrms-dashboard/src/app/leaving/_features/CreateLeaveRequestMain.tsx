@@ -1,14 +1,14 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { CreateLeaveReqModal } from '../_components';
+import { CreateLeaveRequestModal } from '../_components';
 import { HomePageHeader } from '../_components/HomePageHeader';
 
-export const CreateLeaveReqMain = () => {
+export const CreateLeaveRequestMain = () => {
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <HomePageHeader />
-      <CreateLeaveReqModal />
+      <CreateLeaveRequestModal />
     </Box>
   );
 };

@@ -27,7 +27,7 @@
     "@as-integrations/next": "3.0.0",
     "@aws-sdk/client-s3": "^3.556.0",
     "@aws-sdk/s3-request-presigner": "^3.556.0",
-    "@emotion/cache": "11.11.0",
+    "@emotion/cache": "^11.11.0",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@graphql-tools/merge": "9.0.0",

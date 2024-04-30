@@ -9,7 +9,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
-import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
+import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 
 const validationSchema = yup.object({
   step1Date: yup.date().required(),
@@ -17,8 +18,8 @@ const validationSchema = yup.object({
   step1LeaveType: yup.string().required(),
 });
 
-export const CreateLeaveReqStep1 = () => {
-  const { setStepNumber } = useContext(LeaveReqCreationContext);
+export const CreateLeaveRequestGeneralInput = () => {
+  const { setStepNumber, setLeaveReqStep } = useContext(LeaveRequestCreationContext);
 
   const workerName = { name: 'WorkerName' };
 
@@ -32,6 +33,7 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: () => {
+      setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
       setStepNumber(1);
     },
   });

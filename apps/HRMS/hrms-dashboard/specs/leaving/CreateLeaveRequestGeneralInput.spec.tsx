@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { LeaveReqCreationContext } from '../../src/app/leaving/_providers/LeaveReqCreationProvider';
-import { CreateLeaveReqMain } from '../../src/app/leaving/_features/CreateLeaveReqMain';
-import { CreateLeaveReqStep1 } from '../../src/app/leaving/_components';
+import { LeaveRequestCreationContext } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
+import { CreateLeaveRequestGeneralInput } from '../../src/app/leaving/_components';
 import { render, act, fireEvent } from '@testing-library/react';
 
 describe('Create Leave Request Step1', () => {
@@ -10,9 +10,9 @@ describe('Create Leave Request Step1', () => {
     const setStepNumber = jest.fn();
 
     const { getByTestId } = render(
-      <LeaveReqCreationContext.Provider value={{ stepNumber: 0, setStepNumber, leaveReqStep: <CreateLeaveReqStep1 />, isOpen: true }}>
-        <CreateLeaveReqMain />
-      </LeaveReqCreationContext.Provider>
+      <LeaveRequestCreationContext.Provider value={{ stepNumber: 0, setStepNumber, leaveReqStep: <CreateLeaveRequestGeneralInput />, isOpen: true }}>
+        <CreateLeaveRequestMain />
+      </LeaveRequestCreationContext.Provider>
     );
 
     const selectUserName = getByTestId('name-select-input').getElementsByClassName('MuiSelect-select')[0];
@@ -42,9 +42,9 @@ describe('Create Leave Request Step1', () => {
 
   it('2. should work onChange function of DatePicker component when changing date', () => {
     const { getByTestId } = render(
-      <LeaveReqCreationContext.Provider value={{ stepNumber: 0, leaveReqStep: <CreateLeaveReqStep1 />, isOpen: true }}>
-        <CreateLeaveReqMain />
-      </LeaveReqCreationContext.Provider>
+      <LeaveRequestCreationContext.Provider value={{ stepNumber: 0, leaveReqStep: <CreateLeaveRequestGeneralInput />, isOpen: true }}>
+        <CreateLeaveRequestMain />
+      </LeaveRequestCreationContext.Provider>
     );
 
     const datePickerInput = getByTestId('date-picker-container').getElementsByTagName('input')[0];

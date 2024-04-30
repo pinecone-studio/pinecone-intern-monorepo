@@ -2,11 +2,11 @@
 
 import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
 import { createContext } from 'react';
-import { CreateLeaveReqStep1 } from '../_components';
+import { CreateLeaveRequestGeneralInput } from '../_components';
 
-export const LeaveReqCreationContext = createContext<LeaveReqCreationContextType>({} as LeaveReqCreationContextType);
+export const LeaveRequestCreationContext = createContext<LeaveRequestCreationContextType>({} as LeaveRequestCreationContextType);
 
-type LeaveReqCreationContextType = {
+type LeaveRequestCreationContextType = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   leaveReqStep: JSX.Element;
@@ -15,13 +15,13 @@ type LeaveReqCreationContextType = {
   setStepNumber: Dispatch<SetStateAction<number>>;
 };
 
-export const LeaveReqCreationProvider = ({ children }: PropsWithChildren) => {
+export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) => {
   const [isOpen, setIsOpen] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
-  const [leaveReqStep, setLeaveReqStep] = useState(<CreateLeaveReqStep1 />);
+  const [leaveReqStep, setLeaveReqStep] = useState(<CreateLeaveRequestGeneralInput />);
 
   return (
-    <LeaveReqCreationContext.Provider
+    <LeaveRequestCreationContext.Provider
       value={{
         isOpen,
         setIsOpen,
@@ -32,6 +32,6 @@ export const LeaveReqCreationProvider = ({ children }: PropsWithChildren) => {
       }}
     >
       {children}
-    </LeaveReqCreationContext.Provider>
+    </LeaveRequestCreationContext.Provider>
   );
 };
