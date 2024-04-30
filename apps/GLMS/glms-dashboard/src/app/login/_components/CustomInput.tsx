@@ -1,3 +1,4 @@
+'use client';
 import { Stack, TextField, TextFieldProps } from '@mui/material';
 
 const CustomInput = (props: TextFieldProps) => {
