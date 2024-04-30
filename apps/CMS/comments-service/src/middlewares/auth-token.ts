@@ -10,6 +10,7 @@ export const accessTokenAuth = async (req: {
   }
   try {
     const decoded = jwt.verify(accessToken, 'secret-key');
+
     return decoded;
   } catch (error) {
     throw new Error('Failed to auth');
