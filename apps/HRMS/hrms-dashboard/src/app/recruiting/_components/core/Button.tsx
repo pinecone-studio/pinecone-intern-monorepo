@@ -22,7 +22,7 @@ export const Button = ({ label, onClick, disabled = false, btnType = 'contained'
       variant={btnType}
       disabled={disabled}
       sx={{
-        fontSize: '16px',
+        fontSize: '14px',
         fontWeight: '400',
         padding: '10px 14px',
         color: btnType === 'outlined' ? '#121316' : 'white',

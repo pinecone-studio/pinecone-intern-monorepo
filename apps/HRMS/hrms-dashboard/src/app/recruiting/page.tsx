@@ -8,7 +8,7 @@ const RecruitPage = () => {
   const { data } = useHelloQueryFromRecruitingServiceQuery();
 
   return (
-    <div>
+    <div style={{ width: '100%', backgroundColor: '#F7F7F8' }}>
       <h1>hello from Recruiting Service Query {data?.helloQueryFromRecruitingService}</h1>
       <JobRecruitDashboard />
       <Link href="/">
