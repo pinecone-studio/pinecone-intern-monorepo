@@ -6,5 +6,4 @@ const CreateArticleIcon = () => {
     );
   }
 
-
-export {CreateArticleIcon};
+export default CreateArticleIcon;
