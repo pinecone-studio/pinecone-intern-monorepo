@@ -2,7 +2,7 @@ import { Container, InputAdornment, Stack, TextField } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconColor, BackgroundMain, Icon } from './colors/index';
-import Logo from '../../../public/Logo';
+import Logo from '../../public/Logo';
 const Header = () => {
   return (
     <Stack data-testid="header-artivle-detail" bgcolor={BackgroundMain}>

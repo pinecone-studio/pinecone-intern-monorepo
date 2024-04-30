@@ -3,7 +3,7 @@ import './global.css';
 import { ThemeProvider } from '@mui/material';
 import { FederationProvider } from '../common';
 import { theme } from '../common/theme';
-import Header from '@/common/_features/Header';
+import Header from 'apps/GLMS/glms-dashboard/src/components/Header';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
