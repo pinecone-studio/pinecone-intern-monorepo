@@ -3,12 +3,12 @@ import { Typography } from '@mui/material';
 
 type JobLabelProps = {
   title: string;
-  labelType?: 'Drafted' | 'Published' | 'Closed';
+  labelType?: 'Draft' | 'Published' | 'Closed';
 };
 
 export const JobStatusLabel = ({ title, labelType }: JobLabelProps) => {
   const labels = [
-    { status: 'Drafted', bgColor: '#fae8a2', color: '#5e4123' },
+    { status: 'Draft', bgColor: '#fae8a2', color: '#5e4123' },
     { status: 'Closed', bgColor: '#fc9090', color: '#5e2330' },
     { status: 'Published', bgColor: '#c1e6cf', color: '#174224' },
   ];
@@ -25,7 +25,7 @@ export const JobStatusLabel = ({ title, labelType }: JobLabelProps) => {
 
 type ApplicantLabelProps = {
   title: string;
-  labelType?: 'Passed' | 'Pending' | 'Rejected' | 'Scheduled' | 'Interview ';
+  labelType?: 'Passed' | 'Pending' | 'Rejected' | 'Scheduled' | 'Interview';
 };
 
 export const ApplicantStatusLabel = ({ title, labelType }: ApplicantLabelProps) => {

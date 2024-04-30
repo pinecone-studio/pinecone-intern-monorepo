@@ -22,7 +22,7 @@ export const Job = gql`
   }
 
   enum JobStatus {
-    DRAFTED
+    DRAFT
     PUBLISHED
     CLOSED
   }
