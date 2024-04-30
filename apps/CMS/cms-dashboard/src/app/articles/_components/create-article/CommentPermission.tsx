@@ -1,3 +1,4 @@
+'use client';
 import { Box, Typography, Switch, FormControlLabel } from "@mui/material";
 import {useState } from "react";
 const CommentPermission = ()=> {
