@@ -2,18 +2,18 @@ import { Stack } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 
 type PropsType = {
-  paginationPageCount: number;
+  pageCount: number;
   handleClick: (_: number) => void;
   searchPath: string | null;
 };
 
-export const EmployeePagination = ({ paginationPageCount, handleClick, searchPath }: PropsType) => {
+export const EmployeePagination = ({ pageCount, handleClick, searchPath }: PropsType) => {
   return (
     <Stack>
       <Pagination
         onChange={(_, page) => handleClick(page)}
         data-testid="page-button"
-        count={paginationPageCount}
+        count={pageCount}
         variant="outlined"
         page={Number(searchPath)}
         shape="rounded"

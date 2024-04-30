@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 describe('employee pagination component', () => {
   const props = {
-    paginationPageCount: 5,
+    pageCount: 5,
     handleClick: jest.fn(),
     searchPath: '1',
   };

@@ -5,16 +5,16 @@ import { EmployeePagination } from '../_components';
 import { EmployeesListTable } from './EmployeesListTable';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { employeeDataPagination } from '../constants';
+import { perPage } from '../constants';
 
 export const EmployeesList = () => {
-  const [paginationPageCount, setPaginationPageCount] = useState<number>(1);
+  const [pageCount, setPageCount] = useState<number>(1);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchPath: string | null = searchParams.get('employees');
-  const start = (Number(searchPath) - 1) * employeeDataPagination.limit;
-  const end = Number(searchPath) * employeeDataPagination.limit;
+  const start = (Number(searchPath) - 1) * perPage.limit;
+  const end = Number(searchPath) * perPage.limit;
   const paginationFilter = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -53,8 +53,8 @@ export const EmployeesList = () => {
             </Typography>
           </Stack>
         </Stack>
-        <EmployeesListTable setPaginationPageCount={setPaginationPageCount} start={start} end={end} />
-        <EmployeePagination data-cy="employee-pagination" paginationPageCount={paginationPageCount} handleClick={handleClick} searchPath={searchPath} />
+        <EmployeesListTable setPageCount={setPageCount} start={start} end={end} />
+        <EmployeePagination data-cy="employee-pagination" pageCount={pageCount} handleClick={handleClick} searchPath={searchPath} />
       </Stack>
     </Stack>
   );

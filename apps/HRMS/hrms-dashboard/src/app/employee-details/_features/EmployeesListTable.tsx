@@ -3,23 +3,23 @@ import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableConta
 import Image from 'next/image';
 import { useGetAllEmployeeQuery } from '../../../generated';
 import { useEffect } from 'react';
-import { employeeDataPagination } from '../constants';
+import { perPage } from '../constants';
 
 type PropsType = {
-  setPaginationPageCount: (_: number) => void;
+  setPageCount: (_: number) => void;
   start: number;
   end: number;
 };
 
-export const EmployeesListTable = ({ setPaginationPageCount, start, end }: PropsType) => {
+export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const { data, loading } = useGetAllEmployeeQuery();
   const allEmployees = data?.getAllEmployee;
   const allEmployeeslength: number = allEmployees?.length ?? 0;
-
   useEffect(() => {
-    setPaginationPageCount(Math.ceil(allEmployeeslength / employeeDataPagination.limit));
-  }, [data, allEmployeeslength]);
+    const pageCount = allEmployeeslength / perPage.limit;
+    setPageCount(Math.ceil(pageCount));
+  }, [data]);
 
   if (loading)
     return (
