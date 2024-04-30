@@ -18,6 +18,7 @@ export const articleSchema = gql`
     scheduledAt: Date
   }
   enum ArticleStatus {
+    ALL
     DRAFT
     PUBLISHED
     ARCHIVED
