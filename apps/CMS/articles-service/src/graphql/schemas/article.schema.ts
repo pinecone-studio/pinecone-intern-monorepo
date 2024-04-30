@@ -47,5 +47,6 @@ export const articleSchema = gql`
     getArticlesByQuantity(quantity: Int!): [Article]!
     getNewestArticle: Article!
     getArticlesByAuthorId(_id: ID!): [Article]!
+    getArticlesByStatus(status: String!): [Article!]!
   }
 `;
