@@ -4,7 +4,7 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-import { MenuButton } from '../_components/ArticleMenuButton';
+import MenuButton from '../_components/ArticleMenuButton';
 import ArticleEditButton from '../_components/ArticleEditButton';
 
 type DashboardTablesTypes = {

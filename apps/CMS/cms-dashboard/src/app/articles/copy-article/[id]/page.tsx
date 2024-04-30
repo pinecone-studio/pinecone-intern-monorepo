@@ -10,11 +10,19 @@ const Copy = () => {
   const article = data?.getArticleByID as Article | undefined;
 
   if (loading) {
-    return <Stack>Loading..</Stack>;
+    return (
+      <Stack p={6} fontSize={22} fontWeight={700}>
+        Loading...
+      </Stack>
+    );
   }
 
   if (error) {
-    return <Stack>Error</Stack>;
+    return (
+      <Stack p={6} color={'red'} fontSize={22} fontWeight={700}>
+        Error
+      </Stack>
+    );
   }
 
   return (
