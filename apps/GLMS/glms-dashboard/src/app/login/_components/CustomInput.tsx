@@ -7,7 +7,6 @@ const CustomInput = (props: TextFieldProps) => {
       <TextField
         {...rest}
         placeholder="text"
-        id="custom-input"
         inputProps={{
           style: {
             padding: '8px',
