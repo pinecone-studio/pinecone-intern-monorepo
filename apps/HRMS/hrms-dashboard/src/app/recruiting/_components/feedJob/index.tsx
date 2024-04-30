@@ -19,7 +19,7 @@ export const JobRecruitDashboard = () => {
         </div>
       </div>
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', paddingInline: '24px', height: '56px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', paddingInline: '23px', height: '56px' }}>
           <p style={{ fontSize: '14px', paddingBlock: '4px', fontWeight: 500 }}>Зар</p>
           <p style={{ fontSize: '14px', paddingBlock: '4px' }}>Ирсэн өргөдөл</p>
         </div>
