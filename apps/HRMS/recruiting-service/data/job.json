@@ -14,7 +14,7 @@
       },
       "minSalary": "60000",
       "maxSalary": "90000",
-      "lastRequestingDay": "2024-04-29",
+      "dueDate": "2024-04-29",
       "createdAt": "2024-04-29",
       "status": "PUBLISHED"
     },
@@ -32,7 +32,7 @@
       },
       "minSalary": "70000",
       "maxSalary": "100000",
-      "lastRequestingDay": "2024-04-29",
+      "dueDate": "2024-04-29",
       "createdAt": "2024-04-29",
       "status": "PUBLISHED"
     },
@@ -50,7 +50,7 @@
       },
       "minSalary": "50000",
       "maxSalary": "80000",
-      "lastRequestingDay": "2024-04-29",
+      "dueDate": "2024-04-29",
       "createdAt": "2024-04-29",
       "status": "PUBLISHED"
     },
@@ -69,7 +69,7 @@
       "minSalary": "55000",
       "maxSalary": "85000",
       "status": "PUBLISHED",
-      "lastRequestingDay": "2024-04-29",
+      "dueDate": "2024-04-29",
       "createdAt": "2024-04-29"
     },
     {
@@ -87,7 +87,7 @@
       "minSalary": "65000",
       "maxSalary": "95000",
       "status": "PUBLISHED",
-      "lastRequestingDay": "2024-04-29",
+      "dueDate": "2024-04-29",
       "createdAt": "2024-04-29"
     }
   ]

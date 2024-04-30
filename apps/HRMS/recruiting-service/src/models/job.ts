@@ -26,7 +26,7 @@ const jobSchema = new Schema({
     type: String,
     require: true,
   },
-  lastRequestingDay: {
+  dueDate: {
     type: Date,
     default: new Date(),
     require: true,

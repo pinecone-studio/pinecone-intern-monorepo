@@ -19,7 +19,7 @@ jest.mock('@/models/job', () => ({
         },
         minSalary: '70000',
         maxSalary: '100000',
-        lastRequestingDay: '2024-04-29',
+        dueDate: '2024-04-29',
         createdAt: '2024-04-29',
         status: 'DRAFTED',
       })
@@ -40,7 +40,7 @@ const input = {
   },
   minSalary: '70000',
   maxSalary: '100000',
-  lastRequestingDay: '2024-04-29',
+  dueDate: '2024-04-29',
   createdAt: '2024-04-29',
   status: 'DRAFTED',
 };
@@ -62,7 +62,7 @@ describe('Create Job Recruit', () => {
       },
       minSalary: '70000',
       maxSalary: '100000',
-      lastRequestingDay: '2024-04-29',
+      dueDate: '2024-04-29',
       createdAt: '2024-04-29',
       status: 'DRAFTED',
     });
