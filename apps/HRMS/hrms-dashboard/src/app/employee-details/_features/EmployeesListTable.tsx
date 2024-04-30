@@ -2,11 +2,25 @@
 import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useGetAllEmployeeQuery } from '../../../generated';
+import { useEffect } from 'react';
+import { perPage } from '../constants';
 
-export const EmployeesListTable = () => {
+type PropsType = {
+  setPageCount: (_: number) => void;
+  start: number;
+  end: number;
+};
+
+export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const { data, loading } = useGetAllEmployeeQuery();
   const allEmployees = data?.getAllEmployee;
+  const allEmployeeslength: number = allEmployees?.length ?? 0;
+  useEffect(() => {
+    const pageCount = allEmployeeslength / perPage.limit;
+    setPageCount(Math.ceil(pageCount));
+  }, [data]);
+
   if (loading)
     return (
       <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} py={8}>
@@ -30,7 +44,7 @@ export const EmployeesListTable = () => {
           </TableHead>
           <TableBody>
             {!loading &&
-              allEmployees?.map((row, index) => (
+              allEmployees?.slice(start, end).map((row, index) => (
                 <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 }, borderBottom: '1px solid #ECEDF0' }}>
                   <TableCell sx={{ cursor: 'pointer', '&:hover': { fontWeight: 900 } }} component="th" scope="row">
                     <Stack flexDirection={'row'} alignItems={'left'} gap={1.5}>
