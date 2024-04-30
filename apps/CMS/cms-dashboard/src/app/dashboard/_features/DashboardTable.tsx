@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Stack, Typography, Menu, MenuItem } from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import ArticleEditButton from '../_components/ArticleEditButton';
 const menuItems = [
   {
     icons: <ArchiveOutlinedIcon />,
@@ -141,9 +141,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                         })}
                       </Menu>
                     </Stack>
-                    <IconButton aria-label="delete" sx={{ cursor: 'pointer' }}>
-                      <EditOutlinedIcon sx={{ width: 22, height: 22 }} />
-                    </IconButton>
+                    <ArticleEditButton id={item.id} />
                   </Stack>
                 </TableCell>
               </TableRow>

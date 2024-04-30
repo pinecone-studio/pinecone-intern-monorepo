@@ -10,7 +10,8 @@ import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 
 const SignUpForm = () => {
-  const { handleSignUp, creationLoading } = useAuth();
+  const { handleSignUp, signUpLoading } = useAuth();
+
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
       .string()
@@ -98,7 +99,7 @@ const SignUpForm = () => {
           }}
           data-cy="Sign-Up-Button"
           data-testid="Sign-Up-Button-Loader"
-          disabled={!formik.isValid || creationLoading}
+          disabled={!formik.isValid || signUpLoading}
           fullWidth
           variant="contained"
           sx={{
@@ -115,7 +116,7 @@ const SignUpForm = () => {
             cursor: !formik.isValid ? 'not-allowed' : 'pointer',
           }}
         >
-          {creationLoading && <Loader />}
+          {signUpLoading && <Loader />}
           <Typography mr={'23%'} fontSize={16} fontWeight={600}>
             Бүртгүүлэх
           </Typography>
@@ -134,7 +135,7 @@ const SignUpForm = () => {
             cursor: 'pointer',
           }}
         >
-          <Link href={'/'}>Нэвтрэх</Link>
+          <Link href={'/sign-in'}>Нэвтрэх</Link>
         </Typography>
       </Stack>
     </Stack>
