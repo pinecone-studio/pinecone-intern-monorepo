@@ -3,10 +3,10 @@ import CustomInput from '../../src/app/login/_components/CustomInput';
 import { render } from '@testing-library/react';
 describe('ArticlesCard', () => {
   it('1. it should render with correct props', () => {
-    const { getByTestId } = render(<CustomInput placeholder="" />);
+    const { getByTestId } = render(<CustomInput value={'ff'} />);
 
-    const placeholder = getByTestId('placeholder');
+    const value = getByTestId('placeholder');
 
-    expect(placeholder.textContent).toMatch('');
+    expect(value.textContent).toMatch('ff');
   });
 });
