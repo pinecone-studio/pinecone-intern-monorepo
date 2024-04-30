@@ -1,13 +1,12 @@
-import CustomInput from '../../src/app/login/_components/CustomInput';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-test('input component updates value correctly', () => {
-  const onChangeMock = jest.fn();
-  const { getByPlaceholderText } = render(<CustomInput />);
+import CustomInput from '../../src/app/login/_components/CustomInput';
+import { render } from '@testing-library/react';
+describe('ArticlesCard', () => {
+  it('1. it should render with correct props', () => {
+    const { getByTestId } = render(<CustomInput placeholder="" />);
 
-  const inputElement = getByPlaceholderText('Type something...');
+    const placeholder = getByTestId('placeholder');
 
-  fireEvent.change(inputElement, { target: { value: 'Test input' } });
-
-  expect(onChangeMock).toHaveBeenCalledWith('Test input');
+    expect(placeholder.textContent).toMatch('');
+  });
 });

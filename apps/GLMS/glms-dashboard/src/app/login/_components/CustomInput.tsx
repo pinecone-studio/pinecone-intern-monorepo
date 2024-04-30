@@ -1,9 +1,12 @@
-import { Stack, TextField } from '@mui/material';
+import { Stack, TextField, TextFieldProps } from '@mui/material';
 
-const CustomInput = () => {
+const CustomInput = (props: TextFieldProps) => {
+  const { ...rest } = props;
   return (
     <Stack data-testid="input">
       <TextField
+        {...rest}
+        placeholder="text"
         id="custom-input"
         inputProps={{
           style: {
