@@ -9,7 +9,7 @@ const CustomInput = (props: TextFieldProps) => {
         placeholder="text"
         inputProps={{
           style: {
-            padding: '8px',
+            padding: '8px ',
             height: '56px',
             backgroundColor: '#F7F7F8',
             borderRadius: '8px',
