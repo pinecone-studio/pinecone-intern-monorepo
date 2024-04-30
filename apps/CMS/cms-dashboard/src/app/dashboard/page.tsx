@@ -7,6 +7,7 @@ import { useGetArticlesQueryQuery, Article } from '../../generated';
 import { SearchInput } from './_components/SearchInput';
 import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
+import FileUpload from './_components/FileUpload';
 
 const Home = () => {
   const { data: article } = useGetArticlesQueryQuery();
@@ -29,6 +30,8 @@ const Home = () => {
           </Stack>
         </Container>
       </Stack>
+
+      {/* <FileUpload /> */}
     </Stack>
   );
 };
