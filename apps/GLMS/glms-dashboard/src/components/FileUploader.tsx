@@ -1,7 +1,7 @@
 'use client';
 import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { fileManagement } from '@/file-management';
-import { RemoveCircle } from '@mui/icons-material';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 type FormikTypes = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -27,10 +27,10 @@ const FileUploader = (props: FormikTypes) => {
       justifyContent={'center'}
       alignItems={'center'}
       borderRadius={'8px'}
-      sx={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}
+      sx={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover', position: 'relative' }}
     >
       {!thumbnail ? (
-        <Stack>
+        <Stack direction={'row'} sx={{ flexWrap: 'wrap' }}>
           <Typography fontWeight={400} fontSize={18} color={'#3F414580'}>
             Зургийг чирж буулгах эсвэл
           </Typography>
@@ -52,12 +52,12 @@ const FileUploader = (props: FormikTypes) => {
         </Stack>
       ) : (
         <IconButton
-          sx={{ position: 'absolute', width: '40px', height: '40px' }}
+          sx={{ position: 'absolute', width: '40px', height: '40px', top: 5, right: 5 }}
           onClick={() => {
             setFieldValue('thumbnail', '');
           }}
         >
-          <RemoveCircle />
+          <CancelIcon sx={{ color: 'white', '&:hover': { color: 'whitesmoke' } }} />
         </IconButton>
       )}
     </Stack>
