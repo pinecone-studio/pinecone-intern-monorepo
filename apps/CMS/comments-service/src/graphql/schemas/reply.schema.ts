@@ -23,5 +23,6 @@ export const replySchema = gql`
   }
   type Query {
     getRepliesByCommentId(commentId: String): [Reply]
+    getRepliesByParentId(parentId: String): [Reply]
   }
 `;
