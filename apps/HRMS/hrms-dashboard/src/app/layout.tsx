@@ -3,6 +3,7 @@ import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
 import { Sidebar } from '../common/components/Sidebar';
 import { LeaveReqCreationProvider } from './leaving/_providers/LeaveReqCreationProvider';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 
 export const metadata = {
   title: 'Welcome to hrms-dashboard',
@@ -20,7 +21,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 <Header />
                 <Stack flexDirection={'row'}>
                   <Sidebar />
-                  {children}
+                  <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
                 </Stack>
               </Stack>
             </body>

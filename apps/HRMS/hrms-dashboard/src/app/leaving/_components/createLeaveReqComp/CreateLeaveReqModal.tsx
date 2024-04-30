@@ -16,6 +16,7 @@ export const CreateLeaveReqModal = () => {
   return (
     <Modal data-cy="request-modal" data-testid="leaveRequestModal" open={isOpen} onClose={handleClose}>
       <Container
+        data-testid="modalContainer"
         sx={{
           width: '600px',
           position: 'absolute',

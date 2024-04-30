@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
+import { CreateLeaveRequestStep2 } from './CreateLeaveRequestStep2';
 
 const validationSchema = yup.object({
   step1Date: yup.date().required(),
@@ -18,7 +19,7 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveReqStep1 = () => {
-  const { setStepNumber } = useContext(LeaveReqCreationContext);
+  const { setStepNumber, setLeaveReqStep } = useContext(LeaveReqCreationContext);
 
   const workerName = { name: 'WorkerName' };
 
@@ -32,6 +33,7 @@ export const CreateLeaveReqStep1 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: () => {
+      setLeaveReqStep(<CreateLeaveRequestStep2 />);
       setStepNumber(1);
     },
   });

@@ -6,7 +6,7 @@ import { HomePageHeader } from '../_components/HomePageHeader';
 
 export const CreateLeaveReqMain = () => {
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <HomePageHeader />
       <CreateLeaveReqModal />
     </Box>
