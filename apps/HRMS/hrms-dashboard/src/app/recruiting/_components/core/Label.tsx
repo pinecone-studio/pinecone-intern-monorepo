@@ -5,15 +5,15 @@ type JobLabelProps = {
 
 export const JobStatusLabel = ({ title, labelType }: JobLabelProps) => {
   const labels = [
-    { status: 'Drafted', bgColor: '#fae8a2', color: '#5e4123' },
-    { status: 'Closed', bgColor: '#fc9090', color: '#5e2330' },
-    { status: 'Published', bgColor: '#c1e6cf', color: '#174224' },
+    { status: 'Drafted', bgColor: 'bg-[#fae8a2] text-[#5e4123]' },
+    { status: 'Closed', bgColor: 'bg-[#fc9090] text-[#5e2330]' },
+    { status: 'Published', bgColor: 'bg-[#c1e6cf] text-[#174224]' },
   ];
   const filterLabels = labels.filter((label) => label.status === labelType);
 
   return (
     <div>
-      <p className={`p-1 m-1 inline-block rounded-md bg-[${filterLabels[0]?.bgColor} text-[${filterLabels[0]?.color}]`}>{title}</p>
+      <p className={`p-1 m-1 inline-block rounded-md ${filterLabels[0].bgColor}]`}>{title}</p>
     </div>
   );
 };
