@@ -11,7 +11,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
   
   return (
-    <Stack data-cy="mainBannerComp" width={'100%'} height={656} position={'relative'}>
+    <Stack data-cy="mainBannerComp" width={'100%'} height={756} position={'relative'}>
       <img width={'100%'} height={'100%'} data-cy="main-cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
       <Stack
         data-cy="innerComp"
@@ -29,7 +29,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
       >
         <Stack direction={'row'} gap={1} alignItems={'center'}>
           <Typography data-cy="main-date" fontWeight={500} fontSize={15} color={'#fff'}>
-            {date}
+            {date?.slice(0,-14)}
           </Typography>
           <Stack width={4} height={4} borderRadius={'100%'} bgcolor={'#fff'}></Stack>
 
