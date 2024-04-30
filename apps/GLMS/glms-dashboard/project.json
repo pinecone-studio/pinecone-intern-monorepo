@@ -27,6 +27,7 @@
         }
       },
       "dependsOn": [
+        { "target": "clean", "params": "forward" },
         {
           "target": "codegen",
           "params": "forward"
