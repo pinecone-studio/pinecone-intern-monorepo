@@ -33,7 +33,7 @@ export const FormInput = (props: TextFieldProps) => {
           },
           endAdornment: type === 'password' && (
             <InputAdornment position="end">
-              <IconButton data-testid="visibilityToggle" onClick={handleShowPassword}>
+              <IconButton data-testid="toggleVisibility" onClick={handleShowPassword}>
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>

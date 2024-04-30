@@ -1,16 +1,15 @@
 'use client';
 
-import { ArrowForward } from '@mui/icons-material';
 import { Button, Stack, Typography } from '@mui/material';
-import { useFormik } from 'formik';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from 'next/link';
-import { Loader } from '../_components/Loader';
-import { FormInput } from '../_components/FormInput';
-import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useAuth } from '../../../common';
+import { FormInput, Loader } from '../../sign-up/_components';
 
-const SignUpForm = () => {
-  const { handleSignUp, signUpLoading } = useAuth();
+const SignInForm = () => {
+  const { handleSignIn, loginLoading } = useAuth();
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -34,30 +33,25 @@ const SignUpForm = () => {
       .matches(/[a-z]/, 'Жижэг үсэг байх ёстой')
       .matches(/[A-Z]/, 'Том үсэг байх ёстой')
       .matches(/^(?=.*[!@#$%^&*])/, 'Тусгай тэмдэгт байх ёстой'),
-    confirmPassword: yup
-      .string()
-      .required('Нууц үгээ давтаж оруулна уу')
-      .oneOf([yup.ref('password')], 'Нууц үг буруу байна'),
   });
 
   const formik = useFormik({
     initialValues: {
       emailOrPhoneNumber: '',
       password: '',
-      confirmPassword: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      handleSignUp(values.emailOrPhoneNumber, values.password);
+      handleSignIn(values.emailOrPhoneNumber, values.password);
     },
   });
 
   return (
-    <Stack data-testid="sign-up-form-container" gap={2.5} padding={5} maxWidth={'440px'} width={'100%'} bgcolor={'#fff'} borderRadius={3} border={'1px solid #d6d8db'}>
-      <Typography data-testid="sign-up-modal-title" mb={1} textAlign={'center'} fontSize={36} fontWeight={700}>
-        Бүртгүүлэх
+    <Stack data-testid="sign-in-form-container" gap={2.5} padding={5} maxWidth={'440px'} width={'100%'} bgcolor={'#fff'} borderRadius={3} border={'1px solid #d6d8db'}>
+      <Typography data-testid="sign-in-modal-title" textAlign={'center'} mb={1} fontSize={36} fontWeight={700}>
+        Нэвтрэх
       </Typography>
-      <Stack gap={1}>
+      <Stack gap={2}>
         <FormInput
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
@@ -69,43 +63,38 @@ const SignUpForm = () => {
           helperText={formik.errors.emailOrPhoneNumber}
           onBlur={formik.handleBlur}
         />
-        <FormInput
-          name="password"
-          label="Нууц үг"
-          placeholder="Нууц үг оруулна уу"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          error={Boolean(formik.errors.password)}
-          helperText={formik.errors.password}
-          onBlur={formik.handleBlur}
-        />
-        <FormInput
-          name="confirmPassword"
-          label="Нууц үг давтах"
-          placeholder="Нууц үгээ давтаж оруулна уу"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.confirmPassword}
-          error={Boolean(formik.errors.confirmPassword)}
-          helperText={formik.errors.confirmPassword}
-          onBlur={formik.handleBlur}
-        />
+
+        <Stack alignItems={'flex-end'}>
+          <FormInput
+            name="password"
+            label="Нууц үг"
+            placeholder="Нууц үг оруулна уу"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            error={Boolean(formik.errors.password)}
+            helperText={formik.errors.password}
+            onBlur={formik.handleBlur}
+          />
+          <Typography fontSize={14} fontWeight={400}>
+            Нууц үг сэргээх
+          </Typography>
+        </Stack>
       </Stack>
       <Stack>
         <Button
           onClick={() => {
             formik.handleSubmit();
           }}
-          data-cy="Sign-Up-Button"
+          data-cy="Sign-In-Button"
           data-testid="Sign-Up-Button-Loader"
-          disabled={!formik.isValid || signUpLoading}
           fullWidth
           variant="contained"
+          disabled={!formik.isValid || loginLoading}
           sx={{
             justifyContent: 'flex-end',
             py: '14.5px',
-            background: '#000',
+            background: '#121316',
             color: 'white',
             gap: '8px',
             '&:hover': {
@@ -116,30 +105,30 @@ const SignUpForm = () => {
             cursor: !formik.isValid ? 'not-allowed' : 'pointer',
           }}
         >
-          {signUpLoading && <Loader />}
-          <Typography mr={'23%'} fontSize={16} fontWeight={600}>
-            Бүртгүүлэх
+          {loginLoading && <Loader />}
+          <Typography mr={'28%'} fontSize={16} fontWeight={600}>
+            Нэвтрэх
           </Typography>
-          <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" />
+          <ArrowForwardIcon data-testid="sign-in-modal-icon2" fontSize="medium" />
         </Button>
       </Stack>
       <Stack border={1} borderColor="#ECEDF0"></Stack>
       <Stack direction={'row'} justifyContent={'center'} gap={1}>
-        <Typography>Бүртгэлтэй юу?</Typography>
+        <Typography>Бүртгэлгүй юу?</Typography>
 
         <Typography
-          data-testid="sign-up-modal-to-signin"
+          data-testid="sign-in-modal-to-signin"
           color={'#551a8b'}
           borderBottom={'1px solid #551a8b'}
           sx={{
             cursor: 'pointer',
           }}
         >
-          <Link href={'/sign-in'}>Нэвтрэх</Link>
+          <Link href={'/sign-up'}>Бүртгүүлэх</Link>
         </Typography>
       </Stack>
     </Stack>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { FormInput } from '../../src/app/sign-up/_components/FormInput';
+import { FormInput } from '../../src/app/sign-up/_components';
 
 describe('ArticlesCard', () => {
   it('1. it should render with correct props', () => {
@@ -18,7 +18,7 @@ describe('ArticlesCard', () => {
     const { getByTestId } = render(<FormInput label="Password" type="password" helperText="Enter your password" />);
 
     const passwordInput = getByTestId('Custom-Input').querySelector('input');
-    const toggleButton = getByTestId('visibilityToggle');
+    const toggleButton = getByTestId('toggleVisibility');
 
     expect(passwordInput.type).toBe('password');
 
