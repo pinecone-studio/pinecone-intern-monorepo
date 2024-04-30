@@ -6,11 +6,12 @@ import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated/index';
+import FileUploader from '../../components/FileUploader';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
-  image: yup.string().required(),
+  thumbnail: yup.string().required(),
 });
 
 const CourseAdd = () => {
@@ -21,7 +22,7 @@ const CourseAdd = () => {
     initialValues: {
       title: '',
       description: '',
-      image: '',
+      thumbnail: '',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
@@ -30,7 +31,7 @@ const CourseAdd = () => {
           courseInput: {
             title: values.title,
             description: values.description,
-            thumbnail: values.image,
+            thumbnail: values.thumbnail,
           },
         },
       });
@@ -81,28 +82,7 @@ const CourseAdd = () => {
               <Typography fontWeight={600} color={'#121316'}>
                 {'Хавтасны зураг'}
               </Typography>
-              <Stack width={'100%'} height={422} px={1} border={'2px #D6D8DB dashed'} direction={'row'} justifyContent={'center'} alignItems={'center'} borderRadius={'8px'}>
-                <Typography fontWeight={400} fontSize={18} color={'#3F414580'}>
-                  Зургийг чирж буулгах эсвэл
-                </Typography>
-                <Stack width={80} overflow={'hidden'} position={'relative'} alignItems={'center'}>
-                  <Typography sx={{ textDecoration: 'underline' }} fontSize={18} fontWeight={600} color={'#3F4145'}>
-                    Browse
-                  </Typography>
-                  <TextField
-                    id="file-test"
-                    name="image"
-                    onChange={formik.handleChange}
-                    value={formik.values.image}
-                    type="file"
-                    sx={{
-                      opacity: 0,
-                      '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': { padding: 0 },
-                      position: 'absolute',
-                    }}
-                  />
-                </Stack>
-              </Stack>
+              <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </Stack>
           </Stack>
           <Stack width={'100%'} alignItems={'center'}>
@@ -123,7 +103,7 @@ const CourseAdd = () => {
                 borderRadius: '8px',
                 py: 2,
               }}
-              disabled={!formik.values.title || !formik.values.description || !formik.values.image}
+              disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
               <Stack width={24} height={24}></Stack> {'Үргэлжлүүлэх'} <East fontSize="small" />
             </Button>
