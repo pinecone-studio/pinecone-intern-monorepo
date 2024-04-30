@@ -3,19 +3,28 @@ import { PiEyeClosed } from 'react-icons/pi';
 import { MdDeleteOutline, MdReply } from 'react-icons/md';
 import { TbPointFilled } from 'react-icons/tb';
 
-const Index = () => {
+type CommentsProps = {
+  name?: string  ;
+  email?: string;
+  comment?: string;
+  createdAt?: string;
+  articleId?: string;
+};
+
+const Index = (props: CommentsProps) => {
+  const { name, email, comment, createdAt, articleId } = props; 
   return (
-    <Box width={928} borderRadius={2} bgcolor={'white'} height={240}>
+    <Box width={928} borderRadius={2} bgcolor={'white'} height={240} mt={6} mb={6}>
       <Box padding={2}>
         <Typography fontSize={18} fontWeight={'bold'} lineHeight={2}>
-          Сувдан
+         {name}
         </Typography>
         <Box sx={{ display: 'flex', gap: '4px' }}>
           <Typography fontSize={16} color={'#5E6166'} lineHeight={2}>
-            suvdaa2@gmail.com
+            {email}
           </Typography>
           <Typography fontSize={16} color={'#5E6166'} lineHeight={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <TbPointFilled /> 1 минутийн өмнө
+            <TbPointFilled /> {createdAt}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -23,11 +32,11 @@ const Index = () => {
             Post:
           </Typography>
           <Typography fontSize={16} color={'grey'}>
-            Morphosis Хөтөлбөр: Гадны зах зээлд ажиллах сонирхолтой инженерүүдэд
+            {articleId}
           </Typography>
         </Box>
         <Typography fontSize={18} fontWeight={'bold'} lineHeight={2}>
-          Хулхины газар байна оо
+          {comment}
         </Typography>
       </Box>
       <Box borderTop={1} borderColor={'#5E6166'} sx={{ display: 'flex', justifyContent: 'space-between' }} padding={3}>
