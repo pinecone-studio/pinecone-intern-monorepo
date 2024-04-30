@@ -1,2 +1,2 @@
-export * from './CreateLeaveReqMain';
+export * from './CreateLeaveRequestMain';
 export * from './AssessmentMain';

@@ -2,7 +2,7 @@ import { Stack } from '@mui/material';
 import { FederationProvider, Header, ThemeProviderHRMS } from '../common';
 import './global.css';
 import { Sidebar } from '../common/components/Sidebar';
-import { LeaveReqCreationProvider } from './leaving/_providers/LeaveReqCreationProvider';
+import { LeaveRequestCreationProvider } from './leaving/_providers/LeaveRequestCreationProvider';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 
 export const metadata = {
@@ -15,7 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <FederationProvider>
         <ThemeProviderHRMS>
-          <LeaveReqCreationProvider>
+          <LeaveRequestCreationProvider>
             <body>
               <Stack flex={1}>
                 <Header />
@@ -25,7 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 </Stack>
               </Stack>
             </body>
-          </LeaveReqCreationProvider>
+          </LeaveRequestCreationProvider>
         </ThemeProviderHRMS>
       </FederationProvider>
     </html>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { LeaveReqCreationContext } from '../../src/app/leaving/_providers/LeaveReqCreationProvider';
-import { CreateLeaveReqMain } from '../../src/app/leaving/_features/CreateLeaveReqMain';
+import { LeaveRequestCreationContext } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
 import { render, act, fireEvent } from '@testing-library/react';
 
 describe('Create Leave Request Modal', () => {
@@ -9,9 +9,9 @@ describe('Create Leave Request Modal', () => {
     const setIsOpen = jest.fn();
 
     const { getByTestId } = render(
-      <LeaveReqCreationContext.Provider value={{ setIsOpen, isOpen: true }}>
-        <CreateLeaveReqMain />
-      </LeaveReqCreationContext.Provider>
+      <LeaveRequestCreationContext.Provider value={{ setIsOpen, isOpen: true }}>
+        <CreateLeaveRequestMain />
+      </LeaveRequestCreationContext.Provider>
     );
 
     const closeButton = getByTestId('modalClosingButton');

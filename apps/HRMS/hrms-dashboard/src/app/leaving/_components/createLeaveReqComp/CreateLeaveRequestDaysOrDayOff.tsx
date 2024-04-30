@@ -3,16 +3,16 @@ import { Box, Button, FormControl, FormControlLabel, FormLabel, IconButton, Radi
 import { useFormik } from 'formik';
 import { useContext } from 'react';
 import * as yup from 'yup';
-import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
-import { CreateLeaveRequestStep2DayOff } from './CreateLeaveRequestStep2DayOff';
-import { CreateLeaveReqStep1 } from './CreateLeaveReqStep1';
+import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestSelectedDayOff } from './CreateLeaveRequestSelectedDayOff';
+import { CreateLeaveRequestGeneralInput } from './CreateLeaveRequestGeneralInput';
 
 const validationSchema = yup.object({
   step21LeaveLength: yup.string().required(),
 });
 
-export const CreateLeaveRequestStep2 = () => {
-  const { setLeaveReqStep, setStepNumber } = useContext(LeaveReqCreationContext);
+export const CreateLeaveRequestDaysOrDayOff = () => {
+  const { setLeaveReqStep, setStepNumber } = useContext(LeaveRequestCreationContext);
 
   const formik = useFormik({
     initialValues: {
@@ -20,7 +20,7 @@ export const CreateLeaveRequestStep2 = () => {
     },
     validationSchema: validationSchema,
     onSubmit: () => {
-      setLeaveReqStep(<CreateLeaveRequestStep2DayOff />);
+      setLeaveReqStep(<CreateLeaveRequestSelectedDayOff />);
     },
   });
 
@@ -41,7 +41,7 @@ export const CreateLeaveRequestStep2 = () => {
           sx={{ bgcolor: '#1C20240A' }}
           onClick={() => {
             setStepNumber(0);
-            setLeaveReqStep(<CreateLeaveReqStep1 />);
+            setLeaveReqStep(<CreateLeaveRequestGeneralInput />);
           }}
         >
           <ArrowBack />

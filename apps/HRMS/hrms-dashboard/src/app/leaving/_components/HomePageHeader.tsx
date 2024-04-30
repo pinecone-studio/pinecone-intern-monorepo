@@ -3,11 +3,11 @@
 import { Box, IconButton } from '@mui/material';
 import { useContext } from 'react';
 import { Typography } from '@mui/material';
-import { LeaveReqCreationContext } from '../_providers/LeaveReqCreationProvider';
+import { LeaveRequestCreationContext } from '../_providers/LeaveRequestCreationProvider';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 export const HomePageHeader = () => {
-  const { setIsOpen } = useContext(LeaveReqCreationContext);
+  const { setIsOpen } = useContext(LeaveRequestCreationContext);
 
   const handleOpen = () => setIsOpen(true);
 

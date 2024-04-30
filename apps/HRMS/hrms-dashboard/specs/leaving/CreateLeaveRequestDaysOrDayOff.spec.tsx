@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { LeaveReqCreationProvider } from '../../src/app/leaving/_providers/LeaveReqCreationProvider';
-import { CreateLeaveReqMain } from '../../src/app/leaving/_features/CreateLeaveReqMain';
+import { LeaveRequestCreationProvider } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
 import { render, act, fireEvent, waitFor } from '@testing-library/react';
 
 describe('Create Leave Request Step2', () => {
   it('1. should move to step 2 from step 1', async () => {
     const { getByTestId } = render(
-      <LeaveReqCreationProvider>
-        <CreateLeaveReqMain />
-      </LeaveReqCreationProvider>
+      <LeaveRequestCreationProvider>
+        <CreateLeaveRequestMain />
+      </LeaveRequestCreationProvider>
     );
 
     const leaveRequestOpeningButton = getByTestId('open-request-btn');
@@ -64,9 +64,9 @@ describe('Create Leave Request Step2', () => {
   });
   it('2. should return to step 1 from step 2', async () => {
     const { getByTestId } = render(
-      <LeaveReqCreationProvider>
-        <CreateLeaveReqMain />
-      </LeaveReqCreationProvider>
+      <LeaveRequestCreationProvider>
+        <CreateLeaveRequestMain />
+      </LeaveRequestCreationProvider>
     );
 
     const leaveRequestOpeningButton = getByTestId('open-request-btn');

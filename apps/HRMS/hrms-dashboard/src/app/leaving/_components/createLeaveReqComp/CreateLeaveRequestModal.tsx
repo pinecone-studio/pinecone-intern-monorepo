@@ -3,10 +3,10 @@
 import { Clear } from '@mui/icons-material';
 import { Box, Container, IconButton, Modal, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { LeaveReqCreationContext } from '../../_providers/LeaveReqCreationProvider';
+import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 
-export const CreateLeaveReqModal = () => {
-  const { isOpen, setIsOpen, leaveReqStep, stepNumber } = useContext(LeaveReqCreationContext);
+export const CreateLeaveRequestModal = () => {
+  const { isOpen, setIsOpen, leaveReqStep, stepNumber } = useContext(LeaveRequestCreationContext);
   const steps = ['Ерөнхий', 'Хугацаа', 'Нэмэлт'];
 
   const handleClose = () => {
