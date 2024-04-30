@@ -1,21 +1,19 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
-import { useHelloQueryFromCommentsServiceQuery } from '../../generated';
 import { CommentsMain } from './_features';
+import { Grid } from '@mui/material';
 
 const CommentsPage = () => {
-  const { data } = useHelloQueryFromCommentsServiceQuery();
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'grey' }}>
-      <h1>hello from CMS dashboard Comments Page</h1>
-      <h1>hello from Comments Service Query {data?.helloQueryFromCommentsService}</h1>
+    <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#cccccc', mt: 4 }}>
       <CommentsMain />
       <Link href="/">
         <button>Go back to home page</button>
       </Link>
-    </div>
+    </Grid>
   );
 };
+
 export default CommentsPage;

@@ -1,11 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
 import { PiEyeClosed } from 'react-icons/pi';
+import React from 'react';
 import { MdDeleteOutline, MdReply } from 'react-icons/md';
 // import { TbPointFilled } from 'react-icons/tb';
 
 const Index = () => {
   return (
-    <Box width={928} borderRadius={2} bgcolor={'white'} height={240}>
+    <Box width={928} borderRadius={2} bgcolor={'white'} height={240} data-testid="comments-dialog-form-container">
       <Box padding={2}>
         <Typography fontSize={18} fontWeight={'bold'} lineHeight={2}>
           Сувдан
@@ -33,16 +34,23 @@ const Index = () => {
       <Box borderTop={1} borderColor={'#5E6166'} sx={{ display: 'flex', justifyContent: 'space-between' }} padding={3}>
         <Box>
           <Button sx={{ gap: 1 }}>
-            <PiEyeClosed /> <Typography fontSize={12}>Нуухаа болих</Typography>
+            <PiEyeClosed />{' '}
+            <Typography fontSize={12} data-cy="Hidden-Button">
+              Нуухаа болих
+            </Typography>
           </Button>
           <Button sx={{ gap: 1 }}>
             <MdDeleteOutline />
-            <Typography fontSize={12}> Устгах</Typography>
+            <Typography fontSize={12} data-cy="Deleted-Button">
+              Устгах
+            </Typography>
           </Button>
         </Box>
         <Button sx={{ gap: 1 }}>
           <MdReply />
-          <Typography fontSize={12}>Хариулах</Typography>
+          <Typography fontSize={12} data-cy="Reply-Button">
+            Хариулах
+          </Typography>
         </Button>
       </Box>
     </Box>
