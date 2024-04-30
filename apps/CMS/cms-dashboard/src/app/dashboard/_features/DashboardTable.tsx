@@ -93,7 +93,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                 </TableCell>
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
-                    <MenuButton />
+                    <MenuButton id={item.id} />
                     <ArticleEditButton id={item.id} />
                   </Stack>
                 </TableCell>

@@ -1,31 +1,28 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import MenuButton from '../../src/app/dashboard/_components/ArticleMenuButton';
 
-describe('Should render menu icon-button', () => {
+describe('Should render article menu button', () => {
   it('1. Should render icon', () => {
     render(<MenuButton />);
   });
+
   it('2. Open menu button on click', () => {
     render(<MenuButton />);
 
-    const moreVertButton = screen.getByTestId('morevert-button-test-id');
+    const menuButton = screen.getByTestId('morevert-button-test-id');
 
-    fireEvent.click(moreVertButton);
+    fireEvent.click(menuButton);
   });
 
-  it('3. Close morevert button on click', async () => {
+  it('3. Close menu button on click', async () => {
     const { container, getAllByTestId } = render(<MenuButton />);
 
-    const moreVertButtonn = container.getElementsByTagName('button')[0];
+    const moreVertButton = container.getElementsByTagName('button')[0];
 
-    await act(() => {
-      fireEvent.click(moreVertButtonn);
-    });
+    fireEvent.click(moreVertButton);
 
-    const menuItem = getAllByTestId('close-button-menu-test-id')[0];
+    const closeMenuButton = getAllByTestId('close-button-menu-test-id')[0];
 
-    await act(async () => {
-      await fireEvent.click(menuItem);
-    });
+    await fireEvent.click(closeMenuButton);
   });
 });

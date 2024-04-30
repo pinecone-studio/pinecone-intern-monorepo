@@ -1,22 +1,23 @@
-import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import { IconButton, Link, Menu, MenuItem, Stack, Tooltip } from '@mui/material';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const menuItems = [
-  {
-    icons: <ArchiveOutlinedIcon />,
-    label: 'Архив',
-  },
+  // {
+  //   icons: <ArchiveOutlinedIcon />,
+  //   label: 'Архив',
+  // },
   {
     icons: <LinkOutlinedIcon />,
     label: 'Линк хуулах',
   },
 ];
 
-const MenuButton = () => {
+export const MenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
+  const [copied, setCopied] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -25,9 +26,16 @@ const MenuButton = () => {
     setAnchorEl(null);
   };
 
+  const handleCopyClicked = useCallback(async () => {
+    setCopied(true);
+
+    const text = window.location.origin ?? '';
+
+    await navigator.clipboard.writeText(`${text}/article/id=${id}`);
+  });
   return (
     <Stack>
-      <IconButton data-testid="morevert-button-test-id'" sx={{ cursor: 'pointer' }} onClick={handleClick}>
+      <IconButton data-testid="morevert-button-test-id" sx={{ cursor: 'pointer' }} onClick={handleClick}>
         <MoreVertOutlinedIcon sx={{ width: 22, height: 22 }} />
       </IconButton>
 
@@ -50,9 +58,15 @@ const MenuButton = () => {
                 },
               }}
             >
+              {/* <Link href={`/articles/copy/${id}`}>
+                <IconButton data-testid="item-icon" sx={{ color: '#000' }}>
+                  <ArchiveOutlinedIcon />
+                </IconButton>
+              </Link> */}
               <IconButton data-testid="item-icon" sx={{ color: '#000' }}>
-                {item.icons}
+                <ArchiveOutlinedIcon />
               </IconButton>
+
               <MenuItem sx={{ padding: 1 }}>{item.label}</MenuItem>
             </Stack>
           );
@@ -61,5 +75,3 @@ const MenuButton = () => {
     </Stack>
   );
 };
-
-export default MenuButton;
