@@ -3,8 +3,31 @@ import { Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { EmployeePagination } from '../_components';
 import { EmployeesListTable } from './EmployeesListTable';
+import { useCallback, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { employeeDataPagination } from '../constants';
 
 export const EmployeesList = () => {
+  const [paginationPageCount, setPaginationPageCount] = useState<number>(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchPath: string | null = searchParams.get('employees');
+  const start = (Number(searchPath) - 1) * employeeDataPagination.limit;
+  const end = Number(searchPath) * employeeDataPagination.limit;
+  const paginationFilter = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const handleClick = (page: number) => {
+    router.push(pathname + '?' + paginationFilter('employees', `${page}`));
+  };
+
   return (
     <Stack p={4} width={'100%'} overflow={'scroll'}>
       <Stack p={3} bgcolor={'common.white'} width={'100%'}>
@@ -30,8 +53,8 @@ export const EmployeesList = () => {
             </Typography>
           </Stack>
         </Stack>
-        <EmployeesListTable />
-        <EmployeePagination />
+        <EmployeesListTable setPaginationPageCount={setPaginationPageCount} start={start} end={end} />
+        <EmployeePagination data-cy="employee-pagination" paginationPageCount={paginationPageCount} handleClick={handleClick} searchPath={searchPath} />
       </Stack>
     </Stack>
   );

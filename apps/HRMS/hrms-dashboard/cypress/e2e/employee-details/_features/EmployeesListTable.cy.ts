@@ -1,5 +1,5 @@
 describe('All employee table', () => {
-  beforeEach(() => cy.visit('/employee-details'));
+  beforeEach(() => cy.visit('/employee-details?employees=1'));
 
   it('Table header should be visible', () => {
     cy.get('[data-cy="employeesList"]').should('exist').should('be.visible');

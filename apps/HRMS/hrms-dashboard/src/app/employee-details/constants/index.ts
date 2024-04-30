@@ -9,3 +9,6 @@ export const createEmployeeText = [
   { label: 'Ажилд орсон огноо', type: 'date', placeholder: 'Ажилд орсон огноо оруулна уу' },
   { label: 'Төлөв', type: 'text', placeholder: 'Төлөв оруулна уу' },
 ];
+export const employeeDataPagination = {
+  limit: 8,
+};
