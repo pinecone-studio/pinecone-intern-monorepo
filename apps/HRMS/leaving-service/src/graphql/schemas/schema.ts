@@ -50,6 +50,7 @@ export const LeaveRequestTypeDefs = gql`
   type Query {
     getRequests: [LeaveRequest!]!
     getRequestById(_id: ID!): LeaveRequest
+    getRequestByMonth(startDate: Date): [LeaveRequest]!
   }
 
   type Mutation {
