@@ -1,4 +1,3 @@
-import { ArticleStatus } from '@/graphql/generated';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { getArticlesByStatus } from '@/graphql/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
@@ -48,19 +47,19 @@ const mockData = [
 ];
 describe('This function should return articles with matching status', () => {
   it('Should return all articles with matching status', async () => {
-    const articles = await getArticlesByStatus!({}, { status: ArticleStatus.Published }, {}, {} as GraphQLResolveInfo);
+    const articles = await getArticlesByStatus!({}, { status: 'PUBLISHED' }, {}, {} as GraphQLResolveInfo);
     expect(articles).toEqual(mockData);
   });
   it('should throw an error if the article cannot be found', async () => {
     try {
-      await getArticlesByStatus!({}, { status: ArticleStatus.Published }, {}, {} as GraphQLResolveInfo);
+      await getArticlesByStatus!({}, { status: 'PUBLISHED' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR));
     }
   });
   it('should throw an error when an error occurs during fetching', async () => {
     try {
-      await getArticlesByStatus!({ undefined }, { status: ArticleStatus.Published }, { undefined }, {} as GraphQLResolveInfo);
+      await getArticlesByStatus!({ undefined }, { status: 'PUBLISHED' }, { undefined }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Failed to get articles' }, errorTypes.INTERVAL_SERVER_ERROR));
     }
