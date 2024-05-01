@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 
 export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) => {
@@ -7,7 +7,7 @@ export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) =
   const toggleCommentPermission = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
-  
+
   return (
     <div className="flex flex-row gap-2">
       <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: checked ? 'black' : '#121316' }}>{checked ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>

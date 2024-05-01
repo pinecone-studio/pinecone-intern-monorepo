@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { ArrowBackSVG } from '../../../../assets';
 
 export const ArrowBack = () => {
