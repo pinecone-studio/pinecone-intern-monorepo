@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import EditButton from '../../src/app/[id]/_components/EditButton';
+import EditButton from '../../src/app/[id]/_components/Editbutton';
 
 describe('EditButton component', () => {
   it('renders EditButton', () => {
