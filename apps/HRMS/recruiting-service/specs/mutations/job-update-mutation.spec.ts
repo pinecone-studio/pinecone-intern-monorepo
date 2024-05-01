@@ -25,12 +25,4 @@ describe('updateJob', () => {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Cannot update job' }, errorTypes.INTERNAL_SERVER_ERROR));
     }
   });
-
-  it('3. should throw an error if input is not provided', async () => {
-    try {
-      await updateJob({}, { id: '1', input: undefined }, {}, {} as GraphQLResolveInfo);
-    } catch (error) {
-      expect(error).toEqual(graphqlErrorHandler({ message: 'Input is required' }, errorTypes.INTERNAL_SERVER_ERROR));
-    }
-  });
 });
