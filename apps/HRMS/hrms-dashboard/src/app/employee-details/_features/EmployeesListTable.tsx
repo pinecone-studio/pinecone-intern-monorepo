@@ -29,7 +29,7 @@ export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
   return (
     <section data-cy="employeesList" className="flex my-4 rounded-xl overflow-hidden">
       <div className="w-full">
-        <table className="w-full border-collapse">
+        <table data-cy="tableBody" className="w-full border-collapse">
           <tr className="w-full bg-light">
             {tableHeader.map((item, index) => (
               <th key={index} className="p-4">
