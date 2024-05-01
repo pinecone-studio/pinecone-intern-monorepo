@@ -1,8 +1,7 @@
 'use client';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { FederationProvider } from '../common';
 import './global.css';
-import { theme } from '../theme';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../common/providers/AuthProvider';
@@ -13,14 +12,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <FederationProvider>
-              <AuthProvider>
-                {children}
-                <ToastContainer />
-              </AuthProvider>
-            </FederationProvider>
-          </ThemeProvider>
+          <FederationProvider>
+            <AuthProvider>
+              {children}
+              <ToastContainer />
+            </AuthProvider>
+          </FederationProvider>
+
           <CssBaseline />
         </AppRouterCacheProvider>
       </body>

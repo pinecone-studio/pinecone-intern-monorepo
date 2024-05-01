@@ -8,9 +8,12 @@ import { Loader } from '../_components/Loader';
 import { FormInput } from '../_components/FormInput';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
+import { useState } from 'react';
+import TextInput from '../_components/TextInput';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
+  const [name, setName] = useState('');
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -58,7 +61,18 @@ const SignUpForm = () => {
         Бүртгүүлэх
       </Typography>
       <Stack gap={1}>
-        <FormInput
+        <TextInput
+          name="emailOrPhoneNumber"
+          label="Таны имэйл эсвэл утасны дугаар"
+          placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
+          type="password"
+          crossOrigin=""
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.emailOrPhoneNumber}
+          error={Boolean(formik.errors.emailOrPhoneNumber)}
+        />
+        {/* <FormInput
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
           placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
@@ -68,7 +82,7 @@ const SignUpForm = () => {
           error={Boolean(formik.errors.emailOrPhoneNumber)}
           helperText={formik.errors.emailOrPhoneNumber}
           onBlur={formik.handleBlur}
-        />
+        /> */}
         <FormInput
           name="password"
           label="Нууц үг"
@@ -123,7 +137,9 @@ const SignUpForm = () => {
           <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" />
         </Button>
       </Stack>
+
       <Stack border={1} borderColor="#ECEDF0"></Stack>
+
       <Stack direction={'row'} justifyContent={'center'} gap={1}>
         <Typography>Бүртгэлтэй юу?</Typography>
 
