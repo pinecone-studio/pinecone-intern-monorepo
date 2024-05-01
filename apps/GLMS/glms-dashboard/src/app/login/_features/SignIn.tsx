@@ -1,9 +1,9 @@
-import CustomInpute from '../_components/CustomInput';
+import CustomInput from '../_components/CustomInput';
 
 const SignIn = () => {
   return (
     <div>
-      <CustomInpute />
+      <CustomInput />
     </div>
   );
 };
