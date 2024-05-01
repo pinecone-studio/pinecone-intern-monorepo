@@ -5,7 +5,7 @@ import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useCreateCourseMutation } from '@/generated/index';
+import { useCreateCourseMutation } from '../../generated';
 import FileUploader from '../../components/FileUploader';
 
 const validatinSchema = yup.object({
@@ -40,77 +40,71 @@ const CourseAdd = () => {
   });
 
   return (
-    <Stack data-testid="create-course-container" bgcolor={'#ECEDF0'} py={3} minHeight={'100vh'}>
+    <div data-testid="create-course-container" className="bg-[#ECEDF0]  h-[100%]  py-5  ">
       <Container maxWidth="xl">
-        <Stack
+        <div
           data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboardOtherLab');
           }}
-          direction={'row'}
-          gap={3}
-          marginBottom={'26px'}
-          sx={{ cursor: 'pointer' }}
-          fontSize={18}
-          fontWeight={600}
-          alignItems={'center'}
+          className=" flex flex-row gap-[3px] mb-[26px] text-lg  font-semibold items-center cursor-pointer"
         >
           <KeyboardBackspace /> {'Нүүр'}
-        </Stack>
-        <Stack width={'100%'} bgcolor={'white'} borderRadius={'12px'} px={3} paddingBottom={7} paddingTop={5}>
-          <Stack marginBottom={8}>
-            <Typography fontSize={28} fontWeight={700} color={'#121316'}>
-              {'Сэдвийн ерөнхий мэдээлэл '}
-            </Typography>
-          </Stack>
-          <Stack direction={'row'} gap={'74px'}>
-            <Stack width={'100%'} gap={8}>
-              <Stack width={'100%'} gap={1}>
-                <Typography fontWeight={600} fontSize={16} color={'#121316'}>
-                  {'Гарчиг'}
-                </Typography>
-                <TextField id="title-test" name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Оруулна уу..." />
-              </Stack>
-              <Stack width={'100%'} gap={1}>
-                <Typography fontWeight={600} fontSize={16} color={'#121316'}>
-                  {'Дэлгэрэнгүй'}
-                </Typography>
-                <TextField id="description-test" multiline minRows={3} name="description" onChange={formik.handleChange} value={formik.values.description} type="text" placeholder="Энд бичнэ үү..." />
-              </Stack>
-            </Stack>
-            <Stack width={'100%'} gap={1} marginBottom={'108px'}>
-              <Typography fontWeight={600} color={'#121316'}>
-                {'Хавтасны зураг'}
-              </Typography>
+        </div>
+        <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
+          <div className="mb-8">
+            <p className=" text-[28px] font-bold text-[#121316]">{'Сэдвийн ерөнхий мэдээлэл '}</p>
+          </div>
+          <div className=" flex flex-row gap-5 w-[100%] h-[100%] pb-10">
+            <div className="  flex flex-col gap-10 w-[50%]">
+              <div className=" gap-2 flex flex-col w-[100%]">
+                <label className=" font-semibold text-[16px] color-[#121316]">{'Гарчиг'}</label>
+                <input
+                  className="w-[90%] h-[40px] border-[2px] rounded px-2 "
+                  type="text"
+                  name="title"
+                  placeholder="Оруулна уу..."
+                  id="title-test"
+                  onChange={formik.handleChange}
+                  value={formik.values.title}
+                ></input>
+              </div>
+              <div className="w-[100%] gap-2 flex flex-col">
+                <label className="font-semibold text-[16px] color-[#121316]">{'Дэлгэрэнгүй'}</label>
+                <input
+                  className="w-[90%] border-[2px] rounded h-[80px] px-2"
+                  id="description-test"
+                  name="description"
+                  onChange={formik.handleChange}
+                  value={formik.values.description}
+                  type="text"
+                  placeholder="Энд бичнэ үү..."
+                />
+              </div>
+            </div>
+            <div className="w-[50%] gap-2 flex flex-col ">
+              <label className="font-semibold color-[#121316] text-[16px]">{'Хавтасны зураг'}</label>
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
-            </Stack>
-          </Stack>
-          <Stack width={'100%'} alignItems={'center'}>
-            <Button
+            </div>
+          </div>
+          <div className="w-[100%] flex justify-center ">
+            <button
+              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white"
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
               }}
-              variant="contained"
-              sx={{
-                width: 'fit-content',
-                '&:disabled': {
-                  color: 'white',
-                  backgroundColor: '#121316',
-                  opacity: '0.5',
-                },
-                gap: '28px',
-                borderRadius: '8px',
-                py: 2,
-              }}
               disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
-              <Stack width={24} height={24}></Stack> {'Үргэлжлүүлэх'} <East fontSize="small" />
-            </Button>
-          </Stack>
-        </Stack>
+              {'Үргэлжлүүлэх'} <East fontSize="small" />
+            </button>
+          </div>
+        </div>
+        <div className="flex  w-[100%] flex justify-center pt-5">
+          <p className="text-[#1C2024]">© 2023 Pinecone</p>
+        </div>
       </Container>
-    </Stack>
+    </div>
   );
 };
 
