@@ -6,6 +6,7 @@ import { EmployeesListTable } from './EmployeesListTable';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { perPage } from '../constants';
+import { CreateEmployeeForm } from './CreateEmployeeForm';
 
 export const EmployeesList = () => {
   const [pageCount, setPageCount] = useState<number>(1);
@@ -28,10 +29,6 @@ export const EmployeesList = () => {
     router.push(pathname + '?' + paginationFilter('employees', `${page}`));
   };
 
-import { CreateEmployeeForm } from './CreateEmployeeForm';
-import { useState } from 'react';
-
-export const EmployeesList = () => {
   const [openNewEmployee, setOpenNewEmployee] = useState(false);
   const handleOpenNewEmployee = () => setOpenNewEmployee(true);
   const handleCloseNewEmployee = () => setOpenNewEmployee(false);
