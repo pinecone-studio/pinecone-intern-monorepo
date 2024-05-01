@@ -11,18 +11,7 @@ query Query {
   }
 }
 
-# query GetArticlesByCategory($categoryId: String!, $getAll: Boolean!) {
-#   getArticlesByCategory(categoryId: $categoryId, getAll: $getAll) {
-#     content
-#     coverPhoto
-#     publishedAt
-#     id
-#     title
-#     category {
-#       name
-#     }
-#   }
-# }
+
 
 query GetArticlesByCategory($categoryId: String!, $quantity: Int!) {
   getArticlesByCategory(categoryId: $categoryId, quantity: $quantity) {
