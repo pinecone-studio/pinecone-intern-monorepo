@@ -1,9 +1,10 @@
 'use client';
 import './global.css';
-import { ThemeProvider } from '@mui/material';
+
 import { FederationProvider } from '../common';
 import { theme } from '../common/theme';
 import Header from '../components/Header';
+import { ThemeProvider } from '@emotion/react';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
