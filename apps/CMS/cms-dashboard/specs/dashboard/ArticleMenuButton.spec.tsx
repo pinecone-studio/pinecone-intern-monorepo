@@ -1,21 +1,27 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import MenuButton from '../../src/app/dashboard/_components/ArticleMenuButton';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import ArticleMenuButton from '../../src/app/dashboard/_components/ArticleMenuButton';
+
+jest.mock('navigator.clipboard', () => ({
+  writeText: jest.fn(),
+}));
 
 describe('Should render article menu button', () => {
-  it('1. Should render icon', () => {
-    render(<MenuButton id="1" />);
+  it('1. Should render article menu button', () => {
+    render(<ArticleMenuButton id="9991" />);
   });
 
   it('2. Open menu button on click', () => {
-    render(<MenuButton id="1" />);
+    render(<ArticleMenuButton id="9991" />);
 
     const menuButton = screen.getByTestId('morevert-button-test-id');
 
-    fireEvent.click(menuButton);
+    act(() => {
+      fireEvent.click(menuButton);
+    });
   });
 
   it('3. Close menu button on click', async () => {
-    const { container, getAllByTestId } = render(<MenuButton id="1" />);
+    const { container, getAllByTestId } = render(<ArticleMenuButton id="9991" />);
 
     const moreVertButton = container.getElementsByTagName('button')[0];
 
@@ -27,7 +33,7 @@ describe('Should render article menu button', () => {
   });
 
   it('4. Copy menu button on click', () => {
-    render(<MenuButton id="1" />);
+    render(<ArticleMenuButton id="1" />);
 
     const menuButton = screen.getByTestId('morevert-button-test-id');
     fireEvent.click(menuButton);

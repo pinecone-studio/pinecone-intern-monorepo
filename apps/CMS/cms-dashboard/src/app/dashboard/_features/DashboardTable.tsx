@@ -4,8 +4,8 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { Article } from '../../../generated';
 import { useSearchParams } from 'next/navigation';
-import MenuButton from '../_components/ArticleMenuButton';
 import ArticleEditButton from '../_components/ArticleEditButton';
+import ArticleMenuButton from '../_components/ArticleMenuButton';
 
 type DashboardTablesTypes = {
   articles: Article[] | undefined;
@@ -93,7 +93,7 @@ const DashboardTable = (props: DashboardTablesTypes) => {
                 </TableCell>
                 <TableCell>
                   <Stack direction={'row'} gap={1} justifyContent={'center'}>
-                    <MenuButton id={item.id} />
+                    <ArticleMenuButton id={item.id} />
                     <ArticleEditButton id={item.id} />
                   </Stack>
                 </TableCell>

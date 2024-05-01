@@ -6,7 +6,7 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { useCallback, useState } from 'react';
 
-const MenuButton = ({ id }: { id: string }) => {
+const ArticleMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
   const [copied, setCopied] = useState(false);
 
@@ -68,4 +68,4 @@ const MenuButton = ({ id }: { id: string }) => {
   );
 };
 
-export default MenuButton;
+export default ArticleMenuButton;
