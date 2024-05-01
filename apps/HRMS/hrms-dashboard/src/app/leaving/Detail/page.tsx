@@ -11,12 +11,14 @@ import RequestDetails from '../_components/RequestDetails';
 const Detail = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get('requestId');
+  const requestId = searchParams.get('requestId');
+  const id = requestId || '';
 
   const { data, loading } = useGetRequestByIdQuery({
     variables: { id },
   });
   if (loading) return <p>Loading...</p>;
+  const requestData = data?.getRequestById;
 
   return (
     <Stack sx={{ display: 'flex', alignItems: 'center', bgcolor: 'rgba(247, 247, 248, 1)', gap: '24px', width: '100vw', height: '100vh' }}>
@@ -28,8 +30,8 @@ const Detail = () => {
       </Stack>
       <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '1154px' }}>
         <Stack sx={{ display: 'flex', gap: '18px' }}>
-          {data?.getRequestById && <DetailInfo data={data.getRequestById} />}
-          <RequestDetails data={data?.getRequestById} />
+          {requestData && <DetailInfo data={requestData} />}
+          {requestData && <RequestDetails data={requestData} />}
         </Stack>
         <Stack sx={{ display: 'flex', gap: '18px' }}>
           <Stack sx={{ width: '565px', height: '384px', bgcolor: 'white', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '24px' }}>

@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useDeclineRequestMutation } from '../../../generated';
 import { useRouter } from 'next/navigation';
 
-const DeclineButton = ({ id }) => {
+const DeclineButton = ({ id }: { id: string }) => {
   const router = useRouter();
   const [decline] = useDeclineRequestMutation();
 

@@ -1,7 +1,7 @@
 'use client';
 import { headers } from './utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Button, Typography, Stack, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Button, Typography, Stack, Box, TableContainer } from '@mui/material';
 import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
 
@@ -33,30 +33,32 @@ const Requests = () => {
           </Stack>
         </Box>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <Table>
-            <TableHead sx={{ backgroundColor: 'rgba(247, 247, 248, 1)' }}>
-              <TableRow>
-                {headers.map((data, index) => (
-                  <TableCell key={index}>{data}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.getRequests.map((dat, index) => (
-                  <TableRow key={index} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)} data-testid="requests">
-                    <TableCell>{dat._id}</TableCell>
-                    <TableCell>{dat.declinedReasoning}</TableCell>
-                    <TableCell>{dat.description}</TableCell>
-                    <TableCell>{dat.totalHour}</TableCell>
-                    <TableCell>{dat.totalHour}</TableCell>
-                    <TableCell data-testid="request-status">
-                      <Status dat={dat} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table>
+              <TableHead sx={{ backgroundColor: 'rgba(247, 247, 248, 1)' }}>
+                <TableRow>
+                  {headers.map((data, index) => (
+                    <TableCell key={index}>{data}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data.getRequests.map((dat, index) => (
+                    <TableRow key={index} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)} data-testid="requests">
+                      <TableCell>{dat._id}</TableCell>
+                      <TableCell>{dat.declinedReasoning}</TableCell>
+                      <TableCell>{dat.description}</TableCell>
+                      <TableCell>{dat.totalHour}</TableCell>
+                      <TableCell>{dat.totalHour}</TableCell>
+                      <TableCell data-testid="request-status">
+                        <Status dat={dat} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Paper>
       </Stack>
     </Stack>

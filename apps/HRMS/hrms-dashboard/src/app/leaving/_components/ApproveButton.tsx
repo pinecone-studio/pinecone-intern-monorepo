@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useApproveRequestMutation } from '../../../generated';
 import { useRouter } from 'next/navigation';
 
-const ApproveButton = ({ id }) => {
+const ApproveButton = ({ id }: { id: string }) => {
   const router = useRouter();
   const [approve] = useApproveRequestMutation();
 

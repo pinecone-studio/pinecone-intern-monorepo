@@ -1,6 +1,8 @@
 import { Typography } from '@mui/material';
-
-const Status = ({ dat }) => {
+type Status = {
+  status: string;
+};
+const Status = ({ dat }: { dat: Status }) => {
   const { status } = dat;
   const statusText = status.toLowerCase();
   let backgroundColor = '';
