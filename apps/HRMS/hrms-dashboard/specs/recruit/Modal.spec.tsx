@@ -2,6 +2,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { CreateErrorModal } from '../../src/app/recruiting/_features';
 import Image from 'next/image';
+import deleted from '../../src/app/recruiting/_components/asset/icons/successDeleted.png';
+import created from '../../src/app/recruiting/_components/asset/icons/successCreated.png';
 
 describe('<CreateErrorModal />', () => {
   test('modal close and open when label and close button is clicked', () => {
@@ -23,8 +25,8 @@ describe('<CreateErrorModal />', () => {
   test('renders correct message based on label prop', () => {
     const text = 'Test Message';
     const labelDelete = 'Устгах';
-    const alt = 'svg';
-    const src = '/successCreated.png';
+    const alt = 'png';
+    const src = deleted.src;
 
     const { getByTestId: getByTestIdEdit } = render(<CreateErrorModal text={text} label={labelDelete} />);
     render(<Image src={src} alt={alt} width={50} height={50} />);
@@ -35,8 +37,8 @@ describe('<CreateErrorModal />', () => {
   test('renders correct message based on label prop', () => {
     const text = 'Test Message';
     const labelEdit = 'Засварлах';
-    const alt = 'svg';
-    const src = '/successDeleted.png';
+    const alt = 'png';
+    const src = created.src;
 
     const { getByTestId: getByTestIdEdit } = render(<CreateErrorModal text={text} label={labelEdit} />);
     render(<Image src={src} alt={alt} width={50} height={50} />);

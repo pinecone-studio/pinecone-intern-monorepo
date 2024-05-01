@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import deleted from '../../_components/asset/icons/successDeleted.png';
+import created from '../../_components/asset/icons/successCreated.png';
 
 type Props = {
   text: string;
@@ -17,7 +19,7 @@ export const CreateErrorModal = ({ text, label }: Props) => {
     setOpen(false);
   };
 
-  const message = label === 'Устгах' ? '/successDeleted.png' : '/successCreated.png';
+  const message = label === 'Устгах' ? deleted.src : created.src;
 
   return (
     <div>
@@ -33,7 +35,7 @@ export const CreateErrorModal = ({ text, label }: Props) => {
           </div>
           <div className="flex flex-col justify-center items-center mx-5 mb-2 gap-2">
             <div className="rounded-md p-3">
-              <Image src={message} alt="svg" width={50} height={50} />
+              <Image src={message} alt="png" width={50} height={50} />
             </div>
             <p className="text-xl font-semibold text-black">{text}.</p>
           </div>
