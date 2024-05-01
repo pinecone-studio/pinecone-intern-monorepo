@@ -4,8 +4,6 @@ import { errorTypes, graphqlErrorHandler } from "../error";
 
 export const getRequestToday: QueryResolvers['getRequestToday'] = async (_, {startDate} ) => {
     try {
-        console.log(startDate);
-        
         const daySlice = startDate.slice(0, 10);
         const startOfDay = new Date(daySlice);
         const endOfDay = new Date(startOfDay);
