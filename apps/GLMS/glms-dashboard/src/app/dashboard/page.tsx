@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated/index';
+import PlusIcon from '../assets/PlusIcon';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
@@ -31,10 +32,10 @@ const DashboardOtherLab = () => {
                 <button
                   data-testid="button1"
                   onClick={() => router.push('/create-course')}
-                  className="flex justify-center items-center border-solid border-[2px] border-[#121316] rounded-[8px] gap-[2px] hover:bg-black hover:text-white w-[99px] ease-in"
+                  className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
                   color="inherit"
                 >
-                  Сэдэв
+                  Сэдэв <PlusIcon/>
                 </button>
                 <AddChallengeModal />
               </div>
@@ -66,7 +67,7 @@ const DashboardOtherLab = () => {
         <div className=" mr-auto ml-auto px-[24px] flex max-w-[1536px]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses.map((data) => (
-              <div className="p-2" key={data.id}>
+              <div onClick={()=> router.push(`${data.id}`)} className="p-2" key={data.id}>
                 <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
               </div>
             ))}
