@@ -1,2 +1,2 @@
-export * from './FooterButtons';
-export * from './MenuBar'
+export * from './AdminNavigateLinksFeature';
+export * from './MenuBar';

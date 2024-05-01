@@ -1,30 +1,28 @@
 'use client';
 import { Course } from '@/generated/index';
-import { Stack, Typography } from '@mui/material';
 
 const Courses = (props: Course) => {
-const { id, thumbnail, title, description, position } = props;
+const { id, thumbnail, title, description} = props;
 
   return (
-    <Stack key={id} sx={{cursor:'pointer'}} data-testid="courseContain"  height={240} width={'100%'} overflow={'hidden'} border={'solid 1px #0000001A'} borderRadius={'12px'} bgcolor={'white'}>
-      <Stack width={'100%'} height={120} borderRadius={'6px'} overflow={'hidden'}>
+    <div className=' bg-white cursor-pointer h-[240px] w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl' key={id} data-testid="courseContain">
+      <div className='w-full h-[120px] rounded-md overflow-hidden'>
         <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
-      </Stack>
-      <Stack height={120} width={'100%'} py={1} px={'21px'} justifyContent={'space-between'}>
-        <Typography data-testid="titleTest" color={'#121316'} fontSize={16} fontWeight={600}>
+      </div>
+      <div className='h-[120px] w-full px-[21px] justify-between py-1'>
+        <p className='text-[16px] font-bold  ' data-testid="titleTest" color={'#121316'} >
           {title}
-        </Typography>
-        <Typography data-testid="infoTest" color={'#3F4145'} fontSize={14} fontWeight={400} textOverflow={'ellipsis'} height={42} overflow={'hidden'}>
+        </p>
+        <p className='test-[14px] font-normal overflow-hidden h-[48px]' data-testid="infoTest" color={'#3F4145'} >
           {description}
-        </Typography>
-        <Stack width={'fit-content'} px={1} py={'2px'} bgcolor={'#C1E6CF'} borderRadius={'12px'}>
-          <Typography data-testid="lessonCountTest" display={'flex'} color={'#0A4E22'} fontSize={14} gap={'4px'} fontWeight={400}>
-            {position}
+        </p>
+        <div className=' w-fit px-1 py-[2px] bg-[#C1E6CF] rounded-xl' >
+          <p className='flex text-[14px] font-normal' data-testid="lessonCountTest">
             Lessons
-          </Typography>
-        </Stack>
-      </Stack>
-    </Stack>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 export default Courses;

@@ -7,7 +7,7 @@ const courseSchema = new Schema({
   },
   description: { type: String },
   thumbnail: { type: String },
-  position: { type: Number, unique: true },
+  position: { type: Number},
   createdAt: {
     type: Date,
     default: Date.now,
