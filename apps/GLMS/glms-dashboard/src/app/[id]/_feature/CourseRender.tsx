@@ -2,11 +2,11 @@
 import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
 import DeleteButton from '../_components/DeleteButton';
-import EditButton from '../_components/EditButton';
 import BackButton from '../_components/Backbutton';
 import { Course } from '@/generated/index';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
+import EditButton from '../_components/Editbutton';
 
 const CourseRender = ({ data }: {data: Course | undefined}) => {
   const router= useRouter()
