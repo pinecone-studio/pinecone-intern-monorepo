@@ -15,7 +15,7 @@ const Home = () => {
       <span>TITLE: {article?.title}</span>
       <span>CONTENT: {article?.content}</span>
       <span>CATEGORY: {article?.category.name}</span>
-      <span>SLUG: {article?.slug}</span>
+      <span>SLUG:  {article?.slug}</span>
       <ArrowBack />
       <Title title="This is brand new" />
       <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
