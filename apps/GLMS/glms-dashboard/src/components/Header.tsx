@@ -1,6 +1,6 @@
-import SearchIcon from '../../public/search-icon';
-import PositionIcon from '../../public/header-position';
-import Logo from '../../public/logo';
+import SearchIcon from '../../public/SearchIcon';
+import PositionIcon from '../../public/HeaderPosition';
+import Logo from '../../public/Logo';
 const Header = () => {
   return (
     <div data-testid="header-artivle-detail" className="bg-[#F7F7F8]">
