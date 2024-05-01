@@ -4,12 +4,12 @@ import { JobModel } from '@/models/job';
 
 export const updateJob: MutationResolvers['updateJob'] = async (_, { id, input }: RequireFields<MutationUpdateJobArgs, 'id'>) => {
   if (!input) {
-    throw new Error('Input is required');
+    throw graphqlErrorHandler({ message: 'Input is required' }, errorTypes.INTERNAL_SERVER_ERROR);
   }
   try {
     const updatedJob = await JobModel.findByIdAndUpdate(id, input, { new: true });
     if (!updatedJob) {
-      throw new Error('Job not found');
+      throw graphqlErrorHandler({ message: 'Job not found' }, errorTypes.INTERNAL_SERVER_ERROR);
     }
     return updatedJob;
   } catch (error) {
