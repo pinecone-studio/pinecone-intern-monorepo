@@ -10,15 +10,27 @@ export const commentsSchema = gql`
     articleId: String!
   }
   type Comment {
-    _id: ID!
-    name: String!
+    _id: ID
+    name: String
     email: String
+    comment: String
+    ipAddress: String
+    createdAt: Date
+    articleId: String
+  }
+  input UpdateCommentInput {
+    _id: ID!
     comment: String!
-    ipAddress: String!
-    createdAt: Date!
-    articleId: String!
+  }
+  input DeleteCommentInput {
+    _id: ID!
   }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID
+    updateComment(updateInput: UpdateCommentInput!): ID
+    deleteComment(deleteInput: DeleteCommentInput!): ID
+  }
+  type Query {
+    getComments: [Comment]
   }
 `;

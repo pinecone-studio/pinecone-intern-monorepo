@@ -1,11 +1,10 @@
 import { FormControlLabel, Radio } from '@mui/material';
 
 interface RadioButtonProps {
-  value: boolean;
   checked: boolean;
-  onClick: () => void;
+  handleRadioButtonChecked: () => void;
 }
 
-export const RadioButton: React.FC<RadioButtonProps> = ({ value, checked, onClick }) => {
-  return <FormControlLabel value={value?.toString()} data-testid="radio-button" control={<Radio onClick={onClick} />} checked={checked} label="" />;
+export const RadioButton: React.FC<RadioButtonProps> = ({ checked, handleRadioButtonChecked }) => {
+  return <FormControlLabel data-testid="radio-button" data-cy="radio-button" control={<Radio checked={checked} onClick={handleRadioButtonChecked} />} label="" />;
 };

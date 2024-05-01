@@ -5,7 +5,7 @@ import { Window, ContentPaste, Report, Tag } from '@mui/icons-material';
 
 const sidebarItems = [
   { text: 'Нүүр хуудас', icon: <Window />, pathName: '/' },
-  { text: 'Ажилчид', icon: <ContentPaste />, pathName: '/employee-details' },
+  { text: 'Ажилчид', icon: <ContentPaste />, pathName: '/employee-details?employees=1' },
   { text: 'Чөлөө', icon: <Report />, pathName: '/leaving' },
   { text: 'Ажлын зар', icon: <Tag />, pathName: '/recruiting' },
 ];

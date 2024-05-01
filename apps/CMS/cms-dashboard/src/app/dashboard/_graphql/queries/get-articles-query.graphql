@@ -1,7 +1,11 @@
 query GetArticlesQuery {
   getArticlesQuery {
+    id
     title
     status
     createdAt
+    category {
+      name
+    }
   }
 }

@@ -1,1 +1,8 @@
 # // write mutations
+mutation CreateEmployee($input: CreateEmployeeInput!) {
+  createEmployee(input: $input) {
+    firstName
+    lastName
+    email
+  }
+}

@@ -50,11 +50,28 @@ export const challengeTypeDefs = gql`
     author: String
     status: StatusType
   }
+
+  input InputChoices {
+    choice: String
+    isCorrect: Boolean
+  }
+
+  input UpdateQuiz {
+    question: String
+    choices: [InputChoices]
+    choicesType: ChoicesType
+  }
+
   type Query {
     getChallenges: [Challenge]
+    getChallengesByStatus: [Challenge]
+    getChallengeById(challengeId: ID): Challenge
+    getQuizById(quizId: ID!): Quiz
   }
 
   type Mutation {
     createChallenge(quizInput: [QuizInput], challengeInput: ChallengeInput): ID
+    createQuiz(quizInput: QuizInput!): ID
+    updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
   }
 `;

@@ -5,9 +5,11 @@ export const Job = gql`
     id: ID
     title: String
     description: String
-    requirements: Requirement
+    requirements: Requirement!
     minSalary: String
     maxSalary: String
+    dueDate: String!
+    createdAt: String!
     status: JobStatus
     applicant: String
   }
@@ -33,6 +35,8 @@ export const Job = gql`
     requirements: RequirementInput!
     minSalary: String!
     maxSalary: String!
+    dueDate: String!
+    createdAt: String!
     status: JobStatus!
   }
 
