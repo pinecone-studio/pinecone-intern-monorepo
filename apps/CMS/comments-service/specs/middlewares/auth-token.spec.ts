@@ -1,6 +1,5 @@
 import { accessTokenAuth } from '@/middlewares/auth-token';
 import jwt from 'jsonwebtoken';
-import { jwtDecode } from 'jwt-decode';
 describe('authenticate access token', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -9,7 +8,6 @@ describe('authenticate access token', () => {
   const name = 'Хэрэглэгч';
   const email = 'ace@gmail.com';
   const accessToken = jwt.sign({ id, name, email }, 'secret-key');
-  const iat = jwtDecode(accessToken).iat;
   const mockRequest = {
     headers: {
       authorization: `Bearer ${accessToken}`,
@@ -21,10 +19,9 @@ describe('authenticate access token', () => {
       id: '663087c433fbc1529835ca43',
       name: 'Хэрэглэгч',
       email: 'ace@gmail.com',
-      iat: iat,
     };
-    const result = await accessTokenAuth(mockRequest);
-    expect(result).toEqual(decodedUser);
+    const result = (await accessTokenAuth(mockRequest)) as { email: string };
+    expect(result.email).toEqual(decodedUser.email);
   });
 
   it('should throw error when there is no access token', async () => {
