@@ -16,6 +16,6 @@ export const sectionSchema = gql`
     contentImage: String
   }
   type Mutation {
-    createSection(sectionInput:SectionInput!): Section!
+    createSection(sectionInput:[SectionInput!]): [Section!]
   }
 `;
