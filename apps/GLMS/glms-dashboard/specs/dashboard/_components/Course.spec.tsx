@@ -15,8 +15,6 @@ describe('Course component', () => {
     const { getByTestId } = render(<Course {...props} />);
 
 
-    
-
     expect(getByTestId('courseContain')).toBeDefined();
   });
 });
