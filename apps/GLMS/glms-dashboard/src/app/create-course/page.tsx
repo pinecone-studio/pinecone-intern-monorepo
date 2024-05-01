@@ -41,13 +41,13 @@ const CourseAdd = () => {
 
   return (
     <div data-testid="create-course-container" className="bg-[#ECEDF0]  h-[100%]  py-5  ">
-      <Container maxWidth="xl">
+      <div className="px-60">
         <div
           data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboardOtherLab');
           }}
-          className=" flex flex-row gap-[3px] mb-[26px] text-lg  font-semibold items-center cursor-pointer"
+          className=" flex flex-row gap-[6px] mb-[26px] text-lg  font-semibold items-center cursor-pointer"
         >
           <KeyboardBackspace /> {'Нүүр'}
         </div>
@@ -103,7 +103,7 @@ const CourseAdd = () => {
         <div className="flex  w-[100%] flex justify-center pt-5">
           <p className="text-[#1C2024]">© 2023 Pinecone</p>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };
