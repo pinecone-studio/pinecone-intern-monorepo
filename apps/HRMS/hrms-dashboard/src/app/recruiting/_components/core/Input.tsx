@@ -2,27 +2,27 @@ import { ChangeEvent } from 'react';
 
 interface InputProps {
   label: string;
-  placeholder: string;
   name?: string;
   value?: string;
+  placeholder: string;
   row?: string;
   disabled?: boolean;
   errorText?: string | undefined;
   onChange?: (_: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input = ({ name, label, placeholder, onChange, value, errorText, disabled }: InputProps) => {
+export const Input = ({ name, label, onChange, value, errorText, disabled, placeholder }: InputProps) => {
   return (
     <>
       <div className="relative my-6">
         <input
           id="id-01"
-          className="peer relative h-10 w-full rounded border border-slate-200 px-4 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+          className="peer relative h-10 w-full rounded border bg-white border-slate-200 px-4 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           value={value}
           onChange={onChange}
+          placeholder={placeholder}
           name={name}
           disabled={disabled}
-          placeholder={placeholder}
         />
         <label
           htmlFor="id-b02"
