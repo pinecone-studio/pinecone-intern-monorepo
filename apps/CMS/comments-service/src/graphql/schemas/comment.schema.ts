@@ -21,8 +21,6 @@ export const commentsSchema = gql`
   input UpdateCommentInput {
     _id: ID!
     comment: String!
-    name: String!
-    token: String
   }
   input DeleteCommentInput {
     _id: ID!
