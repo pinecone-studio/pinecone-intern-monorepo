@@ -49,7 +49,7 @@ export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
                   <TableCell sx={{ cursor: 'pointer', '&:hover': { fontWeight: 900 } }} component="th" scope="row">
                     <Stack flexDirection={'row'} alignItems={'left'} gap={1.5}>
                       <Stack position={'relative'} borderRadius={'50%'} overflow={'hidden'} height={'50px'} sx={{ aspectRatio: 1 / 1 }}>
-                        <Image src="/profile.png" style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
+                        <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
                       </Stack>
                       <Stack justifyContent={'center'}>
                         <Typography fontSize={14} fontWeight={600} color={'primary.dark'}>

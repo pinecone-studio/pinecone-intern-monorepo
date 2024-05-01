@@ -1,11 +1,12 @@
 'use client';
-import { Stack, Typography } from '@mui/material';
+import { Modal, Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { EmployeePagination } from '../_components';
 import { EmployeesListTable } from './EmployeesListTable';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { perPage } from '../constants';
+import { CreateEmployeeForm } from './CreateEmployeeForm';
 
 export const EmployeesList = () => {
   const [pageCount, setPageCount] = useState<number>(1);
@@ -28,6 +29,9 @@ export const EmployeesList = () => {
     router.push(pathname + '?' + paginationFilter('employees', `${page}`));
   };
 
+  const [openNewEmployee, setOpenNewEmployee] = useState(false);
+  const handleOpenNewEmployee = () => setOpenNewEmployee(true);
+  const handleCloseNewEmployee = () => setOpenNewEmployee(false);
   return (
     <Stack p={4} width={'100%'} overflow={'scroll'}>
       <Stack p={3} bgcolor={'common.white'} width={'100%'}>
@@ -36,6 +40,7 @@ export const EmployeesList = () => {
             Ажилчид
           </Typography>
           <Stack
+            onClick={handleOpenNewEmployee}
             data-cy="addEmployeeBtn"
             flexDirection={'row'}
             alignItems={'center'}
@@ -52,6 +57,11 @@ export const EmployeesList = () => {
               Ажилтан нэмэх
             </Typography>
           </Stack>
+          <Modal open={openNewEmployee} onClose={handleCloseNewEmployee}>
+            <Stack alignItems={'center'} justifyContent={'center'} width={'60%'} border={'0px'} position={'absolute'} top={'50%'} left={'50%'} sx={{ transform: 'translate(-50%,-50%)' }}>
+              <CreateEmployeeForm handleCloseNewEmployee={handleCloseNewEmployee} />
+            </Stack>
+          </Modal>
         </Stack>
         <EmployeesListTable setPageCount={setPageCount} start={start} end={end} />
         <EmployeePagination data-cy="employee-pagination" pageCount={pageCount} handleClick={handleClick} searchPath={searchPath} />
