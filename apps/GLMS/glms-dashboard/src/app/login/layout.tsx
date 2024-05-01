@@ -1,4 +1,3 @@
-'use client';
 import { ThemeProvider } from '@mui/material';
 import { FederationProvider } from '@/common/providers';
 import { theme } from '@/common/theme';
