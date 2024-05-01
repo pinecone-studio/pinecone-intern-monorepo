@@ -7,11 +7,11 @@ interface SelectButtonProps {
 export const SelectButton: React.FC<SelectButtonProps> = ({ options, selectedOption, handleSelectChange }) => {
   return (
     <select
+      className="h-[36px] w-full rounded-[8px] border-[1px] border-[#D6D8DB] bg-[#FEFEFE]"
       value={selectedOption}
       onChange={handleSelectChange}
       data-testid="select-button"
       data-cy="select-button"
-      style={{ height: '36px', width: '100%', borderRadius: '8px', border: '1px solid #D6D8DB', background: '#FEFEFE' }}
     >
       {options.map((option, index) => (
         <option key={index} value={option} data-testid="select-option">

@@ -1,5 +1,3 @@
-import React from 'react';
-import { Typography } from '@mui/material';
 import { SelectButton } from './Select';
 
 type ISelectPropsType = {
@@ -12,8 +10,12 @@ type ISelectPropsType = {
 export const SelectWithLabel = ({ label, options, selectedOption, onSelect }: ISelectPropsType) => {
   return (
     <>
-      <Typography sx={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>{label}</Typography>
-      <SelectButton options={options} selectedOption={selectedOption} handleSelectChange={onSelect} />
+      <p style={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>{label}</p>
+      <select className="flex w-[384px] h-[36px] border-[#D6D8DB] border-[1px] p-[8px] rounded-[8px]">
+        {options.map((e) => {
+          return <option>{e}</option>;
+        })}
+      </select>
     </>
   );
 };
