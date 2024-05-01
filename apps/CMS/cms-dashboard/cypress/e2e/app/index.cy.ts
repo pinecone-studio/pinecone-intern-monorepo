@@ -10,7 +10,7 @@ describe('app page.tsx', () => {
       .and(
         'have.css',
         'background',
-        'rgba(0, 0, 0, 0) linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(0, 0, 2) 29%, rgb(0, 0, 0) 40%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0% / auto padding-box border-box'
+        'rgba(0, 0, 0, 0) linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box'
       );
     cy.get('[data-cy="main-date"]').should('exist');
     cy.get('[data-cy="main-categories"]').should('exist');

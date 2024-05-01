@@ -1,9 +1,8 @@
 'use client';
-import { Grid, IconButton, Stack, Typography } from '@mui/material';
 import ArticleCard from '../_components/ArticleCard';
-import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { useState } from 'react';
 import { useGetArticlesByCategoryQuery } from '../../../generated';
+import DropDownSvg from '../../../assets/icons/DropDownSvg';
 
 type GroupArticlesCompProps = {
   title: string;
@@ -12,7 +11,6 @@ type GroupArticlesCompProps = {
 
 const GroupArticlesComp = (props: GroupArticlesCompProps) => {
   const { title, categoryId } = props;
-  const [isClicked, setIsClicked] = useState(false);
   const [isAll, setIsAll] = useState(false);
   const { data, loading, refetch } = useGetArticlesByCategoryQuery({
     variables: {
@@ -21,27 +19,26 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
     },
   });
   const clickHandler = () => {
-    setIsClicked((prev) => !prev);
     setIsAll((prev) => !prev);
     refetch();
   };
 
   return (
-    <Stack p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
+    <div data-cy='article-main-container' className="flex flex-col w-full p-6 gap-8 bg-[#fff] rounded-2xl">
       {loading ? (
-        <Stack>Loading</Stack>
+        <div>Loading....</div>
       ) : (
-        <Stack data-cy="group-container" p={3} gap={4} bgcolor={'#fff'} borderRadius={2}>
-          <Typography data-cy="group-title" fontSize={28} fontWeight={700} color={'primary:main'}>
+        <div data-cy="group-container" className="flex flex-col p-6 gap-8 bg-[#fff] rounded-2xl">
+          <p data-cy="group-title" className="text-[28px] font-bold text-black">
             {title}
-          </Typography>
-          <Grid data-cy="group-grid" container spacing={4}>
+          </p>
+          <div data-cy="group-grid" className="grid grid-cols-2 gap-8 ">
             {data?.getArticlesByCategory.length === 0 ? (
-              <Stack></Stack>
+              <div></div>
             ) : (
               data?.getArticlesByCategory?.map((item) => {
                 return (
-                  <Grid item xs={6} key={item?.id}>
+                  <div key={item?.id}>
                     <ArticleCard
                       title={item?.title}
                       cover={item?.coverPhoto === null ? '/earth.jpeg' : item?.coverPhoto}
@@ -49,25 +46,25 @@ const GroupArticlesComp = (props: GroupArticlesCompProps) => {
                       category={item?.category.name}
                       date={item?.publishedAt}
                     />
-                  </Grid>
+                  </div>
                 );
               })
             )}
-          </Grid>
-          <Stack data-cy="group-innerCon" width="100%" alignItems="center">
-            <IconButton
+          </div>
+          <div data-cy="group-innerCon" className="flex w-full justify-center">
+            <div
               data-cy="group-icon-button"
               onClick={() => {
                 clickHandler();
               }}
-              sx={{ cursor: 'pointer' }}
+              className="w-fit h-fit flex cursor-pointer p-4 rounded-full hover:bg-[#1C202414]"
             >
-              {isClicked ? <KeyboardArrowUp sx={{ width: 49, height: 40 }} /> : <KeyboardArrowDown sx={{ width: 49, height: 40 }} />}
-            </IconButton>
-          </Stack>
-        </Stack>
+              <DropDownSvg/>
+            </div>
+          </div>
+        </div>
       )}
-    </Stack>
+    </div>
   );
 };
 
