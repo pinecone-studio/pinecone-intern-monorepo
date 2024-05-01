@@ -39,6 +39,16 @@ export const Job = gql`
     createdAt: String!
     status: JobStatus!
   }
+  input UpdateJobInput {
+    title: String
+    description: String
+    requirements: RequirementInput
+    minSalary: String
+    maxSalary: String
+    dueDate: String
+    createdAt: String
+    status: JobStatus
+  }
 
   input RequirementInput {
     skill: String
@@ -57,5 +67,6 @@ export const Job = gql`
   type Mutation {
     deleteJob(id: ID!): Job!
     createJobRecruit(input: CreateJobInput!): Job!
+    updateJob(id: ID!, input: UpdateJobInput): Job!
   }
 `;
