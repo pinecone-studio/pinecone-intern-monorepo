@@ -1,9 +1,9 @@
 import DeleteIcon from "../../assets/DeleteIcon";
-type BackButtonProps = {
+type DeleteButtonProps = {
   onClick: () => void;
 };
 
-const DeleteButton:React.FC<BackButtonProps> = ({onClick}) => {
+const DeleteButton:React.FC<DeleteButtonProps> = ({onClick}) => {
   return (
     <button onClick={onClick} className=' p-[16px] border-[1px] border-solid shadow-md rounded-md ' data-testid="delete-button-test-id" >
         <DeleteIcon/>
