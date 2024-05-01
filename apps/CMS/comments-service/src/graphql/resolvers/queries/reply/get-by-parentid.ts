@@ -1,4 +1,4 @@
-import { errorTypes, graphqlErrorHandler } from '../error';
+import { errorTypes, graphqlErrorHandler } from '../../error';
 import { QueryResolvers } from '@/graphql/generated';
 import ReplyModel from '@/models/reply.model';
 export const getRepliesByParentId: QueryResolvers['getRepliesByParentId'] = async (_, { parentId }) => {

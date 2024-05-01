@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@/graphql/generated';
-import { errorTypes, graphqlErrorHandler } from '../error';
+import { errorTypes, graphqlErrorHandler } from '../../error';
 import { CommentsModel } from '@/models/comment.model';
 import { accessTokenAuth } from '@/middlewares/auth-token';
 
