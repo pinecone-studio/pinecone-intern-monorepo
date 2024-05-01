@@ -1,4 +1,3 @@
-import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { getArticlesByPaginate } from '@/graphql/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
