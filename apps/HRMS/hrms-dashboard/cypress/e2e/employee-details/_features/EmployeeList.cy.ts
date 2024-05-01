@@ -11,7 +11,7 @@ describe('Employee list page', () => {
   });
 
   it('3.should navigate to the correct page when pagination button is clicked', () => {
-    cy.get('.MuiPaginationItem-root').eq(2).click();
+    cy.get('[data-testid="page-button-2"]').click();
     cy.url().should('include', 'employees=2');
   });
 });
