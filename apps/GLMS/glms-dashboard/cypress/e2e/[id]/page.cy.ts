@@ -1,4 +1,4 @@
-describe('[id]', ()=>{
+describe(' course Id page should visit [id]', ()=>{
     beforeEach(()=>{
         cy.visit(`/6630947579f907760d17b9c7`)
     })

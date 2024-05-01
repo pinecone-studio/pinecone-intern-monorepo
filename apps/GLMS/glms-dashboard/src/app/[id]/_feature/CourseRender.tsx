@@ -2,7 +2,7 @@
 import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
 import DeleteButton from '../_components/DeleteButton';
-import EditButton from '../_components/Editbutton';
+import EditButton from '../_components/EditButton';
 import BackButton from '../_components/Backbutton';
 import { Course } from '@/generated/index';
 import CourseDesc from '../_components/CourseDesc';
@@ -10,9 +10,11 @@ import { useRouter } from 'next/navigation';
 
 const CourseRender = ({ data }: {data: Course | undefined}) => {
   const router= useRouter()
+
   const handleback = ( ) => {
    router.push('/dashboard')
   }
+
   return (
     <div className='bg-[#F7F7F8]'>
       <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[1536px] gap-[24px]" >

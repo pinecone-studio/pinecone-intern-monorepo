@@ -1,7 +1,9 @@
 import ArrowBackIcon from '../../assets/ArrowBackIcon';
+
 type BackButtonProps = {
   onClick: () => void;
 };
+
 const BackButton:React.FC<BackButtonProps>  = ({ onClick }) => {
   return (
     <div data-testid="prev-button-test-id">

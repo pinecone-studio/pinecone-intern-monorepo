@@ -1,4 +1,5 @@
 import { Course } from "@/generated/index"
+
 const CourseDesc = ({description}:Course) => {
   return (
     <p className="w-[950px] text-[18px]" data-testid="course-desc-test-id"  >{description}</p>

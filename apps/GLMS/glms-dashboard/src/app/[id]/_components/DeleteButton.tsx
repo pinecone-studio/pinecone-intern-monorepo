@@ -1,4 +1,5 @@
 import DeleteIcon from "../../assets/DeleteIcon";
+
 type DeleteButtonProps = {
   onClick: () => void;
 };
