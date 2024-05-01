@@ -132,7 +132,7 @@ describe('Create Employee Form', () => {
     cy.get('[data-cy="employmentStatusList"]').should('be.visible').eq(0).click();
     cy.get('[data-testid="createEmployeeBtn"]').should('not.be.disabled');
   });
-  it.only('11. When the user fill all input, submit button is not disabled', () => {
+  it('11. When the user fill all input, submit button is not disabled', () => {
     cy.get('[data-cy="addEmployeeBtn"]').should('exist').should('be.visible').click();
     cy.get('[data-testid="createEmployeeBtn"]').should('exist').click();
     cy.get('[data-testid="createEmployeeBtn"]').should('be.disabled');
