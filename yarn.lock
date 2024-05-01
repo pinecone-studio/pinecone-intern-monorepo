@@ -2,6 +2,10 @@
 # yarn lockfile v1
 # bun ./bun.lockb --hash: 19413428F4A59981-6289f1a459a3febe-DA7C67158A58AE77-3b7e450f14fa7cb9
 
+"@aashutoshrathi/word-wrap@^1.2.3":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
+  integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
 "@actions/github@6.0.0":
   version "6.0.0"
