@@ -9,6 +9,7 @@ type FormikTypes = {
 };
 const FileUploader = (props: FormikTypes) => {
   const { setFieldValue, thumbnail } = props;
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = Array.from(e.target.files);

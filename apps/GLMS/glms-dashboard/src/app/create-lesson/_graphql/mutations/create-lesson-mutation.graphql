@@ -1,0 +1,8 @@
+mutation CreateLesson($lessonInput: LessonInput!) {
+  createLesson(lessonInput: $lessonInput) {
+    title
+    thumbnail
+    position
+    courseId
+  }
+}
