@@ -6,3 +6,4 @@ export * from './get-article-by-id';
 export * from './get-articles-by-author-id';
 export * from './get-newest-article';
 export * from './get-articles-by-status';
+export * from './get-articles-by-paginate';

@@ -6,7 +6,7 @@ export const userSchema = gql`
     name: String!
     email: String
     phoneNumber: String
-    avatar: String!
+    avatar: String
     role: String!
     otp: String
   }
