@@ -156,7 +156,7 @@
         "cypressConfig": "apps/GLMS/glms-dashboard/cypress.config.ts",
         "testingType": "e2e",
         "reporter": "mochawesome",
-        "devServerTarget": "glms-dashboard:serve:testing",
+        "devServerTarget": "glms-dashboard:serve:development",
         "watch": true
       },
       "dependsOn": [
