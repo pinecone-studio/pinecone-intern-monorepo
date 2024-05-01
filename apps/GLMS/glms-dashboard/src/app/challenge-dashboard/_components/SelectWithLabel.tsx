@@ -10,8 +10,8 @@ export const SelectWithLabel = ({ label, options, selectedOption, onSelect }: IS
     <>
       <p style={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>{label}</p>
       <select className="flex w-[384px] h-[36px] border-[#D6D8DB] border-[1px] p-[8px] rounded-[8px]" value={selectedOption} onChange={onSelect}>
-        {options.map((e) => {
-          return <option>{e}</option>;
+        {options.map((e, i) => {
+          return <option key={i}>{e}</option>;
         })}
       </select>
     </>
