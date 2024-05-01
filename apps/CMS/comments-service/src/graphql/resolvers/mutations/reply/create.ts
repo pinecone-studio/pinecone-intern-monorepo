@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@/graphql/generated';
-import { errorTypes, graphqlErrorHandler } from '../error';
+import { errorTypes, graphqlErrorHandler } from '../../error';
 import ReplyModel from '@/models/reply.model';
 
 export const publishReply: MutationResolvers['publishReply'] = async (_, { createInput }) => {

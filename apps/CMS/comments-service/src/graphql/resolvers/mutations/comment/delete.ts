@@ -1,8 +1,10 @@
 import { MutationResolvers } from '@/graphql/generated';
 import { CommentsModel } from '@/models/comment.model';
-import { errorTypes, graphqlErrorHandler } from '../error';
+import { errorTypes, graphqlErrorHandler } from '../../error';
+import { accessTokenAuth } from '@/middlewares/auth-token';
 
-export const deleteComment: MutationResolvers['deleteComment'] = async (_, { deleteInput }) => {
+export const deleteComment: MutationResolvers['deleteComment'] = async (_, { deleteInput }, { req }) => {
+  await accessTokenAuth(req);
   try {
     const deletedComment = await CommentsModel.findByIdAndDelete(deleteInput._id);
     return deletedComment._id;

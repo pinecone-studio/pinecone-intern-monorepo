@@ -1,11 +1,15 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { deleteComment } from '@/graphql/resolvers/mutations';
+import { accessTokenAuth } from '@/middlewares/auth-token';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
     findByIdAndDelete: jest.fn(),
   },
+}));
+jest.mock('@/middlewares/auth-token', () => ({
+  accessTokenAuth: jest.fn(),
 }));
 
 describe('delete comment mutation', () => {
@@ -14,6 +18,7 @@ describe('delete comment mutation', () => {
   });
   const deleteInput = { _id: 'test' };
   it('should delete comment by id and return its ID', async () => {
+    (accessTokenAuth as jest.Mock).mockImplementation(() => {});
     jest.spyOn(CommentsModel, 'findByIdAndDelete').mockResolvedValue({
       _id: 'test',
     });

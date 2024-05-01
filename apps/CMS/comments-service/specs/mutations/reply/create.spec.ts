@@ -1,5 +1,5 @@
 import { publishReply } from '@/graphql/resolvers/mutations';
-import { errorTypes, graphqlErrorHandler } from '../../src/graphql/resolvers/error';
+import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
 import ReplyModel from '@/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 

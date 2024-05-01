@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@/graphql/generated';
 import { CommentsModel } from '@/models/comment.model';
-import { errorTypes, graphqlErrorHandler } from '../error';
+import { errorTypes, graphqlErrorHandler } from '../../error';
 export const publishComment: MutationResolvers['publishComment'] = async (_, { createInput }) => {
   try {
     const newComment = await CommentsModel.create(createInput);
