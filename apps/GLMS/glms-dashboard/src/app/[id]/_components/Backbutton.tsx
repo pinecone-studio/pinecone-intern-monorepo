@@ -1,14 +1,13 @@
-import ArrowBackIcon from "../../assets/ArrowBackIcon";
-
-
-const BackButton = () => {
+import ArrowBackIcon from '../../assets/ArrowBackIcon';
+type BackButtonProps = {
+  onClick: () => void;
+};
+const BackButton:React.FC<BackButtonProps>  = ({ onClick }) => {
   return (
     <div data-testid="prev-button-test-id">
-      <button className="flex justify-center items-center rounded-[8px] gap-[2px] w-[99px] ease-in">
-<ArrowBackIcon/>
-        <p >
-          Сэдвүүд
-        </p>
+      <button onClick={onClick} className="flex justify-center items-center rounded-[8px] gap-[2px] w-[99px] ease-in">
+        <ArrowBackIcon />
+        <p>Сэдвүүд</p>
       </button>
     </div>
   );
