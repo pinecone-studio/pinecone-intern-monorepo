@@ -4,23 +4,42 @@ import { fireEvent, render } from '@testing-library/react';
 
 describe('employee pagination component', () => {
   const props = {
-    pageCount: 5,
+    pageCount: 2,
     handleClick: jest.fn(),
-    searchPath: '1',
   };
 
-  it('pagination component render and click', () => {
-    const { container, getByTestId } = render(<EmployeePagination {...props} />);
-    expect(container).toBeDefined();
+  it('pagination component render ', () => {
+    const { getByTestId } = render(<EmployeePagination {...props} />);
+    const pagination = getByTestId('pagination');
+    expect(pagination).toBeDefined();
+  });
 
-    const beforeButton = getByTestId('NavigateBeforeIcon');
-    fireEvent.click(beforeButton);
+  it('decrements checked when previous button is clicked', () => {
+    const { getByTestId } = render(<EmployeePagination {...props} />);
+    const prevButton = getByTestId('before-button');
+    expect(prevButton).toBeDefined();
+    fireEvent.click(prevButton);
+    expect(props.handleClick).toHaveBeenCalledWith(1);
+  });
 
-    const nextButton = getByTestId('NavigateNextIcon');
+  it('increments checked when next button is clicked', () => {
+    const { getByTestId } = render(<EmployeePagination {...props} />);
+    const nextButton = getByTestId('after-button');
     fireEvent.click(nextButton);
+    expect(props.handleClick).toHaveBeenCalledWith(2);
+    const prevButton = getByTestId('before-button');
+    fireEvent.click(prevButton);
+    expect(props.handleClick).toHaveBeenCalledWith(1);
+  });
 
-    const pageButton = getByTestId('page-button');
-    expect(pageButton.getAttribute('count')).toBeDefined();
+  it('page button click', () => {
+    const { getByTestId } = render(<EmployeePagination {...props} />);
+    const pageButton = getByTestId('page-button-2');
+    expect(pageButton).toBeDefined();
     fireEvent.click(pageButton);
+    expect(props.handleClick).toHaveBeenCalledWith(2);
+    const nextButton = getByTestId('after-button');
+    fireEvent.click(nextButton);
+    expect(props.handleClick).toHaveBeenCalledWith(2);
   });
 });

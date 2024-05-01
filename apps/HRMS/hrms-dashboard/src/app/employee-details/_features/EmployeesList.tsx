@@ -27,6 +27,7 @@ export const EmployeesList = () => {
 
   const handleClick = (page: number) => {
     router.push(pathname + '?' + paginationFilter('employees', `${page}`));
+    console.log(page);
   };
 
   const [openNewEmployee, setOpenNewEmployee] = useState(false);
@@ -64,7 +65,7 @@ export const EmployeesList = () => {
           </Modal>
         </Stack>
         <EmployeesListTable setPageCount={setPageCount} start={start} end={end} />
-        <EmployeePagination data-cy="employee-pagination" pageCount={pageCount} handleClick={handleClick} searchPath={searchPath} />
+        <EmployeePagination data-cy="employee-pagination" pageCount={pageCount} handleClick={handleClick} />
       </Stack>
     </Stack>
   );
