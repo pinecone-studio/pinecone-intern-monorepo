@@ -1,9 +1,9 @@
 import React from 'react';
-import CustomInput from '../../src/app/login/_components/CustomInput';
 import { render } from '@testing-library/react';
+import FormInput from '../../src/app/login/_components/FormInput';
 describe('CustomInput', () => {
   it('it should render with correct props', () => {
-    const { getByTestId } = render(<CustomInput data-testid="kk" />);
+    const { getByTestId } = render(<FormInput data-testid="kk" />);
 
     const input = getByTestId('kk');
 
