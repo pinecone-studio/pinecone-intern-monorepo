@@ -1,6 +1,6 @@
 import React from "react"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { InputValue } from "../../../src/app/challenge-dashboard/_components/"
+import { InputValue } from "../../../src/app/challenge-dashboard/_components/InputValue"
 
 describe("Input", ()=>{
     it("Should render input component", () => {
