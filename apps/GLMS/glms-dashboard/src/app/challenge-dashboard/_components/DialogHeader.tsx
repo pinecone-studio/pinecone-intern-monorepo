@@ -1,18 +1,16 @@
-import { DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 type DialogHeaderType = {
   title: string;
   onClose: () => void;
 };
-
 export const DialogHeader = ({ title, onClose }: DialogHeaderType) => {
   return (
-    <div style={{ padding: '4px 15px 8px 15px' }}>
-      <DialogTitle sx={{ fontWeight: 700, fontSize: 24 }}>{title}</DialogTitle>
-      <IconButton data-testid="challenge-close-btn" aria-label="close" onClick={onClose} sx={{ position: 'absolute', right: 20, top: 20, color: (theme) => theme.palette.grey[500] }}>
+    <div className='px-6 py-2 flex justify-between'>
+      <h1 className='font-bold text-xl'>{title}</h1>
+      <button onClick={onClose} data-testid="challenge-close-btn" className=' hover:bg-black hover:text-white hover:rounded-md'>
         <CloseIcon />
-      </IconButton>
+      </button>
     </div>
   );
 };
