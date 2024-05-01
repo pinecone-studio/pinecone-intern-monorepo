@@ -1,9 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
-import deleted from '../../_components/asset/icons/successDeleted.png';
-import created from '../../_components/asset/icons/successCreated.png';
+import { DeletedSvg } from '../../../asset';
+import { CreatedSvg } from '../../../asset';
 
 type Props = {
   text: string;
@@ -19,7 +18,7 @@ export const CreateErrorModal = ({ text, label }: Props) => {
     setOpen(false);
   };
 
-  const message = label === 'Устгах' ? deleted.src : created.src;
+  const message = label === 'Устгах' ? <DeletedSvg /> : <CreatedSvg />;
 
   return (
     <div>
@@ -34,9 +33,7 @@ export const CreateErrorModal = ({ text, label }: Props) => {
             </button>
           </div>
           <div className="flex flex-col justify-center items-center mx-5 mb-2 gap-2">
-            <div className="rounded-md p-3">
-              <Image src={message} alt="png" width={50} height={50} />
-            </div>
+            <div className="rounded-md p-3">{message}</div>
             <p className="text-xl font-semibold text-black">{text}.</p>
           </div>
         </div>

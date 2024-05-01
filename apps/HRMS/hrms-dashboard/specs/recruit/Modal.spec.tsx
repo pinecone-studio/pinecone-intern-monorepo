@@ -1,20 +1,22 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { CreateErrorModal } from '../../src/app/recruiting/_features';
-import Image from 'next/image';
-import deleted from '../../src/app/recruiting/_components/asset/icons/successDeleted.png';
-import created from '../../src/app/recruiting/_components/asset/icons/successCreated.png';
 
 describe('<CreateErrorModal />', () => {
-  test('modal close and open when label and close button is clicked', () => {
-    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text="Aмжилттай устлаа" label="Устгах" />);
+  test('modal close and open when label "Устгах" and close button is clicked', () => {
+    const text = 'Test Message';
+    const labelDelete = 'Устгах';
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} label={labelDelete} />);
 
     const buttonElement = getByText('Устгах');
-    expect(getByText('Устгах')).toBeDefined();
+    expect(buttonElement).toBeDefined();
     fireEvent.click(buttonElement);
 
     const modalElementBefore = queryByTestId('modal');
     expect(modalElementBefore).toBeDefined();
+
+    const deletedSvg = getByTestId('deleted-svg');
+    expect(deletedSvg).toBeDefined();
 
     const closeButton = getByTestId('close-button');
     fireEvent.click(closeButton);
@@ -22,28 +24,26 @@ describe('<CreateErrorModal />', () => {
     const modalElementAfter = queryByTestId('modal');
     expect(modalElementAfter).toBeDefined();
   });
-  test('renders correct message based on label prop', () => {
-    const text = 'Test Message';
-    const labelDelete = 'Устгах';
-    const alt = 'png';
-    const src = deleted.src;
 
-    const { getByTestId: getByTestIdEdit } = render(<CreateErrorModal text={text} label={labelDelete} />);
-    render(<Image src={src} alt={alt} width={50} height={50} />);
-
-    const img = getByTestIdEdit('modal').querySelector('img');
-    expect(img!.getAttribute('alt')).toBe(alt);
-  });
-  test('renders correct message based on label prop', () => {
+  test('modal close and open when label "Засварлах" and close button is clicked', () => {
     const text = 'Test Message';
     const labelEdit = 'Засварлах';
-    const alt = 'png';
-    const src = created.src;
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} label={labelEdit} />);
 
-    const { getByTestId: getByTestIdEdit } = render(<CreateErrorModal text={text} label={labelEdit} />);
-    render(<Image src={src} alt={alt} width={50} height={50} />);
+    const buttonElement = getByText('Засварлах');
+    expect(buttonElement).toBeDefined();
+    fireEvent.click(buttonElement);
 
-    const img = getByTestIdEdit('modal').querySelector('img');
-    expect(img!.getAttribute('alt')).toBe(alt);
+    const modalElementBefore = queryByTestId('modal');
+    expect(modalElementBefore).toBeDefined();
+
+    const createdSvg = getByTestId('created-svg');
+    expect(createdSvg).toBeDefined();
+
+    const closeButton = getByTestId('close-button');
+    fireEvent.click(closeButton);
+
+    const modalElementAfter = queryByTestId('modal');
+    expect(modalElementAfter).toBeDefined();
   });
 });
