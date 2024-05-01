@@ -1,3 +1,4 @@
+'use client'
 export const SubmitButtons = () => {
   return (
     <div data-testid="contained-submit-buttons-id" className="flex flex-col gap-[20px]">
