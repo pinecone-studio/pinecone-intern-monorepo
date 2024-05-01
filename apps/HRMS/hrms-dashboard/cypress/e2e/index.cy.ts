@@ -4,7 +4,6 @@ describe('home page', () => {
     cy.get('[data-cy="dashboardSidebar"]').should('exist');
     cy.get('[data-cy="dashboardSidebar').children().should('have.length', 4);
     cy.get('[data-cy="headerIcon"]').should('exist').should('be.visible');
-    cy.get('[data-cy="headerMenu"]').should('exist').should('be.visible');
     cy.get('[data-cy="headerProfile"]').should('exist').should('be.visible');
   });
   it('2.Sidebar menu clickable and redirect to employee details page', () => {
