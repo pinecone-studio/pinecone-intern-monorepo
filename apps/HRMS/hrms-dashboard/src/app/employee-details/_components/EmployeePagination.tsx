@@ -51,7 +51,7 @@ export const EmployeePagination = ({ pageCount, handleClick }: PropsType) => {
           </button>
         );
       })}
-      <button data-testid="after-button" style={{ color: checked === pageCount ? 'text-gray-300 pl-3 ' : 'text-[#121316] pl-3' }} onClick={nextButton}>
+      <button data-testid="after-button" className={checked == pageCount ? 'text-gray-300 pl-3 cursor-none' : 'text-main pl-3'} onClick={nextButton}>
         <RightButton />
       </button>
     </div>
