@@ -1,2 +1,2 @@
-export * from './AdminNavigateLinksFeature';
-export * from './MenuBar';
+export { AdminNavigateLinksFeature } from './AdminNavigateLinksFeature';
+export { ArticleStatusTabsFeature } from './ArticleStatusTabsFeature';
