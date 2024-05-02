@@ -16,14 +16,12 @@ const Section = () => {
 
   const handleCreateSection = async () => {
    
-      if (!getSections) {
-        return;
-      }
+      if (!getSections)  return;
 
       const sectionData = JSON.parse(getSections);
 
-      await Promise.all(sectionData.map(async (el:FormValues) => {
-       await createSection({
+      await Promise.all(sectionData.map((el:FormValues) => {
+        createSection({
           variables: {        
               title: el.title,
               description: el.description  
