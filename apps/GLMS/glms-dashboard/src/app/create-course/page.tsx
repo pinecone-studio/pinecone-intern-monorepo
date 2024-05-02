@@ -1,12 +1,12 @@
 'use client';
 
-import { East, KeyboardBackspace } from '@mui/icons-material';
-import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '../../generated';
 import FileUploader from '../../components/FileUploader';
+import { ArrowLeft } from './assets/ArrowLeft';
+import { ArrowRight } from './assets/ArrowRight';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
@@ -49,7 +49,7 @@ const CourseAdd = () => {
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-lg  font-semibold items-center cursor-pointer"
         >
-          <KeyboardBackspace /> {'Нүүр'}
+          <ArrowLeft /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-8">
@@ -96,7 +96,7 @@ const CourseAdd = () => {
               }}
               disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
-              {'Үргэлжлүүлэх'} <East fontSize="small" />
+              {'Үргэлжлүүлэх'} <ArrowRight />
             </button>
           </div>
         </div>
