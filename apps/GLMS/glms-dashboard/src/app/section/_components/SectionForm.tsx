@@ -9,11 +9,11 @@ const SectionForm = ({ title, description}: { title: string; description: string
       <div className="'flex flex-col gap-4 border-2 border-dashed rounded-4 p-8 border-[#D6D8DB] rounded-[8px]">
         <div className="flex flex-col py-2">
           <p className="font-bold">Хэсгийн гарчиг</p>
-          <input data-testid="title" className="w-[588px] h-[56px] border rounded-[4px] p-2" value={title || ''}></input>
+          <div data-testid="title" className="w-[588px] h-[56px] border rounded-[4px] p-2" >{title}</div>
         </div>
         <div className="flex flex-col py-2">
           <p className="font-bold">Дэлгэрэнгүй</p>
-          <input data-testid="description" className="w-[588px] h-[56px] border rounded-[4px] p-2" value={description || ''}></input>
+          <div data-testid="description" className="w-[588px] h-[56px] border rounded-[4px] p-2" >{description}</div>
         </div>
         <div className="flex flex-col py-2">
           <p className="font-bold"> Хичээлийн зураг</p>

@@ -1,5 +1,4 @@
 "use client"
-import { error } from 'console';
 import AddSection from './_features/AddSection';
 import ArrowBackIcon from './assets/ArrowBackIcon';
 import { useCreateSectionMutation } from '@/generated/index';
@@ -16,7 +15,7 @@ const Section = () => {
   const [createSection] = useCreateSectionMutation();
 
   const handleCreateSection = async () => {
-    try {
+   
       if (!getSections) {
         return;
       }
@@ -24,7 +23,7 @@ const Section = () => {
       const sectionData = JSON.parse(getSections);
 
       await Promise.all(sectionData.map(async (el:FormValues) => {
-        const res = await createSection({
+       await createSection({
           variables: {        
               title: el.title,
               description: el.description  
@@ -32,10 +31,6 @@ const Section = () => {
         });
         localStorage.clear()
       }));
-
-    } catch (error) {
-        throw error
-    }
   };
 
   return (
