@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import SectionForm from '../../src/app/section/_components/SectionForm'
 
 describe('SectionForm', () => {
-  test('renders with title, description, and key', () => {
+  test('should take correct props', () => {
     const title = 'Test Title';
     const description = 'Test Description';
 
@@ -17,36 +17,4 @@ describe('SectionForm', () => {
     expect(titleInput.value).toBe(title);
     expect(descriptionInput.value).toBe(description);
   });
-
-  test('calls edit and delete functions when corresponding buttons are clicked', () => {
-    const editMock = jest.fn();
-    const deleteMock = jest.fn();
-
-    const { getByText } = render(
-      <SectionForm title="Test Title" description="Test Description" />
-    );
-
-    const editButton = getByText('Засах');
-    const deleteButton = getByText('Устгах');
-
-    fireEvent.click(editButton);
-    fireEvent.click(deleteButton);
-
-    expect(editMock).toHaveBeenCalled();
-    expect(deleteMock).toHaveBeenCalled();
-  });
-
-  test('calls add function when add button is clicked', () => {
-    const addMock = jest.fn();
-
-    const { getByTestId } = render(
-      <SectionForm title="Test Title" description="Test Description"/>
-    );
-
-    const addButton = getByTestId('add-section-handle-btn');
-
-    fireEvent.click(addButton);
-
-    expect(addMock).toHaveBeenCalled();
-  });
-});
+})

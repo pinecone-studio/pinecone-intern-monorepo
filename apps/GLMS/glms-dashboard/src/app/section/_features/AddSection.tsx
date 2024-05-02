@@ -68,7 +68,7 @@ const AddSection = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={Boolean(formik.errors.title)}
-          helperText={formik.touched.title && formik.errors.title}
+          helperText={formik.errors.title}
         />
         <SectionInputForm
           name='description'
@@ -79,7 +79,7 @@ const AddSection = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={Boolean(formik.errors.description)}
-          helperText={formik.touched.description && formik.errors.description}
+          helperText={ formik.errors.description}
         />
         <div>
           <p className='font-bold'> Хичээлийн зураг</p>
