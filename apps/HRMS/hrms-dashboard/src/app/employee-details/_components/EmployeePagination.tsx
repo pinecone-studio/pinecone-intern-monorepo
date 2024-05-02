@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { LeftArrow, RightButton } from './SVG';
+import { LeftArrow, RightButton } from '../../asset';
 
 type PropsType = {
   pageCount: number;
