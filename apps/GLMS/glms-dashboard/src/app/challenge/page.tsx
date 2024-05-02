@@ -5,9 +5,8 @@ import ChoiceImage from './_components/ChoiceImage';
 import { useState } from 'react';
 
 const ChallengePage = () => {
-  const { data, loading } = useGetChallengesByStatusQuery({});
+  const { data, loading } = useGetChallengesByStatusQuery();
   const [selectedChoice, setSelectedChoice] = useState('');
-  console.log(selectedChoice);
   return (
     <div>
       <h1>Welcome to Challenge page</h1>
