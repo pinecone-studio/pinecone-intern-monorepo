@@ -27,7 +27,6 @@ export const EmployeesList = () => {
 
   const handleClick = (page: number) => {
     router.push(pathname + '?' + paginationFilter('employees', `${page}`));
-    console.log(page);
   };
 
   const [openNewEmployee, setOpenNewEmployee] = useState(false);

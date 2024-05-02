@@ -37,7 +37,6 @@ export const EmployeePagination = ({ pageCount, handleClick }: PropsType) => {
       <button data-testid="before-button" className={checked == 1 ? 'text-gray-300 pr-3 cursor-none' : 'text-main pr-3'} onClick={prevButton}>
         <LeftArrow />
       </button>
-
       {paginationPageCount.map((value, index) => {
         return (
           <button
