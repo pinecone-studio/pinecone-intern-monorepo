@@ -1,5 +1,5 @@
 import { Article } from '../../../generated';
-import { EditButton } from '../../assets/EditButtonSvg';
+import { EditButtonSvg } from '../../assets/EditButtonSvg';
 import ArticleMenuButton from '../_components/ArticleMenuButton';
 
 const tableItems = ['Огноо', 'Статус', 'Ангилал'];
@@ -57,7 +57,7 @@ const DashboardTableT = (props: DashboardTableProps) => {
                   <td>
                     <div className="flex justify-center">
                       <ArticleMenuButton id={item.id} />
-                      <EditButton />
+                      <EditButtonSvg />
                     </div>
                   </td>
                 </tr>

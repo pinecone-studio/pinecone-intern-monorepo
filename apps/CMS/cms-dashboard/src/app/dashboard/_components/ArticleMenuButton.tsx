@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import { LinkButton } from '../../assets/LinkButtonSvg';
-import { MorevertButton } from '../../assets/TableMorevertSvg';
-import { ArchiveButton } from '../../assets/ArchiveButton';
+import { LinkButtonSvg } from '../../assets/LinkButtonSvg';
+import { MorevertButtonSvg } from '../../assets/TableMorevertSvg';
+import { ArchiveButtonSvg } from '../../assets/ArchiveButtonSvg';
 
 const ArticleMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
@@ -32,20 +32,16 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
   return (
     <div className="relative dropdown">
       <div data-testid="menu-button-test-id" tabIndex={0} role="button" onClick={handleClick}>
-        <MorevertButton />
+        <MorevertButtonSvg />
       </div>
 
       <div className="absolute left-[-50px] top-8">
         {anchorEl && (
-          <div
-            onClick={() => {
-              handleClose();
-            }}
-          >
+          <div onClick={handleClose}>
             <ul tabIndex={0} className="dropdown-content z-10 menu p-2 shadow rounded-xl border border-slate-200">
               <li data-testid="close-menu-button-test-id" className="z-10 bg-white">
                 <a>
-                  <ArchiveButton />
+                  <ArchiveButtonSvg />
                   Архив
                 </a>
               </li>
@@ -58,7 +54,7 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
                 }}
               >
                 <a className="whitespace-nowrap">
-                  <LinkButton />
+                  <LinkButtonSvg />
                   Линк хуулах
                 </a>
               </li>

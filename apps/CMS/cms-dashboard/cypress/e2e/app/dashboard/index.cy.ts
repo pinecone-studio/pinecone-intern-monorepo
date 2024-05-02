@@ -15,4 +15,8 @@ describe('dashboard page', () => {
   it('AdminNavigateLinksFeature must be defined', () => {
     cy.get('[data-cy="admin-navigate-links-feature-cy-id"]').should('exist');
   });
+
+  it('Dashboard table', () => {
+    cy.get('[data-cy="dashboard-table-cy"]').should('exist').should('be.visible');
+  });
 });
