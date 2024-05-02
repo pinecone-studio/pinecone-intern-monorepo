@@ -9,12 +9,12 @@ export const SelectButton: React.FC<SelectButtonProps> = ({ options, selectedOpt
     <select
       value={selectedOption}
       onChange={handleSelectChange}
-      data-testid="select-button"
       data-cy="select-button"
+      data-testid="select-button"
       style={{ height: '36px', width: '100%', borderRadius: '8px', border: '1px solid #D6D8DB', background: '#FEFEFE' }}
     >
       {options.map((option, index) => (
-        <option key={index} value={option} data-testid="select-option">
+        <option key={index} value={option}>
           {option}
         </option>
       ))}

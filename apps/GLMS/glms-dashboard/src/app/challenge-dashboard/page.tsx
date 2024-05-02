@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { RadioButton, SelectButton, Button } from './_components';
-import { AddChallengeModal } from './_feature/AddChallengeModal';
 import { Box } from '@mui/material';
 
 const Page = () => {
@@ -21,10 +20,7 @@ const Page = () => {
       <Box data-cy="radio-button">
         <RadioButton checked={checked} handleRadioButtonChecked={handleRadioButtonChecked} />
       </Box>
-      <SelectButton data-cy="select-button" handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
-      <Box>
-        <AddChallengeModal data-cy="add-challenge-button" />
-      </Box>
+      <SelectButton handleSelectChange={handleSelectChange} options={['yuu', 'bn', 'da']} selectedOption={selectedOption} />
       <Button label={'text'} />
     </Box>
   );
