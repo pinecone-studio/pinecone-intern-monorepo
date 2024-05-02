@@ -1,59 +1,69 @@
-import { createSection } from '@/graphql/resolvers/mutations';
+import { createSection } from '@/graphql/resolvers/mutations'; // Adjust the path as needed
 import sectionModel from '@/model/section-model';
+import { GraphQLError } from 'graphql';
 
 jest.mock('@/model/section-model', () => ({
-  create: jest.fn(),
+  insertMany: jest.fn(),
 }));
 
-describe('createContents resolver', () => {
+describe('createSection resolver', () => {
   beforeEach(() => {
-      jest.clearAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('should create content with provided data', async () => {
-      const mockInput = {
-        sectionInput: {
-          title: 'Test Title',
-          description: 'Test Description',
-          contentImage: 'Test Image URL'
-        }
-      };
-
-      const mockNewContent = {
-          id: '321321',
-          title:mockInput.sectionInput.title,
-          description:mockInput.sectionInput.description,
-          contentImage:mockInput.sectionInput.contentImage,
-
-      };
-
-      (sectionModel.create as jest.Mock).mockResolvedValue(mockNewContent);
-      const result = await createSection({}, mockInput);
-
-      expect(sectionModel.create).toHaveBeenCalledWith(mockInput.sectionInput);
-      expect(result).toEqual(mockNewContent);
-  });
-  it('should throw an error if content creation fails', async () => {
-    const mockInput = {
+  it('should create a section with provided data', async () => {
+    const mockInput = [
+      {
         title: 'Test Title',
         description: 'Test Description',
         contentImage: 'Test Image URL'
+      }
+    ];
+
+    const mockNewSection = [
+      {
+        id: '123',
+        title: 'Test Title',
+        description: 'Test Description',
+        contentImage: 'Test Image URL',
+        createdAt: '2024-05-05T00:00:00.000Z' 
+      }
+    ];
+
+    (sectionModel.insertMany as jest.Mock).mockResolvedValue(mockNewSection);
+
+    const result = await createSection({}, { sectionInput: mockInput });
+
+    expect(sectionModel.insertMany).toHaveBeenCalledWith(mockInput);
+    expect(result).toEqual(mockNewSection);
+  });
+
+  it('should throw an error if section creation fails', async () => {
+    const mockInput = [
+      {
+        title: 'Test Title',
+        description: 'Test Description',
+        contentImage: 'Test Image URL'
+      }
+    ];
+
+    const mockError = new Error('cannot find content');
+
+    (sectionModel.insertMany as jest.Mock).mockRejectedValue(mockError);
+
+    await expect(createSection({}, { sectionInput: mockInput })).rejects.toThrow(GraphQLError);
+  });
+  it('should throw an error if section creation fails', async () => {
+    const mockInput = {
+      title: 'Test Title',
+      description: 'Test Description',
+      contentImage: 'Test Image URL'
     };
 
     const mockError = new Error('cannot find content');
 
-    (sectionModel.create as jest.Mock).mockRejectedValue(mockError);
+    (sectionModel.insertMany as jest.Mock).mockRejectedValue(mockError);
 
-    await expect(createSection({}, mockInput)).rejects.toThrow(mockError);
-});
-
-  it('should throw an unknown error if the error type is not recognized', async () => {
-      const mockInput = {
-          title: 'Test Title',
-          description: 'Test Description',
-          contentImage: 'Test Image URL'
-      };
-      (sectionModel.create as jest.Mock).mockRejectedValue('Unknown error');
-      await expect(createSection({}, mockInput)).rejects.toThrow('cannot find content');
+    await expect(createSection({}, { sectionInput: mockInput })).rejects.toThrow(GraphQLError);
   });
-})
+});
