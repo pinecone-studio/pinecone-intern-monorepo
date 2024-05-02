@@ -1,5 +1,5 @@
 'use client';
-import { TextOrFileQuestionCreate } from './_components/TextOrFileCreateQuestion';
+import { TextOrFileQuestionCreate } from './_components';
 
 const Page = () => {
   return (
