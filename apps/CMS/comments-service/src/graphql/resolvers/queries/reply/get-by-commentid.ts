@@ -1,6 +1,6 @@
 import { errorTypes, graphqlErrorHandler } from '../../error';
-import { QueryResolvers } from '@/graphql/generated';
-import ReplyModel from '@/models/reply.model';
+import { QueryResolvers } from '../../../generated/index';
+import ReplyModel from '../../../../models/reply.model';
 export const getRepliesByCommentId: QueryResolvers['getRepliesByCommentId'] = async (_, { commentId }) => {
   try {
     const replies = await ReplyModel.find({ commentId });

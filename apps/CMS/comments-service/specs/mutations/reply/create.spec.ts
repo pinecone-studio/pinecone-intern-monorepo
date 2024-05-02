@@ -1,6 +1,6 @@
-import { publishReply } from '@/graphql/resolvers/mutations';
+import { publishReply } from '../../../src/graphql/resolvers/mutations/reply/create';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import ReplyModel from '@/models/reply.model';
+import ReplyModel from '../../../src/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/reply.model', () => ({
