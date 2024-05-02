@@ -1,11 +1,11 @@
 'use client';
 
 type ArticlesProps = {
-  cover?: string;
+  cover: string;
   date?: string;
   title?: string;
   category?: string;
-  description?: string;
+  description: string;
 };
 
 const ArticleCard = (props: ArticlesProps) => {
@@ -29,7 +29,7 @@ const ArticleCard = (props: ArticlesProps) => {
         <p data-testid="article-title" className="font-bold text-2xl">
           {title}
         </p>
-        <p data-testid="article-description" className="text-lg max-w-[564px] max-h-[56px] truncate text-[#3F4145]">{description}</p>
+        <div data-testid="article-description" dangerouslySetInnerHTML={{__html:description}} className="text-lg max-w-[564px] max-h-[56px] truncate "/>
       </div>
     </div>
   );
