@@ -30,6 +30,8 @@ export const LeaveRequestTypeDefs = gql`
     superVisor: String
     durationType: DurationType!
     declinedReasoning: String
+    email: String!
+    substitute: String
   }
 
   type LeaveRequest {
@@ -51,6 +53,7 @@ export const LeaveRequestTypeDefs = gql`
     getRequests: [LeaveRequest!]!
     getRequestById(_id: ID!): LeaveRequest
     getRequestByMonth(startDate: Date): [LeaveRequest]!
+    getRequestToday(startDate:Date): [LeaveRequest]
   }
 
   type Mutation {

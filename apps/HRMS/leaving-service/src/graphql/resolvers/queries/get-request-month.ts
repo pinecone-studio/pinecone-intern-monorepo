@@ -8,12 +8,12 @@ export const getRequestByMonth: QueryResolvers['getRequestByMonth'] = async (_, 
         const month = Number(startDate.slice(5, 7));
     
         const startDateOfMonth = new Date(year, month - 1, 1);
-        const endDateOfMonth = new Date(year, month, 0);
+        const firstDateOfNextMonth = new Date(year, month, 1);
     
         const getMonth = await LeaveRequestModel.find({
             startDate: {
                 $gte: startDateOfMonth,
-                $lte: endDateOfMonth
+                $lte: firstDateOfNextMonth
             }
         });
         return getMonth;

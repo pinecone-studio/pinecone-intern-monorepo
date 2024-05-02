@@ -1,95 +1,80 @@
 'use client';
-import { Button, Container, Grid, Stack, Typography } from '@mui/material';
-import { Add } from '@mui/icons-material';
 import { Book } from './assets/Book';
 import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated/index';
+import PlusIcon from '../assets/PlusIcon';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
-  const {data} = useGetCoursesQuery() 
+  const { data } = useGetCoursesQuery();
   const router = useRouter();
   const [actionTab, setActionTab] = useState('Хичээл');
 
   return (
-    <Stack data-testid="outerStack" bgcolor={'#ECEDF0'} minHeight={'100vh'} data-cy="Dashboard-Lab-Page">
-      <Stack bgcolor={'white'} width={'100%'}>
-        <Stack borderBottom={'1px solid #0000001A'} borderTop={'1px solid #0000001A'}>
-          <Container maxWidth="xl" sx={{ display: 'flex' }}>
-            <Stack width={'50%'} py={'34px'} gap={4}>
-              <Stack>
-                <Typography data-testid="title1" color={'#121316'} fontSize={36} fontWeight={500}>
-                  {'Сайн уу?'}
-                </Typography>
-                <Typography data-testid="title2" color={'#121316'} fontSize={36} fontWeight={700}>
-                  {'Өдрийн мэнд'}
-                </Typography>
-              </Stack>
-              <Stack direction={'row'} gap={2}>
-                <Button
+    <div data-testid="outerStack" className=" bg-[#ECEDF0] min-h-fit" data-cy="Dashboard-Lab-Page">
+      <div className="bg-white w-full">
+        <div className=" border-b-[1px] border-solid border-[#0000001A] border-t-[1px]  ">
+          <div className=" mr-auto ml-auto px-[24px] flex max-w-[1536px]">
+            <div className=" w-[50%] gap-[4px] py-[34px]">
+              <div>
+                <p data-testid="title1" className="color-[#121316] text-[36px] font-medium">
+                  Сайн уу?
+                </p>
+                <p data-testid="title2" className="color-[#121316] text-[36px] font-bold">
+                  Өдрийн мэнд
+                </p>
+              </div>
+              <div className="flex gap-[16px]">
+                <button
                   data-testid="button1"
                   onClick={() => router.push('/create-course')}
-                  variant="outlined"
+                  className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
                   color="inherit"
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    border: 'solid 2px #121316',
-                    borderRadius: '8px',
-                    gap: '2px',
-                    '&:hover': { background: 'black', color: 'white' },
-                  }}
-                  endIcon={<Add />}
                 >
-                  Хичээл
-                </Button>
+                  Сэдэв <PlusIcon/>
+                </button>
                 <AddChallengeModal />
-              </Stack>
-            </Stack>
-            <Stack width={'50%'} alignItems={'center'}>
+              </div>
+            </div>
+            <div className=" w-1/2 flex items-center">
               <Book />
-            </Stack>
-          </Container>
-        </Stack>
-        <Stack borderBottom={'1px solid #0000001A'}>
-          <Container maxWidth="xl">
+            </div>
+          </div>
+        </div>
+        <div className=" border-b-[1px] border-solid border-[#0000001A]">
+          <div className=" mr-auto ml-auto px-[24px] flex max-w-[1536px]">
             {buttonsBottom.map((name) => (
-              <Button
+              <button
                 data-testid="tab1"
                 data-cy={name}
                 onClick={() => {
                   setActionTab(name);
                 }}
                 key={name}
-                variant="text"
-                size="large"
-                color="inherit"
-                sx={{ borderBottom: `${actionTab == name ? '2px solid #121316' : null}`, borderRadius: '0px' }}
+                className={`text-lg font-medium py-2 px-4 ${actionTab === name ? 'border-b-2 border-black' : ''}`}
               >
                 {name}
-              </Button>
+              </button>
             ))}
-          </Container>
-        </Stack>
-      </Stack>
-      <Stack width={'100%'}>
-        <Container maxWidth="xl">
-          <Grid container width={'100%'}>
-            {data?.getCourses
-              .map((data) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data.title} p={1}>
-                  <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
-                </Grid>
-              ))}
-          </Grid>
-        </Container>
-      </Stack>
-    </Stack>
+          </div>
+        </div>
+      </div>
+      <div className=" w-full">
+        <div className=" mr-auto ml-auto px-[24px] flex max-w-[1536px]">
+          <div className=" flex flex-wrap box-border  h-full w-full">
+            {data?.getCourses.map((data) => (
+              <div onClick={()=> router.push(`${data.id}`)} className="p-2" key={data.id}>
+                <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default DashboardOtherLab;

@@ -1,7 +1,6 @@
 'use client';
 
-import { Button as MuiButton } from '@mui/material';
-import PlusIcon from '../icons/PlusIcon';
+import { FaPlus } from 'react-icons/fa';
 
 interface IButtonProps {
   label: string;
@@ -10,33 +9,15 @@ interface IButtonProps {
   btnType?: 'contained' | 'outlined';
   onClick?: () => void;
   plusIcon?: boolean;
-  style?: React.CSSProperties;
 }
 
-export const Button = ({ label, onClick, disabled = false, btnType = 'contained', href, plusIcon }: IButtonProps) => {
+export const Button = ({ label, onClick, disabled, btnType = 'contained', plusIcon }: IButtonProps) => {
+  const btnTypeStyle = btnType === 'contained' ? 'btn bg-[#121316] text-white' : 'btn btn-outline text-[#121316] border-[#D6D8DB]';
+
   return (
-    <MuiButton
-      href={href}
-      onClick={onClick}
-      color="primary"
-      variant={btnType}
-      disabled={disabled}
-      sx={{
-        fontSize: '14px',
-        fontWeight: '400',
-        padding: '10px 14px',
-        color: btnType === 'outlined' ? '#121316' : 'white',
-        border: btnType === 'outlined' ? 1 : 0,
-        borderColor: btnType === 'outlined' ? '#121316' : '',
-        borderRadius: '8px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-      }}
-      size="medium"
-    >
+    <button className={`text-[14px] px-[14px] py-[10px] rounded-[8px] items-center gap-2 flex hover:bg-slate-700 ${btnTypeStyle}`} disabled={disabled} onClick={onClick}>
       {label}
-      {plusIcon && <PlusIcon />}
-    </MuiButton>
+      {plusIcon && <FaPlus color="white" />}
+    </button>
   );
 };
