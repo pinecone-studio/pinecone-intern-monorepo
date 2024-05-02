@@ -17,4 +17,7 @@ describe('Employee Details page', () => {
     cy.get('.MuiPagination-ul ').find('li:last-child').click();
     cy.get('.MuiPaginationItem-root').eq(0).click();
   });
+  it('employmentinfo component', () => {
+    cy.get('[data-testid="employment-info"]').should('exist');
+  });
 });

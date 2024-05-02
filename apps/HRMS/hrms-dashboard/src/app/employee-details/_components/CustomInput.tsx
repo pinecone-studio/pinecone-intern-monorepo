@@ -1,3 +1,11 @@
+// todo:
+// make the employee update with appolos
+//  connect the inputs to the database
+// make custom changes in CustomInput with the inputs
+// for the design:
+// tutslah hadgalah button iig compenent bolgoj Jest Bichih
+// Hamgiin suuld Cypress bichih
+
 import { Stack, TextField, TextFieldProps, Typography } from '@mui/material';
 type CustomInputProps = {
   label: string;

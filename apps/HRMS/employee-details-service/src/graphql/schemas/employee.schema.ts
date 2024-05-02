@@ -128,6 +128,14 @@ export const employeeDetailsSchema = gql`
     dependency: String
   }
 
+  input UpdateEmploymentInput {
+    id: ID
+    department: ID
+    jobTitle: [String]
+    dateOfReleased: Date
+    employmentStatus: EmploymentStatus
+  }
+
   type Query {
     getDependent(id: ID!): Dependent!
     getAllEmployee: [Employee]
@@ -141,5 +149,6 @@ export const employeeDetailsSchema = gql`
     deletedDependent(id: ID!): Dependent!
     deleteEmployee(id: ID!): Employee!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
+    updateEmployment(id: ID!, input: UpdateEmploymentInput!): Employee!
   }
 `;
