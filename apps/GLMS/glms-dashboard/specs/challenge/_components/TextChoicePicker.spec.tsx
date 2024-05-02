@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
-import ChoiceText from '../../../src/app/challenge/_components/ChoiceText';
+import ChoiceText from '../../../src/app/challenge/_components/TextChoicePicker';
 
 describe('ChoiceText component', () => {
   const mockChoice = { _id: '123', choice: 'Test choice' };
@@ -23,7 +23,7 @@ describe('ChoiceText component', () => {
   it('applies unchecked style when selected choice does not match', () => {
     const { container } = render(<ChoiceText choice={mockChoice} selectedChoice="456" handleChange={mockHandleChange} />);
     const choiceDiv = container.firstChild;
-    expect(choiceDiv).toHaveClass('flex w-[588px] justify-center items-center border border-[#ECEDF0] h-[72px] rounded-[12px] p-4}');
+    expect(choiceDiv).toHaveClass('flex w-[588px] justify-center items-center border h-[72px] rounded-[12px] p-4 border-[#ECEDF0]}');
   });
 
   it('radio button should have click', () => {

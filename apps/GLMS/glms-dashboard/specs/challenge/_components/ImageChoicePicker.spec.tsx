@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ChoiceImage from '../../../src/app/challenge/_components/ChoiceImage';
+import ChoiceImage from '../../../src/app/challenge/_components/ImageChoicePicker';
 
 describe('ChoiceImage Component', () => {
   const choice = { _id: '1', choice: 'image-url.jpg' };
