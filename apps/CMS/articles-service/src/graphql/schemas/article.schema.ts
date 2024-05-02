@@ -57,7 +57,7 @@ export const articleSchema = gql`
   type Query {
     getArticlesQuery: [Article]!
     getArticleByID(id: ID!): Article!
-    getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article!]!
+    getArticlesByCategory(categoryId: String!, quantity: Int!): [Article!]!
     getArticlesByCategoryNoLimit(categoryId: String!): [Article!]!
     getArticlesByQuantity(quantity: Int!): [Article]!
     getNewestArticle: Article!
