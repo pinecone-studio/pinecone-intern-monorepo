@@ -1,6 +1,6 @@
 import React from "react"
-import { fireEvent, render, screen , act} from "@testing-library/react"
-import { Input } from "../../../glms-dashboard/src/app/challenge-dashboard/_components"
+import { fireEvent, render, screen } from "@testing-library/react"
+import { Input } from "../../../src/app/challenge-dashboard/_components"
 
 describe("Input", ()=>{
     it("Should render input component", () => {
