@@ -9,6 +9,7 @@ export const employeeDetailsSchema = gql`
     firstName: String
     lastName: String
     email: String
+    phone: String
     imageUrl: String
     department: Department
     jobTitle: String
@@ -94,6 +95,7 @@ export const employeeDetailsSchema = gql`
     department: Department
     jobTitle: [String]
     ladderLevel: Int
+    phone: String
     salary: Float
     bankName: String
     bankAccountNumber: Float
@@ -102,11 +104,11 @@ export const employeeDetailsSchema = gql`
   }
 
   input UpdatePersonalInformationInput {
-    gender: Gender
-    dateOfBirth: Date
-    registrationNumber: String
+    id: ID
+    firstName: String
     phone: String
-    hobby: [String]
+    email: String
+    jobTitle: [String]
   }
 
   input UpdateFamilyInformationInput {
@@ -154,5 +156,6 @@ export const employeeDetailsSchema = gql`
     deletedDependent(id: ID!): Dependent!
     deleteEmployee(id: ID!): Employee!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
+    personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
   }
 `;
