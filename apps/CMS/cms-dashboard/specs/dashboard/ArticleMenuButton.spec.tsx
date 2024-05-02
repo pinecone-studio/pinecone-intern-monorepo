@@ -8,6 +8,8 @@ Object.assign(navigator, {
   },
 });
 
+jest.useFakeTimers();
+
 describe('Should render article menu button', () => {
   it('1. Article Menu Button', () => {
     render(<ArticleMenuButton id="123" />);
@@ -62,6 +64,10 @@ describe('Should render article menu button', () => {
 
     await waitFor(() => {
       expect(mockTest).toHaveBeenCalledWith(`${window.location.origin}/articles/edit-article/${id}`);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(1300);
     });
   });
 });

@@ -1,16 +1,20 @@
-import ArticleMenuButton from './_components/ArticleMenuButton';
+'use client';
+
+import { Article, useGetArticlesQueryQuery } from '../../generated';
 import { SearchInput } from './_components/SearchInput';
 import { AdminNavigateLinksFeature, ArticleStatusTabsFeature } from './_features';
+import DashboardTableT from './_features/DashboardTableT';
 
 const Home = () => {
+  const { data: article } = useGetArticlesQueryQuery();
+  const articles = article?.getArticlesQuery as Article[] | undefined;
+
   return (
-    <div className="w-full max-w-screen-xl mx-auto">
-      <div className="flex flex-col gap-[10px]">
-        <ArticleStatusTabsFeature />
-        <SearchInput />
-        <ArticleMenuButton id="661c87fd6837efa536464d26" />
-        <AdminNavigateLinksFeature />
-      </div>
+    <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto">
+      <SearchInput />
+      <DashboardTableT articles={articles} />
+      <ArticleStatusTabsFeature />
+      <AdminNavigateLinksFeature />
     </div>
   );
 };
