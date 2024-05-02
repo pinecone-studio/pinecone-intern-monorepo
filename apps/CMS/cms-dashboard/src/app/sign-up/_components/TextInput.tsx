@@ -1,5 +1,4 @@
-import { IconButton, Input } from '@material-tailwind/react';
-import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, ReactNode, useState } from 'react';
 import { MdVisibility } from 'react-icons/md';
 import { MdVisibilityOff } from 'react-icons/md';
 
@@ -11,54 +10,39 @@ type TextInputProps = {
   placeholder: string;
   type: string;
   value: string;
-  error?: boolean;
-  crossOrigin: string;
+
+  helperText?: string;
 };
 
 const TextInput = (props: TextInputProps) => {
+  const { name, label, type = 'text', onChange, onBlur, value, placeholder, helperText } = props;
+
   const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => {
+
+  const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
-  const { name, label, type = 'text', onChange, onBlur, value, error, crossOrigin, placeholder } = props;
 
   return (
-    <div className="gap-1">
-      <div className="gap-1">
-        <h1>{label}</h1>
-        <div className="flex flex-row relative">
-          <Input
-            type={type === 'password' && showPassword ? 'text' : type}
-            className="py-[14px] px-[16px] bg-[#ECEDF0] w-full text-black"
-            name={name}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            error={error}
-            crossOrigin={crossOrigin}
-          />
-          <IconButton className="w-7 h-7 flex items-center" variant="text" onClick={handleShowPassword}>
-            {showPassword ? <MdVisibility size="medium" /> : <MdVisibilityOff size="medium" />}
-          </IconButton>
-        </div>
-      </div>
-      <div className="gap-1">
-        <h1>{label}</h1>
-        <label className="input input-bordered flex items-center gap-2  bg-[#ECEDF0]">
-          <input
-            className="py-[24px] w-full text-black"
-            type={type === 'password' && showPassword ? 'text' : type}
-            name={name}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            placeholder={placeholder}
-          />
-          <button onClick={handleShowPassword} className="btn btn-circle w-7 h-7 bg-transparent">
-            {showPassword ? <MdVisibility size="small" className="bg-red" /> : <MdVisibilityOff size="small" />}
+    <div className="flex flex-col gap-1">
+      <h1 className="text-lg">{label}</h1>
+      <label className="input flex items-center gap-2  bg-[#ECEDF0] border border-black border-solid rounded-none">
+        <input
+          className="py-[24px] w-full text-black"
+          type={type === 'password' ? (showPassword ? 'text' : type) : type}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          placeholder={placeholder}
+        />
+        {type === 'password' && (
+          <button onClick={togglePassword} className="btn btn-circle w-7 h-7 border-none bg-transparent hover:bg-transparent shadow-none">
+            {showPassword ? <MdVisibilityOff size="small" /> : <MdVisibility size="small" />}
           </button>
-        </label>
-      </div>
+        )}
+      </label>
+      <p className="text-red-700 text-2">{helperText}</p>
     </div>
   );
 };

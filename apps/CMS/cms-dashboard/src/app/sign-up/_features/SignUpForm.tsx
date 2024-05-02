@@ -65,45 +65,30 @@ const SignUpForm = () => {
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
           placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
-          type="password"
-          crossOrigin=""
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.emailOrPhoneNumber}
-          error={Boolean(formik.errors.emailOrPhoneNumber)}
-        />
-        {/* <FormInput
-          name="emailOrPhoneNumber"
-          label="Таны имэйл эсвэл утасны дугаар"
-          placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
           type="text"
           onChange={formik.handleChange}
-          value={formik.values.emailOrPhoneNumber}
-          error={Boolean(formik.errors.emailOrPhoneNumber)}
-          helperText={formik.errors.emailOrPhoneNumber}
           onBlur={formik.handleBlur}
-        /> */}
-        <FormInput
+          value={formik.values.emailOrPhoneNumber}
+          helperText={formik.errors.emailOrPhoneNumber}
+        />
+        <TextInput
           name="password"
           label="Нууц үг"
           placeholder="Нууц үг оруулна уу"
           type="password"
           onChange={formik.handleChange}
           value={formik.values.password}
-          error={Boolean(formik.errors.password)}
-          helperText={formik.errors.password}
           onBlur={formik.handleBlur}
+          helperText={formik.errors.password}
         />
-        <FormInput
+        <TextInput
           name="confirmPassword"
           label="Нууц үг давтах"
           placeholder="Нууц үгээ давтаж оруулна уу"
           type="password"
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
-          error={Boolean(formik.errors.confirmPassword)}
           helperText={formik.errors.confirmPassword}
-          onBlur={formik.handleBlur}
         />
       </Stack>
       <Stack>
