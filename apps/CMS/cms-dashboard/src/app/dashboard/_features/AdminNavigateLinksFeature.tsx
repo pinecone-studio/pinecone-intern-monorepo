@@ -13,7 +13,7 @@ export const AdminNavigateLinksFeature = () => {
       <NavigateLink text="Сэтгэгдэл" myPathName="/" />
       <NavigateLink text="Статистик" myPathName="/" />
       <div className="divider lg:divider-horizontal" />
-      <NavigateLinkWithIcon text="Контент нэмэх" myPathName="/" icon={<AiOutlinePlus />} />
+      <NavigateLinkWithIcon text="Контент нэмэх" myPathName="/articles/create-article" icon={<AiOutlinePlus />} />
     </div>
   );
 };
