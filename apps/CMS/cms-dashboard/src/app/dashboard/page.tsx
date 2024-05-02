@@ -1,13 +1,15 @@
 'use client';
 
-import { useGetArticlesQueryQuery } from '../../generated';
+import { Article, useGetArticlesQueryQuery } from '../../generated';
 import DashboardTableT from './_features/DashboardTableT';
 
 const Home = () => {
-  const { data } = useGetArticlesQueryQuery();
+  const { data: article } = useGetArticlesQueryQuery();
+  const articles = article?.getArticlesQuery as Article[] | undefined;
+
   return (
     <div className="w-full max-w-screen-xl mx-auto">
-      <DashboardTableT />
+      <DashboardTableT articles={articles} />
     </div>
   );
 };

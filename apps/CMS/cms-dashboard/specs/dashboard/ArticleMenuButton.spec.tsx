@@ -63,5 +63,7 @@ describe('Should render article menu button', () => {
     await waitFor(() => {
       expect(mockTest).toHaveBeenCalledWith(`${window.location.origin}/articles/edit-article/${id}`);
     });
+
+    jest.useFakeTimers();
   });
 });
