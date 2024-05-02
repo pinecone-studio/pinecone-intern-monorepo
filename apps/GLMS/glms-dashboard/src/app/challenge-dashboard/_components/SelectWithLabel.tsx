@@ -13,7 +13,7 @@ export const SelectWithLabel = ({ label, options, selectedOption, onSelect }: IS
   return (
     <>
       <Typography sx={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>{label}</Typography>
-      <SelectButton options={options} selectedOption={selectedOption} handleSelectChange={onSelect} />
+      <SelectButton data-testid="select" options={options} selectedOption={selectedOption} handleSelectChange={onSelect} />
     </>
   );
 };
