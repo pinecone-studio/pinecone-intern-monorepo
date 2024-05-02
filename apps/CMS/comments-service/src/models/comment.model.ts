@@ -41,5 +41,10 @@ const commentsSchema = new Schema({
     ref: 'article',
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['DELETED', 'HIDDEN', 'NORMAL'],
+    default: 'NORMAL',
+  },
 });
 export const CommentsModel = mongoose.models.comments || model('comments', commentsSchema);

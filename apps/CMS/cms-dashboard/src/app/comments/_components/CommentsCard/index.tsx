@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { PiEyeClosed } from 'react-icons/pi';
 import { MdDeleteOutline, MdReply } from 'react-icons/md';
-import { TbPointFilled } from 'react-icons/tb';
+// import { TbPointFilled } from 'react-icons/tb';
 
 const Index = () => {
   return (
@@ -15,7 +15,7 @@ const Index = () => {
             suvdaa2@gmail.com
           </Typography>
           <Typography fontSize={16} color={'#5E6166'} lineHeight={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <TbPointFilled /> 1 минутийн өмнө
+            {/* <TbPointFilled /> 1 минутийн өмнө */}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

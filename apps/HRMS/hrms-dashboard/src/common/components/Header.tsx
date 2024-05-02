@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { PineLogo } from './SVG';
 export const Header = () => {
   const router = useRouter();
   return (
@@ -12,7 +13,7 @@ export const Header = () => {
         data-cy="headerIcon"
         className="flex items-center justify-center cursor-pointer"
       >
-        <Image alt="logo" height={24} width={32} sizes="small" src={'/logo.png'} />
+        <PineLogo/>
       </div>
       <div className="flex gap-4">
         <div data-cy="headerProfile" className="flex items-center justify-center rounded-full py-0.5 overflow-hidden cursor-pointer aspect-square">
