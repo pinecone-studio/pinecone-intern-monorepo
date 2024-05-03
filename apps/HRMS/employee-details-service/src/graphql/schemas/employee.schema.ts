@@ -118,6 +118,12 @@ export const employeeDetailsSchema = gql`
     phone: String
     dependency: String
   }
+  input UpdateEmploymentInput {
+    department: Department
+    jobTitle: String
+    dateOfEmployment: Date
+    employmentStatus: EmploymentStatus
+  }
   input PaginationInput {
     limit: Int!
     page: Int!
