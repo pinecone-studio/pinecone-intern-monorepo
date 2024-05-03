@@ -1,3 +1,4 @@
+'use client';
 import { SearchIcon } from '../../public/assets/SearchIcon';
 import { PositionIcon } from '../../public/assets/HeaderPosition';
 import { Logo } from '../../public/assets/Logo';
