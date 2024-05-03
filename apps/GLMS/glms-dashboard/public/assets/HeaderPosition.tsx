@@ -1,4 +1,4 @@
-const PositionIcon = () => {
+export const PositionIcon = () => {
   return (
     <svg width="13.33" height="13.33" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -8,4 +8,3 @@ const PositionIcon = () => {
     </svg>
   );
 };
-export default PositionIcon;
