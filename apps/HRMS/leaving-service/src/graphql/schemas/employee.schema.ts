@@ -14,7 +14,6 @@ export const EmployeeTypeDefs = gql`
   }
 
   type Query {
-    getEmployeeId(id:ID!,department:String): [Employee]
-    getEmployee:[Employee!]!
+    getEmployeeId(id:ID!,department:String):[Employee]!
   }
 `;
