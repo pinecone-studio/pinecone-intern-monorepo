@@ -1,7 +1,7 @@
-import ArrowBackIcon from '../../../../public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
 
 type BackButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {

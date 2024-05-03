@@ -1,7 +1,7 @@
-import DeleteIcon from '../../../../public/assets/DeleteIcon';
+import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 
 type DeleteButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {

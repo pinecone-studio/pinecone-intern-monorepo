@@ -27,6 +27,7 @@
         }
       },
       "dependsOn": [
+        { "target": "clean", "params": "forward" },
         {
           "target": "codegen",
           "params": "forward"
@@ -159,6 +160,9 @@
         "watch": true
       },
       "dependsOn": [
+        {
+          "target": "cypress:clean"
+        },
         {
           "target": "codegen"
         }

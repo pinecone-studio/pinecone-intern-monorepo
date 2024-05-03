@@ -1,7 +1,7 @@
-import EditButtonicon from '../../../../public/assets/EditButtonicon';
+import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
 
 type EditButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const EditButton: React.FC<EditButtonProps> = ({ onClick }) => {
