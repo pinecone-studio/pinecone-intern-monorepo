@@ -1,5 +1,4 @@
 'use client';
-import { CssBaseline } from '@mui/material';
 import { FederationProvider } from '../common';
 import './global.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,8 +17,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               <ToastContainer />
             </AuthProvider>
           </FederationProvider>
-
-          <CssBaseline />
         </AppRouterCacheProvider>
       </body>
     </html>

@@ -1,4 +1,4 @@
-const ArrowRight = () => {
+export const ArrowIcon = () => {
   return (
     <div>
       <svg className=" w-10 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -7,5 +7,3 @@ const ArrowRight = () => {
     </div>
   );
 };
-
-export default ArrowRight;

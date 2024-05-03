@@ -4,3 +4,6 @@ export * from './LinkButtonIcon';
 export * from './TableMorevertIcon';
 export * from './ArchiveButtonIcon';
 export * from './HeaderLogoIcon';
+export * from './EyeSlashIcon';
+export * from './EyeIcon';
+export * from './ArrowIcon';

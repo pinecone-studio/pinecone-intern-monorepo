@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
 import cx from 'classnames';
-import Eye from '../../../assets/Eye';
-import EyeSlash from '../../../assets/EyeSlash';
+import { EyeIcon } from '../../../assets/icons/EyeIcon';
+import { EyeSlashIcon } from '../../../assets/icons/EyeSlashIcon';
 
 type TextInputProps = {
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
@@ -46,7 +46,7 @@ const TextInput = (props: TextInputProps) => {
         />
         {type === 'password' && (
           <button data-testid="toggleVisibility" onClick={togglePassword} className="btn btn-circle w-7 h-7 border-none bg-transparent hover:bg-transparent shadow-none">
-            {showPassword ? <Eye /> : <EyeSlash />}
+            {showPassword ? <EyeIcon /> : <EyeSlashIcon />}
           </button>
         )}
       </label>

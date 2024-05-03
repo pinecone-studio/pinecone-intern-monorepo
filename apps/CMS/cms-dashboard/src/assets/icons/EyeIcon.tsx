@@ -1,4 +1,4 @@
-const Eye = () => {
+export const EyeIcon = () => {
   return (
     <div>
       <svg className="w-8 h-8 text-[#6c6d6e] dark:text-[#6c6d6e]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -11,5 +11,3 @@ const Eye = () => {
     </div>
   );
 };
-
-export default Eye;
