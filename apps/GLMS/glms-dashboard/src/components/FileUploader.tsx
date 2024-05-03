@@ -1,7 +1,7 @@
 'use client';
 import { fileManagement } from '@/file-management';
-import CancelIcon from '../../public/assets/CancelIcon';
-import NoneImage from '../../public/assets/NoneImage';
+import { CancelIcon } from '../../public/assets/CancelIcon';
+import { NoneImage } from '../../public/assets/NoneImage';
 
 type FormikTypes = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
