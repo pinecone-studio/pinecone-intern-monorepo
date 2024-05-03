@@ -1,6 +1,7 @@
 'use client';
 
 import { Article, useGetArticlesQueryQuery } from '../../generated';
+import { Pagination } from './_components';
 import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
 import { SearchInput } from './_components/SearchInput';
@@ -26,6 +27,7 @@ const Home = () => {
               <DashboardTable articles={articles} />
             </div>
           </div>
+          <Pagination />
           <div className="flex justify-center">
             <AdminNavigateLinksFeature />
           </div>
