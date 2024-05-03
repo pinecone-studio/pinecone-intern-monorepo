@@ -1,6 +1,4 @@
 'use client';
-
-import { East } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -10,18 +8,16 @@ import PrevArrow from 'apps/GLMS/glms-dashboard/public/prev-arrow';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
-  description: yup.string().required(),
   thumbnail: yup.string().required(),
 });
 
-const LessonAdd = () => {
+export default function LessonAdd() {
   const router = useRouter();
   const [createLesson] = useCreateLessonMutation();
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      description: '',
       thumbnail: '',
     },
     validationSchema: validatinSchema,
@@ -32,18 +28,18 @@ const LessonAdd = () => {
             title: values.title,
             thumbnail: values.thumbnail,
             position: 0,
-            courseId: '',
+            courseId: localStorage.getItem('courseID'),
           },
         },
       });
       router.push('/dashboard');
     },
   });
-
   return (
-    <div className="bg-[#ECEDF0] h-screen">
-      <div className="w-[85vw] m-auto pt-[2.5vh]">
+    <div data-testid="create-lesson-container">
+      <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
+          data-testid="test-back-div"
           onClick={() => {
             router.push('/dashboard');
           }}
@@ -51,34 +47,44 @@ const LessonAdd = () => {
         >
           <PrevArrow /> {'Нүүр'}
         </div>
-        <div className="w-full bg-white rounded-xl px-6 pt-12 h-[70vh]">
-          <div className="max-w-[668px] w-full m-auto p-10 border-[2px #D6D8DB dashed] rounded-2">
-            <div className="w-full gap-2">
-              <p className="font-semibold text-base text-[#121316]">{'Хичээлийн гарчиг'}</p>
-              <input name="title" onChange={formik.handleChange} value={formik.values.title} type="text" placeholder="Оруулна уу..." />
-            </div>
-
-            <div className="w-full gap-2">
-              <p className="font-semibold text-[#121316]">{'Хичээлийн зураг'}</p>
-              <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
+        <div className="w-full bg-white rounded-xl pt-12 h-[70vh]">
+          <div className="px-6">
+            <div className="max-w-[668px] w-full m-auto rounded-xl p-10" style={{ border: '2px #D6D8DB dashed' }}>
+              <div className="w-full gap-2">
+                <p className="font-semibold text-base text-[#121316] mb-2">{'Хичээлийн гарчиг'}</p>
+                <input
+                  type="text"
+                  id="title-test-of-lesson"
+                  className="input input-bordered w-full"
+                  name="title"
+                  onChange={formik.handleChange}
+                  value={formik.values.title}
+                  placeholder="Оруулна уу..."
+                />
+              </div>
+              <div className="w-full gap-2 mt-6">
+                <p className="font-semibold text-[#121316] mb-2">{'Хичээлийн зураг'}</p>
+                <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
+              </div>
             </div>
           </div>
 
-          <div className="w-full items-center text-end">
-            <button
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              className="btn w-fit gap-7 rounded-lg py-4 px-24 "
-              disabled={!formik.values.title || !formik.values.thumbnail}
-            >
-              {'Хадгалах'}
-            </button>
+          <hr className="mt-8 mb-5" />
+          <div className="px-6">
+            <div className="w-full flex items-center justify-end m-auto max-w-[668px]">
+              <button
+                type="button"
+                data-testid="create-button-of-lesson"
+                onClick={() => formik.handleSubmit()}
+                className="btn w-fit gap-7 rounded-lg py-4 px-24"
+                disabled={!formik.values.title || !formik.values.thumbnail}
+              >
+                {'Хадгалах'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default LessonAdd;
+}

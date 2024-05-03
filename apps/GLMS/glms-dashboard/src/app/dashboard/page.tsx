@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated';
-import PlusIcon from '../assets/PlusIcon';
-
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
@@ -32,10 +30,13 @@ const DashboardOtherLab = () => {
                 <button
                   data-testid="button1"
                   onClick={() => router.push('/create-course')}
-                  className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
+                  className="flex justify-center items-center border-solid border-[2px] border-[#121316] rounded-[8px] gap-[2px] hover:bg-black hover:text-white w-[99px] "
                   color="inherit"
                 >
-                  Сэдэв <PlusIcon />
+                  Хичээл
+                  <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.8327 6.83268H6.83268V11.8327H5.16602V6.83268H0.166016V5.16602H5.16602V0.166016H6.83268V5.16602H11.8327V6.83268Z" fill={'white'} />
+                  </svg>
                 </button>
                 <AddChallengeModal />
               </div>
@@ -67,7 +68,14 @@ const DashboardOtherLab = () => {
         <div className=" mr-auto ml-auto px-[24px] flex max-w-[1536px]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses.map((data) => (
-              <div onClick={() => router.push(`${data.id}`)} className="p-2" key={data.id}>
+              <div
+                className="p-2"
+                key={data.id}
+                onClick={() => {
+                  localStorage.setItem('courseID', `${data.id}`);
+                  router.push(`/${data.id}`);
+                }}
+              >
                 <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
               </div>
             ))}
