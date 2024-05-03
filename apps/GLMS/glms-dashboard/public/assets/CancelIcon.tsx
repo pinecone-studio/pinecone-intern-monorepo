@@ -1,4 +1,4 @@
-const CancelIcon = () => {
+export const CancelIcon = () => {
   return (
     <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
       <title>remove</title>
@@ -6,4 +6,3 @@ const CancelIcon = () => {
     </svg>
   );
 };
-export default CancelIcon;

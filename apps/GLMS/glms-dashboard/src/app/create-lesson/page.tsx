@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateLessonMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import PrevArrow from '../../../public/PrevArrow';
+import { PrevArrow } from '../../../public/assets/PrevArrow';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),

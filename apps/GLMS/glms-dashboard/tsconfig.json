@@ -34,7 +34,8 @@
     "**/*.jsx",
     "../../../apps/GLMS/glms-dashboard/.next/types/**/*.ts",
     "../../../dist/apps/GLMS/glms-dashboard/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "public/assets"
   ],
 
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "**/*.spec.tsx", "src/**/*.test.ts"]
