@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { Loader } from '../../src/app/sign-up/_components';
+import { ArrowIcon } from '../../src/assets/icons/ArrowIcon';
 
-describe('Loader', () => {
+describe('Arrow icon', () => {
   it('renders loader correctly', () => {
-    const { container } = render(<Loader />);
+    const { container } = render(<ArrowIcon />);
 
     expect(container).toBeDefined();
   });
