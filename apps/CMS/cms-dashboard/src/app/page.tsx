@@ -26,7 +26,9 @@ const Home = () => {
         )}
         {categoriesLoading ? null : (
           <div className="flex flex-col px-24 gap-12 w-[70%] pb-28">
-            {categories?.getCategories.map((item)=><GroupArticles key={item.id} title={item.name} categoryId={item.id}/>)}
+            {categories?.getCategories.map((item) => (
+              <GroupArticles key={item.id} title={item.name} categoryId={item.id} />
+            ))}
           </div>
         )}
         <div className="fixed opacity-100 bottom-8">

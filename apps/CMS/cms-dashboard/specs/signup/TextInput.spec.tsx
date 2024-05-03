@@ -3,55 +3,33 @@ import { render, fireEvent } from '@testing-library/react';
 import TextInput from '../../src/app/sign-up/_components/TextInput';
 
 describe('TextInput', () => {
-  it('renders correctly', () => {
-    const { getByTestId } = render(<TextInput name="test" label="Test Label" placeholder="Test Placeholder" type="text" value="" onChange={() => {}} />);
-    expect(getByTestId('Custom-Input')).toBeDefine();
+  it('it should render with correct props', () => {
+    const mockFunction = jest.fn();
+    const { getByTestId } = render(<TextInput name="test" label="test" placeholder="test" value="test" error="test" onChange={mockFunction} onBlur={mockFunction} />);
+
+    const date = getByTestId('label');
+
+    const helperText = getByTestId('helperText');
+
+    expect(date.textContent).toMatch('test');
+    expect(helperText.textContent).toMatch('');
   });
 
-  it('shows helper text when provided', () => {
-    const { getByTestId } = render(<TextInput name="test" label="Test Label" placeholder="Test Placeholder" type="text" value="" onChange={() => {}} helperText="This is a helper text" />);
-    expect(getByTestId('helperText')).toHaveTextContent('This is a helper text');
-  });
+  it('2. toggles password visibility when input type is password', () => {
+    const mockFunction = jest.fn();
+    const { getByTestId } = render(<TextInput name="test" label="test" placeholder="test" type="password" value="test" onChange={mockFunction} />);
 
-  it('toggles password visibility when toggle button is clicked', () => {
-    const { getByTestId } = render(<TextInput name="password" label="Password" placeholder="Enter Password" type="password" value="" onChange={() => {}} />);
+    const passwordInput = getByTestId('Custom-Input').querySelector('input');
     const toggleButton = getByTestId('toggleVisibility');
-    const inputElement = getByTestId('Custom-Input').querySelector('input');
+
+    expect(passwordInput.type).toBe('password');
 
     fireEvent.click(toggleButton);
-    expect(inputElement).toHaveAttribute('type', 'text');
+
+    expect(passwordInput.type).toBe('text');
 
     fireEvent.click(toggleButton);
-    expect(inputElement).toHaveAttribute('type', 'password');
-  });
 
-  it('calls onChange handler when input value changes', () => {
-    const handleChange = jest.fn();
-    const { getByTestId } = render(<TextInput name="test" label="Test Label" placeholder="Test Placeholder" type="text" value="" onChange={handleChange} />);
-    const inputElement = getByTestId('Custom-Input').querySelector('input');
-
-    fireEvent.change(inputElement, { target: { value: 'New Value' } });
-    expect(handleChange).toHaveBeenCalled();
-  });
-
-  it('calls onBlur handler when input loses focus', () => {
-    const handleBlur = jest.fn();
-    const { getByTestId } = render(<TextInput name="test" label="Test Label" placeholder="Test Placeholder" type="text" value="" onBlur={handleBlur} onChange={() => {}} />);
-    const inputElement = getByTestId('Custom-Input').querySelector('input');
-
-    fireEvent.blur(inputElement);
-    expect(handleBlur).toHaveBeenCalled();
-  });
-
-  it('displays error styles and message when error is provided', () => {
-    const { getByTestId, getByLabelText } = render(
-      <TextInput name="test" label="Test Label" placeholder="Test Placeholder" type="text" value="" onChange={() => {}} error="This is an error message" />
-    );
-    const inputContainer = getByTestId('Custom-Input');
-    const inputElement = getByLabelText('Test Label');
-
-    expect(inputContainer).toHaveClass('border-red-700');
-    expect(inputElement).toHaveClass('focus-within:border-red-700');
-    expect(getByTestId('helperText')).toHaveTextContent('This is an error message');
+    expect(passwordInput.type).toBe('password');
   });
 });

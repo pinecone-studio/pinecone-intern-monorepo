@@ -1,12 +1,11 @@
 'use client';
 
-import { ArrowForward } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import { Loader } from '../_components/Loader';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 import TextInput from '../_components/TextInput';
-import ArrowRight from '../../../assets/arrow-right';
+import ArrowRight from '../../../assets/ArrowRight';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
@@ -52,7 +51,7 @@ const SignUpForm = () => {
   });
 
   return (
-    <div data-testid="sign-up-form-container" className="flex flex-col gap-5 p-10 max-w-[440px] w-full bg-white rounded-lg border border-solid border-[#d6d8db]">
+    <div data-testid="sign-up-form-container" className="flex flex-col gap-5 p-10 max-w-[440px] w-full bg-white rounded-lg border border-solid border-[#d6d8db] ">
       <h1 data-testid="sign-up-modal-title" className="mb-2 text-center text-4xl font-bold">
         Бүртгүүлэх
       </h1>
@@ -90,7 +89,7 @@ const SignUpForm = () => {
           error={formik.errors.confirmPassword}
         />
       </div>
-      <div>
+      <div className="group">
         <button
           onClick={() => {
             formik.handleSubmit();
@@ -103,8 +102,7 @@ const SignUpForm = () => {
           disabled={!formik.isValid || signUpLoading}
         >
           {signUpLoading && <Loader />}
-          <h2 className="mr-[23%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
-          {/* <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" /> */}
+          <h2 className="mr-[20%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
           <ArrowRight />
         </button>
       </div>
