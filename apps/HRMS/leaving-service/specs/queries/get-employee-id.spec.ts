@@ -26,7 +26,7 @@ describe("getEmployeeId", () => {
         (EmployeeModel.findById as jest.Mock).mockResolvedValueOnce(employeeData);
         (EmployeeModel.find as jest.Mock).mockResolvedValueOnce(filteredWorkers);
 
-        const result = await getEmployeeId({}, { id });
+        const result = await getEmployeeId({},  { id });
 
         expect(result).toEqual(filteredWorkers);
         expect(EmployeeModel.find).toHaveBeenCalledWith({
