@@ -2,16 +2,16 @@
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useCreateLessonMutation } from '@/generated/index';
+import { useCreateLessonMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import PrevArrow from 'apps/GLMS/glms-dashboard/public/prev-arrow';
+import PrevArrow from 'apps/GLMS/glms-dashboard/public/Prev-arrow';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
   thumbnail: yup.string().required(),
 });
 
-export default function LessonAdd() {
+const LessonAdd = () => {
   const router = useRouter();
   const [createLesson] = useCreateLessonMutation();
 
@@ -87,4 +87,5 @@ export default function LessonAdd() {
       </div>
     </div>
   );
-}
+};
+export default LessonAdd;
