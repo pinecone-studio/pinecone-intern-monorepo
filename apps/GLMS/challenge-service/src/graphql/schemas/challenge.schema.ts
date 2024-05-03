@@ -73,5 +73,6 @@ export const challengeTypeDefs = gql`
     createChallenge(quizInput: [QuizInput], challengeInput: ChallengeInput): ID
     createQuiz(quizInput: QuizInput!): ID
     updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
+    deleteQuiz(quizId: String!): Quiz
   }
 `;
