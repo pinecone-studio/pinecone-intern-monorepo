@@ -35,7 +35,7 @@ const CourseAdd = () => {
           },
         },
       });
-      router.push('/dashboardOtherLab');
+      router.push('/dashboard');
     },
   });
 
