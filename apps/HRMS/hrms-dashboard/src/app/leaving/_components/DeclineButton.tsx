@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import { useDeclineRequestMutation } from '../../../generated';
 import { useRouter } from 'next/navigation';
 
@@ -12,14 +11,9 @@ const DeclineButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <Button
-      variant="text"
-      onClick={handleDecline}
-      sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}
-      data-testid="decline-button"
-    >
+    <button onClick={handleDecline} className="text-black h-30 border border-gray-300 rounded-sm hover:bg-black hover:text-white" style={{ padding: 'revert' }} data-testid="decline-button">
       Татгалзах
-    </Button>
+    </button>
   );
 };
 

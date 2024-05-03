@@ -1,17 +1,16 @@
-import { Stack, Typography } from '@mui/material';
 type Details = {
-  description: string ;
+  description: string;
 };
 const RequestDetails = ({ data }: { data: Details }) => (
-  <Stack sx={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '565px', height: '312px', bgcolor: 'white', borderRadius: '10px', padding: '20px' }} data-testid="request-details">
-    <Typography sx={{ color: 'rgba(63, 65, 69, 1)' }}>Хугацааны төрөл</Typography>
-    <Typography sx={{ fontWeight: '600', color: 'rgba(18, 19, 22, 1)' }}>{data.description}</Typography>
-    <Typography sx={{ color: 'rgba(63, 65, 69, 1)' }}>Хэдэн өдрөөр тооцон авах</Typography>
-    <Typography sx={{ fontWeight: '600', color: 'rgba(18, 19, 22, 1)' }}>{data.description}</Typography>
-    <Typography sx={{ color: 'rgba(63, 65, 69, 1)' }}>Эхлэх хугацаа</Typography>
-    <Typography sx={{ fontWeight: '600', color: 'rgba(18, 19, 22, 1)' }}>{data.description}</Typography>
-    <Typography sx={{ color: 'rgba(63, 65, 69, 1)' }}>Дуусах хугацаа</Typography>
-    <Typography sx={{ fontWeight: '600', color: 'rgba(18, 19, 22, 1)' }}>{data.description}</Typography>
-  </Stack>
+  <div className="flex flex-col gap-3 w-[565px] h-[312px] bg-white rounded-sm p-5" data-testid="request-details">
+    <p style={{ color: 'rgba(63, 65, 69, 1)' }}>Хугацааны төрөл</p>
+    <p className="font-semibold text-black">{data.description}</p>
+    <p style={{ color: 'rgba(63, 65, 69, 1)' }}>Хэдэн өдрөөр тооцон авах</p>
+    <p className="font-semibold text-black">{data.description}</p>
+    <p style={{ color: 'rgba(63, 65, 69, 1)' }}>Эхлэх хугацаа</p>
+    <p className="font-semibold text-black">{data.description}</p>
+    <p style={{ color: 'rgba(63, 65, 69, 1)' }}>Дуусах хугацаа</p>
+    <p className="font-semibold text-black">{data.description}</p>
+  </div>
 );
 export default RequestDetails;

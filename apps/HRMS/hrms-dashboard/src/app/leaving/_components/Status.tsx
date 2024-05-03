@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 type Status = {
   status: string;
 };
@@ -21,17 +20,18 @@ const Status = ({ dat }: { dat: Status }) => {
   }
 
   return (
-    <Typography
+    <p
       style={{
         borderRadius: '15px',
         textAlign: 'center',
         background: backgroundColor,
         border: borderStyle,
+        fontWeight: 500,
       }}
       data-testid="request-status"
     >
       {statusText}
-    </Typography>
+    </p>
   );
 };
 

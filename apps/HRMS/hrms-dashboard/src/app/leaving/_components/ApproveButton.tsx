@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import { useApproveRequestMutation } from '../../../generated';
 import { useRouter } from 'next/navigation';
 
@@ -12,14 +11,9 @@ const ApproveButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <Button
-      variant="text"
-      onClick={handleApprove}
-      sx={{ color: 'black', height: '30px', border: '1px solid rgba(214, 216, 219, 1)', '&:hover': { bgcolor: 'black', color: 'white' } }}
-      data-testid="approve-button"
-    >
+    <button onClick={handleApprove} className="text-black h-30 border border-gray-300 rounded-sm hover:bg-black hover:text-white" style={{ padding: 'revert' }} data-testid="approve-button">
       Зөвшөөрөх
-    </Button>
+    </button>
   );
 };
 

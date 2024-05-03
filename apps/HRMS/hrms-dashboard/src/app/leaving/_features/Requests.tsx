@@ -1,7 +1,6 @@
 'use client';
 import { headers } from './utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Button, Typography, Stack, Box, TableContainer } from '@mui/material';
 import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
 
@@ -13,55 +12,50 @@ const Requests = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <Stack sx={{ bgcolor: 'rgba(247, 247, 248, 1)', width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', paddingY: '30px' }} data-testid="requests-component">
-      <Stack sx={{ width: '1154px', bgcolor: 'white', borderRadius: '10px', padding: '16px', display: 'flex', gap: '12px' }}>
-        <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography sx={{ fontWeight: '700', fontSize: '24px' }}>Чөлөө</Typography>
-          <Typography>{currentDate}</Typography>
-        </Stack>
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Stack sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Button variant="text" sx={{ color: 'black' }}>
-              Хүсэлт
-            </Button>
-            <Button variant="text" sx={{ color: 'black' }}>
-              Ажилчид
-            </Button>
-            <Button variant="text" sx={{ color: 'black' }}>
-              Түүх
-            </Button>
-          </Stack>
-        </Box>
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table>
-              <TableHead sx={{ backgroundColor: 'rgba(247, 247, 248, 1)' }}>
-                <TableRow>
-                  {headers.map((data, index) => (
-                    <TableCell key={index}>{data}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data &&
-                  data.getRequests.map((dat, index) => (
-                    <TableRow key={index} style={{ cursor: 'pointer' }} onClick={() => router.push(`/leaving/Detail?requestId=${dat._id}`)} data-testid="requests">
-                      <TableCell>{dat._id}</TableCell>
-                      <TableCell>{dat.declinedReasoning}</TableCell>
-                      <TableCell>{dat.description}</TableCell>
-                      <TableCell>{dat.totalHour}</TableCell>
-                      <TableCell>{dat.totalHour}</TableCell>
-                      <TableCell data-testid="request-status">
+    <div className="p-10">
+      <div className="flex flex-col gap-6 w-[1154px] p-6 bg-white rounded-sm">
+        <div className="flex justify-between items-center w-full">
+          <h1 className="text-2xl font-bold">Чөлөө</h1>
+          <p>{currentDate}</p>
+        </div>
+        <div className="flex gap-4">
+          <button>Хүсэлт</button>
+          <button>Ажилчид</button>
+          <button>Түүх</button>
+        </div>
+        <div className="flex flex-col gap-6 bg-gray-100 w-full">
+          <div className="overflow-x-auto shadow-md rounded-lg">
+            <div className="w-full max-h-[480px] overflow-y-auto bg-white">
+              <table className="w-full text-sm text-left">
+                <thead>
+                  <tr className="bg-base-300">
+                    {headers.map((header, index) => (
+                      <th key={index} scope="col" className="px-6 py-3">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.getRequests.map((dat, index) => (
+                    <tr key={index} className="cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat._id}`)} data-testid="requests">
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat._id}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.declinedReasoning}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.description}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
+                      <td className="px-6 py-4" data-testid="request-status">
                         <Status dat={dat} />
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Stack>
-    </Stack>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default Requests;
