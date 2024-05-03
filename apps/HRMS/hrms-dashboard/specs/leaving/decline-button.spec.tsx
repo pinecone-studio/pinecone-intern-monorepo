@@ -9,7 +9,7 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-jest.mock('../../src/generated/index', () => ({
+jest.mock('../../src/generated', () => ({
   useDeclineRequestMutation: jest.fn(() => [jest.fn(), {}]),
 }));
 

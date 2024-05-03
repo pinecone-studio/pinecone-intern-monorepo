@@ -8,7 +8,7 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-jest.mock('../../src/generated/index', () => ({
+jest.mock('../../src/generated', () => ({
   useApproveRequestMutation: jest.fn(() => [jest.fn(), {}]),
 }));
 
