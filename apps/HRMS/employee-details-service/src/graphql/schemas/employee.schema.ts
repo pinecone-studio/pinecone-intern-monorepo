@@ -3,12 +3,12 @@ import { gql } from 'graphql-tag';
 
 export const employeeDetailsSchema = gql`
   scalar Date
-
   type Employee {
     id: ID!
     firstName: String
     lastName: String
     email: String
+    phone: String
     imageUrl: String
     department: Department
     jobTitle: String
@@ -23,7 +23,6 @@ export const employeeDetailsSchema = gql`
     personalInformation: PersonalInformation
     familyInformation: FamilyInformation
   }
-
   type PersonalInformation {
     gender: Gender
     dateOfBirth: Date
@@ -31,14 +30,12 @@ export const employeeDetailsSchema = gql`
     phone: String
     hobby: [String]
   }
-
   type FamilyInformation {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
-
   type Dependent {
     id: ID!
     firstName: String
@@ -46,20 +43,17 @@ export const employeeDetailsSchema = gql`
     phone: String
     dependency: String
   }
-
   enum Gender {
     MALE
     FEMALE
     OTHER
   }
-
   enum MaritalStatus {
     SINGLE
     MARRIED
     DIVORCED
     WIDOWED
   }
-
   enum EmploymentStatus {
     FULL_TIME
     PART_TIME
@@ -67,14 +61,12 @@ export const employeeDetailsSchema = gql`
     TEMPORARY
     ARCHIVE
   }
-
   enum Department {
     SOFTWARE
     DESIGN
     MARKETING
     BACK_OFFICE
   }
-
   input CreateEmployeeInput {
     firstName: String
     lastName: String
@@ -87,59 +79,53 @@ export const employeeDetailsSchema = gql`
     dateOfEmployment: Date
     employmentStatus: EmploymentStatus
   }
-
   input UpdateEmployeeInput {
     id: ID
     email: String
     department: Department
     jobTitle: [String]
     ladderLevel: Int
+    phone: String
     salary: Float
     bankName: String
     bankAccountNumber: Float
     dateOfReleased: Date
     employmentStatus: EmploymentStatus
   }
-
   input UpdatePersonalInformationInput {
-    gender: Gender
-    dateOfBirth: Date
-    registrationNumber: String
+    id: ID
+    firstName: String
     phone: String
-    hobby: [String]
+    email: String
+    jobTitle: String
+    imageUrl: String
   }
-
   input UpdateFamilyInformationInput {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Department]
   }
-
   input CreateDependetInput {
     firstName: String
     lastName: String
     phone: String
     dependency: String
   }
-
   input UpdateDependentInput {
     firstName: String
     lastName: String
     phone: String
     dependency: String
   }
-
   input PaginationInput {
     limit: Int!
     page: Int!
   }
-
   type paginateReturn {
     totalEmployees: Int!
     employees: [Employee]!
   }
-
   type Query {
     getDependent(id: ID!): Dependent!
     getAllEmployee: [Employee]
@@ -147,12 +133,12 @@ export const employeeDetailsSchema = gql`
     getEmployee(id: ID): Employee
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
   }
-
   type Mutation {
     createEmployee(input: CreateEmployeeInput!): Employee!
     createDependent(input: CreateDependetInput): Dependent!
     deletedDependent(id: ID!): Dependent!
     deleteEmployee(id: ID!): Employee!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
+    personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
   }
 `;
