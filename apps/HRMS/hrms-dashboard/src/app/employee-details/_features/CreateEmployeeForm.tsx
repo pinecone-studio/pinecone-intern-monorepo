@@ -83,25 +83,25 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
       <form className="flex flex-col justify-center px-10 pt-10 gap-4">
         <div className="grid grid-cols-2 gap-6">
           {inputItems.map((item, index) => (
-            <CustomInput key={index} data-cy="customInput" label={item.label} type={item.type} placeholder={item.placeholder} {...generateFormikProps(item.name as keyof typeof formik.values)} />
+            <CustomInput key={index} data-testid="customInput" label={item.label} type={item.type} placeholder={item.placeholder} {...generateFormikProps(item.name as keyof typeof formik.values)} />
           ))}
 
-          <CustomInput data-cy="customInput" label={'Хэлтэс'} type="select" {...generateFormikProps('department')}>
+          <CustomInput data-testid="customInput" label={'Хэлтэс'} type="select" {...generateFormikProps('department')}>
             <option value="" className="text-light" disabled selected hidden>
               Хэлтэс сонгоно уу
             </option>
             {departmentList.map((item, index) => (
-              <option data-cy="departmentList" key={index} value={item}>
+              <option data-testid="departmentList" key={index} value={item}>
                 {item}
               </option>
             ))}
           </CustomInput>
-          <CustomInput data-cy="customInput" label={'Төлөв'} type="select" {...generateFormikProps('employmentStatus')}>
+          <CustomInput data-testid="customInput" label={'Төлөв'} type="select" {...generateFormikProps('employmentStatus')}>
             <option value="" className="text-light" selected hidden>
               Төлөв сонгоно уу
             </option>
             {employmentStatusList.map((item, index) => (
-              <option data-cy="employmentStatusList" key={index} value={item}>
+              <option data-testid="employmentStatusList" key={index} value={item}>
                 {item}
               </option>
             ))}
@@ -118,8 +118,9 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
               cursor: !formik.isValid ? 'default' : 'pointer',
             }}
             className="rounded-lg py-3 px-4"
-            data-testid="createEmployeeBtn"
-            onClick={() => {
+            data-cy="createEmployeeBtn"
+            onClick={(e) => {
+              e.preventDefault()
               formik.handleSubmit();
             }}
           >

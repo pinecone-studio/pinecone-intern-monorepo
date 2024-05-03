@@ -34,7 +34,7 @@ export const EmployeesList = () => {
 
   return (
     <>
-      <main className="flex flex-col p-8 w-full overflow-scroll relative">
+      <main className="flex flex-col p-8 w-full">
         <div className="flex flex-col p-6 bg-white w-full">
           <div className="flex items-center justify-between">
             <p data-cy="employeePageTitle" className="text-main text-2xl font-bold">
