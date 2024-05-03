@@ -1,19 +1,15 @@
 'use client';
 
 import { ArrowForward } from '@mui/icons-material';
-import { Button, Stack, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import Link from 'next/link';
 import { Loader } from '../_components/Loader';
-import { FormInput } from '../_components/FormInput';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
-import { useState } from 'react';
 import TextInput from '../_components/TextInput';
+import ArrowRight from '../../../assets/arrow-right';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
-  const [name, setName] = useState('');
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -56,11 +52,11 @@ const SignUpForm = () => {
   });
 
   return (
-    <Stack data-testid="sign-up-form-container" gap={2.5} padding={5} maxWidth={'440px'} width={'100%'} bgcolor={'#fff'} borderRadius={3} border={'1px solid #d6d8db'}>
-      <Typography data-testid="sign-up-modal-title" mb={1} textAlign={'center'} fontSize={36} fontWeight={700}>
+    <div data-testid="sign-up-form-container" className="flex flex-col gap-5 p-10 max-w-[440px] w-full bg-white rounded-lg border border-solid border-[#d6d8db]">
+      <h1 data-testid="sign-up-modal-title" className="mb-2 text-center text-4xl font-bold">
         Бүртгүүлэх
-      </Typography>
-      <Stack gap={1}>
+      </h1>
+      <div className="flex flex-col gap-2">
         <TextInput
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
@@ -70,6 +66,7 @@ const SignUpForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.emailOrPhoneNumber}
           helperText={formik.errors.emailOrPhoneNumber}
+          error={formik.errors.emailOrPhoneNumber}
         />
         <TextInput
           name="password"
@@ -80,6 +77,7 @@ const SignUpForm = () => {
           value={formik.values.password}
           onBlur={formik.handleBlur}
           helperText={formik.errors.password}
+          error={formik.errors.password}
         />
         <TextInput
           name="confirmPassword"
@@ -89,57 +87,38 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
           helperText={formik.errors.confirmPassword}
+          error={formik.errors.confirmPassword}
         />
-      </Stack>
-      <Stack>
-        <Button
+      </div>
+      <div>
+        <button
           onClick={() => {
             formik.handleSubmit();
           }}
           data-cy="Sign-Up-Button"
           data-testid="Sign-Up-Button-Loader"
+          className={`btn w-full h-fit flex justify-end py-[12px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${
+            !formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'
+          }`}
           disabled={!formik.isValid || signUpLoading}
-          fullWidth
-          variant="contained"
-          sx={{
-            justifyContent: 'flex-end',
-            py: '14.5px',
-            background: '#000',
-            color: 'white',
-            gap: '8px',
-            '&:hover': {
-              backgroundColor: '#d6d8db',
-              color: '#000',
-            },
-            borderRadius: '8px',
-            cursor: !formik.isValid ? 'not-allowed' : 'pointer',
-          }}
         >
           {signUpLoading && <Loader />}
-          <Typography mr={'23%'} fontSize={16} fontWeight={600}>
-            Бүртгүүлэх
-          </Typography>
-          <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" />
-        </Button>
-      </Stack>
+          <h2 className="mr-[23%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
+          {/* <ArrowForward data-testid="sign-up-modal-icon2" fontSize="medium" /> */}
+          <ArrowRight />
+        </button>
+      </div>
 
-      <Stack border={1} borderColor="#ECEDF0"></Stack>
+      <div className="border border-solid border-[#ecedf0]"></div>
 
-      <Stack direction={'row'} justifyContent={'center'} gap={1}>
-        <Typography>Бүртгэлтэй юу?</Typography>
+      <div className="flex justify-center gap-2">
+        <h2>Бүртгэлтэй юу?</h2>
 
-        <Typography
-          data-testid="sign-up-modal-to-signin"
-          color={'#551a8b'}
-          borderBottom={'1px solid #551a8b'}
-          sx={{
-            cursor: 'pointer',
-          }}
-        >
-          <Link href={'/sign-in'}>Нэвтрэх</Link>
-        </Typography>
-      </Stack>
-    </Stack>
+        <div className="text-[#551a8b] border-b border-b-solid border-[#551a8b] cursor-pointer" data-testid="sign-up-modal-to-signin">
+          <a href={'/sign-in'}>Нэвтрэх</a>
+        </div>
+      </div>
+    </div>
   );
 };
 
