@@ -15,6 +15,7 @@ export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) 
     const filteredWorkers: Employee[] = departmentWorkers.filter((worker) =>
       worker.ladderLevel !== undefined && ladderLevel !== undefined && worker.ladderLevel <= ladderLevel
   );
+  
   if (filteredWorkers.length === 0) {
     const hrEmployees = await EmployeeModel.find({ department: "BACK_OFFICE" ,jobTitle:'HR'});
 
