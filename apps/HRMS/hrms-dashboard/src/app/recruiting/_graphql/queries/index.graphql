@@ -1,0 +1,21 @@
+query GetJobs {
+  getJobs {
+    id
+    title
+    description
+    requirements {
+      skill
+      education
+      language
+      qualification
+      workExperience
+      others
+    }
+    minSalary
+    maxSalary
+    dueDate
+    createdAt
+    status
+    applicant
+  }
+}

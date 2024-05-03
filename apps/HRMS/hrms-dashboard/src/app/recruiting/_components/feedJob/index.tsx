@@ -1,4 +1,4 @@
-import { CreateErrorModal } from '../../_features';
+import { JobsListTable } from '../../_features';
 import { Button } from '../core';
 import { useRouter } from 'next/navigation';
 
@@ -26,7 +26,7 @@ export const JobRecruitDashboard = () => {
         </div>
       </div>
       <div style={{ borderTop: '1px solid #303436', width: '100%' }}></div>
-      <CreateErrorModal label="Устгах" text="Усгагдлаа" />
+      <JobsListTable />
     </div>
   );
 };

@@ -22,7 +22,7 @@ export const CreateErrorModal = ({ text, label }: Props) => {
 
   return (
     <div>
-      <button className="btn" onClick={handleOpen}>
+      <button data-testid="open-modal" className="btn" onClick={handleOpen}>
         {label}
       </button>
       <dialog className="modal rounded-3xl" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" data-testid="modal">

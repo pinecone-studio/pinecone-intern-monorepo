@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { CreateErrorModal } from '../../src/app/recruiting/_features';
+import { CreateErrorModal } from '../../src/app/recruiting/_components';
 
 describe('<CreateErrorModal />', () => {
   test('modal close and open when label "Устгах" and close button is clicked', () => {

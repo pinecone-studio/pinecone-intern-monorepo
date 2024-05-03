@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { useHelloQueryFromRecruitingServiceQuery } from '../../generated';
 import { JobRecruitDashboard } from './_components/feedJob';
