@@ -1,3 +1,4 @@
+'use client';
 import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
 
 type EditButtonProps = {

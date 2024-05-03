@@ -1,3 +1,4 @@
+'use client';
 import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
 
 type BackButtonProps = {
