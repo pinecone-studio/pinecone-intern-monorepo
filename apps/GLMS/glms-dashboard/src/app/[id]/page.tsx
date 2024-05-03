@@ -1,12 +1,12 @@
 'use client';
-import { useGetCourseByIdQuery } from '@/generated/index';
+import { useGetCourseByIdQuery } from '@/generated';
 import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
 const Home = () => {
   const pathName = usePathname().substring(1);
   const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
   const getByIdData = data?.getCourseById;
-  
+
   if (loading)
     return (
       <div className=" w-full h-full flex justify-center items-center">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetChallengesByStatusQuery } from '@/generated/index';
+import { useGetChallengesByStatusQuery } from '@/generated';
 
 const ChallengePage = () => {
   const { data, loading } = useGetChallengesByStatusQuery();

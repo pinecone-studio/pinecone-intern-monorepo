@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useCreateCourseMutation } from '../../generated';
+import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
 import { ArrowLeft } from './assets/ArrowLeft';
 import { ArrowRight } from './assets/ArrowRight';
