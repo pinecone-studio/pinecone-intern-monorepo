@@ -10,8 +10,8 @@ export const employeeDetailsSchema = gql`
     lastName: String
     email: String
     imageUrl: String
-    department: ID
-    jobTitle: [String]
+    department: Department
+    jobTitle: String
     ladderLevel: String
     salary: Float
     bankName: String
@@ -80,8 +80,8 @@ export const employeeDetailsSchema = gql`
     lastName: String
     email: String
     imageUrl: String
-    department: ID
-    jobTitle: [String]
+    department: Department
+    jobTitle: String
     ladderLevel: String
     salary: Float
     dateOfEmployment: Date
@@ -91,7 +91,7 @@ export const employeeDetailsSchema = gql`
   input UpdateEmployeeInput {
     id: ID
     email: String
-    department: ID
+    department: Department
     jobTitle: [String]
     ladderLevel: Int
     salary: Float
@@ -130,11 +130,22 @@ export const employeeDetailsSchema = gql`
     dependency: String
   }
 
+  input PaginationInput {
+    limit: Int!
+    page: Int!
+  }
+
+  type paginateReturn {
+    totalEmployees: Int!
+    employees: [Employee]!
+  }
+
   type Query {
     getDependent(id: ID!): Dependent!
     getAllEmployee: [Employee]
     getAllDependents: [Dependent!]
     getEmployee(id: ID): Employee
+    getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
   }
 
   type Mutation {
