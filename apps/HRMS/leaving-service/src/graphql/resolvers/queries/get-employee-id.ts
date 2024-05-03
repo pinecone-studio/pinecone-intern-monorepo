@@ -1,25 +1,29 @@
-import { QueryResolvers } from '@/graphql/generated';
-import  EmployeeModel  from '@/graphql/model/employee';
-import { GraphQLError } from 'graphql';
+import { Employee, QueryResolvers } from '@/graphql/generated';
+import EmployeeModel from '@/graphql/model/employee';
+import { errorTypes, graphqlErrorHandler } from '../error';
 
+export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) => {
+  try {
+    const employee = await EmployeeModel.findById(id);
+    const { department, ladderLevel } = employee!;
 
+    const departmentWorkers = await EmployeeModel.find({
+      department,
+      ladderLevel: { $in: ['3', '1', '2'], $ne: ladderLevel },
+    });
 
+    const filteredWorkers: Employee[] = departmentWorkers.filter((worker) =>
+      worker.ladderLevel !== undefined && ladderLevel !== undefined && worker.ladderLevel <= ladderLevel
+  );
+  if (filteredWorkers.length === 0) {
+    const hrEmployees = await EmployeeModel.find({ department: "BACK_OFFICE" ,jobTitle:'HR'});
 
-export const getEmployeeId:QueryResolvers['getEmployeeId'] = async (_ , {id}) => {
- 
-  const employee = await EmployeeModel.findById(id);
-  const { department } = employee!;
+    return hrEmployees;
+}
+    return filteredWorkers;
+  } catch (error) {
+    throw graphqlErrorHandler({message: "Something went wrong"}, errorTypes.BAD_REQUEST)
 
-  const departmentWorkers = await EmployeeModel.find({
-     department,
-    ladderLevel: {$in:["3","1","2",]}
-   });
-  return departmentWorkers ;
+  }
 };
- // departmentWorker.filter(0<4)
 
-  // departmentWorker.length[0]
-
-  // const hrms = await EmployeeModel.find({jobtitte: "Hrms"})
-
-  // const getAllRequests = await EmployeeModel.find({ department: '4' });
