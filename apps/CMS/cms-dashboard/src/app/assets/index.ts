@@ -2,4 +2,4 @@ export * from './ArrowBackSvg';
 export * from './MagnifyingGlassSvg';
 export * from './TableMorevertSvg';
 export * from './ArchiveButtonSvg';
-export * from './LoadingSvG';
+export * from './LoadingIcon';

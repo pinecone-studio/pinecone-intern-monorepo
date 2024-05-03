@@ -1,4 +1,4 @@
-export const LoadingSvG = () => {
+export const LoadingIcon = () => {
   return (
     <svg className="animate-spin h-12 w-12 mx-auto" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
