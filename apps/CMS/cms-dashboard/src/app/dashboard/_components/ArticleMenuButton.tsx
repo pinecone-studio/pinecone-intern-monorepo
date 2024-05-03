@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import { LinkButtonSvg } from '../../assets/LinkButtonSvg';
-import { MorevertButtonSvg } from '../../assets/TableMorevertSvg';
-import { ArchiveButtonSvg } from '../../assets/ArchiveButtonSvg';
+import { LinkButtonIcon } from '@/icons';
+import { MorevertButtonIcon } from '@/icons';
+import { ArchiveButtonIcon } from '@/icons';
 
 const ArticleMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
@@ -31,17 +31,17 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
 
   return (
     <div className="relative dropdown">
-      <div data-testid="menu-button-test-id" tabIndex={0} role="button" onClick={handleClick}>
-        <MorevertButtonSvg />
+      <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button" onClick={handleClick}>
+        <MorevertButtonIcon />
       </div>
 
       <div className="absolute left-[-50px] top-8">
         {anchorEl && (
-          <div onClick={handleClose}>
+          <div onClick={handleClose} data-cy="drop-down-menu-test-cy">
             <ul tabIndex={0} className="dropdown-content z-10 menu p-2 shadow rounded-xl border border-slate-200">
               <li data-testid="close-menu-button-test-id" className="z-10 bg-white">
                 <a>
-                  <ArchiveButtonSvg />
+                  <ArchiveButtonIcon />
                   Архив
                 </a>
               </li>
@@ -54,7 +54,7 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
                 }}
               >
                 <a className="whitespace-nowrap">
-                  <LinkButtonSvg />
+                  <LinkButtonIcon />
                   Линк хуулах
                 </a>
               </li>

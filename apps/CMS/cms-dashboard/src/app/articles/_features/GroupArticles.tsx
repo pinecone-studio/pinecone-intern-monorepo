@@ -1,8 +1,8 @@
 'use client';
 import ArticleCard from '../_components/ArticleCard';
 import { useState } from 'react';
-import { useGetArticlesByCategoryQuery } from '../../../generated';
-import DropDownSvg from '../../../assets/icons/DropDownSvg';
+import { useGetArticlesByCategoryQuery } from '@/generated';
+import { DropDownIcon } from '@/icons';
 
 type GroupArticlesProps = {
   title: string;
@@ -37,7 +37,7 @@ const GroupArticles = (props: GroupArticlesProps) => {
         </div>
         <div data-cy="group-innerCon" className="flex w-full justify-center">
           <div data-cy="group-icon-button" onClick={clickHandler} className="w-fit h-fit flex cursor-pointer p-4 rounded-full hover:bg-[#1C202414]">
-            <DropDownSvg />
+            <DropDownIcon />
           </div>
         </div>
       </div>

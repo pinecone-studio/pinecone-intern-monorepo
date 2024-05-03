@@ -1,4 +1,4 @@
-export const ArchiveButtonSvg = () => {
+export const ArchiveButtonIcon = () => {
   return (
     <div data-cy="archive-button-svg-cy">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
