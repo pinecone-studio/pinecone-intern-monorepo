@@ -10,7 +10,7 @@ type RichTextProps = {
   onBlur?: (previousSelection: Range, editor: UnprivilegedEditor) => void;
   error?: string;
   helpertext?: string;
-  content:string;
+  content: string;
 };
 
 const modules = {
@@ -27,9 +27,7 @@ const modules = {
   ],
 };
 
-
-const RichTextEditor = ({onChange, onBlur, error, helpertext,content}: RichTextProps) => {
-
+const RichTextEditor = ({ onChange, onBlur, error, helpertext, content }: RichTextProps) => {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
   return (

@@ -15,7 +15,7 @@ const Input = ({ placeholder, value, onChange, name, type, onBlur, error, helper
   return (
     <div className=" flex flex-col gap-2">
       <input
-         className={cx('h-16 px-6 items-center bg-[#ffffff] text-lg rounded-2xl w-full', {
+        className={cx('h-16 px-6 items-center bg-[#ffffff] text-lg rounded-2xl w-full', {
           'ring-[1px] ring-red-700 hover:ring-[1px]': error,
           'focus-within:border focus-within:border-[#000000] focus-within:hover:border-[#000000]': !error,
         })}

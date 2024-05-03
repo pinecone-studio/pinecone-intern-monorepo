@@ -28,7 +28,7 @@ const CreateArticle = () => {
   const handleback = () => {
     router.push('/');
   };
-  
+
   const handleRichTextChange = (value: string) => {
     setFieldValue('content', value);
   };
@@ -36,8 +36,8 @@ const CreateArticle = () => {
   const handleCreateArticleSubmit = () => {
     handleSubmit();
   };
-  
-  const {values, errors, isValid, setFieldValue, handleSubmit ,handleChange, handleBlur} = useFormik({
+
+  const { values, errors, isValid, setFieldValue, handleSubmit, handleChange, handleBlur } = useFormik({
     initialValues: {
       title: '',
       content: '',
@@ -46,14 +46,14 @@ const CreateArticle = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      handleCreateArticle(values.title, values.content, values.coverPhoto, values.category,);
+      handleCreateArticle(values.title, values.content, values.coverPhoto, values.category);
     },
   });
- 
-  const handleCreateArticle = async (title:string, content, coverPhoto, category) => {
+
+  const handleCreateArticle = async (title: string, content, coverPhoto, category) => {
     await createArticle({
       variables: {
-        articleInput: { commentPermission, title, content, coverPhoto,category,author, slug, status},
+        articleInput: { commentPermission, title, content, coverPhoto, category, author, slug, status },
       },
     });
   };
@@ -65,25 +65,10 @@ const CreateArticle = () => {
           <BackButton onClick={handleback} />
           <div className=" flex flex-col gap-[15px]">
             <p className=" text-lg font-semibold">Гарчиг өгөх</p>
-            <Input
-              type="text"
-              name="title"
-              placeholder="Энд гарчгаа бичнэ үү..."
-              value={values.title}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.title}
-              helpertext={errors.title}
-            />
+            <Input type="text" name="title" placeholder="Энд гарчгаа бичнэ үү..." value={values.title} onChange={handleChange} onBlur={handleBlur} error={errors.title} helpertext={errors.title} />
           </div>
         </div>
-        <RichTextEditor 
-        content={values.content}
-        onChange={handleRichTextChange}      
-        onBlur={handleBlur} 
-        error={errors.content}
-        helpertext={errors.content}
-        />
+        <RichTextEditor content={values.content} onChange={handleRichTextChange} onBlur={handleBlur} error={errors.content} helpertext={errors.content} />
       </div>
       <div className=" flex flex-col justify-between w-[388px]">
         <RightSide
