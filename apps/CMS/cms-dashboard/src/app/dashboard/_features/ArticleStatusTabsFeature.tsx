@@ -29,7 +29,7 @@ export const ArticleStatusTabsFeature = () => {
   const currentStatus = searchParams.get('status') || 'ALL';
 
   return (
-    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-[56px] px-3 flex flex-row gap-1 items-center cursor-pointer border-[1px]  border-border rounded-[8px] ">
+    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-[56px] px-3 flex flex-row gap-1 items-center cursor-pointer border-[1px] bg-white border-border rounded-[8px] ">
       <Link href={pathname + '?' + createQueryString('status', 'ALL')} className="h-[100%]">
         <StatusTab selectedStatus={currentStatus} quantity={articles?.length} thisStatus={'ALL'} />
       </Link>
