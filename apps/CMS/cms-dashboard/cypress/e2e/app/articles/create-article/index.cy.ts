@@ -23,6 +23,7 @@ describe('PublishLeftSide', () => {
       cy.get('[data-testid="create-article-btn"]').should('exist').should('be.visible').click();
       cy.url().should('include', '/articles/create-article');
     });
+    
 
   });
   

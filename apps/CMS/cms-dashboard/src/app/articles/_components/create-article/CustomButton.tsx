@@ -7,7 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button = ({ label, onClick, disabled, bgColor = 'primary' }: ButtonProps) => {
+const CustomButton = ({ label, onClick, disabled, bgColor = 'primary' }: ButtonProps) => {
   const buttonBackground = bgColor === 'primary' ? 'btn bg-[#1c2024] text-white' : 'btn border-[#D6D8DB]  bg-[#D6D8DB] btn-outline text-[#121316] hover:bg-slate-300 hover:border-[#D6D8DB]';
 
   return (
@@ -16,3 +16,4 @@ export const Button = ({ label, onClick, disabled, bgColor = 'primary' }: Button
     </button>
   );
 };
+export default CustomButton;
