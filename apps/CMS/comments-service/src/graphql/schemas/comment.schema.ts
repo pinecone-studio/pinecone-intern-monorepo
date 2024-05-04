@@ -31,6 +31,10 @@ export const commentsSchema = gql`
   input RemoveCommentByAdminInput {
     _id: ID!
   }
+  input GetCommentsLimitInput {
+    limit: Int!
+    offset: Int!
+  }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID!
     updateComment(updateInput: UpdateCommentInput!): ID!
@@ -39,6 +43,6 @@ export const commentsSchema = gql`
     deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
   }
   type Query {
-    getComments: [Comment]
+    getComments(input: GetCommentsLimitInput!): [Comment]
   }
 `;
