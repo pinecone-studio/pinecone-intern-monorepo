@@ -1,13 +1,14 @@
 import CommentsCard from '../_components/CommentsCard';
-import { useGetCommentsQuery } from '../../../generated';
+// import { useGetCommentsQuery } from '../../../generated';
 
 export const CommentsMain = () => {
-  const { data } = useGetCommentsQuery();
-  const comments = data?.getComments || [];
+  // const { data } = useGetCommentsQuery();
+  // const comments = data?.getComments || [];
 
   return (
     <div>
-      {comments.map((item) => (
+      <CommentsCard/>
+      {/* {comments.map((item) => (
         <div  key={item?._id}>
           {item?.comment && (
             <CommentsCard 
@@ -18,7 +19,7 @@ export const CommentsMain = () => {
               articleId={item.articleId ?? ""} />
           )}
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

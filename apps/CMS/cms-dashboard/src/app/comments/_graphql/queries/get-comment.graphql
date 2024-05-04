@@ -1,10 +1,10 @@
-query getComments {
-    getComments{
-    comment
-   _id
-   email
-   name
-   createdAt
-   articleId
-}
-}
+# query getComments($input: GetCommentsLimitInput!) {
+#     getComments ((input: $input)) {
+#     comment
+#    _id
+#    email
+#    name
+#    createdAt
+#    articleId
+# }
+# }
