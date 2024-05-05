@@ -10,3 +10,4 @@ export * from './ArrowIcon';
 export * from './LoadingIcon';
 export * from './ArrowBackIcon';
 export * from './MagnifyingClassIcon';
+export * from './FileUploadIcon';
