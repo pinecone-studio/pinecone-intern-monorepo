@@ -75,7 +75,7 @@ const AddSection = () => {
              onClick={() => {
                formik.handleSubmit();
              }}
-             disabled={!formik.values.title || !formik.values.description}
+             disabled={!formik.values.title || !formik.values.description || !formik.values.contentImage}
             >
               +
             </button>
