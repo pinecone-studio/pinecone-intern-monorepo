@@ -17,5 +17,6 @@ export const sectionSchema = gql`
   }
   type Mutation {
     createSection(sectionInput:SectionInput!): Section!
+    deleteSection(id:ID!):Section!
   }
 `;
