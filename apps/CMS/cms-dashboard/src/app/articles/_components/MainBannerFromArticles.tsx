@@ -1,5 +1,4 @@
 'use client';
-import { Button, Stack, Typography } from '@mui/material';
 
 type MainBannerFromArticlesProps = {
   date?: string;
@@ -9,53 +8,31 @@ type MainBannerFromArticlesProps = {
 };
 const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
   const { date, categories, articlesTitle, cover } = props;
-  
-  return (
-    <Stack data-cy="mainBannerComp" width={'100%'} height={656} position={'relative'}>
-      <img width={'100%'} height={'100%'} data-cy="main-cover" src={cover} alt="article-cover" style={{ objectFit: 'cover' }} />
-      <Stack
-        data-cy="innerComp"
-        position={'absolute'}
-        bottom={0}
-        width={'100%'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        gap={3}
-        p={3}
-        paddingBottom={'50px'}
-        sx={{
-          background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,2,1) 29%, rgba(0,0,0,1) 40%, rgba(255,255,255,0) 100%)',
-        }}
-      >
-        <Stack direction={'row'} gap={1} alignItems={'center'}>
-          <Typography data-cy="main-date" fontWeight={500} fontSize={15} color={'#fff'}>
-            {date}
-          </Typography>
-          <Stack width={4} height={4} borderRadius={'100%'} bgcolor={'#fff'}></Stack>
 
-          <Typography data-cy="main-categories" color={'#fff'}>
+  return (
+    <div data-cy="mainBannerComp" className="flex flex-col w-full h-[756px] relative ">
+      <div className="w-full h-full flex">
+        <img className="w-full h-full object-cover" data-cy="main-cover" src={cover} alt="article-cover" />
+      </div>
+      <div data-cy="innerComp" className="flex flex-col absolute bottom-0 w-full  justify-center items-center gap-6 p-6 pb-[50px] bg-gradient-to-t from-black to-transparent">
+        <div className="flex flex-row gap-2 items-center">
+          <p data-cy="main-date" className="font-bold text-[15px] text-white">
+            {date?.slice(0, -14)}
+          </p>
+          <div className="w-1 h-1 rounded-full bg-white"></div>
+
+          <p data-cy="main-categories" className="text-white">
             #{categories}
-          </Typography>
-        </Stack>
-        <Typography data-cy="articlesTitle" fontWeight={700} fontSize={32} color={'#fff'} maxWidth={'850px'} textAlign={'center'}>
+          </p>
+        </div>
+        <p data-cy="articlesTitle" className="font-bold text-[32px] max-w-[850px] text-center text-white">
           {articlesTitle}
-        </Typography>
-        <Button
-          data-cy="mainBtn"
-          sx={{
-            borderRadius: '999px',
-            bgcolor: '#fff',
-            color: '#000',
-            padding: '12px 16px',
-            '&:hover': {
-              color: '#fff',
-            },
-          }}
-        >
+        </p>
+        <div data-cy="mainBtn" className=" rounded-full bg-white text-black p-[12px 16px] px-4 py-3 hover:text-white hover:bg-inherit cursor-pointer">
           Унших
-        </Button>
-      </Stack>
-    </Stack>
+        </div>
+      </div>
+    </div>
   );
 };
 export default MainBannerFromArticles;

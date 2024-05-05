@@ -8,7 +8,7 @@ jest.mock('jsonwebtoken');
 
 jest.mock('../../src/models/user.model.ts', () => ({
   UserModel: {
-    findOne: jest.fn().mockReturnValueOnce({ email: 'test', _id: 'user-id', name: 'test',role:'user' }).mockResolvedValueOnce(null).mockRejectedValueOnce(null),
+    findOne: jest.fn().mockReturnValueOnce({ email: 'test', _id: 'user-id', name: 'test', role: 'user' }).mockResolvedValueOnce(null).mockRejectedValueOnce(null),
   },
 }));
 
@@ -32,7 +32,7 @@ describe('Sign in', () => {
       ],
     });
 
-    expect(jwt.sign as jest.Mock).toHaveBeenCalledWith({ id: 'user-id', name: 'test', email: 'test',role:'user' }, 'secret-key');
+    expect(jwt.sign as jest.Mock).toHaveBeenCalledWith({ id: 'user-id', name: 'test', email: 'test', role: 'user' }, 'secret-key');
 
     expect(result).toEqual({ token: 'testToken', message: 'Амжилттай нэвтэрлээ' });
   });

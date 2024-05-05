@@ -11,12 +11,12 @@ export const getArticlesQuery: QueryResolvers['getArticlesQuery'] = async () => 
   }
 };
 
-export const getArticlesByCategory: QueryResolvers['getArticlesByCategory'] = async (_, { categoryId, getAll }) => {
+export const getArticlesByCategory: QueryResolvers['getArticlesByCategory'] = async (_, { categoryId, quantity }) => {
   try {
     const articles = await ArticleModel.find({ category: categoryId })
       .populate('category')
       .populate('author')
-      .limit(getAll ? 0 : 2);
+      .limit(quantity);
 
     return articles;
   } catch (error) {

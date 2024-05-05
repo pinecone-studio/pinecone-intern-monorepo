@@ -35,6 +35,21 @@ export const articleSchema = gql`
     commentPermission: Boolean!
   }
 
+  input PaginationInput {
+    limit: Int!
+    page: Int!
+  }
+
+  input FilterInput {
+    status: String!
+    searchedValue: String!
+  }
+
+  type PaginationReturn {
+    articles: [Article!]!
+    totalArticles: Int!
+  }
+
   type Mutation {
     createArticle(articleInput: CreateArticleInput!): Article!
   }
@@ -42,11 +57,12 @@ export const articleSchema = gql`
   type Query {
     getArticlesQuery: [Article]!
     getArticleByID(id: ID!): Article!
-    getArticlesByCategory(categoryId: String!, getAll: Boolean!): [Article!]!
+    getArticlesByCategory(categoryId: String!, quantity: Int!): [Article!]!
     getArticlesByCategoryNoLimit(categoryId: String!): [Article!]!
     getArticlesByQuantity(quantity: Int!): [Article]!
     getNewestArticle: Article!
     getArticlesByAuthorId(_id: ID!): [Article]!
     getArticlesByStatus(status: String!): [Article!]!
+    getArticlesByPaginate(paginationInput: PaginationInput!, filterInput: FilterInput!): PaginationReturn!
   }
 `;

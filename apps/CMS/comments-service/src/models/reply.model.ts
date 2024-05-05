@@ -8,6 +8,11 @@ const replySchema = new Schema({
   email: { type: String, required: true },
   createdAt: { type: Date, required: true, default: new Date() },
   ipAddress: String,
+  status: {
+    type: String,
+    enum: ['DELETED', 'HIDDEN', 'NORMAL'],
+    default: 'NORMAL',
+  },
 });
 const ReplyModel = models.reply || model('reply', replySchema);
 export default ReplyModel;

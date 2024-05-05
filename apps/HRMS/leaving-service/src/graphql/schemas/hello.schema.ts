@@ -2,7 +2,7 @@ import { gql } from 'graphql-tag';
 
 export const helloLeavingSchema = gql`
   type Query {
-    helloQueryFromLeavingService: String
+    helloQueryFromLeavingService:  String 
   }
 
   # ******************** Mutations ********************

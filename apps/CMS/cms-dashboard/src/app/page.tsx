@@ -1,31 +1,40 @@
 'use client';
 
 import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
-import { Stack } from '@mui/material';
-import GroupArticlesComp from './articles/_features/GroupArticlesComp';
-import { useGetNewestArticleQuery } from '../generated';
+import { useGetNewestArticleQuery, useGetCategoriesQuery } from '../generated';
+import GroupArticles from './articles/_features/GroupArticles';
+import { Loader } from './sign-up/_components';
+import { AdminNavigateLinksFeature } from './dashboard/_features';
 
 const Home = () => {
   const { data, loading } = useGetNewestArticleQuery();
+  const { data: categories, loading: categoriesLoading } = useGetCategoriesQuery();
   return (
     <div>
-      <Stack width={'100vw'} gap={6} bgcolor={'#F7F7F8'} suppressHydrationWarning={true} alignItems={'center'} pb={3}>
+      <div className="flex flex-col w-full gap-12 bg-[#F7F7F8] items-center pb-6" suppressHydrationWarning={true}>
         {loading ? (
-          <Stack>Loading</Stack>
+          <div className="flex w-[100vw] h-[100vh] items-center justify-center">
+            <Loader />
+          </div>
         ) : (
           <MainBannerFromArticles
             articlesTitle={data?.getNewestArticle.title}
-            cover={data?.getNewestArticle.coverPhoto ?? '/earth.jpeg'}
+            cover={data?.getNewestArticle.coverPhoto}
             date={data?.getNewestArticle.publishedAt}
             categories={data?.getNewestArticle.category.name}
           />
         )}
-        <Stack px={12} gap={6} width={'85%'}>
-          <GroupArticlesComp title="Шинэ контентууд" categoryId="662776d1ebfd0e7cf0eed309" />
-          <GroupArticlesComp title="Хөтөлбөр болон эвентүүд" categoryId="661c677c6837efa536464cab" />
-          <GroupArticlesComp title="Сонирхолтой түүхүүд" categoryId="662771aaebfd0e7cf0eed302" />
-        </Stack>
-      </Stack>
+        {categoriesLoading ? null : (
+          <div className="flex flex-col px-24 gap-12 w-[70%] pb-28">
+            {categories?.getCategories.map((item) => (
+              <GroupArticles key={item.id} title={item.name} categoryId={item.id} />
+            ))}
+          </div>
+        )}
+        <div className="fixed opacity-100 bottom-8">
+          <AdminNavigateLinksFeature />
+        </div>
+      </div>
     </div>
   );
 };

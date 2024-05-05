@@ -1,0 +1,10 @@
+query getComments {
+    getComments {
+    comment
+   _id
+   email
+   name
+   createdAt
+   articleId
+}
+}

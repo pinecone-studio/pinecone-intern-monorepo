@@ -9,7 +9,7 @@ const EmployeeSchema = new mongoose.Schema({
     type: String,
     enum: ['SOFTWARE', 'DESIGN', 'MARKETING', 'BACK_OFFICE'],
   },
-  jobTitle: [String],
+  jobTitle: String,
   ladderLevel: String,
   salary: Number,
   bankName: String,
