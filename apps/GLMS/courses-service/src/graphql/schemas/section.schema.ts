@@ -18,5 +18,6 @@ export const sectionSchema = gql`
   type Mutation {
     createSection(sectionInput:SectionInput!): Section!
     deleteSection(id:ID!):Section!
+    updateSection(id: ID!, title: String, contentImage: String, description: String): Section!
   }
 `;

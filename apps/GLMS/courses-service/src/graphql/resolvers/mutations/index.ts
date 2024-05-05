@@ -4,3 +4,4 @@ export * from './update-lesson';
 export * from './create-section';
 export * from './create-course';
 export * from "./delete-section";
+export * from "./update-section"
