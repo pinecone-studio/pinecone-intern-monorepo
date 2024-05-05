@@ -7,7 +7,12 @@ describe ('Handle section page' , () => {
     });
 
     it('2.Should display GetSections component' , () => {
-        cy.get('[data-testid="get-sections-query"]').should('exist')
+        cy.get('[data-testid="get-sections-query"]').should('exist');
+        cy.get('[data-testid="section-form"]').should('exist');
+        cy.get('[data-testid="title"]').should('exist');
+        cy.get('[data-testid="description"]').should('exist');
+        cy.get('[data-testid="contentImage"]').should('exist')
+        
     })
 
     it('4.Should display AddSection feature' , () => {

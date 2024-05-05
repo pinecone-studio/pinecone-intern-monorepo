@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import GetSections from './_components/GetSections';
+import GetSections from './_features/GetSections';
 import AddSection from './_features/AddSection';
 import { ArrowLeft } from '../create-course/assets/ArrowLeft';
 
