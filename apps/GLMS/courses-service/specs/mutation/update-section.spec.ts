@@ -1,5 +1,4 @@
 import { updateSection } from '@/graphql/resolvers/mutations';
-import { updateLesson } from '../../src/graphql/resolvers/mutations/update-lesson';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/model/section-model', () => ({
