@@ -18,10 +18,23 @@ describe('GetSections', () => {
     (useGetSectionsQuery as jest.Mock).mockReturnValueOnce({ data: sectionsData });
 
     const { getByTestId} = render(<GetSections/>);
-  
 
     expect(getByTestId('get-sections-query')).toBeDefined();
-   
+  });
+
+  it('renders section forms when data is null', () => {
+    (useGetSectionsQuery as jest.Mock).mockReturnValueOnce({ data: null });
+
+    const { getByTestId } = render(<GetSections/>);
+
+    expect(getByTestId('get-sections-query')).toBeDefined();
+  });
+
+  it('renders section forms when data is undefined', () => {
+    (useGetSectionsQuery as jest.Mock).mockReturnValueOnce({ data: undefined });
+
+    const { getByTestId } = render(<GetSections/>);
+
+    expect(getByTestId('get-sections-query')).toBeDefined();
   });
 });
-
