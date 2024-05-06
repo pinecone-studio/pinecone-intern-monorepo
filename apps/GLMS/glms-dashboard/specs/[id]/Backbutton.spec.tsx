@@ -6,12 +6,12 @@ describe('BackButton component', () => {
   it('renders BackButton', () => {
     const { getByTestId } = render(<BackButton />);
     const backButton = getByTestId('prev-button-test-id');
-    expect(backButton).toBeDefined()
+    expect(backButton).toBeDefined();
   });
 
   it('renders correct text in BackButton', () => {
     const { getByText } = render(<BackButton />);
     const buttonText = getByText('Сэдвүүд');
-    expect(buttonText).toBeDefined()
+    expect(buttonText).toBeDefined();
   });
 });

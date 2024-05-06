@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { AssessmentMain } from './_features';
-import { useHelloQueryFromAssessmentServiceQuery } from '@/generated/index';
+import { useHelloQueryFromAssessmentServiceQuery } from '@/generated';
 
 const AssessmentPage = () => {
   const { data } = useHelloQueryFromAssessmentServiceQuery();

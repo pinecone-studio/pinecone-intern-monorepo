@@ -6,6 +6,6 @@ describe('DeleteButton component', () => {
   it('renders DeleteButton', () => {
     const { getByTestId } = render(<DeleteButton />);
     const backButton = getByTestId('delete-button-test-id');
-    expect(backButton).toBeDefined()
+    expect(backButton).toBeDefined();
   });
 });

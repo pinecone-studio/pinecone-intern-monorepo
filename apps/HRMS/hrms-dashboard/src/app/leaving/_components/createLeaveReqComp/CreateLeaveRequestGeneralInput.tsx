@@ -1,19 +1,13 @@
 'use client';
 
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import dayjs from 'dayjs';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 
 const validationSchema = yup.object({
-  step1Date: yup.date().required(),
+  step1Date: yup.string().required(),
   step1UserName: yup.string().required(),
   step1LeaveType: yup.string().required(),
 });
@@ -27,9 +21,9 @@ export const CreateLeaveRequestGeneralInput = () => {
 
   const formik = useFormik({
     initialValues: {
-      step1Date: dayjs(),
-      step1UserName: '',
-      step1LeaveType: '',
+      step1Date: undefined,
+      step1UserName: undefined,
+      step1LeaveType: undefined,
     },
     validationSchema: validationSchema,
     onSubmit: () => {
@@ -39,63 +33,70 @@ export const CreateLeaveRequestGeneralInput = () => {
   });
 
   return (
-    <Box>
-      <Stack sx={{ gap: '16px' }}>
-        <Stack sx={{ gap: '4px' }} data-testid="date-picker-container">
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+    <div className="w-[100%] flex flex-col gap-[40px]">
+      <div className="w-[100%] flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[4px]">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Огноо
-          </Typography>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
-          </LocalizationProvider>
-        </Stack>
+          </div>
+          <div data-testid="date-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
+            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
+          </div>
+        </div>
 
-        <Stack sx={{ gap: '4px' }}>
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+        <div className="w-[100%] flex flex-col gap-[4px]" data-testid="name-select-input">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Нэрээ сонгоно уу
-          </Typography>
-          <TextField data-cy="name-select-input" data-testid="name-select-input" select name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
-            <MenuItem data-testid={workerName.name} value={workerName.name}>
+          </div>
+          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+            <option disabled selected>
+              Нэрээ сонгоно уу
+            </option>
+            <option data-testid="WorkerName" value={workerName.name}>
               {workerName.name}
-            </MenuItem>
-          </TextField>
-        </Stack>
-        <Stack sx={{ gap: '4px' }}>
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+            </option>
+          </select>
+        </div>
+
+        <div className="w-[100%] flex flex-col gap-[4px]" data-testid="type-select-input">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Шалтгаанаа сонгоно уу
-          </Typography>
-          <TextField data-cy="type-select-input" data-testid="type-select-input" select name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
-            {leaveTypes.map((option, index) => {
+          </div>
+          <select data-cy="type-select-input" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
+            <option disabled selected>
+              Шалтгаанаа сонгоно уу
+            </option>
+            {leaveTypes.map((item, index) => {
               return (
-                <MenuItem data-testid={`type-${index}`} key={index} value={option}>
-                  {option}
-                </MenuItem>
+                <option key={index} data-testid={`type-${index}`} value={item}>
+                  {item}
+                </option>
               );
             })}
-          </TextField>
-        </Stack>
-      </Stack>
-      <Box paddingTop={'40px'} display={'flex'} justifyContent={'space-between'}>
-        <IconButton sx={{ visibility: 'hidden', bgcolor: 'white' }}>
-          <ArrowBack sx={{ color: 'white' }} />
-        </IconButton>
-        <Button
+          </select>
+        </div>
+      </div>
+      <div className="pt-[40px] flex justify-between">
+        <button className="p-[12px] bg-[#1C20240A] rounded-full invisible">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#121316" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+        </button>
+        <button
           data-cy="next-btn"
           data-testid="nextButton"
           onClick={() => {
             formik.handleSubmit();
           }}
-          variant="contained"
-          sx={{ bgcolor: '#121316', textTransform: 'none', gap: '4px', paddingY: '12px', paddingX: '16px' }}
-          disableElevation
+          className="bg-[#121316] flex gap-[4px] py-[12px] px-[16px] rounded-[8px] text-white disabled:bg-[#D6D8DB] disabled:text-[#1C20243D]"
           disabled={!formik.values.step1Date || !formik.values.step1LeaveType || !formik.values.step1UserName}
         >
-          <Typography fontSize={16} fontWeight={600} color={'white'}>
-            Дараах
-          </Typography>
-          <ArrowForward sx={{ color: 'white' }} />
-        </Button>
-      </Box>
-    </Box>
+          <div className="text-[16px] font-semibold">Дараах</div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="white" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 };

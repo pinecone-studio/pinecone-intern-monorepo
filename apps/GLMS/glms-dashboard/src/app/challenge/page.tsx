@@ -1,9 +1,10 @@
 'use client';
 
-import { useGetChallengesByStatusQuery } from '@/generated/index';
+import { useGetChallengesByStatusQuery } from '@/generated';
 import ChoiceImage from './_components/ImageChoicePicker';
 import { useState } from 'react';
 import ChoiceText from './_components/TextChoicePicker';
+import ProgressBar from './_components/ProgressBar';
 
 const ChallengePage = () => {
   const { data, loading } = useGetChallengesByStatusQuery();
@@ -12,9 +13,10 @@ const ChallengePage = () => {
     setSelectedChoice(event.target.value);
   };
   return (
-    <div>
+    <div className="w-screen overflow-hidden px-[120px] bg-white">
       <h1>Welcome to Challenge page</h1>
       <h1>{!loading && data?.getChallengesByStatus?.map((challenge) => challenge?.title)}</h1>
+      <ProgressBar />
       <ChoiceImage
         selectedChoice={selectedChoice}
         setSelectedChoice={setSelectedChoice}

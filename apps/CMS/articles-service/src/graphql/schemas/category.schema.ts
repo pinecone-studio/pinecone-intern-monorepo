@@ -8,7 +8,7 @@ export const categorySchema = gql`
     createdAt: Date
   }
   type Query {
-    getCategories:[Category]!
+    getCategories:[Category!]!
   } 
   type Mutation {
     createCategory(name: String!): Category!

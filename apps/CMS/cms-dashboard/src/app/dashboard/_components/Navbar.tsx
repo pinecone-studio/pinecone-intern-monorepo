@@ -1,11 +1,10 @@
 import React from 'react';
-import { Stack } from '@mui/material';
-import Image from 'next/image';
+import { HeaderLogoIcon } from '@/icons';
 
 export const Navbar = () => {
   return (
-    <Stack data-cy="navbar-cy-id" px={4} py={1.7} bgcolor={'#FFF'} data-testid="navbar">
-      <Image src={'Logo.svg'} alt="" width={36} height={36} />
-    </Stack>
+    <div data-cy="navbar-cy-id" data-testid="navbar" className="px-8 py-4 bg-white">
+      <HeaderLogoIcon />
+    </div>
   );
 };
