@@ -6,8 +6,7 @@ export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) 
   try {
     const employee = await EmployeeModel.findById(id);
     const { department, ladderLevel } = employee!;
-    console.log(employee);
-    
+        
     const departmentWorkers = await EmployeeModel.find({
       department,
       ladderLevel: { $in: ['3', '1', '2'], $ne: ladderLevel },
