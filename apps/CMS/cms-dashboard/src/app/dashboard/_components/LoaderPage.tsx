@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Navbar } from './Navbar';
 import { LoadingIcon } from '../../assets';
 
