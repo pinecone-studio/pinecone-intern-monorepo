@@ -4,11 +4,13 @@ import EditIcon from '../assets/EditIcon';
 import DeleteIcon from '../assets/DeleteIcon';
 import { useEffect, useState } from 'react';
 
+
+
 const GetSections = () => {
   const { data , refetch } = useGetSectionsQuery();
   const [deleteSection] = useDeleteSectionMutation();
   const [successMessage, setSuccessMessage] = useState('');
-
+  const query = data?.getSections
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
@@ -66,7 +68,7 @@ const GetSections = () => {
             <button className=" w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
               Засах <EditIcon />
             </button>
-            <button data-testid="delete-btn" onClick={()=>handleDeleteSection(section.id)} className="w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]">
+            <button data-testid="delete-btn" onClick={()=>handleDeleteSection(section.id || "")} className="w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]">
               Устгах <DeleteIcon />
             </button>
           </div>
