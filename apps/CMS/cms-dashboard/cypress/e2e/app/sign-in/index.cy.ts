@@ -53,7 +53,6 @@ describe('articles page', () => {
     cy.get('input[name="password"]').type('12345678');
     cy.get('[data-testid="helperText"]').eq(1).should('exist').should('contain', 'Жижэг үсэг байх ёстой');
   });
-
   it('8. When user types on the password input with no uppercase letter, it should display an error message', () => {
     cy.get('[data-cy="Sign-In-Button"]').should('exist').click();
     cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
