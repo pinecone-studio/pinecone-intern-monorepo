@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { MagnifyingGlassSvg } from '../../assets';
+import { MagnifyingGlassSvg } from '../../../assets/icons/MagnifyingClassIcon';
 
 export const SearchInput = () => {
   const router = useRouter();

@@ -1,6 +1,6 @@
 'use client';
+import { LoadingIcon } from '../../../assets/icons/LoadingIcon';
 import { Navbar } from './Navbar';
-import { LoadingIcon } from '../../assets';
 
 export const LoaderPage = () => {
   return (
