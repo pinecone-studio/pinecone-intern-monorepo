@@ -7,10 +7,11 @@ export const EmployeeTypeDefs = gql`
     firstName: String
     lastName: String
     email: String
-    department: ID
+    department: String
     jobTitle: [String]
     ladderLevel: String
   }
+  
   type Query {
     getEmployeeId(id:ID!):[Employee]!
   }
