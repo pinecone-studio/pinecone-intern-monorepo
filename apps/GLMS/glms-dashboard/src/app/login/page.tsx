@@ -1,11 +1,10 @@
-import { Stack } from '@mui/material';
 import SignIn from './_features/SignIn';
 
 const Login = () => {
   return (
-    <Stack>
+    <div>
       <SignIn />
-    </Stack>
+    </div>
   );
 };
 export default Login;
