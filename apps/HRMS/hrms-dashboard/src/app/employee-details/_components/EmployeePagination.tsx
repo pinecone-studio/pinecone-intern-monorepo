@@ -28,7 +28,6 @@ export const EmployeePagination = ({ handleClick, page, }: PropsType) => {
   return (
     <>
       <ReactPaginate
-        data-testid="page-button"
         className="flex gap-2 justify-center items-center"
         pageClassName="border rounded-lg w-10 h-10 flex justify-center items-center  "
         activeClassName="bg-black text-white"
