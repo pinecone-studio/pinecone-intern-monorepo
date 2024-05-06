@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { perPage } from '../constants';
 import { CreateEmployeeForm } from './CreateEmployeeForm';
-import { AddIcon } from '../../asset';
+import { AddIcon } from '../../../assets';
 
 export const EmployeesList = () => {
   const [pageCount, setPageCount] = useState<number>(1);

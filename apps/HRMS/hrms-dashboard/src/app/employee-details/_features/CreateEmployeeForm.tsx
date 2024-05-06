@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Department, useCreateEmployeeMutation } from '../../../generated';
 import { EmploymentStatus } from '../../../generated';
-import { Close } from '../../asset';
+import { Close } from '../../../assets';
 import { inputItems } from '../constants';
 
 type CreateEmployeeFormProps = {
