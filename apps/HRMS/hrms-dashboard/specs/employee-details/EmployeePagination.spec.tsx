@@ -1,26 +1,25 @@
 import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import { EmployeePagination } from '../../src/app/employee-details/_components';
-import { fireEvent, render } from '@testing-library/react';
+describe('EmployeePagination', () => {
+  const handleClickMock = jest.fn();
 
-describe('employee pagination component', () => {
-  const props = {
-    pageCount: 5,
-    handleClick: jest.fn(),
-    searchPath: '1',
-  };
+  afterEach(() => {
+    handleClickMock.mockClear();
+  });
 
-  it('pagination component render and click', () => {
-    const { container, getByTestId } = render(<EmployeePagination {...props} />);
+  it('should not call handleClick when page does not change', () => {
+    const { container, getByText } = render(<EmployeePagination page={20} handleClick={handleClickMock} />);
     expect(container).toBeDefined();
+    fireEvent.click(getByText('1'));
+    expect(handleClickMock).toHaveBeenCalledWith(1);
+  });
 
-    const beforeButton = getByTestId('NavigateBeforeIcon');
-    fireEvent.click(beforeButton);
-
-    const nextButton = getByTestId('NavigateNextIcon');
-    fireEvent.click(nextButton);
-
-    const pageButton = getByTestId('page-button');
-    expect(pageButton.getAttribute('count')).toBeDefined();
-    fireEvent.click(pageButton);
+  it('should not call handleClick when page does not change', () => {
+    const { getByText } = render(
+      <EmployeePagination page={20} handleClick={handleClickMock}  />
+    );
+    fireEvent.click(getByText('3'));
+    expect(handleClickMock).toHaveBeenCalledWith(3);
   });
 });

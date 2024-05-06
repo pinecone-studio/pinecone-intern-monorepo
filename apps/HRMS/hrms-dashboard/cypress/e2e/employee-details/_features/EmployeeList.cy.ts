@@ -10,8 +10,17 @@ describe('Employee list page', () => {
     cy.get('[data-cy="employeesList"]').should('be.visible');
   });
 
-  it('3.should navigate to the correct page when pagination button is clicked', () => {
-    cy.get('.MuiPaginationItem-root').eq(2).click();
+  it('3.should open create employee form when add employee button is clicked', () => {
+    cy.get('[data-cy="addEmployeeBtn"]').click();
+    cy.get('[data-testid=create-employee]').should('be.visible');
+    cy.get('[data-testid="close-button"]').click()
+  });
+
+  it('4.should navigate to the correct page when pagination button is clicked', () => {
+    cy.get('ul li:first').click();
+    cy.get('ul li').eq(2).click();
+    cy.url().should('include', 'employees=2');
+    cy.get('ul li:last').click();
     cy.url().should('include', 'employees=2');
   });
 });
