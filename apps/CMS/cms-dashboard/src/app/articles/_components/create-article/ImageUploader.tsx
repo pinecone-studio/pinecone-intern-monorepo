@@ -1,6 +1,6 @@
 'use client';
-import CreateArticleIcon from '../icons/CreateArticleIcon';
 import { fileManagement } from '@/file-management';
+import CreateArticleIcon from '../icons/CreateArticleIcon';
 
 type ImageUploaderProps = {
   coverPhoto: string;
@@ -19,6 +19,7 @@ const ImageUploader = ({ coverPhoto, setCoverPhoto }: ImageUploaderProps) => {
   const Remove = () => {
     setCoverPhoto('coverPhoto', '');
   };
+
   return (
     <div data-testid="imageUploader" className="flex flex-col gap-4 p-6 border-b">
       <p className=" text-lg font-semibold">Өнгөц зураг</p>

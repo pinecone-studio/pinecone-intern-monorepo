@@ -2,8 +2,8 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CustomButton from '../../../src/app/articles/_components/create-article/CustomButton';
 
-describe('Button Component', () => {
-  it('1. Renders the button with label', () => {
+describe('Create Article CustomButton Component', () => {
+  it('1. Should render the correct props', () => {
     const { getByText } = render(<CustomButton label="Нийтлэх" />);
     expect(getByText('Нийтлэх')).toBeDefined();
   });
@@ -29,7 +29,7 @@ describe('Button Component', () => {
   });
 
   it('4. Renders the button as bgColor no p  ', () => {
-    const { getByText } = render(<CustomButton label="Нийтлэх"  bgColor="secondary"/>);
+    const { getByText } = render(<CustomButton label="Нийтлэх" bgColor="secondary" />);
     const button = getByText('Нийтлэх');
     expect(button).not.toBeNull();
     expect(button).toHaveClass('btn border-[#D6D8DB]  bg-[#D6D8DB] btn-outline text-[#121316] hover:bg-slate-300 hover:border-[#D6D8DB]');
