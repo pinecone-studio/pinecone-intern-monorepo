@@ -1,15 +1,20 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import CommentPermission from '../../../../cms-dashboard/src/app/articles/_components/create-article/CommentPermission';
 
-describe('Comment Permission Component', () => {
-  it('1. Should render commentPermission Component', () => {
-    const { getByTestId } = render(<CommentPermission />);
+describe('Create Article CommentPermission Component', () => {
+  it('1. Should render the correct props', () => {
+    const mockFunction = jest.fn();
+    const { getByTestId } = render(<CommentPermission commentPermission={true} setCommentPermission={mockFunction} />);
     const switchBtn = getByTestId('commentPermission');
     expect(switchBtn).toBeDefined();
   });
-  it('2. Permission button clicked', async () => {
-    const { getByTestId } = render(<CommentPermission />);
+
+  it('2. CommentPermission button clicked', async () => {
+    const mockFunction = jest.fn();
+    const { getByTestId } = render(<CommentPermission commentPermission={true} setCommentPermission={mockFunction} />);
     const switchBtn = getByTestId('commentPermission');
     fireEvent.click(switchBtn);
   });
+
 });

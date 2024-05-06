@@ -3,7 +3,7 @@
 import {  Dispatch, SetStateAction } from "react";
 
 type ArticleCommentProps = {
-  commentPermission?: boolean;
+  commentPermission: boolean;
   setCommentPermission: Dispatch<SetStateAction<boolean>>;
 };
 

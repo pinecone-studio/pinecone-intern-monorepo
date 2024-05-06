@@ -14,31 +14,30 @@ const validationSchema = yup.object({
   title: yup.string().required('Та гарчгаа оруулна уу'),
   content: yup.string().required('Та нийтлэлээ оруулна уу'),
   coverPhoto: yup.string().required('Та зураг сонго нуу'),
-  category: yup.string(),
+  category: yup.string().required('Та ангилалаа сонго нуу'),
 });
 
 const CreateArticle = () => {
   const router = useRouter();
   const [commentPermission, setCommentPermission] = useState(true);
   const [createArticle, { loading: creationLoading }] = useCreateArticleMutation();
-  // const author = '661c68e36837efa536464cb5';
-  // const status = 'PUBLISHED';
-  // const slug = 'slug';
-
-  const handleSubmit = () => {
-    console.log(commentPermission);
-    formik.handleSubmit();
-  };
+  const author = '661c68e36837efa536464cb5';
+  const status = 'PUBLISHED';
+  const slug = 'slug';
 
   const handleback = () => {
     router.push('/');
   };
-
+  
   const handleRichTextChange = (value: string) => {
-    formik.setFieldValue('content', value);
+    setFieldValue('content', value);
   };
 
-  const formik = useFormik({
+  const handleCreateArticleSubmit = () => {
+    handleSubmit();
+  };
+  
+  const {values, errors, isValid, setFieldValue, handleSubmit ,handleChange, handleBlur} = useFormik({
     initialValues: {
       title: '',
       content: '',
@@ -47,16 +46,14 @@ const CreateArticle = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      handleCreateArticle(values.title, values.content);
+      handleCreateArticle(values.title, values.content, values.coverPhoto, values.category,);
     },
   });
-
-  console.log(formik.values);
-
-  const handleCreateArticle = async () => {
+ 
+  const handleCreateArticle = async (title:string, content, coverPhoto, category) => {
     await createArticle({
       variables: {
-        articleInput: { title, coverPhoto, content, author, category, status, slug, commentPermission },
+        articleInput: { commentPermission, title, content, coverPhoto,category,author, slug, status},
       },
     });
   };
@@ -72,29 +69,35 @@ const CreateArticle = () => {
               type="text"
               name="title"
               placeholder="Энд гарчгаа бичнэ үү..."
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.errors.title}
-              helpertext={formik.errors.title}
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.title}
+              helpertext={errors.title}
             />
           </div>
         </div>
-        <RichTextEditor content={formik.values['content']} onChange={handleRichTextChange} />
+        <RichTextEditor 
+        content={values.content}
+        onChange={handleRichTextChange}      
+        onBlur={handleBlur} 
+        error={errors.content}
+        helpertext={errors.content}
+        />
       </div>
       <div className=" flex flex-col justify-between w-[388px]">
         <RightSide
           name="category"
-          setCategory={formik.handleChange}
-          value={formik.values.category}
-          coverPhoto={formik.values.coverPhoto}
-          setCoverPhoto={formik.setFieldValue}
+          setCategory={handleChange}
+          value={values.category}
+          coverPhoto={values.coverPhoto}
+          setCoverPhoto={setFieldValue}
           commentPermission={commentPermission}
           setCommentPermission={setCommentPermission}
         />
         <div className=" flex flex-col p-6 gap-6 border-t">
-          <CustomButton disabled={!formik.isValid} label="Ноорогт хадгалах" bgColor="primary" onClick={handleSubmit} />
-          <CustomButton disabled={!formik.isValid} label="Нийтлэх" bgColor="secondary" />
+          <CustomButton disabled={!isValid} label="Ноорогт хадгалах" bgColor="primary" onClick={handleCreateArticleSubmit} />
+          <CustomButton disabled={!isValid} label="Нийтлэх" bgColor="secondary" />
         </div>
       </div>
     </div>
