@@ -48,9 +48,9 @@ const Detail = () => {
               <p>Хүсэлт батлах хүн</p>
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-3">
-                  <p>Бат-Энх</p>
+                  <p>{data?.getRequestById?.superVisor}</p>
                   <p style={{ color: '#16A94A' }} data-testid="request-status">
-                    {data?.getRequestById?.status}
+                    {data?.getRequestById?.status.toLowerCase()}
                   </p>
                 </div>
                 <div className="flex gap-3 items-center">

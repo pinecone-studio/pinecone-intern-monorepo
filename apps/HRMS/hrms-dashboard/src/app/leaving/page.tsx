@@ -7,7 +7,7 @@ const LeavingPage = () => {
   const handleNavigateToHomePageButton = () => router.push('/');
 
   return (
-    <div className="w-full h-screen bg-base-200">
+    <div>
       <h1>hello from HRMS dashboard Leaving Page</h1>
       <h1>hello from Leaving Service Query</h1>
       <Requests />

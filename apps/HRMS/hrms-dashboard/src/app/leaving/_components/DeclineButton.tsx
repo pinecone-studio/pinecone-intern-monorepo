@@ -11,7 +11,12 @@ const DeclineButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <button onClick={handleDecline} className="text-black h-30 border border-gray-300 rounded-sm hover:bg-black hover:text-white" style={{ padding: 'revert' }} data-testid="decline-button">
+    <button
+      onClick={handleDecline}
+      className=" border border-[#D6D8DB] border-solid text-black h-30 rounded-md hover:bg-black hover:text-white"
+      style={{ padding: 'revert' }}
+      data-testid="decline-button"
+    >
       Татгалзах
     </button>
   );

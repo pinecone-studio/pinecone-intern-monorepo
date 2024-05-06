@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 const Requests = () => {
   const router = useRouter();
   const { data, loading } = useGetRequestsQuery();
-  const currentDate = new Date().toLocaleDateString();
-
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -16,12 +16,14 @@ const Requests = () => {
       <div className="flex flex-col gap-6 w-[1154px] p-6 bg-white rounded-sm">
         <div className="flex justify-between items-center w-full">
           <h1 className="text-2xl font-bold">Чөлөө</h1>
-          <p>{currentDate}</p>
+          <p>{formattedDate}</p>
         </div>
         <div className="flex gap-4">
-          <button>Хүсэлт</button>
-          <button>Ажилчид</button>
-          <button>Түүх</button>
+          <div role="tablist" className="tabs tabs-bordered">
+            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Хүсэлт" defaultChecked />
+            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
+            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
+          </div>
         </div>
         <div className="flex flex-col gap-6 bg-gray-100 w-full">
           <div className="overflow-x-auto shadow-md rounded-lg">
@@ -41,7 +43,7 @@ const Requests = () => {
                     <tr key={index} className="cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat._id}`)} data-testid="requests">
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat._id}</td>
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.declinedReasoning}</td>
-                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.description}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.superVisor}</td>
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
                       <td className="px-6 py-4" data-testid="request-status">

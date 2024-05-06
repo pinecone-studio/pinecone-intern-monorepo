@@ -2,8 +2,9 @@ query GetRequests {
   getRequests {
     _id
     declinedReasoning
-    description
+    startDate
     totalHour
+    superVisor
     status
   }
 }
