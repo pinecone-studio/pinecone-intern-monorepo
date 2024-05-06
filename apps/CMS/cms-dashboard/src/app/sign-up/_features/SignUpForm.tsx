@@ -89,7 +89,7 @@ const SignUpForm = () => {
           error={formik.errors.confirmPassword}
         />
       </div>
-      <div className="group">
+      <div>
         <button
           onClick={() => {
             formik.handleSubmit();

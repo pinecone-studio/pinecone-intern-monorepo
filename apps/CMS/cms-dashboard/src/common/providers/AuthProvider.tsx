@@ -14,6 +14,12 @@ type AuthContextType = {
   loginLoading: boolean;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+  userEmail: string;
+  setUserEmail: Dispatch<SetStateAction<string>>;
+  userOtp: string;
+  setUserOtp: Dispatch<SetStateAction<string>>;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -22,6 +28,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [signUp, { loading: signUpLoading }] = useSignUpMutation();
   const [signIn, { loading: loginLoading }] = useSignInMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [userEmail, setUserEmail] = useState('');
+  const [userOtp, setUserOtp] = useState('');
 
   const handleSignUp = async (emailOrPhoneNumber: string, password: string) => {
     const emailOrPhone = emailOrPhoneNumber.includes('@') ? { email: emailOrPhoneNumber } : { phoneNumber: emailOrPhoneNumber };
@@ -96,6 +105,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         isLoggedIn,
         setIsLoggedIn,
         loginLoading,
+        index,
+        setIndex,
+        userEmail,
+        setUserEmail,
+        userOtp,
+        setUserOtp,
       }}
     >
       {children}
