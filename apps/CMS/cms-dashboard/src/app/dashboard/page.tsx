@@ -1,7 +1,7 @@
 'use client';
 
 import { Article, useGetArticlesQueryQuery } from '../../generated';
-import { Pagination } from './_components';
+import {  Pagination } from './_components';
 import { FilterByDate } from './_components/FilterByDate';
 import { Navbar } from './_components/Navbar';
 import { SearchInput } from './_components/SearchInput';
@@ -32,7 +32,7 @@ const Home = () => {
             <AdminNavigateLinksFeature />
           </div>
         </div>
-      </div>
+      </div>      
     </div>
   );
 };

@@ -50,25 +50,23 @@ export const FilterByDate = () => {
         </div>
       </div>
       {open && (
-        <div className="absolute h-full right-0 top-[56px] z-[5]">
-          <div>
-            <DateRangePicker
-              retainEndDateOnFirstSelection
-              startDatePlaceholder="Start date"
-              endDatePlaceholder="End date"
-              ranges={[
-                {
-                  startDate: startDate,
-                  endDate: endDate,
-                  key: 'selection',
-                },
-              ]}
-              onChange={handleDateChange}
-            />
-            <button data-testid="close-calendar-button-test-id" onClick={openCalendar} style={{ color: '#3F4145', width: '100%' }}>
-              Close
-            </button>
-          </div>
+        <div className="h-full fixed right-[40px] z-10">
+          <DateRangePicker
+            retainEndDateOnFirstSelection
+            startDatePlaceholder="Start date"
+            endDatePlaceholder="End date"
+            ranges={[
+              {
+                startDate: startDate,
+                endDate: endDate,
+                key: 'selection',
+              },
+            ]}
+            onChange={handleDateChange}
+          />
+          <button data-testid="close-calendar-button-test-id" onClick={openCalendar} style={{ color: '#3F4145', width: '100%' }}>
+            Close
+          </button>
         </div>
       )}
     </section>
