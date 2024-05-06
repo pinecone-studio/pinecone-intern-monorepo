@@ -54,10 +54,6 @@ const gateway = new ApolloGateway({
         url: process.env.RECRUITING_SERVICE,
       },
       {
-        name: 'employee-details',
-        url: process.env.EMPLOYEE_DETAILS_SERVICE,
-      },
-      {
         name: 'articles',
         url: process.env.ARTICLES_SERVICE,
       },
