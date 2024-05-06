@@ -10,7 +10,7 @@ type PropsType = {
 };
 export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
-  const { data, loading, refetch } = useGetEmployeesByPaginateQuery({
+  const { data, loading, } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
         limit: perPage.limit,
@@ -18,7 +18,7 @@ export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
       },
     }, 
   });
-  refetch();
+
   const employeesData = data?.getEmployeesByPaginate;
   const totalEmployees = employeesData?.totalEmployees
   useEffect(() => {
