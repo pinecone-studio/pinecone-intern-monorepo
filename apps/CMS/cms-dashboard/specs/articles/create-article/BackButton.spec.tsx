@@ -10,5 +10,4 @@ describe('Create Article BackButton component', () => {
     expect(backButton).toBeDefined();
   });
 
-
 });
