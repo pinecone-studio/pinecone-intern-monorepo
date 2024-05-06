@@ -70,24 +70,22 @@ describe('articles page', () => {
     cy.get('input[name="password"]').type('12345678aB');
     cy.get('[data-testid="helperText"]').eq(1).should('exist').should('contain', 'Тусгай тэмдэгт байх ёстой');
   });
-
-  // it("10. When user clicks on the signin button, it should create new user and shows 'Амжилттай нэвтэрлээ' message", () => {
-  //   cy.get('[data-cy="Sign-In-Button"]').should('exist').click();
-  //   cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
-  //   cy.get('input[name="emailOrPhoneNumber"]').type('uulaaka73@gmail.com');
-  //   cy.get('input[name="password"]').type('11111111qQ!');
-  //   cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
-  //   cy.get('[data-cy="Sign-In-Button"]').click();
-  //   cy.contains('Амжилттай нэвтэрлээ').should('be.visible');
-  // });
-
-  // it("11. When user clicks on the signin button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Бүртгэлтэй хэрэглэгч алга' message ", () => {
-  //   cy.get('[data-cy="Sign-In-Button"]').should('exist').click();
-  //   cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
-  //   cy.get('input[name="emailOrPhoneNumber"]').type('pinecone10k@gmail.com');
-  //   cy.get('input[name="password"]').type('12345678aB!');
-  //   cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
-  //   cy.get('[data-cy="Sign-In-Button"]').click();
-  //   cy.contains('Бүртгэлтэй хэрэглэгч алга').should('be.visible');
-  // });
+  it("10. When user clicks on the signin button, it should create new user and shows 'Амжилттай нэвтэрлээ' message", () => {
+    cy.get('[data-cy="Sign-In-Button"]').should('exist').click();
+    cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
+    cy.get('input[name="emailOrPhoneNumber"]').type('uulaaka73@gmail.com');
+    cy.get('input[name="password"]').type('11111111qQ!');
+    cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-In-Button"]').click();
+    cy.contains('Амжилттай нэвтэрлээ').should('be.visible');
+  });
+  it("11. When user clicks on the signin button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Бүртгэлтэй хэрэглэгч алга' message ", () => {
+    cy.get('[data-cy="Sign-In-Button"]').should('exist').click();
+    cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
+    cy.get('input[name="emailOrPhoneNumber"]').type('pinecone10k@gmail.com');
+    cy.get('input[name="password"]').type('12345678aB!');
+    cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-In-Button"]').click();
+    cy.contains('Бүртгэлтэй хэрэглэгч алга').should('be.visible');
+  });
 });
