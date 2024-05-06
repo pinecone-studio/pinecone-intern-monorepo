@@ -1,42 +1,43 @@
-import { Stack } from '@mui/material';
-import Pagination from '@mui/material/Pagination';
+'use client';
+import ReactPaginate from 'react-paginate';
+import { useEffect, useState } from 'react';
+import { LeftArrow, RightArrow } from '../../asset';
+import { perPage } from '../constants';
 
 type PropsType = {
-  pageCount: number;
+  page: number | undefined ;
   handleClick: (_: number) => void;
-  searchPath: string | null;
 };
 
-export const EmployeePagination = ({ pageCount, handleClick, searchPath }: PropsType) => {
+type PageChangeEvent = {
+  selected: number;
+};
+
+export const EmployeePagination = ({ handleClick, page, }: PropsType) => {
+  const [checked, setChecked] = useState(1);
+  const pageLength = Math.ceil(page! / perPage.limit);
+  
+  const onPageChange = (e: PageChangeEvent) => {
+    setChecked(e.selected + 1);
+  };
+   
+  useEffect(() => {
+    handleClick(checked);
+  }, [ checked]);
+
   return (
-    <Stack>
-      <Pagination
-        onChange={(_, page) => handleClick(page)}
+    <>
+      <ReactPaginate
         data-testid="page-button"
-        count={pageCount}
-        variant="outlined"
-        page={Number(searchPath)}
-        shape="rounded"
-        size="large"
-        sx={{
-          'Button.MuiPaginationItem-previousNext': {
-            border: 'none',
-            fontWeight: 700,
-          },
-          'Button.MuiPaginationItem-page': {
-            border: '2px solid #ECEDF0',
-            borderRadius: '8px',
-          },
-          'Button.MuiPaginationItem-page.Mui-selected': {
-            border: 'none',
-            bgcolor: 'primary.main',
-            color: '#fff',
-            borderRadius: '8px',
-          },
-          display: 'flex',
-          justifyContent: 'center',
-        }}
+        className="flex gap-2 justify-center items-center"
+        pageClassName="border rounded-lg w-10 h-10 flex justify-center items-center  "
+        activeClassName="bg-black text-white"
+        nextLabel={<RightArrow />}
+        pageCount={pageLength}
+        onPageChange={onPageChange}
+        previousLabel={<LeftArrow />}
+        renderOnZeroPageCount={null}
       />
-    </Stack>
+    </>
   );
 };
