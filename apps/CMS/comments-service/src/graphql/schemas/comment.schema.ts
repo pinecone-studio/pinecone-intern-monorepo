@@ -43,6 +43,6 @@ export const commentsSchema = gql`
     deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
   }
   type Query {
-    getComments(input: GetCommentsLimitInput!): [Comment]
+    getComments(input: GetCommentsLimitInput!): [Comment!]
   }
 `;
