@@ -3,17 +3,16 @@ import { useGetJobsQuery, Job } from '../../../generated';
 
 export const JobsListTable = () => {
   const tableHeader = ['Ажлын байр', 'Хүлээн авах эцсийн хугацаа', 'Огноо', 'Төлөв'];
+  const DaysOfWeek = ['Ням', 'Даваа', 'Мягмар', 'Лхагва', 'Пүрэв', 'Баасан', 'Бямба'];
   const { data, loading } = useGetJobsQuery();
   const jobs = data?.getJobs;
 
-  const DaysOfWeek = ['Ням', 'Даваа', 'Мягмар', 'Лхагва', 'Пүрэв', 'Баасан', 'Бямба'];
   if (loading)
     return (
       <div className="flex w-full justify-center items-center">
         <span className="loading loading-ring loading-lg"></span>
       </div>
     );
-
   return (
     <div data-cy="jobsList" className="flex rounded-xl overflow-scroll">
       <table className="w-full table-fixed text-left">
