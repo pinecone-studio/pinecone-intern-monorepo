@@ -54,6 +54,7 @@ export const EmployeesList = () => {
               </>
             )}
           </div>
+          <TableFilters />
           <EmployeesListTable setPage={setPage} searchPath={searchPath} />
           <EmployeePagination page={page} handleClick={handleClick} />
         </div>
