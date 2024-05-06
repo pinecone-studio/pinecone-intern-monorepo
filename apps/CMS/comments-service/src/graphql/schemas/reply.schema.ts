@@ -24,10 +24,14 @@ export const replySchema = gql`
   input RemoveReplyByAdminInput {
     _id: ID!
   }
+  input SetReplyStatusToNormalInput {
+    _id: ID!
+  }
   type Mutation {
     publishReply(createInput: CreateReplyInput): ID!
     hideReplyByAdmin(hideInput: HideReplyByAdminInput!): ID!
     deleteReplyByAdmin(removeInput: RemoveReplyByAdminInput!): ID!
+    setReplyStatusToNormal(setReplyStatusInput: SetReplyStatusToNormalInput!): ID!
   }
   type Query {
     getRepliesByCommentId(commentId: String): [Reply]

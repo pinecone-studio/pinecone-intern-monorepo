@@ -31,14 +31,19 @@ export const commentsSchema = gql`
   input RemoveCommentByAdminInput {
     _id: ID!
   }
+  input SetCommentStatusToNormalInput {
+    _id: ID!
+  }
   type Mutation {
     publishComment(createInput: CreateCommentInput!): ID!
     updateComment(updateInput: UpdateCommentInput!): ID!
     deleteComment(deleteInput: DeleteCommentInput!): ID!
     hideCommentByAdmin(hideInput: HideCommentByAdminInput!): ID!
     deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
+    setCommentStatusToNormal(setCommentStatusInput: SetCommentStatusToNormalInput!): ID!
   }
   type Query {
     getComments: [Comment]
+    getCommentsByArticleId(articleId: ID!): [Comment]
   }
 `;
