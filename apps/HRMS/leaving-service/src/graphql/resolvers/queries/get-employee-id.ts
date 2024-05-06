@@ -24,6 +24,5 @@ export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) 
     return filteredWorkers;
   } catch (error) {
     throw graphqlErrorHandler({message: "Something went wrong"}, errorTypes.BAD_REQUEST)
-
   }
 };
