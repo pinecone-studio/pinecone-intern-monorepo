@@ -1,4 +1,3 @@
-import { useSearchParams } from 'next/navigation';
 import { Article } from '../../../generated';
 import ArticleMenuButton from '../_components/ArticleMenuButton';
 import { EditButtonIcon } from '@/icons';
