@@ -10,7 +10,6 @@ const GetSections = () => {
   const { data , refetch } = useGetSectionsQuery();
   const [deleteSection] = useDeleteSectionMutation();
   const [successMessage, setSuccessMessage] = useState('');
-  const query = data?.getSections
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
