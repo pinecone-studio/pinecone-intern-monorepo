@@ -23,7 +23,6 @@ export const SearchInput = () => {
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
       setTimeout(() => {
-        console.log('Zoloo', event.target.value);
         router.push(pathname + '?' + createQueryString('searchedValue', event.target.value));
       }, 1000);
     },
