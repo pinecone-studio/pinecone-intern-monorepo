@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div className="bg-[#e9eaec] h-[100vh]">
       <Navbar />
-      <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6 h-[95vh]">
+      <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
         <div className="flex flex-col h-full justify-between">
           <div className="flex flex-col gap-1">
             <div className="flex justify-between">
