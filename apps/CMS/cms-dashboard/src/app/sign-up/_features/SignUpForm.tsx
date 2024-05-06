@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { Loader } from '../_components/Loader';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
-import TextInput from '../_components/TextInput';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
+import TextInput from '../_components/TextInput';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();

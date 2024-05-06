@@ -24,14 +24,13 @@ const TextInput = (props: TextInputProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-1" data-testid="Custom-Input">
+    <div className="flex flex-col gap-1 w-full" data-testid="Custom-Input">
       <h1 data-testid="label">{label}</h1>
       <label
         data-testid="error"
         className={cx('flex px-[13px] items-center gap-2 bg-[#ECEDF0] rounded-[4px] border border-[#d6d8db] hover:border-black', {
-          'border-red-700 hover:border-red-700': error,
-          'focus-within:border-2 focus-within:border-red-700': error,
-          'focus-within:border-2 focus-within:border-[#3873cb] focus-within:hover:border-[#3873cb]': !error,
+          'border-red-700 hover:border-red-700 focus-within:ring-1 focus-within:ring-red-700 ': error,
+          'focus-within:ring-1 focus-within:ring-[#3873cb] focus-within:border-[#3873cb] focus-within:hover:border-[#3873cb]': !error,
         })}
       >
         <input
