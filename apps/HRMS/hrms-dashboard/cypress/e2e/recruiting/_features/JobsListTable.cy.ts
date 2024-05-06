@@ -10,6 +10,7 @@ describe('Jobs table', () => {
     cy.get('[data-cy="tableHeader-2"]').should('be.visible').should('have.text', 'Огноо');
     cy.get('[data-cy="tableHeader-3"]').should('be.visible').should('have.text', 'Төлөв');
   });
+
   it('Send req to graphql endpoint', () => {
     cy.get('[data-cy="jobData"]').each(($row) => {
       cy.wrap($row).within(() => {
