@@ -1,3 +1,3 @@
 export const helloQueryFromArticlesService = () => {
-  return 'This message is from the hello query Articles services local';
+  return 'This message is from the hello query Articles services';
 };
