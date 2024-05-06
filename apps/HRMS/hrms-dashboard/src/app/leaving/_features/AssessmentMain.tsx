@@ -1,3 +1,5 @@
+'use client';
+
 import { LeavingButton } from '../_components';
 
 export const LeavingMain = () => {

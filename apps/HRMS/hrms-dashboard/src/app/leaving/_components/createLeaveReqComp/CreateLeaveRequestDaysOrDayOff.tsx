@@ -1,5 +1,5 @@
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { Box, Button, FormControl, FormControlLabel, FormLabel, IconButton, Radio, RadioGroup, Typography } from '@mui/material';
+'use client';
+
 import { useFormik } from 'formik';
 import { useContext } from 'react';
 import * as yup from 'yup';
@@ -8,7 +8,7 @@ import { CreateLeaveRequestSelectedDayOff } from './CreateLeaveRequestSelectedDa
 import { CreateLeaveRequestGeneralInput } from './CreateLeaveRequestGeneralInput';
 
 const validationSchema = yup.object({
-  step21LeaveLength: yup.string().required(),
+  step2LeaveLength: yup.string().required(),
 });
 
 export const CreateLeaveRequestDaysOrDayOff = () => {
@@ -16,7 +16,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
 
   const formik = useFormik({
     initialValues: {
-      step21LeaveLength: '',
+      step2LeaveLength: '',
     },
     validationSchema: validationSchema,
     onSubmit: () => {
@@ -25,44 +25,77 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
   });
 
   return (
-    <Box data-testid="step2Component">
-      <FormControl sx={{ gap: '16px' }}>
-        <FormLabel sx={{ fontSize: '16px', fontWeight: '400', color: 'primary.main' }}>Хугацааны төрөл сонгох</FormLabel>
-        <RadioGroup row sx={{ gap: '16px' }} name="step21LeaveLength" onChange={formik.handleChange} value={formik.values.step21LeaveLength}>
-          <FormControlLabel data-cy="radioButtonDays" data-testid="radioButtonDays" value="days" control={<Radio />} label="Хоног" />
-          <FormControlLabel data-cy="radioButtonDayOff" data-testid="radioButtonDayOff" value="dayOff" control={<Radio />} label="Өдөр" />
-        </RadioGroup>
-      </FormControl>
+    <div data-testid="step2Component">
+      <div className="flex flex-col gap-[16px]">
+        <div className="text-[16px] font-normal text-[#121316]">Хугацааны төрөл сонгох</div>
+        <div className="flex gap-[16px]">
+          <div className="flex items-center">
+            <div className="w-[48px] h-[48px] p-[12px]">
+              <input
+                className="w-[24px] h-[24px]"
+                data-cy="radioButtonDays"
+                data-testid="radioButtonDays"
+                type="radio"
+                id="radioButtonDays"
+                name="step2LeaveLength"
+                value="days"
+                onClick={(e) => formik.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value)}
+              />
+            </div>
+            <label htmlFor="radioButtonDays" className="text-[16px] font-normal text-[#121316]">
+              Хоног
+            </label>
+          </div>
+          <div className="flex items-center">
+            <div className="w-[48px] h-[48px] p-[12px]">
+              <input
+                className="w-[24px] h-[24px]"
+                data-cy="radioButtonDayOff"
+                data-testid="radioButtonDayOff"
+                type="radio"
+                id="radioButtonDayOff"
+                name="step2LeaveLength"
+                value="dayOff"
+                onClick={(e) => formik.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value)}
+              />
+            </div>
+            <label htmlFor="radioButtonDayOff" className="text-[16px] font-normal text-[#121316]">
+              Өдөр
+            </label>
+          </div>
+        </div>
+      </div>
 
-      <Box paddingTop={'40px'} display={'flex'} justifyContent={'space-between'}>
-        <IconButton
+      <div className="pt-[40px] flex justify-between">
+        <button
           data-cy="returnPreviousStep"
           data-testid="returnPreviousStep"
-          sx={{ bgcolor: '#1C20240A' }}
+          className="p-[12px] bg-[#1C20240A] rounded-full"
           onClick={() => {
             setStepNumber(0);
             setLeaveReqStep(<CreateLeaveRequestGeneralInput />);
           }}
         >
-          <ArrowBack />
-        </IconButton>
-        <Button
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#121316" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+        </button>
+
+        <button
           data-cy="next-btn"
           data-testid="nextButton"
           onClick={() => {
             formik.handleSubmit();
           }}
-          variant="contained"
-          sx={{ bgcolor: '#121316', textTransform: 'none', gap: '4px', paddingY: '12px', paddingX: '16px' }}
-          disableElevation
-          disabled={!formik.values.step21LeaveLength}
+          className="bg-[#121316] flex gap-[4px] py-[12px] px-[16px] rounded-[8px] text-white disabled:bg-[#D6D8DB] disabled:text-[#1C20243D]"
+          disabled={!formik.values.step2LeaveLength}
         >
-          <Typography fontSize={16} fontWeight={600} color={'white'}>
-            Дараах
-          </Typography>
-          <ArrowForward sx={{ color: 'white' }} />
-        </Button>
-      </Box>
-    </Box>
+          <div className="text-[16px] font-semibold">Дараах</div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="white" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 };
