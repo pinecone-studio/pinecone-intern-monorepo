@@ -4,6 +4,7 @@ import { Navbar } from './Navbar';
 
 export const LoaderPage = () => {
   return (
+    
     <div data-testid="loader-page-test-id" className="w-[100%] h-[100vh] flex flex-col">
       <Navbar />
       <div className="w-[100%] h-[100vh] flex flex-col items-center justify-center">
