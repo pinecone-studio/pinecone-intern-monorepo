@@ -1,39 +1,32 @@
-import { Button as MuiButton } from '@mui/material';
+'use client';
+
+import { FaPlus } from 'react-icons/fa';
+import { MdDeleteOutline } from 'react-icons/md';
 
 interface IButtonProps {
-  label: string;
+  label?: string;
   disabled?: boolean;
-  radius?: number;
+  btnType?: 'text' | 'icon';
   h?: number;
-  onClick?: () => void;
-  href?: string;
   w?: number;
-  color?: string;
-  fontSize?: number;
+  btnColor?: 'white' | 'black';
+  icon?: 'plus' | 'delete';
+  onClick?: () => void;
 }
 
-export const Button = ({ label, onClick, href, color = '#4B4844', w = 150, h = 50, radius = 5, fontSize = 14 }: IButtonProps) => {
+export const Button = ({ label, onClick, disabled, btnColor = 'black', icon, btnType = 'text', h = 8, w = 8 }: IButtonProps) => {
+  const btnTypeStyle = btnType === 'text' ? 'px-4' : 'px-2';
+  const btnColorStyle = btnColor === 'black' ? 'bg-[#121316] border-none text-white' : 'bg-white border-solid border border-[#D6D8DB] text-[#121316]';
+
   return (
-    <MuiButton
-      href={href}
+    <button
+      className={`flex items-center justify-center gap-2 text-[${h + 6}px] font-sans font-semibold rounded-[8px] h-${h} w-${w} px-2 ${btnTypeStyle} ${btnColorStyle} hover:opacity-90`}
+      disabled={disabled}
       onClick={onClick}
-      variant="contained"
-      color="inherit"
-      sx={{
-        borderRadius: radius,
-        fontSize: fontSize,
-        fontStyle: 'normal',
-        fontWeight: 600,
-        color: 'white',
-        bgcolor: color,
-        width: w,
-        height: h,
-        '&:hover': {
-          color: 'black',
-        },
-      }}
     >
       {label}
-    </MuiButton>
+      {icon === 'plus' && <FaPlus color="white" data-testid="plus-icon" />}
+      {icon === 'delete' && <MdDeleteOutline color="#121316" size={15} data-testid="delete-icon" />}
+    </button>
   );
 };
