@@ -1,11 +1,11 @@
-import { Box } from '@mui/material';
+
 import { EmployeesList } from './_features/EmployeesList';
 
 const EmployeeDetailsPage = () => {
   return (
-    <Box bgcolor={'primary.light'} width={'100%'} overflow={'scroll'}>
+    <main className='bg-light w-full overflow-scroll relative'>
       <EmployeesList />
-    </Box>
+    </main>
   );
 };
 
