@@ -7,11 +7,16 @@ export const EmployeeTypeDefs = gql`
     firstName: String
     lastName: String
     email: String
-    department: String
+    department: Department
     jobTitle: [String]
     ladderLevel: String
   }
-  
+  enum Department {
+    SOFTWARE
+    DESIGN
+    MARKETING
+    BACK_OFFICE
+  }
   type Query {
     getEmployeeId(id:ID!):[Employee]!
   }
