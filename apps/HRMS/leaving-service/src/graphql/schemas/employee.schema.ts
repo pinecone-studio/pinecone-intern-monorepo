@@ -12,6 +12,6 @@ export const EmployeeTypeDefs = gql`
     ladderLevel: String
   }
   type Query {
-    getEmployeeId(id:ID!,department:String):[Employee]!
+    getEmployeeId(id:ID!):[Employee]!
   }
 `;

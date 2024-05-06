@@ -2,11 +2,12 @@ import { Employee, QueryResolvers } from '@/graphql/generated';
 import EmployeeModel from '@/graphql/model/employee';
 import { errorTypes, graphqlErrorHandler } from '../error';
 
-export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) => {
+export const getEmployeeId: QueryResolvers['getEmployeeId'] = async (_, { id }) => {  
   try {
     const employee = await EmployeeModel.findById(id);
     const { department, ladderLevel } = employee!;
-
+    console.log(employee);
+    
     const departmentWorkers = await EmployeeModel.find({
       department,
       ladderLevel: { $in: ['3', '1', '2'], $ne: ladderLevel },
