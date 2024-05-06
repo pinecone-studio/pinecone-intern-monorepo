@@ -1,42 +1,25 @@
 'use client';
 
-import { Box, IconButton } from '@mui/material';
-import { useContext } from 'react';
-import { Typography } from '@mui/material';
-import { LeaveRequestCreationContext } from '../_providers/LeaveRequestCreationProvider';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-
 export const HomePageHeader = () => {
-  const { setIsOpen } = useContext(LeaveRequestCreationContext);
-
-  const handleOpen = () => setIsOpen(true);
+  const openModal = () => {
+    (document.getElementById('my_modal_3') as HTMLFormElement).showModal();
+  };
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'white', paddingY: '20px', paddingX: '24px', borderRadius: '12px' }}>
-      <Box display={'flex'} justifyContent={'space-between'} sx={{ gap: '12px' }}>
-        <Typography fontSize={24} fontWeight={700} color={'primary.main'} sx={{ flexBasis: '0', flexGrow: '1' }}>
-          Нүүр хуудас
-        </Typography>
-        <IconButton
-          data-cy="open-request"
-          data-testid="open-request-btn"
-          onClick={handleOpen}
-          sx={{
-            borderRadius: '8px',
-            paddingY: '8px',
-            paddingX: '12px',
-            bgcolor: 'primary.main',
-            display: 'flex',
-            gap: '4px',
-            '&:hover': { backgroundColor: 'primary.main' },
-          }}
-        >
-          <Typography fontSize={14} fontWeight={600} color={'white'} sx={{ paddingY: '2px', paddingX: '4px' }}>
-            Чөлөөний хуудас бөглөх
-          </Typography>
-          <InsertDriveFileOutlinedIcon sx={{ width: '20px', height: '20px', color: 'white' }} />
-        </IconButton>
-      </Box>
-    </Box>
+    <div className="px-[24px] py-[20px] rounded-[12px] bg-[white]">
+      <div className="flex justify-between items-center">
+        <div className="text-[24px] font-bold text-[#121316] basis-0 grow">Нүүр хуудас</div>
+        <button data-cy="open-request" data-testid="open-request-btn" className="btn rounded-[8px] py-[8px] px-[12px] bg-[#121316] hover:bg-[#121316]" onClick={openModal}>
+          <div className="text-[14px] font-semibold text-[white] py-[2px] px-[4px]">Чөлөөний хуудас бөглөх</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-[white]">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 };

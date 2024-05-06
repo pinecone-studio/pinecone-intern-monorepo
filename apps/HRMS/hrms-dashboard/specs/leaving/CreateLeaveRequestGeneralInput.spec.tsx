@@ -1,56 +1,48 @@
 import React from 'react';
 
-import { LeaveRequestCreationContext } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { LeaveRequestCreationProvider } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
-import { CreateLeaveRequestGeneralInput } from '../../src/app/leaving/_components';
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent, waitFor } from '@testing-library/react';
 
 describe('Create Leave Request Step1', () => {
-  it('1. should set setStepNumber function 1 when next button is clicked and move to step-2', async () => {
-    const setStepNumber = jest.fn();
-
+  it('1. should set values in input fields and move to step-2', async () => {
     const { getByTestId } = render(
-      <LeaveRequestCreationContext.Provider value={{ stepNumber: 0, setStepNumber, leaveReqStep: <CreateLeaveRequestGeneralInput />, isOpen: true }}>
+      <LeaveRequestCreationProvider>
         <CreateLeaveRequestMain />
-      </LeaveRequestCreationContext.Provider>
+      </LeaveRequestCreationProvider>
     );
 
-    const selectUserName = getByTestId('name-select-input').getElementsByClassName('MuiSelect-select')[0];
-    const selectType = getByTestId('type-select-input').getElementsByClassName('MuiSelect-select')[0];
+    const datePicker = getByTestId('date-picker-container').getElementsByTagName('input')[0];
+    const selectUserName = getByTestId('name-select-input').getElementsByTagName('select')[0];
+    const selectType = getByTestId('type-select-input').getElementsByTagName('select')[0];
     const nextButton = getByTestId('nextButton');
 
     act(() => {
-      fireEvent.mouseDown(selectUserName);
+      fireEvent.change(datePicker, { target: { value: '2000-01-01' } });
     });
 
     act(() => {
-      fireEvent.click(getByTestId('WorkerName'));
+      fireEvent.change(selectUserName, { target: { value: 'WorkerName' } });
     });
+
+    // act(() => {
+    //   fireEvent.click(getByTestId('WorkerName'));
+    // });
 
     act(() => {
-      fireEvent.mouseDown(selectType);
+      fireEvent.change(selectType, { target: { value: 'remote' } });
     });
 
-    act(() => {
-      fireEvent.click(getByTestId('type-0'));
-    });
+    // act(() => {
+    //   fireEvent.click(getByTestId('type-0'));
+    // });
 
+    // await waitFor(() =>
     act(() => {
       fireEvent.click(nextButton);
     });
-  });
+    // );
 
-  it('2. should work onChange function of DatePicker component when changing date', () => {
-    const { getByTestId } = render(
-      <LeaveRequestCreationContext.Provider value={{ stepNumber: 0, leaveReqStep: <CreateLeaveRequestGeneralInput />, isOpen: true }}>
-        <CreateLeaveRequestMain />
-      </LeaveRequestCreationContext.Provider>
-    );
-
-    const datePickerInput = getByTestId('date-picker-container').getElementsByTagName('input')[0];
-
-    act(() => {
-      fireEvent.change(datePickerInput, { target: { value: '12/30/2000' } });
-    });
+    await waitFor(() => expect(getByTestId('step2Component')).toBeDefined());
   });
 });

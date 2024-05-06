@@ -1,13 +1,10 @@
-'use client';
-
-import { Stack } from '@mui/material';
 import { CreateLeaveRequestMain } from './_features';
 
 const LeavingPage = () => {
   return (
-    <Stack gap={'24px'} sx={{ paddingTop: '32px', paddingX: '32px', width: '100%', bgcolor: '#F7F7F8' }}>
+    <div className="flex flex-col hap-[24px] pt-[32px] px-[32px] w-[100%] bg-[#F7F7F8]">
       <CreateLeaveRequestMain />
-    </Stack>
+    </div>
   );
 };
 
