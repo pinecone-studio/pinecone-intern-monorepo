@@ -1,16 +1,17 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { LeaveRequestCreationContext } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { LeaveRequestCreationProvider } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
 
 describe('HomePageHeader', () => {
-  it('should set setIsOpen function true when button is clicked and open Leave Request Creation modal', () => {
-    const setIsOpen = jest.fn();
+  it('should open Leave Request Creation modal while clicking the button', () => {
+    HTMLDialogElement.prototype.showModal = jest.fn();
+    HTMLDialogElement.prototype.close = jest.fn();
 
     const { getByTestId } = render(
-      <LeaveRequestCreationContext.Provider value={{ setIsOpen }}>
+      <LeaveRequestCreationProvider>
         <CreateLeaveRequestMain />
-      </LeaveRequestCreationContext.Provider>
+      </LeaveRequestCreationProvider>
     );
 
     const openButton = getByTestId('open-request-btn');
