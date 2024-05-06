@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import { publishComment } from '../../../src/graphql/resolvers/mutations/comment/create';
+import { publishComment } from '../../../src/graphql/resolvers/mutations/comment/create-comment';
 import { GraphQLResolveInfo } from 'graphql';
 import { CommentsModel } from '../../../src/models/comment.model';
 

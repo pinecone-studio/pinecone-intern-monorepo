@@ -1,7 +1,7 @@
 import ReplyModel from '../../../src/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import { deleteReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/remove-by-admin';
+import { deleteReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/remove-comment-by-admin';
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
 }));

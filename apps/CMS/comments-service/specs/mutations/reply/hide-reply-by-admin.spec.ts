@@ -1,7 +1,7 @@
 import ReplyModel from '../../../src/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import { hideReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/hide-by-admin';
+import { hideReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/hide-comment-by-admin';
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
 }));
