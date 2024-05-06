@@ -1,8 +1,8 @@
-import { RequireFields, MutationUpdateJobArgs, MutationResolvers } from '@/graphql/generated';
+import { RequireFields, MutationDeleteJobArgs, MutationResolvers } from '@/graphql/generated';
 import { errorTypes, graphqlErrorHandler } from '../error';
 import { JobModel } from '@/models/job';
 
-export const deleteJob: MutationResolvers['deleteJob'] = async (_, { id }: RequireFields<MutationUpdateJobArgs, 'id'>) => {
+export const deleteJob: MutationResolvers['deleteJob'] = async (_, { id }: RequireFields<MutationDeleteJobArgs, 'id'>) => {
   try {
     const deletedJob = await JobModel.findByIdAndDelete(id);
     if (!deletedJob) {
