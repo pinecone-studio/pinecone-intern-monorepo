@@ -111,17 +111,11 @@ export const employeeDetailsSchema = gql`
     employees: [Employee]!
   }
 
-  input filterInput {
-    searchedValue: String
-  }
-
   type Query {
     getAllEmployee: [Employee]
     getEmployee(id: ID): Employee
-    getEmployeeRequest(id: ID!): [Employee]!
-
+    getEmployeeRequest(id:ID!):[Employee]!
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
-    getEmployeesByPaginate(filterInput: filterInput!, paginationInput: PaginationInput!): paginateReturn!
   }
 
   type Mutation {
