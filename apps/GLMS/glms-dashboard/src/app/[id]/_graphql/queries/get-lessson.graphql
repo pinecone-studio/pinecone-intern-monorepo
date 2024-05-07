@@ -1,0 +1,9 @@
+query GetLessonById($getLessonByIdId: String!) {
+  getLessonById(courseId: $getLessonByIdId) {
+    id
+    title
+    thumbnail
+    position
+    courseId
+  }
+}

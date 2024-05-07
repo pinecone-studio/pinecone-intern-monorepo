@@ -8,22 +8,23 @@ import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import EditBigButton from '../_components/EditBigButton';
 import AddLessonButton from '../_components/AddLessonButton';
+import LessonRender from './LessonRender';
 type DataTypes = {
   data: Course | undefined;
-  // lessonData: Lesson[] | undefined;
+  lessonData: Lesson[] | undefined;
 };
 
-const CourseRender = ({ data }: DataTypes) => {
+const CourseRender = ({ data, lessonData }: DataTypes) => {
   const router = useRouter();
-
-  const handleback = () => {
-    router.push('/dashboard');
-  };
 
   return (
     <div>
       <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
-        <BackButton onClick={handleback} />
+        <BackButton
+          onClick={() => {
+            router.push('/dashboard');
+          }}
+        />
         <div className=" py-[48px] px-[24px] bg-white rounded-xl " key={data?.id}>
           <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto">
             <div className="flex justify-between">
@@ -37,12 +38,15 @@ const CourseRender = ({ data }: DataTypes) => {
               <CourseDesc description={data?.description} />
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
-            {/* {!lessonData && <div className="max-w-[792px] w-full text-center text-slate-[#D6D8DB] text-xs">Хичээл байхгүй байна</div>}
             {lessonData?.map((lesson: Lesson) => {
               return <LessonRender lesson={lesson} />;
-            })} */}
+            })}
 
-            <AddLessonButton />
+            <AddLessonButton
+              onClick={() => {
+                router.push('/create-lesson');
+              }}
+            />
           </div>
         </div>
       </div>

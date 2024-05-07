@@ -2,6 +2,9 @@ import { Lesson } from '@/graphql/generated';
 import { Model, Schema, model, models } from 'mongoose';
 
 const lessonSchema = new Schema({
+  courseId: {
+    type: Schema.Types.ObjectId,
+  },
   title: {
     type: String,
   },
@@ -11,9 +14,7 @@ const lessonSchema = new Schema({
   position: {
     type: Number,
   },
-  courseId: {
-    type: String,
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,

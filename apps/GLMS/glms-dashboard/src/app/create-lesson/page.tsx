@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useCreateLessonMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
 import { PrevArrow } from '../../../public/assets/PrevArrow';
+import { useEffect, useState } from 'react';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
@@ -13,36 +14,43 @@ const validatinSchema = yup.object({
 
 const LessonAdd = () => {
   const router = useRouter();
+  const [courseId, setCourseId] = useState<string | null>(null);
   const [createLesson] = useCreateLessonMutation();
-  const courseID = localStorage.getItem('courseID');
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      thumbnail: 'j',
+      thumbnail: '',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
+      if (!courseId) return router.push('/dashboard');
+
       createLesson({
         variables: {
           lessonInput: {
             title: values.title,
             thumbnail: values.thumbnail,
             position: 0,
-            courseId: courseID,
+            courseId,
           },
         },
       });
-      router.push(`/${courseID || 'dashboard'}`);
+      router.push(`/${courseId || 'dashboard'}`);
     },
   });
+
+  useEffect(() => {
+    setCourseId(localStorage.getItem('courseID'));
+  }, []);
+
   return (
     <div data-testid="create-lesson-container" className="bg-[#F7F7F8] ">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="test-back-div"
           onClick={() => {
-            router.push(`/${courseID || 'dashboard'}`);
+            router.push(`/${courseId || 'dashboard'}`);
           }}
           className="gap-6 mb-[2.5vh] cursor-pointer text-[18px] font-semibold flex items-center "
         >

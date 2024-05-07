@@ -7,8 +7,8 @@ const LessonRender = ({ lesson }: { lesson: Lesson }) => {
   return (
     <div className="border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between">
       <div className="flex gap-4 items-center">
-        <div className="w-9 h-9 bg-purple-500 rounded-md">
-          <img src={`${lesson.thumbnail}`} />
+        <div>
+          <img src={`${lesson.thumbnail}`} className="w-9 h-9 rounded-md object-fit" />
         </div>
         <p className="font-semibold">{lesson?.title}</p>
 
