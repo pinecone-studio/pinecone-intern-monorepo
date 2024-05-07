@@ -1,34 +1,35 @@
-describe('Handle section page', () => {
-  beforeEach(() => cy.visit('/section'));
+describe ('Handle section page' , () => {
+    beforeEach(() => cy.visit('/section'))
 
-  it('1. check back to dashboard page button click ', () => {
-    cy.get('[data-cy="handle-back-page"]').should('exist');
-    cy.get('[data-cy="handle-back-page"]').click();
-  });
+    it('1. check back to dashboard page button click ', () => {
+        cy.get('[data-testid="handle-back-page"]').should('exist');
+        cy.get('[data-testid="handle-back-page"]').click();
+    });
 
-  it('2.Should display GetSections component', () => {
-    cy.get('[data-testid="get-sections-container"]').should('exist');
-    cy.get('[data-testid="get-section-form"]').should('exist');
-    cy.get('[data-cy="title"]').should('exist');
-    cy.get('[data-cy="description"]').should('exist');
-    cy.get('[data-cy="contentImage"]').should('exist');
-    cy.get('[data-cy="delete-btn"]').should('exist')
-    cy.get('[data-cy="delete-btn"]').click({multiple:true})
-  });
+    it('2.Should display GetSections component' , () => {
+        cy.get('[data-testid="get-sections-query"]').should('exist');
+        cy.get('[data-testid="section-form"]').should('exist');
+        cy.get('[data-testid="title"]').should('exist');
+        cy.get('[data-testid="description"]').should('exist');
+        cy.get('[data-testid="contentImage"]').should('exist');
+        cy.get('[data-testid="delete-btn"]').click({ multiple: true });
+        cy.get('[data-testid="update-btn"]').click({ multiple: true });
+        
+    })
 
-  it('3.Should display AddSection feature', () => {
-    cy.get('[data-testid="add-section-form"]').should('exist');
-    cy.get('input[name="title"]').type('html');
-    cy.get('input[name="description"]').type('html intro');
-    cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-cy="add-section-handle-btn"]').click();
-  });
+    it('4.Should display AddSection feature' , () => {
+        cy.get('[ data-testid="add-section-form"]').should('exist')
+    
+    it('5. create lesson button', () => {
+        cy.get('[data-cy="handle-add-section-btn"]').should('exist').should('be.disabled');
+      });
+      it('6. check create button be enable and when inputs filled', () => {
+        cy.get('[data-testid="title"]').type('html');
+        cy.get('[data-testid="description"]').type('html intro');
+        cy.get('#file-test').selectFile('public/js.png', { force: true });
+        cy.get('[data-testid="handle-add-section-btn"]').should('not.be.disabled');
+        cy.get('[data-testid="handle-add-section-btn"]').click();
+      });
 
-  it('4.When section created successfully AddSection form reset' , () => {
-    cy.get('[ data-testid="add-section-form"]').should('exist');
-    cy.get('input[name="title"]').should('exist');
-    cy.get('input[name="description"]').should('exist');
-    cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-cy="add-section-handle-btn"]').should('exist').should('be.disabled');
-  })
-});
+    });
+})
