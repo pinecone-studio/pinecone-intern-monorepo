@@ -16,7 +16,6 @@ const LessonAdd = () => {
   const router = useRouter();
   const [courseId, setCourseId] = useState<string | null>(null);
   const [createLesson] = useCreateLessonMutation();
-  const courseID = localStorage.getItem('courseID');
 
   const formik = useFormik({
     initialValues: {

@@ -4,12 +4,8 @@ import { QueryResolvers } from '../../generated';
 
 export const getLessonById: QueryResolvers['getLessonById'] = async (_, { courseId }) => {
   try {
-    const lessonId = await lessonModel.find({ courseId });
-    if (!lessonId) {
-      throw new GraphQLError('cannot find lesson');
-    }
-    return lessonId;
-  } catch (error) {
+    return await lessonModel.find({ courseId });
+  } catch (error: unknown) {
     throw new GraphQLError('cannot find lesson');
   }
 };

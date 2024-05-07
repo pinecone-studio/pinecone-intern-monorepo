@@ -1,5 +1,5 @@
 'use client';
-import { EditButtonicon } from 'apps/GLMS/glms-dashboard/public/assets/EditButtonicon';
+import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
 
 type EditButtonProps = {
   onClick?: () => void;
