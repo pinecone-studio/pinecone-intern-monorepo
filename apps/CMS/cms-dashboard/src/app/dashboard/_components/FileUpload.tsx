@@ -14,7 +14,7 @@ export const FileUpload = (props: FileUploadProps) => {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = Array.from(e.target.files);
-      const accessUrl = await fileManagement(file, 'cms-dashboard');
+      const accessUrl = await fileManagement(file, 'CMS-dashboard');
       setFieldValue('thumbnail', accessUrl[0], true);
     }
   };
