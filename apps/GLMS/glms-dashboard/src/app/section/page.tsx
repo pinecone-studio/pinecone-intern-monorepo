@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import GetSections from './_features/GetSections';
 import AddSection from './_features/AddSection';
-import { ArrowLeft } from '../../../public/assets/ArrowLeft';
+import { ArrowLeft } from '../../../public/assets/ArrowLeftIcon';
 
 const SectionPage = () => {
   const router = useRouter();
