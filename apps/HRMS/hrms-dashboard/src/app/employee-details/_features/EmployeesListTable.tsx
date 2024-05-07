@@ -1,25 +1,29 @@
 'use client';
 import Image from 'next/image';
-import { useGetAllEmployeeQuery } from '../../../generated';
-import { useEffect } from 'react';
+import { useGetEmployeesByPaginateQuery } from '../../../generated';
 import { perPage } from '../constants';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 type PropsType = {
-  setPageCount: (_: number) => void;
-  start: number;
-  end: number;
+  setPage:Dispatch<SetStateAction<number | undefined>>
+  searchPath: string | null;
 };
-
-export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
+export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
-  const { data, loading } = useGetAllEmployeeQuery();
-  const allEmployees = data?.getAllEmployee;
-  const allEmployeeslength: number = allEmployees?.length ?? 0;
-  useEffect(() => {
-    const pageCount = allEmployeeslength / perPage.limit;
-    setPageCount(Math.ceil(pageCount));
-  }, [data]);
+  const { data, loading, } = useGetEmployeesByPaginateQuery({
+    variables: {
+      paginationInput: {
+        limit: perPage.limit,
+        page: Number(searchPath),
+      },
+    }, 
+  });
 
+  const employeesData = data?.getEmployeesByPaginate;
+  const totalEmployees = employeesData?.totalEmployees
+  useEffect(() => {
+    setPage(totalEmployees);
+  }, [data]);
   if (loading)
     return (
       <div className="flex w-full justify-center items-center py-16">
@@ -40,9 +44,9 @@ export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
             ))}
           </tr>
           {!loading &&
-            allEmployees?.slice(start, end).map((row, index) => (
-              <tr key={index} className="w-full h-11 border-solid border-b border-b-[#EDE6F0]  p-4 text-left">
-                <td className="cursor-pointer p-4 w-[20%]">
+            employeesData?.employees?.map((row, index) => (
+              <tr key={index} className="h-11 border-solid border-b border-b-[#EDE6F0]  p-4 text-left">
+                <td className="cursor-pointer p-4">
                   <div className="flex items-center justify-start gap-3">
                     <figure className="relative rounded-full overflow-hidden h-[50px] aspect-square">
                       <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />

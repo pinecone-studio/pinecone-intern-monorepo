@@ -36,4 +36,9 @@ describe('dashboard page', () => {
     cy.get('[data-cy="morevert-button-test-cy"]').eq(0).should('exist').click();
     cy.get('[data-cy="drop-down-menu-test-cy"]').eq(0).should('exist').click({ force: true });
   });
+
+  // Pagination component
+  it('Pagination component must be defined', () => {
+    cy.get('[data-cy="pagination-cy-id"]').eq(0).should('exist').click();
+  });
 });

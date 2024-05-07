@@ -7,3 +7,6 @@ export * from './HeaderLogoIcon';
 export * from './EyeSlashIcon';
 export * from './EyeIcon';
 export * from './ArrowIcon';
+export * from './LoadingIcon';
+export * from './ArrowBackIcon';
+export * from './MagnifyingClassIcon';

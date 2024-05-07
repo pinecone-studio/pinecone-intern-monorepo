@@ -11,3 +11,20 @@ query GetAllEmployee {
     employmentStatus
   }
 }
+
+query GetEmployeesByPaginate($paginationInput: PaginationInput!) {
+  getEmployeesByPaginate(paginationInput: $paginationInput) {
+    totalEmployees
+    employees {
+      id
+      email
+      firstName
+      employmentStatus
+      department
+      imageUrl
+      jobTitle
+      ladderLevel
+      lastName
+    }
+  }
+}
