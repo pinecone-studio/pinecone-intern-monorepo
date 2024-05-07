@@ -1,18 +1,13 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import Requests from './_features/Requests';
+import { CreateLeaveRequestMain } from './_features';
 
 const LeavingPage = () => {
-  const router = useRouter();
-  const handleNavigateToHomePageButton = () => router.push('/');
-
   return (
-    <div>
-      <h1>hello from HRMS dashboard Leaving Page</h1>
-      <h1>hello from Leaving Service Query</h1>
+    <div className="flex flex-col hap-[24px] pt-[32px] px-[32px] w-[100%] bg-[#F7F7F8]">
+      <CreateLeaveRequestMain />
       <Requests />
-      <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
-   </div>
+    </div>
   );
 };
 

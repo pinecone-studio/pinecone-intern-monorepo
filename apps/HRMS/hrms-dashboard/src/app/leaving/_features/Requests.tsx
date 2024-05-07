@@ -12,7 +12,7 @@ const Requests = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="p-10">
+    <div className="pt-10">
       <div className="flex flex-col gap-6 w-[1154px] p-6 bg-white rounded-sm">
         <div className="flex justify-between items-center w-full">
           <h1 className="text-2xl font-bold">Чөлөө</h1>
