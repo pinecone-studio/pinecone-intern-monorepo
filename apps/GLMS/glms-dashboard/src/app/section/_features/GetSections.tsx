@@ -26,8 +26,8 @@ const GetSections = () => {
               </div>
               <div className="flex flex-col py-2">
                 <p className="font-bold"> Хэсгийн зураг</p>
-                <div data-testid="contentImage" className="w-[588px] h-60 border-2 border-dashed border-gray-300 rounded-xl flex flex-col justify-center items-center">
-                    <img src={`${section.contentImage}`} alt="sectionImage"/>
+                <div data-testid="contentImage" className="w-[588px] h-60">
+                    <img className='w-[588px] h-60 rounded-[4px]'  src={`${section.contentImage}`} alt="sectionImage"/>
                 </div>
               </div>
             </div>
