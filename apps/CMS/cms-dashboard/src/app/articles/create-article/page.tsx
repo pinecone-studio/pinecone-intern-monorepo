@@ -68,7 +68,7 @@ const CreateArticle = () => {
             <Input type="text" name="title" placeholder="Энд гарчгаа бичнэ үү..." value={values.title} onChange={handleChange} onBlur={handleBlur} error={errors.title} helpertext={errors.title} />
           </div>
         </div>
-        <RichTextEditor content={values.content} onChange={handleRichTextChange} onBlur={handleBlur} error={errors.content} helpertext={errors.content} />
+        <RichTextEditor content={values.content} onChange={handleRichTextChange} helpertext={errors.content} />
       </div>
       <div className=" flex flex-col justify-between w-[388px]">
         <RightSide

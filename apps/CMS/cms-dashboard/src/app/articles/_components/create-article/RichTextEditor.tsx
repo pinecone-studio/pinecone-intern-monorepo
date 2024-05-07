@@ -1,14 +1,11 @@
 'use client';
-import { FocusEvent, FocusEventHandler, useMemo } from 'react';
+import { useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import styles from './styles.module.css';
-import ReactQuill, { UnprivilegedEditor } from 'react-quill';
 
 type RichTextProps = {
   onChange: (_value: string) => void;
-  onBlur?: (previousSelection: Range, editor: UnprivilegedEditor) => void;
-  error?: string;
   helpertext?: string;
   content: string;
 };
@@ -27,7 +24,7 @@ const modules = {
   ],
 };
 
-const RichTextEditor = ({ onChange, onBlur, error, helpertext, content }: RichTextProps) => {
+const RichTextEditor = ({ onChange, helpertext, content }: RichTextProps) => {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
   return (
@@ -42,7 +39,6 @@ const RichTextEditor = ({ onChange, onBlur, error, helpertext, content }: RichTe
           className={styles.quill}
           onChange={onChange}
           value={content}
-          onBlur={onBlur}
         />
       </div>
       <p data-testid="helperText" className=" text-red-700 text-[16px]">
