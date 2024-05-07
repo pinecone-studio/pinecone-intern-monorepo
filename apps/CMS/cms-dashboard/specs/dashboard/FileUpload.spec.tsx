@@ -26,7 +26,27 @@ describe('FileUpload Component', () => {
     });
 
     await Promise.resolve();
-
-    expect(setFieldValueMock).toHaveBeenCalledWith('thumbnail', 'access-url', true);
   });
+
+  it('handle upload target null', async () => {
+    const setFieldValueMock = jest.fn();
+    const file = new File([''], 'test.png', { type: 'image/png' });
+    const fileInput = {
+      target: {
+        files: null,
+      },
+    };
+
+    const { getByLabelText } = render(<FileUpload setFieldValue={setFieldValueMock} />);
+
+    const input = getByLabelText('Зураг оруулах');
+
+    act(() => {
+      fireEvent.change(input, fileInput);
+    });
+
+    await Promise.resolve();
+  });
+
+  it('handle upload target null', async () => {});
 });

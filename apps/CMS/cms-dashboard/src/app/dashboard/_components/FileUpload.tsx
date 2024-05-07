@@ -4,7 +4,7 @@ import { FileUploadIcon } from '../../../assets/icons/FileUploadIcon';
 
 type FileUploadProps = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
-  thumbnail: string;
+  thumbnail?: string;
 };
 
 export const FileUpload = (props: FileUploadProps) => {
