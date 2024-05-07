@@ -6,5 +6,4 @@ query getComments ($input: GetCommentsLimitInput!) {
    name
    createdAt
    articleId
-}
-}
+}}

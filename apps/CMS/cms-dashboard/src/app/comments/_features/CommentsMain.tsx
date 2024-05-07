@@ -12,7 +12,7 @@ export const CommentsMain = () => {
     variables: {
       input: {
         limit: perPage,
-        offset: (currentPage - 1) * perPage,
+        offset: (currentPage - 1) * perPage ,
       }
     }
   });
