@@ -8,7 +8,7 @@ const validatinSchema = yup.object({
   thumbnail: yup.string().required(),
 });
 
-export default function Uploader() {
+const Uploader = () => {
   const formik = useFormik({
     initialValues: {
       thumbnail: '',
@@ -22,4 +22,6 @@ export default function Uploader() {
       <FileUpload thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
     </div>
   );
-}
+};
+
+export default Uploader;
