@@ -75,7 +75,7 @@ export const employeeDetailsSchema = gql`
     id: ID
     email: String
     department: Department
-    jobTitle: [String]
+    jobTitle: String
     ladderLevel: Int
     phone: String
     salary: Float
@@ -100,7 +100,24 @@ export const employeeDetailsSchema = gql`
     maritalStatus: MaritalStatus
     relative: [Department]
   }
-
+  input CreateDependetInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+  input UpdateDependentInput {
+    firstName: String
+    lastName: String
+    phone: String
+    dependency: String
+  }
+  input UpdateEmploymentInput {
+    department: Department
+    jobTitle: String
+    dateOfEmployment: Date
+    employmentStatus: EmploymentStatus
+  }
   input PaginationInput {
     limit: Int!
     page: Int!
@@ -122,5 +139,6 @@ export const employeeDetailsSchema = gql`
     createEmployee(input: CreateEmployeeInput!): Employee!
     deleteEmployee(id: ID!): Employee!
     personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
+    updateEmployment(id: ID!, input: UpdateEmploymentInput!): Employee!
   }
 `;
