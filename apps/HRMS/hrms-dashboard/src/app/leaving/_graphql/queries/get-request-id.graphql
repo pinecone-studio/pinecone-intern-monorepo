@@ -1,0 +1,9 @@
+query GetRequestById($id: ID!) {
+  getRequestById(_id: $id) {
+    _id
+    declinedReasoning
+    description
+    superVisor
+    status
+  }
+}

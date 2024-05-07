@@ -27,8 +27,8 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "../../../apps/GLMS/assessment-service/.next/types/**/*.ts",
-    "../../../dist/apps/GLMS/assessment-service/.next/types/**/*.ts",
+    "../../../apps/HRMS/leaving-service/.next/types/**/*.ts",
+    "../../../dist/apps/HRMS/leaving-service/.next/types/**/*.ts",
     "next-env.d.ts"
   ],
   "exclude": [

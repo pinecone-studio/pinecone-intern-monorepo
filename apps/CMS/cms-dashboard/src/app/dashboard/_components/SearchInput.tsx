@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { MagnifyingGlassSvg } from '../../assets';
+import { MagnifyingGlassSvg } from '../../../assets/icons/MagnifyingClassIcon';
 
 export const SearchInput = () => {
   const router = useRouter();
@@ -23,7 +23,6 @@ export const SearchInput = () => {
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
       setTimeout(() => {
-        console.log('Zoloo', event.target.value);
         router.push(pathname + '?' + createQueryString('searchedValue', event.target.value));
       }, 1000);
     },

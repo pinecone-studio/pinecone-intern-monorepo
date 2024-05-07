@@ -24,7 +24,6 @@ const validationSchema = yup.object({
 const departmentList = Object.values(Department);
 const employmentStatusList = Object.values(EmploymentStatus);
 export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
-  const { handleCloseNewEmployee } = props;
   const [createEmployee] = useCreateEmployeeMutation();
   const formik = useFormik({
     initialValues: {
@@ -55,7 +54,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           },
         },
       });
-      handleCloseNewEmployee();
+      props.handleCloseNewEmployee();
     },
   });
 
@@ -76,7 +75,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
         <p data-testid="addEmployeeTitle" className="text-lg text-main font-semibold">
           Ажилтан нэмэх
         </p>
-        <div onClick={handleCloseNewEmployee} className="cursor-pointer">
+        <div data-testid="close-button" onClick={props.handleCloseNewEmployee} className="cursor-pointer">
           <Close />
         </div>
       </div>
@@ -118,6 +117,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
               cursor: !formik.isValid ? 'default' : 'pointer',
             }}
             className="rounded-lg py-3 px-4"
+            name='submitBtn'
             data-cy="createEmployeeBtn"
             onClick={(e) => {
               e.preventDefault()

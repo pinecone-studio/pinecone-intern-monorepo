@@ -101,7 +101,7 @@ describe('Create Employee Form', () => {
     cy.get('select[name="employmentStatus"]').should('exist').select('FULL_TIME');
     cy.get('select[name="employmentStatus"]').should('have.value', 'FULL_TIME');
   });
-  it.only('10. When the user fill all input, submit button is not disabled', () => {
+  it('10. When the user fill all input, submit button is not disabled', () => {
     cy.get('[data-cy="addEmployeeBtn"]').should('exist').should('be.visible').click();
     cy.get('[data-cy="createEmployeeBtn"]').should('exist').click();
     cy.get('[data-cy="createEmployeeBtn"]').should('be.disabled');
@@ -120,5 +120,6 @@ describe('Create Employee Form', () => {
     cy.get('select[name="employmentStatus"]').should('exist').select('FULL_TIME');
     cy.get('select[name="employmentStatus"]').should('have.value', 'FULL_TIME');
     cy.get('[data-cy="createEmployeeBtn"]').should('not.be.disabled');
+    cy.get('button[name="submitBtn"]').click()
   });
 });

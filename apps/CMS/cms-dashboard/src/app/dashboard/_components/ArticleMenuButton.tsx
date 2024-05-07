@@ -22,7 +22,7 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
 
     const domain = window.location.origin;
 
-    await navigator.clipboard.writeText(`${domain}/articles/edit-article/${id}`);
+    await navigator.clipboard.writeText(`${domain}/articles/copy-article/${id}`);
 
     setTimeout(() => {
       setCopied(false);

@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import { ArrowBack } from '../../src/app/articles/edit-article/[id]/_components/ArrowBack';
+import { ArrowBack } from '../../../src/app/articles/edit-article/[id]/_components/ArrowBack';
 
 describe('Arrow back component', () => {
-  it('1-> should verify if arrow back component is displayed or not', () => {
+  it('1 -> should verify if arrow back component is displayed or not', () => {
     const { container } = render(<ArrowBack />);
     expect(container).toBeDefined();
   });
