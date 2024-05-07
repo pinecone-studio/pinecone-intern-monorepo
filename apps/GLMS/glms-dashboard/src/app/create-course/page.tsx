@@ -100,7 +100,7 @@ const CourseAdd = () => {
             </button>
           </div>
         </div>
-        <div className="flex  w-[100%] flex justify-center pt-5">
+        <div className="w-[100%] flex justify-center pt-5">
           <p className="text-[#1C2024]">© 2023 Pinecone</p>
         </div>
       </div>

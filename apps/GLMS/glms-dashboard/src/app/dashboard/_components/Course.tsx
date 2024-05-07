@@ -1,6 +1,6 @@
 'use client';
 import { Course } from '@/generated';
-import { CourseDelete } from '../../../../public/assets/CourseDelete';
+import { CourseDelete } from '../../../../public/assets/CourseDeleteIcon';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
