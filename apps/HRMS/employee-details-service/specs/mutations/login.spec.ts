@@ -2,7 +2,7 @@ import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { EmployeeModel }from '../../src/models/employee';
 import { GraphQLResolveInfo } from 'graphql';
 import jwt from 'jsonwebtoken';
-import { signIn } from '@/graphql/resolvers/mutations/sign-in';
+import { login } from '@/graphql/resolvers/mutations/login';
 
 jest.mock('jsonwebtoken');
 
@@ -22,7 +22,7 @@ describe('Sign in', () => {
 
     (jwt.sign as jest.Mock).mockReturnValueOnce('testToken');
 
-    const result = await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);
+    const result = await login!({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(EmployeeModel.findOne).toHaveBeenCalledWith({
       $or: [
@@ -38,7 +38,7 @@ describe('Sign in', () => {
 
   it('it should throw user not found error', async () => {
     try {
-      await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);
+      await login!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч алга' }, errorTypes.NOT_FOUND));
     }
@@ -46,7 +46,7 @@ describe('Sign in', () => {
 
   it('it should throw error', async () => {
     try {
-      await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);
+      await login!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
     }

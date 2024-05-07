@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql';
 import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
+export const login: MutationResolvers['login'] = async (_, { input }) => {
   try {
     const { emailorPhone } = input;
     const employee = await EmployeeModel.findOne({
