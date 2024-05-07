@@ -71,13 +71,12 @@ const CourseAdd = () => {
               </div>
               <div className="w-[100%] gap-2 flex flex-col">
                 <label className="font-semibold text-[16px] color-[#121316]">{'Дэлгэрэнгүй'}</label>
-                <input
-                  className="w-[90%] border-[2px] rounded h-[80px] px-2"
+                <textarea
+                  className="w-[90%] border-[2px] rounded h-[100px] px-2"
                   id="description-test"
                   name="description"
                   onChange={formik.handleChange}
                   value={formik.values.description}
-                  type="text"
                   placeholder="Энд бичнэ үү..."
                 />
               </div>
@@ -87,27 +86,26 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-between ">
+          <div className="w-[100%] flex justify-between mt-[108px]">
             <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex "
+              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
               }}
               disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
-              <p>Үргэлжлүүлэх</p>
-              <ArrowForwardIcon />
+              <p className="text-[18px] font-semibold">Ноороглох</p>
             </button>
             <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex "
+              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
               }}
               disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
-              <p>Үргэлжлүүлэх</p>
+              <p className="text-[18px] font-semibold">Үргэлжлүүлэх</p>
               <ArrowForwardIcon />
             </button>
           </div>
