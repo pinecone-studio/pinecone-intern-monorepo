@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface IProps {
+interface QuestionProps {
   question: string;
   index: number;
 }
 
-const Question = ({ question, index }: IProps) => {
+const Question = ({ question, index }: QuestionProps) => {
   return (
     <div>
       <h1 className="text-4xl font-bold">
