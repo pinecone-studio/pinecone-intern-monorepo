@@ -36,7 +36,6 @@ describe('createCourse resolver', () => {
   it('should throw an error if content creation fails', async () => {
     const mockInput = {
       title: 'Test Title',
-      description: 'Test Description',
       thumbnail: 'Test Image URL',
       courseId: 'testid',
     };
@@ -50,7 +49,6 @@ describe('createCourse resolver', () => {
   it('should throw an unknown error if the error type is not recognized', async () => {
     const mockInput = {
       title: 'Test Title',
-      description: 'Test Description',
       thumbnail: 'Test Image URL',
       courseId: 'testid',
     };
