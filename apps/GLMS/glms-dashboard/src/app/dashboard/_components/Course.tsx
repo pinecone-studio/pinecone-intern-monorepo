@@ -1,6 +1,6 @@
 'use client';
 import { Course } from '@/generated';
-import { CourseDelete } from '../../../../public/assets/CourseDeleteIcon';
+import { CourseDeleteIcon } from '../../../../public/assets/CourseDeleteIcon';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
@@ -21,7 +21,7 @@ const Courses = (props: Course) => {
           <p className="flex w-fit bg-[#C1E6CF]  px-1 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
             Lessons
           </p>
-          <CourseDelete />
+          <CourseDeleteIcon />
         </div>
       </div>
     </div>

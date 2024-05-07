@@ -6,7 +6,7 @@ import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeM
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated';
 import AddIcon from '@mui/icons-material/Add';
-import { Pinecone } from '../../../public/assets/PineconeIcon';
+import { PineconeLogo } from '../../../public/assets/PineconeLogo';
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
@@ -85,7 +85,7 @@ const DashboardOtherLab = () => {
         </div>
       </div>
       <div className="w-[100%] flex justify-center pb-6">
-        <Pinecone />
+        <PineconeLogo />
       </div>
     </div>
   );
