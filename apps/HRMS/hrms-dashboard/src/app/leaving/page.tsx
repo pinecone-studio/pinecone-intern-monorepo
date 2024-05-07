@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import Requests from './_features/Requests';
+import { CreateLeaveRequestMain } from './_features';
 
 const LeavingPage = () => {
   const router = useRouter();
@@ -12,7 +13,6 @@ const LeavingPage = () => {
       <h1>hello from Leaving Service Query</h1>
       <Requests />
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
-    </div>
   );
 };
 

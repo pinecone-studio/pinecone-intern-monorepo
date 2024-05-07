@@ -1,2 +1,2 @@
-export * from './FormInput';
+export * from './TextInput';
 export * from './Loader';

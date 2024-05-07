@@ -1,0 +1,13 @@
+.quill :global .ql-container  {
+    border: none;
+    border-radius: 18px;
+    height: 237px;
+    font-size: 18px;
+    overflow-y: scroll;
+    padding: 18px 24px;
+}
+
+.quill :global .ql-toolbar  {
+    background-color: rgb(255, 255, 255);
+    width: fit-content;
+}

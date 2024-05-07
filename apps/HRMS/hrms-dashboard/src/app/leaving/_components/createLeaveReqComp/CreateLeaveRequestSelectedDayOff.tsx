@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
+'use client';
 
 export const CreateLeaveRequestSelectedDayOff = () => {
-  return <Box data-testid="leaveRequestDayOff">Step2 Day Off</Box>;
+  return <div data-testid="leaveRequestDayOff">Step2 Day Off</div>;
 };

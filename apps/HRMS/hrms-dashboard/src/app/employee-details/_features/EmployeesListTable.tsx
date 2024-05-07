@@ -1,72 +1,69 @@
 'use client';
-import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Image from 'next/image';
-import { useGetAllEmployeeQuery } from '../../../generated';
-import { useEffect } from 'react';
+import { useGetEmployeesByPaginateQuery } from '../../../generated';
 import { perPage } from '../constants';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 type PropsType = {
-  setPageCount: (_: number) => void;
-  start: number;
-  end: number;
+  setPage:Dispatch<SetStateAction<number | undefined>>
+  searchPath: string | null;
 };
-
-export const EmployeesListTable = ({ setPageCount, start, end }: PropsType) => {
+export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
-  const { data, loading } = useGetAllEmployeeQuery();
-  const allEmployees = data?.getAllEmployee;
-  const allEmployeeslength: number = allEmployees?.length ?? 0;
-  useEffect(() => {
-    const pageCount = allEmployeeslength / perPage.limit;
-    setPageCount(Math.ceil(pageCount));
-  }, [data]);
+  const { data, loading, } = useGetEmployeesByPaginateQuery({
+    variables: {
+      paginationInput: {
+        limit: perPage.limit,
+        page: Number(searchPath),
+      },
+    }, 
+  });
 
+  const employeesData = data?.getEmployeesByPaginate;
+  const totalEmployees = employeesData?.totalEmployees
+  useEffect(() => {
+    setPage(totalEmployees);
+  }, [data]);
   if (loading)
     return (
-      <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} py={8}>
-        <CircularProgress />
-      </Stack>
+      <div className="flex w-full justify-center items-center py-16">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
     );
   return (
-    <Stack data-cy="employeesList" my={2} borderRadius={'12px'} overflow={'hidden'}>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {tableHeader.map((item, index) => (
-                <TableCell align="left" key={index} sx={{ backgroundColor: 'primary.light' }}>
-                  <Typography data-cy={`tableHeader-${index}`} fontSize={12} fontWeight={600} color={'primary.dark'}>
-                    {item}
-                  </Typography>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!loading &&
-              allEmployees?.slice(start, end).map((row, index) => (
-                <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 }, borderBottom: '1px solid #ECEDF0' }}>
-                  <TableCell sx={{ cursor: 'pointer', '&:hover': { fontWeight: 900 } }} component="th" scope="row">
-                    <Stack flexDirection={'row'} alignItems={'left'} gap={1.5}>
-                      <Stack position={'relative'} borderRadius={'50%'} overflow={'hidden'} height={'50px'} sx={{ aspectRatio: 1 / 1 }}>
-                        <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
-                      </Stack>
-                      <Stack justifyContent={'center'}>
-                        <Typography fontSize={14} fontWeight={600} color={'primary.dark'}>
-                          {row?.lastName?.slice(0, 1).toUpperCase() + '.' + row?.firstName}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </TableCell>
-                  <TableCell align="left">{row?.jobTitle}</TableCell>
-                  <TableCell align="left">{row?.email}</TableCell>
-                  <TableCell align="left">{row?.department}</TableCell>
-                  <TableCell align="left">{row?.employmentStatus}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Stack>
+    <section data-cy="employeesList" className="flex my-4 rounded-xl overflow-scroll">
+      <div className="w-full">
+        <table data-cy="tableBody" className="w-full border-collapse">
+          <tr className="w-full bg-light">
+            {tableHeader.map((item, index) => (
+              <th key={index} className="p-4 w-1/5 text-left">
+                <p data-cy={`tableHeader-${index}`} className="text-xs  font-semibold text-dark">
+                  {item}
+                </p>
+              </th>
+            ))}
+          </tr>
+          {!loading &&
+            employeesData?.employees?.map((row, index) => (
+              <tr key={index} className="h-11 border-solid border-b border-b-[#EDE6F0]  p-4 text-left">
+                <td className="cursor-pointer p-4">
+                  <div className="flex items-center justify-start gap-3">
+                    <figure className="relative rounded-full overflow-hidden h-[50px] aspect-square">
+                      <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
+                    </figure>
+                    <p className="text-sm font-semibold text-dark overflow-hidden truncate">{row?.lastName?.slice(0, 1).toUpperCase() + '.' + row?.firstName}</p>
+                  </div>
+                </td>
+                <td className="p-4 w-1/5">
+                  <p className="truncate">{row?.jobTitle}</p>
+                </td>
+                <td className="p-4 w-1/5 truncate">{row?.email}</td>
+                <td className="p-4 w-1/5 truncate">{row?.department}</td>
+                <td className="p-4 w-1/5 truncate">{row?.employmentStatus}</td>
+              </tr>
+            ))}
+        </table>
+      </div>
+    </section>
   );
 };

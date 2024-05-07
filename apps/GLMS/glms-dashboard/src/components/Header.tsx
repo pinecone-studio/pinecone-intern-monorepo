@@ -1,39 +1,24 @@
-import { Container, InputAdornment, Stack, TextField } from '@mui/material';
-import AppsIcon from '@mui/icons-material/Apps';
-import SearchIcon from '@mui/icons-material/Search';
-import { IconColor, BackgroundMain, Icon } from './colors/index';
-import Logo from '../../public/Logo';
+'use client';
+import { SearchIcon } from '../../public/assets/SearchIcon';
+import { PositionIcon } from '../../public/assets/HeaderPosition';
+import { Logo } from '../../public/assets/Logo';
 const Header = () => {
   return (
-    <Stack data-testid="header-artivle-detail" bgcolor={BackgroundMain}>
-      <Container maxWidth="xl" sx={{ display: 'flex', height: '48px', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div data-testid="header-artivle-detail" className="bg-[#F7F7F8]">
+      <div className="flex h-12 items-center justify-between w-[85vw] m-auto">
         <Logo />
-        <Stack direction="row" gap="8px" alignItems="center">
-          <TextField
-            data-testid="text-data-search"
-            InputProps={{
-              sx: {
-                borderRadius: '8px',
-                width: '180px',
-                height: '32px',
-                p: '6px',
-              },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: { Icon } }} />
-                </InputAdornment>
-              ),
-            }}
-            type="search"
-            placeholder="Search"
-          />
-          <AppsIcon sx={{ color: { IconColor }, width: '36xp', height: '36px' }} />
-          <Stack width="32px" height="32px">
-            <img style={{ borderRadius: '100%' }} src="Profile.png" />
-          </Stack>
-        </Stack>
-      </Container>
-    </Stack>
+        <div data-testid="text-data-search" className="gap-3 items-center flex ">
+          <label className="input input-bordered flex items-center gap-2 h-8 outline-none">
+            <SearchIcon />
+            <input type="text" className="grow text-sm w-32 " placeholder="Search" />
+          </label>
+          <PositionIcon />
+          <div className="w-8 h-8">
+            <img className="rounded-full" src="/profile-image.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default Header;

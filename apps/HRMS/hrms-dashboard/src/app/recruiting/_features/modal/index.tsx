@@ -1,43 +1,43 @@
 'use client';
-import { Fragment, useState } from 'react';
-import { Dialog, useTheme, Button, DialogActions, DialogContent, DialogContentText, useMediaQuery } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
+
+import { useState } from 'react';
+import { DeletedSvg } from '../../../asset';
+import { CreatedSvg } from '../../../asset';
 
 type Props = {
   text: string;
-  label: string;
+  label?: 'Устгах' | 'Засварлах' | 'Хадгалах';
 };
 
 export const CreateErrorModal = ({ text, label }: Props) => {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  const message = label === 'Устгах' ? <DeletedSvg /> : <CreatedSvg />;
+
   return (
-    <Fragment>
-      <Button variant="outlined" onClick={handleClickOpen} data-testid="error-modal-button">
+    <div>
+      <button className="btn" onClick={handleOpen}>
         {label}
-      </Button>
-      <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" sx={{ borderRadius: '25px' }} data-testid="error-modal">
-        <DialogActions>
-          <Button onClick={handleClose} sx={{ color: 'black' }} autoFocus data-testid="close-button">
-            <CloseIcon fontSize="medium" />
-          </Button>
-        </DialogActions>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: 20, mb: 5, gap: 3 }}>
-          <div style={{ backgroundColor: 'green', color: 'white', borderRadius: '6px', padding: 10 }}>
-            <CheckIcon fontSize="large" />
+      </button>
+      <dialog className="modal rounded-3xl" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" data-testid="modal">
+        <div className="modal-box">
+          <div>
+            <button onClick={handleClose} data-testid="close-button" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
           </div>
-          <DialogContentText sx={{ fontSize: '20px', fontWeight: '600', color: 'black' }}>{text}.</DialogContentText>
-        </DialogContent>
-      </Dialog>
-    </Fragment>
+          <div className="flex flex-col justify-center items-center mx-5 mb-2 gap-2">
+            <div className="rounded-md p-3">{message}</div>
+            <p className="text-xl font-semibold text-black">{text}.</p>
+          </div>
+        </div>
+      </dialog>
+    </div>
   );
 };

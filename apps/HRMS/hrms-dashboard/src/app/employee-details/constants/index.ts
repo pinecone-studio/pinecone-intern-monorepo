@@ -12,3 +12,19 @@ export const createEmployeeText = [
 export const perPage = {
   limit: 8,
 };
+export const sidebarItems = [
+  { text: 'Нүүр хуудас', icon: '/svg/Window.svg', pathName: '/' },
+  { text: 'Ажилчид', icon: '/svg/ContentPaste.svg', pathName: '/employee-details?employees=1' },
+  { text: 'Чөлөө', icon: '/svg/Report.svg', pathName: '/leaving' },
+  { text: 'Ажлын зар', icon: '/svg/Tag.svg', pathName: '/recruiting' },
+];
+
+export const inputItems = [
+  { label: 'Овог', type: 'text', placeholder: 'Овог оруулна уу', name: 'lastName' },
+  { label: 'Нэр', type: 'text', placeholder: 'Нэр оруулна уу', name: 'firstName' },
+  { label: 'И-мэйл', type: 'text', placeholder: 'И-мэйл оруулна уу', name: 'email' },
+  { label: 'Албан тушаал', type: 'text', placeholder: 'Албан тушаал оруулна уу', name: 'jobTitle' },
+  { label: 'Түвшин', type: 'text', placeholder: 'Түвшин оруулна уу', name: 'ladderLevel' },
+  { label: 'Цалин', type: 'number', placeholder: 'Цалин оруулна уу', name: 'salary' },
+  { label: 'Ажилд орсон огноо', type: 'date', placeholder: 'Огноо оруулна уу', name: 'dateOfEmployment' },
+];

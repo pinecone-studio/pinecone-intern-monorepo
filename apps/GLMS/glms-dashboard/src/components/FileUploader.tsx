@@ -1,7 +1,7 @@
 'use client';
-import { IconButton, Stack, TextField, Typography } from '@mui/material';
 import { fileManagement } from '@/file-management';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { CancelIcon } from '../../public/assets/CancelIcon';
+import { NoneImage } from '../../public/assets/NoneImage';
 
 type FormikTypes = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -9,6 +9,7 @@ type FormikTypes = {
 };
 const FileUploader = (props: FormikTypes) => {
   const { setFieldValue, thumbnail } = props;
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = Array.from(e.target.files);
@@ -18,49 +19,34 @@ const FileUploader = (props: FormikTypes) => {
   };
 
   return (
-    <Stack
-      width={'100%'}
-      height={422}
-      px={1}
-      border={'2px #D6D8DB dashed'}
-      direction={'row'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      borderRadius={'8px'}
-      sx={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover', position: 'relative' }}
+    <div
+      className="w-full h-full max-h-[422px] min-h-[240px] px-2  flex justify-center items-center rounded-lg relative bg-cover"
+      style={{ backgroundImage: `url(${thumbnail})`, border: '2px #D6D8D8 dashed' }}
     >
       {!thumbnail ? (
-        <Stack direction={'row'} sx={{ flexWrap: 'wrap' }}>
-          <Typography fontWeight={400} fontSize={18} color={'#3F414580'}>
-            Зургийг чирж буулгах эсвэл
-          </Typography>
-          <Stack width={80} overflow={'hidden'} position={'relative'} alignItems={'center'}>
-            <Typography sx={{ textDecoration: 'underline' }} fontSize={18} fontWeight={600} color={'#3F4145'}>
-              Browse
-            </Typography>
-            <TextField
-              id="file-test"
-              onChange={handleUpload}
-              type="file"
-              sx={{
-                opacity: 0,
-                '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': { padding: 0 },
-                position: 'absolute',
-              }}
-            />
-          </Stack>
-        </Stack>
+        <div className="w-full">
+          <div className="flex justify-center w-full">
+            <NoneImage />
+          </div>
+          <div className="flex flex-wrap justify-center">
+            <p className="font-normal text-lg text-[#3F414580] text-center">Зургийг чирж буулгах эсвэл</p>
+            <div className="w-20 overflow-hidden relative items-center ">
+              <p className="underline text-lg font-semibold text-[#3F4145] ">Browse</p>
+              <input id="file-test" onChange={handleUpload} type="file" className="absolute top-0 left-0 opacity-0 " />
+            </div>
+          </div>
+        </div>
       ) : (
-        <IconButton
-          sx={{ position: 'absolute', width: '40px', height: '40px', top: 5, right: 5 }}
+        <div
+          className="absolute top-1 right-1 cursor-pointer"
           onClick={() => {
             setFieldValue('thumbnail', '');
           }}
         >
-          <CancelIcon sx={{ color: 'white', '&:hover': { color: 'whitesmoke' } }} />
-        </IconButton>
+          <CancelIcon />
+        </div>
       )}
-    </Stack>
+    </div>
   );
 };
 export default FileUploader;

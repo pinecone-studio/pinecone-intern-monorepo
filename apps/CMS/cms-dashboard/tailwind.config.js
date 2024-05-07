@@ -13,6 +13,7 @@ module.exports = {
         tagGrayBackground: '#ECEDF0',
         grayBackground: '#13ce66',
         activeBackground: '#1C202414',
+        iconSecondary: '#5E6166',
       },
     },
   },

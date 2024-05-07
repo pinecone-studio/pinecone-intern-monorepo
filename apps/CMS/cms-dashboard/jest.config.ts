@@ -7,7 +7,7 @@ export default {
     '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'] }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/apps/GLMS/glms-dashboard',
+  coverageDirectory: '../../../coverage/apps/CMS/cms-dashboard',
   setupFilesAfterEnv: ['jest-canvas-mock'],
   collectCoverageFrom: [
     '!src/app/**/*.tsx',
