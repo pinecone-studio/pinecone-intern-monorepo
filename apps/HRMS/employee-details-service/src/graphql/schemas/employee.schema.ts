@@ -114,6 +114,7 @@ export const employeeDetailsSchema = gql`
   type Query {
     getAllEmployee: [Employee]
     getEmployee(id: ID): Employee
+    getEmployeeRequest(id:ID!):[Employee]!
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
   }
 
