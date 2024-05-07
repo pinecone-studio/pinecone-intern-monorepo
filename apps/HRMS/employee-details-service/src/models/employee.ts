@@ -42,7 +42,6 @@ const EmployeeSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Dependent',
-      required: true,
     },
   ],
 
