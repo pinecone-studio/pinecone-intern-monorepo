@@ -5,10 +5,10 @@ export const signSchema = gql`
     token: String!
     message: String!
   }
-  input SignInInput {
-    emailOrPhoneNumber: String!
+  input SignInput {
+   emailorPhone: String!
   }
   type Mutation {
-    signIn(input: SignInInput!): Token!
+    signIn(input: SignInput!): Token!
   }
 `;

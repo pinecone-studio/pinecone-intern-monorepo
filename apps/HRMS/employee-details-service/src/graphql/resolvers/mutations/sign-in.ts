@@ -6,9 +6,9 @@ import graphqlErrorHandler, { errorTypes } from '../error';
 
 export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
   try {
-    const { emailOrPhoneNumber } = input;
+    const { emailorPhone } = input;
     const employee = await EmployeeModel.findOne({
-      $or: [{ email: emailOrPhoneNumber }, { phone: emailOrPhoneNumber }],
+      $or: [{ email: emailorPhone }, { phone: emailorPhone }],
     });
 
     if (!employee) {

@@ -13,7 +13,7 @@ jest.mock('../../src/models/employee', () => ({
 }));
 
 const input = {
-  emailOrPhoneNumber: 'test@test.com',
+  emailorPhone: 'test@test.com',
 };
 
 describe('Sign in', () => {
