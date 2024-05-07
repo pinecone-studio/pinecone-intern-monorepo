@@ -45,7 +45,6 @@ const CourseAdd = () => {
           data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboard');
-            ``;
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
