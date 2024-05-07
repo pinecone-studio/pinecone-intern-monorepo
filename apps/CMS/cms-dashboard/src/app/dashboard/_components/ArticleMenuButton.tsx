@@ -5,7 +5,7 @@ import { LinkButtonIcon } from '@/icons';
 import { MorevertButtonIcon } from '@/icons';
 import { ArchiveButtonIcon } from '@/icons';
 
-const ArticleMenuButton = ({ id }: { id: string }) => {
+export const ArticleMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -67,5 +67,3 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
     </div>
   );
 };
-
-export default ArticleMenuButton;
