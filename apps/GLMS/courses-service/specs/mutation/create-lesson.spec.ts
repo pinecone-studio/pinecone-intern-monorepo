@@ -8,21 +8,22 @@ jest.mock('@/model/lesson-model', () => ({
 describe('createCourse resolver', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-});
+  });
   it('should create a new course and return its data', async () => {
     const mockInput = {
-      lessonInput:{
+      lessonInput: {
         title: 'Course Title',
         thumbnail: 'course-thumbnail.jpg',
         position: 1,
-      }
-
+        courseId: 'testid',
+      },
     };
     const mockNewCourse = {
       id: '12345',
       title: mockInput.lessonInput.title,
       thumbnail: mockInput.lessonInput.thumbnail,
       position: mockInput.lessonInput.position,
+      courseId: 'testid',
     };
 
     (lessonModel.create as jest.Mock).mockResolvedValue(mockNewCourse);
@@ -34,9 +35,10 @@ describe('createCourse resolver', () => {
   });
   it('should throw an error if content creation fails', async () => {
     const mockInput = {
-        title: 'Test Title',
-        description: 'Test Description',
-        contentImage: 'Test Image URL'
+      title: 'Test Title',
+      description: 'Test Description',
+      thumbnail: 'Test Image URL',
+      courseId: 'testid',
     };
 
     const mockError = new Error('An unknown error occurred');
@@ -44,14 +46,15 @@ describe('createCourse resolver', () => {
     (lessonModel.create as jest.Mock).mockRejectedValue(mockError);
 
     await expect(createLesson({}, mockInput)).rejects.toThrow(mockError);
-});
-it('should throw an unknown error if the error type is not recognized', async () => {
-  const mockInput = {
+  });
+  it('should throw an unknown error if the error type is not recognized', async () => {
+    const mockInput = {
       title: 'Test Title',
       description: 'Test Description',
-      contentImage: 'Test Image URL'
-  };
-  (lessonModel.create as jest.Mock).mockRejectedValue('Unknown error');
-  await expect(createLesson({}, mockInput)).rejects.toThrow('An unknown error occurred');
-});
+      thumbnail: 'Test Image URL',
+      courseId: 'testid',
+    };
+    (lessonModel.create as jest.Mock).mockRejectedValue('Unknown error');
+    await expect(createLesson({}, mockInput)).rejects.toThrow('An unknown error occurred');
+  });
 });

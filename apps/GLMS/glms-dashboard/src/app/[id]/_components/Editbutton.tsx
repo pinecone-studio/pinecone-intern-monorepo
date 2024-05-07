@@ -1,5 +1,5 @@
 'use client';
-import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
+import { EditButtonicon } from 'apps/GLMS/glms-dashboard/public/assets/EditButtonicon';
 
 type EditButtonProps = {
   onClick?: () => void;
@@ -7,8 +7,7 @@ type EditButtonProps = {
 
 const EditButton: React.FC<EditButtonProps> = ({ onClick }) => {
   return (
-    <button onClick={onClick} className="flex border-[1px] border-solid shadow-md px-[20px] py-[16px] gap-2 rounded-md" data-testid="edit-button-test-id">
-      <p className=" text-[18px] font-semibold">Ерөнхийн мэдээлэл</p>
+    <button onClick={onClick} className="btn btn-ghost w-14 h-14 p-4 border border-[#D6D8DB] rounded-md cursor-pointer " data-testid="delete-button-test-id">
       <EditButtonicon />
     </button>
   );

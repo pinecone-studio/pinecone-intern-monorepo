@@ -4,26 +4,26 @@ export const lessonSchema = gql`
   scalar Date
   type Query {
     getLessons: [Lesson!]!
-    getLessonById(id: ID!): Lesson!
+    getLessonById(courseId: String!): Lesson!
   }
   type Lesson {
     id: ID
     title: String
     thumbnail: String
     position: Int
+    courseId: String
     createdAt: Date
     sections: [Section]
-    courseId:ID
   }
   input LessonInput {
     title: String
     thumbnail: String
     position: Int
-    courseId:ID
+    courseId: String
   }
 
   type Mutation {
     createLesson(lessonInput: LessonInput!): Lesson!
-    updateLesson(id: ID!, sectionIds: [ID], title: String!, thumbnail: String!, position: Int!): Lesson!
+    # updateLesson(id: ID!, sectionIds: [ID], title: String!, thumbnail: String!, position: Int!): Lesson!
   }
 `;

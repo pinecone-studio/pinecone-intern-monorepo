@@ -14,11 +14,12 @@ const validatinSchema = yup.object({
 const LessonAdd = () => {
   const router = useRouter();
   const [createLesson] = useCreateLessonMutation();
+  const courseID = localStorage.getItem('courseID');
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      thumbnail: '',
+      thumbnail: 'j',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
@@ -28,26 +29,26 @@ const LessonAdd = () => {
             title: values.title,
             thumbnail: values.thumbnail,
             position: 0,
-            courseId: localStorage.getItem('courseID'),
+            courseId: courseID,
           },
         },
       });
-      router.push('/dashboard');
+      router.push(`/${courseID || 'dashboard'}`);
     },
   });
   return (
-    <div data-testid="create-lesson-container">
+    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] ">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="test-back-div"
           onClick={() => {
-            router.push('/dashboard');
+            router.push(`/${courseID || 'dashboard'}`);
           }}
           className="gap-6 mb-[2.5vh] cursor-pointer text-[18px] font-semibold flex items-center "
         >
           <PrevArrow /> {'Нүүр'}
         </div>
-        <div className="w-full bg-white rounded-xl pt-12 h-[70vh]">
+        <div className="w-full bg-white rounded-xl pt-12">
           <div className="px-6">
             <div className="max-w-[668px] w-full m-auto rounded-xl p-10" style={{ border: '2px #D6D8DB dashed' }}>
               <div className="w-full gap-2">
@@ -68,7 +69,6 @@ const LessonAdd = () => {
               </div>
             </div>
           </div>
-
           <hr className="mt-8 mb-5" />
           <div className="px-6">
             <div className="w-full flex items-center justify-end m-auto max-w-[668px]">

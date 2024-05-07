@@ -11,16 +11,21 @@ const lessonSchema = new Schema({
   position: {
     type: Number,
   },
+  courseId: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  sections: [{
-    type: Schema.Types.ObjectId,
-    ref: 'section',
-  }],
-}); 
+  sections: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'section',
+    },
+  ],
+});
 
-const lessonModel: Model<Lesson> = models.lesson || model<Lesson>('lesson' ,lessonSchema)
+const lessonModel: Model<Lesson> = models.lesson || model<Lesson>('lesson', lessonSchema);
 
 export default lessonModel;
