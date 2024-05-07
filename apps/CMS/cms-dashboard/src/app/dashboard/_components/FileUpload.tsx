@@ -1,5 +1,6 @@
 import { fileManagement } from '@/file-management';
-import { FileUploadIcon } from '@/icons';
+
+import { FileUploadIcon } from '../../../assets/icons/FileUploadIcon';
 
 type FileUploadProps = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -18,17 +19,19 @@ export const FileUpload = (props: FileUploadProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <p className="font-[600] text-[18px] text-[#121316]">Өнгөц зураг</p>
 
-      <div className="w-[340px] h-[155px] flex flex-col gap-2 bg-[#F7F7F8] rounded-lg justify-center items-center">
-        <div className="relative">
-          <input type="file" className="w-[60px] opacity-1" onChange={handleUpload} />
-          {/* <div className="absolute top-0 left-3">
-            <FileUploadIcon />
-          </div> */}
-        </div>
-        <p className="font-normal text-[16px] text-[#121316]">Зураг оруулах</p>
+      <div className="w-[340px] h-[160px] object-cover rounded-xl" style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}>
+        {!thumbnail && (
+          <label className="flex flex-col gap-2 items-center w-[340px] h-[160px] bg-[#F7F7F8] rounded-xl">
+            <div className="flex flex-col pt-12 items-center gap-1">
+              <FileUploadIcon />
+              <p className="font-normal text-[16px] text-[#121316]">Зураг оруулах</p>
+            </div>
+            <input type="file" className="h-[50px] opacity-0" onChange={handleUpload} />
+          </label>
+        )}
       </div>
     </div>
   );
