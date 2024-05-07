@@ -1,3 +1,5 @@
+'use client';
+
 import { fileManagement } from '@/file-management';
 import { FileUploadIcon } from '../../../assets/icons/FileUploadIcon';
 
