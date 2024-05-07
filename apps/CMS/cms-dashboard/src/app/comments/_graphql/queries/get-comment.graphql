@@ -1,4 +1,4 @@
-query getComments ($input: GetCommentsLimitInput!)  {
+query getComments ($input: GetCommentsLimitInput!) {
     getComments (input: $input) {
     comment
    _id
