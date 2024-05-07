@@ -8,11 +8,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
-          <PineconeLogo />
-        </div>
+        <FederationProvider>
+          <Header />
+          {children}
+          <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
+            <PineconeLogo />
+          </div>
+        </FederationProvider>
       </body>
     </html>
   );

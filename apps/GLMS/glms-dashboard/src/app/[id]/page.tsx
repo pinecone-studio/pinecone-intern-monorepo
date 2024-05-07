@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 const Home = () => {
   const pathName = usePathname().substring(1);
   const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
-  const { data: lessonData, loading: lessonLoading, error: _lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
+  const { data: lessonData, loading: lessonLoading, error: lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
   const getByIdData = data?.getCourseById;
   const getByLessonIdData = lessonData?.getLessonById as Lesson[];
   if (loading || lessonLoading)
@@ -19,6 +19,12 @@ const Home = () => {
     return (
       <div className=" w-full h-full flex justify-center items-center">
         <p>Error: {error.message}</p>
+      </div>
+    );
+  if (lessonError)
+    return (
+      <div className=" w-full h-full flex justify-center items-center">
+        <p>Error: {lessonError.message}</p>
       </div>
     );
 

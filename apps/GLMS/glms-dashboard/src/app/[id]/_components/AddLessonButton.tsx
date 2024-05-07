@@ -1,4 +1,4 @@
-import { PlusIcon } from 'apps/GLMS/glms-dashboard/public/assets/PlusIcon';
+import { PlusIcon } from '../../../../public/assets/PlusIcon';
 type RouterType = {
   onClick?: () => void;
 };

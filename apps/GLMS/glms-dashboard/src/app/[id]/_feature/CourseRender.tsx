@@ -38,8 +38,8 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
               <CourseDesc description={data?.description} />
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
-            {lessonData?.map((lesson: Lesson) => {
-              return <LessonRender lesson={lesson} />;
+            {lessonData?.map((lesson: Lesson, index: number) => {
+              return <LessonRender lesson={lesson} key={index} />;
             })}
 
             <AddLessonButton

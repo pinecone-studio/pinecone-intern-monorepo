@@ -1,4 +1,4 @@
-import { EditButtonicon } from 'apps/GLMS/glms-dashboard/public/assets/EditButtonicon';
+import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson } from '@/generated';
