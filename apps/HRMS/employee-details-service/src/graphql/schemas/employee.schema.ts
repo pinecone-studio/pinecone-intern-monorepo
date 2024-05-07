@@ -83,7 +83,7 @@ export const employeeDetailsSchema = gql`
     id: ID
     email: String
     department: Department
-    jobTitle: [String]
+    jobTitle: String
     ladderLevel: Int
     phone: String
     salary: Float
@@ -132,6 +132,7 @@ export const employeeDetailsSchema = gql`
     totalEmployees: Int!
     employees: [Employee]!
   }
+
   type Query {
     getDependent(id: ID!): Dependent!
     getAllEmployee: [Employee]
@@ -146,5 +147,6 @@ export const employeeDetailsSchema = gql`
     deleteEmployee(id: ID!): Employee!
     updatedDependent(id: ID!, input: UpdateDependentInput!): Dependent!
     personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
+    updateEmployment(id: ID!, input: UpdateEmploymentInput!): Employee!
   }
 `;
