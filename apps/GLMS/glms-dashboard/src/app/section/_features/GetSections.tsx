@@ -1,10 +1,20 @@
 'use client';
-import { useGetSectionsQuery } from '../../../generated';
+import { useGetSectionsQuery, useUpdateSectionMutation } from '../../../generated';
 import EditIcon from '../assets/EditIcon';
 import DeleteIcon from '../assets/DeleteIcon';
+import { useRouter } from 'next/navigation';
 
 const GetSections = () => {
+  const router = useRouter()
   const { data } = useGetSectionsQuery();
+
+  const [updateSection] = useUpdateSectionMutation()
+
+  const handleUpdateSectionPage = (sectionId : string | undefined | null) => {
+    if(sectionId){
+      router.push('/update-section')
+    }
+  }
 
   return (
     <div data-testid="get-sections-query" className="bg-[#fff] rounded-[6px]">
@@ -33,7 +43,7 @@ const GetSections = () => {
             </div>
           </div>
           <div className="flex gap-4 items-center py-4">
-            <button className=" w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
+            <button onClick={()=> handleUpdateSectionPage(section.id)} className=" w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
               Засах <EditIcon />
             </button>
             <button className="w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]">
