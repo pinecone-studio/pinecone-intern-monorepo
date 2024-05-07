@@ -16,11 +16,12 @@ const LessonAdd = () => {
   const router = useRouter();
   const [courseId, setCourseId] = useState<string | null>(null);
   const [createLesson] = useCreateLessonMutation();
+  const courseID = localStorage.getItem('courseID');
 
   const formik = useFormik({
     initialValues: {
       title: '',
-      thumbnail: '',
+      thumbnail: 'j',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
@@ -32,11 +33,19 @@ const LessonAdd = () => {
             title: values.title,
             thumbnail: values.thumbnail,
             position: 0,
+<<<<<<< HEAD
             courseId,
           },
         },
       });
       router.push(`/${courseId || 'dashboard'}`);
+=======
+            courseId: courseID,
+          },
+        },
+      });
+      router.push(`/${courseID || 'dashboard'}`);
+>>>>>>> be6f3c89 (feat(lesson-query): lesson query)
     },
   });
 
@@ -50,7 +59,11 @@ const LessonAdd = () => {
         <div
           data-testid="test-back-div"
           onClick={() => {
+<<<<<<< HEAD
             router.push(`/${courseId || 'dashboard'}`);
+=======
+            router.push(`/${courseID || 'dashboard'}`);
+>>>>>>> be6f3c89 (feat(lesson-query): lesson query)
           }}
           className="gap-6 mb-[2.5vh] cursor-pointer text-[18px] font-semibold flex items-center "
         >
