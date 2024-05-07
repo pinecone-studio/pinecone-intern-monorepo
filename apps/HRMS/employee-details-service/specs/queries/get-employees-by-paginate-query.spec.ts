@@ -20,7 +20,7 @@ jest.mock('@/models/employee', () => ({
         }),
       })
       .mockReturnValueOnce({
-        countDocuments: jest.fn().mockResolvedValueOnce(1),
+        countDocuments: jest.fn().mockResolvedValueOnce(2),
       }),
   },
 }));
@@ -36,11 +36,11 @@ const mockData = {
       employmentStatus: 'PART_TIME',
     },
   ],
-  totalEmployees: 1,
+  totalEmployees: 2,
 };
 describe('This function should return employee with matching filters', () => {
-  it('sShould return employees with limit', async () => {
-    const result = await getEmployeesByPaginate!({}, { paginationInput: { limit: 1, page: 1 } }, {}, {} as GraphQLResolveInfo);
+  it('Should return employees with limit', async () => {
+    const result = await getEmployeesByPaginate!({}, { paginationInput: { limit: 1, page: 1 }, filterInput: { searchedValue: 'b' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(mockData);
   });
 });
