@@ -18,7 +18,7 @@ const Uploader = () => {
   });
 
   return (
-    <div className="p-6">
+    <div className="p-4">
       <FileUpload thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
     </div>
   );
