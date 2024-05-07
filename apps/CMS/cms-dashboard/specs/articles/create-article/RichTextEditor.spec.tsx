@@ -4,8 +4,11 @@ import RichTextEditor from '../../../src/app/articles/_components/create-article
 
 describe('RichText Editor Component', () => {
   it('1. Should render RichText Editor Component', () => {
-    const { getByTestId } = render(<RichTextEditor content='content' />);
+    const mockFunction = jest.fn();
+    const { getByTestId } = render(<RichTextEditor content="content" onChange={mockFunction} />);
     const editor = getByTestId('quillEditor');
+    const helperText = getByTestId('helperText');
     expect(editor).toBeDefined();
+    expect(helperText.textContent).toMatch('');
   });
 });

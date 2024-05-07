@@ -7,7 +7,9 @@ describe('Create Article CommentPermission Component', () => {
     const mockFunction = jest.fn();
     const { getByTestId } = render(<CommentPermission commentPermission={true} setCommentPermission={mockFunction} />);
     const switchBtn = getByTestId('commentPermission');
+    const headerText = getByTestId('comment-header-text');
     expect(switchBtn).toBeDefined();
+    expect(headerText.textContent).toMatch('Сэтгэгдэл идэвхтэй');
   });
 
   it('2. CommentPermission button clicked', async () => {
@@ -16,5 +18,4 @@ describe('Create Article CommentPermission Component', () => {
     const switchBtn = getByTestId('commentPermission');
     fireEvent.click(switchBtn);
   });
-
 });

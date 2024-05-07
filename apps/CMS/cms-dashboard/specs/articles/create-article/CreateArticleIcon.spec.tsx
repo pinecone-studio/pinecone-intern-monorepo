@@ -1,4 +1,4 @@
-import CreateArticleIcon from '../../../src/app/articles/_components/icons/CreateArticleIcon';
+import CreateArticleIcon from '../../../src/assets/icons/CreateArticleIcon';
 import { render } from '@testing-library/react';
 
 describe('CreateArticle Icon', () => {

@@ -10,7 +10,6 @@ const CommentPermission: React.FC<ArticleCommentProps> = ({ commentPermission, s
   return (
     <div className="flex gap-4 items-center justify-between p-6">
       <p data-testid="comment-header-text" className=" text-lg font-semibold">
-        {' '}
         Сэтгэгдэл идэвхтэй
       </p>
       <input

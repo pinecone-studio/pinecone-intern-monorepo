@@ -8,6 +8,7 @@ import RichTextEditor from '../_components/create-article/RichTextEditor';
 import CustomButton from '../_components/create-article/CustomButton';
 import RightSide from '../_features/create-article/RightSide';
 import BackButton from '../_components/create-article/BackButton';
+import CreateArticleModal from '../_components/create-article/CreateArticleModal';
 import { useCreateArticleMutation } from '../../../generated';
 
 const validationSchema = yup.object({
@@ -18,6 +19,7 @@ const validationSchema = yup.object({
 });
 
 const CreateArticle = () => {
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const [commentPermission, setCommentPermission] = useState(true);
   const [createArticle, { loading: creationLoading }] = useCreateArticleMutation();
@@ -58,6 +60,15 @@ const CreateArticle = () => {
     });
   };
 
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  console.log(values, commentPermission);
   return (
     <div data-cy="create-article-main-container" className=" w-full h-screen flex justify-between">
       <div className="flex flex-col bg-[#F7F7F8] pl-[92px] pr-[82px] pt-[66px] gap-12  w-full">
@@ -79,10 +90,16 @@ const CreateArticle = () => {
           setCoverPhoto={setFieldValue}
           commentPermission={commentPermission}
           setCommentPermission={setCommentPermission}
+          onBlur={handleBlur}
+          error={errors.category}
+          helpertext={errors.category}
+          imageUploaderError={errors.coverPhoto}
+          ImageUploaderHelpertext={errors.coverPhoto}
         />
         <div className=" flex flex-col p-6 gap-6 border-t">
-          <CustomButton disabled={!isValid} label="Ноорогт хадгалах" bgColor="primary" onClick={handleCreateArticleSubmit} />
-          <CustomButton disabled={!isValid} label="Нийтлэх" bgColor="secondary" />
+          <CustomButton disabled={!isValid} label="Ноорогт хадгалах" bgColor="secondary" onClick={handleCreateArticleSubmit} />
+          <CustomButton disabled={!isValid} label="Нийтлэх" bgColor="primary" onClick={handleModalOpen} />
+          <CreateArticleModal isVisible={showModal} onClose={handleModalClose} />
         </div>
       </div>
     </div>
