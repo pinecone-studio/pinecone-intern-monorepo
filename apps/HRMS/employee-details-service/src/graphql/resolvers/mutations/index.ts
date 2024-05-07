@@ -5,3 +5,4 @@ export * from './dependent-update-mutation';
 export * from './employee-create-mutation';
 export * from './employee-delete-mutation';
 export * from './update-personal-details'
+export * from './login'
