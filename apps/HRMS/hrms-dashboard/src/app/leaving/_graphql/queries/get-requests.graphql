@@ -1,0 +1,10 @@
+query GetRequests {
+  getRequests {
+    _id
+    declinedReasoning
+    startDate
+    totalHour
+    superVisor
+    status
+  }
+}
