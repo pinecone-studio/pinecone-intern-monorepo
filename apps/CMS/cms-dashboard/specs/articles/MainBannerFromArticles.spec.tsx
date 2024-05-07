@@ -1,9 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render,act } from '@testing-library/react';
 import MainBannerFromArticles from '../../src/app/articles/_components/MainBannerFromArticles';
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockReturnValue({ push: jest.fn() }),
+}));
 describe('MainBannerFromArticles', () =>
   it('should have correct props', () => {
-    const { container } = render(<MainBannerFromArticles date="2024.04.12" articlesTitle="Welcome" categories="Coding" cover="/Academy.svg" />);
-    expect(container).toBeDefined()
+    const { getByTestId } = render(<MainBannerFromArticles date="2024.04.12" articlesTitle="Welcome" categories="Coding" cover="/Academy.svg" id='663097b58073930529faddfc' />);
+    const button = getByTestId('mainBtn')
+    act(()=>{
+      fireEvent.click(button)
+    })
   }));
