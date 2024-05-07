@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { ArrowLeft } from '../../../public/assets/ArrowLeft';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -48,7 +48,7 @@ const CourseAdd = () => {
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
-          <ArrowLeftIcon /> {'Нүүр'}
+          <ArrowLeft /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-8">
@@ -85,17 +85,7 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
-            <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
-              data-testid="create-button"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
-            >
-              <p className="text-[18px] font-semibold">Ноороглох</p>
-            </button>
+          <div className="w-[100%] flex justify-end mt-[108px] mb-[56px]">
             <button
               className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
               data-testid="create-button"
