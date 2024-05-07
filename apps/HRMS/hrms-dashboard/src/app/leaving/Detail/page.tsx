@@ -49,11 +49,11 @@ const Detail = () => {
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-3">
                   <p>{data?.getRequestById?.superVisor}</p>
-                  <p style={{ color: '#16A94A' }} data-testid="request-status">
+                  <p style={{ color: '#16A94A' }}>
                     {data?.getRequestById?.status.toLowerCase()}
                   </p>
                 </div>
-                <div className="flex gap-3 items-center">
+                <div className="flex gap-3 items-center" data-testid="request-status">
                   <DeclineButton id={id} />
                   <ApproveButton id={id} />
                 </div>
