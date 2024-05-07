@@ -1,12 +1,12 @@
-import {EmployeeModel}from '../../src/graphql/model/employee';
-import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
+import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
+import { EmployeeModel }from '../../src/models/employee';
 import { signIn } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 import jwt from 'jsonwebtoken';
 
 jest.mock('jsonwebtoken');
 
-jest.mock('../../src/graphql/model/employee', () => ({
+jest.mock('../../src/models/employee', () => ({
   EmployeeModel: {
     findOne: jest.fn().mockReturnValueOnce({ email: 'test', id: 'user-id', firstName: 'test', lastName: 'user' }).mockResolvedValueOnce(null).mockRejectedValueOnce(null),
   },

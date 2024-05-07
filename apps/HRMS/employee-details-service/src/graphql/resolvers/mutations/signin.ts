@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
-import { errorTypes, graphqlErrorHandler } from '../error';
+
 import { MutationResolvers } from '@/graphql/generated';
 import { GraphQLError } from 'graphql';
-import { EmployeeModel } from '@/graphql/model/employee';
+import { EmployeeModel } from '@/models/employee';
+import graphqlErrorHandler, { errorTypes } from '../error';
 export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
   try {
     const { emailOrPhoneNumber } = input;
@@ -13,7 +14,7 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
     if (!employee) {
       throw graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч алга' }, errorTypes.NOT_FOUND);
     }
-    
+
     const id = employee.id;
     const firstName = employee.firstName;
     const lastName = employee.lastName;
