@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useHelloQueryFromRecruitingServiceQuery } from '../../generated';
-import { JobRecruitDashboard } from './_components/feedJob';
+import { JobRecruitDashboard } from './_components/dashboard';
 
 const RecruitPage = () => {
   const { data } = useHelloQueryFromRecruitingServiceQuery();
