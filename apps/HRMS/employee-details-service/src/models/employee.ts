@@ -44,7 +44,6 @@ const EmployeeSchema = new mongoose.Schema({
       ref: 'Dependent',
     },
   ],
-
   createdAt: {
     type: Date,
     default: new Date(),
