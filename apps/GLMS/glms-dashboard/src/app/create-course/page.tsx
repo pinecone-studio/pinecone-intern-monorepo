@@ -86,7 +86,7 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-between mt-[108px]">
+          <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
             <button
               className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
               data-testid="create-button"

@@ -67,10 +67,10 @@ const DashboardOtherLab = () => {
       </div>
       <div className="w-full ">
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
-          <div className=" flex flex-wrap box-border gap-8  h-full w-full">
+          <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses.map((data) => (
               <div
-                className="py-8"
+                className="mt-8 mr-8"
                 key={data.id}
                 onClick={() => {
                   localStorage.setItem('courseID', `${data.id}`);
