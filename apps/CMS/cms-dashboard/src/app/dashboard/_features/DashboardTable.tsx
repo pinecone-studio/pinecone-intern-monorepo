@@ -1,5 +1,5 @@
 import { Article } from '../../../generated';
-import ArticleMenuButton from '../_components/ArticleMenuButton';
+import { ArticleMenuButton } from '../_components/ArticleMenuButton';
 import { EditButtonIcon } from '@/icons';
 import { ApolloError } from '@apollo/client';
 
