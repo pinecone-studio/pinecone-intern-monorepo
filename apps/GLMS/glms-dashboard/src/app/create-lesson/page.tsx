@@ -21,7 +21,7 @@ const LessonAdd = () => {
   const formik = useFormik({
     initialValues: {
       title: '',
-      thumbnail: 'j',
+      thumbnail: '',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
