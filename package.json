@@ -109,6 +109,7 @@
     "@types/mocha": "10.0.6",
     "@types/node": "~18.16.9",
     "@types/nodemailer": "^6.4.15",
+    "@types/otp-generator": "^4.0.2",
     "@types/quill": "^2.0.14",
     "@types/react": "18.2.33",
     "@types/react-date-range": "1.4.9",

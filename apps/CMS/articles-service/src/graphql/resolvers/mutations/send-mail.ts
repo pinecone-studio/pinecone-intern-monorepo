@@ -9,6 +9,7 @@ export const sendMail: MutationResolvers['sendMail'] = async (_, { input }) => {
     const { email } = input;
 
     const user = await UserModel.findOne({ email });
+
     if (!user) {
       return graphqlErrorHandler({ message: 'Бүртгэлтэй хэрэглэгч алга' }, errorTypes.NOT_FOUND);
     }
