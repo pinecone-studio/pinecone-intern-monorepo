@@ -1,7 +1,7 @@
 'use client';
 
 import { fileManagement } from '@/file-management';
-import { FileUploadIcon } from '../../../assets/icons/FileUploadIcon';
+import { FileUploadIcon } from '@/icons';
 
 type FileUploadProps = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -20,12 +20,12 @@ export const FileUpload = (props: FileUploadProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0]">
       <p className="font-[600] text-[18px] text-[#121316]">Өнгөц зураг</p>
 
-      <div className="w-[340px] h-[160px] object-cover rounded-xl" style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}>
+      <div className="w-[315px] h-[160px] object-cover rounded-xl" style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}>
         {!thumbnail && (
-          <label className="flex flex-col gap-2 items-center w-[340px] h-[160px] bg-[#F7F7F8] rounded-xl">
+          <label className="flex flex-col gap-2 items-center w-[315px] h-[160px] bg-[#F7F7F8] rounded-xl">
             <div className="flex flex-col pt-12 items-center gap-1">
               <FileUploadIcon />
               <p className="font-normal text-[16px] text-[#121316]">Зураг оруулах</p>

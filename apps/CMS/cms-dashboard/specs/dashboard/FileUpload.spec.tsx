@@ -1,4 +1,4 @@
-import { FileUpload } from '@/app/dashboard/_components/FileUpload';
+import { FileUpload } from '@/app/articles/edit-article/[id]/_components/FileUpload';
 
 import { render, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
