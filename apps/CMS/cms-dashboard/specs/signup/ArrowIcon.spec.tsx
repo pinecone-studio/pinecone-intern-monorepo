@@ -5,8 +5,8 @@ import { ArrowIcon } from '../../src/assets/icons/ArrowIcon';
 
 describe('Arrow icon', () => {
   it('renders loader correctly', () => {
-    const { container } = render(<ArrowIcon />);
-
+    const { getByTestId } = render(<ArrowIcon />);
+    const container = getByTestId('arrow-icon-container');
     expect(container).toBeDefined();
   });
 });

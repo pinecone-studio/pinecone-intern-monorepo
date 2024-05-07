@@ -22,16 +22,17 @@ const Home = () => {
             cover={data?.getNewestArticle.coverPhoto}
             date={data?.getNewestArticle.publishedAt}
             categories={data?.getNewestArticle.category.name}
+            id={data?.getNewestArticle.id}
           />
         )}
         {categoriesLoading ? null : (
-          <div className="flex flex-col px-24 gap-12 w-[70%] pb-28">
+          <div className="flex flex-col md:px-24 sm:px-[48px] gap-12 xl:w-[65%] lg:w-[70%] md:w-[85%] sm:w-[100vw] pb-28">
             {categories?.getCategories.map((item) => (
               <GroupArticles key={item.id} title={item.name} categoryId={item.id} />
             ))}
           </div>
         )}
-        <div className="fixed opacity-100 bottom-8">
+        <div className="fixed opacity-100 bottom-8 z-10">
           <AdminNavigateLinksFeature />
         </div>
       </div>

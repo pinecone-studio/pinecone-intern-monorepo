@@ -1,16 +1,23 @@
 'use client';
 
+import { useRouter } from "next/navigation";
+
 type MainBannerFromArticlesProps = {
   date?: string;
   categories?: string;
   articlesTitle?: string;
   cover?: string;
+  id?:string
 };
 const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
-  const { date, categories, articlesTitle, cover } = props;
+  const { date, categories, articlesTitle, cover,id } = props;
+  const router = useRouter();
 
+  const routerHandler = () => {
+    router.push(`articles/${id}`);
+  };
   return (
-    <div data-cy="mainBannerComp" className="flex flex-col w-full h-[756px] relative ">
+    <div data-cy="mainBannerComp" className="flex flex-col w-full xl:h-[756px] lg:h-[656px] md:h-[556px] sm:h-[456px] relative">
       <div className="w-full h-full flex">
         <img className="w-full h-full object-cover" data-cy="main-cover" src={cover} alt="article-cover" />
       </div>
@@ -28,7 +35,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
         <p data-cy="articlesTitle" className="font-bold text-[32px] max-w-[850px] text-center text-white">
           {articlesTitle}
         </p>
-        <div data-cy="mainBtn" className=" rounded-full bg-white text-black p-[12px 16px] px-4 py-3 hover:text-white hover:bg-inherit cursor-pointer">
+        <div data-testid='mainBtn' onClick={routerHandler} data-cy="mainBtn" className=" rounded-full bg-white text-black p-[12px 16px] px-4 py-3 hover:text-white hover:bg-inherit cursor-pointer">
           Унших
         </div>
       </div>
