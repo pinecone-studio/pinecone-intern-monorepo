@@ -20,11 +20,13 @@ const GetSections = () => {
     }
   }, [successMessage]);
 
-  const handleDeleteSection =  (id:string) => {
+  const handleDeleteSection =  ( id : string | undefined | null ) => {
     try {
-       deleteSection({ variables: { id } }); 
-       setSuccessMessage('Section deleted successfully.');
-       refetch()
+      if(id){
+        deleteSection({ variables: { id } }); 
+        setSuccessMessage('Section deleted successfully.');
+        refetch()
+      }
     } catch (error) {
       console.error('Failed to delete section:', error);
     }
@@ -67,7 +69,7 @@ const GetSections = () => {
             <button className=" w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
               Засах <EditIcon />
             </button>
-            <button data-testid="delete-btn" onClick={()=>handleDeleteSection(section.id || "")} className="w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]">
+            <button data-testid="delete-btn" onClick={()=>handleDeleteSection(section.id)} className="w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]">
               Устгах <DeleteIcon />
             </button>
           </div>
