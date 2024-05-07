@@ -1,0 +1,8 @@
+query GetArticlesByStatus($status: String!) {
+  getArticlesByStatus(status: $status) {
+    id
+    publishedAt
+    title
+    coverPhoto
+  }
+}
