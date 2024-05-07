@@ -1,8 +1,6 @@
-import { Department, EmploymentStatus } from '@/graphql/generated';
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { updateEmployment } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-
 jest.mock('@/models/employee', () => ({
   EmployeeModel: {
     findByIdAndUpdate: jest
@@ -10,9 +8,6 @@ jest.mock('@/models/employee', () => ({
       .mockReturnValueOnce({
         _id: '1',
         jobTitle: 'Дизайнер',
-        department: 'SOFTWARE',
-        dateOfEmployment: '2023-03-09',
-        employmentStatus: 'FULL_TIME',
       })
       .mockResolvedValueOnce(undefined)
       .mockReturnValueOnce(null),
@@ -21,18 +16,13 @@ jest.mock('@/models/employee', () => ({
 
 const input = {
   jobTitle: 'Дизайнер',
-  department: Department.Software,
-  employmentStatus: EmploymentStatus.FullTime,
 };
 describe('update employment', () => {
   it('should update a employment', async () => {
-    const result = await updateEmployment!({}, { id: '1', input: input }, {}, {} as GraphQLResolveInfo);
+    const result = await updateEmployment!({}, { id: '1', input }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '1',
       jobTitle: 'Дизайнер',
-      department: 'SOFTWARE',
-      dateOfEmployment: '2023-03-09',
-      employmentStatus: 'FULL_TIME',
     });
   });
 
