@@ -6,7 +6,6 @@ import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeM
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated';
 import AddIcon from '@mui/icons-material/Add';
-import { PineconeLogo } from '../../../public/assets/PineconeLogo';
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
