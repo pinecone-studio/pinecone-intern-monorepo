@@ -1,12 +1,14 @@
-import { useSearchParams } from 'next/navigation';
 import { Article } from '../../../generated';
 import ArticleMenuButton from '../_components/ArticleMenuButton';
 import { EditButtonIcon } from '@/icons';
+import { ApolloError } from '@apollo/client';
 
 const tableItems = ['Огноо', 'Статус', 'Ангилал'];
 
 type DashboardTableProps = {
   articles: Article[] | undefined;
+  loading: boolean;
+  error: ApolloError | undefined;
 };
 
 type ArticleStatusType = {
@@ -38,32 +40,10 @@ const getColorForStatus = (status: string) => {
   }
 };
 
-const DashboardTable = (props: DashboardTableProps) => {
-  const { articles } = props;
-  const searchParams = useSearchParams();
-  const searchedValueFilter = searchParams.get('searchedValue') ?? '';
-  const startDate = searchParams.get('startDate') ?? '';
-  const endDate = searchParams.get('endDate') ?? '';
-  const statusFilter = searchParams.get('status') ?? '';
-
-  const result = articles
-    ?.filter((item) => {
-      if (!searchedValueFilter) return item;
-      return item.title.toLocaleLowerCase().includes(searchedValueFilter.toLocaleLowerCase() ?? '');
-    })
-    .filter((item) => {
-      if (!startDate || !endDate) return item;
-      const itemDate = new Date(item['createdAt']);
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      return itemDate >= start && itemDate <= end;
-    })
-    .filter((item) => {
-      if (!statusFilter) return item;
-      if (statusFilter === null || statusFilter === 'ALL') return item;
-      return item.status == statusFilter;
-    });
-
+export const DashboardTable = (props: DashboardTableProps) => {
+  const { articles, loading, error } = props;
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>error</div>;
   return (
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
       <div className="overflow-x-auto w-full min-w-[650px] flex border">
@@ -86,7 +66,7 @@ const DashboardTable = (props: DashboardTableProps) => {
           </thead>
 
           <tbody>
-            {result?.map(({ status, title, createdAt, category, id }, index) => {
+            {articles?.map(({ status, title, createdAt, category, id }, index) => {
               return (
                 <tr key={index}>
                   <td>
@@ -125,5 +105,3 @@ const DashboardTable = (props: DashboardTableProps) => {
     </div>
   );
 };
-
-export default DashboardTable;
