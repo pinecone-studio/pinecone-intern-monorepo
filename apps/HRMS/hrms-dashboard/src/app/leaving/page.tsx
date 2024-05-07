@@ -13,6 +13,7 @@ const LeavingPage = () => {
       <h1>hello from Leaving Service Query</h1>
       <Requests />
       <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
+    </div>
   );
 };
 
