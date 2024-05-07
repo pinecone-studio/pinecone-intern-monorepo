@@ -30,7 +30,6 @@ describe('FileUpload Component', () => {
 
   it('handle upload target null', async () => {
     const setFieldValueMock = jest.fn();
-    const file = new File([''], 'test.png', { type: 'image/png' });
     const fileInput = {
       target: {
         files: null,
