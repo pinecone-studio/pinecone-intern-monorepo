@@ -1,6 +1,6 @@
 'use client';
 import { useGetSectionByIdQuery, useUpdateSectionMutation } from '@/generated';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
@@ -9,12 +9,20 @@ import FileUploader from '../../components/FileUploader';
 
 const UpdateSection = () => {
   const router = useRouter();
+  const[sectionID , setSectionID] = useState("")
   const [updateSection] = useUpdateSectionMutation();
 
-    if (typeof window === 'undefined') {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sectionId = localStorage.getItem('sectionId');
+      if (sectionId !== null) {
+        setSectionID(sectionId);
+      }
     }
-  const sectionId = localStorage.getItem('sectionId');
-  const id = sectionId ? sectionId : '';
+  }, []);
+  
+ 
+  const id = sectionID? sectionID : '';
 
   const validatinSchema = yup.object({
     title: yup.string().required(),
