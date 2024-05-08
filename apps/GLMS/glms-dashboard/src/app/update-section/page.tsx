@@ -11,12 +11,8 @@ const UpdateSection = () => {
   const router = useRouter();
   const [updateSection] = useUpdateSectionMutation();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.getItem('sectionId');
+    if (typeof window === 'undefined') {
     }
-  }, []);
-
   const sectionId = localStorage.getItem('sectionId');
   const id = sectionId ? sectionId : '';
 
@@ -45,19 +41,18 @@ const UpdateSection = () => {
         },
       });
       router.push('section');
-      localStorage.clear()
+      localStorage.clear();
     },
   });
 
   const { data, loading } = useGetSectionByIdQuery({
     variables: { id: id },
   });
- 
+
   useEffect(() => {
     if (data && data.getSectionById) {
-      
       const section = data.getSectionById;
-      
+
       formik.setFieldValue('title', section.title);
       formik.setFieldValue('description', section.description);
       formik.setFieldValue('thumbnail', section.contentImage);
@@ -66,7 +61,7 @@ const UpdateSection = () => {
 
   if (loading) return <p>Loading...</p>;
   return (
-    <div data-testid="update-section-page-container" className="flex flex-col justify-center bg-[#F7F7F8] px-20" >
+    <div data-testid="update-section-page-container" className="flex flex-col justify-center bg-[#F7F7F8] px-20">
       <div data-cy="handle-back-page" onClick={() => router.push('/section')} className=" flex flex-row justify-center items-center gap-1 w-[140px] h-fit py-4">
         <ArrowLeftIcon />
         <p>Нүүр</p>
