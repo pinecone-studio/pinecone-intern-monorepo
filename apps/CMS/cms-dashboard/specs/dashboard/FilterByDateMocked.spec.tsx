@@ -11,16 +11,11 @@ type mockDateRangePickerType = {
 };
 
 jest.mock('next/navigation', () => ({
-  usePathname: jest.fn(),
-  useRouter() {
-    return {
-      push: () => jest.fn(),
-    };
-  },
-  useSearchParams() {
-    return {};
-  },
+  useRouter: jest.fn().mockReturnValue({ push: jest.fn() }),
+  useSearchParams: jest.fn().mockReturnValue({ get: jest.fn().mockResolvedValueOnce('') }),
+  usePathname: jest.fn().mockReturnValue('/test'),
 }));
+
 jest.mock('react-date-range', () => {
   const MockDateRangePicker = (props: mockDateRangePickerType) => {
     return <div data-testid="mock-date-range-picker-test-id"  onClick={() => props.onChange({ selection: { startDate: undefined, endDate: undefined } })}></div>;
@@ -43,5 +38,6 @@ describe('FilterByDate', () => {
 
     const mockedButton = getByTestId('mock-date-range-picker-test-id');
     fireEvent.click(mockedButton);
+    expect(mockedButton).toBeDefined()
   });
 });

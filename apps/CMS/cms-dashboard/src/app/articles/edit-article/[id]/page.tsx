@@ -2,7 +2,7 @@
 
 import { Article, useGetArticleByIdQuery } from '../../../../../src/generated';
 import { useParams } from 'next/navigation';
-import { SubmitButtons, Title, ToggleButtonForCommnent, ArrowBack } from './_components/index';
+import { SubmitButton, Title, ToggleButtonForCommnent, ArrowBack } from './_components/index';
 import { TitleInput } from './_components/TitleInput';
 import { ContentInput } from './_components/ContentInput';
 import * as yup from 'yup';
@@ -57,7 +57,8 @@ const Home = () => {
           <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
         </div>
 
-        <SubmitButtons />
+        <SubmitButton text="Ноорогт хадгалах" bgColor='#f6f6f6' />
+        <SubmitButton text="Нийтлэх" bgColor="#D6D8D8" />
       </div>
     </div>
   );
