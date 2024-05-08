@@ -20,21 +20,33 @@ export const Calendar = () => {
     useMonthDate(dayjs(monthDate).add(inc, "month").format("YYYY-MM-DD"))
   }
   return (
-    <div>
-      <div className="flex w-[100%] justify-between">
+    <div className='mb-[100px] mt-[100px] bg-[#FFFFFF] px-[30px] rounded-[12px]'>
+      <div className="flex w-[100%] justify-between my-[10px] items-center">
         <h2 className="text-[18px] text-bold text-center">Чөлөөтэй ажилчид</h2>
-        <div className="flex py-[8px] px-[12px] border-[1px] border-[#ECEDF0] rounded-md">
-          <button
-            onClick={()=>{UpdateMonth(-1)}}
-          >
-            &larr;
-          </button>
-          <p className="text-[#3F4145]">{monthDate}</p>
-          <button
-            onClick={() => {UpdateMonth(1)}}
-          >
-            &rarr;
-          </button>
+        <div className='flex flex-col gap-[10px]'>
+          <div className="flex py-[8px] px-[12px] border-[1px] border-[#ECEDF0] rounded-md justify-between">
+            <button
+              onClick={()=>{UpdateMonth(-1)}}
+            >
+              &larr;
+            </button>
+            <p className="text-[#3F4145]">{monthDate}</p>
+            <button
+              onClick={() => {UpdateMonth(1)}}
+            >
+              &rarr;
+            </button>
+          </div>
+          <div className='flex gap-[10px]'>
+            <div className='flex py-[4px] px-[8px] gap-[8px] items-center'>
+              <div className='w-[8px] h-[8px] bg-[#1890FF] rounded-full'></div>
+              <p className='text-[#1890FF] text-[12px]'>Чөлөөтэй</p>
+            </div>
+            <div className='flex py-[4px] px-[8px] gap-[8px] items-center'>
+              <div className='w-[8px] h-[8px] bg-[#16A94A] rounded-full'></div>
+              <p className='text-[#16A94A] text-[12px]'>Өвчтэй</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-[100%]">
