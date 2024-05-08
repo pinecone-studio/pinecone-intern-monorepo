@@ -163,7 +163,9 @@
         "watch": true
       },
       "dependsOn": [
-     
+        {
+          "target": "cypress:clean"
+        },
         {
           "target": "codegen"
         }
