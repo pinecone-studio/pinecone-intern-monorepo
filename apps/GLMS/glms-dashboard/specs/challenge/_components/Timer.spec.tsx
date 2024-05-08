@@ -4,12 +4,12 @@ import { Timer } from '../../../src/app/challenge/_components/Timer';
 
 jest.useFakeTimers();
 
-describe('Timer component', () => {
+describe('1. Timer component', () => {
     afterEach(() => {
         jest.clearAllTimers();
     });
 
-    test('Timer resets to initial value when "Next" button is clicked', () => {
+    test('2. Timer resets to initial value when "Next" button is clicked', () => {
         const { getByText } = render(<Timer />);
         const nextButton = getByText('Next');
         fireEvent.click(nextButton);
@@ -17,11 +17,9 @@ describe('Timer component', () => {
         act(() => {
             jest.advanceTimersByTime(1000);
         });
-
-        // expect(getByText('30'));
     });
 
-    test('Timer countdown works correctly', () => {
+    test('3. Timer countdown works correctly', () => {
         const { getByText } = render(<Timer />);
         expect(getByText('30'));
         act(() => {
@@ -30,7 +28,7 @@ describe('Timer component', () => {
         expect(getByText('29'));
     });
 
-    test('Timer stops counting down at 0', () => {
+    test('4. Timer stops counting down at 0', () => {
         const { getByText } = render(<Timer />);
         act(() => {
             jest.advanceTimersByTime(30000);
