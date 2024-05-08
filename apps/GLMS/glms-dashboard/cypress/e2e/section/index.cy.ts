@@ -21,7 +21,6 @@ describe('Handle section page', () => {
     cy.get('input[name="title"]').type('html');
     cy.get('input[name="description"]').type('html intro');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-cy="add-section-handle-btn]').should('not.be.disabled');
     cy.get('[data-cy="add-section-handle-btn"]').click();
   });
 

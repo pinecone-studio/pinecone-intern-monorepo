@@ -26,7 +26,7 @@ const GetSections = () => {
         refetch();
       }
     } catch (error) {
-      console.error('Failed to delete section:', error);
+      console.error( error);
     }
   };
 
