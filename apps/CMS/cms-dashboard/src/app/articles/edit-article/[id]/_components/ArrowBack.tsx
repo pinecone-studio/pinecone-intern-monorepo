@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowBackIcon } from "@/icons";
+import { ArrowBackIcon } from '@/icons';
 
 export const ArrowBack = () => {
   return (
