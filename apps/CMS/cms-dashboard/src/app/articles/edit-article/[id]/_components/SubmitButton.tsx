@@ -5,6 +5,7 @@ type propstype = {
   bgColor: string;
   onclick: () => void;
 };
+
 export const SubmitButton = ({ text, bgColor, onclick }: propstype) => {
   return (
     <div data-testid="contained-submit-buttons-id" className="flex flex-col gap-[20px]">
