@@ -12,17 +12,14 @@ query GetAllEmployee {
   }
 }
 
-
 query GetJobTitles {
   getAllEmployee {
     jobTitle
   }
 }
 
-
 query GetEmployeesByPaginate($paginationInput: PaginationInput!, $employeeDetailsfilterInput: employeeDetailsfilterInput!) {
   getEmployeesByPaginate(paginationInput: $paginationInput, employeeDetailsfilterInput: $employeeDetailsfilterInput) {
-
     totalEmployees
     employees {
       id
@@ -35,5 +32,21 @@ query GetEmployeesByPaginate($paginationInput: PaginationInput!, $employeeDetail
       ladderLevel
       lastName
     }
+  }
+}
+
+query GetEmployee($getEmployeeId: ID) {
+  getEmployee(id: $getEmployeeId) {
+    firstName
+    lastName
+    jobTitle
+    email
+    phone
+    imageUrl
+    department
+    ladderLevel
+    homeAddress
+    dateOfEmployment
+    employmentStatus
   }
 }
