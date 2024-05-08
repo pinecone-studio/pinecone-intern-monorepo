@@ -17,10 +17,11 @@ export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
         page: Number(searchPath),
       },
       employeeDetailsfilterInput: {
-        searchedValue: '',
+        searchedValue: 'н',
       },
     },
   });
+  console.log(data);
 
   const employeesData = data?.getEmployeesByPaginate;
   const totalEmployees = employeesData?.totalEmployees;
