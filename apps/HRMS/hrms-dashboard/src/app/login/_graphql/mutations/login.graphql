@@ -1,6 +1,6 @@
-mutation Login($input: SignInput!) {
-  login(input: $input) {
-    token
+mutation Login($emailorPhone:String! ) {
+  login(input: {emailorPhone: $emailorPhone}) {
     message
+    token
   }
 }

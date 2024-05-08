@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
+'use client'
 import { PropsWithChildren, useContext, createContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
 import { setCookie, parseCookies } from 'nookies';
 import { useLoginMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
   handleSignIn: (emailorPhone: string) => Promise<void>;
@@ -14,17 +17,14 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [signIn, { loading: loginLoading }] = useLoginMutation();
+  const [login, { loading: loginLoading }] = useLoginMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+const router = useRouter()
   const handleSignIn = async (emailorPhone: string) => {
-    console.log('sdsd')
     try {
-      const { data: loginData } = await signIn({
+      const { data: loginData } = await login({
         variables: {
-        input:{
             emailorPhone
-        }
         },
       });
       const token = loginData?.login.token;
@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         autoClose: 3000,
         hideProgressBar: true,
       });
+      router.push('/')
     } catch (error) {
       if (error instanceof ApolloError) {
         toast.error(error.graphQLErrors[0].message, {
@@ -48,14 +49,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-//   useEffect(() => {
-//     const cookies = parseCookies();
-//     const token = cookies.token;
+  useEffect(() => {
+    const cookies = parseCookies();
+    const token = cookies.token;
 
-//     if (token) {
-//       setIsLoggedIn(true);
-//     }
-//   }, []);
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

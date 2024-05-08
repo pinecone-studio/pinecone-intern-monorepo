@@ -1,14 +1,11 @@
 'use client';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-
-
-// import TextInput from '@/app/sign-up/_components/TextInput';
-// import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
-import { useAuth } from '@/common/providers/AuthProvider';
 import TextInput from '../_components/TextInput';
+import { useAuth } from '../../../common/providers/AuthProvider';
+import { ArrowIcon } from '../../../../public/assets/ArrowIcon';
 
-const SignInForm = () => {
+const LoginForm = () => {
   const { handleSignIn, loginLoading } = useAuth();
 
   const validationSchema = yup.object({
@@ -28,7 +25,7 @@ const SignInForm = () => {
       .required('Утас эсвэл имэйл хаяг оруулна уу'),
   });
 
-  const formik = useFormik({
+  const formik = useFormik({    
     initialValues: {
       emailorPhone: '',
     },
@@ -71,22 +68,14 @@ const SignInForm = () => {
           disabled={!formik.isValid || loginLoading}
         >
           {loginLoading && <span className="loading loading-ring loading-lg"></span>}
-          <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
-          {/* <ArrowIcon /> */}
+          <h2  className="mr-[23%] text-lg text-semibold flex items-center">Нэвтрэх</h2>
+          <ArrowIcon />
         </button>
       </div>
 
       <div className="border border-solid border-[#ecedf0]"></div>
-
-      <div className="flex justify-center gap-2">
-        <h2>Бүртгэлгүй юу?</h2>
-
-        <div className="text-[#551a8b] border-b border-b-solid border-[#551a8b] cursor-pointer" data-testid="sign-in-modal-to-signup">
-          <a href={'/sign-up'}>Бүртгүүлэх</a>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default SignInForm;
+export default LoginForm;

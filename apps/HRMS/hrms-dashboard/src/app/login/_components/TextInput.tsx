@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
 import cx from 'classnames';
-import { EyeIcon } from '../../../assets/icon/EyeIcon';
-import { EyesIcon } from '../../../assets/icon/EyesIcon';
+import { EyeIcon } from '../../../../public/assets/EyeIcon';
+import { EyesIcon } from '../../../../public/assets/EyesIcon';
 
 type TextInputProps = {
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;

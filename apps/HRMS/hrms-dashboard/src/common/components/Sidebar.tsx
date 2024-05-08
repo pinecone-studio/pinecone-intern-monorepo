@@ -12,6 +12,9 @@ export const sidebarItems = [
 export const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  if (pathname === '/login') {
+    return null
+  }
 
   return (
     <aside data-cy="dashboardSidebar" className="min-w-[242px] bg-white h-[100vh] pt-4 border-r border-[#ECEDF0]">
