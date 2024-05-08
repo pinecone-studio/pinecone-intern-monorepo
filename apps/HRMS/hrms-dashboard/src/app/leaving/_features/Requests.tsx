@@ -1,29 +1,39 @@
 'use client';
+import { useEffect } from 'react';
 import { headers } from './utils/Table';
 import { useGetRequestsQuery } from '../../../generated';
 import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
+import FilterByToday from '../_components/FilterByToday';
 
 const Requests = () => {
   const router = useRouter();
-  const { data, loading } = useGetRequestsQuery();
+  const { data, loading, error, refetch } = useGetRequestsQuery();
+  useEffect(() => {
+    if (refetch) {
+      refetch();
+    }
+  }, [refetch]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error:{error.message}</p>;
+
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="pt-10">
-      <div className="flex flex-col gap-6 w-[1154px] p-6 bg-white rounded-sm">
+      <div className="flex flex-col gap-6 w-[1154px] p-6 bg-white rounded-lg">
         <div className="flex justify-between items-center w-full">
           <h1 className="text-2xl font-bold">Чөлөө</h1>
           <p>{formattedDate}</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex justify-between">
           <div role="tablist" className="tabs tabs-bordered">
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Хүсэлт" defaultChecked />
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
           </div>
+          <FilterByToday />
         </div>
         <div className="flex flex-col gap-6 bg-gray-100 w-full">
           <div className="overflow-x-auto shadow-md rounded-lg">
@@ -43,9 +53,9 @@ const Requests = () => {
                     <tr key={index} className="cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat._id}`)} data-testid="requests">
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat._id}</td>
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.declinedReasoning}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.startDate}</td>
+                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
                       <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.superVisor}</td>
-                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
-                      <td className="px-6 py-4 text-[#3F4145] text-sm">{dat.totalHour}</td>
                       <td className="px-6 py-4" data-testid="request-status">
                         <Status dat={dat} />
                       </td>

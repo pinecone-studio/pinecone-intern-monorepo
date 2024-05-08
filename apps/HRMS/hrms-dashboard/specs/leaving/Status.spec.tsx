@@ -6,21 +6,21 @@ describe('Status component', () => {
   it('renders correctly with approved status', () => {
     const data = { status: 'approved' };
     const { getByText } = render(<Status dat={data} />);
-    const typographyElement = getByText('approved');
+    const typographyElement = getByText('Зөвшөөрсөн');
     expect(typographyElement).toBeTruthy();
   });
 
   it('renders correctly with declined status', () => {
     const data = { status: 'declined' };
     const { getByText } = render(<Status dat={data} />);
-    const typographyElement = getByText('declined');
+    const typographyElement = getByText('Татгалзсан');
     expect(typographyElement).toBeTruthy();
   });
 
   it('renders correctly with pending status', () => {
     const data = { status: 'pending' };
     const { getByText } = render(<Status dat={data} />);
-    const typographyElement = getByText('pending');
+    const typographyElement = getByText('Шинэ хүсэлт');
     expect(typographyElement).toBeTruthy();
   });
   it('renders correctly with unknown status', () => {

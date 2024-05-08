@@ -36,8 +36,25 @@ describe('Requests features', () => {
     useGetRequestsQuery.mockReturnValueOnce({ error: { message: errorMessage } });
 
     render(<Requests />);
+  });
 
-    // expect(screen.getByText(`Error: ${errorMessage}`));
+  it('should fetch data on mount', async () => {
+    const mockData = {
+      getRequests: [],
+    };
+    const mockRefetch = jest.fn();
+    useGetRequestsQuery.mockReturnValue({
+      data: mockData,
+      loading: false,
+      error: null,
+      refetch: mockRefetch,
+    });
+
+    render(<Requests />);
+
+    await waitFor(() => {
+      expect(mockRefetch).toHaveBeenCalled();
+    });
   });
 
   it('navigates to detail page on row click', async () => {
@@ -57,7 +74,6 @@ describe('Requests features', () => {
     await waitFor(() => {
       const row = screen.getByText('Reason 1').closest('tr');
       fireEvent.click(row);
-      // expect(useRouter().push).toHaveBeenCalledWith('/leaving/Detail?requestId=1');
     });
   });
 });
