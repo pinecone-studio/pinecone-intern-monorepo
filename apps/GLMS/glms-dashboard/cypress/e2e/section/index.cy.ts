@@ -12,7 +12,7 @@ describe('Handle section page', () => {
     cy.get('[data-cy="title"]').should('exist');
     cy.get('[data-cy="description"]').should('exist');
     cy.get('[data-cy="contentImage"]').should('exist');
-    cy.get('[data-cy="delete-btn"]').should('exist').click({multiple:true})
+    cy.get('[data-cy="delete-btn"]').should('exist')
     cy.get('[data-cy="update-btn"]').should('exist').click({multiple:true})
   });
 

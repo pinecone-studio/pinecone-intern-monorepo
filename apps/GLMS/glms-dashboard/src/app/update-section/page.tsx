@@ -79,7 +79,7 @@ const UpdateSection = () => {
           <div className="flex flex-col py-2">
             <p className="font-bold">Хэсгийн гарчиг</p>
             <input
-              data-testid="title"
+              data-cy="title"
               className="w-[588px] h-fit border rounded-[4px] p-2"
               type="text"
               name="title"
@@ -92,7 +92,7 @@ const UpdateSection = () => {
           <div className="flex flex-col py-2">
             <p className="font-bold">Дэлгэрэнгүй</p>
             <textarea
-              data-testid="description"
+              data-cy="description"
               className="w-[588px] h-[160px] border rounded-[4px] p-2"
               id="description-test"
               name="description"

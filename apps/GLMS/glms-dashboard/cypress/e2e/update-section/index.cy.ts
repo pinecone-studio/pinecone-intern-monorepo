@@ -12,9 +12,10 @@ describe ('Handle update-section page' , () => {
 
     it('3.Should display update section container', () => {
       cy.get('[data-testid="update-section-form"]').should('exist');
-      cy.get('[data-testid="title"]').should('exist').type('html intro');
-      cy.get('[data-testid="description"]').should('exist').type('html');
+      cy.get('[data-cy="title"]').should('exist').type('html intro');
+      cy.get('[data-cy="description"]').should('exist').type('html');
       cy.get('#file-test').selectFile('public/js.png', { force: true });
-      cy.get('[data-cy="update-section-handle-btn"]').should('exist').click();
+      cy.get('[data-cy="update-section-handle-btn"]').should('exist')
+      cy.get('[data-cy="update-section-handle-btn"]').click();
     });
 })
