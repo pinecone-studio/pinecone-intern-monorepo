@@ -5,22 +5,25 @@ import { perPage } from '../constants';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 
 type PropsType = {
-  setPage:Dispatch<SetStateAction<number | undefined>>
+  setPage: Dispatch<SetStateAction<number | undefined>>;
   searchPath: string | null;
 };
 export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
-  const { data, loading, } = useGetEmployeesByPaginateQuery({
+  const { data, loading } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
         limit: perPage.limit,
         page: Number(searchPath),
       },
-    }, 
+      employeeDetailsfilterInput: {
+        searchedValue: '',
+      },
+    },
   });
 
   const employeesData = data?.getEmployeesByPaginate;
-  const totalEmployees = employeesData?.totalEmployees
+  const totalEmployees = employeesData?.totalEmployees;
   useEffect(() => {
     setPage(totalEmployees);
   }, [data]);

@@ -12,8 +12,8 @@ query GetAllEmployee {
   }
 }
 
-query GetEmployeesByPaginate($paginationInput: PaginationInput!) {
-  getEmployeesByPaginate(paginationInput: $paginationInput) {
+query GetEmployeesByPaginate($paginationInput: PaginationInput!, $employeeDetailsfilterInput: employeeDetailsfilterInput!) {
+  getEmployeesByPaginate(paginationInput: $paginationInput, employeeDetailsfilterInput: $employeeDetailsfilterInput) {
     totalEmployees
     employees {
       id
