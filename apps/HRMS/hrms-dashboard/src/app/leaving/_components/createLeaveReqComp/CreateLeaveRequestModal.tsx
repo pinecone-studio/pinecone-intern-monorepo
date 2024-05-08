@@ -15,10 +15,10 @@ export const CreateLeaveRequestModal = () => {
         </form>
         <div className="gap-[40px] flex flex-col">
           <div className="font-bold text-lg">Чөлөөний хуудас бөглөх</div>
-          <ul className="steps steps-vertical lg:steps-horizontal ">
+          <ul className="steps steps-horizontal ">
             <li className="step step-neutral">Ерөнхий</li>
-            <li className={`step ${stepNumber == 1 ? 'step-neutral' : ''}`}>Хугацаа</li>
-            <li className={`step`}>Нэмэлт</li>
+            <li className={`step ${stepNumber == 1 ? 'step-neutral' : ''} ${stepNumber == 2 ? 'step-neutral' : ''}`}>Хугацаа</li>
+            <li className={`step ${stepNumber == 2 ? 'step-neutral' : ''}`}>Нэмэлт</li>
           </ul>
           {leaveReqStep}
         </div>

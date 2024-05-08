@@ -20,11 +20,6 @@ export const FilterByDate = () => {
   const handleDateChange = (rangeDate: RangeKeyDict) => {
     setStartDate(rangeDate.selection.startDate);
     setEndDate(rangeDate.selection.endDate);
-
-    const formmatedStartDate = format(rangeDate?.selection?.startDate ?? new Date(), 'yyyy.MM.dd');
-    const formmatedEndDate = format(rangeDate.selection.endDate ?? new Date(), 'yyyy.MM.dd');
-
-    router.push(pathName + '?' + createQueryString(formmatedStartDate, formmatedEndDate));
   };
 
   const createQueryString = useCallback(
@@ -36,6 +31,12 @@ export const FilterByDate = () => {
     },
     [searchParams]
   );
+
+  const handleSubmit = () => {
+    const formmatedStartDate = format(startDate ?? new Date(), 'yyyy.MM.dd');
+    const formmatedEndDate = format(endDate ?? new Date(), 'yyyy.MM.dd');
+    router.push(pathName + '?' + createQueryString(formmatedStartDate, formmatedEndDate));
+  };
 
   return (
     <section data-cy="filter-by-date-cy-id" className="relative bg-white overflow-hidden rounded-[12px] border">
@@ -50,25 +51,30 @@ export const FilterByDate = () => {
         </div>
       </div>
       {open && (
-        <div className="absolute h-full right-0 top-[56px] z-[5]">
-          <div>
-            <DateRangePicker
-              retainEndDateOnFirstSelection
-              startDatePlaceholder="Start date"
-              endDatePlaceholder="End date"
-              ranges={[
-                {
-                  startDate: startDate,
-                  endDate: endDate,
-                  key: 'selection',
-                },
-              ]}
-              onChange={handleDateChange}
-            />
-            <button data-testid="close-calendar-button-test-id" onClick={openCalendar} style={{ color: '#3F4145', width: '100%' }}>
-              Close
-            </button>
-          </div>
+        <div className="h-full fixed right-[40px] z-10">
+          <DateRangePicker
+            retainEndDateOnFirstSelection
+            startDatePlaceholder="Start date"
+            endDatePlaceholder="End date"
+            ranges={[
+              {
+                startDate: startDate,
+                endDate: endDate,
+                key: 'selection',
+              },
+            ]}
+            onChange={handleDateChange}
+          />
+          <button
+            data-testid="close-calendar-button-test-id"
+            onClick={() => {
+              openCalendar();
+              handleSubmit();
+            }}
+            style={{ color: '#3F4145', width: '100%' }}
+          >
+            Close
+          </button>
         </div>
       )}
     </section>

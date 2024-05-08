@@ -13,7 +13,7 @@ describe('assessment page', () => {
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();
     cy.get('[data-cy="request-modal"]').contains('Чөлөөний хуудас бөглөх');
     cy.get('[data-cy="date-picker-container"]').type('2000-01-01');
-    cy.get('input').eq(0).should('have.value', '2000-01-01');
+    cy.get('[data-cy="date-picker-container"]').should('have.value', '2000-01-01');
   });
 
   it('4. Check if WorkerName is selected', () => {
@@ -47,9 +47,10 @@ describe('assessment page', () => {
   it('7. should be disabled when inputs are empty', () => {
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();
     cy.get('[data-cy="request-modal"]').contains('Чөлөөний хуудас бөглөх');
-    cy.get('[data-cy="date-picker-container"]').should('have.value', "");
-    cy.get('[data-cy="name-select-input"]').invoke("val").should("be.null");
-    cy.get('[data-cy="type-select-input"]').invoke("val").should("be.null");
+    cy.get('button[data-cy="next-btn"]').click();
+    cy.get('[data-cy="step1DateError"]').should('contain', 'Огноо оруулна уу');
+    cy.get('[data-cy="step1UserNameError"]').should('contain', 'Нэрээ сонгоно уу');
+    cy.get('[data-cy="step1LeaveTypeError"]').should('contain', 'Шалтгаанаа сонгоно уу');
     cy.get('button[data-cy="next-btn"]').should('be.disabled');
   });
 

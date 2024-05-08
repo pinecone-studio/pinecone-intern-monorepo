@@ -23,6 +23,10 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  otpExpiresIn: {
+    type: String,
+    required: false,
+  },
   role: {
     type: String,
     required: true,

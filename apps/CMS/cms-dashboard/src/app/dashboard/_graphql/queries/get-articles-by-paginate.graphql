@@ -1,0 +1,24 @@
+query GetArticlesByPaginate($paginationInput: PaginationInput!, $filterInput: FilterInput!) {
+  getArticlesByPaginate(paginationInput: $paginationInput, filterInput: $filterInput) {
+    articles {
+      id
+      title
+      coverPhoto
+      content
+      author {
+        name
+      }
+      category {
+        name
+      }
+      status
+      slug
+      commentPermission
+      createdAt
+      publishedAt
+      updatedAt
+      scheduledAt
+    }
+    totalArticles
+  }
+}

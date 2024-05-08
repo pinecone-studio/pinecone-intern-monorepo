@@ -61,7 +61,6 @@ export const challengeTypeDefs = gql`
     choices: [InputChoices]
     choicesType: ChoicesType
   }
-
   type Query {
     getChallenges: [Challenge]
     getChallengesByStatus: [Challenge]
@@ -74,5 +73,6 @@ export const challengeTypeDefs = gql`
     createQuiz(quizInput: QuizInput!): ID
     updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
     archiveChallengeById(challengeId: ID): ID
+    deleteQuiz(quizId: String!): Quiz
   }
 `;

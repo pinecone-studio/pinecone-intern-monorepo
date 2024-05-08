@@ -1,0 +1,8 @@
+query GetArticlesByCategoryNoLimit($categoryId: String!) {
+  getArticlesByCategoryNoLimit(categoryId: $categoryId) {
+    content
+    coverPhoto
+    title
+    id
+  }
+}

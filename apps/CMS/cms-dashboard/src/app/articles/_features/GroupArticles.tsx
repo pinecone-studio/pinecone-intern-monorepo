@@ -21,18 +21,18 @@ const GroupArticles = (props: GroupArticlesProps) => {
   const clickHandler = () => setQuantity((prev) => prev + 2);
 
   return (
-    <div data-cy="article-main-container" className="flex flex-col w-full p-6 gap-8 bg-[#fff] rounded-2xl">
+    <div data-cy="article-main-container" className="flex flex-col w-full md:p-6 sm:p-2 gap-8 bg-[#fff] rounded-2xl ">
       <div data-cy="group-container" className="flex flex-col p-6 gap-8 bg-[#fff] rounded-2xl">
         <p data-cy="group-title" className="text-[28px] font-bold text-black">
           {title}
         </p>
-        <div data-cy="group-grid" className="grid grid-cols-2 gap-8 ">
+        <div data-cy="group-grid" className="grid md:grid-cols-2 md:gap-8 sm:grid-cols-1">
           {loading
             ? previousData?.getArticlesByCategory?.map((item) => (
                 <ArticleCard key={item.id} title={item?.title} cover={item.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
               ))
             : data?.getArticlesByCategory?.map((item) => (
-                <ArticleCard key={item.id} title={item.title} cover={item.coverPhoto} description={item.content} category={item.category.name} date={item.publishedAt} />
+                <ArticleCard key={item.id} title={item.title} cover={item.coverPhoto} description={item.content} category={item.category.name} date={item.publishedAt}  _id={item.id}/>
               ))}
         </div>
         <div data-cy="group-innerCon" className="flex w-full justify-center">

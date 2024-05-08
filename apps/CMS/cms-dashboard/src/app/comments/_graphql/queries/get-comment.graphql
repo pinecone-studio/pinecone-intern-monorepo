@@ -1,10 +1,9 @@
-query getComments {
-    getComments {
+query getComments ($input: GetCommentsLimitInput!) {
+    getComments (input: $input) {
     comment
    _id
    email
    name
    createdAt
    articleId
-}
-}
+}}
