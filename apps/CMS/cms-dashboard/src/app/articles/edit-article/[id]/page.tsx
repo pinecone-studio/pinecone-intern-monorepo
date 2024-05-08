@@ -57,8 +57,8 @@ const Home = () => {
           <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
         </div>
 
-        <SubmitButton text="Ноорогт хадгалах" />
-        <SubmitButton text="Нийтлэх" />
+        <SubmitButton text="Ноорогт хадгалах" bgColor='#f6f6f6' />
+        <SubmitButton text="Нийтлэх" bgColor="#D6D8D8" />
       </div>
     </div>
   );
