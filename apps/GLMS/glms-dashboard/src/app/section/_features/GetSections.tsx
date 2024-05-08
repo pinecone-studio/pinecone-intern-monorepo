@@ -3,6 +3,7 @@ import { useDeleteSectionMutation, useGetSectionsQuery } from '../../../generate
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 import { useEffect, useState } from 'react';
+import { error } from 'console';
 
 const GetSections = () => {
   const { data, refetch } = useGetSectionsQuery();
@@ -19,15 +20,12 @@ const GetSections = () => {
   }, [successMessage]);
 
   const handleDeleteSection = (id: string | undefined | null) => {
-    try {
       if (id) {
         deleteSection({ variables: { id } });
         setSuccessMessage('Section deleted successfully.');
         refetch();
       }
-    } catch (error) {
       throw error
-    }
   };
 
   useEffect(() => {
