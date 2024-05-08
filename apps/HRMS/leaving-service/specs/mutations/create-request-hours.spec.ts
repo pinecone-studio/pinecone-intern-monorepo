@@ -9,6 +9,7 @@ jest.mock('../../src/graphql/model/leave-request', () => ({
       .fn()
       .mockReturnValueOnce({
         _id: '6625e930e488966d7a390e35',
+        name: "WorkerName",
         declinedReasoning: null,
         description: 'lagshin muu baina',
         durationType: "Hour",
@@ -27,6 +28,7 @@ jest.mock('../../src/graphql/model/leave-request', () => ({
 
 const requestInput = {
   employeeId: 'AJILTANIB2299',
+  name: "WorkerName",
   startDateString: '2024-04-22T02:52:27.560Z',
   endDateString: '2024-04-26T06:52:27.560Z',
   description: 'lagshin muu baina',
@@ -42,6 +44,7 @@ describe('createLeaveRequestHours', () => {
     const result = await createLeaveRequestHours?.({}, { requestInput }, {}, {} as GraphQLResolveInfo)
     expect(result).toEqual({
         _id: '6625e930e488966d7a390e35',
+        name: "WorkerName",
         declinedReasoning: null,
         description: 'lagshin muu baina',
         durationType: DurationType.Hour,
