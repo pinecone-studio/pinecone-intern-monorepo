@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { LeaveRequestCreationProvider } from '../../src/app/leaving/_providers/LeaveRequestCreationProvider';
-import { CreateLeaveRequestMain } from '../../src/app/leaving/_features/CreateLeaveRequestMain';
+import { LeaveRequestCreationProvider } from '../../../src/app/leaving/_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestMain } from '../../../src/app/leaving/_features/CreateLeaveRequestMain';
 
 describe('HomePageHeader', () => {
   it('should open Leave Request Creation modal while clicking the button', () => {
