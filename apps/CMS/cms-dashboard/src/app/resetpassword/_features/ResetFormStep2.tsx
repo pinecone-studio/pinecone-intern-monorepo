@@ -12,7 +12,7 @@ export const ResetFormStep2 = ({ setIndex }: { setIndex: Dispatch<SetStateAction
   const { setUserOtp, userEmail } = useAuth();
 
   const validationSchema = yup.object({
-    code: yup.string().required(''),
+    code: yup.string().required('Нууц үг сэргээх кодоо оруулна уу'),
   });
 
   const formik = useFormik({
