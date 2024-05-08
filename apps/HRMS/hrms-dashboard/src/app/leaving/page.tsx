@@ -1,4 +1,3 @@
-'use client';
 import Requests from './_features/Requests';
 import { CreateLeaveRequestMain } from './_features';
 

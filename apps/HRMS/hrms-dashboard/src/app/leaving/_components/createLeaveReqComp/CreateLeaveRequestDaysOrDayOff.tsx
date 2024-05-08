@@ -1,33 +1,67 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestSelectedDayOff } from './CreateLeaveRequestSelectedDayOff';
+import { CreateLeaveRequestSelectedDays } from './CreateLeaveRequestSelectedDays';
+import { ButtonCustom } from './ButtonCustom';
 import { CreateLeaveRequestGeneralInput } from './CreateLeaveRequestGeneralInput';
+import { CreateLeaveRequestAdditionInfo } from './CreateLeaveRequestAdditionInfo';
 
-const validationSchema = yup.object({
-  step2LeaveLength: yup.string().required(),
+const validationSchemaDayOff = yup.object({
+  step2LeaveLength: yup.string().required('Хоног эсвэл өдөр сонгоно уу'),
+  step2Date: yup.string().required('Огноо сонгоно уу'),
+  step2StartHour: yup.string().required('Эхлэх цаг сонгоно уу'),
+  step2EndHour: yup.string().required('Дуусах цаг сонгоно уу'),
+});
+
+const validationSchemaDays = yup.object({
+  step2LeaveLength: yup.string().required('Хоног эсвэл өдөр сонгоно уу'),
+  step2StartDate: yup.string().required('Эхлэх өдөр сонгоно уу'),
+  step2EndDate: yup.string().required('Дуусах өдөр сонгоно уу'),
 });
 
 export const CreateLeaveRequestDaysOrDayOff = () => {
   const { setLeaveReqStep, setStepNumber } = useContext(LeaveRequestCreationContext);
+  const [radioValue, setRadioValue] = useState('');
 
-  const formik = useFormik({
+  const formikDayOff = useFormik({
     initialValues: {
       step2LeaveLength: '',
+      step2Date: undefined,
+      step2StartHour: undefined,
+      step2EndHour: undefined,
     },
-    validationSchema: validationSchema,
+    validationSchema: validationSchemaDayOff,
     onSubmit: () => {
-      setLeaveReqStep(<CreateLeaveRequestSelectedDayOff />);
+      setLeaveReqStep(<CreateLeaveRequestAdditionInfo />);
+      setStepNumber(2);
+    },
+  });
+
+  const formikDays = useFormik({
+    initialValues: {
+      step2LeaveLength: '',
+      step2StartDate: undefined,
+      step2EndDate: undefined,
+    },
+    validationSchema: validationSchemaDays,
+    onSubmit: () => {
+      setLeaveReqStep(<CreateLeaveRequestAdditionInfo />);
+      setStepNumber(2);
     },
   });
 
   return (
     <div data-testid="step2Component">
       <div className="flex flex-col gap-[16px]">
-        <div className="text-[16px] font-normal text-[#121316]">Хугацааны төрөл сонгох</div>
+        <div>
+          <div className="text-[16px] font-normal text-[#121316]">Хугацааны төрөл сонгох</div>
+          <p className="text-[#DC143C] text-[12px]">{formikDayOff.errors.step2LeaveLength}</p>
+          <p className="text-[#DC143C] text-[12px]">{formikDays.errors.step2LeaveLength}</p>
+        </div>
         <div className="flex gap-[16px]">
           <div className="flex items-center">
             <div className="w-[48px] h-[48px] p-[12px]">
@@ -39,7 +73,10 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
                 id="radioButtonDays"
                 name="step2LeaveLength"
                 value="days"
-                onClick={(e) => formik.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value)}
+                onClick={(e) => {
+                  formikDays.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value);
+                  setRadioValue((e.target as HTMLTextAreaElement).value);
+                }}
               />
             </div>
             <label htmlFor="radioButtonDays" className="text-[16px] font-normal text-[#121316]">
@@ -56,7 +93,10 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
                 id="radioButtonDayOff"
                 name="step2LeaveLength"
                 value="dayOff"
-                onClick={(e) => formik.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value)}
+                onClick={(e) => {
+                  formikDayOff.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value);
+                  setRadioValue((e.target as HTMLTextAreaElement).value);
+                }}
               />
             </div>
             <label htmlFor="radioButtonDayOff" className="text-[16px] font-normal text-[#121316]">
@@ -64,38 +104,53 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
             </label>
           </div>
         </div>
+
+        {radioValue == '' ? (
+          ''
+        ) : radioValue == 'dayOff' ? (
+          <CreateLeaveRequestSelectedDayOff
+            step2DateName={'step2Date'}
+            step2DateValue={formikDayOff.values.step2Date}
+            step2DateChange={formikDayOff.handleChange}
+            step2DateError={formikDayOff.errors.step2Date}
+            step2StartHourName={'step2StartHour'}
+            step2StartHourValue={formikDayOff.values.step2StartHour}
+            step2StartHourChange={formikDayOff.handleChange}
+            step2StartHourError={formikDayOff.errors.step2StartHour}
+            step2EndHourName={'step2EndHour'}
+            step2EndHourValue={formikDayOff.values.step2EndHour}
+            step2EndHourChange={formikDayOff.handleChange}
+            step2EndHourError={formikDayOff.errors.step2EndHour}
+          />
+        ) : (
+          <CreateLeaveRequestSelectedDays
+            step2StartDateName={'step2StartDate'}
+            step2StartDateValue={formikDays.values.step2StartDate}
+            step2StartDateChange={formikDays.handleChange}
+            step2StartDateError={formikDays.errors.step2StartDate}
+            step2EndDateName={'step2EndDate'}
+            step2EndDateValue={formikDays.values.step2EndDate}
+            step2EndDateChange={formikDays.handleChange}
+            step2EndDateError={formikDays.errors.step2EndDate}
+          />
+        )}
       </div>
 
-      <div className="pt-[40px] flex justify-between">
-        <button
-          data-cy="returnPreviousStep"
-          data-testid="returnPreviousStep"
-          className="p-[12px] bg-[#1C20240A] rounded-full"
-          onClick={() => {
-            setStepNumber(0);
-            setLeaveReqStep(<CreateLeaveRequestGeneralInput />);
-          }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#121316" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
-        </button>
-
-        <button
-          data-cy="next-btn"
-          data-testid="nextButton"
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-          className="bg-[#121316] flex gap-[4px] py-[12px] px-[16px] rounded-[8px] text-white disabled:bg-[#D6D8DB] disabled:text-[#1C20243D]"
-          disabled={!formik.values.step2LeaveLength}
-        >
-          <div className="text-[16px] font-semibold">Дараах</div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="white" />
-          </svg>
-        </button>
-      </div>
+      <ButtonCustom
+        onClickPrev={() => {
+          setStepNumber(0);
+          setLeaveReqStep(<CreateLeaveRequestGeneralInput />);
+        }}
+        onClick={() => {
+          if (radioValue == 'dayOff') {
+            formikDayOff.handleSubmit();
+          }
+          if (radioValue == 'days') {
+            formikDays.handleSubmit();
+          }
+        }}
+        disabled={!formikDayOff.isValid || !formikDays.isValid}
+      />
     </div>
   );
 };
