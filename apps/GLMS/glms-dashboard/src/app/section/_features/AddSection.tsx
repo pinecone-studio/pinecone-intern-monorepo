@@ -42,7 +42,7 @@ const AddSection = () => {
           <div className="flex flex-col py-2">
             <p className="font-bold">Хэсгийн гарчиг</p>
             <input
-             data-testid="title"
+             data-cy="title"
              className="w-[588px] h-fit border rounded-[4px] p-2" 
              type="text"
              name="title"
@@ -55,7 +55,7 @@ const AddSection = () => {
           <div className="flex flex-col py-2">
             <p className="font-bold">Дэлгэрэнгүй</p>
             <input 
-            data-testid="description"
+            data-cy="description"
             className="w-[588px] h-fit border rounded-[4px] p-2" 
             id="description-test"
             name="description"

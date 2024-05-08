@@ -63,7 +63,7 @@ const GetSections = () => {
               Засах <EditButtonIcon />
             </button>
             <button
-              data-testid="delete-btn"
+              data-cy="delete-btn"
               onClick={() => handleDeleteSection(section.id)}
               className="w-[101px] bg-transparent border-2 font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]"
             >
