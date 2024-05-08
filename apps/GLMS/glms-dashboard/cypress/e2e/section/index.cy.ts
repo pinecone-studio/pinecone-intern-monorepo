@@ -13,9 +13,9 @@ describe('Handle section page', () => {
     cy.get('[data-cy="description"]').should('exist');
     cy.get('[data-cy="contentImage"]').should('exist');
     cy.get('[data-cy="delete-btn"]').should('exist')
-    cy.get('[data-cy="delete-btn"]').click({multiple:true})
+    cy.get('[data-cy="delete-btn"]').click()
     cy.get('[data-cy="update-btn"]').should('exist')
-    cy.get('[data-cy="update-btn"]').click({multiple:true})
+    cy.get('[data-cy="update-btn"]').click()
   });
 
   it('3.Should display AddSection feature', () => {
