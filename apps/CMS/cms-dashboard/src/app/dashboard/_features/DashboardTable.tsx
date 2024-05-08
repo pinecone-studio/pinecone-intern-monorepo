@@ -43,8 +43,7 @@ const getColorForStatus = (status: string) => {
 export const DashboardTable = (props: DashboardTableProps) => {
   const { articles, loading, error } = props;
   if (loading) return <div>loading...</div>;
-  if (error) return <div>error</div>;
-
+  if (error) return <div>error...{error.message}</div>;
   return (
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
       <div className="overflow-x-auto w-full min-w-[650px] flex border">
