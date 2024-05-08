@@ -4,9 +4,8 @@ import { GraphQLError } from 'graphql';
 
 export const createLesson: MutationResolvers['createLesson'] = async (_, { lessonInput }) => {
   try {
-    const newLesson = await lessonModel.create(lessonInput);
-    return newLesson
+    return await lessonModel.create(lessonInput);
   } catch (error) {
-    throw new GraphQLError('An unknown error occurred'); 
+    throw new GraphQLError('An unknown error occurred');
   }
 };
