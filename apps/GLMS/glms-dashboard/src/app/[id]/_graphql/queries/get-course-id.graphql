@@ -1,10 +1,9 @@
-query GetCourseById($getCourseByIdId: ID!) {
-  getCourseById(id: $getCourseByIdId) {
+query GetLessonById($getLessonByIdId: String!) {
+  getLessonById(courseId: $getLessonByIdId) {
     id
     title
-    description
     thumbnail
     position
-    createdAt
+    courseId
   }
 }

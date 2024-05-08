@@ -3,20 +3,22 @@ import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
 import DeleteButton from '../_components/DeleteButton';
 import BackButton from '../_components/Backbutton';
-import { Course } from '@/generated';
+import { Course, Lesson } from '@/generated';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import AddLessonButton from '../_components/AddLessonButton';
+import LessonRender from './LessonRender';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 type DataTypes = {
   data: Course | undefined;
+  lessonData: Lesson[] | undefined;
 };
 
-const CourseRender = ({ data }: DataTypes) => {
+const CourseRender = ({ data, lessonData }: DataTypes) => {
   const router = useRouter();
 
   return (
-    <div data-cy="idCourse">
+    <div>
       <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
         <BackButton
           onClick={() => {
@@ -39,9 +41,11 @@ const CourseRender = ({ data }: DataTypes) => {
               <CourseDesc description={data?.description} />
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
+            {lessonData?.map((lesson: Lesson, index: number) => {
+              return <LessonRender lesson={lesson} key={index} />;
+            })}
 
             <AddLessonButton
-              data-cy="addLessonButton"
               onClick={() => {
                 router.push('/create-lesson');
               }}
