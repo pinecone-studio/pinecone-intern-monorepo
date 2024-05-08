@@ -6,6 +6,7 @@ import { useState } from 'react';
 import ChoiceText from './_components/TextChoicePicker';
 import ProgressBar from './_components/ProgressBar';
 import { ChallengeResults } from './_feature/ChallengeResults';
+import { Timer } from './_components/Timer';
 
 const ChallengePage = () => {
   const { data, loading } = useGetChallengesByStatusQuery();
@@ -29,6 +30,7 @@ const ChallengePage = () => {
         choice={{ _id: '2', choice: 'https://c4.wallpaperflare.com/wallpaper/887/817/276/html-5-html-5-logo-wallpaper-thumb.jpg' }}
       />
       <ChallengeResults />
+      <Timer />
     </div>
   );
 };
