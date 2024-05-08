@@ -3,18 +3,16 @@ import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
 import DeleteButton from '../_components/DeleteButton';
 import BackButton from '../_components/Backbutton';
-import { Course, Lesson } from '@/generated';
+import { Course } from '@/generated';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import EditBigButton from '../_components/EditBigButton';
 import AddLessonButton from '../_components/AddLessonButton';
-import LessonRender from './LessonRender';
 type DataTypes = {
   data: Course | undefined;
-  lessonData: Lesson[] | undefined;
 };
 
-const CourseRender = ({ data, lessonData }: DataTypes) => {
+const CourseRender = ({ data }: DataTypes) => {
   const router = useRouter();
 
   return (
@@ -38,9 +36,6 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
               <CourseDesc description={data?.description} />
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
-            {lessonData?.map((lesson: Lesson, index: number) => {
-              return <LessonRender lesson={lesson} key={index} />;
-            })}
 
             <AddLessonButton
               onClick={() => {
