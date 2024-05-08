@@ -1,9 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { PineLogo } from './SVG';
 export const Header = () => {
   const router = useRouter();
+  const pathname = usePathname()
+  if (pathname === '/login') {
+    return null
+  }
   return (
     <header className="w-full flex items-center justify-between py-1 px-6 bg-main">
       <div

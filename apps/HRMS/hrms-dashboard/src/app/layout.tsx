@@ -4,6 +4,7 @@ import { Sidebar } from '../common/components/Sidebar';
 import { LeaveRequestCreationProvider } from './leaving/_providers/LeaveRequestCreationProvider';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { DataProvider } from './employee-details/provider/DataProvider';
+import { AuthProvider } from '@/common/providers/AuthProvider';
 
 export const metadata = {
   title: 'Welcome to hrms-dashboard',
@@ -17,6 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <LeaveRequestCreationProvider>
           <body>
             <DataProvider>
+              <AuthProvider>
               <div className="flex flex-col flex-1">
                 <Header />
                 <div className="flex">
@@ -24,6 +26,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                   <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
                 </div>
               </div>
+            </AuthProvider>
             </DataProvider>
           </body>
         </LeaveRequestCreationProvider>
