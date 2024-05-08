@@ -1,15 +1,32 @@
 'use client';
-import { useGetCourseByIdQuery } from '@/generated';
+import { Course, Lesson, useGetCourseByIdQuery, useGetLessonByIdQuery } from '@/generated';
 import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 const Home = () => {
   const pathName = usePathname().substring(1);
+  const [newCourse, setNewCourse] = useState<Course>();
+  const [newLesson, setNewLesson] = useState<Lesson[]>();
+
+  const { data: lessonData, loading: lessonLoading, error: lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
+  useEffect(() => {
+    const getByLessonIdData = lessonData?.getLessonById as Lesson[];
+    setNewLesson(getByLessonIdData);
+  }, [lessonData, lessonLoading, lessonError]);
+
   const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
-  const getByIdData = data?.getCourseById;
-  if (loading)
+  useEffect(() => {
+    const getByIdData = data?.getCourseById;
+    setNewCourse(getByIdData);
+  }, [data, loading, error]);
+
+  if (loading || lessonLoading)
     return (
-      <div className=" w-full h-full flex justif3y-center items-center">
-        <p className=" text-[40px] font-bold m-auto w-full">Loading...</p>
+      <div className="flex justify-center items-center h-screen w-screen">
+        <div className="text-center">
+          <p className="loading loading-spinner m-auto loading-lg" />
+          <p className="text-xl ">Loading...</p>
+        </div>
       </div>
     );
 
@@ -22,7 +39,7 @@ const Home = () => {
 
   return (
     <div data-cy="idCourse" className="bg-[#F7F7F8]">
-      <CourseRender data-cy-id="courseId" data={getByIdData} />
+      <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} />
     </div>
   );
 };
