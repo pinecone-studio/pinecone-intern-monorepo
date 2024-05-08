@@ -6,7 +6,7 @@ type PropsType = {
   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   name: string;
   placeholder: string;
-  value: string;
+  value: string | undefined;
   helperText?: string;
   error?: string;
 };

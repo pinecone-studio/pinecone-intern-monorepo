@@ -7,7 +7,7 @@ type PropsType = {
   name: string;
   placeholder: string;
   type?: string;
-  value: string;
+  value: string | undefined;
   helperText?: string;
   error?: string;
 };
