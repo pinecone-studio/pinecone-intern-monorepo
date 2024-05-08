@@ -16,9 +16,11 @@ export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
         limit: perPage.limit,
         page: Number(searchPath),
       },
+
       employeeDetailsfilterInput: {
         searchedValue: '',
       },
+
     },
   });
 
