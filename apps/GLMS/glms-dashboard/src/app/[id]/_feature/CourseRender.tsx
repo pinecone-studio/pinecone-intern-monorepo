@@ -16,7 +16,7 @@ const CourseRender = ({ data }: DataTypes) => {
   const router = useRouter();
 
   return (
-    <div>
+    <div data-cy="idCourse">
       <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
         <BackButton
           onClick={() => {
@@ -38,6 +38,7 @@ const CourseRender = ({ data }: DataTypes) => {
             </div>
 
             <AddLessonButton
+              data-cy="addLessonButton"
               onClick={() => {
                 router.push('/create-lesson');
               }}

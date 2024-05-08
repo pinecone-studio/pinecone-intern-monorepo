@@ -16,14 +16,14 @@ describe('Handle section page', () => {
     cy.get('[ data-testid="add-section-form"]').should('exist');
 
     it('5. create lesson button', () => {
-      cy.get('[data-cy="handle-add-section-btn"]').should('exist').should('be.disabled');
+      cy.get('[data-cy="add-section-handle-btn"]').should('exist').should('be.disabled');
     });
     it('6. check create button be enable and when inputs filled', () => {
       cy.get('[data-testid="title"]').type('html');
       cy.get('[data-testid="description"]').type('html intro');
       cy.get('#file-test').selectFile('public/js.png', { force: true });
-      cy.get('[data-testid="handle-add-section-btn"]').should('not.be.disabled');
-      cy.get('[data-testid="handle-add-section-btn"]').click();
+      cy.get('[data-testid="add-section-handle-btn]').should('not.be.disabled');
+      cy.get('[data-testid="add-section-handle-btn"]').click();
     });
   });
 });
