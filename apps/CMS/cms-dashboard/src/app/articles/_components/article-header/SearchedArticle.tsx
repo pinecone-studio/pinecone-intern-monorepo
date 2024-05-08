@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 type SearchedArticleProps = {
   title: string;
   coverPhoto: string;
-  publishedAt: Date;
+  createdAt: Date;
   id: string;
 };
 
 const SearchedArticle = (props: SearchedArticleProps) => {
-  const { id, coverPhoto, publishedAt, title } = props;
+  const { id, coverPhoto, createdAt, title } = props;
   const router = useRouter();
 
   const routerHandler = () => {
@@ -24,7 +24,7 @@ const SearchedArticle = (props: SearchedArticleProps) => {
           {title}
         </p>
         <p data-testid="searched-article-date" className="text-[#121316] text-[12px]">
-          {format(publishedAt, 'yyyy.MM.dd')}
+          {format(createdAt, 'yyyy.MM.dd')}
         </p>
       </div>
     </div>
