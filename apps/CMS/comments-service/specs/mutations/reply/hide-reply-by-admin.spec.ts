@@ -1,7 +1,8 @@
 import ReplyModel from '../../../src/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import { hideReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/hide-comment-by-admin';
+import { hideReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/hide-reply-by-admin';
+import { ReplyStatus } from '@/graphql/generated';
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
 }));
@@ -16,7 +17,7 @@ describe('hide reply by admin mutation', () => {
   it('should find reply by id and update status return its id', async () => {
     const mockedModel = jest.spyOn(ReplyModel, 'findByIdAndUpdate').mockResolvedValueOnce(mockInput);
     const result = await hideReplyByAdmin!({}, { hideInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    expect(ReplyModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: 'HIDDEN' });
+    expect(ReplyModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: ReplyStatus.Hidden });
     expect(mockedModel).toHaveReturned();
     expect(result).toEqual(mockInput._id);
   });

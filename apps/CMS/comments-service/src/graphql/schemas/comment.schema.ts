@@ -9,6 +9,11 @@ export const commentsSchema = gql`
     email: String!
     articleId: String!
   }
+  enum CommentStatus {
+    Normal
+    DELETED
+    HIDDEN
+  }
   type Comment {
     _id: ID
     name: String
@@ -17,6 +22,7 @@ export const commentsSchema = gql`
     ipAddress: String
     createdAt: Date
     articleId: String
+    status: CommentStatus
   }
   input UpdateCommentInput {
     _id: ID!

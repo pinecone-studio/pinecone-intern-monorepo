@@ -2,6 +2,7 @@ import { CommentsModel } from '../../../src/models/comment.model';
 import { hideCommentByAdmin } from '../../../src/graphql/resolvers/mutations/comment/hide-comment-by-admin';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
+import { CommentStatus } from '@/graphql/generated';
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
     findByIdAndUpdate: jest.fn(),
@@ -18,7 +19,7 @@ describe('hide comment by admin mutation', () => {
   it('should find comment by id and update status return its id', async () => {
     const mockedModel = jest.spyOn(CommentsModel, 'findByIdAndUpdate').mockResolvedValueOnce(mockInput);
     const result = await hideCommentByAdmin!({}, { hideInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: 'HIDDEN' });
+    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: CommentStatus.Hidden });
     expect(mockedModel).toHaveReturned();
     expect(result).toEqual(mockInput._id);
   });

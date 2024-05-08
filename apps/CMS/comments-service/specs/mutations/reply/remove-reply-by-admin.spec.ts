@@ -1,7 +1,8 @@
 import ReplyModel from '../../../src/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
-import { deleteReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/remove-comment-by-admin';
+import { deleteReplyByAdmin } from '../../../src/graphql/resolvers/mutations/reply/remove-reply-by-admin';
+import { ReplyStatus } from '@/graphql/generated';
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
 }));
@@ -16,7 +17,7 @@ describe('remove reply by admin mutation', () => {
   it('should find reply by id and update status return its id', async () => {
     const mockedModel = jest.spyOn(ReplyModel, 'findByIdAndUpdate').mockResolvedValueOnce(mockInput);
     const result = await deleteReplyByAdmin!({}, { removeInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    expect(ReplyModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: 'DELETED' });
+    expect(ReplyModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: ReplyStatus.Deleted });
     expect(mockedModel).toHaveReturned();
     expect(result).toEqual(mockInput._id);
   });

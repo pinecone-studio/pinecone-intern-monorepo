@@ -1,3 +1,3 @@
-export * from './create-comment';
-export * from './hide-comment-by-admin';
-export * from './remove-comment-by-admin';
+export * from './create-reply';
+export * from './hide-reply-by-admin';
+export * from './remove-reply-by-admin';

@@ -2,6 +2,7 @@ import { CommentsModel } from '../../../src/models/comment.model';
 import { deleteCommentByAdmin } from '../../../src/graphql/resolvers/mutations/comment/remove-comment-by-admin';
 import { GraphQLResolveInfo } from 'graphql';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
+import { CommentStatus } from '@/graphql/generated';
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
     findByIdAndUpdate: jest.fn(),
@@ -18,7 +19,7 @@ describe('remove comment by admin mutation', () => {
   it('should find comment by id and update status return its id', async () => {
     const mockedModel = jest.spyOn(CommentsModel, 'findByIdAndUpdate').mockResolvedValueOnce(mockInput);
     const result = await deleteCommentByAdmin!({}, { removeInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: 'DELETED' });
+    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(mockInput._id, { status: CommentStatus.Deleted });
     expect(mockedModel).toHaveReturned();
     expect(result).toEqual(mockInput._id);
   });
