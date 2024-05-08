@@ -1,4 +1,4 @@
-import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonIcon';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson } from '@/generated';
@@ -13,7 +13,7 @@ const LessonRender = ({ lesson }: { lesson: Lesson }) => {
         <p className="font-semibold">{lesson?.title}</p>
 
         <button className="w-9 h-9 btn-sm btn-ghost cursor-pointer border border-[#00000033] rounded-md flex items-center justify-center p-2">
-          <EditButtonicon />
+          <EditButtonIcon />
         </button>
       </div>
       <div className="flex gap-4 items-center">

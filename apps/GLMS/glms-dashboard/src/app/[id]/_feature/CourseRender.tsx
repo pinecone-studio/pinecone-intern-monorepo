@@ -6,8 +6,8 @@ import BackButton from '../_components/Backbutton';
 import { Course } from '@/generated';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
-import EditBigButton from '../_components/EditBigButton';
 import AddLessonButton from '../_components/AddLessonButton';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonIcon';
 type DataTypes = {
   data: Course | undefined;
 };
@@ -28,7 +28,10 @@ const CourseRender = ({ data }: DataTypes) => {
             <div className="flex justify-between">
               <CourseTitle title={data?.title} />
               <div className="flex gap-4">
-                <EditBigButton onClick={Boolean} />
+                <button data-testid="edit-button-test-id" className="btn btn-ghost flex border border-[#D6D8DB] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer ">
+                  <p className=" text-[18px] font-semibold">Ерөнхийн мэдээлэл</p>
+                  <EditButtonIcon />
+                </button>
                 <DeleteButton onClick={Boolean} />
               </div>
             </div>

@@ -1,7 +1,7 @@
 'use client';
 import { useDeleteSectionMutation, useGetSectionsQuery } from '../../../generated';
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
-import { EditButtonicon } from '../../../../public/assets/EditButtonicon';
+import { EditButtonicon } from '../../../../public/assets/EditButtonIcon';
 import { useEffect, useState } from 'react';
 
 const GetSections = () => {
