@@ -9,7 +9,6 @@ interface InputProps {
   disabled?: boolean;
   errorText?: string | undefined;
   onChange?: (_: ChangeEvent<HTMLInputElement>) => void;
-  handleChange?: (_: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const Input = ({ name, label, onChange, value, errorText, disabled, placeholder }: InputProps) => {
