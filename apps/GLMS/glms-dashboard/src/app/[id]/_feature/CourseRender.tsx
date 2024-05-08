@@ -8,7 +8,6 @@ import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import EditBigButton from '../_components/EditBigButton';
 import AddLessonButton from '../_components/AddLessonButton';
-<<<<<<< HEAD
 import LessonRender from './LessonRender';
 type DataTypes = {
   data: Course | undefined;
@@ -16,28 +15,16 @@ type DataTypes = {
 };
 
 const CourseRender = ({ data, lessonData }: DataTypes) => {
-=======
-type DataTypes = {
-  data: Course | undefined;
-  // lessonData: Lesson[] | undefined;
-};
-
-const CourseRender = ({ data }: DataTypes) => {
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
   const router = useRouter();
 
   return (
     <div>
       <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
-<<<<<<< HEAD
         <BackButton
           onClick={() => {
             router.push('/dashboard');
           }}
         />
-=======
-        <BackButton onClick={handleback} />
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
         <div className=" py-[48px] px-[24px] bg-white rounded-xl " key={data?.id}>
           <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto">
             <div className="flex justify-between">
@@ -51,7 +38,6 @@ const CourseRender = ({ data }: DataTypes) => {
               <CourseDesc description={data?.description} />
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
-<<<<<<< HEAD
             {lessonData?.map((lesson: Lesson, index: number) => {
               return <LessonRender lesson={lesson} key={index} />;
             })}
@@ -61,14 +47,6 @@ const CourseRender = ({ data }: DataTypes) => {
                 router.push('/create-lesson');
               }}
             />
-=======
-            {/* {!lessonData && <div className="max-w-[792px] w-full text-center text-slate-[#D6D8DB] text-xs">Хичээл байхгүй байна</div>}
-            {lessonData?.map((lesson: Lesson) => {
-              return <LessonRender lesson={lesson} />;
-            })} */}
-
-            <AddLessonButton />
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
           </div>
         </div>
       </div>

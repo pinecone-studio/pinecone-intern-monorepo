@@ -7,10 +7,7 @@ import { PineconeLogo } from '../../public/assets/PineconeLogo';
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-<<<<<<< HEAD
       <body>
-=======
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
         <FederationProvider>
           <Header />
           {children}
@@ -18,10 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <PineconeLogo />
           </div>
         </FederationProvider>
-<<<<<<< HEAD
       </body>
-=======
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
     </html>
   );
 };

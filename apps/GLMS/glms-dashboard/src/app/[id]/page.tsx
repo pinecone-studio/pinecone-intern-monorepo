@@ -1,15 +1,10 @@
 'use client';
-<<<<<<< HEAD
 import { Lesson, useGetCourseByIdQuery, useGetLessonByIdQuery } from '@/generated';
-=======
-import { Lesson, useGetCourseByIdQuery } from '@/generated';
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
 import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
 const Home = () => {
   const pathName = usePathname().substring(1);
   const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
-<<<<<<< HEAD
   const { data: lessonData, loading: lessonLoading, error: lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
   const getByIdData = data?.getCourseById;
   const getByLessonIdData = lessonData?.getLessonById as Lesson[];
@@ -17,16 +12,6 @@ const Home = () => {
     return (
       <div className=" w-full h-full flex justif3y-center items-center">
         <p className=" text-[40px] font-bold m-auto w-full">Loading...</p>
-=======
-  // const { data: lessonData, loading: lessonLoading, error: lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
-  const getByIdData = data?.getCourseById;
-  // const getByLessonIdData = lessonData?.getLessonById as Lesson[];
-
-  if (loading)
-    return (
-      <div className=" w-full h-full flex justif3y-center items-center">
-        <p className=" text-[40px] font-bold">Loading...</p>
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
       </div>
     );
 
@@ -45,11 +30,7 @@ const Home = () => {
 
   return (
     <div data-cy="idCourse" className="bg-[#F7F7F8]">
-<<<<<<< HEAD
       <CourseRender data-cy-id="courseId" data={getByIdData} lessonData={getByLessonIdData} />
-=======
-      <CourseRender data-cy-id="courseId" data={getByIdData} />
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
     </div>
   );
 };

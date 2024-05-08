@@ -4,11 +4,7 @@ export const lessonSchema = gql`
   scalar Date
   type Query {
     getLessons: [Lesson!]!
-<<<<<<< HEAD
     getLessonById(courseId: String!): [Lesson!]
-=======
-    getLessonById(courseId: String!): Lesson!
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
   }
   type Lesson {
     id: ID
