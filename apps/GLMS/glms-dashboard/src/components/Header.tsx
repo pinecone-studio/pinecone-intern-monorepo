@@ -4,7 +4,7 @@ import { PositionIcon } from '../../public/assets/HeaderPosition';
 import { Logo } from '../../public/assets/Logo';
 const Header = () => {
   return (
-    <div data-testid="header-artivle-detail" className="bg-[#F7F7F8]">
+    <div data-testid="header-artivle-detail" className="bg-[#F7F7F8] border-b-[1px] border-[#ECEDF0] ">
       <div className="flex h-12 items-center justify-between w-[85vw] m-auto">
         <Logo />
         <div data-testid="text-data-search" className="gap-3 items-center flex ">

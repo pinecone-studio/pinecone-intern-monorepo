@@ -6,11 +6,10 @@ const Home = () => {
   const pathName = usePathname().substring(1);
   const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
   const getByIdData = data?.getCourseById;
-
   if (loading)
     return (
-      <div className=" w-full h-full flex justify-center items-center">
-        <p className=" text-[40px] font-bold">Loading...</p>
+      <div className=" w-full h-full flex justif3y-center items-center">
+        <p className=" text-[40px] font-bold m-auto w-full">Loading...</p>
       </div>
     );
 
@@ -22,7 +21,7 @@ const Home = () => {
     );
 
   return (
-    <div data-cy="idCourse">
+    <div data-cy="idCourse" className="bg-[#F7F7F8]">
       <CourseRender data-cy-id="courseId" data={getByIdData} />
     </div>
   );
