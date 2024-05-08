@@ -4,10 +4,12 @@ export const userSchema = gql`
   type User {
     id: ID
     name: String!
+    password: String!
     email: String
     phoneNumber: String
     avatar: String
     role: String!
+    otpExpiresIn: Int
     otp: String
   }
   input SignUpInput {
@@ -25,6 +27,16 @@ export const userSchema = gql`
     email: String!
   }
 
+  input sendMailInput {
+    email: String!
+  }
+
+  input resetPasswordInput {
+    email: String!
+    code: String!
+    newPassword: String!
+  }
+
   type Message {
     message: String!
   }
@@ -35,6 +47,8 @@ export const userSchema = gql`
   }
 
   type Mutation {
+    sendMail(input: sendMailInput!): Message!
+    resetPassword(input: resetPasswordInput!): Message!
     signUp(input: SignUpInput!): Message!
     signIn(input: SignInInput!): Token!
     deleteUser(input: deleteUserInput!): Message!
