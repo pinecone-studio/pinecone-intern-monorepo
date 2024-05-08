@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
 describe('Should render each searched article', () => {
   it('1.Should take its props', () => {
     const dateProps = new Date();
-    const { getByTestId, container } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" publishedAt={dateProps} id="article_id" />);
+    const { getByTestId, container } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" createdAt={dateProps} id="article_id" />);
 
     const title = getByTestId('searched-article-title');
     const articleContainer = getByTestId('searched-article-container');
@@ -27,7 +27,7 @@ describe('Should render each searched article', () => {
   it('2.Should change props date to desired format', () => {
     const dateProps = new Date();
     const finalDate = format(dateProps, 'yyyy.MM.dd');
-    const { getByTestId } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" publishedAt={dateProps} id="article_id" />);
+    const { getByTestId } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" createdAt={dateProps} id="article_id" />);
 
     const date = getByTestId('searched-article-date');
     expect(date.textContent).toEqual(finalDate);
