@@ -45,16 +45,19 @@ const UpdateSection = () => {
         },
       });
       router.push('section');
+      localStorage.clear()
     },
   });
 
   const { data, loading } = useGetSectionByIdQuery({
     variables: { id: id },
   });
-
+ 
   useEffect(() => {
     if (data && data.getSectionById) {
+      
       const section = data.getSectionById;
+      
       formik.setFieldValue('title', section.title);
       formik.setFieldValue('description', section.description);
       formik.setFieldValue('thumbnail', section.contentImage);
@@ -103,10 +106,10 @@ const UpdateSection = () => {
         <div className="flex gap-4 jutify-center items-center py-4">
           <button
             data-cy="update-section-handle-btn"
-            className="px-6 py-2 bg-black text-white rounded-[8px] flex items-center justify-center text-[20px] pb-2 hover:bg-[#D6D8DB] hover:text-black hover:cursor:pointer"
+            className="px-2 py-1 bg-black text-white rounded-[8px] flex items-center justify-center text-[20px] pb-2 hover:bg-[#D6D8DB] hover:text-black hover:cursor:pointer"
             onClick={() => formik.handleSubmit()}
           >
-            +
+            засах
           </button>
         </div>
       </div>

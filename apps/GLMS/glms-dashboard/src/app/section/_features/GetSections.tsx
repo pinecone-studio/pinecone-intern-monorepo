@@ -31,6 +31,7 @@ const GetSections = () => {
 
   const handleUpdateSectionPage = (sectionId : string | undefined | null) => {
     if(sectionId){
+      localStorage.setItem("sectionId" , sectionId)
       router.push("/update-section")
     }
   }
