@@ -61,6 +61,7 @@ export const Job = gql`
   type Query {
     getJobs: [Job!]!
     getJobById(jobId: ID!): Job
+    getJobsWithLimit(offset: Int!, limit: Int!): [Job!]!
   }
 
   type Mutation {
