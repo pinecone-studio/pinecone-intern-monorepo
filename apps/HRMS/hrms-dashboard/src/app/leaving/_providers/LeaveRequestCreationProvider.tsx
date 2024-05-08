@@ -7,8 +7,6 @@ import { CreateLeaveRequestGeneralInput } from '../_components';
 export const LeaveRequestCreationContext = createContext<LeaveRequestCreationContextType>({} as LeaveRequestCreationContextType);
 
 type LeaveRequestCreationContextType = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
   leaveReqStep: JSX.Element;
   setLeaveReqStep: Dispatch<SetStateAction<JSX.Element>>;
   stepNumber: number;
@@ -16,15 +14,12 @@ type LeaveRequestCreationContextType = {
 };
 
 export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
   const [leaveReqStep, setLeaveReqStep] = useState(<CreateLeaveRequestGeneralInput />);
 
   return (
     <LeaveRequestCreationContext.Provider
       value={{
-        isOpen,
-        setIsOpen,
         leaveReqStep,
         setLeaveReqStep,
         stepNumber,

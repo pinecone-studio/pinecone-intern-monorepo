@@ -1,8 +1,16 @@
 import { Lesson, MutationResolvers } from '@/graphql/generated';
 import lessonModel from '@/model/lesson-model';
 import { GraphQLError } from 'graphql';
-export const updateLesson: MutationResolvers['updateLesson'] = async (_, { id,title, thumbnail ,position, sectionIds}) => {
 
+type ArgumentTypes = {
+  id: string;
+  title: string;
+  thumbnail: string;
+  position: number;
+  sectionIds: string;
+};
+
+export const updateLesson: MutationResolvers['updateLesson'] = async (_: string, { id, title, thumbnail, position, sectionIds }: ArgumentTypes) => {
   try {
     const updatedLesson = await lessonModel
       .findByIdAndUpdate(
@@ -11,7 +19,7 @@ export const updateLesson: MutationResolvers['updateLesson'] = async (_, { id,ti
           title,
           sections: sectionIds,
           thumbnail,
-          position
+          position,
         },
         { new: true }
       )

@@ -1,13 +1,14 @@
-import DeleteIcon from "../../assets/DeleteIcon";
+'use client';
+import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 
 type DeleteButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
-const DeleteButton:React.FC<DeleteButtonProps> = ({onClick}) => {
+const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {
   return (
-    <button onClick={onClick} className=' p-[16px] border-[1px] border-solid shadow-md rounded-md ' data-testid="delete-button-test-id" >
-        <DeleteIcon/>
+    <button onClick={onClick} className="btn btn-ghost w-14 h-14 p-4 border border-[#D6D8DB] rounded-md cursor-pointer " data-testid="delete-button-test-id">
+      <DeleteIcon />
     </button>
   );
 };

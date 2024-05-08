@@ -1,0 +1,6 @@
+mutation Login($emailorPhone:String! ) {
+  login(input: {emailorPhone: $emailorPhone}) {
+    message
+    token
+  }
+}

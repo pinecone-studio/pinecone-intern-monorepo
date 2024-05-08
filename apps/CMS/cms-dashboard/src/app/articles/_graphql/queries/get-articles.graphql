@@ -11,28 +11,34 @@ query Query {
   }
 }
 
-query GetArticlesByCategory($categoryId: String!, $getAll: Boolean!) {
-  getArticlesByCategory(categoryId: $categoryId, getAll: $getAll) {
+query GetArticlesByCategory($categoryId: String!, $quantity: Int!) {
+  getArticlesByCategory(categoryId: $categoryId, quantity: $quantity) {
+    category {
+      name
+      id
+    }
     content
     coverPhoto
     publishedAt
-    id
     title
-    category {
-      name
-    }
+    id
+    slug
   }
 }
 
-query getNewestArticle {
+query GetNewestArticle {
   getNewestArticle {
     category {
+      id
       name
     }
+    commentPermission
     content
     coverPhoto
+    id
     publishedAt
     title
+    slug
   }
 }
 

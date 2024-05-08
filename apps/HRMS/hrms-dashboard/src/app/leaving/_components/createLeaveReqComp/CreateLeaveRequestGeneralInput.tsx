@@ -1,21 +1,16 @@
 'use client';
 
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { Box, Button, IconButton, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import dayjs from 'dayjs';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
+import { ButtonCustom } from './ButtonCustom';
 
 const validationSchema = yup.object({
-  step1Date: yup.date().required(),
-  step1UserName: yup.string().required(),
-  step1LeaveType: yup.string().required(),
+  step1Date: yup.string().required('Огноо оруулна уу'),
+  step1UserName: yup.string().required('Нэрээ сонгоно уу'),
+  step1LeaveType: yup.string().required('Шалтгаанаа сонгоно уу'),
 });
 
 export const CreateLeaveRequestGeneralInput = () => {
@@ -27,9 +22,9 @@ export const CreateLeaveRequestGeneralInput = () => {
 
   const formik = useFormik({
     initialValues: {
-      step1Date: dayjs(),
-      step1UserName: '',
-      step1LeaveType: '',
+      step1Date: undefined,
+      step1UserName: undefined,
+      step1LeaveType: undefined,
     },
     validationSchema: validationSchema,
     onSubmit: () => {
@@ -39,63 +34,64 @@ export const CreateLeaveRequestGeneralInput = () => {
   });
 
   return (
-    <Box>
-      <Stack sx={{ gap: '16px' }}>
-        <Stack sx={{ gap: '4px' }} data-testid="date-picker-container">
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+    <div className="w-[100%] flex flex-col gap-[40px]">
+      <div className="w-[100%] flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[4px]">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Огноо
-          </Typography>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker name="step1Date" value={formik.values.step1Date} onChange={(value) => formik.setFieldValue('step1Date', value, true)} />
-          </LocalizationProvider>
-        </Stack>
+          </div>
+          <div data-testid="date-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
+            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
+          </div>
+          <p data-cy="step1DateError" className="text-[#DC143C] text-[12px]">
+            {formik.errors.step1Date}
+          </p>
+        </div>
 
-        <Stack sx={{ gap: '4px' }}>
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+        <div className="w-[100%] flex flex-col gap-[4px]" data-testid="name-select-input">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Нэрээ сонгоно уу
-          </Typography>
-          <TextField data-cy="name-select-input" data-testid="name-select-input" select name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
-            <MenuItem data-testid={workerName.name} value={workerName.name}>
+          </div>
+          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+            <option disabled selected>
+              Нэрээ сонгоно уу
+            </option>
+            <option data-testid="WorkerName" value={workerName.name}>
               {workerName.name}
-            </MenuItem>
-          </TextField>
-        </Stack>
-        <Stack sx={{ gap: '4px' }}>
-          <Typography data-cy="step1Label" fontSize={16} fontWeight={400} color={'#121316'}>
+            </option>
+          </select>
+          <p data-cy="step1UserNameError" className="text-[#DC143C] text-[12px]">
+            {formik.errors.step1UserName}
+          </p>
+        </div>
+
+        <div className="w-[100%] flex flex-col gap-[4px]" data-testid="type-select-input">
+          <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Шалтгаанаа сонгоно уу
-          </Typography>
-          <TextField data-cy="type-select-input" data-testid="type-select-input" select name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
-            {leaveTypes.map((option, index) => {
+          </div>
+          <select data-cy="type-select-input" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
+            <option disabled selected>
+              Шалтгаанаа сонгоно уу
+            </option>
+            {leaveTypes.map((item, index) => {
               return (
-                <MenuItem data-testid={`type-${index}`} key={index} value={option}>
-                  {option}
-                </MenuItem>
+                <option key={index} data-testid={`type-${index}`} value={item}>
+                  {item}
+                </option>
               );
             })}
-          </TextField>
-        </Stack>
-      </Stack>
-      <Box paddingTop={'40px'} display={'flex'} justifyContent={'space-between'}>
-        <IconButton sx={{ visibility: 'hidden', bgcolor: 'white' }}>
-          <ArrowBack sx={{ color: 'white' }} />
-        </IconButton>
-        <Button
-          data-cy="next-btn"
-          data-testid="nextButton"
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-          variant="contained"
-          sx={{ bgcolor: '#121316', textTransform: 'none', gap: '4px', paddingY: '12px', paddingX: '16px' }}
-          disableElevation
-          disabled={!formik.values.step1Date || !formik.values.step1LeaveType || !formik.values.step1UserName}
-        >
-          <Typography fontSize={16} fontWeight={600} color={'white'}>
-            Дараах
-          </Typography>
-          <ArrowForward sx={{ color: 'white' }} />
-        </Button>
-      </Box>
-    </Box>
+          </select>
+          <p data-cy="step1LeaveTypeError" className="text-[#DC143C] text-[12px]">
+            {formik.errors.step1LeaveType}
+          </p>
+        </div>
+      </div>
+      <ButtonCustom
+        onClick={() => {
+          formik.handleSubmit();
+        }}
+        disabled={!formik.isValid}
+      />
+    </div>
   );
 };

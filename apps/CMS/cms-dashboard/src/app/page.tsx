@@ -1,28 +1,39 @@
 'use client';
 
 import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
-import GroupArticlesComp from './articles/_features/GroupArticlesComp';
-import { useGetNewestArticleQuery } from '../generated';
+import { useGetNewestArticleQuery, useGetCategoriesQuery } from '../generated';
+import GroupArticles from './articles/_features/GroupArticles';
+import { Loader } from './sign-up/_components';
+import { AdminNavigateLinksFeature } from './dashboard/_features';
 
 const Home = () => {
-  const { data, loading } = useGetNewestArticleQuery(); 
+  const { data, loading } = useGetNewestArticleQuery();
+  const { data: categories, loading: categoriesLoading } = useGetCategoriesQuery();
   return (
     <div>
-      <div className='flex flex-col w-full gap-12 bg-[#F7F7F8] items-center pb-6'  suppressHydrationWarning={true}>
+      <div className="flex flex-col w-full gap-12 bg-[#F7F7F8] items-center pb-6" suppressHydrationWarning={true}>
         {loading ? (
-          <div>Loading</div>
+          <div className="flex w-[100vw] h-[100vh] items-center justify-center">
+            <Loader />
+          </div>
         ) : (
           <MainBannerFromArticles
             articlesTitle={data?.getNewestArticle.title}
-            cover={data?.getNewestArticle.coverPhoto ?? '/earth.jpeg'}
+            cover={data?.getNewestArticle.coverPhoto}
             date={data?.getNewestArticle.publishedAt}
             categories={data?.getNewestArticle.category.name}
+            id={data?.getNewestArticle.id}
           />
         )}
-        <div className='flex flex-col px-24 gap-12 w-[70%]'>
-          <GroupArticlesComp title="Шинэ контентууд" categoryId="662776d1ebfd0e7cf0eed309" />
-          <GroupArticlesComp title="Хөтөлбөр болон эвентүүд" categoryId="661c677c6837efa536464cab" />
-          <GroupArticlesComp title="Сонирхолтой түүхүүд" categoryId="662771aaebfd0e7cf0eed302" />
+        {categoriesLoading ? null : (
+          <div className="flex flex-col md:px-24 sm:px-[48px] gap-12 xl:w-[65%] lg:w-[70%] md:w-[85%] sm:w-[100vw] pb-28">
+            {categories?.getCategories.map((item) => (
+              <GroupArticles key={item.id} title={item.name} categoryId={item.id} />
+            ))}
+          </div>
+        )}
+        <div className="fixed opacity-100 bottom-8 z-10">
+          <AdminNavigateLinksFeature />
         </div>
       </div>
     </div>

@@ -1,32 +1,40 @@
-import {  GraphQLResolveInfo } from 'graphql';
-import { getCourseById } from '@/graphql/resolvers/queries/get-course-by-id';
+import { GraphQLError } from 'graphql';
+import courseModel from '@/model/course-model';
+import { getCourseById } from '@/graphql/resolvers/queries';
 
-jest.mock('../../src/model/course-model', () => ({
-  findById: jest.fn()
+jest.mock('@/model/course-model', () => ({
+  findById: jest.fn(),
 }));
 
-jest.mock('../../src/model/course-model', () => ({
-    findById: jest.fn().mockResolvedValueOnce({
-      _id: 'mockCourseId',
-      title: 'Test Course',
-    }).mockResolvedValueOnce(null),
-  }));
-  
-  describe('Get Course By Id', () => {
-    it('should return a course', async () => {
-      const result = await getCourseById!({}, { id: 'mockCourseId' }, {}, {} as GraphQLResolveInfo);
-  
-      expect(result).toEqual({
-        _id: 'mockCourseId',
-        title: 'Test Course',
-      });
-    });
-  
-    it("should throw an error if the course doesn't exist", async () => {
-      try {
-        await getCourseById!({}, { id: 'nonExistentId' }, {}, {} as GraphQLResolveInfo);
-      } catch (error) {
-        expect(error).toEqual(new Error('cannot find course'));
-      }
-    });
+describe('getCourseById resolver', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
+
+  it('returns a course when found by ID', async () => {
+    const courseId = '123';
+    const mockCourse = { id: courseId, title: 'Test Course' };
+    jest.spyOn(courseModel, 'findById').mockResolvedValue(mockCourse);
+
+    const result = await getCourseById(null, { id: courseId });
+    expect(result).toEqual(mockCourse);
+    expect(courseModel.findById).toHaveBeenCalledWith(courseId);
+  });
+
+  it('throws an error when course is not found by ID', async () => {
+    const courseId = '456';
+    jest.spyOn(courseModel, 'findById').mockResolvedValue(null);
+
+    await expect(getCourseById(null, { id: courseId })).rejects.toThrow(GraphQLError);
+    expect(courseModel.findById).toHaveBeenCalledWith(courseId);
+  });
+
+  it('throws an error when an error occurs during findById', async () => {
+    const courseId = '789';
+    const errorMessage = 'Database error';
+    jest.spyOn(courseModel, 'findById').mockRejectedValue(new Error(errorMessage));
+
+    await expect(getCourseById(null, { id: courseId })).rejects.toThrow(GraphQLError);
+    expect(courseModel.findById).toHaveBeenCalledWith(courseId);
+  });
+});

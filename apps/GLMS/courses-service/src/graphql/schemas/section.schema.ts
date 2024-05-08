@@ -2,6 +2,7 @@ import { gql } from 'graphql-tag';
 export const sectionSchema = gql`
    type Query {
     getSections: [Section!]!
+    getSectionById(id: ID!): Section!
   }
   type Section {
     id: ID
@@ -17,5 +18,7 @@ export const sectionSchema = gql`
   }
   type Mutation {
     createSection(sectionInput:SectionInput!): Section!
+    updateSection(id: ID!, sectionInput:SectionInput!): Section!
+    deleteSection(id:ID!):Section!
   }
 `;

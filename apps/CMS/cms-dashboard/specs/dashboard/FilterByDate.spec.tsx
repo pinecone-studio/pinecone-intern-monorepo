@@ -34,4 +34,13 @@ describe('FilterByDate', () => {
     const todayButton = container.getElementsByClassName('rdrStaticRange')[0];
     fireEvent.click(todayButton);
   });
+
+  it('4. Handle submit when clicking close button', () => {
+    const { getByTestId } = render(<FilterByDate />);
+    const openCalendarButton = getByTestId('open-calendar-button-test-id')
+    fireEvent.click(openCalendarButton)
+    const closeCalendarButton = getByTestId('close-calendar-button-test-id')
+    fireEvent.click(closeCalendarButton)
+    expect(closeCalendarButton).toBeDefined()
+  });
 });

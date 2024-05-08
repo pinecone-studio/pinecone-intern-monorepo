@@ -1,0 +1,9 @@
+mutation createSection($sectionInput: SectionInput!) {
+  createSection(sectionInput: $sectionInput) {
+    id
+    title
+    description
+    contentImage
+    createdAt
+  }
+}

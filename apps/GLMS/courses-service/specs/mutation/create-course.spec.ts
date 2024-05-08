@@ -1,34 +1,32 @@
+import { GraphQLError } from 'graphql';
+import courseModel from '@/model/course-model';
 import { createCourse } from '@/graphql/resolvers/mutations';
-import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
-const mockInput = {
-  title: 'English',
-  description: 'Learning english',
-  thumbnail: 'course-thumbnail.jpg',
-};
-
-jest.mock('../../../courses-service/src/model/course-model.ts', () => ({
-  create: jest
-    .fn()
-    .mockReturnValueOnce({
-      title: 'English',
-      description: 'Learning english',
-      thumbnail: 'course-thumbnail.jpg',
-    })
-    .mockRejectedValueOnce(new Error('An unknown error occurred')),
+jest.mock('@/model/course-model', () => ({
+  create: jest.fn(),
 }));
 
-describe('Create Course', () => {
-  it('1.it should create new course', async () => {
-    const result = await createCourse!({}, { courseInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual(mockInput);
+describe('createCourse resolver', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('2.it should throw error', async () => {
-    try {
-      await createCourse!({}, { courseInput: mockInput }, {}, {} as GraphQLResolveInfo);
-    } catch (error) {
-      expect(error).toEqual(new GraphQLError('An unknown error occurred'));
-    }
+  it('creates a course successfully', async () => {
+    const courseInput = { title: 'Test Course', description: 'Test Description' };
+    const mockCourse = { id: '123', ...courseInput };
+    jest.spyOn(courseModel, 'create').mockResolvedValue(mockCourse);
+
+    const result = await createCourse(null, { courseInput });
+    expect(result).toEqual(mockCourse);
+    expect(courseModel.create).toHaveBeenCalledWith(courseInput);
+  });
+
+  it('throws an error when course creation fails', async () => {
+    const courseInput = { title: 'Test Course', description: 'Test Description' };
+    const errorMessage = 'Database error';
+    jest.spyOn(courseModel, 'create').mockRejectedValue(new Error(errorMessage));
+
+    await expect(createCourse(null, { courseInput })).rejects.toThrow(GraphQLError);
+    expect(courseModel.create).toHaveBeenCalledWith(courseInput);
   });
 });

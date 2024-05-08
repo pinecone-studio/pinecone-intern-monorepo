@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import { MdMoreVert } from 'react-icons/md';
-import { ArticleMenu } from '../../assets/ArticleBtn';
-import { LinkButton } from '../../assets/LinkBtn';
+import { LinkButtonIcon } from '@/icons';
+import { MorevertButtonIcon } from '@/icons';
+import { ArchiveButtonIcon } from '@/icons';
 
-const ArticleMenuButton = ({ id }: { id: string }) => {
+export const ArticleMenuButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -22,38 +22,39 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
 
     const domain = window.location.origin;
 
-    await navigator.clipboard.writeText(`${domain}/articles/edit-article/${id}`);
+    await navigator.clipboard.writeText(`${domain}/articles/copy-article/${id}`);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1300);
   }, [id]);
 
   return (
-    <div className="p-8">
-      <MdMoreVert data-testid="menu-button-test-id" fontSize={28} color="#5E6166" onClick={handleClick} />
+    <div className="relative dropdown">
+      <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button" onClick={handleClick}>
+        <MorevertButtonIcon />
+      </div>
 
-      <div className="relative">
+      <div className="absolute left-[-50px] top-8">
         {anchorEl && (
-          <div>
-            <ul className="menu bg-base-200 w-56 rounded-box">
-              <li
-                data-testid="close-menu-button-test-id"
-                className="gap-4"
-                onClick={() => {
-                  handleClose();
-                  setCopied(false);
-                }}
-              >
+          <div onClick={handleClose} data-cy="drop-down-menu-test-cy">
+            <ul tabIndex={0} className="dropdown-content z-10 menu p-2 shadow rounded-xl border border-slate-200">
+              <li data-testid="close-menu-button-test-id" className="z-10 bg-white">
                 <a>
-                  <ArticleMenu />
+                  <ArchiveButtonIcon />
                   Архив
                 </a>
               </li>
+
               <li
                 data-testid="copy-clipboard-button-test-id"
+                className="z-10 bg-white"
                 onClick={() => {
                   handleClickCopy();
                 }}
               >
-                <a>
-                  <LinkButton />
+                <a className="whitespace-nowrap">
+                  <LinkButtonIcon />
                   Линк хуулах
                 </a>
               </li>
@@ -61,10 +62,8 @@ const ArticleMenuButton = ({ id }: { id: string }) => {
           </div>
         )}
 
-        {copied && <p className="absolute text-[#545353] bg-[#b3b3b3] px-[10px] rounded-md mt-2 ml-2">Copied</p>}
+        {copied && <p className="text-slate-50 bg-[#8e8d8d] px-3 w-fit rounded-lg mt-2 ml-9 z-10">Copied</p>}
       </div>
     </div>
   );
 };
-
-export default ArticleMenuButton;
