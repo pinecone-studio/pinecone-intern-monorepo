@@ -20,12 +20,9 @@ const ArticleHeader = () => {
 
   return (
     <div data-cy="header-container" className="w-full bg-white py-4 flex justify-center  fixed top-0">
-      {/* Inner container */}
       <div className="w-[90%] max-w-[1250px] flex flex-col items-center justify-center gap-6 relative">
-        {/* Header search and category */}
         <div className="w-full flex flex-row justify-between items-center">
           <img src="/Logo.svg" width={32} height={32} />
-          {/* Category and search */}
           <div className="flex flex-row gap-8 items-center">
             <div data-cy="category-text" className="flex flex-row gap-4 items-center cursor-pointer" onClick={categoryOpenHandler}>
               <p className="text-base text-[#5E6166]">Ангилал</p>
@@ -47,7 +44,6 @@ const ArticleHeader = () => {
             </div>
           </div>
         </div>
-        {/* Category and search result */}
         <div
           data-cy="category-and-result"
           style={{ display: isCategoryOpen || searchValue ? 'flex' : 'none' }}

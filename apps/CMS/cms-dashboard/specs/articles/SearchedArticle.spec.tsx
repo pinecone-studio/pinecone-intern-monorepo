@@ -8,8 +8,8 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
-describe('It should render each searched article', () => {
-  it('1.It should take its props', () => {
+describe('Should render each searched article', () => {
+  it('1.Should take its props', () => {
     const dateProps = new Date();
     const { getByTestId, container } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" publishedAt={dateProps} id="article_id" />);
 
@@ -24,7 +24,7 @@ describe('It should render each searched article', () => {
     });
   });
 
-  it('2.It should change props date to desired format', () => {
+  it('2.Should change props date to desired format', () => {
     const dateProps = new Date();
     const finalDate = format(dateProps, 'yyyy.MM.dd');
     const { getByTestId } = render(<SearchedArticle title="Morphosis" coverPhoto="image_url" publishedAt={dateProps} id="article_id" />);
