@@ -1,5 +1,5 @@
 'use client';
-import { Book } from './assets/Book';
+import { Book } from '../../../public/assets/Book';
 import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
