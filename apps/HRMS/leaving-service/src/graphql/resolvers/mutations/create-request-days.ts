@@ -5,7 +5,7 @@ import { sendMail } from '@/mail/mail-sender';
 
 export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"] = async (_, { requestInput }) => {
   try {
-    const { employeeId, startDateString, endDateString, description, leaveType, superVisor, durationType, email, substitute } = requestInput;
+    const { employeeId, name, startDateString, endDateString, description, leaveType, superVisor, durationType, email, substitute } = requestInput;
 
     const startDate = new Date(startDateString);
     const endDate = new Date(endDateString);
@@ -14,6 +14,7 @@ export const createLeaveRequestDays: MutationResolvers["createLeaveRequestDays"]
     const createdLeaveRequests = await Promise.all(workDays.map(async (date) => {
       const create = await LeaveRequestModel.create({
         employeeId,
+        name,
         startDate: date,
         description,
         leaveType,
