@@ -18,16 +18,16 @@ describe('Handle section page', () => {
 
   it('3.Should display AddSection feature', () => {
     cy.get('[data-testid="add-section-form"]').should('exist');
-    cy.get('input[name="title"]').type('html');
-    cy.get('input[name="description"]').type('html intro');
+    cy.get('[data-cy="title"]').should('exist').type('html');
+    cy.get('[data-cy="description"]').should('exist').type('html intro');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="add-section-handle-btn"]').click();
   });
 
   it('4.When section created successfully AddSection form reset' , () => {
-    cy.get('[ data-testid="add-section-form"]').should('exist');
-    cy.get('input[name="title"]').should('exist');
-    cy.get('input[name="description"]').should('exist');
+    cy.get('[data-testid="add-section-form"]').should('exist');
+    cy.get('[data-cy="title"]').should('exist');
+    cy.get('[data-cy="description"]').should('exist');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="add-section-handle-btn"]').should('exist').should('be.disabled');
   })

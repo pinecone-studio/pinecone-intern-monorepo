@@ -54,7 +54,7 @@ const AddSection = () => {
           <div className="flex flex-col py-2">
             <p className="font-bold">Дэлгэрэнгүй</p>
             <textarea
-              data-testid="description"
+              data-cy="description"
               className="w-[588px] h-[160px] border rounded-[4px] p-2"
               id="description-test"
               name="description"
