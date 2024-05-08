@@ -26,7 +26,7 @@ const GetSections = () => {
         refetch();
       }
     } catch (error) {
-      console.error( error);
+      throw error
     }
   };
 
