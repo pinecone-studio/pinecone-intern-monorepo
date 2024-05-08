@@ -10,13 +10,14 @@ export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) =
 
   return (
     <div className="flex justify-between p-6">
-      <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: checked ? 'black' : '#121316' }}>{checked ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>
+      <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: 'black' }}>{checked ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>
       <input
         data-testid="input-test-id"
         onChange={toggleCommentPermission}
         checked={checked ? true : false}
         type="checkbox"
         className={checked ? 'toggle [--tglbg:black]' : 'toggle [--tglbg:#f6f6f6]'}
+        style={{ color: checked ? 'white' : 'black' }}
       />
     </div>
   );
