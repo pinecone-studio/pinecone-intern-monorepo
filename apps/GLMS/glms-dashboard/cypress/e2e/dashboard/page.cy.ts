@@ -16,4 +16,14 @@ describe('dashboard component', () => {
     cy.get('[data-cy="Архив"]').should('exist').should('be.visible');
     cy.get('[data-cy="Архив"]').click();
   });
+
+  it('navigates to /create-course when clicked', () => {
+    cy.get('[data-cy="CreateCourseBtn"]').click();
+    cy.url().should('include', '/create-course');
+  });
+
+  it('course clicked', () => {
+    cy.get('[data-cy="courseClick"]').eq(0).click({ multiple: true });
+    cy.url().should('include', '/6633305c94d4584898bb049a');
+  });
 });
