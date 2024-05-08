@@ -11,7 +11,8 @@ describe ('Handle section page' , () => {
         cy.get('[data-testid="section-form"]').should('exist');
         cy.get('[data-testid="title"]').should('exist');
         cy.get('[data-testid="description"]').should('exist');
-        cy.get('[data-testid="contentImage"]').should('exist')
+        cy.get('[data-testid="contentImage"]').should('exist');
+        cy.get('[data-testid="delete-btn"]').click({ multiple: true });
         
     })
 
@@ -29,5 +30,5 @@ describe ('Handle section page' , () => {
         cy.get('[data-testid="handle-add-section-btn"]').click();
       });
 
-    })
+    });
 })

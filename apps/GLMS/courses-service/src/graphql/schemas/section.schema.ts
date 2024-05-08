@@ -2,6 +2,7 @@ import { gql } from 'graphql-tag';
 export const sectionSchema = gql`
    type Query {
     getSections: [Section!]!
+    getSectionById(id: ID!): Section!
   }
   type Section {
     id: ID

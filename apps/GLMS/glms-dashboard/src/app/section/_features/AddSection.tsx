@@ -18,7 +18,7 @@ const AddSection = () => {
     initialValues: {
       title: '',
       description: '',
-      contentImage: '',
+      thumbnail: '',
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
@@ -27,7 +27,7 @@ const AddSection = () => {
           sectionInput : {
             title:values.title,
             description: values.description,
-            contentImage:values.contentImage
+            contentImage:values.thumbnail
           }
         }
       })
@@ -67,7 +67,7 @@ const AddSection = () => {
           </div>
           <div className="flex flex-col py-2">
             <p className="font-bold"> Хэсгийн зураг</p>
-            <FileUploader thumbnail={formik.values.contentImage} setFieldValue={formik.setFieldValue} />
+            <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
           </div>
         </div>
         <div className="flex gap-4 jutify-center items-center py-4">
@@ -75,7 +75,7 @@ const AddSection = () => {
              onClick={() => {
                formik.handleSubmit();
              }}
-             disabled={!formik.values.title || !formik.values.description }
+             disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail }
             >
               +
             </button>

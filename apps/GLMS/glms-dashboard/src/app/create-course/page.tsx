@@ -5,9 +5,8 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import { ArrowLeft } from './assets/ArrowLeft';
-import { ArrowRight } from './assets/ArrowRight';
-
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -40,16 +39,16 @@ const CourseAdd = () => {
   });
 
   return (
-    <div data-testid="create-course-container" className="bg-[#ECEDF0]  h-[100%]  py-5  ">
-      <div className="px-60">
+    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full flex justify-center py-6 border-t-2">
+      <div className="w-[90%]">
         <div
           data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboard');
           }}
-          className=" flex flex-row gap-[6px] mb-[26px] text-lg  font-semibold items-center cursor-pointer"
+          className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
-          <ArrowLeft /> {'Нүүр'}
+          <ArrowLeftIcon /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-8">
@@ -60,7 +59,7 @@ const CourseAdd = () => {
               <div className=" gap-2 flex flex-col w-[100%]">
                 <label className=" font-semibold text-[16px] color-[#121316]">{'Гарчиг'}</label>
                 <input
-                  className="w-[90%] h-[40px] border-[2px] rounded px-2 "
+                  className="w-[90%] h-[40px] border-[2px] rounded p-2 "
                   type="text"
                   name="title"
                   placeholder="Оруулна уу..."
@@ -71,13 +70,12 @@ const CourseAdd = () => {
               </div>
               <div className="w-[100%] gap-2 flex flex-col">
                 <label className="font-semibold text-[16px] color-[#121316]">{'Дэлгэрэнгүй'}</label>
-                <input
-                  className="w-[90%] border-[2px] rounded h-[80px] px-2"
+                <textarea
+                  className="w-[90%] border-[2px] rounded h-[100px] px-2"
                   id="description-test"
                   name="description"
                   onChange={formik.handleChange}
                   value={formik.values.description}
-                  type="text"
                   placeholder="Энд бичнэ үү..."
                 />
               </div>
@@ -87,21 +85,19 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-center ">
+          <div className="w-[100%] flex justify-end mt-[108px] mb-[56px]">
             <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white"
+              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
               data-testid="create-button"
               onClick={() => {
                 formik.handleSubmit();
               }}
               disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
             >
-              {'Үргэлжлүүлэх'} <ArrowRight />
+              <p className="text-[18px] font-semibold">Үргэлжлүүлэх</p>
+              <ArrowForwardIcon />
             </button>
           </div>
-        </div>
-        <div className="flex  w-[100%] flex justify-center pt-5">
-          <p className="text-[#1C2024]">© 2023 Pinecone</p>
         </div>
       </div>
     </div>
