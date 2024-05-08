@@ -1,7 +1,7 @@
 'use client';
 
 const ArticlesPage = () => {
-  return <div></div>;
+  return <div className="w-full h-full bg-black"></div>;
 };
 
 export default ArticlesPage;
