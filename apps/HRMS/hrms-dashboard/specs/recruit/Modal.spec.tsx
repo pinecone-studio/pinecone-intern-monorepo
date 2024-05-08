@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { CreateErrorModal } from '../../src/app/recruiting/_components';
-import { CreatedSvg, DeletedSvg } from '../../src/app/asset';
+import { CreatedSvg, DeletedSvg } from '../../src/assets';
 
 describe('<CreateErrorModal />', () => {
   test('modal close and open when label "Устгах" and close button is clicked', () => {

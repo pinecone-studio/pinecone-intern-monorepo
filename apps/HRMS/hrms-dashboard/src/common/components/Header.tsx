@@ -4,9 +4,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { PineLogo } from './SVG';
 export const Header = () => {
   const router = useRouter();
-  const pathname = usePathname()
+  const pathname = usePathname();
   if (pathname === '/login') {
-    return null
+    return null;
   }
   return (
     <header className="w-full flex items-center justify-between py-1 px-6 bg-main">
@@ -17,7 +17,7 @@ export const Header = () => {
         data-cy="headerIcon"
         className="flex items-center justify-center cursor-pointer"
       >
-        <PineLogo/>
+        <PineLogo />
       </div>
       <div className="flex gap-4">
         <div data-cy="headerProfile" className="flex items-center justify-center rounded-full py-0.5 overflow-hidden cursor-pointer aspect-square">

@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { DeletedSvg } from '../../../asset';
-import { CreatedSvg } from '../../../asset';
+import { DeletedSvg, CreatedSvg } from '../../../../assets/index';
 
 type Props = {
   text: string;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'; // Import useRouter from 'next/navigation'
-import { AddJobPageComponent, Input, TextArea } from '../../src/app/recruiting/_components';
-import { CreatedSvg, LeftArrow } from '../../src/app/asset';
+import { AddJobPageComponent, Input, TextArea } from '../../src/app/recruiting/_components/index';
+import { CreatedSvg } from '../../src/assets';
 import { useRouter } from 'next/navigation';
+import { LeftArrow } from '../../src/app/asset';
 
 const useRouterMock = useRouter as jest.Mock;
 

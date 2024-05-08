@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Department, useCreateEmployeeMutation } from '../../../generated';
 import { EmploymentStatus } from '../../../generated';
-import { Close } from '../../../assets';
+// import { Close } from '../../../assets';
 import { inputItems } from '../constants';
 
 type CreateEmployeeFormProps = {
@@ -58,7 +58,6 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
     },
   });
 
-
   const generateFormikProps = (name: keyof typeof formik.values) => ({
     name: name,
     value: formik.values[name],
@@ -68,7 +67,6 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
     onBlur: formik.handleBlur,
   });
 
-
   return (
     <main data-cy="addEmployeeForm" className="flex flex-col max-w-[650px] p-10 w-full rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
       <div className="flex justify-between">
@@ -76,7 +74,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           Ажилтан нэмэх
         </p>
         <div data-testid="close-button" onClick={props.handleCloseNewEmployee} className="cursor-pointer">
-          <Close />
+          {/* <Close /> */} Close
         </div>
       </div>
       <form className="flex flex-col justify-center px-10 pt-10 gap-4">
@@ -117,10 +115,10 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
               cursor: !formik.isValid ? 'default' : 'pointer',
             }}
             className="rounded-lg py-3 px-4"
-            name='submitBtn'
+            name="submitBtn"
             data-cy="createEmployeeBtn"
             onClick={(e) => {
-              e.preventDefault()
+              e.preventDefault();
               formik.handleSubmit();
             }}
           >
