@@ -3,11 +3,14 @@
 type propstype = {
   text: string;
   bgColor: string;
+  onclick: () => void;
 };
-export const SubmitButton = ({ text, bgColor }: propstype) => {
+export const SubmitButton = ({ text, bgColor, onclick }: propstype) => {
   return (
     <div data-testid="contained-submit-buttons-id" className="flex flex-col gap-[20px]">
       <button
+        onClick={onclick}
+        type="submit"
         data-testid="submit-button-id"
         className="w-[339px] h-[56px] justify-center flex flex-col items-center self-stretch rounded-lg  border-0 transition-transform transform active:scale-95 hover:scale-100 duration-300 ease-in-out"
         style={{ background: bgColor }}
