@@ -10,7 +10,7 @@ type ArgumentTypes = {
   sectionIds: string;
 };
 
-export const updateLesson: MutationResolvers['updateLesson'] = async ({}, { id, title, thumbnail, position, sectionIds }: ArgumentTypes) => {
+export const updateLesson: MutationResolvers['updateLesson'] = async (_: string, { id, title, thumbnail, position, sectionIds }: ArgumentTypes) => {
   try {
     const updatedLesson = await lessonModel
       .findByIdAndUpdate(
