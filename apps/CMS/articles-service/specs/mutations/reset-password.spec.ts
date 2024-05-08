@@ -23,7 +23,9 @@ describe('resetPassword resolver', () => {
     const result = await resetPassword!({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({ message: 'Нууц үг амжилттай шинэчлэгдлээ' });
+
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email, otp: input.code });
+
     expect(UserModel.updateOne).toHaveBeenCalledWith(
       { email: input.email },
       {
@@ -42,7 +44,9 @@ describe('resetPassword resolver', () => {
     const result = await resetPassword!({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
+
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email, otp: input.code });
+
     expect(UserModel.updateOne).not.toHaveBeenCalled();
   });
 
@@ -53,7 +57,9 @@ describe('resetPassword resolver', () => {
     const result = await resetPassword!({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(graphqlErrorHandler({ message: 'Нэг удаагын код буруу байна' }, errorTypes.NOT_FOUND));
+
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email, otp: input.code });
+
     expect(UserModel.updateOne).not.toHaveBeenCalled();
   });
 
@@ -65,7 +71,9 @@ describe('resetPassword resolver', () => {
     const result = await resetPassword!({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(graphqlErrorHandler({ message: 'Нэг удаагын кодны хугацаа дууссан байна' }, errorTypes.BAD_REQUEST));
+
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email, otp: input.code });
+
     expect(UserModel.updateOne).not.toHaveBeenCalled();
   });
 });
