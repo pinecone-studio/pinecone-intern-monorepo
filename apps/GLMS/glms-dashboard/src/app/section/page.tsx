@@ -2,10 +2,9 @@
 import { useRouter } from 'next/navigation';
 import GetSections from './_features/GetSections';
 import AddSection from './_features/AddSection';
-import { ArrowLeft } from '../create-course/assets/ArrowLeft';
+import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 
 const SectionPage = () => {
-
   const router = useRouter();
 
   return (
@@ -17,11 +16,11 @@ const SectionPage = () => {
         }}
         className=" flex flex-row justify-center items-center gap-1 w-[140px] h-fit py-4"
       >
-        <ArrowLeft/>
+        <ArrowLeftIcon />
         <p>Нүүр</p>
       </div>
-      <GetSections/>
-      <AddSection/>
+      <GetSections />
+      <AddSection />
     </div>
   );
 };

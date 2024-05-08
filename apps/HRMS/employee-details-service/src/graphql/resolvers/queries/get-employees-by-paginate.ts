@@ -10,7 +10,7 @@ export const getEmployeesByPaginate: QueryResolvers['getEmployeesByPaginate'] = 
   const employees = await EmployeeModel.find(searchQuery)
     .limit(limit)
     .skip(limit * (page - 1));
-  const totalEmployees = await EmployeeModel.find({}).countDocuments();
+  const totalEmployees = await EmployeeModel.find(searchQuery).countDocuments();
 
   return { employees, totalEmployees };
 };

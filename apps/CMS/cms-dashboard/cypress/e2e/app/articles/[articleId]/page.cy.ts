@@ -1,4 +1,5 @@
 
+
 describe('One article page',()=>{
   beforeEach(()=>{
     cy.visit('/articles/663097b58073930529faddfc')
@@ -37,3 +38,4 @@ describe('One article page',()=>{
     cy.get('[data-cy="each-header-article"]').first().click()
   })
 })
+
