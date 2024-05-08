@@ -8,6 +8,7 @@ import { ContentInput } from './_components/ContentInput';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { FileUpload } from './_components/FileUpload';
+import { CategorySelectInputFeature } from './_feature/CategorySelectInputFeature';
 
 const validatinSchema = yup.object({
   thumbnail: yup.string().required(),
@@ -30,7 +31,7 @@ const Home = () => {
 
   return (
     <div data-cy="edit-article-page-cy" className="flex w-[100%] h-screen">
-      <div className="w-[80%] flex flex-col px-28 py-[70px] bg-[#f2f2f3] gap-6">
+      <div className="w-[75%] flex flex-col px-28 py-[70px] bg-[#f2f2f3] gap-6">
         <ArrowBack />
 
         <div className="flex flex-col gap-10">
@@ -47,11 +48,10 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="w-[20%] flex flex-col justify-between">
+      <div className="w-[25%] flex flex-col justify-between">
         <div className="flex flex-col">
-          <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0]">
-            <Title title="Ангилал" />
-            <TitleInput />
+          <div className="p-6 border-b-[1px] border-[#ECEDF0]">
+            <CategorySelectInputFeature />
           </div>
           <FileUpload thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
           <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
