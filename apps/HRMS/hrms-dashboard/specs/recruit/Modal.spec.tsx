@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { CreateErrorModal } from '../../src/app/recruiting/_features';
+import { CreateErrorModal } from '../../src/app/recruiting/_components';
 import { CreatedSvg, DeletedSvg } from '../../src/app/asset';
 
 describe('<CreateErrorModal />', () => {

@@ -1,7 +1,6 @@
-describe('Add Job Page', () => {
-  beforeEach(() => cy.visit('/recruiting/add-job'));
-
-  it('Should display welcome message', () => {
-    cy.get('h1').contains('hello from Recruiting Add Job Page');
+describe('AddJobPage', () => {
+  it('should render the AddJobPageComponent', () => {
+    cy.visit('/recruiting/add-job');
+    cy.get('[data-testid="add-job-comp"]').should('be.visible');
   });
 });

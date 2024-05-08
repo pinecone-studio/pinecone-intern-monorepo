@@ -3,19 +3,25 @@
 import { useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
 import { Input, TextArea } from '../core';
-import { CreateErrorModal } from '../../_features';
+import { CreateErrorModal } from '../modal';
 
 export const AddJobPageComponent = () => {
   const router = useRouter();
+
+  const handleBackButtonClick = () => {
+    router.push('/recruiting');
+  };
   return (
     <div className="mx-5 w-full">
       <div className="flex items-center mt-4">
-        <button onClick={() => router.push('/recruiting')} className="hover:bg-base-300 p-3 rounded-md">
+        <button data-testid="back-button" onClick={handleBackButtonClick} className="hover:bg-base-300 p-3 rounded-md">
           <LeftArrow />
         </button>
 
         <div className="w-full">
-          <h1 className="text-center text-lg font-medium">Ажлын зар үүсгэх</h1>
+          <h1 data-testid="title" className="text-center text-lg font-medium">
+            Ажлын зар үүсгэх
+          </h1>
         </div>
       </div>
       <div className="my-10 mt-16 mx-16">
@@ -30,7 +36,7 @@ export const AddJobPageComponent = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end mr-16">
+      <div data-testid="modal-button" className="flex justify-end mr-16">
         <CreateErrorModal text="Амжилттай Зар үүслээ" label="Хадгалах" />
       </div>
     </div>
