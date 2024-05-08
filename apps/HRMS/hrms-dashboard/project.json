@@ -98,7 +98,8 @@
         "ci": {
           "ci": true
         }
-      }
+      },
+    "dependsOn": [{"target": "codegen"}]
     },
     "clean": {
       "executor": "nx:run-commands",

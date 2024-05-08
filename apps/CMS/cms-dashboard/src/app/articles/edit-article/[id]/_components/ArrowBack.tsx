@@ -1,10 +1,9 @@
 'use client';
-
-import { ArrowBackIcon } from "@/icons";
-
+import { ArrowBackIcon } from '@/icons';
+import "../_styles/editArticle.css";
 export const ArrowBack = () => {
   return (
-    <button data-testid="arrow-back-button-id" className="transition-transform transform active:rotate-45 hover:scale-110 duration-300 ease-in-out w-fit">
+    <button data-testid="arrow-back-button-id" className="hoverRotate">
       <ArrowBackIcon />
     </button>
   );

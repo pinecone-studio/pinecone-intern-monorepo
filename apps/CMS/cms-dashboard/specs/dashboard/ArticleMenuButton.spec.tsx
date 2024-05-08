@@ -1,5 +1,5 @@
 import { act, fireEvent, getByTestId, render, waitFor } from '@testing-library/react';
-import ArticleMenuButton from '../../src/app/dashboard/_components/ArticleMenuButton';
+import { ArticleMenuButton } from '../../src/app/dashboard/_components/ArticleMenuButton';
 
 const mockTest = jest.fn();
 Object.assign(navigator, {

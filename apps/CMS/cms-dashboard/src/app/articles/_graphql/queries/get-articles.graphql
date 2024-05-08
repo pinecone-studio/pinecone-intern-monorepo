@@ -26,15 +26,19 @@ query GetArticlesByCategory($categoryId: String!, $quantity: Int!) {
   }
 }
 
-query getNewestArticle {
+query GetNewestArticle {
   getNewestArticle {
     category {
+      id
       name
     }
+    commentPermission
     content
     coverPhoto
+    id
     publishedAt
     title
+    slug
   }
 }
 

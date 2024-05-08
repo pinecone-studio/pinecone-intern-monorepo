@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CreateEmployeeForm } from './CreateEmployeeForm';
 import { AddIcon } from '../../../assets';
+import { TableFilters } from './TableFilters';
 
 export const EmployeesList = () => {
   const [page, setPage] = useState<number | undefined>(0);
@@ -40,17 +41,22 @@ export const EmployeesList = () => {
               <AddIcon />
               <p className="text-sm font-semibold">Ажилтан нэмэх</p>
             </div>
+
             {openNewEmployee && (
               <>
-                <div data-testid="create-employee" className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
+                <div
+                  data-testid="create-employee"
+                  className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden"
+                >
                   <CreateEmployeeForm handleCloseNewEmployee={handleCloseNewEmployee} />
                 </div>
                 <div onClick={handleCloseNewEmployee} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
               </>
             )}
           </div>
+          <TableFilters />
           <EmployeesListTable setPage={setPage} searchPath={searchPath} />
-          <EmployeePagination page={page} handleClick={handleClick}   />
+          <EmployeePagination page={page} handleClick={handleClick} />
         </div>
       </main>
     </>
