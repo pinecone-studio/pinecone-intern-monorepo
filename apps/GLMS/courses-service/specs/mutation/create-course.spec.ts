@@ -5,6 +5,7 @@ const mockInput = {
   title: 'English',
   description: 'Learning english',
   thumbnail: 'course-thumbnail.jpg',
+  status: 'Noorog',
 };
 
 jest.mock('../../../courses-service/src/model/course-model.ts', () => ({
@@ -14,6 +15,7 @@ jest.mock('../../../courses-service/src/model/course-model.ts', () => ({
       title: 'English',
       description: 'Learning english',
       thumbnail: 'course-thumbnail.jpg',
+      status: 'Noorog',
     })
     .mockRejectedValueOnce(new Error('An unknown error occurred')),
 }));
