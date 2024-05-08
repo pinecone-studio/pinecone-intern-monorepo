@@ -8,7 +8,7 @@ import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import AddLessonButton from '../_components/AddLessonButton';
 import LessonRender from './LessonRender';
-import { EditButtonIcon } from 'apps/GLMS/glms-dashboard/public/assets/EditButtonicon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 type DataTypes = {
   data: Course | undefined;
   lessonData: Lesson[] | undefined;
