@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { signUp } from '../../src/graphql/resolvers/mutations/sign-up-user';
+import { signUp } from '../../src/graphql/resolvers/mutations/sign-up';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 const input = {
   email: 'mockEmail@gmail.com',
