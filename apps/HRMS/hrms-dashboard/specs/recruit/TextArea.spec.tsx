@@ -4,7 +4,7 @@ import { TextArea } from '../../src/app/recruiting/_components';
 
 describe('TextArea', () => {
   it('calls onChange handler when textarea value changes', () => {
-    const handleChange = jest.fn(); // Mock handleChange function
+    const handleChange = jest.fn();
     render(<TextArea label="Test Label" placeholder="Test Placeholder" name="test" onChange={handleChange} />);
 
     fireEvent.change(screen.getByPlaceholderText('Test Placeholder'), { target: { value: 'New value' } });

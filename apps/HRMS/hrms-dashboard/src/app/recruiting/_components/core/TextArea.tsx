@@ -7,7 +7,7 @@ interface TextAreaProps {
   placeholder: string;
   disabled?: boolean;
   errorText?: string;
-  onChange?: (_: ChangeEvent<HTMLTextAreaElement>) => void; // Correctly type onChange prop
+  onChange?: (_: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const TextArea = ({ name, label, value, errorText, disabled, placeholder, onChange }: TextAreaProps) => {
@@ -17,14 +17,7 @@ export const TextArea = ({ name, label, value, errorText, disabled, placeholder,
         <div className="label">
           <span className="label-text">{label}</span>
         </div>
-        <textarea
-          name={name}
-          value={value}
-          placeholder={placeholder}
-          disabled={disabled}
-          onChange={onChange} // Use handleChange function for onChange event
-          className="textarea textarea-bordered h-28 w-full bg-base-200"
-        ></textarea>
+        <textarea name={name} value={value} placeholder={placeholder} disabled={disabled} onChange={onChange} className="textarea textarea-bordered h-28 w-full bg-base-200"></textarea>
       </label>
       <p>{errorText}</p>
     </div>

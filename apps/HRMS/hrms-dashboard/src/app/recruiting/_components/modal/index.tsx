@@ -24,7 +24,6 @@ export const CreateErrorModal = ({ text, label }: Props) => {
     { label: 'Хадгалах', svg: <CreatedSvg /> },
   ];
   const message = labels.filter((label) => label === label);
-  // const message = label == 'Устгах' ? <DeletedSvg /> : <CreatedSvg />;
 
   return (
     <div>

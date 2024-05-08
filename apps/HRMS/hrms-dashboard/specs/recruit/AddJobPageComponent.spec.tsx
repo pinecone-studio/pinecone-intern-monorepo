@@ -11,7 +11,6 @@ jest.mock('next/navigation', () => ({
 }));
 describe('AddJobPageComponent', () => {
   test('renders correctly', () => {
-    // Mock the router object with a push function
     const mockPush = jest.fn();
     useRouterMock.mockReturnValue({ push: mockPush });
 
@@ -22,7 +21,6 @@ describe('AddJobPageComponent', () => {
   });
 
   test('back button navigates to /recruiting', () => {
-    // Mock the router object with a push function
     const mockPush = jest.fn();
     useRouterMock.mockReturnValue({ push: mockPush });
 
@@ -32,7 +30,6 @@ describe('AddJobPageComponent', () => {
   });
 });
 
-// Test Input and TextArea components
 describe('Input and TextArea components', () => {
   test('Input renders correctly', () => {
     const { getByLabelText } = render(<Input label="Label" placeholder="Placeholder" />);
