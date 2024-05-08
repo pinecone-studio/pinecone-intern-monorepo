@@ -15,7 +15,6 @@ describe ('Handle update-section page' , () => {
       cy.get('[data-cy="title"]').should('exist').type('html intro');
       cy.get('[data-cy="description"]').should('exist').type('html');
       cy.get('#file-test').selectFile('public/js.png', { force: true });
-      cy.get('[data-cy="update-section-handle-btn"]').should('exist')
       cy.get('[data-cy="update-section-handle-btn"]').click();
     });
 })
