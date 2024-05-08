@@ -1,18 +1,39 @@
-import { ChangeEvent } from 'react';
+"use client"
+import * as yup from 'yup';
+import {useCreateSectionMutation} from "../../../generated"
+import { useFormik } from 'formik';
 import FileUploader from '../../../components/FileUploader';
 
-type AddSectionProps = {
-  titleOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  titleValue: string;
-  descriptionOnChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  descriptionValue: string;
-  thumbnailOnChange: string;
-  ThumbnailValue: (field: string, value: any) => void;
-  onClick: () => void;
-  buttonName : string;
-};
+const validatinSchema = yup.object({
+    title: yup.string().required(),
+    description: yup.string().required(),
+    contentImage:yup.string()
+  });
 
-const AddSection = ({titleOnChange , titleValue , descriptionOnChange , descriptionValue , thumbnailOnChange , ThumbnailValue , onClick , buttonName } : AddSectionProps) => {
+const AddSection = () => {
+
+  const [createSection] = useCreateSectionMutation()
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+      thumbnail: '',
+    },
+    validationSchema: validatinSchema,
+    onSubmit: (values) => {
+      createSection({
+        variables: {
+          sectionInput : {
+            title:values.title,
+            description: values.description,
+            contentImage:values.thumbnail
+          }
+        }
+      })
+      formik.resetForm();
+    },
+  });
+
 
     return(
         <div  data-testid="add-section-form" className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-[4px] justify-center items-center p-6">
@@ -26,32 +47,35 @@ const AddSection = ({titleOnChange , titleValue , descriptionOnChange , descript
              name="title"
              placeholder="Оруулна уу..."
              id="title-test"
-             onChange={titleOnChange}
-             value={titleValue}
+             onChange={formik.handleChange}
+             value={formik.values.title}
              ></input>
           </div>
           <div className="flex flex-col py-2">
             <p className="font-bold">Дэлгэрэнгүй</p>
-            <textarea 
-            data-testid="description"
-            className="w-[588px] h-[160px] border rounded-[4px] p-2" 
-            id="description-test"
-            name="description"
-            onChange={descriptionOnChange}
-            value={descriptionValue}
-            placeholder="Энд бичнэ үү..."
+            <textarea
+              data-testid="description"
+              className="w-[588px] h-[160px] border rounded-[4px] p-2"
+              id="description-test"
+              name="description"
+              onChange={formik.handleChange}
+              value={formik.values.description}
+              placeholder="Энд бичнэ үү..."
             ></textarea>
           </div>
           <div className="flex flex-col py-2">
             <p className="font-bold"> Хэсгийн зураг</p>
-            <FileUploader thumbnail={thumbnailOnChange} setFieldValue={ThumbnailValue} />
+            <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
           </div>
         </div>
         <div className="flex gap-4 jutify-center items-center py-4">
-            <button data-cy="add-section-handle-btn" className="px-6 py-2 bg-black text-white rounded-[8px] flex items-center justify-center text-[20px] pb-2 hover:bg-[#D6D8DB] hover:text-black hover:cursor:pointer"
-             onClick={()=>onClick()}
+            <button data-cy="add-section-handle-btn" className="w-[36px] bg-black h-[36px] text-white rounded-[8px] flex items-center justify-center text-[26px] pb-2 hover:bg-[#D6D8DB] hover:text-black "
+             onClick={() => {
+               formik.handleSubmit();
+             }}
+             disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail }
             >
-              {buttonName}
+              +
             </button>
           </div>
       </div>

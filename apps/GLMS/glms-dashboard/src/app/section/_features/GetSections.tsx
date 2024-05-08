@@ -9,14 +9,7 @@ const GetSections = () => {
   const { data, refetch } = useGetSectionsQuery();
   const [deleteSection] = useDeleteSectionMutation();
   const [successMessage, setSuccessMessage] = useState('');
-  const router = useRouter()
-
-  const handleUpdateSectionPage = (sectionId : string | undefined | null) => {
-    if(sectionId){
-      localStorage.setItem("sectionId" , sectionId)
-      router.push('/update-section')
-    }
-  }
+  const router = useRouter();
 
   useEffect(() => {
     if (successMessage) {
@@ -36,6 +29,11 @@ const GetSections = () => {
       }
   };
 
+  const handleUpdateSectionPage = (sectionId : string | undefined | null) => {
+    if(sectionId){
+      router.push("/update-section")
+    }
+  }
 
   useEffect(() => {
     if (data) {
@@ -66,7 +64,10 @@ const GetSections = () => {
             </div>
           </div>
           <div className="flex gap-4 items-center py-4">
-            <button data-testid="update-btn" onClick={()=>handleUpdateSectionPage(section.id)} className=" w-[101px] bg-transparent border-2 border font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
+            <button 
+            data-cy="update-btn"
+            onClick={()=>handleUpdateSectionPage(section.id)} 
+            className=" w-[101px] bg-transparent border-2  font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
               Засах <EditButtonIcon />
             </button>
             <button
