@@ -6,7 +6,6 @@ export const createCourse: MutationResolvers['createCourse'] = async (_, { cours
   try {
     return await courseModel.create(courseInput);
   } catch (error) {
-    console.log(error);
     throw new GraphQLError('An unknown error occurred');
   }
 };

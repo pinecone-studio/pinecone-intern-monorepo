@@ -11,10 +11,23 @@ describe('createLessonPage', () => {
   it('3. create lesson button', () => {
     cy.get('[data-testid="create-button-of-lesson"]').should('exist').should('be.disabled');
   });
-  it('4. check create button be enable and inputs', () => {
+
+  it('creates a lesson and navigates to the correct route', () => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'CreateLesson') {
+        req.reply((res) => {
+          res.send({ data: { createLesson: { id: 'lessonId' } } });
+        });
+      }
+    }).as('createLesson');
+
     cy.get('#title-test-of-lesson').type('some text');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-testid="create-button-of-lesson"]').should('not.be.disabled');
     cy.get('[data-testid="create-button-of-lesson"]').click();
+
+    cy.wait('@createLesson');
+
+    cy.url().should('include', '/dashboard');
   });
 });

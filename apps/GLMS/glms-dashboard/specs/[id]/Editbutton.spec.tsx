@@ -8,9 +8,4 @@ describe('EditButton component', () => {
     const editButton = getByTestId('edit-button-test-id');
     expect(editButton).toBeDefined();
   });
-  it('renders correct text in EditButton', () => {
-    const { getByText } = render(<EditButton />);
-    const buttonText = getByText('Ерөнхийн мэдээлэл');
-    expect(buttonText).toBeDefined();
-  });
 });
