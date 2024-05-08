@@ -14,7 +14,7 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside data-cy="dashboardSidebar" className="min-w-[242px] bg-white h-[100vh] pt-4">
+    <aside data-cy="dashboardSidebar" className="min-w-[242px] bg-white h-[100vh] pt-4 border-r border-[#ECEDF0]">
       {sidebarItems.map((item, index) => {
         return (
           <div
@@ -26,9 +26,7 @@ export const Sidebar = () => {
             style={{ backgroundColor: `${pathname == item.pathName ? '#1C202414' : '#fff'}` }}
             className={`flex justify-start items-center cursor-pointer`}
           >
-            <div className="flex py-2 px-4 text-lg">
-              {item.icon}
-            </div>
+            <div className="flex py-2 px-4 text-lg">{item.icon}</div>
             <p className="text-base text-main font-semibold py-2.5 ">{item.text}</p>
           </div>
         );
