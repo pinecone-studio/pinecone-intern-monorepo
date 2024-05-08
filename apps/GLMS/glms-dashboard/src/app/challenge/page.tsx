@@ -1,5 +1,6 @@
 import ProgressBar from './_components/ProgressBar';
 import { ChallengeResults } from './_feature/ChallengeResults';
+import { Timer } from './_components/Timer';
 
 const ChallengePage = () => {
   return (
@@ -7,6 +8,7 @@ const ChallengePage = () => {
       <h1>Welcome to Challenge page</h1>
       <ProgressBar />
       <ChallengeResults />
+      <Timer />
     </div>
   );
 };
