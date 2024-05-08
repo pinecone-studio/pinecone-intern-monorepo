@@ -7,7 +7,7 @@ import { Course } from '@/generated';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import AddLessonButton from '../_components/AddLessonButton';
-import { EditButtonIcon } from '../../../../public/assets/EditButtonIcon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 type DataTypes = {
   data: Course | undefined;
 };

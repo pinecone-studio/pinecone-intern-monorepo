@@ -1,7 +1,7 @@
 'use client';
 import { useDeleteSectionMutation, useGetSectionsQuery } from '../../../generated';
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
-import { EditButtonicon } from '../../../../public/assets/EditButtonIcon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 import { useEffect, useState } from 'react';
 
 const GetSections = () => {
@@ -64,7 +64,7 @@ const GetSections = () => {
           </div>
           <div className="flex gap-4 items-center py-4">
             <button className=" w-[101px] bg-transparent border-2  font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
-              Засах <EditButtonicon />
+              Засах <EditButtonIcon />
             </button>
             <button
               data-testid="delete-btn"

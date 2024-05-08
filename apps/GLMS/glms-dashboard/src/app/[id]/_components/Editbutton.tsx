@@ -1,6 +1,6 @@
 'use client';
 
-import { EditButtonIcon } from '../../../../public/assets/EditButtonIcon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 
 type EditButtonProps = {
   onClick?: () => void;

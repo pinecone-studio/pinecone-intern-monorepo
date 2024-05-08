@@ -1,4 +1,4 @@
-import { EditButtonIcon } from '../../../../public/assets/EditButtonIcon';
+import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson } from '@/generated';
