@@ -13,7 +13,7 @@ export const getRequestByCalendarMonth: QueryResolvers['getRequestByCalendarMont
 
         const startDateOfMonth= 1 - weekDayOfInputMonth
         const leaveRequestsStartFrom = dayjs(new Date(year, month,)).add(startDateOfMonth, "day")
-        
+
         const leaveRequestEndTo = dayjs(leaveRequestsStartFrom).add(35, "day")
     
         const getMonth = await LeaveRequestModel.find({
