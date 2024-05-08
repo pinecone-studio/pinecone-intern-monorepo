@@ -14,13 +14,6 @@ const lessonSchema = new Schema({
   position: {
     type: Number,
   },
-<<<<<<< HEAD
-
-=======
-  courseId: {
-    type: String,
-  },
->>>>>>> be6f3c89 (feat(lesson-query): lesson query)
   createdAt: {
     type: Date,
     default: Date.now,
