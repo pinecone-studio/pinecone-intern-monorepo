@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
+import { useState } from 'react';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -15,6 +15,8 @@ const validatinSchema = yup.object({
 
 const CourseAdd = () => {
   const router = useRouter();
+  const [status, setStatus] = useState(['Ноорог', 'Хичээл']);
+  const [statusSelected, setStatusSelected] = useState<string | null>(null);
   const [createCourse] = useCreateCourseMutation();
 
   const formik = useFormik({
@@ -31,6 +33,7 @@ const CourseAdd = () => {
             title: values.title,
             description: values.description,
             thumbnail: values.thumbnail,
+            status: statusSelected,
           },
         },
       });
@@ -86,27 +89,19 @@ const CourseAdd = () => {
             </div>
           </div>
           <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
-            <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
-              data-testid="create-button"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
-            >
-              <p className="text-[18px] font-semibold">Ноороглох</p>
-            </button>
-            <button
-              className="bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center"
-              data-testid="create-button"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
-            >
-              <p className="text-[18px] font-semibold">Үргэлжлүүлэх</p>
-              <ArrowForwardIcon />
-            </button>
+            {status.map((item) => (
+              <button
+                className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center `}
+                data-testid="create-button"
+                onClick={() => {
+                  formik.handleSubmit();
+                  setStatusSelected(item);
+                }}
+                disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
+              >
+                <p className="text-[18px] font-semibold">{item === 'Хичээл' ? 'Хадгалах' : item}</p>
+              </button>
+            ))}
           </div>
         </div>
       </div>
