@@ -1,8 +1,9 @@
 'use client';
 import { BagIcon } from '../../../../../../public/assets/BagIcon';
-import { Location1 } from '../../../../../../public/assets/Location1';
-import { Mail } from '../../../../../../public/assets/Mail';
-import { Phone } from '../../../../../../public/assets/Phone';
+import { LocationIcon } from '../../../../../../public/assets/LocationIcon';
+import { Mailicon } from '../../../../../../public/assets/MailIcon';
+import { PhoneIcon } from '../../../../../../public/assets/PhoneIcon';
+
 interface PersonalInformationProps {
   firstName?: string | null;
   lastName?: string | null;
@@ -30,15 +31,15 @@ export const PersonalInformation = ({ firstName, lastName, email, phone, jobTitl
           <p> {jobTitle}</p>
         </div>
         <div className="flex gap-3 items-center">
-          <Phone />
+          <PhoneIcon />
           <p> {phone}</p>
         </div>
         <div className="flex gap-3 items-center">
-          <Mail />
+          <Mailicon />
           <p>{email}</p>
         </div>
         <div className="flex gap-3 items-center">
-          <Location1 />
+          <LocationIcon />
           <p> {address}</p>
         </div>
       </div>
