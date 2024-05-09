@@ -92,7 +92,8 @@ const CourseAdd = () => {
             {status.map((item, index) => (
               <button
                 key={index}
-                className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center `}
+                name="submitBtn"
+                className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center btn`}
                 data-testid="create-button"
                 onClick={() => {
                   formik.handleSubmit();
