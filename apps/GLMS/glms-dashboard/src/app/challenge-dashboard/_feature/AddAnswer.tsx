@@ -21,7 +21,7 @@ export const AddAnswer = (props: IAddAnswerButtonProps) => {
       <div>
         {answers.map((answer, index) => (
           <div key={index} className="flex gap-5 m-2">
-            {checked ? (
+            {checked && (
               <input
                 type="radio"
                 id="radio-button"
@@ -32,8 +32,6 @@ export const AddAnswer = (props: IAddAnswerButtonProps) => {
                   handleCorrectAnswer(index);
                 }}
               />
-            ) : (
-              <></>
             )}
             <input
               placeholder="Хариулт оруулна уу..."
