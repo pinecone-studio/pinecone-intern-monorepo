@@ -1,0 +1,7 @@
+query GetRequestByCalendarMonth($startDate: Date) {
+  getRequestByCalendarMonth(startDate: $startDate) {
+    name
+    startDate
+    leaveType
+  }
+}

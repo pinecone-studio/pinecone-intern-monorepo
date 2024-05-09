@@ -1,9 +1,10 @@
 import dayjs, { Dayjs } from 'dayjs';
 
 export type TDay = {
-  leaveRequest: string;
+  __typename: string
+  leaveType: string;
   name: string;
-  date: string;
+  startDate: string;
 };
 
  type TWeek = {
@@ -25,7 +26,7 @@ export function calendarMatrix(monthDate: Dayjs | string, data: TDay[]) {
 
     for (let j = 0; j < 7; j++) {
       const day = firstDayOfTheMonth.add(currentDayOfMonth, 'day');
-      const leaveRequestOfDay = data.filter((item) => dayjs(item.date).isSame(day, 'day'));
+      const leaveRequestOfDay = data.filter((item) => dayjs(item.startDate).isSame(day, 'day'));
 
       currentDayOfMonth++;
 

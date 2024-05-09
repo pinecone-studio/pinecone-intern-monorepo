@@ -1,20 +1,20 @@
 'use client';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { calendarMatrix } from '../_components/calendarComponents/DataMatrix';
+import { TDay, calendarMatrix } from '../_components/calendarComponents/DataMatrix';
 import { CalendarWeek } from '../_components/calendarComponents/Week';
-
-const data = [
-  { leaveRequest: 'shit happened', name: 'worker1', date: '2024-05-27' },
-  { leaveRequest: 'shit happened2', name: 'worker2', date: '2024-05-27' },
-  { leaveRequest: 'shit happened2', name: 'worker2', date: '2024-05-27' },
-  { leaveRequest: 'shit happened2', name: 'worker2', date: '2024-05-27' },
-  { leaveRequest: 'shit happened', name: 'worker13', date: '2024-05-28' },
-];
+import { useGetRequestByCalendarMonthQuery } from '@/generated';
 
 export const Calendar = () => {
   const [monthDate, useMonthDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const calendarDataMatrix = calendarMatrix(monthDate, data);
+  const {data, loading} = useGetRequestByCalendarMonthQuery({variables:{startDate: monthDate}})
+  if(loading) return <p>Loading...</p>
+
+  const calendarData = data?.getRequestByCalendarMonth
+  const calendarDataMatrix = calendarMatrix(monthDate, calendarData as TDay[]);
+  console.log(calendarDataMatrix);
+  
+  
 
   const UpdateMonth = (inc:number)=>{
     useMonthDate(dayjs(monthDate).add(inc, "month").format("YYYY-MM-DD"))
@@ -25,13 +25,13 @@ export const Calendar = () => {
         <h2 className="text-[18px] text-bold text-center">Чөлөөтэй ажилчид</h2>
         <div className='flex flex-col gap-[10px]'>
           <div className="flex py-[8px] px-[12px] border-[1px] border-[#ECEDF0] rounded-md justify-between">
-            <button
+            <button data-cy='calendarPrevMonth'
               onClick={()=>{UpdateMonth(-1)}}
             >
               &larr;
             </button>
             <p className="text-[#3F4145]">{monthDate}</p>
-            <button
+            <button data-cy='calendarNextMonth'
               onClick={() => {UpdateMonth(1)}}
             >
               &rarr;
