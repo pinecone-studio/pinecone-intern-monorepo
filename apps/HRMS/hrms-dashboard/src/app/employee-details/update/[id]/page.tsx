@@ -2,6 +2,7 @@
 import { useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
+import { UpdateDependant, UpdateEmployment } from './_features';
 
 const Update = () => {
   const { id } = useParams();
@@ -28,7 +29,18 @@ const Update = () => {
         </figure>
         <p className="text-black  m-auto text-sm font-semibold">Ажилтны дэлгэрэнгүй</p>
       </div>
-      <div className="w-full bg-light p-8 h-full">{data?.getEmployee?.firstName}</div>
+      <div className="flex w-full bg-light p-8 h-full gap-6">
+        <div className="">{''}</div>
+        <div className="w-full flex flex-col gap-6">
+          <UpdateEmployment
+            jobTitle={data?.getEmployee?.jobTitle}
+            department={data?.getEmployee?.department}
+            dateOfEmployment={data?.getEmployee?.dateOfEmployment}
+            employmentStatus={data?.getEmployee?.employmentStatus}
+          />
+          <UpdateDependant dependantPhone="88556061" registerNumber="ЙО02240509" />
+        </div>
+      </div>
     </section>
   );
 };
