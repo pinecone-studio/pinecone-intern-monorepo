@@ -6,7 +6,7 @@ export const updateArticleStatusById: MutationResolvers['updateArticleStatusById
   try {
     const updatedArticle = await ArticleModel.findByIdAndUpdate(_id, { status: newStatus }, { new: true }).populate('category');
     if (!updatedArticle) {
-      throw graphqlErrorHandler({ message: 'could not found article' }, errorTypes.INTERVAL_SERVER_ERROR);
+      throw graphqlErrorHandler({ message: 'could not found article' }, errorTypes.NOT_FOUND);
     }
     return updatedArticle;
   } catch (error) {
