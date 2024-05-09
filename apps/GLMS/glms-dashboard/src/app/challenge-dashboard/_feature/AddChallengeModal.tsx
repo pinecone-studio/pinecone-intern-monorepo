@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Add } from '@mui/icons-material';
+import { IoIosAdd } from 'react-icons/io';
 import { SelectWithLabel } from '../_components';
+import { CloseIcon } from '../../../assets/icon/CloseIcon';
 import { useRouter } from 'next/navigation';
-import { Closeicon } from '../icons/CloseIcon';
 
 export const AddChallengeModal = () => {
   const [selectedCourse, setSelectedCourse] = useState<string>('');
@@ -29,14 +29,14 @@ export const AddChallengeModal = () => {
         onClick={() => (document.getElementById('my_modal_1') as HTMLDialogElement)!.showModal()}
       >
         Сорил
-        <Add />
+        <IoIosAdd />
       </button>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box max-w-md" data-testid="challenge-dialog">
           <form method="dialog" className="flex-col pb-2 border-b-2 w-full">
             <p className="font-bold text-2xl mx-4"> Сорил нэмэх</p>
             <button className="btn btn-sm btn-circle btn-ghost absolute font-semibold right-6 top-5" data-testid="close-button">
-              <Closeicon />
+              <CloseIcon />
             </button>
           </form>
           <div>
