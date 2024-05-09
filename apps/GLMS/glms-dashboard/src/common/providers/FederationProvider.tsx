@@ -4,7 +4,6 @@ import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/s
 import { PropsWithChildren } from 'react';
 import { ApolloLink, HttpLink } from '@apollo/client';
 import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr';
-import Header from '../../components/Header';
 
 const uri = process.env.FEDERATION_ENDPOINT;
 
