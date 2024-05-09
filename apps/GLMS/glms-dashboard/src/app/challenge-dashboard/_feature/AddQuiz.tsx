@@ -60,7 +60,7 @@ export const AddQuiz = () => {
           <button className="border-r">
             <MdDelete color="black" size={50} className="border rounded-lg mr-3 p-1" />
           </button>
-          <button type="button" data-cy="submit-btn" className="bg-black text-white p-2 rounded-xl" onClick={() => submitQuiz()}>
+          <button type="button" data-cy="submit-btn" className="bg-black text-white p-2 rounded-xl" onClick={submitQuiz}>
             save
           </button>
         </div>
