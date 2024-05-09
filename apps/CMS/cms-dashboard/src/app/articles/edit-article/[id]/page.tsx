@@ -8,27 +8,46 @@ import { ContentInput } from './_components/ContentInput';
 import { useFormik } from 'formik';
 import { FileUpload } from './_components/FileUpload';
 import { CategorySelectInputFeature } from './_feature/CategorySelectInputFeature';
+import { useEffect } from 'react';
+import { ApolloError } from '@apollo/client';
 
 const Home = () => {
   const { id } = useParams();
   const { data, loading, error } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
+  const article = data?.getArticleByID as Article | undefined;
+  const [updateArticle] = useUpdateArticleMutation();
 
   const formik = useFormik({
     initialValues: {
       thumbnail: '',
-      articleTitle: data?.getArticleByID.title,
-      articleContent: data?.getArticleByID.content,
+      title: '',
+      content: '',
     },
     validationSchema: validationSchema,
-    onSubmit: () => {},
+    onSubmit: async (values) => {
+      console.log(values);
+
+      await updateArticle({
+        variables: {
+          id: id,
+          title: values.title,
+          content: values.content,
+          category: '',
+          coverPhoto: '',
+          commentPermission: false,
+        },
+      });
+    },
   });
+
+  useEffect(() => {
+    formik.setFieldValue('title', article?.title);
+    formik.setFieldValue('content', article?.content);
+  }, [data]);
 
   if (loading) return <h5>Loading...</h5>;
   if (error) return <h5>Error</h5>;
 
-  const article = data?.getArticleByID as Article | undefined;
-
-  const [] = useUpdateArticleMutation();
   return (
     <div data-cy="edit-article-page-cy" className="flex w-[100%] h-screen">
       <div className="w-[75%] flex flex-col px-28 py-[70px] bg-[#f2f2f3] gap-6">
@@ -38,27 +57,27 @@ const Home = () => {
           <div className="flex flex-col gap-3">
             <Title title="Гарчиг өгөх" />
             <TitleInput
-              name="articleTitle"
+              name="title"
               placeholder="type article title"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.articleTitle}
-              helperText={formik.errors.articleTitle}
-              error={formik.errors.articleTitle}
+              value={formik.values.title}
+              helperText={formik.errors.title}
+              error={formik.errors.title}
             />
           </div>
 
           <div className="flex flex-col gap-3">
             <Title title="Нийтлэл бичих" />
             <ContentInput
-              name="articleContent"
+              name="content"
               placeholder="type article content"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.articleContent}
-              helperText={formik.errors.articleContent}
-              error={formik.errors.articleContent}
+              value={formik.values.content}
+              helperText={formik.errors.content}
+              error={formik.errors.content}
             />
           </div>
         </div>
@@ -73,8 +92,16 @@ const Home = () => {
           <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
         </div>
 
-        <SubmitButton onClick={formik.handleSubmit} text="Ноорогт хадгалах" bgColor="#f6f6f6" />
-        <SubmitButton onClick={formik.handleSubmit} text="Нийтлэх" bgColor="#D6D8D8" />
+        <div className="p-6">
+          {/* <SubmitButton onClick={formik.handleSubmit} text="Ноорогт хадгалах" bgColor="#f6f6f6" /> */}
+          <SubmitButton
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+            text="Нийтлэх"
+            bgColor="black"
+          />
+        </div>
       </div>
     </div>
   );

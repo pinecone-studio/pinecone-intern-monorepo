@@ -45,7 +45,6 @@ export const DashboardTable = (props: DashboardTableProps) => {
   if (loading) return <div>loading...</div>;
   if (error) return <div>error...{error.message}</div>;
   return (
-    
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
       <div className="overflow-x-auto w-full min-w-[650px] flex border">
         <table className="table">

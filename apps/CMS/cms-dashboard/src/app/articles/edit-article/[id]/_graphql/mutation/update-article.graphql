@@ -1,11 +1,12 @@
-mutation UpdateArticle($id: ID!, $title: String!, $content: String!, $category: ID!, $commentPermission: Boolean!) {
-  updateArticle(_id: $id, title: $title, content: $content, category: $category, commentPermission: $commentPermission) {
+mutation UpdateArticle($id: ID!, $title: String!, $content: String!, $category: ID!, $commentPermission: Boolean!, $coverPhoto: String) {
+  updateArticle(_id: $id, title: $title, content: $content, category: $category, commentPermission: $commentPermission, coverPhoto: $coverPhoto) {
+    id
     title
+    coverPhoto
     content
     commentPermission
     category {
       name
     }
-    coverPhoto
   }
 }
