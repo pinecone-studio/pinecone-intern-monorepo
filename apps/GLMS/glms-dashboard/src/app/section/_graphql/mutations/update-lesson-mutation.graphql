@@ -1,0 +1,5 @@
+mutation updateLesson($id: ID!, $lessonInput: LessonInput!) {
+  updateLesson(id: $id, lessonInput: $lessonInput) {
+    sections
+  }
+}
