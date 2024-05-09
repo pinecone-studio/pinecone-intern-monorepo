@@ -89,21 +89,24 @@ const CourseAdd = () => {
             </div>
           </div>
           <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
-            {status.map((item, index) => (
-              <button
-                key={index}
-                name="submitBtn"
-                className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center btn`}
-                data-testid="create-button"
-                onClick={() => {
-                  formik.handleSubmit();
-                  setStatusSelected(item);
-                }}
-                disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
-              >
-                <p className="text-[18px] font-semibold">{item === 'Хичээл' ? 'Хадгалах' : item}</p>
-              </button>
-            ))}
+            {status.map((item, index) => {
+              const handleClick = () => {
+                formik.handleSubmit();
+                setStatusSelected(item);
+              };
+              return (
+                <button
+                  key={index}
+                  name="submitBtn"
+                  className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center btn`}
+                  data-testid="create-button"
+                  onClick={handleClick}
+                  disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
+                >
+                  <p className="text-[18px] font-semibold">{item === 'Хичээл' ? 'Хадгалах' : item}</p>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -84,26 +84,24 @@ const DashboardOtherLab = () => {
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses
               .filter((item: Course) => actionTab === item.status)
-              .map((data, index) => (
-                <div className="relative" key={index}>
-                  <div>
-                    <div
-                      data-cy="courseClick"
-                      className="mt-8 mr-8"
-                      key={data.id}
-                      onClick={() => {
-                        localStorage.setItem('courseID', `${data.id}`);
-                        router.push(`/${data.id}`);
-                      }}
-                    >
-                      <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+              .map((data, index) => {
+                const handleClick = () => {
+                  localStorage.setItem('courseID', `${data.id}`);
+                  router.push(`/${data.id}`);
+                };
+                return (
+                  <div className="relative" key={index}>
+                    <div>
+                      <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
+                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+                      </div>
+                      <button className="absolute bottom-6 right-14">
+                        <CourseDeleteIcon />
+                      </button>
                     </div>
-                    <button className="absolute bottom-6 right-14">
-                      <CourseDeleteIcon />
-                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
       </div>
