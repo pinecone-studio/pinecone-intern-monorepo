@@ -18,7 +18,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
   const employedYear = Math.floor(today.getFullYear() - started.getFullYear());
 
   return (
-    <section className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
+    <section data-cy="updateEmployment" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
         <p className="text-black text-lg font-semibold cursor-pointer">Хөдөлмөр эрхлэлтийн мэдээлэл</p>
         <UpdateButton />
