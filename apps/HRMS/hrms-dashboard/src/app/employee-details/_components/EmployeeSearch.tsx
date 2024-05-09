@@ -1,6 +1,6 @@
 'use client';
 import React, { ChangeEvent, useCallback } from 'react';
-import { Search } from '../../../assets';
+import { SearchSvg } from '../../../assets';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const EmployeeSearch = () => {
@@ -26,7 +26,7 @@ export const EmployeeSearch = () => {
   return (
     <div className="border flex gap-2 border-[#ECEDF0] p-1 rounded-lg min-w-[302px] justify-center items-center ">
       <div className="px-1">
-        <Search />
+        <SearchSvg />
       </div>
       <input data-testid="employee-search" type="text" defaultValue={searchPath!} onChange={handleChange} className="w-full outline-none" />
     </div>

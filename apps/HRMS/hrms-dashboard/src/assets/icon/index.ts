@@ -1,5 +1,5 @@
 export * from './CreatedSvg';
 export * from './DeletedSvg';
-export * from '../../app/asset/icons/Search';
+export * from '../../app/asset/icons/SearchSvg';
 export * from './AddIcon';
-export * from './Close';
+export * from './CloseSvg';

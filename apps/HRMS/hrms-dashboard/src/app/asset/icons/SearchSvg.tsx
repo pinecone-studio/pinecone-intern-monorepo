@@ -1,4 +1,4 @@
-export const Search = () => {
+export const SearchSvg = () => {
   return (
     <svg width="22" height="22" className=" text-black" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

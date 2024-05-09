@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Department, useCreateEmployeeMutation } from '../../../generated';
 import { EmploymentStatus } from '../../../generated';
 import { inputItems } from '../constants';
-import { Close } from '../../../assets';
+import { CloseSvg } from '../../../assets';
 
 type CreateEmployeeFormProps = {
   handleCloseNewEmployee: () => void;
@@ -74,7 +74,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           Ажилтан нэмэх
         </p>
         <div data-testid="close-button" onClick={props.handleCloseNewEmployee} className="cursor-pointer">
-          <Close />
+          <CloseSvg />
         </div>
       </div>
       <form className="flex flex-col justify-center px-10 pt-10 gap-4">
