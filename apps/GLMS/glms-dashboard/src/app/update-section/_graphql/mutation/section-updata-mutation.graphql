@@ -1,0 +1,7 @@
+mutation updateSection($id: ID!, $sectionInput: SectionInput!) {
+  updateSection(id: $id, sectionInput: $sectionInput) {
+    title
+    description
+    contentImage
+  }
+}

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 export const sectionSchema = gql`
-   type Query {
+  type Query {
     getSections: [Section!]!
     getSectionById(id: ID!): Section!
   }
@@ -9,16 +9,18 @@ export const sectionSchema = gql`
     title: String
     description: String
     contentImage: String
-    createdAt:Date
+    posted: Boolean
+    createdAt: Date
   }
   input SectionInput {
     title: String
     description: String
     contentImage: String
+    posted: Boolean
   }
   type Mutation {
-    createSection(sectionInput:SectionInput!): Section!
-    updateSection(id: ID!, sectionInput:SectionInput!): Section!
-    deleteSection(id:ID!):Section!
+    createSection(sectionInput: SectionInput!): Section!
+    updateSection(id: ID!, sectionInput: SectionInput!): Section!
+    deleteSection(id: ID!): Section!
   }
 `;
