@@ -1,4 +1,3 @@
-
 const CommentsTab = () => {
   return (
     <div className='p-3 bg-white rounded-xl w-full'>
