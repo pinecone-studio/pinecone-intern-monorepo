@@ -1,4 +1,3 @@
-import { ArticleStatus } from '@/graphql/generated';
 import { updateArticleStatusById } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 const mockedArticle = {
@@ -8,7 +7,7 @@ const mockedArticle = {
   content: 'testing content',
   author: '1',
   category: '1',
-  status: ArticleStatus.Archived,
+  status: 'ARCHIVED',
   slug: 'thisisSlug',
   commentPermission: false,
 };
@@ -35,13 +34,13 @@ jest.mock('../../src/models/article.model', () => ({
 
 describe('Update article status', () => {
   it('should update article status by id', async () => {
-    const result = await updateArticleStatusById!({}, { _id: '1', newStatus: ArticleStatus.Archived }, {}, {} as GraphQLResolveInfo);
+    const result = await updateArticleStatusById!({}, { _id: '1', newStatus: 'ARCHIVED' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(mockedArticle);
   });
 
   it("should throw an error if the article doesn't exist", async () => {
     try {
-      await updateArticleStatusById!({}, { _id: '1', newStatus: ArticleStatus.Archived }, {}, {} as GraphQLResolveInfo);
+      await updateArticleStatusById!({}, { _id: '1', newStatus: 'ARCHIVED' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('could not update article status'));
     }
