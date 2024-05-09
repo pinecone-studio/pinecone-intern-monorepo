@@ -1,21 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { MdRadioButtonChecked, MdAddPhotoAlternate } from 'react-icons/md';
 
-export const TextOrFileQuestionCreate = () => {
-  const [selectedBtn, setSelectedBtn] = useState<'text' | 'file'>('text');
+type Props = {
+  selectedBtn: 'TEXT' | 'IMAGE';
+  handleSelectText: () => void;
+  handleSelectFile: () => void;
+};
 
-  const handleSelectText = () => {
-    setSelectedBtn('text');
-  };
-
-  const handleSelectFile = () => {
-    setSelectedBtn('file');
-  };
-  const isTextSelected = selectedBtn === 'text' ? 'bg-black text-white' : 'bg-slate-200 text-black';
-  const isImageSelected = selectedBtn === 'file' ? 'bg-black text-white' : 'bg-slate-200 text-black';
+export const TextOrFileQuestionCreate = ({ selectedBtn, handleSelectFile, handleSelectText }: Props) => {
+  const isTextSelected = selectedBtn === 'TEXT' ? 'bg-black text-white' : 'bg-slate-200 text-black';
+  const isImageSelected = selectedBtn === 'IMAGE' ? 'bg-black text-white' : 'bg-slate-200 text-black';
 
   const centerStyle = 'flex flex-col justify-center items-center ';
   const containerTextOrFile = 'flex w-[220px] rounded-2xl border border-slate-400';
@@ -26,11 +21,11 @@ export const TextOrFileQuestionCreate = () => {
     <div className={centerStyle}>
       <div className={containerTextOrFile}>
         <div className={uploadTextClass} onClick={handleSelectText} data-testid="select-text-button">
-          <RadioButtonCheckedIcon />
+          <MdRadioButtonChecked />
           <span> Сонгох</span>
         </div>
         <div className={uploadFileClass} onClick={handleSelectFile} data-testid="select-file-button">
-          <AddPhotoAlternateIcon />
+          <MdAddPhotoAlternate />
           <span> Зураг</span>
         </div>
       </div>
