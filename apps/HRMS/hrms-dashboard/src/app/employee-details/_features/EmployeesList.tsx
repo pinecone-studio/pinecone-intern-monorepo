@@ -4,7 +4,7 @@ import { EmployeesListTable } from './EmployeesListTable';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CreateEmployeeForm } from './CreateEmployeeForm';
-import { AddIcon } from '../../../assets';
+// import { AddIcon } from '../../../assets';
 import { TableFilters } from './TableFilters';
 
 export const EmployeesList = () => {
@@ -38,7 +38,7 @@ export const EmployeesList = () => {
               Ажилчид
             </p>
             <div onClick={handleOpenNewEmployee} data-cy="addEmployeeBtn" className="flex items-center py-2 px-3 gap-1 rounded-lg bg-light text-main cursor-pointer">
-              <AddIcon />
+              {/* <AddIcon /> */}
               <p className="text-sm font-semibold">Ажилтан нэмэх</p>
             </div>
 

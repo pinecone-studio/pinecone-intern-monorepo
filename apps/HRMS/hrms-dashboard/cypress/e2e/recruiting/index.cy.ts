@@ -12,8 +12,13 @@ describe('Recruiting Page', () => {
     cy.contains('p', 'Зар').should('exist');
     cy.contains('p', 'Ирсэн өргөдөл').should('exist');
   });
+
   it('navigates to add job page on button click', () => {
     cy.get('[data-testid="jobAdd-button"]').click();
     cy.url().should('include', '/recruiting/add-job');
+  });
+
+  it('renders table headers correctly', () => {
+    cy.get('[data-cy="jobsList"] th').should('be.visible');
   });
 });
