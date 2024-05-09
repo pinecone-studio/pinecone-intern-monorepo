@@ -1,5 +1,5 @@
-mutation updateSection($sectionInput: SectionInput!) {
-  updateSection(sectionInput: $sectionInput) {
+mutation updateSection($id: ID!,$sectionInput: SectionInput!) {
+  updateSection(id: ID!,sectionInput: $sectionInput) {
     title
     description
     contentImage
