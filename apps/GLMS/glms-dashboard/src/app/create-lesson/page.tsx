@@ -44,7 +44,7 @@ const LessonAdd = () => {
   }, []);
 
   return (
-    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] ">
+    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] h-[92vh] ">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="test-back-div"
@@ -55,7 +55,7 @@ const LessonAdd = () => {
         >
           <PrevArrow /> {'Нүүр'}
         </div>
-        <div className="w-full bg-white rounded-xl pt-12">
+        <div className="w-full bg-white h-[60vh] rounded-xl pt-12">
           <div className="px-6">
             <div className="max-w-[668px] w-full m-auto rounded-xl p-10" style={{ border: '2px #D6D8DB dashed' }}>
               <div className="w-full gap-2">

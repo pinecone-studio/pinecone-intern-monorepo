@@ -22,7 +22,7 @@ const Home = () => {
 
   if (loading || lessonLoading)
     return (
-      <div className="flex justify-center items-center h-screen w-screen">
+      <div className="flex justify-center items-center h-[92vh] w-screen">
         <div className="text-center">
           <p className="loading loading-spinner m-auto loading-lg" />
           <p className="text-xl ">Loading...</p>

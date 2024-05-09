@@ -19,13 +19,13 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
 
   return (
     <div>
-      <div className=" mr-auto ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
+      <div className=" mr-auto h-[92vh] ml-auto px-[24px] flex  flex-col max-w-[90vw] gap-[24px] pt-8">
         <BackButton
           onClick={() => {
             router.push('/dashboard');
           }}
         />
-        <div className=" py-[48px] px-[24px] bg-white rounded-xl " key={data?.id}>
+        <div className=" py-[48px] px-[24px] bg-white rounded-xl h-[80vh] " key={data?.id}>
           <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto">
             <div className="flex justify-between">
               <CourseTitle title={data?.title} />

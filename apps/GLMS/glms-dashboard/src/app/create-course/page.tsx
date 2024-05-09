@@ -42,14 +42,14 @@ const CourseAdd = () => {
   });
 
   return (
-    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full flex justify-center py-6 border-t-2">
+    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full h-[91vh] flex justify-center py-6 border-t-2">
       <div className="w-[90%]">
         <div
           data-testid="test-back-stack"
           onClick={() => {
             router.push('/dashboard');
           }}
-          className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
+          className=" flex flex-row gap-[6px] mb-[40px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
           <ArrowLeftIcon /> {'Нүүр'}
         </div>

@@ -46,40 +46,29 @@ const DashboardOtherLab = () => {
               </div>
               <div className=" flex items-center justify-center w-1/3">
                 <Book />
-                <div className="flex gap-[16px]">
-                  <button
-                    data-testid="button1"
-                    onClick={() => router.push('/create-course')}
-                    className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
-                    color="inherit"
-                  >
-                    Сэдэв <AddIcon />
-                  </button>
-                  <AddChallengeModal />
-                </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
-            <div className=" mr-auto ml-auto  flex w-[85%] px-6 ">
-              {buttonsBottom.map((name) => (
-                <button
-                  data-testid="tab1"
-                  data-cy={name}
-                  onClick={() => {
-                    setActionTab(name);
-                  }}
-                  key={name}
-                  className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
-                >
-                  {name}
-                </button>
-              ))}
+            <div className="border-solid border-[#0000001A]">
+              <div className=" mr-auto ml-auto px-[24px]">
+                {buttonsBottom.map((name) => (
+                  <button
+                    data-testid="tab1"
+                    data-cy={name}
+                    onClick={() => {
+                      setActionTab(name);
+                    }}
+                    key={name}
+                    className={`text-lg font-medium py-2 px-4 ${actionTab === name ? 'border-b-2 border-black' : ''}`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full ">
+      <div className="w-full h-[63vh]">
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses
