@@ -11,6 +11,7 @@ describe('remove reply by admin mutation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   const mockInput = {
     _id: '662fa126fc8ed6fdd88ace2f',
   };
