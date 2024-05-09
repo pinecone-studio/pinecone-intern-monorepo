@@ -62,7 +62,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
               <tr key={index} className="h-11 border-solid border-b border-b-[#EDE6F0]  p-4 text-left">
                 <td className="cursor-pointer p-4">
                   <Link href={`/employee-details/update/${row?.id}`}>
-                    <div className="flex items-center justify-start gap-3">
+                    <div data-cy="updateLink" className="flex items-center justify-start gap-3">
                       <figure className="relative rounded-full overflow-hidden h-[50px] aspect-square">
                         <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
                       </figure>
