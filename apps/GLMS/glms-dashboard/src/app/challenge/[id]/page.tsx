@@ -14,14 +14,12 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [isShow, setIsShow] = useState(0);
   const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
 
-  //progressBar
-  // 6639b508ad9ecc26d93ecafd
-
   const oneValueCalculator = () => {
     if (data?.getChallengeById?.quiz) {
       setOneProgressValue(100 / data?.getChallengeById?.quiz?.length);
     }
   };
+  console.log('hi', data?.getChallengeById?.quiz);
   const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);
   const [progressValue, setProgressValue] = useState<number>(0);
 
@@ -35,12 +33,12 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   }, [loading]);
 
   return (
-    <div className="bg-[#f7f7f8] flex flex-col justify-center items-center">
+    <div className="bg-white flex flex-col justify-center items-center">
       <ProgressBar progressValue={progressValue} />
       {data?.getChallengeById?.quiz?.map((quiz, index) => {
         return (
           <div key={quiz?._id}>
-            {isShow === index ? (
+            {isShow === index && (
               <div key={quiz?._id} className="flex w-full flex-col justify-center items-center h-[80vh] gap-[92px]">
                 <Question question={quiz?.question} index={index} />
                 <div className="flex flex-col items-center gap-8 mt-16">
@@ -49,8 +47,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
                   ))}
                 </div>
               </div>
-            ) : (
-              ''
             )}
           </div>
         );
