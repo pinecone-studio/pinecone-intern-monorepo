@@ -1,12 +1,10 @@
 'use client';
 import { Course } from '@/generated';
-import { CourseDeleteIcon } from '../../../../public/assets/CourseDeleteIcon';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
-
   return (
-    <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl" key={id} data-testid="courseContain">
+    <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id} data-testid="courseContain">
       <div className="w-full h-[120px] rounded-md overflow-hidden">
         <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
       </div>
@@ -21,7 +19,6 @@ const Courses = (props: Course) => {
           <p className="flex w-fit bg-[#C1E6CF]  px-1 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
             Lessons
           </p>
-          <CourseDeleteIcon />
         </div>
       </div>
     </div>

@@ -4,7 +4,8 @@ import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { useRouter } from 'next/navigation';
-import { useGetCoursesQuery } from '@/generated';
+import { Course, useGetCoursesQuery } from '@/generated';
+import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
@@ -77,23 +78,30 @@ const DashboardOtherLab = () => {
             </div>
           </div>
         </div>
-        <div className="w-full ">
-          <div className=" mr-auto ml-auto  flex max-w-[85%]">
-            <div className=" flex flex-wrap box-border  h-full w-full">
-              {data?.getCourses.map((data) => (
-                <div
-                  data-cy="courseClick"
-                  className="mt-8 mr-8"
-                  key={data.id}
-                  onClick={() => {
-                    localStorage.setItem('courseID', `${data.id}`);
-                    router.push(`/${data.id}`);
-                  }}
-                >
-                  <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
-                </div>
-              ))}
-            </div>
+      </div>
+      <div className="w-full ">
+        <div className=" mr-auto ml-auto  flex max-w-[85%]">
+          <div className=" flex flex-wrap box-border  h-full w-full">
+            {data?.getCourses
+              .filter((item: Course) => actionTab === item.status)
+              .map((data, index) => {
+                const handleClick = () => {
+                  localStorage.setItem('courseID', `${data.id}`);
+                  router.push(`/${data.id}`);
+                };
+                return (
+                  <div className="relative" key={index}>
+                    <div>
+                      <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
+                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+                      </div>
+                      <button className="absolute bottom-6 right-14">
+                        <CourseDeleteIcon />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

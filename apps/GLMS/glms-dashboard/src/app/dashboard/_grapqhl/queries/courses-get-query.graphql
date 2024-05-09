@@ -5,6 +5,7 @@ query GetCourses {
     description
     thumbnail
     position
+    status
     createdAt
   }
 }

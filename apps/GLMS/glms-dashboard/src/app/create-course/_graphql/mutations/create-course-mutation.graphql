@@ -3,5 +3,6 @@ mutation CreateCourse($courseInput: CourseInput!) {
     title
     description
     thumbnail
+    status
   }
 }

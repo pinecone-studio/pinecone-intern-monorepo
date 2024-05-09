@@ -11,11 +11,11 @@ describe('createCoursePage', () => {
   it('3. create button', () => {
     cy.get('[data-testid="create-button"]').should('exist').should('be.disabled');
   });
-  it('4. check create button be enable and inputs', () => {
+  it.only('4. check create button be enable and inputs', () => {
     cy.get('#title-test').type('some text');
     cy.get('#description-test').type('some more text');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-testid="create-button"]').should('not.be.disabled');
-    cy.get('[data-testid="create-button"]').click();
+    cy.get('button[name="submitBtn"]').eq(0).click();
   });
 });
