@@ -27,7 +27,6 @@ export const EmployeesListTable = ({ setPage, checked }: PropsType) => {
       },
     },
   });
-  console.log();
 
   const employeesData = data?.getEmployeesByPaginate;
   const totalEmployees = Number(employeesData?.totalEmployees);
