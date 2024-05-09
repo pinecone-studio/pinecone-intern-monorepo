@@ -25,7 +25,16 @@ const validationSchemaDays = yup.object({
 
 export const CreateLeaveRequestDaysOrDayOff = () => {
   const { setLeaveReqStep, setStepNumber } = useContext(LeaveRequestCreationContext);
-  const [radioValue, setRadioValue] = useState('');
+  const [radioValue, setRadioValue] = useState('dayOff');
+
+  const formikSubmitHandler = () => {
+    if (radioValue == 'dayOff') {
+      formikDayOff.handleSubmit();
+    }
+    if (radioValue == 'days') {
+      formikDays.handleSubmit();
+    }
+  };
 
   const formikDayOff = useFormik({
     initialValues: {
@@ -73,6 +82,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
                 id="radioButtonDays"
                 name="step2LeaveLength"
                 value="days"
+                checked={radioValue === 'days'}
                 onClick={(e) => {
                   formikDays.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value);
                   setRadioValue((e.target as HTMLTextAreaElement).value);
@@ -93,6 +103,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
                 id="radioButtonDayOff"
                 name="step2LeaveLength"
                 value="dayOff"
+                checked={radioValue === 'dayOff'}
                 onClick={(e) => {
                   formikDayOff.setFieldValue('step2LeaveLength', (e.target as HTMLTextAreaElement).value);
                   setRadioValue((e.target as HTMLTextAreaElement).value);
@@ -105,9 +116,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
           </div>
         </div>
 
-        {radioValue == '' ? (
-          ''
-        ) : radioValue == 'dayOff' ? (
+        {radioValue == 'dayOff' ? (
           <CreateLeaveRequestSelectedDayOff
             step2DateName={'step2Date'}
             step2DateValue={formikDayOff.values.step2Date}
@@ -141,15 +150,8 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
           setStepNumber(0);
           setLeaveReqStep(<CreateLeaveRequestGeneralInput />);
         }}
-        onClick={() => {
-          if (radioValue == 'dayOff') {
-            formikDayOff.handleSubmit();
-          }
-          if (radioValue == 'days') {
-            formikDays.handleSubmit();
-          }
-        }}
-        disabled={!formikDayOff.isValid || !formikDays.isValid}
+        onClick={formikSubmitHandler}
+        disabled={(() => (radioValue === 'days' && !formikDays.isValid) || (radioValue === 'dayOff' && !formikDayOff.isValid))()}
       />
     </div>
   );
