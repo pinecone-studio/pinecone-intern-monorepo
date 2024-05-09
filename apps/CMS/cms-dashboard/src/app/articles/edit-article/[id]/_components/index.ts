@@ -5,3 +5,5 @@ export * from './ArrowBack';
 export * from './ContentInput';
 export * from './TitleInput';
 export * from './CategorySelectInput';
+export * from './ValidationSchema';
+export * from './HelperText';

@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) => {
@@ -14,10 +15,10 @@ export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) =
       <input
         data-testid="input-test-id"
         onChange={toggleCommentPermission}
-        checked={checked ? true : false}
+        checked={checked}
         type="checkbox"
         className={checked ? 'toggle [--tglbg:black]' : 'toggle [--tglbg:#f6f6f6]'}
-        style={{ color: checked ? 'white' : 'black' }}
+        style={{ color: checked ? 'white' : 'black', background: checked ? 'white' : 'black' }}
       />
     </div>
   );
