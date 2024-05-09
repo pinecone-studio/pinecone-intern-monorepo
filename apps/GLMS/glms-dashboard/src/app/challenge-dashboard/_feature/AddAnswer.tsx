@@ -16,6 +16,10 @@ export const AddAnswer = (props: IAddAnswerButtonProps) => {
   const { label, answers, addAnswer, handleCorrectAnswer, handleAnswerChange } = props;
   const [checked, setChecked] = useState(false);
 
+  const handleChecked = () => {
+    setChecked(!checked);
+  };
+
   return (
     <div style={{ margin: 10 }}>
       <div>
@@ -51,7 +55,7 @@ export const AddAnswer = (props: IAddAnswerButtonProps) => {
         <button id="add-answer" className=" rounded p-1 w-full border border-black " disabled={answers.length > 3} onClick={addAnswer} data-testid="add-button">
           + {label}
         </button>
-        <button id="choose-button" className=" rounded p-1 w-full border border-black" onClick={() => setChecked(!checked)}>
+        <button id="choose-button" className=" rounded p-1 w-full border border-black" onClick={handleChecked}>
           Зөв хариулт сонгох
         </button>
       </div>
