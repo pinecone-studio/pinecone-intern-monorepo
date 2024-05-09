@@ -12,8 +12,8 @@ describe('Handle section page', () => {
     cy.get('[data-cy="title"]').should('exist');
     cy.get('[data-cy="description"]').should('exist');
     cy.get('[data-cy="contentImage"]').should('exist');
-    cy.get('[data-cy="delete-btn"]').should('exist').click({multiple:true})
-    cy.get('[data-cy="update-btn"]').should('exist').click({multiple:true})
+    cy.get('[data-cy="delete-btn"]').should('exist').click({ multiple: true });
+    cy.get('[data-cy="update-btn"]').should('exist').click({ multiple: true });
   });
 
   it('3.Should display AddSection feature', () => {
@@ -24,11 +24,11 @@ describe('Handle section page', () => {
     cy.get('[data-cy="add-section-handle-btn"]').click();
   });
 
-  it('4.When section created successfully AddSection form reset' , () => {
+  it('4.When section created successfully AddSection form reset', () => {
     cy.get('[data-testid="add-section-form"]').should('exist');
     cy.get('[data-cy="title"]').should('exist');
     cy.get('[data-cy="description"]').should('exist');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="add-section-handle-btn"]').should('exist').should('be.disabled');
-  })
+  });
 });
