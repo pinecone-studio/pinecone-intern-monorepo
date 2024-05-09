@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import { FileUpload } from './_components/FileUpload';
 import { CategorySelectInputFeature } from './_feature/CategorySelectInputFeature';
 import { useEffect } from 'react';
-import { ApolloError } from '@apollo/client';
+import { log } from 'console';
 
 const Home = () => {
   const { id } = useParams();
@@ -25,18 +25,18 @@ const Home = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
-
-      await updateArticle({
-        variables: {
-          id: id,
-          title: values.title,
-          content: values.content,
-          category: '',
-          coverPhoto: '',
-          commentPermission: false,
-        },
-      });
+      try {
+        await updateArticle({
+          variables: {
+            id: id,
+            title: values.title,
+            content: values.content,
+            commentPermission: false,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -96,7 +96,11 @@ const Home = () => {
           {/* <SubmitButton onClick={formik.handleSubmit} text="Ноорогт хадгалах" bgColor="#f6f6f6" /> */}
           <SubmitButton
             onClick={() => {
-              formik.handleSubmit();
+              try {
+                formik.handleSubmit();
+              } catch (error) {
+                console.log(error);
+              }
             }}
             text="Нийтлэх"
             bgColor="black"
