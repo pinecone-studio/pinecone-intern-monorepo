@@ -21,6 +21,7 @@ export const EmployeesList = () => {
   useEffect(() => {
     setChecked(1);
   }, [searchPath]);
+
   return (
     <>
       <main className="flex flex-col p-8 w-full">
