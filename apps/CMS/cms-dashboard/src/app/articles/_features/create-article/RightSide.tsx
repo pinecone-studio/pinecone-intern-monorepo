@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEventHandler, Dispatch, FocusEventHandler, SetStateAction } from 'react';
+import React, { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 import cx from 'classnames';
 import { useGetCategoriesQuery } from '../../../../generated';
 import ImageUploader from './ImageUploader';
@@ -40,7 +40,11 @@ const RightSide: React.FC<CreateArticleRightSideProps> = ({
       ) : (
         <div className=" gap-[16px] flex flex-col p-6">
           <p className=" font-semibold text-lg">Ангилал</p>
-          <select data-cy="selectCategory"  value={value} name={name} onChange={setCategory}
+          <select
+            data-cy="selectCategory"
+            value={value}
+            name={name}
+            onChange={setCategory}
             className={cx('p-2 bg-[#f7f7f8] rounded-lg border h-14', {
               'ring-[1px] ring-red-700 hover:ring-[1px]': error,
               'focus-within:border focus-within:border-[#000000] focus-within:hover:border-[#000000]': !error,
