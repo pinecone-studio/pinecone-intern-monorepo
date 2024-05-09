@@ -45,11 +45,11 @@ const Index = (props: CommentsProps) => {
             <Button label="Нуухаа болих" icon={PiEyeClosed} btnType='ghost'></Button>
           </div>
           <div className='flex items-center'>
-            <Button label="Устгах" icon={MdDeleteOutline}></Button>
+            <Button label="Устгах" icon={MdDeleteOutline} btnType='ghost'></Button>
           </div>
         </div>
          <div className='flex items-center'>
-            <Button label="Хариулах" icon={MdReply}></Button>
+            <Button label="Хариулах" icon={MdReply} btnType='ghost'></Button>
          </div>
       </div> 
     </div>
