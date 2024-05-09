@@ -4,7 +4,7 @@ import { ContentPaste, Report, Tag, Window } from './SVG';
 
 export const sidebarItems = [
   { text: 'Нүүр хуудас', icon: <Window />, pathName: '/' },
-  { text: 'Ажилчид', icon: <ContentPaste />, pathName: '/employee-details?employees=1' },
+  { text: 'Ажилчид', icon: <ContentPaste />, pathName: '/employee-details' },
   { text: 'Чөлөө', icon: <Report />, pathName: '/leaving' },
   { text: 'Ажлын зар', icon: <Tag />, pathName: '/recruiting' },
 ];
@@ -13,7 +13,7 @@ export const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
   if (pathname === '/login') {
-    return null
+    return null;
   }
 
   return (

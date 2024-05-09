@@ -1,29 +1,20 @@
 'use client';
 import ReactPaginate from 'react-paginate';
-import { useEffect, useState } from 'react';
 import { LeftArrow, RightArrow } from '../../asset';
-import { perPage } from '../constants';
 
 type PropsType = {
-  page: number | undefined ;
-  handleClick: (_: number) => void;
+  page: number | undefined;
+  setChecked: (_: number) => void;
 };
 
 type PageChangeEvent = {
   selected: number;
 };
 
-export const EmployeePagination = ({ handleClick, page, }: PropsType) => {
-  const [checked, setChecked] = useState(1);
-  const pageLength = Math.ceil(page! / perPage.limit);
-  
+export const EmployeePagination = ({ page, setChecked }: PropsType) => {
   const onPageChange = (e: PageChangeEvent) => {
     setChecked(e.selected + 1);
   };
-   
-  useEffect(() => {
-    handleClick(checked);
-  }, [ checked]);
 
   return (
     <>
@@ -32,10 +23,9 @@ export const EmployeePagination = ({ handleClick, page, }: PropsType) => {
         pageClassName="border rounded-lg w-10 h-10 flex justify-center items-center  "
         activeClassName="bg-black text-white"
         nextLabel={<RightArrow />}
-        pageCount={pageLength}
+        pageCount={page!}
         onPageChange={onPageChange}
         previousLabel={<LeftArrow />}
-        renderOnZeroPageCount={null}
       />
     </>
   );

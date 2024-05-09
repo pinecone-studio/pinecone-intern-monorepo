@@ -4,31 +4,38 @@ import { useGetEmployeesByPaginateQuery } from '../../../generated';
 import { perPage } from '../constants';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type PropsType = {
   setPage: Dispatch<SetStateAction<number | undefined>>;
-  searchPath: string | null;
+  checked: number;
 };
-export const EmployeesListTable = ({ setPage, searchPath }: PropsType) => {
+export const EmployeesListTable = ({ setPage, checked }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
+  const searchParams = useSearchParams();
+  const employeesSearchPath: string | null = searchParams.get('search');
   const { data, loading } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
         limit: perPage.limit,
-        page: Number(searchPath),
+        page: checked,
       },
-
       employeeDetailsfilterInput: {
-        searchedValue: '',
+        searchedValue: employeesSearchPath || '',
+        jobTitle: '',
+        employmentStatus: '',
       },
     },
   });
 
   const employeesData = data?.getEmployeesByPaginate;
-  const totalEmployees = employeesData?.totalEmployees;
+  const totalEmployees = Number(employeesData?.totalEmployees);
+  const pageLength = Math.ceil(totalEmployees / perPage.limit);
+
   useEffect(() => {
-    setPage(totalEmployees);
+    setPage(pageLength);
   }, [data]);
+
   if (loading)
     return (
       <div className="flex w-full justify-center items-center py-16">

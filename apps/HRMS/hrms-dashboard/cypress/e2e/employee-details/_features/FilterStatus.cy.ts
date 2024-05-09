@@ -1,5 +1,5 @@
 describe('Status filter', () => {
-  beforeEach(() => cy.visit('/employee-details?employees=1'));
+  beforeEach(() => cy.visit('/employee-details'));
 
   it('1.Selects an option from the dropdown', () => {
     cy.get('[data-cy=filterStatus]').select(1);
