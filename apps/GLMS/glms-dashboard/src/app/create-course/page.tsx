@@ -89,8 +89,9 @@ const CourseAdd = () => {
             </div>
           </div>
           <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
-            {status.map((item) => (
+            {status.map((item, index) => (
               <button
+                key={index}
                 className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center `}
                 data-testid="create-button"
                 onClick={() => {

@@ -83,9 +83,9 @@ const DashboardOtherLab = () => {
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses
-              .filter((item: Course) => actionTab === item.status)
-              .map((data) => (
-                <div className="relative">
+              .filter((item: Course, key) => actionTab === item.status)
+              .map((data, index) => (
+                <div className="relative" key={index}>
                   <div>
                     <div
                       data-cy="courseClick"
