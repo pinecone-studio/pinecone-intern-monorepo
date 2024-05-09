@@ -61,6 +61,13 @@ export const challengeTypeDefs = gql`
     choices: [InputChoices]
     choicesType: ChoicesType
   }
+  input UpdateChallengeInput {
+    title: String
+    quiz: [QuizInput]
+    referenceLesson: ID
+    experiencePoint: Int
+  }
+
   type Query {
     getChallenges: [Challenge]
     getChallengesByStatus: [Challenge]
@@ -74,5 +81,8 @@ export const challengeTypeDefs = gql`
     updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
     archiveChallengeById(challengeId: ID): ID
     deleteQuiz(quizId: String!): Quiz
+    publishChallengeById(challengeId: String!): ID
+    deleteChallengeById(challengeId: String!): ID
+    updateChallenge(challengeId: ID!, updateChallengeInput: UpdateChallengeInput!): Challenge
   }
 `;
