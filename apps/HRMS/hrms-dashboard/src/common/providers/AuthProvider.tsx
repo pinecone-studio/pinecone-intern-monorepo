@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-'use client'
+'use client';
 import { PropsWithChildren, useContext, createContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
@@ -19,17 +19,17 @@ export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [login, { loading: loginLoading }] = useLoginMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-const router = useRouter()
+  const router = useRouter();
   const handleSignIn = async (emailorPhone: string) => {
     try {
       const { data: loginData } = await login({
         variables: {
-            emailorPhone
+          emailorPhone,
         },
       });
       const token = loginData?.login.token;
       setCookie(null, 'token', token || '', {
-        maxAge: 3600
+        maxAge: 3600,
       });
       setIsLoggedIn(true);
       toast.success(loginData?.login.message, {
@@ -37,7 +37,7 @@ const router = useRouter()
         autoClose: 3000,
         hideProgressBar: true,
       });
-      router.push('/')
+      router.push('/');
     } catch (error) {
       if (error instanceof ApolloError) {
         toast.error(error.graphQLErrors[0].message, {

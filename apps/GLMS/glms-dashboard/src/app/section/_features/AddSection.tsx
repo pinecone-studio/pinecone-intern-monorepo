@@ -12,8 +12,7 @@ const validatinSchema = yup.object({
 
 const AddSection = () => {
 
-    const [createSection] = useCreateSectionMutation()
-
+  const [createSection] = useCreateSectionMutation()
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -54,16 +53,15 @@ const AddSection = () => {
           </div>
           <div className="flex flex-col py-2">
             <p className="font-bold">Дэлгэрэнгүй</p>
-            <input 
-            data-cy="description"
-            className="w-[588px] h-fit border rounded-[4px] p-2" 
-            id="description-test"
-            name="description"
-            onChange={formik.handleChange}
-            value={formik.values.description}
-            type="text"
-            placeholder="Энд бичнэ үү..."
-            ></input>
+            <textarea
+              data-cy="description"
+              className="w-[588px] h-[160px] border rounded-[4px] p-2"
+              id="description-test"
+              name="description"
+              onChange={formik.handleChange}
+              value={formik.values.description}
+              placeholder="Энд бичнэ үү..."
+            ></textarea>
           </div>
           <div className="flex flex-col py-2">
             <p className="font-bold"> Хэсгийн зураг</p>

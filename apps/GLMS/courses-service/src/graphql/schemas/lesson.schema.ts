@@ -24,5 +24,6 @@ export const lessonSchema = gql`
 
   type Mutation {
     createLesson(lessonInput: LessonInput!): Lesson!
+    deleteLesson(id:ID!):Lesson!
   }
 `;

@@ -53,6 +53,7 @@ export const articleSchema = gql`
   type Mutation {
     createArticle(articleInput: CreateArticleInput!): Article!
     updateArticle(_id: ID!, title: String!, content: String!, category: ID!, coverPhoto: String, commentPermission: Boolean!): Article!
+    updateArticleStatusById(_id: ID!, newStatus: String!): Article!
   }
 
   type Query {

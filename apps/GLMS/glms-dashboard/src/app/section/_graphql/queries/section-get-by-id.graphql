@@ -1,0 +1,8 @@
+query getSectionById($id:ID!) {
+    getSectionById(id:$id) {
+        id
+        title
+        description
+        contentImage
+    }
+}
