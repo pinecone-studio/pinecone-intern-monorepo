@@ -12,7 +12,9 @@ type PropsType = {
 };
 
 export const ContentInput = (props: PropsType) => {
+
   const { name, placeholder, onChange, onBlur, value, helperText, error } = props;
+  
   return (
     <div>
       <textarea value={value} placeholder={placeholder} name={name} onChange={onChange} onBlur={onBlur} className="textarea textarea-bordered h-[237px] w-full rounded-lg">
