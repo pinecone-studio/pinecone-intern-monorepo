@@ -75,7 +75,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
           <div className="flex items-center">
             <div className="w-[48px] h-[48px] p-[12px]">
               <input
-                className="w-[24px] h-[24px]"
+                className="w-[24px] h-[24px] accent-white"
                 data-cy="radioButtonDays"
                 data-testid="radioButtonDays"
                 type="radio"
@@ -96,7 +96,7 @@ export const CreateLeaveRequestDaysOrDayOff = () => {
           <div className="flex items-center">
             <div className="w-[48px] h-[48px] p-[12px]">
               <input
-                className="w-[24px] h-[24px]"
+                className="w-[24px] h-[24px] accent-white"
                 data-cy="radioButtonDayOff"
                 data-testid="radioButtonDayOff"
                 type="radio"

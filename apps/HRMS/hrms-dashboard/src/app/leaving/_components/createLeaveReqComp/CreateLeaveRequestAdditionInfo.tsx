@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { ButtonCustom } from './ButtonCustom';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
+import { useGetEmployeeRequestQuery } from '@/generated';
 
 const validationSchema = yup.object({
   step3Substitute: yup.string().required('Ажил шилжүүлэн өгөх ажилтны нэр оруулна уу'),
@@ -14,9 +15,11 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestAdditionInfo = () => {
-  const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
-  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded } = useContext(LeaveRequestCreationContext);
+  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded, payload } = useContext(LeaveRequestCreationContext);
 
+  const { data } = useGetEmployeeRequestQuery({ variables: { getEmployeeRequestId: payload?.id } });
+
+  console.log(data);
   const formik = useFormik({
     initialValues: {
       step3Substitute: '',
@@ -37,7 +40,14 @@ export const CreateLeaveRequestAdditionInfo = () => {
             Ажил шилжүүлэн өгөх ажилтны нэр
           </div>
           <div data-testid="step3Substitute-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="step3Substitute" className="w-[100%] bg-[#F7F7F8]" name="step3Substitute" value={formik.values.step3Substitute} onChange={formik.handleChange} type="text"></input>
+            <input
+              data-cy="step3Substitute"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
+              name="step3Substitute"
+              value={formik.values.step3Substitute}
+              onChange={formik.handleChange}
+              type="text"
+            ></input>
           </div>
           <p data-cy="step3SubstituteError" className="text-[#DC143C] text-[12px]">
             {formik.errors.step3Substitute}
@@ -54,7 +64,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
               data-cy="step3WorkBrief"
               rows={3}
               cols={3}
-              className="w-[100%] bg-[#F7F7F8]"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
               name="step3WorkBrief"
               value={formik.values.step3WorkBrief}
               onChange={formik.handleChange}
@@ -69,14 +79,20 @@ export const CreateLeaveRequestAdditionInfo = () => {
           <div data-cy="step3Label" className="text-[16px] font-normal text-[#121316]">
             Хүсэлт батлах хүнээ сонго
           </div>
-          <select data-cy="step3ApprovedBy" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step3ApprovedBy" value={formik.values.step3ApprovedBy} onChange={formik.handleChange}>
+          <select
+            data-cy="step3ApprovedBy"
+            className="w-[100%] select select-bordered bg-[#F7F7F8] text-[#121316]"
+            name="step3ApprovedBy"
+            value={formik.values.step3ApprovedBy}
+            onChange={formik.handleChange}
+          >
             <option disabled selected>
               Хүсэлт батлах хүнээ сонго
             </option>
-            {leaveTypes.map((item, index) => {
+            {data?.getEmployeeRequest.map((item, index) => {
               return (
-                <option key={index} data-testid={`approvedBy-${index}`} value={item}>
-                  {item}
+                <option key={index} data-testid={`approvedBy-${index}`} value={item?.firstName}>
+                  {item?.firstName}
                 </option>
               );
             })}

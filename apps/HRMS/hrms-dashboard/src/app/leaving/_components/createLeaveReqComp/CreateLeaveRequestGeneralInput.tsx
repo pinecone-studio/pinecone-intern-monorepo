@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 import { ButtonCustom } from './ButtonCustom';
+import { useGetEmployeeRequestQuery } from '@/generated';
 
 const validationSchema = yup.object({
   step1Date: yup.string().required('Огноо оруулна уу'),
@@ -14,10 +15,7 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestGeneralInput = () => {
-  const { setStepNumber, setLeaveReqStep } = useContext(LeaveRequestCreationContext);
-
-  const workerName = { name: 'WorkerName' };
-
+  const { setStepNumber, setLeaveReqStep, payload } = useContext(LeaveRequestCreationContext);
   const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
 
   const formik = useFormik({
@@ -41,7 +39,7 @@ export const CreateLeaveRequestGeneralInput = () => {
             Огноо
           </div>
           <div data-testid="date-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
+            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8] text-[#121316]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
           </div>
           <p data-cy="step1DateError" className="text-[#DC143C] text-[12px]">
             {formik.errors.step1Date}
@@ -52,12 +50,12 @@ export const CreateLeaveRequestGeneralInput = () => {
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Нэрээ сонгоно уу
           </div>
-          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8] text-[#121316]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
             <option disabled selected>
               Нэрээ сонгоно уу
             </option>
-            <option data-testid="WorkerName" value={workerName.name}>
-              {workerName.name}
+            <option data-testid="WorkerName" value={payload?.firstName}>
+              {payload?.firstName}
             </option>
           </select>
           <p data-cy="step1UserNameError" className="text-[#DC143C] text-[12px]">
@@ -69,7 +67,13 @@ export const CreateLeaveRequestGeneralInput = () => {
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Шалтгаанаа сонгоно уу
           </div>
-          <select data-cy="type-select-input" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
+          <select
+            data-cy="type-select-input"
+            className="w-[100%] select select-bordered bg-[#F7F7F8] text-[#121316]"
+            name="step1LeaveType"
+            value={formik.values.step1LeaveType}
+            onChange={formik.handleChange}
+          >
             <option disabled selected>
               Шалтгаанаа сонгоно уу
             </option>

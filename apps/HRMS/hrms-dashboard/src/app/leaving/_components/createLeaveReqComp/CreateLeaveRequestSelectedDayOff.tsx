@@ -40,7 +40,15 @@ export const CreateLeaveRequestSelectedDayOff = (props: CreateLeaveRequestSelect
           Огноо
         </div>
         <div data-testid="date-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-          <input id="step2Date" data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8]" name={step2DateName} value={step2DateValue} onChange={step2DateChange} type="date"></input>
+          <input
+            id="step2Date"
+            data-cy="date-picker-container"
+            className="w-[100%] bg-[#F7F7F8] text-[#121316]"
+            name={step2DateName}
+            value={step2DateValue}
+            onChange={step2DateChange}
+            type="date"
+          ></input>
         </div>
         <p className="text-[#DC143C] text-[12px]">{step2DateError}</p>
       </div>
@@ -50,7 +58,14 @@ export const CreateLeaveRequestSelectedDayOff = (props: CreateLeaveRequestSelect
             Эхлэх цаг
           </div>
           <div data-testid="startHour-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="startHour-picker-container" className="w-[100%] bg-[#F7F7F8]" name={step2StartHourName} value={step2StartHourValue} onChange={step2StartHourChange} type="time"></input>
+            <input
+              data-cy="startHour-picker-container"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
+              name={step2StartHourName}
+              value={step2StartHourValue}
+              onChange={step2StartHourChange}
+              type="time"
+            ></input>
           </div>
           <p className="text-[#DC143C] text-[12px]">{step2StartHourError}</p>
         </div>
@@ -59,7 +74,14 @@ export const CreateLeaveRequestSelectedDayOff = (props: CreateLeaveRequestSelect
             Дуусах цаг
           </div>
           <div data-testid="endHour-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="endHour-picker-container" className="w-[100%] bg-[#F7F7F8]" name={step2EndHourName} value={step2EndHourValue} onChange={step2EndHourChange} type="time"></input>
+            <input
+              data-cy="endHour-picker-container"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
+              name={step2EndHourName}
+              value={step2EndHourValue}
+              onChange={step2EndHourChange}
+              type="time"
+            ></input>
           </div>
           <p className="text-[#DC143C] text-[12px]">{step2EndHourError}</p>
         </div>
