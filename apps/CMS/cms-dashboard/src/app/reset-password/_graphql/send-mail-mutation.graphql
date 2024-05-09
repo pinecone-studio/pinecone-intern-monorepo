@@ -1,0 +1,5 @@
+mutation SendMail($email: String!) {
+  sendMail(input: { email: $email }) {
+    message
+  }
+}

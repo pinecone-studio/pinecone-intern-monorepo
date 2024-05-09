@@ -41,7 +41,7 @@ const SignInForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      handleSignIn(values.emailOrPhoneNumber, values.password);
+      await handleSignIn(values.emailOrPhoneNumber, values.password);
     },
   });
 
@@ -74,28 +74,25 @@ const SignInForm = () => {
             helperText={formik.errors.password}
             error={formik.errors.password}
           />
-          <a href={'/'} className="text-sm text-[#551a8b]">
+          <a href={'/reset-password'} className="text-sm text-[#551a8b]">
             Нууц үг сэргээх
           </a>
         </div>
       </div>
-      <div className="group">
-        <button
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-          data-cy="Sign-In-Button"
-          data-testid="Sign-Up-Button-Loader"
-          className={`btn w-full h-fit flex justify-end py-[12px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${
-            !formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'
-          }`}
-          disabled={!formik.isValid || loginLoading}
-        >
-          {loginLoading && <Loader />}
-          <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
-          <ArrowIcon />
-        </button>
-      </div>
+
+      <button
+        onClick={() => {
+          formik.handleSubmit();
+        }}
+        data-cy="Sign-In-Button"
+        data-testid="Sign-Up-Button-Loader"
+        className={`btn w-full h-fit flex justify-end py-[9px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        disabled={!formik.isValid || loginLoading}
+      >
+        {loginLoading && <Loader />}
+        <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
+        <ArrowIcon />
+      </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>
 
