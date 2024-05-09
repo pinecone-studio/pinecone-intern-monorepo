@@ -1,8 +1,8 @@
 'use client';
 import { Course, Lesson, useGetCourseByIdQuery, useGetLessonByIdQuery } from '@/generated';
-import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import CourseRender from './_feature/CourseRender';
 const Home = () => {
   const pathName = usePathname().substring(1);
   const [newCourse, setNewCourse] = useState<Course>();
@@ -38,7 +38,7 @@ const Home = () => {
     );
 
   return (
-    <div data-cy="idCourse" className="bg-[#F7F7F8]">
+    <div data-cy="idCourse" className="bg-[#F7F7F8] h-[92vh]">
       <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} />
     </div>
   );

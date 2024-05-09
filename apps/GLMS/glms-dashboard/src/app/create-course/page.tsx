@@ -42,7 +42,7 @@ const CourseAdd = () => {
   });
 
   return (
-    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full flex justify-center py-6 border-t-2">
+    <div data-testid="create-course-container" className="bg-[#F7F7F8] h-[92vh] w-full flex justify-center py-6 border-t-2">
       <div className="w-[90%]">
         <div
           data-testid="test-back-stack"

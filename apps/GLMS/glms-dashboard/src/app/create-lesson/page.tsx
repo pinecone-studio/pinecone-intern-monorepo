@@ -44,7 +44,7 @@ const LessonAdd = () => {
   }, []);
 
   return (
-    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] ">
+    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] h-[92vh]">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="test-back-div"
