@@ -42,7 +42,12 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
               <CourseImage thumbnail={data?.thumbnail} />
             </div>
             {lessonData?.map((lesson: Lesson, index: number) => {
-              return <LessonRender lesson={lesson} key={index} />;
+              const handleCreateSection = () => {
+                localStorage.setItem('lessonID', lesson.id || '');
+                router.push('/section');
+              };
+
+              return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} />;
             })}
 
             <AddLessonButton
