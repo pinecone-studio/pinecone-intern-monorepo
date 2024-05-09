@@ -1,5 +1,5 @@
 'use client';
-import { Bag } from '../../../../public/assets/Bag';
+import { BagIcon } from 'apps/HRMS/hrms-dashboard/public/assets/BagIcon';
 import { Location1 } from '../../../../public/assets/Location1';
 import { Mail } from '../../../../public/assets/Mail';
 import { Phone } from '../../../../public/assets/Phone';
@@ -26,7 +26,7 @@ export const PersonalInformation = ({ firstName, lastName, email, phone, jobTitl
       <h2 className="text-[18px] font-semibold">{`${firstName} ${lastName}`}</h2>
       <div className="w-[230px] flex flex-col gap-2">
         <div className="flex gap-3 items-center">
-          <Bag />
+          <BagIcon />
           <p> {jobTitle}</p>
         </div>
         <div className="flex gap-3 items-center">
