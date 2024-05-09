@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Department, useCreateEmployeeMutation } from '../../../generated';
 import { EmploymentStatus } from '../../../generated';
-// import { Close } from '../../../assets';
 import { inputItems } from '../constants';
+import { Close } from '../../../assets';
 
 type CreateEmployeeFormProps = {
   handleCloseNewEmployee: () => void;
@@ -74,7 +74,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           Ажилтан нэмэх
         </p>
         <div data-testid="close-button" onClick={props.handleCloseNewEmployee} className="cursor-pointer">
-          {/* <Close /> */} Close
+          <Close />
         </div>
       </div>
       <form className="flex flex-col justify-center px-10 pt-10 gap-4">

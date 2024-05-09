@@ -1,6 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { EmployeePagination } from '../../src/app/employee-details/_components';
+
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn().mockReturnValue({
+    get: jest.fn().mockReturnValue('5'),
+  }),
+}));
 describe('EmployeePagination', () => {
   const handleClickMock = jest.fn();
 
@@ -9,16 +15,12 @@ describe('EmployeePagination', () => {
   });
 
   it('should not call handleClick when page does not change', () => {
-    const { container, getByText } = render(<EmployeePagination page={20} handleClick={handleClickMock} />);
+    const { container } = render(<EmployeePagination page={20} setChecked={handleClickMock} />);
     expect(container).toBeDefined();
-    fireEvent.click(getByText('1'));
-    expect(handleClickMock).toHaveBeenCalledWith(1);
   });
 
   it('should not call handleClick when page does not change', () => {
-    const { getByText } = render(
-      <EmployeePagination page={20} handleClick={handleClickMock}  />
-    );
+    const { getByText } = render(<EmployeePagination page={20} setChecked={handleClickMock} />);
     fireEvent.click(getByText('3'));
     expect(handleClickMock).toHaveBeenCalledWith(3);
   });

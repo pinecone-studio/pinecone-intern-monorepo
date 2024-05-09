@@ -120,6 +120,6 @@ describe('Create Employee Form', () => {
     cy.get('select[name="employmentStatus"]').should('exist').select('FULL_TIME');
     cy.get('select[name="employmentStatus"]').should('have.value', 'FULL_TIME');
     cy.get('[data-cy="createEmployeeBtn"]').should('not.be.disabled');
-    cy.get('button[name="submitBtn"]').click()
+    cy.get('button[name="submitBtn"]').click();
   });
 });
