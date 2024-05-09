@@ -1,6 +1,7 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { PersonalInformation } from '../../src/app/employee-details/_components';
+
 
 describe('PersonalInformation', () => {
   const props = {

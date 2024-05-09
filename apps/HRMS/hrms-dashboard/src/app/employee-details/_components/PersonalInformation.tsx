@@ -1,5 +1,5 @@
 'use client';
-import { BagIcon } from 'apps/HRMS/hrms-dashboard/public/assets/BagIcon';
+import { BagIcon } from '../../../../public/assets/BagIcon'
 import { Location1 } from '../../../../public/assets/Location1';
 import { Mail } from '../../../../public/assets/Mail';
 import { Phone } from '../../../../public/assets/Phone';
