@@ -29,20 +29,17 @@ export const employeeDetailsSchema = gql`
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
   }
-
   enum Gender {
     MALE
     FEMALE
     OTHER
   }
-
   enum MaritalStatus {
     SINGLE
     MARRIED
     DIVORCED
     WIDOWED
   }
-
   enum EmploymentStatus {
     FULL_TIME
     PART_TIME
@@ -50,14 +47,12 @@ export const employeeDetailsSchema = gql`
     TEMPORARY
     ARCHIVE
   }
-
   enum Department {
     SOFTWARE
     DESIGN
     MARKETING
     BACK_OFFICE
   }
-
   input CreateEmployeeInput {
     firstName: String
     lastName: String
@@ -70,7 +65,6 @@ export const employeeDetailsSchema = gql`
     dateOfEmployment: Date
     employmentStatus: EmploymentStatus
   }
-
   input UpdateEmployeeInput {
     id: ID
     email: String
@@ -84,7 +78,6 @@ export const employeeDetailsSchema = gql`
     dateOfReleased: Date
     employmentStatus: EmploymentStatus
   }
-
   input UpdatePersonalInformationInput {
     id: ID
     firstName: String
@@ -93,7 +86,6 @@ export const employeeDetailsSchema = gql`
     jobTitle: String
     imageUrl: String
   }
-
   input UpdateFamilyInformationInput {
     homeAddress: String
     numberOfFamilyMembers: Int
@@ -122,16 +114,15 @@ export const employeeDetailsSchema = gql`
     limit: Int!
     page: Int!
   }
-
   type paginateReturn {
     totalEmployees: Int!
     employees: [Employee]!
   }
-
   input employeeDetailsfilterInput {
     searchedValue: String
+    employmentStatus: String
+    jobTitle: String
   }
-
   type Query {
     getAllEmployee: [Employee]
     getEmployee(id: ID): Employee
@@ -139,7 +130,6 @@ export const employeeDetailsSchema = gql`
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
     getEmployeesByPaginate(employeeDetailsfilterInput: employeeDetailsfilterInput!, paginationInput: PaginationInput!): paginateReturn!
   }
-
   type Mutation {
     createEmployee(input: CreateEmployeeInput!): Employee!
     deleteEmployee(id: ID!): Employee!

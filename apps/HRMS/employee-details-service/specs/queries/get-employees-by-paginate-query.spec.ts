@@ -40,7 +40,12 @@ const mockData = {
 };
 describe('This function should return employee with matching filters', () => {
   it('Should return employees with limit', async () => {
-    const result = await getEmployeesByPaginate!({}, { paginationInput: { limit: 1, page: 1 }, employeeDetailsfilterInput: { searchedValue: 'a' } }, {}, {} as GraphQLResolveInfo);
+    const result = await getEmployeesByPaginate!(
+      {},
+      { paginationInput: { limit: 1, page: 1 }, employeeDetailsfilterInput: { searchedValue: 'a', employmentStatus: 'FULL_TIME', jobTitle: 'Developer' } },
+      {},
+      {} as GraphQLResolveInfo
+    );
     expect(result).toEqual(mockData);
   });
 });

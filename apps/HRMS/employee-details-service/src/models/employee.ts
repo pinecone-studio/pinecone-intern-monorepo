@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const EmployeeSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: String,
+  email: {
+    type: String,
+    required: true,
+  },
   imageUrl: String,
   department: {
     type: String,
