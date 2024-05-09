@@ -15,7 +15,7 @@ const Button = ({ label, disabled, btnType, onClick, icon }: IButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`btn btn-${btnType} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`btn btn-${btnType} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} bg-white outline-none`}
       disabled={disabled}
     >
       {IconComponent && <IconComponent />}
