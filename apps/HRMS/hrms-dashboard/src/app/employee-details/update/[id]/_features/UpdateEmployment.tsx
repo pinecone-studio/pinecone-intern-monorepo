@@ -14,7 +14,9 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
   const day = props.dateOfEmployment?.toString().slice(8, 10);
 
   const started = new Date(Number(year), Number(month), Number(day));
+
   const employedYear = Math.floor(today.getFullYear() - started.getFullYear());
+
   return (
     <section className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
