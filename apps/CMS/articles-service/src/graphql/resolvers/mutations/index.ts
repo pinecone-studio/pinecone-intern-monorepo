@@ -7,3 +7,4 @@ export * from './sign-in';
 export * from './send-mail';
 export * from './reset-password';
 export * from './update-article';
+export * from './update-article-status-by-id';
