@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { PersonalInformation } from '../../src/app/employee-details/_components';
 describe('personalInfromation', () => {
   const props = {
@@ -7,7 +7,10 @@ describe('personalInfromation', () => {
     email: 'Zoloosoko0526@gmail.com',
   };
   it('should render perdonalInfromation components', () => {
-    const { container } = render(<PersonalInformation id="1" email={props.email} lastName={props.lastName} />);
+    const { container, getByTestId } = render(<PersonalInformation email={props.email} lastName={props.lastName} />);
     expect(container).toBeDefined();
+    const button = getByTestId('update-button');
+    fireEvent.click(button);
+    expect(button).toBeDefined();
   });
 });
