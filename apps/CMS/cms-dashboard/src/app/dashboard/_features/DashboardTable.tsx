@@ -1,7 +1,7 @@
 import { Article } from '../../../generated';
 import ArticleEditButton from '../_components/ArticleEditButton';
-import { ArticleMenuButton } from '../_components/ArticleMenuButton';
 import { ApolloError } from '@apollo/client';
+import { ArticleDropDownMenuFeature } from './ArticleDropDownMenuFeature';
 
 const tableItems = ['Огноо', 'Статус', 'Ангилал'];
 
@@ -45,6 +45,7 @@ export const DashboardTable = (props: DashboardTableProps) => {
   if (loading) return <div>loading...</div>;
   if (error) return <div>error...{error.message}</div>;
   return (
+    
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
       <div className="overflow-x-auto w-full min-w-[650px] flex border">
         <table className="table">
@@ -92,7 +93,7 @@ export const DashboardTable = (props: DashboardTableProps) => {
                   </td>
                   <td>
                     <div className="flex justify-center">
-                      <ArticleMenuButton id={id as string} />
+                      <ArticleDropDownMenuFeature id={id as string} />
                       <ArticleEditButton id={id as string} />
                     </div>
                   </td>

@@ -11,5 +11,6 @@ export * from './LoadingIcon';
 export * from './ArrowBackIcon';
 export * from './MagnifyingClassIcon';
 export * from './FileUploadIcon';
-export * from "./SearchIcon"
-export * from "./ExpandIcon"
+export * from './SearchIcon';
+export * from './ExpandIcon';
+export * from './SuccessIcon';
