@@ -15,7 +15,7 @@ const validatinSchema = yup.object({
 
 const CourseAdd = () => {
   const router = useRouter();
-  const [status, setStatus] = useState(['Ноорог', 'Хичээл']);
+  const [status] = useState(['Ноорог', 'Хичээл']);
   const [statusSelected, setStatusSelected] = useState<string | null>(null);
   const [createCourse] = useCreateCourseMutation();
 
