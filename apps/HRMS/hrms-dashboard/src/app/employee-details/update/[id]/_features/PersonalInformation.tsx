@@ -1,8 +1,8 @@
 'use client';
-import { BagIcon } from '../../../../public/assets/BagIcon'
-import { Location1 } from '../../../../public/assets/Location1';
-import { Mail } from '../../../../public/assets/Mail';
-import { Phone } from '../../../../public/assets/Phone';
+import { BagIcon } from '../../../../../../public/assets/BagIcon';
+import { Location1 } from '../../../../../../public/assets/Location1';
+import { Mail } from '../../../../../../public/assets/Mail';
+import { Phone } from '../../../../../../public/assets/Phone';
 interface PersonalInformationProps {
   firstName?: string | null;
   lastName?: string | null;
@@ -24,7 +24,7 @@ export const PersonalInformation = ({ firstName, lastName, email, phone, jobTitl
         <img src={imageUrl!} alt="" />
       </div>
       <h2 className="text-[18px] font-semibold">{`${firstName} ${lastName}`}</h2>
-      <div className="w-[230px] flex flex-col gap-2">
+      <div className="w-[230px] flex flex-col gap-4">
         <div className="flex gap-3 items-center">
           <BagIcon />
           <p> {jobTitle}</p>

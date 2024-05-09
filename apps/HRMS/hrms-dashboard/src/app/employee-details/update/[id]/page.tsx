@@ -5,7 +5,6 @@ import { LeftArrow } from '../../../asset';
 import { UpdateDependant, UpdateEmployment } from './_features';
 import { PersonalInformation } from '../../_components';
 
-
 const Update = () => {
   const { id } = useParams();
   const router = useRouter();
@@ -29,24 +28,24 @@ const Update = () => {
         </figure>
         <p className="text-black m-auto text-sm font-semibold">Employee Details</p>
       </div>
-      <div className="w-full bg-light p-8 h-full">
-        {employee ? (
-          <PersonalInformation
-            lastName={employee.lastName}
-            homeAddress={employee.homeAddress}
-            firstName={employee.firstName}
-            email={employee.email}
-            phone={employee.phone}
-            jobTitle={employee.jobTitle}
-            imageUrl={employee.imageUrl}
-          />
-        ) : (
-          <p>No employee data found.</p>
-        )}
-      </div>
+
       <div className="flex w-full bg-light p-8 h-full gap-6">
-        <div className="">{''}</div>
-        <div className="w-full flex flex-col gap-6">
+        <div className=" bg-white rounded-xl w-[34%]">
+          {employee ? (
+            <PersonalInformation
+              lastName={employee.lastName}
+              homeAddress={employee.homeAddress}
+              firstName={employee.firstName}
+              email={employee.email}
+              phone={employee.phone}
+              jobTitle={employee.jobTitle}
+              imageUrl={employee.imageUrl}
+            />
+          ) : (
+            <p>No employee data found.</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-6 w-[66%]">
           <UpdateEmployment
             jobTitle={data?.getEmployee?.jobTitle}
             department={data?.getEmployee?.department}
