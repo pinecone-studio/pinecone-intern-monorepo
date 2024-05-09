@@ -3,9 +3,9 @@ import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson } from '@/generated';
 
-const LessonRender = ({ lesson }: { lesson: Lesson }) => {
+const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleCreateSection: () => void }) => {
   return (
-    <div className="border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between">
+    <div onClick={handleCreateSection} className="border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between hover:bg-[#f0f0f0] cursor-pointer">
       <div className="flex gap-4 items-center">
         <div>
           <img src={`${lesson.thumbnail}`} className="w-9 h-9 rounded-md object-fit" />

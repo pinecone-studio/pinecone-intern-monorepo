@@ -1,16 +1,13 @@
 'use client';
-import { useDeleteSectionMutation, useGetSectionsQuery } from '../../../generated';
-import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
-import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
+import { useDeleteSectionMutation, useGetSectionsQuery } from '../../../../generated';
+import { DeleteIcon } from '../../../../../public/assets/DeleteIcon';
+import { EditButtonIcon } from '../../../../../public/assets/EditButtonicon';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 const GetSections = () => {
   const { data, refetch } = useGetSectionsQuery();
   const [deleteSection] = useDeleteSectionMutation();
   const [successMessage, setSuccessMessage] = useState('');
-  const router = useRouter();
-
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
@@ -22,19 +19,12 @@ const GetSections = () => {
   }, [successMessage]);
 
   const handleDeleteSection = (id: string | undefined | null) => {
-      if (id) {
-        deleteSection({ variables: { id } });
-        setSuccessMessage('Section deleted successfully.');
-        refetch();
-      }
-  };
-
-  const handleUpdateSectionPage = (sectionId : string | undefined | null) => {
-    if(sectionId){
-      localStorage.setItem("sectionId" , sectionId)
-      router.push("/update-section")
+    if (id) {
+      deleteSection({ variables: { id } });
+      setSuccessMessage('Section deleted successfully.');
+      refetch();
     }
-  }
+  };
 
   useEffect(() => {
     if (data) {
@@ -65,10 +55,7 @@ const GetSections = () => {
             </div>
           </div>
           <div className="flex gap-4 items-center py-4">
-            <button 
-            data-cy="update-btn"
-            onClick={()=>handleUpdateSectionPage(section.id)} 
-            className=" w-[101px] bg-transparent border-2  font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
+            <button className=" w-[101px] bg-transparent border-2  font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]">
               Засах <EditButtonIcon />
             </button>
             <button
