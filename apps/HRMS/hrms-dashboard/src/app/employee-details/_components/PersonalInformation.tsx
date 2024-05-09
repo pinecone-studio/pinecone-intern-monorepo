@@ -2,7 +2,7 @@
 import { Location1 } from '../../../../public/assets/Location1';
 import { Mail } from '../../../../public/assets/Mail';
 import { Phone } from '../../../../public/assets/Phone';
-import { Bag } from '../../../../public/assets/bag';
+import { Bag } from '../../../../public/assets/Bag';
 interface PersonalInformationProps {
   firstName?: string | null;
   lastName?: string | null;
