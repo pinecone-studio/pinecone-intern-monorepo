@@ -62,6 +62,7 @@ const Home = () => {
             <div className="flex justify-center">
               <AdminNavigateLinksFeature />
             </div>
+            <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
           </div>
         </div>
       </div>

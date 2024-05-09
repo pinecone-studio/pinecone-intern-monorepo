@@ -1,6 +1,6 @@
 'use client';
 
-import { Article, useGetArticleByIdQuery } from '../../../../../src/generated';
+import { Article, useGetArticleByIdQuery, useUpdateArticleMutation } from '../../../../../src/generated';
 import { useParams } from 'next/navigation';
 import { SubmitButton, Title, ToggleButtonForCommnent, ArrowBack, validationSchema } from './_components/index';
 import { TitleInput } from './_components/TitleInput';
@@ -28,6 +28,7 @@ const Home = () => {
 
   const article = data?.getArticleByID as Article | undefined;
 
+  const [] = useUpdateArticleMutation();
   return (
     <div data-cy="edit-article-page-cy" className="flex w-[100%] h-screen">
       <div className="w-[75%] flex flex-col px-28 py-[70px] bg-[#f2f2f3] gap-6">
