@@ -81,7 +81,7 @@ export const Challengeprovider = ({ children }: PropsWithChildren) => {
     if (selectedBtn === 'TEXT') {
       const textQuiz = JSON.stringify({ question: question, choiceType: selectedBtn, choices: answers });
       setAllQuiz([textQuiz]);
-      localStorage.setItem('challenge', JSON.stringify(allQuiz));
+      localStorage.setItem('quizText', textQuiz);
       setAnswers([{ answer: '', isCorrect: false }]);
       setAnswerTwo('');
       setAnswerOne('');
@@ -100,7 +100,6 @@ export const Challengeprovider = ({ children }: PropsWithChildren) => {
       ],
     });
     localStorage.setItem('quiz', imageQuiz);
-    console.log('imageQuiz', imageQuiz);
     setAllQuiz([imageQuiz]);
     setAnswers([{ answer: '', isCorrect: false }]);
     setAnswerTwo('');
