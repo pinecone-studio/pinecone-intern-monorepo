@@ -1,8 +1,0 @@
-mutation updateSection($id: ID!,$sectionInput: SectionInput!) {
-  updateSection(id: ID!,sectionInput: $sectionInput) {
-    title
-    description
-    contentImage
-    posted
-  }
-}
