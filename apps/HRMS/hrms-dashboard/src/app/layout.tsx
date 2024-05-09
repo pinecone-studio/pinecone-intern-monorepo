@@ -14,9 +14,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <FederationProvider>
-        <LeaveRequestCreationProvider>
-          <body>
+      <body>
+        <FederationProvider>
+          <LeaveRequestCreationProvider>
             <DataProvider>
               <AuthProvider>
               <div className="flex flex-col flex-1">
@@ -28,9 +28,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </AuthProvider>
             </DataProvider>
-          </body>
-        </LeaveRequestCreationProvider>
-      </FederationProvider>
+          </LeaveRequestCreationProvider>
+        </FederationProvider>
+      </body>
     </html>
   );
 };
