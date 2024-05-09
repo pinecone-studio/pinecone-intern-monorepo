@@ -2,8 +2,8 @@
 import * as yup from 'yup';
 
 import { useFormik } from 'formik';
-import { useCreateSectionMutation } from '../../../../generated';
-import FileUploader from '../../../../components/FileUploader';
+import { useCreateSectionMutation } from '../../../generated';
+import FileUploader from '../../../components/FileUploader';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),

@@ -39,9 +39,5 @@ export const makeApolloClient = () => {
 };
 
 export const FederationProvider = ({ children }: PropsWithChildren) => {
-  return (
-    <ApolloNextAppProvider makeClient={makeApolloClient}>
-      <div className="h-screen">{children}</div>
-    </ApolloNextAppProvider>
-  );
+  return <ApolloNextAppProvider makeClient={makeApolloClient}>{children}</ApolloNextAppProvider>;
 };

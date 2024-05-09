@@ -1,6 +1,6 @@
 import GetSections from './_features/GetSections';
 import AddSection from './_features/AddSection';
-import { ArrowLeftIcon } from '../../../../public/assets/ArrowLeftIcon';
+import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 import Link from 'next/link';
 
 const SectionPage = () => {
