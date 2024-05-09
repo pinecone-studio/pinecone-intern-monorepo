@@ -6,4 +6,5 @@ export * from './create-category';
 export * from './sign-in';
 export * from './send-mail';
 export * from './reset-password';
+export * from './update-article-status-by-id';
 export * from './update-article';

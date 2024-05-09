@@ -4,10 +4,17 @@ import React, { useCallback, useState } from 'react';
 import { LinkButtonIcon } from '@/icons';
 import { MorevertButtonIcon } from '@/icons';
 import { ArchiveButtonIcon } from '@/icons';
+import { ArticleStatus, useUpdateArticleStatusByIdMutation } from '@/generated';
+import { toast } from 'react-toastify';
+import { ApolloError } from '@apollo/client';
+import { ArchiveSuccessOverlay } from '../_components/ArchiveSuccessOverlay';
+import { useRefetch } from '@/common/providers';
 
-export const ArticleMenuButton = ({ id }: { id: string }) => {
+export const ArticleMenuDropDownFeature = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [updateArticleStatusById] = useUpdateArticleStatusByIdMutation();
+  const refetch = useRefetch();
 
   const handleClick = () => {
     setAnchorEl(true);
@@ -29,6 +36,34 @@ export const ArticleMenuButton = ({ id }: { id: string }) => {
     }, 1300);
   }, [id]);
 
+  const archiveArticle = async () => {
+    try {
+      const { data } = await updateArticleStatusById({
+        variables: {
+          id,
+          newStatus: ArticleStatus.Archived,
+        },
+      });
+
+      const title = data?.updateArticleStatusById.title;
+
+      toast(<ArchiveSuccessOverlay title={title ?? ''} />, {
+        progressStyle: { background: '#01E17B' },
+        position: 'top-center',
+        autoClose: 3000,
+      });
+
+      refetch();
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        toast.error(error.graphQLErrors[0].message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+      }
+    }
+  };
   return (
     <div className="relative dropdown">
       <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button" onClick={handleClick}>
@@ -39,20 +74,14 @@ export const ArticleMenuButton = ({ id }: { id: string }) => {
         {anchorEl && (
           <div onClick={handleClose} data-cy="drop-down-menu-test-cy">
             <ul tabIndex={0} className="dropdown-content z-10 menu p-2 shadow rounded-xl border border-slate-200">
-              <li data-testid="close-menu-button-test-id" className="z-10 bg-white">
+              <li onClick={archiveArticle} data-testid="close-menu-button-test-id" className="z-10 bg-white">
                 <a>
                   <ArchiveButtonIcon />
                   Архив
                 </a>
               </li>
 
-              <li
-                data-testid="copy-clipboard-button-test-id"
-                className="z-10 bg-white"
-                onClick={() => {
-                  handleClickCopy();
-                }}
-              >
+              <li data-testid="copy-clipboard-button-test-id" className="z-10 bg-white" onClick={handleClickCopy}>
                 <a className="whitespace-nowrap">
                   <LinkButtonIcon />
                   Линк хуулах

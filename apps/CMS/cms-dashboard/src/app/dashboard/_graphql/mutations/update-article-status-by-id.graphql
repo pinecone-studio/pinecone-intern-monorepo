@@ -1,0 +1,5 @@
+mutation updateArticleStatusById($id: ID!, $newStatus: ArticleStatus!) {
+  updateArticleStatusById(_id: $id, newStatus: $newStatus) {
+    title
+  }
+}

@@ -9,6 +9,7 @@ import { SearchInput } from './_components/SearchInput';
 import { AdminNavigateLinksFeature, ArticleStatusTabsFeature } from './_features';
 import { DashboardTable } from './_features/DashboardTable';
 import { useEffect, useState } from 'react';
+import { RefetchProvider } from '../../common/providers/Refetch';
 
 const Home = () => {
   const searchParams = useSearchParams();
@@ -16,7 +17,12 @@ const Home = () => {
   const statusFilter = searchParams.get('status') ?? '';
   const searchedValueFilter = searchParams.get('searchedValue') ?? '';
 
-  const { data, loading, error } = useGetArticlesByPaginateQuery({
+  const {
+    data,
+    loading,
+    error,
+    refetch: getArticlesRefetch,
+  } = useGetArticlesByPaginateQuery({
     variables: {
       paginationInput: {
         limit: 3,
@@ -37,27 +43,29 @@ const Home = () => {
     setPageNumber(0);
   }, [statusFilter, searchedValueFilter]);
   return (
-    <div className="bg-[#e9eaec] h-[100vh]">
-      <Navbar />
-      <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex flex-col gap-1">
-            <div className="flex justify-between">
-              <SearchInput />
-              <FilterByDate />
+    <RefetchProvider refetch={getArticlesRefetch}>
+      <div className="bg-[#e9eaec] h-[100vh]">
+        <Navbar />
+        <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
+          <div className="flex flex-col h-full justify-between">
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between">
+                <SearchInput />
+                <FilterByDate />
+              </div>
+              <div className="flex flex-col gap-3">
+                <ArticleStatusTabsFeature />
+                <DashboardTable articles={articles} loading={loading} error={error} />
+              </div>
             </div>
-            <div className="flex flex-col gap-3">
-              <ArticleStatusTabsFeature />
-              <DashboardTable articles={articles} loading={loading} error={error} />
+            <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+            <div className="flex justify-center">
+              <AdminNavigateLinksFeature />
             </div>
-          </div>
-          <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-          <div className="flex justify-center">
-            <AdminNavigateLinksFeature />
           </div>
         </div>
       </div>
-    </div>
+    </RefetchProvider>
   );
 };
 export default Home;

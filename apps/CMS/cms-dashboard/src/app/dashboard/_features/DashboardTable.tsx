@@ -1,6 +1,6 @@
 import { Article } from '../../../generated';
 import ArticleEditButton from '../_components/ArticleEditButton';
-import { ArticleMenuButton } from '../_components/ArticleMenuButton';
+import { ArticleMenuDropDownFeature } from './ArticleMenuDropDownFeature';
 import { ApolloError } from '@apollo/client';
 
 const tableItems = ['Огноо', 'Статус', 'Ангилал'];
@@ -92,7 +92,7 @@ export const DashboardTable = (props: DashboardTableProps) => {
                   </td>
                   <td>
                     <div className="flex justify-center">
-                      <ArticleMenuButton id={id as string} />
+                      <ArticleMenuDropDownFeature id={id as string} />
                       <ArticleEditButton id={id as string} />
                     </div>
                   </td>
