@@ -11,11 +11,14 @@ type LeaveRequestCreationContextType = {
   setLeaveReqStep: Dispatch<SetStateAction<JSX.Element>>;
   stepNumber: number;
   setStepNumber: Dispatch<SetStateAction<number>>;
+  isLeaveRequestSucceeded: boolean;
+  setisLeaveRequestSucceeded: Dispatch<SetStateAction<boolean>>;
 };
 
 export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) => {
   const [stepNumber, setStepNumber] = useState(0);
   const [leaveReqStep, setLeaveReqStep] = useState(<CreateLeaveRequestGeneralInput />);
+  const [isLeaveRequestSucceeded, setisLeaveRequestSucceeded] = useState(false);
 
   return (
     <LeaveRequestCreationContext.Provider
@@ -24,6 +27,8 @@ export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) =>
         setLeaveReqStep,
         stepNumber,
         setStepNumber,
+        isLeaveRequestSucceeded,
+        setisLeaveRequestSucceeded,
       }}
     >
       {children}

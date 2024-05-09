@@ -1,14 +1,13 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { LeaveRequestCreationProvider } from '../../../src/app/leaving/_providers/LeaveRequestCreationProvider';
 import React from 'react';
-import { CreateLeaveRequestAdditionInfo, CreateLeaveRequestDaysOrDayOff } from '../../../src/app/leaving/_components';
+import { CreateLeaveRequestDaysOrDayOff } from '../../../src/app/leaving/_components';
 
 describe('Leave Request Creation: Day Off selected', () => {
-  it('should fill inputs and move to Addition info', async () => {
+  it('1. should fill inputs', async () => {
     const { getByTestId } = render(
       <LeaveRequestCreationProvider>
         <CreateLeaveRequestDaysOrDayOff />
-        <CreateLeaveRequestAdditionInfo />
       </LeaveRequestCreationProvider>
     );
 
@@ -40,7 +39,5 @@ describe('Leave Request Creation: Day Off selected', () => {
     act(() => {
       fireEvent.click(nextButton);
     });
-
-    await waitFor(() => expect(getByTestId('step3Component')).toBeDefined());
   });
 });

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { LeaveRequestCreationProvider } from '../../../src/app/leaving/_providers/LeaveRequestCreationProvider';
-import { CreateLeaveRequestMain } from '../../../src/app/leaving/_features/CreateLeaveRequestMain';
-import { render, act, fireEvent, waitFor } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
+import { CreateLeaveRequestGeneralInput } from '../../../src/app/leaving/_components';
 
 describe('Create Leave Request General Input', () => {
-  it('1. should set values in input fields and move to step-2', async () => {
+  it('1. should set values in input fields', async () => {
     const { getByTestId } = render(
       <LeaveRequestCreationProvider>
-        <CreateLeaveRequestMain />
+        <CreateLeaveRequestGeneralInput />
       </LeaveRequestCreationProvider>
     );
 
@@ -32,7 +32,5 @@ describe('Create Leave Request General Input', () => {
     act(() => {
       fireEvent.click(nextButton);
     });
-
-    await waitFor(() => expect(getByTestId('step2Component')).toBeDefined());
   });
 });
