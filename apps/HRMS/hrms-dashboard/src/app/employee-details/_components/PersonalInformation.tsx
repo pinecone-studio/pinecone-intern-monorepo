@@ -1,9 +1,8 @@
 'use client';
-import { Bag } from 'apps/HRMS/hrms-dashboard/public/assets/bag';
+import { Bag } from '../../../../public/assets/Bag';
 import { Location1 } from '../../../../public/assets/Location1';
 import { Mail } from '../../../../public/assets/Mail';
 import { Phone } from '../../../../public/assets/Phone';
-
 interface PersonalInformationProps {
   firstName?: string | null;
   lastName?: string | null;
