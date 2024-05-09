@@ -1,13 +1,11 @@
 import BackArrow from '../../../../assets/icons/BackArrow';
 
-type BackButtonProps = {
-  onClick: () => void;
-};
 
-const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
+
+const BackButton = () => {
   return (
-    <div data-testid="back-button">
-      <button onClick={onClick}>
+    <div data-cy="back-button-cy-id" data-testid="back-button">
+      <button>
         <BackArrow />
       </button>
     </div>

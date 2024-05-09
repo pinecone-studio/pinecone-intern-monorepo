@@ -17,8 +17,8 @@ const CommentPermission: React.FC<ArticleCommentProps> = ({ commentPermission, s
         type="checkbox"
         className="toggle"
         defaultChecked={commentPermission}
-        onChange={() => {
-          setCommentPermission((prev) => !prev);
+        onChange={(e) => {
+          setCommentPermission(e.currentTarget.checked);
         }}
       />
     </div>

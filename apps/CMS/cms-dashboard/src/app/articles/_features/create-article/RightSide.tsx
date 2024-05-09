@@ -2,7 +2,7 @@
 import React, { ChangeEventHandler, Dispatch, FocusEventHandler, SetStateAction } from 'react';
 import cx from 'classnames';
 import { useGetCategoriesQuery } from '../../../../generated';
-import ImageUploader from '../../_components/create-article/ImageUploader';
+import ImageUploader from './ImageUploader';
 import CommentPermission from '../../_components/create-article/CommentPermission';
 
 type CreateArticleRightSideProps = {
@@ -13,7 +13,6 @@ type CreateArticleRightSideProps = {
   setCategory: ChangeEventHandler<HTMLSelectElement>;
   name: string;
   value: string;
-  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   error?: string;
   helpertext?: string;
   imageUploaderError?: string;
@@ -25,7 +24,6 @@ const RightSide: React.FC<CreateArticleRightSideProps> = ({
   coverPhoto,
   setCoverPhoto,
   setCategory,
-  onBlur,
   name,
   value,
   error,
@@ -35,20 +33,14 @@ const RightSide: React.FC<CreateArticleRightSideProps> = ({
 }) => {
   const { data, loading } = useGetCategoriesQuery();
   const categoriesData = data?.getCategories;
-
   return (
-    <div>
+    <div data-cy="rightside-cy-id">
       {loading ? (
         <div>Loading</div>
       ) : (
         <div className=" gap-[16px] flex flex-col p-6">
           <p className=" font-semibold text-lg">Ангилал</p>
-          <select
-            onBlur={onBlur}
-            value={value}
-            name={name}
-            onChange={setCategory}
-            placeholder="Хайх эсвэл шинээр нэмэх"
+          <select data-cy="selectCategory"  value={value} name={name} onChange={setCategory}
             className={cx('p-2 bg-[#f7f7f8] rounded-lg border h-14', {
               'ring-[1px] ring-red-700 hover:ring-[1px]': error,
               'focus-within:border focus-within:border-[#000000] focus-within:hover:border-[#000000]': !error,

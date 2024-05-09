@@ -13,7 +13,7 @@ interface InputProps {
 
 const Input = ({ placeholder, value, onChange, name, type, onBlur, error, helpertext }: InputProps) => {
   return (
-    <div className=" flex flex-col gap-2">
+    <div data-cy="title-input-cy-id" className=" flex flex-col gap-2">
       <input
         className={cx('h-16 px-6 items-center bg-[#ffffff] text-lg rounded-2xl w-full', {
           'ring-[1px] ring-red-700 hover:ring-[1px]': error,

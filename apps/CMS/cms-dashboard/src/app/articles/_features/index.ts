@@ -1,2 +1,2 @@
-export * from './create-article/NewArticle';
-export * from "./article-header/ArticleHeader"
+export * from './create-article/ImageUploader';
+export * from './create-article/RightSide';

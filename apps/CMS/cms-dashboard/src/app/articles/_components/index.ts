@@ -4,6 +4,6 @@ export * from './MainBannerFromArticles';
 export * from '../_features/GroupArticles';
 export * from './create-article/CustomButton';
 export * from './create-article/CommentPermission';
-export * from './create-article/ImageUploader';
+export * from '../_features/create-article/ImageUploader';
 export * from './create-article/Input';
 export * from './create-article/RichTextEditor';

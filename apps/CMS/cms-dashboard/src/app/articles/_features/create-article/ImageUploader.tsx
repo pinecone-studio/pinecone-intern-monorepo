@@ -27,7 +27,7 @@ const ImageUploader = ({ coverPhoto, setCoverPhoto, imageUploaderError, ImageUpl
     <div data-testid="imageUploader" className="flex flex-col gap-4 p-6 border-b">
       <p className=" text-lg font-semibold">Өнгөц зураг</p>
       <div className="relative ">
-        <label htmlFor={coverPhoto ? '' : 'input'}>
+        <label htmlFor={coverPhoto ? '' : 'input'} >
           <div
             className={cx('h-[152px] flex flex-col px-[52px] py-9 justify-center items-center gap-2 rounded-xl bg-[#F7F7F8] mb-2', {
               'ring-[1px] ring-red-700 hover:ring-[1px]': imageUploaderError,
@@ -43,7 +43,7 @@ const ImageUploader = ({ coverPhoto, setCoverPhoto, imageUploaderError, ImageUpl
               </div>
             )}
 
-            {!coverPhoto && <input onChange={handleUploadImage} id="input" type="file" accept="image/*" multiple hidden />}
+            {!coverPhoto && <input  data-testid="image-upload-input" onChange={handleUploadImage} id="input" type="file" accept="image/*" multiple hidden />}
           </div>
         </label>
         <p data-testid="helperText" className=" text-red-700 text-[16px]">
