@@ -44,7 +44,7 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
             {lessonData?.map((lesson: Lesson, index: number) => {
               const handleCreateSection = () => {
                 localStorage.setItem('lessonID', lesson.id || '');
-                router.push(`/${localStorage.getItem('courseID')}/section?lessonId=${localStorage.getItem('lessonID')}`);
+                router.push(`/section`);
               };
               return <LessonRender lesson={lesson} handleCreateSection={handleCreateSection} key={index} />;
             })}
