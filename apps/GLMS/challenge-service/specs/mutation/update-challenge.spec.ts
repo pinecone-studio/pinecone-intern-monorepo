@@ -1,4 +1,3 @@
-import { ChallengeModel } from '@/model/challenge.model';
 import { updateChallenge } from '../../src/graphql/resolvers/mutations';
 import { GraphQLError } from 'graphql';
 import { GraphQLResolveInfo } from 'graphql';
