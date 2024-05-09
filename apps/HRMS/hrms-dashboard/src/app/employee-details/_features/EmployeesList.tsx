@@ -13,14 +13,17 @@ export const EmployeesList = () => {
 
   const searchParams = useSearchParams();
   const searchPath: string | null = searchParams.get('search');
+  const jobTitlePath: string | null = searchParams.get('jobTitle');
+  const employmentStatusPath: string | null = searchParams.get('employmentStatus');
 
+  const defaultValue = jobTitlePath || '';
   const [openNewEmployee, setOpenNewEmployee] = useState(false);
   const handleOpenNewEmployee = () => setOpenNewEmployee(true);
   const handleCloseNewEmployee = () => setOpenNewEmployee(false);
 
   useEffect(() => {
     setChecked(1);
-  }, [searchPath]);
+  }, [searchPath, jobTitlePath, employmentStatusPath]);
 
   return (
     <>
@@ -52,9 +55,9 @@ export const EmployeesList = () => {
               <EmployeeSearch />
               <TableFilters />
             </div>
-            <EmployeesListTable setPage={setPage} checked={checked} />
+            <EmployeesListTable setPage={setPage} checked={checked} defaultValue={defaultValue} />
           </div>
-          <EmployeePagination page={page} setChecked={setChecked} />
+          <EmployeePagination page={page} setChecked={setChecked} checked={checked} />
         </div>
       </main>
     </>

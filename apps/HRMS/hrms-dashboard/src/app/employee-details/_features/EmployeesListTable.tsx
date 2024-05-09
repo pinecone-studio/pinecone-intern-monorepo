@@ -9,11 +9,14 @@ import { useSearchParams } from 'next/navigation';
 type PropsType = {
   setPage: Dispatch<SetStateAction<number | undefined>>;
   checked: number;
+  defaultValue: string;
 };
-export const EmployeesListTable = ({ setPage, checked }: PropsType) => {
+export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType) => {
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const searchParams = useSearchParams();
   const employeesSearchPath: string | null = searchParams.get('search');
+  const jobTitlePath: string | null | undefined = String(searchParams.get('jobTitle'));
+  const employmentStatusPath: string | null = searchParams.get('employmentStatus');
   const { data, loading } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
@@ -22,8 +25,8 @@ export const EmployeesListTable = ({ setPage, checked }: PropsType) => {
       },
       employeeDetailsfilterInput: {
         searchedValue: employeesSearchPath || '',
-        jobTitle: '',
-        employmentStatus: '',
+        jobTitle: defaultValue,
+        employmentStatus: employmentStatusPath || '',
       },
     },
   });
@@ -35,6 +38,7 @@ export const EmployeesListTable = ({ setPage, checked }: PropsType) => {
   useEffect(() => {
     setPage(pageLength);
   }, [data]);
+  console.log(jobTitlePath);
 
   if (loading)
     return (
