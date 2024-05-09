@@ -15,7 +15,6 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   const tableHeader = ['Ажилтан', 'Мэргэжил', 'И-мэйл', 'Хэлтэс', 'Төлөв'];
   const searchParams = useSearchParams();
   const employeesSearchPath: string | null = searchParams.get('search');
-  const jobTitlePath: string | null | undefined = String(searchParams.get('jobTitle'));
   const employmentStatusPath: string | null = searchParams.get('employmentStatus');
   const { data, loading } = useGetEmployeesByPaginateQuery({
     variables: {
@@ -38,7 +37,6 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   useEffect(() => {
     setPage(pageLength);
   }, [data]);
-  console.log(jobTitlePath);
 
   if (loading)
     return (
