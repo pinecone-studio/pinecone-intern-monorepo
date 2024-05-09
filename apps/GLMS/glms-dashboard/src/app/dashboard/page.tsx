@@ -6,6 +6,8 @@ import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeM
 import { useRouter } from 'next/navigation';
 import { useGetCoursesQuery } from '@/generated';
 import AddIcon from '@mui/icons-material/Add';
+import PlusIcon from '../../assets/PlusIcon';
+
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
@@ -44,44 +46,55 @@ const DashboardOtherLab = () => {
               </div>
               <div className=" flex items-center justify-center w-1/3">
                 <Book />
+                <div className="flex gap-[16px]">
+                  <button
+                    data-testid="button1"
+                    onClick={() => router.push('/create-course')}
+                    className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
+                    color="inherit"
+                  >
+                    Сэдэв <PlusIcon />
+                  </button>
+                  <AddChallengeModal />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
-          <div className=" mr-auto ml-auto  flex w-[85%] px-6 ">
-            {buttonsBottom.map((name) => (
-              <button
-                data-testid="tab1"
-                data-cy={name}
-                onClick={() => {
-                  setActionTab(name);
-                }}
-                key={name}
-                className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
-              >
-                {name}
-              </button>
-            ))}
+          <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
+            <div className=" mr-auto ml-auto  flex w-[85%] px-6 ">
+              {buttonsBottom.map((name) => (
+                <button
+                  data-testid="tab1"
+                  data-cy={name}
+                  onClick={() => {
+                    setActionTab(name);
+                  }}
+                  key={name}
+                  className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="w-full ">
-        <div className=" mr-auto ml-auto  flex max-w-[85%]">
-          <div className=" flex flex-wrap box-border  h-full w-full">
-            {data?.getCourses.map((data) => (
-              <div
-                data-cy="courseClick"
-                className="mt-8 mr-8"
-                key={data.id}
-                onClick={() => {
-                  localStorage.setItem('courseID', `${data.id}`);
-                  router.push(`/${data.id}`);
-                }}
-              >
-                <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
-              </div>
-            ))}
+        <div className="w-full ">
+          <div className=" mr-auto ml-auto  flex max-w-[85%]">
+            <div className=" flex flex-wrap box-border  h-full w-full">
+              {data?.getCourses.map((data) => (
+                <div
+                  data-cy="courseClick"
+                  className="mt-8 mr-8"
+                  key={data.id}
+                  onClick={() => {
+                    localStorage.setItem('courseID', `${data.id}`);
+                    router.push(`/${data.id}`);
+                  }}
+                >
+                  <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

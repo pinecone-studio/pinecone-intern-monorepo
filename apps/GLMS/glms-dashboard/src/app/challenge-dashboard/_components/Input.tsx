@@ -1,12 +1,15 @@
 'use client';
-import { useState } from 'react';
 
-export const Input = () => {
-  const [quizeInput, setQuizeInput] = useState('');
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => setQuizeInput(e.target.value);
+type InputProps = {
+  value: string;
+  onChange: (_: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+};
+
+export const Input = ({ value, onChange, name }: InputProps) => {
   return (
     <div>
-      <input type="text" value={quizeInput} placeholder="Оруулна уу..." data-testid="search-text-field" onChange={onChangeHandler} />
+      <input name={name} className="p-2 border  rounded-lg w-full border-[#D6D8DB]" type="text" value={value} placeholder="Оруулна уу..." data-testid="search-text-field" onChange={onChange} />
     </div>
   );
 };
