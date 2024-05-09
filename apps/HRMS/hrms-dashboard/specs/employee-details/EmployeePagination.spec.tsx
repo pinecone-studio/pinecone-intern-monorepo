@@ -15,12 +15,12 @@ describe('EmployeePagination', () => {
   });
 
   it('should not call handleClick when page does not change', () => {
-    const { container } = render(<EmployeePagination page={20} setChecked={handleClickMock} />);
+    const { container } = render(<EmployeePagination page={20} setChecked={handleClickMock} checked={1} />);
     expect(container).toBeDefined();
   });
 
   it('should not call handleClick when page does not change', () => {
-    const { getByText } = render(<EmployeePagination page={20} setChecked={handleClickMock} />);
+    const { getByText } = render(<EmployeePagination page={20} setChecked={handleClickMock} checked={1} />);
     fireEvent.click(getByText('3'));
     expect(handleClickMock).toHaveBeenCalledWith(3);
   });

@@ -5,13 +5,14 @@ import { LeftArrow, RightArrow } from '../../asset';
 type PropsType = {
   page: number | undefined;
   setChecked: (_: number) => void;
+  checked: number;
 };
 
 type PageChangeEvent = {
   selected: number;
 };
 
-export const EmployeePagination = ({ page, setChecked }: PropsType) => {
+export const EmployeePagination = ({ page, setChecked, checked }: PropsType) => {
   const onPageChange = (e: PageChangeEvent) => {
     setChecked(e.selected + 1);
   };
@@ -26,6 +27,7 @@ export const EmployeePagination = ({ page, setChecked }: PropsType) => {
         pageCount={page!}
         onPageChange={onPageChange}
         previousLabel={<LeftArrow />}
+        forcePage={checked - 1}
       />
     </>
   );
