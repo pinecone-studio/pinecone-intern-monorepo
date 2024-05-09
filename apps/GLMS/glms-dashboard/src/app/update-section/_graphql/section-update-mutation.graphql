@@ -1,0 +1,8 @@
+mutation updateSection($sectionInput: SectionInput!) {
+  updateSection(sectionInput: $sectionInput) {
+    title
+    description
+    contentImage
+    posted
+  }
+}

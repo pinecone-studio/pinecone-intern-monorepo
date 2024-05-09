@@ -9,7 +9,7 @@ import FileUploader from '../../components/FileUploader';
 
 const UpdateSection = () => {
   const router = useRouter();
-  const[sectionID , setSectionID] = useState("")
+  const [sectionID, setSectionID] = useState('');
   const [updateSection] = useUpdateSectionMutation();
 
   useEffect(() => {
@@ -20,9 +20,8 @@ const UpdateSection = () => {
       }
     }
   }, []);
-  
- 
-  const id = sectionID? sectionID : '';
+
+  const id = sectionID ? sectionID : '';
 
   const validatinSchema = yup.object({
     title: yup.string().required(),
