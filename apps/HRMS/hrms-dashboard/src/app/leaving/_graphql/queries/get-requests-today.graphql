@@ -1,0 +1,10 @@
+query GetRequestToday($startDate: Date) {
+  getRequestToday(startDate: $startDate) {
+   _id
+    declinedReasoning
+    startDate
+    totalHour
+    superVisor
+    status
+  }
+}

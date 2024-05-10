@@ -16,7 +16,12 @@ const Detail = () => {
   const { data, loading } = useGetRequestByIdQuery({
     variables: { id },
   });
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex w-full justify-center items-center pt-10">
+        <span className="loading loading-spinner loading-md"></span>
+      </div>
+    );
   const requestData = data?.getRequestById;
 
   return (
@@ -49,9 +54,7 @@ const Detail = () => {
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-3">
                   <p>{data?.getRequestById?.superVisor}</p>
-                  <p style={{ color: '#16A94A' }}>
-                    {data?.getRequestById?.status.toLowerCase()}
-                  </p>
+                  <p style={{ color: '#16A94A' }}>{data?.getRequestById?.status.toLowerCase()}</p>
                 </div>
                 <div className="flex gap-3 items-center" data-testid="request-status">
                   <DeclineButton id={id} />

@@ -1,6 +1,7 @@
 query GetRequests {
   getRequests {
     _id
+    leaveType
     declinedReasoning
     startDate
     totalHour

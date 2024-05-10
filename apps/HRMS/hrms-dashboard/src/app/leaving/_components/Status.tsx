@@ -45,6 +45,7 @@ const Status = ({ dat }: { dat: Status }) => {
         border: borderStyle,
         fontWeight: 500,
       }}
+      className="px-2"
       data-testid="request-status"
     >
       {statusText}
