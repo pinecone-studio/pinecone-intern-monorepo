@@ -88,7 +88,7 @@ const Home = () => {
               onBlur={formik.handleBlur}
               value={formik.values.title}
               helperText={formik.errors.title}
-              error={Boolean(formik.errors.title)}
+              error={formik.touched.title && Boolean(formik.errors.title)}
             />
           </div>
 
@@ -101,7 +101,7 @@ const Home = () => {
               onBlur={formik.handleBlur}
               value={formik.values.content}
               helperText={formik.errors.content}
-              error={Boolean(formik.errors.content)}
+              error={formik.touched.content && Boolean(formik.errors.content)}
             />
           </div>
         </div>
