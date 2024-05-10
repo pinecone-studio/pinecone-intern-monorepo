@@ -9,38 +9,64 @@ import { useFormik } from 'formik';
 import { FileUpload } from './_components/FileUpload';
 import { CategorySelectInputFeature } from './_feature/CategorySelectInputFeature';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { ApolloError } from '@apollo/client';
 
 const Home = () => {
   const { id } = useParams();
-  const { data, loading, error } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
-  const article = data?.getArticleByID as Article | undefined;
   const [updateArticle] = useUpdateArticleMutation();
+  const { data, loading, error, refetch } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
+  const article = data?.getArticleByID as Article | undefined;
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      thumbnail: '',
       title: '',
       content: '',
+      category: '',
+      coverPhoto: '',
+      commentPermission: false,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await updateArticle({
-        variables: {
-          id: id,
-          title: values.title,
-          content: values.content,
-          category: '661c677c6837efa536464cab',
-          commentPermission: false,
-        },
-      });
-      router.push('/dashboard');
+      console.log(values);
+      try {
+        await updateArticle({
+          variables: {
+            id: id,
+            title: values.title,
+            content: values.content,
+            category: values.category,
+            coverPhoto: values.coverPhoto,
+            commentPermission: values.commentPermission,
+          },
+        });
+        toast.success('Successfully updated', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+        await refetch();
+        router.push('/dashboard');
+      } catch (error) {
+        if (error instanceof ApolloError) {
+          toast.error(error.graphQLErrors[0].message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+          });
+        }
+      }
     },
   });
 
   useEffect(() => {
-    formik.setFieldValue('title', article?.title);
-    formik.setFieldValue('content', article?.content);
+    if (!article) return;
+    formik.setFieldValue('title', article.title);
+    formik.setFieldValue('content', article.content);
+    formik.setFieldValue('category', article.category.id);
+    formik.setFieldValue('coverPhoto', article.coverPhoto);
+    formik.setFieldValue('commentPermission', article.commentPermission);
   }, [data]);
 
   if (loading) return <h5>Loading...</h5>;
@@ -62,7 +88,7 @@ const Home = () => {
               onBlur={formik.handleBlur}
               value={formik.values.title}
               helperText={formik.errors.title}
-              error={formik.errors.title}
+              error={Boolean(formik.errors.title)}
             />
           </div>
 
@@ -75,7 +101,7 @@ const Home = () => {
               onBlur={formik.handleBlur}
               value={formik.values.content}
               helperText={formik.errors.content}
-              error={formik.errors.content}
+              error={Boolean(formik.errors.content)}
             />
           </div>
         </div>
@@ -84,10 +110,26 @@ const Home = () => {
       <div className="w-[25%] flex flex-col justify-between">
         <div className="flex flex-col">
           <div className="p-6 border-b-[1px] border-[#ECEDF0]">
-            <CategorySelectInputFeature />
+            <CategorySelectInputFeature
+              name="category"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.category}
+              helperText={formik.errors.category}
+              formikError={Boolean(formik.errors.category)}
+              defaultValue={article?.category.id}
+            />
           </div>
-          <FileUpload thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
-          <ToggleButtonForCommnent isChecked={article?.commentPermission as boolean} />
+          <FileUpload thumbnail={formik.values.coverPhoto} setFieldValue={formik.setFieldValue} />
+          <ToggleButtonForCommnent
+            name="commentPermission"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.commentPermission}
+            helperText={formik.errors.commentPermission}
+            formikError={Boolean(formik.errors.commentPermission)}
+            defaultChecked={article?.commentPermission}
+          />
         </div>
 
         <div className="p-6 flex flex-col gap-4">
@@ -95,14 +137,14 @@ const Home = () => {
             onClick={() => {
               router.push('/dashboard');
             }}
-            text="Ноорогт хадгалах"
+            text="Cancel"
             bgColor="#888"
           />
           <SubmitButton
             onClick={() => {
               formik.handleSubmit();
             }}
-            text="Нийтлэх"
+            text="Update"
             bgColor="black"
           />
         </div>

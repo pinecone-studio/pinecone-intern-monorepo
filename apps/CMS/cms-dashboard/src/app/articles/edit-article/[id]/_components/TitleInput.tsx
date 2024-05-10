@@ -9,7 +9,7 @@ type PropsType = {
   type?: string;
   value: string | undefined;
   helperText?: string;
-  error?: string;
+  error?: boolean | undefined;
 };
 
 export const TitleInput = (props: PropsType) => {

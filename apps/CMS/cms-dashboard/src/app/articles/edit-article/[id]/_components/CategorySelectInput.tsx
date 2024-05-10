@@ -1,23 +1,32 @@
 import { Category } from '@/generated';
-type CategorySelectInputProps = {
+import { CategorySelectInputFeatureProps } from '../_feature/CategorySelectInputFeature';
+type PropsType = {
   loading: boolean;
   categories: [Category] | undefined;
-};
-export const CategorySelectInput = ({ categories, loading }: CategorySelectInputProps) => {
-  return (
-    <select data-testid="category-select-input-select-button" defaultValue="" className="select select-bordered w-full  text-black-primary invalid:text-textPlaceholder" required>
-      {loading && <option>Loading...</option>}
+} & CategorySelectInputFeatureProps;
+export const CategorySelectInput = (props: PropsType) => {
+  const { loading, categories, name, value, onChange, onBlur, defaultValue } = props;
 
-      <option value="" disabled>
-        Ангилал сонгох
-      </option>
-      {categories?.map((item) => {
-        return (
-          <option data-testid={`categories-option-${item.id}`} key={item.id} value={item.id}>
-            {item.name}
-          </option>
-        );
-      })}
-    </select>
+  return (
+    <>
+      <select
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        defaultValue={value ?? defaultValue}
+        className="select select-bordered w-full  text-black-primary invalid:text-textPlaceholder"
+        data-testid="category-select-input-select-button"
+      >
+        {loading && <option>Loading...</option>}
+        {categories?.map((item, index) => {
+          return (
+            <option data-testid={`categories-option-${index}`} key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          );
+        })}
+      </select>
+    </>
   );
 };

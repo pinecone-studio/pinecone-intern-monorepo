@@ -56,6 +56,7 @@ query GetArticleByID($getArticleByIdId: ID!) {
     slug
     status
     category {
+      id
       name
     }
     author {
