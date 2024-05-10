@@ -47,18 +47,20 @@ const Home = () => {
       <div className="bg-[#e9eaec] h-[100vh]">
         <Navbar />
         <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
-          <div className="flex flex-col h-full justify-between">
-            <div className="flex flex-col gap-1">
-              <div className="flex justify-between">
-                <SearchInput />
-                <FilterByDate />
+          <div className="flex flex-col h-[90vh] justify-between">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <div className="flex justify-between">
+                  <SearchInput />
+                  <FilterByDate />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <ArticleStatusTabsFeature />
+                  <DashboardTable articles={articles} loading={loading} error={error} />
+                </div>
               </div>
-              <div className="flex flex-col gap-3">
-                <ArticleStatusTabsFeature />
-                <DashboardTable articles={articles} loading={loading} error={error} />
-              </div>
+              <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
             </div>
-            <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
             <div className="flex justify-center">
               <AdminNavigateLinksFeature />
             </div>
