@@ -1,13 +1,10 @@
-import { Button, Typography } from '@mui/material';
-import CreateIcon from '@mui/icons-material/Create';
+import { PenIcon } from '../../../../public/assets/PenIcon';
 
 export const UpdateButton = () => {
   return (
-    <Button data-testid="update-button" sx={{ bgcolor: '#F6F6F6', padding: '8px 10px', borderRadius: '8px', display: 'flex', gap: '8px' }}>
-      <CreateIcon fontSize="small" sx={{ color: 'black' }} />
-      <Typography sx={{ color: 'black', fontSize: '14px', alignItems: 'center' }} fontWeight={450}>
-        Засварлах
-      </Typography>
-    </Button>
+    <button data-testid="update-button" className="bg-[#F6F6F6] px-2 py-[10px] rounded-[8px] flex gap-2 ">
+      <PenIcon />
+      <p className="text-main text-[14px] items-center">Засварлах</p>
+    </button>
   );
 };

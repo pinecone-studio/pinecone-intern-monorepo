@@ -3,6 +3,7 @@ import { BagIcon } from '../../../../../../public/assets/BagIcon';
 import { LocationIcon } from '../../../../../../public/assets/LocationIcon';
 import { Mailicon } from '../../../../../../public/assets/MailIcon';
 import { PhoneIcon } from '../../../../../../public/assets/PhoneIcon';
+import { UpdateButton } from '../../../_components';
 
 interface PersonalInformationProps {
   firstName?: string | null;
@@ -19,7 +20,7 @@ export const PersonalInformation = ({ firstName, lastName, email, phone, jobTitl
     <div className=" w-full flex flex-col bg-white rounded-xl p-5  gap-10">
       <div className="flex gap-[40px] w-[100%] justify-between ">
         <p className="text-[18px] font-semibold">Хувийн мэдээлэл</p>
-        <button>Засварлах</button>
+        <UpdateButton/>
       </div>
       <div className="w-1/2 aspect-square rounded-full overflow-hidden m-auto relative">
         <img src={imageUrl!} alt="" />
