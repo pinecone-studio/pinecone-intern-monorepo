@@ -1,0 +1,6 @@
+query GetRequestByMonth($startDate: Date) {
+  getRequestByMonth(startDate: $startDate) {
+    startDate
+    leaveType
+  }
+}
