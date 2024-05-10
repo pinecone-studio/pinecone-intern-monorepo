@@ -16,16 +16,16 @@ interface PersonalInformationProps {
 export const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl }: PersonalInformationProps) => {
   const address = homeAddress || 'Ulaanbaatar, Mongolia';
   return (
-    <div className="max-w-[358px] w-full flex flex-col bg-white rounded-xl p-5 items-center gap-10">
-      <div className="flex gap-[40px] w-[100%] justify-center items-center">
+    <div className=" w-full flex flex-col bg-white rounded-xl p-5  gap-10">
+      <div className="flex gap-[40px] w-[100%] justify-between ">
         <p className="text-[18px] font-semibold">Хувийн мэдээлэл</p>
         <button>Засварлах</button>
       </div>
       <div className="w-1/2 aspect-square rounded-full overflow-hidden m-auto relative">
         <img src={imageUrl!} alt="" />
       </div>
-      <h2 className="text-[18px] font-semibold">{`${firstName} ${lastName}`}</h2>
-      <div className="w-[230px] flex flex-col gap-4">
+      <h2 className="text-[18px] font-semibold flex justify-center">{`${firstName} ${lastName}`}</h2>
+      <div className=" flex flex-col gap-4 max-w-[280px] m-auto ">
         <div className="flex gap-3 items-center">
           <BagIcon />
           <p> {jobTitle}</p>
