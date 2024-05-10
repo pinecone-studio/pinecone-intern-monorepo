@@ -3,6 +3,7 @@ import { Course, Lesson, useGetCourseByIdQuery, useGetLessonByIdQuery } from '@/
 import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
 const Home = () => {
   const pathName = usePathname().substring(1);
   const [newCourse, setNewCourse] = useState<Course>();
@@ -20,15 +21,7 @@ const Home = () => {
     setNewCourse(getByIdData);
   }, [data, loading, error]);
 
-  if (loading || lessonLoading)
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        <div className="text-center">
-          <p className="loading loading-spinner m-auto loading-lg" />
-          <p className="text-xl ">Loading...</p>
-        </div>
-      </div>
-    );
+  if (loading || lessonLoading) return <Loading />;
 
   if (error)
     return (
