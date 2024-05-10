@@ -1,25 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler } from 'react';
+import { HelperText } from './HelperText';
+type ToggleInputProps = {
+  name: string;
+  defaultChecked: boolean | undefined;
+  value: boolean | undefined;
+  helperText?: string;
+  formikError?: boolean | undefined;
+  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
+};
 
-export const ToggleButtonForCommnent = ({ isChecked }: { isChecked: boolean }) => {
-  const [checked, setChecked] = useState(isChecked);
-
-  const toggleCommentPermission = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
+export const ToggleButtonForCommnent = (props: ToggleInputProps) => {
+  const { name, defaultChecked, value, helperText, formikError, onChange } = props;
 
   return (
     <div className="flex justify-between p-6">
-      <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: 'black' }}>{checked ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>
+      <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: 'black' }}>{value === true ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>
       <input
-        data-testid="input-test-id"
-        onChange={toggleCommentPermission}
-        checked={checked}
+        name={name}
+        defaultChecked={defaultChecked ?? value}
+        onChange={onChange}
+        checked={value}
         type="checkbox"
-        className={checked ? 'toggle [--tglbg:black]' : 'toggle [--tglbg:#f6f6f6]'}
-        style={{ color: checked ? 'white' : 'black', background: checked ? 'white' : 'black' }}
+        data-testid="input-test-id"
+        className={'toggle [--tglbg:#f6f6f6]'}
+        style={{ background: value === true ? 'white' : 'black' }}
       />
+      {formikError && <HelperText error={helperText} />}
     </div>
   );
 };

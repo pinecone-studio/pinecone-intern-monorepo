@@ -9,12 +9,34 @@ const mockedCategories: [Category] = [
     createdAt: '2022-01-22',
   },
 ];
-const mockedLaoding = true;
-describe('Title Input component', () => {
+
+describe('Category Input component', () => {
   it('Component must be defined', () => {
-    const { getByTestId } = render(<CategorySelectInput categories={mockedCategories} loading={mockedLaoding} />);
+    const { getByTestId } = render(
+      <CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" formikError={false} defaultValue="test" loading={false} />
+    );
     const select = getByTestId('category-select-input-select-button');
     fireEvent.mouseDown(select);
-    expect(getByTestId('categories-option-1')).toBeDefined();
+    expect(getByTestId('categories-option-0')).toBeDefined();
+  });
+  it('Component must be defined', () => {
+    render(
+      <CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" formikError={false} defaultValue="test" loading={true} />
+    );
+  });
+  it('Component must be defined', () => {
+    render(
+      <CategorySelectInput
+        categories={mockedCategories}
+        onChange={jest.fn()}
+        onBlur={jest.fn()}
+        name="test"
+        value={undefined}
+        helperText="test"
+        formikError={false}
+        defaultValue="test"
+        loading={false}
+      />
+    );
   });
 });

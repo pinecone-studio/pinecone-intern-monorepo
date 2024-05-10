@@ -8,11 +8,10 @@ type PropsType = {
   placeholder: string;
   value: string | undefined;
   helperText?: string;
-  error?: string;
+  error?: boolean | undefined;
 };
 
 export const ContentInput = (props: PropsType) => {
-
   const { name, placeholder, onChange, onBlur, value, helperText, error } = props;
 
   return (
