@@ -62,7 +62,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       });
       const token = signInData?.signIn.token;
       localStorage.setItem('token', token || '');
-      setIsLoggedIn(true);
       toast.success(signInData?.signIn.message, {
         position: 'top-center',
         autoClose: 3000,

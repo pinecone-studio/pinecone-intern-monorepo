@@ -1,10 +1,17 @@
-import SignUpForm from './_features/SignUpForm';
+'use client';
 
-const SignUp = () => {
+import { ResetFormStep1, ResetFormStep2, ResetFormStep3 } from './_features';
+import { useResetPassword } from '@/common/providers/ResetPasswordProvider';
+
+const ResetPassword = () => {
+  const { index, setIndex } = useResetPassword();
+
   return (
     <div className="w-full h-[100vh] flex" data-cy="Article-Page">
       <div className="w-[50%] h-full flex items-center justify-center">
-        <SignUpForm />
+        {index === 0 && <ResetFormStep1 setIndex={setIndex} />}
+        {index === 1 && <ResetFormStep2 setIndex={setIndex} />}
+        {index === 2 && <ResetFormStep3 setIndex={setIndex} />}
       </div>
       <div className="w-[50%] h-full flex justify-center items-center bg-[#121316]">
         <div className="flex align-end">
@@ -17,4 +24,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ResetPassword;

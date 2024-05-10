@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../common/providers/AuthProvider';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { ResetPasswordProvider } from '@/common/providers/ResetPasswordProvider';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +14,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <AppRouterCacheProvider>
           <FederationProvider>
             <AuthProvider>
-              {children}
+              <ResetPasswordProvider>{children}</ResetPasswordProvider>
               <ToastContainer />
             </AuthProvider>
           </FederationProvider>

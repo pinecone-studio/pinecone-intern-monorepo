@@ -46,7 +46,7 @@ const SignUpForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      handleSignUp(values.emailOrPhoneNumber, values.password);
+      await handleSignUp(values.emailOrPhoneNumber, values.password);
     },
   });
 
@@ -89,23 +89,20 @@ const SignUpForm = () => {
           error={formik.errors.confirmPassword}
         />
       </div>
-      <div className="group">
-        <button
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-          data-cy="Sign-Up-Button"
-          data-testid="Sign-Up-Button-Loader"
-          className={`btn w-full h-fit flex justify-end py-[12px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${
-            !formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'
-          }`}
-          disabled={!formik.isValid || signUpLoading}
-        >
-          {signUpLoading && <Loader />}
-          <h2 className="mr-[20%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
-          <ArrowIcon />
-        </button>
-      </div>
+
+      <button
+        onClick={() => {
+          formik.handleSubmit();
+        }}
+        data-cy="Sign-Up-Button"
+        data-testid="Sign-Up-Button-Loader"
+        className={`btn w-full h-fit flex justify-end py-[9px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        disabled={!formik.isValid || signUpLoading}
+      >
+        {signUpLoading && <Loader />}
+        <h2 className="mr-[20%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
+        <ArrowIcon />
+      </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>
 
