@@ -34,7 +34,10 @@ const articleSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  publishedAt: Date,
+  publishedAt: {
+    type: Date,
+    default: Date.now,
+  },
   updatedAt: Date,
   scheduledAt: Date,
 });

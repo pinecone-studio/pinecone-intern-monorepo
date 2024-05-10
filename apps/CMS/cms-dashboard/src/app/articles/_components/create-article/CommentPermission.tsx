@@ -1,17 +1,28 @@
 'use client';
+import { Dispatch, SetStateAction } from 'react';
 
 type ArticleCommentProps = {
-    checked?: boolean  ;
-    setChecked?: ()=> void;
-  };
+  commentPermission: boolean;
+  setCommentPermission: Dispatch<SetStateAction<boolean>>;
+};
 
-const CommentPermission = (props: ArticleCommentProps)=> {
-    const { checked, setChecked } = props;
-    return (
-        <div className=" flex p-6 gap-4 items-center justify-between ">
-            <p data-testid="comment-header-text" className=" text-lg">   Сэтгэгдэл идэвхтэй</p>
-            <input data-testid="commentPermission" type="checkbox" className="toggle" checked={checked} onChange={setChecked} />
-        </div>
-    );
-}
-export default CommentPermission
+const CommentPermission: React.FC<ArticleCommentProps> = ({ commentPermission, setCommentPermission }) => {
+  return (
+    <div className="flex gap-4 items-center justify-between p-6">
+      <p data-testid="comment-header-text" className=" text-lg font-semibold">
+        Сэтгэгдэл идэвхтэй
+      </p>
+      <input
+        data-testid="commentPermission"
+        type="checkbox"
+        className="toggle"
+        defaultChecked={commentPermission}
+        onChange={(e) => {
+          setCommentPermission(e.currentTarget.checked);
+        }}
+      />
+    </div>
+  );
+};
+
+export default CommentPermission;
