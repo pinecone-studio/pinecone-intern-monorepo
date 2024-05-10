@@ -1,5 +1,4 @@
 'use client';
-import { Book } from '../../../public/assets/Book';
 import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
@@ -7,14 +6,15 @@ import { useRouter } from 'next/navigation';
 import { Course, useGetCoursesQuery } from '@/generated';
 import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
+import Loading from '../../components/Loading';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
-  const { data } = useGetCoursesQuery();
-  const router = useRouter();
+  const { data, loading } = useGetCoursesQuery();
   const [actionTab, setActionTab] = useState('Хичээл');
-
+  const router = useRouter();
+  if (loading) return <Loading />;
   return (
     <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
       <div className="">
@@ -22,7 +22,7 @@ const DashboardOtherLab = () => {
           <div className="w-[85%]">
             <div className=" mr-auto ml-auto pt-[34px] flex">
               <div className=" w-[50%] gap-[4px] ">
-                <div>
+                <div className="mb-5">
                   <p data-testid="title1" className="color-[#121316] text-[36px] font-medium">
                     Сайн уу?
                   </p>
@@ -30,6 +30,7 @@ const DashboardOtherLab = () => {
                     Өдрийн мэнд
                   </p>
                 </div>
+
                 <div className="flex gap-[16px]">
                   <button
                     data-testid="button1"
@@ -44,24 +45,10 @@ const DashboardOtherLab = () => {
                   <AddChallengeModal />
                 </div>
               </div>
-              <div className=" flex items-center justify-center w-1/3">
-                <Book />
-                <div className="flex gap-[16px]">
-                  <button
-                    data-testid="button1"
-                    onClick={() => router.push('/create-course')}
-                    className="flex justify-center items-center border-solid border-[2px] border-black hover:bg-black hover:text-white  rounded-[8px] gap-[2px] w-[99px] h-[36px] "
-                    color="inherit"
-                  >
-                    Сэдэв <AddIcon />
-                  </button>
-                  <AddChallengeModal />
-                </div>
-              </div>
             </div>
           </div>
           <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
-            <div className=" mr-auto ml-auto  flex w-[85%] px-6 ">
+            <div className="flex w-[85%] px-6 ">
               {buttonsBottom.map((name) => (
                 <button
                   data-testid="tab1"
@@ -79,7 +66,7 @@ const DashboardOtherLab = () => {
           </div>
         </div>
       </div>
-      <div className="w-full ">
+      <div className="w-full h-[65vh] ">
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses

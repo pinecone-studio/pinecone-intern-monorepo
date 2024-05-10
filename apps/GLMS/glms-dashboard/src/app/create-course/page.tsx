@@ -15,7 +15,7 @@ const validatinSchema = yup.object({
 
 const CourseAdd = () => {
   const router = useRouter();
-  const [status] = useState(['Ноорог', 'Хичээл']);
+  const [status] = useState(['Ноороглох', 'Хичээл']);
   const [statusSelected, setStatusSelected] = useState<string | null>(null);
   const [createCourse] = useCreateCourseMutation();
 
@@ -54,7 +54,7 @@ const CourseAdd = () => {
           <ArrowLeftIcon /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
-          <div className="mb-8">
+          <div className="mb-4">
             <p className=" text-[28px] font-bold text-[#121316]">{'Сэдвийн ерөнхий мэдээлэл '}</p>
           </div>
           <div className=" flex flex-row gap-5 w-[100%] h-[100%] pb-10">
@@ -88,7 +88,7 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-between mt-[108px] mb-[56px]">
+          <div className="w-[100%] flex justify-between mb-[30px]">
             {status.map((item, index) => {
               const handleClick = () => {
                 formik.handleSubmit();
