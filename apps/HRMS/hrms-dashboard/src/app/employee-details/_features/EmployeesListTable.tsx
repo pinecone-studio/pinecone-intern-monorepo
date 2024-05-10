@@ -16,7 +16,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   const searchParams = useSearchParams();
   const employeesSearchPath: string | null = searchParams.get('search');
   const employmentStatusPath: string | null = searchParams.get('employmentStatus');
-  const { data, loading } = useGetEmployeesByPaginateQuery({
+  const { data, loading, refetch } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
         limit: perPage.limit,
@@ -36,6 +36,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
 
   useEffect(() => {
     setPage(pageLength);
+    refetch();
   }, [data]);
 
   if (loading)
