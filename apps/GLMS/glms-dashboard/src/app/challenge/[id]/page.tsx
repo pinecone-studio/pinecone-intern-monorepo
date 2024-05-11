@@ -5,35 +5,48 @@ import Question from '../_components/Question';
 import ChoiceText from '../_components/TextChoicePicker';
 import { useEffect, useState } from 'react';
 import ProgressBar from '../_components/ProgressBar';
+import Link from 'next/link';
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
+  const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
+  const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);
+  const [progressValue, setProgressValue] = useState<number>(0);
+  const [isShow, setIsShow] = useState(0);
+  const [isLast, setIsLast] = useState(false);
+
   const handleChange = (id: string | undefined | null) => {
     setSelectedChoice(id);
   };
-  const [isShow, setIsShow] = useState(0);
-  const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
 
   const oneValueCalculator = () => {
     if (data?.getChallengeById?.quiz) {
       setOneProgressValue(100 / data?.getChallengeById?.quiz?.length);
     }
   };
-  console.log('hi', data?.getChallengeById?.quiz);
-  const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);
-  const [progressValue, setProgressValue] = useState<number>(0);
 
   const handleProgressValue = () => {
     if (progressValue !== 100) {
+      setIsShow(isShow + 1);
       setProgressValue((prev) => prev + oneProgressValue!);
+      checkLast();
     }
   };
   useEffect(() => {
     oneValueCalculator();
   }, [loading]);
 
+  const checkLast = () => {
+    if (data?.getChallengeById?.quiz) {
+      if (data?.getChallengeById?.quiz?.length - 2 === isShow) {
+        setIsLast(true);
+      } else {
+        setIsLast(false);
+      }
+    }
+  };
   return (
-    <div className="bg-white flex flex-col justify-center items-center">
+    <div className="bg-white flex flex-col justify-center items-center py-10">
       <ProgressBar progressValue={progressValue} />
       {data?.getChallengeById?.quiz?.map((quiz, index) => {
         return (
@@ -51,9 +64,29 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
           </div>
         );
       })}
-      <button role="button" className="btn rounded-lg text-white p-2 text-sm w-1/2 bg-[#989898]" onClick={() => (setIsShow(isShow + 1), handleProgressValue())}>
-        NEXT
-      </button>
+      <div>
+        {isLast ? (
+          <Link href="/challenge">
+            <button
+              role="button"
+              className="btn border-0 rounded-lg text-white p-2 
+      text-sm bg-[#989898] w-28"
+              onClick={handleProgressValue}
+            >
+              Дуусгах
+            </button>
+          </Link>
+        ) : (
+          <button
+            role="button"
+            className="btn border-0 rounded-lg text-white p-2 
+      text-sm bg-[#989898] w-28"
+            onClick={handleProgressValue}
+          >
+            Дараах
+          </button>
+        )}
+      </div>
     </div>
   );
 };
