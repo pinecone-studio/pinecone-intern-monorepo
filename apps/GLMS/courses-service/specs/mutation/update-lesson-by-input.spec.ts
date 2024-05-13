@@ -1,4 +1,4 @@
-import { updateLessonByInput, updateSection } from '@/graphql/resolvers/mutations';
+import { updateLessonByInput } from '@/graphql/resolvers/mutations';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/model/lesson-model', () => ({
