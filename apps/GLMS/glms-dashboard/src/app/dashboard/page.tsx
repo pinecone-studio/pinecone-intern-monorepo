@@ -83,7 +83,7 @@ const DashboardOtherLab = () => {
                       <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
                         <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
                       </div>
-                      <button className="absolute bottom-6 right-14" onClick={() => {}}>
+                      <button className="absolute bottom-6 right-14">
                         <CourseDeleteIcon />
                       </button>
                     </div>
