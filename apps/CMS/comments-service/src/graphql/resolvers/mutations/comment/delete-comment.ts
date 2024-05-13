@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@/graphql/generated';
+import { MutationResolvers } from '@/graphql/generated/index';
 import { CommentsModel } from '@/models/comment.model';
 import { errorTypes, graphqlErrorHandler } from '../../error';
 import { accessTokenAuth } from '@/middlewares/auth-token';

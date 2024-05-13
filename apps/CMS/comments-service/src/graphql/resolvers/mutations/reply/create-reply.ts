@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@/graphql/generated';
+import { MutationResolvers } from '@/graphql/generated/index';
 import { errorTypes, graphqlErrorHandler } from '../../error';
 import ReplyModel from '@/models/reply.model';
 
