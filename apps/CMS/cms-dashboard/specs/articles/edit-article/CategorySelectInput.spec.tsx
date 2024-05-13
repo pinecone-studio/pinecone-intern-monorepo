@@ -12,31 +12,15 @@ const mockedCategories: [Category] = [
 
 describe('Category Input component', () => {
   it('Component must be defined', () => {
-    const { getByTestId } = render(
-      <CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" formikError={false} defaultValue="test" loading={false} />
-    );
+    const { getByTestId } = render(<CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" loading={false} />);
     const select = getByTestId('category-select-input-select-button');
     fireEvent.mouseDown(select);
     expect(getByTestId('categories-option-0')).toBeDefined();
   });
   it('Component must be defined', () => {
-    render(
-      <CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" formikError={false} defaultValue="test" loading={true} />
-    );
+    render(<CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value="test" helperText="test" loading={true} />);
   });
   it('Component must be defined', () => {
-    render(
-      <CategorySelectInput
-        categories={mockedCategories}
-        onChange={jest.fn()}
-        onBlur={jest.fn()}
-        name="test"
-        value={undefined}
-        helperText="test"
-        formikError={false}
-        defaultValue="test"
-        loading={false}
-      />
-    );
+    render(<CategorySelectInput categories={mockedCategories} onChange={jest.fn()} onBlur={jest.fn()} name="test" value={undefined} helperText="test" defaultValue="default test" loading={false} />);
   });
 });

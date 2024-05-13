@@ -1,17 +1,7 @@
-import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { HelperText } from './HelperText';
+import { EDIT_INPUT_PROPS } from './common';
 
-type PropsType = {
-  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
-  onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
-  name: string;
-  placeholder: string;
-  value: string | undefined;
-  helperText?: string;
-  error?: boolean | undefined;
-};
-
-export const ContentInput = (props: PropsType) => {
+export const ContentInput = (props: EDIT_INPUT_PROPS) => {
   const { name, placeholder, onChange, onBlur, value, helperText, error } = props;
 
   return (

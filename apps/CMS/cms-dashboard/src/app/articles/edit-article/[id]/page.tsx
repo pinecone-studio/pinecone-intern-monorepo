@@ -2,7 +2,7 @@
 
 import { Article, useGetArticleByIdQuery, useUpdateArticleMutation } from '../../../../../src/generated';
 import { useParams, useRouter } from 'next/navigation';
-import { SubmitButton, Title, ToggleButtonForCommnent, ArrowBack, validationSchema } from './_components/index';
+import { SubmitButton, InputLabel, ToggleButtonForCommnent, ArrowBack, validationSchema } from './_components/index';
 import { TitleInput } from './_components/TitleInput';
 import { ContentInput } from './_components/ContentInput';
 import { useFormik } from 'formik';
@@ -29,7 +29,6 @@ const Home = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
       try {
         await updateArticle({
           variables: {
@@ -79,7 +78,7 @@ const Home = () => {
 
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-3">
-            <Title title="Гарчиг өгөх" />
+            <InputLabel title="Гарчиг" />
             <TitleInput
               name="title"
               placeholder="type article title"
@@ -93,7 +92,7 @@ const Home = () => {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Title title="Нийтлэл бичих" />
+            <InputLabel title="Нийтлэл" />
             <ContentInput
               name="content"
               placeholder="type article content"
@@ -116,7 +115,6 @@ const Home = () => {
               onBlur={formik.handleBlur}
               value={formik.values.category}
               helperText={formik.errors.category}
-              formikError={Boolean(formik.errors.category)}
               defaultValue={article?.category.id}
             />
           </div>
@@ -127,7 +125,6 @@ const Home = () => {
             onBlur={formik.handleBlur}
             value={formik.values.commentPermission}
             helperText={formik.errors.commentPermission}
-            formikError={Boolean(formik.errors.commentPermission)}
             defaultChecked={article?.commentPermission}
           />
         </div>
@@ -137,15 +134,15 @@ const Home = () => {
             onClick={() => {
               router.push('/dashboard');
             }}
-            text="Cancel"
             bgColor="#888"
+            text="Болих"
           />
           <SubmitButton
             onClick={() => {
               formik.handleSubmit();
             }}
-            text="Update"
             bgColor="black"
+            text="Шинэчлэх"
           />
         </div>
       </div>
