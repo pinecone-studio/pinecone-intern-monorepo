@@ -27,6 +27,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   const handleProgressValue = () => {
     if (progressValue !== 100) {
+      setSelectedChoice(null);
       setIsShow(isShow + 1);
       setProgressValue((prev) => prev + oneProgressValue!);
       checkLast();
@@ -37,16 +38,14 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   }, [loading]);
 
   const checkLast = () => {
-    if (data?.getChallengeById?.quiz) {
-      if (data?.getChallengeById?.quiz?.length - 2 === isShow) {
-        setIsLast(true);
-      } else {
-        setIsLast(false);
-      }
+    if (data?.getChallengeById?.quiz && data?.getChallengeById?.quiz?.length - 2 === isShow) {
+      setIsLast(true);
+    } else {
+      setIsLast(false);
     }
   };
   return (
-    <div className="bg-white flex flex-col justify-center items-center py-10">
+    <div className="bg-white flex flex-col justify-center items-center h-[90vh]">
       <ProgressBar progressValue={progressValue} />
       {data?.getChallengeById?.quiz?.map((quiz, index) => {
         return (
@@ -68,6 +67,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
         {isLast ? (
           <Link href="/challenge">
             <button
+              disabled={selectedChoice ? false : true}
               role="button"
               className="btn border-0 rounded-lg text-white p-2 
       text-sm bg-[#989898] w-28"
@@ -78,6 +78,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
           </Link>
         ) : (
           <button
+            disabled={selectedChoice ? false : true}
             role="button"
             className="btn border-0 rounded-lg text-white p-2 
       text-sm bg-[#989898] w-28"
