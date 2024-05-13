@@ -1,0 +1,19 @@
+query GetChallengeById($challengeId: ID) {
+  getChallengeById(challengeId: $challengeId) {
+    _id
+    author
+    quiz {
+      _id
+      choices {
+        _id
+        choice
+        isCorrect
+      }
+      choicesType
+      question
+    }
+    refCourse
+    status
+    title
+  }
+}
