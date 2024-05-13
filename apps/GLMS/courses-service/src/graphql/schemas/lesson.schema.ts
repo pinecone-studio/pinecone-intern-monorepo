@@ -27,5 +27,6 @@ export const lessonSchema = gql`
     createLesson(lessonInput: LessonInput!): Lesson!
     updateLesson(id: ID!, sectionIds: [ID]): Lesson!
     deleteLesson(id: ID!): Lesson!
+    updateLessonByInput(id:ID!, lessonInput:LessonInput!): Lesson!
   }
 `;

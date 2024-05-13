@@ -7,3 +7,4 @@ export * from './update-section';
 export * from './delete-section';
 export * from './delete-lesson';
 export * from './update-course';
+export * from './update-lesson-by-input';
