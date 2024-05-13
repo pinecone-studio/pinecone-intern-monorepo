@@ -35,7 +35,7 @@ query GetEmployeesByPaginate($paginationInput: PaginationInput!, $employeeDetail
   }
 }
 
-query GetEmployee($getEmployeeId: ID) {
+query GetEmployee($getEmployeeId: ID!) {
   getEmployee(id: $getEmployeeId) {
     firstName
     lastName
@@ -48,5 +48,9 @@ query GetEmployee($getEmployeeId: ID) {
     homeAddress
     dateOfEmployment
     employmentStatus
+    relative {
+      phone
+      dependency
+    }
   }
 }
