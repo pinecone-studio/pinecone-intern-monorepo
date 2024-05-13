@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { setCommentStatusToNormal } from '../../../src/graphql/resolvers/mutations/comment/comment-normalize-by-admin';
 import { CommentsModel } from '../../../src/models/comment.model';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { CommentStatus } from '@/graphql/generated';
+import { CommentStatus } from '@/graphql/generated/index';
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {

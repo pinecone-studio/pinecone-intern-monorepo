@@ -1,4 +1,4 @@
-import { CommentStatus, QueryResolvers } from '@/graphql/generated';
+import { CommentStatus, QueryResolvers } from '@/graphql/generated/index';
 import { CommentsModel } from '../../../../models/comment.model';
 import { GraphQLError } from 'graphql/error';
 

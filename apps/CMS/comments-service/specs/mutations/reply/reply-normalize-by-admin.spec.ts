@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { setReplyStatusToNormal } from '../../../src/graphql/resolvers/mutations/reply/reply-normalize-by-admin';
 import ReplyModel from '../../../src/models/reply.model';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { ReplyStatus } from '@/graphql/generated';
+import { ReplyStatus } from '@/graphql/generated/index';
 
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
