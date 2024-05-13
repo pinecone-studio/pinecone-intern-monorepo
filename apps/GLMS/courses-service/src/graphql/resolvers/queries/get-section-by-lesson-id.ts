@@ -6,6 +6,6 @@ export const getSectionByLessonId: QueryResolvers['getSectionByLessonId'] = asyn
   try {
     return await sectionModel.find({ lessonId });
   } catch (error) {
-    throw new GraphQLError('cannot find contents');
+    throw new GraphQLError('cannot find section');
   }
 };
