@@ -15,7 +15,7 @@ const validatinSchema = yup.object({
 
 const CourseAdd = () => {
   const router = useRouter();
-  const [status] = useState(['Ноороглох', 'Хичээл']);
+  const [status] = useState(['Ноорог', 'Хичээл']);
   const [statusSelected, setStatusSelected] = useState<string | null>(null);
   const [createCourse] = useCreateCourseMutation();
 
@@ -62,7 +62,7 @@ const CourseAdd = () => {
               <div className=" gap-2 flex flex-col w-[100%]">
                 <label className=" font-semibold text-[16px] color-[#121316]">{'Гарчиг'}</label>
                 <input
-                  className="w-[90%] h-[40px] border-[2px] rounded p-2 "
+                  className="w-[90%] h-[40px] border-[2px] rounded p-2"
                   type="text"
                   name="title"
                   placeholder="Оруулна уу..."

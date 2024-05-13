@@ -1,44 +1,35 @@
 import { updateCourse } from '@/graphql/resolvers/mutations';
-import { GraphQLError, GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/model/course-model', () => ({
   findByIdAndUpdate: jest
     .fn()
     .mockReturnValueOnce({
-     id : "1",
-     title : "Html",
-     description : "Html intro",
-     thumbnail : "image.jpg",
-     status : "published"
+      populate: jest.fn().mockResolvedValue({
+        _id: 'mockCourseId',
+        status: 'Архив',
+      }),
     })
-    .mockReturnValueOnce(null)
+    .mockReturnValueOnce({
+      populate: jest.fn().mockResolvedValue(null),
+    }),
 }));
 
-describe('Update course', () => {
+describe('Update Course', () => {
   it('should update a course', async () => {
-    const result = await updateCourse!({}, { id: '1', courseInput : {title: 'Html', thumbnail : "image.jpg", description : "Html intro" , status:"published"} }, {}, {} as GraphQLResolveInfo);
+    const result = await updateCourse!({}, { id: 'mockCourseId', status: 'Архив' }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
-        id : "1",
-        title : "Html",
-        description : "Html intro",
-        thumbnail : "image.jpg",
-        status : "published"
+      _id: 'mockCourseId',
+      status: 'Архив',
     });
   });
 
   it("should throw an error if the course doesn't exist", async () => {
     try {
-      await updateCourse!({}, {id: '2', courseInput : {title: 'Html', thumbnail : "image.jpg", description : "Html intro" , status:"published"} }, {}, {} as GraphQLResolveInfo);
+      await updateCourse!({}, { id: 'nonExistentId', status: 'Архив' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new GraphQLError('Failed to update course'));
+      expect(error).toEqual(new Error('An unknown error occurred'));
     }
-  });
-  it('should throw error if delete section failed' , async() => {
-    try {
-        await updateCourse!({}, {id: '1', courseInput : {title: 'Html', thumbnail : "image.jpg", description : "Html intro" , status:"published"}  }, {}, {} as GraphQLResolveInfo);
-      } catch (error) {
-        expect(error).toEqual(new GraphQLError('Failed to update course'));
-      }
   });
 });

@@ -1,4 +1,5 @@
 'use client';
+
 import Courses from './_components/Course';
 import { useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
@@ -14,6 +15,7 @@ const DashboardOtherLab = () => {
   const { data, loading } = useGetCoursesQuery();
   const [actionTab, setActionTab] = useState('Хичээл');
   const router = useRouter();
+
   if (loading) return <Loading />;
   return (
     <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
@@ -30,7 +32,6 @@ const DashboardOtherLab = () => {
                     Өдрийн мэнд
                   </p>
                 </div>
-
                 <div className="flex gap-[16px]">
                   <button
                     data-testid="button1"
@@ -46,27 +47,27 @@ const DashboardOtherLab = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
-            <div className="flex w-[85%] px-6 ">
-              {buttonsBottom.map((name) => (
-                <button
-                  data-testid="tab1"
-                  data-cy={name}
-                  onClick={() => {
-                    setActionTab(name);
-                  }}
-                  key={name}
-                  className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
-                >
-                  {name}
-                </button>
-              ))}
+            <div className="bg-white flex  items-center">
+              <div className="flex w-[85%] px-6 ">
+                {buttonsBottom.map((name) => (
+                  <button
+                    data-testid="tab1"
+                    data-cy={name}
+                    onClick={() => {
+                      setActionTab(name);
+                    }}
+                    key={name}
+                    className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full h-[65vh] ">
+      <div className="w-full h-[70vh] ">
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses
@@ -82,7 +83,7 @@ const DashboardOtherLab = () => {
                       <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
                         <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
                       </div>
-                      <button className="absolute bottom-6 right-14">
+                      <button className="absolute bottom-6 right-14" onClick={() => {}}>
                         <CourseDeleteIcon />
                       </button>
                     </div>

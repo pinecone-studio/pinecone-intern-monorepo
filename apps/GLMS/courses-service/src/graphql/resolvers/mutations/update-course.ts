@@ -1,16 +1,15 @@
-import { MutationResolvers } from '@/graphql/generated';
+import { Course, MutationResolvers } from '@/graphql/generated';
 import courseModel from '@/model/course-model';
 import { GraphQLError } from 'graphql';
 
-export const updateCourse: MutationResolvers['updateCourse'] = async (_, { id , courseInput}) => {
+export const updateCourse: MutationResolvers['updateCourse'] = async (_, { id }) => {
   try {
-    const updatedCourse = await courseModel
-      .findByIdAndUpdate( id, courseInput , {new:true} )
+    const updatedCourse = await courseModel.findByIdAndUpdate(id, { status: 'Aрхив' }).populate<Course>('course');
     if (!updatedCourse) {
-      throw new GraphQLError('Could not find course');
+      throw new GraphQLError('Cannot find Course');
     }
     return updatedCourse;
   } catch (error) {
-    throw new GraphQLError('Failed to update course');
+    throw new GraphQLError('An unknown error occurred');
   }
 };
