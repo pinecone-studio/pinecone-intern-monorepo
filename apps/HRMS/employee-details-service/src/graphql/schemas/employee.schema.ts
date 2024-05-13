@@ -24,7 +24,7 @@ export const employeeDetailsSchema = gql`
     dateOfBirth: Date
     registrationNumber: String
     hobby: [String]
-    relative: [Dependent!]!
+    relative: [Dependent]!
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
@@ -125,7 +125,7 @@ export const employeeDetailsSchema = gql`
   }
   type Query {
     getAllEmployee: [Employee]
-    getEmployee(id: ID): Employee
+    getEmployee(id: ID!): Employee
     getEmployeeRequest(id: ID!): [Employee]!
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
     getEmployeesByPaginate(employeeDetailsfilterInput: employeeDetailsfilterInput!, paginationInput: PaginationInput!): paginateReturn!
