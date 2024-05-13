@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getSectionOfLessonById } from '../../src/graphql/resolvers/queries/get-section-of-lesson-by-id';
+import { getSectionByLessonId } from '../../src/graphql/resolvers/queries/get-section-by-lesson-id';
 
 jest.mock('../../src/model/lesson-model', () => ({
   findById: jest.fn(),
@@ -8,7 +8,7 @@ jest.mock('../../src/model/lesson-model', () => ({
 describe('Get Lesson By Id', () => {
   it("should throw an error if the lesson doesn't exist", async () => {
     try {
-      await getSectionOfLessonById!(null || {}, { id: 'nonExistentId' }, {}, {} as GraphQLResolveInfo);
+      await getSectionByLessonId!(null || {}, { lessonId: 'nonExistentId' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('cannot find lesson'));
     }

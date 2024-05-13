@@ -2,6 +2,9 @@ import { Section } from '@/graphql/generated';
 import { Model, Schema, model, models } from 'mongoose';
 
 const sectionSchema = new Schema({
+  lessonId: {
+    type: String,
+  },
   title: {
     type: String,
   },
