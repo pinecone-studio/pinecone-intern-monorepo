@@ -5,3 +5,4 @@ export * from './get-lesson-by-id';
 export * from './get-course-by-id';
 export * from './courses-get';
 export * from './get-section-by-id';
+export * from './get-section-of-lesson-by-id';
