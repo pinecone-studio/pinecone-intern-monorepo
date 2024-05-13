@@ -5,6 +5,7 @@ export const lessonSchema = gql`
   type Query {
     getLessons: [Lesson!]!
     getLessonById(courseId: String!): [Lesson!]
+    getSectionOfLessonById(id: ID!): [Lesson!]
   }
   type Lesson {
     id: ID
@@ -24,7 +25,7 @@ export const lessonSchema = gql`
 
   type Mutation {
     createLesson(lessonInput: LessonInput!): Lesson!
-    updateLesson(id: ID!, lessonInput: LessonInput!): Lesson!
+    updateLesson(id: ID!, sectionIds: [ID]): Lesson!
     deleteLesson(id: ID!): Lesson!
   }
 `;
