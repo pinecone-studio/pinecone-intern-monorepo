@@ -4,6 +4,6 @@ export const getLessons = async () => {
   try {
     return await lessonModel.find();
   } catch (error) {
-    throw new GraphQLError('cannot find lesson'); 
+    throw new GraphQLError('cannot find lesson');
   }
 };

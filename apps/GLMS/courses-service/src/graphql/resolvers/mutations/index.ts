@@ -6,3 +6,4 @@ export * from './create-course';
 export * from './update-section';
 export * from './delete-section';
 export * from './delete-lesson';
+export * from './update-course';
