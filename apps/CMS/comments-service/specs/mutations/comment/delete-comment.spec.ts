@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { deleteComment } from '@/graphql/resolvers/mutations';
+import { deleteComment } from '@/graphql/resolvers/mutations/comment/delete-comment';
 import { accessTokenAuth } from '@/middlewares/auth-token';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLResolveInfo } from 'graphql';

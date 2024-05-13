@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { getCommentsByArticleId } from '@/graphql/resolvers/queries';
+import { getCommentsByArticleId } from '@/graphql/resolvers/queries/comment/get-comments-by-articleid';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLResolveInfo } from 'graphql';
 

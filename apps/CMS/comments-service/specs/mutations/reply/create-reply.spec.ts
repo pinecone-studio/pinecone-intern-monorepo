@@ -1,4 +1,4 @@
-import { publishReply } from '@/graphql/resolvers/mutations';
+import { publishReply } from '@/graphql/resolvers/mutations/reply/create-reply';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
 import ReplyModel from '@/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
