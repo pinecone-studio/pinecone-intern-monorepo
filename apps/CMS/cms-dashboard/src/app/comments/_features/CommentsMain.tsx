@@ -4,6 +4,7 @@ import { useGetCommentsQuery } from '../../../generated';
 import { FaArrowRight } from 'react-icons/fa';
 import { FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
+import CreateCommentsCard from '../_components/CreateCommentsCard';
 import UserComment from '../_components/UserComment';
 
 const perPage = 5;
@@ -29,6 +30,7 @@ export const CommentsMain = () => {
   return (
     <div className="my-10">
       <CommentsTab />
+      <CreateCommentsCard />
       <UserComment />
       {comments.map((item) => (
         <div key={item?._id}>
