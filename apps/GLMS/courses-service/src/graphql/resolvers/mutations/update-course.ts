@@ -10,6 +10,6 @@ export const updateCourse: MutationResolvers['updateCourse'] = async (_, { id })
     }
     return updatedCourse;
   } catch (error) {
-    throw new GraphQLError('An unknown error occurred');
+    throw new GraphQLError('An sunknown error occurred');
   }
 };
