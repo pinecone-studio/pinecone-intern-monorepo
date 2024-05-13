@@ -4,7 +4,7 @@ import graphqlErrorHandler, { errorTypes } from '../error';
 
 export const getEmployee: QueryResolvers['getEmployee'] = async (_, { id }) => {
   try {
-    const employee = await EmployeeModel.findById(id)
+    const employee = await EmployeeModel.findById(id).populate('relative');
     if (!employee) {
       throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR);
     }
