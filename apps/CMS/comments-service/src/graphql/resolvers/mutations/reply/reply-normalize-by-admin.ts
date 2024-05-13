@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler } from '../../error';
-import { MutationResolvers, ReplyStatus } from '../../../generated/index';
+import { MutationResolvers, ReplyStatus } from '@/graphql/generated/index';
 import ReplyModel from '@/models/reply.model';
 
 export const setReplyStatusToNormal: MutationResolvers['setReplyStatusToNormal'] = async (_, { id }) => {

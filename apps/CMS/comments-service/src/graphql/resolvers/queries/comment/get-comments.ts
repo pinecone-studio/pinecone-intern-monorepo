@@ -1,5 +1,5 @@
 import { CommentStatus, QueryResolvers } from '@/graphql/generated/index';
-import { CommentsModel } from '../../../../models/comment.model';
+import { CommentsModel } from '@/models/comment.model';
 import { GraphQLError } from 'graphql/error';
 
 export const getComments: QueryResolvers['getComments'] = async (_, { input }) => {

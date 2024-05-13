@@ -1,6 +1,6 @@
 import { errorTypes, graphqlErrorHandler } from '../../error';
-import { MutationResolvers, CommentStatus } from '../../../generated/index';
-import { CommentsModel } from '../../../../models/comment.model';
+import { MutationResolvers, CommentStatus } from '@/graphql/generated/index';
+import { CommentsModel } from '@/models/comment.model';
 
 export const setCommentStatusToNormal: MutationResolvers['setCommentStatusToNormal'] = async (_, { id }) => {
   try {
