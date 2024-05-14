@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 import SuccessDeleteToggle from '../../../components/SuccessDeleteToggle';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';

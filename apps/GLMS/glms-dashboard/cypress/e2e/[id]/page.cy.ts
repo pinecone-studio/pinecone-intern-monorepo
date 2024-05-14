@@ -7,12 +7,6 @@ describe(' course Id page should visit [id]', () => {
     cy.contains('Loading...').should('not.exist');
     cy.contains('Error:').should('not.exist');
   });
-  it('0. Should no lesson text visible', () => {
-    const lessonData = [{}];
-    if (lessonData.length == 0) {
-      cy.get('[data-testid="no-lesson-test"]').should('be.visible');
-    }
-  });
   describe('handleCreateLesson', () => {
     it('1. Should create lesson', () => {
       cy.get('[data-testid="add-lesson-button-test-id"]').should('exist').click();
