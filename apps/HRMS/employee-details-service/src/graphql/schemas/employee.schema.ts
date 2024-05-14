@@ -123,6 +123,9 @@ export const employeeDetailsSchema = gql`
     employmentStatus: String
     jobTitle: String
   }
+  input employeeDependentUpdateInput {
+    relative: String!
+  }
   type Query {
     getAllEmployee: [Employee]
     getEmployee(id: ID!): Employee
@@ -135,5 +138,6 @@ export const employeeDetailsSchema = gql`
     deleteEmployee(id: ID!): Employee!
     personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
     updateEmployment(id: ID!, input: UpdateEmploymentInput!): Employee!
+    EmployeeDependentUpdate(id: ID!, input: employeeDependentUpdateInput!): Employee!
   }
 `;
