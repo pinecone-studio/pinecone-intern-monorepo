@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { RefetchProvider } from '@/common/providers/RefetchProvider';
 import { useRouter } from 'next/navigation';
 import jwt from 'jsonwebtoken';
-
 type decodedTokenType = {
   role: string;
 };
