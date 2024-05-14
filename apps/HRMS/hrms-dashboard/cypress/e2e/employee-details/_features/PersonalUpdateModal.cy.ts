@@ -1,6 +1,6 @@
 describe('PersonalUpdateModal Component Test', () => {
   beforeEach(() => {
-    cy.visit('/employee-details/update/66389a107bc2c1b3a29a5585');
+    cy.get('/employee-details/update/66389a107bc2c1b3a29a5585');
     cy.get('[data-testid="update-button-info"]').click();
   });
 
