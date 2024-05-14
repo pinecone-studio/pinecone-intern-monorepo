@@ -1,10 +1,10 @@
 .hoverRotate {
-  width: fit-content;  
-  transition: transform 0.3 ease-in-out;  
+  width: fit-content;
+  transition: transform 0.3 ease-in-out;
 }
 
 .hoverRotate:hover {
-  transform: rotate(720deg);
-  transition-duration: 0.5s;
+  transform: rotate(360deg);
+  transition-duration: 1s;
   perspective: 1000px;
 }
