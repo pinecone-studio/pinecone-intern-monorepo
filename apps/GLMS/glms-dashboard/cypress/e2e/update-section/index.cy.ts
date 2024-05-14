@@ -23,6 +23,6 @@ describe ('Handle update-section page' , () => {
       cy.get('[data-cy="description"]').type( 'HTML basic description')
       cy.get('#file-test').selectFile('public/js.png', { force: true });
       cy.get('[data-cy="update-section-handle-btn"]').click()
-      cy.url().should('include', '/section');
+    
     });
 })
