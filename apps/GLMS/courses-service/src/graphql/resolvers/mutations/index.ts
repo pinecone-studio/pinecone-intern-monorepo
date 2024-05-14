@@ -9,3 +9,4 @@ export * from './delete-lesson';
 export * from './update-course';
 export * from './update-lesson-by-input';
 export * from './update-course-status';
+export * from './sign-up';
