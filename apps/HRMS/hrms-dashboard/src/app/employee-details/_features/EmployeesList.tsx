@@ -1,5 +1,5 @@
 'use client';
-import { EmployeePagination, EmployeeSearch } from '../_components';
+import { EmployeePagination } from '../_components';
 import { EmployeesListTable } from './EmployeesListTable';
 import { useEffect, useState } from 'react';
 import { CreateEmployeeForm } from './CreateEmployeeForm';
@@ -52,7 +52,6 @@ export const EmployeesList = () => {
               )}
             </div>
             <div className="flex gap-4 py-6">
-              <EmployeeSearch />
               <TableFilters />
             </div>
             <EmployeesListTable setPage={setPage} checked={checked} defaultValue={defaultValue} />

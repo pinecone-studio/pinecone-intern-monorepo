@@ -19,14 +19,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <LeaveRequestCreationProvider>
             <DataProvider>
               <AuthProvider>
-              <div className="flex flex-col flex-1">
-                <Header />
-                <div className="flex">
-                  <Sidebar />
-                  <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+                <div className="flex flex-col flex-1">
+                  <Header />
+                  <div className="flex flex-col md:flex-row">
+                    <Sidebar />
+                    <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+                  </div>
                 </div>
-              </div>
-            </AuthProvider>
+              </AuthProvider>
             </DataProvider>
           </LeaveRequestCreationProvider>
         </FederationProvider>
