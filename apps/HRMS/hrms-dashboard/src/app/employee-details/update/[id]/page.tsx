@@ -17,7 +17,6 @@ const Update = () => {
       </div>
     );
   }
-
   const employee = data?.getEmployee;
 
   return (
@@ -52,7 +51,7 @@ const Update = () => {
             dateOfEmployment={data?.getEmployee?.dateOfEmployment}
             employmentStatus={data?.getEmployee?.employmentStatus}
           />
-          <UpdateDependant dependantPhone="88556061" registerNumber="ЙО02240509" />
+          <UpdateDependant dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} />.
         </div>
       </div>
     </section>
