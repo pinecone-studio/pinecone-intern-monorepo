@@ -42,10 +42,16 @@ const getColorForStatus = (status: string) => {
 
 export const DashboardTable = (props: DashboardTableProps) => {
   const { articles, loading, error } = props;
-  if (loading) return <div>loading...</div>;
+  if (loading)
+    return (
+      <div className="flex w-full justify-center py-8">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+
   if (error) return <div>error...{error.message}</div>;
+
   return (
-    
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
       <div className="overflow-x-auto w-full min-w-[650px] flex border">
         <table className="table">
@@ -65,42 +71,45 @@ export const DashboardTable = (props: DashboardTableProps) => {
               })}
             </tr>
           </thead>
-
-          <tbody>
-            {articles?.map(({ status, title, createdAt, category, id }, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <p className="text-[16px] text-textPrimary font-[600] whitespace-nowrap">{title}</p>
-                  </td>
-                  <td>
-                    <p
-                      className="font-[400] text-[14px] py-[2px] px-2 rounded-[30px] w-fit"
-                      style={{
-                        backgroundColor: getColorForStatus(status),
-                      }}
-                    >
-                      {ARTICLE_ENUM[status as keyof ArticleStatusType]}
-                    </p>
-                  </td>
-                  <td>
-                    <p className="font-[400] text-[14px] whitespace-nowrap">{createdAt.slice(0, 10)}</p>
-                  </td>
-                  <td>
-                    <div className="rounded-[30px] w-fit bg-[#ECEDF0]">
-                      <p className="font-[400] text-[14px] text-[#1F2126] py-[2px] px-3">{category.name}</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="flex justify-center">
-                      <ArticleDropDownMenuFeature id={id as string} />
-                      <ArticleEditButton id={id as string} />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          {!articles?.length ? (
+            <p className="text-xl font-semibold p-8">Article not found</p>
+          ) : (
+            <tbody>
+              {articles?.map(({ status, title, createdAt, category, id }, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <p className="text-[16px] text-textPrimary font-[600] whitespace-nowrap">{title}</p>
+                    </td>
+                    <td>
+                      <p
+                        className="font-[400] text-[14px] py-[2px] px-2 rounded-[30px] w-fit"
+                        style={{
+                          backgroundColor: getColorForStatus(status),
+                        }}
+                      >
+                        {ARTICLE_ENUM[status as keyof ArticleStatusType]}
+                      </p>
+                    </td>
+                    <td>
+                      <p className="font-[400] text-[14px] whitespace-nowrap">{createdAt.slice(0, 10)}</p>
+                    </td>
+                    <td>
+                      <div className="rounded-[30px] w-fit bg-[#ECEDF0]">
+                        <p className="font-[400] text-[14px] text-[#1F2126] py-[2px] px-3">{category.name}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center">
+                        <ArticleDropDownMenuFeature id={id as string} />
+                        <ArticleEditButton id={id as string} />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

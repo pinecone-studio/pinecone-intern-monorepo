@@ -48,7 +48,7 @@ const Home = () => {
         <Navbar />
         <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
           <div className="flex flex-col h-[90vh] justify-between">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-1">
                 <div className="flex justify-between">
                   <SearchInput />
