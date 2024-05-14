@@ -10,12 +10,19 @@ import { AdminNavigateLinksFeature, ArticleStatusTabsFeature } from './_features
 import { DashboardTable } from './_features/DashboardTable';
 import { useEffect, useState } from 'react';
 import { RefetchProvider } from '@/common/providers/RefetchProvider';
+import { useRouter } from 'next/navigation';
+import jwt from 'jsonwebtoken';
+
+type decodedTokenType = {
+  role: string;
+};
 
 const Home = () => {
   const searchParams = useSearchParams();
   const [pageNumber, setPageNumber] = useState<number>(0);
   const statusFilter = searchParams.get('status') ?? '';
   const searchedValueFilter = searchParams.get('searchedValue') ?? '';
+  const router = useRouter();
 
   const {
     data,
@@ -42,6 +49,25 @@ const Home = () => {
   useEffect(() => {
     setPageNumber(0);
   }, [statusFilter, searchedValueFilter]);
+
+  useEffect(() => {
+    const currentToken: string | null = localStorage.getItem('token');
+    if (!currentToken) {
+      router.push('/');
+      return;
+    }
+
+    const decodedToken = jwt.decode(currentToken) as decodedTokenType | null;
+    if (!decodedToken) {
+      router.push('/');
+      return;
+    }
+
+    if (decodedToken.role === 'user') {
+      router.push('/');
+    } 
+  }, [router]);
+
   return (
     <RefetchProvider refetch={getArticlesRefetch}>
       <div className="bg-[#e9eaec] h-[100vh]">
