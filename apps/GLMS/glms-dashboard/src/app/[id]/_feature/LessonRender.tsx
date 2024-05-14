@@ -10,10 +10,8 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   const [deleteLesson] = useDeleteLessonMutation();
 
   const HandleDeleteLesson = () => {
-    if (lesson?.id) {
-      deleteLesson({ variables: { id: lesson?.id } });
-      isDeleted(true);
-    }
+    if (lesson.id) deleteLesson({ variables: { id: lesson?.id } });
+    isDeleted(true);
   };
 
   return (
