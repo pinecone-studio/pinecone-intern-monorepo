@@ -1,2 +1,2 @@
-export * from './get-by-commentid';
-export * from './get-by-parentid';
+export * from './get-replies-by-commentid';
+export * from './get-replies-by-parentid';

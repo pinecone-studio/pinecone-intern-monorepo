@@ -2,6 +2,11 @@ import gql from 'graphql-tag';
 
 export const replySchema = gql`
   scalar Date
+  enum ReplyStatus {
+    NORMAL
+    DELETED
+    HIDDEN
+  }
   type Reply {
     _id: ID!
     reply: String!
@@ -10,6 +15,7 @@ export const replySchema = gql`
     parent: Reply
     createdAt: Date
     ipAddress: String
+    status: ReplyStatus
   }
   input CreateReplyInput {
     reply: String!
@@ -28,6 +34,7 @@ export const replySchema = gql`
     publishReply(createInput: CreateReplyInput): ID!
     hideReplyByAdmin(hideInput: HideReplyByAdminInput!): ID!
     deleteReplyByAdmin(removeInput: RemoveReplyByAdminInput!): ID!
+    setReplyStatusToNormal(id: ID!): ID!
   }
   type Query {
     getRepliesByCommentId(commentId: String): [Reply]
