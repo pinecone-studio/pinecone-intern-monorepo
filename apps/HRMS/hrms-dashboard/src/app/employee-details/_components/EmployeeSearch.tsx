@@ -24,7 +24,7 @@ export const EmployeeSearch = () => {
   };
 
   return (
-    <div className="border flex gap-2 border-[#ECEDF0] p-1 rounded-lg min-w-[302px] justify-center items-center ">
+    <div className="border flex gap-2 border-[#ECEDF0] p-1 rounded-lg min-w-[150px] md:min-w-[302px] justify-center items-center ">
       <div className="px-1">
         <SearchSvg />
       </div>
