@@ -9,7 +9,7 @@ export const CreatedSvg = () => {
       </g>
       <defs>
         <filter id="filter0_b_16196_72218" x="-24" y="-10" width="96" height="96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="12" />
           <feComposite in2="SourceAlpha" operator="in" />
           <feBlend mode="normal" in="SourceGraphic" result="shape" />

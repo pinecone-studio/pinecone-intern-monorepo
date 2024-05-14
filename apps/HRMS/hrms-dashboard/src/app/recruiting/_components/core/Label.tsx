@@ -13,7 +13,7 @@ export const JobStatusLabel = ({ title, labelType }: JobLabelProps) => {
 
   return (
     <div>
-      <p className={`p-1 m-1 inline-block rounded-md ${filterLabels[0].bgColor}]`}>{title}</p>
+      <p className={`text-sm tracking-tight py-0.5 px-2 items-center inline-block rounded-xl ${filterLabels[0].bgColor}]`}>{title}</p>
     </div>
   );
 };
@@ -35,7 +35,7 @@ export const ApplicantStatusLabel = ({ title, labelType }: ApplicantLabelProps) 
 
   return (
     <div>
-      <p className={`px-2 py-1 m-1 inline-block rounded-md ${filterLabels[0].bgColor} `}>{title}</p>
+      <p className={`text-sm tracking-tight py-0.5 px-2 items-center inline-block rounded-xl ${filterLabels[0].bgColor} `}>{title}</p>
     </div>
   );
 };

@@ -26,19 +26,19 @@ export const CreateErrorModal = ({ text, label }: Props) => {
 
   return (
     <div>
-      <button className="btn bg-[#121316] text-base-100 hover:text-black" onClick={handleOpen}>
+      <button className="btn shadow-none tracking-tight border-[#D6D8DB] bg-white text-[#121316] hover:bg-[#cccccc] hover:border-[#a6a6a6]" onClick={handleOpen}>
         {label}
       </button>
-      <dialog className="modal rounded-3xl" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" data-testid="modal">
-        <div className="modal-box">
+      <dialog className="modal flex justify-center m-auto backdrop-brightness-50 w-screen" open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title" data-testid="modal">
+        <div className="modal-box bg-white">
           <div>
-            <button onClick={handleClose} data-testid="close-button" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button onClick={handleClose} data-testid="close-button" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-[#121316]">
               ✕
             </button>
           </div>
-          <div className="flex flex-col justify-center items-center mx-5 mb-2 gap-2">
-            <div className="rounded-md p-3">{message[0].svg}</div>
-            <p className="text-xl font-semibold text-black">{text}.</p>
+          <div className="flex flex-col justify-center items-center mx-5 mb-2 gap-2 bg-white">
+            <div className="rounded-md p-3">{message[1].svg}</div>
+            <p className="text-xl font-semibold text-[#121316]">{text}.</p>
           </div>
         </div>
       </dialog>
