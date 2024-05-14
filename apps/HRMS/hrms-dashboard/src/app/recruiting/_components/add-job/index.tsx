@@ -12,14 +12,14 @@ export const AddJobPageComponent = () => {
     router.push('/recruiting');
   };
   return (
-    <div className="mx-5 w-full">
-      <div className="flex items-center mt-4">
-        <button data-testid="back-button" onClick={handleBackButtonClick} className="hover:bg-base-300 p-3 rounded-md">
+    <div className="w-full">
+      <div className="flex items-center bg-white w-full">
+        <button data-testid="back-button" onClick={handleBackButtonClick} className="hover:bg-[#cccccc] p-4 rounded-md">
           <LeftArrow />
         </button>
 
         <div className="w-full">
-          <h1 data-testid="title" className="text-center text-lg font-medium">
+          <h1 data-testid="title" className="text-center text-sm font-semibold text-black">
             Ажлын зар үүсгэх
           </h1>
         </div>
