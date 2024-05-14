@@ -4,6 +4,7 @@ import { fileManagement } from '@/file-management';
 import { FileUploadIcon } from '@/icons';
 import { InputLabel } from './InputLabel';
 import { MdOutlineModeEdit } from 'react-icons/md';
+import { ChangeEvent, useState } from 'react';
 
 type FileUploadProps = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -22,7 +23,7 @@ export const FileUpload = (props: FileUploadProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0]">
+    <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0] relative">
       <InputLabel title="Өнгөц зураг" />
 
       <div className="w-full h-[220px] object-cover rounded-xl" style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}>
@@ -41,7 +42,7 @@ export const FileUpload = (props: FileUploadProps) => {
           <div className="bg-white border-2 w-fit p-2 rounded-full">
             <MdOutlineModeEdit size={26} />
           </div>
-          <input type="file" className="w-[60px] border absolute top-2 opacity-0" onChange={handleUpload} />
+          <input type="file" className="w-[60px] border absolute top-2 opacity-0" />
         </div>
       </div>
     </div>

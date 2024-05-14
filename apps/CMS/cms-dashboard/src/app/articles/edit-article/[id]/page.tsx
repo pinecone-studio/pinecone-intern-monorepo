@@ -118,6 +118,7 @@ const Home = () => {
               defaultValue={article?.category.id}
             />
           </div>
+
           <FileUpload thumbnail={formik.values.coverPhoto} setFieldValue={formik.setFieldValue} />
 
           <ToggleButtonForCommnent
