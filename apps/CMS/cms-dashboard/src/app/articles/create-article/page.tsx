@@ -24,7 +24,7 @@ const CreateArticle = () => {
   const router = useRouter();
   const [commentPermission, setCommentPermission] = useState(true);
   const [createArticle] = useCreateArticleMutation();
-  const author = '663b2a978739ee840973692f';
+  const author = '66387904ab62ff527e48d757';
   const status = 'PUBLISHED';
   const slug = 'slug';
 
@@ -36,8 +36,7 @@ const CreateArticle = () => {
     setFieldValue('content', value);
   };
 
-
-  const { values, errors, isValid, setFieldValue, handleSubmit, handleChange, handleBlur,  touched , resetForm } = useFormik({
+  const { values, errors, isValid, setFieldValue, handleSubmit, handleChange, handleBlur, touched, resetForm } = useFormik({
     initialValues: {
       title: '',
       content: '',
@@ -47,22 +46,22 @@ const CreateArticle = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       handleCreateArticle(values.title, values.content, values.coverPhoto, values.category);
-      resetForm()
-      handleModalClose()
+      resetForm();
+      handleModalClose();
     },
   });
 
   const handleCreateArticle = async (title: string, content: string, coverPhoto: string, category: string) => {
-      await createArticle({
-        variables: {
-          articleInput: { commentPermission, title, content, coverPhoto, category, author, slug, status },
-        },
-      });
-      toast.success('Published Successfully !', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+    await createArticle({
+      variables: {
+        articleInput: { commentPermission, title, content, coverPhoto, category, author, slug, status },
+      },
+    });
+    toast.success('Published Successfully !', {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
   };
 
   const handleModalClose = () => {
@@ -78,8 +77,10 @@ const CreateArticle = () => {
       <div data-cy="create-article-main-container" className=" w-full h-screen flex justify-between">
         <div className="flex flex-col bg-[#F7F7F8] pl-[92px] pr-[82px] pt-[66px] gap-12  w-full">
           <div className=" flex flex-col gap-[18px]">
-            <div data-cy="back-button-container"  onClick={handleback}><BackButton /></div>
-            
+            <div data-cy="back-button-container" onClick={handleback}>
+              <BackButton />
+            </div>
+
             <div className=" flex flex-col gap-[15px]">
               <p data-cy="title-cy-id" className=" text-lg font-semibold">
                 Гарчиг өгөх

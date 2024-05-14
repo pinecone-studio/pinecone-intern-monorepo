@@ -13,6 +13,7 @@ export const CategorySelectInput = (props: EDIT_INPUT_PROPS) => {
         defaultValue={defaultValue}
         className="select select-bordered w-full  text-black-primary invalid:text-textPlaceholder"
         data-testid="category-select-input-select-button"
+        data-cy="category-select-input-select-button-cy-id"
       >
         {loading && <option>Loading...</option>}
         {categories?.map((item, index) => {

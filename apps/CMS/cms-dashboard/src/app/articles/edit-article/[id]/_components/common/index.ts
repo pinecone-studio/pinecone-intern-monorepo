@@ -8,7 +8,7 @@ export type EDIT_INPUT_PROPS = {
   placeholder?: string;
   type?: string;
   value: string | number | readonly string[] | undefined;
-  helperText?: string;
+  helperText?: string | undefined;
   error?: boolean | undefined;
   defaultValue?: string | number | undefined;
   loading?: boolean;

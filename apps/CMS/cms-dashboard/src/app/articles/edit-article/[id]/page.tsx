@@ -86,7 +86,7 @@ const Home = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.title}
-              helperText={formik.errors.title}
+              helperText={String(formik.errors.title)}
               error={formik.touched.title && Boolean(formik.errors.title)}
             />
           </div>
@@ -119,6 +119,7 @@ const Home = () => {
             />
           </div>
           <FileUpload thumbnail={formik.values.coverPhoto} setFieldValue={formik.setFieldValue} />
+
           <ToggleButtonForCommnent
             name="commentPermission"
             onChange={formik.handleChange}
