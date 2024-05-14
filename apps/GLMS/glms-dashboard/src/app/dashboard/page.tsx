@@ -30,7 +30,6 @@ const DashboardOtherLab = () => {
                     Өдрийн мэнд
                   </p>
                 </div>
-
                 <div className="flex gap-[16px]">
                   <button
                     data-testid="button1"
@@ -46,22 +45,22 @@ const DashboardOtherLab = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white border-b-[1px] border-solid border-[#0000001A] flex justify-center items-center">
-            <div className="flex w-[85%] px-6 ">
-              {buttonsBottom.map((name) => (
-                <button
-                  data-testid="tab1"
-                  data-cy={name}
-                  onClick={() => {
-                    setActionTab(name);
-                  }}
-                  key={name}
-                  className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
-                >
-                  {name}
-                </button>
-              ))}
+            <div className="bg-white">
+              <div className="flex w-[85%] px-6 ">
+                {buttonsBottom.map((name) => (
+                  <button
+                    data-testid="tab1"
+                    data-cy={name}
+                    onClick={() => {
+                      setActionTab(name);
+                    }}
+                    key={name}
+                    className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
