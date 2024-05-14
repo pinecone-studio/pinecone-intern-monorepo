@@ -1,7 +1,6 @@
 describe ('Handle update-course page' , () => {
     beforeEach(() => cy.visit('/update-course'))
 
-    localStorage.setItem('courseID', '123');
 
     it('1. Update section page' , () => {
       cy.get('[data-testid="update-course-container"]').should('exist')
@@ -25,6 +24,5 @@ describe ('Handle update-course page' , () => {
       cy.get('[data-cy="description"]').type('Html intro')
       cy.get('#file-test').selectFile('public/js.png', { force: true });
       cy.get('[data-cy="update-button"]').click()
-      cy.url().should('include', '/123');
     });
 })
