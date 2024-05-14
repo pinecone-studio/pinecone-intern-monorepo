@@ -2,6 +2,7 @@
 
 import { fileManagement } from '@/file-management';
 import { FileUploadIcon } from '@/icons';
+import { InputLabel } from './InputLabel';
 
 type FileUploadProps = {
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -21,7 +22,7 @@ export const FileUpload = (props: FileUploadProps) => {
 
   return (
     <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0]">
-      <p className="font-[600] text-[18px] text-[#121316]">Өнгөц зураг</p>
+      <InputLabel title="Өнгөц зураг" />
 
       <div className="w-full h-[190px] object-cover rounded-xl" style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: 'cover' }}>
         {!thumbnail && (
