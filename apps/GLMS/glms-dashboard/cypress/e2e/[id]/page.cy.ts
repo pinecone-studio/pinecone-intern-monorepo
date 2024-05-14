@@ -17,11 +17,10 @@ describe(' course Id page should visit [id]', () => {
     cy.get('[data-testid="edit-course-button"]').should('exist').click();
     cy.url().should('include', '/update-course');
   });
-  describe('handleBack', () => {
-    it('3. Should navigate back to dashboard ', () => {
-      cy.get('[data-cy="prev-button-test-id"]').should('exist').click();
-      cy.url().should('include', '/dashboard');
-    });
+
+  it('3. Should navigate back to dashboard ', () => {
+    cy.get('[data-cy="prev-button-test-id"]').should('exist').click();
+    cy.url().should('include', '/dashboard');
   });
 
   it('4. Should set lessonID in localStorage and navigate to /section', () => {
