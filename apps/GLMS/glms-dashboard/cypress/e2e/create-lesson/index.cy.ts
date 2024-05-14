@@ -25,9 +25,7 @@ describe('createLessonPage', () => {
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-testid="create-button-of-lesson"]').should('not.be.disabled');
     cy.get('[data-testid="create-button-of-lesson"]').click();
-
     cy.wait('@createLesson');
-
     cy.url().should('include', '/dashboard');
   });
 });
