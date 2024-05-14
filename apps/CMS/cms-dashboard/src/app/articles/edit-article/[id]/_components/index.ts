@@ -1,5 +1,5 @@
 export * from './SubmitButton';
-export * from './Title';
+export * from './InputLabel';
 export * from './ToggleForComment';
 export * from './ArrowBack';
 export * from './ContentInput';

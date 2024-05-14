@@ -1,10 +1,6 @@
-import { Category } from '@/generated';
-import { CategorySelectInputFeatureProps } from '../_feature/CategorySelectInputFeature';
-type PropsType = {
-  loading: boolean;
-  categories: [Category] | undefined;
-} & CategorySelectInputFeatureProps;
-export const CategorySelectInput = (props: PropsType) => {
+import { EDIT_INPUT_PROPS } from './common';
+
+export const CategorySelectInput = (props: EDIT_INPUT_PROPS) => {
   const { loading, categories, name, value, onChange, onBlur, defaultValue } = props;
 
   return (
@@ -14,7 +10,7 @@ export const CategorySelectInput = (props: PropsType) => {
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        defaultValue={value ?? defaultValue}
+        defaultValue={defaultValue}
         className="select select-bordered w-full  text-black-primary invalid:text-textPlaceholder"
         data-testid="category-select-input-select-button"
       >

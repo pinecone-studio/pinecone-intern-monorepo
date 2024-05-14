@@ -4,7 +4,7 @@ import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { HelperText } from './HelperText';
 type ToggleInputProps = {
   name: string;
-  defaultChecked: boolean | undefined;
+  defaultChecked?: boolean | undefined;
   value: boolean | undefined;
   helperText?: string;
   formikError?: boolean | undefined;
@@ -20,7 +20,7 @@ export const ToggleButtonForCommnent = (props: ToggleInputProps) => {
       <div style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: 600, lineHeight: '24px', color: 'black' }}>{value === true ? 'Сэтгэгдэл идэвхтэй' : 'Сэтгэгдэл идэвхгүй'}</div>
       <input
         name={name}
-        defaultChecked={defaultChecked ?? value}
+        defaultChecked={defaultChecked}
         onChange={onChange}
         checked={value}
         type="checkbox"
