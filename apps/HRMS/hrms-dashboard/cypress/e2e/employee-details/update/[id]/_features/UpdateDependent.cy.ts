@@ -1,7 +1,7 @@
 describe('update dependant', () => {
   beforeEach(() => cy.visit('/employee-details'));
 
-  it('1.Should visit to update page', () => {
+  it('Should visit to update page', () => {
     cy.get('[data-cy="updateLink"]').should('exist').eq(2).click();
     cy.url().should('include', 'update');
     cy.get('[data-cy="updateDependent"]').should('exist').should('be.visible');
