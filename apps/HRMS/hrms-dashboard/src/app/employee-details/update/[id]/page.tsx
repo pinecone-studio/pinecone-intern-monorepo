@@ -1,8 +1,8 @@
 'use client';
-import { useGetEmployeeQuery } from '@/generated';
+import { Dependent, useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
-import { UpdateDependant, UpdateEmployment } from './_features';
+import { UpdateDependent, UpdateEmployment } from './_features';
 import { PersonalInformation } from '../../_components';
 
 const Update = () => {
@@ -47,7 +47,7 @@ const Update = () => {
             dateOfEmployment={data?.getEmployee?.dateOfEmployment}
             employmentStatus={data?.getEmployee?.employmentStatus}
           />
-          <UpdateDependant dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} />
+          <UpdateDependent dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} relative={employee?.relative[0] as Dependent} />
         </div>
       </div>
     </section>

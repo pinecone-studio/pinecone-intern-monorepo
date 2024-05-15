@@ -6,3 +6,35 @@ mutation CreateEmployee($input: CreateEmployeeInput!) {
     email
   }
 }
+
+mutation CreateDependent($input: CreateDependetInput) {
+  createDependent(input: $input) {
+    id
+    firstName
+    lastName
+    phone
+    dependency
+  }
+}
+
+mutation EmployeeDependentUpdate($employeeDependentUpdateId: ID!, $input: employeeDependentUpdateInput!) {
+  EmployeeDependentUpdate(id: $employeeDependentUpdateId, input: $input) {
+    relative {
+      id
+      firstName
+      lastName
+      phone
+      dependency
+    }
+  }
+}
+
+mutation UpdatedDependent($updatedDependentId: ID!, $input: UpdateDependentInput!) {
+  updatedDependent(id: $updatedDependentId, input: $input) {
+    id
+    firstName
+    lastName
+    phone
+    dependency
+  }
+}

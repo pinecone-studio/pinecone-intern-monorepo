@@ -51,6 +51,9 @@ query GetEmployee($getEmployeeId: ID!) {
     relative {
       phone
       dependency
+      id
+      lastName
+      firstName
     }
   }
 }
