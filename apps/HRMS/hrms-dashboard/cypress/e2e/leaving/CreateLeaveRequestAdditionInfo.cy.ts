@@ -36,6 +36,8 @@ describe('assessment page', () => {
     cy.get('[data-cy="step3ApprovedBy"]').select(1);
     cy.get('button[data-cy="next-btn"]').should('not.be.disabled').click();
     cy.get('[data-cy="LeaveRequestSucceeded"]').contains('Чөлөөний хүсэлт амжилттай илгээгдлээ');
+    cy.get('[data-cy="modal-closing-btn"]').click();
+    cy.get('[data-cy="LeaveRequestSucceeded"]').should('not.exist');
   });
 
   it('3. should return to Previous step', () => {

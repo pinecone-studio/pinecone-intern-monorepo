@@ -9,9 +9,11 @@ describe('assessment page', () => {
     cy.get('[data-cy="type-select-input"]').select(1);
     cy.get('button[data-cy="next-btn"]').should('not.be.disabled').click();
     cy.get('[data-cy="radioButtonDays"]').click();
-    cy.get('[data-cy="leaveRequestDays"]').should('exist');
     cy.get('[data-cy="starDate-picker-container"]').type('2000-01-01');
     cy.get('[data-cy="endDate-picker-container"]').type('2000-01-05');
+    cy.get('[data-cy="radioButtonDayOff"]').click();
+    cy.get('button[data-cy="next-btn"]').should('be.disabled');
+    cy.get('[data-cy="radioButtonDays"]').click();
 
     cy.get('[data-cy="radioButtonDayOff"]').click();
     cy.get('[data-cy="leaveRequestDayOff"]').should('exist');
