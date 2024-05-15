@@ -12,8 +12,6 @@ export const FileUpload = (props: FileUploadProps) => {
   const { value, setFieldValue } = props;
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('ajillaw');
-
     if (e.target.files) {
       const file = Array.from(e.target.files);
 

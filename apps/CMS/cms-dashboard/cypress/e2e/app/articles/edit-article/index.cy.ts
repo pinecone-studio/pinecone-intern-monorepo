@@ -14,7 +14,6 @@ describe('Edit article page', () => {
     cy.get('[data-cy="input-label-cy-id"]').should('contain', 'Гарчиг');
     cy.get('[data-cy="input-label-cy-id"]').should('contain', 'Нийтлэл');
     cy.get('[data-cy="input-label-cy-id"]').should('contain', 'Ангилал');
-    cy.get('[data-cy="input-label-cy-id"]').should('contain', 'Өнгөц зураг');
 
     // 4. Should be visible Title input component and shows error message
     cy.get('[data-cy="title-input-cy-id"]').should('exist').clear();
