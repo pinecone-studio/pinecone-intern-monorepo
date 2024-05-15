@@ -1,51 +1,36 @@
 import { FileUpload } from '@/app/articles/edit-article/[id]/_components/FileUpload';
-
-import { render, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 jest.mock('@/file-management', () => ({
   fileManagement: jest.fn().mockResolvedValue(['access-url']),
 }));
 
 describe('FileUpload Component', () => {
+  const setFieldValueMock = jest.fn();
+  const file = new File([''], 'test.png', { type: 'image/png' });
   it('should handle file upload correctly', async () => {
-    const setFieldValueMock = jest.fn();
-    const file = new File([''], 'test.png', { type: 'image/png' });
-    const fileInput = {
-      target: {
-        files: [file],
-      },
-    };
+    const { getByTestId } = render(<FileUpload setFieldValue={setFieldValueMock} value="value" />);
 
-    const { getByLabelText } = render(<FileUpload setFieldValue={setFieldValueMock} />);
+    const input = getByTestId('file-input-test-id');
 
-    const input = getByLabelText('Зураг оруулах');
-
-    act(() => {
-      fireEvent.change(input, fileInput);
-    });
-
+    await waitFor(() =>
+      fireEvent.change(input, {
+        target: { files: [file] },
+      })
+    );
     await Promise.resolve();
   });
 
   it('handle upload target null', async () => {
-    const setFieldValueMock = jest.fn();
-    const fileInput = {
-      target: {
-        files: null,
-      },
-    };
+    const { getByTestId } = render(<FileUpload setFieldValue={setFieldValueMock} value="value" />);
 
-    const { getByLabelText } = render(<FileUpload setFieldValue={setFieldValueMock} />);
+    const input = getByTestId('file-input-test-id');
 
-    const input = getByLabelText('Зураг оруулах');
-
-    act(() => {
-      fireEvent.change(input, fileInput);
-    });
-
+    await waitFor(() =>
+      fireEvent.change(input, {
+        target: { files: null },
+      })
+    );
     await Promise.resolve();
   });
-
-  it('handle upload target null', async () => {});
 });
