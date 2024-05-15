@@ -98,7 +98,9 @@ const CourseAdd = () => {
                 <button
                   key={index}
                   name="submitBtn"
-                  className={`bg-[#121316] rounded-lg w-[280px] h-[56px] text-white flex justify-center items-center btn`}
+                  className={`${
+                    item == 'Ноорог' ? 'border-[#121316] bg-white hover:bg-[#f0f0f0] text-black' : 'bg-[#121316] hover:bg-[#121316] text-white'
+                  } rounded-lg w-[280px] h-[56px]  flex justify-center items-center btn`}
                   data-testid="create-button"
                   onClick={handleClick}
                   disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}

@@ -9,16 +9,18 @@ import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
 
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
+const date = new Date().toLocaleTimeString();
 
 const DashboardOtherLab = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { data, loading } = useGetCoursesQuery();
+  const { data, loading, refetch } = useGetCoursesQuery();
   const [actionTab, setActionTab] = useState('Хичээл');
   const handleCreateCourse = () => {
     router.push('/create-course');
   };
   useEffect(() => {
+    refetch();
     if (pathname == '/dashboard') {
       localStorage.removeItem('courseID');
       localStorage.removeItem('lessonID');
@@ -38,7 +40,7 @@ const DashboardOtherLab = () => {
                     Сайн уу?
                   </p>
                   <p data-testid="title2" className="color-[#121316] text-[36px] font-bold">
-                    Өдрийн мэнд
+                    {date.slice(-2) === 'AM' ? 'Өдрийн мэнд' : 'Оройн мэнд'}
                   </p>
                 </div>
                 <div className="flex gap-[16px]">
@@ -56,7 +58,7 @@ const DashboardOtherLab = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white">
+            <div className="bg-white mt-8">
               <div className="flex w-[85%] px-6 ">
                 {buttonsBottom.map((name) => (
                   <button
@@ -68,7 +70,7 @@ const DashboardOtherLab = () => {
                     key={name}
                     className={`text-[14px] font-normal py-2 px-4 ${actionTab === name ? 'border-b-2 border-black font-extrabold' : ''}`}
                   >
-                    {name}
+                    <p className={` ${actionTab === name ? ' font-bold' : ''}`}>{name}</p>
                   </button>
                 ))}
               </div>

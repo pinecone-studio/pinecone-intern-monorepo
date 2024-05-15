@@ -1,8 +1,10 @@
 'use client';
-import { Course } from '@/generated';
+import { Course, useGetLessonByIdQuery } from '@/generated';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
+  const { data, loading, refetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: id || '' } });
+  const length = data?.getLessonById?.length;
   return (
     <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id} data-testid="courseContain">
       <div className="w-full h-[120px] rounded-md overflow-hidden">
@@ -16,9 +18,10 @@ const Courses = (props: Course) => {
           {description}
         </p>
         <div className="py-3 flex justify-between items-center ">
-          <p className="flex w-fit bg-[#C1E6CF]  px-1 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
-            Lessons
-          </p>
+          <div className="flex w-fit bg-[#C1E6CF]  px-3 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
+            {loading ? '0' : length}
+            {` Lesson${length == 1 || length == 0 ? '' : 's'}`}
+          </div>
         </div>
       </div>
     </div>
