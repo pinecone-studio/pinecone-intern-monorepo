@@ -25,7 +25,7 @@ const TextInput = (props: TextInputProps) => {
   return (
     <div className="flex flex-col gap-1 w-full" data-testid="Custom-Input">
       <h1 data-testid="label">{label}</h1>
-      <label
+      <div
         data-testid="error"
         className={cx('flex px-[13px] items-center gap-2 bg-[#ECEDF0] rounded-[4px] border border-[#d6d8db] hover:border-black', {
           'border-red-700 hover:border-red-700 focus-within:ring-1 focus-within:ring-red-700 ': error,
@@ -45,7 +45,7 @@ const TextInput = (props: TextInputProps) => {
         {type === 'password' && (
           <button data-testid="toggleVisibility" onClick={togglePassword} className="btn btn-circle w-7 h-7 border-none bg-transparent hover:bg-transparent shadow-none"></button>
         )}
-      </label>
+      </div>
       <p data-testid="helperText" className="text-red-700 text-xs">
         {helperText}
       </p>
