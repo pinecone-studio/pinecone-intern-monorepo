@@ -16,7 +16,6 @@ const validatinSchema = yup.object({
 
 const SectionPage = () => {
   const [createSection] = useCreateSectionMutation();
-  const { data, loading, refetch } = useGetSectionByLessonIdQuery({ variables: { getSectionByLessonIdId: localStorage.getItem('lessonID') || '' } });
   const [deleteSection] = useDeleteSectionMutation();
   const router = useRouter();
   const [isPosted, setIsPosted] = useState(false);
@@ -33,6 +32,7 @@ const SectionPage = () => {
     }
   }, []);
   const id = sectionID ? sectionID : '';
+  const { data, loading, refetch } = useGetSectionByLessonIdQuery({ variables: { getSectionByLessonIdId: lessonID } });
   const formik = useFormik({
     initialValues: {
       title: '',
