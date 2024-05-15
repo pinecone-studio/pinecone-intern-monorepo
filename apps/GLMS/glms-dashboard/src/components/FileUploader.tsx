@@ -21,6 +21,7 @@ const FileUploader = (props: FormikTypes) => {
   return (
     <div
       className="w-full h-full max-h-[422px] min-h-[240px]  px-2  flex justify-center items-center rounded-lg relative bg-cover"
+      data-cy="file-uploader-test-id"
       style={{ backgroundImage: `url(${thumbnail})`, border: '2px #D6D8D8 dashed' }}
     >
       {!thumbnail ? (

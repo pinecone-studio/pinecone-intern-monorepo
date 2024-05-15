@@ -23,13 +23,6 @@ const Home = () => {
 
   if (loading || lessonLoading) return <Loading />;
 
-  if (error)
-    return (
-      <div className=" w-full h-full flex justify-center items-center">
-        <p>Error: {error.message}</p>
-      </div>
-    );
-
   return (
     <div data-cy="idCourse" className="bg-[#F7F7F8]">
       <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} />
