@@ -7,6 +7,7 @@ describe('createLessonPage', () => {
   it('2. check back to dashboard page button click ', () => {
     cy.get('[data-testid="test-back-div"]').should('exist');
     cy.get('[data-testid="test-back-div"]').click();
+    cy.url().should('include', '/dashboard');
   });
   it('3. create lesson button', () => {
     cy.get('[data-testid="create-button-of-lesson"]').should('exist').should('be.disabled');
@@ -25,9 +26,7 @@ describe('createLessonPage', () => {
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-testid="create-button-of-lesson"]').should('not.be.disabled');
     cy.get('[data-testid="create-button-of-lesson"]').click();
-
     cy.wait('@createLesson');
-
     cy.url().should('include', '/dashboard');
   });
 });
