@@ -18,7 +18,6 @@ interface PersonalInformationProps {
 }
 
 const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl }: PersonalInformationProps) => {
-  const address = homeAddress || 'Ulaanbaatar, Mongolia';
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -36,8 +35,8 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
           <p className="text-main text-[14px] items-center">Засварлах</p>
         </button>
       </div>
-      <div className="w-1/3 sm:w-1/2 aspect-square rounded-full overflow-hidden m-auto relative">
-        <Image data-testid="profile-picture" fill style={{ objectFit: 'cover' }} src={imageUrl || '/avatar.png'} alt="profile picture" />
+      <div data-testid="profile-picture" className="w-1/3 sm:w-1/2 aspect-square rounded-full overflow-hidden m-auto relative">
+        <Image fill style={{ objectFit: 'cover' }} src={imageUrl || '/avatar.png'} alt="profile picture" />
       </div>
       <h2 className="text-[18px] font-semibold flex justify-center">{`${firstName} ${lastName}`}</h2>
       <div className="flex flex-col gap-4 max-w-[280px] m-auto">
@@ -55,11 +54,11 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
         </div>
         <div className="flex gap-3 items-center">
           <LocationIcon />
-          <p>{address}</p>
+          <p>{homeAddress}</p>
         </div>
       </div>
       {isModalOpen && (
-        <PersonalUpdateModal lastName={lastName} homeAddress={address} firstName={firstName} email={email} phone={phone} jobTitle={jobTitle} imageUrl={imageUrl} setIsModalOpen={setIsModalOpen} />
+        <PersonalUpdateModal lastName={lastName} homeAddress={homeAddress} firstName={firstName} email={email} phone={phone} jobTitle={jobTitle} imageUrl={imageUrl} setIsModalOpen={setIsModalOpen} />
       )}
     </div>
   );

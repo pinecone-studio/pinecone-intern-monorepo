@@ -1,21 +1,85 @@
-describe('PersonalUpdateModal Component Test', () => {
-  beforeEach(() => {
-    cy.get('/employee-details/update/66389a107bc2c1b3a29a5585');
+describe('update personal info', () => {
+  beforeEach(() => cy.visit('/employee-details'));
+  it('Click modal close icon', () => {
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
     cy.get('[data-testid="update-button-info"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+    cy.get('[data-testid="modal-close-icon"]').click();
+  });
+  it('2.Click modal cancel btn', () => {
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+    cy.get('[data-testid="update-button-info"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+    cy.get('[data-testid="personal-info-cancel"]').click();
+  });
+  it('4. Should fill out and submit the form in PersonalUpdateModal', () => {
+    const imageUrl = 'https://example.com/image.jpg';
+    const lastName = 'Doe';
+    const firstName = 'John';
+    const jobTitle = 'Software Engineer';
+    const email = 'john.doe@example.com';
+    const phone = '99112233';
+    const address = 'Ulaanbator Mongolia';
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+    cy.get('[data-testid="update-button-info"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+    cy.get('input[name="imageUrl"]').type(imageUrl).clear();
+    cy.get('input[name="lastName"]').type(lastName).clear();
+    cy.get('input[name="firstName"]').type(firstName).clear();
+    cy.get('input[name="jobTitle"]').type(jobTitle).clear();
+    cy.get('input[name="email"]').type(email).clear();
+    cy.get('input[name="phone"]').type(phone).clear();
+    cy.get('input[name="address"]').type(address).clear();
+    cy.get('[data-testid="submit-btn"]').click();
   });
 
-  it('displays modal with form fields and default values', () => {
+  it('5. Should fill out and submit the form in PersonalUpdateModal', () => {
+    const imageUrl = 'https://example.com/image.jpg';
+    const lastName = 'Doe';
+    const firstName = 'John';
+    const jobTitle = 'Software Engineer';
+    const email = 'john.doe@example.com';
+    const phone = '99112233';
+    const address = 'Ulaanbator Mongolia';
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+    cy.get('[data-testid="update-button-info"]').click();
     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-    cy.get('input[name="imageUrl"]').should('exist').should('have.value', '');
-    cy.get('input[name="lastName"]').should('exist').should('have.value', '');
-    cy.get('input[name="firstName"]').should('exist').should('have.value', '');
-    cy.get('input[name="jobTitle"]').should('exist').should('have.value', '');
-    cy.get('input[name="email"]').should('exist').should('have.value', '');
-    cy.get('input[name="phone"]').should('exist').should('have.value', '');
-    cy.get('input[name="address"]').should('exist').should('have.value', '');
+    cy.get('input[name="imageUrl"]').type(imageUrl).clear();
+    cy.get('input[name="lastName"]').type(lastName).clear();
+    cy.get('input[name="firstName"]').type(firstName).clear();
+    cy.get('input[name="jobTitle"]').type(jobTitle).clear();
+    cy.get('input[name="email"]').type(email).clear();
+    cy.get('input[name="phone"]').type(phone).clear();
+    cy.get('input[name="address"]').type(address).clear();
+    cy.get('input[name="imageUrl"]').type(imageUrl);
+    cy.get('input[name="lastName"]').type(lastName);
+    cy.get('input[name="firstName"]').type(firstName);
+    cy.get('input[name="jobTitle"]').type(jobTitle);
+    cy.get('input[name="email"]').type(email);
+    cy.get('input[name="phone"]').type(phone);
+    cy.get('input[name="address"]').type(address);
+    cy.get('[data-testid="submit-btn"]').click();
   });
-  it('displays error messages on invalid form submission', () => {
-    cy.get('button[type="submit"]').click();
+  it('6.visit fields ', () => {
+    const imageUrl = 'https://example.com/image.jpg';
+    const lastName = 'Doe';
+    const firstName = 'John';
+    const jobTitle = 'Software Engineer';
+    const email = 'john.doe@example.com';
+    const phone = '99112233';
+    const address = 'Ulaanbator Mongolia';
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+    cy.get('[data-testid="update-button-info"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+    cy.get('input[name="imageUrl"]').type(imageUrl).clear();
+    cy.get('input[name="lastName"]').type(lastName).clear();
+    cy.get('input[name="firstName"]').type(firstName).clear();
+    cy.get('input[name="jobTitle"]').type(jobTitle).clear();
+    cy.get('input[name="email"]').type(email).clear();
+    cy.get('input[name="phone"]').type(phone).clear();
+    cy.get('input[name="address"]').type(address).clear();
+    cy.get('[data-testid="submit-btn"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
     cy.contains('ImageUrl is required').should('be.visible');
     cy.contains('Last Name is required').should('be.visible');
     cy.contains('First Name is required').should('be.visible');
@@ -23,21 +87,6 @@ describe('PersonalUpdateModal Component Test', () => {
     cy.contains('Email is required').should('be.visible');
     cy.contains('Phone is required').should('be.visible');
     cy.contains('Address is required').should('be.visible');
-  });
-
-  it('closes modal when close button is clicked', () => {
-    cy.get('[data-testid="personal-info-modal"] button').click();
-    cy.get('[data-testid="personal-info-modal"]').should('not.exist');
-  });
-
-  it('submits form successfully', () => {
-    cy.get('input[name="imageUrl"]').type('https://example.com/image.jpg');
-    cy.get('input[name="lastName"]').type('Doe');
-    cy.get('input[name="firstName"]').type('John');
-    cy.get('input[name="jobTitle"]').type('Software Engineer');
-    cy.get('input[name="email"]').type('john.doe@example.com');
-    cy.get('input[name="phone"]').type('1234567890');
-    cy.get('input[name="address"]').type('123 Main St');
-    cy.get('button[type="submit"]').click();
+    cy.get('[data-testid="submit-btn"]').click();
   });
 });

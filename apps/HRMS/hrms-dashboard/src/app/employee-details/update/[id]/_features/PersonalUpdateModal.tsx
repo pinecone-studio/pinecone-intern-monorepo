@@ -35,22 +35,25 @@ export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
     address: Yup.string().required('Address is required'),
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    props.setIsModalOpen(false);
+  };
 
   return (
     <div data-testid="personal-info-modal" className="fixed inset-0 flex items-center justify-center bg-[#0000004D] bg-opacity-50 z-50">
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
+        {({ isSubmitting, isValid }) => (
           <Form className="flex flex-col gap-2 rounded-[8px] p-10 bg-white  ">
             <div className="flex justify-between ">
               <p className="text-[18px] font-semibold">Хувийн мэдээлэл</p>
               <button
+                data-testid="modal-close-icon"
                 onClick={() => {
                   props.setIsModalOpen(false);
                 }}
                 disabled={isSubmitting}
               >
-                <CloseIcon/>
+                <CloseIcon />
               </button>
             </div>
             <div>
@@ -83,7 +86,6 @@ export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
               <Field className="w-[408px] p-2 h-[50px] border-[1px] rounded-[8px] border-[#D6D8DB] bg-[#F7F7F8] " type="text" name="phone" placeholder="Phone" />
               <ErrorMessage name="phone" component="div" className=" text-[red] error" />
             </div>
-
             <div>
               <p className=" font-normal ">Хаяг</p>
               <Field className="w-[408px] p-2 h-[50px] border-[1px] rounded-[8px] border-[#D6D8DB] bg-[#F7F7F8] " type="text" name="address" placeholder="Address" />
@@ -95,13 +97,22 @@ export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
                 onClick={() => {
                   props.setIsModalOpen(false);
                 }}
+                data-testid="personal-info-cancel"
                 className="w-[100px] rounded-[8px] h-[48px] border-[1px] bg-white border-[#D6D8DB] "
                 type="button"
                 disabled={isSubmitting}
               >
                 Цуцлах
               </button>
-              <button className="w-[100px] rounded-[8px] h-[48px] bg-black text-[white] " type="submit" disabled={isSubmitting}>
+              <button
+                onClick={() => {
+                  handleSubmit;
+                }}
+                data-testid="submit-btn"
+                className="w-[100px] rounded-[8px] h-[48px] bg-black text-[white] "
+                type="submit"
+                disabled={isSubmitting && !isValid}
+              >
                 Хадгалах
               </button>
             </div>
