@@ -1,16 +1,17 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
+import { useRouter } from 'next/navigation';
 import { Input, TextArea } from '../core';
 import { CreateErrorModal } from '../modal';
 
-export const AddJobPageComponent = () => {
+export const EditJob = () => {
   const router = useRouter();
 
   const handleBackButtonClick = () => {
-    router.push('/recruiting');
+    router.push('/recruiting/job-detail');
   };
+
   return (
     <div className="w-full">
       <div className="flex items-center bg-white w-full">
@@ -30,10 +31,9 @@ export const AddJobPageComponent = () => {
         <TextArea label="Шаардлага" placeholder="Placeholder" />
         <div className="mt-3 ">
           <h1 className="font-semibold text-base tracking-tight text-[#121316]">Цалингийн хэмжээ</h1>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+          <div className="grid grid-cols-2 gap-x-6">
             <Input label="Доод цалин" placeholder="Placeholder" />
             <Input label="Дээд цалин" placeholder="Placeholder" />
-            <Input label="Анкет хүлээн авах хугацаа" placeholder="Placeholder" />
           </div>
         </div>
         <div data-testid="modal-button" className="flex justify-end mr-0 mt-6">

@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 describe('JobDetail', () => {
-  test('renders correctly', () => {
+  it('renders correctly', () => {
     const mockPush = jest.fn();
     useRouterMock.mockReturnValue({ push: mockPush });
 
@@ -21,7 +21,7 @@ describe('JobDetail', () => {
     expect(() => getByTestId('modal-button')).not.toThrow();
   });
 
-  test('back button navigates to /recruiting', () => {
+  it('back button navigates to /recruiting', () => {
     const mockPush = jest.fn();
     useRouterMock.mockReturnValue({ push: mockPush });
 
@@ -29,19 +29,26 @@ describe('JobDetail', () => {
     fireEvent.click(getByTestId('back-button'));
     expect(mockPush).toHaveBeenCalledWith('/recruiting');
   });
-});
+  it('edit button navigates to /recruiting/edit-job', () => {
+    const mockPush = jest.fn();
+    useRouterMock.mockReturnValue({ push: mockPush });
 
-describe('Arrow svg', () => {
-  it('renders LeftArrow svg correctly', () => {
-    const { getByTestId } = render(<LeftArrow />);
-    const svgElement = getByTestId('left-arrow');
-    expect(svgElement).toBeDefined();
+    const { getByTestId } = render(<JobDetail />);
+    fireEvent.click(getByTestId('edit-button'));
+    expect(mockPush).toHaveBeenCalledWith('/recruiting/edit-job');
   });
-});
-describe('DeleteSVG', () => {
-  it('renders CreatedSvg correctly', () => {
-    const { getByTestId } = render(<DeletedSvg />);
-    const svgElement = getByTestId('deleted-svg');
-    expect(svgElement).toBeDefined();
+  describe('Arrow svg', () => {
+    it('renders LeftArrow svg correctly', () => {
+      const { getByTestId } = render(<LeftArrow />);
+      const svgElement = getByTestId('left-arrow');
+      expect(svgElement).toBeDefined();
+    });
+  });
+  describe('DeleteSVG', () => {
+    it('renders CreatedSvg correctly', () => {
+      const { getByTestId } = render(<DeletedSvg />);
+      const svgElement = getByTestId('deleted-svg');
+      expect(svgElement).toBeDefined();
+    });
   });
 });

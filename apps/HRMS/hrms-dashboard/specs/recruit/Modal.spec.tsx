@@ -4,37 +4,24 @@ import { CreateErrorModal } from '../../src/app/recruiting/_components';
 import { CreatedSvg, DeletedSvg } from '../../src/assets';
 
 describe('<CreateErrorModal />', () => {
-  test('modal close and open when label "Устгах" and close button is clicked', () => {
-    const text = 'Test Message';
-    const labelDelete = 'Устгах';
-    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} label={labelDelete} />);
-
-    const buttonElement = getByText('Устгах');
-    expect(buttonElement).toBeDefined();
-    fireEvent.click(buttonElement);
-
-    const modalElementBefore = queryByTestId('modal');
-    expect(modalElementBefore).toBeDefined();
-
-    const closeButton = getByTestId('close-button');
-    fireEvent.click(closeButton);
-
-    const modalElementAfter = queryByTestId('modal');
-    expect(modalElementAfter).toBeDefined();
-  });
-
-  describe('DeleteSvg', () => {
+  describe('DeletedSvg', () => {
     it('renders DeletedSvg correctly', () => {
       const { getByTestId } = render(<DeletedSvg />);
       const svgElement = getByTestId('deleted-svg');
       expect(svgElement).toBeDefined();
     });
   });
-
-  test('modal close and open when label "Хадгалах" and close button is clicked', () => {
-    const text = 'Test Message';
+  describe('CreatedSVG', () => {
+    it('renders CreatedSvg correctly', () => {
+      const { getByTestId } = render(<CreatedSvg />);
+      const svgElement = getByTestId('created-svg');
+      expect(svgElement).toBeDefined();
+    });
+  });
+  it('modal close and open when label "Хадгалах" and close button is clicked', () => {
+    const text = 'Хадгалах';
     const labelEdit = 'Хадгалах';
-    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} label={labelEdit} />);
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} labelType={labelEdit} />);
 
     const buttonElement = getByText('Хадгалах');
     expect(buttonElement).toBeDefined();
@@ -46,14 +33,31 @@ describe('<CreateErrorModal />', () => {
     const closeButton = getByTestId('close-button');
     fireEvent.click(closeButton);
 
+    const buttonDialog = getByTestId('button-modal');
+    expect(buttonDialog).toBeDefined();
+
     const modalElementAfter = queryByTestId('modal');
     expect(modalElementAfter).toBeDefined();
   });
-});
-describe('CreateSVG', () => {
-  it('renders CreatedSvg correctly', () => {
-    const { getByTestId } = render(<CreatedSvg />);
-    const svgElement = getByTestId('created-svg');
-    expect(svgElement).toBeDefined();
+  it('modal close and open when label "Устгах" and close button is clicked', () => {
+    const text = 'Устгах';
+    const labelDelete = 'Устгах';
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} labelType={labelDelete} />);
+
+    const buttonElement = getByText('Устгах');
+    expect(buttonElement).toBeDefined();
+    fireEvent.click(buttonElement);
+
+    const modalElementBefore = queryByTestId('modal');
+    expect(modalElementBefore).toBeDefined();
+
+    const closeButton = getByTestId('close-button');
+    fireEvent.click(closeButton);
+
+    const buttonDialog = getByTestId('button-modal');
+    expect(buttonDialog).toBeDefined();
+
+    const modalElementAfter = queryByTestId('modal');
+    expect(modalElementAfter).toBeDefined();
   });
 });

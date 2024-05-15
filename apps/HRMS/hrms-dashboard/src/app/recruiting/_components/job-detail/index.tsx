@@ -12,6 +12,10 @@ export const JobDetail = () => {
     router.push('/recruiting');
   };
 
+  const handleEditButtonClick = () => {
+    router.push('/recruiting/edit-job');
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center bg-white w-full">
@@ -72,9 +76,11 @@ export const JobDetail = () => {
         <div className="h-[1px] bg-[#ECEDF0] mt-12 mb-6 mx-[-24px]"></div>
         <div className="flex gap-2 justify-end mr-0">
           <div data-testid="modal-button" className="flex justify-end">
-            <CreateErrorModal text="Амжилттай устгалаа." label="Устгах" />
+            <CreateErrorModal text="Устгах" labelType="Устгах" />
           </div>
-          <button className="btn shadow-none tracking-tight border-black rounded-lg hover:text-[#8dff87] text-white">Засварлах</button>
+          <button data-testid="edit-button" onClick={handleEditButtonClick} className="btn shadow-none tracking-tight border-black rounded-lg hover:text-[#8dff87] text-white">
+            Засварлах
+          </button>
         </div>
       </div>
     </div>
