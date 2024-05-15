@@ -7,6 +7,7 @@ describe('createCoursePage', () => {
   it('2. check back to dashboard page button click ', () => {
     cy.get('[data-testid="test-back-stack"]').should('exist');
     cy.get('[data-testid="test-back-stack"]').click();
+    cy.url().should('include', '/dashboard');
   });
   it('3. create button', () => {
     cy.get('[data-testid="create-button"]').should('exist').should('be.disabled');
