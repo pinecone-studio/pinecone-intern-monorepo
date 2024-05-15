@@ -6,6 +6,7 @@ export const lessonSchema = gql`
     getLessons: [Lesson!]!
     getLessonById(courseId: String!): [Lesson!]
     getSectionOfLessonById(id: ID!): [Lesson!]
+    getLessonByInId(id: ID!): Lesson!
   }
   type Lesson {
     id: ID
