@@ -11,7 +11,6 @@ describe('Handle section page', () => {
     cy.get('[data-cy="lesson-test-id"]').eq(0).should('exist').click();
     cy.window().its('localStorage').invoke('getItem', 'lessonID');
     cy.url().should('include', '/section');
-    cy.wait(3000);
     cy.get('[data-testid="get-section-form"]').should('exist');
     cy.get('[data-cy="title"]').should('exist');
     cy.get('[data-cy="description"]').should('exist');

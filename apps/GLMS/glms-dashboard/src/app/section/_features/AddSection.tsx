@@ -5,7 +5,7 @@ type AddSectionTypes = {
   handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
   setIsPosted: Dispatch<SetStateAction<boolean>>;
-  handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
+  handleSubmit: (_e?: FormEvent<HTMLFormElement> | undefined) => void;
   title: string;
   description: string;
   thumbnail: string;

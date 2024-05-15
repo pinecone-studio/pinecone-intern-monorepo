@@ -2,7 +2,6 @@
 import { GetSectionByLessonIdQuery, Section } from '@/generated';
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
-import { useEffect } from 'react';
 type GetSectionsType = {
   handleUpdateSectionPage: () => void;
   handleDeleteSection: () => void;
