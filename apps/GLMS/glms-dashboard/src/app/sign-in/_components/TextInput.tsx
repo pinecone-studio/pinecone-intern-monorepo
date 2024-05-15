@@ -1,3 +1,4 @@
+'use client';
 import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
 import cx from 'classnames';
 

@@ -90,7 +90,7 @@ const SignInForm = () => {
         <h2>Бүртгэлгүй юу?</h2>
 
         <div className="text-[#551a8b] border-b border-b-solid border-[#551a8b] cursor-pointer" data-testid="sign-in-modal-to-signup">
-          <a href={'/sign-up'}>Бүртгүүлэх</a>
+          <a href="./dashboard">Бүртгүүлэх</a>
         </div>
       </div>
     </div>
