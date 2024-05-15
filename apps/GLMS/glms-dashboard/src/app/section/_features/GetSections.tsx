@@ -3,8 +3,8 @@ import { GetSectionByLessonIdQuery, Section } from '@/generated';
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 type GetSectionsType = {
-  handleUpdateSectionPage: (id: string | undefined | null) => void;
-  handleDeleteSection: (id: string | undefined | null) => void;
+  handleUpdateSectionPage: (_id: string | undefined | null) => void;
+  handleDeleteSection: (_id: string | undefined | null) => void;
   isLoading: boolean;
   data: GetSectionByLessonIdQuery | undefined;
   loading: boolean;

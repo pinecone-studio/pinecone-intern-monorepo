@@ -3,7 +3,7 @@ import { Course, useGetLessonByIdQuery } from '@/generated';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
-  const { data, loading, refetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: id || '' } });
+  const { data, loading } = useGetLessonByIdQuery({ variables: { getLessonByIdId: id || '' } });
   const length = data?.getLessonById?.length;
   return (
     <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id} data-testid="courseContain">
