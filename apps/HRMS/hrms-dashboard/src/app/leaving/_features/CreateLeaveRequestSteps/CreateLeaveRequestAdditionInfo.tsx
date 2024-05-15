@@ -4,9 +4,11 @@ import { useFormik } from 'formik';
 import { useContext } from 'react';
 import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
-import { ButtonCustom } from './ButtonCustom';
+import { CreateLeaveRequestButtonCustom } from '../../_components/CreateLeaveRequestButtonCustom';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 import { useGetEmployeeRequestQuery } from '@/generated';
+import { useCreateLeaveRequestDaysMutation, useCreateLeaveRequestHoursMutation } from '@/generated';
+import { LeaveType, DurationType } from '@/generated';
 
 const validationSchema = yup.object({
   step3Substitute: yup.string().required('Ажил шилжүүлэн өгөх ажилтны нэр оруулна уу'),
@@ -15,20 +17,59 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestAdditionInfo = () => {
-  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded, payload } = useContext(LeaveRequestCreationContext);
+  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded, loggedUser, radioValue, step1, step2 } = useContext(LeaveRequestCreationContext);
+  const [createLeaveRequestDays] = useCreateLeaveRequestDaysMutation();
+  const [createLeaveRequestHours] = useCreateLeaveRequestHoursMutation();
 
-  const { data } = useGetEmployeeRequestQuery({ variables: { getEmployeeRequestId: payload?.id } });
+  const { data } = useGetEmployeeRequestQuery({ variables: { getEmployeeRequestId: !loggedUser ? '' : loggedUser.id } });
 
-  console.log(data);
   const formik = useFormik({
     initialValues: {
       step3Substitute: '',
       step3WorkBrief: '',
-      step3ApprovedBy: undefined,
+      step3ApprovedBy: '',
     },
     validationSchema: validationSchema,
-    onSubmit: () => {
+    onSubmit: async (values) => {
       setisLeaveRequestSucceeded(true);
+
+      if (radioValue === 'Day') {
+        await createLeaveRequestDays({
+          variables: {
+            requestInput: {
+              employeeId: loggedUser?.id,
+              name: loggedUser?.firstName,
+              startDateString: step2?.step2StartDate,
+              endDateString: step2?.step2EndDate,
+              description: values.step3WorkBrief,
+              leaveType: step1?.step1LeaveType as LeaveType,
+              superVisor: values.step3ApprovedBy,
+              durationType: step2?.step2LeaveLength as DurationType,
+              email: loggedUser?.email as string,
+              substitute: values.step3Substitute,
+            },
+          },
+        });
+      }
+
+      if (radioValue === 'Hour') {
+        await createLeaveRequestHours({
+          variables: {
+            requestInput: {
+              employeeId: loggedUser?.id,
+              name: loggedUser?.firstName,
+              startDateString: step2?.step2StartDate,
+              endDateString: step2?.step2EndDate,
+              description: values.step3WorkBrief,
+              leaveType: step1?.step1LeaveType as LeaveType,
+              superVisor: values.step3ApprovedBy,
+              durationType: step2?.step2LeaveLength as DurationType,
+              email: loggedUser?.email as string,
+              substitute: values.step3Substitute,
+            },
+          },
+        });
+      }
     },
   });
 
@@ -86,12 +127,12 @@ export const CreateLeaveRequestAdditionInfo = () => {
             value={formik.values.step3ApprovedBy}
             onChange={formik.handleChange}
           >
-            <option disabled selected>
+            <option disabled selected value="">
               Хүсэлт батлах хүнээ сонго
             </option>
             {data?.getEmployeeRequest.map((item, index) => {
               return (
-                <option key={index} data-testid={`approvedBy-${index}`} value={item?.firstName}>
+                <option key={index} data-testid={`approvedBy-${index}`} value={item?.firstName ?? undefined}>
                   {item?.firstName}
                 </option>
               );
@@ -102,7 +143,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
           </p>
         </div>
       </div>
-      <ButtonCustom
+      <CreateLeaveRequestButtonCustom
         onClickPrev={() => {
           setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
           setStepNumber(1);

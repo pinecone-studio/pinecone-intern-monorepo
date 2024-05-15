@@ -7,7 +7,7 @@ export const CreateLeaveRequestSucceeded = () => {
     <div data-cy="LeaveRequestSucceeded" data-testid="LeaveRequestSucceeded">
       <div className="flex justify-between">
         <form method="dialog">
-          <button data-cy="modal-closing-btn" data-testid="modalClosingButton" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          <button onClick={() => window.location.reload()} data-cy="modal-closing-btn" data-testid="modalClosingButton" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
             ✕
           </button>
         </form>

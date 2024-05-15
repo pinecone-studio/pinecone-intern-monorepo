@@ -4,11 +4,11 @@ import { ChangeEventHandler } from 'react';
 
 type CreateLeaveRequestSelectedDaysProps = {
   step2StartDateName: string;
-  step2StartDateValue: undefined;
+  step2StartDateValue: string | undefined;
   step2StartDateChange: ChangeEventHandler<HTMLInputElement>;
   step2StartDateError: string | undefined;
   step2EndDateName: string;
-  step2EndDateValue: undefined;
+  step2EndDateValue: string | undefined;
   step2EndDateChange: ChangeEventHandler<HTMLInputElement>;
   step2EndDateError: string | undefined;
 };

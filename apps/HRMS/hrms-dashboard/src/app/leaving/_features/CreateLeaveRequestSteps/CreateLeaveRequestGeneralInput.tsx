@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
+import { CreateLeaveRequestButtonCustom } from '../../_components/CreateLeaveRequestButtonCustom';
+import { LeaveType } from '@/generated';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
-import { ButtonCustom } from './ButtonCustom';
-import { useGetEmployeeRequestQuery } from '@/generated';
 
 const validationSchema = yup.object({
   step1Date: yup.string().required('Огноо оруулна уу'),
@@ -15,24 +15,25 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestGeneralInput = () => {
-  const { setStepNumber, setLeaveReqStep, payload } = useContext(LeaveRequestCreationContext);
-  const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
+  const { setStepNumber, setLeaveReqStep, loggedUser, step1, setStep1 } = useContext(LeaveRequestCreationContext);
+  const durationTypeList = Object.values(LeaveType);
 
   const formik = useFormik({
     initialValues: {
-      step1Date: undefined,
-      step1UserName: undefined,
-      step1LeaveType: undefined,
+      step1Date: step1 ? step1.step1Date : '',
+      step1UserName: step1 ? step1.step1UserName : '',
+      step1LeaveType: step1?.step1LeaveType ? step1.step1LeaveType : '',
     },
     validationSchema: validationSchema,
-    onSubmit: () => {
+    onSubmit: (values) => {
       setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
       setStepNumber(1);
+      setStep1(values);
     },
   });
 
   return (
-    <div className="w-[100%] flex flex-col gap-[40px]">
+    <div data-testid="generalInputs" className="w-[100%] flex flex-col gap-[40px]">
       <div className="w-[100%] flex flex-col gap-[16px]">
         <div className="flex flex-col gap-[4px]">
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
@@ -51,11 +52,11 @@ export const CreateLeaveRequestGeneralInput = () => {
             Нэрээ сонгоно уу
           </div>
           <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8] text-[#121316]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
-            <option disabled selected>
+            <option disabled selected value="">
               Нэрээ сонгоно уу
             </option>
-            <option data-testid="WorkerName" value={payload?.firstName}>
-              {payload?.firstName}
+            <option data-testid="WorkerName" value={loggedUser?.firstName}>
+              {loggedUser?.firstName}
             </option>
           </select>
           <p data-cy="step1UserNameError" className="text-[#DC143C] text-[12px]">
@@ -74,10 +75,10 @@ export const CreateLeaveRequestGeneralInput = () => {
             value={formik.values.step1LeaveType}
             onChange={formik.handleChange}
           >
-            <option disabled selected>
+            <option disabled selected value="">
               Шалтгаанаа сонгоно уу
             </option>
-            {leaveTypes.map((item, index) => {
+            {durationTypeList.map((item, index) => {
               return (
                 <option key={index} data-testid={`type-${index}`} value={item}>
                   {item}
@@ -90,12 +91,7 @@ export const CreateLeaveRequestGeneralInput = () => {
           </p>
         </div>
       </div>
-      <ButtonCustom
-        onClick={() => {
-          formik.handleSubmit();
-        }}
-        disabled={!formik.isValid}
-      />
+      <CreateLeaveRequestButtonCustom onClick={formik.handleSubmit} disabled={!formik.isValid} />
     </div>
   );
 };

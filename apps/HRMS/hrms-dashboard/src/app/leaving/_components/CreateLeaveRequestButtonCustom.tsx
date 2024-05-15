@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
+import { LeaveRequestCreationContext } from '../_providers/LeaveRequestCreationProvider';
 
 type ButtonCustomProps = {
   onClickPrev?: () => void;
@@ -9,7 +9,7 @@ type ButtonCustomProps = {
   disabled: boolean | undefined;
 };
 
-export const ButtonCustom = (props: ButtonCustomProps) => {
+export const CreateLeaveRequestButtonCustom = (props: ButtonCustomProps) => {
   const { onClickPrev, onClick, disabled } = props;
   const { leaveReqStep } = useContext(LeaveRequestCreationContext);
 

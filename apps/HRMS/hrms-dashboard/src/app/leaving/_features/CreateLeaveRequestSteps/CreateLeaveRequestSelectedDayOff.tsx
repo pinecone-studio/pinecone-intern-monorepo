@@ -4,15 +4,15 @@ import { ChangeEventHandler } from 'react';
 
 type CreateLeaveRequestSelectedDayOffProps = {
   step2DateName: string;
-  step2DateValue: undefined;
+  step2DateValue: string | undefined;
   step2DateChange: ChangeEventHandler<HTMLInputElement>;
   step2DateError: string | undefined;
   step2StartHourName: string;
-  step2StartHourValue: undefined;
+  step2StartHourValue: string | undefined;
   step2StartHourChange: ChangeEventHandler<HTMLInputElement>;
   step2StartHourError: string | undefined;
   step2EndHourName: string;
-  step2EndHourValue: undefined;
+  step2EndHourValue: string | undefined;
   step2EndHourChange: ChangeEventHandler<HTMLInputElement>;
   step2EndHourError: string | undefined;
 };

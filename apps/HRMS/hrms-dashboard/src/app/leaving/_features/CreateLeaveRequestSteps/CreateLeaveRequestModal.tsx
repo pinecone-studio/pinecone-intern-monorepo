@@ -1,11 +1,12 @@
 'use client';
 
 import { useContext } from 'react';
+
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestSucceeded } from './CreateLeaveRequestSucceeded';
 
 export const CreateLeaveRequestModal = () => {
-  const { leaveReqStep, stepNumber, isLeaveRequestSucceeded, setRefresh, refresh } = useContext(LeaveRequestCreationContext);
+  const { leaveReqStep, stepNumber, isLeaveRequestSucceeded } = useContext(LeaveRequestCreationContext);
 
   return (
     <dialog data-cy="request-modal" data-testid="leaveRequestModal" id="my_modal_3" className="modal">
@@ -14,7 +15,7 @@ export const CreateLeaveRequestModal = () => {
           <div data-testid="createLeaveRequestModalContainer">
             <form method="dialog">
               <button
-                onClick={() => setRefresh(refresh + 1)}
+                onClick={() => window.location.reload()}
                 data-cy="modal-closing-btn"
                 data-testid="modalClosingButton"
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-[#121316]"

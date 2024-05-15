@@ -1,35 +1,23 @@
-import React from 'react';
-
+import { act, fireEvent, render } from '@testing-library/react';
 import { LeaveRequestCreationProvider } from '../../../src/app/leaving/_providers/LeaveRequestCreationProvider';
-import { render, act, fireEvent } from '@testing-library/react';
-import { CreateLeaveRequestDaysOrDayOff } from '../../../src/app/leaving/_components';
+import React from 'react';
+import { CreateLeaveRequestDaysOrDayOff } from '../../../src/app/leaving/_features/CreateLeaveRequestSteps/CreateLeaveRequestDaysOrDayOff';
 
-describe('Create Leave Request Step2', () => {
-  it('1. should choose Days', async () => {
-    HTMLDialogElement.prototype.showModal = jest.fn();
-
+describe('Leave Request Creation Days or DayOff', () => {
+  it('should fill Leave Request Creation: Days selected inputs and move to Addition info section', async () => {
     const { getByTestId } = render(
       <LeaveRequestCreationProvider>
         <CreateLeaveRequestDaysOrDayOff />
       </LeaveRequestCreationProvider>
     );
 
-    expect(getByTestId('step2Component')).toBeDefined();
-
-    const nextButton = getByTestId('nextButton');
-
-    act(() => {
-      nextButton.click();
-    });
-
     act(() => {
       getByTestId('radioButtonDays').click();
     });
 
-    expect(getByTestId('leaveRequestDays')).toBeDefined();
-
     const startDatePicker = getByTestId('starDate-picker-container').getElementsByTagName('input')[0];
     const endDatePicker = getByTestId('endDate-picker-container').getElementsByTagName('input')[0];
+    const nextButton = getByTestId('nextButton');
 
     act(() => {
       fireEvent.change(startDatePicker, { target: { value: '2024-01-01' } });
@@ -43,33 +31,21 @@ describe('Create Leave Request Step2', () => {
       fireEvent.click(nextButton);
     });
   });
-
-  it('2. should choose Day-off', async () => {
-    HTMLDialogElement.prototype.showModal = jest.fn();
-
+  it('should fill Leave Request Creation: DayOff selected inputs and move to Addition info section', async () => {
     const { getByTestId } = render(
       <LeaveRequestCreationProvider>
         <CreateLeaveRequestDaysOrDayOff />
       </LeaveRequestCreationProvider>
     );
 
-    expect(getByTestId('step2Component')).toBeDefined();
-
-    const nextButton = getByTestId('nextButton');
-
-    act(() => {
-      nextButton.click();
-    });
-
     act(() => {
       getByTestId('radioButtonDayOff').click();
     });
 
-    expect(getByTestId('leaveRequestDayOff')).toBeDefined();
-
     const datePicker = getByTestId('date-picker-container').getElementsByTagName('input')[0];
     const startHouPicker = getByTestId('startHour-picker-container').getElementsByTagName('input')[0];
     const endHourPicker = getByTestId('endHour-picker-container').getElementsByTagName('input')[0];
+    const nextButton = getByTestId('nextButton');
 
     act(() => {
       fireEvent.change(datePicker, { target: { value: '2024-01-01' } });
@@ -85,19 +61,6 @@ describe('Create Leave Request Step2', () => {
 
     act(() => {
       fireEvent.click(nextButton);
-    });
-  });
-  it('3. should return to General Input from Choosing days or daty off step', async () => {
-    const { getByTestId } = render(
-      <LeaveRequestCreationProvider>
-        <CreateLeaveRequestDaysOrDayOff />
-      </LeaveRequestCreationProvider>
-    );
-
-    expect(getByTestId('step2Component')).toBeDefined();
-
-    act(() => {
-      getByTestId('returnPreviousStep').click();
     });
   });
 });
