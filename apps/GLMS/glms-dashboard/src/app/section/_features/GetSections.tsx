@@ -59,7 +59,6 @@ const GetSections = (props: GetSectionsType) => {
                 Засах <EditButtonIcon />
               </button>
               <button
-                data-cy="delete-btn"
                 onClick={handleDeleteSection}
                 disabled={isLoading}
                 className="w-[101px] bg-transparent border-2 font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]"
