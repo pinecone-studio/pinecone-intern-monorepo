@@ -3,7 +3,7 @@ describe('Handle section page', () => {
   describe('Getsection page', () => {
     it('1.Should display GetSections component', () => {
       cy.visit('/6633305c94d4584898bb049a');
-      cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click().wait(20000);
+      cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click();
       cy.window().its('localStorage').invoke('getItem', 'lessonID');
       cy.url().should('include', '/section');
       cy.get('[data-testid="get-section-form"]').should('exist');
