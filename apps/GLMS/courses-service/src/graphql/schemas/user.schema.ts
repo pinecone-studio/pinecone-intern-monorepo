@@ -6,6 +6,7 @@ export const userSchema = gql`
     name: String!
     password: String!
     email: String
+    phoneNumber: String
     avatar: String
     role: String!
     otpExpiresIn: Int
@@ -13,12 +14,26 @@ export const userSchema = gql`
   }
   input SignUpInput {
     email: String
-    password: String
-    name : String
-    role : String
+    phoneNumber: String
+    password: String!
+  }
+
+  input SignInInput {
+    emailOrPhoneNumber: String!
+    password: String!
+  }
+
+  type Message {
+    message: String!
+  }
+
+  type Token {
+    token: String!
+    message: String!
   }
 
   type Mutation {
-    signUp(userInput: SignUpInput!): User!
+    signUp(input: SignUpInput!): Message!
+    signIn(input: SignInInput!): Token!
   }
 `;

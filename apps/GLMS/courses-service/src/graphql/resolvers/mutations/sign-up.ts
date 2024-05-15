@@ -1,26 +1,28 @@
 import { MutationResolvers } from '@/graphql/generated';
-import UserModel from '@/model/user-model';
+import { UserModel } from '@/model';
 import { GraphQLError } from 'graphql';
 
-
-export const signUp: MutationResolvers['signUp'] = async (_, { userInput }) => {
-    console.log(userInput)
-    
+export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
+  
   try {
-    const { email} = userInput;
-    const orFilter =[{email}];
+    const { email, phoneNumber, password } = input;
+
+    const orFilter = [{ email }, { phoneNumber }];
+
     const userExists = await UserModel.findOne({
       $or: orFilter.filter((item) => {
         return Object.values(item)[0];
       }),
     });
 
-    if (!userExists) {
-        const user = await UserModel.create(userInput);
-        return user
+    if (userExists) {
+     throw new GraphQLError('Бүртгэлтэй хэрэглэгч байна')
     }
-    throw new GraphQLError("Бүртгэлтэй хэрэглэгч байна")
+
+    await UserModel.create({ email, phoneNumber, password });
+
+    return { message: 'Хэрэглэгч амжилттай үүслээ' };
   } catch (error) {
-    throw new GraphQLError("Алдаа гарлаа")
+    throw new GraphQLError('Алдаа гарлаа')
   }
 };

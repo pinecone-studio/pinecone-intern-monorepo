@@ -4,12 +4,20 @@ import { Schema, model, Model, models } from 'mongoose';
 const userSchema = new Schema({
   name: {
     type: String,
+    required: true,
+    default: 'сурагч',
   },
   email: {
     type: String,
+    required: false,
+  },
+  phoneNumber: {
+    type: String,
+    required: false,
   },
   password: {
     type: String,
+    required: true,
   },
   otp: {
     type: String,
@@ -21,13 +29,14 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['багш' , 'сурагч'],
+    required: true,
+    enum: ['багш', 'сурагч'],
     default: 'сурагч',
   },
   avatar: {
     type: String,
+    required: false,
   },
 });
 
-const UserModel: Model<User> = models.user || model<User>('user', userSchema);
-export default UserModel
+export const UserModel: Model<User> = models.user || model<User>('user', userSchema);
