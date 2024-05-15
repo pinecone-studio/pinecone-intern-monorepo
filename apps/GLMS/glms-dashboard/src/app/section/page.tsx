@@ -21,7 +21,18 @@ const SectionPage = () => {
   const router = useRouter();
   const [isPosted, setIsPosted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [sectionID, setSectionID] = useState('');
+  const [lessonID, setLessonID] = useState('');
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sectionId = localStorage.getItem('sectionId');
+      const lessonId = localStorage.getItem('sectionId');
+      setSectionID(sectionId || '');
+      setLessonID(lessonId || '');
+    }
+  }, []);
+  const id = sectionID ? sectionID : '';
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -33,7 +44,7 @@ const SectionPage = () => {
       await createSection({
         variables: {
           sectionInput: {
-            lessonId: localStorage.getItem('lessonID'),
+            lessonId: lessonID,
             title: values.title,
             description: values.description,
             contentImage: values.thumbnail,
@@ -50,7 +61,7 @@ const SectionPage = () => {
   };
   const handleDeleteSection = async () => {
     setIsLoading(true);
-    await deleteSection({ variables: { id: localStorage.getItem('sectionId') || '' } });
+    await deleteSection({ variables: { id } });
     setIsLoading(false);
     refetch();
   };
