@@ -1,8 +1,11 @@
-mutation updateSection($id:ID! , $sectionInput:SectionInput!) {
-    updateSection(id:$id , sectionInput:$sectionInput) {
-        id
-        title
-        description
-        contentImage     
-    }
+mutation updateSection($id: ID!, $sectionInput: SectionInput!) {
+  updateSection(id: $id, sectionInput: $sectionInput) {
+    id
+    lessonId
+    title
+    description
+    contentImage
+    posted
+    createdAt
+  }
 }

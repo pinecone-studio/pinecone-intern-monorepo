@@ -1,8 +1,8 @@
 'use client';
 import Courses from './_components/Course';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Course, useGetCoursesQuery } from '@/generated';
 import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,9 +11,20 @@ import Loading from '../../components/Loading';
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 
 const DashboardOtherLab = () => {
+  const pathname = usePathname();
+  const router = useRouter();
   const { data, loading } = useGetCoursesQuery();
   const [actionTab, setActionTab] = useState('Хичээл');
-  const router = useRouter();
+  const handleCreateCourse = () => {
+    router.push('/create-course');
+  };
+  useEffect(() => {
+    if (pathname == '/dashboard') {
+      localStorage.removeItem('courseID');
+      localStorage.removeItem('lessonID');
+      localStorage.removeItem('sectionId');
+    }
+  }, []);
   if (loading) return <Loading />;
   return (
     <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
@@ -34,7 +45,7 @@ const DashboardOtherLab = () => {
                   <button
                     data-testid="button1"
                     data-cy="CreateCourseBtn"
-                    onClick={() => router.push('/create-course')}
+                    onClick={handleCreateCourse}
                     className="flex justify-center items-center border-solid border-[2px] border-[#121316] gap-2 rounded-[8px]  hover:bg-black hover:text-white px-4 py-2"
                     color="inherit"
                   >
