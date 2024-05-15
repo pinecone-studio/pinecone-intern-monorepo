@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
-import { ButtonCustom } from './ButtonCustom';
+import { CreateLeaveRequestNextButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestNextButtonCustom';
 
 const validationSchema = yup.object({
   step1Date: yup.string().required('Огноо оруулна уу'),
@@ -14,7 +14,7 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestGeneralInput = () => {
-  const { setStepNumber, setLeaveReqStep } = useContext(LeaveRequestCreationContext);
+  const { setStepNumber, setLeaveReqStep, step1, setStep1 } = useContext(LeaveRequestCreationContext);
 
   const workerName = { name: 'WorkerName' };
 
@@ -22,26 +22,27 @@ export const CreateLeaveRequestGeneralInput = () => {
 
   const formik = useFormik({
     initialValues: {
-      step1Date: undefined,
-      step1UserName: undefined,
-      step1LeaveType: undefined,
+      step1Date: step1 ? step1.step1Date : '',
+      step1UserName: step1 ? step1.step1UserName : '',
+      step1LeaveType: step1?.step1LeaveType ? step1.step1LeaveType : '',
     },
     validationSchema: validationSchema,
-    onSubmit: () => {
+    onSubmit: (values) => {
       setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
       setStepNumber(1);
+      setStep1(values);
     },
   });
 
   return (
-    <div className="w-[100%] flex flex-col gap-[40px]">
+    <div data-testid="generalInputs" className="w-[100%] flex flex-col gap-[40px]">
       <div className="w-[100%] flex flex-col gap-[16px]">
         <div className="flex flex-col gap-[4px]">
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Огноо
           </div>
           <div data-testid="date-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
+            <input data-cy="date-picker-container" className="w-[100%] bg-[#F7F7F8] text-[#121316]" name="step1Date" value={formik.values.step1Date} onChange={formik.handleChange} type="date"></input>
           </div>
           <p data-cy="step1DateError" className="text-[#DC143C] text-[12px]">
             {formik.errors.step1Date}
@@ -52,8 +53,8 @@ export const CreateLeaveRequestGeneralInput = () => {
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Нэрээ сонгоно уу
           </div>
-          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
-            <option disabled selected>
+          <select data-cy="name-select-input" className="select select-bordered bg-[#F7F7F8] text-[#121316]" name="step1UserName" value={formik.values.step1UserName} onChange={formik.handleChange}>
+            <option disabled selected value="">
               Нэрээ сонгоно уу
             </option>
             <option data-testid="WorkerName" value={workerName.name}>
@@ -69,8 +70,14 @@ export const CreateLeaveRequestGeneralInput = () => {
           <div data-cy="step1Label" className="text-[16px] font-normal text-[#121316]">
             Шалтгаанаа сонгоно уу
           </div>
-          <select data-cy="type-select-input" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step1LeaveType" value={formik.values.step1LeaveType} onChange={formik.handleChange}>
-            <option disabled selected>
+          <select
+            data-cy="type-select-input"
+            className="w-[100%] select select-bordered bg-[#F7F7F8] text-[#121316]"
+            name="step1LeaveType"
+            value={formik.values.step1LeaveType}
+            onChange={formik.handleChange}
+          >
+            <option disabled selected value="">
               Шалтгаанаа сонгоно уу
             </option>
             {leaveTypes.map((item, index) => {
@@ -86,12 +93,10 @@ export const CreateLeaveRequestGeneralInput = () => {
           </p>
         </div>
       </div>
-      <ButtonCustom
-        onClick={() => {
-          formik.handleSubmit();
-        }}
-        disabled={!formik.isValid}
-      />
+      <div className="pt-[40px] flex justify-between">
+        <div className="invisible">x</div>
+        <CreateLeaveRequestNextButtonCustom onClick={formik.handleSubmit} disabled={!formik.isValid} />
+      </div>
     </div>
   );
 };

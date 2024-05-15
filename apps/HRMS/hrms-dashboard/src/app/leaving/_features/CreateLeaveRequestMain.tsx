@@ -1,7 +1,7 @@
 'use client';
 
-import { CreateLeaveRequestModal } from '../_components';
-import { HomePageHeader } from '../_components/HomePageHeader';
+import { CreateLeaveRequestModal } from './CreateLeaveRequest/CreateLeaveRequestModal';
+import { HomePageHeader } from './HomePageHeader';
 
 export const CreateLeaveRequestMain = () => {
   return (

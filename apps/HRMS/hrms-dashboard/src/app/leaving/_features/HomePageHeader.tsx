@@ -6,7 +6,7 @@ export const HomePageHeader = () => {
   };
 
   return (
-    <div className="px-[24px] py-[20px] rounded-[12px] bg-[white]">
+    <div data-cy="HomePageHeader" className="px-[24px] py-[20px] rounded-[12px] bg-[white]">
       <div className="flex justify-between items-center">
         <div className="text-[24px] font-bold text-[#121316] basis-0 grow">Нүүр хуудас</div>
         <button data-cy="open-request" data-testid="open-request-btn" className="btn rounded-[8px] py-[8px] px-[12px] bg-[#121316] hover:bg-[#121316]" onClick={openModal}>

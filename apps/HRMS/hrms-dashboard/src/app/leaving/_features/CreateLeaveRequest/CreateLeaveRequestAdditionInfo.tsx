@@ -4,8 +4,9 @@ import { useFormik } from 'formik';
 import { useContext } from 'react';
 import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
-import { ButtonCustom } from './ButtonCustom';
+import { CreateLeaveRequestNextButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestNextButtonCustom';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
+import { CreateLeaveRequestPreviousButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestPreviousButtonCustom';
 
 const validationSchema = yup.object({
   step3Substitute: yup.string().required('Ажил шилжүүлэн өгөх ажилтны нэр оруулна уу'),
@@ -21,7 +22,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
     initialValues: {
       step3Substitute: '',
       step3WorkBrief: '',
-      step3ApprovedBy: undefined,
+      step3ApprovedBy: '',
     },
     validationSchema: validationSchema,
     onSubmit: () => {
@@ -37,7 +38,14 @@ export const CreateLeaveRequestAdditionInfo = () => {
             Ажил шилжүүлэн өгөх ажилтны нэр
           </div>
           <div data-testid="step3Substitute-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
-            <input data-cy="step3Substitute" className="w-[100%] bg-[#F7F7F8]" name="step3Substitute" value={formik.values.step3Substitute} onChange={formik.handleChange} type="text"></input>
+            <input
+              data-cy="step3Substitute"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
+              name="step3Substitute"
+              value={formik.values.step3Substitute}
+              onChange={formik.handleChange}
+              type="text"
+            ></input>
           </div>
           <p data-cy="step3SubstituteError" className="text-[#DC143C] text-[12px]">
             {formik.errors.step3Substitute}
@@ -54,7 +62,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
               data-cy="step3WorkBrief"
               rows={3}
               cols={3}
-              className="w-[100%] bg-[#F7F7F8]"
+              className="w-[100%] bg-[#F7F7F8] text-[#121316]"
               name="step3WorkBrief"
               value={formik.values.step3WorkBrief}
               onChange={formik.handleChange}
@@ -69,8 +77,14 @@ export const CreateLeaveRequestAdditionInfo = () => {
           <div data-cy="step3Label" className="text-[16px] font-normal text-[#121316]">
             Хүсэлт батлах хүнээ сонго
           </div>
-          <select data-cy="step3ApprovedBy" className="w-[100%] select select-bordered bg-[#F7F7F8]" name="step3ApprovedBy" value={formik.values.step3ApprovedBy} onChange={formik.handleChange}>
-            <option disabled selected>
+          <select
+            data-cy="step3ApprovedBy"
+            className="w-[100%] select select-bordered bg-[#F7F7F8] text-[#121316]"
+            name="step3ApprovedBy"
+            value={formik.values.step3ApprovedBy}
+            onChange={formik.handleChange}
+          >
+            <option disabled selected value="">
               Хүсэлт батлах хүнээ сонго
             </option>
             {leaveTypes.map((item, index) => {
@@ -86,16 +100,15 @@ export const CreateLeaveRequestAdditionInfo = () => {
           </p>
         </div>
       </div>
-      <ButtonCustom
-        onClickPrev={() => {
-          setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
-          setStepNumber(1);
-        }}
-        onClick={() => {
-          formik.handleSubmit();
-        }}
-        disabled={!formik.isValid}
-      />
+      <div className="pt-[40px] flex justify-between">
+        <CreateLeaveRequestPreviousButtonCustom
+          onClickPrev={() => {
+            setLeaveReqStep(<CreateLeaveRequestDaysOrDayOff />);
+            setStepNumber(1);
+          }}
+        />
+        <CreateLeaveRequestNextButtonCustom onClick={formik.handleSubmit} disabled={!formik.isValid} />
+      </div>
     </div>
   );
 };

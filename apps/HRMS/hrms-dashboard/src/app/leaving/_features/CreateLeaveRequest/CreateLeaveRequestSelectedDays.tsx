@@ -4,11 +4,11 @@ import { ChangeEventHandler } from 'react';
 
 type CreateLeaveRequestSelectedDaysProps = {
   step2StartDateName: string;
-  step2StartDateValue: undefined;
+  step2StartDateValue: string | undefined;
   step2StartDateChange: ChangeEventHandler<HTMLInputElement>;
   step2StartDateError: string | undefined;
   step2EndDateName: string;
-  step2EndDateValue: undefined;
+  step2EndDateValue: string | undefined;
   step2EndDateChange: ChangeEventHandler<HTMLInputElement>;
   step2EndDateError: string | undefined;
 };
@@ -25,7 +25,7 @@ export const CreateLeaveRequestSelectedDays = (props: CreateLeaveRequestSelected
           <input
             id="step2Date"
             data-cy="starDate-picker-container"
-            className="w-[100%] bg-[#F7F7F8]"
+            className="w-[100%] bg-[#F7F7F8] text-[#121316]"
             name={step2StartDateName}
             value={step2StartDateValue}
             onChange={step2StartDateChange}
@@ -42,7 +42,7 @@ export const CreateLeaveRequestSelectedDays = (props: CreateLeaveRequestSelected
           <input
             id="step2Date"
             data-cy="endDate-picker-container"
-            className="w-[100%] bg-[#F7F7F8]"
+            className="w-[100%] bg-[#F7F7F8] text-[#121316]"
             name={step2EndDateName}
             value={step2EndDateValue}
             onChange={step2EndDateChange}
