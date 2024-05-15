@@ -1,4 +1,4 @@
-import { GraphQLError } from 'graphql';
+import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 import lessonModel from '@/model/lesson-model';
 import { getLessonByInId } from '@/graphql/resolvers/queries';
 
@@ -16,7 +16,7 @@ describe('getLessonByInId resolver', () => {
     const mockLesson = { id: lessonId, title: 'Test Lesson' };
     jest.spyOn(lessonModel, 'findById').mockResolvedValue(mockLesson);
 
-    const result = await getLessonByInId(null, { id: lessonId });
+    const result = await getLessonByInId!({}, { id: lessonId }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(mockLesson);
     expect(lessonModel.findById).toHaveBeenCalledWith(lessonId);
   });
@@ -25,8 +25,8 @@ describe('getLessonByInId resolver', () => {
     const lessonId = '456';
     jest.spyOn(lessonModel, 'findById').mockResolvedValue(null);
 
-    await expect(getLessonByInId(null, { id: lessonId })).rejects.toThrow(GraphQLError);
-    expect(lessonModel.findById).toHaveBeenCalledWith(courseId);
+    await expect(getLessonByInId!({}, { id: lessonId }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+    expect(lessonModel.findById).toHaveBeenCalledWith(lessonId);
   });
 
   it('throws an error when an error occurs during findById', async () => {
@@ -34,7 +34,7 @@ describe('getLessonByInId resolver', () => {
     const errorMessage = 'Database error';
     jest.spyOn(lessonModel, 'findById').mockRejectedValue(new Error(errorMessage));
 
-    await expect(getLessonByInId(null, { id: lessonId })).rejects.toThrow(GraphQLError);
+    await expect(getLessonByInId!({}, { id: lessonId }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
     expect(lessonModel.findById).toHaveBeenCalledWith(lessonId);
   });
 });
