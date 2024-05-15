@@ -1,8 +1,0 @@
- query getSections {
-   getSections {
-     id
-     title
-     description
-     contentImage
-   }
- }

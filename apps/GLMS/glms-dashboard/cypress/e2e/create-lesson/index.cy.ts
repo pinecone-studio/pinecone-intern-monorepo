@@ -5,8 +5,7 @@ describe('createLessonPage', () => {
     cy.get('[data-testid="create-lesson-container"]').should('exist').should('be.visible');
   });
   it('2. check back to dashboard page button click ', () => {
-    cy.get('[data-testid="test-back-div"]').should('exist');
-    cy.get('[data-testid="test-back-div"]').click();
+    cy.get('[data-testid="test-back-div"]').should('exist').click();
     cy.url().should('include', '/dashboard');
   });
   it('3. create lesson button', () => {

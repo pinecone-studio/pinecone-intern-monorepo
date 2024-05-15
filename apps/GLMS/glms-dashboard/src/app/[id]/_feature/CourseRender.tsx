@@ -18,9 +18,7 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
   const router = useRouter();
 
   const handleUpdateCoursePage = () => {
-    if (data?.id) {
-      router.push('update-course');
-    }
+    router.push('update-course');
   };
   const handleBack = () => {
     router.push('/dashboard');
