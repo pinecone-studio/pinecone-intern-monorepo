@@ -20,8 +20,11 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
     const lastName = employee.lastName;
     const email = employee.email;
     const imageUrl = employee.imageUrl
+    const jobTitle = employee.jobTitle
+    const ladderLevel = employee.ladderLevel
 
-    const token = jwt.sign({ id, firstName, email, lastName , imageUrl }, 'secret-key');
+
+    const token = jwt.sign({ id, firstName, email, lastName , imageUrl , ladderLevel , jobTitle }, 'secret-key');
 
     return { token, message: 'Амжилттай нэвтэрлээ' };
   } catch (error) {
