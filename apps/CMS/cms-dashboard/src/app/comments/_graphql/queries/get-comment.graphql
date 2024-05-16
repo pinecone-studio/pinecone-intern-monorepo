@@ -1,9 +1,18 @@
-query getComments ($input: GetCommentsLimitInput!) {
-    getComments (input: $input) {
-    comment
-   _id
-   email
-   name
-   createdAt
-   articleId
-}}
+query GetComments($input: GetCommentsLimitInput!) {
+  getComments(input: $input) {
+    comments {
+      email
+      name
+      status
+      createdAt
+      comment
+      articleId
+      _id
+    }
+    allCount
+    count
+    deletedCount
+    hiddenCount
+    normalCount
+  }
+}
