@@ -12,6 +12,9 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
   const { limit, offset, status } = input;
   try {
     const filter: Partial<{ status: CommentStatus | CommentStatus[] }> = {};
+    if (status) {
+      filter.status = status;
+    }
     const commentsPromise = CommentsModel.find(filter).limit(limit).skip(offset);
     const allCountPromise = CommentsModel.countDocuments();
     const filteredCountPromise = CommentsModel.countDocuments(filter);
