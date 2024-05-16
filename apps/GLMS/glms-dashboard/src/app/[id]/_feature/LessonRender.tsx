@@ -4,14 +4,25 @@ import SuccessDeleteToggle from '../../../components/SuccessDeleteToggle';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson, useDeleteLessonMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
 
 const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleCreateSection: () => void }) => {
   const [deleted, isDeleted] = useState(false);
   const [deleteLesson] = useDeleteLessonMutation();
+  const router = useRouter();
 
-  const HandleDeleteLesson = () => {
-    if (lesson.id) deleteLesson({ variables: { id: lesson?.id } });
-    isDeleted(true);
+  const HandleDeleteLesson = (id: string | undefined | null) => {
+    if (id) {
+      deleteLesson({ variables: { id } });
+      isDeleted(true);
+    }
+  };
+
+  const HandleUpdateLessonPage = (id: string | undefined | null) => {
+    if (id) {
+      localStorage.setItem('lessonID', id);
+      router.push('update-lesson');
+    }
   };
 
   return (
@@ -31,8 +42,8 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
           </div>
         </div>
         <div className="flex gap-4 items-center z-50 ">
-          <EditButton />
-          <DeleteButton onClick={HandleDeleteLesson} />
+          <EditButton onClick={() => HandleUpdateLessonPage(lesson.id)} />
+          <DeleteButton onClick={() => HandleDeleteLesson(lesson.id)} />
         </div>
       </div>
     </div>
