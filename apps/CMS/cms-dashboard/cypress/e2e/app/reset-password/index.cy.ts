@@ -5,6 +5,7 @@ describe('articles page', () => {
   it('1. Should display reset-form-1', () => {
     cy.get('[data-testid="reset-form1-container"]').should('exist').should('be.visible');
   });
+
   it('2. When user enters no value on the inputs and click on the send mail button, it should display an error messages', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
   });
