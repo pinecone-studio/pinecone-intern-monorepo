@@ -3,10 +3,10 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import TextInput from '@/app/sign-up/_components/TextInput';
-import { Loader } from '@/app/sign-up/_components';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
 import { useResetPassword } from '@/common/providers/ResetPasswordProvider';
+import TextInput from '@/app/sign-up/_components/TextInput';
+import { Loader } from '@/app/sign-up/_components';
 
 export const ResetFormStep1 = ({ setIndex }: { setIndex: Dispatch<SetStateAction<number>> }) => {
   const { setEmail, handleSendMail, sendMailLoading } = useResetPassword();

@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import TextInput from '@/app/sign-up/_components/TextInput';
 import { useSendMailMutation } from '@/generated';
 import { useResetPassword } from '@/common/providers/ResetPasswordProvider';
+import TextInput from '@/app/sign-up/_components/TextInput';
 
 export const ResetFormStep2 = ({ setIndex }: { setIndex: Dispatch<SetStateAction<number>> }) => {
   const [sendMail, { loading: creationLoading }] = useSendMailMutation();
