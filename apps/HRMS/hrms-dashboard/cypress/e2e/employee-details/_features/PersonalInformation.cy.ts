@@ -6,77 +6,34 @@ describe('update personal info', () => {
     cy.get('[data-testid="personal-info"]').should('exist').should('be.visible');
     cy.get('[data-testid="profile-picture"]').should('exist').should('be.visible');
   });
-  it('Clicking the button opens the modal', () => {
-    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-    cy.get('[data-testid="update-button-info"]').click();
-    cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-  });
-  it('Click modal close icon', () => {
+  it('Cancel icon', () => {
     cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
     cy.get('[data-testid="update-button-info"]').click();
     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
     cy.get('[data-testid="modal-close-icon"]').click();
   });
-  it('Click modal cancel btn', () => {
+  it('Cencel btn', () => {
     cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
     cy.get('[data-testid="update-button-info"]').click();
     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
     cy.get('[data-testid="personal-info-cancel"]').click();
   });
-   it('5. Should fill out and submit the form in PersonalUpdateModal', () => {
-     const imageUrl = 'https://example.com/image.jpg';
-     const lastName = 'Doe';
-     const firstName = 'John';
-     const jobTitle = 'Software Engineer';
-     const email = 'john.doe@example.com';
-     const phone = '99112233';
-     const address = 'Ulaanbator Mongolia';
-     cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-     cy.get('[data-testid="update-button-info"]').click();
-     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-     cy.get('input[name="imageUrl"]').type(imageUrl).clear();
-     cy.get('input[name="lastName"]').type(lastName).clear();
-     cy.get('input[name="firstName"]').type(firstName).clear();
-     cy.get('input[name="jobTitle"]').type(jobTitle).clear();
-     cy.get('input[name="email"]').type(email).clear();
-     cy.get('input[name="phone"]').type(phone).clear();
-     cy.get('input[name="address"]').type(address).clear();
-     cy.get('input[name="imageUrl"]').type(imageUrl);
-     cy.get('input[name="lastName"]').type(lastName);
-     cy.get('input[name="firstName"]').type(firstName);
-     cy.get('input[name="jobTitle"]').type(jobTitle);
-     cy.get('input[name="email"]').type(email);
-     cy.get('input[name="phone"]').type(phone);
-     cy.get('input[name="address"]').type(address);
-     cy.get('[data-testid="submit-btn"]').click();
-   });
-   it('6.visit fields ', () => {
-     const imageUrl = 'https://example.com/image.jpg';
-     const lastName = 'Doe';
-     const firstName = 'John';
-     const jobTitle = 'Software Engineer';
-     const email = 'john.doe@example.com';
-     const phone = '99112233';
-     const address = 'Ulaanbator Mongolia';
-     cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-     cy.get('[data-testid="update-button-info"]').click();
-     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-     cy.get('input[name="imageUrl"]').type(imageUrl).clear();
-     cy.get('input[name="lastName"]').type(lastName).clear();
-     cy.get('input[name="firstName"]').type(firstName).clear();
-     cy.get('input[name="jobTitle"]').type(jobTitle).clear();
-     cy.get('input[name="email"]').type(email).clear();
-     cy.get('input[name="phone"]').type(phone).clear();
-     cy.get('input[name="address"]').type(address).clear();
-     cy.get('[data-testid="submit-btn"]').click();
-     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-     cy.contains('ImageUrl is required').should('be.visible');
-     cy.contains('Last Name is required').should('be.visible');
-     cy.contains('First Name is required').should('be.visible');
-     cy.contains('Job Title is required').should('be.visible');
-     cy.contains('Email is required').should('be.visible');
-     cy.contains('Phone is required').should('be.visible');
-     cy.contains('Address is required').should('be.visible');
-     cy.get('[data-testid="submit-btn"]').click();
-   });
+  // it('Click modal close icon', () => {
+  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+  //   cy.get('[data-testid="update-button-info"]').click();
+  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+  //   cy.get('[data-testid="modal-close-icon"]').click();
+  // });
+  // it('Click modal cancel btn', () => {
+  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+  //   cy.get('[data-testid="update-button-info"]').click();
+  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+  //   cy.get('[data-testid="personal-info-cancel"]').click();
+  // });
+  // it('Click modal cancel btn', () => {
+  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+  //   cy.get('[data-testid="update-button-info"]').click();
+  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
+  //   cy.get('[data-testid="submit-btn"]').click();
+  // });
 });

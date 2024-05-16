@@ -7,6 +7,7 @@ import { Mailicon } from '../../../../../../public/assets/MailIcon';
 import { PhoneIcon } from '../../../../../../public/assets/PhoneIcon';
 import { PenIcon } from '../../../../../../public/assets/PenIcon';
 import { PersonalUpdateModal } from './PersonalUpdateModal';
+
 interface PersonalInformationProps {
   firstName?: string | null;
   lastName?: string | null;
