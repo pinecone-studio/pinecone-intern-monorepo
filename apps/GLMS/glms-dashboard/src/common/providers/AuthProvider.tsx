@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
 'use client';
 
 import { PropsWithChildren, useContext, createContext } from 'react';
 import { useSignUpMutation } from '../../generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
+type AuthContextType = {
+  handleSignUp: (emailOrPhoneNumber: string, password: string) => Promise<void>;
+  signUpLoading: boolean;
+};
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [signUp, { loading: signUpLoading }] = useSignUpMutation();
