@@ -9,11 +9,6 @@ export const commentsSchema = gql`
     email: String!
     articleId: String!
   }
-  enum CommentStatus {
-    NORMAL
-    DELETED
-    HIDDEN
-  }
   type Comment {
     _id: ID
     name: String
@@ -40,7 +35,21 @@ export const commentsSchema = gql`
   input GetCommentsLimitInput {
     limit: Int!
     offset: Int!
+    status: [CommentStatus!]!
   }
+  enum CommentStatus {
+  HIDDEN
+  NORMAL
+  DELETED
+  }
+  type TotalCommentCountResponse {
+  count: Int!  
+  comments: [Comment!]!
+  hiddenCount: Int!
+  normalCount: Int!
+  deletedCount: Int!
+  allCount: Int!
+}
   type Mutation {
     setCommentStatusToNormal(id: ID!): ID!
     publishComment(createInput: CreateCommentInput!): ID!
@@ -50,7 +59,11 @@ export const commentsSchema = gql`
     deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
   }
   type Query {
-    getComments(input: GetCommentsLimitInput!): [Comment!]
+    getComments(input: GetCommentsLimitInput!): TotalCommentCountResponse!
     getCommentsByArticleId(articleId: ID!): [Comment]
   }
 `;
+
+
+
+

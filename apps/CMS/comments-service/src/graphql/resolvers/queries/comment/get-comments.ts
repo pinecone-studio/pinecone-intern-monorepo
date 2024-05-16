@@ -1,15 +1,42 @@
-import { QueryResolvers } from '@/graphql/generated/index';
-import { CommentsModel } from '@/models/comment.model';
+import { CommentStatus, QueryResolvers } from '@/graphql/generated';
+import { CommentsModel } from '../../../../models/comment.model';
 import { GraphQLError } from 'graphql/error';
 
-export const getComments: QueryResolvers['getComments'] = async (_, { input }) => {
-  const { limit, offset } = input;
+interface GetCommentsInput {
+  limit: number;
+  offset: number;
+  status?: CommentStatus | CommentStatus[];
+}
+
+export const getComments: QueryResolvers['getComments'] = async (_, { input }: { input: GetCommentsInput }) => {
+  const { limit, offset, status } = input;
   try {
-    const comments = await CommentsModel.find()
-      .limit(limit)
-      .skip(offset * limit);
-    return comments;
+    const filter: Partial<{ status: CommentStatus | CommentStatus[] }> = {};
+    const commentsPromise = CommentsModel.find(filter).limit(limit).skip(offset);
+    const allCountPromise = CommentsModel.countDocuments();
+    const filteredCountPromise = CommentsModel.countDocuments(filter);
+    const hiddenCountPromise = CommentsModel.countDocuments({ status: 'HIDDEN' });
+    const normalCountPromise = CommentsModel.countDocuments({ status: 'NORMAL' });
+    const deletedCountPromise = CommentsModel.countDocuments({ status: 'DELETED' });
+
+    const [comments, filteredCount, allCount, hiddenCount, normalCount, deletedCount] = await Promise.all([
+      commentsPromise,
+      filteredCountPromise,
+      allCountPromise,
+      hiddenCountPromise,
+      normalCountPromise,
+      deletedCountPromise,
+    ]);
+
+    return {
+      count: filteredCount,
+      allCount,
+      hiddenCount,
+      normalCount,
+      deletedCount,
+      comments,
+    };
   } catch (error) {
-    throw new GraphQLError('Error in get comments query');
+    throw new GraphQLError(`Error in get comments query: ${error}`);
   }
 };
