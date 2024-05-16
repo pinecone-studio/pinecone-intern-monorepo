@@ -1,3 +1,4 @@
+import { CommentStatus } from '@/graphql/generated';
 import { getComments } from '@/graphql/resolvers/queries';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
@@ -36,7 +37,7 @@ describe('This query should return comments', () => {
   } catch (error) {
     expect(error).toEqual(new GraphQLError(`Error in get comments query`));
   }
-  });
+  } );
   it('2. should return GraphQLError if comments not found', async () => {
     (CommentsModel.find as jest.Mock).mockReturnValueOnce({
       limit: jest.fn().mockReturnThis(),
@@ -49,23 +50,23 @@ describe('This query should return comments', () => {
     } catch (error) {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
-  });
+  } );
   it('3.should include status in filter when it exists', async () => {
     try {
-      const input = { limit: 10, offset: 0, status: ['NORMAL']};
+      const input = { limit: 10, offset: 0, status: ['NORMAL'] as CommentStatus[] };
       await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
       expect(CommentsModel.find).toHaveBeenCalledWith({ status: ['NORMAL'] });
     } catch (error) {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
-  });
+  } );
   it('4.should not include status in filter when it does not exist', async () => {
     try {
-      const input = { limit: 10, offset: 0, status: [] };
+      const input = { limit: 10, offset: 0, status: [] as CommentStatus[] };
       await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
       expect(CommentsModel.find).toHaveBeenCalledWith({});
     } catch (error) {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
-  });
+  } );
 });

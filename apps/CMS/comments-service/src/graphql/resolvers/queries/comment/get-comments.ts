@@ -1,6 +1,6 @@
+import { CommentStatus, QueryResolvers } from '@/graphql/generated';
 import { CommentsModel } from '../../../../models/comment.model';
 import { GraphQLError } from 'graphql/error';
-import { CommentStatus, QueryResolvers } from '@/graphql/generated';
 
 interface GetCommentsInput {
   limit: number;
@@ -18,9 +18,9 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
     const commentsPromise = CommentsModel.find(filter).limit(limit).skip(offset);
     const allCountPromise = CommentsModel.countDocuments();
     const filteredCountPromise = CommentsModel.countDocuments(filter);
-    const hiddenCountPromise = CommentsModel.countDocuments({ status: CommentStatus.Hidden });
-    const normalCountPromise = CommentsModel.countDocuments({ status: CommentStatus.Normal });
-    const deletedCountPromise = CommentsModel.countDocuments({ status: CommentStatus.Deleted});
+    const hiddenCountPromise = CommentsModel.countDocuments({ status:'HIDDEN'});
+    const normalCountPromise = CommentsModel.countDocuments({ status:'NORMAL'});
+    const deletedCountPromise = CommentsModel.countDocuments({ status:'DELETED'});
     const [comments, filteredCount, allCount, hiddenCount, normalCount, deletedCount] = await Promise.all([
       commentsPromise,
       filteredCountPromise,
@@ -42,3 +42,4 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
     throw new GraphQLError(`Error in get comments query`);
   }
 };
+
