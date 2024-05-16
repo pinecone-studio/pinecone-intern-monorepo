@@ -16,7 +16,6 @@ export const FileUpload = (props: FileUploadProps) => {
       const file = Array.from(e.target.files);
 
       const accessUrl = await fileManagement(file, 'CMS-dashboard');
-      console.log('aa', accessUrl);
 
       setFieldValue('coverPhoto', accessUrl[0], true);
     }
