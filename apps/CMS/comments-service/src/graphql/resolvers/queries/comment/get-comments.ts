@@ -24,12 +24,12 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
     const deletedCountPromise = CommentsModel.countDocuments({ status: CommentStatus.Deleted});
 
     const [comments, filteredCount, allCount, hiddenCount, normalCount, deletedCount] = await Promise.all([
-      commentsPromise.exec(),
-      filteredCountPromise.exec(),
-      allCountPromise.exec(),
-      hiddenCountPromise.exec(),
-      normalCountPromise.exec(),
-      deletedCountPromise.exec(),
+      commentsPromise,
+      filteredCountPromise,
+      allCountPromise,
+      hiddenCountPromise,
+      normalCountPromise,
+      deletedCountPromise,
     ]);
 
     return {
