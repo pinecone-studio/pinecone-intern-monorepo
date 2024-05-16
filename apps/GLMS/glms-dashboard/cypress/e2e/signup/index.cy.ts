@@ -1,4 +1,4 @@
-const testEmailAddress = 'pineconeTestUser@gmail.com';
+
 
 describe('articles page', () => {
   beforeEach(() => cy.visit('/signup'));

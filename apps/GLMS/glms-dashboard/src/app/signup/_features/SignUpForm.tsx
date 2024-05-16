@@ -5,7 +5,7 @@ import { Loader } from '../_components/Loader';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 import TextInput from '../_components/TextInput';
-import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
