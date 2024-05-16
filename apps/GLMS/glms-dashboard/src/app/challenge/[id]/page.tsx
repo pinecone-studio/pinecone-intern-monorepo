@@ -6,6 +6,7 @@ import ChoiceText from '../_components/TextChoicePicker';
 import { useEffect, useState } from 'react';
 import ProgressBar from '../_components/ProgressBar';
 import Link from 'next/link';
+import Skeleton from '../_feature/Skeleton';
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
@@ -47,22 +48,26 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   return (
     <div className="bg-white flex flex-col justify-center items-center h-[90vh]">
       <ProgressBar progressValue={progressValue} />
-      {data?.getChallengeById?.quiz?.map((quiz, index) => {
-        return (
-          <div key={quiz?._id}>
-            {isShow === index && (
-              <div key={quiz?._id} className="flex w-full flex-col justify-center items-center h-[80vh] gap-[92px]">
-                <Question question={quiz?.question} index={index} />
-                <div className="flex flex-col items-center gap-8 mt-16">
-                  {quiz?.choices?.map((choice) => (
-                    <ChoiceText key={choice?._id} choice={choice?.choice} id={choice?._id} selectedChoice={selectedChoice} handleChange={handleChange} />
-                  ))}
+      {loading ? (
+        <Skeleton />
+      ) : (
+        data?.getChallengeById?.quiz?.map((quiz, index) => {
+          return (
+            <div key={quiz?._id}>
+              {isShow === index && (
+                <div key={quiz?._id} className="flex w-full flex-col justify-center items-center h-[80vh] gap-[92px]">
+                  <Question question={quiz?.question} index={index} />
+                  <div className="flex flex-col items-center gap-8 mt-16">
+                    {quiz?.choices?.map((choice) => (
+                      <ChoiceText key={choice?._id} choice={choice?.choice} id={choice?._id} selectedChoice={selectedChoice} handleChange={handleChange} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
+              )}
+            </div>
+          );
+        })
+      )}
       <div>
         {isLast ? (
           <Link href="/challenge">
