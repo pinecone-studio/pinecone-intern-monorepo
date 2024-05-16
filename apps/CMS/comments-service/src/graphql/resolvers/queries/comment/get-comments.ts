@@ -40,6 +40,6 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
       comments,
     };
   } catch (error) {
-    throw new GraphQLError(`Error in get comments query: ${error}`);
+    throw new GraphQLError(`Error in get comments query`);
   }
 };

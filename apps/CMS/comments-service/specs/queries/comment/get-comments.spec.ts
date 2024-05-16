@@ -17,13 +17,10 @@ describe('This query should return comments', () => {
     jest.clearAllMocks();
   });
   it('1. should return comments if found', async () => {
-    (CommentsModel.find as jest.Mock).mockReturnValueOnce({
-      limit: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValueOnce([
-        { _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf',  createdAt: new Date(), articleId: 'asdf' }
-      ]),
-    });
+  
+    (CommentsModel.find as jest.Mock).mockReturnValueOnce([
+      { _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: new Date(), articleId: 'asdf'  }
+    ]);
 
     const input = { limit: 10, offset: 0, status: [] };
     const comments = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
@@ -35,10 +32,11 @@ describe('This query should return comments', () => {
       normalCount: undefined,
       deletedCount: undefined,
       comments: [
-        { _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test',  ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf'}
+        {  _id: 'asdf', name: 'adsf', email: 'asdfejf',  comment: 'test',  ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf'}
       ]
     });
   });
+
   it('2. should return GraphQLError if comments not found', async () => {
     (CommentsModel.find as jest.Mock).mockReturnValueOnce({
       limit: jest.fn().mockReturnThis(),
