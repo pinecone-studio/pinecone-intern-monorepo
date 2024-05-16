@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetChallengeByIdQuery } from '@/generated';
+import { useGetChallengeByIdQuery, useGetChallengeByWOcorrectQuery } from '@/generated';
 import Question from '../_components/Question';
 import ChoiceText from '../_components/TextChoicePicker';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Skeleton from '../_feature/Skeleton';
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeByWOcorrectQuery({ variables: { challengeId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
   const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);
   const [progressValue, setProgressValue] = useState<number>(0);
