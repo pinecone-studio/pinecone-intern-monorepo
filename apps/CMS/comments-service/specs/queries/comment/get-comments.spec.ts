@@ -63,8 +63,8 @@ describe('This query should return comments', () => {
   it('4.should not include status in filter when it does not exist', async () => {
     try {
       const input = { limit: 10, offset: 0, status: [] as CommentStatus[] };
-    await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(CommentsModel.find).toHaveBeenCalledWith({});
+      await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
+      expect(CommentsModel.find).toHaveBeenCalledWith({});
     } catch (error) {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
