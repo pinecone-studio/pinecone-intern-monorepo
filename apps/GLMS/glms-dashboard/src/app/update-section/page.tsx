@@ -52,8 +52,8 @@ const UpdateSection = () => {
             },
           },
         });
-        router.push('/section');
       }
+      router.push('/section');
     },
   });
 
@@ -92,6 +92,7 @@ const UpdateSection = () => {
             <p className="font-bold">Хэсгийн гарчиг</p>
             <input
               data-cy="update-section-title"
+              test-id="title-input"
               className="w-[588px] h-fit border rounded-[4px] p-2"
               type="text"
               name="title"
@@ -105,6 +106,7 @@ const UpdateSection = () => {
             <p className="font-bold">Дэлгэрэнгүй</p>
             <textarea
               data-cy="update-section-description"
+              test-id="description-input"
               className="w-[588px] h-[160px] border rounded-[4px] p-2"
               id="description-test"
               name="description"

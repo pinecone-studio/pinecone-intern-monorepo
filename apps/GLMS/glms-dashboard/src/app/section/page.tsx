@@ -15,24 +15,17 @@ const validatinSchema = yup.object({
 });
 
 const SectionPage = () => {
-  const [createSection] = useCreateSectionMutation();
-  const [deleteSection] = useDeleteSectionMutation();
   const router = useRouter();
   const [isPosted, setIsPosted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [sectionID, setSectionID] = useState('');
-  const [lessonID, setLessonID] = useState('');
-
+  const [lessonId, setLessonId] = useState('');
+  const [createSection] = useCreateSectionMutation();
+  const [deleteSection] = useDeleteSectionMutation();
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const sectionId = localStorage.getItem('sectionId');
-      const lessonId = localStorage.getItem('sectionId');
-      setSectionID(sectionId || '');
-      setLessonID(lessonId || '');
-    }
+    setLessonId(localStorage.getItem('lessonID') || '');
   }, []);
-  const id = sectionID ? sectionID : '';
-  const { data, loading, refetch } = useGetSectionByLessonIdQuery({ variables: { getSectionByLessonIdId: lessonID } });
+  const { data, loading, refetch } = useGetSectionByLessonIdQuery({ variables: { getSectionByLessonIdId: lessonId } });
+
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -44,7 +37,7 @@ const SectionPage = () => {
       await createSection({
         variables: {
           sectionInput: {
-            lessonId: lessonID,
+            lessonId: lessonId,
             title: values.title,
             description: values.description,
             contentImage: values.thumbnail,
@@ -56,13 +49,20 @@ const SectionPage = () => {
       formik.resetForm();
     },
   });
-  const handleUpdateSectionPage = () => {
-    router.push('/update-section');
+  const handleUpdateSectionPage = (id: string | undefined | null) => {
+    if (id) {
+      localStorage.setItem('sectionId', id);
+      router.push('/update-section');
+    } else {
+      refetch();
+    }
   };
-  const handleDeleteSection = async () => {
-    setIsLoading(true);
-    await deleteSection({ variables: { id } });
-    setIsLoading(false);
+  const handleDeleteSection = async (id: string | undefined | null) => {
+    if (id) {
+      setIsLoading(true);
+      await deleteSection({ variables: { id } });
+      setIsLoading(false);
+    }
     refetch();
   };
   useEffect(() => {

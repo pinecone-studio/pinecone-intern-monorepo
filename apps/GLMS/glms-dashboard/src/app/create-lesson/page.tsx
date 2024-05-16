@@ -83,7 +83,7 @@ const LessonAdd = () => {
                 type="button"
                 data-testid="create-button-of-lesson"
                 onClick={() => formik.handleSubmit()}
-                className="btn w-fit gap-7 rounded-lg py-4 px-24"
+                className="btn w-fit gap-7 rounded-lg py-4 px-24 bg-black hover:bg-black text-white"
                 disabled={!formik.values.title || !formik.values.thumbnail}
               >
                 {'Хадгалах'}

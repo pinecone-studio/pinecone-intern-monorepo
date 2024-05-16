@@ -3,8 +3,8 @@ import { GetSectionByLessonIdQuery, Section } from '@/generated';
 import { DeleteIcon } from '../../../../public/assets/DeleteIcon';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 type GetSectionsType = {
-  handleUpdateSectionPage: () => void;
-  handleDeleteSection: () => void;
+  handleUpdateSectionPage: (_id: string | undefined | null) => void;
+  handleDeleteSection: (_id: string | undefined | null) => void;
   isLoading: boolean;
   data: GetSectionByLessonIdQuery | undefined;
   loading: boolean;
@@ -53,13 +53,14 @@ const GetSections = (props: GetSectionsType) => {
             <div className="flex gap-4 items-center py-4">
               <button
                 data-cy="update-btn"
-                onClick={handleUpdateSectionPage}
+                onClick={() => handleUpdateSectionPage(section.id)}
                 className=" w-[101px] bg-transparent border-2  font-bold rounded-[12px] p-2 text-black flex items-center justify-center gap-2 hover:bg-[#D6D8DB]"
               >
                 Засах <EditButtonIcon />
               </button>
               <button
-                onClick={handleDeleteSection}
+                cy-data="delete-button-cy-test"
+                onClick={() => handleDeleteSection(section.id)}
                 disabled={isLoading}
                 className="w-[101px] bg-transparent border-2 font-bold rounded-[12px] p-2 text-black flex items-center judtify-center gap-2 hover:bg-[#D6D8DB]"
               >

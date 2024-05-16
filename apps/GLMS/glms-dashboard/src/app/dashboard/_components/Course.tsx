@@ -1,10 +1,12 @@
 'use client';
+
 import { Course } from '@/generated';
 
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
+
   return (
-    <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id} data-testid="courseContain">
+    <div data-testid="courseContain" className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id}>
       <div className="w-full h-[120px] rounded-md overflow-hidden">
         <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
       </div>
@@ -15,10 +17,10 @@ const Courses = (props: Course) => {
         <p className="text-[14px] font-normal overflow-hidden h-[40px] text-[#3F4145]" data-testid="infoTest" color={'#3F4145'}>
           {description}
         </p>
-        <div className="py-3 flex justify-between items-center ">
-          <p className="flex w-fit bg-[#C1E6CF]  px-1 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
+        <div className="py-3 flex justify-between items-center">
+          <div className="flex w-fit bg-[#C1E6CF]  px-3 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
             Lessons
-          </p>
+          </div>
         </div>
       </div>
     </div>
