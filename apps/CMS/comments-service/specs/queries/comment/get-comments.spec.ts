@@ -7,16 +7,7 @@ jest.mock('@/models/comment.model', () => ({
     find: jest.fn().mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValueOnce([{ 
-        _id: 'asdf', 
-        name: 'adsf', 
-        email: 'asdfejf', 
-        comment: 'test', 
-        ipAddress: 'adf', 
-        createdAt: new Date(), 
-        articleId: 'asdf' 
-      }]),
-    }),
+      exec: jest.fn().mockResolvedValueOnce([{_id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: new Date(), articleId: 'asdf' }]),}),
     countDocuments: jest.fn().mockResolvedValueOnce(1),
   },
 }));
@@ -25,21 +16,18 @@ describe('This query should return comments', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
   it('1. should return comments if found', async () => {
-    (CommentsModel.find as jest.Mock).mockReturnValueOnce([
-      { 
-        _id: 'asdf', 
-        name: 'adsf', 
-        email: 'asdfejf', 
-        comment: 'test', 
-        ipAddress: 'adf', 
-        createdAt: new Date(), 
-        articleId: 'asdf' 
-      }
-    ]);
+    (CommentsModel.find as jest.Mock).mockReturnValueOnce({
+      limit: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValueOnce([
+        { _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf',  createdAt: new Date(), articleId: 'asdf' }
+      ]),
+    });
+
     const input = { limit: 10, offset: 0, status: [] };
     const comments = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
+
     expect(comments).toEqual({
       count: 1,
       allCount: 1,
@@ -47,15 +35,7 @@ describe('This query should return comments', () => {
       normalCount: undefined,
       deletedCount: undefined,
       comments: [
-        { 
-          _id: 'asdf', 
-          name: 'adsf', 
-          email: 'asdfejf', 
-          comment: 'test', 
-          ipAddress: 'adf', 
-          createdAt: expect.any(Date), 
-          articleId: 'asdf' 
-        }
+        { _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test',  ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf'}
       ]
     });
   });
