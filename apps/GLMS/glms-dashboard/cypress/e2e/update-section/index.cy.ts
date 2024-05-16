@@ -18,6 +18,7 @@ describe('Handle update-section page', () => {
     cy.get('[data-cy="update-section-description"]').should('exist').type('html intro');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="update-section-handle-btn"]').eq(1).click();
+    cy.url().should('include', '/section');
   });
   it('4. updates form fields with data from API', () => {
     cy.intercept('POST', '/graphql', (req) => {

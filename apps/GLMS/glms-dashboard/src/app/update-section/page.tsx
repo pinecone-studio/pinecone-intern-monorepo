@@ -52,8 +52,8 @@ const UpdateSection = () => {
             },
           },
         });
-        router.push('/section');
       }
+      router.push('/section');
     },
   });
 
