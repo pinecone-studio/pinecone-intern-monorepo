@@ -15,12 +15,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <FederationProvider>
             <AuthProvider>
               <ToastContainer />
-            </AuthProvider>
-            <Header />
+              <Header />
             {children}
             <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
               <PineconeLogo />
             </div>
+            </AuthProvider>
           </FederationProvider>
         </Challengeprovider>
       </body>
