@@ -4,7 +4,7 @@ import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
-    find: jest.fn().mockReturnValueOnce({
+    find: jest.fn().mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       exec: jest.fn().mockResolvedValueOnce([{ 
@@ -17,7 +17,7 @@ jest.mock('@/models/comment.model', () => ({
         articleId: 'asdf' 
       }]),
     }),
-    countDocuments: jest.fn().mockResolvedValueOnce(1),
+    countDocuments: jest.fn().mockResolvedValueOnce(1), // Mock countDocuments as per your requirement
   },
 }));
 
@@ -29,15 +29,22 @@ describe('This query should return comments', () => {
   it('1. should return comments if found', async () => {
     const input = { limit: 10, offset: 0, status: [] };
     const comments = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(comments).toEqual([{ 
-      _id: 'asdf', 
-      name: 'adsf', 
-      email: 'asdfejf', 
-      comment: 'test', 
-      ipAddress: 'adf', 
-      createdAt: expect.any(Date), 
-      articleId: 'asdf' 
-    }]);
+    expect(comments).toEqual({
+      count: 1,
+      allCount: 1,
+      hiddenCount: undefined,
+      normalCount: undefined,
+      deletedCount: undefined,
+      comments: [{
+        _id: 'asdf', 
+        name: 'adsf', 
+        email: 'asdfejf', 
+        comment: 'test', 
+        ipAddress: 'adf', 
+        createdAt: expect.any(Date), 
+        articleId: 'asdf' 
+      }],
+    });
   });
 
   it('2. should return GraphQLError if comments not found', async () => {
