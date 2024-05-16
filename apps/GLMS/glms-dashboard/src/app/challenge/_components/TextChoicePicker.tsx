@@ -4,15 +4,16 @@ interface IProps {
   id: string | null | undefined;
   choice: string | null | undefined;
   selectedChoice: string | undefined | null;
-  handleChange: (_: string | undefined | null) => void;
+  quizId: string | undefined | null;
+  handleChange: (_: string | undefined | null, _quizId?: string | undefined | null) => void;
 }
-const ChoiceText = ({ choice, selectedChoice, handleChange, id }: IProps) => {
+const ChoiceText = ({ choice, selectedChoice, handleChange, id, quizId }: IProps) => {
   const isSelected = selectedChoice === id;
   return (
     <div
       data-testid="container"
       onClick={() => {
-        handleChange(id);
+        handleChange(id, quizId);
       }}
       className={`flex max-w-[588px] cursor-pointer justify-center items-center border h-[72px] rounded-[12px] p-4 ${isSelected ? 'border-b-[4px] border-[#000000] ' : 'border-[#ECEDF0]'}}`}
     >
