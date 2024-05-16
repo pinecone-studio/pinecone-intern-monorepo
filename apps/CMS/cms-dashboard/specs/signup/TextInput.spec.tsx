@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import TextInput from '../../src/app/sign-up/_components/TextInput';
+import TextInput from '@/app/sign-up/_components/TextInput';
 
 describe('TextInput', () => {
   it('it should render with correct props', () => {

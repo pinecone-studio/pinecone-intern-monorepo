@@ -3,8 +3,8 @@
 import MainBannerFromArticles from './articles/_components/MainBannerFromArticles';
 import { useGetNewestArticleQuery, useGetCategoriesQuery } from '../generated';
 import GroupArticles from './articles/_features/GroupArticles';
-import { Loader } from './sign-up/_components';
 import { AdminNavigateLinksFeature } from './dashboard/_features';
+import { Loader } from './sign-up/_components';
 
 const Home = () => {
   const { data, loading } = useGetNewestArticleQuery();
