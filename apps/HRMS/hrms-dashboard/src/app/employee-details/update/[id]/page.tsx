@@ -2,8 +2,10 @@
 import { Dependent, useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
-import { UpdateDependent, UpdateEmployment } from './_features';
-import PersonalInformation from './_features/PersonalInformation';
+
+import PersonalInformation from '../../_features/PersonalInformation';
+import { UpdateEmployment } from '../../_features/UpdateEmployment';
+import { UpdateDependent } from '../../_features/UpdateDependent';
 
 
 const Update = () => {

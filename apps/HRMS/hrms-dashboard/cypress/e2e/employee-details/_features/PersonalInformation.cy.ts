@@ -18,22 +18,4 @@ describe('update personal info', () => {
     cy.get('[data-testid="personal-info-modal"]').should('be.visible');
     cy.get('[data-testid="personal-info-cancel"]').click();
   });
-  // it('Click modal close icon', () => {
-  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-  //   cy.get('[data-testid="update-button-info"]').click();
-  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-  //   cy.get('[data-testid="modal-close-icon"]').click();
-  // });
-  // it('Click modal cancel btn', () => {
-  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-  //   cy.get('[data-testid="update-button-info"]').click();
-  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-  //   cy.get('[data-testid="personal-info-cancel"]').click();
-  // });
-  // it('Click modal cancel btn', () => {
-  //   cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
-  //   cy.get('[data-testid="update-button-info"]').click();
-  //   cy.get('[data-testid="personal-info-modal"]').should('be.visible');
-  //   cy.get('[data-testid="submit-btn"]').click();
-  // });
 });

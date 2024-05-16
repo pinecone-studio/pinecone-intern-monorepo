@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import { BagIcon } from '../../../../../../public/assets/BagIcon';
-import { LocationIcon } from '../../../../../../public/assets/LocationIcon';
-import { Mailicon } from '../../../../../../public/assets/MailIcon';
-import { PhoneIcon } from '../../../../../../public/assets/PhoneIcon';
-import { PenIcon } from '../../../../../../public/assets/PenIcon';
+import { BagIcon } from '../../../../public/assets/BagIcon';
+import { LocationIcon } from '../../../../public/assets/LocationIcon';
+import { Mailicon } from '../../../../public/assets/MailIcon';
+import { PhoneIcon } from '../../../../public/assets/PhoneIcon';
+import { PenIcon } from '../../../../public/assets/PenIcon';
 import { PersonalUpdateModal } from './PersonalUpdateModal';
 
 interface PersonalInformationProps {

@@ -1,4 +1,4 @@
-import { UpdateButton } from '../../../_components';
+import { UpdateButton } from '../_components';
 
 type UpdateEmploymentProps = {
   jobTitle: string | null | undefined;

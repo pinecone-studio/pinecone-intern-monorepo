@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { CloseIcon } from '../../../../asset/icons/CloseIcon';
+import { CloseIcon } from '../../asset/icons/CloseIcon';
 
 type PersonalUpdateModalProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
