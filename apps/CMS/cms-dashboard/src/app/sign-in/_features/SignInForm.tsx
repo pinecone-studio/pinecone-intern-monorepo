@@ -117,6 +117,16 @@ const SignInForm = () => {
         <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
         <ArrowIcon />
       </button>
+
+      <div className="border border-solid border-[#ecedf0]"></div>
+
+      <div className="flex justify-center gap-2">
+        <h2>Бүртгэлгүй юу?</h2>
+
+        <div className="text-[#551a8b] border-b border-b-solid border-[#551a8b] cursor-pointer" data-testid="sign-in-modal-to-signup">
+          <a href={'/sign-up'}>Бүртгүүлэх</a>
+        </div>
+      </div>
     </div>
   );
 };
