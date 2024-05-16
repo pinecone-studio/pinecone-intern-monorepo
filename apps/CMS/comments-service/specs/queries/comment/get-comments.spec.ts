@@ -2,9 +2,10 @@ import { getComments } from '@/graphql/resolvers/queries';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
-jest.mock('@/models/comment.model', () => ({
+jest.mock('../../../../models/comment.model', () => ({
   CommentsModel: {
     find: jest.fn(),
+    countDocuments: jest.fn(),
   },
 }));
 describe('This query should return comments', () => {
