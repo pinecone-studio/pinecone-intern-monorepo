@@ -1,14 +1,9 @@
 'use client';
-type CourseType = {
-  id: string | null | undefined;
-  thumbnail: string | null | undefined;
-  title: string | null | undefined;
-  description: string | null | undefined;
-  length: number | null | undefined;
-  loading: boolean | null;
-};
-const Courses = (props: CourseType) => {
-  const { id, thumbnail, title, description, length, loading } = props;
+
+import { Course } from '@/generated';
+
+const Courses = (props: Course) => {
+  const { id, thumbnail, title, description } = props;
 
   return (
     <div data-testid="courseContain" className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id}>
@@ -22,10 +17,9 @@ const Courses = (props: CourseType) => {
         <p className="text-[14px] font-normal overflow-hidden h-[40px] text-[#3F4145]" data-testid="infoTest" color={'#3F4145'}>
           {description}
         </p>
-        <div className="py-3 flex justify-between items-center ">
+        <div className="py-3 flex justify-between items-center">
           <div className="flex w-fit bg-[#C1E6CF]  px-3 py-[2px] rounded-xl  text-[14px] font-normal" data-testid="lessonCountTest">
-            {loading ? '0' : length}
-            {` Lesson${length == 1 || length == 0 ? '' : 's'}`}
+            Lessons
           </div>
         </div>
       </div>

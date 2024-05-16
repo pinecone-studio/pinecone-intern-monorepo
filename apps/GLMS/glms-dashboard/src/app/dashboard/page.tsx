@@ -84,8 +84,6 @@ const DashboardOtherLab = () => {
             {data?.getCourses
               .filter((item: Course) => actionTab === item.status)
               .map((data, index) => {
-                const { data: lessonData, loading: lessonLoading } = useGetLessonByIdQuery({ variables: { getLessonByIdId: data.id || '' } });
-                const length = lessonData?.getLessonById?.length;
                 const handleClick = () => {
                   localStorage.setItem('courseID', `${data.id}`);
                   router.push(`/${data.id}`);
@@ -94,7 +92,7 @@ const DashboardOtherLab = () => {
                   <div className="relative" key={index}>
                     <div>
                       <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
-                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} length={length} loading={lessonLoading} />
+                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} />
                       </div>
                       <button className="absolute bottom-6 right-14">
                         <CourseDeleteIcon />

@@ -8,8 +8,6 @@ describe('Course component', () => {
     thumbnail: 'img',
     title: 'mocktitle',
     description: 'mock des',
-    length: 3,
-    loading: false,
   };
 
   it('renders with correct props and structure', () => {
