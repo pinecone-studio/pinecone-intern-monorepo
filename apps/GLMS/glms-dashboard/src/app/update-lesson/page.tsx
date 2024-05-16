@@ -8,7 +8,7 @@ import { PrevArrow } from '../../../public/assets/PrevArrow';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 
-const updateLesson = () => {
+const UpdateLesson = () => {
   const router = useRouter();
   const [lessonID, setLessonID] = useState('');
   const [courseID, setCourseID] = useState('');
@@ -123,4 +123,4 @@ const updateLesson = () => {
     </div>
   );
 };
-export default updateLesson;
+export default UpdateLesson;
