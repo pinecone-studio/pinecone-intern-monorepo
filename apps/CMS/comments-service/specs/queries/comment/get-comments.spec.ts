@@ -4,16 +4,7 @@ import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/comment.model', () => ({
   CommentsModel: {
-    find: jest.fn(),
-    countDocuments: jest.fn(),
-  },
-}));
-describe('This query should return comments', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  it('1.should return comments if found', async () => {
-    (CommentsModel.find as jest.Mock).mockReturnValueOnce({
+    find: jest.fn().mockReturnValueOnce({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       exec: jest.fn().mockResolvedValueOnce([{ 
@@ -25,7 +16,17 @@ describe('This query should return comments', () => {
         createdAt: new Date(), 
         articleId: 'asdf' 
       }]),
-    });
+    }),
+    countDocuments: jest.fn().mockResolvedValueOnce(1),
+  },
+}));
+
+describe('This query should return comments', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('1. should return comments if found', async () => {
     const input = { limit: 10, offset: 0, status: [] };
     const comments = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
     expect(comments).toEqual([{ 
@@ -38,15 +39,16 @@ describe('This query should return comments', () => {
       articleId: 'asdf' 
     }]);
   });
-  it('2.should return GraphQLError if comments not found', async () => {
+
+  it('2. should return GraphQLError if comments not found', async () => {
+    (CommentsModel.find as jest.Mock).mockReturnValueOnce({
+      limit: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValueOnce([]),
+    });
+    const input = { limit: 10, offset: 0, status: [] };
     try {
-      (CommentsModel.find as jest.Mock).mockReturnValueOnce({
-        limit: jest.fn().mockReturnThis(),
-        skip: jest.fn().mockReturnThis(),
-        exec: jest.fn().mockResolvedValueOnce([]), 
-      });
-      const input = { limit: 10, offset: 0, status: [] };
-      await getComments!({}, { input}, {}, {} as GraphQLResolveInfo);
+      await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new GraphQLError('Error in get comments query'));
     }
