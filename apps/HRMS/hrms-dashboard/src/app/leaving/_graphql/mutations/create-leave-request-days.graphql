@@ -1,0 +1,16 @@
+mutation CreateLeaveRequestDays($requestInput: LeaveRequestInput!) {
+  createLeaveRequestHours(requestInput: $requestInput) {
+    _id
+    employeeId
+    startDate
+    description
+    leaveType
+    superVisor
+    durationType
+    status
+    declinedReasoning
+    startHour
+    endHour
+    totalHour
+  }
+}

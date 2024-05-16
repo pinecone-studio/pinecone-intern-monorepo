@@ -1,0 +1,8 @@
+query GetEmployeeRequest($getEmployeeRequestId: ID!) {
+  getEmployeeRequest(id: $getEmployeeRequestId) {
+    firstName
+    lastName
+    email
+    id
+  }
+}
