@@ -1,12 +1,17 @@
 'use client';
-import { Course, useGetLessonByIdQuery } from '@/generated';
+type CourseType = {
+  id: string | null | undefined;
+  thumbnail: string | null | undefined;
+  title: string | null | undefined;
+  description: string | null | undefined;
+  length: number | null | undefined;
+  loading: boolean | null;
+};
+const Courses = (props: CourseType) => {
+  const { id, thumbnail, title, description, length, loading } = props;
 
-const Courses = (props: Course) => {
-  const { id, thumbnail, title, description } = props;
-  const { data, loading } = useGetLessonByIdQuery({ variables: { getLessonByIdId: id || '' } });
-  const length = data?.getLessonById?.length;
   return (
-    <div className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id} data-testid="courseContain">
+    <div data-testid="courseContain" className=" bg-white cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id}>
       <div className="w-full h-[120px] rounded-md overflow-hidden">
         <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
       </div>

@@ -3,7 +3,7 @@ import Courses from './_components/Course';
 import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { usePathname, useRouter } from 'next/navigation';
-import { Course, useGetCoursesQuery } from '@/generated';
+import { Course, useGetCoursesQuery, useGetLessonByIdQuery } from '@/generated';
 import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
@@ -84,6 +84,8 @@ const DashboardOtherLab = () => {
             {data?.getCourses
               .filter((item: Course) => actionTab === item.status)
               .map((data, index) => {
+                const { data: lessonData, loading: lessonLoading } = useGetLessonByIdQuery({ variables: { getLessonByIdId: data.id || '' } });
+                const length = lessonData?.getLessonById?.length;
                 const handleClick = () => {
                   localStorage.setItem('courseID', `${data.id}`);
                   router.push(`/${data.id}`);
@@ -92,7 +94,7 @@ const DashboardOtherLab = () => {
                   <div className="relative" key={index}>
                     <div>
                       <div data-cy="courseClick" className="mt-8 mr-8" key={data.id} onClick={handleClick}>
-                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} position={data.position} />
+                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} length={length} loading={lessonLoading} />
                       </div>
                       <button className="absolute bottom-6 right-14">
                         <CourseDeleteIcon />
