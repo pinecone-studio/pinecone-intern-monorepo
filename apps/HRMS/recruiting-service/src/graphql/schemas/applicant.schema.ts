@@ -11,9 +11,11 @@ export const Applicant = gql`
     status: String!
   }
   enum JobStatus {
-    DRAFTED
-    PUBLISHED
-    CLOSED
+    PENDING
+    SCHEDULED
+    INTERVIEW_STAGE
+    PASSED
+    REJECTED
   }
   input CreateApplicantInput {
     firstname: String

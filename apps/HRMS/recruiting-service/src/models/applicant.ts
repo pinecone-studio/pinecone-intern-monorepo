@@ -26,12 +26,6 @@ const applicantSchema = new Schema({
     type: String,
     require: true,
   },
-
-  //   jobId: {
-  //     type: Schema.Types.ObjectId,
-  //     // required: true,
-  //     ref: 'Job',
-  //   },
 });
 
 export const ApplicantModel: Model<Applicant> = models['Applicant'] || model<Applicant>('Applicant', applicantSchema);
