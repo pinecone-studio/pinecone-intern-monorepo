@@ -1,4 +1,3 @@
-import { CommentStatus } from '@/graphql/generated/index';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { deleteCommentByAdmin } from '@/graphql/resolvers/mutations/comment/delete-comment-by-admin';
 import { CommentsModel } from '@/models/comment.model';
@@ -18,7 +17,7 @@ describe('delete comment by admin mutation', () => {
     jest.spyOn(CommentsModel, 'findByIdAndUpdate').mockResolvedValueOnce({ _id: id });
     const result = await deleteCommentByAdmin!({}, { id }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(id);
-    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(id, { status: CommentStatus.Deleted });
+    expect(CommentsModel.findByIdAndUpdate).toHaveBeenCalledWith(id, { status: 'DELETED' });
   });
   it('should return error when failed to convert status to DELETED', async () => {
     const errorMessage = graphqlErrorHandler({ message: `cannot remove comment by admin` }, errorTypes.INTERVAL_SERVER_ERROR);
