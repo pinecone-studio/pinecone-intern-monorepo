@@ -43,7 +43,6 @@ export const commentsSchema = gql`
   DELETED
   }
   type TotalCommentCountResponse {
-  count: Int!  
   comments: [Comment!]!
   hiddenCount: Int!
   normalCount: Int!

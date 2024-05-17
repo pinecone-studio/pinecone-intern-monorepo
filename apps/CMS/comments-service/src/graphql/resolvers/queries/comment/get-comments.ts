@@ -11,35 +11,38 @@ interface GetCommentsInput {
 export const getComments: QueryResolvers['getComments'] = async (_, { input }: { input: GetCommentsInput }) => {
   const { limit, offset, status } = input;
   try {
-    const filter: Partial<{ status: CommentStatus | CommentStatus[] }> = {};
+    const filter: Partial<{ status: CommentStatus[] }> = {};
     if (status && status.length > 0) {
-      filter.status = status ;
+       filter.status = status ;
     }
     const commentsPromise = CommentsModel.find(filter).limit(limit).skip(offset);
-    const allCountPromise = CommentsModel.countDocuments();
-    const filteredCountPromise = CommentsModel.countDocuments(filter);
-    const hiddenCountPromise = CommentsModel.countDocuments({ status:'HIDDEN'});
-    const normalCountPromise = CommentsModel.countDocuments({ status:'NORMAL'});
-    const deletedCountPromise = CommentsModel.countDocuments({ status:'DELETED'});
-    const [comments, filteredCount, allCount, hiddenCount, normalCount, deletedCount] = await Promise.all([
-      commentsPromise,
-      filteredCountPromise,
-      allCountPromise,
-      hiddenCountPromise,
-      normalCountPromise,
-      deletedCountPromise,
+    const countsPromise = CommentsModel.aggregate([
+      {
+        $facet: {
+          allCount: [{ $count: "count" }],
+          hiddenCount: [{ $match: { status: 'HIDDEN' } }, { $count: "count" }],
+          normalCount: [{ $match: { status: 'NORMAL' } }, { $count: "count" }],
+          deletedCount: [{ $match: { status: 'DELETED' } }, { $count: "count" }]
+        }
+      },
+      {
+        $project: {
+          allCount: { $arrayElemAt: ["$allCount.count", 0] },
+          hiddenCount: { $arrayElemAt: ["$hiddenCount.count", 0] },
+          normalCount: { $arrayElemAt: ["$normalCount.count", 0] },
+          deletedCount: { $arrayElemAt: ["$deletedCount.count", 0] }
+        }
+      }
     ]);
-
+    const [comments, counts] = await Promise.all([commentsPromise, countsPromise]);
     return {
-      count: filteredCount,
-      allCount,
-      hiddenCount,
-      normalCount,
-      deletedCount,
+      allCount: counts[0]?.allCount || 0,
+      hiddenCount: counts[0]?.hiddenCount || 0,
+      normalCount: counts[0]?.normalCount || 0,
+      deletedCount: counts[0]?.deletedCount || 0,
       comments,
     };
   } catch (error) {
     throw new GraphQLError(`Error in get comments query`);
   }
 };
-
