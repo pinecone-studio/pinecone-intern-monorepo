@@ -69,4 +69,45 @@ describe('This query should return comments', () => {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
   });
+  it('5.returns comments and counts when inputs are valid', async () => {
+  try {
+      const mockInput = {
+        limit: 10,
+        offset: 0,
+        status: ['NORMAL', 'HIDDEN', 'DELETED'],
+      };
+      const mockComments = [{ id: '1', text: 'Comment 1' }, { id: '2', text: 'Comment 2' }];
+      const mockCounts = {
+        allCount: 100,
+        hiddenCount: 20,
+        normalCount: 70,
+        deletedCount: 10,
+      };
+
+      const result = await getComments!({}, { input: mockInput },{}, {} as GraphQLResolveInfo);
+      expect(result).toEqual({
+        allCount: 100,
+        hiddenCount: 20,
+        normalCount: 70,
+        deletedCount: 10,
+        comments: mockComments,
+      });
+      expect(CommentsModel.find).toHaveBeenCalledWith(expect.any(Object));
+      expect(CommentsModel.aggregate).toHaveBeenCalledWith(expect.any(Array));
+  } catch (error) {
+    expect(error).toEqual(new GraphQLError(`Error in get comments query`));
+  }
+  });
+
+  it('6.throws GraphQLError when an error occurs', async () => {
+   try {
+     const mockInput = {
+       limit: 10,
+       offset: 0,
+     };
+     await expect(getComments!({}, { input: mockInput },{},{} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+   } catch (error) {
+     expect(error).toEqual(new GraphQLError(`Error in get comments query`));
+   }
+  });
 });
