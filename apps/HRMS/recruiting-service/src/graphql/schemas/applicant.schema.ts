@@ -10,7 +10,7 @@ export const Applicant = gql`
     cv: String
     status: String!
   }
-  enum JobStatus {
+  enum ApplicantStatus {
     PENDING
     SCHEDULED
     INTERVIEW_STAGE
@@ -23,7 +23,15 @@ export const Applicant = gql`
     email: String
     phone: String
     cv: String
-    status: JobStatus
+    status: ApplicantStatus
+  }
+  input UpdateApplicantInput {
+    firstname: String
+    lastname: String
+    email: String
+    phone: String
+    cv: String
+    status: ApplicantStatus
   }
   type Query {
     getApplicant: [Applicant!]!
@@ -31,6 +39,8 @@ export const Applicant = gql`
     getApplicantWithLimit(offset: Int!, limit: Int!): [Applicant!]!
   }
   type Mutation {
+    deleteApplicant(id: ID!): Applicant!
     createApplicant(createApplicantInput: CreateApplicantInput!): Applicant!
+    updateApplicant(id: ID!, input: UpdateApplicantInput!): Applicant!
   }
 `;
