@@ -31,12 +31,6 @@ export const commentsSchema = gql`
   input DeleteCommentInput {
     _id: ID!
   }
-  input HideCommentByAdminInput {
-    _id: ID!
-  }
-  input RemoveCommentByAdminInput {
-    _id: ID!
-  }
   input GetCommentsLimitInput {
     limit: Int!
     offset: Int!
@@ -46,8 +40,8 @@ export const commentsSchema = gql`
     publishComment(createInput: CreateCommentInput!): ID!
     updateComment(updateInput: UpdateCommentInput!): ID!
     deleteComment(deleteInput: DeleteCommentInput!): ID!
-    hideCommentByAdmin(hideInput: HideCommentByAdminInput!): ID!
-    deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
+    hideCommentByAdmin(id: ID!): ID!
+    deleteCommentByAdmin(id: ID!): ID!
   }
   type Query {
     getComments(input: GetCommentsLimitInput!): [Comment!]
