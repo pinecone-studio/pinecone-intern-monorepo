@@ -22,7 +22,7 @@ const Update = () => {
   return (
     <section className="w-full h-[100vh] bg-light flex flex-col overflow-scroll relative">
       <div className="w-full flex bg-white py-5">
-        <figure onClick={() => router.push('employee-details?employees=1')} className="px-4 flex items-center justify-center cursor-pointer">
+        <figure data-testid="back-button" onClick={() => router.push('employee-details')} className="px-4 flex items-center justify-center cursor-pointer">
           <LeftArrow />
         </figure>
         <p className="text-black m-auto text-sm font-semibold">Employee Details</p>
