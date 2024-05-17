@@ -24,16 +24,10 @@ export const replySchema = gql`
     name: String!
     email: String!
   }
-  input HideReplyByAdminInput {
-    _id: ID!
-  }
-  input RemoveReplyByAdminInput {
-    _id: ID!
-  }
   type Mutation {
     publishReply(createInput: CreateReplyInput): ID!
-    hideReplyByAdmin(hideInput: HideReplyByAdminInput!): ID!
-    deleteReplyByAdmin(removeInput: RemoveReplyByAdminInput!): ID!
+    hideReplyByAdmin(id: ID!): ID!
+    deleteReplyByAdmin(id: ID!): ID!
     setReplyStatusToNormal(id: ID!): ID!
   }
   type Query {
