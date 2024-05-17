@@ -3,9 +3,11 @@ export const sectionSchema = gql`
   type Query {
     getSections: [Section!]!
     getSectionById(id: ID!): Section!
+    getSectionByLessonId(lessonId: String!): [Section!]
   }
   type Section {
     id: ID
+    lessonId: String
     title: String
     description: String
     contentImage: String
@@ -13,6 +15,7 @@ export const sectionSchema = gql`
     createdAt: Date
   }
   input SectionInput {
+    lessonId: String
     title: String
     description: String
     contentImage: String

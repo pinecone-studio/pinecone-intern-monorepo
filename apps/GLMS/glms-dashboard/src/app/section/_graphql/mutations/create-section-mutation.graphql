@@ -1,6 +1,7 @@
 mutation createSection($sectionInput: SectionInput!) {
   createSection(sectionInput: $sectionInput) {
     id
+    lessonId
     title
     description
     contentImage

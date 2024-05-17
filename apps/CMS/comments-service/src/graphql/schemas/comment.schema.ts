@@ -9,6 +9,11 @@ export const commentsSchema = gql`
     email: String!
     articleId: String!
   }
+  enum CommentStatus {
+    NORMAL
+    DELETED
+    HIDDEN
+  }
   type Comment {
     _id: ID
     name: String
@@ -17,6 +22,7 @@ export const commentsSchema = gql`
     ipAddress: String
     createdAt: Date
     articleId: String
+    status: CommentStatus
   }
   input UpdateCommentInput {
     _id: ID!
@@ -25,24 +31,20 @@ export const commentsSchema = gql`
   input DeleteCommentInput {
     _id: ID!
   }
-  input HideCommentByAdminInput {
-    _id: ID!
-  }
-  input RemoveCommentByAdminInput {
-    _id: ID!
-  }
   input GetCommentsLimitInput {
     limit: Int!
     offset: Int!
   }
   type Mutation {
+    setCommentStatusToNormal(id: ID!): ID!
     publishComment(createInput: CreateCommentInput!): ID!
     updateComment(updateInput: UpdateCommentInput!): ID!
     deleteComment(deleteInput: DeleteCommentInput!): ID!
-    hideCommentByAdmin(hideInput: HideCommentByAdminInput!): ID!
-    deleteCommentByAdmin(removeInput: RemoveCommentByAdminInput!): ID!
+    hideCommentByAdmin(id: ID!): ID!
+    deleteCommentByAdmin(id: ID!): ID!
   }
   type Query {
     getComments(input: GetCommentsLimitInput!): [Comment!]
+    getCommentsByArticleId(articleId: ID!): [Comment]
   }
 `;

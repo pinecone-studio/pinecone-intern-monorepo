@@ -1,3 +1,5 @@
 export * from './CommentsButton';
-export * from './CommentsArticleCard';
+export * from './CreateCommentsCard';
 export * from './CommentsTab';
+export * from './CommentsTab';
+export * from './UserComment';

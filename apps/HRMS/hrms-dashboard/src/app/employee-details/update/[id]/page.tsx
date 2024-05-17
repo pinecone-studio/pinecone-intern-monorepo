@@ -17,11 +17,10 @@ const Update = () => {
       </div>
     );
   }
-
   const employee = data?.getEmployee;
 
   return (
-    <section className="w-full flex flex-col overflow-scroll relative">
+    <section className="w-full h-[100vh] bg-light flex flex-col overflow-scroll relative">
       <div className="w-full flex bg-white py-5">
         <figure onClick={() => router.push('employee-details?employees=1')} className="px-4 flex items-center justify-center cursor-pointer">
           <LeftArrow />
@@ -29,30 +28,26 @@ const Update = () => {
         <p className="text-black m-auto text-sm font-semibold">Employee Details</p>
       </div>
 
-      <div className="flex w-full bg-light p-8 h-full gap-6">
-        <div className=" bg-white rounded-xl w-[34%]">
-          {employee ? (
-            <PersonalInformation
-              lastName={employee.lastName}
-              homeAddress={employee.homeAddress}
-              firstName={employee.firstName}
-              email={employee.email}
-              phone={employee.phone}
-              jobTitle={employee.jobTitle}
-              imageUrl={employee.imageUrl}
-            />
-          ) : (
-            <p>No employee data found.</p>
-          )}
+      <div className="flex flex-col lg:flex-row w-full  p-8 h-fit gap-6">
+        <div className="rounded-xl lg:w-1/3 w-full">
+          <PersonalInformation
+            lastName={employee?.lastName}
+            homeAddress={employee?.homeAddress}
+            firstName={employee?.firstName}
+            email={employee?.email}
+            phone={employee?.phone}
+            jobTitle={employee?.jobTitle}
+            imageUrl={employee?.imageUrl}
+          />
         </div>
-        <div className="flex flex-col gap-6 w-[66%]">
+        <div className="flex flex-col gap-6 lg:w-2/3 w-full">
           <UpdateEmployment
             jobTitle={data?.getEmployee?.jobTitle}
             department={data?.getEmployee?.department}
             dateOfEmployment={data?.getEmployee?.dateOfEmployment}
             employmentStatus={data?.getEmployee?.employmentStatus}
           />
-          <UpdateDependant dependantPhone="88556061" registerNumber="ЙО02240509" />
+          <UpdateDependant dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} />
         </div>
       </div>
     </section>

@@ -2,9 +2,9 @@
 import { useRouter } from 'next/navigation';
 import BackArrowIcon from '../../../assets/icons/BackArrowIcon';
 import { useGetArticleByIdQuery } from '../../../generated';
-import { Loader } from '@/app/sign-up/_components';
 import Link from 'next/link';
 import ArticleHeader from '../_features/article-header/ArticleHeader';
+import { Loader } from '@/app/sign-up/_components';
 
 const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
   const { data, loading } = useGetArticleByIdQuery({ variables: { getArticleByIdId: params.articleId } });

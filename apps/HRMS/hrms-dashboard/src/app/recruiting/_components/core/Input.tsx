@@ -13,12 +13,20 @@ interface InputProps {
 
 export const Input = ({ name, label, onChange, value, errorText, disabled, placeholder }: InputProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full tracking-tight">
       <label className="form-control w-full ">
         <div className="label">
-          <span className="label-text">{label}</span>
+          <span className="label-text text-[#121316] text-base font-semibold">{label}</span>
         </div>
-        <input type="text" name={name} onChange={onChange} value={value} placeholder={placeholder} disabled={disabled} className="input input-bordered w-full bg-base-200" />
+        <input
+          type="text"
+          name={name}
+          onChange={onChange}
+          value={value}
+          placeholder={placeholder}
+          disabled={disabled}
+          className="input input-bordered w-full tracking-tight bg-[#F7F7F8] text-[#121316] border-[#D6D8DB] text-lg"
+        />
       </label>
       <p>{errorText}</p>
     </div>

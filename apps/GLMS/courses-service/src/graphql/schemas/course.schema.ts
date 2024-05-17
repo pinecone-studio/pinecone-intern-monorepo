@@ -23,5 +23,7 @@ export const courseSchema = gql`
   }
   type Mutation {
     createCourse(courseInput: CourseInput!): Course!
+    updateCourse(id: ID!, courseInput: CourseInput!): Course!
+    updateCourseStatus(id: ID!): Course!
   }
 `;

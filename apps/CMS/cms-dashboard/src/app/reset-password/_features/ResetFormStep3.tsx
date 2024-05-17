@@ -3,11 +3,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import TextInput from '@/app/sign-up/_components/TextInput';
-import { Loader } from '@/app/sign-up/_components';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
 import { useRouter } from 'next/navigation';
 import { useResetPassword } from '@/common/providers/ResetPasswordProvider';
+import TextInput from '@/app/sign-up/_components/TextInput';
+import { Loader } from '@/app/sign-up/_components';
 
 export const ResetFormStep3 = ({ setIndex }: { setIndex: Dispatch<SetStateAction<number>> }) => {
   const { email, otp, handleResetPassword, resetPasswordLoading } = useResetPassword();
@@ -35,7 +35,7 @@ export const ResetFormStep3 = ({ setIndex }: { setIndex: Dispatch<SetStateAction
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       await handleResetPassword(email, otp, values.newPassword);
-      router.push('/');
+      router.push('/sign-in');
       setIndex(0);
     },
   });

@@ -18,13 +18,13 @@ describe('ChoiceText component', () => {
   it('applies checked style when selected choice matches', () => {
     const { container } = render(<ChoiceText choice={mockChoice} id={mockId} selectedChoice={mockSelectedChoice} handleChange={mockHandleChange} />);
     const choiceDiv = container.firstChild;
-    expect(choiceDiv).toHaveClass('flex w-[588px] items-center justify-center border border-[#000000] border-b-[4px] h-[72px] rounded-[12px] p-4');
+    expect(choiceDiv).toHaveClass('flex max-w-[588px] cursor-pointer items-center justify-center border border-[#000000] border-b-[4px] h-[72px] rounded-[12px] p-4');
   });
 
   it('applies unchecked style when selected choice does not match', () => {
     const { container } = render(<ChoiceText choice={mockChoice} id="123456" selectedChoice={mockSelectedChoice} handleChange={mockHandleChange} />);
     const choiceDiv = container.firstChild;
-    expect(choiceDiv).toHaveClass('flex w-[588px] justify-center items-center border h-[72px] rounded-[12px] p-4 border-[#ECEDF0]}');
+    expect(choiceDiv).toHaveClass('flex max-w-[588px] cursor-pointer justify-center items-center border h-[72px] rounded-[12px] p-4 border-[#ECEDF0]}');
   });
   it('calls handleChange when clicked', () => {
     const { getByTestId } = render(<ChoiceText choice={mockChoice} id={mockId} selectedChoice={mockSelectedChoice} handleChange={mockHandleChange} />);

@@ -1,12 +1,10 @@
-'use client';
-
-type propstype = {
+type SubmitButtonProps = {
   text: string;
   bgColor: string;
   onClick: () => void;
 };
 
-export const SubmitButton = ({ text, bgColor, onClick }: propstype) => {
+export const SubmitButton = ({ text, bgColor, onClick }: SubmitButtonProps) => {
   return (
     <div data-testid="contained-submit-buttons-id" className="flex flex-col">
       <button

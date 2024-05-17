@@ -9,26 +9,21 @@ const Home = () => {
   const [newCourse, setNewCourse] = useState<Course>();
   const [newLesson, setNewLesson] = useState<Lesson[]>();
 
-  const { data: lessonData, loading: lessonLoading, error: lessonError } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
+  const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
   useEffect(() => {
     const getByLessonIdData = lessonData?.getLessonById as Lesson[];
     setNewLesson(getByLessonIdData);
+    lessonRefetch();
   }, [lessonData, lessonLoading, lessonError]);
 
-  const { data, loading, error } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
+  const { data, loading, error, refetch } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
   useEffect(() => {
     const getByIdData = data?.getCourseById;
     setNewCourse(getByIdData);
+    refetch();
   }, [data, loading, error]);
 
   if (loading || lessonLoading) return <Loading />;
-
-  if (error)
-    return (
-      <div className=" w-full h-full flex justify-center items-center">
-        <p>Error: {error.message}</p>
-      </div>
-    );
 
   return (
     <div data-cy="idCourse" className="bg-[#F7F7F8]">

@@ -5,9 +5,11 @@ describe('assessment page', () => {
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').should('be.visible');
   });
 
-  it('2. Should show Leave Request modal', () => {
+  it('2. Should show Leave Request modal and close the modal', () => {
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();
     cy.get('[data-cy="request-modal"]').contains('Чөлөөний хуудас бөглөх');
+    cy.get('[data-cy="modal-closing-btn"]').click();
+    cy.get('[data-cy="HomePageHeader"]').should('exist');
   });
   it('3. Should check if date is typed', () => {
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();

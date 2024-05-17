@@ -13,8 +13,10 @@ export const NextPageIcon = () => {
       width={'100%'}
       height={'100%'}
       border={'1px solid #D6D8DB'}
-      borderRadius={'6px'}
-      padding={1}
+      borderRadius={'10px'}
+      paddingY={1}
+      px={2}
+      bgcolor={'#FFF'}
     >
       <Stack fontWeight={600} color={'#121316'}>
         Next

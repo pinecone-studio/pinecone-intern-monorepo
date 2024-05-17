@@ -24,7 +24,7 @@ export const employeeDetailsSchema = gql`
     dateOfBirth: Date
     registrationNumber: String
     hobby: [String]
-    relative: [Dependent!]!
+    relative: [Dependent]!
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
@@ -123,9 +123,12 @@ export const employeeDetailsSchema = gql`
     employmentStatus: String
     jobTitle: String
   }
+  input employeeDependentUpdateInput {
+    relative: String!
+  }
   type Query {
     getAllEmployee: [Employee]
-    getEmployee(id: ID): Employee
+    getEmployee(id: ID!): Employee
     getEmployeeRequest(id: ID!): [Employee]!
     getEmployeesByPaginate(paginationInput: PaginationInput!): paginateReturn!
     getEmployeesByPaginate(employeeDetailsfilterInput: employeeDetailsfilterInput!, paginationInput: PaginationInput!): paginateReturn!
@@ -135,5 +138,6 @@ export const employeeDetailsSchema = gql`
     deleteEmployee(id: ID!): Employee!
     personalUpdate(id: ID!, input: UpdatePersonalInformationInput!): Employee!
     updateEmployment(id: ID!, input: UpdateEmploymentInput!): Employee!
+    EmployeeDependentUpdate(id: ID!, input: employeeDependentUpdateInput!): Employee!
   }
 `;

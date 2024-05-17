@@ -1,5 +1,5 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { getRepliesByCommentId } from '@/graphql/resolvers/queries';
+import { getRepliesByCommentId } from '@/graphql/resolvers/queries/reply/get-replies-by-commentid';
 import ReplyModel from '@/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('@/models/reply.model', () => ({

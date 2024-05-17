@@ -1,0 +1,11 @@
+query getSectionByLessonId($getSectionByLessonIdId: String!) {
+  getSectionByLessonId(lessonId: $getSectionByLessonIdId) {
+    id
+    lessonId
+    title
+    description
+    contentImage
+    posted
+    createdAt
+  }
+}

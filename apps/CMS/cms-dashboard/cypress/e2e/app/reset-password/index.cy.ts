@@ -5,23 +5,24 @@ describe('articles page', () => {
   it('1. Should display reset-form-1', () => {
     cy.get('[data-testid="reset-form1-container"]').should('exist').should('be.visible');
   });
+
   it('2. When user enters no value on the inputs and click on the send mail button, it should display an error messages', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
   });
   it('3. When user types on the email input clicks on button, it should show success message', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     cy.contains('Амжилттай илгээгдлээ').should('be.visible');
   });
   it('4. Should display reset-form-2', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     cy.contains('Амжилттай илгээгдлээ').should('be.visible');
     cy.get('[data-testid="reset-form2-container"]').should('exist').should('be.visible');
   });
   it('4.5. When user clicks on Resend button, it should send otp again', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     cy.contains('Амжилттай илгээгдлээ').should('be.visible');
     cy.get('[data-testid="reset-form2-container"]').should('exist').should('be.visible');
     cy.get('[data-cy="Reset-Form2-Again-Button"]').should('exist').click();
@@ -29,25 +30,25 @@ describe('articles page', () => {
   });
   it('5. When user enters no value on the inputs and click on the reset-form2 button, it should display an error messages', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
   });
   it('6. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     cy.get('input[name="code"]').type('1234');
     cy.contains('Нууц үг сэргээх кодоо оруулна уу').should('not.exist');
   });
   it('7. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
   });
   it('8. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -57,7 +58,7 @@ describe('articles page', () => {
   });
   it('9. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -69,7 +70,7 @@ describe('articles page', () => {
   });
   it('10. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -81,7 +82,7 @@ describe('articles page', () => {
   });
   it('11. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -93,7 +94,7 @@ describe('articles page', () => {
   });
   it('12. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -105,7 +106,7 @@ describe('articles page', () => {
   });
   it('13. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -116,7 +117,7 @@ describe('articles page', () => {
   });
   it('14. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -129,7 +130,7 @@ describe('articles page', () => {
   });
   it('15. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();
@@ -141,7 +142,7 @@ describe('articles page', () => {
   });
   it('16. When user types on the OTP input, an error message should disappear', () => {
     initiateResetPassword('Имэйл хаяг аа оруулна уу');
-    enterOTPAndSetNewPassword('uulaaka73@gmail.com');
+    enterOTPAndSetNewPassword('donotdelete498@gmail.com');
     handleErrorsAndEdgeCases1('Нууц үг сэргээх кодоо оруулна уу');
     handleErrorsAndEdgeCases2('1234');
     cy.get('[data-cy="Reset-Form3-Button"]').should('exist').click();

@@ -3,12 +3,17 @@
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../common';
-import { Loader } from '../../sign-up/_components';
-import TextInput from '@/app/sign-up/_components/TextInput';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
+import { useRouter } from 'next/navigation';
+import { GoogleIcon } from '../../../assets/icons/GoogleIcon';
+import { FaceBookIcon } from '../../../assets/icons/FacebookIcon';
+import { LinkedInIcon } from '../../../assets/icons/LinkedInIcon';
+import TextInput from '@/app/sign-up/_components/TextInput';
+import { Loader } from '@/app/sign-up/_components';
 
 const SignInForm = () => {
   const { handleSignIn, loginLoading } = useAuth();
+  const router = useRouter();
 
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
@@ -42,14 +47,34 @@ const SignInForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       await handleSignIn(values.emailOrPhoneNumber, values.password);
+      router.push('/');
     },
   });
 
   return (
-    <div data-testid="sign-in-form-container" className="flex flex-col gap-5 p-10 max-w-[440px] w-full bg-white rounded-lg border border-solid border-[#d6d8db] ">
+    <div data-testid="sign-in-form-container" className="flex flex-col gap-5 p-10 max-w-[440px] w-full bg-white rounded-lg border border-solid border-[#d6d8db]">
       <h1 data-testid="sign-in-modal-title" className="mb-2 text-center text-4xl font-bold">
         Нэвтрэх
       </h1>
+
+      <div className="flex justify-center gap-6">
+        <button className="btn rounded-full py-1 px-3 border-[#ECEDF0] bg-transparent hover:bg-transparent shadow-none">
+          <GoogleIcon />
+        </button>
+        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
+          <FaceBookIcon />
+        </button>
+        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
+          <LinkedInIcon />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center w-full">
+        <div className="w-full border border-solid border-[#ecedf0]"></div>
+        <h2 className="mx-2 text-lg font-medium">эсвэл</h2>
+        <div className="w-full border border-solid border-[#ecedf0]"></div>
+      </div>
+
       <div className="flex flex-col gap-2 w-full">
         <TextInput
           name="emailOrPhoneNumber"
@@ -62,22 +87,21 @@ const SignInForm = () => {
           helperText={formik.errors.emailOrPhoneNumber}
           error={formik.errors.emailOrPhoneNumber}
         />
-        <div className="flex flex-col items-end">
-          <TextInput
-            name="password"
-            label="Нууц үг"
-            placeholder="Нууц үг оруулна уу"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            onBlur={formik.handleBlur}
-            helperText={formik.errors.password}
-            error={formik.errors.password}
-          />
-          <a href={'/reset-password'} className="text-sm text-[#551a8b]">
-            Нууц үг сэргээх
-          </a>
-        </div>
+
+        <TextInput
+          name="password"
+          label="Нууц үг"
+          placeholder="Нууц үг оруулна уу"
+          type="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+          onBlur={formik.handleBlur}
+          helperText={formik.errors.password}
+          error={formik.errors.password}
+        />
+        <a href={'/reset-password'} className="text-base text-[#26282e] hover:text-[#551a8b] text-center">
+          Нууц үг сэргээх
+        </a>
       </div>
 
       <button
