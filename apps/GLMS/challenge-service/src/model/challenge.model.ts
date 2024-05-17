@@ -3,7 +3,6 @@ import { Schema, model, models } from 'mongoose';
 const ChallengeSchema = new Schema({
   title: {
     type: String,
-    required: true,
   },
   author: {
     type: String,
@@ -16,6 +15,7 @@ const ChallengeSchema = new Schema({
   status: {
     type: String,
     enum: ['APPROVED', 'DRAFT'],
+    default: 'DRAFT',
     required: true,
   },
   quiz: [

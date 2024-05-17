@@ -44,7 +44,6 @@ export const challengeTypeDefs = gql`
   }
 
   input ChallengeInput {
-    title: String
     refCourse: String
     xp: Int
     author: String
