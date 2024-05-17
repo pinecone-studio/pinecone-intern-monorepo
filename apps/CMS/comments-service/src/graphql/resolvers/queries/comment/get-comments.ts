@@ -36,11 +36,11 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
     ]);
     const [comments, counts] = await Promise.all([commentsPromise, countsPromise]);
     return {
-      allCount: counts[0]?.allCount || 0,
-      hiddenCount: counts[0]?.hiddenCount || 0,
-      normalCount: counts[0]?.normalCount || 0,
-      deletedCount: counts[0]?.deletedCount || 0,
-      comments,
+      allCount: counts[0].allCount,
+      hiddenCount: counts[0].hiddenCount,
+      normalCount: counts[0].normalCount,
+      deletedCount: counts[0].deletedCount,
+      comments: comments,
     };
   } catch (error) {
     throw new GraphQLError(`Error in get comments query`);
