@@ -1,9 +1,11 @@
 'use client';
 import './global.css';
 import { FederationProvider } from '../common';
+import {AuthProvider} from '../common/providers/AuthProvider'
 import Header from '../components/Header';
 import { PineconeLogo } from '../../public/assets/PineconeLogo';
 import { Challengeprovider } from './challenge-dashboard/context/Challenge';
+import { ToastContainer } from 'react-toastify';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,11 +13,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body>
         <Challengeprovider>
           <FederationProvider>
-            <Header />
+            <AuthProvider>
+              <ToastContainer />
+              <Header />
             {children}
             <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
               <PineconeLogo />
             </div>
+            </AuthProvider>
           </FederationProvider>
         </Challengeprovider>
       </body>
