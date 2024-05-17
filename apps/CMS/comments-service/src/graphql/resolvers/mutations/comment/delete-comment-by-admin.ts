@@ -1,4 +1,4 @@
-import { CommentStatus, MutationResolvers } from '@/graphql/generated';
+import { CommentStatus, MutationResolvers } from '@/graphql/generated/index';
 import { errorTypes, graphqlErrorHandler } from '../../error';
 import { CommentsModel } from '@/models/comment.model';
 

@@ -1,6 +1,6 @@
-import { CommentStatus } from '@/graphql/generated';
+import { CommentStatus } from '@/graphql/generated/index';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
-import { deleteCommentByAdmin } from '@/graphql/resolvers/mutations';
+import { deleteCommentByAdmin } from '@/graphql/resolvers/mutations/comment/delete-comment-by-admin';
 import { CommentsModel } from '@/models/comment.model';
 import { GraphQLResolveInfo } from 'graphql';
 
