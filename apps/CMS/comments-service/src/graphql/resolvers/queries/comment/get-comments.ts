@@ -15,8 +15,8 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
     if (status && status.length > 0) {
        filter.status = status ;
     }
-    const commentsPromise = CommentsModel.find(filter).limit(limit).skip(offset);
-    const countsPromise = CommentsModel.aggregate([
+    const comments = await CommentsModel.find(filter).limit(limit).skip(offset).exec();
+    const counts = await CommentsModel.aggregate([
       {
         $facet: {
           allCount: [{ $count: "count" }],
@@ -34,7 +34,6 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
         }
       }
     ]);
-    const [comments, counts] = await Promise.all([commentsPromise, countsPromise]);
     return {
       allCount: counts[0].allCount,
       hiddenCount: counts[0].hiddenCount,
