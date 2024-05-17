@@ -10,13 +10,13 @@ import { CreateLeaveRequestPreviousButtonCustom } from '../../_components/create
 import { useGetEmployeeRequestQuery } from '@/generated';
 import { useCreateLeaveRequestDaysMutation, useCreateLeaveRequestHoursMutation } from '@/generated';
 import { LeaveType, DurationType } from '@/generated';
+import dayjs from 'dayjs';
 
 const validationSchema = yup.object({
   step3Substitute: yup.string().required('Ажил шилжүүлэн өгөх ажилтны нэр оруулна уу'),
   step3WorkBrief: yup.string().required('Шилжүүлэн өгч буй ажлын талаар товч оруулна уу'),
   step3ApprovedBy: yup.string().required('Хүсэлт батлах хүнээ сонгоно уу'),
 });
-
 export const CreateLeaveRequestAdditionInfo = () => {
   const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded, loggedUser, radioValue, step1, step2 } = useContext(LeaveRequestCreationContext);
   const [createLeaveRequestDays] = useCreateLeaveRequestDaysMutation();
@@ -45,7 +45,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
               leaveType: step1?.step1LeaveType as LeaveType,
               superVisor: values.step3ApprovedBy,
               durationType: step2?.step2LeaveLength as DurationType,
-              email: loggedUser?.email as string,
+              email: values.step3ApprovedBy,
               substitute: values.step3Substitute,
             },
           },
@@ -58,13 +58,13 @@ export const CreateLeaveRequestAdditionInfo = () => {
             requestInput: {
               employeeId: loggedUser?.id,
               name: loggedUser?.firstName,
-              startDateString: step2?.step2StartDate,
-              endDateString: step2?.step2EndDate,
+              startDateString: dayjs(step2?.step2Date).set('hour', parseInt(step2?.step2StartHour?.slice(0, 2) ?? '')),
+              endDateString: dayjs(step2?.step2Date).set('hour', parseInt(step2?.step2EndHour?.slice(0, 2) ?? '')),
               description: values.step3WorkBrief,
               leaveType: step1?.step1LeaveType as LeaveType,
               superVisor: values.step3ApprovedBy,
               durationType: step2?.step2LeaveLength as DurationType,
-              email: loggedUser?.email as string,
+              email: values.step3ApprovedBy,
               substitute: values.step3Substitute,
             },
           },
@@ -72,7 +72,6 @@ export const CreateLeaveRequestAdditionInfo = () => {
       }
     },
   });
-
   return (
     <div data-testid="step3Component" className="w-[100%] flex flex-col gap-[40px]">
       <div className="w-[100%] flex flex-col gap-[16px]">
@@ -132,7 +131,7 @@ export const CreateLeaveRequestAdditionInfo = () => {
             </option>
             {data?.getEmployeeRequest.map((item, index) => {
               return (
-                <option key={index} data-testid={`approvedBy-${index}`} value={item?.firstName ?? undefined}>
+                <option key={index} data-testid={`approvedBy-${index}`} value={item?.email ?? undefined}>
                   {item?.firstName}
                 </option>
               );

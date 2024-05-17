@@ -7,7 +7,7 @@ import { AuthContext } from '@/common/providers/AuthProvider';
 import { parseCookies } from 'nookies';
 import jwt from 'jsonwebtoken';
 
-export type PayloadProps = {
+export type PayloadProp = {
   id: string;
   firstName: string;
   lastName: string;
@@ -42,8 +42,8 @@ type LeaveRequestCreationContextType = {
   setStep1: Dispatch<SetStateAction<Step1Props | undefined>>;
   step2: Step2DayOffProps | undefined;
   setStep2: Dispatch<SetStateAction<Step2DayOffProps | undefined>>;
-  loggedUser: PayloadProps | undefined;
-  setLoggedUser: Dispatch<SetStateAction<PayloadProps | undefined>>;
+  loggedUser: PayloadProp | undefined;
+  setLoggedUser: Dispatch<SetStateAction<PayloadProp | undefined>>;
 };
 
 export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) => {
@@ -55,12 +55,12 @@ export const LeaveRequestCreationProvider = ({ children }: PropsWithChildren) =>
   const [radioValue, setRadioValue] = useState('Hour');
   const [step1, setStep1] = useState<Step1Props>();
   const [step2, setStep2] = useState<Step2DayOffProps>();
-  const [loggedUser, setLoggedUser] = useState<PayloadProps | undefined>();
+  const [loggedUser, setLoggedUser] = useState<PayloadProp | undefined>();
 
   useEffect(() => {
     const cookies = parseCookies();
     const token = cookies.token;
-    const payload = jwt.decode(token) as PayloadProps;
+    const payload = jwt.decode(token) as PayloadProp;
     setLoggedUser(payload);
   }, [isLoggedIn]);
 

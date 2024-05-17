@@ -1,5 +1,5 @@
 mutation CreateLeaveRequestDays($requestInput: LeaveRequestInput!) {
-  createLeaveRequestHours(requestInput: $requestInput) {
+  createLeaveRequestDays(requestInput: $requestInput) {
     _id
     employeeId
     startDate
