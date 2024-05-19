@@ -13,7 +13,7 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }: {
   try {
     const filter: Partial<{ status: CommentStatus[] }> = {};
     if (status && status.length > 0) {
-       filter.status = status ;
+       filter.status = status;
     }
     const comments = await CommentsModel.find(filter).limit(limit).skip(offset).exec();
     const counts = await CommentsModel.aggregate([

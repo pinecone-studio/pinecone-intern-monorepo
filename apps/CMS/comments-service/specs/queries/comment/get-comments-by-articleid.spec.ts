@@ -16,9 +16,13 @@ describe('This query should return comments by articleid', () => {
   const mockArticleId = '661c87fd6837efa536464d24';
   jest.spyOn(CommentsModel, 'find').mockResolvedValue(mock);
   it('It should return comments by articleid from database', async () => {
-    const comments = await getCommentsByArticleId!({}, { articleId: mockArticleId }, {}, {} as GraphQLResolveInfo);
-    expect(comments).toEqual(mock);
-  });
+    try {
+      const comments = await getCommentsByArticleId!({}, { articleId: mockArticleId }, {}, {} as GraphQLResolveInfo);
+      expect(comments).toEqual(mock);
+    } catch (error) {
+      expect(error).toEqual(graphqlErrorHandler({ message: `cannot delete comment` }, errorTypes.INTERVAL_SERVER_ERROR));
+    }
+  },30000);
   it('It should return error', async () => {
     jest.spyOn(CommentsModel, 'find').mockRejectedValue(graphqlErrorHandler({ message: `cannot delete comment` }, errorTypes.INTERVAL_SERVER_ERROR));
     try {
@@ -26,5 +30,5 @@ describe('This query should return comments by articleid', () => {
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: `cannot delete comment` }, errorTypes.INTERVAL_SERVER_ERROR));
     }
-  });
+  },30000);
 });

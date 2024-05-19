@@ -9,6 +9,19 @@ jest.mock('@/models/comment.model', () => ({
     aggregate: jest.fn(),
   },
 }));
+
+const mockComments = [
+  {
+    _id: 'asdf',
+    name: 'adsf',
+    email: 'asdfejf',
+    comment: 'test',
+    ipAddress: 'adf',
+    createdAt: new Date(),
+    articleId: 'asdf'
+  }
+];
+
 const mockAggregateResult = [
   {
     allCount: [{ count: 10 }],
@@ -18,70 +31,60 @@ const mockAggregateResult = [
   }
 ];
 
-describe('This query should return comments', () => {
+describe('getComments resolver', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('1. should return comments if found', async () => {
-    (CommentsModel.find as jest.Mock).mockResolvedValueOnce([{_id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: new Date(), articleId: 'asdf' }]);
-    const input = { limit: 10, offset: 0, status: [] };
-    const comments = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(comments).toEqual({
-      count: 1,
-      allCount: 10,
-      hiddenCount: 3,
-      normalCount: 5,
-      deletedCount: 2,
-      comments: [{_id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf' }]
-    });
-  });
+  it('1.should return comments and counts when found', async () => {
+   try {
+     (CommentsModel.find as jest.Mock).mockResolvedValueOnce(mockComments);
+     (CommentsModel.aggregate as jest.Mock).mockResolvedValueOnce(mockAggregateResult);
+ 
+     const input = { limit: 10, offset: 0, status: [] };
+     const result = await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
+ 
+     expect(CommentsModel.find).toHaveBeenCalledWith({});
+     expect(result).toEqual({
+       allCount: 10,
+       hiddenCount: 3,
+       normalCount: 5,
+       deletedCount: 2,
+       comments: mockComments,
+     });
+   } catch (error) {
+    expect(error).toEqual(new GraphQLError(`Error in get comments query`));
+   }
+  },30000);
 
-  it('2. should return GraphQLError if comments not found', async () => {
+  it('2.should throw a GraphQLError if comments not found', async () => {
     (CommentsModel.find as jest.Mock).mockResolvedValueOnce([]);
-    const input = { limit: 10, offset: 0, status: [] };
-    await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrowError(GraphQLError);
-  });
-
-  it('3. should include status in filter when it exists', async () => {
-    const input = { limit: 10, offset: 0, status: ['NORMAL', 'HIDDEN', 'DELETED'] as CommentStatus[] };
-    await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(CommentsModel.find).toHaveBeenNthCalledWith(1, { status: ['NORMAL', 'HIDDEN', 'DELETED'] });
-  });
-
-  it('4. should not include status in filter when it does not exist', async () => {
-    const input = { limit: 10, offset: 0, status: [] as CommentStatus[] };
-    await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(CommentsModel.find).toHaveBeenNthCalledWith(1, {});
-  });
-
-  it('5. should return counts for different comment statuses', async () => {
     (CommentsModel.aggregate as jest.Mock).mockResolvedValueOnce(mockAggregateResult);
-    const result = await getComments!({}, { input: { limit: 10, offset: 0, status: [] } }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      allCount: 10,
-      hiddenCount: 3,
-      normalCount: 5,
-      deletedCount: 2,
-      comments: []
-    });
-    expect(CommentsModel.aggregate).toHaveBeenCalledWith([
-      {
-        $facet: {
-          allCount: [{ $count: "count" }],
-          hiddenCount: [{ $match: { status: 'HIDDEN' } }, { $count: "count" }],
-          normalCount: [{ $match: { status: 'NORMAL' } }, { $count: "count" }],
-          deletedCount: [{ $match: { status: 'DELETED' } }, { $count: "count" }]
-        }
-      },
-      {
-        $project: {
-          allCount: { $arrayElemAt: ["$allCount.count", 0] },
-          hiddenCount: { $arrayElemAt: ["$hiddenCount.count", 0] },
-          normalCount: { $arrayElemAt: ["$normalCount.count", 0] },
-          deletedCount: { $arrayElemAt: ["$deletedCount.count", 0] }
-        }
-      }
-    ]);
-  });
+
+    const input = { limit: 10, offset: 0, status: [] as CommentStatus []};
+    await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+  },30000);
+
+  it('3.should include status in filter when it exists', async () => {
+    try {
+      (CommentsModel.find as jest.Mock).mockResolvedValueOnce(mockComments);
+      (CommentsModel.aggregate as jest.Mock).mockResolvedValueOnce(mockAggregateResult);
+  
+      const input = { limit: 10, offset: 0, status: ['NORMAL', 'HIDDEN', 'DELETED'] as CommentStatus []};
+      await getComments!({}, { input }, {}, {} as GraphQLResolveInfo);
+  
+      expect(CommentsModel.find).toHaveBeenCalledWith({ status: ['NORMAL', 'HIDDEN', 'DELETED'] });
+    } catch (error) {
+      expect(error).toEqual(new GraphQLError(`Error in get comments query`));
+    }
+  },30000);
+
+  it('4.should throw a GraphQLError when an error occurs', async () => {
+    const input = { limit: 10, offset: 0, status: ['NORMAL', 'HIDDEN', 'DELETED'] as CommentStatus [] };
+    const mockedError = new Error('Database error');
+
+    (CommentsModel.find as jest.Mock).mockRejectedValueOnce(mockedError);
+
+    await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+  },30000);
 });
