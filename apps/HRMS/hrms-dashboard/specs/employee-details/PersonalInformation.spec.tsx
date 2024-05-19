@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import PersonalInformation from '../../src/app/employee-details/update/[id]/_features/PersonalInformation';
+import PersonalInformation from '../../src/app/employee-details/_features/PersonalInformation'
+
 
 describe('PersonalInformation', () => {
   const props = {
