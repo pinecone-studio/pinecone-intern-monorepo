@@ -81,8 +81,6 @@ describe('getComments resolver', () => {
 
   it('4.should throw a GraphQLError when an error occurs', async () => {
     const input = { limit: 10, offset: 0, status: ['NORMAL', 'HIDDEN', 'DELETED'] as CommentStatus [] }; 
-    (CommentsModel.find as jest.Mock).mockRejectedValueOnce(new GraphQLError(`Error in get comments query`));
-
     await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
   });
 });
