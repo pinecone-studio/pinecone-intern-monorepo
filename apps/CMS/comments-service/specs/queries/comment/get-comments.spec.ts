@@ -55,7 +55,7 @@ describe('getComments resolver', () => {
    } catch (error) {
     expect(error).toEqual(new GraphQLError(`Error in get comments query`));
    }
-  },30000);
+  });
 
   it('2.should throw a GraphQLError if comments not found', async () => {
     (CommentsModel.find as jest.Mock).mockResolvedValueOnce([]);
@@ -63,7 +63,7 @@ describe('getComments resolver', () => {
 
     const input = { limit: 10, offset: 0, status: [] as CommentStatus []};
     await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
-  },30000);
+  });
 
   it('3.should include status in filter when it exists', async () => {
     try {
@@ -77,7 +77,7 @@ describe('getComments resolver', () => {
     } catch (error) {
       expect(error).toEqual(new GraphQLError(`Error in get comments query`));
     }
-  },30000);
+  });
 
   it('4.should throw a GraphQLError when an error occurs', async () => {
     const input = { limit: 10, offset: 0, status: ['NORMAL', 'HIDDEN', 'DELETED'] as CommentStatus [] };
@@ -86,5 +86,5 @@ describe('getComments resolver', () => {
     (CommentsModel.find as jest.Mock).mockRejectedValueOnce(mockedError);
 
     await expect(getComments!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
-  },30000);
+  });
 });
