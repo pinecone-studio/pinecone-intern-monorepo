@@ -52,7 +52,6 @@ const UpdateLesson = () => {
         },
       });
       router.push(`/${ID}`);
-      console.log(ID);
     },
   });
 
