@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { useParams } from 'next/navigation';
 import { CustomInput } from '../../../_components';
 import { useCreateDependentMutation, useEmployeeDependentUpdateMutation } from '@/generated';
-import { CloseSvg } from '../../../../asset/icons/CloseSvg';
+import { CloseSvg } from '../../../../../../public/assets/CloseSvg';
 
 const validationSchema = yup.object({
   lastName: yup.string().required('Овог оо оруулна уу.'),

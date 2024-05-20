@@ -3,7 +3,8 @@ import { Dependent, useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
 import { UpdateDependent, UpdateEmployment } from './_features';
-import { PersonalInformation } from '../../_components';
+import PersonalInformation from './_features/PersonalInformation';
+
 
 const Update = () => {
   const { id } = useParams();
