@@ -6,6 +6,7 @@ const LeaveRequestSchema = new mongoose.Schema({
     ref: 'Employee',
   },
   name: String,
+  department:String,
   startDate: Date,
   startHour: Number,
   endHour: Number,

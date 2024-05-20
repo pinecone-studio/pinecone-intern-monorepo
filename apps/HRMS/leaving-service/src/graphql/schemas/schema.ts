@@ -24,6 +24,7 @@ export const LeaveRequestTypeDefs = gql`
   input LeaveRequestInput {
     employeeId: String
     name: String
+    department: String
     startDateString: Date
     endDateString: Date
     description: String!
@@ -38,6 +39,7 @@ export const LeaveRequestTypeDefs = gql`
   type LeaveRequest {
     _id: ID
     name: String
+    department: String
     employeeId: String
     startDate: Date
     description: String!
@@ -55,7 +57,7 @@ export const LeaveRequestTypeDefs = gql`
     getRequests: [LeaveRequest!]!
     getRequestById(_id: ID!): LeaveRequest
     getRequestByMonth(startDate: Date): [LeaveRequest]!
-    getRequestByCalendarMonth(startDate:Date): [LeaveRequest]!
+    getRequestByCalendarMonth(startDate:Date, department:String!): [LeaveRequest]!
     getRequestToday(startDate:Date): [LeaveRequest]
   }
 
