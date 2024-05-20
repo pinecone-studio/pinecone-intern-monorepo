@@ -105,7 +105,7 @@ describe('Page Component add quizs', () => {
     cy.get('[data-cy="update-btn"]').click();
   });
 
-  it('18. should display success toast on successful challenge creation', () => {
+  it('18. should display success toast on successful challenge creation and it should jump to dashboard', () => {
     submitQuiz();
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'CreateChallenge') {
@@ -124,6 +124,7 @@ describe('Page Component add quizs', () => {
     cy.contains('button', 'Нийтлэх').click();
     cy.wait('@createChallengeMutation');
     cy.contains('Сорилийг амжилттай үүсгэлээ').should('exist');
+    cy.url().should('include', '/dashboard');
   });
 
   it('19. should display error toast on unsuccessful challenge creation', () => {

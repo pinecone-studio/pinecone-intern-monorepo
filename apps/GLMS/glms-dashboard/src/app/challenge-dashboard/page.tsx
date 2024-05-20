@@ -52,6 +52,7 @@ const Page = () => {
         },
       });
       toast.success('Сорилийг амжилттай үүсгэлээ');
+      router.push('/dashboard');
     } catch (error) {
       if (error instanceof ApolloError) {
         toast.error(error?.graphQLErrors[0]?.message, {
