@@ -16,9 +16,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <FederationProvider>
-          <LeaveRequestCreationProvider>
-            <DataProvider>
-              <AuthProvider>
+          <DataProvider>
+            <AuthProvider>
+              <LeaveRequestCreationProvider>
                 <div className="flex flex-col flex-1">
                   <Header />
                   <div className="flex flex-col md:flex-row">
@@ -26,9 +26,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                     <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
                   </div>
                 </div>
-              </AuthProvider>
-            </DataProvider>
-          </LeaveRequestCreationProvider>
+              </LeaveRequestCreationProvider>
+            </AuthProvider>
+          </DataProvider>
         </FederationProvider>
       </body>
     </html>
