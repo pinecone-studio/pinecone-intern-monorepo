@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 
 export const challengeTypeDefs = gql`
+  scalar Date
+
   enum StatusType {
     DRAFT
     APPROVED
@@ -67,6 +69,23 @@ export const challengeTypeDefs = gql`
     experiencePoint: Int
   }
 
+  type ChallengeSession {
+    _id: ID
+    studentEmail: String
+    challengeId: ID
+    experiencePoint: Int
+    startedAt: Date
+    endAt: Date
+  }
+
+  input ChallengeSessionInput {
+    studentEmail: String
+    challengeId: ID
+    experiencePoint: Int
+    startedAt: Date
+    endAt: Date
+  }
+
   type Query {
     getChallenges: [Challenge]
     getChallengesByStatus: [Challenge]
@@ -83,5 +102,6 @@ export const challengeTypeDefs = gql`
     publishChallengeById(challengeId: String!): ID
     deleteChallengeById(challengeId: String!): ID
     updateChallenge(challengeId: ID!, updateChallengeInput: UpdateChallengeInput!): Challenge
+    submitChallenge(challengeSessionInput: ChallengeSessionInput): ID
   }
 `;

@@ -7,3 +7,4 @@ export * from './delete-quiz';
 export * from './delete-challenge-by-id';
 export * from './publish-challenge-by-id';
 export * from './update-challenge-by-id';
+export * from './submit-challenge';
