@@ -40,7 +40,7 @@ describe('update dependant', () => {
     cy.get('select[name="employmentStatus"]').should('have.value', 'FULL_TIME');
     cy.get('[data-cy="createEmployeeBtn"]').should('not.be.disabled');
     cy.get('button[name="submitBtn"]').click();
-    cy.get('ul li').find('a').eq(-3).click();
+    cy.get('ul li').find('a').eq(2).click();
     cy.get('.paginate').last().click();
     cy.get('[data-cy="updateLink"]').should('exist').eq(-1).click();
     cy.get('[data-testid="add-information"]').should('exist').click();
