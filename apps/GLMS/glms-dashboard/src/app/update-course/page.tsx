@@ -53,6 +53,7 @@ const UpdateCourse = () => {
 
   const { data, loading } = useGetCourseByIdQuery({
     variables: { getCourseByIdId: id },
+    skip: !id,
   });
 
   useEffect(() => {
