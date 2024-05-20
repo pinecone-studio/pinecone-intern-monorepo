@@ -1,12 +1,12 @@
 'use client';
 
-import { useGetChallengeByIdQuery } from '@/generated';
 import Question from '../_components/Question';
 import ChoiceText from '../_components/TextChoicePicker';
 import { useEffect, useState } from 'react';
 import ProgressBar from '../_components/ProgressBar';
 import Link from 'next/link';
 import Skeleton from '../_feature/Skeleton';
+import { useGetChallengeQuery } from '@/generated';
 
 interface IStudentChoiceData {
   quizId: string;
@@ -14,7 +14,7 @@ interface IStudentChoiceData {
 }
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useGetChallengeByIdQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeQuery({ variables: { challengeId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
   const [selectedQuiz, setSelectedQuiz] = useState<string | undefined | null>(null);
   const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);

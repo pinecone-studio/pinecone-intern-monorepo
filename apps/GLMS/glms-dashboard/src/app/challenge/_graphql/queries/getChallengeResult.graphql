@@ -1,4 +1,4 @@
-query GetChallengeById($challengeId: ID) {
+query GetChallengeResult($challengeId: ID) {
   getChallengeById(challengeId: $challengeId) {
     _id
     author
