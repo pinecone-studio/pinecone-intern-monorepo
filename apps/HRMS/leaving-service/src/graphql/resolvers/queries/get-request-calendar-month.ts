@@ -3,7 +3,7 @@ import { QueryResolvers } from "@/graphql/generated";
 import { LeaveRequestModel } from "@/graphql/model";
 import { errorTypes, graphqlErrorHandler } from "../error";
 
-export const getRequestByCalendarMonth: QueryResolvers['getRequestByCalendarMonth'] = async (_, { startDate }) => {
+export const getRequestByCalendarMonth: QueryResolvers['getRequestByCalendarMonth'] = async (_, { startDate, department}) => {
     try{
         const year = dayjs(startDate).year();
         const month = dayjs(startDate).month();
@@ -20,7 +20,8 @@ export const getRequestByCalendarMonth: QueryResolvers['getRequestByCalendarMont
             startDate: {
                 $gte: leaveRequestsStartFrom,
                 $lte: leaveRequestEndTo
-            }
+            },
+            department:{$in: [department]}
         });
         return getMonth;
     }catch(error){
