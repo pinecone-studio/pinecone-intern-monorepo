@@ -75,7 +75,7 @@ export const challengeTypeDefs = gql`
   }
 
   type Mutation {
-    createChallenge(quizInput: [QuizInput], challengeInput: ChallengeInput): ID
+    createChallenge(quizInput: [QuizInput!]!, challengeInput: ChallengeInput): ID
     createQuiz(quizInput: QuizInput!): ID
     updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
     archiveChallengeById(challengeId: ID): ID

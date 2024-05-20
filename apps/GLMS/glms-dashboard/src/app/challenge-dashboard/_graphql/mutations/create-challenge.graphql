@@ -1,0 +1,3 @@
+mutation CreateChallenge($quizInput: [QuizInput!]!, $challengeInput: ChallengeInput) {
+  createChallenge(quizInput: $quizInput, challengeInput: $challengeInput)
+}

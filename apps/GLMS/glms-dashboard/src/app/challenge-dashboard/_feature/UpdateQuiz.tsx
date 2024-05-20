@@ -2,39 +2,35 @@
 import { Input, TextOrFileQuestionCreate, CheckBox } from '../_components';
 import { AddAnswer } from './AddAnswer';
 import { ChallengeFileUploader } from './FileUploader';
-import { FaPlus } from 'react-icons/fa';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { QuizInput } from '@/generated';
+import { MdDelete } from 'react-icons/md';
+
 type AddQuizType = {
-  handleAllQuiz: (_newQuiz: QuizInput) => void;
+  updateQuiz: (_index: number, _newQuiz: QuizInput) => void;
+  question: string;
+  choicesType: string;
+  choices: {
+    choice: string;
+    isCorrect: boolean;
+  }[];
+  index: number;
+  deleteQuiz: (_index: number) => void;
 };
-export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
-  const [checked, setChecked] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+
+export const UpdateQuiz = (props: AddQuizType) => {
+  const { updateQuiz, question, choicesType, choices, index, deleteQuiz } = props;
   const validationSchema = Yup.object({
     question: Yup.string().required('Асуулт оруулна уу'),
-    answersText: Yup.array().of(
-      Yup.object().shape({
-        answer: Yup.string(),
-        isCorrect: Yup.boolean(),
-      })
-    ),
     questionType: Yup.string().oneOf(['TEXT', 'IMAGE']),
-    answersImage: Yup.array().of(
-      Yup.object().shape({
-        answer: Yup.string(),
-        isCorrect: Yup.boolean(),
-      })
-    ),
   });
-
   const formik = useFormik({
     initialValues: {
-      question: '',
-      answersText: [{ choice: '', isCorrect: false }],
-      questionType: 'TEXT',
+      question: question,
+      answersText: choices.map(({ choice, isCorrect }) => ({ choice, isCorrect })),
+      questionType: choicesType,
       firstImageAnswer: '',
       isFirstImageAnswerCorrect: false,
       secondImageAnswer: '',
@@ -53,14 +49,9 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
                 { choice: secondImageAnswer, isCorrect: isSecondImageAnswerCorrect },
               ],
       };
-      handleAllQuiz(quiz as QuizInput);
-      formik.resetForm();
+      updateQuiz(index, quiz as QuizInput);
     },
   });
-
-  const handleChecked = () => {
-    setChecked(!checked);
-  };
 
   const handleFirstImageAnswer = () => {
     formik.setFieldValue('isFirstImageAnswerCorrect', true);
@@ -74,6 +65,7 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
   const handleSelectText = () => {
     formik.setFieldValue('questionType', 'TEXT');
   };
+
   const handleSelectFile = () => {
     formik.setFieldValue('questionType', 'IMAGE');
   };
@@ -83,7 +75,6 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
     const updatedAnswers = quizAnswers.map((choice: { choice: string; isCorrect: boolean }, i: number) => (i === index ? { ...choice, isCorrect: true } : { ...choice, isCorrect: false }));
     formik.setFieldValue('answersText', updatedAnswers);
   };
-
   const handleAnswerChange = (index: number, value: string) => {
     const newAnswers = [...formik.values.answersText];
     newAnswers[index] = {
@@ -94,15 +85,21 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
   };
 
   const addAnswer = () => {
-    formik.setFieldValue('answersText', [...formik.values.answersText, { choice: '', isCorrect: false }]);
+    formik.setFieldValue('answersText', [...formik.values.answersText, { answer: '', isCorrect: false }]);
   };
 
-  const handleImageCorrect = () => {
-    setIsChecked(!isChecked);
-  };
+  useEffect(() => {
+    if (choicesType === 'IMAGE') {
+      formik.setFieldValue('firstImageAnswer', choices[0].choice);
+      formik.setFieldValue('secondImageAnswer', choices[1].choice);
+      formik.setFieldValue('isFirstImageAnswerCorrect', choices[0].isCorrect);
+      formik.setFieldValue('isSecondImageAnswerCorrect', choices[1].isCorrect);
+      formik.setFieldValue('answersText', [{ answer: '', isCorrect: false }]);
+    }
+  }, [choicesType]);
 
   return (
-    <div className="flex items-center justify-center flex-col" data-testid="add-quiz">
+    <div className="flex items-center justify-center flex-col mb-4" data-testid="update-quiz">
       <div className="w-[668px] max-h-[500px] h-fit border-2 border-dashed p-6 rounded-lg gap space-y-4">
         <>
           <h2 className="font-semibold text-base  font-inter tracking-tight text-left mb-1 ml-1">Сорилын асуулт</h2>
@@ -112,7 +109,7 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
         <TextOrFileQuestionCreate selectedBtn={formik.values.questionType} handleSelectText={handleSelectText} handleSelectFile={handleSelectFile} />
         {formik.values.questionType === 'TEXT' ? (
           <AddAnswer
-            checked={checked}
+            checked={true}
             label={'Хариулт нэмэх'}
             answers={formik.values.answersText}
             handleAnswerChange={handleAnswerChange}
@@ -124,33 +121,33 @@ export const AddQuiz = ({ handleAllQuiz }: AddQuizType) => {
             <div className={`flex-1 h-[230px]`}>
               <ChallengeFileUploader name="firstImageAnswer" image={formik.values.firstImageAnswer} setFieldValue={formik.setFieldValue} />
               <CheckBox
-                isExist={isChecked}
                 label="Зөв эсэх"
                 onClick={handleFirstImageAnswer}
                 className="flex justify-center items-center gap-3 font-bold"
                 checked={formik.values.isFirstImageAnswerCorrect}
+                isExist={true}
               />
             </div>
             <div className={`flex-1 h-[230px]`}>
               <ChallengeFileUploader name="secondImageAnswer" image={formik.values.secondImageAnswer} setFieldValue={formik.setFieldValue} />
               <CheckBox
-                isExist={isChecked}
                 label="Зөв эсэх"
                 onClick={handleSecondImageAnswer}
                 className="flex justify-center items-center gap-3 font-bold"
                 checked={formik.values.isSecondImageAnswerCorrect}
+                isExist={true}
               />
             </div>
           </div>
         )}
       </div>
       <div className="flex justify-center gap-10 h-9 mt-3">
-        <button data-testid="choose-button" className="rounded-lg h-9 p-1 border border-[#D6D8DB] px-2" onClick={formik.values.questionType === 'TEXT' ? handleChecked : handleImageCorrect}>
-          Зөв хариулт сонгох
+        <button data-cy="delete-btn" className="rounded-lg h-9 p-1 border border-[#D6D8DB] px-2" onClick={() => deleteQuiz(index)}>
+          <MdDelete />
         </button>
         <div className="border-r border"></div>
-        <button type="submit" onClick={() => formik.handleSubmit()} data-cy="submit-btn" className="bg-black text-white p-1 px-2 rounded-lg">
-          <FaPlus />
+        <button type="submit" onClick={() => formik.handleSubmit()} data-cy="update-btn" className="bg-black text-white border-l-2 p-1 px-2 rounded-lg">
+          save
         </button>
       </div>
     </div>

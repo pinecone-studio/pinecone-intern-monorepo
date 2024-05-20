@@ -16,7 +16,6 @@ const ChallengeSchema = new Schema({
     type: String,
     enum: ['APPROVED', 'DRAFT'],
     default: 'DRAFT',
-    required: true,
   },
   quiz: [
     {
