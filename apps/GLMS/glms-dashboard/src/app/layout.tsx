@@ -1,6 +1,6 @@
 'use client';
 import './global.css';
-import { FederationProvider } from '../common';
+import { AuthProvider, FederationProvider } from '../common';
 import Header from '../components/Header';
 import { PineconeLogo } from '../../public/assets/PineconeLogo';
 import { ToastContainer } from 'react-toastify';
@@ -11,12 +11,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <FederationProvider>
-          <Header />
-          {children}
-          <ToastContainer />
-          <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
-            <PineconeLogo />
-          </div>
+          <AuthProvider>
+            <Header />
+            {children}
+            <ToastContainer />
+            <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
+              <PineconeLogo />
+            </div>
+          </AuthProvider>
         </FederationProvider>
       </body>
     </html>
