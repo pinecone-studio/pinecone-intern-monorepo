@@ -33,7 +33,7 @@ export const userSchema = gql`
   }
 
   type Mutation {
-    signUp(input: SignUpInput!): Message!
-    signIn(input: SignInInput!): Token!
+    lessonSignUp(input: SignUpInput!): Message!
+    lessonSignIn(input: SignInInput!): Token!
   }
 `;
