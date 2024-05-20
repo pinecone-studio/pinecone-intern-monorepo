@@ -5,9 +5,10 @@ describe('Handle update-lesson page', () => {
     cy.get('[data-testid="update-lesson-container"]').should('exist');
   });
 
-  it('2. check back to dashboard page button click ', () => {
+  it('2. check back to course page button click ', () => {
     cy.get('[data-cy="handle-back-page"]').should('exist');
     cy.get('[data-cy="handle-back-page"]').click();
+    cy.url().should('include', '/${courseID}');
   });
 
   it('3.Should display update lesson container', () => {
@@ -15,7 +16,7 @@ describe('Handle update-lesson page', () => {
     cy.get('[data-cy="update-lesson-title"]').should('exist').type('Java');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="update-lesson-button"]').should('exist');
-    cy.url().should('include', '/lesson');
+    cy.url().should('include', '/${courseID}');
   });
   it('4. updates form fields with data from API', () => {
     cy.intercept('POST', '/graphql', (req) => {
