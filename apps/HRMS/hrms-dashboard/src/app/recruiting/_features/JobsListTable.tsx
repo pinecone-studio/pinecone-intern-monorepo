@@ -10,13 +10,13 @@ export const JobsListTable = () => {
 
   if (loading)
     return (
-      <div className="flex w-full justify-center items-center">
+      <div data-testid="loading-indicator" className="flex w-full justify-center items-center">
         <span className="loading loading-ring loading-lg"></span>
       </div>
     );
 
   return (
-    <div data-cy="jobsList" className="flex rounded-xl overflow-scroll">
+    <div data-testid="jobsList" data-cy="jobsList" className="flex rounded-xl overflow-scroll">
       <table className="w-full table-fixed text-left">
         <thead>
           <tr className="bg-primary-light bg-[#F7F7F8] border-b border-b-[#D6D8DB] text-black text-[12px]">

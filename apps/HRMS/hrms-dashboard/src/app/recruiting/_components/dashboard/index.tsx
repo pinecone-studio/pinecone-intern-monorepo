@@ -1,7 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import { Button } from '../core';
 import { useRouter } from 'next/navigation';
+import { ApplicantsListTable, JobsListTable } from '../../_features';
 
 export const JobRecruitDashboard = () => {
+  const [selected, setSelected] = useState('jobs');
   const router = useRouter();
   const addRecruit = () => {
     router.push('/recruiting/add-job');
@@ -17,13 +22,24 @@ export const JobRecruitDashboard = () => {
         </div>
       </div>
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', paddingInline: '23px', height: '56px' }}>
-          <p style={{ fontSize: '14px', paddingBlock: '4px', fontWeight: 500 }}>Зар</p>
-          <p style={{ fontSize: '14px', paddingBlock: '4px' }}>Ирсэн өргөдөл</p>
+        <div className="border-b mb-10 border-[#ECEDF0]" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button className={`text-sm ${selected === 'jobs' ? 'border-b-2' : ''} p-2`} data-testid="jobs-button" onClick={() => setSelected('jobs')}>
+            Зар
+          </button>
+          <button className={`text-sm ${selected === 'applicants' ? 'border-b-2' : ''} p-2`} data-testid="applicants-button" onClick={() => setSelected('applicants')}>
+            Ирсэн өргөдөл
+          </button>
         </div>
       </div>
-      <div className="border-t-[#ECEDF0] border-t w-full px-12"></div>
-      <div style={{ borderTop: '1px solid #303436', width: '100%' }}></div>
+      {selected === 'jobs' ? (
+        <div data-testid="jobs-table">
+          <JobsListTable />
+        </div>
+      ) : (
+        <div data-testid="applications-table">
+          <ApplicantsListTable />
+        </div>
+      )}
     </div>
   );
 };
