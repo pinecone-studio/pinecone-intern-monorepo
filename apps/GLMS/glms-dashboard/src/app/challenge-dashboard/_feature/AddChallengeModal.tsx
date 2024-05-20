@@ -2,25 +2,21 @@
 
 import { useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { SelectWithLabel } from '../_components';
 import { CloseIcon } from '../../../assets/icon/CloseIcon';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-export const AddChallengeModal = () => {
-  const [selectedCourse, setSelectedCourse] = useState<string>('');
+type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
+type ModalProps = {
+  courses: CourseType[];
+};
+
+export const AddChallengeModal = (props: ModalProps) => {
   const [selectedTopic, setSelectedTopic] = useState<string>('');
 
-  const handleSelectCourse = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCourse(event.target.value);
-  };
   const handleSelectTopic = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTopic(event.target.value);
   };
 
-  const classesMockData = ['HTML intro', 'HTML tags', 'HTML syntax', 'HTML symentic tags'];
-  const topicsMockData = ['HTML intro', 'HTML tags', 'HTML syntax', 'HTML symentic tags'];
-
-  const router = useRouter();
   return (
     <div className="rounded-badge">
       <button
@@ -41,15 +37,22 @@ export const AddChallengeModal = () => {
           </form>
           <div>
             <div className="my-3">
-              <SelectWithLabel label="Сэдэв сонгох" data-testid="select-with-label" options={classesMockData} selectedOption={selectedTopic} onSelect={handleSelectTopic} />
+              <p style={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>Сэдэв сонгох</p>
+              <select data-cy="select" className="flex w-96 h-9 border-[#D6D8DB] border p-2 rounded-lg" onChange={handleSelectTopic}>
+                {props?.courses.map((course, i) => {
+                  return (
+                    <option value={course.id} key={i}>
+                      {course.title}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
-            <div>
-              <SelectWithLabel label="Хичээл сонгох" data-testid="select-with-label" options={topicsMockData} selectedOption={selectedCourse} onSelect={handleSelectCourse} />
-            </div>
+
             <div className="modal-action" data-testid="modal-action">
               <form method="dialog">
-                <button className="btn bg-black text-white rounded-xl hover:bg-white hover:text-black" data-testid="next-page-btn" onClick={() => router.push('/challenge-dashboard')}>
-                  Оруулах
+                <button className="btn bg-black text-white rounded-xl hover:bg-white hover:text-black" data-testid="next-page-btn">
+                  <Link href={{ pathname: '/challenge-dashboard', query: { key: selectedTopic } }}>Оруулах</Link>
                 </button>
               </form>
             </div>

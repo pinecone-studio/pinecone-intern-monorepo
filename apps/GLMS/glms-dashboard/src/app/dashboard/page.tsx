@@ -7,10 +7,10 @@ import { Course, useGetCoursesQuery } from '@/generated';
 import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
-
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 const date = new Date().toLocaleTimeString();
 
+type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
 const DashboardOtherLab = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -54,7 +54,7 @@ const DashboardOtherLab = () => {
                     <p className="text-[14px] font-semibold">Хичээл</p>
                     <AddIcon className="w-[24px] h-[24px]" />
                   </button>
-                  <AddChallengeModal />
+                  <AddChallengeModal courses={data?.getCourses as CourseType[]} />
                 </div>
               </div>
             </div>

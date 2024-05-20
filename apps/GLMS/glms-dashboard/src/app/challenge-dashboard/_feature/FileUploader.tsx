@@ -5,28 +5,33 @@ import { useState } from 'react';
 import { MdCancel } from 'react-icons/md';
 
 type FormikTypes = {
-  setFieldValue: (_value: string) => void;
+  name: string;
+  setFieldValue: (_: string, _value: string) => void;
   image: string;
 };
 
 export const ChallengeFileUploader = (props: FormikTypes) => {
   const [loading, setLoading] = useState(false);
-  const { setFieldValue, image } = props;
+  const { setFieldValue, image, name } = props;
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setLoading(true);
       const file = Array.from(e.target.files);
       fileManagement(file, 'GLMS-dashboard').then((accessUrl) => {
-        setFieldValue(accessUrl[0]);
+        setFieldValue(name, accessUrl[0]);
         setLoading(false);
       });
     }
   };
 
+  const handleSetEmptyValue = () => {
+    setFieldValue(name, '');
+  };
+
   return (
     <div
-      className="w-full h-full px-1 border-2 border-gray-300 dashed rounded-lg flex justify-center items-center relative"
+      className="w-full h-full px-1 border border-dashed border-gray-300 dashed rounded-lg flex justify-center items-center relative"
       style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', objectFit: 'cover' }}
     >
       {loading && <span data-testid="loading-spinner" className="loading loading-spinner loading-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>}
@@ -44,7 +49,7 @@ export const ChallengeFileUploader = (props: FormikTypes) => {
         <button
           data-testid="cancel-btn"
           className="absolute top-2 right-2 w-10 h-10 bg-gray-200 text-white rounded-full flex items-center justify-center hover:bg-gray-600"
-          onClick={() => setFieldValue('')}
+          onClick={handleSetEmptyValue}
         >
           <MdCancel />
         </button>
