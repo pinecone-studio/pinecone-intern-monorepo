@@ -109,7 +109,7 @@ const UpdateLesson = () => {
           <div className="px-6">
             <div className="w-full flex items-center justify-end m-auto max-w-[668px] pb-10">
               <button
-                data-cy="update-lesson-button"
+                data-cy="update-lesson-handle-btn"
                 type="button"
                 onClick={() => formik.handleSubmit()}
                 className="btn w-fit gap-7 rounded-lg py-4 px-24"

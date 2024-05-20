@@ -15,7 +15,7 @@ describe('Handle update-lesson page', () => {
     cy.get('[data-testid="update-lesson-form"]').should('exist');
     cy.get('[data-cy="update-lesson-title"]').should('exist').type('Java');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-cy="update-lesson-button"]').should('exist');
+    cy.get('[data-cy="update-lesson-handle-btn"]').eq(1).click();
     cy.url().should('include', '/${courseID}');
   });
   it('4. updates form fields with data from API', () => {
