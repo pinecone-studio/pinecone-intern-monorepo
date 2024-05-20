@@ -13,8 +13,17 @@ type PersonalUpdateModalProps = {
   homeAddress?: string | null;
   imageUrl?: string | null;
 };
+const validationSchema = Yup.object().shape({
+  imageUrl: Yup.string().required('ImageUrl is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  firstName: Yup.string().required('First Name is required'),
+  jobTitle: Yup.string().required('Job Title is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  phone: Yup.string().required('Phone is required'),
+  address: Yup.string().required('Address is required'),
+});
 
-export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
+ const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
   const initialValues = {
     imageUrl: props.imageUrl,
     lastName: props.lastName,
@@ -24,19 +33,7 @@ export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
     phone: props.phone,
     address: props.homeAddress,
   };
-
-  const validationSchema = Yup.object().shape({
-    imageUrl: Yup.string().required('ImageUrl is required'),
-    lastName: Yup.string().required('Last Name is required'),
-    firstName: Yup.string().required('First Name is required'),
-    jobTitle: Yup.string().required('Job Title is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    phone: Yup.string().required('Phone is required'),
-    address: Yup.string().required('Address is required'),
-  });
-
   const handleSubmit = () => {};
-
   return (
     <div data-testid="personal-info-modal" className="fixed inset-0 flex items-center justify-center bg-[#0000004D] bg-opacity-50 z-50">
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -112,3 +109,4 @@ export const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
     </div>
   );
 };
+export default PersonalUpdateModal;

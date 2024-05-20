@@ -6,7 +6,7 @@ import { LocationIcon } from '../../../../public/assets/LocationIcon';
 import { Mailicon } from '../../../../public/assets/MailIcon';
 import { PhoneIcon } from '../../../../public/assets/PhoneIcon';
 import { PenIcon } from '../../../../public/assets/PenIcon';
-import { PersonalUpdateModal } from './PersonalUpdateModal';
+import PersonalUpdateModal from './PersonalUpdateModal';
 
 interface PersonalInformationProps {
   firstName?: string | null;
@@ -46,7 +46,7 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
           <p>{jobTitle}</p>
         </div>
         <div className="flex gap-3 items-center">
-          <PhoneIcon />
+          <PhoneIcon data-testid="phoneIcon" />
           <p>{phone}</p>
         </div>
         <div className="flex gap-3 items-center">
