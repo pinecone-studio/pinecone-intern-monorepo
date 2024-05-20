@@ -19,7 +19,7 @@ export const replySchema = gql`
     email: String!
   }
   type Mutation {
-    publishReply(createInput: CreateReplyInput): ID!
+    publishReply(createInput: CreateReplyInput!): ID!
   }
   type Query {
     getRepliesByCommentId(commentId: String): [Reply]
