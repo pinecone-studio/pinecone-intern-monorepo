@@ -1,4 +1,4 @@
-query GetChallengeByWOcorrect($challengeId: ID) {
+query GetChallengeResult($challengeId: ID) {
   getChallengeById(challengeId: $challengeId) {
     _id
     author
@@ -7,6 +7,7 @@ query GetChallengeByWOcorrect($challengeId: ID) {
       choices {
         _id
         choice
+        isCorrect
       }
       choicesType
       question
