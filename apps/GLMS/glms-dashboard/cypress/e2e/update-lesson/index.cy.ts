@@ -12,8 +12,26 @@ describe('Handle update-lesson page', () => {
 
   it('3.Should display update lesson container', () => {
     cy.get('[data-testid="update-lesson-form"]').should('exist');
-    cy.get('[data-cy="title"]').should('exist').type('Java');
+    cy.get('[data-cy="update-lesson-title"]').should('exist').type('Java');
     cy.get('#file-test').selectFile('public/js.png', { force: true });
-    cy.get('[data-cy="update-button"]').should('exist');
+    cy.get('[data-cy="update-lesson-button"]').should('exist');
+    cy.url().should('include', '/section');
+  });
+  it('4. updates form fields with data from API', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetLessonInId') {
+        req.reply((res) => {
+          res.send({
+            data: {
+              getLessonInId: {
+                id: 'lesson-id',
+                title: 'Mock Title',
+                thumbnail: 'Mock Thumbnail',
+              },
+            },
+          });
+        });
+      }
+    }).as('GetLessonInId');
   });
 });

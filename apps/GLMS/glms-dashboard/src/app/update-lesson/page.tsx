@@ -83,7 +83,7 @@ const UpdateLesson = () => {
         >
           <PrevArrow /> {'Нүүр'}
         </div>
-        <div ata-testid="update-lesson-form" className="w-full bg-white rounded-xl pt-12">
+        <div data-testid="update-lesson-form" className="w-full bg-white rounded-xl pt-12">
           <div className="px-6">
             <div className="max-w-[668px] w-full m-auto rounded-xl p-10" style={{ border: '2px #D6D8DB dashed' }}>
               <div className="w-full gap-2">
@@ -91,6 +91,7 @@ const UpdateLesson = () => {
                 <input
                   type="text"
                   id="title-test-of-lesson"
+                  data-cy="update-lesson-title"
                   className="input input-bordered w-full"
                   name="title"
                   onChange={formik.handleChange}
@@ -108,7 +109,7 @@ const UpdateLesson = () => {
           <div className="px-6">
             <div className="w-full flex items-center justify-end m-auto max-w-[668px] pb-10">
               <button
-                data-cy="update-button"
+                data-cy="update-lesson-button"
                 type="button"
                 onClick={() => formik.handleSubmit()}
                 className="btn w-fit gap-7 rounded-lg py-4 px-24"
