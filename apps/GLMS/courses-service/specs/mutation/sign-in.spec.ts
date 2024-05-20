@@ -1,4 +1,4 @@
-import { signIn } from '../../src/graphql/resolvers/mutations/sign-in';
+import { lessonSignIn } from '../../src/graphql/resolvers/mutations/sign-in';
 import { UserModel } from '@/model';
 import jwt from 'jsonwebtoken';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
@@ -36,7 +36,7 @@ describe('Sign in', () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(userMock);
     (jwt.sign as jest.Mock).mockReturnValueOnce('mockToken');
 
-    const result = await signIn!({}, { input }, {}, {} as GraphQLResolveInfo);
+    const result = await lessonSignIn!({}, { input }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       token: 'mockToken',
       message: 'Амжилттай нэвтэрлээ',
@@ -47,18 +47,13 @@ describe('Sign in', () => {
         { phoneNumber: input.emailOrPhoneNumber, password: input.password },
       ],
     });
-    expect(jwt.sign).toHaveBeenCalledWith(
-      { id: userMock._id, name: userMock.name, email: userMock.email, role: userMock.role },
-      'secret-key'
-    );
+    expect(jwt.sign).toHaveBeenCalledWith({ id: userMock._id, name: userMock.name, email: userMock.email, role: userMock.role }, 'secret-key');
   });
 
   it('should throw an error if user is not found', async () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(null);
 
-    await expect(signIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new GraphQLError('Бүртгэлтэй хэрэглэгч алга')
-    );
+    await expect(lessonSignIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Бүртгэлтэй хэрэглэгч алга'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [
         { email: input.emailOrPhoneNumber, password: input.password },
@@ -71,9 +66,7 @@ describe('Sign in', () => {
   it('should throw a generic error on unexpected errors', async () => {
     (UserModel.findOne as jest.Mock).mockRejectedValueOnce(new Error('Unexpected error'));
 
-    await expect(signIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new GraphQLError('Алдаа гарлаа')
-    );
+    await expect(lessonSignIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Алдаа гарлаа'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [
         { email: input.emailOrPhoneNumber, password: input.password },
