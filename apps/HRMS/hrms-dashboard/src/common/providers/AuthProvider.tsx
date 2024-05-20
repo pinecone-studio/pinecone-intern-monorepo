@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       router.push('/');
     } catch (error) {
       if (error instanceof ApolloError) {
-        toast.error(error.graphQLErrors[0].message, {
+        toast.error("Бүртгэлтэй хэрэглэгч алга", {
           position: 'top-center',
           autoClose: 3000,
           hideProgressBar: true,
