@@ -1,6 +1,7 @@
 'use client';
 import './global.css';
 import { FederationProvider } from '../common';
+import {AuthProvider} from '../common/providers/AuthProvider'
 import Header from '../components/Header';
 import { PineconeLogo } from '../../public/assets/PineconeLogo';
 import { ToastContainer } from 'react-toastify';

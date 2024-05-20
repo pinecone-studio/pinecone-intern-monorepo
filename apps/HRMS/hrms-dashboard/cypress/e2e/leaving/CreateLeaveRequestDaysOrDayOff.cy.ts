@@ -1,7 +1,11 @@
 describe('assessment page', () => {
-  beforeEach(() => cy.visit('/leaving'));
+  beforeEach(() => cy.visit('/login'));
 
   it('1. should select radio button with value of Days or DayOff and move to next step', () => {
+    cy.get('input[name="emailorPhone"]').type('tengis@#gmail.com');
+    cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-In-Button"]').click();
+    cy.get('[data-cy="sidebarItem"]').contains('Чөлөө').click();
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();
     cy.get('[data-cy="request-modal"]').contains('Чөлөөний хуудас бөглөх');
     cy.get('[data-cy="date-picker-container"]').type('2000-01-01');
@@ -25,6 +29,10 @@ describe('assessment page', () => {
   });
 
   it('2. should return to Previous step', () => {
+    cy.get('input[name="emailorPhone"]').type('tengis@#gmail.com');
+    cy.get('[data-cy="Sign-In-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-In-Button"]').click();
+    cy.get('[data-cy="sidebarItem"]').contains('Чөлөө').click();
     cy.get('[data-cy="open-request"]').contains('Чөлөөний хуудас бөглөх').click();
     cy.get('[data-cy="request-modal"]').contains('Чөлөөний хуудас бөглөх');
     cy.get('[data-cy="date-picker-container"]').type('2000-01-01');

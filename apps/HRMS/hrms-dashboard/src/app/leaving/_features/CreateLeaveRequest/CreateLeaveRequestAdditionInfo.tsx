@@ -7,16 +7,22 @@ import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreati
 import { CreateLeaveRequestNextButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestNextButtonCustom';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 import { CreateLeaveRequestPreviousButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestPreviousButtonCustom';
+import { useGetEmployeeRequestQuery } from '@/generated';
+import { useCreateLeaveRequestDaysMutation, useCreateLeaveRequestHoursMutation } from '@/generated';
+import { LeaveType, DurationType } from '@/generated';
+import dayjs from 'dayjs';
 
 const validationSchema = yup.object({
   step3Substitute: yup.string().required('Ажил шилжүүлэн өгөх ажилтны нэр оруулна уу'),
   step3WorkBrief: yup.string().required('Шилжүүлэн өгч буй ажлын талаар товч оруулна уу'),
   step3ApprovedBy: yup.string().required('Хүсэлт батлах хүнээ сонгоно уу'),
 });
-
 export const CreateLeaveRequestAdditionInfo = () => {
-  const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
-  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded } = useContext(LeaveRequestCreationContext);
+  const { setStepNumber, setLeaveReqStep, setisLeaveRequestSucceeded, loggedUser, radioValue, step1, step2 } = useContext(LeaveRequestCreationContext);
+  const [createLeaveRequestDays] = useCreateLeaveRequestDaysMutation();
+  const [createLeaveRequestHours] = useCreateLeaveRequestHoursMutation();
+
+  const { data } = useGetEmployeeRequestQuery({ variables: { getEmployeeRequestId: !loggedUser ? '' : loggedUser.id } });
 
   const formik = useFormik({
     initialValues: {
@@ -25,11 +31,47 @@ export const CreateLeaveRequestAdditionInfo = () => {
       step3ApprovedBy: '',
     },
     validationSchema: validationSchema,
-    onSubmit: () => {
+    onSubmit: async (values) => {
       setisLeaveRequestSucceeded(true);
+      if (radioValue === 'Day') {
+        await createLeaveRequestDays({
+          variables: {
+            requestInput: {
+              employeeId: loggedUser?.id,
+              name: loggedUser?.firstName,
+              startDateString: step2?.step2StartDate,
+              endDateString: step2?.step2EndDate,
+              description: values.step3WorkBrief,
+              leaveType: step1?.step1LeaveType as LeaveType,
+              superVisor: values.step3ApprovedBy,
+              durationType: step2?.step2LeaveLength as DurationType,
+              email: values.step3ApprovedBy,
+              substitute: values.step3Substitute,
+            },
+          },
+        });
+      }
+
+      if (radioValue === 'Hour') {
+        await createLeaveRequestHours({
+          variables: {
+            requestInput: {
+              employeeId: loggedUser?.id,
+              name: loggedUser?.firstName,
+              startDateString: dayjs(step2?.step2Date).set('hour', parseInt(step2?.step2StartHour?.slice(0, 2) ?? '')),
+              endDateString: dayjs(step2?.step2Date).set('hour', parseInt(step2?.step2EndHour?.slice(0, 2) ?? '')),
+              description: values.step3WorkBrief,
+              leaveType: step1?.step1LeaveType as LeaveType,
+              superVisor: values.step3ApprovedBy,
+              durationType: step2?.step2LeaveLength as DurationType,
+              email: values.step3ApprovedBy,
+              substitute: values.step3Substitute,
+            },
+          },
+        });
+      }
     },
   });
-
   return (
     <div data-testid="step3Component" className="w-[100%] flex flex-col gap-[40px]">
       <div className="w-[100%] flex flex-col gap-[16px]">
@@ -87,10 +129,10 @@ export const CreateLeaveRequestAdditionInfo = () => {
             <option disabled selected value="">
               Хүсэлт батлах хүнээ сонго
             </option>
-            {leaveTypes.map((item, index) => {
+            {data?.getEmployeeRequest.map((item, index) => {
               return (
-                <option key={index} data-testid={`approvedBy-${index}`} value={item}>
-                  {item}
+                <option key={index} data-testid={`approvedBy-${index}`} value={item?.email ?? undefined}>
+                  {item?.firstName}
                 </option>
               );
             })}

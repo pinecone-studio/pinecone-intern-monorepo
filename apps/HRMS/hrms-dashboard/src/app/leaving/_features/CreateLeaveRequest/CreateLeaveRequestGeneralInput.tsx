@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { LeaveRequestCreationContext } from '../../_providers/LeaveRequestCreationProvider';
 import { CreateLeaveRequestDaysOrDayOff } from './CreateLeaveRequestDaysOrDayOff';
 import { CreateLeaveRequestNextButtonCustom } from '../../_components/createLeaveReqComp/CreateLeaveRequestNextButtonCustom';
+import { LeaveType } from '@/generated';
 
 const validationSchema = yup.object({
   step1Date: yup.string().required('Огноо оруулна уу'),
@@ -14,11 +15,9 @@ const validationSchema = yup.object({
 });
 
 export const CreateLeaveRequestGeneralInput = () => {
-  const { setStepNumber, setLeaveReqStep, step1, setStep1 } = useContext(LeaveRequestCreationContext);
+  const { setStepNumber, setLeaveReqStep, step1, setStep1, loggedUser } = useContext(LeaveRequestCreationContext);
 
-  const workerName = { name: 'WorkerName' };
-
-  const leaveTypes = ['shit happened', 'remote', 'medical', 'family emergency', 'others'];
+  const durationTypeList = Object.values(LeaveType);
 
   const formik = useFormik({
     initialValues: {
@@ -57,8 +56,8 @@ export const CreateLeaveRequestGeneralInput = () => {
             <option disabled selected value="">
               Нэрээ сонгоно уу
             </option>
-            <option data-testid="WorkerName" value={workerName.name}>
-              {workerName.name}
+            <option data-testid="WorkerName" value={loggedUser?.firstName}>
+              {loggedUser?.firstName}
             </option>
           </select>
           <p data-cy="step1UserNameError" className="text-[#DC143C] text-[12px]">
@@ -80,7 +79,7 @@ export const CreateLeaveRequestGeneralInput = () => {
             <option disabled selected value="">
               Шалтгаанаа сонгоно уу
             </option>
-            {leaveTypes.map((item, index) => {
+            {durationTypeList.map((item, index) => {
               return (
                 <option key={index} data-testid={`type-${index}`} value={item}>
                   {item}
