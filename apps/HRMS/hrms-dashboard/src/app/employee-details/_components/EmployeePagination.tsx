@@ -20,8 +20,8 @@ export const EmployeePagination = ({ page, setChecked, checked }: PropsType) => 
   return (
     <>
       <ReactPaginate
-        className="flex gap-2 justify-center items-center"
-        pageClassName="border rounded-lg w-10 h-10 flex justify-center items-center  "
+        className="flex gap-2 justify-center items-center "
+        pageClassName="border rounded-lg w-10 h-10 flex justify-center items-center paginate "
         activeClassName="bg-black text-white"
         nextLabel={<RightArrow />}
         pageCount={page!}

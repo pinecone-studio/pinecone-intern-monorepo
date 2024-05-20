@@ -1,8 +1,8 @@
 'use client';
-import { useGetEmployeeQuery } from '@/generated';
+import { Dependent, useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
-import { UpdateDependant, UpdateEmployment } from './_features';
+import { UpdateDependent, UpdateEmployment } from './_features';
 import { PersonalInformation } from '../../_components';
 
 const Update = () => {
@@ -22,7 +22,7 @@ const Update = () => {
   return (
     <section className="w-full h-[100vh] bg-light flex flex-col overflow-scroll relative">
       <div className="w-full flex bg-white py-5">
-        <figure onClick={() => router.push('employee-details?employees=1')} className="px-4 flex items-center justify-center cursor-pointer">
+        <figure data-testid="back-button" onClick={() => router.push('employee-details')} className="px-4 flex items-center justify-center cursor-pointer">
           <LeftArrow />
         </figure>
         <p className="text-black m-auto text-sm font-semibold">Employee Details</p>
@@ -47,7 +47,7 @@ const Update = () => {
             dateOfEmployment={data?.getEmployee?.dateOfEmployment}
             employmentStatus={data?.getEmployee?.employmentStatus}
           />
-          <UpdateDependant dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} />
+          <UpdateDependent dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} relative={employee?.relative[0] as Dependent} />
         </div>
       </div>
     </section>

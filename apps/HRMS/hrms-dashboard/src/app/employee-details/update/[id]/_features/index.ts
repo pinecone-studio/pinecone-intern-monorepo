@@ -1,2 +1,3 @@
 export * from './UpdateEmployment';
-export * from './UpdateDependant';
+export * from './UpdateDependent';
+export * from './CreateDependent';
