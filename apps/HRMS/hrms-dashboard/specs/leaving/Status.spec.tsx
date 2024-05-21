@@ -24,7 +24,7 @@ describe('Status component', () => {
     expect(typographyElement).toBeTruthy();
   });
   it('renders correctly with unknown status', () => {
-    const data = { status: 'unknown' };
+    const data = { status: '' };
     const { getByText } = render(<Status dat={data} />);
     expect(getByText).toBeTruthy();
   });
