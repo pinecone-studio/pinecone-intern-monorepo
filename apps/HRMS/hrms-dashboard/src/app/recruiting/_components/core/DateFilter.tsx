@@ -12,7 +12,7 @@ export const DateFilter = () => {
   };
 
   return (
-    <div className="relative w-36 opacity-100">
+    <div data-testid="date-filter" className="relative w-36 opacity-100">
       <select
         value={selectedLabel}
         onChange={handleChange}

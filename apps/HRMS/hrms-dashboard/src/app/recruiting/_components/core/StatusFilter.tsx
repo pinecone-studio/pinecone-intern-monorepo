@@ -12,7 +12,7 @@ export const StatusFilter = () => {
   };
 
   return (
-    <div className="relative w-32 opacity-100">
+    <div data-testid="status-filter" className="relative w-32 opacity-100">
       <select
         value={selectedLabel}
         onChange={handleChange}
