@@ -1,6 +1,8 @@
 query GetRequests {
   getRequests {
     _id
+    name
+    employeeId
     leaveType
     declinedReasoning
     startDate

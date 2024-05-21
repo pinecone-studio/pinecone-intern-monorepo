@@ -1,38 +1,36 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { headers } from './utils/Table';
-import { useGetRequestTodayQuery, useGetRequestsQuery } from '../../../generated';
+import { LeaveRequest, useGetRequestsQuery } from '../../../generated';
 import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
+import { formatDate } from '../_components/Date';
+import FilterByToday from '../_components/FilterByToday';
 
 const Requests = () => {
   const router = useRouter();
-  const [showTodayRequests, setShowTodayRequests] = useState(false);
-  const { data: requestsData, loading: requestsLoading, refetch: requestsRefetch } = useGetRequestsQuery();
-  const { data: todayRequestsData, loading: todayRequestsLoading } = useGetRequestTodayQuery({
-    variables: {
-      startDate: new Date().toISOString().split('T')[0],
-    },
-  });
+  const [filteredData, setFilteredData] = useState<LeaveRequest[]>([]);
+  const { data, loading, refetch } = useGetRequestsQuery();
 
   useEffect(() => {
-    if (requestsRefetch) {
-      requestsRefetch();
+    if (refetch) {
+      refetch();
     }
-  }, [showTodayRequests, requestsRefetch]);
+  }, [refetch]);
 
-  const handleTodayButtonClick = () => {
-    setShowTodayRequests(true);
+  const filterDataByToday = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const todayRequests = (data?.getRequests || []).filter((dat) => new Date(dat.startDate).toISOString().split('T')[0] === today) as LeaveRequest[];
+    setFilteredData(todayRequests);
   };
 
-  if (requestsLoading || todayRequestsLoading)
+  if (loading)
     return (
       <div className="flex justify-center items-center pt-10">
         <span className="loading loading-spinner loading-md"></span>
       </div>
     );
-
-  const requestsToShow = showTodayRequests ? todayRequestsData?.getRequestToday : requestsData?.getRequests || [];
+  const requestsToShow = filteredData.length > 0 ? filteredData : data?.getRequests;
 
   return (
     <div className="py-10">
@@ -47,9 +45,7 @@ const Requests = () => {
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
           </div>
-          <button className="border border-[#D6D8DB] border-solid text-black h-30 rounded-md hover:bg-black hover:text-white" style={{ padding: 'revert' }} onClick={handleTodayButtonClick}>
-            Өнөөдөр
-          </button>
+          <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
         </div>
         <div className="flex flex-col gap-6 bg-gray-100">
           <div className="overflow-x-auto shadow-md rounded-lg">
@@ -67,11 +63,11 @@ const Requests = () => {
                 <tbody>
                   {requestsToShow?.map((dat, index) => (
                     <tr key={index} className="border-solid border-b border-b-[#EDE6F0] cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat?._id}`)} data-testid="requests">
-                      <td className="p-4 w-1/5 truncate">{dat?._id}</td>
-                      <td className="p-4 w-1/5 truncate">{dat?.leaveType}</td>
-                      <td className="p-4 w-1/5 truncate">{dat?.startDate}</td>
-                      <td className="p-4 w-1/5 truncate">{dat?.totalHour}</td>
-                      <td className="p-4 w-1/5 truncate">{dat?.superVisor}</td>
+                      <td className="p-4 w-1/5 truncate">{dat?.name}</td>
+                      <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.leaveType}</td>
+                      <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.startDate ? formatDate(dat.startDate) : ''}</td>
+                      <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.totalHour}</td>
+                      <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.superVisor}</td>
                       <td className="p-4 w-1/5 truncate" data-testid="request-status">
                         {dat && <Status dat={dat} />}
                       </td>
