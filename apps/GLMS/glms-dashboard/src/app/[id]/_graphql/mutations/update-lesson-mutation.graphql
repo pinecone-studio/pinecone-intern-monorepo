@@ -1,0 +1,7 @@
+mutation updateLessonByInput($id: ID!, $lessonInput: LessonInput!) {
+  updateLessonByInput(id: $id, lessonInput: $lessonInput) {
+    id
+    title
+    thumbnail
+  }
+}
