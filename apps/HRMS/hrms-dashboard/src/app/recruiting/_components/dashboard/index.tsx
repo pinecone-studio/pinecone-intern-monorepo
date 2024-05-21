@@ -7,23 +7,13 @@ export const JobRecruitDashboard = () => {
     router.push('/recruiting/add-job');
   };
   return (
-    <div>
-      <div style={{ paddingInline: '24px', paddingTop: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1 style={{ fontSize: '18px', fontWeight: 700, color: 'black' }}> Ажлын зар</h1>
-          <div data-testid="jobAdd-button">
-            <Button label="Зар нэмэх" plusIcon onClick={addRecruit} />
-          </div>
+    <div className="px-6">
+      <div className="flex justify-between items-center">
+        <div className="text-2xl tracking-tight font-bold text-[#121316]">Ажлын зар</div>
+        <div data-testid="jobAdd-button" className="pt-4">
+          <Button label="Зар нэмэх" plusIcon onClick={addRecruit} />
         </div>
       </div>
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', paddingInline: '23px', height: '56px' }}>
-          <p style={{ fontSize: '14px', paddingBlock: '4px', fontWeight: 500 }}>Зар</p>
-          <p style={{ fontSize: '14px', paddingBlock: '4px' }}>Ирсэн өргөдөл</p>
-        </div>
-      </div>
-      <div className="border-t-[#ECEDF0] border-t w-full px-12"></div>
-      <div style={{ borderTop: '1px solid #303436', width: '100%' }}></div>
     </div>
   );
 };

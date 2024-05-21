@@ -9,15 +9,6 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('Recruit Component', () => {
-  it('should render recruit components', () => {
-    const { container, getByText } = render(<JobRecruitDashboard />);
-    expect(container).toBeDefined();
-
-    const firstParagraph = getByText('Зар');
-    const secondParagraph = getByText('Ирсэн өргөдөл');
-    expect(firstParagraph).toBeDefined();
-    expect(secondParagraph).toBeDefined();
-  });
   it('should contain the correct text content', () => {
     const { getByText } = render(<JobRecruitDashboard />);
     expect(getByText('Ажлын зар')).toBeDefined();
