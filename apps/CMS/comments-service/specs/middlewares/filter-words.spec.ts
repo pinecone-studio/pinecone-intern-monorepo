@@ -1,23 +1,19 @@
 import { filterWords } from '@/middlewares/filter-words';
-
-jest.mock('bad-words', () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      clean: jest.fn((text) => text.replace(/badword/g, '****')),
-    };
+import Filter from 'bad-words';
+describe('bad words', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-});
-
-describe('filterWords', () => {
-  it('should filter out bad words', async () => {
-    const comment = 'This is a badword comment';
+  it('should return filtered comment', async () => {
+    const comment = 'This is shit';
     const result = await filterWords(comment);
-    expect(result).toBe('This is a **** comment');
+    expect(result).toEqual('This is ****');
   });
-
-  it('should leave clean comments unchanged', async () => {
-    const comment = 'This is a clean comment';
-    const result = await filterWords(comment);
-    expect(result).toBe('This is a clean comment');
+  it('should throw error when failed to filter', async () => {
+    const filter = new Filter();
+    jest.spyOn(filter, 'clean').mockImplementation(() => {
+      throw new Error('Failed to filter');
+    });
+    await expect(filterWords('')).rejects.toThrowError('Failed to filter');
   });
 });
