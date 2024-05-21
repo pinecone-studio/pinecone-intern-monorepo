@@ -22,9 +22,10 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
     const imageUrl = employee.imageUrl
     const jobTitle = employee.jobTitle
     const ladderLevel = employee.ladderLevel
+    const department = employee.department
 
 
-    const token = jwt.sign({ id, firstName, email, lastName , imageUrl , ladderLevel , jobTitle }, 'secret-key');
+    const token = jwt.sign({ id, firstName, email, lastName , imageUrl , ladderLevel , jobTitle ,department }, 'secret-key');
 
     return { token, message: 'Амжилттай нэвтэрлээ' };
   } catch (error) {
