@@ -5,7 +5,7 @@ import { Loader } from '../_components/Loader';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 import TextInput from '../_components/TextInput';
-import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
+import { ArrowLeftIcon } from '../../../../public/assets/ArrowLeftIcon';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
@@ -101,7 +101,7 @@ const SignUpForm = () => {
       >
         {signUpLoading && <Loader />}
         <h2 className="mr-[20%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
-        <ArrowBackIcon />
+        <ArrowLeftIcon />
       </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>
