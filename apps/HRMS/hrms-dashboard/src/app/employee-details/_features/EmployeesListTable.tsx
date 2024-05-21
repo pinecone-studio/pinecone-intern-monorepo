@@ -5,7 +5,6 @@ import { perPage } from '../constants';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useRefetch } from '@/common/providers/RefetchProvider';
 
 type PropsType = {
   setPage: Dispatch<SetStateAction<number | undefined>>;
