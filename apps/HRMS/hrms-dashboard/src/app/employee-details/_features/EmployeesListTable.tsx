@@ -5,6 +5,7 @@ import { perPage } from '../constants';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { useRefetch } from '@/common/providers/RefetchProvider';
 
 type PropsType = {
   setPage: Dispatch<SetStateAction<number | undefined>>;
@@ -16,6 +17,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   const searchParams = useSearchParams();
   const employeesSearchPath: string | null = searchParams.get('search');
   const employmentStatusPath: string | null = searchParams.get('employmentStatus');
+
   const { data, loading, refetch } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {
