@@ -1,4 +1,4 @@
-
+const testEmailAddress = 'pinecone@gmail.com';
 
 describe('articles page', () => {
   beforeEach(() => cy.visit('/signup'));
@@ -96,3 +96,29 @@ describe('articles page', () => {
   });
 });
 
+describe('Sign-up full workflow', () => {
+
+  beforeEach(() => cy.visit('/signup'));
+
+  it("12. When user clicks on the signup button, it should create new user and shows 'Хэрэглэгч амжилттай үүслээ' message", () => {
+    cy.get('[data-cy="Sign-Up-Button"]').should('exist').click();
+    cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
+    cy.get('input[name="emailOrPhoneNumber"]').type(testEmailAddress);
+    cy.get('input[name="password"]').type('12345678aB!');
+    cy.get('input[name="confirmPassword"]').type('12345678aB!');
+    cy.get('[data-cy="Sign-Up-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-Up-Button"]').click();
+    cy.contains('Хэрэглэгч амжилттай үүслээ').should('be.visible');
+  });
+
+  it("13. When user clicks on the signup button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Хэрэглэгч амжилттай үүслээ' and 'Бүртгэлтэй хэрэглэгч байна' message ", () => {
+    cy.get('[data-cy="Sign-Up-Button"]').should('exist').click();
+    cy.get('[data-cy="Sign-Up-Button"]').should('be.disabled');
+    cy.get('input[name="emailOrPhoneNumber"]').type(testEmailAddress);
+    cy.get('input[name="password"]').type('12345678aB!');
+    cy.get('input[name="confirmPassword"]').type('12345678aB!');
+    cy.get('[data-cy="Sign-Up-Button"]').should('not.be.disabled');
+    cy.get('[data-cy="Sign-Up-Button"]').click();
+    cy.contains('Бүртгэлтэй хэрэглэгч байна').should('be.visible');
+  })
+})
