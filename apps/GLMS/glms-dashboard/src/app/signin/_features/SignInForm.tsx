@@ -9,7 +9,7 @@ import { FaceBookIcon } from '../../../../public/assets/FacebookIcon';
 import { LinkedInIcon } from '../../../../public/assets/LinkedInIcon';
 import TextInput from '../../signup/_components/TextInput';
 import { Loader } from '../../signup/_components/Loader';
-import { ArrowLeftIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowLeftIcon';
+import { ArrowLeftIcon } from '../../../../public/assets/ArrowLeftIcon';
 
 const SignInForm = () => {
   const { handleSignIn, loginLoading } = useAuth();
