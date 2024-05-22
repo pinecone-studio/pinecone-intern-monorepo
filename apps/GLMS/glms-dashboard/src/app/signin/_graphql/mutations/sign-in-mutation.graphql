@@ -1,0 +1,6 @@
+mutation SignIn($emailOrPhoneNumber: String!, $password: String!) {
+  signIn(input: { emailOrPhoneNumber: $emailOrPhoneNumber, password: $password }) {
+    message
+    token
+  }
+}
