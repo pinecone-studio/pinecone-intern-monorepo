@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { LinkButtonIcon } from '@/icons';
 import { MorevertButtonIcon } from '@/icons';
 import { ArchiveButtonIcon } from '@/icons';
-import { ArticleStatus, useUpdateArticleStatusByIdMutation } from '@/generated';
+import { ArticleStatus, useGetArticleByIdQuery, useUpdateArticleStatusByIdMutation } from '@/generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
 import { ArchivedSuccessfullyModal } from '../_components/ArchivedSuccessfullyModal';
@@ -14,6 +14,8 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
   const [updateArticleStatusById] = useUpdateArticleStatusByIdMutation();
+  const { data } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
+
   const refetch = useRefetch();
 
   const handleClick = () => {
@@ -37,6 +39,18 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
   }, [id]);
 
   const archiveArticle = async () => {
+    if (data?.getArticleByID?.status === 'ARCHIVED') {
+      toast.success(`Looks like it's already archived`, {
+        style: {
+          border: '1px solid #713200',
+          padding: '16px',
+          color: '#713200',
+        },
+        position: 'top-center',
+      });
+      return;
+    }
+
     try {
       const { data } = await updateArticleStatusById({
         variables: {
