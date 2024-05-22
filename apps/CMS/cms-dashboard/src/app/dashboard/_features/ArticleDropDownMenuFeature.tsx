@@ -9,19 +9,20 @@ import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
 import { ArchivedSuccessfullyModal } from '../_components/ArchivedSuccessfullyModal';
 import { useRefetch } from '@/common/providers/RefetchProvider';
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
 
 export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
-  const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
   const [updateArticleStatusById] = useUpdateArticleStatusByIdMutation();
   const refetch = useRefetch();
 
-  const handleClick = () => {
-    setAnchorEl(true);
-  };
+  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => {
-    setAnchorEl(false);
+    setAnchorEl(null);
   };
 
   const handleClickCopy = useCallback(async () => {
@@ -64,35 +65,52 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
       }
     }
   };
+
   return (
     <div className="relative dropdown">
-      <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button" onClick={handleClick}>
+      {/* <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button">
         <MorevertButtonIcon />
-      </div>
+      </div> */}
 
-      <div className="absolute left-[-50px] top-8">
-        {anchorEl && (
-          <div onClick={handleClose} data-cy="drop-down-menu-test-cy">
-            <ul tabIndex={0} className="dropdown-content z-10 menu p-2 shadow rounded-xl border border-slate-200">
-              <li onClick={archiveArticle} data-testid="close-menu-button-test-id" className="z-10 bg-white">
-                <a>
-                  <ArchiveButtonIcon />
-                  Архив
-                </a>
-              </li>
+      <IconButton data-testid="menu-button-test-id" sx={{ cursor: 'pointer' }} onClick={handleClick}>
+        <MorevertButtonIcon />
+      </IconButton>
 
-              <li data-testid="copy-clipboard-button-test-id" className="z-10 bg-white" onClick={handleClickCopy}>
-                <a className="whitespace-nowrap">
-                  <LinkButtonIcon />
-                  Линк хуулах
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
+      <Menu data-testid="drop-down-menu-test-id" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <Stack gap={0.2}>
+          <Stack
+            className={`close-test-class-name`}
+            data-testid="close-button-menu-test-id"
+            direction={'row'}
+            px={2}
+            alignItems={'center'}
+            onClick={handleClose}
+            sx={{
+              '&:hover': {
+                bgcolor: '#0000000A',
+              },
+            }}
+          >
+            <Stack data-testid="item-icon" sx={{ color: '#000' }}>
+              <ArchiveButtonIcon />
+            </Stack>
 
-        {copied && <p className="text-slate-50 bg-[#8e8d8d] px-3 w-fit rounded-lg mt-2 ml-9 z-10">Copied</p>}
-      </div>
+            <Typography p={1}>Архив</Typography>
+          </Stack>
+
+          <Tooltip data-testid="copy-to-clipboard-id" arrow open={copied} title="Copied" onClick={() => handleClickCopy()}>
+            <MenuItem>
+              <ListItemIcon sx={{ color: '#000' }}>
+                <LinkButtonIcon />
+              </ListItemIcon>
+
+              <ListItemText>Линк хуулах</ListItemText>
+            </MenuItem>
+          </Tooltip>
+        </Stack>
+      </Menu>
+
+      {copied && <p className="text-slate-50 bg-[#8e8d8d] px-3 w-fit rounded-lg mt-2 ml-9 z-10">Copied</p>}
     </div>
   );
 };

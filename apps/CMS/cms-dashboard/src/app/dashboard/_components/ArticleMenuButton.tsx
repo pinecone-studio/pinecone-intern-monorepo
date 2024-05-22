@@ -26,7 +26,7 @@ export const ArticleMenuButton = ({ id }: { id: string }) => {
 
     setTimeout(() => {
       setCopied(false);
-    }, 1300);
+    }, 1000);
   }, [id]);
 
   return (

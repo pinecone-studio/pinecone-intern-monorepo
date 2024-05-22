@@ -3,13 +3,17 @@
 import { Article, useGetArticleByIdQuery } from '@/generated';
 import { useParams } from 'next/navigation';
 
- const CopyLink = () => {
+const CopyLink = () => {
   const { id } = useParams();
   const { data, loading, error } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
   const article = data?.getArticleByID as Article | undefined;
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="w-full flex justify-center items-center py-8">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
   }
 
   if (error) {
@@ -29,4 +33,4 @@ import { useParams } from 'next/navigation';
   );
 };
 
-export default CopyLink
+export default CopyLink;
