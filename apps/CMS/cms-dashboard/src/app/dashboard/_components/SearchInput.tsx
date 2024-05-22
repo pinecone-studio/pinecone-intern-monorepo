@@ -2,6 +2,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { MagnifyingGlassSvg } from '../../../assets/icons/MagnifyingClassIcon';
+import { ClearAllFilterIcon } from '@/assets/icons';
 
 export const SearchInput = () => {
   const router = useRouter();
@@ -18,7 +19,12 @@ export const SearchInput = () => {
     },
     [searchParams]
   );
+  const clearFilter = ({ name }: { name: string }) => {
+    const params = new URLSearchParams(searchParams.toString());
 
+    params.delete(name);
+    return params.toString();
+  };
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
@@ -28,6 +34,10 @@ export const SearchInput = () => {
     },
     [pathname, createQueryString, router]
   );
+  const handleClear = useCallback(() => {
+    setSearchValue('');
+    router.push(pathname + '?' + clearFilter({ name: 'searchedValue' }));
+  }, [pathname, clearFilter, router]);
 
   useEffect(() => {
     setSearchValue(searchParams.get('searchedValue') ?? '');
@@ -37,6 +47,9 @@ export const SearchInput = () => {
       <label className="h-full flex items-center gap-2 input  border-[1px] border-[#D6D8DB] focus-within:outline-none">
         <MagnifyingGlassSvg />
         <input data-testid="search-input-test-id" type="text" value={searchValue} className="grow" placeholder="Нийтлэл, шошгоор хайх" onChange={handleChange} />
+        <button data-testid="clear-filter-button-test-id" onClick={handleClear}>
+          <ClearAllFilterIcon />
+        </button>
       </label>
     </div>
   );
