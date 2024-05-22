@@ -2,7 +2,7 @@ export const ArrowSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="pointer-events-none absolute top-2.5 right-4 h-5 w-5 fill-[#3F4145]"
+      className="pointer-events-none absolute top-1.5 right-3 h-5 w-5 fill-[#3F4145]"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-labelledby="title-04 description-04"

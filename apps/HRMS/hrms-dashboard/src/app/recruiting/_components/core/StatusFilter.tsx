@@ -12,11 +12,11 @@ export const StatusFilter = () => {
   };
 
   return (
-    <div className="relative my-6 w-36 opacity-100">
+    <div data-testid="status-filter" className="relative w-32 opacity-100">
       <select
         value={selectedLabel}
         onChange={handleChange}
-        className="relative inline-block h-10 w-full text-[#3F4145] font-semibold appearance-none rounded-lg border border-[#ECEDF0] bg-white px-4 text-slate-900 outline-none"
+        className="relative inline-block h-8 tracking-tight w-full text-[#3F4145] font-semibold text-sm appearance-none rounded-lg border border-[#ECEDF0] bg-white px-3 text-slate-900 outline-none whitespace-nowrap"
       >
         <option value="">Төлөв</option>
         {labels.map((label, index) => (
