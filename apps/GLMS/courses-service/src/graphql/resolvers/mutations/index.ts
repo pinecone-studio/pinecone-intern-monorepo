@@ -11,3 +11,4 @@ export * from './update-lesson-by-input';
 export * from './update-course-status';
 export * from './sign-up';
 export * from './sign-in';
+export * from './delete-course';

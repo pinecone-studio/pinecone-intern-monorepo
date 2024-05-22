@@ -25,5 +25,6 @@ export const courseSchema = gql`
     updateCourse(id: ID!, courseInput: CourseInput!): Course!
     updateCourseStatus(id: ID!): Course!
     createCourse(courseInput: CourseInput!): Course!
+    deleteCourse(id: ID!): Course!
   }
 `;
