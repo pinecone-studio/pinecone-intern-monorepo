@@ -14,9 +14,11 @@ import { RefetchProvider } from '@/common/providers/RefetchProvider';
 const Home = () => {
   const searchParams = useSearchParams();
   const [pageNumber, setPageNumber] = useState<number>(0);
+  const limit = 8;
   const statusFilter = searchParams.get('status') ?? '';
   const searchedValueFilter = searchParams.get('searchedValue') ?? '';
-
+  const startDateFilter = searchParams.get('startDate');
+  const endDateFilter = searchParams.get('endDate');
   const {
     data,
     loading,
@@ -25,19 +27,21 @@ const Home = () => {
   } = useGetArticlesByPaginateQuery({
     variables: {
       paginationInput: {
-        limit: 3,
+        limit,
         page: pageNumber + 1,
       },
       filterInput: {
         status: statusFilter === 'ALL' ? '' : statusFilter,
         searchedValue: searchedValueFilter,
+        startDate: startDateFilter,
+        endDate: endDateFilter,
       },
     },
   });
 
   const articles = data?.getArticlesByPaginate.articles as Article[] | undefined;
-  const totalArticles = data?.getArticlesByPaginate.totalArticles ?? 3;
-  const totalPageQuantity = Math.ceil(totalArticles / 3);
+  const totalArticles = data?.getArticlesByPaginate.totalArticles ?? limit;
+  const totalPageQuantity = Math.ceil(totalArticles / limit);
 
   useEffect(() => {
     setPageNumber(0);

@@ -14,6 +14,7 @@
     "baseUrl": "../../..",
     "paths": {
       "@/app/*": ["apps/CMS/cms-dashboard/src/app/*"],
+      "@/assets/*": ["apps/CMS/cms-dashboard/src/assets/*"],
       "@/generated": ["apps/CMS/cms-dashboard/src/generated/index.ts"],
       "@/common/*": ["apps/CMS/cms-dashboard/src/common/*"],
       "@/file-management": ["libs/file-management/src/index.ts"],
