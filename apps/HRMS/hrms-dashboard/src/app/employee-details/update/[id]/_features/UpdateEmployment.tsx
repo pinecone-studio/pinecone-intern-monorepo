@@ -72,6 +72,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
         <p className="w-full text-left text-main  text-sm font-normal">Ажилласан хугацаа</p>
         <p className="w-full text-left text-main text-base font-semibold">{employedYear} жил</p>
       </div>
+      
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Төлөв</p>
         <p className="w-full text-left text-main text-base font-semibold">{props.employmentStatus}</p>
