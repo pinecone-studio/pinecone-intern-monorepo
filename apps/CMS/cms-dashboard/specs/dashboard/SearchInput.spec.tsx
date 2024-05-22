@@ -26,4 +26,9 @@ describe('SearchInput component', () => {
     fireEvent.change(getByTestId('search-input-test-id'), { target: { value: 'searchedValue=newValue' } });
     jest.runAllTimers();
   });
+  it('4. Should handleClear function called', () => {
+    const { getByTestId } = render(<SearchInput />);
+    (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams('searchedValue=newValue'));
+    fireEvent.click(getByTestId('clear-filter-button-test-id'));
+  });
 });

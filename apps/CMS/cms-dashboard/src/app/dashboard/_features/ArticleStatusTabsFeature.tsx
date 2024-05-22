@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { StatusTab } from '../_components/StatusTab';
 import Link from 'next/link';
+import { ClearAllFilterIcon } from '@/assets/icons';
 
 const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: string) => {
   return articles?.filter((item) => item.status === status).length;
@@ -26,22 +27,32 @@ export const ArticleStatusTabsFeature = () => {
     },
     [searchParams]
   );
+  const clearFilter = ({ name }: { name: string }) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.delete(name);
+    return params.toString();
+  };
   const currentStatus = searchParams.get('status') || 'ALL';
 
   return (
-    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-[56px] px-3 flex flex-row gap-1 items-center cursor-pointer border-[1px] bg-white border-border rounded-[8px] ">
-      <Link href={pathname + '?' + createQueryString('status', 'ALL')} className="h-[100%]">
-        <StatusTab selectedStatus={currentStatus} quantity={articles?.length} thisStatus={'ALL'} />
+    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-[56px] px-3 flex items-center justify-between border-[1px] bg-white border-border rounded-[8px] ">
+      <div className="flex gap-10">
+        <Link href={pathname + '?' + createQueryString('status', 'ALL')} className="h-[100%]">
+          <StatusTab selectedStatus={currentStatus} quantity={articles?.length} thisStatus={'ALL'} />
+        </Link>
+        {Object.values(ArticleStatus).map((item, index) => {
+          const myQty = getNumberOfArticlesByStatus(articles, item);
+          return (
+            <Link href={pathname + '?' + createQueryString('status', item)} key={index} className="h-[100%]">
+              <StatusTab selectedStatus={currentStatus} quantity={myQty} thisStatus={item} />
+            </Link>
+          );
+        })}
+      </div>
+      <Link href={pathname + '?' + clearFilter({ name: 'status' })}>
+        <ClearAllFilterIcon />
       </Link>
-
-      {Object.values(ArticleStatus).map((item, index) => {
-        const myQty = getNumberOfArticlesByStatus(articles, item);
-        return (
-          <Link href={pathname + '?' + createQueryString('status', item)} key={index} className="h-[100%]">
-            <StatusTab selectedStatus={currentStatus} quantity={myQty} thisStatus={item} />
-          </Link>
-        );
-      })}
     </div>
   );
 };

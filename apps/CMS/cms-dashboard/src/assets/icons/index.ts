@@ -17,3 +17,5 @@ export * from './SuccessIcon';
 export * from './GoogleIcon';
 export * from './FacebookIcon';
 export * from './LinkedInIcon';
+export * from './CalendarIcon';
+export * from './ClearAllFilterIcon';
