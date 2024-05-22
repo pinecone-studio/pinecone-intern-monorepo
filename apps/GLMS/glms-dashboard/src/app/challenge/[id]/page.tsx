@@ -4,9 +4,9 @@ import Question from '../_components/Question';
 import ChoiceText from '../_components/TextChoicePicker';
 import { useEffect, useState } from 'react';
 import ProgressBar from '../_components/ProgressBar';
-import Link from 'next/link';
 import Skeleton from '../_feature/Skeleton';
 import { useGetChallengeQuery } from '@/generated';
+import { useRouter } from 'next/navigation';
 
 interface IStudentChoiceData {
   quizId: string;
@@ -21,6 +21,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [progressValue, setProgressValue] = useState<number>(0);
   const [isShow, setIsShow] = useState(0);
   const [isLast, setIsLast] = useState(false);
+  const router = useRouter();
 
   const [studentChoiceData] = useState<IStudentChoiceData[]>([]);
 
@@ -30,9 +31,8 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   };
 
   const studentChoiceDataPusher = () => {
-    const newStudentChoiceData = studentChoiceData.push({ quizId: selectedQuiz!, choiceId: selectedChoice! });
-    localStorage.setItem('studentChoices', JSON.stringify(newStudentChoiceData));
-    console.log('studentChoices', studentChoiceData);
+    studentChoiceData.push({ quizId: selectedQuiz!, choiceId: selectedChoice! });
+    localStorage.setItem('studentChoices', JSON.stringify(studentChoiceData));
   };
 
   const oneValueCalculator = () => {
@@ -42,9 +42,11 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   };
 
   const handleProgressValue = () => {
+    if (!isLast) {
+      setIsShow(isShow + 1);
+    }
     if (progressValue !== 100) {
       setSelectedChoice(null);
-      setIsShow(isShow + 1);
       setProgressValue((prev) => prev + oneProgressValue!);
       checkLast();
     }
@@ -85,22 +87,22 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       )}
       <div>
         {isLast ? (
-          <Link href="/challenge">
-            <button
-              disabled={selectedChoice ? false : true}
-              role="button"
-              className="btn border-0 rounded-lg text-white p-2 
+          <button
+            disabled={selectedChoice ? false : true}
+            role="button"
+            className="btn border-0 rounded-lg text-white p-2 
       text-sm bg-[#989898] w-28"
-              onClick={() => {
-                handleProgressValue();
-                studentChoiceDataPusher();
-              }}
-            >
-              Дуусгах
-            </button>
-          </Link>
+            onClick={() => {
+              handleProgressValue();
+              studentChoiceDataPusher();
+              router.push(`challenge/result/${params.id}`);
+            }}
+          >
+            Дуусгах
+          </button>
         ) : (
           <button
+            data-testid="next-button"
             disabled={selectedChoice ? false : true}
             role="button"
             className="btn border-0 rounded-lg text-white p-2 

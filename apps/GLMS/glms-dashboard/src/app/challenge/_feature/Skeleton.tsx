@@ -1,6 +1,6 @@
 const Skeleton = () => {
   return (
-    <div className="animate-pulse py-10 w-1/3 h-full mt-[75px]">
+    <div data-testid="skeleton" className="animate-pulse py-10 w-1/3 h-full mt-[75px]">
       <div className="h-8 bg-gray-100 rounded-xl dark:bg-gray-300 mb-[150px]" />
       <div
         className="h-20 border-gray-100 border-2 
