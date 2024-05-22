@@ -41,8 +41,10 @@ export const articleSchema = gql`
   }
 
   input FilterInput {
-    status: String!
-    searchedValue: String!
+    status: String
+    searchedValue: String
+    startDate: Date
+    endDate: Date
   }
 
   type PaginationReturn {
