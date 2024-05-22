@@ -1,30 +1,33 @@
 "use client"
-import { Challenge, Course, Lesson, Quiz, useGetChallengeByIdQuery } from '@/generated';
+import { Challenge, Course, Lesson, Quiz, QuizInput, useGetChallengeByIdQuery } from '@/generated';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 type Props = {}
 
 const Home = (props: Props) => {
-    const pathName = usePathname().substring(1);
+  const pathName = usePathname().substring(6);
   const [newCourse, setNewCourse] = useState<Course>();
+  const [quizs, setQuizs] = useState<QuizInput[]>([]);
   const [newChallenge, setNewChallenge] = useState<Challenge[]>();
-  const { data: quizData, loading: quizLoading, error: quizError } = useGetChallengeByIdQuery({ variables: { challengeId: "6639b508ad9ecc26d93ecafd" } });
-  useEffect(() => {
-    const getByLessonIdData = quizData?.getChallengeById as Challenge[];
-    setNewChallenge(getByLessonIdData);
-  }, [quizData, quizLoading, quizError]);
-
+  const { data: quizData, loading: quizLoading, error: quizError } = useGetChallengeByIdQuery({ variables: { challengeId: pathName } });
+  // useEffect(() => {
+  //   const getByLessonIdData = quizData?.getChallengeById as Challenge[];
+  //   setNewChallenge(getByLessonIdData);
+  //   setQuizs(getByLessonIdData[0].quiz);
+  //   console.log("-------------->",getByLessonIdData)
+  // }, []);
+  // setQuizs(quizData?.getChallengeById?.quiz);
   
   return (
     <div>
-        <button onClick={() => console.log(quizData)} className='bg-blue-400 p-4 rounded-md'></button>
+        <button onClick={() => console.log(quizData, quizs)} className='bg-blue-400 p-4 rounded-md'></button>
         {
-            quizData?.getChallengeById?.quiz?.map((quiz) => {
+            quizData?.getChallengeById?.quiz?.map((quiz, i) => {
                 return (
-                    <>
+                    <div key={i}>
                         <p>{quiz?.question}</p>
-                    </>
+                    </div>
                 )
             } )
         }
