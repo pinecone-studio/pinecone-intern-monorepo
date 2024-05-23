@@ -7,6 +7,7 @@ import ProgressBar from '../_components/ProgressBar';
 import Skeleton from '../_feature/Skeleton';
 import { useGetChallengeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
+import ChoiceImage from '../_components/ImageChoicePicker';
 
 interface IStudentChoiceData {
   quizId: string;
@@ -62,6 +63,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       setIsLast(false);
     }
   };
+
   return (
     <div className="bg-white flex flex-col justify-center items-center h-[90vh]">
       <ProgressBar progressValue={progressValue} />
@@ -74,10 +76,14 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
               {isShow === index && (
                 <div key={quiz?._id} className="flex w-full flex-col justify-center items-center h-[80vh] gap-[92px]">
                   <Question question={quiz?.question} index={index} />
-                  <div className="flex flex-col items-center gap-8 mt-16">
-                    {quiz?.choices?.map((choice) => (
-                      <ChoiceText key={choice?._id} choice={choice?.choice} quizId={quiz?._id} id={choice?._id} selectedChoice={selectedChoice} handleChange={handleChange} />
-                    ))}
+                  <div className={`flex ${quiz?.choicesType === 'TEXT' ? 'flex-col' : 'flex-row'} items-center gap-8 mt-16`}>
+                    {quiz?.choices?.map((choice) =>
+                      quiz.choicesType === 'TEXT' ? (
+                        <ChoiceText key={choice?._id} choice={choice?.choice} quizId={quiz?._id} id={choice?._id} selectedChoice={selectedChoice} handleChange={handleChange} />
+                      ) : (
+                        <ChoiceImage key={choice?._id} choice={choice?.choice} setSelectedChoice={setSelectedChoice} selectedChoice={selectedChoice} id={choice?._id} />
+                      )
+                    )}
                   </div>
                 </div>
               )}
