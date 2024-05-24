@@ -18,6 +18,7 @@ export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [lessonSignUp, { loading: signUpLoading }] = useLessonSignUpMutation();
   const [lessonSignIn, { loading }] = useLessonSignInMutation();
+
   const router = useRouter();
 
   const handleSignUp = async (email: string, phoneNumber: string, password: string) => {
