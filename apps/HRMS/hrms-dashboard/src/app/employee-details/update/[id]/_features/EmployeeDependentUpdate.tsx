@@ -54,35 +54,29 @@ export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, r
     onBlur: formik.handleBlur,
   });
   return (
-    <main className="flex flex-col max-w-[650px] w-full p-10  rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
+    <main className="flex flex-col max-w-[500px] w-full p-10  rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
       <div className="flex justify-between">
         <p data-testid="addEmployeeTitle" className="text-lg text-main font-semibold">
-          Нэмэлт мэдээлэл
+          Гэр бүлийн мэдээлэл
         </p>
         <div data-testid="close-button" className="cursor-pointer" onClick={() => handleUpdateDependentClose()}>
           <CloseSvg />
         </div>
       </div>
-      <form className="flex flex-col justify-center px-10 pt-10 gap-4">
+      <form className="flex flex-col justify-center  pt-10 gap-4">
         <div className="grid grid-cols-1 gap-6">
-          <CustomInput data-testid="customInput" label={'Овог оо оруулна уу'} type={'lastName'} placeholder={'Овог оо оруулна уу'} {...generateFormikProps('lastName' as keyof typeof formik.values)} />
+          <CustomInput data-testid="customInput" label={'Овог'} type={'lastName'} placeholder={'Овог оо оруулна уу'} {...generateFormikProps('lastName' as keyof typeof formik.values)} />
+          <CustomInput data-testid="customInput" label={'Нэр'} type={'firstName'} placeholder={'Нэр'} {...generateFormikProps('firstName' as keyof typeof formik.values)} />
           <CustomInput
             data-testid="customInput"
-            label={'Нэрийг нь оруулна уу'}
-            type={'firstName'}
-            placeholder={'Нэрийг нь оруулна уу'}
-            {...generateFormikProps('firstName' as keyof typeof formik.values)}
-          />
-          <CustomInput
-            data-testid="customInput"
-            label={'Холбоо барих дугаар аа бичнэ үү'}
+            label={'Холбоо барих дугаар'}
             type={'phone'}
             placeholder={'Холбоо барих дугаар аа бичнэ үү'}
             {...generateFormikProps('phone' as keyof typeof formik.values)}
           />
           <CustomInput
             data-testid="customInput"
-            label={'энэ хүн таны хэн болох'}
+            label={'Таны хэн болох'}
             type={'dependency'}
             placeholder={'энэ хүн таны хэн болох'}
             {...generateFormikProps('dependency' as keyof typeof formik.values)}
@@ -90,7 +84,7 @@ export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, r
           <div className="flex gap-2 justify-end">
             <button
               data-cy="cancel-button"
-              className="border py-4 px-5 font-semibold rounded-lg border-[D6D8D8]"
+              className="border py-2 px-4 font-semibold rounded-lg border-[D6D8D8]"
               onClick={(e) => {
                 e.preventDefault();
                 handleUpdateDependentClose();
@@ -101,7 +95,7 @@ export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, r
             <button
               data-cy="submit-button"
               type="submit"
-              className=" py-4 px-5 font-semibold rounded-lg bg-black text-white"
+              className=" py-2 px-4 font-semibold rounded-lg bg-black text-white"
               onClick={(e) => {
                 e.preventDefault();
                 formik.handleSubmit();

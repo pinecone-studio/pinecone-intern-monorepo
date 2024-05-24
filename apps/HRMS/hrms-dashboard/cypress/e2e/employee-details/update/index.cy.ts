@@ -1,0 +1,29 @@
+describe('Employee Details page', () => {
+  beforeEach(() => cy.visit('/employee-details'));
+  it('Should fill out and submit the form PersonalUpdateModal', () => {
+    const lastName = 'Doe';
+    const firstName = 'John';
+    const jobTitle = 'Software Engineer';
+    const email = 'john.doe@example.com';
+    const phone = '99112233';
+    const address = 'Ulaanbator Mongolia';
+    cy.get('[data-cy="updateLink"]').should('exist').eq(1).click();
+    cy.get('[data-testid="update-button-info"]').click();
+    cy.get('[data-testid="personal-info-modal"]').should('exist');
+    cy.get('input[name="imageUrl"]').clear();
+    cy.get('input[name="lastName"]').clear();
+    cy.get('input[name="firstName"]').clear();
+    cy.get('input[name="jobTitle"]').clear();
+    cy.get('input[name="email"]').clear();
+    cy.get('input[name="phone"]').clear();
+    cy.get('input[name="address"]').clear();
+    cy.get('input[name="lastName"]').type(lastName);
+    cy.get('input[name="firstName"]').type(firstName);
+    cy.get('input[name="jobTitle"]').type(jobTitle);
+    cy.get('input[name="email"]').type(email);
+    cy.get('input[name="phone"]').type(phone);
+    cy.get('input[name="address"]').type(address);
+    cy.get('[data-testid="submit-btn"]').should('be.visible');
+    cy.get('[data-testid="submit-btn"]').click();
+  });
+});
