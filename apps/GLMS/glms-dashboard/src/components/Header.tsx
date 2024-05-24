@@ -12,7 +12,6 @@ const Header = () => {
   const [email, setEmail] = useState<string>('');
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/');
     const token = localStorage.getItem('token');
     const data = jwt.decode(token);
     setEmail(data?.email);

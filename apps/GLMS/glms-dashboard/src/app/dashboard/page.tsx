@@ -30,11 +30,11 @@ const DashboardOtherLab = () => {
   }, []);
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/');
     const token = localStorage.getItem('token');
     const data = jwt.decode(token);
-    setAccess(data?.role);
+    setAccess(data?.role || 'багш');
   }, []);
+
   if (loading) return <Loading />;
   return (
     <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
