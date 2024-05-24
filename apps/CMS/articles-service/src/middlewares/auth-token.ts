@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
 export const accessTokenAuth = async ({ authorization }: { authorization: string }) => {
-  console.log('props', authorization);
-
   if (!authorization) {
     throw new Error('There is no valid token');
   }
