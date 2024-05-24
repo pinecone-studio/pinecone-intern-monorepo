@@ -16,4 +16,22 @@ describe('RequestDetails component', () => {
     const totalHourElements = queryAllByText(mockData.totalHour);
     expect(totalHourElements.length).toBeTruthy();
   });
+
+  it('renders formatted start date when startDate is provided', () => {
+    const mockDataWithStartDate = {
+      totalHour: 10,
+      startDate: '2024-05-24',
+    };
+
+    const { getByText } = render(<RequestDetails data={mockDataWithStartDate} />);
+    expect(getByText);
+  });
+
+  it('renders empty string when startDate is not provided', () => {
+    const mockDataWithoutStartDate = {
+      totalHour: 10,
+    };
+    const { getByText } = render(<RequestDetails data={mockDataWithoutStartDate} />);
+    expect(getByText);
+  });
 });

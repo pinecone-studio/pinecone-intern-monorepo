@@ -5,7 +5,7 @@ import Info from '../../src/app/leaving/_components/Info';
 describe('DetailInfo component', () => {
   const testData = {
     name: 'test',
-    declinedReasoning: 'Test declined reasoning',
+    leaveType: 'Medical',
   };
 
   it('renders correctly', () => {
@@ -14,6 +14,6 @@ describe('DetailInfo component', () => {
     expect(getByText('Нэр')).toBeTruthy();
     expect(getByText(testData.name)).toBeTruthy();
     expect(getByText('Шалтгаан')).toBeTruthy();
-    expect(getByText(testData.declinedReasoning)).toBeTruthy();
+    expect(getByText(testData.leaveType)).toBeTruthy();
   });
 });

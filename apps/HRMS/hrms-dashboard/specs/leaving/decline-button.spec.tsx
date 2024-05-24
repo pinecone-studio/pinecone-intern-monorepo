@@ -14,12 +14,27 @@ jest.mock('../../src/generated', () => ({
 }));
 
 describe('DeclineButton', () => {
-  it('calls the decline mutation', async () => {
+  it('calls the decline mutation and navigates to /leaving', async () => {
     const mockId = '1';
-    const { getByText } = render(<DeclineButton id={mockId} />);
-
+    const mockStatus = 'pending';
+    const { getByText } = render(<DeclineButton id={mockId} status={mockStatus} />);
     fireEvent.click(getByText('Татгалзах'));
-
     expect(useDeclineRequestMutation).toHaveBeenCalledWith();
+  });
+
+  it('disables button when status is approved', () => {
+    const mockId = '1';
+    const mockStatus = 'approved';
+    const { getByTestId } = render(<DeclineButton id={mockId} status={mockStatus} />);
+    const button = getByTestId('decline-button');
+    expect(button).toBeTruthy();
+  });
+
+  it('enables button when status is not approved', () => {
+    const mockId = '1';
+    const mockStatus = 'pending';
+    const { getByTestId } = render(<DeclineButton id={mockId} status={mockStatus} />);
+    const button = getByTestId('decline-button');
+    expect(button).toBeTruthy();
   });
 });

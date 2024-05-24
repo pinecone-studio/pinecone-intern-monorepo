@@ -6,6 +6,8 @@ import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
 import { formatDate } from '../_components/Date';
 import FilterByToday from '../_components/FilterByToday';
+import FilterByWeek from '../_components/FilterByWeek';
+import { toast } from 'react-toastify';
 
 const Requests = () => {
   const router = useRouter();
@@ -21,7 +23,19 @@ const Requests = () => {
   const filterDataByToday = () => {
     const today = new Date().toISOString().split('T')[0];
     const todayRequests = (data?.getRequests || []).filter((dat) => new Date(dat.startDate).toISOString().split('T')[0] === today) as LeaveRequest[];
+    if (todayRequests.length === 0) {
+      toast.info('Өнөөдөр хүсэлт ирээгүй байна');
+    }
     setFilteredData(todayRequests);
+  };
+  const filterDataByWeek = () => {
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const weekRequests = data?.getRequests.filter((dat) => new Date(dat.startDate) >= weekAgo) as LeaveRequest[];
+    if (weekRequests.length === 0) {
+      toast.info('Энэ 7 хоногт хүсэлт ирээгүй байна');
+    }
+    setFilteredData(weekRequests);
   };
 
   if (loading)
@@ -45,7 +59,10 @@ const Requests = () => {
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
           </div>
-          <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
+          <div className="flex items-center gap-2">
+            <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
+            <FilterByWeek onClick={filterDataByWeek} data-testid="filter-by-week" />
+          </div>
         </div>
         <div className="flex flex-col gap-6 bg-gray-100">
           <div className="overflow-x-auto shadow-md rounded-lg">
@@ -62,7 +79,7 @@ const Requests = () => {
                 </thead>
                 <tbody>
                   {requestsToShow?.map((dat, index) => (
-                    <tr key={index} className="border-solid border-b border-b-[#EDE6F0] cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat?._id}`)} data-testid="requests">
+                    <tr key={index} className="border-solid border-b border-b-[#EDE6F0] cursor-pointer" onClick={() => router.push(`/leaving/detail/?requestId=${dat?._id}`)} data-testid="requests">
                       <td className="p-4 w-1/5 truncate">{dat?.name}</td>
                       <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.leaveType}</td>
                       <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.startDate ? formatDate(dat.startDate) : ''}</td>
