@@ -50,7 +50,6 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
                     localStorage.setItem('lessonID', lesson.id || '');
                     router.push('/section');
                   };
-
                   return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} />;
                 })}
 

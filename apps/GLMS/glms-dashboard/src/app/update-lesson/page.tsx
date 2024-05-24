@@ -7,6 +7,7 @@ import FileUploader from '../../components/FileUploader';
 import { PrevArrow } from '../../../public/assets/PrevArrow';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const UpdateLesson = () => {
   const router = useRouter();
@@ -52,6 +53,11 @@ const UpdateLesson = () => {
         },
       });
       router.push(`/${ID}`);
+      toast.success('Таны хичээл амжилттай засагдлаа ', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     },
   });
 

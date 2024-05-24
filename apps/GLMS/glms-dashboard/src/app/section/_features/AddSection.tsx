@@ -1,6 +1,7 @@
 'use client';
 import { ChangeEventHandler, Dispatch, FormEvent, SetStateAction } from 'react';
 import FileUploader from '../../../components/FileUploader';
+import { toast } from 'react-toastify';
 type AddSectionTypes = {
   handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
   setFieldValue: (_field: string, _value: string, _shouldValidate?: boolean) => void;
@@ -52,6 +53,11 @@ const AddSection = (props: AddSectionTypes) => {
           const handleAddSection = () => {
             item === 'Нийтлэх' ? setIsPosted(true) : setIsPosted(false);
             handleSubmit();
+            toast.success('Таны хичээл амжилттай хадгалагдлаа ', {
+              position: 'top-center',
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
           };
           return (
             <button

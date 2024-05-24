@@ -6,6 +6,7 @@ import { useCreateLessonMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
 import { PrevArrow } from '../../../public/assets/PrevArrow';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const validatinSchema = yup.object({
   title: yup.string().required(),
@@ -36,6 +37,11 @@ const LessonAdd = () => {
         },
       });
       router.push(`/${courseId || 'dashboard'}`);
+      toast.success('Таньд шинэ хичээл нэмэгдлээ ', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     },
   });
 

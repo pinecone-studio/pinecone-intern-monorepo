@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 import { useRouter } from 'next/navigation';
 import FileUploader from '../../components/FileUploader';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const UpdateSection = () => {
   const router = useRouter();
@@ -54,6 +55,11 @@ const UpdateSection = () => {
         });
       }
       router.push('/section');
+      toast.success('Мэдээлэл амжилттай засагдлаа', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     },
   });
 

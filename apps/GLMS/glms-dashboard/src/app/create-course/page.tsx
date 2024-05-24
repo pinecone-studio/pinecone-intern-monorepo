@@ -5,8 +5,9 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { ArrowBackIcon } from '../../../public/assets/ArrowBackIcon';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -51,7 +52,7 @@ const CourseAdd = () => {
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
-          <ArrowLeftIcon /> {'Нүүр'}
+          <ArrowBackIcon /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-4">
@@ -93,6 +94,11 @@ const CourseAdd = () => {
               const handleClick = () => {
                 formik.handleSubmit();
                 setStatusSelected(item);
+                toast.success('Таны хичээл амжилттай нэмэгдлээ', {
+                  position: 'top-center',
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                });
               };
               return (
                 <button
