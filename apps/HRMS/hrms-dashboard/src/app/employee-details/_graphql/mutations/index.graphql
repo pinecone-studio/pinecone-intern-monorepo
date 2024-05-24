@@ -46,3 +46,15 @@ mutation UpdateEmployment($updateEmploymentId: ID!, $input: UpdateEmploymentInpu
     employmentStatus
   }
 }
+
+mutation PersonalUpdate($input: UpdatePersonalInformationInput!, $personalUpdateId: ID!) {
+  personalUpdate(input: $input, id: $personalUpdateId) {
+    email
+    firstName
+    id
+    imageUrl
+    lastName
+    phone
+    jobTitle
+  }
+}

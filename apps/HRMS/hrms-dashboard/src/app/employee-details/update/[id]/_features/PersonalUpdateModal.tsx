@@ -1,12 +1,14 @@
 import * as Yup from 'yup';
 import { Dispatch, SetStateAction } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import { CloseSvg } from '../../../../../../public/assets/CloseSvg';
+import { Employee, UpdatePersonalInformationInput, usePersonalUpdateMutation } from '@/generated';
+import { useParams } from 'next/navigation';
 
 type PersonalUpdateModalProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   firstName?: string | null;
-  lastName?: string | null;
+  lastName?: string | null | undefined;
   email?: string | null;
   phone?: string | null;
   jobTitle?: string | null;
@@ -15,7 +17,7 @@ type PersonalUpdateModalProps = {
   refetch: () => void;
 };
 const validationSchema = Yup.object().shape({
-  imageUrl: Yup.string().required('ImageUrl is required'),
+  imageUrl: Yup.string(),
   lastName: Yup.string().required('Last Name is required'),
   firstName: Yup.string().required('First Name is required'),
   jobTitle: Yup.string().required('Job Title is required'),
@@ -25,6 +27,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
+  const { id } = useParams();
+
   const initialValues = {
     imageUrl: props.imageUrl,
     lastName: props.lastName,
@@ -34,7 +38,24 @@ const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
     phone: props.phone,
     address: props.homeAddress,
   };
-  const handleSubmit = () => {};
+  const [PersonalUpdate] = usePersonalUpdateMutation();
+
+  const handleSubmit = (values: UpdatePersonalInformationInput) => {
+    PersonalUpdate({
+      variables: {
+        personalUpdateId: id,
+        input: {
+          firstName: values.firstName,
+          imageUrl: values.imageUrl,
+          jobTitle: values.jobTitle,
+          email: values.email,
+          phone: values.phone,
+        },
+      },
+    });
+    props.setIsModalOpen(false);
+  };
+
   return (
     <div data-testid="personal-info-modal" className="fixed inset-0 flex items-center justify-center bg-[#0000004D] bg-opacity-50 z-50">
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -100,7 +121,7 @@ const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
               >
                 Цуцлах
               </button>
-              <button onClick={handleSubmit} data-testid="submit-btn" className="w-[100px] rounded-[8px] h-[48px] bg-black text-[white] " type="submit" disabled={isSubmitting && !isValid}>
+              <button data-testid="submit-btn" className="w-[100px] rounded-[8px] h-[48px] bg-black text-[white] " type="submit" disabled={isSubmitting && !isValid}>
                 Хадгалах
               </button>
             </div>
