@@ -1,8 +1,12 @@
 query GetRequestById($id: ID!) {
   getRequestById(_id: $id) {
     _id
+    name
+    employeeId
+    leaveType
     declinedReasoning
-    description
+    startDate
+    totalHour
     superVisor
     status
   }

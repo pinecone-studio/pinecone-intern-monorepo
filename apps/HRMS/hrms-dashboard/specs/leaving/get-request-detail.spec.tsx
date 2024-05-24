@@ -4,7 +4,7 @@ import RequestDetails from '../../src/app/leaving/_components/RequestDetails';
 
 describe('RequestDetails component', () => {
   const mockData = {
-    description: 'Test description',
+    totalHour: 'Test totalHour',
   };
 
   it('renders with correct data', () => {
@@ -13,7 +13,7 @@ describe('RequestDetails component', () => {
     const requestDetailsElement = getByTestId('request-details');
     expect(requestDetailsElement).toBeTruthy();
 
-    const descriptionElements = queryAllByText(mockData.description);
-    expect(descriptionElements.length).toBeTruthy();
+    const totalHourElements = queryAllByText(mockData.totalHour);
+    expect(totalHourElements.length).toBeTruthy();
   });
 });

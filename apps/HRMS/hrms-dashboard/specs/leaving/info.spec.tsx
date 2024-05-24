@@ -4,7 +4,7 @@ import Info from '../../src/app/leaving/_components/Info';
 
 describe('DetailInfo component', () => {
   const testData = {
-    _id: '1',
+    name: 'test',
     declinedReasoning: 'Test declined reasoning',
   };
 
@@ -12,7 +12,7 @@ describe('DetailInfo component', () => {
     const { getByText } = render(<Info data={testData} />);
 
     expect(getByText('Нэр')).toBeTruthy();
-    expect(getByText(testData._id)).toBeTruthy();
+    expect(getByText(testData.name)).toBeTruthy();
     expect(getByText('Шалтгаан')).toBeTruthy();
     expect(getByText(testData.declinedReasoning)).toBeTruthy();
   });
