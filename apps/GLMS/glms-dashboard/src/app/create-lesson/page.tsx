@@ -24,6 +24,7 @@ const LessonAdd = () => {
     },
     validationSchema: validatinSchema,
     onSubmit: (values) => {
+      if (!courseId) return router.push('/dashboard');
       createLesson({
         variables: {
           lessonInput: {
@@ -34,7 +35,7 @@ const LessonAdd = () => {
           },
         },
       });
-      router.push(`/${courseId}`);
+      router.push(`/${courseId || 'dashboard'}`);
     },
   });
 
