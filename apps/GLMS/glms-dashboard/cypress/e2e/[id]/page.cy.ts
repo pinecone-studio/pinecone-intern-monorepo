@@ -30,4 +30,9 @@ describe(' course Id page should visit [id]', () => {
     cy.get('[data-testid="edit-course-button"]').should('exist').click();
     cy.url().should('include', '/update-course');
   });
+  it('5. Should navigate to update-lesson', () => {
+    cy.visit(`/6633305c94d4584898bb049a`);
+    cy.get('[data-cy="lesson-edit-button-test-id"]').eq(1).should('exist').click();
+    cy.url().should('include', '/update-lesson');
+  });
 });
