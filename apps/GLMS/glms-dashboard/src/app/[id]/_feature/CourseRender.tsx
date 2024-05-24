@@ -56,8 +56,8 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
                 <AddLessonButton onClick={handleCreateLesson} />
               </div>
               <div className="max-w-[313px] w-full">
-                <div className="flex gap-4 mb-6 w-">
-                  <button data-testid="edit-course-button" onClick={handleUpdateCoursePage} className="btn btn-ghost flex border border-[#D6D8DB] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
+                <div data-testid="edit-course-button" onClick={handleUpdateCoursePage} className="flex gap-4 mb-6 w-">
+                  <button className="btn btn-ghost flex border border-[#D6D8DB] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
                     <p className=" text-[18px] font-semibold">Ерөнхий мэдээлэл</p>
                     <EditButtonIcon />
                   </button>

@@ -13,9 +13,6 @@ const Home = () => {
   const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathname } });
 
   useEffect(() => {
-    if (!localStorage.getItem('courseID')) router.push('/dashboard');
-  }, []);
-  useEffect(() => {
     const getByLessonIdData = lessonData?.getLessonById as Lesson[];
     setNewLesson(getByLessonIdData);
     lessonRefetch();
