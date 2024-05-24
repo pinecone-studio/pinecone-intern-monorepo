@@ -12,4 +12,8 @@ describe('MainBannerFromArticles', () =>
     act(()=>{
       fireEvent.click(button)
     })
+    const imgButton = getByTestId("imgButton")
+    act(()=>{
+      fireEvent.click(imgButton)
+    })
   }));

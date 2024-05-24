@@ -5,9 +5,6 @@ import { useFormik } from 'formik';
 import { useAuth } from '../../../common';
 import { ArrowIcon } from '../../../assets/icons/ArrowIcon';
 import { useRouter } from 'next/navigation';
-import { GoogleIcon } from '../../../assets/icons/GoogleIcon';
-import { FaceBookIcon } from '../../../assets/icons/FacebookIcon';
-import { LinkedInIcon } from '../../../assets/icons/LinkedInIcon';
 import TextInput from '@/app/sign-up/_components/TextInput';
 import { Loader } from '@/app/sign-up/_components';
 
@@ -56,25 +53,6 @@ const SignInForm = () => {
       <h1 data-testid="sign-in-modal-title" className="mb-2 text-center text-4xl font-bold">
         Нэвтрэх
       </h1>
-
-      <div className="flex justify-center gap-6">
-        <button className="btn rounded-full py-1 px-3 border-[#ECEDF0] bg-transparent hover:bg-transparent shadow-none">
-          <GoogleIcon />
-        </button>
-        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
-          <FaceBookIcon />
-        </button>
-        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
-          <LinkedInIcon />
-        </button>
-      </div>
-
-      <div className="flex items-center justify-center w-full">
-        <div className="w-full border border-solid border-[#ecedf0]"></div>
-        <h2 className="mx-2 text-lg font-medium">эсвэл</h2>
-        <div className="w-full border border-solid border-[#ecedf0]"></div>
-      </div>
-
       <div className="flex flex-col gap-2 w-full">
         <TextInput
           name="emailOrPhoneNumber"
