@@ -2,7 +2,7 @@
 
 import { Article, useGetArticleByIdQuery, useUpdateArticleMutation } from '../../../../../src/generated';
 import { useParams, useRouter } from 'next/navigation';
-import { SubmitButton, InputLabel, ToggleButtonForCommnent, ArrowBack, validationSchema } from './_components/index';
+import { InputLabel, ToggleButtonForCommnent, ArrowBack, validationSchema, PublishButton, CancelButton } from './_components/index';
 import { TitleInput } from './_components/TitleInput';
 import { ContentInput } from './_components/ContentInput';
 import { useFormik } from 'formik';
@@ -132,20 +132,8 @@ const Home = () => {
         </div>
 
         <div className="p-6 flex flex-col gap-4">
-          <SubmitButton
-            onClick={() => {
-              router.push('/dashboard');
-            }}
-            bgColor="#888"
-            text="Болих"
-          />
-          <SubmitButton
-            onClick={() => {
-              formik.handleSubmit();
-            }}
-            bgColor="black"
-            text="Шинэчлэх"
-          />
+          <CancelButton />
+          <PublishButton handleClick={formik.handleSubmit} dirty={formik.dirty} isValid={formik.isValid} />
         </div>
       </div>
     </div>

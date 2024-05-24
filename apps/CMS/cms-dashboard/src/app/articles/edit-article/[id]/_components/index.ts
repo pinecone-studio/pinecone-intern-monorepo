@@ -1,4 +1,3 @@
-export * from './SubmitButton';
 export * from './InputLabel';
 export * from './ToggleForComment';
 export * from './ArrowBack';
@@ -7,3 +6,5 @@ export * from './TitleInput';
 export * from './CategorySelectInput';
 export * from './ValidationSchema';
 export * from './HelperText';
+export * from './PublishButton';
+export * from './CancelButton';
