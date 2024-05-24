@@ -1,5 +1,4 @@
 import { getArticlesByPaginate } from '@/graphql/resolvers/queries';
-import { accessTokenAuth } from '../../src/middlewares/auth-token';
 import { ArticleModel } from '@/models';
 import { GraphQLResolveInfo } from 'graphql';
 import jwt from 'jsonwebtoken';
