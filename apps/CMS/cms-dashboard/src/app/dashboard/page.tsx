@@ -58,7 +58,7 @@ const Home = () => {
                   <SearchInput />
                   <FilterByDate />
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 h-[66vh]">
                   <ArticleStatusTabsFeature />
                   <DashboardTable articles={articles} loading={loading} error={error} />
                 </div>
