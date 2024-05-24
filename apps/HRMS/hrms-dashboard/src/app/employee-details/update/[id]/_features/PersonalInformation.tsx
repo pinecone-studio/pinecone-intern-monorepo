@@ -16,9 +16,10 @@ interface PersonalInformationProps {
   jobTitle?: string | null;
   homeAddress?: string | null;
   imageUrl?: string | null;
+  refetch: () => void;
 }
 
-const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl }: PersonalInformationProps) => {
+const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl, refetch }: PersonalInformationProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -59,7 +60,17 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
         </div>
       </div>
       {isModalOpen && (
-        <PersonalUpdateModal lastName={lastName} homeAddress={homeAddress} firstName={firstName} email={email} phone={phone} jobTitle={jobTitle} imageUrl={imageUrl} setIsModalOpen={setIsModalOpen} />
+        <PersonalUpdateModal
+          refetch={refetch}
+          lastName={lastName}
+          homeAddress={homeAddress}
+          firstName={firstName}
+          email={email}
+          phone={phone}
+          jobTitle={jobTitle}
+          imageUrl={imageUrl}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </div>
   );

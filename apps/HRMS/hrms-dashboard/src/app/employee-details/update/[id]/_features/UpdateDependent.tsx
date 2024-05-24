@@ -4,13 +4,15 @@ import { CreateDependent } from './CreateDependent';
 import { EmployeeDependentUpdate } from './EmployeeDependentUpdate';
 import { Dependent } from '@/generated';
 
+
 type UpdateDependantProps = {
   dependantPhone: string | null | undefined;
   dependency: string | null | undefined;
   relative: Dependent;
+  refetch: () => void;
 };
 
-export const UpdateDependent = (props: UpdateDependantProps) => {
+export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative }: UpdateDependantProps) => {
   const [handleCreate, setHandleCreate] = useState(false);
   const [handleUpdate, setHandleUpdate] = useState(false);
 
@@ -23,8 +25,10 @@ export const UpdateDependent = (props: UpdateDependantProps) => {
   return (
     <section data-cy="updateDependent" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
-        <p className="text-black text-lg font-semibold cursor-pointer">Хөдөлмөр эрхлэлтийн мэдээлэл</p>
-        {props.dependency ? (
+        <p onClick={() => refetch()} className="text-black text-lg font-semibold cursor-pointer">
+          Хөдөлмөр эрхлэлтийн мэдээлэл
+        </p>
+        {dependency ? (
           <>
             <div>
               <div data-cy="dependent-update-button" onClick={() => handleUpdateDependent()}>
@@ -33,7 +37,7 @@ export const UpdateDependent = (props: UpdateDependantProps) => {
               {handleUpdate && (
                 <>
                   <div className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
-                    <EmployeeDependentUpdate handleUpdateDependentClose={handleUpdateDependentClose} relative={props.relative} />
+                    <EmployeeDependentUpdate refetch={refetch} handleUpdateDependentClose={handleUpdateDependentClose} relative={relative} />
                   </div>
                   <div className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
                 </>
@@ -56,7 +60,7 @@ export const UpdateDependent = (props: UpdateDependantProps) => {
             {handleCreate && (
               <>
                 <div className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
-                  <CreateDependent handleCreateDependentClose={handleCreateDependentClose} />
+                  <CreateDependent refetch={refetch} handleCreateDependentClose={handleCreateDependentClose} dependantPhone={dependantPhone} dependency={dependency} relative={relative} />
                 </div>
                 <div className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
               </>
@@ -66,11 +70,11 @@ export const UpdateDependent = (props: UpdateDependantProps) => {
       </div>
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Яаралтай үед холбоо барих хүний дугаар</p>
-        <p className="w-full text-left text-main text-base font-semibold">{props.dependantPhone}</p>
+        <p className="w-full text-left text-main text-base font-semibold">{dependantPhone}</p>
       </div>
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Энэ хүн таны хэн болох</p>
-        <p className="w-full text-left text-main text-base font-semibold">{props.dependency}</p>
+        <p className="w-full text-left text-main text-base font-semibold">{dependency}</p>
       </div>
     </section>
   );

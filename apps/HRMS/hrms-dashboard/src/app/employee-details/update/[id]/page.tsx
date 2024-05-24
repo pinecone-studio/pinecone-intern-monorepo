@@ -5,11 +5,10 @@ import { LeftArrow } from '../../../asset';
 import { UpdateDependent, UpdateEmployment } from './_features';
 import PersonalInformation from './_features/PersonalInformation';
 
-
 const Update = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { data, loading } = useGetEmployeeQuery({ variables: { getEmployeeId: id } });
+  const { data, loading, refetch } = useGetEmployeeQuery({ variables: { getEmployeeId: id } });
 
   if (loading) {
     return (
@@ -26,12 +25,15 @@ const Update = () => {
         <figure data-testid="back-button" onClick={() => router.push('employee-details')} className="px-4 flex items-center justify-center cursor-pointer">
           <LeftArrow />
         </figure>
-        <p className="text-black m-auto text-sm font-semibold">Employee Details</p>
+        <p onClick={() => refetch()} className="text-black m-auto text-sm font-semibold">
+          Employee Details
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row w-full  p-8 h-fit gap-6">
         <div className="rounded-xl lg:w-1/3 w-full">
           <PersonalInformation
+            refetch={refetch}
             lastName={employee?.lastName}
             homeAddress={employee?.homeAddress}
             firstName={employee?.firstName}
@@ -43,12 +45,13 @@ const Update = () => {
         </div>
         <div className="flex flex-col gap-6 lg:w-2/3 w-full">
           <UpdateEmployment
+            refetch={refetch}
             jobTitle={data?.getEmployee?.jobTitle}
             department={data?.getEmployee?.department}
             dateOfEmployment={data?.getEmployee?.dateOfEmployment}
             employmentStatus={data?.getEmployee?.employmentStatus}
           />
-          <UpdateDependent dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} relative={employee?.relative[0] as Dependent} />
+          <UpdateDependent refetch={refetch} dependantPhone={employee?.relative[0]?.phone} dependency={employee?.relative[0]?.dependency} relative={employee?.relative[0] as Dependent} />
         </div>
       </div>
     </section>
