@@ -3,7 +3,7 @@ import { UserModel } from '@/model';
 import jwt from 'jsonwebtoken';
 import { GraphQLError } from 'graphql';
 
-export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
+export const lessonSignIn: MutationResolvers['lessonSignIn'] = async (_, { input }) => {
   try {
     const { emailOrPhoneNumber, password } = input;
 
@@ -15,7 +15,7 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
     });
 
     if (!user) {
-      throw new GraphQLError('Бүртгэлтэй хэрэглэгч алга')
+      throw new GraphQLError('Бүртгэлтэй хэрэглэгч алга');
     }
 
     const id = user._id;
@@ -29,6 +29,6 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
   } catch (error) {
     if (error instanceof GraphQLError) throw error;
 
-    throw new GraphQLError('Алдаа гарлаа')
+    throw new GraphQLError('Алдаа гарлаа');
   }
 };

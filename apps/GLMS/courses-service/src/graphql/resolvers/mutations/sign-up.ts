@@ -2,8 +2,7 @@ import { MutationResolvers } from '@/graphql/generated';
 import { UserModel } from '@/model';
 import { GraphQLError } from 'graphql';
 
-export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
-  
+export const lessonSignUp: MutationResolvers['lessonSignUp'] = async (_, { input }) => {
   try {
     const { email, phoneNumber, password } = input;
 
@@ -16,13 +15,13 @@ export const signUp: MutationResolvers['signUp'] = async (_, { input }) => {
     });
 
     if (userExists) {
-     throw new GraphQLError('Бүртгэлтэй хэрэглэгч байна')
+      throw new GraphQLError('Бүртгэлтэй хэрэглэгч байна');
     }
 
     await UserModel.create({ email, phoneNumber, password });
 
     return { message: 'Хэрэглэгч амжилттай үүслээ' };
   } catch (error) {
-    throw new GraphQLError('Алдаа гарлаа')
+    throw new GraphQLError('Алдаа гарлаа');
   }
 };

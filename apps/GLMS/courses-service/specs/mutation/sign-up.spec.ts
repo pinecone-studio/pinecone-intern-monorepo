@@ -1,4 +1,4 @@
-import { signUp } from '../../src/graphql/resolvers/mutations/sign-up';
+import { lessonSignUp } from '../../src/graphql/resolvers/mutations/sign-up';
 import { UserModel } from '@/model';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
@@ -24,7 +24,7 @@ describe('Sign up', () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(null);
     (UserModel.create as jest.Mock).mockResolvedValueOnce({});
 
-    const result = await signUp!({}, { input }, {}, {} as GraphQLResolveInfo);
+    const result = await lessonSignUp!({}, { input }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       message: 'Хэрэглэгч амжилттай үүслээ',
     });
@@ -37,9 +37,7 @@ describe('Sign up', () => {
   it('should throw an error if user already exists', async () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce({ _id: 'existingUserId' });
 
-    await expect(signUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new GraphQLError('Алдаа гарлаа')
-    );
+    await expect(lessonSignUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Алдаа гарлаа'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [{ email: input.email }, { phoneNumber: input.phoneNumber }],
     });
@@ -50,9 +48,7 @@ describe('Sign up', () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(null);
     (UserModel.create as jest.Mock).mockRejectedValueOnce(new Error('Creation failed'));
 
-    await expect(signUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new GraphQLError('Алдаа гарлаа')
-    );
+    await expect(lessonSignUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Алдаа гарлаа'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [{ email: input.email }, { phoneNumber: input.phoneNumber }],
     });
@@ -62,9 +58,7 @@ describe('Sign up', () => {
   it('should throw a generic error on unexpected errors', async () => {
     (UserModel.findOne as jest.Mock).mockRejectedValueOnce(new Error('Unexpected error'));
 
-    await expect(signUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new GraphQLError('Алдаа гарлаа')
-    );
+    await expect(lessonSignUp!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Алдаа гарлаа'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [{ email: input.email }, { phoneNumber: input.phoneNumber }],
     });
