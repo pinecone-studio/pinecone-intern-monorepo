@@ -8,6 +8,7 @@ type UpdateEmploymentProps = {
   department: string | null | undefined;
   dateOfEmployment: string | null | undefined;
   employmentStatus: string | null | undefined;
+  refetch: () => void;
 };
 
 export const UpdateEmployment = (props: UpdateEmploymentProps) => {
@@ -40,6 +41,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
           <div data-testid="update-employment" className="flex w-full h-full justify-center items-center absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-50 ">
             <div className="absolute z-50">
               <EmploymentInfoInput
+                refetch={props.refetch}
                 setUpdateEmpInput={setUpdateEmpInput}
                 jobTitle={props.jobTitle}
                 department={props.department}
@@ -72,7 +74,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
         <p className="w-full text-left text-main  text-sm font-normal">Ажилласан хугацаа</p>
         <p className="w-full text-left text-main text-base font-semibold">{employedYear} жил</p>
       </div>
-      
+
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Төлөв</p>
         <p className="w-full text-left text-main text-base font-semibold">{props.employmentStatus}</p>

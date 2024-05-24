@@ -12,6 +12,7 @@ type PersonalUpdateModalProps = {
   jobTitle?: string | null;
   homeAddress?: string | null;
   imageUrl?: string | null;
+  refetch: () => void;
 };
 const validationSchema = Yup.object().shape({
   imageUrl: Yup.string().required('ImageUrl is required'),
@@ -23,7 +24,7 @@ const validationSchema = Yup.object().shape({
   address: Yup.string().required('Address is required'),
 });
 
- const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
+const PersonalUpdateModal = (props: PersonalUpdateModalProps) => {
   const initialValues = {
     imageUrl: props.imageUrl,
     lastName: props.lastName,

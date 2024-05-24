@@ -20,6 +20,7 @@ type EmploymentInfoInputProps = {
   dateOfEmployment: string | null | undefined;
   employmentStatus: string | null | undefined;
   setUpdateEmpInput: Dispatch<SetStateAction<boolean>>;
+  refetch: () => void;
 };
 export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
   const [updateEmployment] = useUpdateEmploymentMutation();
@@ -32,8 +33,8 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
       employmentStatus: props.employmentStatus,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      updateEmployment({
+    onSubmit: async (values) => {
+      await updateEmployment({
         variables: {
           updateEmploymentId: id,
           input: {
@@ -44,6 +45,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
           },
         },
       });
+      props.refetch();
       props.setUpdateEmpInput(false);
     },
   });
@@ -55,9 +57,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
         </p>
         <div
           data-testid="closeSvg"
-          onClick={() => {
-            props.setUpdateEmpInput(false);
-          }}
+          onClick={() => {props.setUpdateEmpInput(false);}}
           className="cursor-pointer"
         >
           <CloseSvg />
@@ -86,7 +86,10 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.department)}
           >
             {departmentList.map((item, index) => (
-              <option key={index} value={item}>    {item}</option> ))}
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
           </CustomInput>
           <CustomInput
             data-testid="EmploymentInputInfo"
@@ -109,9 +112,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.employmentStatus)}
           >
             {employeeStatusList.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
+              <option key={index} value={item}>{item}</option>
             ))}
           </CustomInput>
           <div className="flex justify-end gap-2">
@@ -127,10 +128,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
                 borderRadius: '4px',
                 cursor: 'pointer',
               }}
-              onClick={() => {
-                props.setUpdateEmpInput(false);
-              }}
-            >
+              onClick={() => {props.setUpdateEmpInput(false);}}>
               Цуцлах
             </button>
             <button

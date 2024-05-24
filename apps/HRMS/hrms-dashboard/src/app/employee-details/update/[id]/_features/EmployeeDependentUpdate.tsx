@@ -15,9 +15,10 @@ const validationSchema = yup.object({
 type CreateDependentProps = {
   handleUpdateDependentClose: () => void;
   relative: Dependent;
+  refetch: () => void;
 };
 
-export const EmployeeDependentUpdate = ({ handleUpdateDependentClose, relative }: CreateDependentProps) => {
+export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, relative }: CreateDependentProps) => {
   const [EmployeeDependentUpdate] = useUpdatedDependentMutation();
   const formik = useFormik({
     initialValues: {
@@ -27,8 +28,8 @@ export const EmployeeDependentUpdate = ({ handleUpdateDependentClose, relative }
       dependency: String(relative.dependency),
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      EmployeeDependentUpdate({
+    onSubmit: async (values) => {
+      await EmployeeDependentUpdate({
         variables: {
           updatedDependentId: relative.id,
           input: {
@@ -40,6 +41,7 @@ export const EmployeeDependentUpdate = ({ handleUpdateDependentClose, relative }
         },
       });
       handleUpdateDependentClose();
+      refetch();
     },
   });
 
@@ -98,8 +100,8 @@ export const EmployeeDependentUpdate = ({ handleUpdateDependentClose, relative }
             </button>
             <button
               data-cy="submit-button"
-              className=" py-4 px-5 font-semibold rounded-lg bg-black text-white"
               type="submit"
+              className=" py-4 px-5 font-semibold rounded-lg bg-black text-white"
               onClick={(e) => {
                 e.preventDefault();
                 formik.handleSubmit();
