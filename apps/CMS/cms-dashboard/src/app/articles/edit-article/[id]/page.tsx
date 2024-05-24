@@ -72,7 +72,7 @@ const Home = () => {
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
-  if (error) return <h5>Error</h5>;
+  if (error) return <h5>Error...{error.message}</h5>;
 
   return (
     <div data-cy="edit-article-page-cy" className="flex w-[100%] h-screen">

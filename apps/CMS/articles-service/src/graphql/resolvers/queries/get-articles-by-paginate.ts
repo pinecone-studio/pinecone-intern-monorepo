@@ -1,25 +1,22 @@
 import { QueryResolvers } from '@/graphql/generated';
+import { accessTokenAuth } from '@/middlewares/auth-token';
 import { ArticleModel } from '@/models/article.model';
+import { buildQueryFilter } from './build-query-filter';
 
-const buildQuery = (status: string | undefined, searchedValue: string | undefined, startDate: Date | null, endDate: Date | null) => {
-  if (startDate === null || endDate === null) {
-    return { status: { $regex: status, $options: 'i' }, title: { $regex: searchedValue, $options: 'i' } };
-  } else {
-    return {
-      status: { $regex: status, $options: 'i' },
-      title: { $regex: searchedValue, $options: 'i' },
-      createdAt: {
-        $gte: startDate,
-        $lte: endDate,
-      },
-    };
-  }
+type Payload = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  iat: number;
 };
 
-export const getArticlesByPaginate: QueryResolvers['getArticlesByPaginate'] = async (_, { paginationInput, filterInput }) => {
+export const getArticlesByPaginate: QueryResolvers['getArticlesByPaginate'] = async (_, { paginationInput, filterInput }, { headers: { authorization } }) => {
+  const { role, id } = (await accessTokenAuth({ authorization })) as Payload;
   const { limit, page } = paginationInput;
   const { status, searchedValue, startDate, endDate } = filterInput;
-  const query = buildQuery(status, searchedValue, startDate, endDate);
+
+  const query = buildQueryFilter(id, role, status, searchedValue, startDate, endDate);
 
   const articles = await ArticleModel.find(query)
     .populate('author category')
