@@ -12,6 +12,7 @@ type GetSectionsType = {
 
 const GetSections = (props: GetSectionsType) => {
   const { handleUpdateSectionPage, handleDeleteSection, loading, data, isLoading } = props;
+
   return (
     <div data-testid="get-sections-container" className="bg-[#fff] rounded-[6px]">
       {loading && (

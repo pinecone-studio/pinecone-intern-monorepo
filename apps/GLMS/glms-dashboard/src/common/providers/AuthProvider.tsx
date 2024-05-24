@@ -2,7 +2,7 @@
 'use client';
 
 import { PropsWithChildren, useContext, createContext, Dispatch, SetStateAction, useState, useEffect } from 'react';
-import { useSignUpMutation , useSignInMutation } from '../../generated';
+import { useSignUpMutation, useSignInMutation } from '../../generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
 type AuthContextType = {
@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           password,
           ...emailOrPhone,
         },
-       
       });
 
       toast.success(signUpData?.signUp.message, {
