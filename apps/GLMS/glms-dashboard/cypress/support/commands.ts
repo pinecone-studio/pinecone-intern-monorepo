@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /// <reference types="cypress" />
 
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -22,6 +23,7 @@ declare namespace Cypress {
 // -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
   console.log('Custom command example: Login', email, password);
+  
 });
 //
 // -- This is a child command --
@@ -34,3 +36,4 @@ Cypress.Commands.add('login', (email, password) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
