@@ -38,3 +38,11 @@ mutation UpdatedDependent($updatedDependentId: ID!, $input: UpdateDependentInput
     dependency
   }
 }
+mutation UpdateEmployment($updateEmploymentId: ID!, $input: UpdateEmploymentInput!) {
+  updateEmployment(id: $updateEmploymentId, input: $input) {
+    jobTitle
+    department
+    dateOfEmployment
+    employmentStatus
+  }
+}

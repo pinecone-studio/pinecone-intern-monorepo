@@ -21,7 +21,7 @@ const Update = () => {
   const employee = data?.getEmployee;
 
   return (
-    <section className="w-full h-[100vh] bg-light flex flex-col overflow-scroll relative">
+    <section className="w-full h-[100vh] bg-light flex flex-col overflow-scroll">
       <div className="w-full flex bg-white py-5">
         <figure data-testid="back-button" onClick={() => router.push('employee-details')} className="px-4 flex items-center justify-center cursor-pointer">
           <LeftArrow />
