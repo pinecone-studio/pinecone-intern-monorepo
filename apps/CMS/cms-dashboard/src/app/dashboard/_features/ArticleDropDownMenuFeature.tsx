@@ -45,9 +45,9 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
         progressStyle: { background: '#01E17B' },
         position: 'top-center',
         autoClose: 3000,
-        style:{
-          color:"black"
-        }
+        style: {
+          color: 'black',
+        },
       });
       return;
     }
@@ -89,7 +89,7 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
       <Menu data-testid="drop-down-menu-test-id" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <Stack gap={0.2}>
           <Stack
-            className={`close-test-class-name`}
+            className={`close-test-class-name cursor-pointer`}
             data-testid="close-button-menu-test-id"
             data-cy="drop-down-menu-test-cy"
             direction={'row'}
