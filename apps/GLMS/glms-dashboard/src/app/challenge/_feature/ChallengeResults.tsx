@@ -1,6 +1,5 @@
 import { Quiz } from '@/generated';
 import { CheckTrueIcon, CheckFalseIcon } from '../../../assets';
-import ChoiceImage from '../_components/ImageChoicePicker';
 
 export const ChallengeResults = ({ challenge }: { challenge: Quiz[] }) => {
   const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
@@ -43,9 +42,9 @@ export const ChallengeResults = ({ challenge }: { challenge: Quiz[] }) => {
                     <div className="p-3 flex justify-center items-center">{checkIsCorrectIcon(studentChoices[index].choiceId, choice?._id, choice?.isCorrect)}</div>
                   </main>
                 ) : (
-                  <main className="flex w-[588px] h-[483px]">
+                  <main key={choice?._id} className="flex w-[588px] h-[483px]">
                     <img
-                      src={choice?.choice!}
+                      src={choice?.choice as string}
                       width={588}
                       height={483}
                       alt="ChoiceImage"
