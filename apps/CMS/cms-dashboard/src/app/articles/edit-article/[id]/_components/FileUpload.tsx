@@ -23,7 +23,7 @@ export const FileUpload = (props: FileUploadProps) => {
 
   return (
     <div className="flex flex-col gap-3 p-6 border-b-[1px] border-[#ECEDF0] relative">
-      <img src={`${value}`} className="w-full h-[240px] rounded-xl" />
+      <img src={`${value}`} className="w-full h-[240px] rounded-xl object-contain" />
       <div className="absolute bottom-3 left-2">
         <div className="relative">
           <div className="bg-white border-2 w-fit p-2 rounded-full">
