@@ -7,7 +7,7 @@ import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
 
 import { useState } from 'react';
-import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../public/assets/ArrowBackIcon';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
