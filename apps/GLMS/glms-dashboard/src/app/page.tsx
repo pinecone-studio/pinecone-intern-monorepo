@@ -1,16 +1,13 @@
-import Link from 'next/link';
+'use client';
+import { useEffect } from 'react';
+import SignUp from './signup/page';
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
-  return (
-    <div className="h-[90vh] flex w-full justify-center items-center">
-      <div className="text-center">
-        <h1>hello from GLMS dashboard</h1>
-        <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-        <Link href="/dashboard">
-          <button className="btn">Go to Dashboard</button>
-        </Link>
-      </div>
-    </div>
-  );
+  const router = useRouter();
+  useEffect(() => {
+    router.push('/sign-in');
+  });
+  return <></>;
 };
 export default Home;

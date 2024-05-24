@@ -2,23 +2,16 @@
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useAuth } from '../../../common';
-import { useRouter } from 'next/navigation';
-import { GoogleIcon } from '../../../../public/assets/GoogleIcon';
-import { FaceBookIcon } from '../../../../public/assets/FacebookIcon';
-import { LinkedInIcon } from '../../../../public/assets/LinkedInIcon';
 import TextInput from '../../signup/_components/TextInput';
-import { Loader } from '../../signup/_components/Loader';
-import { ArrowLeftIcon } from '../../../../public/assets/ArrowLeftIcon';
+import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { useAuth } from '@/common/providers';
 
 const SignInForm = () => {
-  const { handleSignIn, loginLoading } = useAuth();
-  const router = useRouter();
-
+  const { handleSignIn, loading } = useAuth();
   const validationSchema = yup.object({
     emailOrPhoneNumber: yup
       .string()
-      .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг байх ёстой', function (value) {
+      .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг оруулна уу', function (value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         const isEmail = emailRegex.test(value as string);
@@ -30,13 +23,7 @@ const SignInForm = () => {
         return isEmail || isPhoneNumber;
       })
       .required('Утас эсвэл имэйл хаяг оруулна уу'),
-    password: yup
-      .string()
-      .required('Нууц үгээ оруулна уу')
-      .min(8, 'Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой')
-      .matches(/[a-z]/, 'Жижэг үсэг байх ёстой')
-      .matches(/[A-Z]/, 'Том үсэг байх ёстой')
-      .matches(/^(?=.*[!@#$%^&*])/, 'Тусгай тэмдэгт байх ёстой'),
+    password: yup.string().required('Нууц үгээ оруулна уу'),
   });
 
   const formik = useFormik({
@@ -47,7 +34,6 @@ const SignInForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       await handleSignIn(values.emailOrPhoneNumber, values.password);
-      router.push('/');
     },
   });
 
@@ -57,21 +43,8 @@ const SignInForm = () => {
         Нэвтрэх
       </h1>
 
-      <div className="flex justify-center gap-6">
-        <button className="btn rounded-full py-1 px-3 border-[#ECEDF0] bg-transparent hover:bg-transparent shadow-none">
-          <GoogleIcon />
-        </button>
-        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
-          <FaceBookIcon />
-        </button>
-        <button className="btn p-1 px-3 border-[#ECEDF0] rounded-[50%] bg-transparent hover:bg-transparent shadow-none">
-          <LinkedInIcon />
-        </button>
-      </div>
-
       <div className="flex items-center justify-center w-full">
         <div className="w-full border border-solid border-[#ecedf0]"></div>
-        <h2 className="mx-2 text-lg font-medium">эсвэл</h2>
         <div className="w-full border border-solid border-[#ecedf0]"></div>
       </div>
 
@@ -79,7 +52,7 @@ const SignInForm = () => {
         <TextInput
           name="emailOrPhoneNumber"
           label="Таны имэйл эсвэл утасны дугаар"
-          placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
+          placeholder="Утас эсвэл имэйл хаяг оруулна уу"
           type="text"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -91,7 +64,7 @@ const SignInForm = () => {
         <TextInput
           name="password"
           label="Нууц үг"
-          placeholder="Нууц үг оруулна уу"
+          placeholder="Нууц үгээ оруулна уу"
           type="password"
           onChange={formik.handleChange}
           value={formik.values.password}
@@ -99,7 +72,7 @@ const SignInForm = () => {
           helperText={formik.errors.password}
           error={formik.errors.password}
         />
-        <a href={'/reset-password'} className="text-base text-[#26282e] hover:text-[#551a8b] text-center">
+        <a href={'#'} className="text-base text-[#26282e] hover:text-[#551a8b] text-center">
           Нууц үг сэргээх
         </a>
       </div>
@@ -111,11 +84,10 @@ const SignInForm = () => {
         data-cy="Sign-In-Button"
         data-testid="Sign-Up-Button-Loader"
         className={`btn w-full h-fit flex justify-end py-[9px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-        disabled={!formik.isValid || loginLoading}
+        disabled={!formik.isValid || loading}
       >
-        {loginLoading && <Loader />}
         <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
-        <ArrowLeftIcon />
+        <ArrowBackIcon />
       </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>

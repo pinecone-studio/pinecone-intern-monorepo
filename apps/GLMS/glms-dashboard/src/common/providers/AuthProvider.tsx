@@ -1,40 +1,35 @@
 /* eslint-disable no-unused-vars */
 'use client';
-
-import { PropsWithChildren, useContext, createContext, Dispatch, SetStateAction, useState, useEffect } from 'react';
-import { useSignUpMutation, useSignInMutation } from '../../generated';
+import { PropsWithChildren, useContext, createContext } from 'react';
+import { useLessonSignInMutation, useLessonSignUpMutation } from '@/generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
+import { useRouter } from 'next/navigation';
 type AuthContextType = {
-  handleSignUp: (emailOrPhoneNumber: string, password: string) => Promise<void>;
+  handleSignUp: (email: string, phoneNumber: string, password: string) => Promise<void>;
   handleSignIn: (emailOrPhoneNumber: string, password: string) => Promise<void>;
   signUpLoading: boolean;
-  loginLoading: boolean;
-  isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [signUp, { loading: signUpLoading }] = useSignUpMutation();
-  const [signIn, { loading: loginLoading }] = useSignInMutation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [lessonSignUp, { loading: signUpLoading }] = useLessonSignUpMutation();
+  const [lessonSignIn, { loading }] = useLessonSignInMutation();
+  const router = useRouter();
 
-  const handleSignUp = async (emailOrPhoneNumber: string, password: string) => {
-    const emailOrPhone = emailOrPhoneNumber.includes('@') ? { email: emailOrPhoneNumber } : { phoneNumber: emailOrPhoneNumber };
-
+  const handleSignUp = async (email: string, phoneNumber: string, password: string) => {
     try {
-      const { data: signUpData } = await signUp({
+      const { data: signUpData } = await lessonSignUp({
         variables: {
-          email: '',
-          phoneNumber: '',
+          email,
+          phoneNumber,
           password,
-          ...emailOrPhone,
         },
       });
-
-      toast.success(signUpData?.signUp.message, {
+      router.push('/sign-in');
+      toast.success(signUpData?.lessonSignUp.message, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -52,15 +47,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const handleSignIn = async (emailOrPhoneNumber: string, password: string) => {
     try {
-      const { data: signInData } = await signIn({
+      const { data: signInData } = await lessonSignIn({
         variables: {
           emailOrPhoneNumber,
           password,
         },
       });
-      const token = signInData?.signIn.token;
+      const token = signInData?.lessonSignIn.token;
       localStorage.setItem('token', token || '');
-      toast.success(signInData?.signIn.message, {
+      router.push('/dashboard');
+      toast.success(signInData?.lessonSignIn.message, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -76,23 +72,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{
         handleSignUp,
         handleSignIn,
         signUpLoading,
-        isLoggedIn,
-        setIsLoggedIn,
-        loginLoading,
+        loading,
       }}
     >
       {children}

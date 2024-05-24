@@ -4,19 +4,24 @@ import CourseRender from './_feature/CourseRender';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
+import { useRouter } from 'next/navigation';
 const Home = () => {
-  const pathName = usePathname().substring(1);
+  const pathname = usePathname().substring(1);
+  const router = useRouter();
   const [newCourse, setNewCourse] = useState<Course>();
   const [newLesson, setNewLesson] = useState<Lesson[]>();
+  const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathname } });
 
-  const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
+  useEffect(() => {
+    if (!localStorage.getItem('courseID')) router.push('/dashboard');
+  }, []);
   useEffect(() => {
     const getByLessonIdData = lessonData?.getLessonById as Lesson[];
     setNewLesson(getByLessonIdData);
     lessonRefetch();
   }, [lessonData, lessonLoading, lessonError]);
 
-  const { data, loading, error, refetch } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
+  const { data, loading, error, refetch } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathname } });
   useEffect(() => {
     const getByIdData = data?.getCourseById;
     setNewCourse(getByIdData);
