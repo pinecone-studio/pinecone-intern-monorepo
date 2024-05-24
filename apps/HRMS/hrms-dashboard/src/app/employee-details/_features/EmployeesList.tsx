@@ -6,10 +6,10 @@ import { CreateEmployeeForm } from './CreateEmployeeForm';
 import { AddIcon } from '../../../assets';
 import { TableFilters } from './TableFilters';
 import { useSearchParams } from 'next/navigation';
+import { useRefetch } from '@/common/providers/RefetchProvider';
 
 export const EmployeesList = () => {
-  const [page, setPage] = useState<number | undefined>(0);
-  const [checked, setChecked] = useState(1);
+  const { page, setPage, checked, setChecked } = useRefetch();
 
   const searchParams = useSearchParams();
   const searchPath: string | null = searchParams.get('search');

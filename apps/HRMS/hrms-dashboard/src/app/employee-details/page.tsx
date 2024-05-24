@@ -1,11 +1,14 @@
-
+'use client';
 import { EmployeesList } from './_features/EmployeesList';
+import { RefetchProvider } from '../../common/providers/RefetchProvider';
 
 const EmployeeDetailsPage = () => {
   return (
-    <main className='bg-light w-full overflow-scroll relative'>
-      <EmployeesList />
-    </main>
+    <RefetchProvider>
+      <main className="bg-light w-full overflow-scroll relative">
+        <EmployeesList />
+      </main>
+    </RefetchProvider>
   );
 };
 

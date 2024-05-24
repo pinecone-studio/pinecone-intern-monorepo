@@ -16,6 +16,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   const searchParams = useSearchParams();
   const employeesSearchPath: string | null = searchParams.get('search');
   const employmentStatusPath: string | null = searchParams.get('employmentStatus');
+
   const { data, loading, refetch } = useGetEmployeesByPaginateQuery({
     variables: {
       paginationInput: {

@@ -5,6 +5,7 @@ import { Department, useCreateEmployeeMutation } from '../../../generated';
 import { EmploymentStatus } from '../../../generated';
 import { inputItems } from '../constants';
 import { CloseSvg } from '../../../assets';
+import { useRefetch } from '../../../common/providers/RefetchProvider';
 
 type CreateEmployeeFormProps = {
   handleCloseNewEmployee: () => void;
@@ -25,6 +26,7 @@ const departmentList = Object.values(Department);
 const employmentStatusList = Object.values(EmploymentStatus);
 export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
   const [createEmployee] = useCreateEmployeeMutation();
+  const { refetch } = useRefetch();
   const formik = useFormik({
     initialValues: {
       lastName: '',
@@ -38,8 +40,8 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
       employmentStatus: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      createEmployee({
+    onSubmit: async (values) => {
+      await createEmployee({
         variables: {
           input: {
             firstName: values.firstName as string,
@@ -55,6 +57,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
         },
       });
       props.handleCloseNewEmployee();
+      refetch();
     },
   });
 
