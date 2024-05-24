@@ -80,11 +80,13 @@ export const employeeDetailsSchema = gql`
   }
   input UpdatePersonalInformationInput {
     id: ID
+    lastName: String
     firstName: String
     phone: String
     email: String
     jobTitle: String
     imageUrl: String
+    homeAddress: String
   }
   input UpdateFamilyInformationInput {
     homeAddress: String
