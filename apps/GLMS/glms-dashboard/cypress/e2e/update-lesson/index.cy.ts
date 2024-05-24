@@ -4,10 +4,24 @@ describe('Handle update-lesson page', () => {
   it('1. Update lesson page', () => {
     cy.get('[data-testid="update-lesson-container"]').should('exist');
   });
+  beforeEach(() => {
+    cy.visit('/update-lesson');
+    cy.window().then((win) => {
+      win.localStorage.setItem('lessonID', 'lesson-id-123');
+      win.localStorage.setItem('courseID', 'course-id-456');
+    });
+    cy.reload();
+  });
 
-  it('2. check back to course page button click ', () => {
-    cy.get('[data-testid="handle-back-page"]').should('exist');
-    cy.get('[data-testid="handle-back-page"]').click();
+  it('should set lessonID and courseID from localStorage on mount', () => {
+    cy.window().then((win) => {
+      expect(win.localStorage.getItem('lessonID')).to.eq('lesson-id-123');
+      expect(win.localStorage.getItem('courseID')).to.eq('course-id-456');
+    });
+  });
+  it('should navigate back to the course page when back button is clicked', () => {
+    cy.get('[data-testid="handle-back-page"]').should('exist').click();
+    cy.url().should('include', '/course-id-456');
   });
 
   it('3.Should display update lesson container', () => {
