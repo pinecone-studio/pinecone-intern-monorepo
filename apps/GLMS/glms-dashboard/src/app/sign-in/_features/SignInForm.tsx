@@ -9,20 +9,7 @@ import { useAuth } from '@/common/providers';
 const SignInForm = () => {
   const { handleSignIn, loading } = useAuth();
   const validationSchema = yup.object({
-    emailOrPhoneNumber: yup
-      .string()
-      .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг оруулна уу', function (value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        const isEmail = emailRegex.test(value as string);
-
-        const phoneRegex = /^\d{8}$|^\d{10}$/;
-
-        const isPhoneNumber = phoneRegex.test(value as string);
-
-        return isEmail || isPhoneNumber;
-      })
-      .required('Утас эсвэл имэйл хаяг оруулна уу'),
+    emailOrPhoneNumber: yup.string().required('Утас эсвэл имэйл хаяг оруулна уу'),
     password: yup.string().required('Нууц үгээ оруулна уу'),
   });
 
