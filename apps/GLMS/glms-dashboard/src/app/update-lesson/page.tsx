@@ -71,7 +71,7 @@ const UpdateLesson = () => {
   if (loading) return <Loading />;
 
   return (
-    <div data-testid="update-lesson-container" className="bg-[#F7F7F8] ">
+    <div data-testid="update-lesson-container" className="bg-[#F7F7F8] h-screen">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="handle-back-page"

@@ -15,7 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <Header />
             {children}
             <ToastContainer />
-            <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center">
+            <div className="py-2 pb-6 bg-[#F7F7F8] flex justify-center pb-20">
               <PineconeLogo />
             </div>
           </AuthProvider>

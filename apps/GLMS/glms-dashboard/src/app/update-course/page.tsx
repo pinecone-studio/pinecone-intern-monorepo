@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
+
 import { useRouter } from 'next/navigation';
 import FileUploader from '../../components/FileUploader';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import { useGetCourseByIdQuery, useUpdateCourseMutation } from '@/generated';
 import Loading from '../../components/Loading';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
 const UpdateCourse = () => {
   const router = useRouter();
   const [courseID, setCourseID] = useState('');
@@ -69,7 +70,7 @@ const UpdateCourse = () => {
   if (loading) return <Loading />;
 
   return (
-    <div data-testid="update-course-container" className="bg-[#F7F7F8] w-full flex justify-center py-6 border-t-2">
+    <div data-testid="update-course-container" className="bg-[#F7F7F8] h-screen w-full flex justify-center py-6 border-t-2">
       <div className="w-[90%]">
         <div
           data-cy="handle-back-page"
@@ -78,7 +79,7 @@ const UpdateCourse = () => {
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
-          <ArrowLeftIcon /> {'Буцах'}
+          <ArrowBackIcon /> {'Буцах'}
         </div>
         <div data-testid="update-course-form" className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-4">

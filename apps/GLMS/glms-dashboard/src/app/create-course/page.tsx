@@ -5,8 +5,9 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useCreateCourseMutation } from '@/generated';
 import FileUploader from '../../components/FileUploader';
-import { ArrowLeftIcon } from '../../../public/assets/ArrowLeftIcon';
+
 import { useState } from 'react';
+import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -42,7 +43,7 @@ const CourseAdd = () => {
   });
 
   return (
-    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full flex justify-center py-6 border-t-2">
+    <div data-testid="create-course-container" className="bg-[#F7F7F8] w-full  h-screen flex justify-center py-6 border-t-2">
       <div className="w-[90%]">
         <div
           data-testid="test-back-stack"
@@ -51,7 +52,7 @@ const CourseAdd = () => {
           }}
           className=" flex flex-row gap-[6px] mb-[26px] text-[18px]  font-semibold items-center cursor-pointer py-[10px] w-fit"
         >
-          <ArrowLeftIcon /> {'Нүүр'}
+          <ArrowBackIcon /> {'Нүүр'}
         </div>
         <div className="w-[100%] bg-[white] rounded-xl py-10 px-8 flex flex-col gap-10">
           <div className="mb-4">

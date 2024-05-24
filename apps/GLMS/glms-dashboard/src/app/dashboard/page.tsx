@@ -29,7 +29,7 @@ const DashboardOtherLab = () => {
   }, []);
   if (loading) return <Loading />;
   return (
-    <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
+    <div data-testid="outerStack" className=" bg-[#F7F7F8] min-h-screen pb-10" data-cy="Dashboard-Lab-Page">
       <div className="">
         <div className="bg-white w-full flex flex-col items-center justify-center border-b-[1px] border-solid border-[#0000001A] border-t-[1px]">
           <div className="w-[85%]">
@@ -78,7 +78,7 @@ const DashboardOtherLab = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-[65vh] ">
+      <div className="w-full h-fit ">
         <div className=" mr-auto ml-auto  flex max-w-[85%]">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses

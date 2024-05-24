@@ -44,7 +44,7 @@ const LessonAdd = () => {
   }, []);
 
   return (
-    <div data-testid="create-lesson-container" className="bg-[#F7F7F8] ">
+    <div data-testid="create-lesson-container" className="bg-[#F7F7F8]  h-screen">
       <div className="w-[85vw] m-auto pt-[2.5vh] ">
         <div
           data-testid="test-back-div"
@@ -77,7 +77,7 @@ const LessonAdd = () => {
             </div>
           </div>
           <hr className="mt-8 mb-5" />
-          <div className="px-6">
+          <div className="px-6 pb-5">
             <div className="w-full flex items-center justify-end m-auto max-w-[668px]">
               <button
                 type="button"

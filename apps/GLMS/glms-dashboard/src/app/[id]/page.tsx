@@ -26,7 +26,7 @@ const Home = () => {
   if (loading || lessonLoading) return <Loading />;
 
   return (
-    <div data-cy="idCourse" className="bg-[#F7F7F8]">
+    <div data-cy="idCourse" className="bg-[#F7F7F8] h-fit">
       <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} />
     </div>
   );

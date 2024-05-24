@@ -29,7 +29,7 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
 
   return (
     <div>
-      <div className="mr-auto ml-auto sm:px-3 px-6 flex flex-col sm:max-w-[90vw] max-w-[95vw] gap-[24px] pt-8">
+      <div className="mr-auto ml-auto sm:px-3 px-6 flex flex-col sm:max-w-[90vw] max-w-[95vw] gap-[24px] h-screen pt-8">
         <BackButton onClick={handleBack} />
         <div className=" py-[48px] px-[24px] bg-white rounded-xl " key={data?.id}>
           <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto justify-between ">
