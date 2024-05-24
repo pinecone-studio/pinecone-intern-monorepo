@@ -1,0 +1,29 @@
+.text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  color: '#3F4145';
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.shine-round {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #c3f1ce;
+  border-radius: 50%;
+  padding: 4px;
+  animation: shine 1.5s infinite;
+}
+@keyframes shine {
+  from {
+    box-shadow: 0 0 5px #c3f1ce, 0 0 10px greenyellow, 0 0 15px green;
+  }
+}
