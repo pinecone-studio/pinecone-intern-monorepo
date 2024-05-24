@@ -6,5 +6,5 @@ export * from './TitleInput';
 export * from './CategorySelectInput';
 export * from './ValidationSchema';
 export * from './HelperText';
-export * from './PublishButton';
+export * from './UpdateArticleButton';
 export * from './CancelButton';
