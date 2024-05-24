@@ -3,13 +3,13 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { TDay, calendarMatrix } from '../_components/calendarComponents/DataMatrix';
 import { CalendarWeek } from '../_components/calendarComponents/Week';
-import { useGetRequestByCalendarMonthQuery } from '@/generated';
+import {useGetRequestByMonthQuery } from '@/generated';
 
 export const Calendar = () => {
   const [monthDate, useMonthDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const {data} = useGetRequestByCalendarMonthQuery({variables:{startDate: monthDate}})
+  const {data} = useGetRequestByMonthQuery({variables:{startDate: monthDate}})
 
-  const calendarData = data?.getRequestByCalendarMonth
+  const calendarData = data?.getRequestByMonth
   const calendarDataMatrix = calendarMatrix(monthDate, calendarData as TDay[]);
 
 
