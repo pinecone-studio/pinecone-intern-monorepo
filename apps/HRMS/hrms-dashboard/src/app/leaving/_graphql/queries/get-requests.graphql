@@ -1,10 +1,17 @@
 query GetRequests {
   getRequests {
     _id
-    declinedReasoning
+    name
+    employeeId
     startDate
-    totalHour
+    description
+    leaveType
     superVisor
+    durationType
     status
+    declinedReasoning
+    startHour
+    endHour
+    totalHour
   }
 }

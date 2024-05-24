@@ -16,7 +16,7 @@ export const LeaveRequestTypeDefs = gql`
     APPROVED
     DECLINED
   }
-  enum DurationType{
+  enum DurationType {
     Hour
     Day
   }
@@ -51,14 +51,15 @@ export const LeaveRequestTypeDefs = gql`
     startHour: Int
     endHour: Int
     totalHour: Int!
+    createdAt: Date
   }
 
   type Query {
     getRequests: [LeaveRequest!]!
     getRequestById(_id: ID!): LeaveRequest
     getRequestByMonth(startDate: Date): [LeaveRequest]!
-    getRequestByCalendarMonth(startDate:Date, department:String!): [LeaveRequest]!
-    getRequestToday(startDate:Date): [LeaveRequest]
+    getRequestByCalendarMonth(startDate: Date, department: String!): [LeaveRequest]!
+    getRequestToday(startDate: Date): [LeaveRequest]
   }
 
   type Mutation {
