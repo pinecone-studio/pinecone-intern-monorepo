@@ -79,7 +79,7 @@ const Requests = () => {
                 </thead>
                 <tbody>
                   {requestsToShow?.map((dat, index) => (
-                    <tr key={index} className="border-solid border-b border-b-[#EDE6F0] cursor-pointer" onClick={() => router.push(`/leaving/detail/?requestId=${dat?._id}`)} data-testid="requests">
+                    <tr key={index} className="border-solid border-b border-b-[#EDE6F0] cursor-pointer" onClick={() => router.push(`/leaving/Detail/?requestId=${dat?._id}`)} data-testid="requests">
                       <td className="p-4 w-1/5 truncate">{dat?.name}</td>
                       <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.leaveType}</td>
                       <td className="p-4 w-1/5 truncate text-[#3F4145]">{dat?.startDate ? formatDate(dat.startDate) : ''}</td>
