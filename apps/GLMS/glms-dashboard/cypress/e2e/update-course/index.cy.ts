@@ -35,4 +35,52 @@ describe ('Handle update-course page' , () => {
         }
       }).as('GetCourseByIdQuery');
     });
+    it('should set courseID from localStorage on mount', () => {
+      cy.window().then((win) => {
+        win.localStorage.setItem('courseID', 'course-id-123');
+      });
+      cy.reload();
+      cy.intercept('POST', '/graphql', (req) => {
+        if (req.body.operationName === 'GetCourseById') {
+          req.reply({
+            data: {
+              getCourseById: {
+                id: 'course-id-123',
+                title: 'Test Course Title',
+                description: 'Test Course Description',
+                thumbnail: 'test-thumbnail.png',
+              },
+            },
+          });
+        }
+      }).as('graphql');
+      cy.wait('@graphql').its('request.body.variables.getCourseByIdId').should('eq', 'course-id-123');
+    });
 })
+describe('UpdateCourse Component', () => {
+  beforeEach(() => {
+    cy.visit('/update-course'); 
+  });
+
+  it('should set courseID from localStorage on mount', () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem('courseID', 'course-id-123');
+    });
+    cy.reload();
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetCourseById') {
+        req.reply({
+          data: {
+            getCourseById: {
+              id: 'course-id-123',
+              title: 'Test Course Title',
+              description: 'Test Course Description',
+              thumbnail: 'test-thumbnail.png',
+            },
+          },
+        });
+      }
+    }).as('graphql');
+    cy.wait('@graphql').its('request.body.variables.getCourseByIdId').should('eq', 'course-id-123');
+  });
+});
