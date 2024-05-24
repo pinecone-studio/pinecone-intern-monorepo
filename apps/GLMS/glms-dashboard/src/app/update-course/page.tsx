@@ -7,7 +7,7 @@ import { useGetCourseByIdQuery, useUpdateCourseMutation } from '@/generated';
 import Loading from '../../components/Loading';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../public/assets/ArrowBackIcon';
 const UpdateCourse = () => {
   const router = useRouter();
   const [courseID, setCourseID] = useState('');

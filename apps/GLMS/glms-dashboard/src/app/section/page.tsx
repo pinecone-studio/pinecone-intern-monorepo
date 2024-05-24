@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
-import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../public/assets/ArrowBackIcon';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
