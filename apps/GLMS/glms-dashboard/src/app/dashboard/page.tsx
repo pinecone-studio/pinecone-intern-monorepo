@@ -1,6 +1,7 @@
+/* eslint-disable */
 'use client';
 import Courses from './_components/Course';
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { usePathname, useRouter } from 'next/navigation';

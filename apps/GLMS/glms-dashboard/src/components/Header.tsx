@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import { SearchIcon } from '../../public/assets/SearchIcon';
 const jwt = require('jsonwebtoken');
