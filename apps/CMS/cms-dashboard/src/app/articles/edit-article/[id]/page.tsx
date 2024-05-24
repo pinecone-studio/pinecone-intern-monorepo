@@ -18,7 +18,6 @@ const Home = () => {
   const { data, loading, error, refetch } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
   const article = data?.getArticleByID as Article | undefined;
   const router = useRouter();
-
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -58,7 +57,6 @@ const Home = () => {
       }
     },
   });
-
   useEffect(() => {
     if (!article) return;
     formik.setFieldValue('title', article.title);
@@ -68,7 +66,12 @@ const Home = () => {
     formik.setFieldValue('commentPermission', article.commentPermission);
   }, [data]);
 
-  if (loading) return <h5>Loading...</h5>;
+  if (loading)
+    return (
+      <div className="flex w-full justify-center py-8">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   if (error) return <h5>Error</h5>;
 
   return (

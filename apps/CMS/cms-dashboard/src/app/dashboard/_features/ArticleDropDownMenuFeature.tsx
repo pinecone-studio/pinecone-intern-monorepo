@@ -30,11 +30,11 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
 
     const domain = window.location.origin;
 
-    await navigator.clipboard.writeText(`${domain}/articles/copy-article/${id}`);
+    await navigator.clipboard.writeText(`${domain}/articles/${id}`);
 
     setTimeout(() => {
       setCopied(false);
-    }, 1300);
+    }, 1500);
   }, [id]);
 
   const archiveArticle = async () => {
@@ -67,12 +67,8 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
   };
 
   return (
-    <div className="relative dropdown">
-      {/* <div data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" tabIndex={0} role="button">
-        <MorevertButtonIcon />
-      </div> */}
-
-      <IconButton data-testid="menu-button-test-id" sx={{ cursor: 'pointer' }} onClick={handleClick}>
+    <Stack className="relative dropdown">
+      <IconButton data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" sx={{ cursor: 'pointer', width: 36, height: 40 }} onClick={handleClick}>
         <MorevertButtonIcon />
       </IconButton>
 
@@ -81,24 +77,29 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
           <Stack
             className={`close-test-class-name`}
             data-testid="close-button-menu-test-id"
+            data-cy="drop-down-menu-test-cy"
             direction={'row'}
             px={2}
+            gap={0.7}
             alignItems={'center'}
-            onClick={handleClose}
+            onClick={() => {
+              archiveArticle();
+              handleClose();
+            }}
             sx={{
               '&:hover': {
                 bgcolor: '#0000000A',
               },
             }}
           >
-            <Stack data-testid="item-icon" sx={{ color: '#000' }}>
+            <Stack data-testid="item-icon" sx={{ color: '#000', ml: 0.4 }}>
               <ArchiveButtonIcon />
             </Stack>
 
             <Typography p={1}>Архив</Typography>
           </Stack>
 
-          <Tooltip data-testid="copy-to-clipboard-id" arrow open={copied} title="Copied" onClick={() => handleClickCopy()}>
+          <Tooltip data-testid="copy-to-clipboard-id" arrow open={copied} title="Copied" onClick={handleClickCopy}>
             <MenuItem>
               <ListItemIcon sx={{ color: '#000' }}>
                 <LinkButtonIcon />
@@ -109,8 +110,6 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
           </Tooltip>
         </Stack>
       </Menu>
-
-      {copied && <p className="text-slate-50 bg-[#8e8d8d] px-3 w-fit rounded-lg mt-2 ml-9 z-10">Copied</p>}
-    </div>
+    </Stack>
   );
 };

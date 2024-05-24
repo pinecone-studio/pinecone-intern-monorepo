@@ -53,8 +53,8 @@ export const DashboardTable = (props: DashboardTableProps) => {
 
   return (
     <div data-cy="dashboard-table-cy-id" className="flex w-full justify-center bg-white rounded-[10px] overflow-hidden">
-      <div className="overflow-x-auto w-full min-w-[650px] flex border">
-        <table className="table h-fit flex">
+      <div className="overflow-x-auto w-full min-w-[650px]">
+        <table className="table">
           <thead>
             <tr>
               <th>
@@ -77,9 +77,9 @@ export const DashboardTable = (props: DashboardTableProps) => {
             <tbody>
               {articles?.map(({ status, title, createdAt, category, id }, index) => {
                 return (
-                  <tr key={index} className="h-fit">
+                  <tr key={index}>
                     <td>
-                      <p className="text-[16px] text-textPrimary font-[600] whitespace-nowrap">{title.slice(0, 32)}</p>
+                      <p className="text-[16px] text-textPrimary font-[600]">{title.slice(0, 32)}</p>
                     </td>
                     <td>
                       <p
@@ -100,7 +100,7 @@ export const DashboardTable = (props: DashboardTableProps) => {
                       </div>
                     </td>
                     <td>
-                      <div className="flex justify-center">
+                      <div className="flex items-center">
                         <ArticleDropDownMenuFeature id={id as string} />
                         <ArticleEditButton id={id as string} />
                       </div>

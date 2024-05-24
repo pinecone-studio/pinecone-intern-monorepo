@@ -36,8 +36,8 @@ export const ArticleStatusTabsFeature = () => {
   const currentStatus = searchParams.get('status') || 'ALL';
 
   return (
-    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-[56px] px-3 flex items-center justify-between border-[1px] bg-white border-border rounded-[8px] ">
-      <div className="flex gap-10">
+    <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-fit flex items-center justify-between border-[1px] bg-white border-border rounded-[8px]">
+      <div className="flex">
         <Link href={pathname + '?' + createQueryString('status', 'ALL')} className="h-[100%]">
           <StatusTab selectedStatus={currentStatus} quantity={articles?.length} thisStatus={'ALL'} />
         </Link>
@@ -50,9 +50,11 @@ export const ArticleStatusTabsFeature = () => {
           );
         })}
       </div>
-      <Link href={pathname + '?' + clearFilter({ name: 'status' })}>
-        <ClearAllFilterIcon />
-      </Link>
+      <div className="px-5">
+        <Link href={pathname + '?' + clearFilter({ name: 'status' })}>
+          <ClearAllFilterIcon />
+        </Link>
+      </div>
     </div>
   );
 };
