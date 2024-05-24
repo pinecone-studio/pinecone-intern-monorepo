@@ -9,8 +9,6 @@ import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
-const date = new Date().toLocaleTimeString();
-
 type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
 const DashboardOtherLab = () => {
   const [access, setAccess] = useState('');

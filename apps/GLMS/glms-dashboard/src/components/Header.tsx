@@ -1,6 +1,6 @@
 'use client';
 import { SearchIcon } from '../../public/assets/SearchIcon';
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 import { PositionIcon } from '../../public/assets/HeaderPosition';
 import { Logo } from '../../public/assets/Logo';
 import { useRouter } from 'next/navigation';

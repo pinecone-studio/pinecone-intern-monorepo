@@ -1,6 +1,5 @@
 'use client';
 import { useEffect } from 'react';
-import SignUp from './signup/page';
 import { useRouter } from 'next/navigation';
 
 const Home = () => {

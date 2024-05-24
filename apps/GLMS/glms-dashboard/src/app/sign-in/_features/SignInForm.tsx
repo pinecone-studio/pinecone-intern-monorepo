@@ -3,7 +3,7 @@
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import TextInput from '../../signup/_components/TextInput';
-import { ArrowBackIcon } from 'apps/GLMS/glms-dashboard/public/assets/ArrowBackIcon';
+import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
 import { useAuth } from '@/common/providers';
 
 const SignInForm = () => {
