@@ -7,9 +7,20 @@ describe('Challenge page', () => {
 });
 
 describe('Challenge quiz page', () => {
-  beforeEach(() => cy.visit('/challenge/6639b508ad9ecc26d93ecafd'));
+  beforeEach(() => cy.visit('/challenge/664d99c9fb7b77a2937a2a30'));
   it('1. Should display ProgressBar', () => {
     cy.get('[data-testid="progress-bar"]').should('exist');
+  });
+  it('2. Should display next-button', () => {
+    cy.get('[data-testid="next-button"]').should('exist');
+    cy.get('[data-testid="next-button"]').should('be.disabled');
+  });
+  it('3. Should clickable next button if choice clicked', () => {
+    cy.get('[data-testid="choice-text-664d99c9fb7b77a2937a2a0d"]').should('exist');
+    cy.get('[data-testid="choice-text-664d99c9fb7b77a2937a2a0d"]').click();
+    cy.get('[data-testid="next-button"]').click();
+    cy.get('[data-testid="choice-image-664d99c9fb7b77a2937a2a11"]').click();
+    cy.get('[data-testid="next-button"]').click();
   });
 });
 

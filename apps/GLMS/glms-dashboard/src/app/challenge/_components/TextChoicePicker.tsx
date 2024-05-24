@@ -11,7 +11,8 @@ const ChoiceText = ({ choice, selectedChoice, handleChange, id, quizId }: IProps
   const isSelected = selectedChoice === id;
   return (
     <div
-      data-testid="container"
+      data-testid={`choice-text-${id}`}
+      role="container"
       onClick={() => {
         handleChange(id, quizId);
       }}

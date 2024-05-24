@@ -8,8 +8,8 @@ interface IProps {
 const ChoiceImage = ({ choice, setSelectedChoice, selectedChoice, id }: IProps) => {
   const isSelected = selectedChoice === id;
   return (
-    <div className="flex w-[588px] h-[483px]">
-      <img onClick={() => setSelectedChoice(id)} src={choice!} width={588} height={483} alt="ChoiceImage" className={`object-cover rounded-[8px] ${isSelected && 'opacity-70'}`} />
+    <div data-testid={`choice-image-${id}`} onClick={() => setSelectedChoice(id)} className="flex w-[588px] h-[483px]">
+      <img src={choice!} width={588} height={483} alt="ChoiceImage" className={`object-cover rounded-[8px] ${isSelected && 'opacity-70'}`} />
     </div>
   );
 };
