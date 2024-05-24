@@ -22,8 +22,8 @@ export const courseSchema = gql`
     status: String
   }
   type Mutation {
-    createCourse(courseInput: CourseInput!): Course!
     updateCourse(id: ID!, courseInput: CourseInput!): Course!
     updateCourseStatus(id: ID!): Course!
+    createCourse(courseInput: CourseInput!): Course!
   }
 `;
