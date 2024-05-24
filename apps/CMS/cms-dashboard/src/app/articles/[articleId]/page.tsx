@@ -20,13 +20,13 @@ const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
           <Loader />
         </div>
       ) : (
-        <div data-cy="one-article-container" className="flex flex-col justify-center w-[100vw] min-h-[100vh] bg-[#f7f7f8] gap-8 pb-12 mt-[100px]">
+        <div data-cy="one-article-container" className="flex flex-col justify-center w-[100vw] min-h-[100vh] bg-[#f7f7f8] gap-8 pb-12 ">
           <ArticleHeader />
-          <div className="flex flex-row justify-center w-[100vw] bg-[#f7f7f8] gap-8">
+          <div className="flex flex-row justify-center w-[100vw] bg-[#f7f7f8] gap-8 mt-[100px]">
             <div data-cy="one-article-back-cutton" onClick={routerHandler}>
               <BackArrowIcon />
             </div>
-            <div className="flex flex-col gap-9 max-w-[998px]" suppressHydrationWarning>
+            <div className="flex flex-col gap-9 w-[998px] md:w-[800px] sm:w-[500px]" suppressHydrationWarning>
               <div className="flex flex-col gap-3">
                 <div className="font-bold text-4xl text-[#121316]">{data?.getArticleByID.title}</div>
                 <div className="font-light text-base">
@@ -37,7 +37,7 @@ const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
                 </div>
               </div>
               <div className="w-full h-[1px]  bg-[#D6D8DB]" />
-              <img className="rounded-[12px]" src={data?.getArticleByID.coverPhoto} />
+              <img  className="rounded-[12px] object-cover max-h-[500px]" src={data?.getArticleByID.coverPhoto} />
               <div data-cy="one-article-content" className="text-xl text-[#121316] leading-10" dangerouslySetInnerHTML={{ __html: data?.getArticleByID.content || 'description' }} />
               <Link href={'https://pinecone.mn/'}>
                 <div className="text-xl text-[#121316] leading-3 underline">Бидэнтэй нэгдэх бол энд дарна уу.</div>

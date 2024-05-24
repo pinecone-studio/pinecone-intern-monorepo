@@ -5,10 +5,21 @@ import { useGetNewestArticleQuery, useGetCategoriesQuery } from '../generated';
 import GroupArticles from './articles/_features/GroupArticles';
 import { AdminNavigateLinksFeature } from './dashboard/_features';
 import { Loader } from './sign-up/_components';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
   const { data, loading } = useGetNewestArticleQuery();
   const { data: categories, loading: categoriesLoading } = useGetCategoriesQuery();
+  const [userRole, setUserRole] = useState('user');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { role } = jwt.decode(token) as JwtPayload;
+      setUserRole(role);
+    }
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col w-full gap-12 bg-[#F7F7F8] items-center pb-6" suppressHydrationWarning={true}>
@@ -32,7 +43,7 @@ const Home = () => {
             ))}
           </div>
         )}
-        <div className="fixed opacity-100 bottom-8 z-10">
+        <div className="fixed opacity-100 bottom-8 z-10" style={{ display: userRole === 'user' ? 'none' : 'flex' }}>
           <AdminNavigateLinksFeature />
         </div>
       </div>
