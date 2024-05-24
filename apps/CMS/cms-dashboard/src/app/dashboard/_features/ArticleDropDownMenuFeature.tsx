@@ -40,13 +40,13 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
 
   const archiveArticle = async () => {
     if (data?.getArticleByID?.status === 'ARCHIVED') {
-      toast.success(`Looks like it's already archived`, {
-        style: {
-          border: '1px solid #713200',
-          padding: '16px',
-          color: '#713200',
-        },
+      toast.success(`Looks like it's already archived !`, {
+        progressStyle: { background: '#01E17B' },
         position: 'top-center',
+        autoClose: 3000,
+        style:{
+          color:"black"
+        }
       });
       return;
     }
