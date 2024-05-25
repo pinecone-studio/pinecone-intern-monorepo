@@ -10,6 +10,7 @@ import { AdminNavigateLinksFeature, ArticleStatusTabsFeature } from './_features
 import { DashboardTable } from './_features/DashboardTable';
 import { useEffect, useState } from 'react';
 import { RefetchProvider } from '@/common/providers/RefetchProvider';
+import { NAV_BAR_HEIGHT } from '@/common/variables';
 
 const Home = () => {
   const searchParams = useSearchParams();
@@ -50,14 +51,16 @@ const Home = () => {
     <RefetchProvider refetch={getArticlesRefetch}>
       <div className="bg-grayBackground">
         <Navbar />
-        <div data-cy="dashboard-table-cy" className="w-full min-h-screen max-w-screen-xl mx-auto py-6 flex flex-col gap-2">
+        <div data-cy="dashboard-table-cy" className="w-full  max-w-screen-xl mx-auto py-6 flex flex-col gap-2" style={{ height: `calc(100vh - ${NAV_BAR_HEIGHT}px)` }}>
           <div className="flex gap-2">
             <SearchInput />
             <FilterByDate />
           </div>
 
           <ArticleStatusTabsFeature />
-          <DashboardTable articles={articles} loading={loading} error={error} />
+          <div className="flex-grow">
+            <DashboardTable articles={articles} loading={loading} error={error} />
+          </div>
 
           <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
           <div className="flex justify-center">
