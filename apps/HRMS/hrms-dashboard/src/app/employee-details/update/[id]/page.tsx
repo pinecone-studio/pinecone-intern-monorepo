@@ -2,8 +2,7 @@
 import { Dependent, useGetEmployeeQuery } from '@/generated';
 import { useParams, useRouter } from 'next/navigation';
 import { LeftArrow } from '../../../asset';
-import { UpdateDependent, UpdateEmployment } from './_features';
-import PersonalInformation from './_features/PersonalInformation';
+import { Personal, UpdateDependent, UpdateEmployment } from './_features';
 
 const Update = () => {
   const { id } = useParams();
@@ -32,7 +31,7 @@ const Update = () => {
 
       <div className="flex flex-col lg:flex-row w-full  p-8 h-fit gap-6">
         <div className="rounded-xl lg:w-1/3 w-full">
-          <PersonalInformation
+          <Personal
             refetch={refetch}
             lastName={employee?.lastName}
             homeAddress={employee?.homeAddress}

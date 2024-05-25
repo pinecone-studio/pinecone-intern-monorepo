@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import PersonalUpdateModal from './PersonalUpdateModal';
 import { PenIcon } from '../../../../../../public/assets/PenIcon';
 import { BagIcon } from '../../../../../../public/assets/BagIcon';
 import { PhoneIcon } from '../../../../../../public/assets/PhoneIcon';
 import { Mailicon } from '../../../../../../public/assets/MailIcon';
 import { LocationIcon } from '../../../../../../public/assets/LocationIcon';
+
+import { UpdatePersonal } from './UpdatePersonal';
 
 interface PersonalInformationProps {
   firstName?: string | null;
@@ -19,7 +20,7 @@ interface PersonalInformationProps {
   refetch: () => void;
 }
 
-const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl, refetch }: PersonalInformationProps) => {
+export const Personal = ({ firstName, lastName, email, phone, jobTitle, homeAddress, imageUrl, refetch }: PersonalInformationProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -60,7 +61,7 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
         </div>
       </div>
       {isModalOpen && (
-        <PersonalUpdateModal
+        <UpdatePersonal
           refetch={refetch}
           lastName={lastName}
           homeAddress={homeAddress}
@@ -75,5 +76,3 @@ const PersonalInformation = ({ firstName, lastName, email, phone, jobTitle, home
     </div>
   );
 };
-
-export default PersonalInformation;

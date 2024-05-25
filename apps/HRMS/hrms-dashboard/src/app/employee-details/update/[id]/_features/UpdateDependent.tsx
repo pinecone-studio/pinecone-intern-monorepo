@@ -4,7 +4,6 @@ import { CreateDependent } from './CreateDependent';
 import { EmployeeDependentUpdate } from './EmployeeDependentUpdate';
 import { Dependent } from '@/generated';
 
-
 type UpdateDependantProps = {
   dependantPhone: string | null | undefined;
   dependency: string | null | undefined;
@@ -25,9 +24,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
   return (
     <section data-cy="updateDependent" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
-        <p onClick={() => refetch()} className="text-black text-lg font-semibold cursor-pointer">
-          Хөдөлмөр эрхлэлтийн мэдээлэл
-        </p>
+        <p className="text-black text-lg font-semibold cursor-pointer">Хөдөлмөр эрхлэлтийн мэдээлэл</p>
         {dependency ? (
           <>
             <div>

@@ -57,7 +57,9 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
         </p>
         <div
           data-testid="closeSvg"
-          onClick={() => {props.setUpdateEmpInput(false);}}
+          onClick={() => {
+            props.setUpdateEmpInput(false);
+          }}
           className="cursor-pointer"
         >
           <CloseSvg />
@@ -112,7 +114,9 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.employmentStatus)}
           >
             {employeeStatusList.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={index} value={item}>
+                {item}
+              </option>
             ))}
           </CustomInput>
           <div className="flex justify-end gap-2">
@@ -128,19 +132,16 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
                 borderRadius: '4px',
                 cursor: 'pointer',
               }}
-              onClick={() => {props.setUpdateEmpInput(false);}}>
+              onClick={() => {
+                props.setUpdateEmpInput(false);
+              }}
+            >
               Цуцлах
             </button>
             <button
-              data-cy="updateEmploymentBtn"
-              name="updateBtn"
-              disabled={!formik.isValid}
+              data-cy="updateEmploymentBtn" name="updateBtn" disabled={!formik.isValid}
               style={{
-                backgroundColor: '#121316',
-                color: '#fff',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
+                backgroundColor: '#121316', color: '#fff', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer',
               }}
               onClick={(e) => {
                 e.preventDefault();
