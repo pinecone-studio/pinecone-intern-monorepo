@@ -39,7 +39,7 @@ const MainBannerFromArticles = (props: MainBannerFromArticlesProps) => {
       </div>
       <div className="w-full fixed top-0 bg-white p-5 h-[48px] z-10 p-4 box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;">
         <img data-testid="imgButton" width={36} height={34} className="absolute top-2 left-[20%] b-6" src="Logo.svg" />
-        <AiOutlineUser color="#000" style={{ position: 'absolute', right: '20%', width: 36, height: 36, bottom: 6 }} onClick={jumper} />
+        <AiOutlineUser data-testid="jumper" color="#000" style={{ position: 'absolute', right: '20%', width: 36, height: 36, bottom: 6 }} onClick={jumper} />
       </div>
       <div data-cy="innerComp" className="flex flex-col absolute bottom-0 w-full  justify-center items-center gap-6 p-6 pb-[50px] bg-gradient-to-t from-black to-transparent">
         <div className="flex flex-row gap-2 items-center">

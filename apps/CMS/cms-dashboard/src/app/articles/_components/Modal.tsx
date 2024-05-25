@@ -18,7 +18,7 @@ const Modal = ({ isVisible, onClose }: CreateArticleModalType) => {
     location.reload();
   };
   return (
-    <div data-cy="aritlce-modal-cy-id" id="wrapper" className=" fixed inset-2 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-11" onClick={handleCLose}>
+    <div data-testid="modalCloseBtn" id="wrapper" className=" fixed inset-2 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-11" onClick={handleCLose}>
       <div className=" w-[528px] flex flex-col bg-white relative rounded-2xl gap-8 z-12">
         <button className=" py-3 text-black text-xl absolute top-[13px] right-6 font-semibold " onClick={onClose}>
           X
@@ -31,7 +31,7 @@ const Modal = ({ isVisible, onClose }: CreateArticleModalType) => {
           <button type="submit" className={`text-[18px] px-[20px] py-[12px] rounded-[8px] items-center bg-[#1C20240A] text-[#1c2024]`} onClick={onClose}>
             Үгүй
           </button>
-          <button type="submit" className={`text-[18px] px-[20px] py-[12px] rounded-[8px] items-center bg-[#1c2024] text-white  h-[48px] `} onClick={handleSubmit}>
+          <button data-testid="modalBtn" type="submit" className={`text-[18px] px-[20px] py-[12px] rounded-[8px] items-center bg-[#1c2024] text-white  h-[48px] `} onClick={handleSubmit}>
             Тийм
           </button>
         </div>
