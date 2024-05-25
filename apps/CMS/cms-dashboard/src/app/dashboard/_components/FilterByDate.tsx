@@ -48,8 +48,8 @@ export const FilterByDate = () => {
   };
 
   return (
-    <section data-cy="filter-by-date-cy-id" className="relative bg-white overflow-hidden rounded-[12px] border">
-      <div className="w-fit flex flex-row justify-center items-center h-[56px] gap-4 border border-solid  p-[10px] px-6" style={{ borderColor: '#D6D8DB' }}>
+    <section data-cy="filter-by-date-cy-id" className="relative bg-white rounded-[8px] border px-4 h-[58px]">
+      <div className="flex flex-row gap-3 items-center h-full justify-between w-full">
         <button data-testid="open-calendar-button-test-id" onClick={openCalendar} style={{ color: '#3F4145' }}>
           <CalendarIcon />
         </button>
