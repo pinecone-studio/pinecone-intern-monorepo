@@ -51,7 +51,7 @@ const Home = () => {
     <RefetchProvider refetch={getArticlesRefetch}>
       <div className="bg-grayBackground">
         <Navbar />
-        <div data-cy="dashboard-table-cy" className="w-full  max-w-screen-xl mx-auto py-6 flex flex-col gap-2" style={{ height: `calc(100vh - ${NAV_BAR_HEIGHT}px)` }}>
+        <div data-cy="dashboard-table-cy" className="w-full  max-w-screen-xl mx-auto py-6 flex flex-col gap-2" style={{ minHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)` }}>
           <div className="flex gap-2">
             <SearchInput />
             <FilterByDate />
