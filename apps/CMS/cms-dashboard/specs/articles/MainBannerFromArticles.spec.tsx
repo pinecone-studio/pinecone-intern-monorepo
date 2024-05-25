@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, render, act } from '@testing-library/react';
 import MainBannerFromArticles from '../../src/app/articles/_components/MainBannerFromArticles';
 import { useRouter } from 'next/navigation';
+import Modal from '@/app/articles/_components/Modal';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({ push: jest.fn() }),
@@ -18,8 +19,6 @@ describe('MainBannerFromArticles', () => {
     (useRouter as jest.Mock).mockReturnValue({
       push: routerPushMock,
     });
-
-    // Mock useState to return a mock function for setIsShown
   });
 
   afterEach(() => {
@@ -58,7 +57,11 @@ describe('MainBannerFromArticles', () => {
 
     const { getByTestId } = render(<MainBannerFromArticles />);
 
-    fireEvent.click(getByTestId('jumper'));
+    const btn = getByTestId('jumper');
+
+    render(<MainBannerFromArticles />);
+
+    fireEvent.click(btn);
 
     expect(getItemMock).toHaveBeenCalledWith('token');
     expect(routerPushMock).not.toHaveBeenCalled();
