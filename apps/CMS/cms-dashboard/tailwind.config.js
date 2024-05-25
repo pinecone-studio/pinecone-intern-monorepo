@@ -12,7 +12,7 @@ module.exports = {
         textPlaceholder: '#8B8E95',
         border: '#ECEDF0',
         tagGrayBackground: '#ECEDF0',
-        grayBackground: '#13ce66',
+        grayBackground: '#e9eaec',
         activeBackground: '#1C202414',
         iconSecondary: '#5E6166',
       },
