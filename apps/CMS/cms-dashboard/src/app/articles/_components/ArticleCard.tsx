@@ -21,12 +21,8 @@ const ArticleCard = (props: ArticlesProps) => {
   };
 
   return (
-    <div
-      data-testid="article-main-container"
-      className="flex flex-col w-full h-[504px] overflow-hidden"
-      onClick={routerHandler}
-    >
-      <div className="w-full h-[50%] rounded-xl overflow-hidden relative">
+    <div data-testid="article-main-container" className="flex flex-col w-full h-[504px] overflow-hidden" onClick={routerHandler}>
+      <div className="w-full h-[50%] rounded-xl overflow-hidden ">
         <img data-cy="article-cover" src={cover} className="w-full h-full object-cover" />
       </div>
       <div className="flex flex-col gap-3 p-6">
@@ -39,10 +35,10 @@ const ArticleCard = (props: ArticlesProps) => {
             #{category}
           </p>
         </div>
-        <p data-testid="article-title" className="font-bold text-2xl text-[#121316]" >
+        <p data-testid="article-title" className="font-bold text-2xl text-[#121316]">
           {title}
         </p>
-        <div data-testid="article-description" dangerouslySetInnerHTML={{__html:description}} className="text-lg max-w-[564px] max-h-[56px] truncate "/>
+        <div data-testid="article-description" dangerouslySetInnerHTML={{ __html: description }} className="text-lg max-w-[564px] max-h-[56px] truncate " />
       </div>
     </div>
   );
