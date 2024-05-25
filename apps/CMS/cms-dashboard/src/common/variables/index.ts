@@ -1,1 +1,1 @@
-export * from './staticVariables';
+export * from './static-variables';

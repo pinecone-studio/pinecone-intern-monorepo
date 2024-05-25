@@ -17,7 +17,7 @@ export const FilterByDate = () => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const openCalendar = () => setOpen((prev) => !prev);
+  const toggleOpenCalendar = () => setOpen((prev) => !prev);
 
   const handleDateChange = (rangeDate: RangeKeyDict) => {
     setStartDate(rangeDate.selection.startDate);
@@ -50,7 +50,7 @@ export const FilterByDate = () => {
   return (
     <section data-cy="filter-by-date-cy-id" className="relative bg-white rounded-[8px] border px-4 h-[58px]">
       <div className="flex flex-row gap-3 items-center h-full justify-between w-full">
-        <button data-testid="open-calendar-button-test-id" onClick={openCalendar} style={{ color: '#3F4145' }}>
+        <button data-testid="open-calendar-button-test-id" onClick={toggleOpenCalendar} style={{ color: '#3F4145' }}>
           <CalendarIcon />
         </button>
         <div className="flex-row flex justify-between items-center p-[5px] gap-[3px]">
@@ -63,7 +63,7 @@ export const FilterByDate = () => {
         </Link>
       </div>
       {open && (
-        <div className="h-full fixed right-[40px] z-10">
+        <div className="absolute top-[100%] right-0 rounded-[8px] overflow-hidden z-10 shadow-[0_0_10px_rgba(0,0,0,0.3)]">
           <DateRangePicker
             retainEndDateOnFirstSelection
             startDatePlaceholder="Start date"
@@ -78,14 +78,15 @@ export const FilterByDate = () => {
             onChange={handleDateChange}
           />
           <button
+            className="bg-grayBackground py-2"
             data-testid="close-calendar-button-test-id"
             onClick={() => {
-              openCalendar();
+              toggleOpenCalendar();
               handleSubmit();
             }}
             style={{ color: '#3F4145', width: '100%' }}
           >
-            Close
+            Apply date range
           </button>
         </div>
       )}
