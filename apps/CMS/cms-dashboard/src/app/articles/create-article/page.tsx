@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Input from '../_components/create-article/Input';
@@ -11,6 +11,8 @@ import BackButton from '../_components/create-article/BackButton';
 import CreateArticleModal from '../_components/create-article/CreateArticleModal';
 import { useCreateArticleMutation } from '../../../generated';
 import { toast } from 'react-toastify';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import {v4} from "uuid";
 
 const validationSchema = yup.object({
   title: yup.string().required('Та гарчгаа оруулна уу'),
@@ -20,13 +22,20 @@ const validationSchema = yup.object({
 });
 
 const CreateArticle = () => {
+  const [author, setAuthor] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [status, articleStatus] = useState('PUBLISHED');
   const router = useRouter();
   const [commentPermission, setCommentPermission] = useState(true);
   const [createArticle] = useCreateArticleMutation();
-  const author = '66387904ab62ff527e48d757';
-  const status = 'PUBLISHED';
-  const slug = 'slug';
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { id } = jwt.decode(token) as JwtPayload;
+      setAuthor(id);
+    }
+  }, []);
 
   const handleback = () => {
     router.push('/');
@@ -48,16 +57,18 @@ const CreateArticle = () => {
       handleCreateArticle(values.title, values.content, values.coverPhoto, values.category);
       resetForm();
       handleModalClose();
+      handleback();
     },
   });
 
   const handleCreateArticle = async (title: string, content: string, coverPhoto: string, category: string) => {
+    const slug = v4();
     await createArticle({
       variables: {
         articleInput: { commentPermission, title, content, coverPhoto, category, author, slug, status },
       },
     });
-    toast.success('Published Successfully !', {
+    toast.success(`${status} Successfully !`, {
       position: 'top-center',
       autoClose: 3000,
       hideProgressBar: true,
@@ -80,7 +91,6 @@ const CreateArticle = () => {
             <div data-cy="back-button-container" onClick={handleback}>
               <BackButton />
             </div>
-
             <div className=" flex flex-col gap-[15px]">
               <p data-cy="title-cy-id" className=" text-lg font-semibold">
                 Гарчиг өгөх
@@ -105,7 +115,7 @@ const CreateArticle = () => {
             ImageUploaderHelpertext={errors.coverPhoto}
           />
           <div className=" flex flex-col p-6 gap-6 border-t">
-            <CustomButton disabled={touched.title ? !isValid : true} label="Ноорогт хадгалах" bgColor="secondary" />
+            <CustomButton disabled={touched.title ? !isValid : true} label="Ноорогт хадгалах" bgColor="secondary"  onClick={()=>{articleStatus('DRAFT'); handleSubmit()}} />
             <CustomButton disabled={touched.title ? !isValid : true} label="Нийтлэх" bgColor="primary" onClick={handleModalOpen} />
           </div>
         </div>

@@ -34,7 +34,7 @@ const RightSide: React.FC<CreateArticleRightSideProps> = ({
   const { data, loading } = useGetCategoriesQuery();
   const categoriesData = data?.getCategories;
   return (
-    <div data-cy="rightside-cy-id">
+    <div data-cy="rightside-cy-id" className=' bg-white'>
       {loading ? (
         <div>Loading</div>
       ) : (
