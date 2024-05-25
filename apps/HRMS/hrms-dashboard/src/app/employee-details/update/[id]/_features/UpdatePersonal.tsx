@@ -34,9 +34,7 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = Array.from(e.target.files);
-
       const accessUrl = await fileManagement(file, 'HRMS-dashboard');
-
       setValue(accessUrl[0]);
     }
   };
@@ -91,7 +89,7 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
             <div data-testid="profile-picture" className="w-1/3  aspect-square rounded-full overflow-hidden m-auto relative my-4 ">
               <Image fill style={{ objectFit: 'cover' }} src={value || '/avatar.png'} alt="profile picture" />
             </div>
-            <input type="file" onChange={(e) => handleUpload(e)} className=" bg-black" />
+            <input type="file" id="file-test" onChange={(e) => handleUpload(e)} className=" bg-black" />
             <div>
               <p className=" font-normal ">Овог</p>
               <Field className="w-[408px] p-2 h-[50px] border-[1px] rounded-[8px] border-[#D6D8DB] bg-[#F7F7F8] " type="text" name="lastName" placeholder="Last Name" />
