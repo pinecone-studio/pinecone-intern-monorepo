@@ -16,12 +16,14 @@ export const Header = () => {
   if (pathname === '/login') {
     return null;
   }
+  
+  const handlePush = ()=>{
+    router.push('/login')
+  }
   return (
     <header className="w-full flex items-center justify-between py-1 px-6 bg-main">
       <div
-        onClick={() => {
-          router.push('/');
-        }}
+        onClick={handlePush}
         data-cy="headerIcon"
         className="flex items-center justify-center cursor-pointer"
       >

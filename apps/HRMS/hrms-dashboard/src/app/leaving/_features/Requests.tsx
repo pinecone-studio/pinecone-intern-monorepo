@@ -40,8 +40,8 @@ const Requests = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center pt-10">
-        <span className="loading loading-spinner loading-md"></span>
+      <div className="flex justify-center items-center h-[1000px] ">
+<span className="loading loading-ring loading-lg"></span>
       </div>
     );
   const requestsToShow = filteredData.length > 0 ? filteredData : data?.getRequests;
@@ -69,7 +69,7 @@ const Requests = () => {
             <div className="w-full max-h-[500px] overflow-y-auto bg-white">
               <table className="w-full text-sm text-left">
                 <thead>
-                  <tr className="bg-base-200">
+                  <tr className="bg-base-200 dark:bg-light">
                     {headers.map((header, index) => (
                       <th key={index} className="p-4 w-1/5 text-left">
                         <p className="text-md font-semibold text-dark">{header}</p>
