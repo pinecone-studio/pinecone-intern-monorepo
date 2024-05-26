@@ -1,5 +1,5 @@
 describe('Detail Feature', () => {
-  const testId = '6627615b0e17dca819034a5a';
+  const testId = '663b47469c02f6e5f38ef5c1';
   beforeEach(() => {
     cy.visit(`/leaving/Detail?requestId=${testId}`);
   });

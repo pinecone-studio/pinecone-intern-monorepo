@@ -81,7 +81,7 @@ const Detail = () => {
               </div>
               <div>
                 <p className="w-[400px]">Ажлаа түр хугацаанд юу юу шилжүүлэн өгч буйгаа товч тэмдэглэнэ үү.</p>
-                <p>-</p>
+                <p className="font-semibold text-black pt-2">{data?.getRequestById?.description}</p>
               </div>
             </div>
             <div className="flex flex-col gap-3 w-[565px] h-[96px] bg-white rounded-lg p-5">
@@ -93,7 +93,7 @@ const Detail = () => {
                 </div>
                 <div className="flex gap-3 items-center" data-testid="request-status">
                   <DeclineButton id={requestId} status={requestData?.status} />
-                  <ApproveButton id={requestId} />
+                  <ApproveButton id={requestId} status={requestData?.status} />
                 </div>
               </div>
             </div>

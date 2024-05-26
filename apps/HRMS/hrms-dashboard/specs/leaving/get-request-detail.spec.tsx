@@ -21,6 +21,7 @@ describe('RequestDetails component', () => {
     const mockDataWithStartDate = {
       totalHour: 10,
       startDate: '2024-05-24',
+      endHour: '2024-05-28'
     };
 
     const { getByText } = render(<RequestDetails data={mockDataWithStartDate} />);

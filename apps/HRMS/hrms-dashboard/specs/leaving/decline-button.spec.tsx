@@ -37,4 +37,11 @@ describe('DeclineButton', () => {
     const button = getByTestId('decline-button');
     expect(button).toBeTruthy();
   });
+  it('renders correctly when disabled', () => {
+    const mockId = '1';
+    const mockStatus = 'APPROVED';
+    const { getByTestId } = render(<DeclineButton id={mockId} status={mockStatus} />);
+    const button = getByTestId('decline-button');
+    expect(button).toBeTruthy();
+  });
 });

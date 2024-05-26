@@ -14,15 +14,15 @@ const DeclineButton = ({ id, status }: DeclineButtonProps) => {
     await decline({ variables: { id } });
     router.push('/leaving');
   };
-  const isEnabled = !status || status.toLowerCase() !== 'approved';
+  const isDisabled = status === 'APPROVED' || status === 'DECLINED';
 
   return (
     <button
       onClick={handleDecline}
-      className={`border border-[#D6D8DB] border-solid text-black h-30 rounded-md hover:bg-black hover:text-white ${isEnabled ? '' : 'opacity-50 cursor-not-allowed'}`}
+      className={`border border-[#D6D8DB] border-solid text-black h-30 rounded-md hover:bg-black hover:text-white ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       style={{ padding: 'revert' }}
       data-testid="decline-button"
-      disabled={!isEnabled}
+      disabled={isDisabled}
     >
       Татгалзах
     </button>
