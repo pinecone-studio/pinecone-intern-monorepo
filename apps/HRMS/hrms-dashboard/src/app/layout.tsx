@@ -21,7 +21,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               <LeaveRequestCreationProvider>
                 <div className="flex flex-col flex-1">
                   <Header />
-                  <div className="flex flex-col md:flex-row dark:bg-white">
+                  <div className="flex flex-col md:flex-row ">
                     <Sidebar />
                     <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
                   </div>
