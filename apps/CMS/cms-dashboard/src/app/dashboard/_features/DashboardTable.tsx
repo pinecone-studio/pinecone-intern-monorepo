@@ -32,7 +32,11 @@ export const DashboardTable = (props: DashboardTableProps) => {
         </tr>
       </thead>
       {!articles?.length ? (
-        <p className="text-xl font-semibold p-8">Article not found</p>
+        <tbody className="text-xl font-semibold p-8">
+          <tr>
+            <th>Article not found</th>
+          </tr>
+        </tbody>
       ) : (
         <tbody>
           {articles?.map((item) => {
