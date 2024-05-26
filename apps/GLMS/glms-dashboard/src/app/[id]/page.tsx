@@ -5,18 +5,18 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 const Home = () => {
-  const pathName = usePathname().substring(1);
+  const pathname = usePathname().substring(1);
   const [newCourse, setNewCourse] = useState<Course>();
   const [newLesson, setNewLesson] = useState<Lesson[]>();
+  const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathname } });
 
-  const { data: lessonData, loading: lessonLoading, error: lessonError, refetch: lessonRefetch } = useGetLessonByIdQuery({ variables: { getLessonByIdId: pathName } });
   useEffect(() => {
     const getByLessonIdData = lessonData?.getLessonById as Lesson[];
     setNewLesson(getByLessonIdData);
     lessonRefetch();
   }, [lessonData, lessonLoading, lessonError]);
 
-  const { data, loading, error, refetch } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathName } });
+  const { data, loading, error, refetch } = useGetCourseByIdQuery({ variables: { getCourseByIdId: pathname } });
   useEffect(() => {
     const getByIdData = data?.getCourseById;
     setNewCourse(getByIdData);

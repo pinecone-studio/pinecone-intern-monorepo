@@ -10,15 +10,16 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   const [deleted, isDeleted] = useState(false);
   const [deleteLesson] = useDeleteLessonMutation();
   const router = useRouter();
+  const id = lesson.id;
 
-  const HandleDeleteLesson = (id: string | undefined | null) => {
+  const HandleDeleteLesson = () => {
     if (id) {
       deleteLesson({ variables: { id } });
       isDeleted(true);
     }
   };
 
-  const HandleUpdateLessonPage = (id: string | undefined | null) => {
+  const HandleUpdateLessonPage = () => {
     if (id) {
       localStorage.setItem('lessonID', id);
       router.push('update-lesson');
@@ -38,8 +39,8 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
           </div>
         </div>
         <div className="flex gap-4 items-center z-50 ">
-          <EditButton onClick={() => HandleUpdateLessonPage(lesson.id)} />
-          <DeleteButton onClick={() => HandleDeleteLesson(lesson.id)} />
+          <EditButton onClick={HandleUpdateLessonPage} />
+          <DeleteButton onClick={HandleDeleteLesson} />
         </div>
       </div>
     </div>

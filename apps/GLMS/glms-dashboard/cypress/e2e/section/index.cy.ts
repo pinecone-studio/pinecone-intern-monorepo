@@ -51,11 +51,13 @@ describe('Handle section page', () => {
     cy.get('[data-cy="handle-back-page"]').click();
     cy.url().should('include', '/dashboard');
   });
-  it('5. Should delete section', () => {
-    cy.visit('/6633305c94d4584898bb049a');
-    cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click();
-    cy.window().its('localStorage').invoke('getItem', 'lessonID');
-    cy.url().should('include', '/section');
-    cy.get('[cy-data="delete-button-cy-test"]').should('exist').eq(-1).click();
+  describe('Should delete section', () => {
+    it('5. Should delete section', () => {
+      cy.visit('/6633305c94d4584898bb049a');
+      cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click();
+      cy.window().its('localStorage').invoke('getItem', 'lessonID');
+      cy.url().should('include', '/section');
+      cy.get('[cy-data="delete-button-cy-test"]').should('exist').eq(-1).click();
+    });
   });
 });

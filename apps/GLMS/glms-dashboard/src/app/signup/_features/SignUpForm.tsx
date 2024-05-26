@@ -11,27 +11,9 @@ const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
 
   const validationSchema = yup.object({
-    emailOrPhoneNumber: yup
-      .string()
-      .test('is-email-or-phoneNumber', 'Утас эсвэл имэйл хаяг байх ёстой', function (value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        const isEmail = emailRegex.test(value as string);
-
-        const phoneRegex = /^\d{8}$|^\d{10}$/;
-
-        const isPhoneNumber = phoneRegex.test(value as string);
-
-        return isEmail || isPhoneNumber;
-      })
-      .required('Утас эсвэл имэйл хаяг оруулна уу'),
-    password: yup
-      .string()
-      .required('Нууц үгээ оруулна уу')
-      .min(8, 'Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой')
-      .matches(/[a-z]/, 'Жижэг үсэг байх ёстой')
-      .matches(/[A-Z]/, 'Том үсэг байх ёстой')
-      .matches(/^(?=.*[!@#$%^&*])/, 'Тусгай тэмдэгт байх ёстой'),
+    email: yup.string().email('Имэйл хаяг буруу байна').required('Имэйл хаягаа оруулна уу'),
+    number: yup.number().typeError('Утасны дугаар буруу байна').required('Утасны дугаараа оруулна уу'),
+    password: yup.string().required('Нууц үгээ оруулна уу'),
     confirmPassword: yup
       .string()
       .required('Нууц үгээ давтаж оруулна уу')
@@ -40,13 +22,14 @@ const SignUpForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      emailOrPhoneNumber: '',
+      email: '',
+      number: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: validationSchema,
-    onSubmit:  (values) => {
-    handleSignUp(values.emailOrPhoneNumber, values.password);  
+    onSubmit: (values) => {
+      handleSignUp(values.email, values.number, values.password);
     },
   });
 
@@ -57,15 +40,26 @@ const SignUpForm = () => {
       </h1>
       <div className="flex flex-col gap-2">
         <TextInput
-          name="emailOrPhoneNumber"
-          label="Таны имэйл эсвэл утасны дугаар"
-          placeholder="Имэйл эсвэл утасны дугаар оруулна уу"
+          name="email"
+          label="Таны имэйл"
+          placeholder="Имэйлээ оруулна уу"
           type="text"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.emailOrPhoneNumber}
-          helperText={formik.errors.emailOrPhoneNumber}
-          error={formik.errors.emailOrPhoneNumber}
+          value={formik.values.email}
+          helperText={formik.errors.email}
+          error={formik.errors.email}
+        />
+        <TextInput
+          name="number"
+          label="Таны утасны дугаар"
+          placeholder="Утасны дугаар оруулна уу"
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.number}
+          helperText={formik.errors.number}
+          error={formik.errors.number}
         />
         <TextInput
           name="password"

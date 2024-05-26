@@ -6,7 +6,6 @@ import { GraphQLError } from 'graphql';
 export const lessonSignIn: MutationResolvers['lessonSignIn'] = async (_, { input }) => {
   try {
     const { emailOrPhoneNumber, password } = input;
-
     const user = await UserModel.findOne({
       $or: [
         { email: emailOrPhoneNumber, password },
@@ -15,7 +14,7 @@ export const lessonSignIn: MutationResolvers['lessonSignIn'] = async (_, { input
     });
 
     if (!user) {
-      throw new GraphQLError('Бүртгэлтэй хэрэглэгч алга');
+      throw new GraphQLError('Имэйл/Утас эсвэл нууц үг буруу байна');
     }
 
     const id = user._id;

@@ -53,7 +53,7 @@ describe('Sign in', () => {
   it('should throw an error if user is not found', async () => {
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(null);
 
-    await expect(lessonSignIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Бүртгэлтэй хэрэглэгч алга'));
+    await expect(lessonSignIn!({}, { input }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new GraphQLError('Имэйл/Утас эсвэл нууц үг буруу байна'));
     expect(UserModel.findOne).toHaveBeenCalledWith({
       $or: [
         { email: input.emailOrPhoneNumber, password: input.password },
