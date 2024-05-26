@@ -60,7 +60,7 @@ const Detail = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-base-200">
+    <div className="w-full h-screen bg-base-200 dark:bg-light dark:text-black">
       <div className="flex flex-col items-center gap-6 w-full h-screen">
         <div className="flex items-center justify-between p-3 bg-white w-full">
           <button onClick={handleBackClick} data-testid="back">

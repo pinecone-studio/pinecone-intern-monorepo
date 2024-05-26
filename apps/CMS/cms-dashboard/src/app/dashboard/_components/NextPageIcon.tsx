@@ -1,27 +1,8 @@
-import React from 'react';
-import { Stack } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
 export const NextPageIcon = () => {
   return (
-    <Stack
-      data-testid="next-page-icon-test-id"
-      direction={'row'}
-      justifyContent={'centers'}
-      alignItems={'center'}
-      gap={1}
-      width={'100%'}
-      height={'100%'}
-      border={'1px solid #D6D8DB'}
-      borderRadius={'10px'}
-      paddingY={1}
-      px={2}
-      bgcolor={'#FFF'}
-    >
-      <Stack fontWeight={600} color={'#121316'}>
-        Next
-      </Stack>
-      <ArrowForwardIcon />
-    </Stack>
+    <p data-testid="next-page-icon-test-id" className="flex justify-center items-center gap-1 border border-[#D6D8DB] rounded-[8px] px-3 py-1  bg-white text-textPrimary">
+      <span>Next</span>
+      <span className="text-[18px]">&#8594;</span>
+    </p>
   );
 };

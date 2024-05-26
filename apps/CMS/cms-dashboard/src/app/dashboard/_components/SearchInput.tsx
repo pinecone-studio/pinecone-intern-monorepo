@@ -9,6 +9,7 @@ export const SearchInput = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState<string>('');
+  const [showClearFilter, setShowClearFilter] = useState<boolean>(false);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -42,14 +43,20 @@ export const SearchInput = () => {
   useEffect(() => {
     setSearchValue(searchParams.get('searchedValue') ?? '');
   }, []);
+  useEffect(() => {
+    setShowClearFilter(Boolean(searchParams.get('searchedValue')));
+  }, [searchParams]);
+
   return (
     <div data-cy="search-input-cy-id" className="bg-white w-full h-[58px] rounded-[8px] overflow-hidden">
       <label className="h-full flex items-center gap-2 input focus-within:outline-none">
         <MagnifyingGlassSvg />
         <input data-testid="search-input-test-id" type="text" value={searchValue} className="grow" placeholder="Нийтлэл, шошгоор хайх" onChange={handleChange} />
-        <button data-testid="clear-filter-button-test-id" onClick={handleClear}>
-          <ClearAllFilterIcon />
-        </button>
+        {showClearFilter && (
+          <span data-testid="clear-filter-button-test-id" onClick={handleClear}>
+            <ClearAllFilterIcon />
+          </span>
+        )}
       </label>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { Article, ArticleStatus, useGetArticlesQueryQuery } from '../../../generated';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StatusTab } from '../_components/StatusTab';
 import Link from 'next/link';
 import { ClearAllFilterIcon } from '@/assets/icons';
@@ -13,6 +13,7 @@ const getNumberOfArticlesByStatus = (articles: Article[] | undefined, status: st
 
 export const ArticleStatusTabsFeature = () => {
   const { data: articlesRaw } = useGetArticlesQueryQuery();
+  const [showClearFilter, setShowClearFilter] = useState<boolean>(false);
 
   const articles = articlesRaw?.getArticlesQuery as Article[] | undefined;
 
@@ -34,7 +35,9 @@ export const ArticleStatusTabsFeature = () => {
     return params.toString();
   };
   const currentStatus = searchParams.get('status') || 'ALL';
-
+  useEffect(() => {
+    setShowClearFilter(Boolean(searchParams.get('status')));
+  }, [searchParams]);
   return (
     <div data-cy="article-status-tabs-feature-cy-id" className="w-full h-fit flex items-center justify-between border-[1px] bg-white border-border rounded-[8px]">
       <div className="flex">
@@ -51,9 +54,11 @@ export const ArticleStatusTabsFeature = () => {
         })}
       </div>
       <div className="px-5">
-        <Link href={pathname + '?' + clearFilter({ name: 'status' })}>
-          <ClearAllFilterIcon />
-        </Link>
+        {showClearFilter && (
+          <Link href={pathname + '?' + clearFilter({ name: 'status' })}>
+            <ClearAllFilterIcon />
+          </Link>
+        )}
       </div>
     </div>
   );
