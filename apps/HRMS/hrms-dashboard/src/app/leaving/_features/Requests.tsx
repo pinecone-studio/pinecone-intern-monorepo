@@ -6,6 +6,8 @@ import Status from '../_components/Status';
 import { useRouter } from 'next/navigation';
 import { formatDate } from '../_components/Date';
 import FilterByToday from '../_components/FilterByToday';
+import FilterByWeek from '../_components/FilterByWeek';
+import { toast } from 'react-toastify';
 
 const Requests = () => {
   const router = useRouter();
@@ -21,7 +23,19 @@ const Requests = () => {
   const filterDataByToday = () => {
     const today = new Date().toISOString().split('T')[0];
     const todayRequests = (data?.getRequests || []).filter((dat) => new Date(dat.startDate).toISOString().split('T')[0] === today) as LeaveRequest[];
+    if (todayRequests.length === 0) {
+      toast.info('Өнөөдөр хүсэлт ирээгүй байна');
+    }
     setFilteredData(todayRequests);
+  };
+  const filterDataByWeek = () => {
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const weekRequests = data?.getRequests.filter((dat) => new Date(dat.startDate) >= weekAgo) as LeaveRequest[];
+    if (weekRequests.length === 0) {
+      toast.info('Энэ 7 хоногт хүсэлт ирээгүй байна');
+    }
+    setFilteredData(weekRequests);
   };
 
   if (loading)
@@ -45,7 +59,10 @@ const Requests = () => {
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
             <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
           </div>
-          <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
+          <div className="flex items-center gap-2">
+            <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
+            <FilterByWeek onClick={filterDataByWeek} data-testid="filter-by-week" />
+          </div>
         </div>
         <div className="flex flex-col gap-6 bg-gray-100">
           <div className="overflow-x-auto shadow-md rounded-lg">

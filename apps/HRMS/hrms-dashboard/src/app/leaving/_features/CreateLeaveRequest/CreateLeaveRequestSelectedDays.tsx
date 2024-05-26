@@ -41,6 +41,7 @@ export const CreateLeaveRequestSelectedDays = (props: CreateLeaveRequestSelected
         <div data-testid="endDate-picker-container" className="w-[100%] p-[8px] bg-[#F7F7F8] rounded-[8px] border-[1px] border-[#D6D8DB]">
           <input
             id="step2Date"
+            min={step2StartDateValue}
             data-cy="endDate-picker-container"
             className="w-[100%] bg-[#F7F7F8] text-[#121316]"
             name={step2EndDateName}

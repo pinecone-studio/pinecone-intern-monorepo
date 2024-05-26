@@ -1,6 +1,6 @@
 type DetailData = {
   name?: string | null;
-  declinedReasoning?: string | null;
+  leaveType?: string | null;
 };
 
 const DetailInfo = ({ data }: { data: DetailData }) => (
@@ -11,7 +11,7 @@ const DetailInfo = ({ data }: { data: DetailData }) => (
     </div>
     <div>
       <p style={{ color: 'rgba(63, 65, 69, 1)' }}>Шалтгаан</p>
-      <p style={{ fontWeight: 600, color: 'rgba(18, 19, 22, 1)' }}>{data.declinedReasoning}</p>
+      <p style={{ fontWeight: 600, color: 'rgba(18, 19, 22, 1)' }}>{data.leaveType}</p>
     </div>
   </div>
 );

@@ -3,8 +3,11 @@ query GetRequestById($id: ID!) {
     _id
     name
     employeeId
+    durationType
+    endHour
     leaveType
     declinedReasoning
+    description
     startDate
     totalHour
     superVisor
