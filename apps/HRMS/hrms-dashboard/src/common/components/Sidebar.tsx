@@ -19,7 +19,7 @@ export const Sidebar = () => {
   return (
     <aside
       data-cy="dashboardSidebar"
-      className="flex md:flex-col md:min-w-[242px] min-w-fit md:h-full  md:min-h-[100vh] h-fit md:pt-4 border-r border-[#ECEDF0] justify-between md:justify-start  bg-white flex-wrap "
+      className="flex md:flex-col md:min-w-[242px] min-w-fit md:h-full  md:min-h-[100vh] h-fit md:pt-4 border-r border-[#ECEDF0] justify-between md:justify-start dark:bg-white  bg-white flex-wrap "
     >
       {sidebarItems.map((item, index) => {
         return (
