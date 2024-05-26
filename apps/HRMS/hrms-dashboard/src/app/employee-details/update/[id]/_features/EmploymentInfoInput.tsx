@@ -57,7 +57,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
     },
   });
   return (
-    <main data-cy="updateEmploymentForm" className=" max-w-[585px] rounded-xl p-10 bg-[#fff] gap-10 flex flex-col ">
+    <main data-cy="updateEmploymentForm" className=" max-w-[585px] w-full rounded-xl p-10 bg-[#fff] gap-10 flex flex-col ">
       <div className="flex justify-between w-full items-center">
         <p data-testid="updateEmploymentTitle" className="text-lg text-main font-semibold">
           Хөдөлмөр эрхлэлтийн мэдээлэл
@@ -70,7 +70,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
         </div>
       </div>
       <div className="w-full flex flex-col items-center gap-4 ">
-        <div className="w-[424px] flex flex-col gap-4 ">
+        <div className="w-full flex flex-col gap-4 ">
           <CustomInput
             data-testid="EmploymentInputInfo"
             label="Албан тушаал"
