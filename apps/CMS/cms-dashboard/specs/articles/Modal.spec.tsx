@@ -1,10 +1,6 @@
 import Modal from '@/app/articles/_components/Modal';
 import { act, fireEvent, render } from '@testing-library/react';
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn().mockReturnValue({ push: jest.fn() }),
-}));
-
 describe('modal', () => {
   it('should act', () => {
     const mockFunction = jest.fn();

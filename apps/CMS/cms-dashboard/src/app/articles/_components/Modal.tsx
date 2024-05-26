@@ -19,7 +19,7 @@ const Modal = ({ isVisible, onClose }: CreateArticleModalType) => {
   };
   return (
     <div data-testid="modalCloseBtn" id="wrapper" className=" fixed inset-2 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-11" onClick={handleCLose}>
-      <div className=" w-[528px] flex flex-col bg-white relative rounded-2xl gap-8 z-12">
+      <div data-testid="modal" className=" w-[528px] flex flex-col bg-white relative rounded-2xl gap-8 z-12">
         <button className=" py-3 text-black text-xl absolute top-[13px] right-6 font-semibold " onClick={onClose}>
           X
         </button>

@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render, act } from '@testing-library/react';
 import MainBannerFromArticles from '../../src/app/articles/_components/MainBannerFromArticles';
 import { useRouter } from 'next/navigation';
-import Modal from '@/app/articles/_components/Modal';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({ push: jest.fn() }),
@@ -25,6 +24,21 @@ describe('MainBannerFromArticles', () => {
     jest.clearAllMocks();
   });
   it('should have correct props', () => {
+    const { getByTestId } = render(<MainBannerFromArticles date="2024.04.12" articlesTitle="Welcome" categories="Coding" cover="/Academy.svg" id="663097b58073930529faddfc" />);
+
+    const date = getByTestId('mainDate');
+    expect(date.textContent).toEqual('');
+
+    const title = getByTestId('mainTitle');
+    expect(title.textContent).toEqual('Welcome');
+
+    const category = getByTestId('mainCategory');
+    expect(category.textContent).toEqual('#Coding');
+
+    const cover = getByTestId('mainCover');
+    expect(cover.textContent).toEqual('');
+  });
+  it('should buttons are clickable', () => {
     const { getByTestId } = render(<MainBannerFromArticles date="2024.04.12" articlesTitle="Welcome" categories="Coding" cover="/Academy.svg" id="663097b58073930529faddfc" />);
     const button = getByTestId('mainBtn');
     act(() => {
@@ -66,5 +80,18 @@ describe('MainBannerFromArticles', () => {
     expect(getItemMock).toHaveBeenCalledWith('token');
     expect(routerPushMock).not.toHaveBeenCalled();
     expect(setIsShownMock).toHaveBeenCalledTimes(0);
+  });
+
+  it('should close the modal when handleModalClose is called', () => {
+    getItemMock.mockReturnValue('mockToken');
+
+    const { getByTestId, queryByTestId } = render(<MainBannerFromArticles date="2024.04.12" articlesTitle="Welcome" categories="Coding" cover="/Academy.svg" id="663097b58073930529faddfc" />);
+
+    const jumperBtn = getByTestId('jumper');
+    fireEvent.click(jumperBtn);
+    expect(queryByTestId('modal')).toBeDefined();
+    const closeButton = queryByTestId('modalCloseBtn');
+    closeButton && fireEvent.click(closeButton);
+    expect(queryByTestId('modal')).toBeNull();
   });
 });
