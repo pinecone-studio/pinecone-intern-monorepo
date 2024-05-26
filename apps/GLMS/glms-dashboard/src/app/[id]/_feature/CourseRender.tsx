@@ -14,7 +14,7 @@ type DataTypes = {
   data: Course | undefined;
   lessonData: Lesson[] | undefined;
   lessonRefetch: (
-    variables?:
+    _variables?:
       | Partial<
           Exact<{
             getLessonByIdId: string;

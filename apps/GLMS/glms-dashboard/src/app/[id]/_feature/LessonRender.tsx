@@ -13,7 +13,7 @@ const LessonRender = ({
   lesson: Lesson;
   handleCreateSection: () => void;
   refetch: (
-    variables?:
+    _variables?:
       | Partial<
           Exact<{
             getLessonByIdId: string;
