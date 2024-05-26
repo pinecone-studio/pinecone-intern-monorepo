@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DateRangePicker, RangeKeyDict } from 'react-date-range';
 import { format } from 'date-fns';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -12,6 +12,7 @@ export const FilterByDate = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [open, setOpen] = useState(false);
+  const [showClearFilter, setShowClearFilter] = useState<boolean>(false);
 
   const router = useRouter();
   const pathName = usePathname();
@@ -46,7 +47,9 @@ export const FilterByDate = () => {
     params.delete(endDate);
     return params.toString();
   };
-
+  useEffect(() => {
+    setShowClearFilter(Boolean(searchParams.get('startDate')));
+  }, [searchParams]);
   return (
     <section data-cy="filter-by-date-cy-id" className="relative bg-white rounded-[8px] border px-4 h-[58px]">
       <div className="flex flex-row gap-3 items-center h-full justify-between w-full">
@@ -58,9 +61,11 @@ export const FilterByDate = () => {
           <h5 className="text-[#3F4145] text-sm font-semibold">-</h5>
           <h5 className="text-[#3F4145] text-sm font-semibold">{`${format(endDate ?? new Date(), 'dd.MM.yyyy')}`}</h5>
         </div>
-        <Link href={pathName + '?' + clearFilter({ startDate: 'startDate', endDate: 'endDate' })}>
-          <ClearAllFilterIcon />
-        </Link>
+        {showClearFilter && (
+          <Link href={pathName + '?' + clearFilter({ startDate: 'startDate', endDate: 'endDate' })}>
+            <ClearAllFilterIcon />
+          </Link>
+        )}
       </div>
       {open && (
         <div className="absolute top-[100%] right-0 rounded-[8px] overflow-hidden z-10 shadow-[0_0_10px_rgba(0,0,0,0.3)]">

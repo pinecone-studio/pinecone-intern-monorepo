@@ -1,0 +1,5 @@
+mutation DeleteArticleById($id: ID!) {
+  deleteArticleById(_id: $id) {
+    message
+  }
+}

@@ -9,9 +9,7 @@ jest.mock('next/navigation', () => ({
       push: () => jest.fn(),
     };
   },
-  useSearchParams() {
-    return {};
-  },
+  useSearchParams: jest.fn().mockReturnValue({ get: jest.fn().mockResolvedValueOnce('') }),
 }));
 
 describe('FilterByDate', () => {
@@ -37,10 +35,10 @@ describe('FilterByDate', () => {
 
   it('4. Handle submit when clicking close button', () => {
     const { getByTestId } = render(<FilterByDate />);
-    const openCalendarButton = getByTestId('open-calendar-button-test-id')
-    fireEvent.click(openCalendarButton)
-    const closeCalendarButton = getByTestId('close-calendar-button-test-id')
-    fireEvent.click(closeCalendarButton)
-    expect(closeCalendarButton).toBeDefined()
+    const openCalendarButton = getByTestId('open-calendar-button-test-id');
+    fireEvent.click(openCalendarButton);
+    const closeCalendarButton = getByTestId('close-calendar-button-test-id');
+    fireEvent.click(closeCalendarButton);
+    expect(closeCalendarButton).toBeDefined();
   });
 });
