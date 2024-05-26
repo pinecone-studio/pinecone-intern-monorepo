@@ -4,19 +4,21 @@ import React, { useCallback, useState } from 'react';
 import { LinkButtonIcon } from '@/icons';
 import { MorevertButtonIcon } from '@/icons';
 import { ArchiveButtonIcon } from '@/icons';
-import { ArticleStatus, useUpdateArticleStatusByIdMutation } from '@/generated';
-import { toast } from 'react-toastify';
+import { ArticleStatus, useUpdateArticleStatusByIdMutation, useDeleteArticleByIdMutation, useGetArticleByIdQuery } from '@/generated';
 import { ApolloError } from '@apollo/client';
-import { StatusChangedModal } from '../_components/StatusChangedModal';
 import { useRefetch } from '@/common/providers/RefetchProvider';
 import { DraftIcon } from '@/assets/icons/DraftIcon';
 import { DroppedListItem } from '../_components/DroppedListItem';
 import { PublishIcon } from '@/assets/icons/PublishIcon';
+import { DeleteIcon } from '@/assets/icons/DeleteIcon';
+import { showErrorToast, showToast } from '@/common/functions';
 
 export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
   const [updateArticleStatusById] = useUpdateArticleStatusByIdMutation();
+  const [deleteArticleById] = useDeleteArticleByIdMutation();
+  const { data: articleData } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
   const refetch = useRefetch();
 
   const handleClick = () => {
@@ -27,7 +29,7 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
     setAnchorEl(false);
   };
 
-  const handleClickCopy = useCallback(async () => {
+  const copyLink = useCallback(async () => {
     setCopied(true);
 
     const domain = window.location.origin;
@@ -38,31 +40,44 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
       setCopied(false);
     }, 1300);
   }, [id]);
-  const archiveArticle = async ({ status }: { status: string }) => {
+
+  const updateStatus = async ({ status }: { status: string }) => {
+    if (articleData?.getArticleByID?.status === status) {
+      showToast({ text: `It is already "${status}"` });
+      return;
+    }
     try {
-      const { data } = await updateArticleStatusById({
+      await updateArticleStatusById({
         variables: {
           id,
           newStatus: status,
         },
       });
 
-      const title = data?.updateArticleStatusById.title;
-
-      toast(<StatusChangedModal title={title ?? ''} status={status} />, {
-        progressStyle: { background: '#01E17B' },
-        position: 'top-center',
-        autoClose: 3000,
+      showToast({ text: `"${status}" successfully` });
+      refetch();
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        showErrorToast({ errorMessage: error.graphQLErrors[0].message });
+      }
+    }
+  };
+  const deleteArticle = async () => {
+    try {
+      const { data } = await deleteArticleById({
+        variables: {
+          id,
+        },
       });
+
+      const message = data?.deleteArticleById.message;
+
+      showToast({ text: `"${message}" successfully` });
 
       refetch();
     } catch (error) {
       if (error instanceof ApolloError) {
-        toast.error(error.graphQLErrors[0].message, {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: true,
-        });
+        showErrorToast({ errorMessage: error.graphQLErrors[0].message });
       }
     }
   };
@@ -79,7 +94,7 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
             icon={<PublishIcon />}
             testId="close-menu-button-test-id"
             onClick={() => {
-              archiveArticle({ status: ArticleStatus.Published });
+              updateStatus({ status: ArticleStatus.Published });
             }}
           />
           <DroppedListItem
@@ -87,7 +102,7 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
             icon={<DraftIcon />}
             testId="close-menu-button-test-id"
             onClick={() => {
-              archiveArticle({ status: ArticleStatus.Draft });
+              updateStatus({ status: ArticleStatus.Draft });
             }}
           />
           <DroppedListItem
@@ -95,10 +110,11 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
             icon={<ArchiveButtonIcon />}
             testId="close-menu-button-test-id"
             onClick={() => {
-              archiveArticle({ status: ArticleStatus.Archived });
+              updateStatus({ status: ArticleStatus.Archived });
             }}
           />
-          <DroppedListItem text="Линк хуулах" icon={<LinkButtonIcon />} testId="copy-clipboard-button-test-id" onClick={handleClickCopy} />
+          <DroppedListItem text="Устгах" icon={<DeleteIcon />} testId="close-menu-button-test-id" onClick={deleteArticle} />
+          <DroppedListItem text="Линк хуулах" icon={<LinkButtonIcon />} testId="copy-clipboard-button-test-id" onClick={copyLink} />
         </ul>
       )}
       {copied && <p className="text-textPrimary bg-white px-3 border-2  rounded-lg absolute top-[100%] left-0">Copied</p>}

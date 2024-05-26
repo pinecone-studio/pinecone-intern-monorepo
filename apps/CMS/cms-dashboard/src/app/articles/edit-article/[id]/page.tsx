@@ -9,8 +9,8 @@ import { useFormik } from 'formik';
 import { FileUpload } from './_components/FileUpload';
 import { CategorySelectInputFeature } from './_feature/CategorySelectInputFeature';
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
+import { showErrorToast, showToast } from '@/common/functions';
 
 const Home = () => {
   const { id } = useParams();
@@ -39,20 +39,12 @@ const Home = () => {
             commentPermission: values.commentPermission,
           },
         });
-        toast.success('Successfully updated', {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: true,
-        });
+        showToast({ text: 'Successfully updated' });
         await refetch();
         router.push('/dashboard');
       } catch (error) {
         if (error instanceof ApolloError) {
-          toast.error(error.graphQLErrors[0].message, {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: true,
-          });
+          showErrorToast({ errorMessage: error.graphQLErrors[0].message });
         }
       }
     },

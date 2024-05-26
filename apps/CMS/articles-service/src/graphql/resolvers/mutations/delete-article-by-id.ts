@@ -10,7 +10,7 @@ export const deleteArticleById: MutationResolvers['deleteArticleById'] = async (
       return graphqlErrorHandler({ message: 'Any article found' }, errorTypes.NOT_FOUND);
     }
 
-    return { message: `${article.title} deleted` };
+    return { message: 'Deleted' };
   } catch (error) {
     return graphqlErrorHandler({ message: 'could not delete article' }, errorTypes.BAD_REQUEST);
   }

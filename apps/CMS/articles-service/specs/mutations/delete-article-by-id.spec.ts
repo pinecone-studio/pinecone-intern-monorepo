@@ -11,7 +11,7 @@ jest.mock('../../src/models/article.model', () => ({
 describe('delete article by id', () => {
   it('it should delete article', async () => {
     const result = await deleteArticleById!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({ message: `test deleted` });
+    expect(result).toEqual({ message: `Deleted` });
   });
 
   it('it should throw article not found error', async () => {
