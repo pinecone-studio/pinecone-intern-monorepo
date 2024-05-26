@@ -26,13 +26,11 @@ const UpdateSection = () => {
   }, []);
 
   const id = sectionID ? sectionID : '';
-
   const validatinSchema = yup.object({
     title: yup.string().required(),
     description: yup.string().required(),
     contentImage: yup.string(),
   });
-
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -62,11 +60,9 @@ const UpdateSection = () => {
       });
     },
   });
-
   const { data, loading } = useGetSectionByIdQuery({
     variables: { id: id },
   });
-
   useEffect(() => {
     if (data && data.getSectionById) {
       const section = data.getSectionById;
@@ -75,7 +71,6 @@ const UpdateSection = () => {
       formik.setFieldValue('thumbnail', section.contentImage);
     }
   }, [data]);
-
   if (loading) return <Loading />;
   return (
     <div data-testid="update-section-page-container" className="flex flex-col bg-[#F7F7F8] px-20 h-screen dark:bg-[#121316f7]">
@@ -129,7 +124,6 @@ const UpdateSection = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-
           <div className="flex w-full max-w-[1140px] justify-between items-center mt-5">
             {status.map((item, index) => {
               return (

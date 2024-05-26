@@ -1,13 +1,10 @@
 'use client';
-import { useState } from 'react';
-
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson, useDeleteLessonMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleCreateSection: () => void }) => {
-  const [deleted, isDeleted] = useState(false);
   const [deleteLesson] = useDeleteLessonMutation();
   const router = useRouter();
   const id = lesson.id;
@@ -15,7 +12,6 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   const HandleDeleteLesson = () => {
     if (id) {
       deleteLesson({ variables: { id } });
-      isDeleted(true);
     }
   };
 
