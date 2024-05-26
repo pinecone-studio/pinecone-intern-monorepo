@@ -77,6 +77,18 @@ const gateway = new ApolloGateway({
         name: 'server',
         url: process.env.EXAMPLE_SERVER_SERVICE,
       },
+      {
+        name: 'attendance',
+        url: process.env.ATTENDANCE_SERVICE,
+      },
+      {
+        name: 'topic',
+        url: process.env.TOPIC_SERVICE,
+      },
+      {
+        name: 'student',
+        url: process.env.STUDENT_SERVICE,
+      },
     ],
   }),
   buildService({ url }) {
