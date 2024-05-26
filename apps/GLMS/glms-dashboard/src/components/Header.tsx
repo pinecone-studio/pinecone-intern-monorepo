@@ -45,7 +45,7 @@ const Header = () => {
             <div className="w-8 h-8">
               <img className="rounded-full" src="/profile-image.svg" />
             </div>
-            <span className="font-semibold">{email}</span>
+            <span className="font-semibold dark:text-[#dedede]">{email}</span>
           </div>
           <div
             onClick={() => {
