@@ -19,19 +19,23 @@ describe('<CreateErrorModal />', () => {
     });
   });
   it('modal close and open when label "Хадгалах" and close button is clicked', () => {
+    const onClick = jest.fn();
+    const onClose = jest.fn();
     const text = 'Хадгалах';
     const labelEdit = 'Хадгалах';
-    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} labelType={labelEdit} />);
+
+    const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal onClick={onClick} onClose={onClose} text={text} labelType={labelEdit} />);
 
     const buttonElement = getByText('Хадгалах');
     expect(buttonElement).toBeDefined();
     fireEvent.click(buttonElement);
-
+    expect(onClick).toBeDefined();
     const modalElementBefore = queryByTestId('modal');
     expect(modalElementBefore).toBeDefined();
 
     const closeButton = getByTestId('close-button');
     fireEvent.click(closeButton);
+    expect(onClose).toBeDefined();
 
     const buttonDialog = getByTestId('button-modal');
     expect(buttonDialog).toBeDefined();
@@ -40,6 +44,8 @@ describe('<CreateErrorModal />', () => {
     expect(modalElementAfter).toBeDefined();
   });
   it('modal close and open when label "Устгах" and close button is clicked', () => {
+    const onClick = jest.fn();
+    const onClose = jest.fn();
     const text = 'Устгах';
     const labelDelete = 'Устгах';
     const { getByText, getByTestId, queryByTestId } = render(<CreateErrorModal text={text} labelType={labelDelete} />);
@@ -47,13 +53,13 @@ describe('<CreateErrorModal />', () => {
     const buttonElement = getByText('Устгах');
     expect(buttonElement).toBeDefined();
     fireEvent.click(buttonElement);
-
+    expect(onClick).toBeDefined();
     const modalElementBefore = queryByTestId('modal');
     expect(modalElementBefore).toBeDefined();
 
     const closeButton = getByTestId('close-button');
     fireEvent.click(closeButton);
-
+    expect(onClose).toBeDefined();
     const buttonDialog = getByTestId('button-modal');
     expect(buttonDialog).toBeDefined();
 
