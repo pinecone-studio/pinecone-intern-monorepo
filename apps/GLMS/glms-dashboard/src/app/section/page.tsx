@@ -71,8 +71,8 @@ const SectionPage = () => {
   }, [data, refetch]);
 
   return (
-    <div className="flex flex-col justify-center bg-[#F7F7F8] px-20" data-testid="section-page-container">
-      <Link href={'/dashboard'} data-cy="handle-back-page" className=" flex flex-row justify-center items-center gap-1 w-[140px] h-fit py-4">
+    <div className="flex flex-col justify-center bg-[#F7F7F8] px-10 sm:px-20" data-testid="section-page-container">
+      <Link href={'/dashboard'} data-cy="handle-back-page" className=" flex flex-row justify-start items-start gap-1 w-[140px] h-fit py-4">
         <ArrowBackIcon />
         <p>Нүүр</p>
       </Link>

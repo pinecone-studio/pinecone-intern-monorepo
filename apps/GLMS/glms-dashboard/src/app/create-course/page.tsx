@@ -89,33 +89,34 @@ const CourseAdd = () => {
               <FileUploader thumbnail={formik.values.thumbnail} setFieldValue={formik.setFieldValue} />
             </div>
           </div>
-          <div className="w-[100%] flex justify-between mb-[30px]">
-            {status.map((item, index) => {
-              const handleClick = () => {
-                formik.handleSubmit();
-                setStatusSelected(item);
-                toast.success('Таны хичээл амжилттай нэмэгдлээ', {
-                  position: 'top-center',
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                });
-              };
-              return (
-                <button
-                  key={index}
-                  name="submitBtn"
-                  className={`${
-                    item == 'Ноорог' ? 'border-[#121316] bg-white hover:bg-[#f0f0f0] text-black' : 'bg-[#121316] hover:bg-[#121316] text-white'
-                  } rounded-lg w-[280px] h-[56px]  flex justify-center items-center btn`}
-                  data-testid="create-button"
-                  onClick={handleClick}
-                  disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
-                >
-                  <p className="text-[18px] font-semibold">{item === 'Хичээл' ? 'Хадгалах' : item}</p>
-                </button>
-              );
-            })}
-          </div>
+          <div className="w-[100%] flex flex-col sm:flex-row justify-between sm:gap-4 mb-[30px]">
+  {status.map((item, index) => {
+    const handleClick = () => {
+      formik.handleSubmit();
+      setStatusSelected(item);
+      toast.success('Таны хичээл амжилттай нэмэгдлээ', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+    };
+    return (
+      <button
+        key={index}
+        name="submitBtn"
+        className={`${
+          item == 'Ноорог' ? 'border-[#121316] bg-white hover:bg-[#f0f0f0] text-black' : 'bg-[#121316] hover:bg-[#121316] text-white'
+        } rounded-lg w-full sm:w-[280px] h-[56px] flex justify-center items-center btn mb-4 sm:mb-0`}
+        data-testid="create-button"
+        onClick={handleClick}
+        disabled={!formik.values.title || !formik.values.description || !formik.values.thumbnail}
+      >
+        <p className="text-[18px] font-semibold">{item === 'Хичээл' ? 'Хадгалах' : item}</p>
+      </button>
+    );
+  })}
+</div>
+
         </div>
       </div>
     </div>

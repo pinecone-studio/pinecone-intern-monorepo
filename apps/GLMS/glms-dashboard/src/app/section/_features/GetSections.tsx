@@ -14,7 +14,7 @@ const GetSections = (props: GetSectionsType) => {
   const { handleUpdateSectionPage, handleDeleteSection, loading, data, isLoading } = props;
 
   return (
-    <div data-testid="get-sections-container" className="bg-[#fff] rounded-[6px]">
+    <div data-testid="get-sections-container" className="bg-[#fff] rounded-[6px] p-2 sm:p-6">
       {loading && (
         <div className="w-full flex justify-center mt-8">
           <div className="loading loading-spinner loading-md" />
@@ -24,8 +24,8 @@ const GetSections = (props: GetSectionsType) => {
         if (section.id) localStorage.setItem('sectionId', section.id);
         return (
           <div data-testid="get-section-form" key={section.id} className="flex flex-col justify-center items-center">
-            <div className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-[4px] justify-center items-center p-6">
-              <div className="text-[#9f9f9f] flex justify-between max-w-[656px] w-full">
+            <div className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-[4px] justify-center items-center p-2 sm:p-6">
+              <div className="text-[#9f9f9f] flex flex-col sm:flex-row sm:justify-between max-w-[656px] w-full">
                 <div>
                   <span className="font-bold">Төлөв: </span>
                   <span className={`${section.posted == true ? 'text-green-400' : 'text-yellow-400'}`}> {section.posted == true ? 'Нийтлэгдсэн' : 'Нийтлэгдээгүй'}</span>
@@ -34,19 +34,19 @@ const GetSections = (props: GetSectionsType) => {
                   <span className="font-bold">Үүссэн огноо: </span> {section.createdAt.slice(0, 10)}
                 </div>
               </div>
-              <div className="'flex flex-col gap-4 border-2 border-dashed rounded-4 p-8 border-[#D6D8DB] rounded-[8px]">
+              <div className="'flex flex-col gap-4 border-2 border-dashed rounded-4 rounded-[8px]  p-4 sm:p-8 border-[#D6D8DB]">
                 <div data-cy="title" className="flex flex-col py-2">
                   <p className="font-bold">Хэсгийн гарчиг</p>
-                  <p className="w-[588px] h-fit border rounded-[4px] p-2">{section.title}</p>
+                  <p className="w-full sm:w-[588px] h-fit border rounded-[4px] p-2">{section.title}</p>
                 </div>
                 <div data-cy="description" className="flex flex-col py-2">
                   <p className="font-bold">Дэлгэрэнгүй</p>
-                  <p className="w-[588px] h-fit border rounded-[4px] p-2">{section.description}</p>
+                  <p className="w-full sm:w-[588px] h-fit border rounded-[4px] p-2">{section.description}</p>
                 </div>
                 <div data-cy="contentImage" className="flex flex-col py-2">
                   <p className="font-bold"> Хэсгийн зураг</p>
-                  <div data-testid="contentImage" className="w-[588px] h-60">
-                    <img className="w-[588px] h-60 rounded-[4px] " src={`${section.contentImage}`} alt="sectionImage" />
+                  <div data-testid="contentImage" className="w-full sm:w-[588px]">
+                    <img className="w-[264px] sm:w-[588px] h-40 sm:h-60 rounded-[4px] " src={`${section.contentImage}`} alt="sectionImage" />
                   </div>
                 </div>
               </div>

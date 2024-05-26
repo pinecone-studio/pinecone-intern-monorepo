@@ -1,13 +1,11 @@
 'use client';
-import { useState } from 'react';
-
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
 import { Lesson, useDeleteLessonMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleCreateSection: () => void }) => {
-  const [deleted, isDeleted] = useState(false);
   const [deleteLesson] = useDeleteLessonMutation();
   const router = useRouter();
   const id = lesson.id;
@@ -15,7 +13,11 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   const HandleDeleteLesson = () => {
     if (id) {
       deleteLesson({ variables: { id } });
-      isDeleted(true);
+      toast.success('Таны хичээл амжилттай устлаа ', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });    
     }
   };
 
@@ -28,7 +30,6 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
 
   return (
     <div>
-      {deleted && <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-stone-100/50 "></div>}
       <div className=" border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between cursor-pointer hover:bg-[#fbfbfb] ease-in-out mb-4">
         <div data-cy="lesson-test-id" onClick={handleCreateSection} className="max-w-[792px] w-full h-[104px] py-2.5 ">
           <div className="flex gap-4 items-center">
