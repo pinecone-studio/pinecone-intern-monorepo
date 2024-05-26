@@ -4,27 +4,27 @@ import React, { useCallback, useState } from 'react';
 import { LinkButtonIcon } from '@/icons';
 import { MorevertButtonIcon } from '@/icons';
 import { ArchiveButtonIcon } from '@/icons';
-import { ArticleStatus, useGetArticleByIdQuery, useUpdateArticleStatusByIdMutation } from '@/generated';
+import { ArticleStatus, useUpdateArticleStatusByIdMutation } from '@/generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
-import { ArchivedSuccessfullyModal } from '../_components/ArchivedSuccessfullyModal';
+import { StatusChangedModal } from '../_components/StatusChangedModal';
 import { useRefetch } from '@/common/providers/RefetchProvider';
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
+import { DraftIcon } from '@/assets/icons/DraftIcon';
+import { DroppedListItem } from '../_components/DroppedListItem';
+import { PublishIcon } from '@/assets/icons/PublishIcon';
 
 export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
+  const [anchorEl, setAnchorEl] = useState(false);
   const [copied, setCopied] = useState(false);
   const [updateArticleStatusById] = useUpdateArticleStatusByIdMutation();
-  const { data } = useGetArticleByIdQuery({ variables: { getArticleByIdId: id } });
-
   const refetch = useRefetch();
 
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLButtonElement) | null>();
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = () => {
+    setAnchorEl(true);
   };
+
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
   const handleClickCopy = useCallback(async () => {
@@ -36,33 +36,20 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
 
     setTimeout(() => {
       setCopied(false);
-    }, 1500);
+    }, 1300);
   }, [id]);
-
-  const archiveArticle = async () => {
-    if (data?.getArticleByID?.status === 'ARCHIVED') {
-      toast.success(`Looks like it's already archived !`, {
-        progressStyle: { background: '#01E17B' },
-        position: 'top-center',
-        autoClose: 3000,
-        style: {
-          color: 'black',
-        },
-      });
-      return;
-    }
-
+  const archiveArticle = async ({ status }: { status: string }) => {
     try {
       const { data } = await updateArticleStatusById({
         variables: {
           id,
-          newStatus: ArticleStatus.Archived,
+          newStatus: status,
         },
       });
 
       const title = data?.updateArticleStatusById.title;
 
-      toast(<ArchivedSuccessfullyModal title={title ?? ''} />, {
+      toast(<StatusChangedModal title={title ?? ''} status={status} />, {
         progressStyle: { background: '#01E17B' },
         position: 'top-center',
         autoClose: 3000,
@@ -81,49 +68,40 @@ export const ArticleDropDownMenuFeature = ({ id }: { id: string }) => {
   };
 
   return (
-    <Stack className="relative dropdown">
-      <IconButton data-testid="menu-button-test-id" data-cy="morevert-button-test-cy" sx={{ cursor: 'pointer', width: 36, height: 40 }} onClick={handleClick}>
+    <div className="dropdown  dropdown-top relative">
+      <div onClick={handleClick} tabIndex={0} role="button" data-testid="menu-button-test-id" data-cy="morevert-button-test-cy">
         <MorevertButtonIcon />
-      </IconButton>
-
-      <Menu data-testid="drop-down-menu-test-id" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <Stack gap={0.2}>
-          <Stack
-            className={`close-test-class-name cursor-pointer`}
-            data-testid="close-button-menu-test-id"
-            data-cy="drop-down-menu-test-cy"
-            direction={'row'}
-            px={2}
-            gap={0.7}
-            alignItems={'center'}
+      </div>
+      {anchorEl && (
+        <ul onClick={handleClose} data-cy="drop-down-menu-test-cy" tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <DroppedListItem
+            text="Нийтлэx"
+            icon={<PublishIcon />}
+            testId="close-menu-button-test-id"
             onClick={() => {
-              archiveArticle();
-              handleClose();
+              archiveArticle({ status: ArticleStatus.Published });
             }}
-            sx={{
-              '&:hover': {
-                bgcolor: '#0000000A',
-              },
+          />
+          <DroppedListItem
+            text="Ноороглох"
+            icon={<DraftIcon />}
+            testId="close-menu-button-test-id"
+            onClick={() => {
+              archiveArticle({ status: ArticleStatus.Draft });
             }}
-          >
-            <Stack data-testid="item-icon" sx={{ color: '#000', ml: 0.4 }}>
-              <ArchiveButtonIcon />
-            </Stack>
-
-            <Typography p={1}>Архив</Typography>
-          </Stack>
-
-          <Tooltip data-testid="copy-to-clipboard-id" arrow open={copied} title="Copied" onClick={handleClickCopy}>
-            <MenuItem>
-              <ListItemIcon sx={{ color: '#000' }}>
-                <LinkButtonIcon />
-              </ListItemIcon>
-
-              <ListItemText>Линк хуулах</ListItemText>
-            </MenuItem>
-          </Tooltip>
-        </Stack>
-      </Menu>
-    </Stack>
+          />
+          <DroppedListItem
+            text="Архивлах"
+            icon={<ArchiveButtonIcon />}
+            testId="close-menu-button-test-id"
+            onClick={() => {
+              archiveArticle({ status: ArticleStatus.Archived });
+            }}
+          />
+          <DroppedListItem text="Линк хуулах" icon={<LinkButtonIcon />} testId="copy-clipboard-button-test-id" onClick={handleClickCopy} />
+        </ul>
+      )}
+      {copied && <p className="text-textPrimary bg-white px-3 border-2  rounded-lg absolute top-[100%] left-0">Copied</p>}
+    </div>
   );
 };

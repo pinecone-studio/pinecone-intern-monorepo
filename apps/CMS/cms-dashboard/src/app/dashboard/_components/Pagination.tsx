@@ -16,7 +16,7 @@ type HandlePageChangeProps = {
 export const Pagination = ({ totalPageQuantity, pageNumber, setPageNumber }: PaginationProps) => {
   const handlePageChange = ({ selected }: HandlePageChangeProps) => setPageNumber(selected);
   return (
-    <div data-cy="pagination-cy-id">
+    <div data-cy="pagination-cy-id" className="my-4">
       <ReactPaginate
         className="flex flex-row w-full"
         pageClassName="listItems"

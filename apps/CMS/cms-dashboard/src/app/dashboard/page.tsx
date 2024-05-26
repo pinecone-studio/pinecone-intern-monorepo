@@ -10,6 +10,7 @@ import { AdminNavigateLinksFeature, ArticleStatusTabsFeature } from './_features
 import { DashboardTable } from './_features/DashboardTable';
 import { useEffect, useState } from 'react';
 import { RefetchProvider } from '@/common/providers/RefetchProvider';
+import { NAV_BAR_HEIGHT } from '@/common/variables';
 
 const Home = () => {
   const searchParams = useSearchParams();
@@ -48,26 +49,22 @@ const Home = () => {
   }, [statusFilter, searchedValueFilter]);
   return (
     <RefetchProvider refetch={getArticlesRefetch}>
-      <div className="bg-[#e9eaec] h-[100vh]">
+      <div className="bg-grayBackground">
         <Navbar />
-        <div data-cy="dashboard-table-cy" className="w-full max-w-screen-xl mx-auto py-6">
-          <div className="flex flex-col h-[90vh] justify-between">
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-1">
-                <div className="flex justify-between">
-                  <SearchInput />
-                  <FilterByDate />
-                </div>
-                <div className="flex flex-col gap-3 h-[66vh]">
-                  <ArticleStatusTabsFeature />
-                  <DashboardTable articles={articles} loading={loading} error={error} />
-                </div>
-              </div>
-              <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-            </div>
-            <div className="flex justify-center">
-              <AdminNavigateLinksFeature />
-            </div>
+        <div data-cy="dashboard-table-cy" className="w-full  max-w-screen-xl mx-auto py-6 flex flex-col gap-2" style={{ minHeight: `calc(100vh - ${NAV_BAR_HEIGHT}px)` }}>
+          <div className="flex gap-2">
+            <SearchInput />
+            <FilterByDate />
+          </div>
+
+          <ArticleStatusTabsFeature />
+          <div className="flex-grow">
+            <DashboardTable articles={articles} loading={loading} error={error} />
+          </div>
+
+          <Pagination totalPageQuantity={totalPageQuantity} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+          <div className="flex justify-center">
+            <AdminNavigateLinksFeature />
           </div>
         </div>
       </div>
