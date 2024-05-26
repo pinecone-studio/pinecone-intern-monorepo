@@ -11,7 +11,7 @@ import { Dark } from '../../public/assets/DarkIcon';
 import { useTheme } from '../common';
 const Header = () => {
   const router = useRouter();
-  const { setIsDark, isDark, darkModeHandler } = useTheme();
+  const { isDark, darkModeHandler } = useTheme();
   const [email, setEmail] = useState<string>('');
 
   useEffect(() => {

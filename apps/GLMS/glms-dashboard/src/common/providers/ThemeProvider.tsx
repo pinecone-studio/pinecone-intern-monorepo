@@ -1,9 +1,8 @@
 'use client';
-import { PropsWithChildren, useContext, createContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
+import { PropsWithChildren, useContext, createContext, useState, useEffect } from 'react';
 
 type ThemeContextType = {
   isDark: boolean;
-  setIsDark: Dispatch<SetStateAction<boolean>>;
   darkModeHandler: () => void;
 };
 
@@ -28,7 +27,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
       document.documentElement.classList.remove('dark');
     }
   });
-  return <ThemeContext.Provider value={{ isDark, setIsDark, darkModeHandler }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={{ isDark, darkModeHandler }}>{children}</ThemeContext.Provider>;
 };
 export const useTheme = () => {
   return useContext(ThemeContext);
