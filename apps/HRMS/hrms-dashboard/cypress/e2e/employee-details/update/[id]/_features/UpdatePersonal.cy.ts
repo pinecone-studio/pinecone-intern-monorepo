@@ -29,10 +29,10 @@ describe('update personal info', () => {
     cy.get('input[name="homeAddress"]').clear();
     cy.get('[data-testid="submit-btn"]').should('be.visible');
     cy.get('[data-testid="submit-btn"]').click();
-    cy.contains('[data-testid="lastName-error"]', 'Last Name is required').should('be.visible');
-    cy.contains('[data-testid="firstName-error"]', 'First Name is required').should('be.visible');
-    cy.contains('[data-testid="jobTitle-error"]', 'Job Title is required').should('be.visible');
-    cy.contains('[data-testid="email-error"]', 'Email is required').should('be.visible');
+    cy.contains('[data-testid="lastName-error"]', 'Овог').should('be.visible');
+    cy.contains('[data-testid="firstName-error"]', 'Нэр').should('be.visible');
+    cy.contains('[data-testid="jobTitle-error"]', 'Ажлын').should('be.visible');
+    cy.contains('[data-testid="email-error"]', 'Имэйл').should('be.visible');
   });
 
   it('5. Should fill out and submit the form in PersonalUpdateModal', () => {
