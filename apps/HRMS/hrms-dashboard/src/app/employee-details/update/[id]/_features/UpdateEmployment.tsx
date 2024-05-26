@@ -24,7 +24,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
   const [updateEmpInput, setUpdateEmpInput] = useState(false);
 
   return (
-    <section data-cy="updateEmployment" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
+    <section data-cy="updateEmployment" className="flex flex-col w-full bg-white overflow-hidden rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
         <p data-cy="employmentPageTitle" className="text-black text-lg font-semibold cursor-pointer">
           Хөдөлмөр эрхлэлтийн мэдээлэл
@@ -60,7 +60,7 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
       </div>
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Албан тушаал</p>
-        <p className="w-full text-left text-main text-base font-semibold">{props.jobTitle}</p>
+        <p className="w-full text-left text-main text-base font-semibold truncate">{props.jobTitle}</p>
       </div>
       <div className="flex flex-col gap-1 justify-start">
         <p className="w-full text-left text-main  text-sm font-normal">Хэлтэс</p>

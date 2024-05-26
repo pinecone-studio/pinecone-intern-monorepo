@@ -28,7 +28,7 @@ export const EmployeeSearch = () => {
       <div className="px-1">
         <SearchSvg />
       </div>
-      <input data-testid="employee-search" type="text" defaultValue={searchPath!} onChange={handleChange} className="w-full outline-none" />
+      <input data-testid="employee-search" type="text" defaultValue={searchPath!} onChange={handleChange} className="w-full outline-none bg-white" />
     </div>
   );
 };

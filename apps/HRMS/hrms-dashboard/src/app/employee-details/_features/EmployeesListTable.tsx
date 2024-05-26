@@ -49,7 +49,7 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
   return (
     <section data-cy="employeesList" className="flex my-4 rounded-xl overflow-scroll">
       <div className="w-full">
-        <table data-cy="tableBody" className="w-full border-collapse">
+        <table data-cy="tableBody" className="w-full border-collapse table-fixed">
           <tr className="w-full bg-light">
             {tableHeader.map((item, index) => (
               <th key={index} className="p-4 w-1/5 text-left">
@@ -62,13 +62,13 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
           {!loading &&
             employeesData?.employees?.map((row, index) => (
               <tr key={index} className="h-11 border-solid border-b border-b-[#EDE6F0]  p-4 text-left">
-                <td className="cursor-pointer p-4">
+                <td className="cursor-pointer p-4 overflow-hidden">
                   <Link href={`/employee-details/update/${row?.id}`}>
-                    <div data-cy="updateLink" className="flex items-center justify-start gap-3">
+                    <div data-cy="updateLink" className="flex items-center w-fit justify-start gap-3">
                       <figure className="relative rounded-full overflow-hidden h-[50px] aspect-square">
-                        <Image src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
+                        <Image  src={row?.imageUrl || '/avatar.png'} style={{ objectFit: 'cover' }} alt="product image" fill sizes="small" />
                       </figure>
-                      <p className="text-sm font-semibold text-dark overflow-hidden truncate">{row?.lastName?.slice(0, 1).toUpperCase() + '.' + row?.firstName}</p>
+                      <p className="text-sm font-semibold text-dark truncate">{row?.lastName?.slice(0, 1).toUpperCase() + '.' + row?.firstName}</p>
                     </div>
                   </Link>
                 </td>

@@ -22,7 +22,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
   const handleUpdateDependentClose = () => setHandleUpdate(false);
 
   return (
-    <section data-cy="updateDependent" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
+    <section data-cy="updateDependent" className="flex flex-col w-full bg-white overflow-hidden rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
         <p className="text-black text-lg font-semibold cursor-pointer">Нэмэлт мэдээлэл</p>
         {dependency ? (
