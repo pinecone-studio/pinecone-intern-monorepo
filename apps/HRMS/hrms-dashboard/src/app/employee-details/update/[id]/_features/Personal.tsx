@@ -24,7 +24,7 @@ export const Personal = ({ firstName, lastName, email, phone, jobTitle, homeAddr
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div data-testid="personal-info" className=" w-full flex flex-col bg-white rounded-xl p-5 gap-10">
+    <div data-testid="personal-info" className=" w-full flex flex-col bg-white h-full rounded-xl p-5 gap-10">
       <div className="flex gap-[40px] w-[100%] justify-between">
         <p className="text-[18px] font-semibold">Хувийн мэдээлэл</p>
         <button
@@ -38,11 +38,11 @@ export const Personal = ({ firstName, lastName, email, phone, jobTitle, homeAddr
           <p className="text-main text-[14px] items-center">Засварлах</p>
         </button>
       </div>
-      <div data-testid="profile-picture" className="w-1/3 sm:w-1/2 aspect-square rounded-full overflow-hidden m-auto relative">
+      <div data-testid="profile-picture" className="w-1/3 sm:w-1/2 aspect-square rounded-full overflow-hidden relative mx-auto">
         <Image fill style={{ objectFit: 'cover' }} src={imageUrl || '/avatar.png'} alt="profile picture" />
       </div>
-      <h2 className="text-[18px] font-semibold flex justify-center">{`${firstName} ${lastName}`}</h2>
-      <div className="flex flex-col gap-4 max-w-[280px] m-auto">
+      <h2 className="text-[18px] text-center font-semibold flex justify-center">{`${firstName} ${lastName}`}</h2>
+      <div className="flex flex-col gap-4 max-w-[280px] mx-auto">
         <div className="flex gap-3 items-center">
           <BagIcon />
           <p>{jobTitle}</p>

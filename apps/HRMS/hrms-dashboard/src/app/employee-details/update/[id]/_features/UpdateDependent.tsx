@@ -24,7 +24,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
   return (
     <section data-cy="updateDependent" className="flex flex-col w-full bg-white rounded-xl p-6 gap-6 ">
       <div className="flex justify-between">
-        <p className="text-black text-lg font-semibold cursor-pointer">Хөдөлмөр эрхлэлтийн мэдээлэл</p>
+        <p className="text-black text-lg font-semibold cursor-pointer">Нэмэлт мэдээлэл</p>
         {dependency ? (
           <>
             <div>
@@ -33,10 +33,10 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
               </div>
               {handleUpdate && (
                 <>
-                  <div className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
+                  <div className="flex items-center justify-center max-w-[500px] w-[60%] bg-error rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
                     <EmployeeDependentUpdate refetch={refetch} handleUpdateDependentClose={handleUpdateDependentClose} relative={relative} />
                   </div>
-                  <div className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
+                  <div onClick={()=>setHandleUpdate(false)} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
                 </>
               )}
             </div>
@@ -59,7 +59,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
                 <div className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
                   <CreateDependent refetch={refetch} handleCreateDependentClose={handleCreateDependentClose} dependantPhone={dependantPhone} dependency={dependency} relative={relative} />
                 </div>
-                <div className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
+                <div onClick={()=>{setHandleCreate(false)}} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
               </>
             )}
           </div>

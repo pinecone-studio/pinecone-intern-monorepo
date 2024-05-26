@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { CustomInput } from '../../../_components';
 import { Dependent, useUpdatedDependentMutation } from '@/generated';
 import { CloseSvg } from '../../../../../../public/assets/CloseSvg';
+import { toast } from 'react-toastify';
 
 const validationSchema = yup.object({
   lastName: yup.string().required('Овог оо оруулна уу.'),
@@ -29,7 +30,7 @@ export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, r
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await EmployeeDependentUpdate({
+      const { data } = await EmployeeDependentUpdate({
         variables: {
           updatedDependentId: relative.id,
           input: {
@@ -40,6 +41,12 @@ export const EmployeeDependentUpdate = ({ refetch, handleUpdateDependentClose, r
           },
         },
       });
+      if (data?.updatedDependent.id) {
+        toast.success(`Мэдээлэл шинэчлэгдлээ`, {
+          position: 'top-center',
+          hideProgressBar: true,
+        });
+      }
       handleUpdateDependentClose();
       refetch();
     },

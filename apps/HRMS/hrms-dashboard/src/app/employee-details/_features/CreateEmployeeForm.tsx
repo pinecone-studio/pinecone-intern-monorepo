@@ -6,6 +6,7 @@ import { EmploymentStatus } from '../../../generated';
 import { inputItems } from '../constants';
 import { CloseSvg } from '../../../assets';
 import { useRefetch } from '../../../common/providers/RefetchProvider';
+import { toast } from 'react-toastify';
 
 type CreateEmployeeFormProps = {
   handleCloseNewEmployee: () => void;
@@ -41,7 +42,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await createEmployee({
+      const { data } = await createEmployee({
         variables: {
           input: {
             firstName: values.firstName as string,
@@ -56,6 +57,12 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
           },
         },
       });
+      if (data?.createEmployee.firstName) {
+        toast.success(`${data.createEmployee.email} и-мэйлтэй хэрэглэгч үүслээ`, {
+          position: 'top-center',
+          hideProgressBar: true,
+        });
+      }
       props.handleCloseNewEmployee();
       refetch();
     },

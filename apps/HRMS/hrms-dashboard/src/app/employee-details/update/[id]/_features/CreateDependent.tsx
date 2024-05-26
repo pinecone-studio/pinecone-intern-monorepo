@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { CustomInput } from '../../../_components';
 import { Dependent, useCreateDependentMutation, useEmployeeDependentUpdateMutation } from '@/generated';
 import { CloseSvg } from '../../../../../../public/assets/CloseSvg';
+import { toast } from 'react-toastify';
 
 const validationSchema = yup.object({
   lastName: yup.string().required('Овог оо оруулна уу.'),
@@ -52,6 +53,12 @@ export const CreateDependent = ({ handleCreateDependentClose, refetch }: CreateD
           },
         },
       });
+      if (createDependentResponse.data?.createDependent.id) {
+        toast.success(`Мэдээлэл шинэчлэгдлээ`, {
+          position: 'top-center',
+          hideProgressBar: true,
+        });
+      }
       handleCreateDependentClose();
       refetch();
     },
@@ -69,13 +76,13 @@ export const CreateDependent = ({ handleCreateDependentClose, refetch }: CreateD
     <main data-cy="addDependentForm" className="flex flex-col max-w-[650px] w-full p-10  rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
       <div className="flex justify-between">
         <p data-testid="addEmployeeTitle" className="text-lg text-main font-semibold">
-          Нэмэлт мэдээлэл1
+          Гэр бүлийн мэдээлэл
         </p>
         <div data-testid="close-button" className="cursor-pointer" onClick={() => handleCreateDependentClose()}>
           <CloseSvg />
         </div>
       </div>
-      <div className="flex flex-col justify-center px-10 pt-10 gap-4">
+      <div className="flex flex-col justify-center pt-10 gap-4">
         <div className="grid grid-cols-1 gap-6">
           <CustomInput data-testid="customInput" label={'Овог'} type={'lastName'} placeholder={'Овог оруулна уу'} {...generateFormikProps('lastName' as keyof typeof formik.values)} />
           <CustomInput data-testid="customInput" label={'Нэр'} type={'firstName'} placeholder={'Нэр оруулна уу'} {...generateFormikProps('firstName' as keyof typeof formik.values)} />
@@ -95,7 +102,7 @@ export const CreateDependent = ({ handleCreateDependentClose, refetch }: CreateD
             </button>
             <button
               data-cy="submit-button"
-              className=" py-4 px-5 font-semibold rounded-lg bg-black text-white"
+              className=" py-2 px-4 font-semibold rounded-lg bg-black text-white"
               onClick={() => {
                 formik.handleSubmit();
               }}
