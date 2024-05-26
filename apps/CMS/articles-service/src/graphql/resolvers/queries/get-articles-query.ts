@@ -13,10 +13,7 @@ export const getArticlesQuery: QueryResolvers['getArticlesQuery'] = async () => 
 
 export const getArticlesByCategory: QueryResolvers['getArticlesByCategory'] = async (_, { categoryId, quantity }) => {
   try {
-    const articles = await ArticleModel.find({ category: categoryId })
-      .populate('category')
-      .populate('author')
-      .limit(quantity);
+    const articles = await ArticleModel.find({ category: categoryId, status: 'PUBLISHED' }).populate('category').populate('author').limit(quantity);
 
     return articles;
   } catch (error) {

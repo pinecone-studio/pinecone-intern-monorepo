@@ -32,7 +32,7 @@ const GroupArticles = (props: GroupArticlesProps) => {
                 <ArticleCard key={item.id} title={item?.title} cover={item.coverPhoto} description={item?.content} category={item?.category.name} date={item?.publishedAt} />
               ))
             : data?.getArticlesByCategory?.map((item) => (
-                <ArticleCard key={item.id} title={item.title} cover={item.coverPhoto} description={item.content} category={item.category.name} date={item.publishedAt}  _id={item.id}/>
+                <ArticleCard key={item.id} title={item.title} cover={item.coverPhoto} description={item.content} category={item.category.name} date={item.publishedAt} _id={item.id} />
               ))}
         </div>
         <div data-cy="group-innerCon" className="flex w-full justify-center">

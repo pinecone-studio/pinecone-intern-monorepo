@@ -1,17 +1,12 @@
 describe('app page.tsx', () => {
   beforeEach(() => cy.visit('/'));
 
-
   it('2. it should display Main Banner', () => {
     cy.get('[data-cy="mainBannerComp"]').should('exist');
     cy.get('[data-cy="main-cover"]').should('exist').and('have.attr', 'alt');
     cy.get('[data-cy="innerComp"]')
       .should('exist')
-      .and(
-        'have.css',
-        'background',
-        'rgba(0, 0, 0, 0) linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box'
-      );
+      .and('have.css', 'background', 'rgba(0, 0, 0, 0) linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box');
     cy.get('[data-cy="main-date"]').should('exist');
     cy.get('[data-cy="main-categories"]').should('exist');
     cy.get('[data-cy="articlesTitle"]').should('exist');
