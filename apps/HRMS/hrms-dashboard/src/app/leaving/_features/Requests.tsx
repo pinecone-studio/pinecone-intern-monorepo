@@ -40,25 +40,20 @@ const Requests = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center pt-10">
-        <span className="loading loading-spinner loading-md"></span>
+      <div className="flex justify-center items-center h-[1000px] ">
+<span className="loading loading-ring loading-lg"></span>
       </div>
     );
   const requestsToShow = filteredData.length > 0 ? filteredData : data?.getRequests;
 
   return (
-    <div className="py-10">
+    <div className="py-10 dark:text-black">
       <div className="flex flex-col gap-6 p-6 bg-white rounded-lg">
         <div className="w-full flex justify-between items-center">
           <h1 className="text-2xl font-bold">Чөлөө</h1>
           <p>{new Date().toISOString().split('T')[0]}</p>
         </div>
         <div className="flex justify-between">
-          <div role="tablist" className="tabs tabs-bordered">
-            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Хүсэлт" defaultChecked />
-            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Ажилчид" />
-            <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Түүх" />
-          </div>
           <div className="flex items-center gap-2">
             <FilterByToday onClick={filterDataByToday} data-testid="filter-by-today" />
             <FilterByWeek onClick={filterDataByWeek} data-testid="filter-by-week" />
@@ -69,7 +64,7 @@ const Requests = () => {
             <div className="w-full max-h-[500px] overflow-y-auto bg-white">
               <table className="w-full text-sm text-left">
                 <thead>
-                  <tr className="bg-base-200">
+                  <tr className="bg-base-200 dark:bg-light">
                     {headers.map((header, index) => (
                       <th key={index} className="p-4 w-1/5 text-left">
                         <p className="text-md font-semibold text-dark">{header}</p>

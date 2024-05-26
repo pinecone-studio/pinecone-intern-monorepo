@@ -7,12 +7,14 @@ import {useGetRequestByMonthQuery } from '@/generated';
 
 export const Calendar = () => {
   const [monthDate, useMonthDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const {data} = useGetRequestByMonthQuery({variables:{startDate: monthDate}})
+  const {data , loading} = useGetRequestByMonthQuery({variables:{startDate: monthDate}})
 
   const calendarData = data?.getRequestByMonth
   const calendarDataMatrix = calendarMatrix(monthDate, calendarData as TDay[]);
 
-
+if(loading){
+  return <div></div>
+}
 
   const UpdateMonth = (inc:number)=>{
     useMonthDate(dayjs(monthDate).add(inc, "month").format("YYYY-MM-DD"))
