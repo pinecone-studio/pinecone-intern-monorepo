@@ -2,13 +2,16 @@
 'use client';
 import { SearchIcon } from '../../public/assets/SearchIcon';
 const jwt = require('jsonwebtoken');
-import { PositionIcon } from '../../public/assets/HeaderPosition';
 import { Logo } from '../../public/assets/Logo';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LeaveIcon } from '../../public/assets/LeaveIcon';
+import { Light } from '../../public/assets/LightIcon';
+import { Dark } from '../../public/assets/DarkIcon';
+import { useTheme } from '../common';
 const Header = () => {
   const router = useRouter();
+  const { setIsDark, isDark, darkModeHandler } = useTheme();
   const [email, setEmail] = useState<string>('');
 
   useEffect(() => {
@@ -17,8 +20,8 @@ const Header = () => {
     setEmail(data?.email);
   }, []);
   return (
-    <div data-testid="header-artivle-detail" className="bg-[#F7F7F8] border-b-[1px] border-[#ECEDF0] ">
-      <div className="flex h-12 items-center justify-between w-[85vw] m-auto">
+    <div data-testid="header-artivle-detail" className="bg-[#F7F7F8] border-b-[1px] border-[#ECEDF0] dark:border-[#3d3d3def] dark:bg-[#121316ec] ">
+      <div className="flex h-12 items-center justify-between w-[85vw] max-w-[1440px] m-auto">
         <div
           onClick={() => {
             router.push('/dashboard');
@@ -26,12 +29,18 @@ const Header = () => {
         >
           <Logo />
         </div>
-        <div data-testid="text-data-search" className="gap-7 items-center flex ">
-          <label className="input input-bordered flex items-center gap-2 h-8 outline-none">
+        <div data-testid="text-data-search" className="gap-7 items-center flex fill-[#121316] dark:fill-[#ededed]">
+          <label className="input input-bordered flex items-center gap-1 h-8 outline-none dark:bg-[#3d3d3def]">
             <SearchIcon />
-            <input type="text" className="grow text-sm w-32 " placeholder="Search" />
+            <input type="text" className="grow text-sm dark:text-[#ededed] w-32 " placeholder="Search" />
           </label>
-          <PositionIcon />
+          <div
+            onClick={darkModeHandler}
+            className="cursor-pointer flex gap-1 hover:bg-[#ededed] dark:hover:bg-[#3d3d3def] justify-center items-center  w-9 h-9 rounded-full stroke-[#121316] dark:stroke-[#ededed]"
+          >
+            {!isDark ? <Light /> : <Dark />}
+          </div>
+
           <div className="flex items-center gap-1 cursor-pointer">
             <div className="w-8 h-8">
               <img className="rounded-full" src="/profile-image.svg" />
@@ -43,7 +52,7 @@ const Header = () => {
               localStorage.removeItem('token');
               router.push('/');
             }}
-            className="cursor-pointer flex items-center gap-1 hover:bg-[#ededed] p-2 rounded-full"
+            className="cursor-pointer flex gap-1 hover:bg-[#ededed] dark:hover:bg-[#3d3d3def] justify-center items-center  w-9 h-9 rounded-full stroke-[#121316] dark:stroke-[#ededed]"
           >
             <LeaveIcon />
           </div>

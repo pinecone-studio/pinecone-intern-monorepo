@@ -28,12 +28,12 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
   };
 
   return (
-    <div>
-      <div className="mr-auto ml-auto sm:px-3 px-6 flex flex-col sm:max-w-[90vw] max-w-[95vw] gap-[24px] pt-8">
+    <div className="mr-auto ml-auto sm:px-3 flex flex-col sm:max-w-[90vw] max-w-[95vw] gap-[24px] pt-8 ">
+      <div className="max-w-[1440px] m-auto">
         <BackButton onClick={handleBack} />
-        <div className=" py-[48px] px-[24px] bg-white rounded-xl " key={data?.id}>
-          <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto justify-between ">
-            <div className="lg:flex lg:gap-7 md:block justify-between">
+        <div className="py-12 px-16 bg-white dark:bg-[#2b2b2b] rounded-xl mt-8" key={data?.id}>
+          <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto justify-between w-full">
+            <div className="lg:flex lg:gap-7 md:block justify-between dark:text-[#ededed] ">
               <div className="w-full max-w-[792px] ">
                 <CourseTitle title={data?.title} />
                 <div className="min-h-[220px] mt-1 mb-6 ">
@@ -57,7 +57,7 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
               </div>
               <div className="max-w-[313px] w-full">
                 <div data-testid="edit-course-button" onClick={handleUpdateCoursePage} className="flex gap-4 mb-6 w-">
-                  <button className="btn btn-ghost flex border border-[#D6D8DB] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
+                  <button className="btn btn-ghost flex border border-[#D6D8DB] dark:hover:bg-[#3d3d3def] dark:border-[#515151]  dark:bg-[#4a4a4a] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
                     <p className=" text-[18px] font-semibold">Ерөнхий мэдээлэл</p>
                     <EditButtonIcon />
                   </button>

@@ -16,35 +16,35 @@ const AddSection = (props: AddSectionTypes) => {
   const status = ['Нийтлэх', 'Хадгалах'];
 
   return (
-    <div data-testid="add-section-form" className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-[4px] justify-center items-center p-6">
-      <div className="'flex flex-col  gap-4 border-2 border-dashed rounded-4 p-8 border-[#D6D8DB] rounded-[8px]">
+    <div>
+      <div data-testid="add-section-form" className="'flex flex-col gap-4 dark:border-[#3d3d3def] border-dashed border-2 border-[#D6D8DB] rounded-4 p-8 rounded-[8px] dark:text-[#dedede]">
         <div className="flex flex-col py-2">
-          <p className="font-bold">Хэсгийн гарчиг</p>
+          <p className="font-bold mb-2">Хэсгийн гарчиг</p>
           <input
             data-cy="title"
-            className="w-[588px] h-fit border rounded-[4px] p-2"
+            className="w-[588px] h-fit border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
             type="text"
             name="title"
             placeholder="Оруулна уу..."
             id="title-test"
             onChange={handleChange}
             value={title}
-          ></input>
+          />
         </div>
         <div className="flex flex-col py-2">
-          <p className="font-bold">Дэлгэрэнгүй</p>
+          <p className="font-bold mb-2">Дэлгэрэнгүй</p>
           <textarea
             data-cy="description"
-            className="w-[588px] h-[160px] border rounded-[4px] p-2"
+            className="w-[588px] h-[160px] border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
             id="description-test"
             name="description"
             onChange={handleChange}
             value={description}
             placeholder="Энд бичнэ үү..."
-          ></textarea>
+          />
         </div>
         <div className="flex flex-col py-2">
-          <p className="font-bold"> Хэсгийн зураг</p>
+          <p className="font-bold mb-2"> Хэсгийн зураг</p>
           <FileUploader thumbnail={thumbnail} setFieldValue={setFieldValue} />
         </div>
       </div>
@@ -66,7 +66,9 @@ const AddSection = (props: AddSectionTypes) => {
               data-cy="add-section-handle-btn"
               onClick={handleAddSection}
               className={`${
-                item == 'Хадгалах' ? 'bg-[#121316] hover:bg-[#252525] text-white' : 'btn-outline hover:bg-[#f0f0f0] hover:text-black'
+                item == 'Хадгалах'
+                  ? 'bg-black hover:bg-black text-white dark:hover:bg-[#3d3d3def] dark:border-[#515151] dark:bg-[#4a4a4a]'
+                  : 'btn-outline hover:bg-[#f0f0f0] hover:text-black dark:text-[#dedede] dark:hover:bg-[#292929] dark:border-[#515151] dark:bg-[#2b2b2b]'
               } btn rounded-lg w-[280px] h-[56px]  flex justify-center items-center `}
               data-testid="create-button"
               disabled={!title || !description || !thumbnail}

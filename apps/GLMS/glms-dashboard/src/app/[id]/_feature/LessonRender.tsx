@@ -27,21 +27,18 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   };
 
   return (
-    <div>
-      {deleted && <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-stone-100/50 "></div>}
-      <div className=" border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between cursor-pointer hover:bg-[#fbfbfb] ease-in-out mb-4">
-        <div data-cy="lesson-test-id" onClick={handleCreateSection} className="max-w-[792px] w-full h-[104px] py-2.5 ">
-          <div className="flex gap-4 items-center">
-            <div>
-              <img src={`${lesson.thumbnail}`} className="w-9 h-9 rounded-md object-fit" />
-            </div>
-            <p className="font-semibold">{lesson?.title}</p>
+    <div className=" border border-[#00000033] px-8 py-6 rounded-xl max-w-[792px] w-full h-[104px] flex justify-between cursor-pointer hover:bg-[#fbfbfb] dark:hover:bg-[#434343ef] dark:border-[#515151]  dark:bg-[#3d3d3def] ease-in-out mb-4">
+      <div data-cy="lesson-test-id" onClick={handleCreateSection} className="max-w-[792px] w-full h-[104px] py-2.5 ">
+        <div className="flex gap-4 items-center">
+          <div>
+            <img src={`${lesson.thumbnail}`} className="w-9 h-9 rounded-md object-fit" />
           </div>
+          <p className="font-semibold">{lesson?.title}</p>
         </div>
-        <div className="flex gap-4 items-center z-50 ">
-          <EditButton onClick={HandleUpdateLessonPage} />
-          <DeleteButton onClick={HandleDeleteLesson} />
-        </div>
+      </div>
+      <div className="flex gap-4 items-center z-50 ">
+        <EditButton onClick={HandleUpdateLessonPage} />
+        <DeleteButton onClick={HandleDeleteLesson} />
       </div>
     </div>
   );

@@ -7,9 +7,9 @@ type BackButtonProps = {
 
 const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
   return (
-    <button data-testid="prev-button-test-id" data-cy="prev-button-test-id" onClick={onClick} className="flex justify-center items-center rounded-[8px] gap-[2px] w-[99px] ease-in">
+    <button data-testid="prev-button-test-id" data-cy="prev-button-test-id" onClick={onClick} className="flex justify-center items-center rounded-[8px] gap-[2px] w-[99px] ease-in dark:text-[#dedede]">
       <ArrowBackIcon />
-      <p>Сэдвүүд</p>
+      Буцах
     </button>
   );
 };
