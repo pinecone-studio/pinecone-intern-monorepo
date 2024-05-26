@@ -6,6 +6,7 @@ import { Department, EmploymentStatus, useUpdateEmploymentMutation } from '@/gen
 import { useParams } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { CloseSvg } from '../../../../asset/icons/CloseSvg';
+import { toast } from 'react-toastify';
 const validationSchema = yup.object({
   jobTitle: yup.string().required('Албан тушаал оруулна уу'),
   department: yup.string().required('Хэлтэс сонгоно уу'),
@@ -34,7 +35,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await updateEmployment({
+      const { data } = await updateEmployment({
         variables: {
           updateEmploymentId: id,
           input: {
@@ -45,6 +46,12 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
           },
         },
       });
+      if (data?.updateEmployment.employmentStatus) {
+        toast.success(`Мэдээлэл шинэчлэгдлээ`, {
+          position: 'top-center',
+          hideProgressBar: true,
+        });
+      }
       props.refetch();
       props.setUpdateEmpInput(false);
     },
@@ -57,12 +64,9 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
         </p>
         <div
           data-testid="closeSvg"
-          onClick={() => {
-            props.setUpdateEmpInput(false);
-          }}
+          onClick={() => {props.setUpdateEmpInput(false);}}
           className="cursor-pointer"
-        >
-          <CloseSvg />
+        ><CloseSvg />
         </div>
       </div>
       <div className="w-full flex flex-col items-center gap-4 ">
@@ -88,9 +92,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.department)}
           >
             {departmentList.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
+              <option key={index} value={item}>{item}</option>
             ))}
           </CustomInput>
           <CustomInput
@@ -114,9 +116,7 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.employmentStatus)}
           >
             {employeeStatusList.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
+              <option key={index} value={item}>{item}</option>
             ))}
           </CustomInput>
           <div className="flex justify-end gap-2">
@@ -130,26 +130,26 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
                 padding: '8px 16px',
                 border: '1px solid #000',
                 borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                props.setUpdateEmpInput(false);
-              }}
-            >
+                cursor: 'pointer',}}
+              onClick={() => {props.setUpdateEmpInput(false);}}>
               Цуцлах
             </button>
             <button
-              data-cy="updateEmploymentBtn" name="updateBtn" disabled={!formik.isValid}
+              data-cy="updateEmploymentBtn"
+              name="updateBtn"
+              disabled={!formik.isValid}
               style={{
-                backgroundColor: '#121316', color: '#fff', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer',
+                backgroundColor: '#121316',
+                color: '#fff',
+                padding: '8px 16px',
+                borderRadius: '4px',
+                cursor: 'pointer',
               }}
               onClick={(e) => {
                 e.preventDefault();
                 formik.handleSubmit();
               }}
-            >
-              Хадгалах
-            </button>
+            >Хадгалах</button>
           </div>
         </div>
       </div>
