@@ -97,7 +97,7 @@ const UpdateLesson = () => {
                   type="text"
                   id="title-test-of-lesson"
                   data-cy="update-lesson-title"
-                  className="input input-bordered w-full dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+                  className="input input-bordered w-full dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
                   name="title"
                   onChange={formik.handleChange}
                   value={formik.values.title}

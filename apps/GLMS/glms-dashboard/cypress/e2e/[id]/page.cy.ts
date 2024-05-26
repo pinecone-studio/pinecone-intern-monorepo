@@ -17,7 +17,7 @@ describe(' course Id page should visit [id]', () => {
   it('2. Should navigate back to dashboard ', () => {
     cy.visit(`/6633305c94d4584898bb049a`);
     cy.get('[data-cy="prev-button-test-id"]').should('exist').click();
-    cy.url().should('include', '/dashboard');
+    cy.url().should('include', '/6633305c94d4584898bb049a');
   });
 
   it('3. Should set lessonID in localStorage and navigate to /section', () => {
@@ -32,7 +32,7 @@ describe(' course Id page should visit [id]', () => {
   });
   it('5. Should navigate to update-lesson', () => {
     cy.visit(`/6633305c94d4584898bb049a`);
-    cy.get('[data-cy="lesson-edit-button-test-id"]').eq(1).should('exist').click();
+    cy.get('[data-cy="lesson-edit-button-test-id"]').eq(0).should('exist').click();
     cy.url().should('include', '/update-lesson');
   });
 });

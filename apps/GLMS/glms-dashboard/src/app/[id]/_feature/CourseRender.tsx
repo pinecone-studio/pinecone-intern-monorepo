@@ -3,18 +3,28 @@ import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
 import DeleteButton from '../_components/DeleteButton';
 import BackButton from '../_components/Backbutton';
-import { Course, Lesson } from '@/generated';
+import { Course, Exact, GetLessonByIdQuery, Lesson } from '@/generated';
 import CourseDesc from '../_components/CourseDesc';
 import { useRouter } from 'next/navigation';
 import AddLessonButton from '../_components/AddLessonButton';
 import LessonRender from './LessonRender';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
+import { ApolloQueryResult } from '@apollo/client';
 type DataTypes = {
   data: Course | undefined;
   lessonData: Lesson[] | undefined;
+  lessonRefetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            getLessonByIdId: string;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetLessonByIdQuery>>;
 };
 
-const CourseRender = ({ data, lessonData }: DataTypes) => {
+const CourseRender = ({ data, lessonData, lessonRefetch }: DataTypes) => {
   const router = useRouter();
 
   const handleUpdateCoursePage = () => {
@@ -50,7 +60,7 @@ const CourseRender = ({ data, lessonData }: DataTypes) => {
                     localStorage.setItem('lessonID', lesson.id || '');
                     router.push('/section');
                   };
-                  return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} />;
+                  return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} refetch={lessonRefetch} />;
                 })}
 
                 <AddLessonButton onClick={handleCreateLesson} />

@@ -1,10 +1,27 @@
 'use client';
+import { ApolloQueryResult } from '@apollo/client';
 import DeleteButton from '../_components/DeleteButton';
 import EditButton from '../_components/Editbutton';
-import { Lesson, useDeleteLessonMutation } from '@/generated';
+import { Exact, GetLessonByIdQuery, Lesson, useDeleteLessonMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 
-const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleCreateSection: () => void }) => {
+const LessonRender = ({
+  lesson,
+  handleCreateSection,
+  refetch,
+}: {
+  lesson: Lesson;
+  handleCreateSection: () => void;
+  refetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            getLessonByIdId: string;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetLessonByIdQuery>>;
+}) => {
   const [deleteLesson] = useDeleteLessonMutation();
   const router = useRouter();
   const id = lesson.id;
@@ -12,6 +29,7 @@ const LessonRender = ({ lesson, handleCreateSection }: { lesson: Lesson; handleC
   const HandleDeleteLesson = () => {
     if (id) {
       deleteLesson({ variables: { id } });
+      refetch();
     }
   };
 

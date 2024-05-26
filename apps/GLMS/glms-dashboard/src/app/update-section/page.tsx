@@ -97,7 +97,7 @@ const UpdateSection = () => {
               <input
                 data-cy="update-section-title"
                 test-id="title-input"
-                className="w-[588px] h-fit border rounded-[4px] p-2 object-cover dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+                className="w-[588px] h-fit border rounded-[4px] p-2 object-cover dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
                 type="text"
                 name="title"
                 placeholder="Оруулна уу..."
@@ -111,7 +111,7 @@ const UpdateSection = () => {
               <textarea
                 data-cy="update-section-description"
                 test-id="description-input"
-                className="w-[588px] h-[160px] border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+                className="w-[588px] h-[160px] border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
                 id="description-test"
                 name="description"
                 onChange={formik.handleChange}

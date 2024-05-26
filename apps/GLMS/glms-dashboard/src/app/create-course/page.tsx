@@ -62,7 +62,7 @@ const CourseAdd = () => {
               <div className=" gap-2 flex flex-col w-[100%]">
                 <label className=" font-semibold text-[16px] color-[#121316]">{'Гарчиг'}</label>
                 <input
-                  className="w-[90%] h-[40px] border-[2px] rounded p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none "
+                  className="w-[90%] h-[40px] border-[2px] rounded p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none "
                   type="text"
                   name="title"
                   placeholder="Оруулна уу..."
@@ -74,7 +74,7 @@ const CourseAdd = () => {
               <div className="w-[100%] gap-2 flex flex-col">
                 <label className="font-semibold text-[16px] color-[#121316]">{'Дэлгэрэнгүй'}</label>
                 <textarea
-                  className="w-[90%] border-[2px] rounded h-[100px] px-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+                  className="w-[90%] border-[2px] rounded h-[100px] px-2 dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
                   id="description-test"
                   name="description"
                   onChange={formik.handleChange}

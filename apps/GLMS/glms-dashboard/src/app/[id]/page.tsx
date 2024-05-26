@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <div data-cy="idCourse" className="bg-[#F7F7F8] dark:bg-[#121316f7] h-screen">
-      <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} />
+      <CourseRender data-cy-id="courseId" data={newCourse} lessonData={newLesson} lessonRefetch={lessonRefetch} />
     </div>
   );
 };

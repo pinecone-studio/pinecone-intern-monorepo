@@ -16,13 +16,13 @@ const AddSection = (props: AddSectionTypes) => {
   const status = ['Нийтлэх', 'Хадгалах'];
 
   return (
-    <div>
-      <div data-testid="add-section-form" className="'flex flex-col gap-4 dark:border-[#3d3d3def] border-dashed border-2 border-[#D6D8DB] rounded-4 p-8 rounded-[8px] dark:text-[#dedede]">
+    <div data-testid="add-section-form">
+      <div className="'flex flex-col gap-4 dark:border-[#3d3d3def] border-dashed border-2 border-[#D6D8DB] rounded-4 p-8 rounded-[8px] dark:text-[#dedede]">
         <div className="flex flex-col py-2">
           <p className="font-bold mb-2">Хэсгийн гарчиг</p>
           <input
             data-cy="title"
-            className="w-[588px] h-fit border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+            className="w-[588px] h-fit border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
             type="text"
             name="title"
             placeholder="Оруулна уу..."
@@ -35,7 +35,7 @@ const AddSection = (props: AddSectionTypes) => {
           <p className="font-bold mb-2">Дэлгэрэнгүй</p>
           <textarea
             data-cy="description"
-            className="w-[588px] h-[160px] border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] border-none outline-none"
+            className="w-[588px] h-[160px] border rounded-[4px] p-2 dark:bg-[#3d3d3def] dark:text-[#dedede] dark:border-none dark:outline-none"
             id="description-test"
             name="description"
             onChange={handleChange}
