@@ -89,11 +89,11 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
                 disabled={isSubmitting}
               > <CloseSvg /></button>
             </div>
-            <div className="relative w-1/3  m-auto">
+            <div className="relative w-1/3 m-auto">
               <figure data-testid="profile-picture" className="w-full  aspect-square rounded-full overflow-hidden m-auto relative my-4 ">
                 <Image fill style={{ objectFit: 'cover' }} src={value || '/avatar.png'} alt="profile picture" />
               </figure>
-              <div style={{ backgroundImage: 'url(/plus.png)', backgroundSize: 'cover', cursor:"pointer" }} className="w-8 h-8 absolute bottom-0 right-0 rounded-full overflow-hidden cursor-pointer">
+              <div style={{ backgroundImage: 'url(/plus.png)', backgroundSize: 'cover', cursor:'pointer'}} className="w-8 h-8 absolute z-10 bottom-1 right-0 rounded-full overflow-hidden cursor-pointer">
                 <input style={{ opacity: 0 }} type="file" id="file-test" onChange={(e) => handleUpload(e)}  />
               </div>
             </div>
