@@ -1,0 +1,38 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "baseUrl": "../../..",
+    "paths": {
+      "@/apps/*": ["apps/REPORT/report-dashboard/src/apps/*"],
+      "@/generated/*": ["apps/REPORT/report-dashboard/src/generated/*"],
+      "@/common/*": ["apps/REPORT/report-dashboard/src/common/*"],
+      "@/file-management": ["libs/file-management/src/index.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../../apps/REPORT/report-dashboard/.next/types/**/*.ts",
+    "../../../dist/apps/REPORT/report-dashboard/.next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+}

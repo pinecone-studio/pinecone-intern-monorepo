@@ -7,10 +7,10 @@ terraform {
   }
 }
 
-resource "vercel_project" "intern-hrms-dashboard-prod" {
-  name             = "intern-hrms-dashboard-prod"
-  build_command    = "nx build --skip-nx-cache hrms-dashboard"
-  output_directory = "./dist/apps/HRMS/hrms-dashboard/.next"
+resource "vercel_project" "intern-report-dashboard" {
+  name             = "intern-report-dashboard"
+  build_command    = "nx build --skip-nx-cache report-dashboard"
+  output_directory = "./dist/apps/REPORT/report-dashboard/.next"
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
