@@ -88,7 +88,7 @@ export const CreateEmployeeForm = (props: CreateEmployeeFormProps) => {
         </div>
       </div>
       <form className="flex flex-col justify-center pt-10 gap-4">
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-6 gap-1">
           {inputItems.map((item, index) => (
             <CustomInput key={index} data-testid="customInput" label={item.label} type={item.type} placeholder={item.placeholder} {...generateFormikProps(item.name as keyof typeof formik.values)} />
           ))}
