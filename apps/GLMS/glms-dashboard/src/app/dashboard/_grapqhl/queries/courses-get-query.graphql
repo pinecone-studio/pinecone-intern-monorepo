@@ -1,6 +1,5 @@
 query GetCourses {
   getCourses {
-    id
     title
     description
     thumbnail
