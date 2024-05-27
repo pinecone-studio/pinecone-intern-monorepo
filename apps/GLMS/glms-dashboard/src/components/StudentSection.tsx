@@ -1,7 +1,12 @@
 import { GetSectionByLessonIdQuery, Section } from '@/generated';
 import { EmptyIcon } from '../../public/assets/EmptyIcon';
+import { useEffect, useState } from 'react';
 
 const StudentSection = ({ data }: { data: GetSectionByLessonIdQuery | undefined }) => {
+  const [id, setID] = useState('');
+  useEffect(() => {
+    setID(localStorage.getItem('courseID') || '');
+  }, []);
   return (
     <div className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-xl justify-center items-center p-6 dark:bg-[#2b2b2b] max-w-[1440px] m-auto min-h-[75vh] pt-10 ">
       {data?.getSectionByLessonId
@@ -28,7 +33,7 @@ const StudentSection = ({ data }: { data: GetSectionByLessonIdQuery | undefined 
          rounded-lg w-[280px] h-[56px]  flex justify-center items-center btn`}
             data-testid="create-button"
           >
-            <a href={`/${localStorage.getItem('courseID') || 'dashboard'}`} className="text-[18px] font-semibold">
+            <a href={`/${id || 'dashboard'}`} className="text-[18px] font-semibold">
               Буцах
             </a>
           </button>

@@ -21,7 +21,7 @@ const GetSections = (props: GetSectionsType) => {
         </div>
       )}
       {data?.getSectionByLessonId?.map((section: Section) => {
-        if (section.id) localStorage.setItem('sectionId', section.id);
+        if (section.id) window.localStorage.setItem('sectionId', section.id);
         return (
           <div data-testid="get-section-form" key={section.id} className="flex flex-col justify-center items-center">
             <div className="flex flex-col gap-[4px] border-1 rounded-[4px] justify-center items-center p-6 dark:text-[#dedede]">
