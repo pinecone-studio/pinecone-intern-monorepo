@@ -28,6 +28,7 @@ const Requests = () => {
     }
     setFilteredData(todayRequests);
   };
+
   const filterDataByWeek = () => {
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -41,10 +42,22 @@ const Requests = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center h-[1000px] ">
-<span className="loading loading-ring loading-lg"></span>
+        <span className="loading loading-ring loading-lg"></span>
       </div>
     );
-  const requestsToShow = filteredData.length > 0 ? filteredData : data?.getRequests;
+
+  let uniqueData: (LeaveRequest | undefined)[] = [];
+  if (filteredData.length > 0) {
+    uniqueData = Array.from(new Set(filteredData.map((dat) => dat.name)))
+      .map((name) => filteredData.find((dat) => dat.name === name))
+      .filter((dat): dat is LeaveRequest => !!dat);
+  } else {
+    uniqueData = Array.from(new Set(data?.getRequests.map((dat) => dat.name)))
+      .map((name) => data?.getRequests.find((dat) => dat.name === name))
+      .filter((dat): dat is LeaveRequest => !!dat);
+  }
+
+  const requestsToShow = uniqueData;
 
   return (
     <div className="py-10 dark:text-black">
