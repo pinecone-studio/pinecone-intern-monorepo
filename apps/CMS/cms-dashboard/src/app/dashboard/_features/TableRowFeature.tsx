@@ -1,6 +1,7 @@
 import { Article } from '@/generated';
 import { ArticleDropDownMenuFeature } from './ArticleDropDownMenuFeature';
 import ArticleEditButton from '../_components/ArticleEditButton';
+import { format } from 'date-fns';
 
 type ArticleStatusType = {
   PUBLISHED: string;
@@ -31,11 +32,11 @@ const getColorForStatus = (status: string) => {
   }
 };
 export const TableRowFeature = (props: Article) => {
-  const { status, title, createdAt, category, id } = props;
+  const { status, title, createdAt, category, author, id } = props;
   return (
     <tr>
       <td>
-        <p className="text-[16px] text-textPrimary font-[600]">{title.slice(0, 32)}</p>
+        <p className="text-[16px] text-textPrimary font-[600] truncate w-full">{title}</p>
       </td>
       <td>
         <p
@@ -48,12 +49,15 @@ export const TableRowFeature = (props: Article) => {
         </p>
       </td>
       <td>
-        <p className="font-[400] text-[14px] whitespace-nowrap">{createdAt.slice(0, 10)}</p>
+        <p className="font-[400] text-[14px] whitespace-nowrap">{format(createdAt, 'dd.MM.yyyy')}</p>
       </td>
       <td>
         <div className="rounded-[30px] w-fit bg-[#ECEDF0]">
           <p className="font-[400] text-[14px] text-[#1F2126] py-[2px] px-3">{category.name}</p>
         </div>
+      </td>
+      <td>
+        <p className="text-[16px] text-textPrimary font-[600] truncate w-full">{author.name}</p>
       </td>
       <td>
         <div className="flex items-center">
