@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../common/providers/AuthProvider';
