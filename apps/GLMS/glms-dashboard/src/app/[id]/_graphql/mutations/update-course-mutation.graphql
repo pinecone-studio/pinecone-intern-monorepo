@@ -1,5 +1,6 @@
 mutation updateCourse($id:ID! , $courseInput:CourseInput!) {
     updateCourse(id:$id , courseInput:$courseInput) {
+        id
         title
         description
         thumbnail   

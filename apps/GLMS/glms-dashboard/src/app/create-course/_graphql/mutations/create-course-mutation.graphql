@@ -1,5 +1,6 @@
 mutation CreateCourse($courseInput: CourseInput!) {
   createCourse(courseInput: $courseInput) {
+    id
     title
     description
     thumbnail

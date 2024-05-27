@@ -1,5 +1,6 @@
 query GetCourseById($getCourseByIdId: ID!) {
   getCourseById(id: $getCourseByIdId) {
+    id
     title
     description
     thumbnail
