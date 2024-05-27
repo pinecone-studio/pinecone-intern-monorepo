@@ -1,5 +1,4 @@
 'use client';
-import { useAuth } from '@/common/providers';
 import { Course } from '@/generated';
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;

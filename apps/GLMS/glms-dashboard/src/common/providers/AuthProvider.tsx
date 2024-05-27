@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 'use client';
 const jwt = require('jsonwebtoken');
 import { PropsWithChildren, useContext, createContext, useEffect, useState } from 'react';

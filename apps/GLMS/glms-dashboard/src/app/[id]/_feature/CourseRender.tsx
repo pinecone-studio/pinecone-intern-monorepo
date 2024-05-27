@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';

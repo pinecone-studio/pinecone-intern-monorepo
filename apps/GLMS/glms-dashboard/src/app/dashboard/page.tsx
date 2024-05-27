@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { Course, useGetCoursesQuery } from '@/generated';
-import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
 import { useAuth } from '@/common/providers';
