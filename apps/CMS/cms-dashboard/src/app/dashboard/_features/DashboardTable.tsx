@@ -3,7 +3,7 @@ import { ApolloError } from '@apollo/client';
 import { TableRowFeature } from './TableRowFeature';
 import { TableHead } from '../_components/TableHead';
 
-const tableHeadWords = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал'];
+const tableHeadWords = ['Нийтлэл', 'Статус', 'Огноо', 'Ангилал', 'Нийтлэгч', 'Бусад'];
 
 type DashboardTableProps = {
   articles: Article[] | undefined;
@@ -23,7 +23,7 @@ export const DashboardTable = (props: DashboardTableProps) => {
   if (error) return <div>error...{error.message}</div>;
 
   return (
-    <table data-cy="dashboard-table-cy-id" className="table overflow-x-visible w-full min-w-[650px] bg-white rounded-[8px]">
+    <table data-cy="dashboard-table-cy-id" className="table overflow-x-visible w-full min-w-[650px] bg-white rounded-[8px] border-collapse table-fixed">
       <thead>
         <tr>
           {tableHeadWords.map((item, index) => {
