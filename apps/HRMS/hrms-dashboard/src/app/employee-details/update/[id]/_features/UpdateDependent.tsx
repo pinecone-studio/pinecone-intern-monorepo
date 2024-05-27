@@ -36,7 +36,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
                   <div className="flex items-center justify-center max-w-[500px] w-[60%] bg-error rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
                     <EmployeeDependentUpdate refetch={refetch} handleUpdateDependentClose={handleUpdateDependentClose} relative={relative} />
                   </div>
-                  <div onClick={()=>setHandleUpdate(false)} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
+                  <div onClick={() => setHandleUpdate(false)} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
                 </>
               )}
             </div>
@@ -45,7 +45,7 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
           <div>
             <button
               data-testid="add-information"
-              className="flex gap-1 py-2 px-3 justify-center items-center bg-[#F6F6F6] rounded-lg"
+              className="flex gap-1 py-2 px-3 justify-center items-center bg-[#F6F6F6] rounded-lg text-dark"
               onClick={(e) => {
                 e.preventDefault();
                 handleCreateDependent();
@@ -59,7 +59,12 @@ export const UpdateDependent = ({ refetch, dependantPhone, dependency, relative 
                 <div className="flex items-center justify-center w-[60%] rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden">
                   <CreateDependent refetch={refetch} handleCreateDependentClose={handleCreateDependentClose} dependantPhone={dependantPhone} dependency={dependency} relative={relative} />
                 </div>
-                <div onClick={()=>{setHandleCreate(false)}} className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"></div>
+                <div
+                  onClick={() => {
+                    setHandleCreate(false);
+                  }}
+                  className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
+                ></div>
               </>
             )}
           </div>

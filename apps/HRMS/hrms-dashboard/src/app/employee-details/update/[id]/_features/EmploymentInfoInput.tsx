@@ -57,16 +57,19 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
     },
   });
   return (
-    <main data-cy="updateEmploymentForm" className=" max-w-[585px] w-full rounded-xl p-10 bg-[#fff] gap-10 flex flex-col ">
-      <div className="flex justify-between w-full items-center">
+    <main data-cy="updateEmploymentForm" className="rounded-xl p-10 bg-[#fff] gap-10 flex flex-col w-full ">
+      <div className="flex justify-between w-full items-center ">
         <p data-testid="updateEmploymentTitle" className="text-lg text-main font-semibold">
           Хөдөлмөр эрхлэлтийн мэдээлэл
         </p>
         <div
           data-testid="closeSvg"
-          onClick={() => {props.setUpdateEmpInput(false);}}
+          onClick={() => {
+            props.setUpdateEmpInput(false);
+          }}
           className="cursor-pointer"
-        ><CloseSvg />
+        >
+          <CloseSvg />
         </div>
       </div>
       <div className="w-full flex flex-col items-center gap-4 ">
@@ -92,7 +95,9 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.department)}
           >
             {departmentList.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={index} value={item}>
+                {item}
+              </option>
             ))}
           </CustomInput>
           <CustomInput
@@ -116,40 +121,35 @@ export const EmploymentInfoInput = (props: EmploymentInfoInputProps) => {
             error={Boolean(formik.errors.employmentStatus)}
           >
             {employeeStatusList.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={index} value={item}>
+                {item}
+              </option>
             ))}
           </CustomInput>
           <div className="flex justify-end gap-2">
             <button
-              data-cy="closeBtn"
-              name="CloseBtn"
-              disabled={!formik.isValid}
+              data-cy="closeBtn" name="CloseBtn" disabled={!formik.isValid}
               style={{
-                backgroundColor: '#fff',
-                color: '#121316',
-                padding: '8px 16px',
-                border: '1px solid #000',
-                borderRadius: '4px',
-                cursor: 'pointer',}}
-              onClick={() => {props.setUpdateEmpInput(false);}}>
+                backgroundColor: '#fff', color: '#121316', padding: '8px 16px', border: '1px solid #000', borderRadius: '4px', cursor: 'pointer',
+              }}
+              onClick={() => {
+                props.setUpdateEmpInput(false);
+              }}
+            >
               Цуцлах
             </button>
             <button
-              data-cy="updateEmploymentBtn"
-              name="updateBtn"
-              disabled={!formik.isValid}
+              data-cy="updateEmploymentBtn" name="updateBtn" disabled={!formik.isValid}
               style={{
-                backgroundColor: '#121316',
-                color: '#fff',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
+                backgroundColor: '#121316', color: '#fff', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer',
               }}
               onClick={(e) => {
                 e.preventDefault();
                 formik.handleSubmit();
               }}
-            >Хадгалах</button>
+            >
+              Хадгалах
+            </button>
           </div>
         </div>
       </div>

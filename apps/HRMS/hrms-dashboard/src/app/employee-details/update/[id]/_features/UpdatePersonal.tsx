@@ -80,21 +80,22 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
         {({ isSubmitting, isValid }) => (
           <Form data-testid="update-form" className="flex flex-col gap-4 rounded-[8px] p-10 bg-white ">
             <div className="flex justify-between ">
-              <p className="text-[18px] font-semibold">Хувийн мэдээлэл</p>
+              <p className="text-[18px] font-semibold text-dark">Хувийн мэдээлэл</p>
               <button
-                data-testid="modal-close-icon"
-                onClick={() => {
-                  props.setIsModalOpen(false);
-                }}
-                disabled={isSubmitting}
-              > <CloseSvg /></button>
+                data-testid="modal-close-icon" onClick={() => {props.setIsModalOpen(false);}} disabled={isSubmitting}
+              >
+                <CloseSvg />
+              </button>
             </div>
             <div className="relative w-1/3 m-auto">
               <figure data-testid="profile-picture" className="w-full  aspect-square rounded-full overflow-hidden m-auto relative my-4 ">
                 <Image fill style={{ objectFit: 'cover' }} src={value || '/avatar.png'} alt="profile picture" />
               </figure>
-              <div style={{ backgroundImage: 'url(/plus.png)', backgroundSize: 'cover', cursor:'pointer'}} className="w-8 h-8 absolute z-10 bottom-1 right-0 rounded-full overflow-hidden cursor-pointer">
-                <input style={{ opacity: 0 }} type="file" id="file-test" onChange={(e) => handleUpload(e)}  />
+              <div
+                style={{ backgroundImage: 'url(/plus.png)', backgroundSize: 'cover', cursor: 'pointer' }}
+                className="w-8 h-8 absolute z-10 bottom-1 right-0 rounded-full overflow-hidden cursor-pointer"
+              >
+                <input style={{ opacity: 0 }} type="file" id="file-test" onChange={(e) => handleUpload(e)} />
               </div>
             </div>
             <div className="flex gap-4">
@@ -130,10 +131,7 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
                   <p className=" font-normal ">Хаяг</p>
                   <Field
                     data-testid="home-address"
-                    className="w-full p-2 h-[50px] border-[1px] rounded-[8px] border-[#D6D8DB] bg-[#F7F7F8] "
-                    type="text"
-                    name="homeAddress"
-                    placeholder="Гэрийн хаяг"
+                    className="w-full p-2 h-[50px] border-[1px] rounded-[8px] border-[#D6D8DB] bg-[#F7F7F8] " type="text" name="homeAddress" placeholder="Гэрийн хаяг"
                   />
                   <ErrorMessage data-testid="address-error" name="homeAddress" component="div" className=" text-[red] error" />
                 </div>
@@ -141,18 +139,20 @@ export const UpdatePersonal = (props: PersonalUpdateModalProps) => {
             </div>
             <div className="flex max-w-[408px] justify-end gap-2 mt-2">
               <button
-                onClick={() => {props.setIsModalOpen(false);}}
-                data-testid="personal-info-cancel"
-                className="w-[100px] rounded-[8px] h-[48px] border-[1px] bg-white border-[#D6D8DB] "
-                type="button"
-                disabled={isSubmitting}
-              > Цуцлах
+                onClick={() => {
+                  props.setIsModalOpen(false);
+                }}
+                data-testid="personal-info-cancel" className="w-[100px] rounded-[8px] h-[48px] border-[1px] bg-white border-[#D6D8DB] " type="button" disabled={isSubmitting}
+              >
+                Цуцлах
               </button>
               <button data-testid="submit-btn" className="w-[100px] rounded-[8px] h-[48px] bg-black text-[white] " type="submit" disabled={isSubmitting && !isValid}>
                 Хадгалах
               </button>
             </div>
-          </Form>)}
+          </Form>
+        )}
       </Formik>
-    </div>);
+    </div>
+  );
 };
