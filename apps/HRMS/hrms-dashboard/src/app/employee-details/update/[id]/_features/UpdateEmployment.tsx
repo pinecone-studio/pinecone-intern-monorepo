@@ -38,8 +38,11 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
           <UpdateButton />
         </div>
         {updateEmpInput && (
-          <div data-testid="update-employment" className="flex w-full h-full justify-center items-center absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-50 ">
-            <div className="absolute z-50">
+          <>
+            <div
+              data-testid="update-employment"
+              className="flex items-center justify-center max-w-[500px] w-[60%] bg-error rounded-2xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden"
+            >
               <EmploymentInfoInput
                 refetch={props.refetch}
                 setUpdateEmpInput={setUpdateEmpInput}
@@ -53,9 +56,9 @@ export const UpdateEmployment = (props: UpdateEmploymentProps) => {
               onClick={() => {
                 setUpdateEmpInput(false);
               }}
-              className="flex w-full h-full bg-[#00000080] justify-center items-center absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 overflow-hidden "
+              className="bg-[#00000080] h-full w-full fixed z-20 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] "
             ></div>
-          </div>
+          </>
         )}
       </div>
       <div className="flex flex-col gap-1 justify-start">

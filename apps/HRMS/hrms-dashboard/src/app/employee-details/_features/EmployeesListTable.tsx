@@ -73,11 +73,11 @@ export const EmployeesListTable = ({ setPage, checked, defaultValue }: PropsType
                   </Link>
                 </td>
                 <td className="p-4 w-1/5">
-                  <p className="truncate">{row?.jobTitle}</p>
+                  <p className="truncate text-dark">{row?.jobTitle}</p>
                 </td>
-                <td className="p-4 w-1/5 truncate">{row?.email}</td>
-                <td className="p-4 w-1/5 truncate">{row?.department}</td>
-                <td className="p-4 w-1/5 truncate">{row?.employmentStatus}</td>
+                <td className="p-4 w-1/5 truncate text-dark">{row?.email}</td>
+                <td className="p-4 w-1/5 truncate text-dark">{row?.department}</td>
+                <td className="p-4 w-1/5 truncate text-dark">{row?.employmentStatus}</td>
               </tr>
             ))}
         </table>

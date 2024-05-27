@@ -73,7 +73,7 @@ export const CreateDependent = ({ handleCreateDependentClose, refetch }: CreateD
     onBlur: formik.handleBlur,
   });
   return (
-    <main data-cy="addDependentForm" className="flex flex-col max-w-[650px] w-full p-10  rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
+    <main data-cy="addDependentForm" className="flex flex-col w-screen max-w-[500px] p-10  rounded-2xl overflow-hidden border border-[#D6D8DB] bg-white">
       <div className="flex justify-between">
         <p data-testid="addEmployeeTitle" className="text-lg text-main font-semibold">
           Гэр бүлийн мэдээлэл
@@ -82,8 +82,8 @@ export const CreateDependent = ({ handleCreateDependentClose, refetch }: CreateD
           <CloseSvg />
         </div>
       </div>
-      <div className="flex flex-col justify-center pt-10 gap-4">
-        <div className="grid grid-cols-1 gap-6">
+      <div className="flex flex-col justify-center pt-10 ">
+        <div className="grid grid-cols-1 gap-3">
           <CustomInput data-testid="customInput" label={'Овог'} type={'lastName'} placeholder={'Овог оруулна уу'} {...generateFormikProps('lastName' as keyof typeof formik.values)} />
           <CustomInput data-testid="customInput" label={'Нэр'} type={'firstName'} placeholder={'Нэр оруулна уу'} {...generateFormikProps('firstName' as keyof typeof formik.values)} />
           <CustomInput data-testid="customInput" label={'Холбоо барих дугаар'} type={'phone'} placeholder={'Холбоо барих дугаар'} {...generateFormikProps('phone' as keyof typeof formik.values)} />
