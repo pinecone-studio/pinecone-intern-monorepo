@@ -1,14 +1,15 @@
 interface IProps {
-  choice: { _id: string; choice: string };
-  setSelectedChoice: React.Dispatch<React.SetStateAction<string>>;
-  selectedChoice: string;
+  choice: string | undefined | null;
+  id: string | null | undefined;
+  setSelectedChoice: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  selectedChoice: string | null | undefined;
 }
 
-const ChoiceImage = ({ choice, setSelectedChoice, selectedChoice }: IProps) => {
-  const isSelected = selectedChoice === choice._id;
+const ChoiceImage = ({ choice, setSelectedChoice, selectedChoice, id }: IProps) => {
+  const isSelected = selectedChoice === id;
   return (
-    <div>
-      <img onClick={() => setSelectedChoice(choice._id)} src={choice.choice} width={588} height={483} alt="ChoiceImage" className={`object-cover rounded-[8px] ${isSelected && 'opacity-70'}`} />
+    <div data-testid={`choice-image-${id}`} onClick={() => setSelectedChoice(id)} className="flex w-[588px] h-[483px]">
+      <img src={choice!} width={588} height={483} alt="ChoiceImage" className={`object-cover rounded-[8px] ${isSelected && 'opacity-70'}`} />
     </div>
   );
 };

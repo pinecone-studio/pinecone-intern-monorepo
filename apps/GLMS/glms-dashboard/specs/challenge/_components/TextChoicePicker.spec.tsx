@@ -28,8 +28,8 @@ describe('ChoiceText component', () => {
     expect(choiceDiv).toHaveClass('flex max-w-[588px] cursor-pointer justify-center items-center border h-[72px] rounded-[12px] p-4 border-[#ECEDF0]}');
   });
   it('calls handleChange when clicked', () => {
-    const { getByTestId } = render(<ChoiceText choice={mockChoice} quizId={mockQuizId} id={mockId} selectedChoice={mockSelectedChoice} handleChange={mockHandleChange} />);
-    const container = getByTestId('container');
+    const { getByRole } = render(<ChoiceText choice={mockChoice} quizId={mockQuizId} id={mockId} selectedChoice={mockSelectedChoice} handleChange={mockHandleChange} />);
+    const container = getByRole('container');
     fireEvent.click(container);
     expect(mockHandleChange).toHaveBeenCalled();
   });
