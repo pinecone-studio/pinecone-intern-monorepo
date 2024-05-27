@@ -12,6 +12,7 @@ describe('Handle section page', () => {
     cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="add-section-handle-btn"]').eq(0).click();
   });
+
   it('2.When section created successfully AddSection form reset', () => {
     cy.get('[data-testid="add-section-form"]').should('exist');
     cy.get('[data-cy="title"]').should('exist');
@@ -51,13 +52,12 @@ describe('Handle section page', () => {
     cy.get('[data-cy="handle-back-page"]').click();
     cy.url().should('include', '/dashboard');
   });
-  describe('Should delete section', () => {
-    it('5. Should delete section', () => {
-      cy.visit('/6633305c94d4584898bb049a');
-      cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click();
-      cy.window().its('localStorage').invoke('getItem', 'lessonID');
-      cy.url().should('include', '/section');
-      cy.get('[cy-data="delete-button-cy-test"]').should('exist').eq(-1).click();
-    });
+
+  it('5. Should delete section', () => {
+    cy.visit('/6633305c94d4584898bb049a');
+    cy.get('[data-cy="lesson-test-id"]').should('exist').eq(0).click();
+    cy.window().its('localStorage').invoke('getItem', 'lessonID');
+    cy.url().should('include', '/section');
+    cy.get('[cy-data="delete-button-cy-test"]').should('exist').eq(-1).click();
   });
 });

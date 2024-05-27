@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { IoIosAdd } from 'react-icons/io';
 import { CloseIcon } from '../../../assets/icon/CloseIcon';
+import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 
 type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
@@ -20,12 +20,12 @@ export const AddChallengeModal = (props: ModalProps) => {
   return (
     <div className="rounded-badge">
       <button
-        className="btn border-solid border-2 border-gray-900 rounded-lg px-4 py-2 text-black hover:bg-black hover:text-white"
+        className="flex justify-center items-center border-solid border-[2px] border-[#121316] gap-2 rounded-[8px] dark:text-[#ededed] btn hover:bg-black dark:hover:bg-[#3d3d3def] dark:border-[#515151] px-4 py-2 dark:bg-[#4a4a4a] hover:text-white"
         data-testid="challenge-button"
         onClick={() => (document.getElementById('my_modal_1') as HTMLDialogElement)!.showModal()}
       >
         Сорил
-        <IoIosAdd />
+        <AddIcon className="w-6 h-6" />
       </button>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box max-w-md" data-testid="challenge-dialog">

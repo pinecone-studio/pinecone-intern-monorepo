@@ -11,7 +11,7 @@ describe('BackButton component', () => {
 
   it('renders correct text in BackButton', () => {
     const { getByText } = render(<BackButton />);
-    const buttonText = getByText('Сэдвүүд');
+    const buttonText = getByText('Буцах');
     expect(buttonText).toBeDefined();
   });
 });

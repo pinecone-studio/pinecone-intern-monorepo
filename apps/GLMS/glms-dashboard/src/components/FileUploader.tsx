@@ -20,10 +20,10 @@ const FileUploader = (props: FormikTypes) => {
 
   return (
     <div
-      className="w-full h-full max-h-[422px] min-h-[240px]  px-2  flex justify-center items-center rounded-lg relative bg-cover"
+      className="w-full h-full max-h-[422px] min-h-[240px] px-2  flex justify-center items-center rounded-lg relative bg-contain bg-center bg-no-repeat dark:border-[#3d3d3def] border-dashed border-2 border-[#D6D8DB] dark:bg-[#3d3d3def]"
       data-cy="file-uploader-test-id"
       test-id="thumbnail-input"
-      style={{ backgroundImage: `url(${thumbnail})`, border: '2px #D6D8D8 dashed' }}
+      style={{ backgroundImage: `url(${thumbnail})` }}
     >
       {!thumbnail ? (
         <div className="w-full">
@@ -31,10 +31,10 @@ const FileUploader = (props: FormikTypes) => {
             <NoneImage />
           </div>
           <div className="flex flex-wrap justify-center">
-            <p className="font-normal text-lg text-[#3F414580] text-center">Зургийг чирж буулгах эсвэл</p>
+            <p className="font-normal text-lg text-[#3F414580] dark:text-[#dedede] text-center">Зургийг чирж буулгах эсвэл</p>
             <div className="w-20 overflow-hidden relative items-center ">
-              <p className="underline text-lg font-semibold text-[#3F4145] ">Browse</p>
-              <input id="file-test" onChange={handleUpload} type="file" className="absolute top-0 left-0 opacity-0 " />
+              <p className="underline text-lg font-semibold text-[#3F4145] dark:text-[#dedede]">Browse</p>
+              <input id="file-test" onChange={handleUpload} type="file" className="absolute top-0 left-0 opacity-0" />
             </div>
           </div>
         </div>
