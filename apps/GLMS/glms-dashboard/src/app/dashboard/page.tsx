@@ -1,7 +1,6 @@
 /* eslint-disable */
 'use client';
 import Courses from './_components/Course';
-const jwt = require('jsonwebtoken');
 import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { usePathname, useRouter } from 'next/navigation';
@@ -9,10 +8,12 @@ import { Course, useGetCoursesQuery } from '@/generated';
 import { CourseDeleteIcon } from '../../../public/assets/CourseDeleteIcon';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
+import { useAuth } from '@/common/providers';
+import { EmptyIcon } from 'apps/GLMS/glms-dashboard/public/assets/EmptyIcon';
 const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
 type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
 const DashboardOtherLab = () => {
-  const [access, setAccess] = useState('');
+  const { access } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
   const { data, loading, refetch } = useGetCoursesQuery();
@@ -27,12 +28,6 @@ const DashboardOtherLab = () => {
       localStorage.removeItem('lessonID');
       localStorage.removeItem('sectionId');
     }
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const data = jwt.decode(token);
-    setAccess(data?.role || 'багш');
   }, []);
 
   if (loading) return <Loading />;
@@ -86,32 +81,63 @@ const DashboardOtherLab = () => {
           </div>
         </div>
       )}
-      <div className="w-full h-fit pb-8 dark:bg-[#121316f7]">
-        <div className=" mr-auto ml-auto  flex w-[85%] max-w-[1440px] m-auto">
-          <div className=" flex flex-wrap box-border  h-full w-full">
-            {data?.getCourses
-              .filter((item: Course) => actionTab === item.status)
-              .map((data, index) => {
-                const handleClick = () => {
-                  localStorage.setItem('courseID', `${data.id}`);
-                  router.push(`/${data.id}`);
-                };
-                return (
-                  <div className="relative" key={index}>
-                    <div>
-                      <div data-cy="courseClick" className="mt-8 mr-8 " key={data.id} onClick={handleClick}>
-                        <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} />
+      {access == 'багш' ? (
+        <div className="w-full h-screen dark:bg-[#121316f7]">
+          <div className=" mr-auto ml-auto  flex w-[85%] max-w-[1440px] m-auto">
+            <div className=" flex flex-wrap box-border  h-full w-full">
+              {data?.getCourses
+                .filter((item: Course) => actionTab === item.status)
+                .map((data, index) => {
+                  const handleClick = () => {
+                    localStorage.setItem('courseID', `${data.id}`);
+                    router.push(`/${data.id}`);
+                  };
+                  return (
+                    <div className="relative" key={index}>
+                      <div>
+                        <div data-cy="courseClick" className="mt-8 mr-8 " key={data.id} onClick={handleClick}>
+                          <Courses id={data.id} thumbnail={data.thumbnail} title={data.title} description={data.description} />
+                        </div>
                       </div>
-                      <button className="absolute bottom-6 right-14">
-                        <CourseDeleteIcon />
-                      </button>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              {data?.getCourses.filter((item: Course) => actionTab === item.status).length == 0 && (
+                <div className="m-auto mt-[5%]">
+                  <EmptyIcon />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full h-screen dark:bg-[#121316f7]">
+          <div className="max-w-[1440px] m-auto pt-8 w-[85%]">
+            <div className="py-6 px-10 bg-white dark:bg-[#2b2b2b] min-h-[75vh] rounded-xl pt-8 justify-center">
+              <h1 className="dark:text-[#dedede] text-3xl font-bold mb-8">Сэдвүүд</h1>
+              <div className=" mx-auto  flex w-full">
+                <div className="flex flex-wrap box-border h-full w-full gap-8">
+                  {data?.getCourses
+                    .filter((item: Course) => actionTab === item.status)
+                    .map((data, index) => {
+                      const handleClick = () => {
+                        localStorage.setItem('courseID', `${data.id}`);
+                        router.push(`/${data.id}`);
+                      };
+                      return (
+                        <div className="relative" key={index}>
+                          <div data-cy="courseClick" key={data.id} onClick={handleClick}>
+                            <Courses id={data?.id || undefined} thumbnail={data?.thumbnail} title={data?.title} description={data?.description} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

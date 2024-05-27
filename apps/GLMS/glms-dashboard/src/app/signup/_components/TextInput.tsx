@@ -11,8 +11,8 @@ type TextInputProps = {
   placeholder: string;
   type?: string;
   value: string;
-  helperText?: string;
-  error?: string;
+  helperText?: string | false | undefined;
+  error?: boolean | undefined;
 };
 
 const TextInput = (props: TextInputProps) => {
@@ -24,7 +24,7 @@ const TextInput = (props: TextInputProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full" data-testid="Custom-Input">
+    <div className="flex flex-col gap-1 w-full h-24" data-testid="Custom-Input">
       <h1 data-testid="label">{label}</h1>
       <label
         data-testid="error"

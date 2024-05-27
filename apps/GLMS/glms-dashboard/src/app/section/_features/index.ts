@@ -1,2 +1,2 @@
-export * from "./AddSection"
-export * from "./GetSections"
+export * from './AddSection';
+export * from './GetSections';
