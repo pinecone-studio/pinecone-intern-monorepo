@@ -86,7 +86,7 @@ const DashboardOtherLab = () => {
           </div>
         </div>
       )}
-      <div className="w-full h-screen dark:bg-[#121316f7]">
+      <div className="w-full h-fit pb-8 dark:bg-[#121316f7]">
         <div className=" mr-auto ml-auto  flex w-[85%] max-w-[1440px] m-auto">
           <div className=" flex flex-wrap box-border  h-full w-full">
             {data?.getCourses
