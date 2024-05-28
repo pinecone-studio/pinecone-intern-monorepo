@@ -1,14 +1,19 @@
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { updateReply } from '@/graphql/resolvers/mutations';
+import { accessTokenAuth } from '@/middlewares/auth-token';
 import ReplyModel from '@/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('@/models/reply.model', () => ({
   findByIdAndUpdate: jest.fn(),
 }));
+jest.mock('@/middlewares/auth-token', () => ({
+  accessTokenAuth: jest.fn(),
+}));
 describe('update reply mutation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  (accessTokenAuth as jest.Mock).mockImplementation(() => {});
   it('should update reply and return id', async () => {
     const updateInput = { _id: '662fa120fc8ed6fdd88ace2d', reply: 'test', name: 'test', email: 'test' };
     (ReplyModel.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(updateInput);
