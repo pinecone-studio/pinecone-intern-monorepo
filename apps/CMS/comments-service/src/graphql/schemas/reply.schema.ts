@@ -18,8 +18,15 @@ export const replySchema = gql`
     name: String!
     email: String!
   }
+  input UpdateReplyInput {
+    _id: ID!
+    reply: String!
+    name: String!
+    email: String!
+  }
   type Mutation {
     publishReply(createInput: CreateReplyInput): ID!
+    updateReply(updateInput: UpdateReplyInput!): ID!
   }
   type Query {
     getRepliesByCommentId(commentId: String): [Reply]
