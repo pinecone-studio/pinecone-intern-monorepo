@@ -18,13 +18,12 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useGetChallengeQuery({ variables: { challengeId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
   const [selectedQuiz, setSelectedQuiz] = useState<string | undefined | null>(null);
-  const [oneProgressValue, setOneProgressValue] = useState<number | undefined>(0);
+  let oneProgressValue = 0;
   const [progressValue, setProgressValue] = useState<number>(0);
-  const [isShow, setIsShow] = useState(0);
+  const [isShow, setIsShow] = useState<number>(0);
   const [isLast, setIsLast] = useState(false);
   const router = useRouter();
-
-  const [studentChoiceData] = useState<IStudentChoiceData[]>([]);
+  const [studentChoiceData, setStudentChoiceData] = useState<IStudentChoiceData[]>([]);
 
   const handleChange = (id: string | undefined | null, quizId: string | undefined | null) => {
     setSelectedChoice(id);
@@ -38,7 +37,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   const oneValueCalculator = () => {
     if (data?.getChallengeById?.quiz) {
-      setOneProgressValue(100 / data?.getChallengeById?.quiz?.length);
+      oneProgressValue = 100 / data?.getChallengeById?.quiz?.length;
     }
   };
 
@@ -52,8 +51,17 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       checkLast();
     }
   };
+  const checkStudentChoices = () => {
+    if (localStorage.getItem('studentChoices')) {
+      const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
+      setIsShow(studentChoices.length);
+      setStudentChoiceData(studentChoices);
+      setProgressValue(oneProgressValue * studentChoices.length);
+    }
+  };
   useEffect(() => {
     oneValueCalculator();
+    checkStudentChoices();
   }, [loading]);
 
   const checkLast = () => {
