@@ -8,10 +8,13 @@ describe('articles page', () => {
   it('2. When user enters no value on the inputs and click on the sign in button, it should display an error messages', () => {
     cy.get('[data-cy="Sign-In-Button"]').should('exist');
     cy.get('[data-cy="Sign-In-Button"]').should('be.disabled');
-    cy.get('input[name="emailOrPhoneNumber"]').click().get('input[name="password"]').click();
-    cy.get('[data-testid="helperText"]').eq(0).should('exist').should('contain', 'Утас эсвэл имэйл хаяг оруулна уу');
     cy.get('input[name="emailOrPhoneNumber"]').click();
-    cy.get('[data-testid="helperText"]').eq(1).should('exist').should('contain', 'Нууц үгээ оруулна уу');
+    cy.get('input[name="password"]').click();
+    cy.get('[data-testid="helperText"]').eq(0).should('exist');
+    cy.get('[data-testid="helperText"]').eq(0).should('contain', 'Утас эсвэл имэйл хаяг оруулна уу');
+    cy.get('input[name="emailOrPhoneNumber"]').click();
+    cy.get('[data-testid="helperText"]').eq(1).should('exist');
+    cy.get('[data-testid="helperText"]').eq(1).should('contain', 'Нууц үгээ оруулна уу');
   });
 
   it("3. When user clicks on the signin button with same emailOrPhonenumber, password and confirmPassword, it should shows 'Имэйл/Утас эсвэл нууц үг буруу байна' message ", () => {
