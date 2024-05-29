@@ -81,7 +81,7 @@ const DashboardOtherLab = () => {
         </div>
       )}
       {access == 'багш' ? (
-        <div className="w-full h-screen dark:bg-[#121316f7]">
+        <div className="w-full min-h-screen dark:bg-[#121316f7]">
           <div className=" mr-auto ml-auto  flex w-[85%] max-w-[1440px] m-auto">
             <div className=" flex flex-wrap box-border  h-full w-full">
               {data?.getCourses
@@ -110,7 +110,7 @@ const DashboardOtherLab = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-screen dark:bg-[#121316f7]">
+        <div className="w-full min-h-screen dark:bg-[#121316f7]">
           <div className="max-w-[1440px] m-auto pt-8 w-[85%]">
             <div className="py-6 px-10 bg-white dark:bg-[#2b2b2b] min-h-[75vh] rounded-xl pt-8 justify-center">
               <h1 className="dark:text-[#dedede] text-3xl font-bold mb-8">Сэдвүүд</h1>
@@ -131,6 +131,11 @@ const DashboardOtherLab = () => {
                         </div>
                       );
                     })}
+                  {data?.getCourses.filter((item: Course) => actionTab === item.status).length == 0 && (
+                    <div className="m-auto mt-[5%]">
+                      <EmptyIcon />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

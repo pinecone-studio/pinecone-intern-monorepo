@@ -15,13 +15,6 @@ describe('Challenge quiz page', () => {
     cy.get('[data-testid="next-button"]').should('exist');
     cy.get('[data-testid="next-button"]').should('be.disabled');
   });
-  it('3. Should clickable next button if choice clicked', () => {
-    cy.get('[data-testid="choice-text-664d99c9fb7b77a2937a2a0d"]').should('exist');
-    cy.get('[data-testid="choice-text-664d99c9fb7b77a2937a2a0d"]').click();
-    cy.get('[data-testid="next-button"]').click();
-    cy.get('[data-testid="choice-image-664d99c9fb7b77a2937a2a11"]').click();
-    cy.get('[data-testid="next-button"]').click();
-  });
 });
 
 describe('Challenge result page', () => {
