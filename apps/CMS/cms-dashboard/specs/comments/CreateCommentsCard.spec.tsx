@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import CreateCommentsCard from '../../src/app/comments/_components/CreateCommentsCard';
 import { usePublishCommentMutation } from '@/generated';
 
-// Mock the usePublishCommentMutation hook from '@/generated
 jest.mock('@/generated', () => ({
   usePublishCommentMutation: jest.fn(),
 }));

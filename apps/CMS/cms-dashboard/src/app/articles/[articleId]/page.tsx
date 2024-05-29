@@ -1,12 +1,14 @@
 'use client';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import BackArrowIcon from '../../../assets/icons/BackArrowIcon';
 import { useGetArticleByIdQuery } from '../../../generated';
 import Link from 'next/link';
 import ArticleHeader from '../_features/article-header/ArticleHeader';
-import { Loader } from '@/app/sign-up/_components';
-import CreateCommentsCard from '@/app/comments/_components/CreateCommentsCard';
-import UserComment from '@/app/comments/_features/UserComment';
+// import { Loader } from '@/app/sign-up/_components';
+import CreateCommentsCard from '../../comments/_components/CreateCommentsCard';
+import UserComment from '../../comments/_features/UserComment';
+import { Loader } from '../../sign-up/_components/Loader';
 
 const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
   const { data, loading } = useGetArticleByIdQuery({ variables: { getArticleByIdId: params.articleId } });
@@ -39,22 +41,14 @@ const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
                 </div>
               </div>
               <div className="w-full h-[1px]  bg-[#D6D8DB]" />
-              <img  className="rounded-[12px] object-cover max-h-[500px]" src={data?.getArticleByID.coverPhoto} />
+              <img className="rounded-[12px] object-cover max-h-[500px]" src={data?.getArticleByID.coverPhoto} />
               <div data-cy="one-article-content" className="text-xl text-[#121316] leading-10" dangerouslySetInnerHTML={{ __html: data?.getArticleByID.content || 'description' }} />
               <Link href={'https://pinecone.mn/'}>
                 <div className="text-xl text-[#121316] leading-3 underline">Бидэнтэй нэгдэх бол энд дарна уу.</div>
               </Link>
               <div className="w-full h-[1px]  bg-[#D6D8DB]" />
-              {loading ? (
-                <div className="flex flex-col bg-white w-[100vw] h-[100vh] items-center justify-center ">
-                  <Loader />
-                </div>
-              ) : (
-                <div>
-                  <CreateCommentsCard articleId={params.articleId} />
-                  <UserComment />
-                </div>
-              )}
+              <CreateCommentsCard articleId={params.articleId} />
+              <UserComment />
             </div>
           </div>
         </div>
