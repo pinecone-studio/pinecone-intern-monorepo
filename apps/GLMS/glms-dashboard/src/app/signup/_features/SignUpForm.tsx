@@ -15,8 +15,8 @@ const SignUpForm = () => {
     password: yup.string().required('Нууц үгээ оруулна уу'),
     confirmPassword: yup
       .string()
-      .required('Нууц үгээ давтаж оруулна уу')
-      .oneOf([yup.ref('password')], 'Нууц үг буруу байна'),
+      .oneOf([yup.ref('password')], 'Нууц үг буруу байна')
+      .required('Нууц үгээ давтаж оруулна уу'),
   });
 
   const formik = useFormik({
