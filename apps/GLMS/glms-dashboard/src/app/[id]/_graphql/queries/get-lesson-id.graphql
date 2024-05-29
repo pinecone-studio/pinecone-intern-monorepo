@@ -4,7 +4,6 @@ query GetCourseById($getCourseByIdId: ID!) {
     title
     description
     thumbnail
-    position
     createdAt
   }
 }
