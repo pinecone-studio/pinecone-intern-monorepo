@@ -7,7 +7,7 @@ describe('Challenge page', () => {
 });
 
 describe('Challenge quiz page', () => {
-  beforeEach(() => cy.visit('/challenge/664d99c9fb7b77a2937a2a30'));
+  beforeEach(() => cy.visit('/challenge/6653e62d905e01e9966b273f'));
   it('1. Should display ProgressBar', () => {
     cy.get('[data-testid="progress-bar"]').should('exist');
   });
