@@ -14,7 +14,6 @@ describe('CreateCommentsCard', () => {
   const mockSubmit = jest.fn();
 
   beforeAll(() => {
-    // Mock implementation for usePublishCommentMutation
     usePublishCommentMutation.mockReturnValue([mockSubmit]);
   });
 
@@ -97,8 +96,8 @@ describe('CreateCommentsCard', () => {
     fireEvent.change(commentInput, { target: { value: 'This is a test comment' } });
   });
   it('5. Should submit form with filled inputs', async () => {
-    const mockPublishComment = jest.fn(); // Mock the publish comment function
-    usePublishCommentMutation.mockReturnValue([mockPublishComment]); // Mock the mutation hook to return the mock function
+    const mockPublishComment = jest.fn();
+    usePublishCommentMutation.mockReturnValue([mockPublishComment]);
 
     const { getByTestId, getByPlaceholderText } = render(<CreateCommentsCard articleId="123" />);
     const emailInput = getByPlaceholderText('Цахим хаягаа оруулна уу...');
@@ -112,7 +111,6 @@ describe('CreateCommentsCard', () => {
     const submitButton = getByTestId('create-comment-button');
     fireEvent.click(submitButton);
 
-    // Ensure publishComment function is called with the correct parameters
     await waitFor(() => {
       expect(mockPublishComment).toHaveBeenCalledWith({
         variables: {
