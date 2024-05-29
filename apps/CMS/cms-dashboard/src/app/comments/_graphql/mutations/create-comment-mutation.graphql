@@ -1,0 +1,3 @@
+mutation PublishComment($createInput: CreateCommentInput!) {
+  publishComment(createInput: $createInput)
+}

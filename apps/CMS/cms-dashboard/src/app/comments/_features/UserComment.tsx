@@ -9,7 +9,7 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 const UserComment = () => {
   return (
     <div>
-      <div className="p-[32px] bg-white rounded-2xl w-[928px] h-[200px]">
+      <div className="p-[32px] bg-white rounded-2xl h-[200px]">
         <div>
           <div>
             <h1 className="text-[20px] font-bold">Таны сэтгэгдэл</h1>

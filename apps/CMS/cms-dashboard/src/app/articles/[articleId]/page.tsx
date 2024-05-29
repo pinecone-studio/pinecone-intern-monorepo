@@ -5,6 +5,8 @@ import { useGetArticleByIdQuery } from '../../../generated';
 import Link from 'next/link';
 import ArticleHeader from '../_features/article-header/ArticleHeader';
 import { Loader } from '@/app/sign-up/_components';
+import CreateCommentsCard from '@/app/comments/_components/CreateCommentsCard';
+import UserComment from '@/app/comments/_features/UserComment';
 
 const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
   const { data, loading } = useGetArticleByIdQuery({ variables: { getArticleByIdId: params.articleId } });
@@ -43,6 +45,16 @@ const ArtilesDetails = ({ params }: { params: { articleId: string } }) => {
                 <div className="text-xl text-[#121316] leading-3 underline">Бидэнтэй нэгдэх бол энд дарна уу.</div>
               </Link>
               <div className="w-full h-[1px]  bg-[#D6D8DB]" />
+              {loading ? (
+                <div className="flex flex-col bg-white w-[100vw] h-[100vh] items-center justify-center ">
+                  <Loader />
+                </div>
+              ) : (
+                <div>
+                  <CreateCommentsCard articleId={params.articleId} />
+                  <UserComment />
+                </div>
+              )}
             </div>
           </div>
         </div>
