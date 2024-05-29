@@ -25,16 +25,14 @@
 - [Pull Request Actions](#pull-request-actions) 🚀
 - [Monorepo Workflow](#monorepo-workflow) 🔄
 
-## Monorepo 
+## Monorepo
 
 A Monorepo (short for "monolithic repository") is a version control system where multiple projects are stored within a single repository. This includes standalone projects as well as those sharing common codebases. Tech giants like Google, Facebook, and Microsoft widely employ Monorepos.
-
 
 - **Improved Code Sharing and Reusability:** Share code libraries and components across projects, promoting consistency and reducing redundancy.
 - **Simplified Dependency Management:** Centralize dependencies to avoid version conflicts and streamline management.
 - **Enhanced Collaboration:** Facilitate collaboration between teams working on different projects within the Monorepo.
 - **Global Visibility:** Gain a comprehensive view of the codebase for better refactoring and optimization.
-
 
 ### Useful Links 🌟
 
@@ -46,12 +44,10 @@ A Monorepo (short for "monolithic repository") is a version control system where
 
 ESLint is a popular JavaScript linting tool used to enforce coding standards and identify problematic patterns in code. It helps maintain consistency, improve code quality, and catch errors early in the development process.
 
-
 - **Code Consistency:** Ensure consistent code style across your project, making it easier to read and maintain.
 - **Error Detection:** Catch common errors and potential bugs in your code before they cause issues in production.
 - **Customizable Rules:** Tailor ESLint's rules to match your project's specific coding standards and best practices.
 - **Integration with Editors:** Seamlessly integrate ESLint with code editors to receive real-time feedback and suggestions.
-
 
 ### Useful Links 🌟
 
@@ -62,7 +58,6 @@ ESLint is a popular JavaScript linting tool used to enforce coding standards and
 ## Unit-Testing
 
 Jest is a powerful JavaScript testing framework designed for simplicity and flexibility. It is commonly used for unit testing to ensure the correctness of individual units or components of code.
-
 
 - **Automated Testing:** Write automated tests to verify the functionality of your code, reducing manual testing efforts.
 - **Mocking Support:** Easily mock dependencies and external services for isolated testing of components.
@@ -87,14 +82,13 @@ Cypress is a modern JavaScript-based end-to-end testing framework that allows yo
 - **Easy Debugging:** Cypress provides a built-in test runner with debugging capabilities, making it easier to identify and fix issues.
 - **Mocking and Stubbing:** Mock backend APIs and services for isolated testing of frontend functionality.
 
-
 ### Useful Links 🌟
 
 - [Cypress Documentation](https://docs.cypress.io/guides/overview/why-cypress) 📘
 - [Writing Your First Test with Cypress](https://docs.cypress.io/guides/getting-started/writing-your-first-test) 🛠️
 - [Cypress Best Practices](https://docs.cypress.io/guides/references/best-practices) 🔍
 
-## Pre-Commit 
+## Pre-Commit
 
 Running Pre-Commit checks before committing to GitHub ensures that your code meets quality standards and is ready for deployment. It helps catch errors early, maintains consistent coding practices, and ensures a reliable build and deployment process
 
@@ -149,30 +143,30 @@ npx nx dev-local federation service-name
 There are two scenarios for working on the frontend:
 
 1. Frontend-only Changes:
-    For changes that only affect the frontend (dashboard), use:
+   For changes that only affect the frontend (dashboard), use:
 
-    ```json
-    npx nx dev cms-dashboard
-    ```
-    
-    This starts the frontend and connects it to the federation testing environment.
-    
+   ```json
+   npx nx dev cms-dashboard
+   ```
+
+   This starts the frontend and connects it to the federation testing environment.
+
 2. Frontend Changes with Service Interaction:
-    If your frontend changes interact with a specific service (e.g., articles), you'll need to run both the service and the frontend locally:
+   If your frontend changes interact with a specific service (e.g., articles), you'll need to run both the service and the frontend locally:
 
    Start the desired service:
 
-    ```json
-    npx nx dev-local federation articles-service
-    ```
-    
-    Start the frontend:
+   ```json
+   npx nx dev-local federation articles-service
+   ```
 
-    ```json
-    nx dev-local cms-dashboard
-    ```
+   Start the frontend:
 
-    This will start federation locally with the desired service running locally and a dashboard using the local federation
+   ```json
+   nx dev-local cms-dashboard
+   ```
+
+   This will start federation locally with the desired service running locally and a dashboard using the local federation
 
 ### Adding secrets to ENV:
 
@@ -217,15 +211,12 @@ npx nx get-secrets { project-name }
 
 ```
 
-
-
 # Happy Coding! 🚀
+
 We hope you have a successful and enjoyable time working at Pinecone Studio. Happy coding! 🌟
-    
-
-
-
 
 ### License
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![Pinecone Studio](https://img.shields.io/badge/Owned%20by-Pinecone%20Academy-green)](https://pinecone.mn)
+
+Hello
