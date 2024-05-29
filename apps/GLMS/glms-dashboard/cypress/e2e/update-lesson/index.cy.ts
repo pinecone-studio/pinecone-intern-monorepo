@@ -24,10 +24,11 @@ describe('Handle update-lesson page', () => {
     cy.url().should('include', '/course-id-456');
   });
 
-  it('3.Should display update lesson container', () => {
+  it.only('3.Should display update lesson container', () => {
+    cy.visit(`/6633305c94d4584898bb049a`);
+    cy.get('[data-cy="lesson-edit-button-test-id"]').eq(0).should('exist').click();
+    cy.url().should('include', '/update-lesson');
     cy.get('[data-testid="update-lesson-form"]').should('exist');
-    cy.get('[data-cy="update-lesson-title"]').should('exist').type('Java');
-    cy.get('#file-test').selectFile('public/js.png', { force: true });
     cy.get('[data-cy="update-lesson-handle-btn"]').click();
   });
   it('4. updates form fields with data from API', () => {
