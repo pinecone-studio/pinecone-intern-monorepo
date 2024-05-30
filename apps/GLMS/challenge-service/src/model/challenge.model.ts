@@ -8,8 +8,9 @@ const ChallengeSchema = new Schema({
     type: String,
     required: true,
   },
-  refCourse: {
-    type: String,
+  courseId: {
+    type: Schema.ObjectId,
+    ref: 'course',
     required: true,
   },
   status: {

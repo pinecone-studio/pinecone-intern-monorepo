@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 
 export const challengeTypeDefs = gql`
   scalar Date
-
   enum StatusType {
     DRAFT
     APPROVED
+    ARCHIVE
   }
   enum ChoicesType {
     IMAGE
@@ -29,7 +29,7 @@ export const challengeTypeDefs = gql`
     _id: ID
     title: String
     author: String
-    refCourse: String
+    courseId: String
     status: StatusType
     quiz: [Quiz]
   }
@@ -46,7 +46,7 @@ export const challengeTypeDefs = gql`
   }
 
   input ChallengeInput {
-    refCourse: String
+    courseId: String
     xp: Int
     author: String
     status: StatusType
@@ -67,6 +67,21 @@ export const challengeTypeDefs = gql`
     quiz: [QuizInput]
     referenceLesson: ID
     experiencePoint: Int
+  }
+
+  type Course {
+    title: String
+    description: String
+    thumbnail: String
+    status: String
+    createdAt: Date
+  }
+
+  type AllChallenges {
+    author: String
+    courseId: Course
+    status: StatusType
+    quiz: [Quiz]
   }
 
   type ChallengeSession {
@@ -90,15 +105,14 @@ export const challengeTypeDefs = gql`
     getChallenges: [Challenge]
     getChallengesByStatus: [Challenge]
     getChallengeById(challengeId: ID): Challenge
-    getQuizById(quizId: ID!): Quiz
+    getDraftChallenges: [AllChallenges]
+    getArchiveChallenges: [AllChallenges]
+    getApprovedChallenges: [AllChallenges]
   }
 
   type Mutation {
     createChallenge(quizInput: [QuizInput!]!, challengeInput: ChallengeInput): ID
-    createQuiz(quizInput: QuizInput!): ID
-    updateQuiz(quizId: String!, updateQuiz: UpdateQuiz!): Quiz
     archiveChallengeById(challengeId: ID): ID
-    deleteQuiz(quizId: String!): Quiz
     publishChallengeById(challengeId: String!): ID
     deleteChallengeById(challengeId: String!): ID
     updateChallenge(challengeId: ID!, updateChallengeInput: UpdateChallengeInput!): Challenge

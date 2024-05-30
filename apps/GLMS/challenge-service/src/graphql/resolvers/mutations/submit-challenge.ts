@@ -1,4 +1,4 @@
-import { ChallengeSessionModel } from '@/model/challenge-session.model';
+import { ChallengeSessionModel } from '@/model';
 import { errorTypes, graphqlErrorHandler } from '../error';
 import { MutationResolvers } from '@/graphql/generated';
 

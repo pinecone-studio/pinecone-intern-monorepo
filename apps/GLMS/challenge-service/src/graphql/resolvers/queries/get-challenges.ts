@@ -1,4 +1,4 @@
-import { ChallengeModel } from '@/model/challenge.model';
+import { ChallengeModel } from '@/model';
 import { GraphQLError } from 'graphql';
 
 export const getChallenges = async () => {
