@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoSend } from 'react-icons/io5';
 
-const CreateCommentsCard = () => {
+const CreateCommentCard = () => {
   return (
     <div className="w-[928px] h-[250px] rounded-2xl  bg-white   " style={{ padding: ' var(--24-px-unit-6, 24px) var(--24-px-unit-6, 24px) var(--64-px-unit-16, 64px) var(--24-px-unit-6, 24px)' }}>
       <div className="">
@@ -18,4 +18,4 @@ const CreateCommentsCard = () => {
   );
 };
 
-export default CreateCommentsCard;
+export default CreateCommentCard;
