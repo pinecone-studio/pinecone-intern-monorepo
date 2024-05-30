@@ -1,11 +1,10 @@
+/* eslint-disable */
 'use client';
-
 import { useFormik } from 'formik';
-import { Loader } from '../_components/Loader';
 import { useAuth } from '../../../common/providers/AuthProvider';
 import * as yup from 'yup';
 import TextInput from '../_components/TextInput';
-import { ArrowLeftIcon } from '../../../../public/assets/ArrowLeftIcon';
+import { Spinner } from '../../../components/Spinner';
 
 const SignUpForm = () => {
   const { handleSignUp, signUpLoading } = useAuth();
@@ -16,8 +15,8 @@ const SignUpForm = () => {
     password: yup.string().required('Нууц үгээ оруулна уу'),
     confirmPassword: yup
       .string()
-      .required('Нууц үгээ давтаж оруулна уу')
-      .oneOf([yup.ref('password')], 'Нууц үг буруу байна'),
+      .oneOf([yup.ref('password')], 'Нууц үг буруу байна')
+      .required('Нууц үгээ давтаж оруулна уу'),
   });
 
   const formik = useFormik({
@@ -47,8 +46,8 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
-          helperText={formik.errors.email}
-          error={formik.errors.email}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
         />
         <TextInput
           name="number"
@@ -58,8 +57,8 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.number}
-          helperText={formik.errors.number}
-          error={formik.errors.number}
+          error={formik.touched.number && Boolean(formik.errors.number)}
+          helperText={formik.touched.number && formik.errors.number}
         />
         <TextInput
           name="password"
@@ -69,8 +68,8 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
           onBlur={formik.handleBlur}
-          helperText={formik.errors.password}
-          error={formik.errors.password}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
         />
         <TextInput
           name="confirmPassword"
@@ -79,8 +78,8 @@ const SignUpForm = () => {
           type="password"
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
-          helperText={formik.errors.confirmPassword}
-          error={formik.errors.confirmPassword}
+          error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+          helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
         />
       </div>
 
@@ -90,12 +89,11 @@ const SignUpForm = () => {
         }}
         data-cy="Sign-Up-Button"
         data-testid="Sign-Up-Button-Loader"
-        className={`btn w-full h-fit flex justify-end py-[9px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-        disabled={!formik.isValid || signUpLoading}
+        className={`btn w-full h-fit flex justify-center py-[9px] border-none bg-black text-white gap-2 hover:bg-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        disabled={!formik.values.number || !formik.values.confirmPassword || !formik.values.email || !formik.values.password || signUpLoading}
       >
-        {signUpLoading && <Loader />}
-        <h2 className="mr-[20%] text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
-        <ArrowLeftIcon />
+        <h2 className="text-lg text-semibold flex items-center">Бүртгүүлэх</h2>
+        {signUpLoading && <Spinner />}
       </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>

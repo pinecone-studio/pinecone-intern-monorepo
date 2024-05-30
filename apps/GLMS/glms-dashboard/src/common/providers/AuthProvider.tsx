@@ -1,7 +1,7 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 'use client';
-
-import { PropsWithChildren, useContext, createContext } from 'react';
+const jwt = require('jsonwebtoken');
+import { PropsWithChildren, useContext, createContext, useEffect, useState } from 'react';
 import { useLessonSignInMutation, useLessonSignUpMutation } from '@/generated';
 import { toast } from 'react-toastify';
 import { ApolloError } from '@apollo/client';
@@ -11,6 +11,7 @@ type AuthContextType = {
   handleSignIn: (emailOrPhoneNumber: string, password: string) => Promise<void>;
   signUpLoading: boolean;
   loading: boolean;
+  access: string;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -18,6 +19,7 @@ export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [lessonSignUp, { loading: signUpLoading }] = useLessonSignUpMutation();
   const [lessonSignIn, { loading }] = useLessonSignInMutation();
+  const [access, setAccess] = useState('');
 
   const router = useRouter();
 
@@ -57,6 +59,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       });
       const token = signInData?.lessonSignIn.token;
       localStorage.setItem('token', token || '');
+      const data = jwt.decode(token);
+      setAccess(data?.role);
       router.push('/dashboard');
       toast.success(signInData?.lessonSignIn.message, {
         position: 'top-center',
@@ -73,6 +77,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       }
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const data = jwt.decode(token);
+    setAccess(data?.role || 'багш');
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -81,6 +90,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         handleSignIn,
         signUpLoading,
         loading,
+        access,
       }}
     >
       {children}

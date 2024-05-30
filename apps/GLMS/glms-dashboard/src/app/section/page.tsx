@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import { ArrowBackIcon } from '../../../public/assets/ArrowBackIcon';
+import { useAuth } from '@/common/providers';
+import StudentSection from '../../components/StudentSection';
 const validatinSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -16,6 +18,7 @@ const validatinSchema = yup.object({
 
 const SectionPage = () => {
   const router = useRouter();
+  const { access } = useAuth();
   const [isPosted, setIsPosted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [lessonId, setLessonId] = useState('');
@@ -83,18 +86,24 @@ const SectionPage = () => {
           <ArrowBackIcon />
           Буцах
         </Link>
-        <div className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-xl justify-center items-center p-6 dark:bg-[#2b2b2b]">
-          <GetSections handleUpdateSectionPage={handleUpdateSectionPage} handleDeleteSection={handleDeleteSection} loading={loading} data={data} isLoading={isLoading} />
-          <AddSection
-            handleChange={formik.handleChange}
-            title={formik.values.title}
-            description={formik.values.description}
-            thumbnail={formik.values.thumbnail}
-            setFieldValue={formik.setFieldValue}
-            setIsPosted={setIsPosted}
-            handleSubmit={formik.handleSubmit}
-          />
-        </div>
+        {access == 'багш' ? (
+          <div className="flex flex-col gap-[4px] bg-[#fff] border-1 rounded-xl justify-center items-center p-6 dark:bg-[#2b2b2b]">
+            <GetSections handleUpdateSectionPage={handleUpdateSectionPage} handleDeleteSection={handleDeleteSection} loading={loading} data={data} isLoading={isLoading} />
+            <AddSection
+              handleChange={formik.handleChange}
+              title={formik.values.title}
+              description={formik.values.description}
+              thumbnail={formik.values.thumbnail}
+              setFieldValue={formik.setFieldValue}
+              setIsPosted={setIsPosted}
+              handleSubmit={formik.handleSubmit}
+            />
+          </div>
+        ) : (
+          <div>
+            <StudentSection data={data} />
+          </div>
+        )}
       </div>
     </div>
   );

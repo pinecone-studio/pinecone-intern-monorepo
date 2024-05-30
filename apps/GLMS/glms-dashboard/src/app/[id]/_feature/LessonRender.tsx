@@ -9,7 +9,9 @@ const LessonRender = ({
   lesson,
   handleCreateSection,
   refetch,
+  access,
 }: {
+  access: string;
   lesson: Lesson;
   handleCreateSection: () => void;
   refetch: (
@@ -50,10 +52,12 @@ const LessonRender = ({
           <p className="font-semibold">{lesson?.title}</p>
         </div>
       </div>
-      <div className="flex gap-4 items-center z-50 ">
-        <EditButton onClick={HandleUpdateLessonPage} />
-        <DeleteButton onClick={HandleDeleteLesson} />
-      </div>
+      {access == 'багш' && (
+        <div className="flex gap-4 items-center z-50 ">
+          <EditButton onClick={HandleUpdateLessonPage} />
+          <DeleteButton onClick={HandleDeleteLesson} />
+        </div>
+      )}
     </div>
   );
 };

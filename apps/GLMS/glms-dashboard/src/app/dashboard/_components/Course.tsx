@@ -1,12 +1,14 @@
 'use client';
-
 import { Course } from '@/generated';
-
 const Courses = (props: Course) => {
   const { id, thumbnail, title, description } = props;
-
   return (
-    <div data-testid="courseContain" className=" bg-white dark:bg-[#2b2b2b] cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative" key={id}>
+    <div
+      data-testid="courseContain"
+      className={`bg-white dark:bg-[#2b2b2b] cursor-pointer w-[281px] overflow-hidden border-solid border-[1px] border-[#0000001A] rounded-xl relative dark:bg-[#3d3d3def]
+      `}
+      key={id}
+    >
       <div className="w-full h-[120px] object-fill rounded-md overflow-hidden">
         <img data-testid="lessonImage" src={`${thumbnail}`} alt="lessonImage" />
       </div>

@@ -1,10 +1,10 @@
+/* eslint-disable */
 'use client';
-
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import TextInput from '../../signup/_components/TextInput';
-import { ArrowBackIcon } from '../../../../public/assets/ArrowBackIcon';
 import { useAuth } from '@/common/providers';
+import { Spinner } from '../../../components/Spinner';
 
 const SignInForm = () => {
   const { handleSignIn, loading } = useAuth();
@@ -29,36 +29,34 @@ const SignInForm = () => {
       <h1 data-testid="sign-in-modal-title" className="mb-2 text-center text-4xl font-bold">
         Нэвтрэх
       </h1>
+      <div className="flex flex-col w-full">
+        <div className="h-24">
+          <TextInput
+            name="emailOrPhoneNumber"
+            label="Таны имэйл эсвэл утасны дугаар"
+            placeholder="Утас эсвэл имэйл хаяг оруулна уу"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.emailOrPhoneNumber}
+            error={formik.touched.emailOrPhoneNumber && Boolean(formik.errors.emailOrPhoneNumber)}
+            helperText={formik.touched.emailOrPhoneNumber && formik.errors.emailOrPhoneNumber}
+          />
+        </div>
+        <div className="h-24">
+          <TextInput
+            name="password"
+            label="Нууц үг"
+            placeholder="Нууц үгээ оруулна уу"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+        </div>
 
-      <div className="flex items-center justify-center w-full">
-        <div className="w-full border border-solid border-[#ecedf0]"></div>
-        <div className="w-full border border-solid border-[#ecedf0]"></div>
-      </div>
-
-      <div className="flex flex-col gap-2 w-full">
-        <TextInput
-          name="emailOrPhoneNumber"
-          label="Таны имэйл эсвэл утасны дугаар"
-          placeholder="Утас эсвэл имэйл хаяг оруулна уу"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.emailOrPhoneNumber}
-          helperText={formik.errors.emailOrPhoneNumber}
-          error={formik.errors.emailOrPhoneNumber}
-        />
-
-        <TextInput
-          name="password"
-          label="Нууц үг"
-          placeholder="Нууц үгээ оруулна уу"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          onBlur={formik.handleBlur}
-          helperText={formik.errors.password}
-          error={formik.errors.password}
-        />
         <a href={'#'} className="text-base text-[#26282e] hover:text-[#551a8b] text-center">
           Нууц үг сэргээх
         </a>
@@ -70,11 +68,11 @@ const SignInForm = () => {
         }}
         data-cy="Sign-In-Button"
         data-testid="Sign-Up-Button-Loader"
-        className={`btn w-full h-fit flex justify-end py-[9px] border-none bg-black text-white gap-2 hover:bg-[#d6d8db] hover:text-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-        disabled={!formik.isValid || loading}
+        className={`btn w-full h-fit flex justify-center py-[9px] border-none bg-black text-white gap-2 hover:bg-black ${!formik.isValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        disabled={!formik.values.password || !formik.values.emailOrPhoneNumber || loading}
       >
-        <h2 className="mr-[23%] text-lg text-semibold flex items-center"> Нэвтрэх</h2>
-        <ArrowBackIcon />
+        <h2 className="text-lg text-semibold flex items-center">Нэвтрэх</h2>
+        {loading && <Spinner />}
       </button>
 
       <div className="border border-solid border-[#ecedf0]"></div>

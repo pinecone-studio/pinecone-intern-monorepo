@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import CourseTitle from '../_components/CourseTitle';
 import CourseImage from '../_components/CourseImage';
@@ -10,6 +11,7 @@ import AddLessonButton from '../_components/AddLessonButton';
 import LessonRender from './LessonRender';
 import { EditButtonIcon } from '../../../../public/assets/EditButtonicon';
 import { ApolloQueryResult } from '@apollo/client';
+import { useAuth } from '@/common/providers';
 type DataTypes = {
   data: Course | undefined;
   lessonData: Lesson[] | undefined;
@@ -26,7 +28,7 @@ type DataTypes = {
 
 const CourseRender = ({ data, lessonData, lessonRefetch }: DataTypes) => {
   const router = useRouter();
-
+  const { access } = useAuth();
   const handleUpdateCoursePage = () => {
     router.push('update-course');
   };
@@ -45,7 +47,7 @@ const CourseRender = ({ data, lessonData, lessonRefetch }: DataTypes) => {
           <div className="max-w-[1180px] gap-[24px] flex flex-col m-auto justify-between w-full">
             <div className="lg:flex lg:gap-7 md:block justify-between dark:text-[#ededed] ">
               <div className="w-full max-w-[792px] ">
-                <CourseTitle title={data?.title} />
+                {access == 'багш' ? <CourseTitle title={data?.title} /> : <p className="font-extrabold text-8xl mb-8">{data?.title}</p>}
                 <div className="min-h-[220px] mt-1 mb-6 ">
                   <CourseDesc description={data?.description} />
                 </div>
@@ -60,20 +62,26 @@ const CourseRender = ({ data, lessonData, lessonRefetch }: DataTypes) => {
                     localStorage.setItem('lessonID', lesson.id || '');
                     router.push('/section');
                   };
-                  return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} refetch={lessonRefetch} />;
+                  return <LessonRender handleCreateSection={handleCreateSection} lesson={lesson} key={index} refetch={lessonRefetch} access={access} />;
                 })}
-
-                <AddLessonButton onClick={handleCreateLesson} />
+                {access == 'багш' && <AddLessonButton onClick={handleCreateLesson} />}
               </div>
+
               <div className="max-w-[313px] w-full">
-                <div data-testid="edit-course-button" onClick={handleUpdateCoursePage} className="flex gap-4 mb-6 w-">
-                  <button className="btn btn-ghost flex border border-[#D6D8DB] dark:hover:bg-[#3d3d3def] dark:border-[#515151]  dark:bg-[#4a4a4a] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
-                    <p className=" text-[18px] font-semibold">Ерөнхий мэдээлэл</p>
-                    <EditButtonIcon />
-                  </button>
-                  <DeleteButton onClick={Boolean} />
-                </div>
-                <CourseImage thumbnail={data?.thumbnail} />
+                {access == 'багш' && (
+                  <div data-testid="edit-course-button" onClick={handleUpdateCoursePage} className="flex gap-4 mb-6 w-">
+                    <button className="btn btn-ghost flex border border-[#D6D8DB] dark:hover:bg-[#3d3d3def] dark:border-[#515151]  dark:bg-[#4a4a4a] px-5 py-4 gap-2 rounded-md h-14 cursor-pointer">
+                      <p className=" text-[18px] font-semibold">Ерөнхий мэдээлэл</p>
+                      <EditButtonIcon />
+                    </button>
+                    <DeleteButton onClick={Boolean} />
+                  </div>
+                )}
+                {access == 'багш' ? (
+                  <CourseImage thumbnail={data?.thumbnail} />
+                ) : (
+                  <img width="313px" height="209px" className="mt-32" style={{ borderRadius: '12px', border: '1px' }} src={`${data?.thumbnail}`} />
+                )}
               </div>
             </div>
           </div>

@@ -1,10 +1,7 @@
-/* eslint-disable */
 'use client';
 import { SearchIcon } from '../../public/assets/SearchIcon';
-const jwt = require('jsonwebtoken');
 import { Logo } from '../../public/assets/Logo';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { LeaveIcon } from '../../public/assets/LeaveIcon';
 import { Light } from '../../public/assets/LightIcon';
 import { Dark } from '../../public/assets/DarkIcon';
@@ -12,13 +9,7 @@ import { useTheme } from '../common';
 const Header = () => {
   const router = useRouter();
   const { isDark, darkModeHandler } = useTheme();
-  const [email, setEmail] = useState<string>('');
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const data = jwt.decode(token);
-    setEmail(data?.email);
-  }, []);
   return (
     <div data-testid="header-artivle-detail" className="bg-[#F7F7F8] border-b-[1px] border-[#ECEDF0] dark:border-[#3d3d3def] dark:bg-[#121316ec] ">
       <div className="flex h-12 items-center justify-between w-[85vw] max-w-[1440px] m-auto">
@@ -45,7 +36,6 @@ const Header = () => {
             <div className="w-8 h-8">
               <img className="rounded-full" src="/profile-image.svg" />
             </div>
-            <span className="font-semibold dark:text-[#dedede]">{email}</span>
           </div>
           <div
             onClick={() => {
