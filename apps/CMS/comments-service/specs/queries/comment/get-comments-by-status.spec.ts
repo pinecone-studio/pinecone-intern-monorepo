@@ -1,4 +1,4 @@
-import { getComments } from '@/graphql/resolvers/queries/comment/get-comments';
+import { getComments } from '@/graphql/resolvers/queries/comment/get-comments-by-status';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/comment.model', () => ({
@@ -26,13 +26,13 @@ describe('This query should return comments', () => {
   });
 
   it('1.should return comments if found', async () => {
-    const comments = await getComments!({}, { input: { limit: 10, offset: 0 } }, {}, {} as GraphQLResolveInfo);
+    const comments = await getComments!({}, { input: { limit: 10, offset: 0, status: 'NORMAL' } }, {}, {} as GraphQLResolveInfo);
     expect(comments).toEqual([{ _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf' }]);
   });
 
   it('2.should return GraphQLError if comments not found', async () => {
     try {
-      await getComments!({}, { input: { limit: 10, offset: 0 } }, {}, {} as GraphQLResolveInfo);
+      await getComments!({}, { input: { limit: 10, offset: 0, status: 'NORMAL' } }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new GraphQLError('Error in get comments query'));
     }

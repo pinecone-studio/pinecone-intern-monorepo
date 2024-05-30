@@ -34,6 +34,7 @@ export const commentsSchema = gql`
   input GetCommentsLimitInput {
     limit: Int!
     offset: Int!
+    status: String!
   }
   type Mutation {
     setCommentStatusToNormal(id: ID!): ID!
