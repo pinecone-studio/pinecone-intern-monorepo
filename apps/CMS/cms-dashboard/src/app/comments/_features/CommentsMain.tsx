@@ -21,6 +21,7 @@ export const CommentsMain = () => {
       input: {
         limit: perPage,
         offset: (currentPage - 1) * perPage,
+        status: '',
       },
     },
   });
