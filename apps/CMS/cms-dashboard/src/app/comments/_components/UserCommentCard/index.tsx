@@ -40,9 +40,6 @@ const UserCommentCard = (props: CommentsProps) => {
             </button>
           </div>
         </div>
-        {/* <div className="flex justify-start items-center gap-2 mt-[16px] p-2">
-        <BsArrowReturnRight /> 1 хариу
-      </div> */}
       </div>
     </div>
   );
