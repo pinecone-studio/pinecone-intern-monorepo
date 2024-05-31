@@ -47,7 +47,7 @@ describe('Challenge result page', () => {
     },
   ]);
   beforeEach(() => {
-    cy.visit('/challenge/result/664d99c9fb7b77a2937a2a30');
+    cy.visit('/challenge/result/6653e62d905e01e9966b273f');
     cy.window().then((window) => {
       window.localStorage.setItem(localStorageKey, localStorageValue);
     });

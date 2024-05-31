@@ -24,7 +24,7 @@ const ResultPage = ({ params }: { params: { id: string } }) => {
 
   const rightChoiceCalculator = () => {
     const result: number = studentChoices
-      .map((choice: IChoice) => {
+      ?.map((choice: IChoice) => {
         const rightChoice = rightChoices?.find((r) => r?._id === choice.choiceId);
         if (!rightChoice) {
           return 0;
