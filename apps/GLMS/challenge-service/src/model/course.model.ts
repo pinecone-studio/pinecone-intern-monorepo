@@ -1,4 +1,5 @@
-import { Schema, model, models } from 'mongoose';
+import { Course } from '@/graphql/generated';
+import { Model, Schema, model, models } from 'mongoose';
 
 const courseSchema = new Schema({
   title: {
@@ -12,5 +13,5 @@ const courseSchema = new Schema({
     default: Date.now,
   },
 });
-
-export const courseModel = models.course || model('course', courseSchema);
+const courseModel: Model<Course> = models.course || model<Course>('course', courseSchema);
+export default courseModel;
