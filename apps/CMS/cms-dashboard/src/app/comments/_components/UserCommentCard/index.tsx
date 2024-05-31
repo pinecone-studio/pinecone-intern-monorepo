@@ -1,4 +1,3 @@
-import React from 'react';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { MdOutlineEdit } from 'react-icons/md';

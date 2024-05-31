@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGetCommentsByArticleIdQuery } from '@/generated';
 import UserCommentCard from '../_components/UserCommentCard';
 

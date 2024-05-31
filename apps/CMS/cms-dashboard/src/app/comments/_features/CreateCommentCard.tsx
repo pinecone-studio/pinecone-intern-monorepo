@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoSend } from 'react-icons/io5';
 
 const CreateCommentCard = () => {

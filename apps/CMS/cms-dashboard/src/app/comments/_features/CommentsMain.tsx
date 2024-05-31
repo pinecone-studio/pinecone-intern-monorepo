@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import CommentsCard from '../_components/CommentsCard';
 import { useGetCommentsQuery } from '../../../generated';
-import { FaArrowRight } from 'react-icons/fa';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
 import CreateCommentCard from './CreateCommentCard';
+import CommentsCard from '../_components/CommentsCard';
 
 const perPage = 5;
 
