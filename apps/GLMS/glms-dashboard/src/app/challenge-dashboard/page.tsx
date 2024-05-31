@@ -17,7 +17,7 @@ const Page = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const refCourse = searchParams.get('key');
+  const courseId = searchParams.get('key');
 
   const handleAllQuiz = (newQuiz: QuizInput) => {
     const newAnswers = [...quizs];
@@ -48,7 +48,7 @@ const Page = () => {
       await createChallenge({
         variables: {
           quizInput: quizs,
-          challengeInput: { author, refCourse, xp },
+          challengeInput: { author, courseId, xp },
         },
       });
       toast.success('Сорилийг амжилттай үүсгэлээ');

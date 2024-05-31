@@ -12,7 +12,7 @@ query GetChallengesByStatus {
       choicesType
       question
     }
-    refCourse
+    courseId
     status
     title
   }
