@@ -1,3 +1,3 @@
 export * from './CommentsMain';
-export * from './UserComment';
+export * from './UsersComment';
 export * from './CreateCommentCard';

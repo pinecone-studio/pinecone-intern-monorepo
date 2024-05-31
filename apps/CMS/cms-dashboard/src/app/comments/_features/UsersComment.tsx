@@ -1,7 +1,7 @@
 import { useGetCommentsByArticleIdQuery } from '@/generated';
-import UserCommentCard from '../_components/UserCommentCard';
+import UserCommentCard from '../_components/UsersCommentCard';
 
-const UserComment = ({ articleId }: { articleId: string }) => {
+const UsersComments = ({ articleId }: { articleId: string }) => {
   const { data } = useGetCommentsByArticleIdQuery({
     variables: {
       articleId: articleId,
@@ -18,4 +18,4 @@ const UserComment = ({ articleId }: { articleId: string }) => {
   );
 };
 
-export default UserComment;
+export default UsersComments;

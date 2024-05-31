@@ -3,19 +3,13 @@ import { FaReply } from 'react-icons/fa';
 import { MdOutlineEdit } from 'react-icons/md';
 import { PiTrashSimpleBold } from 'react-icons/pi';
 
-type CommentsProps = {
-  name?: string;
-  comment?: string;
-};
-
-const UserCommentCard = (props: CommentsProps) => {
-  const { name, comment } = props;
+const AutherComment = () => {
   return (
     <div className="p-[32px] bg-white rounded-2xl h-[200px] mt-6 ">
       <div className="items-stretch">
         <div>
-          <h1 className="text-[20px] font-bold">{name}</h1>
-          <p className="text-[18px] font-normal mt-2">{comment}</p>
+          <h1 className="text-[20px] font-bold">Таны сэтгэгдэл</h1>
+          <p className="text-[18px] font-normal mt-2">Энэ мэдээ маш их таалагдаж байна. Pinecone яахын аргагүй Монголд энэ салбарыг түгээж байгаа байгууллага мөн.</p>
         </div>
         <div className=" justify-between  grid grid-cols-2 h-[60px]">
           <div className="flex gap-[16px] ">
@@ -28,7 +22,7 @@ const UserCommentCard = (props: CommentsProps) => {
               Устгах
             </button>
           </div>
-          <div className="flex gap-[16px] justify-end">
+          <div className="flex gap-[16px] justify-start">
             <button className="flex justify-center items-center gap-2 self-end">
               <AiOutlineLike className="h-[20px] w-[20px]" /> 0
             </button>
@@ -45,4 +39,4 @@ const UserCommentCard = (props: CommentsProps) => {
   );
 };
 
-export default UserCommentCard;
+export default AutherComment;
