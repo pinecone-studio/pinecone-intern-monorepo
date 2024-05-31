@@ -10,7 +10,7 @@ type CommentsProps = {
   articleId?: string;
 };
 
-const CommentsCard = (props: CommentsProps) => {
+const AdminCommentsCard = (props: CommentsProps) => {
   const { name, email, comment, createdAt, articleId } = props;
 
   return (
@@ -43,4 +43,4 @@ const CommentsCard = (props: CommentsProps) => {
     </div>
   );
 };
-export default CommentsCard;
+export default AdminCommentsCard;

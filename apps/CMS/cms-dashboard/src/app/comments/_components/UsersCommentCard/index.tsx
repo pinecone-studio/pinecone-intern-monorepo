@@ -1,7 +1,5 @@
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
-import { MdOutlineEdit } from 'react-icons/md';
-import { PiTrashSimpleBold } from 'react-icons/pi';
 
 type CommentsProps = {
   name?: string;
@@ -18,7 +16,7 @@ const UserCommentCard = (props: CommentsProps) => {
           <p className="text-[18px] font-normal mt-2">{comment}</p>
         </div>
         <div className=" justify-between  grid grid-cols-2 h-[60px]">
-          <div className="flex gap-[16px] ">
+          {/* <div className="flex gap-[16px] ">
             <button className="flex justify-center items-center gap-2 self-end">
               <MdOutlineEdit className="h-[20px] w-[20px]" />
               Засах
@@ -27,8 +25,8 @@ const UserCommentCard = (props: CommentsProps) => {
               <PiTrashSimpleBold className="h-[20px] w-[20px]" />
               Устгах
             </button>
-          </div>
-          <div className="flex gap-[16px] justify-end">
+          </div> */}
+          <div className="flex gap-[16px] justify-start">
             <button className="flex justify-center items-center gap-2 self-end">
               <AiOutlineLike className="h-[20px] w-[20px]" /> 0
             </button>
