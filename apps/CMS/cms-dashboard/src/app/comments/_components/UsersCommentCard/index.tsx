@@ -16,16 +16,6 @@ const UserCommentCard = (props: CommentsProps) => {
           <p className="text-[18px] font-normal mt-2">{comment}</p>
         </div>
         <div className=" justify-between  grid grid-cols-2 h-[60px]">
-          {/* <div className="flex gap-[16px] ">
-            <button className="flex justify-center items-center gap-2 self-end">
-              <MdOutlineEdit className="h-[20px] w-[20px]" />
-              Засах
-            </button>
-            <button className="flex justify-center items-center gap-2 self-end">
-              <PiTrashSimpleBold className="h-[20px] w-[20px]" />
-              Устгах
-            </button>
-          </div> */}
           <div className="flex gap-[16px] justify-start">
             <button className="flex justify-center items-center gap-2 self-end">
               <AiOutlineLike className="h-[20px] w-[20px]" /> 0
