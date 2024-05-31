@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import CommentsCard from '../_components/CommentsCard';
 import { useGetCommentsQuery } from '../../../generated';
-import { FaArrowRight } from 'react-icons/fa';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
-import CreateCommentsCard from '../_components/CreateCommentsCard';
-import UserComment from '../_components/UserComment';
+import CreateCommentCard from './CreateCommentCard';
+import CommentsCard from '../_components/CommentsCard';
 
 const perPage = 5;
 
@@ -22,6 +20,7 @@ export const CommentsMain = () => {
       input: {
         limit: perPage,
         offset: (currentPage - 1) * perPage,
+        status: '',
       },
     },
   });
@@ -30,8 +29,7 @@ export const CommentsMain = () => {
   return (
     <div className="my-10">
       <CommentsTab />
-      <CreateCommentsCard />
-      <UserComment />
+      <CreateCommentCard />
       {comments.map((item) => (
         <div key={item?._id}>
           {item?.comment && <CommentsCard comment={item.comment} name={item.name ?? ''} email={item.email ?? ''} createdAt={item.createdAt} articleId={item.articleId ?? ''} />}

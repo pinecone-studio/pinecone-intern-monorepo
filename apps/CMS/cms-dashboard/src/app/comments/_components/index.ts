@@ -1,5 +1,4 @@
 export * from './CommentsButton';
-export * from './CreateCommentsCard';
 export * from './CommentsTab';
-export * from './CommentsTab';
-export * from './UserComment';
+export * from './UserCommentCard';
+export * from './CommentsCard';

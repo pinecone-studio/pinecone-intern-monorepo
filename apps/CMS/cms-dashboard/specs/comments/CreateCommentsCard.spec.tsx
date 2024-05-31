@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import CommentsArticleCard from '../../src/app/comments/_components/CreateCommentsCard';
+import CreateCommentCard from '@/app/comments/_features/CreateCommentCard';
 
 describe('CreateCommentsCard', () => {
   it('1.Should render CreateCommentsCard components', () => {
-    const { container } = render(<CommentsArticleCard />);
+    const { container } = render(<CreateCommentCard />);
     expect(container).toBeDefined();
   });
 });
