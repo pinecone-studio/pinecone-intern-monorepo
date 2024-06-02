@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { CREATE_JOB_MUTATION } from './create-job-mutation';
 import { useMutation } from '@apollo/client';
 
-const validationSchema = Yup.object().shape({
+export const validationSchema = Yup.object().shape({
   title: Yup.string().min(2, 'Too short!').max(50, 'Too long!').required('Required'),
   description: Yup.string().max(500, 'Too Long!').required('Required'),
   requirements: Yup.string().max(500, 'Too Long!').required('Required'),

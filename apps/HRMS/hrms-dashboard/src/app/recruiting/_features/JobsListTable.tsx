@@ -3,6 +3,11 @@ import Link from 'next/link';
 
 export const JobsListTable = () => {
   const tableHeader = ['Ажлын байр', 'Хүлээн авах эцсийн хугацаа', 'Огноо', 'Төлөв'];
+  const formatDateToMongolian = (date: Date) => {
+    const days = ['Ням', 'Даваа', 'Мягмар', 'Лхагва', 'Пүрэв', 'Баасан', 'Бямба'];
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()} - ${days[date.getDay()]}`;
+    return formattedDate;
+  };
 
   const { data, loading } = useGetJobsQuery();
   const jobs = data?.getJobs;
@@ -30,11 +35,11 @@ export const JobsListTable = () => {
           {jobs?.slice(2).map((job: Job, index: number) => {
             return (
               <tr key={index} className="border-b border-b-[#EDE6F0] text-[#3F4145] text-sm text-left">
-                <Link href="/recruiting/job-detail">
+                <Link href={`/recruiting/job-detail/${job.id}`}>
                   <td className="p-6 cursor-pointer hover:underline">{job.title}</td>
                 </Link>
-                <td className="p-6">2024/04/23</td>
-                <td className="p-6">3/12 - Лхагва</td>
+                <td className="p-6">{new Date(Number(job.dueDate)).toLocaleDateString()}</td>
+                <td className="p-6">{formatDateToMongolian(new Date(Number(job.createdAt)))}</td>
                 <td className="p-6">{job.status}</td>
               </tr>
             );

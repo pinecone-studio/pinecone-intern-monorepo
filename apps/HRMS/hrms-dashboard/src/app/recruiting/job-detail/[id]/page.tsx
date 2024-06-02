@@ -1,4 +1,4 @@
-import { JobDetail } from '../_components';
+import { JobDetail } from '../../_components';
 
 const JobDetailPage = () => {
   return (

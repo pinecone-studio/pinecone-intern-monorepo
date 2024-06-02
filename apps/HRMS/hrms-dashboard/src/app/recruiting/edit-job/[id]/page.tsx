@@ -1,4 +1,4 @@
-import { EditJob } from '../_components';
+import { EditJob } from '../../_components';
 
 const EditJobPage = () => {
   return (
