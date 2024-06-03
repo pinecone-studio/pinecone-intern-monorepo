@@ -87,6 +87,7 @@ export const challengeTypeDefs = gql`
     createdAt: Date
   }
   type AllChallenges {
+    _id: ID
     author: String
     courseId: Course
     status: StatusType
