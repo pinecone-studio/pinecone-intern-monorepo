@@ -1,8 +1,9 @@
 'use client';
-import { Quiz, useGetChallengeResultQuery } from '@/generated';
+import { Quiz, User, useGetChallengeResultQuery, useSubmitChallengeMutation } from '@/generated';
 import React, { useEffect, useState } from 'react';
 import Skeleton from '../../_feature/Skeleton';
 import { ChallengeResults } from '../../_feature/ChallengeResults';
+import jwt from 'jsonwebtoken';
 
 interface IChoice {
   quizId: string | null;
@@ -10,10 +11,10 @@ interface IChoice {
 }
 
 const ResultPage = ({ params }: { params: { id: string } }) => {
+  const [submitChallenge] = useSubmitChallengeMutation();
   const { data, loading } = useGetChallengeResultQuery({ variables: { challengeId: params.id } });
-  const [testResult, setTestResult] = useState(0);
-  const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
-
+  const [testResult, setTestResult] = useState<number | null>(null);
+  const [studentChoices] = useState(JSON.parse(localStorage.getItem(params.id)!));
   const rightChoices = data?.getChallengeById?.quiz
     ?.map((quiz) =>
       quiz?.choices?.filter((choice) => {
@@ -35,10 +36,20 @@ const ResultPage = ({ params }: { params: { id: string } }) => {
 
     setTestResult(result);
   };
-
+  const submitChallengeResult = async () => {
+    const user = jwt.decode(localStorage.getItem('token')!) as User;
+    const startedData = JSON.parse(localStorage.getItem('date')!);
+    await submitChallenge({ variables: { challengeSessionInput: { challengeId: params.id, experiencePoint: testResult, studentEmail: user.email, endAt: Date.now(), startedAt: startedData } } });
+  };
   useEffect(() => {
     rightChoiceCalculator();
   }, [data]);
+
+  useEffect(() => {
+    if (testResult) {
+      submitChallengeResult();
+    }
+  }, [testResult]);
 
   return (
     <main className=" w-full h-auto bg-white">
@@ -51,7 +62,7 @@ const ResultPage = ({ params }: { params: { id: string } }) => {
         </section>
       ) : (
         <div className="bg-white flex flex-col justify-center items-center">
-          <ChallengeResults challenge={data?.getChallengeById?.quiz as Quiz[]} />
+          <ChallengeResults id={params.id} challenge={data?.getChallengeById?.quiz as Quiz[]} />
           <div className="w-[100px] h-[100px] bg-[#17191E] rounded-full flex justify-center items-center mb-20">
             <h1 className="text-white font-bold text-2xl">
               {data?.getChallengeById?.quiz?.length}/<span>{testResult}</span>
