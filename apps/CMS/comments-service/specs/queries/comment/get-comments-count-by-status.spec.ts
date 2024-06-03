@@ -1,4 +1,3 @@
-import { CommentStatus } from '@/graphql/generated';
 import { errorTypes, graphqlErrorHandler } from '@/graphql/resolvers/error';
 import { getCommentsCountByStatus } from '@/graphql/resolvers/queries';
 import { CommentsModel } from '@/models/comment.model';
@@ -13,8 +12,8 @@ describe('get comments by status query', () => {
     jest.clearAllMocks();
   });
   it('should return comments count by status', async () => {
-    jest.spyOn(CommentsModel, 'countDocuments').mockResolvedValue(30);
-    const status = CommentStatus.Normal;
+    jest.spyOn(CommentsModel, 'countDocuments').mockResolvedValueOnce(30);
+    const status = 'NORMAL';
     const result = await getCommentsCountByStatus!({}, { status }, {}, {} as GraphQLResolveInfo);
     expect(CommentsModel.countDocuments).toHaveBeenCalledWith({ status });
     expect(result).toEqual({ count: 30 });
@@ -23,7 +22,7 @@ describe('get comments by status query', () => {
     const errorMessage = graphqlErrorHandler({ message: `cannot get comments count by status` }, errorTypes.INTERVAL_SERVER_ERROR);
     jest.spyOn(CommentsModel, 'countDocuments').mockRejectedValue(errorMessage);
     try {
-      await getCommentsCountByStatus!({}, { status: CommentStatus.Normal }, {}, {} as GraphQLResolveInfo);
+      await getCommentsCountByStatus!({}, { status: '' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(errorMessage);
     }

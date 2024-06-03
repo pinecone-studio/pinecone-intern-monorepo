@@ -50,6 +50,6 @@ export const commentsSchema = gql`
   type Query {
     getComments(input: GetCommentsLimitInput!): [Comment!]
     getCommentsByArticleId(articleId: ID!): [Comment]
-    getCommentsCountByStatus(status: CommentStatus!): Count
+    getCommentsCountByStatus(status: String!): Count
   }
 `;
