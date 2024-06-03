@@ -8,7 +8,7 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }) =
     const comments = await CommentsModel.find({ status })
       .limit(limit)
       .skip(offset * limit);
-    return comments;
+    return comments.reverse();
   } catch (error) {
     throw new GraphQLError('Error in get comments query');
   }
