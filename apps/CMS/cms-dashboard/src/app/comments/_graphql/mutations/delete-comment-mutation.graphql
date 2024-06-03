@@ -1,0 +1,3 @@
+mutation DeleteComment($deleteInput: DeleteCommentInput!) {
+  deleteComment(deleteInput: $deleteInput)
+}

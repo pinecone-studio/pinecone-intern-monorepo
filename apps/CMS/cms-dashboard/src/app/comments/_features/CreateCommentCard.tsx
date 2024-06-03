@@ -2,8 +2,13 @@ import { IoSend } from 'react-icons/io5';
 import { usePublishCommentMutation } from '@/generated';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
 
-const CreateCommentCard = ({ articleId }: { articleId: string }) => {
+const validationSchema = yup.object({
+  email: yup.string().email('Имэйл хаяг буруу байна').required('Имэйл хаягаа оруулна уу'),
+});
+
+const CreateCommentCard = ({ articleId, refetch }: { articleId: string; refetch: () => void }) => {
   const [publishComment] = usePublishCommentMutation();
   const formik = useFormik({
     initialValues: {
@@ -14,8 +19,11 @@ const CreateCommentCard = ({ articleId }: { articleId: string }) => {
       entityId: '123',
       entityType: 'user',
     },
-    onSubmit: (values) => {
-      publishComment({
+    validateOnChange: false,
+    validateOnBlur: false,
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      await publishComment({
         variables: {
           createInput: {
             name: values.name,
@@ -27,11 +35,13 @@ const CreateCommentCard = ({ articleId }: { articleId: string }) => {
           },
         },
       });
-      toast.success('Сэтгэгдэл амжилттай нэмэгдлээ ', {
+      toast.success('Сэтгэгдэл амжилттай нэмэгдлээ.', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
       });
+      resetForm();
+      refetch();
     },
   });
 
@@ -59,7 +69,7 @@ const CreateCommentCard = ({ articleId }: { articleId: string }) => {
         />
         <div className="grid justify-items-end">
           <button id="create-comment-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn">
-            <IoSend className="w-[20px] h-[20px]" />
+            <IoSend className="w-[20px] h-[20px]  " />
           </button>
         </div>
       </div>
