@@ -1,20 +1,33 @@
 'use client';
 
 import { LeftArrow } from '../../../asset';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ApplicantStatusLabel } from '../core';
 import { CreateErrorModal } from '../modal';
+import { useQuery } from '@apollo/client';
+import { GET_JOBS } from './query/get-jobs-query';
 
 export const JobDetail = () => {
+  const { id } = useParams();
   const router = useRouter();
+  const { data, loading } = useQuery(GET_JOBS);
+  const jobs = data?.getJobs;
+  const job = jobs?.find((job: { id: string }) => job.id === id);
 
   const handleBackButtonClick = () => {
     router.push('/recruiting');
   };
 
   const handleEditButtonClick = () => {
-    router.push('/recruiting/edit-job');
+    router.push(`/recruiting/edit-job/${id}`);
   };
+
+  if (loading)
+    return (
+      <div data-testid="loading" className="flex w-full justify-center items-center">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
 
   return (
     <div className="w-full">
@@ -32,28 +45,22 @@ export const JobDetail = () => {
       <div className="m-8 bg-white rounded-xl tracking-tight p-6">
         <div>
           <div className="text-[#3F4145]">Албан тушаалын нэр:</div>
-          <div className="text-[#121316] font-semibold">Software Developer: Intern</div>
+          <div className="text-[#121316] font-semibold">{job?.title}</div>
         </div>
         <div className="flex flex-col gap-1">
           <div className="text-[#3F4145] mt-6">Үүрэг:</div>
-          <div className="text-sm text-[#121316]">
-            <li>Development of software products by writing, testing, and documenting code.</li>
-            <li>Responsible for providing technical documentation for system, features, and components.</li>
-            <li>Responsible for providing thorough unit testing and automated testing to ensure a quality product is delivered.</li>
-            <li>Expected to improve, enhance, and support existing operations.</li>
-            <li>Designing, building, installing, configuring and supporting production deployments.</li>
-            <li>Implement and maintain security and data privacy best practices.</li>
+          <div data-testid="description" className="text-sm text-[#121316]">
+            {job?.description?.split('\n').map((paragraph: string, index: number) => (
+              <li key={index}>{paragraph}</li>
+            ))}
           </div>
         </div>
         <div className="flex flex-col gap-1 mt-6">
           <div className="text-[#3F4145]">Шаардлага:</div>
-          <div className="text-sm text-[#121316]">
-            <li>Bachelor’s degree in Computer Science or related study.</li>
-            <li>Knowledge in development with C++/Java, or similar object-oriented languages.</li>
-            <li>0-2 yrs. of experience working within a Linux environment and must be familiar with mobile application development (Android and/or iOS).</li>
-            <li>Must be able to demonstrate innovation in problem solving., must have clear communication with team members and product owners.</li>
-            <li>Must follow and support agile methodologies and practices by actively participating in all SCRUM ceremonies.</li>
-            <li>Must adhere to and develop best practices in software engineering and, be able to interact with individuals to solidify understanding of requirements and expectations.</li>
+          <div data-testid="requirements" className="text-sm text-[#121316]">
+            {job?.requirements.others?.split('\n').map((paragraph: string, index: number) => (
+              <li key={index}>{paragraph}</li>
+            ))}
           </div>
         </div>
         <div className="flex flex-col gap-2 mt-6">
@@ -61,11 +68,11 @@ export const JobDetail = () => {
           <div className="flex gap-6">
             <div>
               <div className="text-xs text-[#3F4145]">Доод хэмжээ</div>
-              <div className="font-semibold text-[#121316]">1’000’000₮</div>
+              <div className="font-semibold text-[#121316]">{Number(job?.minSalary).toLocaleString()}₮</div>
             </div>
             <div>
               <div className="text-xs text-[#3F4145]">Дээд хэмжээ</div>
-              <div className="font-semibold text-[#121316]">2’000’000₮</div>
+              <div className="font-semibold text-[#121316]">{Number(job?.maxSalary).toLocaleString()}₮</div>
             </div>
           </div>
         </div>
@@ -78,7 +85,7 @@ export const JobDetail = () => {
           <div data-testid="modal-button" className="flex justify-end">
             <CreateErrorModal text="Устгах" labelType="Устгах" />
           </div>
-          <button data-testid="edit-button" onClick={handleEditButtonClick} className="btn shadow-none tracking-tight border-black rounded-lg hover:text-[#8dff87] text-white">
+          <button data-testid="edit-button" onClick={handleEditButtonClick} className="btn shadow-none tracking-tight bg-[#D6D8DB] hover:bg-black rounded-lg hover:text-white text-black">
             Засварлах
           </button>
         </div>

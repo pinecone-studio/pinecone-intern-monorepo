@@ -1,3 +1,4 @@
+import { FormikErrors } from 'formik';
 import { ChangeEvent, FocusEvent } from 'react';
 
 interface TextAreaProps {
@@ -6,12 +7,20 @@ interface TextAreaProps {
   value?: string;
   placeholder: string;
   disabled?: boolean;
-  errorText?: string;
+  errorText?: string | string[] | FormikErrors<unknown> | FormikErrors<unknown>[];
   onChange?: (_: ChangeEvent<HTMLTextAreaElement>) => void;
   onBlur?: (_: FocusEvent<HTMLTextAreaElement>) => void;
 }
 
 export const TextArea = ({ name, label, onBlur, value, errorText, disabled, placeholder, onChange }: TextAreaProps) => {
+  let displayErrorText: string | undefined;
+  if (Array.isArray(errorText)) {
+    displayErrorText = errorText.join(', ');
+  } else if (typeof errorText === 'object') {
+    displayErrorText = Object.values(errorText).join(', ');
+  } else {
+    displayErrorText = errorText;
+  }
   return (
     <div className="w-full tracking-tight">
       <label className="form-control w-full">
@@ -28,7 +37,7 @@ export const TextArea = ({ name, label, onBlur, value, errorText, disabled, plac
           className="textarea textarea-bordered border-[#D6D8DB] h-28 w-full rounded-lg bg-[#F7F7F8] text-[#121316] tracking-tight text-lg"
         ></textarea>
       </label>
-      <p className="text-sm text-[#FF2C2C]">{errorText}</p>
+      <p className="text-sm text-[#FF2C2C]">{displayErrorText}</p>
     </div>
   );
 };

@@ -1,54 +1,98 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { JobDetail } from '../../src/app/recruiting/_components';
-import { DeletedSvg } from '../../src/assets';
-import { useRouter } from 'next/navigation';
-import { LeftArrow } from '../../src/app/asset';
+import { useRouter, useParams } from 'next/navigation';
+import { MockedProvider } from '@apollo/client/testing';
+import { GET_JOBS } from '../../src/app/recruiting/_components/job-detail/query/get-jobs-query';
 
 const useRouterMock = useRouter as jest.Mock;
+const useParamsMock = useParams as jest.Mock;
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
+  useParams: jest.fn(),
 }));
+
+const mocks = [
+  {
+    request: {
+      query: GET_JOBS,
+    },
+    result: {
+      data: {
+        getJobs: [
+          {
+            id: '1',
+            title: 'Job Title',
+            description: 'Job Description',
+            requirements: {
+              others: 'Job Requirements',
+            },
+            minSalary: '1000',
+            maxSalary: '2000',
+          },
+        ],
+      },
+    },
+  },
+];
+
 describe('JobDetail', () => {
-  it('renders correctly', () => {
-    const mockPush = jest.fn();
-    useRouterMock.mockReturnValue({ push: mockPush });
+  it('renders without error', async () => {
+    useParamsMock.mockReturnValue({ id: '1' });
+    useRouterMock.mockReturnValue({
+      push: jest.fn(),
+    });
 
-    const { getByTestId } = render(<JobDetail />);
-    expect(() => getByTestId('title')).not.toThrow();
-    expect(() => getByTestId('back-button')).not.toThrow();
-    expect(() => getByTestId('modal-button')).not.toThrow();
-  });
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <JobDetail />
+      </MockedProvider>
+    );
 
-  it('back button navigates to /recruiting', () => {
-    const mockPush = jest.fn();
-    useRouterMock.mockReturnValue({ push: mockPush });
-
-    const { getByTestId } = render(<JobDetail />);
-    fireEvent.click(getByTestId('back-button'));
-    expect(mockPush).toHaveBeenCalledWith('/recruiting');
-  });
-  it('edit button navigates to /recruiting/edit-job', () => {
-    const mockPush = jest.fn();
-    useRouterMock.mockReturnValue({ push: mockPush });
-
-    const { getByTestId } = render(<JobDetail />);
-    fireEvent.click(getByTestId('edit-button'));
-    expect(mockPush).toHaveBeenCalledWith('/recruiting/edit-job');
-  });
-  describe('Arrow svg', () => {
-    it('renders LeftArrow svg correctly', () => {
-      const { getByTestId } = render(<LeftArrow />);
-      const svgElement = getByTestId('left-arrow');
-      expect(svgElement).toBeDefined();
+    await waitFor(() => {
+      expect(getByTestId('modal-button')).toBeDefined();
+      expect(getByTestId('edit-button')).toBeDefined();
+      expect(getByTestId('back-button')).toBeDefined();
     });
   });
-  describe('DeleteSVG', () => {
-    it('renders CreatedSvg correctly', () => {
-      const { getByTestId } = render(<DeletedSvg />);
-      const svgElement = getByTestId('deleted-svg');
-      expect(svgElement).toBeDefined();
+  it('navigates back when back button is clicked', async () => {
+    useParamsMock.mockReturnValue({ id: '1' });
+    const pushMock = jest.fn();
+    useRouterMock.mockReturnValue({
+      push: pushMock,
     });
+
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <JobDetail />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId('back-button'));
+    });
+
+    expect(pushMock).toHaveBeenCalledWith('/recruiting');
+  });
+
+  it('navigates to edit page when edit button is clicked', async () => {
+    useParamsMock.mockReturnValue({ id: '1' });
+    const pushMock = jest.fn();
+    useRouterMock.mockReturnValue({
+      push: pushMock,
+    });
+
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <JobDetail />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId('edit-button'));
+    });
+
+    expect(pushMock).toHaveBeenCalledWith('/recruiting/edit-job/1');
   });
 });

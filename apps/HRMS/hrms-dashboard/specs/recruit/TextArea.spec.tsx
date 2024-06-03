@@ -18,4 +18,17 @@ describe('TextArea', () => {
     const errorText = screen.getByText('Error message');
     expect(errorText).toBeDefined();
   });
+  it('displays error text when provided as an array', () => {
+    render(<TextArea label="Test Label" placeholder="Test Placeholder" name="test" errorText={['Error message 1', 'Error message 2']} />);
+
+    const errorText = screen.getByText('Error message 1, Error message 2');
+    expect(errorText).toBeDefined();
+  });
+
+  it('displays error text when provided as an object', () => {
+    render(<TextArea label="Test Label" placeholder="Test Placeholder" name="test" errorText={{ message1: 'Error message 1', message2: 'Error message 2' }} />);
+
+    const errorText = screen.getByText('Error message 1, Error message 2');
+    expect(errorText).toBeDefined();
+  });
 });
