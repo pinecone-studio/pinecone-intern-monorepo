@@ -1,6 +1,6 @@
 import { Comment } from '@/generated';
 
-const AuthorComment = ({ comment }: Comment) => {
+const Comments = ({ comment }: Comment) => {
   return (
     <p className="font-extrabold" data-testid="comment-test-id">
       {comment}
@@ -8,4 +8,4 @@ const AuthorComment = ({ comment }: Comment) => {
   );
 };
 
-export default AuthorComment;
+export default Comments;

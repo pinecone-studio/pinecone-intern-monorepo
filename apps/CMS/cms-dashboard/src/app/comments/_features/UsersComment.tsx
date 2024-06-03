@@ -1,8 +1,9 @@
 import { useGetCommentsByArticleIdQuery } from '@/generated';
 import UserCommentCard from '../_components/UsersCommentCard';
+import CreateCommentCard from './CreateCommentCard';
 
 const UsersComments = ({ articleId }: { articleId: string }) => {
-  const { data } = useGetCommentsByArticleIdQuery({
+  const { data, refetch } = useGetCommentsByArticleIdQuery({
     variables: {
       articleId: articleId,
     },
@@ -11,8 +12,9 @@ const UsersComments = ({ articleId }: { articleId: string }) => {
 
   return (
     <div>
+      <CreateCommentCard articleId={articleId} refetch={refetch} />
       {articleComments.map((item) => (
-        <div key={item?._id}>{item?.comment && <UserCommentCard comment={item.comment} name={item.name ?? ''} />}</div>
+        <div key={item?._id}>{item?.comment && <UserCommentCard email={item.email} comment={item.comment} name={item.name ?? ''} />}</div>
       ))}
     </div>
   );
