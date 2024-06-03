@@ -27,7 +27,7 @@ describe('This query should return comments', () => {
 
   it('1.should return comments if found', async () => {
     const comments = await getComments!({}, { input: { limit: 10, offset: 0, status: 'NORMAL' } }, {}, {} as GraphQLResolveInfo);
-    expect(comments).toEqual([{ _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf' }]);
+    expect(comments).toEqual([{ _id: 'asdf', name: 'adsf', email: 'asdfejf', comment: 'test', ipAddress: 'adf', createdAt: expect.any(Date), articleId: 'asdf' }].reverse());
   });
 
   it('2.should return GraphQLError if comments not found', async () => {
