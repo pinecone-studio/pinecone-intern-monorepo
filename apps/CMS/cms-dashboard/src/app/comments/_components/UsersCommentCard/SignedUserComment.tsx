@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 
 type CommentsProps = {
   comment?: string;
-  // email?: string | undefined | null;
   id?: string | undefined | null;
   refetch: () => void;
 };
