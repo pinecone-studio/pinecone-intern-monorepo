@@ -15,7 +15,7 @@ interface IStudentChoiceData {
 }
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useGetChallengeQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeQuery({ variables: { courseId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
   const [selectedQuiz, setSelectedQuiz] = useState<string | undefined | null>(null);
   let oneProgressValue = 0;

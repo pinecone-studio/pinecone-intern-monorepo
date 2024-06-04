@@ -10,7 +10,7 @@ interface IChoice {
 }
 
 const ResultPage = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useGetChallengeResultQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeResultQuery({ variables: { courseId: params.id } });
   const [testResult, setTestResult] = useState(0);
   const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
 
@@ -41,19 +41,19 @@ const ResultPage = ({ params }: { params: { id: string } }) => {
   }, [data]);
 
   return (
-    <main className=" w-full h-auto bg-white">
+    <main className="w-full h-auto bg-white ">
       <h1 className="h-40 text-black text-3xl flex items-center ml-[120px]">Quiz алдаа харах</h1>
       {loading ? (
-        <section className="bg-white w-full flex flex-col items-center">
+        <section className="flex flex-col items-center w-full bg-white">
           <Skeleton />
           <Skeleton />
           <Skeleton />
         </section>
       ) : (
-        <div className="bg-white flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center bg-white">
           <ChallengeResults challenge={data?.getChallengeById?.quiz as Quiz[]} />
           <div className="w-[100px] h-[100px] bg-[#17191E] rounded-full flex justify-center items-center mb-20">
-            <h1 className="text-white font-bold text-2xl">
+            <h1 className="text-2xl font-bold text-white">
               {data?.getChallengeById?.quiz?.length}/<span>{testResult}</span>
             </h1>
           </div>
