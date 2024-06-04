@@ -14,6 +14,7 @@ export const CommentsMain = () => {
   const handlePrev = () => {
     setCurrentPage(currentPage - 1);
   };
+
   const { data } = useGetCommentsQuery({
     variables: {
       input: {
