@@ -1,4 +1,4 @@
-import { User, useDeleteCommentMutation } from '@/generated';
+import { User, useDeleteCommentMutation, useUpdateCommentMutation } from '@/generated';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { MdOutlineEdit } from 'react-icons/md';
@@ -6,6 +6,8 @@ import { PiTrashSimpleBold } from 'react-icons/pi';
 import jwt from 'jsonwebtoken';
 import { useApolloClient } from '@apollo/client';
 import { toast } from 'react-toastify';
+import { useFormik } from 'formik';
+import { useState } from 'react';
 
 type CommentsProps = {
   comment?: string;
@@ -18,7 +20,36 @@ const SignedUserComment = (props: CommentsProps) => {
   const token = localStorage.getItem('token')!;
   const user = jwt.decode(token) as User;
   const client = useApolloClient();
+  const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation({ client });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment || '');
+  const formik = useFormik({
+    initialValues: {
+      comment: editedComment,
+    },
+    onSubmit: async (values) => {
+      await updateComment({
+        variables: {
+          updateInput: {
+            _id: id!,
+            comment: values.comment,
+          },
+        },
+      });
+      setIsEditing(false);
+      refetch();
+    },
+  });
+
+  const handleEditComment = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedComment(comment || '');
+  };
 
   const HandleDeleteComment = async () => {
     if (user?.id && id) {
@@ -38,12 +69,26 @@ const SignedUserComment = (props: CommentsProps) => {
         <div>
           <div>
             <h1 className="text-[20px] font-bold">Таны сэтгэгдэл</h1>
-            <p className="text-[18px] font-normal mt-2">{comment}</p>
+            {isEditing ? (
+              <form onSubmit={formik.handleSubmit}>
+                <textarea name="comment" value={formik.values.comment} onChange={formik.handleChange} className="text-[18px] font-normal mt-2 w-full bg-white  p-2 rounded-md " />
+                <div className="flex justify-end gap-2">
+                  <button type="submit" className="bg-black text-white px-4 py-2 rounded" id="edit-save-button-test-id">
+                    Хадгалах
+                  </button>
+                  <button id="edit-decline-button-test-id" type="button" onClick={handleCancelEdit} className="bg-[#FF0000] text-white px-4 py-2 rounded">
+                    Цуцлах
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <p className="text-[18px] font-normal mt-2">{comment}</p>
+            )}
           </div>
         </div>
         <div className=" justify-between  grid grid-cols-2 h-[60px]">
           <div className="flex gap-[16px] ">
-            <button className="flex justify-center items-center gap-2 self-end">
+            <button id="edit-comment-button-test-id" onClick={handleEditComment} className="flex justify-center items-center gap-2 self-end">
               <MdOutlineEdit className="h-[20px] w-[20px]" />
               Засах
             </button>
