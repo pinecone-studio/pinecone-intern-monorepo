@@ -23,6 +23,9 @@ const nextConfig = {
 
     return config;
   },
+  env: {
+    MONGO_ENDPOINT: process.env.MONGO_ENDPOINT ?? ``,
+  },
 };
 
 const plugins = [
