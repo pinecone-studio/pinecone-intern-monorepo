@@ -1,29 +1,12 @@
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
-import jwt from 'jsonwebtoken';
-import { User } from '@/generated';
-import NotSignedUserComment from './NotSignedUserComment';
-import SignedUserComment from './SignedUserComment';
-
 type CommentsProps = {
   name?: string;
   comment?: string;
-  email?: string | undefined | null;
-  id?: string | undefined | null;
-  refetch: () => void;
 };
 
-const UserCommentCard = (props: CommentsProps) => {
-  const { name, comment, email, refetch, id } = props;
-  const token = localStorage.getItem('token')!;
-  const user = jwt.decode(token) as User;
-
-  if (user && email === user.email) {
-    return <SignedUserComment refetch={refetch} comment={comment} id={id} />;
-  }
-  if (user && email !== user.email) {
-    return <NotSignedUserComment name={name} comment={comment} />;
-  }
+const NotSignedUserComment = (props: CommentsProps) => {
+  const { comment, name } = props;
 
   return (
     <div className="p-[32px] bg-white rounded-2xl  mt-6 ">
@@ -52,4 +35,4 @@ const UserCommentCard = (props: CommentsProps) => {
   );
 };
 
-export default UserCommentCard;
+export default NotSignedUserComment;
