@@ -105,7 +105,7 @@ export const challengeTypeDefs = gql`
   type Query {
     getChallenges: [Challenge]
     getChallengesByStatus: [Challenge]
-    getChallengeById(challengeId: ID): Challenge
+    getChallengeById(courseId: String): Challenge
     getDraftChallenges: [AllChallenges]
     getArchiveChallenges: [AllChallenges]
     getApprovedChallenges: [AllChallenges]
