@@ -3,11 +3,7 @@
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import { PropsWithChildren } from 'react';
 import { ApolloLink, HttpLink } from '@apollo/client';
-import {
-  NextSSRApolloClient,
-  NextSSRInMemoryCache,
-  SSRMultipartLink,
-} from '@apollo/experimental-nextjs-app-support/ssr';
+import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr';
 
 const uri = process.env.FEDERATION_ENDPOINT;
 
@@ -24,7 +20,7 @@ export const makeApolloClient = () => {
   const httpLink = new HttpLink({
     uri,
     headers: {
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -43,9 +39,5 @@ export const makeApolloClient = () => {
 };
 
 export const FederationProvider = ({ children }: PropsWithChildren) => {
-  return (
-    <ApolloNextAppProvider makeClient={makeApolloClient}>
-      {children}
-    </ApolloNextAppProvider>
-  );
+  return <ApolloNextAppProvider makeClient={makeApolloClient}>{children}</ApolloNextAppProvider>;
 };

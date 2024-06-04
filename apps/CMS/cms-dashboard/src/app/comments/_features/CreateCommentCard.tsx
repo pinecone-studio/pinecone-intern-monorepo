@@ -19,8 +19,6 @@ const CreateCommentCard = ({ articleId, refetch }: { articleId: string; refetch:
       entityId: '123',
       entityType: 'user',
     },
-    validateOnChange: false,
-    validateOnBlur: false,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       await publishComment({

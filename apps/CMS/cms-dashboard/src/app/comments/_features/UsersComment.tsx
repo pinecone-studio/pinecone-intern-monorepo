@@ -8,13 +8,14 @@ const UsersComments = ({ articleId }: { articleId: string }) => {
       articleId: articleId,
     },
   });
+
   const articleComments = data?.getCommentsByArticleId || [];
 
   return (
     <div>
       <CreateCommentCard articleId={articleId} refetch={refetch} />
       {articleComments.map((item) => (
-        <div key={item?._id}>{item?.comment && <UserCommentCard email={item.email} comment={item.comment} name={item.name ?? ''} />}</div>
+        <div key={item?._id}>{item?.comment && <UserCommentCard id={item._id} refetch={refetch} email={item.email} comment={item.comment} name={item.name ?? ''} />}</div>
       ))}
     </div>
   );
