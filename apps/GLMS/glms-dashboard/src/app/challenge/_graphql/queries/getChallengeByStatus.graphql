@@ -1,19 +1,19 @@
-query GetChallengesByStatus {
-  getChallengesByStatus {
-    _id
-    author
-    quiz {
-      _id
-      choices {
-        _id
-        choice
-        isCorrect
-      }
-      choicesType
-      question
-    }
-    courseId
-    status
-    title
-  }
-}
+# query GetChallengesByStatus {
+#   getChallengesByStatus {
+#     _id
+#     author
+#     quiz {
+#       _id
+#       choices {
+#         _id
+#         choice
+#         isCorrect
+#       }
+#       choicesType
+#       question
+#     }
+#     courseId
+#     status
+#     title
+#   }
+# }

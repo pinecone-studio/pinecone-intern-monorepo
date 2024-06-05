@@ -1,19 +1,19 @@
-query GetChallengeResult($challengeId: ID) {
-  getChallengeById(challengeId: $challengeId) {
-    _id
-    author
-    quiz {
-      _id
-      choices {
-        _id
-        choice
-        isCorrect
-      }
-      choicesType
-      question
-    }
-    courseId
-    status
-    title
-  }
-}
+# query GetChallengeResult($challengeId: ID) {
+#   getChallengeById(challengeId: $challengeId) {
+#     _id
+#     author
+#     quiz {
+#       _id
+#       choices {
+#         _id
+#         choice
+#         isCorrect
+#       }
+#       choicesType
+#       question
+#     }
+#     courseId
+#     status
+#     title
+#   }
+# }
