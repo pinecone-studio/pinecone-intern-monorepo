@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ProfileMain } from './_features';
+import { HistoryBar, PaginationBar } from './_components';
 
 interface ProfilePageProps {}
 
@@ -14,6 +15,8 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
       <Link href="/">
         <button data-testid="profile-btn">Go back to home page</button>
       </Link>
+      <HistoryBar />
+      <PaginationBar />
     </div>
   );
 };
