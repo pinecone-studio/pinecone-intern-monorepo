@@ -20,6 +20,9 @@ const DashboardOtherLab = () => {
   const handleCreateCourse = () => {
     router.push('/create-course');
   };
+  const handleCreateAssessment = () => {
+    router.push('/create-assessment');
+  };
   useEffect(() => {
     refetch();
     if (pathname == '/dashboard') {
@@ -57,6 +60,15 @@ const DashboardOtherLab = () => {
                     <AddIcon className="w-6 h-6" />
                   </button>
                   <AddChallengeModal courses={data?.getCourses as CourseType[]} />
+                  <button
+                    data-testid="assessment-btn"
+                    onClick={handleCreateAssessment}
+                    color="inherit"
+                    className="flex justify-center items-center border-solid border-[2px] border-[#121316] gap-2 rounded-[8px] dark:text-[#ededed] btn hover:bg-black dark:hover:bg-[#3d3d3def] dark:border-[#515151] px-4 py-2 dark:bg-[#4a4a4a] hover:text-white"
+                  >
+                    <p className="text-[14px] font-semibold"> Төсөл</p>
+                    <AddIcon className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </div>
