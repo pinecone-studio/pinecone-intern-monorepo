@@ -1,18 +1,18 @@
-import { useGetRepliesByCommentIdQuery } from '@/generated';
 import { useState } from 'react';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
-import CreateReply from '../ReplyComment/CreateReply';
-import ReplyComment from '../ReplyComment';
+import { useGetRepliesByCommentIdQuery } from '@/generated';
+import ReplyComment from '.';
+import CreateReply from './CreateReply';
 
 type CommentsProps = {
   name?: string;
-  comment?: string;
   id?: string | undefined | null;
+  reply?: string;
 };
 
-const NotSignedUserComment = (props: CommentsProps) => {
-  const { comment, name, id } = props;
+const NotSignedUserReply = (props: CommentsProps) => {
+  const { name, id, reply } = props;
   const [showReplyForm, setShowReplyForm] = useState(false);
   const { data, refetch: refetchReplies } = useGetRepliesByCommentIdQuery({ variables: { commentId: id! } });
   const replyComments = data?.getRepliesByCommentId || [];
@@ -21,14 +21,15 @@ const NotSignedUserComment = (props: CommentsProps) => {
     refetchReplies();
     setShowReplyForm(false);
   };
+
   return (
     <div>
-      <div className="p-[32px] bg-white rounded-2xl  mt-6 ">
+      <div className="p-[32px] rounded-2xl  mt-6 ">
         <div className="items-stretch">
           <div>
             <div>
               <h1 className="text-[20px] font-bold">{name}</h1>
-              <p className="text-[18px] font-normal mt-2">{comment}</p>
+              <p className="text-[18px] font-normal mt-2">{reply}</p>
             </div>
           </div>
           <div className=" justify-between  grid grid-cols-2 h-[60px]">
@@ -46,11 +47,8 @@ const NotSignedUserComment = (props: CommentsProps) => {
           </div>
         </div>
       </div>
-      <button className="flex justify-between items-center p-2">
-        <FaReply />
-        Хариулт 2
-      </button>
-      {showReplyForm && <CreateReply commentId={id!} onReplySubmitted={handleReplySubmitted} />}
+
+      {showReplyForm && <CreateReply onReplySubmitted={handleReplySubmitted} commentId={id!} />}
       {replyComments.map((item) => (
         <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleReplySubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>
       ))}
@@ -58,4 +56,4 @@ const NotSignedUserComment = (props: CommentsProps) => {
   );
 };
 
-export default NotSignedUserComment;
+export default NotSignedUserReply;
