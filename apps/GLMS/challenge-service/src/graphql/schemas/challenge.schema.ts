@@ -6,6 +6,7 @@ export const challengeTypeDefs = gql`
   enum StatusType {
     DRAFT
     APPROVED
+    ARCHIVE
   }
   enum ChoicesType {
     IMAGE
@@ -27,7 +28,6 @@ export const challengeTypeDefs = gql`
 
   type Challenge {
     _id: ID
-    title: String
     author: String
     courseId: String
     status: StatusType

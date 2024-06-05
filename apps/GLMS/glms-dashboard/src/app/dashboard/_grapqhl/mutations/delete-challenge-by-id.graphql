@@ -1,0 +1,3 @@
+mutation DeleteChallengeById($challengeId: String!) {
+  deleteChallengeById(challengeId: $challengeId)
+}
