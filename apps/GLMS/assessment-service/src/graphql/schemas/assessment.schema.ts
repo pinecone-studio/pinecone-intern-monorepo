@@ -31,7 +31,7 @@ export const assessmentTypeDefs = gql`
   }
 
   type Mutation {
-    createAssessment(createAssessmentInput: CreateAssessmentInput!): Assessment
+    createAssessment(createAssessmentInput: CreateAssessmentInput!): ID!
     updateAssessment(_id: String!, updateAssessmentInput: UpdateAssessmentInput): Assessment
     deleteAssessment(_id: String!): Assessment
   }
