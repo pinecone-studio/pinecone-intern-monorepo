@@ -12,7 +12,7 @@ interface IChoice {
 
 const ResultPage = ({ params }: { params: { id: string } }) => {
   const [submitChallenge] = useSubmitChallengeMutation();
-  const { data, loading } = useGetChallengeResultQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeResultQuery({ variables: { courseId: params.id } });
   const [testResult, setTestResult] = useState<number | null>(null);
   const [studentChoices] = useState(JSON.parse(localStorage.getItem(params.id)!));
   const rightChoices = data?.getChallengeById?.quiz
@@ -39,7 +39,9 @@ const ResultPage = ({ params }: { params: { id: string } }) => {
   const submitChallengeResult = async () => {
     const user = jwt.decode(localStorage.getItem('token')!) as User;
     const startedData = JSON.parse(localStorage.getItem('date')!);
-    await submitChallenge({ variables: { challengeSessionInput: { challengeId: params.id, experiencePoint: testResult, studentEmail: user.email, endAt: Date.now(), startedAt: startedData } } });
+    await submitChallenge({
+      variables: { challengeSessionInput: { challengeId: data?.getChallengeById?._id, experiencePoint: testResult, studentEmail: user.email, endAt: Date.now(), startedAt: startedData } },
+    });
   };
   useEffect(() => {
     rightChoiceCalculator();
