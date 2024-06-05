@@ -1,5 +1,5 @@
-query GetChallenge($challengeId: ID) {
-  getChallengeById(challengeId: $challengeId) {
+query GetChallenge($courseId: String) {
+  getChallengeById(courseId: $courseId) {
     _id
     author
     quiz {
