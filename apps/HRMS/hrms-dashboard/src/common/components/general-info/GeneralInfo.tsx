@@ -7,8 +7,12 @@ const GeneralInfo = () => {
         <label>8’000’000₮</label>
       </div>
       <div className="flex justify-between">
-        <label>7 сард ажиллах ёстой хоног (цаг)</label>
-        <label>16 хоног (128 цаг)</label>
+        <label>
+          7 сард ажиллах ёстой хоног <span className="text-[#A8A8A8]">(цаг)</span>
+        </label>
+        <label>
+          16 хоног <span className="text-[#A8A8A8]">(128 цаг)</span>
+        </label>
       </div>
       <div className="flex justify-between">
         <label>Урьдчилгаа цалин тооцох хоног</label>
