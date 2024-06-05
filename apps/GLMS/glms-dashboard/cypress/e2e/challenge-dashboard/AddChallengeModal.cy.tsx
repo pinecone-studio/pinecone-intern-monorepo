@@ -17,7 +17,7 @@ describe('AddChallengeModal Component', () => {
 
   it('3. should select a topic in the modal', () => {
     const selectedTopic = 'Javascript';
-    const selectedTopicId = '66543f6a6b36e468fc2e2c8d';
+    const selectedTopicId = '66601b76df6d30b72df0054a';
 
     cy.get('[data-testid="challenge-button"]').eq(0).click();
     cy.get("[data-cy='select']").select(selectedTopic);
