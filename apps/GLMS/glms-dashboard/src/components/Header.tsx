@@ -33,7 +33,12 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-1 cursor-pointer">
-            <div className="w-8 h-8">
+            <div
+              onClick={() => {
+                router.push('/profile');
+              }}
+              className="w-8 h-8"
+            >
               <img className="rounded-full" src="/profile-image.svg" />
             </div>
           </div>
