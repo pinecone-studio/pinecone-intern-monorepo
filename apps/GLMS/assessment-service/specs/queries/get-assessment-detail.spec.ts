@@ -32,14 +32,6 @@ describe('getAssessmentDetail', () => {
     expect(AssessmentModel.findById).toHaveBeenCalledWith(id);
   });
 
-  // it('Should handle error when AssessmentModel.findById fails', async () => {
-  //   const id = '456';
-  //   jest.spyOn(AssessmentModel, 'findById').mockResolvedValue(null);
-
-  //   await expect(getAssessmentDetails(null, { _id: id })).rejects.toThrow(GraphQLError);
-  //   expect(AssessmentModel.findById).toHaveBeenCalledWith(id);
-  // });
-
   it('throws an error when an error occurs during findById', async () => {
     const id = '888';
     const errorMessage = 'Database error';

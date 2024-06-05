@@ -6,30 +6,27 @@ jest.mock('@/models/assessment.model', () => ({
   create: jest.fn(),
 }));
 
-describe('createAssessment resolver', () => {
+describe('createAssessment', () => {
+  const mockAssessmentId = '12';
+  const createInput = { name: 'Test Assessment', description: 'Test Description' };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('creates an assessment successfully', async () => {
-    const createAssessmentInput = { title: 'Test Title', content: 'Test Content', position: 3 };
+  it('should create an assessment and return its ID', async () => {
+    AssessmentModel.create.mockResolvedValue({ _id: mockAssessmentId });
 
-    const mockAssessment = { id: '12', ...createAssessmentInput };
+    const result = await createAssessment({}, { createInput });
 
-    jest.spyOn(AssessmentModel, 'create').mockResolvedValue(mockAssessment);
-
-    const result = await createAssessment(null, { createAssessmentInput });
-    expect(result).toEqual(mockAssessment);
-    expect(AssessmentModel.create).toHaveBeenCalledWith(createAssessmentInput);
+    expect(AssessmentModel.create).toHaveBeenCalledWith(createInput);
+    expect(result).toBe(mockAssessmentId);
   });
 
-  it('throws an error when assessment creation fails', async () => {
-    const createAssessmentInput = { title: 'Test Title', content: 'Test Content', position: 3 };
-    const errorMessage = 'Database error';
+  it('should throw a GraphQLError if assessment creation fails', async () => {
+    AssessmentModel.create.mockRejectedValue(new Error('Creation failed'));
 
-    jest.spyOn(AssessmentModel, 'create').mockRejectedValue(new Error(errorMessage));
-
-    await expect(createAssessment(null, { createAssessmentInput })).rejects.toThrow(GraphQLError);
-    expect(AssessmentModel.create).toHaveBeenCalledWith(createAssessmentInput);
+    await expect(createAssessment({}, { createInput })).rejects.toThrow(GraphQLError);
+    await expect(createAssessment({}, { createInput })).rejects.toThrow('Could not create Assessment');
   });
 });

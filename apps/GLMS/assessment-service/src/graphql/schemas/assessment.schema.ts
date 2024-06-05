@@ -15,7 +15,7 @@ export const assessmentTypeDefs = gql`
   input CreateAssessmentInput {
     title: String!
     content: String!
-    position: Int
+    position: Int!
   }
 
   input UpdateAssessmentInput {
@@ -31,7 +31,7 @@ export const assessmentTypeDefs = gql`
   }
 
   type Mutation {
-    createAssessment(createAssessmentInput: CreateAssessmentInput!): ID!
+    createAssessment(createInput: CreateAssessmentInput!): ID
     updateAssessment(_id: String!, updateAssessmentInput: UpdateAssessmentInput): Assessment
     deleteAssessment(_id: String!): Assessment
   }
