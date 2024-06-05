@@ -1,0 +1,13 @@
+query GetRepliesByCommentId($commentId: String) {
+  getRepliesByCommentId(commentId: $commentId) {
+    _id
+    reply
+    commentId
+    name
+    # parent {
+
+    # }
+    createdAt
+    ipAddress
+  }
+}
