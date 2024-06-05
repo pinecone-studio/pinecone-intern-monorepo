@@ -1,38 +1,36 @@
 'use client';
 
 import { useQuery } from '@apollo/client';
-import Link from 'next/link';
-import { GET_ALL_JOBS, GET_JOBS_LIMIT } from './query';
+import { GET_ALL_APPLICANTS, GET_APPLICANTS_LIMIT } from './query';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { LeftArrow, RightArrow } from '../../asset';
-import { formatDateToMongolian } from './format-date';
 
-interface Jobs {
+interface Applicants {
   id: string;
-  title: string;
-  dueDate: string;
-  createdAt: string;
+  firstname: string;
+  lastname: string;
+  email: string;
   status: string;
 }
 
-export const JobsListTable = () => {
-  const tableHeader = ['Ажлын байр', 'Хүлээн авах эцсийн хугацаа', 'Огноо', 'Төлөв'];
-  const jobsPerPage = 6;
+export const ApplicantsListTable = () => {
+  const tableHeader = ['Нэр', 'Ажлын байр', 'Имейл', 'Төлөв'];
+  const applicantsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
-  const { data: allJobsData } = useQuery(GET_ALL_JOBS);
+  const { data: allApplicantsData } = useQuery(GET_ALL_APPLICANTS);
   const {
-    data: limitedJobsData,
+    data: limitedApplicantsData,
     loading,
     error,
-  } = useQuery(GET_JOBS_LIMIT, {
+  } = useQuery(GET_APPLICANTS_LIMIT, {
     variables: {
-      offset: currentPage * jobsPerPage,
-      limit: jobsPerPage,
+      offset: currentPage * applicantsPerPage,
+      limit: applicantsPerPage,
     },
   });
-  const limitedJobs = limitedJobsData?.getJobsWithLimit;
-  const totalJobs = allJobsData?.getJobs;
+  const limitedApplicants = limitedApplicantsData?.getApplicantWithLimit;
+  const totalApplicants = allApplicantsData?.getApplicants;
 
   const handlePageClick = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected);
@@ -40,7 +38,7 @@ export const JobsListTable = () => {
 
   if (loading)
     return (
-      <div data-testid="loading" className="flex w-full justify-center items-center">
+      <div className="flex w-full justify-center items-center">
         <span className="loading loading-ring loading-lg"></span>
       </div>
     );
@@ -50,7 +48,7 @@ export const JobsListTable = () => {
   }
 
   return (
-    <div data-cy="jobsList" className="flex flex-col rounded-xl gap-10 items-center overflow-scroll tracking-tight mx-6 mb-6">
+    <div className="flex flex-col rounded-xl gap-10 items-center overflow-scroll tracking-tight mx-6 mb-6">
       <table className="w-full table-fixed text-left">
         <thead>
           <tr className="bg-primary-light bg-[#F7F7F8] border-b border-b-[#D6D8DB] text-[#121316] text-xs">
@@ -61,22 +59,20 @@ export const JobsListTable = () => {
             ))}
           </tr>
         </thead>
-        <tbody data-cy="jobData">
-          {limitedJobs?.map((job: Jobs, index: number) => {
+        <tbody>
+          {limitedApplicants?.map((applicant: Applicants, index: number) => {
             return (
               <tr key={index} className="border-b border-b-[#EDE6F0] text-[#3F4145] text-sm text-left">
-                <Link href={`/recruiting/job-detail/${job.id}`}>
-                  <td className="p-6 cursor-pointer hover:underline">{job.title}</td>
-                </Link>
-                <td className="p-6">{new Date(Number(job.dueDate)).toLocaleDateString()}</td>
-                <td className="p-6">{formatDateToMongolian(new Date(Number(job.createdAt)))}</td>
-                <td className="p-6">{job.status}</td>
+                <td className="p-6 cursor-pointer hover:underline">{applicant.firstname}</td>
+                <td className="p-6">{applicant.lastname}</td>
+                <td className="p-6">{applicant.email}</td>
+                <td className="p-6">{applicant.status}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      {totalJobs && totalJobs.length > 0 && (
+      {totalApplicants && totalApplicants.length > 0 && (
         <ReactPaginate
           data-testid="pagination"
           forcePage={currentPage}
@@ -85,7 +81,7 @@ export const JobsListTable = () => {
           pageLinkClassName="w-10 h-10 flex items-center justify-center border rounded-lg"
           previousLabel={<LeftArrow />}
           nextLabel={<RightArrow />}
-          pageCount={totalJobs.length / jobsPerPage}
+          pageCount={totalApplicants.length / applicantsPerPage}
           onPageChange={handlePageClick}
           activeLinkClassName={'bg-black text-white'}
         />

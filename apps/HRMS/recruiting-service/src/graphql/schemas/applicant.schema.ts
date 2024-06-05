@@ -34,7 +34,7 @@ export const Applicant = gql`
     status: ApplicantStatus
   }
   type Query {
-    getApplicant: [Applicant!]!
+    getApplicants: [Applicant!]!
     getApplicantById(applicantId: ID!): Applicant
     getApplicantWithLimit(offset: Int!, limit: Int!): [Applicant!]!
   }
