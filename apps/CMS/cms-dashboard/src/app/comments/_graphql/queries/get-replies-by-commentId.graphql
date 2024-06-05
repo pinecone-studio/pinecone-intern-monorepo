@@ -4,9 +4,6 @@ query GetRepliesByCommentId($commentId: String) {
     reply
     commentId
     name
-    # parent {
-
-    # }
     createdAt
     ipAddress
   }
