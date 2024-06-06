@@ -73,6 +73,7 @@ const DashboardOtherLab = () => {
                     <p className="text-[14px] font-semibold">Хичээл</p>
                     <MdAdd className="w-6 h-6" />
                   </button>
+
                   <AddChallengeModal courses={data?.getCourses as CourseType[]} />
                 </div>
               )}

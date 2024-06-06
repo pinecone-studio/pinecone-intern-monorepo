@@ -3,7 +3,6 @@ import { useAuth } from '@/common/providers';
 import { AllChallenges, Course } from '@/generated';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { AiTwotoneLike } from 'react-icons/ai';
-import DeleteIcons from '../../../../public/assets/DeleteIcons';
 
 interface ChallengeCardType extends AllChallenges {
   _id: string;
@@ -86,16 +85,17 @@ export const ChallengeCard = (props: ChallengeCardType) => {
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">X</button>
                   </form>
                   <div className="flex justify-center items-center flex-col gap-4">
-                    <div>
-                      <DeleteIcons />
-                    </div>
                     <h3 className="font-bold text-lg text-center">{actionType} руу шилжлүүлэхдээ илтгэлтэй байна уу ?</h3>
                     <div className="flex justify-between w-full">
                       <form method="dialog">
                         <button className="bg-white border rounded-lg font-semibold font-sans px-4 hover:opacity-90 p-1 btn">Болих</button>
                       </form>
                       <form method="dialog">
-                        <button className="bg-[#121316] btn border-none text-white font-sans font-semibold rounded-lg  px-4 hover:opacity-90 p-1 " onClick={() => onClick(_id)}>
+                        <button
+                          className="bg-[#121316] btn border-none text-white font-sans font-semibold rounded-lg  px-4 hover:opacity-90 p-1 "
+                          data-testid="challenge-btn"
+                          onClick={() => onClick(_id)}
+                        >
                           Шилжүүлэх
                         </button>
                       </form>

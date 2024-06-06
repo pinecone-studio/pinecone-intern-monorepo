@@ -11,6 +11,7 @@ type ModalProps = {
 };
 
 export const AddChallengeModal = (props: ModalProps) => {
+  const { courses = [] } = props;
   const [selectedTopic, setSelectedTopic] = useState<string>('');
 
   const handleSelectTopic = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -39,7 +40,8 @@ export const AddChallengeModal = (props: ModalProps) => {
             <div className="my-3">
               <p style={{ fontWeight: 600, fontSize: '14px', color: '#121316' }}>Сэдэв сонгох</p>
               <select data-cy="select" className="flex w-96 h-9 border-[#D6D8DB] border p-2 rounded-lg" onChange={handleSelectTopic}>
-                {props?.courses.map((course, i) => {
+                <option disabled>Сэдэв сонгох</option>
+                {courses.map((course, i) => {
                   return (
                     <option value={course.id} key={i}>
                       {course.title}
