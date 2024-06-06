@@ -5,43 +5,36 @@ jest.mock('mongoose', () => ({
   connect: jest.fn(),
 }));
 
-describe('Database connection check', () => {
-  beforeAll(() => {
+describe('connectToDatabase', () => {
+  beforeEach(() => {
     jest.clearAllMocks();
-  });
-  afterAll(() => {
-    jest.clearAllMocks();
-    jest.resetAllMocks();
   });
 
-  it('1. should call connectToDatabase', async () => {
+  it('should connect to the database successfully', async () => {
     (mongoose.connect as jest.Mock).mockResolvedValue({ connections: [{ readyState: 1 }] });
+    process.env.MONGODB_URI = 'valid_connection_string';
+  
     await connectToDatabase();
-    expect(mongoose.connect).toBeCalled();
+  
+    expect(mongoose.connect).toHaveBeenCalledTimes(1); 
+    expect(mongoose.connect).toHaveBeenCalledWith('valid_connection_string');
+    expect(console.log).toHaveBeenCalledWith('Connected to MongoDB database successfully!');
   });
 
-  it('2. should handle error', async () => {
-    (mongoose.connect as jest.Mock).mockRejectedValue(new Error('error'));
-    try {
-      await connectToDatabase();
-    } catch (e) {
-      expect(e).toBeInstanceOf(Error);
-    }
-  });
-});
+  it('should handle missing MONGODB_URI environment variable', async () => {
+    process.env.MONGODB_URI = undefined;
 
-describe('Database url null check', () => {
-  beforeAll(() => {
-    process.env = { ...process.env, MONGODB_URI: undefined };
+    await expect(connectToDatabase()).rejects.toThrowError(
+      'MONGODB_URI environment variable not found. Please set it to your MongoDB connection string.'
+    );
   });
 
-  afterAll(() => {
-    process.env = { ...process.env };
-    jest.clearAllMocks();
-    jest.resetAllMocks();
-  });
-
-  it('1. should return when data base url is undefined', async () => {
-    await connectToDatabase();
+  it('should handle connection errors', async () => {
+    (mongoose.connect as jest.Mock).mockRejectedValue(new Error('Connection error'));
+    process.env.MONGODB_URI = 'valid_connection_string';
+  
+    await expect(connectToDatabase()).rejects.toThrowError('Connection error');
+  
+    expect(console.log).toHaveBeenCalledWith('Connection failed:', 'Connection error');
   });
 });

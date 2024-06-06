@@ -6,7 +6,6 @@ import { resolvers, typeDefs } from '../../graphql';
 import { connectToDatabase } from '@/config/connect-database';
 
 connectToDatabase();
-const databaseUri = process.env.MONGODB_URI;
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
     typeDefs,
