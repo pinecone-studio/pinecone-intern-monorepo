@@ -1,6 +1,6 @@
 'use client';
 
-import GeneralInfo from '../common/components/general-info/GeneralInfo';
+import GeneralInfo from './payroll/_components/GeneralInfo';
 
 export default async function Index() {
   return (
