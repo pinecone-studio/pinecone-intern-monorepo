@@ -18,8 +18,7 @@ export const studentsSchema = gql`
     profileImgUrl: String!
     classId: String!
   }
-
-  input DeleteStudentInput {
+  input deleteStudentInput {
     studentId: String!
   }
 
@@ -29,6 +28,6 @@ export const studentsSchema = gql`
 
   type Mutation {
     createStudent(input: CreateStudentInput!): Student!
-    deleteStudent(input: DeleteStudentInput!): ID!
+    deleteStudent(input: deleteStudentInput!): ID!
   }
 `;
