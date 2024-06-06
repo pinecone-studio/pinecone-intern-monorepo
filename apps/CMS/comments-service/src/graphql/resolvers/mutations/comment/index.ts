@@ -4,3 +4,4 @@ export * from './update-comment';
 export * from './delete-comment-by-admin';
 export * from './hide-comment-by-admin';
 export * from './normalize-comment-by-admin';
+export * from './add-bad-word';

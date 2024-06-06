@@ -43,6 +43,7 @@ export const commentsSchema = gql`
     deleteComment(deleteInput: DeleteCommentInput!): ID!
     hideCommentByAdmin(id: ID!): ID!
     deleteCommentByAdmin(id: ID!): ID!
+    addBadWord(word: String!): ID!
   }
   type Count {
     normalCount: Int!
