@@ -1,0 +1,3 @@
+mutation ArchiveChallengeById($challengeId: ID) {
+  archiveChallengeById(challengeId: $challengeId)
+}

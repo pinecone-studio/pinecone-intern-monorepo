@@ -6,6 +6,7 @@ export const challengeTypeDefs = gql`
   enum StatusType {
     DRAFT
     APPROVED
+    ARCHIVE
   }
   enum ChoicesType {
     IMAGE

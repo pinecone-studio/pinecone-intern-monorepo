@@ -1,0 +1,3 @@
+mutation PublishChallengeById($challengeId: String!) {
+  publishChallengeById(challengeId: $challengeId)
+}
