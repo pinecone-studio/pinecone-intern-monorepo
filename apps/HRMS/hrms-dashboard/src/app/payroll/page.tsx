@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useHelloQueryFromPayrollServiceQuery } from '../../generated';
 import { PayrollMain } from './_features';
+import { AdvanceSalary } from './_components';
 
 const PayrollPage = () => {
   const { data } = useHelloQueryFromPayrollServiceQuery();
@@ -15,6 +16,7 @@ const PayrollPage = () => {
       <Link href="/">
         <button>Go back to home page</button>
       </Link>
+      <AdvanceSalary/>
     </div>
   );
 };
