@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
 import { useAuth } from '@/common/providers';
 import { EmptyIcon } from 'apps/GLMS/glms-dashboard/public/assets/EmptyIcon';
-const buttonsBottom = ['Хичээл', 'Ноорог', 'Архив'];
+const buttonsBottom = ['Хичээл', 'Ноорог', 'Даалгавар', 'Архив'];
 type CourseType = { title: string; description: string; thumbnail: string; status: string; createdAt: string; id: string };
 const DashboardOtherLab = () => {
   const { access } = useAuth();
