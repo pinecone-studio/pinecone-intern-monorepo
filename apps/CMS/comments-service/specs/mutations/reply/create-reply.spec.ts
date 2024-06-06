@@ -2,16 +2,19 @@ import { publishReply } from '@/graphql/resolvers/mutations/reply/create-reply';
 import { errorTypes, graphqlErrorHandler } from '../../../src/graphql/resolvers/error';
 import ReplyModel from '@/models/reply.model';
 import { GraphQLResolveInfo } from 'graphql';
+import { filterWords } from '@/middlewares/filter-words';
 
 jest.mock('@/models/reply.model', () => ({
   create: jest.fn(),
 }));
-
+jest.mock('@/middlewares/filter-words', () => ({
+  filterWords: jest.fn(),
+}));
 describe('publishReply resolver', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
+  (filterWords as jest.Mock).mockImplementation(() => {});
   const createInput = {
     parentId: '',
     reply: 'This is a test reply.',
@@ -31,8 +34,9 @@ describe('publishReply resolver', () => {
     (ReplyModel.create as jest.Mock).mockResolvedValueOnce(mockCreatedReply);
 
     const result = await publishReply!({}, { createInput }, {}, {} as GraphQLResolveInfo);
+    const filteredReply = await filterWords(createInput.reply);
 
-    expect(ReplyModel.create).toHaveBeenCalledWith(createInput);
+    expect(ReplyModel.create).toHaveBeenCalledWith({ reply: filteredReply, commentId: createInput.commentId, parentId: createInput.parentId, name: createInput.name, email: createInput.email });
     expect(result).toEqual(mockCreatedReply._id);
   });
 
