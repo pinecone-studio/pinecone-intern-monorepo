@@ -3,7 +3,7 @@ import { useGetCommentsLazyQuery } from '../../../generated';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
 import CommentsCard from '../_components/AdminCommentsCard';
-import AddBadWord from '../_components/AddBadWord';
+import AddBadWord from './AddBadWord';
 
 const perPage = 5;
 
