@@ -4,6 +4,7 @@ import { FaReply } from 'react-icons/fa';
 import { useGetRepliesByCommentIdQuery } from '@/generated';
 import ReplyComment from '.';
 import CreateReply from './CreateReply';
+import { PiArrowBendDownRightBold } from 'react-icons/pi';
 
 type CommentsProps = {
   name?: string;
@@ -16,12 +17,14 @@ const NotSignedUserReply = (props: CommentsProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const { data, refetch: refetchReplies } = useGetRepliesByCommentIdQuery({ variables: { commentId: id! } });
   const replyComments = data?.getRepliesByCommentId || [];
-
+  const [showReplies, setShowReplies] = useState(false);
   const handleReplySubmitted = () => {
     refetchReplies();
     setShowReplyForm(false);
   };
-
+  const handleToggleReplies = () => {
+    setShowReplies(!showReplies);
+  };
   return (
     <div>
       <div className="p-[32px] rounded-2xl  mt-6 ">
@@ -47,11 +50,17 @@ const NotSignedUserReply = (props: CommentsProps) => {
           </div>
         </div>
       </div>
-
+      {replyComments.length > 0 && (
+        <div className="flex gap-2 items-center py-2">
+          <button onClick={handleToggleReplies} className="flex items-center gap-2">
+            <PiArrowBendDownRightBold />
+            Хариу {replyComments.length}
+          </button>
+        </div>
+      )}
       {showReplyForm && <CreateReply onReplySubmitted={handleReplySubmitted} commentId={id!} />}
-      {replyComments.map((item) => (
-        <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleReplySubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>
-      ))}
+      {showReplies &&
+        replyComments.map((item) => <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleReplySubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>)}
     </div>
   );
 };
