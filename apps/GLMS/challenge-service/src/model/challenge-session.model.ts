@@ -3,6 +3,7 @@ import { Schema, model, models } from 'mongoose';
 const challengeSessionSchema = new Schema({
   studentEmail: { type: String },
   challengeId: { type: Schema.Types.ObjectId },
+  challengeTitle: { type: String },
   experiencePoint: { type: Number },
   startedAt: { type: Date },
   endAt: { type: Date },
