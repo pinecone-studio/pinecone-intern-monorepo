@@ -1,0 +1,8 @@
+query GetAssessments {
+  getAssessments {
+    _id
+    title
+    content
+    position
+  }
+}

@@ -4,7 +4,7 @@ import Courses from './_components/Course';
 import { useEffect, useState } from 'react';
 import { AddChallengeModal } from '../challenge-dashboard/_feature/AddChallengeModal';
 import { usePathname, useRouter } from 'next/navigation';
-import { Course, useGetCoursesQuery } from '@/generated';
+import { Course, useGetCoursesQuery, Assessment, useGetAssessmentsQuery } from '@/generated';
 import AddIcon from '@mui/icons-material/Add';
 import Loading from '../../components/Loading';
 import { useAuth } from '@/common/providers';
@@ -16,6 +16,7 @@ const DashboardOtherLab = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data, loading, refetch } = useGetCoursesQuery();
+  const { data: assessments, refetch: assessmentrefetch } = useGetAssessmentsQuery();
   const [actionTab, setActionTab] = useState('Хичээл');
   const handleCreateCourse = () => {
     router.push('/create-course');
@@ -25,6 +26,7 @@ const DashboardOtherLab = () => {
   };
   useEffect(() => {
     refetch();
+    assessmentrefetch();
     if (pathname == '/dashboard') {
       localStorage.removeItem('courseID');
       localStorage.removeItem('lessonID');
@@ -148,6 +150,7 @@ const DashboardOtherLab = () => {
                       <EmptyIcon />
                     </div>
                   )}
+                  {/* component */}
                 </div>
               </div>
             </div>
