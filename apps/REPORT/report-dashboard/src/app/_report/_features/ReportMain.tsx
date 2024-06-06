@@ -1,12 +1,11 @@
 import { List } from '../_components/List';
-const testData = [
+export const testData = [
   {
     name: 'Анастасия',
     category: [
       { name: 'HTML entry.', grade: 80, desc: 'good' },
       { name: 'CSS entry.', grade: 30, desc: 'good' },
       { name: 'JS entry.', grade: 80, desc: 'good' },
-      { name: 'SQL entry.', grade: 80, desc: 'good' },
     ],
   },
   {
