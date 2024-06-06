@@ -1,15 +1,13 @@
-import { User, useDeleteCommentMutation, useGetRepliesByCommentIdQuery, useUpdateCommentMutation } from '@/generated';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { MdOutlineEdit } from 'react-icons/md';
-import { PiTrashSimpleBold } from 'react-icons/pi';
-import jwt from 'jsonwebtoken';
-import { useApolloClient } from '@apollo/client';
-import { toast } from 'react-toastify';
-import { useFormik } from 'formik';
+import { PiArrowBendDownRightBold } from 'react-icons/pi';
 import { useState } from 'react';
 import CreateReply from '../ReplyComment/CreateReply';
 import ReplyComment from '../ReplyComment';
+import DeleteComment from './DeleteComment';
+import { useGetRepliesByCommentIdQuery } from '@/generated';
+import EditComment from './EditComment';
 
 type CommentsProps = {
   comment?: string;
@@ -19,83 +17,53 @@ type CommentsProps = {
 
 const SignedUserComment = (props: CommentsProps) => {
   const { comment, id, refetch } = props;
-  const token = localStorage.getItem('token')!;
-  const user = jwt.decode(token) as User;
-  const client = useApolloClient();
-  const [updateComment] = useUpdateCommentMutation();
-  const [deleteComment] = useDeleteCommentMutation({ client });
   const [isEditing, setIsEditing] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment || '');
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
   const { data, refetch: refetchReplies } = useGetRepliesByCommentIdQuery({ variables: { commentId: id! } });
   const replyComments = data?.getRepliesByCommentId || [];
-
-  const formik = useFormik({
-    initialValues: {
-      comment: editedComment,
-    },
-    onSubmit: async (values) => {
-      await updateComment({
-        variables: {
-          updateInput: {
-            _id: id!,
-            comment: values.comment,
-          },
-        },
-      });
-      setIsEditing(false);
-      refetch();
-    },
-  });
-
+  const handleCommentSubmitted = () => {
+    refetchReplies();
+    setShowReplyForm(false);
+    refetch();
+  };
   const handleEditComment = () => {
     setIsEditing(true);
   };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-    setEditedComment(comment || '');
+  const handleToggleReplies = () => {
+    setShowReplies(!showReplies);
   };
-
-  const HandleDeleteComment = async () => {
-    if (user?.id && id) {
-      await deleteComment({ variables: { deleteInput: { _id: user?.id && id } } });
-      toast.success('Сэтгэгдэл амжилттай устгагдлаа.', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
-      refetch();
-    }
-  };
-
-  const handleReplySubmitted = () => {
-    refetchReplies();
-    setShowReplyForm(false);
-  };
-
+  const renderEditComment = () => (
+    <EditComment
+      onReplySubmitted={() => {
+        setIsEditing(false);
+        handleCommentSubmitted();
+      }}
+      id={id}
+      comment={comment}
+    />
+  );
+  const renderReplyForm = () => showReplyForm && <CreateReply commentId={id!} onReplySubmitted={handleCommentSubmitted} />;
+  const renderReplies = () =>
+    showReplies &&
+    replyComments.map((item) => <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleCommentSubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>);
+  const renderReplyButton = () =>
+    replyComments.length > 0 && (
+      <div className="flex gap-2 items-center py-2">
+        <button onClick={handleToggleReplies} className="flex items-center gap-2">
+          <PiArrowBendDownRightBold />
+          Хариу {replyComments.length}
+        </button>
+      </div>
+    );
   return (
     <div>
-      <div className="p-[32px] bg-white rounded-2xl  mt-6 ">
+      <div className="p-[32px] bg-white rounded-2xl ">
         <div className="items-stretch">
           <div>
             <div>
               <h1 className="text-[20px] font-bold">Таны сэтгэгдэл</h1>
-              {isEditing ? (
-                <form onSubmit={formik.handleSubmit}>
-                  <textarea name="comment" value={formik.values.comment} onChange={formik.handleChange} className="text-[18px] font-normal mt-2 w-full bg-white  p-2 rounded-md " />
-                  <div className="flex justify-end gap-2">
-                    <button type="submit" className="bg-black text-white px-4 py-2 rounded" id="edit-save-button-test-id">
-                      Хадгалах
-                    </button>
-                    <button id="edit-decline-button-test-id" type="button" onClick={handleCancelEdit} className="bg-[#FF0000] text-white px-4 py-2 rounded">
-                      Цуцлах
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <p className="text-[18px] font-normal mt-2">{comment}</p>
-              )}
+              {isEditing ? renderEditComment() : <p className="text-[18px] font-normal mt-2">{comment}</p>}
             </div>
           </div>
           <div className=" justify-between  grid grid-cols-2 h-[60px]">
@@ -104,10 +72,7 @@ const SignedUserComment = (props: CommentsProps) => {
                 <MdOutlineEdit className="h-[20px] w-[20px]" />
                 Засах
               </button>
-              <button onClick={HandleDeleteComment} id="delete-comment-button-test-id" className="flex justify-center items-center gap-2 self-end">
-                <PiTrashSimpleBold className="h-[20px] w-[20px]" id="delete-comment-button-test-id" />
-                Устгах
-              </button>
+              <DeleteComment id={id} refetch={refetch} />
             </div>
             <div className="flex gap-[16px] justify-end">
               <button className="flex justify-center items-center gap-2 self-end">
@@ -123,10 +88,9 @@ const SignedUserComment = (props: CommentsProps) => {
           </div>
         </div>
       </div>
-      {showReplyForm && <CreateReply commentId={id!} onReplySubmitted={handleReplySubmitted} />}
-      {replyComments.map((item) => (
-        <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleReplySubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>
-      ))}
+      {renderReplyButton()}
+      {renderReplyForm()}
+      {renderReplies()}
     </div>
   );
 };
