@@ -25,6 +25,6 @@
     ],
     "types": ["jest", "node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "../../../dist/apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "next-env.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "../../../dist/apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "next-env.d.ts", "src/common/components/SVG/CardWallet.tsx"],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
 }
