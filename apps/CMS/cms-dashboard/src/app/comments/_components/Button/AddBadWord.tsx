@@ -1,4 +1,3 @@
-import { IoSend } from 'react-icons/io5';
 type RouterType = {
   onClick?: () => void;
 };
