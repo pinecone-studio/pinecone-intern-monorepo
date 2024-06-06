@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useGetCommentsLazyQuery } from '../../../generated';
+import { useGetCommentsLazyQuery, useAddBadWordMutation } from '../../../generated';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
 import CommentsCard from '../_components/AdminCommentsCard';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 
 const perPage = 5;
 
@@ -29,8 +31,35 @@ export const CommentsMain = () => {
     setCurrentPage(1);
   }, [selectedStatus]);
   const comments = data?.getComments || [];
+  const [addBadWord] = useAddBadWordMutation();
+  const formik = useFormik({
+    initialValues: {
+      word: '',
+    },
+    onSubmit: async (values, { resetForm }) => {
+      await addBadWord({
+        variables: {
+          word: values.word,
+        },
+      });
+      console.log('xdslbhv', values.word);
+      toast.success('Хараалын үг амжилттай нэмэгдлээ.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+      resetForm();
+    },
+  });
+
   return (
     <div className="my-10">
+      <div className="flex justify-end py-2 gap-4">
+        <input type="input " name="word" value={formik.values.word} onChange={formik.handleChange} className="focus:outline-none bg-white rounded-lg p-2" placeholder="Хараал үг оруулах..." />
+        <button id='add-bad-word-button-test-id"' type="submit" onClick={() => formik.handleSubmit()} name="submitBtn" className="bg-black text-white btn">
+          Нэмэх
+        </button>
+      </div>
       <CommentsTab setSelectedStatus={setSelectedStatus} selectedStatus={selectedStatus} />
       {comments.map((item) => (
         <div key={item?._id}>
