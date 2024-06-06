@@ -2,12 +2,14 @@ import { useFormik } from 'formik';
 import { usePublishReplyMutation } from '@/generated';
 import { toast } from 'react-toastify';
 import { IoSend } from 'react-icons/io5';
-
+import * as yup from 'yup';
 type ReplyFormProps = {
   commentId: string;
   onReplySubmitted: () => void;
 };
-
+const validationSchema = yup.object({
+  email: yup.string().email('Имэйл хаяг буруу байна').required('Имэйл хаягаа оруулна уу'),
+});
 const CreateReply = (props: ReplyFormProps) => {
   const [publishReply] = usePublishReplyMutation();
   const { commentId, onReplySubmitted } = props;
@@ -20,6 +22,7 @@ const CreateReply = (props: ReplyFormProps) => {
       parentId: '',
       name: '',
     },
+    validationSchema,
     onSubmit: async (values, { resetForm }) => {
       await publishReply({
         variables: {
@@ -53,9 +56,18 @@ const CreateReply = (props: ReplyFormProps) => {
             onChange={formik.handleChange}
             type="input"
             placeholder="Цахим хаягаа оруулна уу..."
-            className="bg-white w-full py-[16px] border-b-2"
+            className="bg-white w-full py-[16px] border-b-2 focus:outline-none "
           />
-          <input id="comment-name-test-id" name="name" value={formik.values.name} onChange={formik.handleChange} type="input" placeholder="Таны нэр" className="bg-white w-full py-[16px] border-b-2" />
+          <p className="flex justify-end text-[#C93131] text-[12px]">{formik.errors.email}</p>
+          <input
+            id="comment-name-test-id"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            type="input"
+            placeholder="Таны нэр"
+            className="bg-white w-full py-[16px] border-b-2 focus:outline-none"
+          />
           <input
             id="comment-test-id"
             name="reply"
@@ -63,7 +75,7 @@ const CreateReply = (props: ReplyFormProps) => {
             onChange={formik.handleChange}
             type="input"
             placeholder="Энд сэтгэгдлээ бичнэ үү..."
-            className="bg-white w-full py-[16px]"
+            className="bg-white w-full py-[16px] focus:outline-none"
           />
           <div className="grid justify-items-end">
             <button id="create-reply-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn">
