@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-radius: 5px;
+}
