@@ -25,16 +25,8 @@ const AddBadWord = () => {
   });
   return (
     <div className="flex justify-end py-2 gap-4">
-      <input
-        type="input"
-        name="word"
-        value={formik.values.word}
-        onChange={formik.handleChange}
-        className="focus:outline-none bg-white rounded-lg p-2"
-        placeholder="Хараал үг оруулах..."
-        data-testid="bad-word-input"
-      />
-      <button id="add-bad-word-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn" className="bg-black text-white btn" data-testid="add-bad-word-button">
+      <input type="input" name="word" value={formik.values.word} onChange={formik.handleChange} className="focus:outline-none bg-white rounded-lg p-2" placeholder="Хараал үг оруулах..." />
+      <button id="add-bad-word-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn" className="bg-black text-white btn">
         Нэмэх
       </button>
     </div>
