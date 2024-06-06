@@ -32,7 +32,7 @@ const Header = () => {
             {!isDark ? <Light /> : <Dark />}
           </div>
 
-          <div className="flex items-center gap-1 cursor-pointer">
+          <div onClick={() => router.push('/profile')} className="flex items-center gap-1 cursor-pointer">
             <div className="w-8 h-8">
               <img className="rounded-full" src="/profile-image.svg" />
             </div>
