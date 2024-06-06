@@ -5,11 +5,13 @@ import { IoSend } from 'react-icons/io5';
 
 type ReplyFormProps = {
   commentId: string;
-  refetch: () => void;
+  onReplySubmitted: () => void;
 };
 
-const CreateReply = ({ commentId, refetch }: ReplyFormProps) => {
+const CreateReply = (props: ReplyFormProps) => {
   const [publishReply] = usePublishReplyMutation();
+  const { commentId, onReplySubmitted } = props;
+
   const formik = useFormik({
     initialValues: {
       commentId: commentId,
@@ -18,7 +20,7 @@ const CreateReply = ({ commentId, refetch }: ReplyFormProps) => {
       parentId: '',
       name: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await publishReply({
         variables: {
           createInput: {
@@ -35,37 +37,39 @@ const CreateReply = ({ commentId, refetch }: ReplyFormProps) => {
         autoClose: 3000,
         hideProgressBar: true,
       });
-      formik.resetForm();
-      refetch();
+      resetForm();
+      onReplySubmitted();
     },
   });
 
   return (
-    <div className="h-[250px] rounded-2xl  bg-white   " style={{ padding: ' var(--24-px-unit-6, 24px) var(--24-px-unit-6, 24px) var(--64-px-unit-16, 64px) var(--24-px-unit-6, 24px)' }}>
-      <div className="">
-        <input
-          id="comment-email-test-id"
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          type="input"
-          placeholder="Цахим хаягаа оруулна уу..."
-          className="bg-white w-full py-[16px] border-b-2"
-        />
-        <input id="comment-name-test-id" name="name" value={formik.values.name} onChange={formik.handleChange} type="input" placeholder="Таны нэр" className="bg-white w-full py-[16px] border-b-2" />
-        <input
-          id="comment-test-id"
-          name="reply"
-          value={formik.values.reply}
-          onChange={formik.handleChange}
-          type="input"
-          placeholder="Энд сэтгэгдлээ бичнэ үү..."
-          className="bg-white w-full py-[16px]"
-        />
-        <div className="grid justify-items-end">
-          <button id="create-reply-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn">
-            <IoSend className="w-[20px] h-[20px]  " />
-          </button>
+    <div>
+      <div className="h-[250px] rounded-2xl mt-2 bg-white   " style={{ padding: ' var(--24-px-unit-6, 24px) var(--24-px-unit-6, 24px) var(--64-px-unit-16, 64px) var(--24-px-unit-6, 24px)' }}>
+        <div className="">
+          <input
+            id="comment-email-test-id"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            type="input"
+            placeholder="Цахим хаягаа оруулна уу..."
+            className="bg-white w-full py-[16px] border-b-2"
+          />
+          <input id="comment-name-test-id" name="name" value={formik.values.name} onChange={formik.handleChange} type="input" placeholder="Таны нэр" className="bg-white w-full py-[16px] border-b-2" />
+          <input
+            id="comment-test-id"
+            name="reply"
+            value={formik.values.reply}
+            onChange={formik.handleChange}
+            type="input"
+            placeholder="Энд сэтгэгдлээ бичнэ үү..."
+            className="bg-white w-full py-[16px]"
+          />
+          <div className="grid justify-items-end">
+            <button id="create-reply-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn">
+              <IoSend className="w-[20px] h-[20px]  " />
+            </button>
+          </div>
         </div>
       </div>
     </div>
