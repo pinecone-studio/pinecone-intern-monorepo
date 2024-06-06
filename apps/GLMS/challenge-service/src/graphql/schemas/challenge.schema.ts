@@ -109,6 +109,7 @@ export const challengeTypeDefs = gql`
     getDraftChallenges: [AllChallenges]
     getArchiveChallenges: [AllChallenges]
     getApprovedChallenges: [AllChallenges]
+    getChallengeSessions: [ChallengeSession]
   }
 
   type Mutation {
