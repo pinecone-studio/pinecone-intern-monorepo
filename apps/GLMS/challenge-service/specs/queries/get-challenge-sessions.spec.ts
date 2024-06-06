@@ -1,29 +1,5 @@
 import { getChallengeSessions } from '@/graphql/resolvers/queries';
-// import { ChallengeSessionModel } from '@/model';
-// import { ChallengeSessionModel } from '@/model/challenge-session.model';
 import { GraphQLError } from 'graphql';
-
-// jest.mock('@/model/challenge-session.model', () => ({
-//   find: jest.fn(),
-// }));
-
-// describe('getChallengeSessions', () => {
-//   it('should return all challenge sessions from Challenge session Model', async () => {
-//     const mockChallengeSessions = [
-//       {
-//         studentEmail: 'test@gmail.com',
-//         challengeId: '6653e62d905e01e9966b273f',
-//         experiencePoint: 7,
-//         startedAt: '2024-06-04T03:48:04.293+00:00',
-//         endAt: '2024-06-04T03:48:04.293+00:00',
-//       },
-//     ];
-
-//     (ChallengeSessionModel.find as jest.Mock).mockResolvedValue(mockChallengeSessions);
-//     const challengeSessions = await getChallengeSessions();
-//     expect(challengeSessions).toEqual(mockChallengeSessions);
-//     expect(ChallengeSessionModel.find).toHaveBeenCalledTimes(1);
-//   });
 
 jest.mock('@/model/challenge-session.model', () => ({
   ChallengeSessionModel: {
