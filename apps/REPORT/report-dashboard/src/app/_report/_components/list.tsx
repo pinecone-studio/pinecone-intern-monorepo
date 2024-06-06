@@ -1,13 +1,14 @@
-interface Category {
+interface ListItemPropsCategory {
   name: string;
   grade: number;
   desc: string;
 }
-interface Item {
+interface ListItemProps {
   name: string;
-  category: Category[];
+  category: ListItemPropsCategory[];
 }
-export const List = (items: Item[]) => {
+export const List: React.FC<ListItemProps[]> = (props) => {
+  const items = props;
   return (
     <div className="w-screen">
       <table className="table table-lg table-zebra bg-black border-collapse border-2 border-solid border-black" width="100%">
@@ -25,7 +26,7 @@ export const List = (items: Item[]) => {
         </thead>
         <tbody className="h-1/2">
           {/* row 1 */}
-          {items.map((item: Item, index: number) => (
+          {items.map((item: ListItemProps, index: number) => (
             <>
               <tr className="flex text-center">
                 <th rowSpan={item.category.length} className="border">
@@ -53,7 +54,7 @@ export const List = (items: Item[]) => {
                   <input type="checkbox" className="checkbox" />
                 </td>
               </tr>
-              {item.category.slice(1).map((item: Category, index: number) => (
+              {item.category.slice(1).map((item: ListItemPropsCategory, index: number) => (
                 <tr key={index}>
                   <td className="text-center">{item.name}</td>
                   <td className="">
