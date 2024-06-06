@@ -4,6 +4,7 @@ import { JobDetail } from '../../src/app/recruiting/_components';
 import { useRouter, useParams } from 'next/navigation';
 import { MockedProvider } from '@apollo/client/testing';
 import { GET_JOBS } from '../../src/app/recruiting/_components/job-detail/query/get-jobs-query';
+import { DELETE_JOB } from '../../src/app/recruiting/_components/job-detail/mutations/delete-job-mutation';
 
 const useRouterMock = useRouter as jest.Mock;
 const useParamsMock = useParams as jest.Mock;
@@ -32,6 +33,22 @@ const mocks = [
             maxSalary: '2000',
           },
         ],
+      },
+    },
+  },
+  {
+    request: {
+      query: DELETE_JOB,
+      variables: {
+        deleteJobId: '1',
+      },
+    },
+    result: {
+      data: {
+        deleteJob: {
+          id: '1',
+          _typename: 'Job',
+        },
       },
     },
   },
@@ -94,5 +111,27 @@ describe('JobDetail', () => {
     });
 
     expect(pushMock).toHaveBeenCalledWith('/recruiting/edit-job/1');
+  });
+  it('deletes job and navigates back when delete button is clicked', async () => {
+    useParamsMock.mockReturnValue({ id: '1' });
+    const pushMock = jest.fn();
+    useRouterMock.mockReturnValue({
+      push: pushMock,
+    });
+
+    const { findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <JobDetail />
+      </MockedProvider>
+    );
+
+    await waitFor(async () => {
+      const deleteButton = await findByText('Устгах');
+      fireEvent.click(deleteButton);
+    });
+
+    await waitFor(() => {
+      expect(pushMock).toHaveBeenCalledWith('/recruiting');
+    });
   });
 });

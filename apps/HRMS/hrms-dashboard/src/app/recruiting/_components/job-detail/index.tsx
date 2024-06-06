@@ -4,13 +4,15 @@ import { LeftArrow } from '../../../asset';
 import { useRouter, useParams } from 'next/navigation';
 import { ApplicantStatusLabel } from '../core';
 import { CreateErrorModal } from '../modal';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_JOBS } from './query/get-jobs-query';
+import { DELETE_JOB } from './mutations/delete-job-mutation';
 
 export const JobDetail = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { data, loading } = useQuery(GET_JOBS);
+  const { data, loading, refetch } = useQuery(GET_JOBS);
+  const [deleteJob] = useMutation(DELETE_JOB);
   const jobs = data?.getJobs;
   const job = jobs?.find((job: { id: string }) => job.id === id);
 
@@ -20,6 +22,11 @@ export const JobDetail = () => {
 
   const handleEditButtonClick = () => {
     router.push(`/recruiting/edit-job/${id}`);
+  };
+  const handleDeleteButtonClick = async () => {
+    await deleteJob({ variables: { deleteJobId: id } });
+    refetch();
+    router.push('/recruiting');
   };
 
   if (loading)
@@ -83,7 +90,7 @@ export const JobDetail = () => {
         <div className="h-[1px] bg-[#ECEDF0] mt-12 mb-6 mx-[-24px]"></div>
         <div className="flex gap-2 justify-end mr-0">
           <div data-testid="modal-button" className="flex justify-end">
-            <CreateErrorModal text="Устгах" labelType="Устгах" />
+            <CreateErrorModal onClick={handleDeleteButtonClick} text="Устгах" labelType="Устгах" />
           </div>
           <button data-testid="edit-button" onClick={handleEditButtonClick} className="btn shadow-none tracking-tight bg-[#D6D8DB] hover:bg-black rounded-lg hover:text-white text-black">
             Засварлах
