@@ -1,0 +1,13 @@
+query GetArchiveChallenges {
+  getArchiveChallenges {
+    courseId {
+      title
+      thumbnail
+      status
+      id
+      description
+      createdAt
+    }
+    _id
+  }
+}
