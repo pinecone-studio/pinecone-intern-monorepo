@@ -20,9 +20,8 @@ const CommentsTab = ({
   const chooseStatus = (status: string, count: number | undefined) => {
     setSelectedStatus({ status, count: count ? count : 0 });
   };
-
   useEffect(() => {
-    setSelectedStatus({ status, count: data?.getCommentsCount?.normalCount ? data?.getCommentsCount?.normalCount : 0 });
+    setSelectedStatus({ status: 'NORMAL', count: data?.getCommentsCount?.normalCount ? data?.getCommentsCount?.normalCount : 0 });
   }, [data]);
 
   return (
