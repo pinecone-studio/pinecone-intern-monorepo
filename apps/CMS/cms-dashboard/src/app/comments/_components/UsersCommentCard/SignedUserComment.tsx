@@ -1,4 +1,4 @@
-import { User, useDeleteCommentMutation, useUpdateCommentMutation, useGetRepliesByCommentIdQuery } from '@/generated';
+import { User, useDeleteCommentMutation, useGetRepliesByCommentIdQuery, useUpdateCommentMutation } from '@/generated';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { MdOutlineEdit } from 'react-icons/md';
@@ -27,7 +27,7 @@ const SignedUserComment = (props: CommentsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(comment || '');
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const { data } = useGetRepliesByCommentIdQuery({ variables: { commentId: id! } });
+  const { data, refetch: refetchReplies } = useGetRepliesByCommentIdQuery({ variables: { commentId: id! } });
   const replyComments = data?.getRepliesByCommentId || [];
 
   const formik = useFormik({
@@ -69,16 +69,21 @@ const SignedUserComment = (props: CommentsProps) => {
     }
   };
 
+  const handleReplySubmitted = () => {
+    refetchReplies();
+    setShowReplyForm(false);
+  };
+
   return (
     <div>
-      <div className="p-[32px] bg-white rounded-2xl mt-6">
+      <div className="p-[32px] bg-white rounded-2xl  mt-6 ">
         <div className="items-stretch">
           <div>
             <div>
               <h1 className="text-[20px] font-bold">Таны сэтгэгдэл</h1>
               {isEditing ? (
                 <form onSubmit={formik.handleSubmit}>
-                  <textarea name="comment" value={formik.values.comment} onChange={formik.handleChange} className="text-[18px] font-normal mt-2 w-full bg-white p-2 rounded-md" />
+                  <textarea name="comment" value={formik.values.comment} onChange={formik.handleChange} className="text-[18px] font-normal mt-2 w-full bg-white  p-2 rounded-md " />
                   <div className="flex justify-end gap-2">
                     <button type="submit" className="bg-black text-white px-4 py-2 rounded" id="edit-save-button-test-id">
                       Хадгалах
@@ -93,8 +98,8 @@ const SignedUserComment = (props: CommentsProps) => {
               )}
             </div>
           </div>
-          <div className="justify-between grid grid-cols-2 h-[60px]">
-            <div className="flex gap-[16px]">
+          <div className=" justify-between  grid grid-cols-2 h-[60px]">
+            <div className="flex gap-[16px] ">
               <button id="edit-comment-button-test-id" onClick={handleEditComment} className="flex justify-center items-center gap-2 self-end">
                 <MdOutlineEdit className="h-[20px] w-[20px]" />
                 Засах
@@ -109,22 +114,18 @@ const SignedUserComment = (props: CommentsProps) => {
                 <AiOutlineLike className="h-[20px] w-[20px]" /> 0
               </button>
               <button className="flex justify-center items-center gap-2 self-end">
-                <AiOutlineDislike className="h-[20px] w-[20px]" /> 0
+                <AiOutlineDislike className="h-[20px] w-[20px]" />0
               </button>
-              <button id="show-reply-form-button-test-id" onClick={() => setShowReplyForm(!showReplyForm)} className="flex justify-center items-center gap-2 self-end">
+              <button className="flex justify-center items-center gap-2 self-end" onClick={() => setShowReplyForm(!showReplyForm)}>
                 <FaReply /> Хариулах
               </button>
             </div>
           </div>
         </div>
       </div>
-      <button className="flex justify-between items-center p-2">
-        <FaReply />
-        Хариулт 2
-      </button>
-      {showReplyForm && <CreateReply commentId={id!} refetch={refetch} />}
+      {showReplyForm && <CreateReply commentId={id!} onReplySubmitted={handleReplySubmitted} />}
       {replyComments.map((item) => (
-        <div key={item?._id}>{item?.reply && <ReplyComment id={item._id} refetch={refetch} reply={item.reply} name={item.name ?? ''} />}</div>
+        <div key={item?._id}>{item?.reply && <ReplyComment onReplySubmitted={handleReplySubmitted} id={item._id} reply={item.reply} name={item.name ?? ''} />}</div>
       ))}
     </div>
   );
