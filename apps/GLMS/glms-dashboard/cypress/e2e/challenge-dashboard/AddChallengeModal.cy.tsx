@@ -20,7 +20,7 @@ describe('AddChallengeModal Component', () => {
     const selectedTopicId = '66604abf733e2bb9b1376372';
 
     cy.get('[data-testid="challenge-button"]').eq(0).click();
-    cy.get("[data-cy='select']").first().select(selectedTopic);
+    cy.get("[data-cy='select']").first().select(selectedTopicId);
     cy.get("[data-cy='select']").should('have.value', selectedTopicId);
   });
 
