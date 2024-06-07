@@ -12,11 +12,11 @@ type CommentsProps = {
 };
 
 const UserCommentCard = (props: CommentsProps) => {
-  const { name, comment, refetch, id } = props;
+  const { name, comment, refetch, id, email } = props;
   const token = localStorage.getItem('token')!;
   const user = jwt.decode(token) as User;
 
-  if (user) {
+  if (user.email == email) {
     return <SignedUserComment refetch={refetch} comment={comment} id={id} />;
   }
 
