@@ -4,7 +4,9 @@ describe('profile page', () => {
   it('Should display welcome message', () => {
     cy.get('h1').contains('hello from HRMS dashboard Payroll Page');
   });
-  it('Should display click button', () => {
-    cy.get('button').contains('/http://localhost:4200/employee-details').click();
+
+  it('Should navigate to employee details page when button is clicked', () => {
+    cy.get('button[data-testid="button"]').click();
+    cy.url().should('include', '/employee-details');
   });
 });
