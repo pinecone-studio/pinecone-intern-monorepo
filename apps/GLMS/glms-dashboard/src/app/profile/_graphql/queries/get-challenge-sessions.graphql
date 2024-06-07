@@ -1,0 +1,11 @@
+query GetChallengeSessions {
+  getChallengeSessions {
+    _id
+    studentEmail
+    challengeId
+    challengeTitle
+    experiencePoint
+    startedAt
+    endAt
+  }
+}
