@@ -21,7 +21,7 @@ export const Header = () => {
     router.push('/login')
   }
   return (
-    <header className="w-full flex items-center justify-between py-1 px-6 bg-main">
+    <header className="w-full flex items-center justify-between py-1 px-6 bg-main bg-black">
       <div
         onClick={handlePush}
         data-cy="headerIcon"

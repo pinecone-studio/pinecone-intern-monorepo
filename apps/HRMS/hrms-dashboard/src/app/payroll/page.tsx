@@ -8,10 +8,14 @@ const PayrollPage = () => {
   const { data } = useHelloQueryFromPayrollServiceQuery();
 
   return (
-    <div>
+    <div className="bg-[#F7F7F8] w-full">
       <h1>hello from HRMS dashboard Payroll Page</h1>
       <h1>hello from Payroll Service Query {data?.helloQueryFromPayrollService}</h1>
-      <PayrollMain />
+      <div className='p-4 '>
+       
+        <PayrollMain />
+      </div>
+
       <Link href="/">
         <button>Go back to home page</button>
       </Link>
