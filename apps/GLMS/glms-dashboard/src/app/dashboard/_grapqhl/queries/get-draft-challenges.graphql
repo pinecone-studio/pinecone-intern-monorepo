@@ -1,0 +1,12 @@
+query GetDraftChallenges {
+  getDraftChallenges {
+    courseId {
+      title
+      thumbnail
+      status
+      description
+      createdAt
+    }
+    _id
+  }
+}

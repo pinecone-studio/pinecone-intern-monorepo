@@ -6,6 +6,7 @@ export const challengeTypeDefs = gql`
   enum StatusType {
     DRAFT
     APPROVED
+    ARCHIVE
   }
   enum ChoicesType {
     IMAGE
@@ -73,6 +74,7 @@ export const challengeTypeDefs = gql`
     _id: ID
     studentEmail: String
     challengeId: ID
+    challengeTitle: String
     experiencePoint: Int
     startedAt: Date
     endAt: Date
@@ -97,6 +99,7 @@ export const challengeTypeDefs = gql`
   input ChallengeSessionInput {
     studentEmail: String
     challengeId: ID
+    challengeTitle: String
     experiencePoint: Int
     startedAt: Date
     endAt: Date
@@ -109,6 +112,7 @@ export const challengeTypeDefs = gql`
     getDraftChallenges: [AllChallenges]
     getArchiveChallenges: [AllChallenges]
     getApprovedChallenges: [AllChallenges]
+    getChallengeSessions: [ChallengeSession]
   }
 
   type Mutation {

@@ -3,6 +3,7 @@ import { useGetCommentsLazyQuery } from '../../../generated';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import CommentsTab from '../_components/CommentsTab';
 import CommentsCard from '../_components/AdminCommentsCard';
+import AddBadWord from './AddBadWord';
 
 const perPage = 5;
 
@@ -31,6 +32,7 @@ export const CommentsMain = () => {
   const comments = data?.getComments || [];
   return (
     <div className="my-10">
+      <AddBadWord />
       <CommentsTab setSelectedStatus={setSelectedStatus} selectedStatus={selectedStatus} />
       {comments.map((item) => (
         <div key={item?._id}>
