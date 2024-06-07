@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Stepper } from '../../src/app/_student/_components/Stepper';
 
 describe('StepperComponent', () => {
