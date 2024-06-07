@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useHelloQueryFromPayrollServiceQuery } from '../../generated';
-import { PayrollMain } from './_features';
+import { MonthlySalaries } from './delivery/_features';
 import { PayrollPagination } from './delivery/_components/PayrollPagination';
+import { PayrollButton } from './_components';
 
 const PayrollPage = () => {
   const { data } = useHelloQueryFromPayrollServiceQuery();
@@ -17,7 +18,7 @@ const PayrollPage = () => {
         <h1>Цалингийн түүх</h1>
       </div>
       {/* <h1>hello from Payroll Service Query {data?.helloQueryFromPayrollService}</h1> */}
-      <PayrollMain />
+      <MonthlySalaries />
       {/* <PayrollPagination /> */}
     </div>
   );
