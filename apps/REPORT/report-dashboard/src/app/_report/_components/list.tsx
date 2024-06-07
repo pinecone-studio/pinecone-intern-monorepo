@@ -15,20 +15,17 @@ interface ListItemProps {
 }
 import { FaCheck } from 'react-icons/fa6';
 import { FcCancel } from 'react-icons/fc';
-import { useEffect, useState } from 'react';
-import { ChangeEvent, Fragment } from 'react';
+// import { useState } from 'react';
+import { Fragment } from 'react';
 export const List: React.FC<ListItemProps[]> = (props) => {
-  const [selected, setSelected] = useState<string[]>([]);
-  function handleClick(e: ChangeEvent<HTMLInputElement>) {
-    if (selected.includes(e.target.value)) {
-      setSelected(selected.filter((item) => item !== e.target.value));
-    } else {
-      setSelected([...selected, e.target.value]);
-    }
-  }
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+  // const [selected, setSelected] = useState<string[]>([]);
+  // function handleClick(e: ChangeEvent<HTMLInputElement>) {
+  //   if (selected.includes(e.target.value)) {
+  //     setSelected(selected.filter((item) => item !== e.target.value));
+  //   } else {
+  //     setSelected([...selected, e.target.value]);
+  //   }
+  // }
   const items = props;
   return (
     <div className="w-[90vw]">
@@ -79,7 +76,7 @@ export const List: React.FC<ListItemProps[]> = (props) => {
                     {item.days.map((item: ListDayProps, index: number) => (
                       <div key={index} className="flex justify-center items-center gap-3">
                         <h1>{item.name.split('-')[1] + '/' + item.name.split('-')[2]}</h1>
-                        <select value={item.status} className="select select-bordered">
+                        <select defaultValue={item.status} className="select select-bordered">
                           <option value="P">Ирсэн</option>
                           <option value="S">Өвчтэй</option>
                           <option value="A">Байхгүй</option>
@@ -92,7 +89,7 @@ export const List: React.FC<ListItemProps[]> = (props) => {
                 </td>
                 <td rowSpan={item.category.length} className="w-[1vw]">
                   <div className="flex justify-center items-center">
-                    <input type="checkbox" className="checkbox" onChange={handleClick} value={index} />
+                    <input type="checkbox" className="checkbox" value={index} alt="check" />
                   </div>
                 </td>
                 <td rowSpan={item.category.length} className="w-[1vw]">
@@ -116,6 +113,7 @@ export const List: React.FC<ListItemProps[]> = (props) => {
           ))}
         </tbody>
       </table>
+      {/* <h1 className="result-title">Бэлэн төлөвт орсон {selected.length} репорт</h1> */}
     </div>
   );
 };
