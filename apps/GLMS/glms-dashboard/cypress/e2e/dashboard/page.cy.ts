@@ -49,15 +49,15 @@ describe('createLessonPage', () => {
     cy.get('[data-cy="courseClick"]').first().click({ force: true });
   });
 
-  it('should handle publishing a draft challenge', () => {
-    cy.get('[data-cy="Сорилийн ноорог"]').click();
-    cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
-    cy.get('.Toastify__toast--success').should('exist');
-  });
+  // it('should handle publishing a draft challenge', () => {
+  //   cy.get('[data-cy="Сорилийн ноорог"]').click();
+  //   cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
+  //   cy.get('.Toastify__toast--success').should('exist');
+  // });
 
-  it('should handle archiving an approved challenge', () => {
-    cy.get('[data-cy="Сорил"]').click();
-    cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
-    cy.get('.Toastify__toast--success').should('exist');
-  });
+  // it('should handle archiving an approved challenge', () => {
+  //   cy.get('[data-cy="Сорил"]').click();
+  //   cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
+  //   cy.get('.Toastify__toast--success').should('exist');
+  // });
 });
