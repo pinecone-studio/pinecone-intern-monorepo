@@ -15,6 +15,9 @@ const PayrollPage = () => {
       <Link href="/">
         <button>Go back to home page</button>
       </Link>
+      <Link href={'/employee-details'}>
+        <button className="text-black m-4 border rounded-xl p-2 hover:text-white hover:bg-black ease-in-out transition-all">button</button>
+      </Link>
     </div>
   );
 };
