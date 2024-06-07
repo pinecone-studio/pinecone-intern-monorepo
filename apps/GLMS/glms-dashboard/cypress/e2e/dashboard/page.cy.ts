@@ -19,6 +19,10 @@ describe('createLessonPage', () => {
     cy.get('[data-testid="button1"]').click();
     cy.url().should('include', '/create-course');
   });
+  it('should allow creating a course', () => {
+    cy.get('[data-testid="assessment-btn"]').click();
+    cy.url().should('include', '/create-assessment');
+  });
   it('should switch to the correct tab and display the respective content in ActionTab', () => {
     const tabs = ['Хичээл', 'Ноорог'];
 
@@ -54,5 +58,4 @@ describe('createLessonPage', () => {
     cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
     cy.get('.Toastify__toast--success').should('exist');
   });
-
 });
