@@ -1,11 +1,13 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
 import { ContentPaste, Report, Tag, Window } from './SVG';
+import { Wallet } from './SVG/Wallet';
 
 export const sidebarItems = [
   { text: 'Нүүр хуудас', icon: <Window />, pathName: '/' },
   { text: 'Ажилчид', icon: <ContentPaste />, pathName: '/employee-details' },
   { text: 'Чөлөө', icon: <Report />, pathName: '/leaving' },
+  { text: 'Цалин', icon: <Wallet />, pathName: '/payroll' },
   { text: 'Ажлын зар', icon: <Tag />, pathName: '/recruiting' },
 ];
 

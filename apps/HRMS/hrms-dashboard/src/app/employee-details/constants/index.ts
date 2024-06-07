@@ -16,6 +16,7 @@ export const sidebarItems = [
   { text: 'Нүүр хуудас', icon: '/svg/Window.svg', pathName: '/' },
   { text: 'Ажилчид', icon: '/svg/ContentPaste.svg', pathName: '/employee-details?employees=1' },
   { text: 'Чөлөө', icon: '/svg/Report.svg', pathName: '/leaving' },
+  { text: 'Цалин', icon: '/svg/Wallet.svg', pathName: '/payroll' },
   { text: 'Ажлын зар', icon: '/svg/Tag.svg', pathName: '/recruiting' },
 ];
 
