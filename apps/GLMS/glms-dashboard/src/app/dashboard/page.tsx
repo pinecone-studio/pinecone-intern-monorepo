@@ -46,6 +46,9 @@ const DashboardOtherLab = () => {
       localStorage.removeItem('sectionId');
     }
   }, [pathname, refetch]);
+  const handleCreateAssessment = () => {
+    router.push('/create-assessment');
+  };
 
   return (
     <div data-testid="dashboard-page" className="bg-[#F7F7F8] min-h-fit" data-cy="Dashboard-Lab-Page">
@@ -75,6 +78,15 @@ const DashboardOtherLab = () => {
                   </button>
 
                   <AddChallengeModal courses={data?.getCourses as CourseType[]} />
+                  <button
+                    data-testid="assessment-btn"
+                    onClick={handleCreateAssessment}
+                    color="inherit"
+                    className="flex justify-center items-center border-solid border-[2px] border-[#121316] gap-2 rounded-[8px] dark:text-[#ededed] btn hover:bg-black dark:hover:bg-[#3d3d3def] dark:border-[#515151] px-4 py-2 dark:bg-[#4a4a4a] hover:text-white"
+                  >
+                    <p className="text-[14px] font-semibold"> Төсөл</p>
+                    <MdAdd className="w-6 h-6" />
+                  </button>
                 </div>
               )}
             </div>
