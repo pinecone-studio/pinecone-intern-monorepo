@@ -1,5 +1,5 @@
-import { Button } from '../../../shadcn/Button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../shadcn/Dialog';
+import { Button } from '../../../../shadcn/Button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../../shadcn/Dialog';
 
 import { FaPlus } from 'react-icons/fa6';
 import { PayrollCalender1 } from './PayrollCal1';

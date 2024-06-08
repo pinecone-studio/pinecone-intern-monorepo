@@ -1,5 +1,5 @@
 'use client';
-import { PayrollButton, PayrollModal } from '../_components';
+import { PayrollButton, PayrollModal } from '../_components/payrollcalculation';
 import { ComboboxDemo } from '../../../shadcn/Combobox';
 import { ComboboxDemo2 } from '../../../shadcn/Combobox2';
 

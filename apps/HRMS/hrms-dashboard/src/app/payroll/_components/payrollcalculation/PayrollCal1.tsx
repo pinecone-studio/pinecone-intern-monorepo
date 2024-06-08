@@ -6,12 +6,12 @@ import { CalendarIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { cn } from '../../../lib/utils';
-import { Button } from '../../../shadcn/Button';
-import { Calendar } from '../../../shadcn/Calendar';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../shadcn/Form';
-import { Popover, PopoverContent, PopoverTrigger } from '../../../shadcn/Popover';
-import { toast } from '../../../shadcn/UseToast';
+import { cn } from '../../../../lib/utils';
+import { Button } from '../../../../shadcn/Button';
+import { Calendar } from '../../../../shadcn/Calendar';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../shadcn/Form';
+import { Popover, PopoverContent, PopoverTrigger } from '../../../../shadcn/Popover';
+import { toast } from '../../../../shadcn/UseToast';
 
 const FormSchema = z.object({
   dob: z.date({
