@@ -26,4 +26,4 @@ export const studentsSchema = new Schema({
     default: Boolean(true),
   },
 });
-export const StudentsModel = mongoose.models.comments || model('students', studentsSchema);
+export const StudentsModel = mongoose.models.students || model('students', studentsSchema);
