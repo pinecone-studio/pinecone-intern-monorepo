@@ -4,8 +4,8 @@ import { cn } from '../../../lib/utils';
 import { PopoverContent, PopoverTrigger, Popover } from '../../../shadcn/Popover';
 import { Calendar } from '../../../shadcn/Calendar';
 import * as React from 'react';
-import { DateRange } from 'react-day-picker';
-import { Arrow } from '../icons';
+import { DateRange } from '../../../shadcn/DatePicker';
+import { Arrow } from '../icons/Arrow';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '../../../shadcn/Dialog';
 
 export const HeaderComp = () => {

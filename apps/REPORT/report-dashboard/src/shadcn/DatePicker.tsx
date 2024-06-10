@@ -4,7 +4,6 @@ import * as React from 'react';
 import { addDays, format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-
 import { cn } from '../lib/utils';
 import { Button } from './Button';
 import { Calendar } from './Calendar';
@@ -43,3 +42,4 @@ const DatePickerWithRange = ({ className }: React.HTMLAttributes<HTMLDivElement>
   );
 };
 export { DatePickerWithRange, Popover, Button, Calendar, PopoverTrigger, PopoverContent, addDays, format };
+export type { DateRange };
