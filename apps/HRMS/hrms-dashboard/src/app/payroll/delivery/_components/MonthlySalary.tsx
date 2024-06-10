@@ -5,6 +5,6 @@ type PropsType = {
   checked: number;
   defaultValue: string;
 };
-export const MonthlySalary = ({ setPage, checked, defaultValue }: PropsType) => {
+export const MonthlySalary = () => {
   return <div>sar buriin tsalingiin medeelel hiiged maplah</div>;
 };
