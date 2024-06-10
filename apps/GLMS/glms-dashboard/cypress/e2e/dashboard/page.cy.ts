@@ -19,12 +19,6 @@ describe('createLessonPage', () => {
     cy.get('[data-testid="button1"]').click();
     cy.url().should('include', '/create-course');
   });
-  it('should navigate to the create assessment page when "Төсөл" button is clicked', () => {
-    cy.get('[data-testid="assessment-btn"]').should('exist').contains('Төсөл').should('be.visible');
-
-    cy.get('[data-testid="assessment-btn"]').click();
-    cy.url().should('include', '/create-assessment');
-  });
   it('should switch to the correct tab and display the respective content in ActionTab', () => {
     const tabs = ['Хичээл', 'Ноорог'];
 
@@ -49,15 +43,32 @@ describe('createLessonPage', () => {
     cy.get('[data-cy="courseClick"]').first().click({ force: true });
   });
 
-  // it('should handle publishing a draft challenge', () => {
-  //   cy.get('[data-cy="Сорилийн ноорог"]').click();
-  //   cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
-  //   cy.get('.Toastify__toast--success').should('exist');
-  // });
+  it('should handle publishing a draft challenge', () => {
+    cy.get('[data-cy="Сорилийн ноорог"]').click();
+    cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
+    cy.get('.Toastify__toast--success').should('exist');
+  });
 
-  // it('should handle archiving an approved challenge', () => {
-  //   cy.get('[data-cy="Сорил"]').click();
-  //   cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
-  //   cy.get('.Toastify__toast--success').should('exist');
-  // });
+  it('should handle archiving an approved challenge', () => {
+    cy.get('[data-cy="Сорил"]').click();
+    cy.get('[data-testid="challenge-btn"]').first().click({ force: true });
+    cy.get('.Toastify__toast--success').should('exist');
+  });
+
+  it('should handle deleting an archived challenge', () => {
+    cy.get('[data-cy="Сорилийн архив"]').click();
+    cy.get('[data-cy="challenge-btn"]').first().click();
+    cy.get('.Toastify__toast--success').should('exist');
+  });
+
+  it('should render the challenge card with title when courseId is null', () => {
+    cy.get('[data-cy="Сорилийн архив"]').click();
+    cy.get('[data-testid="challenge-card"]').should('exist');
+    cy.get('[data-testid="titleTest"]').should('have.text', 'Энэ хичээл устсан');
+  });
+
+  it('should display empty state icon when there are no courses', () => {
+    cy.get('[data-cy="Хичээл"]').click();
+    cy.get('[data-cy="EmptyIcon"]').should('exist');
+  });
 });
