@@ -23,7 +23,7 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "./jest-dom.d.ts", "@testing-library/jest-dom"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "../../../dist/apps/HRMS/hrms-dashboard/.next/types/**/*.ts", "next-env.d.ts"],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
