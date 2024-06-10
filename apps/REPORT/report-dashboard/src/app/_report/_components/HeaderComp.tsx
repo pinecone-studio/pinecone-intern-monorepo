@@ -1,17 +1,15 @@
 import { Button } from '../../../shadcn/Button';
-// import { format } from '../../../shadcn/DatePicker';
-// import { cn } from '../../../lib/utils';
-// import { PopoverContent, PopoverTrigger, Popover } from '../../../shadcn/Popover';
-// import { Calendar } from '../../../shadcn/Calendar';
+import { format } from '../../../shadcn/DatePicker';
+import { cn } from '../../../lib/utils';
+import { PopoverContent, PopoverTrigger, Popover } from '../../../shadcn/Popover';
+import { Calendar } from '../../../shadcn/Calendar';
 import * as React from 'react';
-// import { DateRange } from '../../../shadcn/DatePicker';
-// import { Arrow } from '../icons/Arrow';
+import { DateRange } from '../../../shadcn/DatePicker';
+import { Arrow } from '../icons/Arrow';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '../../../shadcn/Dialog';
 
-
-
 export const HeaderComp = () => {
-  // const [date, setDate] = React.useState<DateRange | undefined>(undefined);
+  const [date, setDate] = React.useState<DateRange | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
 
   const handleGenerateReport = () => {
@@ -23,7 +21,7 @@ export const HeaderComp = () => {
       <div>
         <p className="text-[#121316] text-[36px] font-bold leading-[44px] tracking-tighter px-[3px]">Репорт</p>
       </div>
-      {/* <div className={cn('grid gap-2 w-[827px]')}>
+      <div className={cn('grid gap-2 w-[827px]')}>
         <Popover>
           <PopoverTrigger asChild>
             <Button id="date" variant="outline" className={cn('px-2 py-[23px] w-[220px] justify-between text-left font-normal text-xs text-black', !date && 'text-muted-foreground')}>
@@ -47,7 +45,7 @@ export const HeaderComp = () => {
               mode="range"
               defaultMonth={date?.from}
               selected={date}
-              onSelect={(range: DateRange | undefined):undefined => {
+              onSelect={(range: DateRange | undefined): undefined => {
                 setDate(range);
                 console.log('Range selected:', range);
               }}
@@ -55,7 +53,7 @@ export const HeaderComp = () => {
             />
           </PopoverContent>
         </Popover>
-      </div> */}
+      </div>
       <div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>

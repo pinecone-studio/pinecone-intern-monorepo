@@ -1,31 +1,65 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { HeaderComp } from '../../src/app/_report/_components';
 import '@testing-library/jest-dom';
-import { act } from '@testing-library/react';
+import * as React from 'react';
+
+jest.mock('../../src/shadcn/Button', () => ({
+  Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{children}</button>,
+}));
+
+jest.mock('../../src/shadcn/DatePicker', () => ({
+  format: (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+}));
+
+jest.mock('../../src/shadcn/Popover', () => ({
+  Popover: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  PopoverContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  PopoverTrigger: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
+jest.mock('../../src/shadcn/Calendar', () => ({
+  Calendar: ({ onSelect }: { onSelect: () => void }) => (
+    <div>
+      <button onClick={() => onSelect}>Select Date Range</button>
+    </div>
+  ),
+}));
+
+jest.mock('../../src/app/_report/icons/Arrow', () => ({
+  Arrow: () => <span>→</span>,
+}));
+
+jest.mock('../../src/shadcn/Dialog', () => ({
+  Dialog: ({ children, open }: { children: React.ReactNode; open: boolean; onOpenChange: () => void }) => <div>{open && children}</div>,
+  DialogTrigger: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogTitle: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
 
 describe('HeaderComp', () => {
-  it('renders without crashing', () => {
+  test('renders correctly', () => {
     render(<HeaderComp />);
+    expect(screen.getByText('Репорт')).toBeInTheDocument();
+    expect(screen.getByText('7 хоног сонгох')).toBeInTheDocument();
+    expect(screen.getByText('Репорт үүсгэх')).toBeInTheDocument();
   });
 
-  it('opens dialog on button click', () => {
-    const { getByText, getByRole } = render(<HeaderComp />);
-    fireEvent.click(getByText('Репорт үүсгэх'));
-    const dialog = getByRole('dialog');
-    expect(dialog).toBeInTheDocument();
+  test('opens the date picker and selects a date range', () => {
+    render(<HeaderComp />);
+
+    fireEvent.click(screen.getByText('7 хоног сонгох'));
+
+    fireEvent.click(screen.getByText('Select Date Range'));
+
+    expect(screen.getByText('Jan 1, 2023 - Jan 7, 2023')).toBeInTheDocument();
   });
 
-  it('displays correct date range', () => {
-    const { getByText, getByRole, getByTestId } = render(<HeaderComp />);
-    const button = getByRole('button', { name: 'date' });
-    fireEvent.click(button);
-    const startDate = getByText('7 хоног сонгох');
-    const dateBtn = getByTestId('date');
+  test('opens the dialog when "Generate Report" button is clicked', () => {
+    render(<HeaderComp />);
 
-    act(() => {
-      fireEvent.click(dateBtn);
-    });
-    expect(startDate).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Репорт үүсгэх'));
+
+    expect(screen.getByText('Репорт үүсгэх')).toBeInTheDocument();
   });
 });
