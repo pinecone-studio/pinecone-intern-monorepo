@@ -38,19 +38,20 @@ export function ComboboxDemo2() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
+        <Button data-testid='ComboBtn2' variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
           {value ? frameworks.find((framework) => framework.value === value)?.label : 'Хугацаа сонгох'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent data-testid='timesChoose' className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput data-testid='input2' placeholder="Search framework..." />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
                 <CommandItem
+                data-testid='times'
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {

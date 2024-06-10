@@ -19,7 +19,7 @@ const FormSchema = z.object({
   }),
 });
 
-export const PayrollCalender1 = () => {
+export const LastDate = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -43,13 +43,13 @@ export const PayrollCalender1 = () => {
           name="dob"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Эхлэх огноо</FormLabel>
+              <FormLabel data-testid='lastdate'>Дуусах огноо</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button variant={'outline'} className={cn('w-[217px] h-[56px]  p-4 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                    <Button data-testid='chooseLastDay' variant={'outline'} className={cn('w-[217px] h-[56px]  p-4 text-left font-normal', !field.value && 'text-muted-foreground')}>
                       {field.value ? format(field.value, 'PPP') : <span>yyy:hh:mm</span>}
-                      <CalendarIcon className="ml-auto h-6 w-6  text-black" />
+                      <CalendarIcon className="ml-auto  h-6 w-6  text-black" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
