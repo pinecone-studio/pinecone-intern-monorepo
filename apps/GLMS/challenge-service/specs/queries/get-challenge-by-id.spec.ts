@@ -3,14 +3,14 @@ import { GraphQLError } from 'graphql';
 
 jest.mock('../../src/model/challenge.model.ts', () => ({
   ChallengeModel: {
-    findById: jest.fn().mockReturnValue({
+    findOne: jest.fn().mockReturnValue({
       populate: jest
         .fn()
         .mockResolvedValueOnce({
           _id: '1',
           title: 'test',
           author: 'test',
-          refCourse: 'test',
+          courseId: 'test',
           status: 'test',
           quiz: ['662237cf4f5c3bd73c213f21', '662237cf4f5c3bd73c213f24'],
         })
@@ -21,12 +21,12 @@ jest.mock('../../src/model/challenge.model.ts', () => ({
 
 describe('get challenge by id', () => {
   it('should get a challenge', async () => {
-    const result = await getChallengeById!({}, { challengeId: '1' }, {});
+    const result = await getChallengeById!({}, { courseId: 'test' }, {});
     expect(result).toEqual({
       _id: '1',
       title: 'test',
       author: 'test',
-      refCourse: 'test',
+      courseId: 'test',
       status: 'test',
       quiz: ['662237cf4f5c3bd73c213f21', '662237cf4f5c3bd73c213f24'],
     });
@@ -34,7 +34,7 @@ describe('get challenge by id', () => {
 
   it('should return error', async () => {
     try {
-      await getChallengeById({}, { challengeId: '1' }); // Pass some dummy values for context
+      await getChallengeById({}, { courseId: 'test' });
     } catch (error) {
       expect(error).toEqual(new GraphQLError('Error in get challenge by id query'));
     }

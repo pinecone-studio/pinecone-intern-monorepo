@@ -8,6 +8,7 @@ import Skeleton from '../_feature/Skeleton';
 import { useGetChallengeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 import ChoiceImage from '../_components/ImageChoicePicker';
+import NewTimer from '../_feature/NewTimer';
 
 interface IStudentChoiceData {
   quizId: string;
@@ -15,55 +16,69 @@ interface IStudentChoiceData {
 }
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useGetChallengeQuery({ variables: { challengeId: params.id } });
+  const { data, loading } = useGetChallengeQuery({ variables: { courseId: params.id } });
   const [selectedChoice, setSelectedChoice] = useState<string | undefined | null>(null);
   const [selectedQuiz, setSelectedQuiz] = useState<string | undefined | null>(null);
-  let oneProgressValue = 0;
+  const [oneProgressValue, setOneProgressValue] = useState(0);
   const [progressValue, setProgressValue] = useState<number>(0);
   const [isShow, setIsShow] = useState<number>(0);
   const [isLast, setIsLast] = useState(false);
   const router = useRouter();
+  const [time, setTime] = useState(30);
   const [studentChoiceData, setStudentChoiceData] = useState<IStudentChoiceData[]>([]);
-
   const handleChange = (id: string | undefined | null, quizId: string | undefined | null) => {
     setSelectedChoice(id);
     setSelectedQuiz(quizId);
   };
-
   const studentChoiceDataPusher = () => {
     studentChoiceData.push({ quizId: selectedQuiz!, choiceId: selectedChoice! });
-    localStorage.setItem('studentChoices', JSON.stringify(studentChoiceData));
+    localStorage.setItem(params.id, JSON.stringify(studentChoiceData));
   };
-
   const oneValueCalculator = () => {
     if (data?.getChallengeById?.quiz) {
-      oneProgressValue = 100 / data?.getChallengeById?.quiz?.length;
+      setOneProgressValue(100 / data?.getChallengeById?.quiz?.length);
+      console.log('ONE VALUE CALCULATOR WORKING', oneProgressValue);
     }
   };
-
   const handleProgressValue = () => {
     if (!isLast) {
       setIsShow(isShow + 1);
+      setTime(30);
     }
     if (progressValue !== 100) {
       setSelectedChoice(null);
-      setProgressValue((prev) => prev + oneProgressValue!);
+      setProgressValue((prev) => prev + oneProgressValue);
       checkLast();
     }
   };
   const checkStudentChoices = () => {
-    if (localStorage.getItem('studentChoices')) {
-      const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
+    if (localStorage.getItem(params.id) && data?.getChallengeById?.quiz) {
+      const studentChoices = JSON.parse(localStorage.getItem(params.id)!);
       setIsShow(studentChoices.length);
       setStudentChoiceData(studentChoices);
-      setProgressValue(oneProgressValue * studentChoices.length);
+      setProgressValue((100 / data?.getChallengeById?.quiz?.length) * studentChoices.length);
+    }
+  };
+  const setStartDate = () => {
+    if (!JSON.parse(localStorage.getItem(params.id)!)) {
+      localStorage.setItem('date', JSON.stringify(Date.now()));
     }
   };
   useEffect(() => {
     oneValueCalculator();
     checkStudentChoices();
+    setStartDate();
   }, [loading]);
-
+  useEffect(() => {
+    if (time === 0) {
+      handleProgressValue();
+      studentChoiceDataPusher();
+    }
+    const intervalId = setInterval(() => {
+      setTime((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [data, time]);
   const checkLast = () => {
     if (data?.getChallengeById?.quiz && data?.getChallengeById?.quiz?.length - 2 === isShow) {
       setIsLast(true);
@@ -71,7 +86,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       setIsLast(false);
     }
   };
-
   return (
     <div className="bg-white flex flex-col justify-center items-center h-[90vh]">
       <ProgressBar progressValue={progressValue} />
@@ -99,36 +113,40 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
           );
         })
       )}
-      <div>
-        {isLast ? (
-          <button
-            disabled={selectedChoice ? false : true}
-            role="button"
-            className="btn border-0 rounded-lg text-white p-2 
+      <div className="w-2/3">
+        <div className="flex justify-between">
+          <div className="flex-1" />
+          <NewTimer time={time} />
+          {isLast ? (
+            <button
+              disabled={selectedChoice ? false : true}
+              role="button"
+              className="btn border-0 rounded-lg text-white p-2 
       text-sm bg-[#989898] w-28"
-            onClick={() => {
-              handleProgressValue();
-              studentChoiceDataPusher();
-              router.push(`challenge/result/${params.id}`);
-            }}
-          >
-            Дуусгах
-          </button>
-        ) : (
-          <button
-            data-testid="next-button"
-            disabled={selectedChoice ? false : true}
-            role="button"
-            className="btn border-0 rounded-lg text-white p-2 
-      text-sm bg-[#989898] w-28"
-            onClick={() => {
-              handleProgressValue();
-              studentChoiceDataPusher();
-            }}
-          >
-            Дараах
-          </button>
-        )}
+              onClick={() => {
+                handleProgressValue();
+                studentChoiceDataPusher();
+                router.push(`challenge/result/${params.id}`);
+              }}
+            >
+              Дуусгах
+            </button>
+          ) : (
+            <button
+              data-testid="next-button"
+              disabled={selectedChoice ? false : true}
+              role="button"
+              className="btn border-0 rounded-lg text-white p-2 
+      text-sm bg-[#989898] w-28 "
+              onClick={() => {
+                handleProgressValue();
+                studentChoiceDataPusher();
+              }}
+            >
+              Дараах
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

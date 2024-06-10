@@ -5,3 +5,4 @@ export * from './get-challenge-by-id';
 export * from './get-approved-challenges';
 export * from './get-draft-challenges';
 export * from './get-archive-challenges';
+export * from './get-challenge-sessions';

@@ -19,8 +19,6 @@ const CreateCommentCard = ({ articleId, refetch }: { articleId: string; refetch:
       entityId: '123',
       entityType: 'user',
     },
-    validateOnChange: false,
-    validateOnBlur: false,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       await publishComment({
@@ -55,9 +53,18 @@ const CreateCommentCard = ({ articleId, refetch }: { articleId: string; refetch:
           onChange={formik.handleChange}
           type="input"
           placeholder="Цахим хаягаа оруулна уу..."
-          className="bg-white w-full py-[16px] border-b-2"
+          className="bg-white w-full py-[16px] border-b-2  focus:outline-none"
         />
-        <input id="comment-name-test-id" name="name" value={formik.values.name} onChange={formik.handleChange} type="input" placeholder="Таны нэр" className="bg-white w-full py-[16px] border-b-2" />
+        <p className="flex justify-end text-[#C93131] text-[12px]">{formik.errors.email}</p>
+        <input
+          id="comment-name-test-id"
+          name="name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          type="input"
+          placeholder="Таны нэр"
+          className="bg-white w-full py-[16px] border-b-2 focus:outline-none"
+        />
         <input
           id="comment-test-id"
           name="comment"
@@ -65,7 +72,7 @@ const CreateCommentCard = ({ articleId, refetch }: { articleId: string; refetch:
           onChange={formik.handleChange}
           type="input"
           placeholder="Энд сэтгэгдлээ бичнэ үү..."
-          className="bg-white w-full py-[16px]"
+          className="bg-white w-full py-[16px] focus:outline-none"
         />
         <div className="grid justify-items-end">
           <button id="create-comment-button-test-id" type="submit" onClick={() => formik.handleSubmit()} name="submitBtn">

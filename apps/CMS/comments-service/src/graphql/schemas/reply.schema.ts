@@ -28,7 +28,7 @@ export const replySchema = gql`
     _id: ID!
   }
   type Mutation {
-    publishReply(createInput: CreateReplyInput): ID!
+    publishReply(createInput: CreateReplyInput!): ID!
     updateReply(updateInput: UpdateReplyInput!): ID!
     deleteReply(deleteInput: DeleteReplyInput!): ID!
   }

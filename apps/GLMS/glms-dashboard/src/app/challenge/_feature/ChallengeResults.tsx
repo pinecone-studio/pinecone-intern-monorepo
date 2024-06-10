@@ -1,8 +1,8 @@
 import { Quiz } from '@/generated';
 import { CheckTrueIcon, CheckFalseIcon } from '../../../assets';
 
-export const ChallengeResults = ({ challenge }: { challenge: Quiz[] }) => {
-  const studentChoices = JSON.parse(localStorage.getItem('studentChoices')!);
+export const ChallengeResults = ({ challenge, id }: { challenge: Quiz[]; id: string }) => {
+  const studentChoices = JSON.parse(localStorage.getItem(id)!);
   const checkIsCorrect = (studentChoice: string, choice: string | undefined | null, isCorrect: boolean | undefined | null) => {
     if (studentChoice === choice && !isCorrect) {
       return 'border-red-500';

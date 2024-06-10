@@ -43,13 +43,16 @@ export const commentsSchema = gql`
     deleteComment(deleteInput: DeleteCommentInput!): ID!
     hideCommentByAdmin(id: ID!): ID!
     deleteCommentByAdmin(id: ID!): ID!
+    addBadWord(word: String!): ID!
   }
   type Count {
-    count: Int
+    normalCount: Int!
+    hiddenCount: Int!
+    deletedCount: Int!
   }
   type Query {
     getComments(input: GetCommentsLimitInput!): [Comment!]
     getCommentsByArticleId(articleId: ID!): [Comment]
-    getCommentsCountByStatus(status: String!): Count
+    getCommentsCount: Count
   }
 `;
