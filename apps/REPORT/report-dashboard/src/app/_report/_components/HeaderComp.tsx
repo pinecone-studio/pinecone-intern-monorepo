@@ -8,6 +8,8 @@ import { DateRange } from '../../../shadcn/DatePicker';
 import { Arrow } from '../icons/Arrow';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '../../../shadcn/Dialog';
 
+
+
 export const HeaderComp = () => {
   const [date, setDate] = React.useState<DateRange | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
@@ -45,7 +47,7 @@ export const HeaderComp = () => {
               mode="range"
               defaultMonth={date?.from}
               selected={date}
-              onSelect={(range) => {
+              onSelect={(range: DateRange | undefined):undefined => {
                 setDate(range);
                 console.log('Range selected:', range);
               }}
