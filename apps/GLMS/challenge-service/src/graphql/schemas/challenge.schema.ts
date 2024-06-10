@@ -28,7 +28,6 @@ export const challengeTypeDefs = gql`
 
   type Challenge {
     _id: ID
-    title: String
     author: String
     courseId: String
     status: StatusType

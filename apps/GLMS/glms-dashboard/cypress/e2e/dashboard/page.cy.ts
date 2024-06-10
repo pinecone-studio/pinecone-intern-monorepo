@@ -55,4 +55,20 @@ describe('createLessonPage', () => {
     cy.get('.Toastify__toast--success').should('exist');
   });
 
+  it('should handle deleting an archived challenge', () => {
+    cy.get('[data-cy="Сорилийн архив"]').click();
+    cy.get('[data-cy="challenge-btn"]').first().click();
+    cy.get('.Toastify__toast--success').should('exist');
+  });
+
+  it('should render the challenge card with title when courseId is null', () => {
+    cy.get('[data-cy="Сорилийн архив"]').click();
+    cy.get('[data-testid="challenge-card"]').should('exist');
+    cy.get('[data-testid="titleTest"]').should('have.text', 'Энэ хичээл устсан');
+  });
+
+  it('should display empty state icon when there are no courses', () => {
+    cy.get('[data-cy="Хичээл"]').click();
+    cy.get('[data-cy="EmptyIcon"]').should('exist');
+  });
 });
