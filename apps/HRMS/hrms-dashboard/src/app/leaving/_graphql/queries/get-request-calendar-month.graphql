@@ -1,7 +1,0 @@
-query getRequestByMonth($startDate: Date) {
-  getRequestByMonth(startDate: $startDate) {
-    name
-    leaveType
-    startDate
-  }
-}

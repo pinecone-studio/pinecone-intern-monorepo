@@ -1,7 +1,1 @@
 export * from './hello-query';
-export * from './dependent-query';
-export * from './dependent-all-query';
-export * from './employee-query';
-export * from './employee-all-query';
-export * from './get-employees-by-paginate';
-export * from './get-request-employee';

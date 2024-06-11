@@ -1,14 +1,10 @@
-import Requests from './_features/Requests';
-import { Calendar, CreateLeaveRequestMain } from './_features';
+'use client';
 
-const LeavingPage = () => {
+export default async function Index() {
   return (
-    <div className="flex flex-col hap-[24px] pt-[32px] px-[32px] w-[100%] bg-[#F7F7F8]">
-      <CreateLeaveRequestMain />
-      <Requests />
-      <Calendar/>
+    <div>
+      <h1 data-cy="Leaving-Page">hello from Leaving Page</h1>
+      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );
-};
-
-export default LeavingPage;
+}
