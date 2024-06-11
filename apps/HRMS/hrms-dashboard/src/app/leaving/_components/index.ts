@@ -1,1 +1,1 @@
-export * from './createLeaveReqComp';
+export * from './LeavingButton';

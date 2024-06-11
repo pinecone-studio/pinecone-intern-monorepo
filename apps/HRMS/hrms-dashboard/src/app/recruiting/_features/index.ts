@@ -1,1 +1,1 @@
-export * from './JobsListTable';
+export * from './RecruitingMain';

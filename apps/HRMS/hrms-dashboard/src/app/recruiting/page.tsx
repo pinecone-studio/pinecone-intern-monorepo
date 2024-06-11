@@ -1,27 +1,10 @@
 'use client';
 
-import { JobRecruitDashboard } from './_components';
-import { JobsListTable } from './_features';
-import { DateFilter, StatusFilter } from './_components';
-import { JobRecruitTabs } from './_components';
-
-const RecruitPage = () => {
+export default async function Index() {
   return (
-    <div className="w-full bg-[#F7F7F8] pt-6 px-8">
-      <div className="flex flex-col bg-white rounded-xl">
-        <JobRecruitDashboard />
-        <div className="pb-6">
-          <JobRecruitTabs />
-          <div className="border-b border-b-[#ECEDF0]"></div>
-        </div>
-        <div className="flex gap-2 mx-6 my-8">
-          <DateFilter />
-          <StatusFilter />
-        </div>
-        <JobsListTable />
-      </div>
+    <div>
+      <h1 data-cy="Recruiting-Page">hello from Recruiting Page</h1>
+      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );
-};
-
-export default RecruitPage;
+}

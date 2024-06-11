@@ -153,7 +153,7 @@ describe('isCoverageAboveThreshold', () => {
 
     cypressCodeCoverageUtils.isCoverageAboveThreshold(70);
 
-    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Code coverage is below 80% (70%). Failing the Cypress test.'));
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Code coverage is below 100% (70%). Failing the Cypress test.'));
     expect(exitSpy).toHaveBeenCalledWith(1);
 
     consoleSpy.mockRestore();
