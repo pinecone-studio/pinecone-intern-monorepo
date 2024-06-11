@@ -1,5 +1,0 @@
-mutation LessonSignUp($email: String, $phoneNumber: String, $password: String!) {
-  lessonSignUp(input: { email: $email, phoneNumber: $phoneNumber, password: $password }) {
-    message
-  }
-}

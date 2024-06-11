@@ -1,17 +1,10 @@
 'use client';
 
-import { useGetChallengesByStatusQuery } from '@/generated';
-import { Timer } from './_components/Timer';
-
-const ChallengePage = () => {
-  const { data, loading } = useGetChallengesByStatusQuery();
+export default async function Index() {
   return (
-    <div className="w-screen overflow-hidden px-[120px] bg-white">
-      <h1>Welcome to Challenge page</h1>
-      <h1>{!loading && data?.getChallengesByStatus?.map((challenge) => challenge?.title)}</h1>
-      <Timer />
+    <div>
+      <h1 data-cy="Challenge-Page">hello from Challenge Page</h1>
+      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );
-};
-
-export default ChallengePage;
+}

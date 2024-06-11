@@ -1,8 +1,0 @@
-mutation deleteSection($id : ID!) {
-    deleteSection(id:$id) {
-        id 
-        title
-        description
-        contentImage
-    }
-}

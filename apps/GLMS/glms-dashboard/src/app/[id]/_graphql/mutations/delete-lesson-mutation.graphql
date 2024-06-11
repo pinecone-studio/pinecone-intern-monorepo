@@ -1,8 +1,0 @@
-mutation deleteLesson ($id : ID!) {
-    deleteLesson(id:$id) {
-        id 
-        title
-        thumbnail
-        courseId
-    }
-}

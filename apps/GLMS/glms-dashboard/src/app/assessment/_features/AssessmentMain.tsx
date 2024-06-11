@@ -3,8 +3,8 @@ import { AssessmentButton } from '../_components';
 export const AssessmentMain = () => {
   return (
     <div>
-      hello from Domain Assessment and Features Assessment main with
-      <AssessmentButton text={'assessment button'} />
+      hello from Topic main with
+      <AssessmentButton text={'Assessment button'} />
     </div>
   );
 };
