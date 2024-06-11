@@ -1,6 +1,0 @@
-mutation LessonSignIn($emailOrPhoneNumber: String!, $password: String!) {
-  lessonSignIn(input: { emailOrPhoneNumber: $emailOrPhoneNumber, password: $password }) {
-    message
-    token
-  }
-}

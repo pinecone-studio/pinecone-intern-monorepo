@@ -1,3 +1,0 @@
-mutation SubmitChallenge($challengeSessionInput: ChallengeSessionInput) {
-  submitChallenge(challengeSessionInput: $challengeSessionInput)
-}

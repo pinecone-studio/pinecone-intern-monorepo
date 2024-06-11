@@ -1,7 +1,0 @@
-query getLessonInId($id: ID!) {
-  getLessonInId(id: $id) {
-    title
-    thumbnail
-    courseId
-  }
-}

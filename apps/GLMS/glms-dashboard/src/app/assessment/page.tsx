@@ -1,26 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { AssessmentMain } from './_features';
-import { useHelloQueryFromAssessmentServiceQuery } from '@/generated';
-
-const AssessmentPage = () => {
-  const { data } = useHelloQueryFromAssessmentServiceQuery();
-  const router = useRouter();
-
-  const handleNavigateToHomePageButton = () => router.push('/');
-
+export default async function Index() {
   return (
-    <div data-testid="assessment-main">
-      <h1>hello from GLMS dashboard Assessment Page</h1>
-      <h1>
-        hello from Assessment Service Query
-        {data?.helloQueryFromAssessmentService}
-      </h1>
-      <AssessmentMain />
-      <button onClick={handleNavigateToHomePageButton}>Go back to home page</button>
+    <div>
+      <h1 data-cy="Assessment-Page">hello from Assessment Page</h1>
+      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );
-};
-
-export default AssessmentPage;
+}
