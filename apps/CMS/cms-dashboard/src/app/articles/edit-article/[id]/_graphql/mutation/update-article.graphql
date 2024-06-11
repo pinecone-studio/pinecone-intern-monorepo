@@ -1,5 +1,0 @@
-mutation UpdateArticle($id: ID!, $title: String!, $content: String!, $category: ID!, $coverPhoto: String, $commentPermission: Boolean!) {
-  updateArticle(_id: $id, title: $title, content: $content, category: $category, coverPhoto: $coverPhoto, commentPermission: $commentPermission) {
-    title
-  }
-}

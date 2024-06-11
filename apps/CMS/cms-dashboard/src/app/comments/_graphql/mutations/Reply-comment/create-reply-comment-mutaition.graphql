@@ -1,3 +1,0 @@
-mutation PublishReply($createInput: CreateReplyInput!) {
-  publishReply(createInput: $createInput)
-}
