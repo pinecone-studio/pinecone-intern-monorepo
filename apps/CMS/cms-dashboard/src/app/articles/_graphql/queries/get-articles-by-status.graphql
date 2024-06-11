@@ -1,8 +1,0 @@
-query GetArticlesByStatus($status: String!) {
-  getArticlesByStatus(status: $status) {
-    id
-    createdAt
-    title
-    coverPhoto
-  }
-}

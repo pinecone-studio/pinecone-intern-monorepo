@@ -1,6 +1,0 @@
-query GetCategories {
-  getCategories {
-    id
-    name
-  }
-}

@@ -1,3 +1,0 @@
-mutation AddBadWord($word: String!) {
-  addBadWord(word: $word)
-}

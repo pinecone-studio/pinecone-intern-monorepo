@@ -1,30 +1,8 @@
-import { PiEyeClosed } from 'react-icons/pi';
-import { MdDeleteOutline, MdReply } from 'react-icons/md';
-
-interface IButtonProps {
-  label: string;
-  disabled?: boolean;
-  btnType?: "default" | "ghost" | "primary";
-  onClick?: () => void;
-  icon?: typeof PiEyeClosed | typeof MdDeleteOutline | typeof MdReply; 
-}
-
-const Button = ({ label, disabled, btnType, onClick, icon }: IButtonProps) => {
-  const IconComponent = icon; 
-
-  return (
-    <button
-      onClick={onClick}
-      className={`btn btn-${btnType} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} bg-white outline-none`}
-      disabled={disabled}
-    >
-      {IconComponent && <IconComponent />}
-      {label}
-    </button>
-  );
+type CommentsButtonProps = {
+  text: string;
 };
 
-export default Button;
-
-
-
+export const CommentsButton = (props: CommentsButtonProps) => {
+  const { text } = props;
+  return <button>{text}</button>;
+};

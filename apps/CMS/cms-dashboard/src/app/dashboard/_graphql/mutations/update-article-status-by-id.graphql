@@ -1,5 +1,0 @@
-mutation UpdateArticleStatusById($id: ID!, $newStatus: String!) {
-  updateArticleStatusById(_id: $id, newStatus: $newStatus) {
-    title
-  }
-}
