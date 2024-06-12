@@ -13,6 +13,7 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
+      "@/*": ["apps/CMS/cms-dashboard/src/*"],
       "@/app/*": ["apps/CMS/cms-dashboard/src/app/*"],
       "@/assets/*": ["apps/CMS/cms-dashboard/src/assets/*"],
       "@/generated": ["apps/CMS/cms-dashboard/src/generated/index.ts"],

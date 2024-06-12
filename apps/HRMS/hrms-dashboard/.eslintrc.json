@@ -1,11 +1,5 @@
 {
-  "extends": [
-    "plugin:cypress/recommended",
-    "plugin:@nx/react-typescript",
-    "next",
-    "next/core-web-vitals",
-    "../../../.eslintrc.json"
-  ],
+  "extends": ["plugin:cypress/recommended", "plugin:@nx/react-typescript", "next", "next/core-web-vitals", "../../../.eslintrc.json"],
   "ignorePatterns": ["!**/*", ".next/**/*"],
   "overrides": [
     {
@@ -17,10 +11,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": [
-          "error",
-          "apps/GLMS/glms-dashboard/pages"
-        ]
+        "@next/next/no-html-link-for-pages": ["error", "apps/GLMS/glms-dashboard/pages"]
       }
     },
     {
@@ -35,6 +26,29 @@
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "env": {
         "jest": true
+      }
+    },
+    {
+      "files": ["**/components/ui/*.ts", "**/components/ui/*.tsx"],
+      "rules": {
+        "complexity": [
+          "error",
+          {
+            "max": 7
+          }
+        ],
+        "max-lines": [
+          "error",
+          {
+            "max": 250
+          }
+        ],
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase"
+          }
+        ]
       }
     },
     {

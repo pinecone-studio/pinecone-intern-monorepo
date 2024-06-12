@@ -1,5 +1,7 @@
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
+import { ProjectHeader } from '@/components/ProjectHeader';
 
 export const metadata = {
   title: 'Welcome to CMS-dashboard',
@@ -10,11 +12,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className="relative">
-        <FederationProvider>
-          <div className="flex flex-col flex-1">
-            <div className="flex flex-col md:flex-row dark:bg-white ">{children}</div>
-          </div>
-        </FederationProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <FederationProvider>
+            <ProjectHeader />
+            {children}
+          </FederationProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
