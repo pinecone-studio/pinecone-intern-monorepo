@@ -1,11 +1,11 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
-const { join } = require('path');
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ['class'],
   content: [join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'), ...createGlobPatternsForDependencies(__dirname)],
-  darkMode: 'class',
   theme: {
     container: {
       center: true,
@@ -74,5 +74,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui'), require('tailwindcss-animate')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
 };

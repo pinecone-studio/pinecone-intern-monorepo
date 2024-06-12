@@ -13,6 +13,7 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
+      "@/*": ["apps/GLMS/glms-dashboard/src/*"],
       "@/apps/*": ["apps/GLMS/glms-dashboard/src/apps/*"],
       "@/generated": ["apps/GLMS/glms-dashboard/src/generated/index.ts"],
       "@/common/*": ["apps/GLMS/glms-dashboard/src/common/*"],

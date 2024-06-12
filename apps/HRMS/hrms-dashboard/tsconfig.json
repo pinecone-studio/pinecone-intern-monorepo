@@ -13,6 +13,7 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
+      "@/*": ["apps/HRMS/hrms-dashboard/src/*"],
       "@/apps/*": ["apps/HRMS/hrms-dashboard/src/apps/*"],
       "@/generated": ["apps/HRMS/hrms-dashboard/src/generated/index.ts"],
       "@/common/*": ["apps/HRMS/hrms-dashboard/src/common/*"],
