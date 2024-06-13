@@ -1,6 +1,37 @@
-describe('sign-in-page', () => {
-  beforeEach(() => cy.visit('/sign-in'));
-  it('Should render home page', () => {
+describe('SignInModal', () => {
+  beforeEach(() => {
+    cy.visit('/sign-in');
+  });
+
+  it('Should render the sign-in page', () => {
     cy.get('[data-cy="sign-in-page"]').should('exist');
+  });
+
+  it('Should render the SignInModal component', () => {
+    cy.contains('Нэвтрэх').should('be.visible');
+
+    cy.contains('Таны имэйл эсвэл утасны дугаар').should('be.visible');
+
+    cy.get('[data-testid="email-input"]').should('be.visible').and('have.attr', 'type', 'email');
+
+    cy.contains('Нууц үг').should('be.visible');
+
+    cy.get('[data-testid="password-input"]').should('be.visible').and('have.attr', 'type', 'password');
+
+    cy.contains('Дараах').should('be.visible');
+  });
+
+  it('Inputs accept text', () => {
+    const email = 'test@example.com';
+    const password = 'password123';
+
+    cy.get('input[name="email"]').type(email).should('have.value', email);
+    cy.get('input[name="password"]').type(password).should('have.value', password);
+  });
+
+  it('Navigates to home page on button click', () => {
+    cy.get('button').contains('Дараах').click();
+
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
 });
