@@ -36,9 +36,9 @@ describe('Stepper component', () => {
 
   test('progress bar style is correct for current step', () => {
     const progressBarItems = screen.queryAllByTestId('step-item-0');
-    expect(progressBarItems.length).toBe(2); // Assuming there are two progress bars
+    expect(progressBarItems.length).toBe(2);
     progressBarItems.forEach((progressBar) => {
-      expect(progressBar).toHaveStyle({ backgroundColor: expect.stringMatching(/rgb\(\d+,\s*\d+,\s*\d+\)/) }); // Check for RGB color format
+      expect(progressBar).toHaveStyle({ backgroundColor: expect.stringMatching(/rgb\(\d+,\s*\d+,\s*\d+\)/) });
       expect(progressBar).toHaveStyle({ left: 'calc(50% + 18px)' });
       expect(progressBar).toHaveStyle({ width: 'calc(100% - 20px)' });
     });
@@ -50,25 +50,24 @@ describe('Stepper component', () => {
     fireEvent.click(nextStepButton);
 
     const updatedStepContents = screen.getAllByTestId('step-content');
-    expect(updatedStepContents[1].textContent).toBe('Нэмэлт мэдээлэл'); // Updated to the correct step content
+    expect(updatedStepContents[1].textContent).toBe('Нэмэлт мэдээлэл');
   });
 
   test('handles invalid currentStep gracefully', () => {
-    // Mocking useState to return an invalid currentStep
     const useStateMock = jest.spyOn(React, 'useState');
     useStateMock.mockReturnValue([-1, () => {}]);
 
     render(<Stepper />);
 
     const stepContent = screen.getAllByTestId('step-content');
-    expect(stepContent.length).toBe(6); // Updated to reflect the correct number of steps
-    expect(stepContent[0].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл'); // Updated to the correct step content
+    expect(stepContent.length).toBe(6);
+    expect(stepContent[0].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
   });
 
   test('renders dynamic step content based on user input', () => {
     const stepContentElements = screen.queryAllByTestId('step-content');
     stepContentElements.forEach((stepContentElement) => {
-      expect(stepContentElement.textContent).toMatch(/Хөдөлмөр эрхлэлтийн мэдээлэл|Нэмэлт мэдээлэл|Хувийн мэдээлэл/); // Update with the correct step content text
+      expect(stepContentElement.textContent).toMatch(/Хөдөлмөр эрхлэлтийн мэдээлэл|Нэмэлт мэдээлэл|Хувийн мэдээлэл/);
     });
   });
 
