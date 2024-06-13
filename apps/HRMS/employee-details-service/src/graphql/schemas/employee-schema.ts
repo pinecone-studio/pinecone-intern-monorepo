@@ -85,8 +85,6 @@ type PersonalInformation {
     hobby: [String]
   }
 
-
-
 input UpdatePersonalInformationInput {
   gender: Gender
   dateOfBirth: Date
@@ -95,15 +93,12 @@ input UpdatePersonalInformationInput {
   hobby: [String]
 }
 
-
 type FamilyInformation {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
-
-
 input UpdateFamilyInformationInput {
   homeAddress: String
   numberOfFamilyMembers: Int
@@ -149,13 +144,10 @@ type Mutation {
   updateEmployee(input: UpdateEmployeeInput): Employee!
   deleteEmployee(_id: ID!): Employee!
   
-  
   addPersonalInformation(employeeId: ID, input: PersonalInformationInput): PersonalInformation!
   updatePersonalInformation(employeeId: ID, input: UpdatePersonalInformationInput): PersonalInformation!
-  
- 
+
   addFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
   updateFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
-     
 }
 `;
