@@ -2,7 +2,7 @@ import SignInModal from './_features/SignInModal';
 
 const SignIn = () => {
   return (
-    <div className=" w-full h-[100vh] flex">
+    <div data-cy="sign-in-page" className=" w-full h-[100vh] flex">
       <div className="w-[50%] bg-[#FFF] flex items-center justify-center">
         <SignInModal />
       </div>
