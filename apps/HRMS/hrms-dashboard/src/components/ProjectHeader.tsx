@@ -12,11 +12,11 @@ export const ProjectHeader = () => {
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center flex-start ">
               <Link href={'/'}>
-                <LogoOnly />
+                <LogoOnly data-cy="sidebarItem" />
               </Link>
             </div>
             <div className="flex space-x-4 flex-end">
-              <ModeToggle />
+              <ModeToggle data-cy="sidebarItem" />
             </div>
           </div>
         </div>
