@@ -19,7 +19,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
       reader.onload = (event) => {
         setPreviewURL(event.target?.result as string);
         setImage(file);
-        onImageUpload(file);
+        // onImageUpload(file);
       };
     }
   };
