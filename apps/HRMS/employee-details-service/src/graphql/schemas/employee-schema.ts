@@ -21,7 +21,7 @@ enum EmploymentStatus {
   PART_TIME
   CONTRACTOR
   TEMPORARY
-  ARCHIVE?
+  ARCHIVE
 }
 
 enum Department {
