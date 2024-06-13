@@ -1,72 +1,67 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render } from '@testing-library/react';
 import { Stepper } from '../../src/app/employee-details/_components/modal/Stepper';
 
-describe('Stepper Component', () => {
-  test('test step-container', () => {
+describe('Stepper component', () => {
+  test('renders without crashing', () => {
     render(<Stepper />);
-    expect(screen.getByTestId('step-container')).toBeDefined();
   });
 
-  test('test subcontainer', () => {
-    render(<Stepper />);
-    expect(screen.getByTestId('subcontainer')).toBeDefined();
+  test('renders step container', () => {
+    const { getByTestId } = render(<Stepper />);
+    const stepContainer = getByTestId('step-container');
+    expect(stepContainer).toBeTruthy();
   });
 
-  test('renders steps with correct content', () => {
-    const mockSteps = [
-      { title: 'Step 1', content: 'Хувийн мэдээлэл' },
-      { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
-      { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
-    ];
-
-    render(<Stepper />);
-
-    const renderedSteps = mockSteps.map((step, index) => ({
-      title: `Step ${index + 1}`,
-      content: step.content,
-    }));
-
-    expect(renderedSteps).toEqual(mockSteps);
+  test('renders subcontainer', () => {
+    const { getByTestId } = render(<Stepper />);
+    const subcontainer = getByTestId('subcontainer');
+    expect(subcontainer).toBeTruthy();
   });
 
-  it('renders the progress bar correctly', () => {
-    const steps = ['Step 1', 'Step 2', 'Step 3'];
-    const currentStep = 1;
-
-    const { container } = render(
-      <div>
-        {steps.map((step, index) => (
-          <div key={index}>
-            {index < steps.length - 1 && (
-              <div
-                className={`absolute top-1/2 transform -translate-y-1/2 h-1 ${currentStep >= index + 1 ? 'bg-black' : 'bg-[#ECEDF0]'}`}
-                style={{ left: 'calc(50% + 18px)', width: 'calc(100% - 20px)' }}
-              ></div>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-
-    const progressBar = container.querySelector('.h-1');
-    expect(progressBar).toBeInTheDocument();
-    expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-black');
+  test('renders correct number of steps', () => {
+    const { getAllByTestId } = render(<Stepper />);
+    const steps = getAllByTestId('step-number');
+    expect(steps.length).toBe(3); // Assuming each step has a data-testid="step-number"
   });
 
-  it('renders the step content correctly', () => {
-    const step = { content: 'Example content' };
+  test('renders step content correctly', () => {
+    const { getByText } = render(<Stepper />);
+    expect(getByText('Хувийн мэдээлэл')).toBeTruthy();
+    expect(getByText('Хөдөлмөр эрхлэлтийн мэдээлэл')).toBeTruthy();
+    expect(getByText('Нэмэлт мэдээлэл')).toBeTruthy();
+  });
 
-    const { getByText } = render(
-      <div>
-        <div className="absolute flex justify-center items-center w-[100px] ml-[30px] mt-2">
-          <p className="text-center text-wrap text-[#121316] text-[14px] font-[600] leading-4 tracking-[-0.2px]">{step.content}</p>
-        </div>
-      </div>
-    );
+  test('renders step numbers correctly', () => {
+    const { getAllByText } = render(<Stepper />);
+    expect(getAllByText(/[1-3]/).length).toBe(3);
+  });
 
-    const stepContent = getByText('Example content');
-    expect(stepContent).toBeInTheDocument();
+  test('step numbers are within range', () => {
+    const { getAllByText } = render(<Stepper />);
+    const stepNumbers = getAllByText(/[1-3]/);
+    stepNumbers.forEach((stepNumber) => {
+      const number = Number(stepNumber.textContent);
+      expect(number >= 1 && number <= 3).toBe(true);
+    });
+  });
+
+  test('step content is correct', () => {
+    const { getByText } = render(<Stepper />);
+    const step1Content = getByText('Хувийн мэдээлэл');
+    const step2Content = getByText('Хөдөлмөр эрхлэлтийн мэдээлэл');
+    const step3Content = getByText('Нэмэлт мэдээлэл');
+    expect(step1Content.textContent).toBe('Хувийн мэдээлэл');
+    expect(step2Content.textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
+    expect(step3Content.textContent).toBe('Нэмэлт мэдээлэл');
+  });
+
+  test('step styles are applied correctly', () => {
+    const { getAllByTestId } = render(<Stepper />);
+    const stepItems = getAllByTestId('step-item'); // Assuming each step item has a data-testid="step-item"
+    stepItems.forEach((stepItem, index) => {
+      const expectedClass = index === 0 ? 'bg-[#121316] text-white' : 'bg-[#ECEDF0] text-black';
+      expect(stepItem.className).toContain(expectedClass);
+    });
   });
 });

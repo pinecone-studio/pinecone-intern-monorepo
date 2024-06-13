@@ -13,8 +13,8 @@ export const Stepper = () => {
       <div data-testid="subcontainer" className="relative flex justify-between items-center mb-[100px]">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
-            <div className="flex-1 relative items-center justify-center px-1">
-              <div className={`flex items-center justify-center w-9 h-9 rounded-full mx-auto ${index <= currentStep ? 'bg-[#121316] text-white' : 'bg-[#ECEDF0] text-black'}`}>
+            <div data-testid="step-number" className="flex-1 relative items-center justify-center px-1">
+              <div data-testid="step-item" className={`flex items-center justify-center w-9 h-9 rounded-full mx-auto ${index <= currentStep ? 'bg-[#121316] text-white' : 'bg-[#ECEDF0] text-black'}`}>
                 <p className="text-4 font-[600] leading-5 tracking-[-0.3px]">{index + 1}</p>
               </div>
               {index < steps.length - 1 && (
