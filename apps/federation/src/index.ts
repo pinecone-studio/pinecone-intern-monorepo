@@ -55,7 +55,7 @@ const gateway = new ApolloGateway({
       },
       {
         name: 'employee-details',
-        url: process.env.EMPLOYEE_DETAILS_SERVICE,
+        url: 'http://localhost:5300',
       },
       {
         name: 'articles',
