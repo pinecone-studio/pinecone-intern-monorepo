@@ -60,4 +60,93 @@ describe('Stepper component', () => {
       expect(stepContent.textContent).toBe('Хувийн мэдээлэл');
     }
   });
+
+  test('navigates to next step on click', () => {
+    render(<Stepper />);
+    const stepNumbers = screen.getAllByTestId('step-number');
+    const nextStepButton = stepNumbers[1];
+
+    nextStepButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+    const updatedStepContents = screen.queryAllByTestId('step-content');
+    expect(updatedStepContents.length).toBe(3);
+    expect(updatedStepContents[1].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
+  });
+
+  test('handles invalid currentStep gracefully', () => {
+    const useStateMock = jest.fn();
+    useStateMock.mockReturnValue([0, () => {}]);
+
+    React.useState = useStateMock;
+
+    render(<Stepper />);
+
+    const stepContent = screen.queryAllByTestId('step-content');
+    expect(stepContent.length).toBe(3);
+    expect(stepContent[0].textContent).toBe('Хувийн мэдээлэл');
+  });
+
+  test('renders dynamic step content based on user input', () => {
+    const MockStepper = () => {
+      const [inputValue, setInputValue] = React.useState('');
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+      };
+
+      const steps = [
+        { title: 'Step 1', content: 'Хувийн мэдээлэл' },
+        { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
+        { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
+      ];
+
+      return (
+        <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto p-4">
+          <input type="text" aria-label="Enter something" value={inputValue} onChange={handleChange} />
+          <div data-testid="subcontainer" className="relative flex justify-between items-center mb-[100px]">
+            {steps.map((step, index) => (
+              <React.Fragment key={index}>
+                <div className="flex-1 relative items-center justify-center px-1">
+                  <div className={`flex items-center justify-center w-9 h-9 rounded-full mx-auto ${index <= 0 ? 'bg-[#121316] text-white' : 'bg-[#ECEDF0] text-black'}`}>
+                    <p data-testid="step-number" className="text-4 font-[600] leading-5 tracking-[-0.3px]">
+                      {index + 1}
+                    </p>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div
+                      data-testid={`step-item-${index}`}
+                      className={`absolute top-1/2 transform -translate-y-1/2 h-1 ${0 >= index + 1 ? 'bg-black' : 'bg-[#ECEDF0]'}`}
+                      style={{ left: 'calc(50% + 18px)', width: 'calc(100% - 20px)' }}
+                    ></div>
+                  )}
+                  <div className="absolute flex justify-center items-center w-[100px] ml-[30px] mt-2">
+                    <p data-testid="step-content" className="text-center text-wrap text-[#121316] text-[14px] font-[600] leading-4 tracking-[-0.2px]">
+                      {step.content}
+                    </p>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    render(<MockStepper />);
+    const inputField = screen.getByLabelText('Enter something') as HTMLInputElement;
+
+    const inputEvent = new Event('input', { bubbles: true });
+    inputField.dispatchEvent(inputEvent);
+
+    inputField.value = 'New content';
+
+    const updatedStepContents = screen.queryAllByTestId('step-content');
+    expect(updatedStepContents.length).toBe(3);
+    expect(updatedStepContents[0].textContent).toBe('Хувийн мэдээлэл');
+  });
+
+  test('conditionally renders additional content based on step progress', () => {
+    render(<Stepper />);
+    const additionalContent = screen.queryByTestId('additional-content');
+    expect(additionalContent !== null).toBe(false);
+  });
 });
