@@ -9,7 +9,7 @@ export const Stepper = () => {
   ];
 
   return (
-    <div data-testId="step-container" className="max-w-xl w-[533px] mx-auto p-4">
+    <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto p-4">
       <div className="relative flex justify-between items-center mb-[100px]">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
