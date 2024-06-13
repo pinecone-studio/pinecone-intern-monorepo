@@ -8,11 +8,11 @@ const SignInModal = () => {
         <div className="flex flex-col items-center gap-[16px]">
           <div className="flex flex-col gap-2">
             <p className="font-semibold">Таны имэйл эсвэл утасны дугаар</p>
-            <Input type="text" className="w-[360px] h-[56px] text-[18px] font-normal bg-[#F7F7F8]" placeholder="Имэйл эсвэл утасны дугаар" />
+            <Input name="email" type="email" className="w-[360px] h-[56px] text-[18px] font-normal bg-[#F7F7F8]" placeholder="Имэйл эсвэл утасны дугаар" />
           </div>
           <div className="flex flex-col gap-2">
             <p className="font-semibold">Нууц үг</p>
-            <Input type="password" className="w-[360px] h-[56px] text-[18px] font-normal bg-[#F7F7F8]" placeholder="Нууц үгээ оруулна уу" />
+            <Input name="password" type="password" className="w-[360px] h-[56px] text-[18px] font-normal bg-[#F7F7F8]" placeholder="Нууц үгээ оруулна уу" />
           </div>
         </div>
       </div>
