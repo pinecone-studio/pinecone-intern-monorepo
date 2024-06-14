@@ -44,6 +44,19 @@ describe('Stepper component', () => {
     });
   });
 
+  test('progress bar between steps is rendered correctly', () => {
+    const progressBars = screen.getAllByTestId('step-item-0');
+    expect(progressBars.length).toBe(2); // There should be 2 progress bars between 3 steps
+    progressBars.forEach((progressBar, index) => {
+      expect(progressBar).toBeInTheDocument();
+      if (index <= 0) {
+        expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+      } else {
+        expect(progressBar).toHaveClass('bg-[#ECEDF0]');
+      }
+    });
+  });
+
   test('navigates to next step on click', () => {
     const nextStepButton = screen.getAllByTestId('step-number')[1];
 
@@ -60,7 +73,7 @@ describe('Stepper component', () => {
     render(<Stepper />);
 
     const stepContent = screen.getAllByTestId('step-content');
-    expect(stepContent.length).toBe(6);
+    expect(stepContent.length).toBe(6); // Should not duplicate the steps
     expect(stepContent[0].textContent).toBe('Хувийн мэдээлэл');
   });
 
