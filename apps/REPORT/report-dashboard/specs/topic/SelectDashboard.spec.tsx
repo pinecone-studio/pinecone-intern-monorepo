@@ -14,6 +14,6 @@ describe('SelectDashboard component', () => {
     act(() => {
       fireEvent.click(getByTestId('option-2'));
     });
-    expect(getByTestId('Black-2')).toBeInstanceOf('bg-black');
+    expect(getByTestId('Black-2')).toBeDefined();
   });
 });

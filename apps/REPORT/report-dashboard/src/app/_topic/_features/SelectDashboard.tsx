@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 type MenuItem = string;
 export const SelectDashboard = () => {
   const menu = [
@@ -8,7 +9,6 @@ export const SelectDashboard = () => {
     { id: 3, name: 'Сурагч' },
   ];
   const [selected, setSelected] = useState<MenuItem>(menu[0].name);
-  console.log(selected);
   return (
     <div
       className="flex gap-3
