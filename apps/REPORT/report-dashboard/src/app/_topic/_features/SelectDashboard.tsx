@@ -2,8 +2,12 @@
 import { useEffect, useState } from 'react';
 type MenuItem = string;
 export const SelectDashboard = () => {
-  const menu = ['Репорт', 'Сэдэв', 'Сурагч'];
-  const [selected, setSelected] = useState<MenuItem>(menu[0]);
+  const menu = [
+    { id: 1, name: 'Репорт' },
+    { id: 2, name: 'Сэдэв' },
+    { id: 3, name: 'Сурагч' },
+  ];
+  const [selected, setSelected] = useState<MenuItem>(menu[0].name);
   console.log(selected);
   return (
     <div
@@ -12,9 +16,9 @@ export const SelectDashboard = () => {
     >
       {menu.map((menuItem) => {
         return (
-          <div key={menuItem} onClick={() => setSelected(menuItem)}>
-            <p>{menuItem}</p>
-            <div className={`h-[2px]  ${selected == menuItem ? 'bg-black' : ''}`}></div>
+          <div key={menuItem.id} onClick={() => setSelected(menuItem.name)}>
+            <p data-testid={`option-${menuItem.id}`}>{menuItem.name}</p>
+            <div data-testid={`Black-${menuItem.id}`} className={`h-[2px]  ${selected == menuItem.name ? 'bg-black' : ''}`}></div>
           </div>
         );
       })}
