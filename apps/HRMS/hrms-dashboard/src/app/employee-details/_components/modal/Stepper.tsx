@@ -1,7 +1,6 @@
 import React from 'react';
 
-export const Stepper = () => {
-  const currentStep = 0;
+export const Stepper = ({ currentStep }: { currentStep: number }) => {
   const steps = [
     { title: 'Step 1', content: 'Хувийн мэдээлэл' },
     { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },

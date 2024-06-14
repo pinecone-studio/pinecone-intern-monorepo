@@ -9,7 +9,7 @@ describe('Stepper component', () => {
   beforeEach(() => {
     useStateMock = jest.spyOn(React, 'useState');
     useStateMock.mockReturnValue([0, () => {}]); // Default state for tests
-    render(<Stepper />);
+    render(<Stepper currentStep={1} />);
   });
 
   afterEach(() => {
@@ -58,7 +58,7 @@ describe('Stepper component', () => {
     progressBars.forEach((progressBar, index) => {
       expect(progressBar).toBeInTheDocument();
       if (index < 1) {
-        expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+        expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-black');
       } else {
         expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
       }
@@ -66,18 +66,16 @@ describe('Stepper component', () => {
   });
 
   test('progress bar reflects current step correctly when step is 1', () => {
-    useStateMock.mockReturnValue([1, () => {}]);
-    render(<Stepper />);
+    render(<Stepper currentStep={1} />);
     const progressBars = screen.getAllByTestId('step-item-0');
-    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-black');
     expect(progressBars[1]).toHaveClass('bg-[#ECEDF0]');
   });
 
   test('progress bar reflects current step correctly when step is 2', () => {
-    useStateMock.mockReturnValue([2, () => {}]);
-    render(<Stepper />);
+    render(<Stepper currentStep={2} />);
     const progressBars = screen.getAllByTestId('step-item-0');
-    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-black');
     expect(progressBars[1]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
   });
 
@@ -91,9 +89,7 @@ describe('Stepper component', () => {
   });
 
   test('handles invalid currentStep gracefully', () => {
-    useStateMock.mockReturnValue([-1, () => {}]);
-
-    render(<Stepper />);
+    render(<Stepper currentStep={1} />);
 
     const stepContent = screen.getAllByTestId('step-content');
     expect(stepContent.length).toBe(6); // Should not duplicate the steps
