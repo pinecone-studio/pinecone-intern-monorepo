@@ -4,21 +4,22 @@ describe('SignInModal', () => {
   });
 
   it('Should render the sign-in page', () => {
-    cy.get('[data-cy="sign-in-page"]').should('exist');
+    cy.get('[data-testid="sign-in-form-container"]').should('exist');
   });
 
   it('Should render the SignInModal component', () => {
     cy.contains('Нэвтрэх').should('be.visible');
     cy.contains('Таны имэйл эсвэл утасны дугаар').should('be.visible');
-    cy.get('[data-testid="email-input"]').should('be.visible').and('have.attr', 'type', 'email');
+    cy.get('[data-testid="email-input"]').should('be.visible').and('have.attr', 'type', 'text');
     cy.contains('Нууц үг').should('be.visible');
     cy.get('[data-testid="password-input"]').should('be.visible').and('have.attr', 'type', 'password');
+    cy.contains('Нууц үг сэргээх').should('be.visible');
     cy.contains('Дараах').should('be.visible');
   });
 
   it('Inputs accept text', () => {
     const email = 'test@example.com';
-    const password = 'password123';
+    const password = 'Password123!';
     cy.get('[data-testid="email-input"]').type(email).should('have.value', email);
     cy.get('[data-testid="password-input"]').type(password).should('have.value', password);
   });
