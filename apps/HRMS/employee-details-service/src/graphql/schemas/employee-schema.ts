@@ -150,7 +150,6 @@ export const employeeDetailsSchema = gql`
 
     addPersonalInformation(employeeId: ID!, input: PersonalInformationInput!): PersonalInformation!
     updatePersonalInformation(employeeId: ID!, input: UpdatePersonalInformationInput!): PersonalInformation!
-
     addFamilyInformation(employeeId: ID!, input: FamilyInformationInput!): FamilyInformation!
     updateFamilyInformation(employeeId: ID!, input: UpdateFamilyInformationInput!): FamilyInformation!
   }
