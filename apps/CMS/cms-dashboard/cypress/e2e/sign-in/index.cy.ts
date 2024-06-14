@@ -23,7 +23,11 @@ describe('SignInModal', () => {
     cy.get('[data-testid="password-input"]').type(password).should('have.value', password);
   });
 
-  it('Navigates to home page on button click', () => {
+  it('Navigates to home page on button click after successful form submission', () => {
+    const email = 'test@example.com';
+    const password = 'Password123!';
+    cy.get('[data-testid="email-input"]').type(email);
+    cy.get('[data-testid="password-input"]').type(password);
     cy.get('button').contains('Дараах').click();
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
