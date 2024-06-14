@@ -6,9 +6,6 @@ import { resolvers, typeDefs } from '../../graphql';
 import { connectToDatabase } from '@/config/connect-database';
 
 connectToDatabase();
-import { connectDB } from '@/config/database';
-
-connectDB();
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
