@@ -9,29 +9,22 @@ describe('SignInModal', () => {
 
   it('Should render the SignInModal component', () => {
     cy.contains('Нэвтрэх').should('be.visible');
-
     cy.contains('Таны имэйл эсвэл утасны дугаар').should('be.visible');
-
     cy.get('[data-testid="email-input"]').should('be.visible').and('have.attr', 'type', 'email');
-
     cy.contains('Нууц үг').should('be.visible');
-
     cy.get('[data-testid="password-input"]').should('be.visible').and('have.attr', 'type', 'password');
-
     cy.contains('Дараах').should('be.visible');
   });
 
   it('Inputs accept text', () => {
     const email = 'test@example.com';
     const password = 'password123';
-
     cy.get('[data-testid="email-input"]').type(email).should('have.value', email);
     cy.get('[data-testid="password-input"]').type(password).should('have.value', password);
   });
 
   it('Navigates to home page on button click', () => {
     cy.get('button').contains('Дараах').click();
-
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
 });
