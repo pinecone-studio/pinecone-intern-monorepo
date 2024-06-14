@@ -1,4 +1,3 @@
-import { MdOutlineAdd } from 'react-icons/md';
 import { AddModal } from './AddModal';
 export const AddEmployee = () => {
   return (
