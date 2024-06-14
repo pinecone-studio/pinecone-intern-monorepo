@@ -36,9 +36,9 @@ describe('Stepper component', () => {
     expect(stepCircles.length).toBe(3);
     stepCircles.forEach((circle, index) => {
       if (index <= 1) {
-        expect(circle).toHaveClass('bg-[#121316] text-white');
+        expect(circle).toHaveClass('flex items-center justify-center w-9 h-9 rounded-full mx-auto bg-[#121316] text-white');
       } else {
-        expect(circle).toHaveClass('bg-[#ECEDF0] text-black');
+        expect(circle).toHaveClass('flex items-center justify-center w-9 h-9 rounded-full mx-auto bg-[#ECEDF0] text-black');
       }
     });
   });
