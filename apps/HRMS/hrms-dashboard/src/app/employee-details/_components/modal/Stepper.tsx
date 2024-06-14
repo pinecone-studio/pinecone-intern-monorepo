@@ -3,9 +3,9 @@ import React from 'react';
 export const Stepper = () => {
   const currentStep = 0;
   const steps = [
+    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
     { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
     { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
-    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
   ];
   return (
     <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto p-4">

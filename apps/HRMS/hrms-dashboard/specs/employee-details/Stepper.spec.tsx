@@ -20,9 +20,9 @@ describe('Stepper component', () => {
     const stepContents = screen.getAllByTestId('step-content');
 
     expect(stepContents.length).toBe(3);
-    expect(stepContents[0].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
-    expect(stepContents[1].textContent).toBe('Нэмэлт мэдээлэл');
-    expect(stepContents[2].textContent).toBe('Хувийн мэдээлэл');
+    expect(stepContents[0].textContent).toBe('Хувийн мэдээлэл');
+    expect(stepContents[1].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
+    expect(stepContents[2].textContent).toBe('Нэмэлт мэдээлэл');
   });
 
   test('renders correct step numbers', () => {
@@ -50,7 +50,7 @@ describe('Stepper component', () => {
     fireEvent.click(nextStepButton);
 
     const updatedStepContents = screen.getAllByTestId('step-content');
-    expect(updatedStepContents[1].textContent).toBe('Нэмэлт мэдээлэл');
+    expect(updatedStepContents[1].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
   });
 
   test('handles invalid currentStep gracefully', () => {
@@ -61,7 +61,7 @@ describe('Stepper component', () => {
 
     const stepContent = screen.getAllByTestId('step-content');
     expect(stepContent.length).toBe(6);
-    expect(stepContent[0].textContent).toBe('Хөдөлмөр эрхлэлтийн мэдээлэл');
+    expect(stepContent[0].textContent).toBe('Хувийн мэдээлэл');
   });
 
   test('renders dynamic step content based on user input', () => {
