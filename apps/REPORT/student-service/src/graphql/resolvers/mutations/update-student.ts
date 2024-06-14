@@ -3,9 +3,9 @@ import { GraphQLError } from 'graphql';
 import { StudentsModel } from '@/graphql/models/student.models';
 
 export const updateStudent: MutationResolvers['updateStudent'] = async (_, { updateInput }) => {
-  const { _id, firstName, lastName, studentCode, profileImgUrl, classId, phoneNumber, email } = updateInput;
+  const { _id, ...rest } = updateInput;
   try {
-    const updateStudent = await StudentsModel.findByIdAndUpdate(_id, { firstName, lastName, studentCode, profileImgUrl, classId, phoneNumber, email });
+    const updateStudent = await StudentsModel.findByIdAndUpdate(_id, { ...rest });
     if (!updateStudent) {
       throw new GraphQLError('Could not find Student');
     }
