@@ -8,7 +8,7 @@ const EmployeeDetailsPage = () => {
         <AddEmployee />
       </div>
       <div>
-        <Stepper />
+        <Stepper currentStep={0} />
       </div>
     </div>
   );

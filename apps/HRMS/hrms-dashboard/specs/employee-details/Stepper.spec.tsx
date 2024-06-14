@@ -8,7 +8,7 @@ describe('Stepper component', () => {
 
   beforeEach(() => {
     useStateMock = jest.spyOn(React, 'useState');
-    useStateMock.mockReturnValue([0, () => {}]); // Default state for tests
+    useStateMock.mockReturnValue([0, () => {}]);
     render(<Stepper currentStep={1} />);
   });
 
@@ -54,7 +54,7 @@ describe('Stepper component', () => {
 
   test('progress bar between steps is rendered correctly', () => {
     const progressBars = screen.getAllByTestId('step-item-0');
-    expect(progressBars.length).toBe(2); // There should be 2 progress bars between 3 steps
+    expect(progressBars.length).toBe(2);
     progressBars.forEach((progressBar, index) => {
       expect(progressBar).toBeInTheDocument();
       if (index < 1) {
@@ -92,7 +92,7 @@ describe('Stepper component', () => {
     render(<Stepper currentStep={1} />);
 
     const stepContent = screen.getAllByTestId('step-content');
-    expect(stepContent.length).toBe(6); // Should not duplicate the steps
+    expect(stepContent.length).toBe(6);
     expect(stepContent[0].textContent).toBe('Хувийн мэдээлэл');
   });
 
