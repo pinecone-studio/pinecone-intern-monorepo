@@ -4,7 +4,7 @@ describe('SignInModal', () => {
   });
 
   it('Should render the sign-in page', () => {
-    cy.get('[data-testid="sign-in-form-container"]').should('exist');
+    cy.get('[data-cy="sign-in-page"]').should('exist');
   });
 
   it('Should render the SignInModal component', () => {
