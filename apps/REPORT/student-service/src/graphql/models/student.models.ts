@@ -25,5 +25,13 @@ export const studentsSchema = new Schema({
     type: Boolean,
     default: Boolean(true),
   },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
 });
 export const StudentsModel = mongoose.models.students || model('students', studentsSchema);
