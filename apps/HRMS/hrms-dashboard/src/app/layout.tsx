@@ -1,7 +1,7 @@
-import { ThemeProvider } from '@/components/ThemeProvider';
+
 import { FederationProvider } from '../common';
 import './global.css';
-import { ProjectHeader } from '@/components/ProjectHeader';
+
 import { Header } from './employee-details/_components/header/Header';
 
 export const metadata = {
