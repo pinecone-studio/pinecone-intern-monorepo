@@ -1,35 +1,34 @@
-import { gql } from 'graphql-tag';
+import gql from 'graphql-tag';
 
 export const employeeDetailsSchema = gql`
   scalar Date
 
   enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
+    MALE
+    FEMALE
+    OTHER
+  }
+  enum MaritalStatus {
+    SINGLE
+    MARRIED
+    DIVORCED
+    WIDOWED
+  }
 
-enum MaritalStatus {
-  SINGLE
-  MARRIED
-  DIVORCED
-  WIDOWED
-}
+  enum EmploymentStatus {
+    FULL_TIME
+    PART_TIME
+    CONTRACTOR
+    TEMPORARY
+    ARCHIVE
+  }
 
-enum EmploymentStatus {
-  FULL_TIME
-  PART_TIME
-  CONTRACTOR
-  TEMPORARY
-  ARCHIVE
-}
-
-enum Department {
-  SOFTWARE
-  DESIGN
-  MARKETING
-  BACK_OFFICE
-}
+  enum Department {
+    SOFTWARE
+    DESIGN
+    MARKETING
+    BACK_OFFICE
+  }
 
   type Employee {
     id: ID
@@ -38,7 +37,7 @@ enum Department {
     email: String
     imageURL: String
     department: String
-    jobTitle: String
+    jobTitle: [String]
     ladderLevel: String
     salary: Float
     bankName: String
@@ -52,32 +51,32 @@ enum Department {
   }
 
   input CreateEmployeeInput {
-  firstname: String
-  lastname: String
-  email: String
-  imageURL: String
-  department: Department
-  jobTitle: String
-  ladderLevel: String
-  salary: Float
-  dateOfEmployment: Date
-  employmentStatus: EmploymentStatus
-}
+    firstname: String
+    lastname: String
+    email: String
+    imageURL: String
+    department: Department
+    jobTitle: [String]
+    ladderLevel: String
+    salary: Float
+    dateOfEmployment: Date
+    employmentStatus: EmploymentStatus
+  }
 
-input UpdateEmployeeInput {
-  id: ID
-  email: String
-  department: ID
-  jobTitle: String
-  laderLevel: Int
-  salary: Float
-  bankName: String
-  bankAccountNumber: Float
-  dateOfReleased: Date
-  employmentStatus: EmploymentStatus
-}
+  input UpdateEmployeeInput {
+    id: ID
+    email: String
+    department: ID
+    jobTitle: [String]
+    laderLevel: Int
+    salary: Float
+    bankName: String
+    bankAccountNumber: Float
+    dateOfReleased: Date
+    employmentStatus: EmploymentStatus
+  }
 
-type PersonalInformation {
+  type PersonalInformation {
     gender: Gender
     dateOfBirth: Date
     registrationNumber: String
@@ -85,27 +84,27 @@ type PersonalInformation {
     hobby: [String]
   }
 
-input UpdatePersonalInformationInput {
-  gender: Gender
-  dateOfBirth: Date
-  registrationNumber: String
-  phone: String
-  hobby: [String]
-}
+  input UpdatePersonalInformationInput {
+    gender: Gender
+    dateOfBirth: Date
+    registrationNumber: String
+    phone: String
+    hobby: [String]
+  }
 
-type FamilyInformation {
+  type FamilyInformation {
     homeAddress: String
     numberOfFamilyMembers: Int
     maritalStatus: MaritalStatus
     relative: [Dependent]
   }
-input UpdateFamilyInformationInput {
-  homeAddress: String
-  numberOfFamilyMembers: Int
-  maritalStatus: MaritalStatus
-  relative: [Dependent]
-}
-  
+  input UpdateFamilyInformationInput {
+    homeAddress: String
+    numberOfFamilyMembers: Int
+    maritalStatus: MaritalStatus
+    # relative: [Dependent]
+  }
+
   type Dependent {
     id: ID
     firstname: String
@@ -131,23 +130,23 @@ input UpdateFamilyInformationInput {
   }
 
   type Query {
-  getEmployees: [Employee!]!
-  getEmployeeDetails(id: ID): Employee!
-  searchByEmploymentStatus(status:EmploymentStatus):[Employee]
-  filterByJobTitle():[Employee]
-  getEmployeeByPaginate(PaginationInput: PaginationInput!): PaginateReturn!
-  getEmployeeByPaginate(employeeDetailsfilterInput: employeeDetailsfilterInput!, PaginationInput: PaginationInput!): PaginateReturn!
-}
+    getEmployees: [Employee!]!
+    getEmployeeDetails(id: ID): Employee!
+    searchByEmploymentStatus(status: EmploymentStatus): [Employee]
+    # filterByJobTitle():[Employee]
+    getEmployeeByPaginate(PaginationInput: PaginationInput!): PaginateReturn!
+    getEmployeeByPaginate(employeeDetailsfilterInput: employeeDetailsfilterInput!, PaginationInput: PaginationInput!): PaginateReturn!
+  }
 
-type Mutation {
-  createEmployee(input: CreateEmployeeInput): Employee!
-  updateEmployee(input: UpdateEmployeeInput): Employee!
-  deleteEmployee(_id: ID!): Employee!
-  
-  addPersonalInformation(employeeId: ID, input: PersonalInformationInput): PersonalInformation!
-  updatePersonalInformation(employeeId: ID, input: UpdatePersonalInformationInput): PersonalInformation!
+  type Mutation {
+    createEmployee(input: CreateEmployeeInput): Employee!
+    updateEmployee(input: UpdateEmployeeInput): Employee!
+    deleteEmployee(_id: ID!): Employee!
 
-  addFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
-  updateFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
-}
+    # addPersonalInformation(employeeId: ID, input: PersonalInformationInput): PersonalInformation!
+    # updatePersonalInformation(employeeId: ID, input: UpdatePersonalInformationInput): PersonalInformation!
+
+    # addFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
+    # updateFamilyInformation(employeeId: ID, input: FamilyInformationInput): FamilyInformation!
+  }
 `;
