@@ -24,6 +24,25 @@ describe('Stepper component', () => {
     expect(subcontainer).toBeInTheDocument();
   });
 
+  test('renders step circle container with correct styles', () => {
+    const circleContains = screen.getAllByTestId('circle-contain');
+    circleContains.forEach((contain) => {
+      expect(contain).toHaveClass('flex-1 relative items-center justify-center px-1');
+    });
+  });
+
+  test('circle style is correct for current step', () => {
+    const stepCircles = screen.getAllByTestId('step-circle');
+    expect(stepCircles.length).toBe(3);
+    stepCircles.forEach((circle, index) => {
+      if (index <= 1) {
+        expect(circle).toHaveClass('bg-[#121316] text-white');
+      } else {
+        expect(circle).toHaveClass('bg-[#ECEDF0] text-black');
+      }
+    });
+  });
+
   test('renders correct number of steps and step content', () => {
     const stepContents = screen.getAllByTestId('step-content');
 
