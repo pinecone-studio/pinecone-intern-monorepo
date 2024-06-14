@@ -4,8 +4,16 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Stepper } from '../../src/app/employee-details/_components/modal/Stepper';
 
 describe('Stepper component', () => {
+  let useStateMock: jest.SpyInstance;
+
   beforeEach(() => {
+    useStateMock = jest.spyOn(React, 'useState');
+    useStateMock.mockReturnValue([0, () => {}]); // Default state for tests
     render(<Stepper />);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   test('renders step container and subcontainer', () => {
@@ -49,12 +57,28 @@ describe('Stepper component', () => {
     expect(progressBars.length).toBe(2); // There should be 2 progress bars between 3 steps
     progressBars.forEach((progressBar, index) => {
       expect(progressBar).toBeInTheDocument();
-      if (index <= 0) {
+      if (index < 1) {
         expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
       } else {
-        expect(progressBar).toHaveClass('bg-[#ECEDF0]');
+        expect(progressBar).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
       }
     });
+  });
+
+  test('progress bar reflects current step correctly when step is 1', () => {
+    useStateMock.mockReturnValue([1, () => {}]);
+    render(<Stepper />);
+    const progressBars = screen.getAllByTestId('step-item-0');
+    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+    expect(progressBars[1]).toHaveClass('bg-[#ECEDF0]');
+  });
+
+  test('progress bar reflects current step correctly when step is 2', () => {
+    useStateMock.mockReturnValue([2, () => {}]);
+    render(<Stepper />);
+    const progressBars = screen.getAllByTestId('step-item-0');
+    expect(progressBars[0]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
+    expect(progressBars[1]).toHaveClass('absolute top-1/2 transform -translate-y-1/2 h-1 bg-[#ECEDF0]');
   });
 
   test('navigates to next step on click', () => {
@@ -67,7 +91,6 @@ describe('Stepper component', () => {
   });
 
   test('handles invalid currentStep gracefully', () => {
-    const useStateMock = jest.spyOn(React, 'useState');
     useStateMock.mockReturnValue([-1, () => {}]);
 
     render(<Stepper />);
