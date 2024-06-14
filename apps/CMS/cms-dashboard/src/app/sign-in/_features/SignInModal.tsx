@@ -3,9 +3,10 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import ArrowIcon from '@/assets/icons/ArrowIcon';
-import Router, { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 const SignInModal = () => {
   const router = useRouter();
+
   return (
     <div className="w-[440px] h-[484px] border border-[1px solid #ECEDF0] rounded-[16px] p-[40px]">
       <div className="flex flex-col items-center gap-[24px]">
@@ -21,7 +22,7 @@ const SignInModal = () => {
           </div>
         </div>
         <div>
-          <Button onClick={() => router.push('/')} className="w-[360px] h-[56px] bg-[#121316] rounded-[8px] relative ">
+          <Button onClick={() => router.push('/')} className="w-[360px] h-[56px] bg-[#121316] rounded-[8px] relative">
             <p className="text-[16px] font-medium">Дараах</p>
             <ArrowIcon />
           </Button>

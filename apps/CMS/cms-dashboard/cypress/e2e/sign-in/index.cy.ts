@@ -25,8 +25,8 @@ describe('SignInModal', () => {
     const email = 'test@example.com';
     const password = 'password123';
 
-    cy.get('input[name="email"]').type(email).should('have.value', email);
-    cy.get('input[name="password"]').type(password).should('have.value', password);
+    cy.get('[data-testid="email-input"]').type(email).should('have.value', email);
+    cy.get('[data-testid="password-input"]').type(password).should('have.value', password);
   });
 
   it('Navigates to home page on button click', () => {
