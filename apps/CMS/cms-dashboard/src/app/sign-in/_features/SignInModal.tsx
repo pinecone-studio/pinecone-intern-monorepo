@@ -4,11 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import ArrowIcon from '@/assets/icons/ArrowIcon';
 import { useRouter } from 'next/navigation';
+
 const SignInModal = () => {
   const router = useRouter();
 
   return (
-    <div className="w-[440px] h-[484px] border border-[1px solid #ECEDF0] rounded-[16px] p-[40px]">
+    <div data-testid="sign-in-page" className="w-[440px] h-[484px] border border-[1px solid #ECEDF0] rounded-[16px] p-[40px]">
       <div className="flex flex-col items-center gap-[24px]">
         <h1 className="text-[36px] font-semibold">Нэвтрэх</h1>
         <div className="flex flex-col items-center gap-[16px]">
@@ -31,4 +32,5 @@ const SignInModal = () => {
     </div>
   );
 };
+
 export default SignInModal;
