@@ -19,7 +19,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
       reader.onload = (event) => {
         setPreviewURL(event.target?.result as string);
         setImage(file);
-        // onImageUpload(file);
+        onImageUpload(file);
       };
     }
   };
@@ -35,7 +35,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <label htmlFor="image-label" className="tracking-light text-lg font-semibold text-[#121316] leading-6">
+        <label htmlFor="image-input" className="tracking-light text-lg font-semibold text-[#121316] leading-6">
           Өнгөц зураг
         </label>
         <div className="max-w-[339px] bg-[#F7F7F8] h-[155px] overflow-hidden rounded-xl flex justify-center items-center relative hover:cursor-pointer" onClick={handleClick}>
