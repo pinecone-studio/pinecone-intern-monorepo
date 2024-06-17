@@ -116,7 +116,8 @@
     "tslib": "2.3.0",
     "vaul": "0.9.1",
     "winston": "3.11.0",
-    "yup": "1.4.0"
+    "yup": "1.4.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.30",
@@ -164,7 +165,7 @@
     "apollo-server-cloud-functions": "3.13.0",
     "autoprefixer": "10.4.13",
     "babel-jest": "29.4.1",
-    "cypress": "13.6.6",
+    "cypress": "^13.11.0",
     "cypress-multi-reporters": "1.6.4",
     "dotenv-cli": "7.2.1",
     "dotenv-webpack": "8.0.1",
