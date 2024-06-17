@@ -3,7 +3,7 @@ import { GraphQLError } from 'graphql';
 
 jest.mock('@/graphql/models/user.models', () => ({
   UserModel: {
-    find: jest.fn().mockImplementation(() => [
+    create: jest.fn().mockImplementation(() => [
       {
         _id: '1',
         firstName: 'John Doe',
@@ -16,13 +16,20 @@ jest.mock('@/graphql/models/user.models', () => ({
   },
 }));
 
-describe('Get user by query', () => {
+describe('Create user', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return users', async () => {
-    const result = UserModel.find();
+  it('should create a user and return it', async () => {
+    const result = UserModel.create({
+      firstName: 'John Doe',
+      lastName: 'Baldan',
+      email: 'baldan@yahoo.com',
+      password: 'baldan123',
+      role: 'STUDENT',
+    });
+
     expect(result).toEqual([
       {
         _id: '1',
@@ -35,17 +42,17 @@ describe('Get user by query', () => {
     ]);
   });
 
-  it('should throw GraphQLError when no users are found', async () => {
-    UserModel.find.mockReturnValueOnce([]);
+  it('should throw GraphQLError when user fails to be created', async () => {
+    UserModel.create.mockReturnValueOnce(new GraphQLError('can not create a new user'));
 
     try {
-      const result = UserModel.find();
+      const result = UserModel.create({ id: '23' });
       if (result.length === 0) {
-        throw new GraphQLError('cannot find users');
+        throw new GraphQLError('can not create a new user');
       }
     } catch (error) {
       expect(error).toBeInstanceOf(GraphQLError);
-      expect(error.message).toBe('cannot find users');
+      expect(error.message).toBe('there was a problem creating a new user');
     }
   });
 });
