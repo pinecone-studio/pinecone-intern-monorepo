@@ -1,18 +1,10 @@
 import { UserModel } from '@/graphql/models/user.models';
-import { GraphQLError } from 'graphql';
+import { getUsers } from '@/graphql/resolvers/queries';
+import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/graphql/models/user.models', () => ({
   UserModel: {
-    find: jest.fn().mockImplementation(() => [
-      {
-        _id: '1',
-        firstName: 'John Doe',
-        lastName: 'Baldan',
-        email: 'baldan@yahoo.com',
-        password: 'baldan123',
-        role: 'STUDENT',
-      },
-    ]),
+    find: jest.fn(),
   },
 }));
 
@@ -22,8 +14,7 @@ describe('Get user by query', () => {
   });
 
   it('should return users', async () => {
-    const result = UserModel.find();
-    expect(result).toEqual([
+    const mock = [
       {
         _id: '1',
         firstName: 'John Doe',
@@ -32,20 +23,18 @@ describe('Get user by query', () => {
         password: 'baldan123',
         role: 'STUDENT',
       },
-    ]);
+    ];
+
+    (UserModel.find as jest.Mock).mockResolvedValue(mock);
+    const result = await getUsers!({}, {}, {}, {} as GraphQLResolveInfo);
+
+    expect(result).toEqual(mock);
   });
 
   it('should throw GraphQLError when no users are found', async () => {
-    UserModel.find.mockReturnValueOnce([]);
+    const mockError = 'can not find users';
+    (UserModel.find as jest.Mock).mockRejectedValue(new Error(mockError));
 
-    try {
-      const result = UserModel.find();
-      if (result.length === 0) {
-        throw new GraphQLError('cannot find users');
-      }
-    } catch (error) {
-      expect(error).toBeInstanceOf(GraphQLError);
-      expect(error.message).toBe('cannot find users');
-    }
+    await expect(getUsers()).rejects.toThrow(GraphQLError);
   });
 });

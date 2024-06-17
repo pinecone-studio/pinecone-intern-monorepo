@@ -1,18 +1,20 @@
 import { UserModel } from '@/graphql/models/user.models';
-import { GraphQLError } from 'graphql';
+import { createUser } from '@/graphql/resolvers/mutations';
+import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/graphql/models/user.models', () => ({
   UserModel: {
-    create: jest.fn().mockImplementation(() => [
-      {
+    create: jest
+      .fn()
+      .mockReturnValueOnce({
         _id: '1',
         firstName: 'John Doe',
         lastName: 'Baldan',
         email: 'baldan@yahoo.com',
         password: 'baldan123',
         role: 'STUDENT',
-      },
-    ]),
+      })
+      .mockRejectedValueOnce(null),
   },
 }));
 
@@ -22,37 +24,48 @@ describe('Create user', () => {
   });
 
   it('should create a user and return it', async () => {
-    const result = UserModel.create({
+    const mock = {
+      _id: '1',
       firstName: 'John Doe',
       lastName: 'Baldan',
       email: 'baldan@yahoo.com',
       password: 'baldan123',
       role: 'STUDENT',
-    });
+    };
 
-    expect(result).toEqual([
+    const result = await createUser!(
+      {},
       {
-        _id: '1',
-        firstName: 'John Doe',
-        lastName: 'Baldan',
-        email: 'baldan@yahoo.com',
-        password: 'baldan123',
-        role: 'STUDENT',
+        input: {
+          _id: '1',
+          firstName: 'John Doe',
+          lastName: 'Baldan',
+          email: 'baldan@yahoo.com',
+          password: 'baldan123',
+          role: 'STUDENT',
+        },
       },
-    ]);
+      {},
+      {} as GraphQLResolveInfo
+    );
+
+    expect(result).toEqual(mock);
   });
 
-  it('should throw GraphQLError when user fails to be created', async () => {
-    UserModel.create.mockReturnValueOnce(new GraphQLError('can not create a new user'));
+  it('should throw when there is a Database error', async () => {
+    const mock = {
+      _id: '1',
+      firstName: 'John Doe',
+      lastName: 'Baldan',
+      email: 'baldan@yahoo.com',
+      password: 'baldan123',
+      role: 'STUDENT',
+    };
 
     try {
-      const result = UserModel.create({ id: '23' });
-      if (result.length === 0) {
-        throw new GraphQLError('can not create a new user');
-      }
+      await createUser({}, { input: mock }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toBeInstanceOf(GraphQLError);
-      expect(error.message).toBe('there was a problem creating a new user');
+      expect(error).toEqual(new GraphQLError('there was a problem creating a new user'));
     }
   });
 });
