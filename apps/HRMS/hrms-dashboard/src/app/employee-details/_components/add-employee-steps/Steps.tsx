@@ -10,13 +10,10 @@ import { inputOne, inputThree, inputTwo } from '../../constants';
 export const Steps = () => {
   const [addEmployeesDetails, setAddEmployeesDetails] = useState(initialAddEmployeesInfo);
   console.log('addEmployeesDetails', addEmployeesDetails);
-
   const formik = useFormik({
     initialValues: initialAddEmployeesInfo,
     // validationSchema: addEmployeeSchema,
     onSubmit: (values) => {
-      console.log('values', values);
-
       setAddEmployeesDetails({
         firstName: values.firstName as string,
         lastName: values.lastName as string,
