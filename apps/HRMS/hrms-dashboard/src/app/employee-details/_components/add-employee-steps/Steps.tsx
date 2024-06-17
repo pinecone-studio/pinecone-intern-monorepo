@@ -15,6 +15,8 @@ export const Steps = () => {
     initialValues: initialAddEmployeesInfo,
     // validationSchema: addEmployeeSchema,
     onSubmit: (values) => {
+      console.log('values', values);
+
       setAddEmployeesDetails({
         firstName: values.firstName as string,
         lastName: values.lastName as string,
