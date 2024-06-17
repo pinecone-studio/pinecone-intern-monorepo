@@ -48,9 +48,7 @@ export const Steps = () => {
           <StepThree key={index} label={item.label} type={item.type} placeholder={item.placeholder} {...generateFormikProps(item.name as keyof typeof formik.values)} />
         ))}
 
-        <button type="submit" className=" bg-green-600">
-          Submit
-        </button>
+        <button className=" bg-green-600">Submit</button>
       </form>
     </>
   );

@@ -8,20 +8,8 @@ export const initialAddEmployeesInfo = {
   salary: 0,
   ladderLevel: '',
   department: '',
-  dateOfEmployment: '',
+  dateOfEmployment: new Date().toISOString().slice(0, 10),
   employmentStatus: '',
-};
-
-export type TAddEmployeesInfo = {
-  lastName: string;
-  firstName: string;
-  email: string;
-  jobTitle: string;
-  salary: number;
-  ladderLevel: string;
-  department: string;
-  dateOfEmployment: string;
-  employmentStatus: string;
 };
 
 export const addEmployeeSchema = yup.object().shape({
