@@ -38,7 +38,14 @@ describe('create employee', () => {
 
   it("should throw an error if the employee doesn't exist ", async () => {
     try {
-      await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
+      const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
+      expect(result).toEqual({
+        _id: '2',
+        firstName: 'bataa',
+        lastName: 'od',
+        email: 'bataa@gmail.com',
+        department: 'Software',
+      });
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
     }
