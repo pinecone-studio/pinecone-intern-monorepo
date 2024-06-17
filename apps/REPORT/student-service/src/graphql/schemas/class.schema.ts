@@ -2,6 +2,12 @@ import gql from 'graphql-tag';
 
 export const classSchema = gql`
   scalar Date
+
+  enum ClassType {
+    CODING
+    DESIGN
+  }
+
   type Class {
     _id: ID
     name: String!
@@ -14,7 +20,7 @@ export const classSchema = gql`
     CODING
     DESIGN
   }
-  
+
   type Query {
     getClasses: [Class]
   }

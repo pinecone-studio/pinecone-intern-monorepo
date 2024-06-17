@@ -89,6 +89,10 @@ const gateway = new ApolloGateway({
         name: 'student',
         url: process.env.STUDENT_SERVICE,
       },
+      {
+        name: 'studentReport',
+        url: 'http://localhost:9000/api/graphql',
+      },
     ],
   }),
   buildService({ url }) {

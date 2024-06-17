@@ -18,5 +18,6 @@ export const classSchema = new Schema({
     required: true,
     enum: ['CODING', 'DESIGN'],
   },
+  classTeachers: { type: [String], required: true },
 });
-export const ClassesModel = mongoose.models.comments || model('classes', classSchema);
+export const ClassesModel = mongoose.models.classes || model('classes', classSchema);
