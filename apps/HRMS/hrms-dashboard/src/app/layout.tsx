@@ -1,8 +1,5 @@
-
 import { FederationProvider } from '../common';
 import './global.css';
-
-import { Header } from './employee-details/_components/header/ProjectHeader';
 
 export const metadata = {
   title: 'Welcome to HRMS-dashboard',
@@ -13,10 +10,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className="relative">
-        <FederationProvider>
-          <Header />
-          {children}
-        </FederationProvider>
+        <FederationProvider>{children}</FederationProvider>
       </body>
     </html>
   );
