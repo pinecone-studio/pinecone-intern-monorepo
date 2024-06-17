@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
 import { IoArrowForwardSharp } from 'react-icons/io5';
@@ -14,6 +14,7 @@ export const AddModal = () => {
       <DialogContent data-testid="modalContent" className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
 
         <DialogFooter>
