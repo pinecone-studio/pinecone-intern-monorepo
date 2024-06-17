@@ -8,7 +8,6 @@ describe('AddModal', () => {
   test('renders the add modal correctly', () => {
     render(<AddModal />);
 
-    // Check if the add employee button is rendered
     const addEmployeeButton = screen.getByTestId('addEmployeeBtn');
     expect(addEmployeeButton).toBeInTheDocument();
 
