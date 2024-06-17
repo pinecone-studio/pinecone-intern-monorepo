@@ -99,7 +99,7 @@
           "ci": true
         }
       },
-    "dependsOn": [{"target": "codegen"}]
+      "dependsOn": [{ "target": "codegen" }]
     },
     "clean": {
       "executor": "nx:run-commands",
