@@ -1,4 +1,3 @@
-import { UserModel } from '@/graphql/models/user.models';
 import { createUser } from '@/graphql/resolvers/mutations';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
 
