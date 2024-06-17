@@ -3,7 +3,7 @@ import { SelectedClassMain } from '../topic/_features/SelectedClassMain';
 
 export default async function Index() {
   return (
-    <div className="">
+    <div>
       <SelectedClassMain />
     </div>
   );
