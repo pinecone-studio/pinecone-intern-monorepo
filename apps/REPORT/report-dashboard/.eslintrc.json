@@ -29,6 +29,29 @@
       }
     },
     {
+      "files": ["**/components/ui/*.ts", "**/components/ui/*.tsx"],
+      "rules": {
+        "complexity": [
+          "error",
+          {
+            "max": 7
+          }
+        ],
+        "max-lines": [
+          "error",
+          {
+            "max": 250
+          }
+        ],
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase"
+          }
+        ]
+      }
+    },
+    {
       "files": ["*.cy.{ts,js,tsx,jsx}", "cypress/**/*.{ts,js,tsx,jsx}"],
       "rules": {}
     }
