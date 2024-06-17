@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
-import Image from 'next/image';
+import React, { forwardRef, useImperativeHandle, useState, useRef } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
+
 
 interface ImageInputProps {
   onImageUpload: (file: File) => void;
@@ -49,14 +49,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
             onChange={handleImageChange}
           />
           {previewURL ? (
-            <Image
-              sizes="100vw"
-              style={{
-                width: '100%',
-                height: 'auto',
-              }}
-              width={928}
-              height={427}
+            <img
               className="rounded w-full h-full object-contain"
               src={previewURL}
               alt="uploaded img"
