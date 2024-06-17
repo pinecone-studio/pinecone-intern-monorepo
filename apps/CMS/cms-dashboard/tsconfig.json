@@ -41,5 +41,5 @@
     ".next/types/**/*.ts",
     "specs/dashboard"
   ],
-  "exclude": ["node_modules", "jest.config.ts"]
+  "exclude": ["node_modules", "jest.config.ts", "cypress.config.ts"]
 }
