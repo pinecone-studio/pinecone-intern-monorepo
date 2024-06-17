@@ -9,4 +9,4 @@ export const inputTwo = [
   { label: 'Цалин', type: 'number', placeholder: 'Цалин оруулна уу', name: 'salary' },
   { label: 'Ажилд орсон огноо', type: 'date', placeholder: 'Огноо оруулна уу', name: 'dateOfEmployment' },
 ];
-export const inputThree = [{ label: 'Ажилд орсон огноо', type: 'date', placeholder: 'Огноо оруулна уу', name: 'dateOfEmployment' }];
+export const inputThree = [{ label: 'Ажилд орсон огноо', type: 'date', placeholder: 'Огноо оруулна уу', name: 'employmentStatus' }];
