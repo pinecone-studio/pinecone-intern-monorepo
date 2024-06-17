@@ -2,7 +2,7 @@
 import { FederationProvider } from '../common';
 import './global.css';
 
-import { Header } from './employee-details/_components/header/Header';
+import { Header } from './employee-details/_components/header/ProjectHeader';
 
 export const metadata = {
   title: 'Welcome to HRMS-dashboard',
