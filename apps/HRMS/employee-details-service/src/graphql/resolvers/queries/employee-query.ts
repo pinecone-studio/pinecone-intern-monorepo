@@ -2,7 +2,7 @@ import { QueryResolvers } from '@/graphql/generated';
 import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const getEmployee: QueryResolvers['getEmployee'] = async (QueryGetEmployeeArgs, { id }) => {
+export const getEmployee: QueryResolvers['getEmployee'] = async (_, id) => {
   try {
     const employee = await EmployeeModel.findById(id).populate('relatives');
     if (!employee) {
