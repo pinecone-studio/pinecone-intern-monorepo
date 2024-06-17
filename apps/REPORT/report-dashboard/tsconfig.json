@@ -13,6 +13,7 @@
     "incremental": true,
     "baseUrl": "../../..",
     "paths": {
+      "@/*": ["apps/REPORT/report-dashboard/src/*"],
       "@/apps/*": ["apps/REPORT/report-dashboard/src/apps/*"],
       "@/generated/*": ["apps/REPORT/report-dashboard/src/generated/*"],
       "@/common/*": ["apps/REPORT/report-dashboard/src/common/*"],

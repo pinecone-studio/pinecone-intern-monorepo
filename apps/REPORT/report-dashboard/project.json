@@ -125,7 +125,7 @@
         "commands": [
           "npx nx cypress report-dashboard",
           "npx mochawesome-merge --reportDir apps/REPORT/report-dashboard/cypress/results/*.json -o apps/REPORT/report-dashboard/.cy/report.json",
-          "npx marge apps/REPORT/report-dashboard/.cy/report.json -o apps/report/report-dashboard/.cy",
+          "npx marge apps/REPORT/report-dashboard/.cy/report.json -o apps/REPORT/report-dashboard/.cy",
           "npx nx check-cypress-code-coverage scripts apps/REPORT/report-dashboard"
         ],
         "parallel": false
