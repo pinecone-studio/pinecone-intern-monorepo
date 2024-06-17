@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { addEmployeeSchema, initialAddEmployeesInfo } from './AddEomlpoyeesValidation';
+import { initialAddEmployeesInfo } from './AddEomlpoyeesValidation';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
@@ -22,9 +22,9 @@ export const Steps = () => {
         jobTitle: values.jobTitle as string,
         salary: values.salary as number,
         ladderLevel: values.ladderLevel as string,
-        department: values.department as any,
+        department: values.department as string,
         dateOfEmployment: values.dateOfEmployment as string,
-        employmentStatus: values.employmentStatus as any,
+        employmentStatus: values.employmentStatus as string,
       });
     },
   });

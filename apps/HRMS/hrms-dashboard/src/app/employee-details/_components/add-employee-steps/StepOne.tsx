@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { ChangeEventHandler, FocusEventHandler, PropsWithChildren, useContext } from 'react';
+import { ChangeEventHandler, FocusEventHandler, PropsWithChildren } from 'react';
 
 type CustomInputProps = {
   label: string;
@@ -14,7 +14,7 @@ type CustomInputProps = {
 };
 
 const StepOne = (props: CustomInputProps & PropsWithChildren) => {
-  const { label, type, placeholder, name, value, children, helperText, onChange, onBlur } = props;
+  const { type, placeholder, name, value, onChange, onBlur } = props;
 
   return <>{type != 'select' && <Input type={type} placeholder={placeholder} name={name} onChange={onChange} value={value} onBlur={onBlur} />}</>;
 };
