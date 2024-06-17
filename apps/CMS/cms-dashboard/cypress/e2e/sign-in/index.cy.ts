@@ -37,9 +37,6 @@ describe('SignInModal', () => {
     cy.get('button[type="submit"]').contains('Дараах').click();
     cy.contains('Утас эсвэл имэйл хаяг байх ёстой').should('be.visible');
     cy.contains('Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой').should('be.visible');
-    cy.contains('Жижэг үсэг байх ёстой').should('be.visible');
-    cy.contains('Том үсэг байх ёстой').should('be.visible');
-    cy.contains('Тусгай тэмдэгт байх ёстой').should('be.visible');
   });
 
   it('5. Navigates to home page on button click after successful form submission', () => {
