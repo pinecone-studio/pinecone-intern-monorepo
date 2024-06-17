@@ -11,11 +11,9 @@ describe('AddModal', () => {
     const addEmployeeButton = screen.getByTestId('addEmployeeBtn');
     expect(addEmployeeButton).toBeInTheDocument();
 
-    // Check if the modal content is hidden initially
     const modalContent = screen.queryByTestId('modalContent');
     expect(modalContent).toBe(null);
 
-    // Click the add employee button to open the modal
     fireEvent.click(addEmployeeButton);
 
     // Check if the modal content becomes visible
