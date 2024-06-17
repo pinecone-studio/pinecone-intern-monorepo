@@ -1,10 +1,13 @@
 'use client';
 
+import { StudentAddModal } from './topic/studentAddTabel/StudentAddModal';
+import { StudentsTable } from './topic/studentAddTabel/StudentTable';
+
 export default async function Index() {
   return (
-    <div>
-      <h1>hello from REPORT dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
+    <div className="mx-auto container ">
+      <StudentAddModal />
+      <StudentsTable />
     </div>
   );
 }
