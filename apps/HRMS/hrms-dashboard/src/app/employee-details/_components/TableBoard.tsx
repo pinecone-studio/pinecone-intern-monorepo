@@ -63,7 +63,6 @@ export const TableDemo = () => {
             </TableCell>
           </TableRow>
         ))}
-        
       </TableBody>
       <TableFooter></TableFooter>
     </Table>
