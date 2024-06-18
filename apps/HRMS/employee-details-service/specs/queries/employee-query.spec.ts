@@ -1,11 +1,11 @@
-import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { getEmployeeDetails } from '@/graphql/resolvers/queries';
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLError } from 'graphql';
+import { errorTypes } from '@/graphql/resolvers/error';
 
 jest.mock('@/models/employee', () => ({
   EmployeeModel: {
     findById: jest.fn().mockReturnValue({
-      populate: jest
+      lean: jest
         .fn()
         .mockResolvedValueOnce({
           _id: '1',
@@ -16,27 +16,69 @@ jest.mock('@/models/employee', () => ({
           jobTitle: 'Engineer',
           ladderLevel: 'Senior',
         })
-        .mockResolvedValueOnce(undefined)
-        .mockRejectedValueOnce(null),
+        .mockResolvedValueOnce(null)
+        .mockRejectedValueOnce(new Error('Database error')),
     }),
   },
 }));
 
-describe('get employee', () => {
-  it('should get a employee', async () => {
+jest.mock('@/graphql/resolvers/error', () => ({
+  default: jest.fn((errorMessage, errorType) => {
+    const { GraphQLError } = jest.requireActual('graphql');
+    return new GraphQLError(errorMessage.message, {
+      extensions: {
+        code: errorType.errorCode,
+        http: { status: errorType.errorStatus },
+      },
+    });
+  }),
+  errorTypes: {
+    INTERVAL_SERVER_ERROR: {
+      errorCode: 'INTERNAL_SERVER_ERROR',
+      errorStatus: 500,
+    },
+  },
+}));
+
+describe('getEmployeeDetails', () => {
+  it('should return employee details if employee exists', async () => {
+    const result = await getEmployeeDetails({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+    expect(result).toEqual({
+      _id: '1',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      department: 'SOFTWARE',
+      jobTitle: 'Engineer',
+      ladderLevel: 'Senior',
+    });
+  });
+
+  it('should throw error if employee does not exist', async () => {
+    await expect(getEmployeeDetails({}, { id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
     try {
-      const result = await getEmployeeDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
-      expect(result).toEqual({
-        _id: '1',
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        department: 'SOFTWARE',
-        jobTitle: 'Engineer',
-        ladderLevel: 'Senior',
-      });
-    } catch (error) {
-      expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
+      await getEmployeeDetails({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+    } catch (error: unknown) {
+      if (error instanceof GraphQLError) {
+        expect(error.message).toBe('Алдаа гарлаа');
+        expect(error.extensions.code).toBe(errorTypes.INTERVAL_SERVER_ERROR.errorCode);
+      } else {
+        throw error;
+      }
+    }
+  });
+
+  it('should handle database errors gracefully', async () => {
+    await expect(getEmployeeDetails({}, { id: '2' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(GraphQLError);
+    try {
+      await getEmployeeDetails({}, { id: '2' }, {}, {} as GraphQLResolveInfo);
+    } catch (error: unknown) {
+      if (error instanceof GraphQLError) {
+        expect(error.message).toBe('Алдаа гарлаа');
+        expect(error.extensions.code).toBe(errorTypes.INTERVAL_SERVER_ERROR.errorCode);
+      } else {
+        throw error;
+      }
     }
   });
 });
