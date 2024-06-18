@@ -145,7 +145,7 @@
     "cypress:clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rd apps/HRMS/hrms-dashboard/cypress/results", "rd apps/HRMS/hrms-dashboard/.nyc_output", "rd apps/HRMS/hrms-dashboard/.cy"],
+        "commands": ["rm -rf apps/HRMS/hrms-dashboard/cypress/results", "rm -rf apps/HRMS/hrms-dashboard/.nyc_output", "rm -rf apps/HRMS/hrms-dashboard/.cy"],
         "parallel": false
       }
     },
