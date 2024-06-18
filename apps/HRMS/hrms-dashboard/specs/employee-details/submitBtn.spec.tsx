@@ -10,3 +10,17 @@ describe('UpdateButton', () => {
     expect(addButton).toBeDefined();
   });
 });
+const setFieldValue = jest.fn();
+const handleSubmit = jest.fn();
+jest.mock('formik', () => ({
+  useFormik: () => ({
+    setFieldValue,
+    handleSubmit,
+    values: {
+      transferMethodCountry: 'AZ',
+      transferMethodCurrency: 'AZN',
+      type: 'BANK_ACCOUNT',
+    },
+  }),
+}));
+expect(handleSubmit).toBeCalled();
