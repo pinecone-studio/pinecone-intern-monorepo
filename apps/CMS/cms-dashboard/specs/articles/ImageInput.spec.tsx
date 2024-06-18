@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ImageInput } from '@/app/articles/_components/ImageInput'; 
-import { act } from 'react-dom/test-utils'; 
+import { ImageInput } from '@/app/articles/_components/ImageInput';
+import { act } from 'react-dom/test-utils';
 
 describe('ImageInput Component', () => {
   let mockOnImageUpload: jest.Mock;
@@ -45,6 +45,7 @@ describe('ImageInput Component', () => {
     });
     expect(mockOnImageUpload).toHaveBeenCalledWith(file);
   });
+
   test('does not call onImageUpload if no file is selected', () => {
     render(<ImageInput onImageUpload={mockOnImageUpload} />);
     const fileInput = screen.getByLabelText('Өнгөц зураг').closest('input') as HTMLInputElement;
@@ -65,5 +66,4 @@ describe('ImageInput Component', () => {
     expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
     expect(mockOnImageUpload).not.toHaveBeenCalled();
   });
-
 });
