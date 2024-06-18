@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useState, useRef } from 'react';
+import {useState } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
 
 
@@ -9,7 +9,6 @@ interface ImageInputProps {
 export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
   const [image, setImage] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
@@ -23,14 +22,6 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
       };
     }
   };
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target instanceof HTMLInputElement) {
-        return;
-      }
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
   
   return (
     <>
@@ -38,19 +29,18 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
         <label htmlFor="image-input" className="tracking-light text-lg font-semibold text-[#121316] leading-6">
           Өнгөц зураг
         </label>
-        <div className="max-w-[339px] bg-[#F7F7F8] h-[155px] overflow-hidden rounded-xl flex justify-center items-center relative hover:cursor-pointer" onClick={handleClick}>
+        <div className="max-w-[339px] bg-[#F7F7F8] h-[155px] overflow-hidden rounded-xl flex justify-center items-center relative hover:cursor-pointer">
           <input
-            ref={fileInputRef}
             id="image-input"
             name="image-input"
             type="file"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            className="absolute z-10 inset-0 w-full h-full opacity-0 cursor-pointer"
             accept="image/*"
             onChange={handleImageChange}
           />
           {previewURL ? (
             <img
-              className="rounded w-full h-full object-contain"
+              className="rounded w-full h-full object-cover"
               src={previewURL}
               alt="uploaded img"
             />
