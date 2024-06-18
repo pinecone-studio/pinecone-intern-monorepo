@@ -37,7 +37,7 @@ export const employeeDetailsSchema = gql`
     email: String!
     imageURL: String
     department: Department!
-    jobTitle: [String]!
+    jobTitle: String[]!
     ladderLevel: String
     salary: Float!
     bankName: String
@@ -56,7 +56,7 @@ export const employeeDetailsSchema = gql`
     email: String!
     imageURL: String
     department: Department!
-    jobTitle: [String]!
+    jobTitle: String[]
     ladderLevel: String
     salary: Float!
     dateOfEmployment: Date!

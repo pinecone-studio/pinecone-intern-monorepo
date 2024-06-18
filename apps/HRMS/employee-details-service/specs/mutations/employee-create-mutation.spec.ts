@@ -1,4 +1,3 @@
-import { Department } from '@/graphql/generated';
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { createEmployee } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
@@ -13,16 +12,24 @@ jest.mock('@/models/employee', () => ({
         lastName: 'od',
         email: 'bataa@gmail.com',
         department: 'Software',
+        jobTitle: ['developer', 'fullstack'],
+        salary: 3500000,
+        dateOfEmployment: '2024-7-22',
+        employmentStatus: 'FullTime',
       })
       .mockRejectedValueOnce(null),
   },
 }));
 
 const input = {
-  firstName: 'bataa',
-  lastName: 'od',
+  firstname: 'bataa',
+  lastname: 'od',
   email: 'bataa@gmail.com',
-  department: Department.Software,
+  department: 'Software',
+  jobTitle: ['developer', 'fullstack'],
+  salary: 3500000,
+  dateOfEmployment: '2024-7-22',
+  employmentStatus: 'FullTime',
 };
 describe('create employee', () => {
   it('should create a employee', async () => {
@@ -33,6 +40,10 @@ describe('create employee', () => {
       lastName: 'od',
       email: 'bataa@gmail.com',
       department: 'Software',
+      jobTitle: ['developer', 'fullstack'],
+      salary: 3500000,
+      dateOfEmployment: '2024-7-22',
+      employmentStatus: 'FullTime',
     });
   });
 
@@ -45,6 +56,10 @@ describe('create employee', () => {
         lastName: 'od',
         email: 'bataa@gmail.com',
         department: 'Software',
+        jobTitle: ['developer', 'fullstack'],
+        salary: 3500000,
+        dateOfEmployment: '2024-7-22',
+        employmentStatus: 'FullTime',
       });
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
