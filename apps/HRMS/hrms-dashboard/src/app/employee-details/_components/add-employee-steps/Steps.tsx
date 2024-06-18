@@ -24,8 +24,7 @@ export const Steps = () => {
     },
     onSubmit: (values) => {
       setAddEmployeesDetails(values);
-
-      console.log('Form submitted with:', values);
+      console.log('Values:', values);
     },
     // validationSchema: addEmployeeSchema,
   });
@@ -70,8 +69,6 @@ export const Steps = () => {
     <div>
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-5">
         {renderStep()}
-
-        {/* Navigation buttons */}
         {currentStep > 0 && (
           <button type="button" onClick={prevStep}>
             Previous
