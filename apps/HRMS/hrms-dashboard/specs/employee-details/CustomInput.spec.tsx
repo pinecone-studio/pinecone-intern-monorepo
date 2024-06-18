@@ -1,52 +1,32 @@
+import React from 'react';
 import { render } from '@testing-library/react';
 import StepOne from '../../src/app/employee-details/_components/add-employee-steps/StepOne';
 import StepTwo from '../../src/app/employee-details/_components/add-employee-steps/StepTwo';
 import StepThree from '../../src/app/employee-details/_components/add-employee-steps/StepThree';
-import React from 'react';
 
-describe('setAddEmployeesDetails function', () => {
-  // Mock the setAddEmployeesDetails function
-  const mockSetAddEmployeesDetails = jest.fn();
-
-  // Mock data values
-  const values = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    jobTitle: 'Software Engineer',
-    salary: 80000,
-    ladderLevel: 'Senior',
-    department: 'Engineering',
-    dateOfEmployment: '2024-01-01',
-    employmentStatus: 'Active',
-  };
-
-  // Mock the component props where setAddEmployeesDetails is used
+describe('stepOne', () => {
   const props = {
-    setAddEmployeesDetails: mockSetAddEmployeesDetails,
+    label: 'testLabel',
+    type: 'testType',
+    placeholder: 'testPlaceholder',
+    name: 'testName',
+    value: 'testValue',
+    onChange: jest.fn(),
+    onBlur: jest.fn(),
   };
 
-  it('calls setAddEmployeesDetails with correct data', () => {
-    // Assuming StepOne, StepTwo, and StepThree use setAddEmployeesDetails somewhere
-    render(<StepOne label={''} type={''} name={''} value={''} {...props} />);
-    render(<StepTwo label={''} type={''} name={''} value={''} {...props} />);
-    render(<StepThree label={''} type={''} name={''} value={''} {...props} />);
+  it('StepOne Component', () => {
+    const { container } = render(<StepOne label={props.label} type={props.label} placeholder={props.placeholder} name={props.name} value={props.value} />);
+    expect(container).toBeDefined();
+  });
 
-    // Call setAddEmployeesDetails with mock data
-    mockSetAddEmployeesDetails(values);
+  it('StepTwo Component', () => {
+    const { container } = render(<StepTwo label={props.label} type={props.label} placeholder={props.placeholder} name={props.name} value={props.value} />);
+    expect(container).toBeDefined();
+  });
 
-    // Assert that setAddEmployeesDetails was called once with the correct values
-    expect(mockSetAddEmployeesDetails).toHaveBeenCalledTimes(1);
-    expect(mockSetAddEmployeesDetails).toHaveBeenCalledWith({
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      jobTitle: 'Software Engineer',
-      salary: 80000,
-      ladderLevel: 'Senior',
-      department: 'Engineering',
-      dateOfEmployment: '2024-01-01',
-      employmentStatus: 'Active',
-    });
+  it('StepThree Component', () => {
+    const { container } = render(<StepThree label={props.label} type={props.label} placeholder={props.placeholder} name={props.name} value={props.value} />);
+    expect(container).toBeDefined();
   });
 });
