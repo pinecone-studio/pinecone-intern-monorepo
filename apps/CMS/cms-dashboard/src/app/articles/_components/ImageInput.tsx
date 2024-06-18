@@ -1,13 +1,11 @@
-import {useState } from 'react';
+import { useState } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
 
-
 interface ImageInputProps {
-  onImageUpload: (file: File) => void;
+  onImageUpload: (_file: File) => void;
 }
 
-export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
-  const [image, setImage] = useState<File | null>(null);
+export const ImageInput = ({ onImageUpload }: ImageInputProps) => {
   const [previewURL, setPreviewURL] = useState<string>('');
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,12 +15,11 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
       reader.readAsDataURL(file);
       reader.onload = (event) => {
         setPreviewURL(event.target?.result as string);
-        setImage(file);
         onImageUpload(file);
       };
     }
   };
-  
+
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -30,20 +27,9 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
           Өнгөц зураг
         </label>
         <div className="max-w-[339px] bg-[#F7F7F8] h-[155px] overflow-hidden rounded-xl flex justify-center items-center relative hover:cursor-pointer">
-          <input
-            id="image-input"
-            name="image-input"
-            type="file"
-            className="absolute z-10 inset-0 w-full h-full opacity-0 cursor-pointer"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+          <input id="image-input" name="image-input" type="file" className="absolute z-10 inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" onChange={handleImageChange} />
           {previewURL ? (
-            <img
-              className="rounded w-full h-full object-cover"
-              src={previewURL}
-              alt="uploaded img"
-            />
+            <img className="rounded w-full h-full object-cover" src={previewURL} alt="uploaded img" />
           ) : (
             <div className="flex flex-col gap-2 items-center justify-center">
               <RiImageAddFill style={{ width: '32px', height: '32px' }} />
@@ -56,4 +42,3 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
     </>
   );
 };
-
