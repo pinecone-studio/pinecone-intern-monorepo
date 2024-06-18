@@ -23,10 +23,6 @@ export const userTypeDefs = gql`
     role: String!
   }
 
-  input deleteUserInput {
-    id: ID!
-  }
-
   input updateUserInput {
     firstName: String
     lastName: String
@@ -42,7 +38,7 @@ export const userTypeDefs = gql`
 
   type Mutation {
     createUser(input: createUserInput!): User
-    deleteUser(id: ID!): ID
-    updateUser(id: ID!, input: updateUserInput!): ID
+    deleteUser(id: String!): ID
+    updateUser(id: String!, updateInput: updateUserInput!): ID
   }
 `;
