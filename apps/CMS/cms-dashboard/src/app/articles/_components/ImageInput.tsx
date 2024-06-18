@@ -34,7 +34,7 @@ export const ImageInput = ({ onImageUpload }: ImageInputProps) => {
             <div className="flex flex-col gap-2 items-center justify-center">
               <RiImageAddFill style={{ width: '32px', height: '32px' }} />
               <p className="text-base">Зураг оруулах</p>
-              <p className="text-[#5E6166] text-xs">Хэмжээ: 928x427</p>
+              <p className="text-muted text-xs">Хэмжээ: 928x427</p>
             </div>
           )}
         </div>

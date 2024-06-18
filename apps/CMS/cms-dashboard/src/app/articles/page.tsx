@@ -7,6 +7,7 @@ export default async function Index() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     console.log(file);
   };
+  
   return (
     <div>
       <h1 data-cy="Articles-Page">hello from Articles Page</h1>
