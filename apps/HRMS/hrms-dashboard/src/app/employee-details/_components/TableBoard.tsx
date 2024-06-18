@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 export const invoices = [
   {
@@ -72,6 +63,7 @@ export const TableDemo = () => {
             </TableCell>
           </TableRow>
         ))}
+        
       </TableBody>
       <TableFooter></TableFooter>
     </Table>
