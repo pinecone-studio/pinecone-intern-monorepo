@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ImageInput } from '@/app/articles/_components/ImageInput';
+import { ImageInput } from '@/app/articles/_components';
 import { act } from 'react-dom/test-utils';
 
 describe('ImageInput Component', () => {
