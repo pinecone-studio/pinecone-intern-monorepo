@@ -1,5 +1,5 @@
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
-import { getEmployee } from '@/graphql/resolvers/queries';
+import { getEmployeeDetails } from '@/graphql/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/employee', () => ({
@@ -24,7 +24,7 @@ jest.mock('@/models/employee', () => ({
 
 describe('get employee', () => {
   it('should get a employee', async () => {
-    const result = await getEmployee!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+    const result = await getEmployeeDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '1',
       firstName: 'John',
@@ -37,7 +37,7 @@ describe('get employee', () => {
   });
   it('cannot found', async () => {
     try {
-      await getEmployee!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+      await getEmployeeDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
     }
@@ -45,7 +45,7 @@ describe('get employee', () => {
 
   it("should throw an error if the employee doesn't exist", async () => {
     try {
-      await getEmployee!({}, { id: '2' }, { undefined }, {} as GraphQLResolveInfo);
+      await getEmployeeDetails!({}, { id: '2' }, { undefined }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
     }

@@ -2,13 +2,24 @@ import { MutationResolvers } from '@/graphql/generated';
 import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const createEmployee: MutationResolvers['createEmployee'] = async (_, { input }) => {
-  console.log("INP",input);
+type inputType = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  imageURL: string;
+  department: string;
+  jobTitle: string[];
+  ladderLevel: string;
+  salary: number;
+  dateOfEmployment: Date;
+  employmentStatus: string;
+};
+
+export const createEmployee: MutationResolvers['createEmployee'] = async (_: unknown, { input }: { input: inputType }) => {
   try {
     const createEmloyee = await EmployeeModel.create(input);
     return createEmloyee;
   } catch (error) {
-    console.log("EE", error)
     throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
   }
 };
