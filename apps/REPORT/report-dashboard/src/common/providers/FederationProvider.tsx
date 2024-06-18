@@ -7,23 +7,21 @@ import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@ap
 
 const uri = process.env.FEDERATION_ENDPOINT;
 
-console.log({ uri });
-
-const getFromLocalStorage = () => {
-  if (typeof window === 'undefined') {
-    return '';
-  }
-  return localStorage.getItem('token');
-};
+// const getFromLocalStorage = () => {
+//   if (typeof window === 'undefined') {
+//     return '';
+//   }
+//   return localStorage.getItem('token');
+// };
 
 export const makeApolloClient = () => {
-  const token = getFromLocalStorage();
+  // const token = getFromLocalStorage();
 
   const httpLink = new HttpLink({
     uri,
-    headers: {
-      Authorization: `${token}`,
-    },
+    // headers: {
+    //   Authorization: `${token}`,
+    // },
   });
 
   return new NextSSRApolloClient({
