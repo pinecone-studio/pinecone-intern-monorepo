@@ -22,23 +22,22 @@ jest.mock('@/models/employee', () => ({
   },
 }));
 
-jest.mock('@/graphql/resolvers/error', () => ({
-  default: jest.fn((errorMessage, errorType) => {
-    const { GraphQLError } = jest.requireActual('graphql');
-    return new GraphQLError(errorMessage.message, {
-      extensions: {
-        code: errorType.errorCode,
-        http: { status: errorType.errorStatus },
-      },
-    });
-  }),
-  errorTypes: {
-    INTERVAL_SERVER_ERROR: {
-      errorCode: 'INTERNAL_SERVER_ERROR',
-      errorStatus: 500,
-    },
-  },
-}));
+jest.mock('@/graphql/resolvers/error', () => {
+  const originalModule = jest.requireActual('@/graphql/resolvers/error');
+  return {
+    __esModule: true,
+    ...originalModule,
+    default: jest.fn((errorMessage, errorType) => {
+      const { GraphQLError } = jest.requireActual('graphql');
+      return new GraphQLError(errorMessage.message, {
+        extensions: {
+          code: errorType.errorCode,
+          http: { status: errorType.errorStatus },
+        },
+      });
+    }),
+  };
+});
 
 describe('getEmployeeDetails', () => {
   it('should return employee details if employee exists', async () => {

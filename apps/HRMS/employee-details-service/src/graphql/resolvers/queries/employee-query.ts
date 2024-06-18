@@ -3,7 +3,6 @@ import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
 export const getEmployeeDetails: QueryResolvers['getEmployee'] = async (_: unknown, { id }: { id: string }) => {
-  console.log('ID', id);
   try {
     const employee = await EmployeeModel.findById(id).lean();
 
