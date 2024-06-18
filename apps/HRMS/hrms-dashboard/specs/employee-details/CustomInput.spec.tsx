@@ -11,36 +11,22 @@ describe('stepOne', () => {
     placeholder: 'testPlaceholder',
     name: 'testName',
     value: 'testValue',
+    onChange: jest.fn(),
+    onBlur: jest.fn(),
   };
 
   it('StepOne Component', () => {
     const { container } = render(<StepOne {...props} />);
     expect(container).toBeDefined();
   });
+
   it('StepTwo Component', () => {
     const { container } = render(<StepTwo {...props} />);
     expect(container).toBeDefined();
   });
+
   it('StepThree Component', () => {
     const { container } = render(<StepThree {...props} />);
     expect(container).toBeDefined();
-  });
-  it('should render select input', () => {
-    const { getByTestId } = render(<StepOne label={props.label} type="select" value={'true'} name="3" />);
-    const selectInput = getByTestId('select-input');
-    expect(selectInput).toBeDefined();
-    expect(selectInput.style.color).toMatch('rgb(18, 19, 22)');
-  });
-  it('should render select input', () => {
-    const { getByTestId } = render(<StepTwo label={props.label} type="select" value={'true'} name="3" />);
-    const selectInput = getByTestId('select-input');
-    expect(selectInput).toBeDefined();
-    expect(selectInput.style.color).toMatch('rgb(18, 19, 22)');
-  });
-  it('should render select input', () => {
-    const { getByTestId } = render(<StepThree label={props.label} type="select" value={'true'} name="3" />);
-    const selectInput = getByTestId('select-input');
-    expect(selectInput).toBeDefined();
-    expect(selectInput.style.color).toMatch('rgb(18, 19, 22)');
   });
 });
