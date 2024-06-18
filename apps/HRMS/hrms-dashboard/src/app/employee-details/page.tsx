@@ -1,15 +1,18 @@
 import { Stepper } from './_components/modal/Stepper';
 import { AddEmployee } from './_components/AddEmployee';
+import { TableDemo } from './_components/TableBoard';
 
 const EmployeeDetailsPage = () => {
   return (
-    <div>
-      <div className="flex justify-center ">
+    <div className="flex justify-center">
+      <div className="flex justify-center flex-col items-center w-[1154px]">
         <AddEmployee />
-      </div>
+        <TableDemo />
       <div>
         <Stepper currentStep={0} />
       </div>
+      </div>
+    
     </div>
   );
 };
