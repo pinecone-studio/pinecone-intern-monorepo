@@ -1,9 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table';
-import { Chip } from './Chip';
 import { DropDownStudent } from './DropDownStudent';
 import { Student } from '@/generated';
 
-export const StudentsTable = ({ studentsdata }: { studentsdata: Student[] }) => {
+export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
+  console.log(studentsData);
   return (
     <Table className="container mx-auto border rounded-lg">
       <TableHeader>
@@ -15,18 +15,18 @@ export const StudentsTable = ({ studentsdata }: { studentsdata: Student[] }) => 
           <TableHead className="text-right w-[100px]">Төлөв </TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        {studentsdata?.map((student, index) => (
+      <TableBody className="h-[70px]">
+        {studentsData?.map((student, index) => (
           <TableRow key={index}>
-            <TableCell className="font-medium flex items-center gap-2 w-[200px]">
+            <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
               <img className="w-[30px] h-[30px]  rounded-full" src={student.profileImgUrl} alt="student" />
               <h1>{student.firstName}</h1>
             </TableCell>
             <TableCell>{student.studentCode}</TableCell>
             <TableCell>{student.email}</TableCell>
             <TableCell>{student.phoneNumber}</TableCell>
-            <TableCell className="font-medium flex items-center gap-2  text-right">
-              <div>{student.active}</div>
+            <TableCell className="font-medium flex items-center gap-2 h-[64px]  text-right">
+              <div className="border rounded-md px-2 py-1 w-[90px] flex justify-center items-center">{student.active}</div>
               <DropDownStudent />
             </TableCell>
           </TableRow>

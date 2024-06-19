@@ -21,6 +21,7 @@ export const studentsSchema = gql`
     classId: String!
     phoneNumber: String!
     email: String!
+    active: Boolean
   }
   input deleteStudentInput {
     studentId: String!

@@ -1,25 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
 import { StudentAddModal } from './studentAddTable/StudentAddModal';
 import { StudentsTable } from './studentAddTable/StudentTable';
-import { useGetStudentsByClassIdQuery } from '@/generated';
+import { Student, useGetStudentsByClassIdQuery } from '@/generated';
 
 export const StudentsInformation = () => {
-  const { data, loading } = useGetStudentsByClassIdQuery({
+  const { data, loading, error } = useGetStudentsByClassIdQuery({
     variables: {
-      classId: '123',
+      classId: '1123',
     },
   });
-
-  console.log(loading, data);
+  const studentsData = data?.getStudentsByClassId;
 
   return (
     <div className="mx-auto container ">
       <StudentAddModal />
-      <div>
-        <StudentsTable studentsdata={studentsdata} />
-      </div>
+      <div>{loading ? <div>loading</div> : error ? <div>Error</div> : <StudentsTable studentsData={studentsData as Student[]} />}</div>
     </div>
   );
 };

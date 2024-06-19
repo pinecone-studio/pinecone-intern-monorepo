@@ -1,4 +1,4 @@
-query getStudentsByClassId($classId: String!) {
+query GetStudentsByClassId($classId: String!) {
   getStudentsByClassId(classId: $classId) {
     _id
     firstName
