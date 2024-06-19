@@ -2,7 +2,6 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
 import { ReactNode } from 'react';
-import { getDashboardLayout } from '@/components/layout/Laypout';
 
 export const metadata = {
   title: 'Welcome to HRMS-dashboard',
@@ -14,7 +13,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body className="relative">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <FederationProvider>{getDashboardLayout(children)}</FederationProvider>
+          <FederationProvider>{children}</FederationProvider>
         </ThemeProvider>
       </body>
     </html>
