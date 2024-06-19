@@ -1,10 +1,10 @@
 query GetClasses {
   getClasses {
     _id
-    className
+    name
     startDate
     endDate
     classType
-    classTeachers
+    teachers
   }
 }

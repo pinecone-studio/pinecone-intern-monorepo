@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 export const classSchema = new Schema({
-  className: {
+  name: {
     type: String,
     required: true,
   },
@@ -18,6 +18,6 @@ export const classSchema = new Schema({
     required: true,
     enum: ['CODING', 'DESIGN'],
   },
-  classTeachers: { type: [String], required: true },
+  teachers: { type: [String], required: true },
 });
 export const ClassesModel = mongoose.models.classes || model('classes', classSchema);

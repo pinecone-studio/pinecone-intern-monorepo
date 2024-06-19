@@ -9,18 +9,20 @@ export const classSchema = gql`
   }
 
   type Class {
-    _id: ID
+    _id: ID!
     name: String!
-    teachers: [String]
-    endDate: String!
     startDate: String!
+    endDate: String!
     classType: ClassType!
-  }
-  enum ClassType {
-    CODING
-    DESIGN
+    teachers: [String!]!
   }
 
+  input CreateClassInput {
+    name: String!
+    startDate: String!
+    classType: ClassType!
+    teachers: [String!]!
+  }
   type Query {
     getClasses: [Class]
   }
