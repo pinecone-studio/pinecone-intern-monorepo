@@ -1,4 +1,4 @@
-import { CreateEmployeeInput, MutationResolvers } from '@/graphql/generated';
+import { CreateEmployeeInput, MutationResolvers } from '../../generated';
 import { EmployeeModel } from '@/models/employee';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
