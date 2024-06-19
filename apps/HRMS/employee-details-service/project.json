@@ -81,7 +81,7 @@
           "target": "get-secrets:testing"
         },
         {
-          "target": "codegen"
+          "target": "graphql-codegen"
         }
       ]
     },
