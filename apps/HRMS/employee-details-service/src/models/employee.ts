@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const EmployeeSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  firstname: String,
+  lastname: String,
   email: {
     type: String,
     required: true,

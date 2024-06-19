@@ -9,8 +9,8 @@ jest.mock('@/models/employee', () => ({
       .fn()
       .mockReturnValueOnce({
         _id: '2',
-        firstName: 'bataa',
-        lastName: 'od',
+        firstname: 'bataa',
+        lastname: 'od',
         email: 'bataa@gmail.com',
         department: 'SOFTWARE',
         jobTitle: ['developer', 'fullstack'],
@@ -37,8 +37,8 @@ describe('create employee', () => {
     const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '2',
-      firstName: 'bataa',
-      lastName: 'od',
+      firstname: 'bataa',
+      lastname: 'od',
       email: 'bataa@gmail.com',
       department: Department.Software,
       jobTitle: ['developer', 'fullstack'],
@@ -53,8 +53,8 @@ describe('create employee', () => {
       const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
       expect(result).toEqual({
         _id: '2',
-        firstName: 'bataa',
-        lastName: 'od',
+        firstname: 'bataa',
+        lastname: 'od',
         email: 'bataa@gmail.com',
         department: Department.Software,
         jobTitle: ['developer', 'fullstack'],
