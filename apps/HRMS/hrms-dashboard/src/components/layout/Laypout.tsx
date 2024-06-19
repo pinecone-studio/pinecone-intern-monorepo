@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import React from 'react';
 import { Sidebar } from '../SideBar';
 import { ProjectHeader } from '../ProjectHeader';
@@ -14,6 +14,6 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
     </div>
   );
 };
-export const getDashboardLayout = (children: any): ReactNode => {
+export const getDashboardLayout = (children: ReactNode): ReactNode => {
   return <DashboardLayout>{children}</DashboardLayout>;
 };

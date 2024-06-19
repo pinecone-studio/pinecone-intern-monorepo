@@ -1,10 +1,7 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
-import { ProjectHeader } from '@/components/ProjectHeader';
-import { NextPage } from 'next';
-import { ReactElement, ReactNode } from 'react';
-import { AppProps } from 'next/app';
+import { ReactNode } from 'react';
 import { getDashboardLayout } from '@/components/layout/Laypout';
 
 export const metadata = {
