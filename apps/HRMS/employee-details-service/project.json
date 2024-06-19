@@ -45,6 +45,9 @@
         {
           "target": "graphql-codegen",
           "params": "forward"
+        },
+        {
+          "target": "get-secrets:development"
         }
       ]
     },
