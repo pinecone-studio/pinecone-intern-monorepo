@@ -16,7 +16,7 @@ jest.mock('@/models/employee', () => ({
         dateOfEmployment: '2024-07-22',
         employmentStatus: 'FULL_TIME',
         jobTitle: ['developer', 'software'],
-        salary: 4000000,
+        salary: 5000000,
       })
       .mockRejectedValueOnce(null),
   },
@@ -30,7 +30,7 @@ const input = {
   dateOfEmployment: '2024-07-22',
   employmentStatus: EmploymentStatus.FullTime,
   jobTitle: ['developer', 'software'],
-  salary: 4000000,
+  salary: 5000000,
 };
 describe('create employee', () => {
   it('should create a employee', async () => {
@@ -44,7 +44,7 @@ describe('create employee', () => {
       dateOfEmployment: '2024-07-22',
       employmentStatus: EmploymentStatus.FullTime,
       jobTitle: ['developer', 'software'],
-      salary: 4000000,
+      salary: 5000000,
     });
   });
 
