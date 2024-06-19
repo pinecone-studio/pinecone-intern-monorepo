@@ -1,4 +1,4 @@
-import { Department } from '@/graphql/generated';
+import { Department, EmploymentStatus } from '@/graphql/generated';
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { createEmployee } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
@@ -12,11 +12,11 @@ jest.mock('@/models/employee', () => ({
         firstName: 'bataa',
         lastName: 'od',
         email: 'bataa@gmail.com',
-        department: 'Software',
+        department: 'SOFTWARE',
         jobTitle: ['developer', 'fullstack'],
         salary: 3500000,
         dateOfEmployment: '2024-7-22',
-        employmentStatus: 'FullTime',
+        employmentStatus: 'FULL_TIME',
       })
       .mockRejectedValueOnce(null),
   },
@@ -30,7 +30,7 @@ const input = {
   jobTitle: ['developer', 'fullstack'],
   salary: 3500000,
   dateOfEmployment: '2024-7-22',
-  employmentStatus: 'FullTime',
+  employmentStatus: EmploymentStatus.FullTime,
 };
 describe('create employee', () => {
   it('should create a employee', async () => {
@@ -40,11 +40,11 @@ describe('create employee', () => {
       firstName: 'bataa',
       lastName: 'od',
       email: 'bataa@gmail.com',
-      department: 'Software',
+      department: Department.Software,
       jobTitle: ['developer', 'fullstack'],
       salary: 3500000,
       dateOfEmployment: '2024-7-22',
-      employmentStatus: 'FullTime',
+      employmentStatus: EmploymentStatus.FullTime,
     });
   });
 
@@ -56,11 +56,11 @@ describe('create employee', () => {
         firstName: 'bataa',
         lastName: 'od',
         email: 'bataa@gmail.com',
-        department: 'Software',
+        department: Department.Software,
         jobTitle: ['developer', 'fullstack'],
         salary: 3500000,
         dateOfEmployment: '2024-7-22',
-        employmentStatus: 'FullTime',
+        employmentStatus: EmploymentStatus.FullTime,
       });
     } catch (error) {
       expect(error).toEqual(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST));
