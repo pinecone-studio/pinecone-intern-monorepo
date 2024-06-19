@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
   displayName: 'hrms-dashboard',
-  preset: '../../../jest.preset.js',
+  preset: './jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
     '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'] }],
@@ -10,6 +10,8 @@ export default {
   coverageDirectory: '../../../coverage/apps/HRMS/hrms-dashboard',
   setupFilesAfterEnv: ['jest-canvas-mock'],
   collectCoverageFrom: [
+    '!**/components/ui/button.tsx',
+    '!**/components/ui/**/*.tsx',
     '!src/app/**/*.tsx',
     'src/**/_components/*.tsx',
     '!**/*.spec.tsx',

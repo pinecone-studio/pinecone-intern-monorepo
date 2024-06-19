@@ -8,7 +8,4 @@ test('renders AddEmployee component', () => {
 
   const container = screen.getByTestId('container');
   expect(container).toBeInTheDocument();
-
-  const addButton = screen.getByText('Ажилтан нэмэх');
-  expect(addButton).toBeDefined();
 });

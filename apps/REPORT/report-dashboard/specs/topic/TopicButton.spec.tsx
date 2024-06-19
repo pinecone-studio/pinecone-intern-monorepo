@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { TopicButton } from '../../src/app/_topic/_components';
+import { TopicButton } from '../../src/app/topic/_components';
 import React from 'react';
 
 describe('AssessmentButton', () => {

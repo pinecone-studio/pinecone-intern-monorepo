@@ -3,7 +3,8 @@ import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import { ApolloServer } from 'apollo-server-cloud-functions';
 import { resolvers, typeDefs } from '../../graphql';
-
+import { connectDatabase } from '@/config/connect-database';
+connectDatabase();
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
     typeDefs,
