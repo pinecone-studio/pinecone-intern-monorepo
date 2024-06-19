@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { MdOutlineEdit, MdMoreVert } from 'react-icons/md';
 
 const mockData = [
@@ -55,6 +55,7 @@ export const TableContent = () => {
             </TableRow>
           </TableHeader>
           <TableBody className="rounded">
+            <TableCaption></TableCaption>
             {mockData?.map((el, index) => {
               let color: string;
 
@@ -93,6 +94,7 @@ export const TableContent = () => {
                 </TableRow>
               );
             })}
+            <TableFooter></TableFooter>
           </TableBody>
         </Table>
       </div>
