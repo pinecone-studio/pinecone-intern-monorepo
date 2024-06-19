@@ -5,14 +5,14 @@ import { ImageInput } from '@/app/articles/_components';
 import { act } from 'react-dom/test-utils';
 
 describe('ImageInput Component', () => {
-  let mockOnImageUpload: jest.Mock;
+  let setFile: jest.Mock<void, [File | null]>;
 
   beforeEach(() => {
-    mockOnImageUpload = jest.fn();
+    setFile = jest.fn();
   });
 
   test('renders the component with initial state', () => {
-    render(<ImageInput onImageUpload={mockOnImageUpload} />);
+    render(<ImageInput setFile={setFile} />);
 
     expect(screen.getByText('Өнгөц зураг')).toBeInTheDocument();
     expect(screen.getByText('Зураг оруулах')).toBeInTheDocument();
@@ -20,7 +20,7 @@ describe('ImageInput Component', () => {
   });
 
   test('opens file input when clicking on the parent div', () => {
-    render(<ImageInput onImageUpload={mockOnImageUpload} />);
+    render(<ImageInput setFile={setFile} />);
 
     const parentDiv = screen.getByText('Зураг оруулах').parentElement;
     fireEvent.click(parentDiv);
@@ -31,7 +31,7 @@ describe('ImageInput Component', () => {
   });
 
   test('uploads and previews an image', async () => {
-    render(<ImageInput onImageUpload={mockOnImageUpload} />);
+    render(<ImageInput setFile={setFile} />);
 
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
     const fileInput = screen.getByLabelText('Өнгөц зураг');
@@ -43,11 +43,11 @@ describe('ImageInput Component', () => {
     await waitFor(() => {
       expect(screen.getByAltText('uploaded img')).toBeInTheDocument();
     });
-    expect(mockOnImageUpload).toHaveBeenCalledWith(file);
+    expect(setFile).toHaveBeenCalledWith(file);
   });
 
   test('does not call onImageUpload if no file is selected', () => {
-    render(<ImageInput onImageUpload={mockOnImageUpload} />);
+    render(<ImageInput setFile={setFile} />);
     const fileInput = screen.getByLabelText('Өнгөц зураг').closest('input') as HTMLInputElement;
 
     fireEvent.change(fileInput, { target: { files: [] } });
@@ -56,7 +56,7 @@ describe('ImageInput Component', () => {
   });
 
   test('handles invalid file upload gracefully', () => {
-    render(<ImageInput onImageUpload={mockOnImageUpload} />);
+    render(<ImageInput setFile={setFile} />);
 
     const invalidFile = new File([''], 'example.txt', { type: 'text/plain' });
     const fileInput = screen.getByLabelText('Өнгөц зураг');
@@ -64,6 +64,5 @@ describe('ImageInput Component', () => {
     fireEvent.change(fileInput, { target: { files: [invalidFile] } });
 
     expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
-    expect(mockOnImageUpload).not.toHaveBeenCalled();
   });
 });
