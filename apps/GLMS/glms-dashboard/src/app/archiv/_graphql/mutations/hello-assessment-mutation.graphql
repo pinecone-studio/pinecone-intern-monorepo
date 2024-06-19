@@ -1,0 +1,3 @@
+mutation HelloMutationFromAssessmentService {
+  helloMutationFromAssessmentService
+}
