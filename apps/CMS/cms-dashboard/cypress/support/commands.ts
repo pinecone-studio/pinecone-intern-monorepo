@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /// <reference types="cypress" />
-
+import 'cypress-file-upload';
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -10,7 +10,6 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
