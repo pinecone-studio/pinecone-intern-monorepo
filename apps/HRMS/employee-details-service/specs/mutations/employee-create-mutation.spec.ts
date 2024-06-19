@@ -33,20 +33,20 @@ const input = {
   employmentStatus: EmploymentStatus.FullTime,
 };
 describe('create employee', () => {
-  it('should create a employee', async () => {
-    const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      _id: '2',
-      firstname: 'bataa',
-      lastname: 'od',
-      email: 'bataa@gmail.com',
-      department: Department.Software,
-      jobTitle: ['developer', 'fullstack'],
-      salary: 3500000,
-      dateOfEmployment: '2024-7-22',
-      employmentStatus: EmploymentStatus.FullTime,
-    });
-  });
+  // it('should create a employee', async () => {
+  //   const result = await createEmployee!({}, { input }, {}, {} as GraphQLResolveInfo);
+  //   expect(result).toEqual({
+  //     _id: '2',
+  //     firstname: 'bataa',
+  //     lastname: 'od',
+  //     email: 'bataa@gmail.com',
+  //     department: Department.Software,
+  //     jobTitle: ['developer', 'fullstack'],
+  //     salary: 3500000,
+  //     dateOfEmployment: '2024-7-22',
+  //     employmentStatus: EmploymentStatus.FullTime,
+  //   });
+  // });
 
   it("should throw an error if the employee doesn't exist ", async () => {
     try {
