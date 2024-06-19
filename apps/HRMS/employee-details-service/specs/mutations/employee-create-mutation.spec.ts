@@ -1,3 +1,4 @@
+import { Department } from '@/graphql/generated';
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
 import { createEmployee } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
@@ -12,7 +13,7 @@ jest.mock('@/models/employee', () => ({
         lastName: 'od',
         email: 'bataa@gmail.com',
         department: 'Software',
-        jobTitle: 'developer',
+        jobTitle: ['developer', 'fullstack'],
         salary: 3500000,
         dateOfEmployment: '2024-7-22',
         employmentStatus: 'FullTime',
@@ -25,8 +26,8 @@ const input = {
   firstname: 'bataa',
   lastname: 'od',
   email: 'bataa@gmail.com',
-  department: 'Software',
-  jobTitle: 'developer',
+  department: Department.Software,
+  jobTitle: ['developer', 'fullstack'],
   salary: 3500000,
   dateOfEmployment: '2024-7-22',
   employmentStatus: 'FullTime',
@@ -40,7 +41,7 @@ describe('create employee', () => {
       lastName: 'od',
       email: 'bataa@gmail.com',
       department: 'Software',
-      jobTitle: 'developer',
+      jobTitle: ['developer', 'fullstack'],
       salary: 3500000,
       dateOfEmployment: '2024-7-22',
       employmentStatus: 'FullTime',
@@ -56,7 +57,7 @@ describe('create employee', () => {
         lastName: 'od',
         email: 'bataa@gmail.com',
         department: 'Software',
-        jobTitle: 'developer',
+        jobTitle: ['developer', 'fullstack'],
         salary: 3500000,
         dateOfEmployment: '2024-7-22',
         employmentStatus: 'FullTime',

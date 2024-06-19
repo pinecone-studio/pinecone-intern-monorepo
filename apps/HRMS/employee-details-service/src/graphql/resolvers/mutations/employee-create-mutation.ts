@@ -8,7 +8,7 @@ type inputType = {
   email: string;
   imageURL: string;
   department: string;
-  jobTitle: string[];
+  jobTitle: [string];
   ladderLevel: string;
   salary: number;
   dateOfEmployment: Date;
@@ -16,8 +16,10 @@ type inputType = {
 };
 
 export const createEmployee: MutationResolvers['createEmployee'] = async (_: unknown, { input }: { input: inputType }) => {
+  console.log('inp', input);
   try {
     const createEmloyee = await EmployeeModel.create(input);
+    console.log('re', createEmloyee);
     return createEmloyee;
   } catch (error) {
     throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
