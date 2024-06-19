@@ -4,18 +4,22 @@ import { GraphQLError } from 'graphql';
 export const updateUser = async (_, { _id, updateInput }) => {
   const { firstName, lastName, role, password, email } = updateInput;
   try {
-    const result = await UserModel.findByIdAndUpdate(_id, {
-      firstName,
-      lastName,
-      role,
-      password,
-      email,
-    });
+    const result = await UserModel.findByIdAndUpdate(
+      _id,
+      {
+        firstName,
+        lastName,
+        role,
+        password,
+        email,
+      },
+      { new: true }
+    );
     if (!result) {
       throw new GraphQLError('failed to update user');
     }
     return result;
   } catch (error) {
-    throw new GraphQLError('failed to update user');
+    throw new GraphQLError('database error');
   }
 };
