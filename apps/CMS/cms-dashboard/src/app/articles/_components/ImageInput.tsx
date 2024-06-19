@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
 
 interface ImageInputProps {
-  onImageUpload: (_file: File) => void;
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  setFile: (_file: File | null) => void; 
 }
 
-export const ImageInput = ({ onImageUpload }: ImageInputProps) => {
+export const ImageInput = ({ setFile }: ImageInputProps) => {
   const [previewURL, setPreviewURL] = useState<string>('');
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +16,7 @@ export const ImageInput = ({ onImageUpload }: ImageInputProps) => {
       reader.readAsDataURL(file);
       reader.onload = (event) => {
         setPreviewURL(event.target?.result as string);
-        onImageUpload(file);
+        setFile(file);
       };
     }
   };
