@@ -74,6 +74,7 @@
     "clsx": "2.1.1",
     "cmdk": "1.0.0",
     "commitizen": "4.3.0",
+    "cypress-file-upload": "^5.0.8",
     "daisyui": "4.10.2",
     "date-fns": "3.6.0",
     "dayjs": "1.11.11",
