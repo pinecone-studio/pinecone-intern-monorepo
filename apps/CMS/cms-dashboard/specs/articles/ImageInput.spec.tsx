@@ -46,13 +46,13 @@ describe('ImageInput Component', () => {
     expect(setFile).toHaveBeenCalledWith(file);
   });
 
-  test('does not call onImageUpload if no file is selected', () => {
+  test('does not call setFile if no file is selected', () => {
     render(<ImageInput setFile={setFile} />);
     const fileInput = screen.getByLabelText('Өнгөц зураг').closest('input') as HTMLInputElement;
 
     fireEvent.change(fileInput, { target: { files: [] } });
 
-    expect(mockOnImageUpload).not.toHaveBeenCalled();
+    expect(setFile).not.toHaveBeenCalled();
   });
 
   test('handles invalid file upload gracefully', () => {
@@ -64,5 +64,6 @@ describe('ImageInput Component', () => {
     fireEvent.change(fileInput, { target: { files: [invalidFile] } });
 
     expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
+    expect(setFile).not.toHaveBeenCalled();
   });
 });
