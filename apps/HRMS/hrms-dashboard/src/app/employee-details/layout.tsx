@@ -1,5 +1,5 @@
 import { ProjectHeader } from '@/components/ProjectHeader';
-import { Sidebar } from 'lucide-react';
+import { Sidebar } from '@/components/SideBar';
 import { ReactNode } from 'react';
 import React from 'react';
 
