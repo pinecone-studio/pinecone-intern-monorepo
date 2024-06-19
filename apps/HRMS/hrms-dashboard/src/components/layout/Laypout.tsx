@@ -3,7 +3,7 @@ import React from 'react';
 import { Sidebar } from '../SideBar';
 import { ProjectHeader } from '../ProjectHeader';
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+export const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <ProjectHeader></ProjectHeader>
