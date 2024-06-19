@@ -1,13 +1,14 @@
-import { UserModel } from '@/graphql/models/user.models';
+import { UserModel } from '@/graphql/models';
 import { GraphQLError } from 'graphql';
 
 export const deleteUser = async (_, { _id }) => {
   try {
     const result = await UserModel.findByIdAndDelete(_id);
     if (!result) {
-      throw new GraphQLError('Could not find specific user');
+      throw new GraphQLError('Could not delete user');
     }
+    return result;
   } catch (error) {
-    throw new GraphQLError('Internal System Error');
+    throw new GraphQLError('Could not delete user');
   }
 };

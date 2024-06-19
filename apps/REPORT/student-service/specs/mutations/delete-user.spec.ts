@@ -1,38 +1,23 @@
+import { UserModel } from '@/graphql/models';
 import { deleteUser } from '@/graphql/resolvers/mutations';
 import { GraphQLError, GraphQLResolveInfo } from 'graphql';
-import { UserModel } from '../../src/graphql/models/user.models';
-import mongoose from 'mongoose';
 
-jest.mock('@/graphql/models/user.models', () => ({
+jest.mock('@/graphql/models', () => ({
   UserModel: {
-    findByIdAndDelete: jest.fn().mockReturnValueOnce({
-      _id: '1',
-      firstName: 'Ghandi',
-      lastName: 'Mhatma',
-      email: 'india@numba.wan',
-      password: 'WarudoPeas',
-      role: 'ADMIN',
-    }),
+    findByIdAndDelete: jest.fn(),
   },
 }));
 
 describe('User Delete function', () => {
-  it('should delete the specific user', async () => {
-    const mockUser = {
-      _id: '1',
-      firstName: 'Ghandi',
-      lastName: 'Mhatma',
-      email: 'india@numba.wan',
-      password: 'WarudoPeas',
-      role: 'ADMIN',
-    };
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should delete user', async () => {
+    const input = { _id: 'userId' };
+    (UserModel.findByIdAndDelete as jest.Mock).mockResolvedValue(input);
 
-    UserModel.findByIdAndDelete.mockResolvedValue(mockUser);
-
-    const id = { _id: '1' };
-
-    const result = await deleteUser!({}, id, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual(mockUser);
+    const result = await deleteUser!({}, { input }, {}, {} as GraphQLResolveInfo);
+    expect(result).toEqual(input);
   });
 
   it('should throw an error when a user is not found', async () => {
