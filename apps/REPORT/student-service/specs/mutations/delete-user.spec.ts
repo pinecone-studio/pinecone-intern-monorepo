@@ -8,23 +8,31 @@ jest.mock('@/graphql/models', () => ({
   },
 }));
 
-describe('User Delete function', () => {
+describe('Delete User', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('should delete user', async () => {
-    const input = { _id: 'userId' };
-    (UserModel.findByIdAndDelete as jest.Mock).mockResolvedValue(input);
 
-    const result = await deleteUser!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual(input);
+  it('should delete a class', async () => {
+    const mockuser = {
+      _id: '1',
+      firstName: 'test',
+      lastName: 'testlast',
+      email: '23@gmail.com',
+      password: '123',
+      role: 'STUDENT',
+    };
+    (UserModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce(mockuser);
+
+    const result = await deleteUser({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
+    expect(result).toEqual(mockuser);
   });
 
   it('should throw an error when a user is not found', async () => {
     try {
       await deleteUser({}, { _id: '' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new GraphQLError('Internal System Error'));
+      expect(error).toEqual(new GraphQLError('Could not delete user'));
     }
   });
 
@@ -32,7 +40,7 @@ describe('User Delete function', () => {
     try {
       await deleteUser({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new GraphQLError('Internal System Error'));
+      expect(error).toEqual(new GraphQLError('Could not delete user'));
     }
   });
 });

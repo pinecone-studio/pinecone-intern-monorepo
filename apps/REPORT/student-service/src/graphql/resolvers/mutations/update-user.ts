@@ -1,7 +1,8 @@
+import { MutationResolvers } from '@/graphql/generated';
 import { UserModel } from '@/graphql/models/user.models';
 import { GraphQLError } from 'graphql';
 
-export const updateUser = async (_, { _id, updateInput }) => {
+export const updateUser: MutationResolvers['updateUser'] = async (_, { _id, updateInput }) => {
   const { firstName, lastName, role, password, email } = updateInput;
   try {
     const result = await UserModel.findByIdAndUpdate(
