@@ -79,6 +79,9 @@
       "dependsOn": [
         {
           "target": "get-secrets:testing"
+        },
+        {
+          "target": "codegen"
         }
       ]
     },
