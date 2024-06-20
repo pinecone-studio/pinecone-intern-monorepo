@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
 import { IoArrowForwardSharp } from 'react-icons/io5';
+import { Stepper } from './Stepper';
 export const AddModal = () => {
   return (
     <Dialog>
@@ -11,11 +12,12 @@ export const AddModal = () => {
           Ажилтан нэмэх
         </Button>
       </DialogTrigger>
-      <DialogContent data-testid="modalContent" className="sm:max-w-[425px]">
+      <DialogContent data-testid="modalContent" className="flex gap-10 flex-col sm:max-w-[620px] px-8">
         <DialogHeader>
           <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
+          <Stepper currentStep={0} />
 
         <DialogFooter>
           <Button variant={'outline'} className="flex gap-2 text-[#1C20243D] bg-[#D6D8DB] duration-500" data-testid="SubmitBtn" type="submit">

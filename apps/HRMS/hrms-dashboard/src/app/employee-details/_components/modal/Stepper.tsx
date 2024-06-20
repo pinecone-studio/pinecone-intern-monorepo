@@ -7,7 +7,7 @@ export const Stepper = ({ currentStep }: { currentStep: number }) => {
     { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
   ];
   return (
-    <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto p-4">
+    <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto ">
       <div data-testid="subcontainer" className="relative flex justify-between items-center mb-[100px]">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
