@@ -27,9 +27,7 @@ describe('connectToDatabase', () => {
 
     await connectToDatabase();
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(
-      'MONGODB_URI environment variable not found. Please set it to your MongoDB connection string.'
-    );
+    expect(consoleLogSpy).toHaveBeenCalledWith('MONGODB_URI environment variable not found. Please set it to your MongoDB connection string.');
   });
 
   it('should connect to the database if MONGODB_URI is set', async () => {

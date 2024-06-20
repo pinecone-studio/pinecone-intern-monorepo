@@ -1,1 +1,1 @@
-export * from './categoryModel';
+export * from './category.model';
