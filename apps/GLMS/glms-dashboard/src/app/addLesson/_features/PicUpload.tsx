@@ -1,26 +1,18 @@
 import { Img } from '@/app/icons/Img';
 import { CardMedia } from '@mui/material';
-import React, { Dispatch, SetStateAction, useState } from 'react';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
 
-interface PicUploadProps {
-  setImage: Dispatch<SetStateAction<string | undefined>>;
-  image: string | undefined;
-}
-
-const PicUpload: React.FC<PicUploadProps> = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | undefined>();
-
-  const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+const PicUpload = ({ imageUrl, setImageUrl }: { imageUrl: string; setImageUrl: React.Dispatch<React.SetStateAction<string>> }) => {
+  const fileChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event?.target?.files?.[0]) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      await uploadHandler(selectedFile);
     }
   };
 
-  const uploadHandler = async () => {
+  const uploadHandler = async (file: File) => {
     if (file) {
       const data = new FormData();
       data.append('file', file);
@@ -31,10 +23,11 @@ const PicUpload: React.FC<PicUploadProps> = () => {
       });
 
       const resJson = await res.json();
-      console.log(resJson);
+      console.log('cefef', resJson.url);
 
       if (resJson.url) {
         setImageUrl(resJson.url);
+        console.log(resJson.url);
       }
     }
   };
@@ -45,18 +38,15 @@ const PicUpload: React.FC<PicUploadProps> = () => {
         <div className="pt-[64px] flex flex-col items-start">
           <p className="font-inter text-base font-semibold leading-5 text-[#121316] pb-[8px]">Хавтасны зураг</p>
           <label htmlFor="file-upload" className="cursor-pointer">
-            <div className="w-[540px] h-[420px] border-dashed border-2 border-gray-400 flex flex-col items-center justify-center rounded-[8px] gap-[15px]">
+            <div className="relative w-[540px] h-[420px] border-dashed border-2 border-gray-400 flex flex-col items-center justify-center rounded-[8px]">
               <input id="file-upload" type="file" onChange={fileChangeHandler} style={{ display: 'none' }} />
-              {imageUrl && <CardMedia component="img" src={imageUrl} style={{ width: '100%', height: '100%' }} alt="uploaded" />}
-              {!imageUrl && <Img />}
-              <div className="flex gap-[10px]">
+              {imageUrl && <CardMedia component="img" src={imageUrl} style={{ borderRadius: '8px', width: '99%', height: '99%', position: 'absolute', zIndex: 10 }} alt="uploaded" />}
+              <div className="flex flex-col items-center gap-[10px]">
+                <Img />
                 <span className="text-[#D6D8DB]">Зураг сонгоно уу </span>
               </div>
             </div>
           </label>
-          <button type="button" onClick={uploadHandler}>
-            Upload
-          </button>
         </div>
       </div>
     </div>
