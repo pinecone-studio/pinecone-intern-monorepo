@@ -28,20 +28,16 @@ describe('StudentAddModal', () => {
     // Fill out the form inputs
     // cy.get('input[id="email"]').type('12345'); // Example input ID, adjust as per your actual IDs
     cy.get('[data-testid="Student-code-input"]').type('23lp5157'); // Example class-based input selection, adjust as per your actual class names
-    cy.get('[data-testid="FirstName-input"]').type('John');
-    cy.get('[data-testid="LastName-input"]').type('Doe');
+    cy.get('[data-testid="firstName-input"]').type('John');
+    cy.get('[data-testid="lastName-input"]').type('Doe');
     cy.get('[data-testid="phone-number-input"]').type('88888888');
     cy.get('[data-testid="email-input"]').type('john.doe@example.com');
 
-    // cy.get('input[placeholder="email@example.com"]').type('john.doe@example.com');
+    cy.get('input[placeholder="email@example.com"]').type('john.doe@example.com');
+    cy.get('[data-test="passive-radio-group-item"').click();
+    cy.get('[data-testid="active-radio-group-item"').click();
 
-    // // Select a radio button option
-    // cy.contains('Идэвхитэй').click();
-
-    // // Submit the form by clicking the save button
-    // cy.get('[data-testid="add-student-button"]').click();
-
-    // Optionally, assert that a success message or confirmation appears
-    // cy.contains('Saved successfully').should('exist');
+    // Submit the form by clicking the save button
+    cy.get('[data-testid="add-student-button"]').contains('Хадгалах').click();
   });
 });
