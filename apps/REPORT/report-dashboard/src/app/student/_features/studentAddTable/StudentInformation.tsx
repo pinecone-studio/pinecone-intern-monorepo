@@ -7,10 +7,11 @@ import { StudentsTable } from './StudentTable';
 export const StudentsInformation = () => {
   const { data, loading, error } = useGetStudentsByClassIdQuery({
     variables: {
-      classId: 'asdf',
+      classId: '1212',
     },
   });
   const studentsData = data?.getStudentsByClassId;
+  console.log(studentsData);
 
   return (
     <div className="mx-auto container ">

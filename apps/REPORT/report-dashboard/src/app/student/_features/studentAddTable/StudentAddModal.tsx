@@ -38,8 +38,8 @@ export const StudentAddModal = () => {
               lastName: values.lastName,
               phoneNumber: values.phoneNumber,
               studentCode: values.studentCode,
-              profileImgUrl: 'asdf',
-              classId: 'asdf',
+              profileImgUrl: 'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?',
+              classId: '1212',
             },
           },
         });
@@ -71,13 +71,13 @@ export const StudentAddModal = () => {
           <div data-testid="radio-group" className="flex justify-between">
             <div className="flex flex-col gap-2">
               <Label htmlFor="FirstName">Овог</Label>
-              <Input value={formik.values.firstName} onChange={(e) => formik.setFieldValue('firstName', e.target.value)} data-testid="FirstName-input" className="w-[220px]" />
+              <Input value={formik.values.lastName} onChange={(e) => formik.setFieldValue('lastName', e.target.value)} data-testid="lastName-input" className="w-[220px]" />
             </div>
             <div className="flex flex-col gap-2">
               <Label data-test="Name-label" className="w-full" htmlFor="email">
                 Нэр
               </Label>
-              <Input value={formik.values.lastName} onChange={(e) => formik.setFieldValue('lastName', e.target.value)} data-testid="LastName-input" className="w-[220px]" />
+              <Input value={formik.values.firstName} onChange={(e) => formik.setFieldValue('firstName', e.target.value)} data-testid="firstName-input" className="w-[220px]" />
             </div>
           </div>
           <Label data-testid="phone-number-label" htmlFor="email">
