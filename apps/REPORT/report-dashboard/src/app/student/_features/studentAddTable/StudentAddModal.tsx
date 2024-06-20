@@ -38,7 +38,7 @@ export const StudentAddModal = () => {
               lastName: values.lastName,
               phoneNumber: values.phoneNumber,
               studentCode: values.studentCode,
-              profileImgUrl: 'adsf',
+              profileImgUrl: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?',
               classId: 'asdf',
             },
           },
@@ -89,7 +89,7 @@ export const StudentAddModal = () => {
           </Label>
           <Input value={formik.values.email} onChange={(e) => formik.setFieldValue('email', e.target.value)} data-testid="email-input" placeholder="email@example.com" />
           <div data-testid="dropzone" className={` ${!image && 'border-dashed border-2 border-gray-200 p-2 rounded-md flex flex-col gap-2 justify-center items-center h-[158px]'}  `}>
-            <Image className="w-[110px] h-[110px] rounded-full" src="/images/studentProfile.jpg" alt="profileImage" width={110} height={110} />
+            <Image className="w-[110px] h-[110px] rounded-full" src={formik.values.profileImgUrl} alt="profileImage" />
             {image && (
               <Label htmlFor="dropzone">
                 <span className="cursor-pointer"> Файлыг чирж буулгах эсвэл</span>

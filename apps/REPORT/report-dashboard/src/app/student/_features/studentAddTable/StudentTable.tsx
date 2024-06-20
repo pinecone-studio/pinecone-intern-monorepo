@@ -1,7 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DropDownStudent } from './DropDownStudent';
 import { Student } from '@/generated';
-import Image from 'next/image';
 
 export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
   console.log(studentsData);
@@ -9,18 +8,22 @@ export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => 
     <Table className="container mx-auto border rounded-lg">
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[150px]">Сурагчийн Нэр </TableHead>
-          <TableHead>Код</TableHead>
-          <TableHead>Цахим хаяг</TableHead>
-          <TableHead>Утасны дугаар</TableHead>
-          <TableHead className="text-right w-[100px]">Төлөв </TableHead>
+          <TableHead data-testid="student-name" className="w-[150px]">
+            Сурагчийн Нэр
+          </TableHead>
+          <TableHead data-testid="student-code">Код</TableHead>
+          <TableHead data-testid="student-email">Цахим хаяг</TableHead>
+          <TableHead data-testid="student-phone-number">Утасны дугаар</TableHead>
+          <TableHead data-testid="stundet-state" className="text-right w-[100px]">
+            Төлөв
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody className="h-[70px]">
         {studentsData?.map((student, index) => (
           <TableRow key={index}>
             <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
-              <Image className="w-[30px] h-[30px]  rounded-full" src={student.profileImgUrl} alt="student" />
+              <img className="h-[40px] w-[40px] rounded-full" src={student.profileImgUrl} alt="student" />
               <h1>{student.firstName}</h1>
             </TableCell>
             <TableCell>{student.studentCode}</TableCell>
