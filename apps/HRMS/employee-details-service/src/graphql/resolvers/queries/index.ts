@@ -1,1 +1,2 @@
-export * from './hello-query';
+export * from './employee-all-query';
+export * from './employee-query';
