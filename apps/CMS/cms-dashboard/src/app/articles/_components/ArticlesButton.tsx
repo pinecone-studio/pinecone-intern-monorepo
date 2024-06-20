@@ -15,7 +15,7 @@ export const ArticlesButton: React.FC<ArticlesButtonProps> = (props) => {
     <div>
       <Button onClick={onClick} disabled={disabled} className={`${bgColor} `} type={type} data-testid="create-article-button">
         {text}
-      </Button>
+      </Button> 
     </div>
   );
 };
