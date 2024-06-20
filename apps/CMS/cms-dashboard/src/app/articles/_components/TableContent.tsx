@@ -42,7 +42,7 @@ export const TableContent = () => {
     <div>
       <div className="max-w-2xl mx-auto mt-10 ">
         <Table data-cy="contentList" className="border rounded">
-          {/* <TableCaption className="bg-red-300">A list of articles.</TableCaption> */}
+          <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead data-cy="tableHeader-0" className="w-[100px]">
@@ -55,7 +55,6 @@ export const TableContent = () => {
             </TableRow>
           </TableHeader>
           <TableBody className="rounded">
-            <TableCaption></TableCaption>
             {mockData?.map((el, index) => {
               let color: string;
 
@@ -94,8 +93,8 @@ export const TableContent = () => {
                 </TableRow>
               );
             })}
-            <TableFooter></TableFooter>
           </TableBody>
+          <TableFooter></TableFooter>
         </Table>
       </div>
     </div>
