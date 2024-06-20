@@ -43,7 +43,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config apps/CMS/articles-service/codegen.ts"]
-      }
+      },
+      "dependsOn": [{ "target": "get-secrets:development" }]
     },
     "export": {
       "executor": "@nx/next:export",
