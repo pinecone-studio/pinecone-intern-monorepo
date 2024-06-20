@@ -15,13 +15,14 @@ export const userSchema = gql`
     ADMIN
   }
 
-  input CreateUserInput {
+  input ECreateUserInput {
     firstName: String!
     lastName: String!
     email: String!
     role: String!
     password: String!
   }
+
   input UpdateUserInput {
     firstName: String
     lastName: String
@@ -36,7 +37,7 @@ export const userSchema = gql`
   }
 
   type Mutation {
-    createUser(input: CreateUserInput): User!
+    createUser(input: ECreateUserInput): User!
     updatedUser(_id: ID!, input: UpdateUserInput!): User!
     deletedUser(_id: ID!): User
   }
