@@ -6,7 +6,7 @@ export const SelectedClassMain = () => {
     <div>
       <div className="container mx-auto">
         <div className="flex justify-between gap-4 h-[136px] items-end">
-          <SelectedClassHeader text={'Class'} students={25} />
+          <SelectedClassHeader text={'Сурагч'} students={25} />
         </div>
         <SelectDashboard />
       </div>
