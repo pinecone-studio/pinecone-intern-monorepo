@@ -1,6 +1,7 @@
 import { Stepper } from './_components/modal/Stepper';
 import { AddEmployee } from './_components/AddEmployee';
 import { TableDemo } from './_components/TableBoard';
+import { PaginationDemo } from './_components/Pagination';
 
 const EmployeeDetailsPage = () => {
   return (
@@ -13,8 +14,8 @@ const EmployeeDetailsPage = () => {
       </div>
       </div>
     
+      <PaginationDemo />
     </div>
   );
 };
-
 export default EmployeeDetailsPage;

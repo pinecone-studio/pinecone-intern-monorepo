@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const EmployeeSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  firstname: String,
+  lastname: String,
   email: {
     type: String,
     required: true,
@@ -12,7 +12,7 @@ const EmployeeSchema = new mongoose.Schema({
     type: String,
     enum: ['SOFTWARE', 'DESIGN', 'MARKETING', 'BACK_OFFICE'],
   },
-  jobTitle: String,
+  jobTitle: [String],
   ladderLevel: String,
   salary: Number,
   bankName: String,

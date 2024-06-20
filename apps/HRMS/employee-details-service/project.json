@@ -45,6 +45,9 @@
         {
           "target": "graphql-codegen",
           "params": "forward"
+        },
+        {
+          "target": "get-secrets:testing"
         }
       ]
     },
@@ -76,6 +79,9 @@
       "dependsOn": [
         {
           "target": "get-secrets:testing"
+        },
+        {
+          "target": "graphql-codegen"
         }
       ]
     },

@@ -10,6 +10,8 @@ export const studentsSchema = gql`
     profileImgUrl: String!
     classId: String!
     active: Boolean
+    phoneNumber: String!
+    email: String!
   }
   input CreateStudentInput {
     firstName: String!
@@ -17,6 +19,8 @@ export const studentsSchema = gql`
     studentCode: String!
     profileImgUrl: String!
     classId: String!
+    phoneNumber: String!
+    email: String!
   }
   input deleteStudentInput {
     studentId: String!
@@ -28,6 +32,8 @@ export const studentsSchema = gql`
     studentCode: String!
     profileImgUrl: String!
     classId: String!
+    phoneNumber: String!
+    email: String!
   }
 
   type Query {
