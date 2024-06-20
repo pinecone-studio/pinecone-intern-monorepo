@@ -1,4 +1,3 @@
-import { LogoOnly } from '@/components/Logo';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaAngleDown } from 'react-icons/fa';
  
@@ -13,7 +12,6 @@ export const SelectedClassHeaderInfo = (props: ClassName) => {
     <div className="flex justify-between mx-8 my-5">
       <div className="flex gap-2">
         <FaArrowLeft size={30} />
-        <LogoOnly />
         <p className="font-bold text-center  text-xl ">{text}</p>
       </div>
       <div>
