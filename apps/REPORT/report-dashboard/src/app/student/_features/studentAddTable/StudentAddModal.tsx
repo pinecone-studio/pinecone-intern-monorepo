@@ -38,7 +38,7 @@ export const StudentAddModal = () => {
               lastName: values.lastName,
               phoneNumber: values.phoneNumber,
               studentCode: values.studentCode,
-              profileImgUrl: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?',
+              profileImgUrl: 'asdf',
               classId: 'asdf',
             },
           },
