@@ -1,5 +1,5 @@
 import { User } from '@/graphql/generated';
-import { Model, Schema, model, models} from 'mongoose';
+import { Model, Schema, model, models } from 'mongoose';
 
 const UserSchema = new Schema<User>({
   firstName: {
@@ -19,12 +19,9 @@ const UserSchema = new Schema<User>({
     required: true,
   },
   role: {
-    type:String,
-    enum:['EMPLOYEE','ADMIN'],
+    type: String,
+    enum: ['EMPLOYEE', 'ADMIN'],
     required: true,
-    
   },
 });
- export const UserModel:Model<User> = models.User || model<User>('User', UserSchema);
-//  export default UserModel;
-
+export const UserModel: Model<User> = models.User || model<User>('User', UserSchema);
