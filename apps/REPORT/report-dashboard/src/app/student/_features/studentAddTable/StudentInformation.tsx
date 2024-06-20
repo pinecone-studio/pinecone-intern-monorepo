@@ -1,13 +1,13 @@
 'use client';
 
-import { StudentAddModal } from './studentAddTable/StudentAddModal';
-import { StudentsTable } from './studentAddTable/StudentTable';
 import { Student, useGetStudentsByClassIdQuery } from '@/generated';
+import { StudentAddModal } from './StudentAddModal';
+import { StudentsTable } from './StudentTable';
 
 export const StudentsInformation = () => {
   const { data, loading, error } = useGetStudentsByClassIdQuery({
     variables: {
-      classId: '1123',
+      classId: 'asdf',
     },
   });
   const studentsData = data?.getStudentsByClassId;

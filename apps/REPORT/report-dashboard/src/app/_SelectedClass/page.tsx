@@ -1,5 +1,5 @@
 import 'tailwindcss/tailwind.css';
-import { SelectedClassMain } from '../_topic/_features/SelectedClassMain';
+import { SelectedClassMain } from '../student/_features/SelectedClassMain';
 
 export default async function Index() {
   return (

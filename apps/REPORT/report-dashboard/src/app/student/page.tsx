@@ -1,9 +1,12 @@
-import { StudentsInformation } from '../_topic/page';
+'use client';
 
-export default function Student() {
+import { StudentsInformation } from './_features/studentAddTable/StudentInformation';
+
+const StudentHomePage = () => {
   return (
-    <div>
+    <div className="container mx-auto">
       <StudentsInformation />
     </div>
   );
-}
+};
+export default StudentHomePage;

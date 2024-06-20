@@ -1,7 +1,7 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../../../components/ui/dropdown-menu';
 import { FiEdit } from 'react-icons/fi';
 import { LuDelete } from 'react-icons/lu';
 import { IoIosMore } from 'react-icons/io';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const DropDownStudent = () => {
   return (
