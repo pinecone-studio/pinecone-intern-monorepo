@@ -1,5 +1,6 @@
 import { Stepper } from './_components/modal/Stepper';
 import { AddEmployee } from './_components/AddEmployee';
+import { PaginationDemo } from './_components/Pagination';
 
 const EmployeeDetailsPage = () => {
   return (
@@ -10,8 +11,8 @@ const EmployeeDetailsPage = () => {
       <div>
         <Stepper currentStep={0} />
       </div>
+      <PaginationDemo />
     </div>
   );
 };
-
 export default EmployeeDetailsPage;
