@@ -4,7 +4,7 @@
 
 describe('StudentAddModal', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200'); // Replace with your application URL
+    cy.visit('http://localhost:4200/student'); // Replace with your application URL
   });
 
   it('renders the StudentAddModal component', () => {

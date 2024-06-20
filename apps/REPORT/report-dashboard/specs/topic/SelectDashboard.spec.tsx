@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { SelectDashboard } from '../../src/app/topic/_features/SelectDashboard';
+import { SelectDashboard } from '../../src/app/topic/_features//SelectDashboard';
 import { act } from 'react-dom/test-utils';
 
 describe('SelectDashboard component', () => {

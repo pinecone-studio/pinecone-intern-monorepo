@@ -1,5 +1,5 @@
-import { SelectedClassHeader } from '../_components/SelectedClassHeader';
-import { SelectDashboard } from './SelectDashboard';
+import { SelectedClassHeader } from '@/app/topic/_components/SelectedClassHeader';
+import { SelectDashboard } from '@/app/topic/_features/SelectDashboard';
 
 export const SelectedClassMain = () => {
   return (

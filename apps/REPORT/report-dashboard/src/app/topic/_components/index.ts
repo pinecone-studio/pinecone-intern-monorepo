@@ -1,1 +1,1 @@
-export * from './StudentButton';
+export * from './TopicButton';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { StudentButton } from '../../src/app/student/_components';
+import { StudentButton } from '../../src/app/student/_components/StudentButton';
 
 describe('Leaving', () => {
   it('Should render profile button component', () => {

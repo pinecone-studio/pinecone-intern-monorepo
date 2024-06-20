@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DropDownStudent } from './DropDownStudent';
 import { Student } from '@/generated';
+import Image from 'next/image';
 
 export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
   console.log(studentsData);
@@ -19,7 +20,7 @@ export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => 
         {studentsData?.map((student, index) => (
           <TableRow key={index}>
             <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
-              <img className="w-[30px] h-[30px]  rounded-full" src={student.profileImgUrl} alt="student" />
+              <Image className="w-[30px] h-[30px]  rounded-full" src={student.profileImgUrl} alt="student" />
               <h1>{student.firstName}</h1>
             </TableCell>
             <TableCell>{student.studentCode}</TableCell>

@@ -11,10 +11,11 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export const StudentAddModal = () => {
   const [value, setValue] = useState('option-one');
-  const [image, _setImage] = useState();
+  const [image] = useState();
   const [createStudent] = useCreateStudentMutation();
   const formik = useFormik({
     initialValues: {
@@ -88,7 +89,7 @@ export const StudentAddModal = () => {
           </Label>
           <Input value={formik.values.email} onChange={(e) => formik.setFieldValue('email', e.target.value)} data-testid="email-input" placeholder="email@example.com" />
           <div data-testid="dropzone" className={` ${!image && 'border-dashed border-2 border-gray-200 p-2 rounded-md flex flex-col gap-2 justify-center items-center h-[158px]'}  `}>
-            <img className="w-[110px] h-[110px] rounded-full" src="/images/studentProfile.jpg" alt="profileImage" />
+            <Image className="w-[110px] h-[110px] rounded-full" src="/images/studentProfile.jpg" alt="profileImage" width={110} height={110} />
             {image && (
               <Label htmlFor="dropzone">
                 <span className="cursor-pointer"> Файлыг чирж буулгах эсвэл</span>
