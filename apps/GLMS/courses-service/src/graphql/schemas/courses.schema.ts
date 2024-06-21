@@ -4,6 +4,7 @@ export const coursesTypeDefs = gql`
   scalar Date
 
   type Query {
+    getCourse(_id: ID!): Course
     getCourses: [Course]
     getLessons(courseId: ID!): [Lesson]
     getLessonDetails(id: ID!): Lesson

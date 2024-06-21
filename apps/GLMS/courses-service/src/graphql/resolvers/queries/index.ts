@@ -1,2 +1,1 @@
-export * from './hello-query';
-export * from './course-queries';
+export * from './course';
