@@ -6,6 +6,9 @@ import { MdOutlineAdd } from 'react-icons/md';
 import { Stepper } from './Stepper';
 import { useState } from 'react';
 import { NextAndBackButton } from './NextAndBackButton';
+import { StepPersonalInfo } from '../add-employee-steps/StepPersonaInfo';
+import { StepJobInfo } from '../add-employee-steps/StepJobInfo';
+import { StepAdditionalInfo } from '../add-employee-steps/StepAdditionaInfo';
 export const AddModal = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
@@ -24,11 +27,14 @@ export const AddModal = () => {
       <DialogContent data-testid="modalContent" className="flex gap-10 flex-col sm:max-w-[620px] px-8">
         <DialogHeader>
           <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
-          <DialogDescription>
-            
-          </DialogDescription>
+
+          <DialogDescription></DialogDescription>
+          <Stepper currentStep={currentStep} steps={steps} />
+          {currentStep == 0 && <StepPersonalInfo />}
+          {currentStep == 1 && <StepJobInfo />}
+          {currentStep == 2 && <StepAdditionalInfo />}
         </DialogHeader>
-        <Stepper currentStep={currentStep} steps={steps} />
+
         <DialogFooter></DialogFooter>
         <NextAndBackButton steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </DialogContent>
