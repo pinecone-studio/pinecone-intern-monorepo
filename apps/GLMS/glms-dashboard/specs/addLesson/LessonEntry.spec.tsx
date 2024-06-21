@@ -20,7 +20,7 @@ describe('LessonEntry', () => {
   it('updates the inputData state correctly when input fields are changed', () => {
     const { getByTestId } = render(<LessonEntry inputData={mockInputData} setInputData={mockSetInputData} />);
 
-    const topicInput = getByTestId('lesson_input_comp');
+    const topicInput = getByTestId('lesson_input_component');
     expect(topicInput).toBeInTheDocument();
     console.log('====>>>>', topicInput);
 
@@ -28,12 +28,12 @@ describe('LessonEntry', () => {
       fireEvent.change(topicInput, { target: { value: 'Test-Lesson' } });
     });
 
-    const titleInput = getByTestId('lesson_input_comp');
+    const titleInput = getByTestId('lesson_input_sec_comp');
     expect(titleInput).toBeInTheDocument();
     console.log('====>>>>', titleInput);
 
     act(() => {
-      fireEvent.change(titleInput, { target: { value: 'lesson_input_sec_comp' } });
+      fireEvent.change(titleInput, { target: { value: 'Test-Lesson' } });
     });
 
     const detailsTextarea = getByTestId('lesson_text_area_comp');

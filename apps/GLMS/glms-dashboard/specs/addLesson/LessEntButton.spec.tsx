@@ -1,9 +1,8 @@
-// LessEntButton.test.tsx
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { LessEntButton } from '../../src/app/addLesson/_components/LessEntButton';
-// Mock the Button and WhiteArrow components
+
 jest.mock('@/components/ui/button', () => ({
   Button: ({ children, onClick, className, disabled }: never) => (
     <button onClick={onClick} className={className} disabled={disabled}>
