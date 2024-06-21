@@ -1,8 +1,18 @@
+'use client';
+
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
-import { IoArrowForwardSharp } from 'react-icons/io5';
+import { NextAndBack } from './modal/NextAndBack';
+import { useState } from 'react';
+
 export const AddModal = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
+    { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
+    { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
+  ];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,9 +28,7 @@ export const AddModal = () => {
         </DialogHeader>
 
         <DialogFooter>
-          <Button variant={'outline'} className="flex gap-2 text-[#1C20243D] bg-[#D6D8DB] duration-500" data-testid="SubmitBtn" type="submit">
-            Дараах <IoArrowForwardSharp data-testid="arrow-icon" className="w-4 h-4" />
-          </Button>
+          <NextAndBack steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
         </DialogFooter>
       </DialogContent>
     </Dialog>
