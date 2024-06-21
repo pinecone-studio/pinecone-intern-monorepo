@@ -20,7 +20,7 @@ describe('LessonEntry', () => {
   it('updates the inputData state correctly when input fields are changed', () => {
     const { getByTestId } = render(<LessonEntry inputData={mockInputData} setInputData={mockSetInputData} />);
 
-    const topicInput = getByTestId('lesson_input_component');
+    const topicInput = getByTestId('lesson_input_comp');
     expect(topicInput).toBeInTheDocument();
     console.log('====>>>>', topicInput);
 

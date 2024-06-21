@@ -26,7 +26,7 @@ export const LessonEntry: React.FC<LessonEntryProps> = ({ inputData, setInputDat
       <div className="flex flex-col pt-[64px] gap-[32px]">
         <div data-testid="continue topic">
           <p className="font-inter text-base font-semibold leading-5 text-[#121316] pb-[8px]">Сэдэв</p>
-          <Input data-testid="lesson_input_component" className="w-[588px] border-gray-400" placeholder="Сонгоно уу" value={inputData.topic} onChange={handleInputChange('topic')} />
+          <Input data-testid="lesson_input_comp" className="w-[588px] border-gray-400" placeholder="Сонгоно уу" value={inputData.topic} onChange={handleInputChange('topic')} />
         </div>
         <div data-testid="continue title">
           <p className="font-inter text-base font-semibold leading-5 text-[#121316] pb-[8px]">Гарчиг</p>
