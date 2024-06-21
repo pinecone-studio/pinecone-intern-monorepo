@@ -19,5 +19,6 @@ describe('NextAndBackButton Component', () => {
   it('should render the NextAndBackButton component', () => {
     render(<WrapperComponent />);
     expect(screen.getByTestId('buttons')).toBeInTheDocument();
+    expect(screen.getByTestId('body-button')).toBeInTheDocument();
   });
 });

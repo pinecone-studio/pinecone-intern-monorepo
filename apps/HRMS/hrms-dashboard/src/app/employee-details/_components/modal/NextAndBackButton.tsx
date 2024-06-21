@@ -8,7 +8,7 @@ export const NextAndBackButton = ({ steps, currentStep, setCurrentStep }: { step
 
   return (
     <div data-testid="buttons">
-      <div className="flex justify-between">
+      <div data-testid="body-button" className="flex justify-between">
         {currentStep > 0 ? (
           <button onClick={prevStep} className={`flex justify-center items-center h-12 w-12 rounded-full bg-[#F6F6F6] ${currentStep === 0 ? 'cursor-not-allowed' : ''}`} disabled={currentStep === 0}>
             <div className="flex w-6 h-6 items-center justify-center">
