@@ -23,7 +23,7 @@ const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
           <TableRow key={index}>
             <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
               <img data-testid="student-profile" className="h-[40px] w-[40px] rounded-full" src={student.profileImgUrl} alt="student" />
-              <h1 data-testid="student-name" className="font-medium">
+              <h1 data-testid="students-name" className="font-medium">
                 {student.firstName}
               </h1>
             </TableCell>

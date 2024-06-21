@@ -1,7 +1,8 @@
 import { LogoOnly } from '@/components/Logo';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaAngleDown } from 'react-icons/fa';
- 
+import Image from 'next/image';
+
 type ClassName = {
   text: string;
   profile: string;
@@ -18,8 +19,8 @@ export const SelectedClassHeaderInfo = (props: ClassName) => {
       </div>
       <div>
         <div className="flex gap-2">
-          <img className=" rounded-full w-10 h-10" src={profile} alt="profile" />
- 
+          <Image className=" rounded-full w-10 h-10" src={profile} alt="profile" />
+
           <div>
             <p className="text-2sm font-bold">{name}</p>
             <p className="text-sm">Багш</p>
@@ -32,4 +33,3 @@ export const SelectedClassHeaderInfo = (props: ClassName) => {
     </div>
   );
 };
- 

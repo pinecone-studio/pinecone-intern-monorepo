@@ -3,20 +3,20 @@
 // Example Student data for testing
 const studentsData = [
   {
-    firstName: 'BATAA',
-    studentCode: '123456',
-    email: 'test@gmail.com',
-    phoneNumber: '90909909',
+    firstName: 'Bataa',
+    studentCode: '23lp5157@',
+    email: 'Bataa@gmail.com',
+    phoneNumber: '89898989',
     active: true,
-    profileImgUrl: 'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?',
+    profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
   },
   {
-    firstName: 'BATAA',
-    studentCode: '123456',
-    email: 'test@gmail.com',
-    phoneNumber: '90909909',
+    firstName: 'Bataa',
+    studentCode: '23lp5157@',
+    email: 'Bataa@gmail.com',
+    phoneNumber: '89898989',
     active: true,
-    profileImgUrl: 'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?',
+    profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
   },
 ];
 
@@ -36,7 +36,7 @@ describe('Students Table', () => {
   it('displays students data correctly', () => {
     // Check if each student's data is displayed correctly in the table
     studentsData.forEach((student, index) => {
-      cy.get('tbody').find(`[data-testid="student-name"]:eq(${index})`).should('contain.text', student.firstName);
+      cy.get('tbody').find(`[data-testid="students-name"]:eq(${index})`).should('contain.text', student.firstName);
       cy.get('tbody').find(`[data-testid="student-code"]:eq(${index})`).should('contain.text', student.studentCode);
       cy.get('tbody').find(`[data-testid="student-email"]:eq(${index})`).should('contain.text', student.email);
       cy.get('tbody').find(`[data-testid="student-phone-number"]:eq(${index})`).should('contain.text', student.phoneNumber);
