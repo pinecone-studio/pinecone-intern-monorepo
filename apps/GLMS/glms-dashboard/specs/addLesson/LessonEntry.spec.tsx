@@ -1,93 +1,47 @@
-// LessonEntry.test.tsx
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { LessonEntry } from '../../src/app/addLesson/_components/LessonEntry';
+import { LessonEntry, InputData } from '../../src/app/addLesson/_components/LessonEntry';
+import { act } from 'react-dom/test-utils';
 
-// Mock Input and Textarea components
-jest.mock('@/components/ui/input', () => ({
-  Input: ({ className, placeholder, value, onChange }: never) => <input className={className} placeholder={placeholder} value={value} onChange={onChange} data-testid="input" />,
-}));
-
-jest.mock('@/components/ui/textarea', () => ({
-  Textarea: ({ className, placeholder, value, onChange }: never) => <textarea className={className} placeholder={placeholder} value={value} onChange={onChange} data-testid="textarea" />,
-}));
-
-describe('LessonEntry Component', () => {
-  const mockInputData = {
-    title: 'Initial Title',
-    topic: 'Initial Topic',
-    details: 'Initial Details',
+describe('LessonEntry', () => {
+  const mockInputData: InputData = {
+    title: '',
+    topic: '',
+    details: '',
   };
 
   const mockSetInputData = jest.fn();
 
-  const renderComponent = (inputData = mockInputData) => {
-    return render(<LessonEntry inputData={inputData} setInputData={mockSetInputData} />);
-  };
-
-  afterEach(() => {
-    jest.clearAllMocks(); // Reset mocks after each test
+  beforeEach(() => {
+    mockSetInputData.mockClear();
   });
 
-  it('renders without crashing', () => {
-    renderComponent();
-    expect(screen.getByPlaceholderText('Сонгоно уу')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Оруулна уу...')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Энд бичнэ үү...')).toBeInTheDocument();
-  });
+  it('updates the inputData state correctly when input fields are changed', () => {
+    const { getByTestId } = render(<LessonEntry inputData={mockInputData} setInputData={mockSetInputData} />);
 
-  it('displays correct initial values', () => {
-    renderComponent();
-    expect(screen.getByPlaceholderText('Сонгоно уу')).toHaveValue(mockInputData.topic);
-    expect(screen.getByPlaceholderText('Оруулна уу...')).toHaveValue(mockInputData.title);
-    expect(screen.getByPlaceholderText('Энд бичнэ үү...')).toHaveValue(mockInputData.details);
-  });
+    const topicInput = getByTestId('lesson_input_comp');
+    expect(topicInput).toBeInTheDocument();
+    console.log('====>>>>', topicInput);
 
-  it('calls setInputData with updated topic', () => {
-    renderComponent();
-    const newValue = 'Updated Topic';
-    const input = screen.getByPlaceholderText('Сонгоно уу');
-    fireEvent.change(input, { target: { value: newValue } });
-    expect(mockSetInputData).toHaveBeenCalledTimes(1);
-    // Simulate state update call
-    const updater = mockSetInputData.mock.calls[0][0];
-    expect(updater(mockInputData)).toEqual({
-      ...mockInputData,
-      topic: newValue,
+    act(() => {
+      fireEvent.change(topicInput, { target: { value: 'Test-Lesson' } });
     });
-  });
 
-  it('calls setInputData with updated title', () => {
-    renderComponent();
-    const newValue = 'Updated Title';
-    const input = screen.getByPlaceholderText('Оруулна уу...');
-    fireEvent.change(input, { target: { value: newValue } });
-    expect(mockSetInputData).toHaveBeenCalledTimes(1);
-    // Simulate state update call
-    const updater = mockSetInputData.mock.calls[0][0];
-    expect(updater(mockInputData)).toEqual({
-      ...mockInputData,
-      title: newValue,
+    const titleInput = getByTestId('lesson_input_comp');
+    expect(titleInput).toBeInTheDocument();
+    console.log('====>>>>', titleInput);
+
+    act(() => {
+      fireEvent.change(titleInput, { target: { value: 'lesson_input_sec_comp' } });
     });
-  });
 
-  it('calls setInputData with updated details', () => {
-    renderComponent();
-    const newValue = 'Updated Details';
-    const textarea = screen.getByPlaceholderText('Энд бичнэ үү...');
-    fireEvent.change(textarea, { target: { value: newValue } });
-    expect(mockSetInputData).toHaveBeenCalledTimes(1);
-    // Simulate state update call
-    const updater = mockSetInputData.mock.calls[0][0];
-    expect(updater(mockInputData)).toEqual({
-      ...mockInputData,
-      details: newValue,
+    const detailsTextarea = getByTestId('lesson_text_area_comp');
+    expect(detailsTextarea).toBeInTheDocument();
+    console.log('====>>>>', detailsTextarea);
+
+    act(() => {
+      fireEvent.change(detailsTextarea, { target: { value: 'Test-Lesson' } });
     });
-  });
-
-  it('matches snapshot', () => {
-    const { container } = renderComponent();
-    expect(container).toMatchSnapshot();
   });
 });

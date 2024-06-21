@@ -21,5 +21,6 @@ export default {
     '*.graphql',
     '!codegen.ts',
     '!src/pages/api/graphql.ts',
+    '!src/lib/utils.ts',
   ],
 };

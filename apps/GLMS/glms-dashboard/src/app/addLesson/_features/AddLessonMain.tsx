@@ -10,7 +10,7 @@ export const AddLessonMain = () => {
   const router = useRouter();
 
   const ToIndex = () => {
-    router.push('/addLesson');
+    router.push('/');
   };
   const [inputData, setInputData] = useState({
     topic: '',
