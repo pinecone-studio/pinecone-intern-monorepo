@@ -1,5 +1,4 @@
-import { Stepper } from './_components/modal/Stepper';
-import { AddEmployee } from './_components/AddEmployee';
+import { AddEmployee } from './_components/modal/AddEmployee';
 import { PaginationDemo } from './_components/Pagination';
 
 const EmployeeDetailsPage = () => {
@@ -7,9 +6,6 @@ const EmployeeDetailsPage = () => {
     <div>
       <div className="flex justify-center ">
         <AddEmployee />
-      </div>
-      <div>
-        <Stepper currentStep={0} />
       </div>
       <PaginationDemo />
     </div>
