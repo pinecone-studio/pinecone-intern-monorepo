@@ -1,26 +1,35 @@
 'use client';
+import { usePathname, useRouter } from 'next/navigation';
+import { parseCookies } from 'nookies';
+import jwt from 'jsonwebtoken';
+import { PineLogo } from './SVG/PineLogo';
+import Image from 'next/image';
+type Decode = {
+  imageUrl: string;
+};
+export const Header = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const cookies = parseCookies();
+  const token = cookies.token;
+  const data = jwt.decode(token) as Decode;
+  if (pathname === '/login') {
+    return null;
+  }
 
-import Link from 'next/link';
-import { LogoOnly } from './Logo';
-import { ModeToggle } from './ModeToggle';
-
-export const ProjectHeader = () => {
+  const handlePush = () => {
+    router.push('/login');
+  };
   return (
-    <>
-      <div className="border-b bg-background">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center flex-start ">
-              <Link href={'/'}>
-                <LogoOnly />
-              </Link>
-            </div>
-            <div className="flex space-x-4 flex-end">
-              <ModeToggle />
-            </div>
-          </div>
+    <header className="w-full bg-black flex items-center justify-between py-1 px-6 bg-main">
+      <div onClick={handlePush} data-cy="headerIcon" className="flex items-center justify-center cursor-pointer">
+        <PineLogo />
+      </div>
+      <div className="flex gap-4">
+        <div data-cy="headerProfile" className="flex items-center justify-center rounded-full py-0.5 overflow-hidden cursor-pointer aspect-square">
+          <Image style={{ objectFit: 'cover' }} alt="profile image" width={32} height={32} sizes="small" src={`${data?.imageUrl || '/avatar.png'}`} />
         </div>
       </div>
-    </>
+    </header>
   );
 };

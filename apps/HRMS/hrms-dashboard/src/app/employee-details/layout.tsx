@@ -1,4 +1,4 @@
-import { ProjectHeader } from '@/components/ProjectHeader';
+import { Header } from '@/components/ProjectHeader';
 import { Sidebar } from '@/components/SideBar';
 import { ReactNode } from 'react';
 import React from 'react';
@@ -6,7 +6,7 @@ import React from 'react';
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
-      <ProjectHeader></ProjectHeader>
+      <Header></Header>
       <div className="flex">
         <Sidebar></Sidebar>
         <div className=" ml-[250px]">{children}</div>
