@@ -1,13 +1,10 @@
 import React from 'react';
 
-export const Stepper = ({ currentStep }: { currentStep: number }) => {
-  const steps = [
-    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
-    { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
-    { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
-  ];
+type StepsType = { title: string; content: string }[];
+
+export const Stepper = ({ currentStep, steps }: { currentStep: number; steps: StepsType }) => {
   return (
-    <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto p-4">
+    <div data-testid="step-container" className="max-w-xl w-[533px] mx-auto ">
       <div data-testid="subcontainer" className="relative flex justify-between items-center mb-[100px]">
         {steps.map((step, index) => (
           <React.Fragment key={index}>

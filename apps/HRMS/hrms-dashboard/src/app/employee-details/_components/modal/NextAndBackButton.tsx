@@ -2,14 +2,12 @@ import { LeftArrowIcon, RightArrowIcon, RightArrowWhiteIcon } from '../Icons/Mod
 
 type StepsType = { title: string; content: string }[];
 
-export const NextAndBack = ({ steps, currentStep, setCurrentStep }: { steps: StepsType; currentStep: number; setCurrentStep: React.Dispatch<React.SetStateAction<number>> }) => {
+export const NextAndBackButton = ({ steps, currentStep, setCurrentStep }: { steps: StepsType; currentStep: number; setCurrentStep: React.Dispatch<React.SetStateAction<number>> }) => {
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h3 className="text-lg font-bold mb-4">{steps[currentStep].title}</h3>
-      <p className="text-gray-600 mb-6">{steps[currentStep].content}</p>
+    <div data-testid="buttons">
       <div className="flex justify-between">
         {currentStep > 0 ? (
           <button onClick={prevStep} className={`flex justify-center items-center h-12 w-12 rounded-full bg-[#F6F6F6] ${currentStep === 0 ? 'cursor-not-allowed' : ''}`} disabled={currentStep === 0}>
