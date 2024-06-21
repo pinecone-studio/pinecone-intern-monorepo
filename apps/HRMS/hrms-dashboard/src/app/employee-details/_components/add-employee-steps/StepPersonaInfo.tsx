@@ -1,24 +1,7 @@
 /* eslint-disable no-secrets/no-secrets */
 import React from 'react';
 import { Input } from '@/components/ui/input';
-// import { ChangeEventHandler, FocusEventHandler, PropsWithChildren } from 'react';
 import { inputOne } from '../../constants';
-
-// interface CustomInputProps {
-//   label: string;
-//   type: string;
-//   placeholder?: string;
-//   name: string;
-//   value: string | number;
-//   defaultValue?: string | number;
-//   error?: boolean;
-//   helperText?: string;
-//   onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
-//   onBlur?: FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
-// }
-
-// export const StepOne = (props: CustomInputProps & PropsWithChildren) => {
-//   const { label, type, placeholder, name, value, helperText, onChange, onBlur } = props;
 
 export const StepPersonalInfo = () => {
   return (
