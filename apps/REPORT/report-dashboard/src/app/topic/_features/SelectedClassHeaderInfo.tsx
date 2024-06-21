@@ -19,8 +19,7 @@ export const SelectedClassHeaderInfo = (props: ClassName) => {
       </div>
       <div>
         <div className="flex gap-2">
-          <Image className=" rounded-full w-10 h-10" src={profile} alt="profile" />
-
+          <Image width={40} height={40} src={profile} alt="profile" />
           <div>
             <p className="text-2sm font-bold">{name}</p>
             <p className="text-sm">Багш</p>
