@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
 import { IoArrowForwardSharp } from 'react-icons/io5';
-import { Steps } from './add-employee-steps/Steps';
 import { Stepper } from './Stepper';
 export const AddModal = () => {
   return (
