@@ -39,9 +39,9 @@ export const coursesTypeDefs = gql`
 
   input UpdateCourseInput {
     id: ID!
-    title: String!
-    thumbnail: String!
-    content: String!
+    title: String
+    thumbnail: String
+    content: String
   }
 
   type Lesson {

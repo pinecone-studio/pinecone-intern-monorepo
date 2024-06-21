@@ -1,4 +1,3 @@
-// Importing necessary modules and types
 import { getCourse } from '@/graphql/resolvers/queries';
 import { CoursesModel } from '@/models/courses';
 
