@@ -18,6 +18,7 @@ export const Stepper = ({ currentStep, steps }: { currentStep: number; steps: St
                   {index + 1}
                 </p>
               </div>
+              
               {index < steps.length - 1 && (
                 <div
                   data-testid="step-item-0"
