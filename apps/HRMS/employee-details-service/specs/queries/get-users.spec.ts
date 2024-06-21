@@ -1,16 +1,14 @@
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
-import { getUsers } from '@/graphql/resolvers/queries/user-all-query';
-import {UserModel} from '@/models/user.model';
+import { getHrmsUsers } from '@/graphql/resolvers/queries/user-all-query';
+import { hrmsUserModel } from '@/models';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('@/models/user.model', () => ({
-  UserModel:{find: jest.fn(),
-    
-  }
+jest.mock('@/models', () => ({
+  hrmsUserModel: { find: jest.fn() },
 }));
 
-describe('getUsers', () => {
-  it('should return all users from UserModel', async () => {
+describe('getHrmsUsers', () => {
+  it('should return all users from hrmsUserModel', async () => {
     const mockUser = [
       {
         _id: '32445',
@@ -22,21 +20,16 @@ describe('getUsers', () => {
       },
     ];
 
-    (UserModel.find as jest.Mock).mockResolvedValue(mockUser);
-    const result = await getUsers!({}, {}, {}, {} as GraphQLResolveInfo);
-    console.log("RR",result)
+    (hrmsUserModel.find as jest.Mock).mockResolvedValue(mockUser);
+    const result = await getHrmsUsers!({}, {}, {}, {} as GraphQLResolveInfo);
+    console.log('RR', result);
     expect(result).toEqual(mockUser);
-    expect(UserModel.find).toHaveBeenCalledTimes(1);
+    expect(hrmsUserModel.find).toHaveBeenCalledTimes(1);
   });
-  it('Should handle error when UserModel.find fails', async () => {
-
+  it('Should handle error when hrmsUserModel.find fails', async () => {
     const mockError = 'can not find users';
-    (UserModel.find as jest.Mock).mockRejectedValue(new Error(mockError));
+    (hrmsUserModel.find as jest.Mock).mockRejectedValue(new Error(mockError));
 
-    await expect(getUsers!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow
-    (graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
-  
-  
+    await expect(getHrmsUsers!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
   });
 });
-

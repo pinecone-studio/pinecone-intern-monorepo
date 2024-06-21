@@ -1,16 +1,16 @@
 import { QueryResolvers } from '@/graphql/generated';
-import {UserModel} from '@/models/user.model';
+import { hrmsUserModel } from '@/models';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const getUser: QueryResolvers['getUser'] = async (_, { _id }) => {
+export const getHrmsUser: QueryResolvers['getHrmsUser'] = async (_, { _id }) => {
   try {
-    const getUser = await UserModel.findById(_id);
+    const getHrmsUser = await hrmsUserModel.findById(_id);
 
-    if (!getUser) {
+    if (!getHrmsUser) {
       throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
     }
 
-    return getUser;
+    return getHrmsUser;
   } catch (error) {
     throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR);
   }

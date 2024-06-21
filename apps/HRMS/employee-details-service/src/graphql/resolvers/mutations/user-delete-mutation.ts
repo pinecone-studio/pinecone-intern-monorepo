@@ -1,16 +1,16 @@
 import { MutationResolvers } from '@/graphql/generated';
-import {UserModel} from '@/models/user.model';
+import { hrmsUserModel } from '@/models';
 import graphqlErrorHandler, { errorTypes } from '../error';
 
-export const deletedUser: MutationResolvers['deletedUser'] = async (_, { _id }) => {
-    try {
-      const deletedUser = await UserModel.findByIdAndDelete(_id);
-      if (!deletedUser) {
-        throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
-      }
-  
-      return deletedUser;
-    } catch (error) {
-      throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
+export const deletedHrmsUser: MutationResolvers['deletedHrmsUser'] = async (_, { _id }) => {
+  try {
+    const deletedHrmsUser = await hrmsUserModel.findByIdAndDelete(_id);
+    if (!deletedHrmsUser) {
+      throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.NOT_FOUND);
     }
-  };
+
+    return deletedHrmsUser;
+  } catch (error) {
+    throw graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.BAD_REQUEST);
+  }
+};

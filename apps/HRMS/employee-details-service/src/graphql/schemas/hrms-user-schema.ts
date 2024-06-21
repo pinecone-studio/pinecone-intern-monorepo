@@ -1,21 +1,21 @@
 import { gql } from 'apollo-server-cloud-functions';
 
-export const userSchema = gql`
-  type User {
+export const hrmsUserTypeDefs = gql`
+  type hrmsUser {
     _id: ID
     firstName: String!
     lastName: String!
     email: String!
-    role: Roles!
+    role: HrmsRoles!
     password: String!
   }
 
-  enum Roles {
+  enum HrmsRoles {
     EMPLOYEE
     ADMIN
   }
 
-  input ECreateUserInput {
+  input hrmsCreateUserInput {
     firstName: String!
     lastName: String!
     email: String!
@@ -23,7 +23,7 @@ export const userSchema = gql`
     password: String!
   }
 
-  input UpdateUserInput {
+  input hrmsUpdateUserInput {
     firstName: String
     lastName: String
     email: String
@@ -32,13 +32,13 @@ export const userSchema = gql`
   }
 
   type Query {
-    getUsers: [User]
-    getUser(_id: String!): User
+    getHrmsUsers: [hrmsUser]
+    getHrmsUser(_id: String!): hrmsUser
   }
 
   type Mutation {
-    createUser(input: ECreateUserInput): User!
-    updatedUser(_id: ID!, input: UpdateUserInput!): User!
-    deletedUser(_id: ID!): User
+    createHrmsUser(input: hrmsCreateUserInput): hrmsUser!
+    updatedHrmsUser(_id: ID!, input: hrmsUpdateUserInput!): hrmsUser!
+    deletedHrmsUser(_id: ID!): hrmsUser
   }
 `;
