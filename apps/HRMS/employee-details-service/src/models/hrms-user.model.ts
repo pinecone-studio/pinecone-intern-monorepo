@@ -1,7 +1,7 @@
-import { hrmsUser } from '@/graphql/generated';
+import { HrmsUser } from '@/graphql/generated';
 import { Model, Schema, model, models } from 'mongoose';
 
-const hrmsUserSchema = new Schema<hrmsUser>({
+const hrmsUserSchema = new Schema<HrmsUser>({
   firstName: {
     type: String,
     required: true,
@@ -24,4 +24,4 @@ const hrmsUserSchema = new Schema<hrmsUser>({
     required: true,
   },
 });
-export const hrmsUserModel: Model<hrmsUser> = models.hrmsUser || model<hrmsUser>('hrmsUser', hrmsUserSchema);
+export const hrmsUserModel: Model<HrmsUser> = models.hrmsUser || model<HrmsUser>('hrmsUser', hrmsUserSchema);
