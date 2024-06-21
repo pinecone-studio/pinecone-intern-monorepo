@@ -10,21 +10,33 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true,
-    "baseUrl": "../../..",
     "paths": {
-      "@/*": ["apps/REPORT/report-dashboard/src/*"],
-      "@/apps/*": ["apps/REPORT/report-dashboard/src/apps/*"],
-      "@/generated/*": ["apps/REPORT/report-dashboard/src/generated/*"],
-      "@/common/*": ["apps/REPORT/report-dashboard/src/common/*"],
-      "@/file-management": ["libs/file-management/src/index.ts"]
+      "@/*": [
+        "apps/REPORT/report-dashboard/src/*"
+      ],
+      "@/apps/*": [
+        "apps/REPORT/report-dashboard/src/apps/*"
+      ],
+      "@/generated/*": [
+        "apps/REPORT/report-dashboard/src/generated/*"
+      ],
+      "@/common/*": [
+        "apps/REPORT/report-dashboard/src/common/*"
+      ],
+      "@/file-management": [
+        "libs/file-management/src/index.ts"
+      ]
     },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ],
+    "incremental": true
   },
   "include": [
     "**/*.ts",
@@ -35,5 +47,11 @@
     "../../../dist/apps/REPORT/report-dashboard/.next/types/**/*.ts",
     "next-env.d.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "specs/**/*.spec.tsx", "src/**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "specs/**/*.spec.tsx",
+    "src/**/*.test.ts"
+  ]
 }
