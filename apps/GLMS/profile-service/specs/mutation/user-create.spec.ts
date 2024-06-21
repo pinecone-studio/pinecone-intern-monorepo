@@ -28,7 +28,6 @@ describe('createUser', () => {
     const CreateUserInput = { firstName: 'mnde', lastName: 'bro', email: 'emailCreate@nest.edu.mn', password: 'passwordCreate', roles: 'TEACHER', avatar: 'dagadf' };
     glmsUserModel.create.mockResolvedValue(null);
 
-    const mockContext = {};
     const mockArgs = { input: CreateUserInput };
 
     await expect(createGlmsUser(null, mockArgs)).rejects.toThrow(GraphQLError);
@@ -39,7 +38,6 @@ describe('createUser', () => {
     const mockError = new Error('Database connection error');
     glmsUserModel.create.mockRejectedValue(mockError);
 
-    const mockContext = {};
     const mockArgs = { input: CreateUserInput };
 
     await expect(createGlmsUser(null, mockArgs)).rejects.toThrow(GraphQLError);
