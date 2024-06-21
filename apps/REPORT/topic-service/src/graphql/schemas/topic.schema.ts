@@ -26,7 +26,7 @@ export const topicsSchema = gql`
   }
 
   type Query {
-    getTopics: [Topic!]
+    getTopics: [Topic!]!
   }
 
   type Mutation {
