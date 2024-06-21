@@ -28,7 +28,6 @@ export const StudentAddModal = () => {
       classId: '',
     },
     onSubmit: async (values) => {
-      console.log(values);
       try {
         await createStudent({
           variables: {
