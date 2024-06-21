@@ -26,6 +26,7 @@ export const StudentAddModal = () => {
       studentCode: '',
       profileImgUrl: '',
       classId: '',
+      active: false,
     },
     onSubmit: async (values) => {
       try {
@@ -37,8 +38,9 @@ export const StudentAddModal = () => {
               lastName: values.lastName,
               phoneNumber: values.phoneNumber,
               studentCode: values.studentCode,
-              profileImgUrl: values.profileImgUrl,
+              profileImgUrl: 'dqddwdq',
               classId: '1212',
+              active: values.active,
             },
           },
         });

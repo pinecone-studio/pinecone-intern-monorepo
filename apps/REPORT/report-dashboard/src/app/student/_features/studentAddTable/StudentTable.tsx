@@ -23,14 +23,18 @@ export const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => 
         {studentsData?.map((student, index) => (
           <TableRow key={index}>
             <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
-              <img className="h-[40px] w-[40px] rounded-full" src={student.profileImgUrl} alt="student" />
-              <h1>{student.firstName}</h1>
+              <img data-testid="student-profile" className="h-[40px] w-[40px] rounded-full" src={student.profileImgUrl} alt="student" />
+              <h1 data-testid="student-name" className="font-medium">
+                {student.firstName}
+              </h1>
             </TableCell>
-            <TableCell>{student.studentCode}</TableCell>
-            <TableCell>{student.email}</TableCell>
-            <TableCell>{student.phoneNumber}</TableCell>
+            <TableCell data-testid="student-code">{student.studentCode}</TableCell>
+            <TableCell data-testid="student-email">{student.email}</TableCell>
+            <TableCell data-testid="student-phone-number">{student.phoneNumber}</TableCell>
             <TableCell className="font-medium flex items-center gap-2 h-[64px]  text-right">
-              <div className="border rounded-md px-2 py-1 w-[90px] flex justify-center items-center">{student.active}</div>
+              <div data-test="chip" className="border rounded-md px-2 py-1 w-[90px] flex justify-center items-center">
+                {student.active}
+              </div>
               <DropDownStudent />
             </TableCell>
           </TableRow>

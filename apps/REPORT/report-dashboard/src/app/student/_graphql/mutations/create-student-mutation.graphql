@@ -8,5 +8,6 @@ mutation createStudent($input: CreateStudentInput!) {
     phoneNumber
     profileImgUrl
     studentCode
+    active
   }
 }
