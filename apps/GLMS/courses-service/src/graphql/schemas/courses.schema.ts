@@ -14,7 +14,7 @@ export const coursesTypeDefs = gql`
     createCourse(createInput: CreateCourseInput): Course
     updateCourse(updateInput: UpdateCourseInput): Course
     changeCoursesPosition(ids: [ID!]!): Boolean
-    deleteCourse(id: ID!): Boolean
+    deleteCourse(id: ID!): Course
 
     createLesson(createInput: CreateLessonInput): Lesson
     updateLesson(updateInput: UpdateLessonInput): Lesson
