@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { AddModal } from '../../src/app/employee-details/_components/AddModal';
+import { AddModal } from '../../src/app/employee-details/_components/modal/AddModal';
 import '@testing-library/jest-dom';
-
 
 describe('AddModal', () => {
   test('renders the add modal correctly', () => {
