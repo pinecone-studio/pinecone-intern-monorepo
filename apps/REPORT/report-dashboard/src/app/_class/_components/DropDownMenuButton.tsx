@@ -6,10 +6,10 @@ import { MoreHorizontal } from 'lucide-react';
 
 const DropDownMenuButton = () => {
   return (
-    <div className="w-[24px] h-[24px] flex items-center justify-center" data-testid="dropdown-menu-button">
+    <div className="w-[24px] h-[24px] flex items-center justify-center absolute top-[8px] right-[8px]" data-testid="dropdown-menu-button">
       <DropdownMenu data-testid="dropdown-menu-button">
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+        <DropdownMenuTrigger asChild className="invisible group-hover:visible">
+          <Button variant={'ghost'} className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
             <MoreHorizontal className="h-4 w-4" data-testid="more-horizontal-icon" />
           </Button>
