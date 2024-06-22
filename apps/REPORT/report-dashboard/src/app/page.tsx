@@ -1,11 +1,10 @@
 'use client';
-
-import DropDownMenuButton from './_class/_components/DropDownMenuButton';
+import CLassCardTab from './_class/features/ClassCardTab';
 
 export default async function Index() {
   return (
     <div>
-      <DropDownMenuButton />
+      <CLassCardTab />
     </div>
   );
 }
