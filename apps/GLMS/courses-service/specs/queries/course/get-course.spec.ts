@@ -1,5 +1,6 @@
 import { getCourse } from '@/graphql/resolvers/queries';
 import { CoursesModel } from '@/models/courses';
+import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/courses', () => ({
   CoursesModel: {
@@ -20,7 +21,7 @@ describe('Get Course', () => {
       content: 'testContent1',
     });
 
-    const result = await getCourse({}, { _id: '1' });
+    const result = await getCourse!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '1',
       title: 'testTitle1',
@@ -32,12 +33,14 @@ describe('Get Course', () => {
   it('should throw an error when no course is found', async () => {
     (CoursesModel.findById as jest.Mock).mockResolvedValue(null);
 
-    await expect(getCourse({}, { _id: '1' })).rejects.toThrow('Course not found');
+    await expect(getCourse!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Course not found');
   });
 
   it('should handle errors when the database fails', async () => {
-    (CoursesModel.findById as jest.Mock).mockRejectedValue(new Error('Database error'));
+    const errorMessage = 'Database error';
 
-    await expect(getCourse({}, { _id: '1' })).rejects.toThrow('Database error');
+    (CoursesModel.findById as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+    await expect(getCourse!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(errorMessage);
   });
 });

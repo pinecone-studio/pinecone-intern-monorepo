@@ -39,9 +39,11 @@ describe('Create Course', () => {
   });
 
   it('should handle errors when database operation fails', async () => {
-    (CoursesModel.create as jest.Mock).mockRejectedValue(new Error('Database operation failed'));
+    const errorMessage = 'Database operation failed';
 
-    await expect(createCourse({}, { createInput: input })).rejects.toThrow('Failed to create course due to an internal error');
+    (CoursesModel.create as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+    await expect(createCourse({}, { createInput: input })).rejects.toThrow(errorMessage);
 
     expect(CoursesModel.create).toHaveBeenCalledTimes(1);
     expect(CoursesModel.create).toHaveBeenCalledWith({ ...input });
