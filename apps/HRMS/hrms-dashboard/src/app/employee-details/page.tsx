@@ -1,13 +1,9 @@
-import { AddEmployee } from './_components/modal/AddEmployee';
-import { PaginationDemo } from './_components/Pagination';
+import { EmployeeDetails } from './_features/EmplyeeDetails';
 
 const EmployeeDetailsPage = () => {
   return (
-    <div>
-      <div className="flex justify-center ">
-        <AddEmployee />
-      </div>
-      <PaginationDemo />
+    <div className="">
+      <EmployeeDetails />
     </div>
   );
 };
