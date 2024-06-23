@@ -36,7 +36,7 @@ export const AddLessonMain: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full bg-[#F7F7F8] flex justify-center items-center">
+    <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex justify-center items-center">
       <div className="rounded-[12px] bg-white p-[24px] max-w-[1250px] w-full">
         <div onClick={navigateToHome} className="flex items-center cursor-pointer mb-[24px]">
           <Arrow />
