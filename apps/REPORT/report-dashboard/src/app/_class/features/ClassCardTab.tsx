@@ -15,7 +15,7 @@ const data = [
 
 const CLassCardTab = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center" data-testid="class-card-tab">
       <div className="w-[1720px] py-[24px]">
         <Tabs defaultValue="Бүгд" className="flex flex-col gap-[36px]">
           <div className="flex flex-row justify-between items-center gap-[16px]">

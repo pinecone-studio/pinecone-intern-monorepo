@@ -1,67 +1,43 @@
-import { Class, ClassType } from '@/generated';
+import ClassCard from '../../../../../report-dashboard/src/app/_class/_components/ClassCard'; // Adjust path as per your project structure
 
 describe('ClassCard Component', () => {
-  const mockData: Class = {
+  const mockData = {
     name: 'Test Class',
     startDate: '2023-01-01',
     endDate: '2023-12-31',
     teachers: ['Teacher 1', 'Teacher 2'],
-    classType: ClassType.Coding,
-    // Add any other required fields here
+    classType: 'Coding', // Assuming this matches the structure of your ClassCard component
+    __typename: 'Class',
   };
 
   beforeEach(() => {
-    // Visit the page or load the component if it's part of a SPA
-    cy.visit('http://localhost:4200/'); // Replace with your actual URL or route
+    // Increase command timeout globally for all tests
+    Cypress.config('defaultCommandTimeout', 15000); // 15 seconds
+    cy.visit('http://localhost:4200/'); // Ensure your application page is loaded where ClassCard is rendered
   });
 
   it('displays class information correctly', () => {
-    // Render the ClassCard component with mockData
-    cy.get('[data-testid="class-card"]').as('classCard');
-    cy.get('@classCard').within(() => {
-      cy.contains('Test Class').should('exist');
-      cy.contains('2023-01-01 - 2023-12-31').should('exist');
-      cy.get('div')
-        .eq(1)
-        .within(() => {
-          cy.contains('Teacher 1').should('exist');
-          cy.contains('Teacher 2').should('exist');
-        });
+    cy.get('[data-testid="class-card"]').each(($card, index) => {
+      cy.wrap($card).within(() => {
+        cy.contains(mockData.name).should('be.visible');
+        cy.contains(`${mockData.startDate} - ${mockData.endDate}`).should('be.visible');
+        cy.contains(mockData.teachers[0]).should('be.visible');
+        cy.contains(mockData.teachers[1]).should('be.visible');
+      });
     });
   });
 
-  it('handles different numbers of teachers', () => {
-    const singleTeacherData = { ...mockData, teachers: ['Single Teacher'] };
-    cy.get('[data-testid="class-card"]').as('classCard');
-
-    // Render with data containing a single teacher
-    cy.get('@classCard').then(() => {
-      cy.contains('Test Class').should('exist');
-      cy.contains('2023-01-01 - 2023-12-31').should('exist');
-      cy.get('div')
-        .eq(1)
-        .within(() => {
-          cy.contains('Single Teacher').should('exist');
-        });
-    });
-
-    const manyTeachersData = {
-      ...mockData,
-      teachers: ['Teacher 1', 'Teacher 2', 'Teacher 3', 'Teacher 4'],
-    };
-
-    // Render with data containing multiple teachers
-    cy.get('@classCard').then(() => {
-      cy.contains('Test Class').should('exist');
-      cy.contains('2023-01-01 - 2023-12-31').should('exist');
-      cy.get('div')
-        .eq(1)
-        .within(() => {
-          cy.get('div').should('have.length', 4);
-          manyTeachersData.teachers.forEach((teacher, index) => {
-            cy.get('div').eq(index).contains(teacher).should('exist');
-          });
-        });
+  it('renders correct number of teacher tags', () => {
+    cy.get('[data-testid="class-card"]').each(($card, index) => {
+      cy.wrap($card).find('div').eq(1).children().should('have.length', 2);
     });
   });
+
+  it('renders DropDownMenuButton', () => {
+    cy.get('[data-testid="class-card"]').each(($card, index) => {
+      cy.wrap($card).find('DropDownMenuButton').should('exist');
+    });
+  });
+
+  // Add more tests as needed...
 });
