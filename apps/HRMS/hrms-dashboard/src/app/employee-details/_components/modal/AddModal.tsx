@@ -1,9 +1,21 @@
+'use client';
+
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
-import { IoArrowForwardSharp } from 'react-icons/io5';
 import { Stepper } from './Stepper';
+import { useState } from 'react';
+import { NextAndBackButton } from './NextAndBackButton';
+import { StepPersonalInfo } from '../add-employee-steps/StepPersonaInfo';
+import { StepJobInfo } from '../add-employee-steps/StepJobInfo';
+import { StepAdditionalInfo } from '../add-employee-steps/StepAdditionaInfo';
 export const AddModal = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
+    { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
+    { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
+  ];
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -15,14 +27,16 @@ export const AddModal = () => {
       <DialogContent data-testid="modalContent" className="flex gap-10 flex-col sm:max-w-[620px] px-8">
         <DialogHeader>
           <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
+
           <DialogDescription></DialogDescription>
+          <Stepper currentStep={currentStep} steps={steps} />
+          {currentStep == 0 && <StepPersonalInfo />}
+          {currentStep == 1 && <StepJobInfo />}
+          {currentStep == 2 && <StepAdditionalInfo />}
         </DialogHeader>
-        <Stepper currentStep={0} />
-        <DialogFooter>
-          <Button variant={'secondary'} className=" gap-2 bg-[#D6D8DB] ease-in-out hover:bg-gray-200 hover:text-black h-10 px-4 py-2 " data-testid="SubmitBtn" type="submit">
-            Дараах <IoArrowForwardSharp data-testid="arrow-icon" className="w-4 h-4" />
-          </Button>
-        </DialogFooter>
+
+        <DialogFooter></DialogFooter>
+        <NextAndBackButton steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </DialogContent>
     </Dialog>
   );
