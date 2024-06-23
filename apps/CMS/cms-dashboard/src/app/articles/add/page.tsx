@@ -25,16 +25,16 @@ export default async function Index() {
   };
 
   return (
-    <div className="bg-slate-200">
+    <div className="bg-[#F7F7F8]">
       <Formik initialValues={initialValues} validationSchema={articleSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <div className='flex '>
+            <div className="flex items-center justify-center">
               {/* Left container */}
               <TextField />
               {/* Right container */}
-              <div className='bg-white'>
-              <ImageInput setFile={setFile} />
+              <div className="bg-white flex-1 p-6">
+                <ImageInput setFile={setFile} />
               </div>
             </div>
           </Form>
