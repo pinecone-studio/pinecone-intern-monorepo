@@ -24,9 +24,9 @@ const SignInModal = () => {
       .string()
       .required('Нууц үгээ оруулна уу')
       .min(8, 'Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой')
-      .matches(/[a-z]/, 'Жижэг үсэг байх ёстой')
+      .matches(/[a-z]/, 'Жижиг үсэг байх ёстой')
       .matches(/[A-Z]/, 'Том үсэг байх ёстой')
-      .matches(/^(?=.*[!@#$%^&*])/, 'Тусгай тэмдэгт байх ёстой'),
+      .matches(/[!@#$%^&*]/, 'Тусгай тэмдэгт байх ёстой'),
   });
 
   const formik = useFormik({
@@ -40,7 +40,6 @@ const SignInModal = () => {
       router.push('/');
     },
   });
-  console.log(formik);
 
   return (
     <div data-testid="sign-in-page" className="w-[440px] h-[484px] border border-[1px solid #ECEDF0] rounded-[16px] p-[40px]">
@@ -77,14 +76,7 @@ const SignInModal = () => {
           </div>
         </div>
         <div>
-          <Button
-            onClick={() => {
-              formik.handleSubmit();
-            }}
-            data-cy="submit-btn"
-            type="submit"
-            className="w-[360px] h-[56px] bg-[#121316] rounded-[8px] relative"
-          >
+          <Button data-cy="submit-btn" type="submit" className="w-[360px] h-[56px] bg-[#121316] rounded-[8px] relative">
             <p className="text-[16px] font-medium">Дараах</p>
             <ArrowIcon />
           </Button>
