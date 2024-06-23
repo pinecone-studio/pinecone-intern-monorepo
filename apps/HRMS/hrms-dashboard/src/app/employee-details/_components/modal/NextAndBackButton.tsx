@@ -2,7 +2,17 @@ import { LeftArrowIcon, RightArrowIcon, RightArrowWhiteIcon } from '../Icons/Mod
 
 type StepsType = { title: string; content: string }[];
 
-export const NextAndBackButton = ({ steps, currentStep, setCurrentStep }: { steps: StepsType; currentStep: number; setCurrentStep: React.Dispatch<React.SetStateAction<number>> }) => {
+export const NextAndBackButton = ({
+  steps,
+  currentStep,
+  setCurrentStep,
+  handleSubmit,
+}: {
+  steps: StepsType;
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  handleSubmit: (_e: React.FormEvent<HTMLFormElement>) => void;
+}) => {
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
@@ -31,7 +41,7 @@ export const NextAndBackButton = ({ steps, currentStep, setCurrentStep }: { step
               </div>
             </button>
           ) : (
-            <button>
+            <button onClick={() => handleSubmit}>
               <div data-testid="step-3" className="flex h-12 rounded-[8px] min-w-[80px] px-[16px] py-[12px] bg-[#121316] items-center">
                 <div className="px-2 py-1 flex">
                   <p className="text-[#FFF] text-[16px] font-[600] leading-5 tracking-[-0.3px] not-italic">Илгээх</p>

@@ -1,32 +1,52 @@
+'use client';
+
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
-export const invoices = [
-  {
-    name: 'Б. Наранцацралт',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  {
-    name: 'М.Ганбат',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  {
-    name: 'Д. Маралмаа',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  // Add other objects as needed
-];
+export interface Employee {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  department: string;
+  jobTitle: string;
+  salary: number;
+}
+
+export interface GetAllEmployeesData {
+  getAllEmployee: Employee[];
+}
+
+export const GET_ALL_EMPLOYEES = gql`
+  query getAllEmployee {
+    getAllEmployee {
+      id
+      firstname
+      lastname
+      email
+      department
+      jobTitle
+      salary
+    }
+  }
+`;
 
 export const TableDemo = () => {
+  const { loading, error, data } = useQuery<GetAllEmployeesData>(GET_ALL_EMPLOYEES);
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    if (error.networkError) {
+      console.error('Network Error:', error.networkError);
+      return <p>Error: Network error occurred. Please check console for details.</p>;
+    }
+    console.error('GraphQL Error:', error);
+    return <p>Error: An error occurred. Please check console for details.</p>;
+  }
+
+  const employees = data?.getAllEmployee ?? [];
+
   return (
     <Table className="mt-[120px]">
       <TableCaption></TableCaption>
@@ -50,16 +70,16 @@ export const TableDemo = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice, index) => (
-          <TableRow data-testid={`TableContent-${index}`} key={invoice.name}>
+        {employees.map((employee, index) => (
+          <TableRow data-testid={`TableContent-${index}`} key={employee.firstname}>
             <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
-              {invoice.name}
+              {employee.lastname}
             </TableCell>
-            <TableCell data-testid={`tableCell-2-${index}`}>{invoice.profession}</TableCell>
-            <TableCell data-testid={`tableCell-3-${index}`}>{invoice.email}</TableCell>
-            <TableCell data-testid={`tableCell-4-${index}`}>{invoice.phoneNumber}</TableCell>
+            <TableCell data-testid={`tableCell-2-${index}`}>{employee.jobTitle}</TableCell>
+            <TableCell data-testid={`tableCell-3-${index}`}>{employee.email}</TableCell>
+            <TableCell data-testid={`tableCell-4-${index}`}>{employee.department}</TableCell>
             <TableCell data-testid={`tableCell-5-${index}`} className="text-right">
-              {invoice.state}
+              {employee.salary}
             </TableCell>
           </TableRow>
         ))}
