@@ -15,7 +15,7 @@ describe('AddModal', () => {
 
     fireEvent.click(addEmployeeButton);
 
-    // Check if the modal content becomes visible
+   
     expect(modalContent).toBe(null);
 
     // Check if the modal title is correct
