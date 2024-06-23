@@ -1,47 +1,35 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { LessonEntry, InputData } from '../../src/app/addLesson/_components/LessonEntry';
-import { act } from 'react-dom/test-utils';
+import { LessonEntry } from '../../src/app/addLesson/_components/LessonEntry';
 
-describe('LessonEntry', () => {
-  const mockInputData: InputData = {
-    title: '',
+describe('LessonEntry Component', () => {
+  const mockInputData = {
     topic: '',
+    title: '',
     details: '',
   };
 
-  const mockSetInputData = jest.fn();
+  const mockHandleInputChange = jest.fn();
 
-  beforeEach(() => {
-    mockSetInputData.mockClear();
+  it('renders correctly', () => {
+    const { getByTestId } = render(<LessonEntry inputData={mockInputData} handleInputChange={mockHandleInputChange} />);
+
+    expect(getByTestId('lesson_input_comp')).toBeInTheDocument();
+    expect(getByTestId('lesson_input_sec_comp')).toBeInTheDocument();
+    expect(getByTestId('lesson_text_area_comp')).toBeInTheDocument();
   });
 
-  it('updates the inputData state correctly when input fields are changed', () => {
-    const { getByTestId } = render(<LessonEntry inputData={mockInputData} setInputData={mockSetInputData} />);
+  it('calls handleInputChange on input change', () => {
+    const { getByTestId } = render(<LessonEntry inputData={mockInputData} handleInputChange={mockHandleInputChange} />);
 
-    const topicInput = getByTestId('lesson_input_comp');
-    expect(topicInput).toBeInTheDocument();
-    console.log('====>>>>', topicInput);
+    fireEvent.change(getByTestId('lesson_input_comp'), { target: { value: 'New Topic' } });
+    expect(mockHandleInputChange).toHaveBeenCalledWith('topic');
 
-    act(() => {
-      fireEvent.change(topicInput, { target: { value: 'Test-Lesson' } });
-    });
+    fireEvent.change(getByTestId('lesson_input_sec_comp'), { target: { value: 'New Title' } });
+    expect(mockHandleInputChange).toHaveBeenCalledWith('title');
 
-    const titleInput = getByTestId('lesson_input_sec_comp');
-    expect(titleInput).toBeInTheDocument();
-    console.log('====>>>>', titleInput);
-
-    act(() => {
-      fireEvent.change(titleInput, { target: { value: 'Test-Lesson' } });
-    });
-
-    const detailsTextarea = getByTestId('lesson_text_area_comp');
-    expect(detailsTextarea).toBeInTheDocument();
-    console.log('====>>>>', detailsTextarea);
-
-    act(() => {
-      fireEvent.change(detailsTextarea, { target: { value: 'Test-Lesson' } });
-    });
+    fireEvent.change(getByTestId('lesson_text_area_comp'), { target: { value: 'New Details' } });
+    expect(mockHandleInputChange).toHaveBeenCalledWith('details');
   });
 });

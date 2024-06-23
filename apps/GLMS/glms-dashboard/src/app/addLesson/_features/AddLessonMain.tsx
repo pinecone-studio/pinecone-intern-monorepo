@@ -1,44 +1,53 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Arrow } from '@/app/icons';
 import { PicUpload } from './PicUpload';
 import { LessEntButton } from '../_components/LessEntButton';
 import { LessonEntry } from '../_components/LessonEntry';
-import { useRouter } from 'next/navigation';
+import { InputData } from '../_components/LessonEntry';
 
-export const AddLessonMain = () => {
+export const AddLessonMain: React.FC = () => {
   const [imageUrl, setImageUrl] = useState('');
   const router = useRouter();
-
-  const ToIndex = () => {
-    router.push('/');
-  };
-  const [inputData, setInputData] = useState({
+  const [inputData, setInputData] = useState<InputData>({
     topic: '',
     title: '',
     details: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const isValid = useCallback(() => {
+    return inputData.topic !== '' && inputData.title !== '' && inputData.details !== '' && imageUrl !== '';
+  }, [inputData, imageUrl]);
+
   useEffect(() => {
-    const isValid = inputData.topic !== '' && inputData.title !== '' && inputData.details !== '';
-    setIsFormValid(isValid);
-  }, [inputData]);
+    setIsFormValid(isValid());
+  }, [isValid]);
+
+  const handleInputChange = useCallback(
+    (field: keyof InputData) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setInputData((prev) => ({ ...prev, [field]: event.target.value }));
+    },
+    []
+  );
+
+  const navigateToHome = () => {
+    router.push('/');
+  };
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex justify-center">
-      <div>
-        <div onClick={ToIndex} className="flex items-center cursor-pointer w-[145px] justify-between my-[24px]">
+    <div className="w-full h-full bg-[#F7F7F8] flex justify-center items-center">
+      <div className="rounded-[12px] bg-white p-[24px] max-w-[1250px] w-full">
+        <div onClick={navigateToHome} className="flex items-center cursor-pointer mb-[24px]">
           <Arrow />
-          <p className="p-[10px] text-base font-semibold leading-6">Нүүр хуудас</p>
+          <p className="ml-[10px] text-base font-semibold">Home</p>
         </div>
-        <div className="rounded-[12px] pt-[40px] pb-[56px] px-[24px] w-[1250px] bg-white">
-          <p className="text-[#121316] text-2xl font-bold leading-9">Хичээлийн ерөнхий мэдээлэл</p>
-          <div className="flex justify-between">
-            <LessonEntry inputData={inputData} setInputData={setInputData} />
-            <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
-          </div>
-          <LessEntButton isFormValid={isFormValid} inputData={inputData} imageUrl={imageUrl} />
+        <h2 className="text-2xl font-bold mb-[40px]">Lesson Information</h2>
+        <div className="flex justify-between gap-[32px]">
+          <LessonEntry inputData={inputData} handleInputChange={handleInputChange} />
+          <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
         </div>
+        <LessEntButton isFormValid={isFormValid} inputData={inputData} imageUrl={imageUrl} />
       </div>
     </div>
   );
