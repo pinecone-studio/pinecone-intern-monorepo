@@ -18,7 +18,6 @@ describe('StudentsInformation Component', () => {
         },
       });
     });
-    cy.wait(500);
 
     cy.get('div').contains('Loading...').should('not.exist');
     cy.get('div').contains('Error').should('be.visible');
@@ -41,7 +40,6 @@ describe('StudentsInformation Component', () => {
         },
       });
     });
-    cy.wait(500);
 
     cy.get('div').contains('Loading...').should('not.exist');
     cy.get('div').contains('Error').should('not.exist');
