@@ -14,8 +14,7 @@ export default async function Index() {
     body: '',
   };
   const handleSubmit = async () => {
-console.log("ajillaa");
-
+    alert('ajillaa');
   };
 
   return (
@@ -27,7 +26,7 @@ console.log("ajillaa");
               {/* Left container */}
               <TextField />
               {/* Right container */}
-              <RightField type="submit"/>
+              <RightField text="submit" />
             </div>
           </Form>
         )}
