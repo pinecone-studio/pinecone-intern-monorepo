@@ -1,4 +1,4 @@
-import { helloQueryFromEmployeeDetailsService } from '../../src/graphql/resolvers/queries/hello-query';
+import { helloQueryFromEmployeeDetailsService } from '../../src/graphql/resolvers/queries';
 
 describe('Hello Query', () => {
   it('Should call hello query', () => {

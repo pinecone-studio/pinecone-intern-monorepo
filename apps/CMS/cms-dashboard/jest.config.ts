@@ -17,6 +17,7 @@ export default {
     '!**/generated.ts',
     '!src/generated/*.ts',
     '!**/generated/*.ts',
+    '!src/lib/utils.ts',
     '*-schema.ts',
     '!**/*-schema.ts',
     '*.graphql',

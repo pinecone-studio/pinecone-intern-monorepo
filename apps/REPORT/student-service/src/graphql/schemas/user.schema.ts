@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const userTypeDefs = gql`
   type User {
-    id: ID
+    _id: ID
     firstName: String!
     lastName: String!
     email: String!
@@ -23,10 +23,6 @@ export const userTypeDefs = gql`
     role: String!
   }
 
-  input deleteUserInput {
-    id: ID!
-  }
-
   input updateUserInput {
     firstName: String
     lastName: String
@@ -42,7 +38,7 @@ export const userTypeDefs = gql`
 
   type Mutation {
     createUser(input: createUserInput!): User
-    deleteUser(id: ID!): ID
-    updateUser(id: ID!, input: updateUserInput!): ID
+    deleteUser(_id: ID!): User
+    updateUser(_id: ID!, updateInput: updateUserInput!): User
   }
 `;
