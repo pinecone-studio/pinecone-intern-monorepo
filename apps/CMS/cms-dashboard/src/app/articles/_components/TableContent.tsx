@@ -3,49 +3,58 @@ import { MdOutlineEdit, MdMoreVert } from 'react-icons/md';
 
 const mockData = [
   {
-    title: 'Marphosis Хөтөлбөр',
-    category: 'SoftwareEngineer',
+    title: 'Morphosis Хөтөлбөр',
+    category: 'Coding',
     status: 'нийтэлсэн',
     createdDate: '03.01.2024',
   },
   {
-    title: 'Marphosis Хөтөлбөр',
-    category: 'SoftwareEngineer',
+    title: 'AMAZON ажлын ярилцлагa',
+    category: 'CV',
     status: 'ноорог',
     createdDate: '03.01.2024',
   },
   {
-    title: 'Marphosis Хөтөлбөр',
-    category: 'SoftwareEngineer',
-    status: 'архив',
+    title: 'Leap хөтөлбөр',
+    category: 'Leap',
+    status: 'нийтэлсэн',
     createdDate: '03.01.2024',
   },
   {
-    title: 'Marphosis Хөтөлбөр',
+    title: 'Pinecone 6 жилийн түүх туршлага',
     category: 'SoftwareEngineer',
     status: 'төлөвлөсөн',
-    createdDate: '03.01.2024',
+    createdDate: '02.17.2024',
   },
   {
-    title: 'Marphosis Хөтөлбөр',
-    category: 'SoftwareEngineer',
+    title: 'Leap хөтөлбөрийн суралцагчдад',
+    category: 'Leap',
+    status: 'нийтэлсэн',
+    createdDate: '02.29.2024',
+  },
+  {
+    title: 'The Tech Odyssey: Exploring Frontiers and Innovations',
+    category: 'Tech',
     status: 'ноорог',
-    createdDate: '03.01.2024',
+    createdDate: '02.01.2024',
+  },
+  {
+    title: 'Innovative Tech Trends: Navigating the Future of Digital Evolution',
+    category: 'Event',
+    status: 'архив',
+    createdDate: '03.06.2024',
   },
 ];
 
-// type TableContentProps = {
-//   text: string;
-// };
 export const TableContent = () => {
   return (
     <div>
-      <div className="max-w-2xl mx-auto mt-10 ">
-        <Table data-cy="contentList" className="border rounded">
+      <div className=" max-w-screen-lg min-w-max mx-auto mt-10 ">
+        <Table data-cy="contentList" className="border bg-white">
           <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead data-cy="tableHeader-0" className="w-[100px]">
+              <TableHead data-cy="tableHeader-0">
                 Нийтлэл
               </TableHead>
               <TableHead data-cy="tableHeader-1">Статус</TableHead>
@@ -79,7 +88,7 @@ export const TableContent = () => {
                     <div className={`rounded-2xl px-2 w-fit text-center text-sm ${color}`}>{el.status}</div>
                   </TableCell>
                   <TableCell>{el.createdDate}</TableCell>
-                  <TableCell>{el.category}</TableCell>
+                  <TableCell><div className='rounded-2xl px-2 w-fit text-center text-sm bg-[#ECEDF0]'>{el.category}</div></TableCell>
                   <TableCell className="text-right">
                     <div className="w-18 h-10 flex flex-row justify-center items-center  ">
                       <button className="w-5 h-5">

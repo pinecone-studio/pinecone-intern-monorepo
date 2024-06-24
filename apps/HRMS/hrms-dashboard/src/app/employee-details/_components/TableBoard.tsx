@@ -48,7 +48,7 @@ export const TableDemo = () => {
   const employees = data?.getAllEmployee ?? [];
 
   return (
-    <Table className="mt-[120px]">
+    <Table className="px-6 ">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow data-testid="content" className="bg-[#F7F7F8]">

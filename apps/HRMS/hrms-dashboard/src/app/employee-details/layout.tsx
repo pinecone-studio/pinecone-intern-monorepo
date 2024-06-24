@@ -5,11 +5,11 @@ import React from 'react';
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
-      <Header></Header>
-      <div className="flex">
-        <Sidebar></Sidebar>
-        <div className=" ml-[250px]">{children}</div>
+    <div className="flex flex-col flex-1">
+      <Header />
+      <div className="">
+        <Sidebar />
+        <div className=" ml-[242px] ">{children}</div>
       </div>
     </div>
   );
