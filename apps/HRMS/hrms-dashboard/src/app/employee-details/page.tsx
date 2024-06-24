@@ -2,7 +2,7 @@ import { EmployeeDetails } from './_features/EmplyeeDetails';
 
 const EmployeeDetailsPage = () => {
   return (
-    <div className="">
+    <div>
       <EmployeeDetails />
     </div>
   );

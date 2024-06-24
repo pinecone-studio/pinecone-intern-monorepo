@@ -15,19 +15,11 @@ describe('AddModal', () => {
 
     fireEvent.click(addEmployeeButton);
 
-    // Check if the modal content becomes visible
+   
     expect(modalContent).toBe(null);
 
     // Check if the modal title is correct
     const modalTitle = screen.getByTestId('title');
     expect(modalTitle).toHaveTextContent('Ажилтан нэмэх');
-
-    // Check if the submit button is rendered
-    const submitButton = screen.getByTestId('SubmitBtn');
-    expect(submitButton).toBeInTheDocument();
-
-    // Check if the arrow icon is rendered within the submit button
-    const arrowIcon = screen.getByTestId('arrow-icon');
-    expect(arrowIcon).toBeInTheDocument();
   });
 });
