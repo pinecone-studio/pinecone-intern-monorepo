@@ -42,7 +42,7 @@ const mockData = [
     title: 'Innovative Tech Trends: Navigating the Future of Digital Evolution',
     category: 'Event',
     status: 'архив',
-    createdDate: '03.05.2024',
+    createdDate: '03.06.2024',
   },
 ];
 
