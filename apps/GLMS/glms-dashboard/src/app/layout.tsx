@@ -4,7 +4,6 @@ import './global.css';
 import { ProjectHeader } from '@/components/ProjectHeader';
 import { Hero } from '@/components/Hero';
 import { HeroTabs } from '@/components/HeroTabs';
-import { ApolloWrapper } from '@/components/providers';
 
 export const metadata = {
   title: 'Welcome to GLMS-dashboard',
@@ -17,12 +16,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="relative">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <FederationProvider>
-            <ApolloWrapper>
-              <ProjectHeader />
-              <Hero />
-              <HeroTabs />
-              {children}
-            </ApolloWrapper>
+            <ProjectHeader />
+            <Hero />
+            <HeroTabs />
+            {children}
           </FederationProvider>
         </ThemeProvider>
       </body>
