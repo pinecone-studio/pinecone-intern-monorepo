@@ -1,13 +1,21 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import '@testing-library/jest-dom';
 import { InputField } from '../../src/app/articles/_components';
 
-const renderInputField = (props = {}) => {
+const validationSchema = Yup.object().shape({
+  testField: Yup.string().required('Test error'),
+});
+
+const renderInputField = (props = {}, initialValues = { testField: '' }, initialTouched = {}, initialErrors = {}) => {
   return render(
     <Formik
-      initialValues={{ testField: '' }}
+      initialValues={initialValues}
+      initialTouched={initialTouched}
+      initialErrors={initialErrors}
+      validationSchema={validationSchema}
       onSubmit={() => {}}
     >
       <Form>
@@ -30,37 +38,23 @@ describe('InputField Component', () => {
   });
 
   test('renders the input field with error message when touched', async () => {
-    render(
-      <Formik
-        initialValues={{ testField: '' }}
-        initialErrors={{ testField: 'Error message' }}
-        initialTouched={{ testField: true }}
-        onSubmit={() => {}}
-      >
-        <Form>
-          <InputField name="testField" label="Test Label" />
-        </Form>
-      </Formik>
-    );
-
-    expect(screen.getByText('Error message')).toBeInTheDocument();
+    renderInputField({}, { testField: '' }, { testField: true }, { testField: 'Test error' });
+    expect(screen.getByText('Test error')).toBeInTheDocument();
   });
 
   test('does not render error message when not touched', () => {
-    render(
-      <Formik
-        initialValues={{ testField: '' }}
-        initialErrors={{ testField: 'Error message' }}
-        initialTouched={{ testField: false }}
-        onSubmit={() => {}}
-      >
-        <Form>
-          <InputField name="testField" label="Test Label" />
-        </Form>
-      </Formik>
-    );
+    renderInputField({}, { testField: '' }, { testField: false }, { testField: 'Test error' });
+    expect(screen.queryByText('Test error')).not.toBeInTheDocument();
+  });
 
-    expect(screen.queryByText('Error message')).not.toBeInTheDocument();
+  test('renders error message when there is an error and the field is touched', () => {
+    renderInputField({}, { testField: '' }, { testField: true }, { testField: 'Test error' });
+    expect(screen.getByText('Test error')).toBeInTheDocument();
+  });
+
+  test('does not render error message when there is no error', () => {
+    renderInputField({}, { testField: '' }, { testField: true });
+    expect(screen.queryByText('Test error')).not.toBeInTheDocument();
   });
 
   test('applies custom class name', () => {
@@ -82,5 +76,38 @@ describe('InputField Component', () => {
   test('renders input with additional field props', () => {
     renderInputField({ key: 'unique-key' });
     expect(screen.getByPlaceholderText('test placeholder')).toBeInTheDocument();
+  });
+
+  test('renders input with an additional arbitrary prop', () => {
+    renderInputField({ 'data-test': 'test-data' });
+    expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('data-test', 'test-data');
+  });
+
+  test('handles different input types correctly', () => {
+    const inputTypes = ['text', 'password', 'email', 'number'];
+    inputTypes.forEach((type) => {
+      renderInputField({ type });
+      expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('type', type);
+    });
+  });
+
+  test('renders without label if not provided', () => {
+    renderInputField({ label: null });
+    expect(screen.queryByLabelText('Test Label')).not.toBeInTheDocument();
+  });
+
+  test('renders label with correct htmlFor attribute', () => {
+    renderInputField();
+    expect(screen.getByLabelText('Test Label')).toHaveAttribute('for', 'testField');
+  });
+
+  test('handles edge case of label being an empty string', () => {
+    renderInputField({ label: '' });
+    expect(screen.queryByText('')).not.toBeInTheDocument();
+  });
+
+  test('renders input with correct id attribute', () => {
+    renderInputField();
+    expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('id', 'testField');
   });
 });
