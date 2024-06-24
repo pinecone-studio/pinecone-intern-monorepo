@@ -1,19 +1,18 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { CardWithForm } from "../../src/app/archiv/_components";
-import { cardData } from "../../src/app/archiv/_components";
 
-describe("CardWithForm component", () => {
-  it("renders cards correctly", () => {
-    const { getByTestId } = render(<CardWithForm cards={cardData} />);
+describe('Course component', () => {
+  const props = {
+    id: '1',
+    thumbnail: 'img',
+    title: 'title',
+    description: 'des',
+  };
 
-    // console.log(getByTestId('lessonTitle').textContent)
+  it('renders with correct props and structure', () => {
+    const { getByTestId } = render(<CardWithForm {...props} />);
 
-    // expect(getByTestId("test-card")).toBeDefined()
-    
-    // expect(getByTestId('test-card')).toBeDefined();
-    // console.log(getByTestId("lessonTitle").textContent)
-    // expect(getByTestId("lessonTitle").textContent).toBe("")
-    
+    expect(getByTestId('test-card')).toBeDefined();
   });
 });
