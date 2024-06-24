@@ -7,7 +7,6 @@ interface FieldProps {
 
 export const RightField = ({ type }: FieldProps) => {
   const [file, setFile] = useState<File | null>(null);
-  /* eslint-disable @typescript-eslint/no-unused-vars */
 console.log(file);
 
   return (
