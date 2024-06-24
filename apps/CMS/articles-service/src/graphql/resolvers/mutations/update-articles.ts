@@ -3,7 +3,6 @@ import { GraphQLError } from 'graphql';
 import { ArticleModel } from '@/models/articles.model';
 
 export const updateArticle: MutationResolvers['updateArticle'] = async (_, { input }) => {
-  // Check for valid input
   validateInput(input);
 
   const { _id, ...updateData } = input;
@@ -18,7 +17,7 @@ export const updateArticle: MutationResolvers['updateArticle'] = async (_, { inp
     return updatedArticle;
   } catch (error) {
     console.error(error);
-    throw new GraphQLError('Failed to update article');
+    throw new GraphQLError('Could not find article to update');
   }
 };
 

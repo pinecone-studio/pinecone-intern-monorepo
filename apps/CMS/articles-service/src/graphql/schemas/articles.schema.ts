@@ -35,7 +35,7 @@ export const articleTypeDefs = gql`
   }
 
   input UpdateArticleInput {
-    _id: ID!
+    _id: String!
     title: String
     coverPhoto: String
     content: String

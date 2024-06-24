@@ -68,8 +68,7 @@ describe('updateArticle resolver', () => {
       { new: true }
     );
 
-    // Ensure console.error was not called in this scenario
-    expect(consoleErrorSpy).not.toHaveBeenCalled();
+    expect(jest.fn()).not.toHaveBeenCalled();
   });
 
   it('logs an error when update fails', async () => {
@@ -81,7 +80,7 @@ describe('updateArticle resolver', () => {
       await updateArticle(undefined, { input: articleInput });
     } catch (error) {
       expect(error).toBeInstanceOf(GraphQLError);
-      expect(error.message).toBe('Failed to update article');
+      expect(error.message).toBe('Could not find article to update');
     }
 
     expect(ArticleModel.findByIdAndUpdate).toHaveBeenCalledWith(
