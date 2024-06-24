@@ -1,8 +1,7 @@
-import { MutationResolvers } from '@/graphql/generated/index';
 import { GraphQLError } from 'graphql';
 import { ArticleModel } from '@/models/articles.model';
 
-export const updateArticle: MutationResolvers['updateArticle'] = async (_, { input }) => {
+export const updateArticle = async (_, { input }) => {
   validateInput(input);
 
   const { _id, ...updateData } = input;
