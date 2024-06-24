@@ -1,5 +1,3 @@
-import { divide } from 'cypress/types/lodash';
-
 const Index = () => {
   return (
     <div className="flex justify-center items-center  bg-[#1C202414] w-full h-[100vh] ">
