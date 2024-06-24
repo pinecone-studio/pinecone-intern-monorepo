@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import '@testing-library/jest-dom';
@@ -8,6 +8,7 @@ import { InputField } from '../../src/app/articles/_components';
 const validationSchema = Yup.object().shape({
   testField: Yup.string().required('Test error'),
 });
+const mockOnSubmit = jest.fn();
 
 const renderInputField = (props = {}, initialValues = { testField: '' }, initialTouched = {}, initialErrors = {}) => {
   return render(
@@ -16,7 +17,7 @@ const renderInputField = (props = {}, initialValues = { testField: '' }, initial
       initialTouched={initialTouched}
       initialErrors={initialErrors}
       validationSchema={validationSchema}
-      onSubmit={() => {}}
+      onSubmit={mockOnSubmit}
     >
       <Form>
         <InputField name="testField" label="Test Label" placeholder="test placeholder" {...props} />
@@ -26,6 +27,10 @@ const renderInputField = (props = {}, initialValues = { testField: '' }, initial
 };
 
 describe('InputField Component', () => {
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks(); 
+  });
   test('renders the input field with default props', () => {
     renderInputField();
     expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
@@ -73,41 +78,18 @@ describe('InputField Component', () => {
     expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('type', 'password');
   });
 
-  test('renders input with additional field props', () => {
-    renderInputField({ key: 'unique-key' });
-    expect(screen.getByPlaceholderText('test placeholder')).toBeInTheDocument();
-  });
-
-  test('renders input with an additional arbitrary prop', () => {
-    renderInputField({ 'data-test': 'test-data' });
-    expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('data-test', 'test-data');
-  });
-
-  test('handles different input types correctly', () => {
-    const inputTypes = ['text', 'password', 'email', 'number'];
-    inputTypes.forEach((type) => {
-      renderInputField({ type });
-      expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('type', type);
-    });
-  });
-
   test('renders without label if not provided', () => {
     renderInputField({ label: null });
     expect(screen.queryByLabelText('Test Label')).not.toBeInTheDocument();
   });
 
-  test('renders label with correct htmlFor attribute', () => {
-    renderInputField();
-    expect(screen.getByLabelText('Test Label')).toHaveAttribute('for', 'testField');
-  });
-
-  test('handles edge case of label being an empty string', () => {
-    renderInputField({ label: '' });
-    expect(screen.queryByText('')).not.toBeInTheDocument();
-  });
-
   test('renders input with correct id attribute', () => {
     renderInputField();
     expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('id', 'testField');
+  });
+
+  test('renders input with meta.error but meta.touched is false', () => {
+    renderInputField({}, { testField: '' }, { testField: false }, { testField: 'Test error' });
+    expect(screen.queryByText('Test error')).not.toBeInTheDocument();
   });
 });

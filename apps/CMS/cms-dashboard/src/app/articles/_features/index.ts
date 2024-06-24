@@ -1,2 +1,2 @@
-export * from './ArticlesMain';
 export * from './TextField';
+export * from './RightField';

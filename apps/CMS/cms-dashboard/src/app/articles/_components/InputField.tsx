@@ -5,7 +5,7 @@ export const InputField = ({ ...props }): JSX.Element => {
 
   return (
     <>
-      <label htmlFor={props.name} className="font-semibold text-lg pt-28 pb-12">
+      <label htmlFor={props.name} className="font-semibold text-lg">
         {props.label}
       </label>
       <Field
@@ -16,7 +16,7 @@ export const InputField = ({ ...props }): JSX.Element => {
         as={props.as}
         rows={props.rows}
         key={props.key}
-        className={`input rounded-lg pl-5 pb-3 focus:outline-none transition-colors duration ease-in-out focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full ${props.addClass}`}
+        className={`input mt-4 rounded-lg py-[18px] px-6 focus:outline-none transition-colors duration ease-in-out focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
       />
       {meta.touched && meta.error && <div className="text-xs text-red-600">{meta.error}</div>}
     </>
