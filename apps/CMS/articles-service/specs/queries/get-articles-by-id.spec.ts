@@ -1,4 +1,4 @@
-import { getArticles } from '@/graphql/resolvers/queries';
+import { getArticles } from '@/graphql/resolvers/queries/get-articles-by-id';
 import { GraphQLError } from 'graphql';
 import { ArticleModel } from '@/models/articles.model';
 
@@ -8,7 +8,7 @@ jest.mock('@/models/articles.model', () => ({
   },
 }));
 
-describe('getArticles resolver', () => {
+describe('getArticles Resolver', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -24,14 +24,14 @@ describe('getArticles resolver', () => {
     const result = await getArticles();
 
     expect(result).toEqual(mockArticles);
-
     expect(ArticleModel.find).toHaveBeenCalledWith();
   });
 
   it('throws a GraphQLError when no articles are found', async () => {
     ArticleModel.find.mockResolvedValue(null);
 
-    expect(ArticleModel.find).toHaveBeenCalledWith();
+    await expect(getArticles()).rejects.toThrow(GraphQLError);
+    await expect(getArticles()).rejects.toThrow('article not found');
   });
 
   it('throws a GraphQLError on database error', async () => {
@@ -40,7 +40,6 @@ describe('getArticles resolver', () => {
     ArticleModel.find.mockRejectedValue(mockError);
 
     await expect(getArticles()).rejects.toThrow(GraphQLError);
-
-    expect(ArticleModel.find).toHaveBeenCalledWith();
+    await expect(getArticles()).rejects.toThrow('Database error');
   });
 });

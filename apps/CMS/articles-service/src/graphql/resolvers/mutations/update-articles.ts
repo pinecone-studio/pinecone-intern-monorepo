@@ -9,16 +9,16 @@ export const updateArticle: MutationResolvers['updateArticle'] = async (_, { inp
 
   const { _id, ...updateData } = input;
 
-  console.log(updateData);
-
   try {
     const updatedArticle = await ArticleModel.findByIdAndUpdate(_id, updateData, { new: true });
+
     if (!updatedArticle) {
       throw new GraphQLError('Could not find article to update');
     }
+
     return updatedArticle;
   } catch (e) {
-    console.log(e);
+    console.error(e); // Log the actual error for debugging purposes
 
     throw new GraphQLError('Failed to update article');
   }

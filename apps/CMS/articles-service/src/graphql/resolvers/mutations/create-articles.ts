@@ -1,16 +1,16 @@
+import { MutationResolvers } from '@/graphql/generated/index';
+import { GraphQLError } from 'graphql';
 import { ArticleModel } from '@/models/articles.model';
-import { Article, MutationResolvers } from '@/graphql/generated';
 
 export const createArticle: MutationResolvers['createArticle'] = async (_, { articleInput }) => {
   try {
     const newArticle = await ArticleModel.create(articleInput);
     if (!newArticle) {
-      throw new Error('Failed to create article');
+      throw new GraphQLError('Failed to create article');
     }
-    console.log(newArticle);
-
-    return newArticle as Article;
+    return newArticle;
   } catch (error) {
-    throw new Error('Failed to create article');
+    console.log(error);
+    throw new GraphQLError('Failed to create article');
   }
 };

@@ -36,7 +36,6 @@ describe('createArticle resolver', () => {
     const result = await createArticle(undefined, { articleInput });
 
     expect(result).toEqual(mockArticle);
-
     expect(ArticleModel.create).toHaveBeenCalledWith(articleInput);
   });
 
@@ -47,9 +46,9 @@ describe('createArticle resolver', () => {
     (ArticleModel.create as jest.Mock).mockRejectedValue(mockError);
 
     await expect(createArticle(undefined, { articleInput })).rejects.toThrow(GraphQLError);
+    await expect(createArticle(undefined, { articleInput })).rejects.toThrow('Failed to create article');
 
     expect(ArticleModel.create).toHaveBeenCalledWith(articleInput);
-
     expect(consoleLogSpy).toHaveBeenCalledWith(mockError);
   });
 
@@ -57,6 +56,7 @@ describe('createArticle resolver', () => {
     (ArticleModel.create as jest.Mock).mockResolvedValue(undefined);
 
     await expect(createArticle(undefined, { articleInput })).rejects.toThrow(GraphQLError);
+    await expect(createArticle(undefined, { articleInput })).rejects.toThrow('Failed to create article');
 
     expect(ArticleModel.create).toHaveBeenCalledWith(articleInput);
   });

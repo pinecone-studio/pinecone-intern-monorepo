@@ -9,7 +9,8 @@ jest.mock('@/models/articles.model', () => ({
 }));
 
 describe('updateArticle resolver', () => {
-  let consoleLogSpy;
+  let consoleErrorSpy;
+
   const articleInput = {
     _id: 'article_id_here',
     title: 'Updated Article',
@@ -17,12 +18,12 @@ describe('updateArticle resolver', () => {
   };
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
     jest.clearAllMocks();
   });
 
   afterEach(() => {
-    consoleLogSpy.mockRestore();
+    consoleErrorSpy.mockRestore();
   });
 
   it('updates an article successfully', async () => {
@@ -55,9 +56,9 @@ describe('updateArticle resolver', () => {
       await updateArticle(undefined, { input: articleInput });
     } catch (error) {
       expect(error).toBeInstanceOf(GraphQLError);
-
       expect(error.message).toBe('Could not find article to update');
     }
+
     expect(ArticleModel.findByIdAndUpdate).toHaveBeenCalledWith(
       articleInput._id,
       expect.objectContaining({
@@ -66,6 +67,9 @@ describe('updateArticle resolver', () => {
       }),
       { new: true }
     );
+
+    // Ensure console.error was not called in this scenario
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
   });
 
   it('logs an error when update fails', async () => {
@@ -77,7 +81,6 @@ describe('updateArticle resolver', () => {
       await updateArticle(undefined, { input: articleInput });
     } catch (error) {
       expect(error).toBeInstanceOf(GraphQLError);
-
       expect(error.message).toBe('Failed to update article');
     }
 
@@ -90,6 +93,27 @@ describe('updateArticle resolver', () => {
       { new: true }
     );
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(mockError);
+    // Ensure console.error was called with the correct error object
+    expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+  });
+
+  it('throws an error for invalid input', async () => {
+    const invalidInput = {
+      title: 'Updated Article',
+      content: 'Updated Content',
+    };
+
+    try {
+      await updateArticle(undefined, { input: invalidInput });
+    } catch (error) {
+      expect(error).toBeInstanceOf(GraphQLError);
+      expect(error.message).toBe('Invalid input: Missing or invalid _id');
+    }
+
+    // Ensure findByIdAndUpdate was not called with invalid input
+    expect(ArticleModel.findByIdAndUpdate).not.toHaveBeenCalled();
+
+    // Ensure console.error was not called in this scenario
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
   });
 });
