@@ -35,7 +35,6 @@ export const articleTypeDefs = gql`
   }
 
   input UpdateArticleInput {
-    _id: String!
     title: String
     coverPhoto: String
     content: String
@@ -49,6 +48,6 @@ export const articleTypeDefs = gql`
 
   type Mutation {
     createArticle(articleInput: CreateArticleInput): Article!
-    updateArticle(input: UpdateArticleInput): Article!
+    updateArticle(_id: String!, input: UpdateArticleInput): Article!
   }
 `;
