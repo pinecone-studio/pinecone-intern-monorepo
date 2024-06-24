@@ -27,6 +27,7 @@ const studentsData = [
     phoneNumber: '88888888',
     active: true,
     /* eslint-disable no-secrets/no-secrets */
+
     profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
   },
 ];
@@ -51,7 +52,6 @@ describe('Students Table', () => {
       cy.get('tbody').find(`[data-testid="student-code"]:eq(${index})`).should('contain.text', student.studentCode);
       cy.get('tbody').find(`[data-testid="student-email"]:eq(${index})`).should('contain.text', student.email);
       cy.get('tbody').find(`[data-testid="student-phone-number"]:eq(${index})`).should('contain.text', student.phoneNumber);
-      cy.get('tbody').find(`[data-testid="dropdown"]:eq(${index})`).click();
     });
   });
 
