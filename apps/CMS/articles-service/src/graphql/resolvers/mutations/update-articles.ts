@@ -1,25 +1,35 @@
 import { MutationResolvers } from '@/graphql/generated/index';
 import { GraphQLError } from 'graphql';
-import { ArticleModel } from '../../../models/articles.model';
+import { ArticleModel } from '@/models/articles.model';
 
 export const updateArticle: MutationResolvers['updateArticle'] = async (_, { input }) => {
-  if (!input || typeof input._id !== 'string') {
-    throw new GraphQLError('Invalid input: Missing or invalid _id');
-  }
+  // Check for valid input
+  validateInput(input);
 
   const { _id, ...updateData } = input;
 
   try {
+    // Update article
     const updatedArticle = await ArticleModel.findByIdAndUpdate(_id, updateData, { new: true });
 
-    if (!updatedArticle) {
-      throw new GraphQLError('Could not find article to update');
-    }
+    // Handle article not found
+    handleArticleNotFound(updatedArticle);
 
     return updatedArticle;
-  } catch (e) {
-    console.error(e); // Log the actual error for debugging purposes
-
+  } catch (error) {
+    console.error(error);
     throw new GraphQLError('Failed to update article');
   }
 };
+
+function validateInput(input: any): void {
+  if (!input || typeof input._id !== 'string') {
+    throw new GraphQLError('Invalid input: Missing or invalid _id');
+  }
+}
+
+function handleArticleNotFound(article: any): void {
+  if (!article) {
+    throw new GraphQLError('Could not find article to update');
+  }
+}
