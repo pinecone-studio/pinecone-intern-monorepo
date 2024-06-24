@@ -1,4 +1,3 @@
-import { Dice1 } from 'lucide-react';
 import { BackIcon } from './SVG/BackIcon';
 
 const EmployeeDtailHeader = () => {
