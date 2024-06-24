@@ -40,7 +40,7 @@ describe('createArticle resolver', () => {
   });
 
   it('throws a GraphQLError when creation fails', async () => {
-    const errorMessage = 'Database error';
+    const errorMessage = 'article not found';
     const mockError = new Error(errorMessage);
 
     (ArticleModel.create as jest.Mock).mockRejectedValue(mockError);

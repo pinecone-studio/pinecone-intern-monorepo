@@ -73,7 +73,7 @@ describe('updateArticle resolver', () => {
   });
 
   it('logs an error when update fails', async () => {
-    const errorMessage = 'Database error';
+    const errorMessage = 'Could not find article to update';
     const mockError = new Error(errorMessage);
     (ArticleModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(mockError);
 

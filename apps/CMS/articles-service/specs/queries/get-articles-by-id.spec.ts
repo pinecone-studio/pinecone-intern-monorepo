@@ -34,12 +34,12 @@ describe('getArticles Resolver', () => {
     await expect(getArticles()).rejects.toThrow('article not found');
   });
 
-  it('throws a GraphQLError on database error', async () => {
-    const mockError = new Error('Database error');
+  it('throws a GraphQLError on article not found', async () => {
+    const mockError = new Error('article not found');
 
     ArticleModel.find.mockRejectedValue(mockError);
 
     await expect(getArticles()).rejects.toThrow(GraphQLError);
-    await expect(getArticles()).rejects.toThrow('Database error');
+    await expect(getArticles()).rejects.toThrow('article not found');
   });
 });

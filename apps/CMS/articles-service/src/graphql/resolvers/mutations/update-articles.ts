@@ -22,13 +22,13 @@ export const updateArticle: MutationResolvers['updateArticle'] = async (_, { inp
   }
 };
 
-function validateInput(input: any): void {
+function validateInput(input): void {
   if (!input || typeof input._id !== 'string') {
     throw new GraphQLError('Invalid input: Missing or invalid _id');
   }
 }
 
-function handleArticleNotFound(article: any): void {
+function handleArticleNotFound(article): void {
   if (!article) {
     throw new GraphQLError('Could not find article to update');
   }
