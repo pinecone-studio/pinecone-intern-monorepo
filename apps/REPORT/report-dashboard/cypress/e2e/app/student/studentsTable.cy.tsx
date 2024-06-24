@@ -8,8 +8,22 @@ const studentsData = [
     email: 'Bataa@gmail.com',
     phoneNumber: '89898989',
     active: true,
-    /* eslint-disable no-secrets/no-secrets */
-
+    profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+  },
+  {
+    firstName: 'HELLO',
+    studentCode: '09876544',
+    email: 'test@gmail.com',
+    phoneNumber: '0000000000',
+    active: true,
+    profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+  },
+  {
+    firstName: 'ewfwefwefew',
+    studentCode: 'q2qw',
+    email: 'afbbfe@gmail.com',
+    phoneNumber: '88888888',
+    active: true,
     profileImgUrl: 'https://images.unsplash.com/photo-1500320464660-ee0ef7d0ae6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
   },
 ];

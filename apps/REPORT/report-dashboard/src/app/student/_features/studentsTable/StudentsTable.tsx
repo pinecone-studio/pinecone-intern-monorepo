@@ -31,7 +31,7 @@ const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
             <TableCell data-testid="student-email">{student.email}</TableCell>
             <TableCell data-testid="student-phone-number">{student.phoneNumber}</TableCell>
             <TableCell className="font-medium flex items-center gap-2 h-[64px]  text-right">
-              <div className="border rounded-md px-2 py-1 w-[90px] flex justify-center items-center">{student.active}</div>
+              <div className="border rounded-md px-2 py-1 w-[90px] flex justify-center items-center">Идэвхтэй</div>
               <DropDownStudent />
             </TableCell>
           </TableRow>
