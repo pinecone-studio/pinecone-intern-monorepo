@@ -16,6 +16,11 @@ export const NextAndBackButton = ({
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
+  const onSubmitClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+  };
+
   return (
     <div data-testid="buttons">
       <div className="flex justify-between">
@@ -41,7 +46,7 @@ export const NextAndBackButton = ({
               </div>
             </button>
           ) : (
-            <button onClick={() => handleSubmit}>
+            <button onClick={onSubmitClick} type="submit">
               <div data-testid="step-3" className="flex h-12 rounded-[8px] min-w-[80px] px-[16px] py-[12px] bg-[#121316] items-center">
                 <div className="px-2 py-1 flex">
                   <p className="text-[#FFF] text-[16px] font-[600] leading-5 tracking-[-0.3px] not-italic">Илгээх</p>

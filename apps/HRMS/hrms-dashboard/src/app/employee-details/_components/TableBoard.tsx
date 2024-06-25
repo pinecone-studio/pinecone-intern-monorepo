@@ -2,51 +2,9 @@
 
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { gql } from '@apollo/client';
-import { useQuery } from '@apollo/client';
+import { Employee } from '@/generated';
 
-export interface Employee {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  department: string;
-  jobTitle: string;
-  salary: number;
-}
-
-export interface GetAllEmployeesData {
-  getAllEmployee: Employee[];
-}
-
-export const GET_ALL_EMPLOYEES = gql`
-  query getAllEmployee {
-    getAllEmployee {
-      id
-      firstname
-      lastname
-      email
-      department
-      jobTitle
-      salary
-    }
-  }
-`;
-
-export const TableDemo = () => {
-  const { loading, error, data } = useQuery<GetAllEmployeesData>(GET_ALL_EMPLOYEES);
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    if (error.networkError) {
-      console.error('Network Error:', error.networkError);
-      return <p>Error: Network error occurred. Please check console for details.</p>;
-    }
-    console.error('GraphQL Error:', error);
-    return <p>Error: An error occurred. Please check console for details.</p>;
-  }
-
-  const employees = data?.getAllEmployee ?? [];
-
+export const TableDemo = ({ employees }: { employees: Employee[] }) => {
   return (
     <Table className="px-6 ">
       <TableCaption></TableCaption>
@@ -70,7 +28,7 @@ export const TableDemo = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {employees.map((employee, index) => (
+        {employees?.map((employee, index) => (
           <TableRow data-testid={`TableContent-${index}`} key={employee.firstname}>
             <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
               {employee.lastname}

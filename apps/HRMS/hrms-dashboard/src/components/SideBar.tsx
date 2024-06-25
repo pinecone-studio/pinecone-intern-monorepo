@@ -22,7 +22,7 @@ export const Sidebar = () => {
   return (
     <aside
       data-cy="dashboardSidebar"
-      className="flex  fixed left-0 md:flex-col md:min-w-[242px] min-w-fit  md:h-[100vh] h-fit md:pt-4 border-r border-[#ECEDF0] justify-between md:justify-start bg-white flex-wrap "
+      className="flex mt-[40px] fixed left-0 md:flex-col md:min-w-[242px] min-w-fit  md:h-[100vh] h-fit md:pt-4 border-r border-[#ECEDF0] justify-between md:justify-start bg-white flex-wrap "
     >
       {sidebarItems.map((item, index) => {
         return (
@@ -33,7 +33,7 @@ export const Sidebar = () => {
               router.push(item.pathName);
             }}
             style={{ backgroundColor: `${pathname == item.pathName ? '#1C202414' : '#fff'}` }}
-            className={`flex justify-start items-center cursor-pointer pr-5 w-1/2 md:w-full`}
+            className={`flex justify-start items-center cursor-pointer pr-5 w-1/2 md:w-full `}
           >
             <div className="flex py-2 px-4 text-lg">{item.icon}</div>
             <p className="text-base text-main font-semibold py-2.5 ">{item.text}</p>

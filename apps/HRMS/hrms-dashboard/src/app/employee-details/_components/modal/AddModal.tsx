@@ -4,74 +4,49 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
 import { Stepper } from './Stepper';
-import { useState } from 'react';
 import { NextAndBackButton } from './NextAndBackButton';
 import { StepPersonalInfo } from '../add-employee-steps/StepPersonaInfo';
 import { StepJobInfo } from '../add-employee-steps/StepJobInfo';
 import { StepAdditionalInfo } from '../add-employee-steps/StepAdditionaInfo';
-import * as Yup from 'yup';
-import { useMutation, gql } from '@apollo/client';
-import { useFormik } from 'formik';
+import { FormikHelpers } from 'formik';
 
-const CREATE_EMPLOYEE_MUTATION = gql`
-  mutation CreateEmployee($input: CreateEmployeeInput!) {
-    createEmployee(input: $input) {
-      id
-      firstname
-      lastname
-      email
-      department
-      jobTitle
-      salary
-    }
-  }
-`;
+type StepsType = { title: string; content: string }[];
 
-export const AddModal = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [createEmployee, { loading }] = useMutation(CREATE_EMPLOYEE_MUTATION);
-
-  const steps = [
-    { title: 'Step 1', content: 'Хувийн мэдээлэл' },
-    { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
-    { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
-  ];
-
-  const formik = useFormik({
-    initialValues: {
-      firstname: '',
-      lastname: '',
-      email: '',
-      imageURL: '',
-      department: 'SOFTWARE',
-      jobTitle: [],
-      ladderLevel: '',
-      salary: 0,
-      dateOfEmployment: new Date(),
-      employmentStatus: 'FULL_TIME',
-    },
-    validationSchema: Yup.object({
-      firstname: Yup.string().required('First name is required'),
-      lastname: Yup.string().required('Last name is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      department: Yup.mixed().oneOf(['SOFTWARE', 'DESIGN', 'MARKETING', 'BACK_OFFICE']).required('Department is required'),
-      jobTitle: Yup.array().of(Yup.string()).required('Job title is required'),
-      salary: Yup.number().min(0, 'Salary must be positive').required('Salary is required'),
-      dateOfEmployment: Yup.date().required('Date of employment is required'),
-      employmentStatus: Yup.mixed().oneOf(['FULL_TIME', 'PART_TIME', 'CONTRACTOR', 'TEMPORARY', 'ARCHIVE']).required('Employment status is required'),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        console.log('Submitting form with values:', values);
-        const { data } = await createEmployee({ variables: { input: values } });
-        console.log('Employee created successfully:', data);
-        resetForm();
-      } catch (error) {
-        console.error('Error creating employee:', error);
-      }
-    },
-  });
-
+export const AddModal = ({
+  currentStep,
+  steps,
+  setCurrentStep,
+  loading,
+  firstname,
+  lastname,
+  email,
+  imageURL,
+  department,
+  jobTitle,
+  ladderLevel,
+  salary,
+  employmentStatus,
+  handleChange,
+  hadlesubmit,
+  fileChangeHandler,
+}: {
+  firstname: string;
+  lastname: string;
+  email: string;
+  imageURL: string;
+  department: string;
+  jobTitle: Array<string>;
+  ladderLevel: string;
+  salary: number;
+  employmentStatus: string;
+  loading: boolean;
+  currentStep: number;
+  steps: StepsType;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  handleChange: (_e: React.ChangeEvent<unknown>) => void;
+  hadlesubmit: (_e: React.FormEvent<HTMLFormElement>) => void;
+  fileChangeHandler: FormikHelpers<string>['setFieldValue'];
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -86,21 +61,13 @@ export const AddModal = () => {
 
           <DialogDescription></DialogDescription>
           <Stepper currentStep={currentStep} steps={steps} />
-          {currentStep == 0 && <StepPersonalInfo firstname={formik.values.firstname} lastname={formik.values.lastname} email={formik.values.email} handleChange={formik.handleChange} />}
-          {currentStep == 1 && (
-            <StepJobInfo
-              department={formik.values.department}
-              jobTitle={formik.values.jobTitle}
-              salary={formik.values.salary}
-              employmentStatus={formik.values.employmentStatus}
-              handleChange={formik.handleChange}
-            />
-          )}
-          {currentStep == 2 && <StepAdditionalInfo ladderLevel={formik.values.ladderLevel} handleChange={formik.handleChange} />}
+          {currentStep == 0 && <StepPersonalInfo firstname={firstname} lastname={lastname} email={email} handleChange={handleChange} />}
+          {currentStep == 1 && <StepJobInfo department={department} jobTitle={jobTitle} salary={salary} employmentStatus={employmentStatus} handleChange={handleChange} />}
+          {currentStep == 2 && <StepAdditionalInfo ladderLevel={ladderLevel} handleChange={handleChange} imageURL={imageURL} fileChangeHandler={fileChangeHandler} />}
           {loading && <p>Loading...</p>}
         </DialogHeader>
         <DialogFooter></DialogFooter>
-        <NextAndBackButton steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} handleSubmit={formik.handleSubmit} />
+        <NextAndBackButton steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} handleSubmit={hadlesubmit} />
       </DialogContent>
     </Dialog>
   );
