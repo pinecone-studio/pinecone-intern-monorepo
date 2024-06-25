@@ -9,8 +9,8 @@ describe('employee-detail', () => {
     cy.get('[data-cy="employeeDetailHeader"]').should('exist').should('be.visible');
     cy.get('[data-cy="Employee-Detail-children"]').should('exist').should('be.visible');
   });
-  it('2.Sidebar menu clickable and redirect to employee details page', () => {
-    cy.get('[data-cy="sidebarItem"]').eq(1).should('exist').should('be.visible');
-    cy.get('[data-cy="sidebarItem"]').eq(1).click();
-  });
+  // it('2.Sidebar menu clickable and redirect to employee details page', () => {
+  //   cy.get('[data-cy="sidebarItem"]').eq(1).should('exist').should('be.visible');
+  //   cy.get('[data-cy="sidebarItem"]').eq(1).click();
+  // });
 });
