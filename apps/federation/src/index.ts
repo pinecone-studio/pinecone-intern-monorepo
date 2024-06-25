@@ -87,7 +87,7 @@ const gateway = new ApolloGateway({
       // },
       {
         name: 'student',
-        url: 'http://localhost:3333',
+        url: 'http://localhost:9000/api/graphql',
       },
     ],
   }),

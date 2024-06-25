@@ -6,7 +6,7 @@ import { Search, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGetClassesQuery } from '@/generated';
 
-const ClassCardTab = () => {
+const CLassCardTab = () => {
   const { data, loading, error } = useGetClassesQuery();
   const classData = data?.getClasses;
   return (
@@ -27,16 +27,16 @@ const ClassCardTab = () => {
               <Button className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]">
                 <p>Анги</p>
                 <span>
-                  <Plus className="h-4 w-4" data-testid="plus-button" />
+                  <Plus className="h-4 w-4" />
                 </span>
               </Button>
             </div>
           </div>
           <div className="relative h-[600px]">
             {loading ? (
-              <p>Loading...</p>
+              <p>Loading</p>
             ) : error ? (
-              <p>Error</p>
+              <p>Error:{error?.message}</p>
             ) : (
               <div>
                 <TabsContent value="Бүгд" className="grid grid-cols-4 gap-4 absolute top-0 left-0 w-full overflow-auto">
@@ -67,4 +67,4 @@ const ClassCardTab = () => {
   );
 };
 
-export default ClassCardTab;
+export default CLassCardTab;

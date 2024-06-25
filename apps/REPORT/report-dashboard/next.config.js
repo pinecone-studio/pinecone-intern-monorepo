@@ -13,7 +13,7 @@ const nextConfig = {
     svgr: false,
   },
   env: {
-    ENDPOINT: process.env.ENDPOINT || '',
+    FEDERATION_ENDPOINT: process.env.FEDERATION_ENDPOINT || '',
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID || '',
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || '',
     PUB_URL: process.env.PUB_URL || '',
