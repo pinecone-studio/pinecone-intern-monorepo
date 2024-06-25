@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { StudentsInformation } from '../../src/app/student/_features/studentsTable/StudentsInformation';
 
-jest.mock('@/generated');
+jest.mock('../../src/generated');
 
 describe('StudentsInformation component', () => {
   it('renders loading state', async () => {
