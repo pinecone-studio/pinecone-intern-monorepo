@@ -10,7 +10,6 @@ export const getArticles: QueryResolvers['getArticles'] = async () => {
     }
     return articles;
   } catch (error) {
-    console.log(error);
     throw new GraphQLError('article not found');
   }
 };

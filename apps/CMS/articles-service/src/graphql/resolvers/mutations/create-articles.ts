@@ -10,7 +10,6 @@ export const createArticle: MutationResolvers['createArticle'] = async (_, { art
     }
     return newArticle;
   } catch (error) {
-    console.log(error);
     throw new GraphQLError('Failed to create article');
   }
 };
