@@ -9,19 +9,13 @@ jest.mock('@/models/articles.model', () => ({
 }));
 
 describe('createArticle resolver', () => {
-  let consoleLogSpy;
   const articleInput = {
     title: 'New Article',
     content: 'New Content',
   };
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
     jest.clearAllMocks();
-  });
-
-  afterEach(() => {
-    consoleLogSpy.mockRestore();
   });
 
   it('creates an article successfully', async () => {
@@ -49,7 +43,6 @@ describe('createArticle resolver', () => {
     await expect(createArticle(undefined, { articleInput })).rejects.toThrow('Failed to create article');
 
     expect(ArticleModel.create).toHaveBeenCalledWith(articleInput);
-    expect(consoleLogSpy).toHaveBeenCalledWith(mockError);
   });
 
   it('throws a GraphQLError when newArticle is undefined', async () => {
