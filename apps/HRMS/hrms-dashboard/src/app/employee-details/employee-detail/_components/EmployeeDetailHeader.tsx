@@ -6,7 +6,7 @@ const EmployeeDetailHeader = () => {
       <button data-cy="headerIcon " className="flex justify-center items-center w-[50px] ">
         <BackIcon></BackIcon>
       </button>
-      <div data-cy="Employee-Detail-children " className=" w-full flex justify-center items-center text-center">
+      <div data-cy="Employee-Detail-children" className=" w-full flex justify-center items-center text-center">
         Ажилтны дэлгэрэнгүй
       </div>
     </div>
