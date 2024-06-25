@@ -2,7 +2,7 @@ import { BackIcon } from './SVG/BackIcon';
 
 const EmployeeDtailHeader = () => {
   return (
-    <div className="flex w-full border-b-gray-400 border-[1px] h-[56px]">
+    <div data-cy="employeeDetailHeader" className="flex w-full border-b-gray-400 border-[1px] h-[56px]">
       <button data-cy="headerIcon " className="flex justify-center items-center w-[50px] ">
         <BackIcon></BackIcon>
       </button>
