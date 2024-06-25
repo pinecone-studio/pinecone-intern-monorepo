@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import React from 'react';
-import EmployeeDtailHeader from './_components/EmployeeDetailHeader';
+import EmployeeDetailHeader from './_components/EmployeeDetailHeader';
 
 const EmployeeDtailLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex flex-col flex-1">
-      <EmployeeDtailHeader></EmployeeDtailHeader>
+      <EmployeeDetailHeader></EmployeeDetailHeader>
       <div className=" ">{children}</div>
     </div>
   );

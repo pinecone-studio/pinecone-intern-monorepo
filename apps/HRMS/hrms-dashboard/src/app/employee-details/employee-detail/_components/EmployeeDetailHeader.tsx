@@ -1,8 +1,8 @@
 import { BackIcon } from './SVG/BackIcon';
 
-const EmployeeDtailHeader = () => {
+const EmployeeDetailHeader = () => {
   return (
-    <div data-cy="employeeDetailHeader" className="flex w-full border-b-gray-400 border-[1px] h-[56px]">
+    <div data-cy="employeeDetailHeader" data-testid="employeeDetailHeader" className="flex w-full border-b-gray-400 border-[1px] h-[56px]">
       <button data-cy="headerIcon " className="flex justify-center items-center w-[50px] ">
         <BackIcon></BackIcon>
       </button>
@@ -12,4 +12,4 @@ const EmployeeDtailHeader = () => {
     </div>
   );
 };
-export default EmployeeDtailHeader;
+export default EmployeeDetailHeader;
