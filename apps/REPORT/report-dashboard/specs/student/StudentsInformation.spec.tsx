@@ -14,7 +14,7 @@ describe('StudentsInformation component', () => {
       loading: true,
       error: undefined,
     };
-    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
+    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
     let component;
     await act(async () => {
       component = render(<StudentsInformation />);
@@ -29,7 +29,7 @@ describe('StudentsInformation component', () => {
       loading: false,
       error: new Error('Mock error message'),
     };
-    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
+    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
 
     let component;
     await act(async () => {
@@ -57,7 +57,7 @@ describe('StudentsInformation component', () => {
       loading: false,
       error: undefined,
     };
-    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
+    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
 
     let component;
     await act(async () => {
