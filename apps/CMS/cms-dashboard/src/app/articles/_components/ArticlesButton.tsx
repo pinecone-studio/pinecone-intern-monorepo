@@ -1,21 +1,19 @@
 'use client';
 
-type ArticlesButtonProps = {
-  text?: string;
-  bgColor?: string | number;
-  type?: 'submit' | 'reset' | 'button';
-  disabled?: boolean;
-  onClick?: () => void;
-};
 import { Button } from '@/components/ui/button';
+type PropsType = {
+  text: string;
+  addClass?: string;
+  able?: boolean;
+  typeText?: 'submit' | 'button' | 'reset' | undefined;
+};
 
-export const ArticlesButton: React.FC<ArticlesButtonProps> = (props) => {
-  const { text, bgColor, disabled, type, onClick } = props;
+export const ArticlesButton = ({ text, addClass, able, typeText }: PropsType): JSX.Element => {
   return (
-    <div>
-      <Button onClick={onClick} disabled={disabled} className={`${bgColor} `} type={type} data-testid="create-article-button">
+    <div className="flex w-full cursor-pointer hover:text-white">
+      <Button disabled={able} className={`w-full ${addClass}`} data-cy="submit-button" type={typeText}>
         {text}
-      </Button> 
+      </Button>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 'use client';
+import { TableContent } from './articles/_components';
 
 const Home = () => {
   return (
-    <div>
-      <h1 data-cy="Home-Page">hello from CMS dashboard</h1>
+    <div className="bg-[#F7F7F8] h-[93.5vh]">
+      <TableContent></TableContent>
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );

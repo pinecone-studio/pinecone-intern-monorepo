@@ -1,6 +1,6 @@
 import { InputField } from '../_components';
 
-export const TextField = () => {
+export const LeftSection = () => {
   return (
     <div className="w-4/5 h-[93.5vh] flex justify-center items-center m-auto">
       <div className='w-4/5'>

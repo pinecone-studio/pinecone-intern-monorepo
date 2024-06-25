@@ -1,2 +1,2 @@
-export * from './TextField';
-export * from './RightField';
+export * from './LeftSection';
+export * from './RightSection';
