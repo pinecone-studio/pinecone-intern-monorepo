@@ -31,5 +31,6 @@ export const glmsUserTypeDefs = gql`
 
   type Mutation {
     createGlmsUser(input: glmsCreateUserInput): glmsUser
+    deleteUser(_id: ID!): glmsUser
   }
 `;
