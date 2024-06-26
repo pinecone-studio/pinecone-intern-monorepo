@@ -1,6 +1,6 @@
 {
   "extends": ["plugin:cypress/recommended", "plugin:@nx/react-typescript", "next", "next/core-web-vitals", "../../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", ".next/**/*"],
+  "ignorePatterns": ["!**/*", ".next/**/*", "**/*.spec.ts", "**/*.spec.tsx", "**/*.spec.js", "**/*.spec.jsx"],
   "overrides": [
     {
       "files": ["*.*"],

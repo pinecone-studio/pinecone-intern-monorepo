@@ -10,7 +10,7 @@ export default {
   coverageDirectory: '../../../coverage/apps/REPORT/report-dashboard',
   setupFilesAfterEnv: ['jest-canvas-mock'],
   collectCoverageFrom: [
-    '!src/app/**/*.tsx',
+    '!src/components/**/*.tsx',
     'src/**/_components/*.tsx',
     '!**/*.spec.tsx',
     '!**/node_modules/**',
