@@ -16,14 +16,10 @@ jest.mock('@/app/icons', () => ({
 }));
 
 describe('LessEntButton', () => {
+  const mockHandleCreateMutation = jest.fn();
   const mockProps = {
     isFormValid: true,
-    inputData: {
-      topic: 'Test Topic',
-      title: 'Test Title',
-      details: 'Test Details',
-    },
-    imageUrl: 'test-image-url',
+    handleCreateMutation: mockHandleCreateMutation,
   };
 
   const renderComponent = (props = mockProps) => render(<LessEntButton {...props} />);
@@ -33,11 +29,10 @@ describe('LessEntButton', () => {
     expect(screen.getByTestId('continue button')).toBeInTheDocument();
   });
 
-  it('calls handler on button click with correct data', () => {
-    console.log = jest.fn();
+  it('calls handleCreateMutation on button click', () => {
     renderComponent();
     fireEvent.click(screen.getByRole('button'));
-    expect(console.log).toHaveBeenCalledWith('data', mockProps.inputData, mockProps.imageUrl);
+    expect(mockHandleCreateMutation).toHaveBeenCalledTimes(1);
   });
 
   it('applies correct styles based on isFormValid', () => {
@@ -54,5 +49,11 @@ describe('LessEntButton', () => {
   it('disables button when isFormValid is false', () => {
     renderComponent({ ...mockProps, isFormValid: false });
     expect(screen.getByRole('button')).toBeDisabled();
+  });
+
+  it('renders the correct text and icon', () => {
+    renderComponent();
+    expect(screen.getByText('Үргэлжлүүлэх')).toBeInTheDocument();
+    expect(screen.getByTestId('white-arrow')).toBeInTheDocument();
   });
 });
