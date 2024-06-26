@@ -25,4 +25,7 @@ describe('StudentAddModal', () => {
     cy.get('[data-testid="active-radio-group-item"').click();
     cy.get('[data-testid="add-student-button"]').contains('Хадгалах').click();
   });
+  it('it should test loading state', () => {
+    cy.get('[data-testid="Loading"]').contains('Loading...');
+  });
 });

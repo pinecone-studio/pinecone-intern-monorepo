@@ -10,11 +10,11 @@ export const StudentsInformation = () => {
     },
   });
   const studentsData = data?.getStudentsByClassId;
-  if (loading) {
-    return <div data-testid="Loading">Loading...</div>;
-  } else if (error) {
-    return <div data-testid="Error">Error: {error.message}</div>;
-  } else {
-    return <StudentsTable studentsData={studentsData as Student[]} />;
-  }
+  return (
+    <div>
+      {loading && <div data-testid="Loading">Loading...</div>}
+      {!loading && !error && <StudentsTable studentsData={studentsData as Student[]} />}
+      {!error && !loading && <StudentsTable studentsData={studentsData as Student[]} />}
+    </div>
+  );
 };
