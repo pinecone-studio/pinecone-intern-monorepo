@@ -89,9 +89,9 @@ describe('Update Lesson', () => {
   });
 
   it('should throw an error if update fails', async () => {
-    const errorMessage = 'Failed to update a lesson';
+    const errorMessage = 'Database operation failed';
 
-    (LessonsModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    (LessonsModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new GraphQLError(errorMessage));
 
     await expect(
       updateLesson(
@@ -106,6 +106,6 @@ describe('Update Lesson', () => {
           },
         }
       )
-    ).rejects.toThrow(new GraphQLError(errorMessage));
+    ).rejects.toThrow(errorMessage);
   });
 });

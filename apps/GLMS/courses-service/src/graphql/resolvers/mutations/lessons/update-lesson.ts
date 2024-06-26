@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql';
 
 export const updateLesson = async (_: unknown, { updateInput }: { updateInput: UpdateLessonInput }) => {
   try {
-    const updateLesson = LessonsModel.findByIdAndUpdate(updateInput.id, updateInput, { new: true, runValidators: true });
+    const updateLesson = await LessonsModel.findByIdAndUpdate(updateInput.id, updateInput, { new: true, runValidators: true });
     return updateLesson;
   } catch (error) {
     const message = (error as Error).message;
