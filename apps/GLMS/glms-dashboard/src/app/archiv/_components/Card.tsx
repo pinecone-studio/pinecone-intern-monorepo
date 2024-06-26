@@ -6,7 +6,7 @@ import {
     CardDescription,
     CardTitle,
 } from "@/components/ui/card"
-import { useQuery, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql, useApolloClient } from '@apollo/client';
 
 const GET_COURSES = gql`
     query GetCourses {
@@ -20,12 +20,27 @@ const GET_COURSES = gql`
 `;
 
 export function CardWithForm() {
-    const { loading, error, data } = useQuery(GET_COURSES); 
+    const client = useApolloClient();
+
+    const [courses, setCourses] = React.useState<Course[]>([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState<Error | null>(null);
+
+    React.useEffect(() => {
+        client.query({ query: GET_COURSES })
+            .then(({ data }) => {
+                setCourses(data.getCourses);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err);
+                setLoading(false);
+            });
+    }, [client]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    const { getCourses: courses } = data;
     return (
         <div className="flex gap-4 w-10/12 mx-auto">
             {courses.map((course: Course) => (

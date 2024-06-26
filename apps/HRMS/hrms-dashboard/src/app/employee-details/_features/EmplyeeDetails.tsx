@@ -11,7 +11,6 @@ export const EmployeeDetails = () => {
           {' '}
           <TableDemo />
         </div>
-
         <PaginationDemo />
       </div>
     </div>
