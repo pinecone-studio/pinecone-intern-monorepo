@@ -1,6 +1,6 @@
 import { Class } from '@/generated';
 import DropDownMenuButton from './DropDownMenuButton';
-type ClassWithTypename = Class & { __typename?: 'Class' };
+export type ClassWithTypename = Class & { __typename?: 'Class' };
 
 const ClassCard = ({ data }: { data: ClassWithTypename }) => {
   return (
