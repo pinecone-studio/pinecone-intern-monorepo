@@ -10,14 +10,13 @@ export const AddLessonMain: React.FC = () => {
   const [imageUrl, setImageUrl] = useState('');
   const router = useRouter();
   const [inputData, setInputData] = useState<InputData>({
-    topic: '',
     title: '',
     details: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
 
   const isValid = useCallback(() => {
-    return inputData.topic !== '' && inputData.title !== '' && inputData.details !== '' && imageUrl !== '';
+    return inputData.title !== '' && inputData.details !== '' && imageUrl !== '';
   }, [inputData, imageUrl]);
 
   useEffect(() => {
@@ -40,14 +39,14 @@ export const AddLessonMain: React.FC = () => {
       <div className="rounded-[12px] bg-white p-[24px] max-w-[1250px] w-full">
         <div onClick={navigateToHome} className="flex items-center cursor-pointer mb-[24px]">
           <Arrow />
-          <p className="ml-[10px] text-base font-semibold">Home</p>
+          <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
         </div>
-        <h2 className="text-2xl font-bold mb-[40px]">Lesson Information</h2>
+        <h2 className="text-2xl font-bold ">Сэдвийн ерөнхий мэдээлэл</h2>
         <div className="flex justify-between gap-[32px]">
           <LessonEntry inputData={inputData} handleInputChange={handleInputChange} />
           <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
         </div>
-        <LessEntButton isFormValid={isFormValid} inputData={inputData} imageUrl={imageUrl} />
+        <LessEntButton isFormValid={isFormValid} inputData={inputData} thumbnail={imageUrl} />
       </div>
     </div>
   );

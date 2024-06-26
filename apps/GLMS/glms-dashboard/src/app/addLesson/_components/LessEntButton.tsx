@@ -4,16 +4,15 @@ import { Button } from '@/components/ui/button';
 interface LessEntButtonProps {
   isFormValid: boolean;
   inputData: {
-    topic: string;
     title: string;
     details: string;
   };
-  imageUrl: string;
+  thumbnail: string;
 }
 
-export const LessEntButton: React.FC<LessEntButtonProps> = ({ isFormValid, inputData, imageUrl }) => {
+export const LessEntButton: React.FC<LessEntButtonProps> = ({ isFormValid, inputData, thumbnail }) => {
   const handler = () => {
-    console.log('data', inputData, imageUrl);
+    console.log('data', inputData, thumbnail);
   };
 
   return (
