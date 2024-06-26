@@ -28,7 +28,7 @@ export const invoices = [
 
 export const TableDemo = () => {
   return (
-    <Table className="mt-[120px]">
+    <Table className="px-6 ">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow data-testid="content" className="bg-[#F7F7F8]">
@@ -52,7 +52,7 @@ export const TableDemo = () => {
       <TableBody>
         {invoices.map((invoice, index) => (
           <TableRow data-testid={`TableContent-${index}`} key={invoice.name}>
-            <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
+            <TableCell data-testid={`tableCell-1-${index}`} className="font-medium ">
               {invoice.name}
             </TableCell>
             <TableCell data-testid={`tableCell-2-${index}`}>{invoice.profession}</TableCell>
