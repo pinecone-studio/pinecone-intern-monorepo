@@ -1,4 +1,4 @@
-import { EmployeePersonalinfo } from './_components/EmployeePersonalinfo';
+import { EmployeePersonalinfo } from './_components/EmployeePersonalInfo';
 import EmployeeInfoSection from './_components/EmplyeeInfoSection';
 
 const Index = () => {

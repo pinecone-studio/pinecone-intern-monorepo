@@ -1,10 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { EmployeePersonalinfo } from '../../src/app/employee-details/employee-detail/_components/EmployeePersonalinfo';
+import { EmployeePersonalInfo } from '../../src/app/employee-details/employee-detail/_components/EmployeePersonalInfo';
 describe('EmployeePersonalinfo', () => {
   test('render employee personal info', () => {
-    render(<EmployeePersonalinfo />);
+    render(<EmployeePersonalInfo />);
 
     const PersonalInfo = screen.getByTestId('PersonalInfo');
     expect(PersonalInfo).toHaveTextContent('Хувийн мэдээлэл');

@@ -99,12 +99,7 @@
           "ci": true
         }
       },
-      "dependsOn": [
-        {
-          "target": "get-secrets:testing"
-        },
-        { "target": "codegen" }
-      ]
+      "dependsOn": [{ "target": "codegen" }]
     },
     "clean": {
       "executor": "nx:run-commands",
