@@ -32,7 +32,7 @@ describe('Delete Lesson', () => {
     expect(LessonsModel.findByIdAndDelete).toHaveBeenCalledWith('1');
   });
 
-  it('should throw an error when no course is found to delete', async () => {
+  it('should throw an error when no lesson is found to delete', async () => {
     (LessonsModel.findByIdAndDelete as jest.Mock).mockResolvedValue(null);
 
     await expect(deleteLesson(null, { id: '2' })).rejects.toThrow('Lesson not found');
