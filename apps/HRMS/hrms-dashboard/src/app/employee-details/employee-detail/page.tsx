@@ -1,3 +1,4 @@
+import { EmployeePersonalinfo } from './_components/EmployeePersonalinfo';
 import EmployeeInfoSection from './_components/EmplyeeInfoSection';
 
 const Index = () => {
@@ -7,6 +8,10 @@ const Index = () => {
         <div className="bg-white px-[20px]  rounded-[8px] py-[20px] h-[696px] w-[358px] ">
           <h1 data-cy="Home-Page">Hello world</h1>
         </div>
+        <div>
+          <EmployeePersonalinfo />
+        </div>
+
         <div className="flex flex-col gap-[24px]">
           <div className="px-[24px] py-[24px]  bg-white rounded-[8px] w-[772px] h-[444px] ">
             <EmployeeInfoSection />
