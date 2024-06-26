@@ -1,6 +1,7 @@
 import PaginationDemo from '../_components/Pagination';
 import { TableDemo } from '../_components/TableBoard';
 import { AddEmployee } from '../_components/modal/AddEmployee';
+import { EmployeePersonalinfo } from '../employee-detail/_components/EmployeePersonalinfo';
 
 export const EmployeeDetails = () => {
   return (
@@ -11,7 +12,7 @@ export const EmployeeDetails = () => {
           {' '}
           <TableDemo />
         </div>
-
+        <EmployeePersonalinfo />
         <PaginationDemo />
       </div>
     </div>
