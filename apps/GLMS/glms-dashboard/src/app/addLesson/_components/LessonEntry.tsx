@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export interface InputData {
   title: string;
-  details: string;
+  content: string;
 }
 
 interface LessonEntryProps {
@@ -25,8 +25,8 @@ export const LessonEntry: React.FC<LessonEntryProps> = ({ inputData, handleInput
           data-testid="lesson_text_area_comp"
           className="w-[588px] h-[110px] max-h-[200px] border-gray-400"
           placeholder="Энд бичнэ үү..."
-          defaultValue={inputData.details}
-          onChange={handleInputChange('details')}
+          defaultValue={inputData.content}
+          onChange={handleInputChange('content')}
         />
       </div>
     </div>

@@ -5,18 +5,19 @@ import { PicUpload } from './PicUpload';
 import { LessEntButton } from '../_components/LessEntButton';
 import { LessonEntry } from '../_components/LessonEntry';
 import { InputData } from '../_components/LessonEntry';
+import { useCreateCourseMutation } from '@/generated';
 
 export const AddLessonMain: React.FC = () => {
   const [imageUrl, setImageUrl] = useState('');
   const router = useRouter();
   const [inputData, setInputData] = useState<InputData>({
     title: '',
-    details: '',
+    content: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
 
   const isValid = useCallback(() => {
-    return inputData.title !== '' && inputData.details !== '' && imageUrl !== '';
+    return inputData.title !== '' && inputData.content !== '' && imageUrl !== '';
   }, [inputData, imageUrl]);
 
   useEffect(() => {
@@ -33,6 +34,24 @@ export const AddLessonMain: React.FC = () => {
   const navigateToHome = () => {
     router.push('/');
   };
+  const [createCourse] = useCreateCourseMutation();
+
+  const handleCreateMutation = async () => {
+    try {
+      await createCourse({
+        variables: {
+          createInput: {
+            title: inputData.title,
+            content: inputData.content,
+            thumbnail: imageUrl,
+          },
+        },
+      });
+      console.log('Course created successfully!');
+    } catch (error) {
+      console.error('Error creating course:', error);
+    }
+  };
 
   return (
     <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex justify-center items-center">
@@ -46,7 +65,7 @@ export const AddLessonMain: React.FC = () => {
           <LessonEntry inputData={inputData} handleInputChange={handleInputChange} />
           <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
         </div>
-        <LessEntButton isFormValid={isFormValid} inputData={inputData} thumbnail={imageUrl} />
+        <LessEntButton handleCreateMutation={handleCreateMutation} isFormValid={isFormValid} />
       </div>
     </div>
   );
