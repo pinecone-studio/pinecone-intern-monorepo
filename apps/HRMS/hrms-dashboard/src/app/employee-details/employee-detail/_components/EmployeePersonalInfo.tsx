@@ -2,7 +2,7 @@ import { TbBriefcase2 } from 'react-icons/tb';
 import { IoMdCall } from 'react-icons/io';
 import { MdEmail } from 'react-icons/md';
 import { FaLocationDot } from 'react-icons/fa6';
-export const EmployeePersonalinfo = () => {
+export const EmployeePersonalInfo = () => {
   return (
     <div className="p-5 flex flex-col gap-10 w-[358px] ">
       <div data-testid="PersonalInfo">
