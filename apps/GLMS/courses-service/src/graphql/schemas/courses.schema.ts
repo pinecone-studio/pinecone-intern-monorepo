@@ -63,9 +63,9 @@ export const coursesTypeDefs = gql`
 
   input UpdateLessonInput {
     id: ID!
-    courseId: ID!
-    title: String!
-    thumbnail: String!
-    content: String!
+    courseId: ID
+    title: String
+    thumbnail: String
+    content: String
   }
 `;
