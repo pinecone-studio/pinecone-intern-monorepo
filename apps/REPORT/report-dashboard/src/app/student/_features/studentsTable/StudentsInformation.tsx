@@ -14,7 +14,6 @@ export const StudentsInformation = () => {
     <div>
       {loading && <div data-testid="Loading">Loading...</div>}
       {!loading && !error && <StudentsTable studentsData={studentsData as Student[]} />}
-      {!error && !loading && <StudentsTable studentsData={studentsData as Student[]} />}
     </div>
   );
 };
