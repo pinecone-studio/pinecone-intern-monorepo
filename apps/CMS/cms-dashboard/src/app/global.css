@@ -81,4 +81,17 @@
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
+  .ql-container {
+    border: none !important;
+  }
+  
+  .ql-toolbar {
+    border: none !important;
+    border-bottom: 1px solid #ccc; 
+  }
+  
+  .ql-editor {
+    min-height: 200px;
+    padding: 0;
+  }
 }
