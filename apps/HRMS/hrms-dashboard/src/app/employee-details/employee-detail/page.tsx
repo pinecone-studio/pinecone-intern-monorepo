@@ -1,5 +1,7 @@
 import { EmployeesOtherInformation } from "../_components/employee-other-information/EmployeesOtherInformation";
 
+import EmployeeInfoSection from './_components/EmplyeeInfoSection';
+
 const Index = () => {
   return (
     <div className="flex justify-center items-center  bg-[#1C202414] w-full h-[100vh] ">
@@ -12,6 +14,10 @@ const Index = () => {
           <div className="px-[24px] py-[24px] rounded-[8px] bg-white w-[772px] h-[228px]">
             <EmployeesOtherInformation />
           </div>
+          <div className="px-[24px] py-[24px]  bg-white rounded-[8px] w-[772px] h-[444px] ">
+            <EmployeeInfoSection />
+          </div>
+          <div className="px-[24px] py-[24px] rounded-[8px] bg-white w-[772px] h-[228px]"></div>
         </div>
       </div>
     </div>
