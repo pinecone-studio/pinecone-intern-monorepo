@@ -1,5 +1,5 @@
 import React from 'react';
-import { EmployeePersonalInfo } from '../../src/app/employee-details/employee-detail/_components/EmployeePersonalInfo';
+import { EmployeePersonalInfo } from '../../src/app/employee-details/employee-detail/_components/EmployeePersonalinfo';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 describe('EmployeePersonalinfo', () => {
