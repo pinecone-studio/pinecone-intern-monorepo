@@ -1,4 +1,4 @@
-import { EmployeePersonalInfo } from './_components/EmployeePersonalinfo';
+import { EmployeePersonalinfo } from './_components/EmployeePersonalinfo';
 import EmployeeInfoSection from './_components/EmplyeeInfoSection';
 
 const Index = () => {
@@ -9,7 +9,7 @@ const Index = () => {
           <h1 data-cy="Home-Page">Hello world</h1>
         </div>
         <div>
-          <EmployeePersonalInfo />
+          <EmployeePersonalinfo />
         </div>
 
         <div className="flex flex-col gap-[24px]">
