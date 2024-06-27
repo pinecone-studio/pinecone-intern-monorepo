@@ -1,7 +1,20 @@
 import DeleteTab from '@/components/svg/DeleteTab';
 import EditTab from '@/components/svg/EditTab';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+  DropdownMenuRadioItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 
 const DropDownMenuButton = () => {
@@ -13,17 +26,27 @@ const DropDownMenuButton = () => {
             <MoreHorizontal className="h-4 w-4" data-testid="more-horizontal-icon" />
           </Button>
         </DropdownMenuTrigger>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger inset></DropdownMenuSubTrigger>
+        </DropdownMenuSub>
         <div className="w-full h-full" data-testid="dropdown-menu-content">
           <DropdownMenuContent align="end" className="gap-[2px]">
-            <DropdownMenuItem className="gap-[8px]" data-testid="dropdown-menu-item">
-              <EditTab />
+            <DropdownMenuItem className="gap-[8px]" data-testid="dropdown-menu-item" property="" itemProp="">
+              <EditTab data-testid="svg" />
               <p className="text-sm text-black font-normal leading-5">Засах</p>
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-[8px]" data-testid="dropdown-menu-item">
+            <DropdownMenuItem className="gap-[8px]" data-testid="dropdown-menu-item" property="" itemProp="">
               <DeleteTab />
               <p className="text-sm text-black font-normal leading-5">Устгах</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
+          <DropdownMenuSubContent></DropdownMenuSubContent>
+          <DropdownMenuCheckboxItem></DropdownMenuCheckboxItem>
+          <DropdownMenuRadioItem value="" />
+          <DropdownMenuLabel inset></DropdownMenuLabel>
+          <DropdownMenuItem inset></DropdownMenuItem>
+          <DropdownMenuSeparator></DropdownMenuSeparator>
+          <DropdownMenuShortcut></DropdownMenuShortcut>
         </div>
       </DropdownMenu>
     </div>

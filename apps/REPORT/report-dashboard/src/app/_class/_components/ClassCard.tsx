@@ -3,7 +3,7 @@ import DropDownMenuButton from './DropDownMenuButton';
 export type ClassWithTypename = Class & { __typename?: 'Class' };
 
 const ClassCard = ({ data }: { data: ClassWithTypename }) => {
-  return (
+  return data ? (
     <div data-testid="class-card" className="flex flex-col items-start gap-[12px] relative w-[416px] p-[24px] border border-[#E0E0E0] bg-[#FFFFFF] rounded-lg group cursor-pointer">
       <div className="flex flex-col justify-center">
         <h3 className="text-[16px] font-normal leading-7">{data?.name}</h3>
@@ -20,6 +20,8 @@ const ClassCard = ({ data }: { data: ClassWithTypename }) => {
       </div>
       <DropDownMenuButton />
     </div>
+  ) : (
+    <p>No data available</p>
   );
 };
 

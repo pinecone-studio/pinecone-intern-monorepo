@@ -31,6 +31,7 @@ const CLassCardTab = () => {
                 </span>
               </Button>
             </div>
+            <Button asChild className={'hidden'} />
           </div>
           <div className="relative h-[600px]">
             {loading ? (
