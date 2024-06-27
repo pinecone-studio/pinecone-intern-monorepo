@@ -26,9 +26,6 @@ const DropDownMenuButton = () => {
             <MoreHorizontal className="h-4 w-4" data-testid="more-horizontal-icon" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger inset></DropdownMenuSubTrigger>
-        </DropdownMenuSub>
         <div className="w-full h-full" data-testid="dropdown-menu-content">
           <DropdownMenuContent align="end" className="gap-[2px]">
             <DropdownMenuItem className="gap-[8px]" data-testid="dropdown-menu-item" property="" itemProp="">
@@ -40,13 +37,6 @@ const DropDownMenuButton = () => {
               <p className="text-sm text-black font-normal leading-5">Устгах</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
-          <DropdownMenuSubContent></DropdownMenuSubContent>
-          <DropdownMenuCheckboxItem></DropdownMenuCheckboxItem>
-          <DropdownMenuRadioItem value="" />
-          <DropdownMenuLabel inset></DropdownMenuLabel>
-          <DropdownMenuItem inset></DropdownMenuItem>
-          <DropdownMenuSeparator></DropdownMenuSeparator>
-          <DropdownMenuShortcut></DropdownMenuShortcut>
         </div>
       </DropdownMenu>
     </div>

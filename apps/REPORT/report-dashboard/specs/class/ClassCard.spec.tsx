@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ClassCard, { ClassWithTypename } from '../../../report-dashboard/src/app/_class/_components/ClassCard';
-import { DropdownMenuSub, DropdownMenu } from '../../src/components/ui/dropdown-menu';
 
 describe('ClassCard component', () => {
   const mockData: ClassWithTypename = {
@@ -26,13 +25,7 @@ describe('ClassCard component', () => {
   });
 
   test('renders default message when data is missing', () => {
-    const { getByText } = render(
-      <DropdownMenu>
-        <DropdownMenuSub>
-          <ClassCard data={undefined as any} />
-        </DropdownMenuSub>
-      </DropdownMenu>
-    );
+    const { getByText } = render(<ClassCard data={undefined as any} />);
 
     expect(getByText('No data available')).toBeInTheDocument();
   });
