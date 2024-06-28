@@ -4,48 +4,56 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { MdOutlineAdd } from 'react-icons/md';
 import { Stepper } from './Stepper';
-import { NextAndBackButton } from './NextAndBackButton';
 import { StepPersonalInfo } from '../add-employee-steps/StepPersonaInfo';
 import { StepJobInfo } from '../add-employee-steps/StepJobInfo';
 import { StepAdditionalInfo } from '../add-employee-steps/StepAdditionaInfo';
-import { FormikHelpers } from 'formik';
+import { Department, EmploymentStatus } from '@/generated';
 
 type StepsType = { title: string; content: string }[];
-
-export const AddModal = ({
-  currentStep,
-  steps,
-  setCurrentStep,
-  loading,
-  firstname,
-  lastname,
-  email,
-  imageURL,
-  department,
-  jobTitle,
-  ladderLevel,
-  salary,
-  employmentStatus,
-  handleChange,
-  hadlesubmit,
-  fileChangeHandler,
-}: {
+type EmployeesInfoType = {
   firstname: string;
   lastname: string;
   email: string;
   imageURL: string;
-  department: string;
-  jobTitle: Array<string>;
+  department: Department;
+  jobTitle: string[];
   ladderLevel: string;
-  salary: number;
-  employmentStatus: string;
-  loading: boolean;
+  salary: string;
+  dateOfEmployment: Date;
+  employmentStatus: EmploymentStatus;
+};
+
+export const AddModal = ({
+  currentStep,
+  steps,
+  nextStep,
+  prevStep,
+  employeesInfo,
+  changeEmployee,
+  createData,
+  fileChangeHandler,
+  imageUrl,
+}: {
   currentStep: number;
   steps: StepsType;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  handleChange: (_e: React.ChangeEvent<unknown>) => void;
-  hadlesubmit: (_e: React.FormEvent<HTMLFormElement>) => void;
-  fileChangeHandler: FormikHelpers<string>['setFieldValue'];
+  nextStep: () => void;
+  prevStep: () => void;
+  employeesInfo: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    imageURL: string;
+    department: Department;
+    jobTitle: string[];
+    ladderLevel: string;
+    salary: string;
+    dateOfEmployment: Date;
+    employmentStatus: EmploymentStatus;
+  };
+  changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
+  createData: () => void;
+  fileChangeHandler: (_event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageUrl: string;
 }) => {
   return (
     <Dialog>
@@ -61,13 +69,13 @@ export const AddModal = ({
 
           <DialogDescription></DialogDescription>
           <Stepper currentStep={currentStep} steps={steps} />
-          {currentStep == 0 && <StepPersonalInfo firstname={firstname} lastname={lastname} email={email} handleChange={handleChange} />}
-          {currentStep == 1 && <StepJobInfo department={department} jobTitle={jobTitle} salary={salary} employmentStatus={employmentStatus} handleChange={handleChange} />}
-          {currentStep == 2 && <StepAdditionalInfo ladderLevel={ladderLevel} handleChange={handleChange} imageURL={imageURL} fileChangeHandler={fileChangeHandler} />}
-          {loading && <p>Loading...</p>}
+          {currentStep == 0 && <StepPersonalInfo nextStep={nextStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}
+          {currentStep == 1 && <StepJobInfo nextStep={nextStep} prevStep={prevStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}
+          {currentStep == 2 && (
+            <StepAdditionalInfo employeesInfo={employeesInfo} imageUrl={imageUrl} prevStep={prevStep} createData={createData} changeEmployee={changeEmployee} fileChangeHandler={fileChangeHandler} />
+          )}
         </DialogHeader>
         <DialogFooter></DialogFooter>
-        <NextAndBackButton steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} handleSubmit={hadlesubmit} />
       </DialogContent>
     </Dialog>
   );

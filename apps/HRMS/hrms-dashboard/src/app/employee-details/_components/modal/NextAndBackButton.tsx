@@ -2,30 +2,16 @@ import { LeftArrowIcon, RightArrowIcon, RightArrowWhiteIcon } from '../Icons/Mod
 
 type StepsType = { title: string; content: string }[];
 
-export const NextAndBackButton = ({
-  steps,
-  currentStep,
-  setCurrentStep,
-  handleSubmit,
-}: {
-  steps: StepsType;
-  currentStep: number;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  handleSubmit: (_e: React.FormEvent<HTMLFormElement>) => void;
-}) => {
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
+export const NextAndBackButton = ({ steps, currentStep, setCurrentStep }: { steps: StepsType; currentStep: number; setCurrentStep: React.Dispatch<React.SetStateAction<number>> }) => {
+  const nextStep = async () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
 
-  const onSubmitClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
-  };
+  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   return (
     <div data-testid="buttons">
       <div className="flex justify-between">
         {currentStep > 0 ? (
-          <button data-testid="prev-button" onClick={prevStep} className="flex justify-center items-center h-12 w-12 rounded-full bg-[#F6F6F6] " disabled={currentStep === 0}>
+          <button data-testid="prev-button" onClick={prevStep} className="flex justify-center items-center h-12 w-12 rounded-full bg-[#F6F6F6]" disabled={currentStep === 0}>
             <div className="flex w-6 h-6 items-center justify-center">
               <LeftArrowIcon />
             </div>
@@ -46,7 +32,7 @@ export const NextAndBackButton = ({
               </div>
             </button>
           ) : (
-            <button onClick={onSubmitClick} type="submit">
+            <button type="submit">
               <div data-testid="step-3" className="flex h-12 rounded-[8px] min-w-[80px] px-[16px] py-[12px] bg-[#121316] items-center">
                 <div className="px-2 py-1 flex">
                   <p className="text-[#FFF] text-[16px] font-[600] leading-5 tracking-[-0.3px] not-italic">Илгээх</p>

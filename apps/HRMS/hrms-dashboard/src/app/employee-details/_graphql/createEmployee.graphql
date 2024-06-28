@@ -3,6 +3,7 @@ mutation CreateEmployee($input: CreateEmployeeInput!) {
     dateOfEmployment
     department
     email
+    imageURL
     employmentStatus
     firstname
     jobTitle

@@ -31,13 +31,16 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
         {employees?.map((employee, index) => (
           <TableRow data-testid={`TableContent-${index}`} key={employee.firstname}>
             <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
-              {employee.lastname}
+              <div className="flex gap-3 justify-start items-center">
+                <div className="flex w-[40px] h-[40px] rounded-full" style={{ backgroundImage: `URL(${employee.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}></div>
+                {employee.firstname}
+              </div>
             </TableCell>
             <TableCell data-testid={`tableCell-2-${index}`}>{employee.jobTitle}</TableCell>
             <TableCell data-testid={`tableCell-3-${index}`}>{employee.email}</TableCell>
             <TableCell data-testid={`tableCell-4-${index}`}>{employee.department}</TableCell>
             <TableCell data-testid={`tableCell-5-${index}`} className="text-right">
-              {employee.salary}
+              {employee.employmentStatus}
             </TableCell>
           </TableRow>
         ))}

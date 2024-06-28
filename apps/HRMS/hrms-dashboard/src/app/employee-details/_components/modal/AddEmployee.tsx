@@ -1,42 +1,51 @@
-import { FormikHelpers } from 'formik';
 import { AddModal } from './AddModal';
+import { Department, EmploymentStatus } from '@/generated';
 
 type StepsType = { title: string; content: string }[];
+type EmployeesInfoType = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  imageURL: string;
+  department: Department;
+  jobTitle: string[];
+  ladderLevel: string;
+  salary: string;
+  dateOfEmployment: Date;
+  employmentStatus: EmploymentStatus;
+};
 
 export const AddEmployee = ({
   currentStep,
   steps,
-  setCurrentStep,
-  firstname,
-  lastname,
-  email,
-  handleChange,
-  department,
-  jobTitle,
-  salary,
-  imageURL,
-  employmentStatus,
-  ladderLevel,
-  loading,
-  hadlesubmit,
+  nextStep,
+  prevStep,
+  employeesInfo,
+  changeEmployee,
+  createData,
   fileChangeHandler,
+  imageUrl,
 }: {
-  loading: boolean;
   currentStep: number;
   steps: StepsType;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  firstname: string;
-  lastname: string;
-  email: string;
-  handleChange: (_e: React.ChangeEvent<unknown>) => void;
-  imageURL: string;
-  department: string;
-  jobTitle: string[];
-  salary: number;
-  employmentStatus: string;
-  ladderLevel: string;
-  hadlesubmit: (_e: React.FormEvent<HTMLFormElement>) => void;
-  fileChangeHandler: FormikHelpers<string>['setFieldValue'];
+  nextStep: () => void;
+  prevStep: () => void;
+  employeesInfo: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    imageURL: string;
+    department: Department;
+    jobTitle: string[];
+    ladderLevel: string;
+    salary: string;
+    dateOfEmployment: Date;
+    employmentStatus: EmploymentStatus;
+  };
+  changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
+  createData: () => void;
+  fileChangeHandler: (_event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageUrl: string;
 }) => {
   return (
     <div data-testid="container" className="flex justify-between py-5 px-6 items-center">
@@ -44,20 +53,13 @@ export const AddEmployee = ({
       <AddModal
         currentStep={currentStep}
         steps={steps}
-        setCurrentStep={setCurrentStep}
-        loading={loading}
-        firstname={firstname}
-        lastname={lastname}
-        email={email}
-        imageURL={imageURL}
-        department={department}
-        jobTitle={jobTitle}
-        ladderLevel={ladderLevel}
-        salary={salary}
-        employmentStatus={employmentStatus}
-        handleChange={handleChange}
-        hadlesubmit={hadlesubmit}
+        nextStep={nextStep}
+        prevStep={prevStep}
+        employeesInfo={employeesInfo}
+        changeEmployee={changeEmployee}
+        createData={createData}
         fileChangeHandler={fileChangeHandler}
+        imageUrl={imageUrl}
       />
     </div>
   );

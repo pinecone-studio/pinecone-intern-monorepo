@@ -3,6 +3,7 @@ query GetEmployees {
     dateOfEmployment
     department
     email
+    imageURL
     employmentStatus
     firstname
     id
