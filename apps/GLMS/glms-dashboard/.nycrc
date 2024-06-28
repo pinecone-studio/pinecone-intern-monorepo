@@ -11,7 +11,8 @@
     "coverage",
     "libs/**",
     "**/generated/*",
-    "src/app/**/_components/*"
+    "src/app/**/_components/*",
+    "src/app/**/lib/*"
   ],
   "excludeAfterRemap": true,
   "all": true,

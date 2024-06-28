@@ -19,7 +19,7 @@ export const coursesTypeDefs = gql`
     createLesson(createInput: CreateLessonInput): Lesson
     updateLesson(updateInput: UpdateLessonInput): Lesson
     changeLessonsPosition(ids: [ID!]!): Boolean
-    deleteLesson(id: ID!): Boolean
+    deleteLesson(id: ID!): Course
   }
 
   type Course {
@@ -63,9 +63,9 @@ export const coursesTypeDefs = gql`
 
   input UpdateLessonInput {
     id: ID!
-    courseId: ID!
-    title: String!
-    thumbnail: String!
-    content: String!
+    courseId: ID
+    title: String
+    thumbnail: String
+    content: String
   }
 `;

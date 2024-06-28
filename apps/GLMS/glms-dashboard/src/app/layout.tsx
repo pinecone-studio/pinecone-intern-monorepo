@@ -2,8 +2,6 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
 import { ProjectHeader } from '@/components/ProjectHeader';
-import { Hero } from '@/components/Hero';
-import { HeroTabs } from '@/components/HeroTabs';
 
 export const metadata = {
   title: 'Welcome to GLMS-dashboard',
@@ -17,8 +15,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <FederationProvider>
             <ProjectHeader />
-            <Hero />
-            <HeroTabs />
             {children}
           </FederationProvider>
         </ThemeProvider>

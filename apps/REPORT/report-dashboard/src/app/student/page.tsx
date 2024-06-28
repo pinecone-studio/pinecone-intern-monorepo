@@ -1,10 +1,15 @@
 'use client';
 
-export default async function Index() {
+import { StudentAddModal } from './_features/studentsTable/StudentAddModal';
+import { StudentsInformation } from './_features/studentsTable/StudentsInformation';
+
+const StudentPage = () => {
   return (
-    <div>
-      <h1>hello from REPORT dashboard</h1>
-      <h1>This is the environment {process.env.ENVIRONMENT}</h1>
+    <div className="mx-auto container">
+      <StudentAddModal />
+      <StudentsInformation />
     </div>
   );
-}
+};
+
+export default StudentPage;

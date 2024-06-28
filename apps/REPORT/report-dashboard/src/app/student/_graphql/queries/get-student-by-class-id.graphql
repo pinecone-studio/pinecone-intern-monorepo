@@ -1,0 +1,13 @@
+query GetStudentByClassId($classId: String!) {
+  getStudentsByClassId(classId: $classId) {
+    _id
+    firstName
+    lastName
+    email
+    phoneNumber
+    studentCode
+    profileImgUrl
+    classId
+    active
+  }
+}

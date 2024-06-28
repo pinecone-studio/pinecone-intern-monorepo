@@ -54,7 +54,17 @@
           "buildTarget": "report-dashboard:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "clean",
+          "params": "forward"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -96,7 +106,8 @@
         "ci": {
           "ci": true
         }
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "clean": {
       "executor": "nx:run-commands",

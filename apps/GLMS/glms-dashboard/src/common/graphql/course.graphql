@@ -1,0 +1,43 @@
+query GetCourse($id: ID!) {
+  getCourse(_id: $id) {
+    id
+    title
+    thumbnail
+    content
+  }
+}
+
+query GetCourses {
+  getCourses {
+    id
+    title
+    thumbnail
+    content
+  }
+}
+
+mutation CreateCourse($createInput: CreateCourseInput) {
+  createCourse(createInput: $createInput) {
+    title
+    thumbnail
+    content
+  }
+}
+
+mutation UpdateCourse($updateInput: UpdateCourseInput) {
+  updateCourse(updateInput: $updateInput) {
+    id
+    thumbnail
+    title
+    content
+  }
+}
+
+mutation DeleteCourse($deleteCourseId: ID!) {
+  deleteCourse(id: $deleteCourseId) {
+    id
+    title
+    thumbnail
+    content
+  }
+}
