@@ -1,5 +1,5 @@
 import { CreateCourseInput } from '@/graphql/generated';
-import { CoursesModel } from '@/models/courses';
+import { CoursesModel } from '@/models/courses.model';
 import { GraphQLError } from 'graphql';
 
 export const createCourse = async (_: unknown, { createInput }: { createInput: CreateCourseInput }) => {
