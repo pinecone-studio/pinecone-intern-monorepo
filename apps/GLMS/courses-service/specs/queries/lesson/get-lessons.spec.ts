@@ -1,54 +1,57 @@
 import { getLessons } from '@/graphql/resolvers/queries';
-import { LessonsModel } from '@/models/lessons';
-import { GraphQLResolveInfo } from 'graphql';
+import { LessonsModel } from '@/models/lessons.model';
+import { GraphQLError } from 'graphql';
 
-jest.mock('@/models/lessons', () => ({
+jest.mock('@/models/lessons.model', () => ({
   LessonsModel: {
     find: jest.fn(),
   },
 }));
 
-const mockCourseId = '1';
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  const populateMock = jest.fn().mockResolvedValue(mockLessons);
+
+  (LessonsModel.find as jest.Mock).mockImplementation(() => ({
+    populate: populateMock,
+  }));
+});
 
 const mockLessons = [
   {
-    id: '101',
-    courseId: '1',
-    title: 'Introduction to HTML',
-    thumbnail: '',
-    content: '',
-    position: 1,
-    createdAt: new Date(),
+    _id: '1',
+    courseId: '101',
+    title: 'HTML Basics',
+    content: 'Learn the basics of HTML',
+    thumbnail: 'http://example.com/thumbnail.jpg',
+    course: {
+      _id: '101',
+      title: 'Introduction to HTML',
+      content: 'Course Description',
+    },
   },
 ];
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+describe('getLessons Resolver', () => {
+  it('successfully retrieves lessons with populated courses', async () => {
+    const courseId = '101';
+    const result = await getLessons({}, { courseId });
 
-describe('Get Lessons', () => {
-  it('should fetch lessons correctly for a given courseId', async () => {
-    (LessonsModel.find as jest.Mock).mockResolvedValue(mockLessons);
-
-    const result = await getLessons!({}, { courseId: mockCourseId }, {}, {} as GraphQLResolveInfo);
-
-    expect(LessonsModel.find).toHaveBeenCalledWith({ courseId: mockCourseId });
     expect(result).toEqual(mockLessons);
+    expect(LessonsModel.find).toHaveBeenCalledWith({ courseId });
+    expect(LessonsModel.find().populate).toHaveBeenCalledWith('courseId');
   });
 
-  it('should return an empty array when no lessons are found', async () => {
-    (LessonsModel.find as jest.Mock).mockResolvedValueOnce([]);
-
-    const result = await getLessons!({}, { courseId: mockCourseId }, {}, {} as GraphQLResolveInfo);
-
-    expect(result).toEqual([]);
-  });
-
-  it('should handle errors when the database fails', async () => {
+  it('handles errors when fetching lessons fails', async () => {
     const errorMessage = 'Database error';
+    const populateMock = jest.fn().mockRejectedValue(new Error(errorMessage));
+    (LessonsModel.find as jest.Mock).mockImplementationOnce(() => ({
+      populate: populateMock,
+    }));
 
-    (LessonsModel.find as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
-
-    await expect(getLessons!({}, { courseId: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(errorMessage);
+    await expect(getLessons({}, { courseId: '101' })).rejects.toThrow(GraphQLError);
+    expect(LessonsModel.find).toHaveBeenCalledWith({ courseId: '101' });
+    expect(populateMock).toHaveBeenCalledWith('courseId');
   });
 });
