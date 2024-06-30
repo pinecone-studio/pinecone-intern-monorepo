@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowIcon } from '../Icons/ModalIcons';
+import { useState } from 'react';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -39,6 +40,7 @@ export const StepJobInfo = ({
   };
   changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
 }) => {
+  const [validMessage, setValidMessage] = useState('');
   const formik = useFormik({
     initialValues: {
       department: employeesInfo.department,
@@ -60,7 +62,11 @@ export const StepJobInfo = ({
 
   const handleNext = () => {
     formik.handleSubmit();
-    nextStep();
+    if (formik.values.department !== null && formik.values.jobTitle !== null && formik.values.salary !== '' && formik.values.employmentStatus !== null) {
+      nextStep();
+    } else {
+      setValidMessage('Мэдээллээ бүрэн оруулна уу');
+    }
   };
 
   return (
@@ -68,15 +74,15 @@ export const StepJobInfo = ({
       <div data-testid="step-job-info" className="flex gap-4 flex-col">
         <div className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Хэлтэс'}</label>
-          <Select>
+          <Select onValueChange={(value) => formik.setFieldValue('department', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue placeholder="Хэлтэс" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={formik.values.department}>{Department.BackOffice}</SelectItem>
-              <SelectItem value={formik.values.department}>{Department.Design}</SelectItem>
-              <SelectItem value={formik.values.department}>{Department.Marketing}</SelectItem>
-              <SelectItem value={formik.values.department}>{Department.Software}</SelectItem>
+              <SelectItem value={Department.BackOffice}>{Department.BackOffice}</SelectItem>
+              <SelectItem value={Department.Design}>{Department.Design}</SelectItem>
+              <SelectItem value={Department.Marketing}>{Department.Marketing}</SelectItem>
+              <SelectItem value={Department.Software}>{Department.Software}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -90,18 +96,19 @@ export const StepJobInfo = ({
         </div>
         <div className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Ажлын цаг'}</label>
-          <Select>
+          <Select onValueChange={(value) => formik.setFieldValue('employmentStatus', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue placeholder="Ажлын цаг" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={formik.values.employmentStatus}>{EmploymentStatus.Archive}</SelectItem>
-              <SelectItem value={formik.values.employmentStatus}>{EmploymentStatus.Contractor}</SelectItem>
-              <SelectItem value={formik.values.employmentStatus}>{EmploymentStatus.FullTime}</SelectItem>
-              <SelectItem value={formik.values.employmentStatus}>{EmploymentStatus.PartTime}</SelectItem>
-              <SelectItem value={formik.values.employmentStatus}>{EmploymentStatus.Temporary}</SelectItem>
+              <SelectItem value={EmploymentStatus.Archive}>{EmploymentStatus.Archive}</SelectItem>
+              <SelectItem value={EmploymentStatus.Contractor}>{EmploymentStatus.Contractor}</SelectItem>
+              <SelectItem value={EmploymentStatus.FullTime}>{EmploymentStatus.FullTime}</SelectItem>
+              <SelectItem value={EmploymentStatus.PartTime}>{EmploymentStatus.PartTime}</SelectItem>
+              <SelectItem value={EmploymentStatus.Temporary}>{EmploymentStatus.Temporary}</SelectItem>
             </SelectContent>
           </Select>
+          <p className="text-[12px] text-[red]">{validMessage}</p>
         </div>
       </div>
       <div className="flex justify-between">

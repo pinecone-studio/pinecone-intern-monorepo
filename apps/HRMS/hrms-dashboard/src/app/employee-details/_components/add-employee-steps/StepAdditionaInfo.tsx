@@ -2,6 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowWhiteIcon } from '../Icons/ModalIcons';
+import { useState } from 'react';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -42,6 +43,7 @@ export const StepAdditionalInfo = ({
   fileChangeHandler: (_event: React.ChangeEvent<HTMLInputElement>) => void;
   imageUrl: string;
 }) => {
+  const [validMessage, setValidMessage] = useState('');
   const formik = useFormik({
     initialValues: {
       imageURL: employeesInfo.imageURL,
@@ -59,11 +61,18 @@ export const StepAdditionalInfo = ({
     },
   });
 
-  const handleNext = () => {
+  const handleAddImage = () => {
     formik.setFieldValue('imageURL', imageUrl);
     console.log('formik image', imageUrl);
+  };
+
+  const handleNext = () => {
     formik.handleSubmit();
-    createData();
+    if (formik.values.imageURL !== '' && formik.values.ladderLevel !== '') {
+      createData();
+    } else {
+      setValidMessage('Мэдээллээ бүрэн оруулна уу');
+    }
   };
 
   return (
@@ -74,10 +83,14 @@ export const StepAdditionalInfo = ({
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="ladderLevel" value={formik.values.ladderLevel} onChange={formik.handleChange} />
           <div className="flex gap-5 justify-center">
             <Input className="wrap h-[56px] w-[105px] px-[8px] py-[8px] bg-[#F7F7F8]" type="file" name="image" onChange={fileChangeHandler} />
-            <div
-              className="flex w-[150px] h-[150px] border-dashed border rounded-[10px] bg-[#F7F7F8] justify-center items-center"
-              style={{ backgroundImage: `URL(${formik.values.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}
-            ></div>
+            <p className="text-[12px] text-[red]">{validMessage}</p>
+            <button onClick={handleAddImage}>
+              upload
+              <div
+                className="flex w-[150px] h-[150px] border-dashed border rounded-[10px] bg-[#F7F7F8] justify-center items-center"
+                style={{ backgroundImage: `URL(${formik.values.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}
+              ></div>
+            </button>
           </div>
         </div>
       </div>

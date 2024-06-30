@@ -1,9 +1,8 @@
-/* eslint-disable no-secrets/no-secrets */
-
 import { Input } from '@/components/ui/input';
 import { RightArrowIcon } from '../Icons/ModalIcons';
 import { useFormik } from 'formik';
 import { Department, EmploymentStatus } from '@/generated';
+import { useState } from 'react';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -38,6 +37,7 @@ export const StepPersonalInfo = ({
   };
   changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
 }) => {
+  const [validMessage, setValidMessage] = useState('');
   const formik = useFormik({
     initialValues: {
       firstname: employeesInfo.firstname,
@@ -59,7 +59,11 @@ export const StepPersonalInfo = ({
 
   const handleNext = () => {
     formik.handleSubmit();
-    nextStep();
+    if (formik.values.firstname !== '' && formik.values.lastname !== '' && formik.values.email !== '') {
+      nextStep();
+    } else {
+      setValidMessage('Мэдээллээ бүрэн оруулна уу');
+    }
   };
 
   return (
@@ -77,6 +81,7 @@ export const StepPersonalInfo = ({
           <label className=" text-[16px] font-normal text-[#121316]">{'Имайл'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="email" value={formik.values.email} onChange={formik.handleChange} />
         </div>
+        <p className="text-[12px] text-[red]">{validMessage}</p>
       </div>
       <div className="flex mt-[48px] justify-end">
         <button data-testid="next-button" onClick={handleNext} className="flex gap-1 items-center px-4 py-2 h-12 rounded-[8px] bg-[#D6D8DB]">
