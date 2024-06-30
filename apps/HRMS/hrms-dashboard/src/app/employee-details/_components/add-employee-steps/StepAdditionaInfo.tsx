@@ -76,7 +76,7 @@ export const StepAdditionalInfo = ({
   };
 
   return (
-    <div className="flex flex-col gap-10">
+    <div data-testid="additionalInfo" className="flex flex-col gap-10">
       <div data-testid="step-additional-info" className="flex gap-4 flex-col">
         <div className="flex flex-col gap-4">
           <label className=" text-[16px] font-normal text-[#121316]">{'Мэрэгжлийн зэрэг'}</label>

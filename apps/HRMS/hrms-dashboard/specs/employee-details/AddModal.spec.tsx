@@ -1,25 +1,96 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { AddModal } from '../../src/app/employee-details/_components/modal/AddModal';
 import '@testing-library/jest-dom';
+import { Department, EmploymentStatus } from '../../src/generated';
+
+// eslint-disable-next-line react/display-name
+jest.mock('../add-employee-steps/StepPersonalInfo', () => () => <div data-testid="StepPersonalInfo">StepPersonalInfo</div>);
+// eslint-disable-next-line react/display-name
+jest.mock('../add-employee-steps/StepJobInfo', () => () => <div data-testid="StepJobInfo">StepJobInfo</div>);
+// eslint-disable-next-line react/display-name
+jest.mock('../add-employee-steps/StepAdditionalInfo', () => () => <div data-testid="StepAdditionalInfo">StepAdditionalInfo</div>);
 
 describe('AddModal', () => {
-  test('renders the add modal correctly', () => {
-    render(<AddModal />);
+  const mockSteps = [
+    { title: 'Personal Info', content: 'Step 1 content' },
+    { title: 'Job Info', content: 'Step 2 content' },
+    { title: 'Additional Info', content: 'Step 3 content' },
+  ];
 
-    const addEmployeeButton = screen.getByTestId('addEmployeeBtn');
-    expect(addEmployeeButton).toBeInTheDocument();
+  const mockEmployeeInfo = {
+    firstname: 'John',
+    lastname: 'Doe',
+    email: 'john.doe@example.com',
+    imageURL: 'http://example.com/image.jpg',
+    department: Department.Software,
+    jobTitle: ['Manager'],
+    ladderLevel: 'Level 1',
+    salary: '50000',
+    dateOfEmployment: new Date(),
+    employmentStatus: EmploymentStatus.FullTime,
+  };
 
-    const modalContent = screen.queryByTestId('modalContent');
-    expect(modalContent).toBe(null);
+  const mockNextStep = jest.fn();
+  const mockPrevStep = jest.fn();
+  const mockChangeEmployee = jest.fn();
+  const mockCreateData = jest.fn();
+  const mockFileChangeHandler = jest.fn();
+  const mockImageUrl = 'http://example.com/image.jpg';
 
-    fireEvent.click(addEmployeeButton);
+  test('renders all steps correctly', () => {
+    render(
+      <AddModal
+        currentStep={0}
+        steps={mockSteps}
+        nextStep={mockNextStep}
+        prevStep={mockPrevStep}
+        employeesInfo={mockEmployeeInfo}
+        changeEmployee={mockChangeEmployee}
+        createData={mockCreateData}
+        fileChangeHandler={mockFileChangeHandler}
+        imageUrl={mockImageUrl}
+      />
+    );
 
-   
-    expect(modalContent).toBe(null);
+    expect(screen.getByTestId('StepPersonalInfo')).toBeInTheDocument();
+    expect(screen.queryByTestId('StepJobInfo')).toBeNull();
+    expect(screen.queryByTestId('StepAdditionalInfo')).toBeNull();
 
-    // Check if the modal title is correct
-    const modalTitle = screen.getByTestId('title');
-    expect(modalTitle).toHaveTextContent('Ажилтан нэмэх');
+    render(
+      <AddModal
+        currentStep={1}
+        steps={mockSteps}
+        nextStep={mockNextStep}
+        prevStep={mockPrevStep}
+        employeesInfo={mockEmployeeInfo}
+        changeEmployee={mockChangeEmployee}
+        createData={mockCreateData}
+        fileChangeHandler={mockFileChangeHandler}
+        imageUrl={mockImageUrl}
+      />
+    );
+
+    expect(screen.queryByTestId('StepPersonalInfo')).toBeNull();
+    expect(screen.getByTestId('StepJobInfo')).toBeInTheDocument();
+    expect(screen.queryByTestId('StepAdditionalInfo')).toBeNull();
+
+    render(
+      <AddModal
+        currentStep={2}
+        steps={mockSteps}
+        nextStep={mockNextStep}
+        prevStep={mockPrevStep}
+        employeesInfo={mockEmployeeInfo}
+        changeEmployee={mockChangeEmployee}
+        createData={mockCreateData}
+        fileChangeHandler={mockFileChangeHandler}
+        imageUrl={mockImageUrl}
+      />
+    );
+
+    expect(screen.queryByTestId('StepPersonalInfo')).toBeNull();
+    expect(screen.queryByTestId('StepJobInfo')).toBeNull();
+    expect(screen.getByTestId('StepAdditionalInfo')).toBeInTheDocument();
   });
 });

@@ -69,11 +69,13 @@ export const AddModal = ({
 
           <DialogDescription></DialogDescription>
           <Stepper currentStep={currentStep} steps={steps} />
-          {currentStep == 0 && <StepPersonalInfo nextStep={nextStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}
-          {currentStep == 1 && <StepJobInfo nextStep={nextStep} prevStep={prevStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}
-          {currentStep == 2 && (
-            <StepAdditionalInfo employeesInfo={employeesInfo} imageUrl={imageUrl} prevStep={prevStep} createData={createData} changeEmployee={changeEmployee} fileChangeHandler={fileChangeHandler} />
-          )}
+          <div data-testid="StepPersonalInfo">{currentStep == 0 && <StepPersonalInfo nextStep={nextStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}</div>
+          <div data-testid="StepJobInfo">{currentStep == 1 && <StepJobInfo nextStep={nextStep} prevStep={prevStep} employeesInfo={employeesInfo} changeEmployee={changeEmployee} />}</div>
+          <div data-testid="StepAdditionalInfo">
+            {currentStep == 2 && (
+              <StepAdditionalInfo employeesInfo={employeesInfo} imageUrl={imageUrl} prevStep={prevStep} createData={createData} changeEmployee={changeEmployee} fileChangeHandler={fileChangeHandler} />
+            )}
+          </div>
         </DialogHeader>
         <DialogFooter></DialogFooter>
       </DialogContent>
