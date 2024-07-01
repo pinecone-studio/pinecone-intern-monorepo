@@ -31,6 +31,11 @@ export const userTypeDefs = gql`
     role: String
   }
 
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     getUsers: [User]
     getUserById(id: ID!): User
@@ -40,5 +45,6 @@ export const userTypeDefs = gql`
     createUser(input: createUserInput!): User
     deleteUser(_id: ID!): User
     updateUser(_id: ID!, updateInput: updateUserInput!): User
+    reportSignIn(input: SignInInput): User
   }
 `;
