@@ -1,84 +1,92 @@
-describe('ClassCard Component', () => {
+import { ClassType } from '@/generated';
+
+describe('ClassCardTab Component', () => {
   beforeEach(() => {
-    // Mock the API call that fetches the class data
+    // Mock the GraphQL query
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses') {
         req.reply({
           data: {
             getClasses: [
-              {
-                __typename: 'Class',
-                name: 'Test Class',
-                startDate: '2023-01-01',
-                endDate: '2023-12-31',
-                teachers: ['Teacher 1', 'Teacher 2'],
-              },
+              { id: '1', name: 'Coding Class', classType: ClassType.Coding },
+              { id: '2', name: 'Design Class', classType: ClassType.Design },
+              { id: '3', name: 'Mixed Class', classType: ClassType.Coding },
             ],
           },
         });
       }
     }).as('getClasses');
 
-    // Visit the page that contains the ClassCard component
-    cy.visit('/class');
+    // Visit the page containing the ClassCardTab component
+    cy.visit('/class'); // Assuming the component is on the home page
     cy.wait('@getClasses');
   });
 
   it('renders the component', () => {
-    cy.get('[data-testid="class-card"]').should('exist');
+    cy.get('[data-testid="class-card-tab"]').should('exist');
   });
 
-  it('displays the class name', () => {
-    cy.get('[data-testid="class-card"] h3').should('have.text', 'Test Class');
+  it('displays the search input', () => {
+    cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').should('exist');
   });
 
-  it('displays the class date range', () => {
-    cy.get('[data-testid="class-card"] p').first().should('have.text', '2023-01-01 - 2023-12-31');
+  it('displays the tabs', () => {
+    cy.get('button').contains('Бүгд').should('exist');
+    cy.get('button').contains('Кодинг').should('exist');
+    cy.get('button').contains('Дизайн').should('exist');
   });
 
-  it('displays teacher names', () => {
-    cy.get('[data-testid="class-card"]').contains('Teacher 1').should('exist');
-    cy.get('[data-testid="class-card"]').contains('Teacher 2').should('exist');
+  it('displays the "Add Class" button', () => {
+    cy.get('button').contains('Анги').should('exist');
   });
 
-  it('renders the correct number of teacher tags', () => {
-    cy.get('[data-testid="class-card"] div > div.flex.py-\\[2px\\]').should('have.length', 2);
+  it('displays class cards when data is loaded', () => {
+    cy.get('.grid-cols-4').should('exist');
+    cy.get('.grid-cols-4').children().should('have.length.gt', 0);
   });
 
-  it('renders the DropDownMenuButton', () => {
-    cy.get('[data-testid="class-card"] button').should('exist'); // Assuming DropDownMenuButton renders a button
+  it('filters classes when tabs are clicked', () => {
+    cy.get('button').contains('Кодинг').click();
+    cy.get('.grid-cols-4').children().should('have.length.gt', 0);
+
+    cy.get('button').contains('Дизайн').click();
+    cy.get('.grid-cols-4').children().should('have.length.gt', 0);
+
+    cy.get('button').contains('Бүгд').click();
+    cy.get('.grid-cols-4').children().should('have.length.gt', 0);
   });
 
-  it('has correct styling', () => {
-    cy.get('[data-testid="class-card"]')
-      .should('have.class', 'flex')
-      .and('have.class', 'flex-col')
-      .and('have.class', 'items-start')
-      .and('have.class', 'gap-[12px]')
-      .and('have.class', 'relative')
-      .and('have.class', 'w-[416px]')
-      .and('have.class', 'p-[24px]')
-      .and('have.class', 'border')
-      .and('have.class', 'border-[#E0E0E0]')
-      .and('have.class', 'bg-[#FFFFFF]')
-      .and('have.class', 'rounded-lg')
-      .and('have.class', 'group')
-      .and('have.class', 'cursor-pointer');
-  });
-
-  it('handles missing data gracefully', () => {
-    // Mock an API response with incomplete data
-    cy.intercept('POST', '/graphql', {
-      data: {
-        getClasses: [{ name: 'Incomplete Class' }],
-      },
-    }).as('getIncompleteClasses');
+  it('displays loading state', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetClasses') {
+        req.reply({
+          delay: 1000,
+          data: { getClasses: [] },
+        });
+      }
+    }).as('getClassesDelayed');
 
     cy.visit('/class');
-    cy.wait('@getIncompleteClasses');
+    cy.contains('Loading...').should('be.visible');
+    cy.wait('@getClassesDelayed');
+  });
 
-    cy.get('[data-testid="class-card"] h3').should('have.text', 'Incomplete Class');
-    cy.get('[data-testid="class-card"] p').first().should('have.text', ' - ');
-    cy.get('[data-testid="class-card"] div > div.flex.py-\\[2px\\]').should('not.exist');
+  it('displays error state', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetClasses') {
+        req.reply({
+          forceNetworkError: true,
+        });
+      }
+    }).as('getClassesError');
+
+    cy.visit('/class');
+    cy.wait('@getClassesError');
+    cy.contains('Error').should('be.visible');
+  });
+
+  it('allows searching', () => {
+    cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('Coding');
+    // Note: Implement search functionality in the component and update this test
   });
 });

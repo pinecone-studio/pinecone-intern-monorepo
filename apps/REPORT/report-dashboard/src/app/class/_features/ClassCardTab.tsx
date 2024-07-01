@@ -35,7 +35,7 @@ const ClassCardTab = () => {
           </div>
           <div className="relative h-[600px]">
             {loading ? (
-              <p>Loading</p>
+              <p>Loading...</p>
             ) : error ? (
               <p>Error:{error?.message}</p>
             ) : (
