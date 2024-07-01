@@ -18,7 +18,7 @@ describe('ClassCardTab Component', () => {
     }).as('getClasses');
 
     // Visit the page containing the ClassCardTab component
-    cy.visit('http://localhost:4200/'); // Assuming the component is on the home page
+    cy.visit('/'); // Assuming the component is on the home page
     cy.wait('@getClasses');
   });
 
@@ -80,7 +80,7 @@ describe('ClassCardTab Component', () => {
       }
     }).as('getClassesError');
 
-    cy.visit('http://localhost:4200/');
+    cy.visit('/');
     cy.wait('@getClassesError');
     cy.contains('Error').should('be.visible');
   });

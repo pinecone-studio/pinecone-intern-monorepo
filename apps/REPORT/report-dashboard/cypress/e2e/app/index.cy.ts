@@ -1,7 +1,16 @@
-describe('home page', () => {
-  beforeEach(() => cy.visit('/'));
+import { ClassType } from '@/generated';
 
-  it('Should display welcome message', () => {
-    cy.get('h1').contains('hello from REPORT dashboard');
+describe('Index Page', () => {
+  beforeEach(() => {
+    // Visit the index page
+    cy.visit('/');
+  });
+
+  it('renders the page', () => {
+    cy.get('div').should('exist');
+  });
+
+  it('contains the ClassCardTab component', () => {
+    cy.get('[data-testid="class-card-tab"]').should('exist');
   });
 });

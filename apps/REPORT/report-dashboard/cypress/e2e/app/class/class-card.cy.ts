@@ -20,7 +20,7 @@ describe('ClassCard Component', () => {
     }).as('getClasses');
 
     // Visit the page that contains the ClassCard component
-    cy.visit('http://localhost:4200/');
+    cy.visit('/');
     cy.wait('@getClasses');
   });
 
@@ -74,7 +74,7 @@ describe('ClassCard Component', () => {
       },
     }).as('getIncompleteClasses');
 
-    cy.visit('http://localhost:4200/');
+    cy.visit('/');
     cy.wait('@getIncompleteClasses');
 
     cy.get('[data-testid="class-card"] h3').should('have.text', 'Incomplete Class');
