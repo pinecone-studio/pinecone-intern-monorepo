@@ -1,8 +1,8 @@
 import { getCourse } from '@/graphql/resolvers/queries';
-import { CoursesModel } from '@/models/courses';
+import { CoursesModel } from '@/models/courses.model';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('@/models/courses', () => ({
+jest.mock('@/models/courses.model', () => ({
   CoursesModel: {
     findById: jest.fn(),
   },

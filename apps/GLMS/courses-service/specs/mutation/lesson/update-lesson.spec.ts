@@ -1,8 +1,8 @@
 import { updateLesson } from '@/graphql/resolvers/mutations';
-import { LessonsModel } from '@/models/lessons';
+import { LessonsModel } from '@/models/lessons.model';
 import { GraphQLError } from 'graphql';
 
-jest.mock('@/models/lessons', () => ({
+jest.mock('@/models/lessons.model', () => ({
   LessonsModel: {
     findByIdAndUpdate: jest.fn(),
   },

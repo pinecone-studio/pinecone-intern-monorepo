@@ -1,7 +1,7 @@
 import { deleteLesson } from '@/graphql/resolvers/mutations';
-import { LessonsModel } from '@/models/lessons';
+import { LessonsModel } from '@/models/lessons.model';
 
-jest.mock('@/models/lessons', () => ({
+jest.mock('@/models/lessons.model', () => ({
   LessonsModel: {
     findByIdAndDelete: jest.fn(),
   },
