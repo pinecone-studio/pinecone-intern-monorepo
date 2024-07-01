@@ -5,7 +5,7 @@ type FieldProps  = {
   setFile: (_file: File | null) => void; 
 }
 
-export const RightField = ({ text, setFile }: FieldProps) => {
+export const RightSection = ({ text, setFile }: FieldProps) => {
 
   return (
     <div className="bg-white flex-1 p-6 h-[93.5vh]">

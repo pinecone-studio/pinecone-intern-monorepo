@@ -1,6 +1,5 @@
 'use client';
-import { LeftSection } from '../_features/add';
-import { RightSection } from '../_features/add';
+import { LeftSection, RightSection } from '../_features';
 import { Formik, Form } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
 import { useState } from 'react';

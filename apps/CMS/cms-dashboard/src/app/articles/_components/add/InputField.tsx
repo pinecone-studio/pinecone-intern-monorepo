@@ -13,8 +13,6 @@ export const InputField = ({ ...props }): JSX.Element => {
         type={props.type}
         {...field}
         placeholder={props.placeholder}
-        as={props.as}
-        rows={props.rows}
         key={props.key}
         className={`input rounded-lg py-[18px] mt-3 px-6 focus:outline-none focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
       />
