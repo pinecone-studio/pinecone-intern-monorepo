@@ -16,9 +16,9 @@ export const InputField = ({ ...props }): JSX.Element => {
         as={props.as}
         rows={props.rows}
         key={props.key}
-        className={`input rounded-lg py-[18px] px-6 focus:outline-none transition-colors duration ease-in-out focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
+        className={`input rounded-lg py-[18px] mt-3 px-6 focus:outline-none focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
       />
-      {meta.touched && meta.error && <div className="text-xs text-red-600">{meta.error}</div>}
+      {meta.touched && meta.error && <div className="text-xs mt-2 absolute text-red-600">{meta.error}</div>}
     </>
   );
 };

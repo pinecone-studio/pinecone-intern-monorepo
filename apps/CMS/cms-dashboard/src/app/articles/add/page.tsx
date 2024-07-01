@@ -3,9 +3,11 @@ import { LeftSection } from '../_features/add';
 import { RightSection } from '../_features/add';
 import { Formik, Form } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
+import { useState } from 'react';
 
 export default async function Index() {
-  interface Values {
+  const [file, setFile] = useState<File | null>(null);
+  type Values = {
     title: string;
     body: string;
   }
@@ -24,7 +26,7 @@ export default async function Index() {
           <Form>
             <div className="flex items-center justify-center">
               <LeftSection />
-              <RightSection typeText="submit" />
+              <RightSection  setFile={setFile} text="submit" />
             </div>
           </Form>
         )}
