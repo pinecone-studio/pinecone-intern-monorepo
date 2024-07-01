@@ -22,7 +22,6 @@ describe('getHrmsUsers', () => {
 
     (hrmsUserModel.find as jest.Mock).mockResolvedValue(mockUser);
     const result = await getHrmsUsers!({}, {}, {}, {} as GraphQLResolveInfo);
-    console.log('RR', result);
     expect(result).toEqual(mockUser);
     expect(hrmsUserModel.find).toHaveBeenCalledTimes(1);
   });

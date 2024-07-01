@@ -18,7 +18,7 @@ describe('delete user', () => {
       password: 'password',
     };
     hrmsUserModel.findByIdAndDelete = jest.fn().mockResolvedValueOnce(mockUser);
-    const result = await deletedHrmsUser!({}, { _id: '32445' }, {}, {});
+    const result = await deletedHrmsUser!({}, { _id: '32445' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(mockUser);
   });
 
