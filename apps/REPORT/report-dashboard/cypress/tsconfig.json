@@ -7,14 +7,5 @@
     "types": ["cypress", "node"],
     "sourceMap": false
   },
-  "include": [
-    "**/*.ts",
-    "**/*.js",
-    "../cypress.config.ts",
-    "../**/*.cy.ts",
-    "../**/*.cy.tsx",
-    "../**/*.cy.js",
-    "../**/*.cy.jsx",
-    "../**/*.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.js", "../cypress.config.ts", "../**/*.cy.ts", "../**/*.cy.tsx", "../**/*.cy.js", "../**/*.cy.jsx", "../**/*.d.ts"]
 }
