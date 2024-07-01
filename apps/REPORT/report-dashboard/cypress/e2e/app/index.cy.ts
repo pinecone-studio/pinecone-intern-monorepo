@@ -1,5 +1,3 @@
-import { ClassType } from '@/generated';
-
 describe('Index Page', () => {
   beforeEach(() => {
     // Visit the index page
