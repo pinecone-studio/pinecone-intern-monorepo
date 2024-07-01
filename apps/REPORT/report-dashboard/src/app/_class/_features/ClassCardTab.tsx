@@ -6,7 +6,7 @@ import { Search, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGetClassesQuery } from '@/generated';
 
-const CLassCardTab = () => {
+const ClassCardTab = () => {
   const { data, loading, error } = useGetClassesQuery();
   const classData = data?.getClasses;
   return (
@@ -68,4 +68,4 @@ const CLassCardTab = () => {
   );
 };
 
-export default CLassCardTab;
+export default ClassCardTab;
