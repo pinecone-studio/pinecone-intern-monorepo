@@ -1,4 +1,5 @@
 import PaginationDemo from '../_components/Pagination';
+import { Search } from '../_components/Search';
 import { TableDemo } from '../_components/TableBoard';
 import { AddEmployee } from '../_components/modal/AddEmployee';
 
@@ -8,7 +9,7 @@ export const EmployeeDetails = () => {
       <div className="bg-white  rounded-xl  pb-6 flex flex-col justify-between">
         <AddEmployee />
         <div className="pb-6">
-          {' '}
+          <Search />
           <TableDemo />
         </div>
 
