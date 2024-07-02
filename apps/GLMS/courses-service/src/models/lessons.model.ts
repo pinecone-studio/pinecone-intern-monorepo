@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const LessonsSchema = new mongoose.Schema({
   _id: { type: String, default: () => uuidv4() },
   courseId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'GLMS-Courses',
     required: true,
   },
