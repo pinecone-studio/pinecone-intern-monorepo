@@ -11,14 +11,12 @@ const Index = () => {
         </div>
 
         <div className="flex flex-col gap-[24px]">
-          <div className="px-[24px] py-[24px]  bg-white rounded-[8px] w-[772px] h-[444px] "></div>
-          <div className="px-[24px] py-[24px] rounded-[8px] bg-white w-[772px] h-[228px]">
-            <EmployeesOtherInformation />
-          </div>
-          <div className="px-[24px] py-[24px]  bg-white rounded-[8px] w-[772px] h-[444px] ">
+          <div className="px-[24px] py-[24px] rounded-[8px] bg-white w-[772px]">
             <EmployeeInfoSection />
           </div>
-          <div className="px-[24px] py-[24px] rounded-[8px] bg-white w-[772px] h-[228px]"></div>
+          <div className="px-[24px] py-[24px]  bg-white rounded-[8px] w-[772px]  ">
+            <EmployeesOtherInformation />
+          </div>
         </div>
       </div>
     </div>
