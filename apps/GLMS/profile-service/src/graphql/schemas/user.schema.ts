@@ -7,7 +7,7 @@ export const glmsUserTypeDefs = gql`
   }
 
   type glmsUser {
-    id: ID
+    _id: ID
     firstName: String!
     lastName: String!
     email: String!
@@ -31,6 +31,6 @@ export const glmsUserTypeDefs = gql`
 
   type Mutation {
     createGlmsUser(input: glmsCreateUserInput): glmsUser
-    deleteUser(_id: ID!): glmsUser
+    deleteGlmsUser(_id: ID!): glmsUser
   }
 `;
