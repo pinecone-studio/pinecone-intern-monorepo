@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
+import Image from 'next/image';
 
 interface ImageInputProps {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  setFile: (_file: File | null) => void; 
+  setFile: (_file: File | null) => void;
 }
 
 export const ImageInput = ({ setFile }: ImageInputProps) => {
@@ -28,9 +28,17 @@ export const ImageInput = ({ setFile }: ImageInputProps) => {
           Өнгөц зураг
         </label>
         <div className="max-w-[339px] bg-[#F7F7F8] h-[155px] overflow-hidden rounded-xl flex justify-center items-center relative hover:cursor-pointer">
-          <input id="image-input" data-cy="image-input" name="image-input" type="file" className="absolute z-10 inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" onChange={handleImageChange} />
+          <input
+            id="image-input"
+            data-cy="image-input"
+            name="image-input"
+            type="file"
+            className="absolute z-10 inset-0 w-full h-full opacity-0 cursor-pointer"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
           {previewURL ? (
-            <img className="rounded w-full h-full object-cover" src={previewURL} alt="uploaded img" />
+            <Image className="rounded w-full h-full object-cover" src={previewURL} alt="uploaded img" fill />
           ) : (
             <div className="flex flex-col gap-2 items-center justify-center">
               <RiImageAddFill style={{ width: '32px', height: '32px' }} />
@@ -43,4 +51,3 @@ export const ImageInput = ({ setFile }: ImageInputProps) => {
     </>
   );
 };
-
