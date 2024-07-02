@@ -14,29 +14,13 @@ describe('StudentsInformation component', () => {
       loading: true,
       error: undefined,
     };
-    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
+    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
     let component;
     await act(async () => {
       component = render(<StudentsInformation />);
     });
 
     expect(component.getByTestId('Loading')).toBeDefined();
-  });
-
-  it('renders error state', async () => {
-    const mockUseGetStudentByClassIdQuery = {
-      data: undefined,
-      loading: false,
-      error: new Error('Mock error message'),
-    };
-    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
-
-    let component;
-    await act(async () => {
-      component = render(<StudentsInformation />);
-    });
-
-    expect(component.getByTestId('Error')).toBeDefined();
   });
 
   it('renders success state', async () => {

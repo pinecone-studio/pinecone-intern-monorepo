@@ -1,2 +1,2 @@
 export * from './course';
-export * from './lessons';
+export * from './lesson';

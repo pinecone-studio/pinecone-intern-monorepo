@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <div className="flex justify-center items-center  bg-[#1C202414] w-full h-[100vh] ">
       <div className="flex gap-[26px]">
-        <div className="bg-white rounded-[8px] h-[696px] w-[358px]">
+        <div className="bg-white rounded-[8px] ">
           <EmployeePersonalInfo />
         </div>
 

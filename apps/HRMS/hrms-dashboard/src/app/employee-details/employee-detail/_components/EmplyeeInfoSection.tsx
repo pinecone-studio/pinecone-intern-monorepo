@@ -1,5 +1,8 @@
 import { Button } from '@/components/ui/button';
 
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { EmploymentInfoDialog } from './EmploymentInfoDialog';
+
 const EmployeeInfoSection = () => {
   const infoFields = [
     { title: 'Албан тушаал', value: 'Дизайнер' },
@@ -13,7 +16,12 @@ const EmployeeInfoSection = () => {
     <div className="h-full">
       <div className="flex justify-between mb-4">
         <p className="border-none p-0 text-black text-lg font-semibold">Хөдөлмөр эрхлэлтийн мэдээлэл</p>
-        <Button className="bg-[#F7F7F8] text-black">Засварлах</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline">Засварлах</Button>
+          </DialogTrigger>
+          <EmploymentInfoDialog infoFields={infoFields} />
+        </Dialog>
       </div>
       {infoFields.map((field, index) => (
         <div key={index} className="mb-2 flex flex-col gap-4 ">

@@ -4,7 +4,7 @@ import { MdEmail } from 'react-icons/md';
 import { FaLocationDot } from 'react-icons/fa6';
 export const EmployeePersonalInfo = () => {
   return (
-    <div className="p-5 flex flex-col gap-10 ">
+    <div className="p-5 flex flex-col gap-10 w-[358px]">
       <div data-testid="PersonalInfo">
         <p className="text-lg text-[#000000] font-semibold">Хувийн мэдээлэл</p>
       </div>

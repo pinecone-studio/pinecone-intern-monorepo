@@ -1,5 +1,5 @@
 import { QueryResolvers } from '@/graphql/generated';
-import { CoursesModel } from '@/models/courses';
+import { CoursesModel } from '@/models/courses.model';
 import { GraphQLError } from 'graphql';
 
 export const getCourse: QueryResolvers['getCourse'] = async (_: unknown, { _id }: { _id: string }) => {

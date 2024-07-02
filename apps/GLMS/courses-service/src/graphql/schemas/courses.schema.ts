@@ -7,7 +7,7 @@ export const coursesTypeDefs = gql`
     getCourse(_id: ID!): Course
     getCourses: [Course]
     getLessons(courseId: ID!): [Lesson]
-    getLessonDetails(id: ID!): Lesson
+    getLessonDetails(_id: ID!): Lesson
   }
 
   type Mutation {
@@ -19,7 +19,7 @@ export const coursesTypeDefs = gql`
     createLesson(createInput: CreateLessonInput): Lesson
     updateLesson(updateInput: UpdateLessonInput): Lesson
     changeLessonsPosition(ids: [ID!]!): Boolean
-    deleteLesson(id: ID!): Boolean
+    deleteLesson(id: ID!): Course
   }
 
   type Course {
@@ -46,7 +46,7 @@ export const coursesTypeDefs = gql`
 
   type Lesson {
     id: ID!
-    courseId: ID!
+    courseId: Course
     title: String!
     thumbnail: String!
     content: String!
