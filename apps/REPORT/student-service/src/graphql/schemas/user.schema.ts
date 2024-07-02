@@ -41,6 +41,11 @@ export const userTypeDefs = gql`
     getUserById(id: ID!): User
   }
 
+  type Token {
+    token: String
+    message: String
+  }
+
   type Mutation {
     createUser(input: createUserInput!): User
     deleteUser(_id: ID!): User
