@@ -14,7 +14,7 @@ export const reportSignIn: MutationResolvers['reportSignIn'] = async (_, { input
 
     if (user) {
       const id = user._id;
-      const name = user.name;
+      const name = user.firstName;
       const userEmail = user.email;
       const role = user.role;
 
