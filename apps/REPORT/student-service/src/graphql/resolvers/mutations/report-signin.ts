@@ -5,7 +5,8 @@ import { MutationResolvers } from '@/graphql/generated';
 
 export const reportSignIn: MutationResolvers['reportSignIn'] = async (_, { input }) => {
   try {
-    const { email, password } = input;
+    const email = input?.email;
+    const password = input?.password;
     const user = await UserModel.findOne({ email: email, password: password });
 
     if (!user) {
@@ -13,11 +14,12 @@ export const reportSignIn: MutationResolvers['reportSignIn'] = async (_, { input
     }
 
     const id = user._id;
-    const name = user.firstName;
+    const firstName = user.firstName;
+    const lastName = user.lastName;
     const userEmail = user.email;
     const role = user.role;
 
-    const token = jwt.sign({ id, name, userEmail, role }, 'temporary-secret-key');
+    const token = jwt.sign({ id, firstName, lastName, userEmail, role }, 'temporary-secret-key');
 
     return { token, message: 'Successful authentication' };
   } catch (error) {

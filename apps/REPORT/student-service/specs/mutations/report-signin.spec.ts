@@ -34,7 +34,8 @@ describe('Sign in', () => {
     };
     const id = 'userId';
     const userEmail = 'mockEmail@gmail.com';
-    const name = 'John Doe';
+    const firstName = 'John Doe';
+    const lastName = 'Doedoe';
     const role = 'STUDENT';
 
     (UserModel.findOne as jest.Mock).mockResolvedValueOnce(userMock);
@@ -46,7 +47,7 @@ describe('Sign in', () => {
       message: 'Successful authentication',
     });
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email, password: input.password });
-    expect(jwt.sign).toHaveBeenCalledWith({ id, name, userEmail, role }, 'temporary-secret-key');
+    expect(jwt.sign).toHaveBeenCalledWith({ id, firstName, lastName, userEmail, role }, 'temporary-secret-key');
   });
 
   it('should throw an error if user is not found', async () => {
