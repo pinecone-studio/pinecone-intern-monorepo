@@ -1,11 +1,10 @@
 'use client';
-
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ArrowIcon } from 'apps/HRMS/hrms-dashboard/public/assets/ArrowIcon';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import ArrowIcon from '@/assets/icons/ArrowICon';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -15,8 +14,8 @@ const LoginForm = () => {
       .test('is-email', 'Имэйл хаяг байх ёстой', function (value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isEmail = emailRegex.test(value as string);
-       
-        return isEmail ;
+
+        return isEmail;
       })
       .required('Имэйл хаяг оруулна уу'),
     password: yup
