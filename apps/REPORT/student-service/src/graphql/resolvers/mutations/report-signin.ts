@@ -12,16 +12,14 @@ export const reportSignIn: MutationResolvers['reportSignIn'] = async (_, { input
       throw new GraphQLError('Incorrect email or password');
     }
 
-    if (user) {
-      const id = user._id;
-      const name = user.firstName;
-      const userEmail = user.email;
-      const role = user.role;
+    const id = user._id;
+    const name = user.firstName;
+    const userEmail = user.email;
+    const role = user.role;
 
-      const token = jwt.sign({ id, name, userEmail, role }, 'temporary-secret-key');
+    const token = jwt.sign({ id, name, userEmail, role }, 'temporary-secret-key');
 
-      return { token, message: 'Successful authentication' };
-    }
+    return { token, message: 'Successful authentication' };
   } catch (error) {
     throw new GraphQLError('Sign in failure');
   }

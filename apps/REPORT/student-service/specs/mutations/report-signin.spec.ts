@@ -37,7 +37,7 @@ describe('Sign in', () => {
     const name = 'John Doe';
     const role = 'STUDENT';
 
-    const main = (UserModel.findOne as jest.Mock).mockResolvedValueOnce(userMock);
+    (UserModel.findOne as jest.Mock).mockResolvedValueOnce(userMock);
     (jwt.sign as jest.Mock).mockReturnValueOnce('mockToken');
 
     const result = await reportSignIn!({}, { input }, {}, {} as GraphQLResolveInfo);
