@@ -8,3 +8,4 @@ export * from './delete-user';
 export * from './create-class';
 export * from './delete-class';
 export * from './update-class';
+export * from './report-signin';
