@@ -14,7 +14,7 @@ const EmployeeSchema = new mongoose.Schema({
   },
   jobTitle: [String],
   ladderLevel: String,
-  salary: Number,
+  salary: String,
   bankName: String,
   bankAccountNumber: String,
   bankAccountHolderName: String,
