@@ -5,9 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Search, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useGetClassesQuery } from '@/generated';
+import { useState } from 'react';
+import { AddClassModal } from './AddClassModal';
 
 const ClassCardTab = () => {
   const { data, loading, error } = useGetClassesQuery();
+  const [isOpen, setIsOpen] = useState(false);
   const classData = data?.getClasses;
   return (
     <div className="flex justify-center" data-testid="class-card-tab">
@@ -24,14 +27,15 @@ const ClassCardTab = () => {
                 <TabsTrigger value="Coding">Кодинг</TabsTrigger>
                 <TabsTrigger value="Design">Дизайн</TabsTrigger>
               </TabsList>
-              <Button className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]">
+              <Button data-testid="openModalButton" className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]" onClick={() => setIsOpen(true)}>
                 <p>Анги</p>
                 <span>
                   <Plus className="h-4 w-4" />
                 </span>
               </Button>
+
+              <AddClassModal open={isOpen} onOpenChange={setIsOpen} />
             </div>
-            <Button asChild className={'hidden'} />
           </div>
           <div className="relative h-[600px]">
             {loading ? (
