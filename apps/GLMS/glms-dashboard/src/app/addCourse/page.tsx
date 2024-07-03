@@ -1,11 +1,11 @@
 'use client';
 
-import { SectionMain } from './_features/SectionMain';
+import { AddCourseMain } from './_features/AddCourseMain';
 
 export default async function Index() {
   return (
     <div>
-      <SectionMain />
+      <AddCourseMain />
     </div>
   );
 }

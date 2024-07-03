@@ -14,25 +14,23 @@ const style = {
 interface InputData {
   title: string;
   description: string;
-  thumbnail: string;
 }
 
 interface SectionEntryProps {
   inputData: InputData;
-  handleInputChange: (field: keyof InputData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => void;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (_e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInputChange, handleFileChange }) => {
+export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInputChange }) => {
   return (
     <div className="flex flex-col gap-[24px]">
       <div className="flex flex-col gap-[8px] w-[590px]">
         <p style={style}>Хичээлийн гарчиг</p>
-        <Input value={inputData.title} placeholder="Оруулна уу..." className="h-[55px]" onChange={handleInputChange('title')} />
+        <Input name="title" value={inputData.title} onChange={handleInputChange} placeholder="Оруулна уу..." className="h-[55px]" />
       </div>
       <div className="flex flex-col gap-[8px] w-[590px]">
         <p style={style}>Дэлгэрэнгүй</p>
-        <Textarea value={inputData.description} placeholder="Энд бичнэ үү..." className="h-[120px] max-h-[200px]" onChange={handleInputChange('description')} />
+        <Textarea name="description" value={inputData.description} onChange={handleInputChange} placeholder="Энд бичнэ үү..." className="h-[120px] max-h-[200px]" />
       </div>
       <div className="flex flex-col gap-[8px]">
         <p style={style}>Хичээлийн зураг</p>
@@ -40,7 +38,6 @@ export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInp
           <div className="flex flex-col items-center">
             <Img />
             <p className="text-[#D6D8DB]">Зураг сонгоно уу</p>
-            <input onChange={handleFileChange} />
           </div>
         </div>
       </div>

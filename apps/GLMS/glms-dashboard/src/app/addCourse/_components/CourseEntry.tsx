@@ -12,7 +12,7 @@ interface LessonEntryProps {
   handleInputChange: (_field: keyof InputData) => (_e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export const LessonEntry: React.FC<LessonEntryProps> = ({ inputData, handleInputChange }) => {
+export const CourseEntry: React.FC<LessonEntryProps> = ({ inputData, handleInputChange }) => {
   return (
     <div className="flex flex-col pt-[64px] gap-[32px]">
       <div data-testid="continue title">
