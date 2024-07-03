@@ -7,7 +7,7 @@ const EmployeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  imageUrl: String,
+  imageURL: String,
   department: {
     type: String,
     enum: ['SOFTWARE', 'DESIGN', 'MARKETING', 'BACK_OFFICE'],
