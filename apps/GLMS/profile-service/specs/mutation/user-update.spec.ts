@@ -17,4 +17,8 @@ glmsUserModel: {
 }
 }));
 
-describe('Update User')
+describe('Update User',() => {
+  it('Should update glmsUser', async () =>{
+    
+  })
+})
