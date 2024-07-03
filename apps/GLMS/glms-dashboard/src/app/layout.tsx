@@ -11,7 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const isSignInPage = pathname === '/sign-in';
   return (
     <html lang="en">
-      <body className="relative">
+      <body className="relative bg-[#F7F7F8]">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <FederationProvider>
             {!isSignInPage && <ProjectHeader />}
