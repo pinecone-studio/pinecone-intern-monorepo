@@ -30,7 +30,7 @@ export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInp
       </div>
       <div className="flex flex-col gap-[8px] w-[590px]">
         <p style={style}>Дэлгэрэнгүй</p>
-        <Textarea data-testid="mocked-textarea" name="description" value={inputData.content} onChange={handleInputChange} placeholder="Энд бичнэ үү..." className="h-[120px] max-h-[200px]" />
+        <Textarea data-testid="mocked-textarea" name="content" value={inputData.content} onChange={handleInputChange} placeholder="Энд бичнэ үү..." className="h-[120px] max-h-[200px]" />
       </div>
       <div className="flex flex-col gap-[8px]">
         <p style={style}>Хичээлийн зураг</p>
