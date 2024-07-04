@@ -1,10 +1,11 @@
 import graphqlErrorHandler, { errorTypes } from '@/graphql/resolvers/error';
-import { getAllEmployees } from '@/graphql/resolvers/queries';
+import { getEmployees } from '@/graphql/resolvers/queries';
 import { EmployeeModel } from '@/models/employee';
+import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('@/models/employee');
 
-describe('getAllEmployees', () => {
+describe('getEmployees', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -29,7 +30,7 @@ describe('getAllEmployees', () => {
 
     (EmployeeModel.find as jest.Mock).mockResolvedValueOnce(employees);
 
-    const result = await getAllEmployees({});
+    const result = await getEmployees!({}, {}, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(employees);
     expect(EmployeeModel.find).toHaveBeenCalled();
@@ -40,6 +41,6 @@ describe('getAllEmployees', () => {
 
     (EmployeeModel.find as jest.Mock).mockRejectedValueOnce(mockedError);
 
-    await expect(getAllEmployees({})).rejects.toThrow(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
+    await expect(getEmployees!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow(graphqlErrorHandler({ message: 'Алдаа гарлаа' }, errorTypes.INTERVAL_SERVER_ERROR));
   });
 });
