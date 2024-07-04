@@ -1,5 +1,5 @@
-export mutation ReportSignIn($input: SignInInput) {
-  reportSignIn(input: $input) {
+mutation ReportSignIn($input: SignInInput) {
+  reportSignIn(input: { email: $email, password: $password }) {
     message
     token
   }
