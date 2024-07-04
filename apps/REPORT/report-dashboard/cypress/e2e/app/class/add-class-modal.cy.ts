@@ -30,11 +30,11 @@ describe('AddClassModal', () => {
   it('validates required fields', () => {
     cy.get('[data-testid="submit-button"]').click();
 
-    cy.get('[data-testid="class-name-input"]').parent().should('contain', 'name is required');
-    cy.get('[data-testid="teacher1-input"]').parent().should('contain', 'teacher1 is required');
-    cy.get('[data-testid="teacher2-input"]').parent().should('contain', 'teacher2 is required');
-    cy.get('[data-testid="start-date-input"]').parent().should('contain', 'startDate is required');
-    cy.get('[data-testid="end-date-input"]').parent().should('contain', 'endDate is required');
+    cy.get('[data-testid="class-name-input"]').parent().should('contain', 'This field is required');
+    cy.get('[data-testid="teacher1-input"]').parent().should('contain', 'This field is required');
+    cy.get('[data-testid="teacher2-input"]').parent().should('contain', 'This field is required');
+    cy.get('[data-testid="start-date-input"]').parent().should('contain', 'This field is required');
+    cy.get('[data-testid="end-date-input"]').parent().should('contain', 'This field is required');
   });
 
   it('allows input in all fields', () => {
@@ -101,7 +101,7 @@ describe('AddClassModal', () => {
     cy.get('[data-testid="submit-button"]').click();
 
     // Re-open the modal
-    cy.get('[data-testid="open-modal-button"]').click();
+    cy.get('[data-testid="openModalButton"]').click();
 
     // Check if all fields are reset
     cy.get('[data-testid="class-name-input"]').should('have.value', '');

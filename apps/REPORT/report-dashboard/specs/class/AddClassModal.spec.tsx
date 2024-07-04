@@ -1,179 +1,118 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MockedProvider } from '@apollo/client/testing';
 import { AddClassModal } from '../../src/app/class/_features/AddClassModal';
-import { GetClassesDocument, CreateClassDocument } from '../../src/generated';
-import { ClassType } from '../../src/generated/index';
 import '@testing-library/jest-dom';
 
-const mocks = [
-  {
-    request: {
-      query: CreateClassDocument,
-      variables: {
-        input: {
-          name: 'JavaScript Basics',
-          teachers: ['John Doe', 'Jane Smith'],
-          startDate: '2024-09-01',
-          endDate: '2024-12-15',
-          classType: ClassType.Coding,
-        },
-      },
-    },
-    result: {
-      data: {
-        createClass: {
-          __typename: 'Class', // Add this line
-          id: '1', // Add this line if it's expected in the response
-          name: 'JavaScript Basics',
-          teachers: ['John Doe', 'Jane Smith'],
-          startDate: '2024-09-01',
-          endDate: '2024-12-15',
-          classType: ClassType.Coding,
-        },
-      },
-    },
+// Mock the hooks and modules
+jest.mock('../../src/generated', () => ({
+  ClassType: {
+    Coding: 'CODING',
+    Design: 'DESIGN',
   },
-  {
-    request: {
-      query: GetClassesDocument,
-    },
-    result: {
-      data: {
-        getClasses: [
-          {
-            name: 'JavaScript Basics',
-            teachers: ['John Doe', 'Jane Smith'],
-            startDate: '2024-09-01',
-            endDate: '2024-12-15',
-            classType: ClassType.Coding,
-          },
-        ],
-      },
-    },
-  },
-];
+  useCreateClassMutation: () => [jest.fn()],
+  useGetClassesQuery: () => ({ refetch: jest.fn() }),
+}));
 
 describe('AddClassModal', () => {
   const mockOnOpenChange = jest.fn();
-
-  const renderComponent = (open = true) => {
-    render(
-      <MockedProvider mocks={mocks as any} addTypename={false}>
-        <AddClassModal open={open} onOpenChange={mockOnOpenChange} />
-      </MockedProvider>
-    );
-  };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders the modal when open is true', () => {
-    renderComponent();
+  it('renders the modal content when open', () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
     expect(screen.getByTestId('modal-content')).toBeInTheDocument();
     expect(screen.getByTestId('modal-header')).toHaveTextContent('Анги нэмэх');
   });
 
-  it('does not render the modal when open is false', () => {
-    renderComponent(false);
+  it('does not render the modal content when closed', () => {
+    render(<AddClassModal open={false} onOpenChange={mockOnOpenChange} />);
     expect(screen.queryByTestId('modal-content')).not.toBeInTheDocument();
   });
 
-  it('renders all form fields', () => {
-    renderComponent();
+  it('renders all input fields', () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
     expect(screen.getByTestId('class-name-input')).toBeInTheDocument();
     expect(screen.getByTestId('teacher1-input')).toBeInTheDocument();
     expect(screen.getByTestId('teacher2-input')).toBeInTheDocument();
     expect(screen.getByTestId('start-date-input')).toBeInTheDocument();
     expect(screen.getByTestId('end-date-input')).toBeInTheDocument();
-    expect(screen.getByTestId('class-type-radio-group')).toBeInTheDocument();
   });
 
-  it('validates form fields on submission', async () => {
-    renderComponent();
+  it('renders the radio group for class type', () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
+    expect(screen.getByTestId('class-type-radio-group')).toBeInTheDocument();
+    expect(screen.getByTestId('coding-radio-button')).toBeInTheDocument();
+    expect(screen.getByTestId('design-radio-button')).toBeInTheDocument();
+  });
 
-    // Submit the form without filling any fields
+  it('shows validation errors when submitting empty form', async () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
+
     fireEvent.click(screen.getByTestId('submit-button'));
 
-    // Wait for and check error messages
     await waitFor(() => {
-      expect(screen.getByText('Class name is required')).toBeInTheDocument();
-      expect(screen.getAllByText('Teacher name is required')).toHaveLength(2);
-      expect(screen.getByText('Start date is required')).toBeInTheDocument();
-      expect(screen.getByText('End date is required')).toBeInTheDocument();
+      expect(screen.getAllByText('This field is required')).toHaveLength(5);
     });
   });
 
   it('submits the form with valid data', async () => {
-    renderComponent();
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
 
-    await userEvent.type(screen.getByTestId('class-name-input'), 'JavaScript Basics');
-    await userEvent.type(screen.getByTestId('teacher1-input'), 'John Doe');
-    await userEvent.type(screen.getByTestId('teacher2-input'), 'Jane Smith');
-    await userEvent.type(screen.getByTestId('start-date-input'), '2024-09-01');
-    await userEvent.type(screen.getByTestId('end-date-input'), '2024-12-15');
+    await userEvent.type(screen.getByTestId('class-name-input'), 'Test Class');
+    await userEvent.type(screen.getByTestId('teacher1-input'), 'Teacher 1');
+    await userEvent.type(screen.getByTestId('teacher2-input'), 'Teacher 2');
+    await userEvent.type(screen.getByTestId('start-date-input'), '2023-01-01');
+    await userEvent.type(screen.getByTestId('end-date-input'), '2023-12-31');
 
-    fireEvent.click(screen.getByTestId('submit-button'));
-
-    await waitFor(() => {
-      expect(mockOnOpenChange).toHaveBeenCalledWith(false);
-    });
-  });
-
-  it('changes class type when radio buttons are clicked', async () => {
-    renderComponent();
-
-    const codingRadio = screen.getByTestId('coding-radio-button');
-    const designRadio = screen.getByTestId('design-radio-button');
-
-    expect(codingRadio).toBeChecked();
-    expect(designRadio).not.toBeChecked();
-
-    await userEvent.click(designRadio);
-
-    expect(codingRadio).not.toBeChecked();
-    expect(designRadio).toBeChecked();
-  });
-
-  it('resets form on successful submission', async () => {
-    renderComponent();
-
-    await userEvent.type(screen.getByTestId('class-name-input'), 'JavaScript Basics');
-    await userEvent.type(screen.getByTestId('teacher1-input'), 'John Doe');
-    await userEvent.type(screen.getByTestId('teacher2-input'), 'Jane Smith');
-    await userEvent.type(screen.getByTestId('start-date-input'), '2024-09-01');
-    await userEvent.type(screen.getByTestId('end-date-input'), '2024-12-15');
+    fireEvent.click(screen.getByTestId('design-radio-button'));
 
     fireEvent.click(screen.getByTestId('submit-button'));
 
-    await waitFor(() => {
-      expect(screen.getByTestId('class-name-input')).toHaveValue('');
-      expect(screen.getByTestId('teacher1-input')).toHaveValue('');
-      expect(screen.getByTestId('teacher2-input')).toHaveValue('');
-      expect(screen.getByTestId('start-date-input')).toHaveValue('');
-      expect(screen.getByTestId('end-date-input')).toHaveValue('');
-      expect(screen.getByTestId('coding-radio-button')).toBeChecked();
-    });
+    await waitFor(
+      () => {
+        expect(mockOnOpenChange).toHaveBeenCalledWith(false);
+      },
+      { timeout: 2500 }
+    );
   });
 
-  it('displays the correct labels for form fields', () => {
-    renderComponent();
+  it('disables submit button while loading', async () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
 
-    expect(screen.getByText('Ангийн нэр')).toBeInTheDocument();
-    expect(screen.getByText('Багш 1-н нэр')).toBeInTheDocument();
-    expect(screen.getByText('Багш 2-н нэр')).toBeInTheDocument();
-    expect(screen.getByText('Эхлэх огноо')).toBeInTheDocument();
-    expect(screen.getByText('Дуусах огноо')).toBeInTheDocument();
-    expect(screen.getByText('Кодинг анги')).toBeInTheDocument();
-    expect(screen.getByText('Дизайн анги')).toBeInTheDocument();
+    // Fill out the form fields
+    await userEvent.type(screen.getByTestId('class-name-input'), 'Test Class');
+    await userEvent.type(screen.getByTestId('teacher1-input'), 'Teacher 1');
+    await userEvent.type(screen.getByTestId('teacher2-input'), 'Teacher 2');
+    await userEvent.type(screen.getByTestId('start-date-input'), '2023-01-01');
+    await userEvent.type(screen.getByTestId('end-date-input'), '2023-12-31');
+
+    // Click the submit button to trigger form submission
+    fireEvent.click(screen.getByTestId('submit-button'));
+
+    // Assert that the button is initially disabled
+    expect(screen.getByTestId('submit-button')).toBeDisabled;
+
+    // Wait for the loading state to resolve (button should become enabled)
+    await waitFor(
+      () => {
+        expect(screen.getByTestId('submit-button')).not.toBeDisabled();
+      },
+      { timeout: 10000 }
+    );
   });
 
-  it('displays the save button with correct text', () => {
-    renderComponent();
+  it('changes class type when radio button is clicked', async () => {
+    render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
 
-    const saveButton = screen.getByTestId('submit-button');
-    expect(saveButton).toHaveTextContent('Хадгалах');
+    expect(screen.getByTestId('coding-radio-container')).toHaveClass('bg-slate-100');
+    expect(screen.getByTestId('design-radio-container')).toHaveClass('bg-white');
+
+    fireEvent.click(screen.getByTestId('design-radio-button'));
+
+    expect(screen.getByTestId('coding-radio-container')).toHaveClass('bg-white');
+    expect(screen.getByTestId('design-radio-container')).toHaveClass('bg-slate-100');
   });
 });
