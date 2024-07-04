@@ -78,6 +78,10 @@ export const SectionMain = () => {
   //   }
   // }
 
+  const handleValue = () => {
+    console.log(inputData, imageUrl);
+  };
+
   return (
     <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100% ] h-[100%]">
       <div>
@@ -109,7 +113,7 @@ export const SectionMain = () => {
           </label>
           <div className="pt-[24px] flex flex-col items-center gap-[32px]">
             <SectionButton />
-            <SectionSaveButt disabled={disabled} />
+            <SectionSaveButt disabled={disabled} onClick={handleValue} />
           </div>
         </div>
       </div>
