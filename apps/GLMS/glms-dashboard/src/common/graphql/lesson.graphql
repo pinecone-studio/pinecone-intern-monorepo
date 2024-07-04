@@ -27,3 +27,19 @@ mutation CreateLesson($createInput: CreateLessonInput) {
     content
   }
 }
+
+
+query GetLessonDetails($id: ID!) {
+  getLessonDetails(_id: $id) {
+    id
+    courseId {
+      id
+      title
+      thumbnail
+      content
+    }
+    title
+    thumbnail
+    content
+  }
+}

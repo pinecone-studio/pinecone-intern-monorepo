@@ -8,7 +8,7 @@ describe('SignInModal', () => {
   });
 
   it('2. Should render the SignInModal component', () => {
-    cy.contains('Нэвтрэх').should('be.visible');
+    cy.contains('Report').should('be.visible');
     cy.contains('Таны имэйл эсвэл утасны дугаар').should('be.visible');
     cy.get('[data-testid="email-input"]').should('be.visible').and('have.attr', 'type', 'text');
     cy.contains('Нууц үг').should('be.visible');
