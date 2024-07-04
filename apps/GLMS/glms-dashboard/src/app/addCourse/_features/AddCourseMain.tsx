@@ -55,9 +55,9 @@ export const AddCourseMain: React.FC = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
-      <div>
-        <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px] mt-[30px]">
+    <div className="w-[100%] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
+      <div className="p-[30px]">
+        <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px]">
           <ArrowLeft />
           <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
         </Button>

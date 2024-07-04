@@ -24,7 +24,7 @@ interface SectionEntryProps {
 export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInputChange }) => {
   return (
     <div className="flex flex-col gap-[24px]">
-      <div className="flex flex-col gap-[8px] w-[590px]">
+      <div className="flex flex-col gap-[8px] w-[590px] ">
         <p style={style}>Хичээлийн гарчиг</p>
         <Input name="title" value={inputData.title} onChange={handleInputChange} placeholder="Оруулна уу..." className="h-[55px]" />
       </div>

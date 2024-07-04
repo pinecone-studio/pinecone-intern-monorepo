@@ -61,13 +61,13 @@ export const SectionMain = () => {
   };
 
   return (
-    <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100vw ] h-[100vh]">
+    <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100% ] h-[100%]">
       <div>
         <Button variant="ghost" className="flex w-[310px] justify-between items-center mb-[15px] mt-[25px]">
           <ArrowLeft />
           <p className=" text-base font-semibold">Хичээлийн ерөнхий мэдээлэл</p>
         </Button>
-        <div className="bg-white w-[1250px] h-[900px] flex flex-col items-center justify-center rounded-[12px]">
+        <div className="bg-white w-[1250px] h-[900px] flex flex-col items-center justify-center rounded-[12px] m-[30px]">
           <label htmlFor="file-upload" className="cursor-pointer">
             <div className="relative">
               <input id="file-upload" type="file" onChange={fileChangeHandler} style={{ display: 'none' }} />
