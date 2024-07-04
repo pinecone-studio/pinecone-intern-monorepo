@@ -1,0 +1,9 @@
+mutation createClass($input: CreateClassInput!) {
+  createClass(input: $input) {
+    name
+    teachers
+    endDate
+    startDate
+    classType
+  }
+}
