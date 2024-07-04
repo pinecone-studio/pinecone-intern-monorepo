@@ -3,8 +3,8 @@ import { CardMedia } from '@mui/material';
 import { SectionEntry } from '../_components/SectionEntry';
 import { SectionButton } from '../_components/SectionButton';
 import { SectionSaveButt } from '../_components/SectionSaveButt';
-import { Arrow } from '@/app/icons';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
@@ -64,7 +64,7 @@ export const SectionMain = () => {
     <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100vw ] h-[100vh]">
       <div>
         <Button variant="ghost" className="flex w-[310px] justify-between items-center mb-[15px] mt-[25px]">
-          <Arrow />
+          <ArrowLeft />
           <p className=" text-base font-semibold">Хичээлийн ерөнхий мэдээлэл</p>
         </Button>
         <div className="bg-white w-[1250px] h-[900px] flex flex-col items-center justify-center rounded-[12px]">

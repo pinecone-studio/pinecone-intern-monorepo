@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Arrow } from '@/app/icons';
 import { PicUpload } from './PicUpload';
 import { CourseEntButton } from '../_components/CourseEntButton';
 import { CourseEntry } from '../_components/CourseEntry';
 import { InputData } from '../_components/CourseEntry';
 import { useCreateCourseMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 export const AddCourseMain: React.FC = () => {
   const router = useRouter();
@@ -58,7 +58,7 @@ export const AddCourseMain: React.FC = () => {
     <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
       <div>
         <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px] mt-[30px]">
-          <Arrow />
+          <ArrowLeft />
           <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
         </Button>
         <div className="rounded-[12px] bg-white p-[24px] w-[1250px] max-w-full">
