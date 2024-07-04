@@ -1,0 +1,6 @@
+export mutation ReportSignIn($input: SignInInput) {
+  reportSignIn(input: $input) {
+    message
+    token
+  }
+}
