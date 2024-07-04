@@ -39,7 +39,7 @@ export const employeeDetailsSchema = gql`
     department: Department!
     jobTitle: [String]!
     ladderLevel: String
-    salary: Float!
+    salary: String!
     bankName: String
     bankAccountNumber: String
     bankAccountHolderName: String
@@ -58,7 +58,7 @@ export const employeeDetailsSchema = gql`
     department: Department!
     jobTitle: [String]!
     ladderLevel: String
-    salary: Float!
+    salary: String!
     dateOfEmployment: Date!
     employmentStatus: EmploymentStatus!
   }
@@ -69,7 +69,7 @@ export const employeeDetailsSchema = gql`
     department: Department
     jobTitle: [String]
     ladderLevel: String
-    salary: Float
+    salary: String!
     bankName: String
     bankAccountNumber: String
     dateOfReleased: Date
