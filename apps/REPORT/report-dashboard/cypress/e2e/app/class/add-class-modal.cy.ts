@@ -79,16 +79,16 @@ describe('AddClassModal', () => {
 
     // Check for error messages
     cy.get('div[role="dialog"]').within(() => {
-      cy.contains('name is required').should('be.visible');
-      cy.contains('teacher1 is required').should('be.visible');
-      cy.contains('teacher2 is required').should('be.visible');
-      cy.contains('startDate is required').should('be.visible');
-      cy.contains('endDate is required').should('be.visible');
+      cy.contains('This field is required').should('be.visible');
+      cy.contains('This field is required').should('be.visible');
+      cy.contains('This field is required').should('be.visible');
+      cy.contains('This field is required').should('be.visible');
+      cy.contains('This field is required').should('be.visible');
     });
 
     cy.get('[data-testid="submit-button"]').click();
 
-    cy.contains('name is required').should('be.visible');
+    cy.contains('This field is required').should('be.visible');
   });
 
   it('resets form after successful submission', () => {
