@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { AddClassModal } from '../../src/app/class/_features/AddClassModal';
 import '@testing-library/jest-dom';
 
@@ -61,11 +60,11 @@ describe('AddClassModal', () => {
   it('submits the form with valid data', async () => {
     render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
 
-    await userEvent.type(screen.getByTestId('class-name-input'), 'Test Class');
-    await userEvent.type(screen.getByTestId('teacher1-input'), 'Teacher 1');
-    await userEvent.type(screen.getByTestId('teacher2-input'), 'Teacher 2');
-    await userEvent.type(screen.getByTestId('start-date-input'), '2023-01-01');
-    await userEvent.type(screen.getByTestId('end-date-input'), '2023-12-31');
+    fireEvent.change(screen.getByTestId('class-name-input'), { target: { value: 'Test Class' } });
+    fireEvent.change(screen.getByTestId('teacher1-input'), { target: { value: 'Teacher 1' } });
+    fireEvent.change(screen.getByTestId('teacher2-input'), { target: { value: 'Teacher 2' } });
+    fireEvent.change(screen.getByTestId('start-date-input'), { target: { value: '2023-01-01' } });
+    fireEvent.change(screen.getByTestId('end-date-input'), { target: { value: '2023-12-31' } });
 
     fireEvent.click(screen.getByTestId('design-radio-button'));
 
@@ -82,14 +81,12 @@ describe('AddClassModal', () => {
   it('disables submit button while loading', async () => {
     render(<AddClassModal open={true} onOpenChange={mockOnOpenChange} />);
 
-    // Fill out the form fields
-    await userEvent.type(screen.getByTestId('class-name-input'), 'Test Class');
-    await userEvent.type(screen.getByTestId('teacher1-input'), 'Teacher 1');
-    await userEvent.type(screen.getByTestId('teacher2-input'), 'Teacher 2');
-    await userEvent.type(screen.getByTestId('start-date-input'), '2023-01-01');
-    await userEvent.type(screen.getByTestId('end-date-input'), '2023-12-31');
+    fireEvent.change(screen.getByTestId('class-name-input'), { target: { value: 'Test Class' } });
+    fireEvent.change(screen.getByTestId('teacher1-input'), { target: { value: 'Teacher 1' } });
+    fireEvent.change(screen.getByTestId('teacher2-input'), { target: { value: 'Teacher 2' } });
+    fireEvent.change(screen.getByTestId('start-date-input'), { target: { value: '2023-01-01' } });
+    fireEvent.change(screen.getByTestId('end-date-input'), { target: { value: '2023-12-31' } });
 
-    // Click the submit button to trigger form submission
     fireEvent.click(screen.getByTestId('submit-button'));
 
     // Assert that the button is initially disabled
