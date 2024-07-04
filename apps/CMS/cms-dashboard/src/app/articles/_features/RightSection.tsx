@@ -20,8 +20,8 @@ export const RightSection = ({ typeText }: FieldProps) => {
         <ImageInput setFile={setFile} />
       </div>
       <div className="flex flex-col gap-4">
-        <ArticlesButton able={isDisabled} addClass="bg-slate-200 text-black font-bold hover:text-white" text="Ноорогт хадгалах" data-cy="save-draft-button" />
-        <ArticlesButton able={isDisabled} addClass="bg-slate-400 text-black font-bold hover:text-white" text="Нийтлэх" typeText={typeText} data-cy="publish-button" />
+        <ArticlesButton able={isDisabled} addClass="bg-slate-200 text-black font-bold hover:text-white rounded-sm p-2" text="Ноорогт хадгалах" data-cy="save-draft-button" />
+        <ArticlesButton able={isDisabled} addClass="bg-slate-400 text-black font-bold hover:text-white rounded-sm p-2" text="Нийтлэх" typeText={typeText} data-cy="publish-button" />
       </div>
     </div>
   );
