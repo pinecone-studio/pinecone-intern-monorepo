@@ -24,6 +24,8 @@ describe('CourseDetail Component Tests', () => {
 
   const interceptGraphQL = (state: string) => {
     cy.intercept('POST', '**/graphql', (req) => {
+      console.log('Intercepting request:', req.body);
+
       if (req.body.operationName === 'GetCourse') {
         const response = generateResponse(state);
         req.reply(response);

@@ -36,7 +36,7 @@ const CourseDetail = () => {
             </p>
             <Lessons />
           </div>
-          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <div></div>}</div>
+          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <></>}</div>
         </div>
       </div>
     </div>
