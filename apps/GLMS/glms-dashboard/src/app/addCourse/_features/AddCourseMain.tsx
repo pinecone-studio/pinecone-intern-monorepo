@@ -6,6 +6,7 @@ import { CourseEntButton } from '../_components/CourseEntButton';
 import { CourseEntry } from '../_components/CourseEntry';
 import { InputData } from '../_components/CourseEntry';
 import { useCreateCourseMutation } from '@/generated';
+import { Button } from '@/components/ui/button';
 
 export const AddCourseMain: React.FC = () => {
   const router = useRouter();
@@ -56,10 +57,10 @@ export const AddCourseMain: React.FC = () => {
   return (
     <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
       <div>
-        <div onClick={navigateToHome} className="flex items-center cursor-pointer mb-[24px] mt-[30px]">
+        <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px] mt-[30px]">
           <Arrow />
           <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
-        </div>
+        </Button>
         <div className="rounded-[12px] bg-white p-[24px] w-[1250px] max-w-full">
           <h2 className="text-2xl font-bold ">Сэдвийн ерөнхий мэдээлэл</h2>
           <div className="flex justify-between gap-[32px]">

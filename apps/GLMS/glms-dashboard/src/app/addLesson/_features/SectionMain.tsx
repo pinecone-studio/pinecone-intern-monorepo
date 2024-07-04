@@ -5,13 +5,11 @@ import { SectionButton } from '../_components/SectionButton';
 import { SectionSaveButt } from '../_components/SectionSaveButt';
 import { Arrow } from '@/app/icons';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
 
 export const SectionMain = () => {
-  const router = useRouter();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [inputData, setInputData] = useState({
     title: '',
@@ -61,14 +59,11 @@ export const SectionMain = () => {
       }
     }
   };
-  const toCourse = () => {
-    router.push('/addCourse');
-  };
 
   return (
     <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100vw ] h-[100vh]">
       <div>
-        <Button onClick={toCourse} variant="ghost" className="flex w-[310px] justify-between items-center mb-[15px] mt-[25px]">
+        <Button variant="ghost" className="flex w-[310px] justify-between items-center mb-[15px] mt-[25px]">
           <Arrow />
           <p className=" text-base font-semibold">Хичээлийн ерөнхий мэдээлэл</p>
         </Button>
