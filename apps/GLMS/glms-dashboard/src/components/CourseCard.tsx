@@ -30,7 +30,7 @@ export const CourseCard = ({ title, content }: LessonCardProps) => {
           <CardDescription style={truncateLines} data-testid="lessonDesc" className="mt-1 text-sm">
             {content}
           </CardDescription>
-          <Badge variant="secondary" data-testid="lessonCount" className="bg-[#C1E6CF] text-[#0A4E22] h-[24px] w-[81px] flex justify-center text-center font-light text-base mt-2 ">
+          <Badge variant="secondary" data-testid="lessonCount" className="bg-[#C1E6CF] text-[#0A4E22] h-[24px] w-[81px] flex justify-center text-center font-light text-base mt-[8px] ">
             lessons
           </Badge>
         </div>
