@@ -10,26 +10,29 @@ export const Lessons = () => {
   const { data, loading, error } = useGetLessonsQuery({
     variables: { courseId: courseId },
   });
-  console.log('Lessons: ', data);
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div data-testid="error-message">Error: {error.message}</div>;
   }
 
   if (loading || !data) {
-    return <div>Loading...</div>;
+    return <div data-testid="loading">Loading...</div>;
   }
 
+  console.log('Lessons: ', data);
+
   return (
-    <div>
+    <div data-testid="lessons-list">
       <div className="flex flex-col gap-3">
         {data?.getLessons?.map((lesson) => (
           // eslint-disable-next-line react/jsx-key
-          <LessonCard customKey={lesson?.id} title={lesson?.title} id={lesson?.id} href={`/student/${courseId}/${lesson?.id}`} />
+          <div key={lesson?.id} data-testid={`lesson-${lesson?.id}`}>
+            <LessonCard title={lesson?.title} id={lesson?.id} href={`/student/${courseId}/${lesson?.id}`} />
+          </div>
         ))}
       </div>
 
-      {data?.getLessons?.length === 0 && <div>No lesson found.</div>}
+      {data?.getLessons?.length === 0 && <div data-testid="no-lessons">No lesson found.</div>}
     </div>
   );
 };

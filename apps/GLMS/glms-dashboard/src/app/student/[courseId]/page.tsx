@@ -15,30 +15,28 @@ const CourseDetail = () => {
   });
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div data-testid="error-message">Error: {error.message}</div>;
   }
 
   if (loading || !data) {
-    return <div>Loading...</div>;
-  }
-
-  if (!data) {
-    return <div>No course found.</div>;
+    return <div data-testid="loading">Loading...</div>;
   }
 
   return (
-    <div className="mx-auto container mb-4">
+    <div data-testid="course-details" className="mx-auto container mb-4">
       <ActionLinkButton label="Hүүр хуудас" href={'/student'} Icon={ArrowLeft} />
       <div className="bg-white mt-5 p-5 rounded-[12px]">
         <div className="grid grid-cols-3 gap-5 ">
           <div className="col-span-2 flex flex-col gap-10">
-            <h1 className="text-8xl font-bold">{data.getCourse?.title}</h1>
-            <p className="text-lg">{data.getCourse?.content}</p>
+            <h1 data-testid="course-title" className="text-8xl font-bold">
+              {data.getCourse?.title}
+            </h1>
+            <p data-testid="course-content" className="text-lg">
+              {data.getCourse?.content}
+            </p>
             <Lessons />
           </div>
-          <div className="">
-            <Image src={data!.getCourse!.thumbnail as string} alt="Description of Image" width={500} height={300} />
-          </div>
+          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <div></div>}</div>
         </div>
       </div>
     </div>
