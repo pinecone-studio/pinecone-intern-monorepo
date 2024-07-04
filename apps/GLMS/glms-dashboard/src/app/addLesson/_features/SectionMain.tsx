@@ -10,16 +10,16 @@ const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
 
 export const SectionMain = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [inputData, setInputData] = useState({
     title: '',
-    description: '',
+    content: '',
   });
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setDisabled(!(inputData.title.trim() && inputData.description.trim() && imageUrl));
-  }, [imageUrl, inputData]);
+    setDisabled(!(inputData.title.trim() && inputData.content.trim() && thumbnail));
+  }, [thumbnail, inputData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -52,7 +52,7 @@ export const SectionMain = () => {
         console.log('Uploaded image URL:', resJson.url);
 
         if (resJson.url) {
-          setImageUrl(resJson.url);
+          setThumbnail(resJson.url);
         }
       } catch (error) {
         console.error('Error uploading image:', error);
@@ -71,10 +71,10 @@ export const SectionMain = () => {
           <label htmlFor="file-upload" className="cursor-pointer">
             <div className="relative">
               <input id="file-upload" type="file" onChange={fileChangeHandler} style={{ display: 'none' }} />
-              {imageUrl && (
+              {thumbnail && (
                 <CardMedia
                   component="img"
-                  src={imageUrl}
+                  src={thumbnail}
                   style={{
                     borderRadius: '8px',
                     width: '580px',
