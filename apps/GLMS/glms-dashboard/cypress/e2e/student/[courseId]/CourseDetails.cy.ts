@@ -35,7 +35,7 @@ describe('CourseDetail Component Tests', () => {
 
   beforeEach(() => {
     interceptGraphQL('default');
-    cy.visit('/student/229a1941-35bd-43fa-8a49-e23e5798f70e');
+    cy.visit('/student/475e4247-4ac0-4115-a7f2-18c638ca47b9');
   });
 
   it('displays error message on failure', () => {
