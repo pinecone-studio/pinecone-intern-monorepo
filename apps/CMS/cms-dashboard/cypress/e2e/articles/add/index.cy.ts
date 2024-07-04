@@ -4,7 +4,6 @@ describe('Index Page', () => {
     cy.visit('/articles/add');
   });
 
-
   it('Should render TextField and RightField components', () => {
     cy.contains('Гарчиг өгөх').should('exist');
     cy.contains('Нийтлэлээ бичих').should('exist');
@@ -26,8 +25,9 @@ describe('Index Page', () => {
       title: 'Mocked Title',
       body: 'Mocked Body Content',
     };
-    cy.get('[name="title"]').type(testValues.title);;
-    cy.get('[name="body"]').type(testValues.body);;
-    cy.get('[data-cy="submit-button"]').click();
+    cy.get('[name="title"]').type(testValues.title);
+    cy.get('[name="body"]').type(testValues.body);
+    cy.get('[data-cy="save-draft-button"]').click();
+    cy.get('[data-cy="publish-button"]').click();
   });
 });

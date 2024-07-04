@@ -1,19 +1,18 @@
-'use client';
-
+import React from 'react';
 import { Button } from '@/components/ui/button';
-type PropsType = {
-  text: string;
+
+type ArticlesButtonProps = {
+  able: boolean;
   addClass?: string;
-  able?: boolean;
+  text: 'Save Draft' | 'Publish' | 'Ноорогт хадгалах' | 'Нийтлэх';
   typeText?: 'submit' | 'button' | 'reset' | undefined;
+  'data-cy'?: string;
 };
 
-export const ArticlesButton = ({ text, addClass, able, typeText }: PropsType): JSX.Element => {
+export const ArticlesButton = ({ able, addClass, text, typeText, 'data-cy': dataCy }: ArticlesButtonProps) => {
   return (
-    <div className="flex w-full cursor-pointer hover:text-white">
-      <Button disabled={able} className={`w-full ${addClass}`} data-cy="submit-button" type={typeText}>
-        {text}
-      </Button>
-    </div>
+    <Button type={typeText} disabled={able} className={`button ${addClass}`} data-cy={dataCy}>
+      {text}
+    </Button>
   );
 };
