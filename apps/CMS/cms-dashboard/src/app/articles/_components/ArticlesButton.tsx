@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 
 type ArticlesButtonProps = {
   able: boolean;
@@ -11,8 +10,8 @@ type ArticlesButtonProps = {
 
 export const ArticlesButton = ({ able, addClass, text, typeText, 'data-cy': dataCy }: ArticlesButtonProps) => {
   return (
-    <Button type={typeText} disabled={able} className={`button ${addClass}`} data-cy={dataCy}>
+    <button type={typeText} disabled={able} className={`button ${addClass}`} data-cy={dataCy}>
       {text}
-    </Button>
+    </button>
   );
 };

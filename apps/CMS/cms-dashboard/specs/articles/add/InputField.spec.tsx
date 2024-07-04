@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import '@testing-library/jest-dom';
-import { InputField } from '../../src/app/articles/_components';
+import { InputField } from '@/app/articles/_components';
 
 const validationSchema = Yup.object().shape({
   testField: Yup.string().required('Test error'),

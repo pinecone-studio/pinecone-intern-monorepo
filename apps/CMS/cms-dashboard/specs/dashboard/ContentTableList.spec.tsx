@@ -1,4 +1,4 @@
-import { TableContent } from '../../src/app/articles/_components';
+import { TableContent } from '@/app/articles/_components';
 import { render } from '@testing-library/react';
 
 describe('TableContent', () => {

@@ -29,5 +29,8 @@ describe('Index Page', () => {
     cy.get('[name="body"]').type(testValues.body);
     cy.get('[data-cy="save-draft-button"]').click();
     cy.get('[data-cy="publish-button"]').click();
+
+    cy.get('[data-cy="custom-button-cy-id"]').should('exist').should('be.visible').click({ multiple: true });
+    cy.get('[data-cy="publishButtonArticle"]').should('exist').should('be.visible').click();
   });
 });
