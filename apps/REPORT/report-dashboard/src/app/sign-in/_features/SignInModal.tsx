@@ -81,7 +81,7 @@ const SignInModal = () => {
             type="submit"
             className="w-[360px] h-[56px] bg-[#121316] dark:hover:bg-black dark:hover:border-[1px] dark:hover:border-[#FFF] transition dark:bg-[#E1E7EF] rounded-[8px] relative group"
           >
-            <p className="text-[16px] font-medium dark:group-hover:text-white transition">Дараах</p>
+            <p className="text-[16px] font-medium dark:group-hover:text-[#E1E7EF]transition">Дараах</p>
             <ArrowIcon />
           </Button>
         </div>
