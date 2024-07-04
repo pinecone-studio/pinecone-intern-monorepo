@@ -8,8 +8,6 @@ const { composePlugins, withNx } = require('@nx/next');
  **/
 const nextConfig = {
   nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
     svgr: false,
   },
   env: {
@@ -20,11 +18,21 @@ const nextConfig = {
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || '',
     PUB_URL: process.env.PUB_URL || '',
   },
+  images: {
+    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'http', // Change to 'https' if necessary
+        hostname: 'res.cloudinary.com',
+        pathname: '/dbtqkhmu5/**', // Adjust based on your Cloudinary configuration
+      },
+    ],
+  },
 };
 
 const plugins = [
-  // Add more Next.js plugins to this list if needed.
   withNx,
+  // Add any additional plugins here
 ];
 
 module.exports = composePlugins(...plugins)(nextConfig);
