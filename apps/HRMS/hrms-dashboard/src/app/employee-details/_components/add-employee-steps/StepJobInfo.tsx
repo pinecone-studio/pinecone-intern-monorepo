@@ -1,9 +1,10 @@
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowIcon } from '../Icons/ModalIcons';
-import { useState } from 'react';
+import { object, string, array } from 'yup';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -17,6 +18,13 @@ type EmployeesInfoType = {
   dateOfEmployment: Date;
   employmentStatus: EmploymentStatus;
 };
+
+const userSchema = object({
+  department: string().required(),
+  jobTitle: array().of(string()).required(),
+  salary: string().required(),
+  employmentStatus: string().required(),
+});
 
 export const StepJobInfo = ({
   nextStep,
@@ -40,7 +48,6 @@ export const StepJobInfo = ({
   };
   changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
 }) => {
-  const [validMessage, setValidMessage] = useState('');
   const formik = useFormik({
     initialValues: {
       department: employeesInfo.department,
@@ -48,33 +55,19 @@ export const StepJobInfo = ({
       salary: employeesInfo.salary,
       employmentStatus: employeesInfo.employmentStatus,
     },
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        console.log('Submitting form with values:', values);
-        changeEmployee(values);
-        console.log('Employee created successfully:');
-        resetForm();
-      } catch (error) {
-        console.error('Error creating employee:', error);
-      }
+    validationSchema: userSchema,
+    onSubmit: async (values) => {
+      changeEmployee(values);
+      nextStep();
     },
   });
 
-  const handleNext = () => {
-    formik.handleSubmit();
-    if (formik.values.department !== null && formik.values.jobTitle !== null && formik.values.salary !== '' && formik.values.employmentStatus !== null) {
-      nextStep();
-    } else {
-      setValidMessage('Мэдээллээ бүрэн оруулна уу');
-    }
-  };
-
   return (
-    <div className="flex flex-col gap-10">
+    <div data-testid="job-info" className="flex flex-col gap-10">
       <div data-testid="step-job-info" className="flex gap-4 flex-col">
-        <div className="flex flex-col gap-1">
+        <div data-testid="step-info" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Хэлтэс'}</label>
-          <Select onValueChange={(value) => formik.setFieldValue('department', value)}>
+          <Select data-testid="select-one" onValueChange={(value) => formik.setFieldValue('department', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue placeholder="Хэлтэс" />
             </SelectTrigger>
@@ -85,18 +78,21 @@ export const StepJobInfo = ({
               <SelectItem value={Department.Software}>{Department.Software}</SelectItem>
             </SelectContent>
           </Select>
+          {formik.errors.department && <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.department}</label>}
         </div>
-        <div className="flex flex-col gap-1">
+        <div data-testid="input-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Мэргэжил'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="jobTitle" value={formik.values.jobTitle} onChange={formik.handleChange} />
+          {formik.errors.jobTitle && <label className=" text-[16px] font-normal text-red-500">{formik.errors.jobTitle}</label>}
         </div>
-        <div className="flex flex-col gap-1">
+        <div data-testid="input-two" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Цалин'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="salary" value={formik.values.salary} onChange={formik.handleChange} />
+          {formik.errors.salary && <label className=" text-[16px] font-normal text-red-500">{formik.errors.salary}</label>}
         </div>
-        <div className="flex flex-col gap-1">
+        <div data-testid="input-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Ажлын цаг'}</label>
-          <Select onValueChange={(value) => formik.setFieldValue('employmentStatus', value)}>
+          <Select data-testid="select-two" onValueChange={(value) => formik.setFieldValue('employmentStatus', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue placeholder="Ажлын цаг" />
             </SelectTrigger>
@@ -108,7 +104,7 @@ export const StepJobInfo = ({
               <SelectItem value={EmploymentStatus.Temporary}>{EmploymentStatus.Temporary}</SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-[12px] text-[red]">{validMessage}</p>
+          {formik.errors.employmentStatus && <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.employmentStatus}</label>}
         </div>
       </div>
       <div className="flex justify-between">
@@ -117,7 +113,7 @@ export const StepJobInfo = ({
             <LeftArrowIcon />
           </div>
         </button>
-        <button data-testid="next-button" onClick={handleNext} className="flex gap-1 items-center px-4 py-2 h-12 rounded-[8px] bg-[#D6D8DB]">
+        <button data-testid="next-button" onClick={() => formik.handleSubmit} className="flex gap-1 items-center px-4 py-2 h-12 rounded-[8px] bg-[#D6D8DB]">
           <p className="text-[#A9ACAF] text-[16px] font-[600] leading-5 tracking-[-0.3px]">Дараах</p>
           <div className="w-6 h-6">
             <RightArrowIcon />

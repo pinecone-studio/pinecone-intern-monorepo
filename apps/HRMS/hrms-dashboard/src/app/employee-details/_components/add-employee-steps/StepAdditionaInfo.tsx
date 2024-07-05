@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowWhiteIcon } from '../Icons/ModalIcons';
-import { useState } from 'react';
+import { object, string, array } from 'yup';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -16,6 +16,13 @@ type EmployeesInfoType = {
   dateOfEmployment: Date;
   employmentStatus: EmploymentStatus;
 };
+
+const userSchema = object({
+  department: string().required(),
+  jobTitle: array().of(string()).required(),
+  salary: string().required(),
+  employmentStatus: string().required(),
+});
 
 export const StepAdditionalInfo = ({
   prevStep,
@@ -43,36 +50,20 @@ export const StepAdditionalInfo = ({
   fileChangeHandler: (_event: React.ChangeEvent<HTMLInputElement>) => void;
   imageUrl: string;
 }) => {
-  const [validMessage, setValidMessage] = useState('');
   const formik = useFormik({
     initialValues: {
       imageURL: employeesInfo.imageURL,
       ladderLevel: employeesInfo.ladderLevel,
     },
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        console.log('Submitting form with values:', values);
-        changeEmployee(values);
-        console.log('Employee created successfully:');
-        resetForm();
-      } catch (error) {
-        console.error('Error creating employee:', error);
-      }
+    validationSchema: userSchema,
+    onSubmit: async (values) => {
+      changeEmployee(values);
+      createData();
     },
   });
 
   const handleAddImage = () => {
     formik.setFieldValue('imageURL', imageUrl);
-    console.log('formik image', imageUrl);
-  };
-
-  const handleNext = () => {
-    formik.handleSubmit();
-    if (formik.values.imageURL !== '' && formik.values.ladderLevel !== '') {
-      createData();
-    } else {
-      setValidMessage('Мэдээллээ бүрэн оруулна уу');
-    }
   };
 
   return (
@@ -81,9 +72,10 @@ export const StepAdditionalInfo = ({
         <div className="flex flex-col gap-4">
           <label className=" text-[16px] font-normal text-[#121316]">{'Мэрэгжлийн зэрэг'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="ladderLevel" value={formik.values.ladderLevel} onChange={formik.handleChange} />
+          <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.ladderLevel}</label>
           <div className="flex gap-5 justify-center">
             <Input className="wrap h-[56px] w-[105px] px-[8px] py-[8px] bg-[#F7F7F8]" type="file" name="image" onChange={fileChangeHandler} />
-            <p className="text-[12px] text-[red]">{validMessage}</p>
+            <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.imageURL}</label>
             <button onClick={handleAddImage}>
               upload
               <div
@@ -100,7 +92,7 @@ export const StepAdditionalInfo = ({
             <LeftArrowIcon />
           </div>
         </button>
-        <button onClick={handleNext} type="submit">
+        <button onClick={() => formik.handleSubmit} type="submit">
           <div data-testid="step-3" className="flex h-12 rounded-[8px] min-w-[80px] px-[16px] py-[12px] bg-[#121316] items-center">
             <div className="px-2 py-1 flex">
               <p className="text-[#FFF] text-[16px] font-[600] leading-5 tracking-[-0.3px] not-italic">Илгээх</p>
