@@ -1,5 +1,5 @@
 import React from 'react';
-import { Img } from '@/app/icons/Img';
+import { Image } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -36,7 +36,7 @@ export const SectionEntry: React.FC<SectionEntryProps> = ({ inputData, handleInp
         <p style={style}>Хичээлийн зураг</p>
         <div className="flex flex-col items-center justify-center border-gray-400 gap-[8px] w-[590px] h-[240px] border-dashed border-2 rounded-[8px]">
           <div className="flex flex-col items-center">
-            <Img />
+            <Image className="text-[#D6D8DB]" />
             <p className="text-[#D6D8DB]">Зураг сонгоно уу</p>
           </div>
         </div>
