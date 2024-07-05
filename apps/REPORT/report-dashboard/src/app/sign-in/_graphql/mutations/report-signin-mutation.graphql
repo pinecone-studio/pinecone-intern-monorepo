@@ -1,5 +1,5 @@
 mutation reportSignIn($input: SignInInput) {
-  reportSignIn(input: SignInInput) {
+  reportSignIn(input: { email: $email, password: $password }) {
     message
     token
   }
