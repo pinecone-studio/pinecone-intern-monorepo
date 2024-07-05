@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         },
       });
       const token = signInData?.reportSignIn.token;
-      localStorage.setItem('acl', token || '');
+      localStorage.setItem('token', token || '');
       const data = jwt.decode(token);
       setAccess(data?.role);
       router.push('/dashboard');
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('acl');
+    const token = localStorage.getItem('token');
     const data = jwt.decode(token);
     setAccess(data?.role);
   }, []);
