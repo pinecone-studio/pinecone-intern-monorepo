@@ -13,6 +13,22 @@ query GetLessons($courseId: ID!) {
   }
 }
 
+mutation CreateLesson($createInput: CreateLessonInput) {
+  createLesson(createInput: $createInput) {
+    id
+    courseId {
+      id
+      title
+      thumbnail
+      content
+    }
+    title
+    thumbnail
+    content
+  }
+}
+
+
 query GetLessonDetails($id: ID!) {
   getLessonDetails(_id: $id) {
     id

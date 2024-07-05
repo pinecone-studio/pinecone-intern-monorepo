@@ -12,7 +12,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <div className="border-b">
+    <div className="border-b bg-white">
       <div className="container mx-auto grid grid-cols-2 items-center">
         <div className="flex flex-col gap-[32px]">
           <div>

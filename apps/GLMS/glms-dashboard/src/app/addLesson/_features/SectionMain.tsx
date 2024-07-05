@@ -5,20 +5,21 @@ import { SectionButton } from '../_components/SectionButton';
 import { SectionSaveButt } from '../_components/SectionSaveButt';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+// import { useCreateLessonMutation } from '@/generated';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
 
 export const SectionMain = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const [inputData, setInputData] = useState({
     title: '',
-    description: '',
+    content: '',
   });
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setDisabled(!(inputData.title.trim() && inputData.description.trim() && imageUrl));
+    setDisabled(!(inputData.title.trim() && inputData.content.trim() && imageUrl));
   }, [imageUrl, inputData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -60,6 +61,27 @@ export const SectionMain = () => {
     }
   };
 
+  // const [createLesson] = useCreateLessonMutation();
+
+  // const handelCreateLesson = async () => {
+  //   try {
+  //     await createLesson({
+  //       variables: {
+  //         createInput: {
+  //           courseId: null,
+  //           title: inputData.title,
+  //           thumbnail: imageUrl,
+  //           content: inputData.content
+  //         }
+  //       }
+  //     })
+  //   }
+  // }
+
+  const handleValue = () => {
+    console.log(inputData, imageUrl);
+  };
+
   return (
     <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100% ] h-[100%]">
       <div>
@@ -91,7 +113,7 @@ export const SectionMain = () => {
           </label>
           <div className="pt-[24px] flex flex-col items-center gap-[32px]">
             <SectionButton />
-            <SectionSaveButt disabled={disabled} />
+            <SectionSaveButt disabled={disabled} onClick={handleValue} />
           </div>
         </div>
       </div>
