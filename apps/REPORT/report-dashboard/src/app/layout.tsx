@@ -18,9 +18,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <FederationProvider>
           <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-              <ToastContainer>
-                <ProjectHeader />
-              </ToastContainer>
+              <ToastContainer />
+              <ProjectHeader />
+              <ToastContainer />
               {children}
             </ThemeProvider>
           </AuthProvider>
