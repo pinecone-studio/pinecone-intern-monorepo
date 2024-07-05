@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
 import { ProjectHeader } from '@/components/ProjectHeader';
+import { AuthProvider } from '@/common/providers/AuthProvider';
 
 export const metadata = {
   title: 'Welcome to CMS-dashboard',
@@ -15,7 +16,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <FederationProvider>
             <ProjectHeader />
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </FederationProvider>
         </ThemeProvider>
       </body>
