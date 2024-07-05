@@ -52,6 +52,6 @@ export const glmsUserTypeDefs = gql`
     createGlmsUser(input: glmsCreateUserInput): glmsUser
     updateGlmsUser(_id: ID!, updateInput: glmsUpdateUserInput!): glmsUser
     deleteGlmsUser(_id: ID!): glmsUser
-    glmsSignIn(logInput: glmsLogInInput): Token
+    glmsLogIn(logInput: glmsLogInInput): Token
   }
 `;

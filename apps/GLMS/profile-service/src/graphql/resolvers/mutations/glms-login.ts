@@ -3,7 +3,7 @@ import { GraphQLError } from 'graphql';
 import { MutationResolvers } from '@/graphql/generated';
 import glmsUserModel from '@/graphql/models/user.model';
 
-export const glmsSignIn: MutationResolvers['glmsLogIn'] = async (_, { logInput }) => {
+export const glmsLogIn: MutationResolvers['glmsLogIn'] = async (_, { logInput }) => {
   try {
     const email = logInput?.email;
     const password = logInput?.password;
