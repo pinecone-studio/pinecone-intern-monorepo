@@ -70,7 +70,7 @@ export const employeeDetailsSchema = gql`
     department: Department
     jobTitle: [String]
     ladderLevel: String
-    salary: String
+    salary: String!
     bankName: String
     bankAccountNumber: String
     dateOfReleased: Date

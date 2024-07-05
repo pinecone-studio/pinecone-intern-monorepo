@@ -8,7 +8,7 @@ export const Hero: React.FC = () => {
   const router = useRouter();
 
   const navigateToIndex = () => {
-    router.push('/addLesson');
+    router.push('/addCourse');
   };
 
   return (

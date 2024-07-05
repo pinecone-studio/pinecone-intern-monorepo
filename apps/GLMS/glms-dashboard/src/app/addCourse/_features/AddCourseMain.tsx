@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Arrow } from '@/app/icons';
 import { PicUpload } from './PicUpload';
-import { LessEntButton } from '../_components/LessEntButton';
-import { LessonEntry } from '../_components/LessonEntry';
-import { InputData } from '../_components/LessonEntry';
+import { CourseEntButton } from '../_components/CourseEntButton';
+import { CourseEntry } from '../_components/CourseEntry';
+import { InputData } from '../_components/CourseEntry';
 import { useCreateCourseMutation } from '@/generated';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
-export const AddLessonMain: React.FC = () => {
-  const [imageUrl, setImageUrl] = useState('');
+export const AddCourseMain: React.FC = () => {
   const router = useRouter();
+  const [imageUrl, setImageUrl] = useState('');
   const [inputData, setInputData] = useState<InputData>({
     title: '',
     content: '',
@@ -54,18 +55,20 @@ export const AddLessonMain: React.FC = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-[#F7F7F8] flex justify-center items-center">
-      <div className="rounded-[12px] bg-white p-[24px] max-w-[1250px] w-full">
-        <div onClick={navigateToHome} className="flex items-center cursor-pointer mb-[24px]">
-          <Arrow />
+    <div className="w-[100%] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
+      <div className="p-[30px]">
+        <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px]">
+          <ArrowLeft />
           <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
+        </Button>
+        <div className="rounded-[12px] bg-white p-[24px] w-[1250px] max-w-full">
+          <h2 className="text-2xl font-bold ">Сэдвийн ерөнхий мэдээлэл</h2>
+          <div className="flex justify-between gap-[32px]">
+            <CourseEntry inputData={inputData} handleInputChange={handleInputChange} />
+            <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
+          </div>
+          <CourseEntButton handleCreateMutation={handleCreateMutation} isFormValid={isFormValid} />
         </div>
-        <h2 className="text-2xl font-bold ">Сэдвийн ерөнхий мэдээлэл</h2>
-        <div className="flex justify-between gap-[32px]">
-          <LessonEntry inputData={inputData} handleInputChange={handleInputChange} />
-          <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
-        </div>
-        <LessEntButton handleCreateMutation={handleCreateMutation} isFormValid={isFormValid} />
       </div>
     </div>
   );

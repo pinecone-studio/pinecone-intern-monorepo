@@ -52,6 +52,7 @@ export const StepPersonalInfo = ({
     },
     validationSchema: userSchema,
     onSubmit: async (values) => {
+      console.log('Submitting form with values:', values);
       changeEmployee(values);
       nextStep();
     },

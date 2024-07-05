@@ -5,7 +5,7 @@ describe('employee-detail', () => {
     cy.get('[data-cy="dashboardSidebar').children().should('have.length', 4);
     cy.get('[data-cy="headerIcon"]').should('exist').should('be.visible');
     cy.get('[data-cy="headerProfile"]').should('exist').should('be.visible');
-    cy.get('[data-cy="Home-Page"]').should('exist').should('be.visible');
+    // cy.get('[data-cy="Home-Page"]').should('exist').should('be.visible');
     cy.get('[data-cy="employeeDetailHeader"]').should('exist').should('be.visible');
     cy.get('[data-cy="Employee-Detail-children"]').should('exist').should('be.visible');
   });

@@ -1,5 +1,5 @@
 import { MutationDeleteLessonArgs } from '@/graphql/generated';
-import { LessonsModel } from '@/models/lessons';
+import { LessonsModel } from '@/models/lessons.model';
 import { GraphQLError } from 'graphql';
 
 export const deleteLesson = async (_: unknown, { id }: MutationDeleteLessonArgs) => {

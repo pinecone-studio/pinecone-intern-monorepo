@@ -1,0 +1,29 @@
+query GetLessons($courseId: ID!) {
+  getLessons(courseId: $courseId) {
+    id
+    courseId {
+      id
+      title
+      thumbnail
+      content
+    }
+    title
+    thumbnail
+    content
+  }
+}
+
+query GetLessonDetails($id: ID!) {
+  getLessonDetails(_id: $id) {
+    id
+    courseId {
+      id
+      title
+      thumbnail
+      content
+    }
+    title
+    thumbnail
+    content
+  }
+}

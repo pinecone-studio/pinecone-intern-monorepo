@@ -1,7 +1,7 @@
 import { deleteCourse } from '@/graphql/resolvers/mutations';
-import { CoursesModel } from '@/models/courses';
+import { CoursesModel } from '@/models/courses.model';
 
-jest.mock('@/models/courses', () => ({
+jest.mock('@/models/courses.model', () => ({
   CoursesModel: {
     findByIdAndDelete: jest.fn(),
   },

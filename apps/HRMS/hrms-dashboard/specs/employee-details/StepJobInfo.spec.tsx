@@ -20,7 +20,6 @@ jest.mock('@/components/ui/select', () => ({
   SelectContent: ({ children }) => <>{children}</>,
   SelectItem: ({ value, children }) => <option value={value}>{children}</option>,
   SelectTrigger: () => <div />,
-  SelectValue: () => <div />,
 }));
 
 jest.mock('../../src/app/employee-details/_components/Icons/ModalIcons', () => ({

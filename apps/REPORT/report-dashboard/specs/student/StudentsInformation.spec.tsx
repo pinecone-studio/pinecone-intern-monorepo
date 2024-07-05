@@ -14,7 +14,7 @@ describe('StudentsInformation component', () => {
       loading: true,
       error: undefined,
     };
-    require('../../src/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
+    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
     let component;
     await act(async () => {
       component = render(<StudentsInformation />);

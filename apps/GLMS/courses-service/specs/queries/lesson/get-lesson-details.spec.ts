@@ -1,49 +1,63 @@
 import { getLessonDetails } from '@/graphql/resolvers/queries';
-import { LessonsModel } from '@/models/lessons';
+import { LessonsModel } from '@/models/lessons.model';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('@/models/lessons', () => ({
+jest.mock('@/models/lessons.model', () => ({
   LessonsModel: {
     findById: jest.fn(),
   },
 }));
 
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  const populateMock = jest.fn().mockResolvedValue(mockLesson);
+
+  (LessonsModel.findById as jest.Mock).mockImplementation(() => ({
+    populate: populateMock,
+  }));
+});
+
+const mockLesson = {
+  id: '1',
+  courseId: {
+    id: '101',
+    title: 'Title test',
+    thumbnail: 'Thumbnail test',
+    content: 'Content test',
+  },
+  title: 'Title test',
+  thumbnail: 'Thumbnail test',
+  content: 'Thumbnail test',
+};
+
 describe('Get Lesson Details', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  it('should return lesson details when found', async () => {
+    const result = await getLessonDetails!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);
 
-  it('should return a lesson details when found', async () => {
-    (LessonsModel.findById as jest.Mock).mockResolvedValue({
-      id: '1',
-      courseId: '101',
-      title: 'Test Title',
-      thumbnail: 'Test Thumbnail',
-      content: 'Test Content',
-    });
+    expect(result).toEqual(mockLesson);
+    expect(LessonsModel.findById).toHaveBeenCalledWith('1');
 
-    const result = await getLessonDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo);
-
-    expect(result).toEqual({
-      id: '1',
-      courseId: '101',
-      title: 'Test Title',
-      thumbnail: 'Test Thumbnail',
-      content: 'Test Content',
+    expect(LessonsModel.findById({}, { _id: '1' }).populate).toHaveBeenCalledWith({
+      path: 'courseId',
+      model: 'GLMS-Courses',
     });
   });
 
-  it('should throw an error when nop lesson details is found', async () => {
-    (LessonsModel.findById as jest.Mock).mockResolvedValue(null);
+  it('should throw an error if no lesson is found', async () => {
+    (LessonsModel.findById as jest.Mock).mockImplementation(() => ({
+      populate: jest.fn().mockResolvedValue(null),
+    }));
 
-    await expect(getLessonDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Lesson not found');
+    await expect(getLessonDetails!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Lesson not found');
   });
 
   it('should handle errors when the database fails', async () => {
     const errorMessage = 'Database error';
+    (LessonsModel.findById as jest.Mock).mockImplementationOnce(() => ({
+      populate: jest.fn().mockRejectedValue(new Error(errorMessage)),
+    }));
 
-    (LessonsModel.findById as jest.Mock).mockRejectedValue(new Error(errorMessage));
-
-    await expect(getLessonDetails!({}, { id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(errorMessage);
+    await expect(getLessonDetails!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(errorMessage);
   });
 });

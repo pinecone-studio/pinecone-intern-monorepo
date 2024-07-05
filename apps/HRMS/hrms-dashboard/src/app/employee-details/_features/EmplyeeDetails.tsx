@@ -1,5 +1,9 @@
 'use client';
 
+<<<<<<< HEAD
+=======
+import { Employee, useGetEmployeesQuery } from '@/generated';
+>>>>>>> main
 import PaginationDemo from '../_components/Pagination';
 import { TableDemo } from '../_components/TableBoard';
 import { AddEmployee } from '../_components/modal/AddEmployee';
@@ -24,6 +28,7 @@ type EmployeesInfoType = {
 };
 
 export const EmployeeDetails = () => {
+<<<<<<< HEAD
   const [currentStep, setCurrentStep] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
   const { data } = useGetEmployeesQuery();
@@ -89,6 +94,11 @@ export const EmployeeDetails = () => {
   const nextStep = async () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
+=======
+  const { data } = useGetEmployeesQuery();
+  const employees = data?.getEmployees;
+
+>>>>>>> main
   return (
     <div className="bg-[#F7F7F8] p-8 h-screen">
       <div className="bg-white rounded-xl pb-6 flex flex-col justify-between">

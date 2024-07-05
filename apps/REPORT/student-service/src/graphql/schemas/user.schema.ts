@@ -31,14 +31,25 @@ export const userTypeDefs = gql`
     role: String
   }
 
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     getUsers: [User]
     getUserById(id: ID!): User
+  }
+
+  type Token {
+    token: String
+    message: String
   }
 
   type Mutation {
     createUser(input: createUserInput!): User
     deleteUser(_id: ID!): User
     updateUser(_id: ID!, updateInput: updateUserInput!): User
+    reportSignIn(input: SignInInput): Token!
   }
 `;
