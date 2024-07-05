@@ -12,13 +12,11 @@ export const CourseCardMain = () => {
     return <div data-testid="loading">Loading...</div>;
   }
 
-  console.log('Lessons: ', data);
-
   return (
-    <div>
+    <div className="grid grid-cols-4 mx-auto container gap-6">
       {data?.getCourses?.map((course) => (
-        <div key={course?.id}>
-          <CourseCard title={course?.title} content={course?.content} />
+        <div key={course?.id} className="flex justify-end">
+          <CourseCard href={`/${course?.id}`} title={course?.title} content={course?.content} thumbnail={course?.thumbnail} />
         </div>
       ))}
     </div>

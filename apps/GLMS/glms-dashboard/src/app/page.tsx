@@ -7,7 +7,9 @@ const Home = () => {
   return (
     <div data-cy="Home-Page">
       <Hero />
-      <CourseCardMain />
+      <div className="my-4">
+        <CourseCardMain />
+      </div>
     </div>
   );
 };
