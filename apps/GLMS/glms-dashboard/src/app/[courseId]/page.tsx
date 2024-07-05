@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import { ActionLinkButton } from '@/components/ActionLinkButton';
 import { Lessons } from './_features/Lessons';
+import { CirclePlus } from 'lucide-react';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -34,7 +35,10 @@ const CourseDetail = () => {
             <p data-testid="course-content" className="text-lg">
               {data.getCourse?.content}
             </p>
-            <Lessons />
+            <div className="flex flex-col gap-2">
+              <ActionLinkButton href="/addLesson" variant="outline" label="Add Lesson" Icon={CirclePlus} />
+              <Lessons />
+            </div>
           </div>
           <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <></>}</div>
         </div>
