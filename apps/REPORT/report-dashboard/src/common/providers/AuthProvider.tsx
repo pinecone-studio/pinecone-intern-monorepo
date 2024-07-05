@@ -25,10 +25,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       const { data: signInData } = await reportSignIn({
         variables: {
-          input: {
-            email,
-            password,
-          },
+          email,
+          password,
         },
       });
       const token = signInData?.reportSignIn.token;
