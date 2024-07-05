@@ -21,7 +21,7 @@ export const Header = () => {
     router.push('/login');
   };
   return (
-    <header className="w-full bg-black flex items-center justify-between py-1 px-6 bg-main">
+    <header className="w-full bg-black flex items-center justify-between py-1 px-6 bg-main fixed z-[1]">
       <div onClick={handlePush} data-cy="headerIcon" className="flex items-center justify-center cursor-pointer">
         <PineLogo />
       </div>

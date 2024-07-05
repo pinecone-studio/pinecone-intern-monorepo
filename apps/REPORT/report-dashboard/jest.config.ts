@@ -4,13 +4,13 @@ export default {
   preset: '../../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
-    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'] }],
+    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'], babelrc: false }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/apps/REPORT/report-dashboard',
   setupFilesAfterEnv: ['jest-canvas-mock'],
   collectCoverageFrom: [
-    '!src/app/**/*.tsx',
+    '!src/components/**/*.tsx',
     'src/**/_components/*.tsx',
     '!**/*.spec.tsx',
     '!**/node_modules/**',

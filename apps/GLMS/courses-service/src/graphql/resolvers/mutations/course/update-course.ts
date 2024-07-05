@@ -1,5 +1,5 @@
 import { UpdateCourseInput } from '@/graphql/generated';
-import { CoursesModel } from '@/models/courses';
+import { CoursesModel } from '@/models/courses.model';
 
 export const updateCourse = async (_: unknown, { updateInput }: { updateInput: UpdateCourseInput }) => {
   const { id, ...updateFields } = updateInput;

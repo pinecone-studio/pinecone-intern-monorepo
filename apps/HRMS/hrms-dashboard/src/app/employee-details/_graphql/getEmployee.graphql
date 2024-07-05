@@ -1,0 +1,14 @@
+query GetEmployees {
+  getEmployees {
+    dateOfEmployment
+    department
+    email
+    imageURL
+    employmentStatus
+    firstname
+    id
+    jobTitle
+    lastname
+    salary
+  }
+}

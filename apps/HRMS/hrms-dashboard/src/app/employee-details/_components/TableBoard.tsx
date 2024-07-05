@@ -1,32 +1,10 @@
+'use client';
+
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Employee } from '@/generated';
 
-export const invoices = [
-  {
-    name: 'Б. Наранцацралт',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  {
-    name: 'М.Ганбат',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  {
-    name: 'Д. Маралмаа',
-    profession: 'UI/UX Дизайнер',
-    state: 'Үндсэн',
-    email: 'ganbat@gmail.com',
-    phoneNumber: 88888888,
-  },
-  // Add other objects as needed
-];
-
-export const TableDemo = () => {
+export const TableDemo = ({ employees }: { employees: Employee[] }) => {
   return (
     <Table className="px-6 ">
       <TableCaption></TableCaption>
@@ -50,16 +28,19 @@ export const TableDemo = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice, index) => (
-          <TableRow data-testid={`TableContent-${index}`} key={invoice.name}>
-            <TableCell data-testid={`tableCell-1-${index}`} className="font-medium ">
-              {invoice.name}
+        {employees?.map((employee, index) => (
+          <TableRow data-testid={`TableContent-${index}`} key={employee.firstname}>
+            <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
+              <div className="flex gap-3 justify-start items-center">
+                <div className="flex w-[40px] h-[40px] rounded-full" style={{ backgroundImage: `URL(${employee.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}></div>
+                {employee.firstname}
+              </div>
             </TableCell>
-            <TableCell data-testid={`tableCell-2-${index}`}>{invoice.profession}</TableCell>
-            <TableCell data-testid={`tableCell-3-${index}`}>{invoice.email}</TableCell>
-            <TableCell data-testid={`tableCell-4-${index}`}>{invoice.phoneNumber}</TableCell>
+            <TableCell data-testid={`tableCell-2-${index}`}>{employee.jobTitle}</TableCell>
+            <TableCell data-testid={`tableCell-3-${index}`}>{employee.email}</TableCell>
+            <TableCell data-testid={`tableCell-4-${index}`}>{employee.department}</TableCell>
             <TableCell data-testid={`tableCell-5-${index}`} className="text-right">
-              {invoice.state}
+              {employee.employmentStatus}
             </TableCell>
           </TableRow>
         ))}
