@@ -50,6 +50,6 @@ export const userTypeDefs = gql`
     createUser(input: createUserInput!): User
     deleteUser(_id: ID!): User
     updateUser(_id: ID!, updateInput: updateUserInput!): User
-    reportSignIn(input: SignInInput): Token!
+    reportSignIn(input: SignInInput!): Token!
   }
 `;
