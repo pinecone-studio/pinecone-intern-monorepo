@@ -1,5 +1,5 @@
 mutation reportSignIn($input: SignInInput) {
-  reportSignIn(input: $input) {
+  reportSignIn(input: SignInInput!) {
     message
     token
   }
