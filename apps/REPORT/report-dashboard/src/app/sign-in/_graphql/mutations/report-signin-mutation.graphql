@@ -1,4 +1,4 @@
-mutation reportSignIn($input: SignInInput) {
+mutation reportSignIn($email: String!, $password: String!) {
   reportSignIn(input: { email: $email, password: $password }) {
     message
     token
