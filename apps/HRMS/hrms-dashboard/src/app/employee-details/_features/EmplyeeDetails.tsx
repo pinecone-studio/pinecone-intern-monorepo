@@ -1,8 +1,8 @@
 'use client';
 
 import { Employee, useGetEmployeesQuery } from '@/generated';
-import PaginationDemo from '../_components/Pagination';
-import { TableDemo } from '../_components/TableBoard';
+import PaginationDemo from '../_components/table/Pagination';
+import { TableDemo } from '../_components/table/TableBoard';
 import { AddEmployee } from '../_components/modal/AddEmployee';
 
 export const EmployeeDetails = () => {
