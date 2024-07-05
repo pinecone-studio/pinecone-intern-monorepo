@@ -15,8 +15,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="relative">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <FederationProvider>
-            <ProjectHeader />
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <ProjectHeader />
+              {children}
+            </AuthProvider>
           </FederationProvider>
         </ThemeProvider>
       </body>
