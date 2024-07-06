@@ -1,40 +1,36 @@
-import dynamic from 'next/dynamic';
-import { useField, useFormikContext } from 'formik';
+import React from 'react';
+import { FieldProps, useField } from 'formik';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+interface QuillInputProps extends FieldProps {
+  label?: string;
+  placeholder?: string;
+}
 
-export const QuillInput = ({ ...props }): JSX.Element => {
-  const [field, meta] = useField(props.name);
-  const { setFieldValue } = useFormikContext();
-  const modules = {
-    toolbar: [
-      [{ font: [] }, { size: [] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      [{ align: [] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ color: [] }, { background: [] }],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ indent: '-1' }, { indent: '+1' }],
-      ['link', 'image'],
-      ['clean'],
-    ],
-  };
+export const QuillInput = ({ field, form, label, placeholder }: QuillInputProps) => {
+  const [input, meta] = useField(field.name);
 
   return (
-    <>
-      <label htmlFor={props.name} className="font-semibold text-lg">
-        {props.label}
-      </label>
+    <div className="flex flex-col gap-4">
+      {label && <Label htmlFor={field.name} text={label} />}
       <ReactQuill
-        value={field.value || ''}
-        id={props.name}
-        onChange={(value) => setFieldValue(props.name, value)}
-        placeholder={props.placeholder}
-        className={`form-control ql-toolbar ql-editor ql-container rounded-lg py-[18px] border-none px-6 bg-white ${meta.touched && meta.error ? 'border-red-500' : ''}`}
-        modules={modules}
+        id={field.name}
+        value={input.value}
+        onChange={(value) => form.setFieldValue(field.name, value)}
+        placeholder={placeholder}
       />
-      {meta.touched && meta.error && <div className="text-xs mt-2 absolute text-red-600">{meta.error}</div>}
-    </>
+      {meta.touched && meta.error && <ErrorMessage message={meta.error} />}
+    </div>
   );
 };
+
+const Label = ({ htmlFor, text }: { htmlFor: string; text: string }) => (
+  <label htmlFor={htmlFor} className="tracking-light text-lg font-semibold text-[#121316] leading-6">
+    {text}
+  </label>
+);
+
+const ErrorMessage = ({ message }: { message: string }) => (
+  <div className="text-base mt-4 text-red-600">{message}</div>
+);

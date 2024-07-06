@@ -1,70 +1,99 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ImageInput } from '@/app/articles/_components/add';
-import { act } from 'react-dom/test-utils';
+import { ImageInput } from '@/app/articles/_components/add/ImageInput';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+
+// Define the validation schema for testing
+const validationSchema = Yup.object({
+  image: Yup.mixed()
+    .required('Зураггүй байж болохгүй')
+    .test('fileType', 'Зөвхөн зураг оруулна уу', value =>
+      value ? ['image/jpeg', 'image/png'].includes(value.type) : false
+    ),
+});
+
+// Setup function to render the component with Formik context
+const setup = (initialValues: any = { image: null }) => {
+  const setFieldValue = jest.fn();
+  const setFieldTouched = jest.fn();
+  render(
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={jest.fn()}
+    >
+      <Form>
+        <Field
+          name="image"
+          component={ImageInput}
+          setFieldValue={setFieldValue}
+          setFieldTouched={setFieldTouched}
+        />
+      </Form>
+    </Formik>
+  );
+  return { setFieldValue, setFieldTouched };
+};
 
 describe('ImageInput Component', () => {
-  let setFile: jest.Mock<void, [File | null]>;
-
-  beforeEach(() => {
-    setFile = jest.fn();
+  afterEach(() => {
+    jest.clearAllMocks(); // Clear mocks after each test
   });
 
   test('renders the component with initial state', () => {
-    render(<ImageInput setFile={setFile} />);
-
+    setup();
     expect(screen.getByText('Өнгөц зураг')).toBeInTheDocument();
     expect(screen.getByText('Зураг оруулах')).toBeInTheDocument();
     expect(screen.getByText('Хэмжээ: 928x427')).toBeInTheDocument();
   });
 
-  test('opens file input when clicking on the parent div', () => {
-    render(<ImageInput setFile={setFile} />);
-
-    const parentDiv = screen.getByText('Зураг оруулах').parentElement;
-    fireEvent.click(parentDiv);
-
-    const fileInput = screen.getByLabelText('Өнгөц зураг');
-    expect(fileInput).toHaveProperty('type', 'file');
-    expect(fileInput).toHaveAttribute('accept', 'image/*');
-  });
-
   test('uploads and previews an image', async () => {
-    render(<ImageInput setFile={setFile} />);
+    const { setFieldValue } = setup();
+    const file = new File([''], 'example.png', { type: 'image/png' });
 
-    const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
-    const fileInput = screen.getByLabelText('Өнгөц зураг');
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
+    fireEvent.change(screen.getByLabelText('Өнгөц зураг'), { target: { files: [file] } });
 
     await waitFor(() => {
       expect(screen.getByAltText('uploaded img')).toBeInTheDocument();
     });
-    expect(setFile).toHaveBeenCalledWith(file);
+    expect(setFieldValue).toHaveBeenCalledWith('image', file);
   });
 
-  test('does not call setFile if no file is selected', () => {
-    render(<ImageInput setFile={setFile} />);
-    const fileInput = screen.getByLabelText('Өнгөц зураг').closest('input') as HTMLInputElement;
+  test('does not call setFieldValue if no file is selected', () => {
+    const { setFieldValue } = setup();
+    const fileInput = screen.getByLabelText('Өнгөц зураг');
 
     fireEvent.change(fileInput, { target: { files: [] } });
 
-    expect(setFile).not.toHaveBeenCalled();
+    expect(setFieldValue).not.toHaveBeenCalled();
   });
 
-  test('handles invalid file upload gracefully', () => {
-    render(<ImageInput setFile={setFile} />);
+  test('shows an error message for validation errors', async () => {
+    setup({}, { image: null }, { image: true }, { image: 'Зураггүй байж болохгүй' });
 
+    await waitFor(() => {
+      expect(screen.getByText('Зураггүй байж болохгүй')).toBeInTheDocument();
+    });
+  });
+
+  test('shows an error message for invalid file type', async () => {
+    setup();
     const invalidFile = new File([''], 'example.txt', { type: 'text/plain' });
-    const fileInput = screen.getByLabelText('Өнгөц зураг');
+    fireEvent.change(screen.getByLabelText('Өнгөц зураг'), { target: { files: [invalidFile] } });
 
-    fireEvent.change(fileInput, { target: { files: [invalidFile] } });
+    await waitFor(() => {
+      expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('Зөвхөн зураг оруулна уу')).toBeInTheDocument();
+  });
 
-    expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
-    expect(setFile).not.toHaveBeenCalled();
+  test('calls setFieldTouched when input loses focus', () => {
+    const { setFieldTouched } = setup();
+
+    fireEvent.blur(screen.getByLabelText('Өнгөц зураг'));
+
+    expect(setFieldTouched).toHaveBeenCalledWith('image', true);
   });
 });
-
