@@ -5,7 +5,7 @@ describe('RightSection Component', () => {
     cy.visit('/articles/add');
   });
 
-  it('Should render the TextField and RightField components', () => {
+  it('should render the TextField and RightField components', () => {
     cy.contains('Гарчиг өгөх').should('exist');
     cy.contains('Нийтлэлээ бичих').should('exist');
     cy.contains('Өнгөц зураг').should('exist');
