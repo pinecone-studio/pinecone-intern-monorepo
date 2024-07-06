@@ -1,10 +1,9 @@
 'use client';
-import { TableContent } from './articles/_components';
 
 const Home = () => {
   return (
-    <div className="bg-[#F7F7F8] h-[93.5vh]">
-      <TableContent></TableContent>
+    <div>
+      <h1>hello from Home dashboard</h1>
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
     </div>
   );

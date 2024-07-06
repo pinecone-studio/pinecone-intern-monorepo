@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import '@testing-library/jest-dom';
-import { InputField } from '@/app/articles/_components';
+import { InputField } from '@/app/articles/_components/add';
 
 const validationSchema = Yup.object().shape({
   testField: Yup.string().required('Test error'),
@@ -12,13 +12,7 @@ const mockOnSubmit = jest.fn();
 
 const renderInputField = (props = {}, initialValues = { testField: '' }, initialTouched = {}, initialErrors = {}) => {
   return render(
-    <Formik
-      initialValues={initialValues}
-      initialTouched={initialTouched}
-      initialErrors={initialErrors}
-      validationSchema={validationSchema}
-      onSubmit={mockOnSubmit}
-    >
+    <Formik initialValues={initialValues} initialTouched={initialTouched} initialErrors={initialErrors} validationSchema={validationSchema} onSubmit={mockOnSubmit}>
       <Form>
         <InputField name="testField" label="Test Label" placeholder="test placeholder" {...props} />
       </Form>
@@ -29,7 +23,7 @@ const renderInputField = (props = {}, initialValues = { testField: '' }, initial
 describe('InputField Component', () => {
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks(); 
+    jest.clearAllMocks();
   });
   test('renders the input field with default props', () => {
     renderInputField();

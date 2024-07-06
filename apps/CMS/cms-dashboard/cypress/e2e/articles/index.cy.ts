@@ -1,9 +1,12 @@
-describe('Articles Page', () => {
+/// <reference types="cypress" />
+
+describe('ArticlesPage', () => {
   beforeEach(() => {
     cy.visit('/articles');
   });
 
-  it('Should render Articles page', () => {
-    cy.get('[data-cy="Articles-Page"]').should('exist');
+  it('Should render the Article-Page heading', () => {
+    cy.get('[data-cy="Article-Page"]').should('exist');
+    cy.get('[data-cy="Article-Page"]').should('contain.text', 'hello from ArticlesPage');
   });
 });

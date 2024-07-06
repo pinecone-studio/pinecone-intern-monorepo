@@ -5,10 +5,10 @@ type ArticlesButtonProps = {
   addClass?: string;
   text: 'Save Draft' | 'Publish' | 'Ноорогт хадгалах' | 'Нийтлэх';
   typeText?: 'submit' | 'button' | 'reset' | undefined;
-  'data-cy'?: string;
+  dataCy: string;
 };
 
-export const ArticlesButton = ({ able, addClass, text, typeText, 'data-cy': dataCy }: ArticlesButtonProps) => {
+export const ArticlesButton = ({ able, addClass, text, typeText, dataCy: dataCy }: ArticlesButtonProps) => {
   return (
     <button type={typeText} disabled={able} className={`button ${addClass}`} data-cy={dataCy}>
       {text}

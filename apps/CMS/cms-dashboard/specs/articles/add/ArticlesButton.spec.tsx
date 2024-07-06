@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { ArticlesButton } from '@/app/articles/_components';
+import { ArticlesButton } from '@/app/articles/_components/add';
 
 describe('ArticleButton', () =>{
   it('should render assessment button component', () => {
