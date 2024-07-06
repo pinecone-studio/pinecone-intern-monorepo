@@ -34,13 +34,24 @@ export const glmsUserTypeDefs = gql`
     avatar: String
   }
 
+  input glmsLogInInput {
+    email: String!
+    password: String!
+  }
+
+  type Token {
+    token: String
+    message: String
+  }
+
   type Query {
     getGlmsUsers: [glmsUser]
   }
 
   type Mutation {
     createGlmsUser(input: glmsCreateUserInput): glmsUser
-    updateGlmsUser(_id:ID!, updateInput: glmsUpdateUserInput!): glmsUser
+    updateGlmsUser(_id: ID!, updateInput: glmsUpdateUserInput!): glmsUser
     deleteGlmsUser(_id: ID!): glmsUser
+    glmsLogIn(logInput: glmsLogInInput): Token
   }
 `;
