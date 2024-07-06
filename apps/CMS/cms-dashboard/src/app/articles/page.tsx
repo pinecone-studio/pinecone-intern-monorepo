@@ -1,13 +1,10 @@
 'use client';
 
-import { TableContent } from './_components';
-
-export default async function Index() {
+export default async function ArticlesPage() {
   return (
-    <div className="bg-[#F7F7F8] h-[93.5vh]">
-      <h1 data-cy="Articles-Page">hello from Articles Page</h1>
+    <div>
+      <h1 data-cy="Article-Page">hello from ArticlesPage</h1>
       <h1>This is the environment {process.env.ENVIRONMENT}</h1>
-      <TableContent></TableContent>
     </div>
   );
 }

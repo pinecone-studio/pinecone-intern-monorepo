@@ -1,5 +1,6 @@
 'use client';
-import { TextField, RightField } from '../_features';
+import { LeftSection } from '../_features/add';
+import { RightSection } from '../_features/add';
 import { Formik, Form } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
 
@@ -14,7 +15,6 @@ export default async function Index() {
     body: '',
   };
   const handleSubmit = async () => {
-    alert('ajillaa');
   };
 
   return (
@@ -24,9 +24,9 @@ export default async function Index() {
           <Form>
             <div className="flex items-center justify-center">
               {/* Left container */}
-              <TextField />
+              <LeftSection />
               {/* Right container */}
-              <RightField text="submit" />
+              <RightSection typeText="submit" />
             </div>
           </Form>
         )}
