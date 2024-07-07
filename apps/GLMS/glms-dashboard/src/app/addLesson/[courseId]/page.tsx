@@ -1,6 +1,6 @@
 'use client';
 
-import { SectionMain } from './_features/SectionMain';
+import { SectionMain } from '../_features/SectionMain';
 
 export default async function Index() {
   return (

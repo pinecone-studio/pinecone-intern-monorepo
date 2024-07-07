@@ -7,9 +7,11 @@ import { useParams } from 'next/navigation';
 export const Lessons = () => {
   const { courseId } = useParams();
 
-  const { data, loading, error } = useGetLessonsQuery({
+  const { data, loading, error, refetch } = useGetLessonsQuery({
     variables: { courseId: courseId },
   });
+
+  refetch();
 
   if (error) {
     return <div data-testid="error-message">Error: {error.message}</div>;
