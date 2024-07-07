@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ArrowIcon from '@/assets/icons/ArrowICon';
+import { useAuth } from '@/common/providers/AuthProvider';
+
 
 const LoginForm = () => {
+  const { handleSignIn } = useAuth();
   const router = useRouter();
   const validationSchema = yup.object({
     email: yup
@@ -35,6 +38,7 @@ const LoginForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log(values);
+      await handleSignIn(values.email, values.password);
       router.push('/');
     },
   });
@@ -76,6 +80,7 @@ const LoginForm = () => {
         <div>
           <Button data-cy="submit-btn" type="submit" className="w-[360px] h-[56px] bg-[#121316] rounded-[8px] relative">
             <p className="text-[16px] font-medium">Дараах</p>
+            
             <ArrowIcon />
           </Button>
         </div>
