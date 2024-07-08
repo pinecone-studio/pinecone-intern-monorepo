@@ -1,3 +1,3 @@
 export * from './create-category';
-export * from './create-articles';
-export * from './update-articles';
+export * from './create-article';
+export * from './update-article';

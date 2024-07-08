@@ -1,3 +1,15 @@
-query HelloQueryFromArticlesService {
-  helloQueryFromCommentsService
+query GetArticles {
+  getArticles {
+    _id
+    title
+    coverPhoto
+    content
+    author
+    status
+    slug
+    createdAt
+    publishedAt
+    updatedAt
+    articleId
+  }
 }

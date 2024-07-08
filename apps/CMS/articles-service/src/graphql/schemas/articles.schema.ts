@@ -25,13 +25,11 @@ export const articleTypeDefs = gql`
   }
 
   input CreateArticleInput {
-    articleId: String
-    title: String
+    title: String!
     coverPhoto: String
-    content: String
-    author: String
-    status: ArticleStatus
-    slug: String
+    content: String!
+    status: String!
+    author: String!
   }
 
   input UpdateArticleInput {

@@ -1,0 +1,39 @@
+query getArticles {
+  getArticles {
+    _id
+    title
+    coverPhoto
+    content
+    author
+    status
+    slug
+    createdAt
+    publishedAt
+    updatedAt
+    articleId
+  }
+}
+
+mutation createArticle($articleInput: CreateArticleInput) {
+  createArticle(articleInput: $articleInput) {
+    title
+    content
+    coverPhoto
+    author
+    status
+    articleId
+    createdAt
+    publishedAt
+    updatedAt
+  }
+}
+
+mutation updateArticle($id: String!, $input: UpdateArticleInput) {
+  updateArticle(_id: $id, input: $input) {
+    title
+    content
+    coverPhoto
+    status
+    slug
+  }
+}

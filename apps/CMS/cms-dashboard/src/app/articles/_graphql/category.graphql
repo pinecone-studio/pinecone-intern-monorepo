@@ -1,0 +1,16 @@
+query getCategories {
+  getCategories {
+    _id
+    name
+    createdAt
+  }
+}
+
+mutation createCategory($categoryInput: CreateCategoryInput!) {
+  createCategory(categoryInput: $categoryInput) {
+    _id
+    name
+    createdAt
+  }
+}
+
