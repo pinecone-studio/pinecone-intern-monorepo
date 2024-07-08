@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowIcon } from '../Icons/ModalIcons';
-import { object, string, array } from 'yup';
+import { object, string } from 'yup';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -20,10 +20,10 @@ type EmployeesInfoType = {
 };
 
 const userSchema = object({
-  department: string().required(),
-  jobTitle: array().of(string()).required(),
-  salary: string().required(),
-  employmentStatus: string().required(),
+  department: string().required('Хэлтэс сонгоно уу'),
+  jobTitle: string().required('Мэргэжил оруулна уу'),
+  salary: string().required('Цалин оруулна уу'),
+  employmentStatus: string().required('Ажлын зэрэг оруулна уу'),
 });
 
 export const StepJobInfo = ({
@@ -61,7 +61,6 @@ export const StepJobInfo = ({
       nextStep();
     },
   });
-
   return (
     <div data-testid="job-info" className="flex flex-col gap-10">
       <div data-testid="step-job-info" className="flex gap-4 flex-col">
@@ -78,17 +77,17 @@ export const StepJobInfo = ({
               <SelectItem value={Department.Software}>{Department.Software}</SelectItem>
             </SelectContent>
           </Select>
-          {formik.errors.department && <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.department}</label>}
+          <label className=" text-[12px] font-normal text-[red]">{formik.errors.department}</label>
         </div>
         <div data-testid="input-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Мэргэжил'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="jobTitle" value={formik.values.jobTitle} onChange={formik.handleChange} />
-          {formik.errors.jobTitle && <label className=" text-[16px] font-normal text-red-500">{formik.errors.jobTitle}</label>}
+          <label className=" text-[12px] font-normal text-red-500">{formik.errors.jobTitle}</label>
         </div>
         <div data-testid="input-two" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Цалин'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="salary" value={formik.values.salary} onChange={formik.handleChange} />
-          {formik.errors.salary && <label className=" text-[16px] font-normal text-red-500">{formik.errors.salary}</label>}
+          <label className=" text-[12px] font-normal text-red-500">{formik.errors.salary}</label>
         </div>
         <div data-testid="input-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Ажлын цаг'}</label>
@@ -104,7 +103,7 @@ export const StepJobInfo = ({
               <SelectItem value={EmploymentStatus.Temporary}>{EmploymentStatus.Temporary}</SelectItem>
             </SelectContent>
           </Select>
-          {formik.errors.employmentStatus && <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.employmentStatus}</label>}
+          <label className=" text-[12px] font-normal text-[red]">{formik.errors.employmentStatus}</label>
         </div>
       </div>
       <div className="flex justify-between">
@@ -113,7 +112,13 @@ export const StepJobInfo = ({
             <LeftArrowIcon />
           </div>
         </button>
-        <button data-testid="next-button" onClick={() => formik.handleSubmit} className="flex gap-1 items-center px-4 py-2 h-12 rounded-[8px] bg-[#D6D8DB]">
+        <button
+          data-testid="next-button"
+          onClick={() => {
+            formik.handleSubmit();
+          }}
+          className="flex gap-1 items-center px-4 py-2 h-12 rounded-[8px] bg-[#D6D8DB]"
+        >
           <p className="text-[#A9ACAF] text-[16px] font-[600] leading-5 tracking-[-0.3px]">Дараах</p>
           <div className="w-6 h-6">
             <RightArrowIcon />

@@ -10,10 +10,12 @@ jest.mock('@/components/ui/input', () => ({
   ),
 }));
 
+const mockOnSubmit = jest.fn();
+
 jest.mock('formik', () => ({
   useFormik: () => ({
     setFieldValue: jest.fn(),
-    handleSubmit: jest.fn(),
+    handleSubmit: () => mockOnSubmit(),
     values: {
       firstname: 'John',
       lastname: 'Doe',
@@ -24,7 +26,7 @@ jest.mock('formik', () => ({
       lastname: 'lastname is a required field',
       email: 'email must be a valid email',
     },
-    onSubmit: jest.fn(),
+    onSubmit: mockOnSubmit,
   }),
 }));
 
@@ -128,17 +130,16 @@ describe('StepPersonalInfo', () => {
     fireEvent.click(nextButton);
 
     await waitFor(() => {
-      expect(mockNextStep).toHaveBeenCalledTimes(0);
-      expect(mockChangeEmployee).toHaveBeenCalledTimes(0);
+      expect(mockOnSubmit).toHaveBeenCalled();
+      expect(mockNextStep).toHaveBeenCalled();
+      expect(mockChangeEmployee).toHaveBeenCalledWith(
+        expect.objectContaining({
+          firstname: 'John',
+          lastname: 'Doe',
+          email: 'john.doe@example.com',
+        })
+      );
     });
-
-    expect(mockChangeEmployee).not.toHaveBeenCalledWith(
-      expect.objectContaining({
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'john.doe@example.com',
-      })
-    );
   });
 
   test('renders next button with correct text and icon', () => {

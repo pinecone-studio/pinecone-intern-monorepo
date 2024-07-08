@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Department, EmploymentStatus } from '@/generated';
 import { useFormik } from 'formik';
 import { LeftArrowIcon, RightArrowWhiteIcon } from '../Icons/ModalIcons';
-import { object, string, array } from 'yup';
+import { object, string } from 'yup';
 
 type EmployeesInfoType = {
   firstname: string;
@@ -18,10 +18,8 @@ type EmployeesInfoType = {
 };
 
 const userSchema = object({
-  department: string().required(),
-  jobTitle: array().of(string()).required(),
-  salary: string().required(),
-  employmentStatus: string().required(),
+  imageURL: string().required('Зураг оруулна уу'),
+  ladderLevel: string().required('Мэргэжлийн зэрэг оруулна уу'),
 });
 
 export const StepAdditionalInfo = ({
@@ -33,18 +31,7 @@ export const StepAdditionalInfo = ({
   imageUrl,
 }: {
   prevStep: () => void;
-  employeesInfo: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    imageURL: string;
-    department: Department;
-    jobTitle: string[];
-    ladderLevel: string;
-    salary: string;
-    dateOfEmployment: Date;
-    employmentStatus: EmploymentStatus;
-  };
+  employeesInfo: EmployeesInfoType;
   changeEmployee: (_values: Partial<EmployeesInfoType>) => void;
   createData: () => void;
   fileChangeHandler: (_event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -55,32 +42,37 @@ export const StepAdditionalInfo = ({
       imageURL: employeesInfo.imageURL,
       ladderLevel: employeesInfo.ladderLevel,
     },
+    enableReinitialize: true,
     validationSchema: userSchema,
     onSubmit: async (values) => {
       changeEmployee(values);
-      createData();
     },
   });
 
   const handleAddImage = () => {
     formik.setFieldValue('imageURL', imageUrl);
+    changeEmployee({ imageURL: imageUrl });
   };
 
   return (
     <div data-testid="additionalInfo" className="flex flex-col gap-10">
       <div data-testid="step-additional-info" className="flex gap-4 flex-col">
         <div className="flex flex-col gap-4">
-          <label className=" text-[16px] font-normal text-[#121316]">{'Мэрэгжлийн зэрэг'}</label>
+          <label className="text-[16px] font-normal text-[#121316]">{'Мэрэгжлийн зэрэг'}</label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" placeholder="" name="ladderLevel" value={formik.values.ladderLevel} onChange={formik.handleChange} />
-          <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.ladderLevel}</label>
+          <label className="text-[16px] font-normal text-[#121316]">{formik.errors.ladderLevel}</label>
           <div className="flex gap-5 justify-center">
             <Input className="wrap h-[56px] w-[105px] px-[8px] py-[8px] bg-[#F7F7F8]" type="file" name="image" onChange={fileChangeHandler} />
-            <label className=" text-[16px] font-normal text-[#121316]">{formik.errors.imageURL}</label>
+            <label className="text-[16px] font-normal text-[#121316]">{formik.errors.imageURL}</label>
             <button onClick={handleAddImage}>
               upload
               <div
                 className="flex w-[150px] h-[150px] border-dashed border rounded-[10px] bg-[#F7F7F8] justify-center items-center"
-                style={{ backgroundImage: `URL(${formik.values.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}
+                style={{
+                  backgroundImage: `URL(${formik.values.imageURL})`,
+                  backgroundPosition: 'center', 
+                  backgroundSize: 'cover',
+                }}
               ></div>
             </button>
           </div>
@@ -92,7 +84,13 @@ export const StepAdditionalInfo = ({
             <LeftArrowIcon />
           </div>
         </button>
-        <button onClick={() => formik.handleSubmit} type="submit">
+        <button
+          onClick={() => {
+            formik.handleSubmit();
+            createData();
+          }}
+          type="button"
+        >
           <div data-testid="step-3" className="flex h-12 rounded-[8px] min-w-[80px] px-[16px] py-[12px] bg-[#121316] items-center">
             <div className="px-2 py-1 flex">
               <p className="text-[#FFF] text-[16px] font-[600] leading-5 tracking-[-0.3px] not-italic">Илгээх</p>
