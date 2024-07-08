@@ -1,4 +1,4 @@
-import { Img } from '@/app/icons/Img';
+import { Image } from 'lucide-react';
 import { CardMedia } from '@mui/material';
 
 const CLOUD_NAME = 'dbtqkhmu5';
@@ -42,7 +42,7 @@ const PicUpload = ({ imageUrl, setImageUrl }: { imageUrl: string; setImageUrl: R
               <input id="file-upload" type="file" onChange={fileChangeHandler} style={{ display: 'none' }} />
               {imageUrl && <CardMedia component="img" src={imageUrl} style={{ borderRadius: '8px', width: '99%', height: '99%', position: 'absolute', zIndex: 10 }} alt="uploaded" />}
               <div className="flex flex-col items-center gap-[10px]">
-                <Img />
+                <Image className="text-[#D6D8DB]" />
                 <span className="text-[#D6D8DB]">Зураг сонгоно уу </span>
               </div>
             </div>

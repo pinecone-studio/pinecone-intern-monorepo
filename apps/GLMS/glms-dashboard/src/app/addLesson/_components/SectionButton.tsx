@@ -1,4 +1,4 @@
-import { Plus } from '@/app/icons';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const SectionButton = () => {

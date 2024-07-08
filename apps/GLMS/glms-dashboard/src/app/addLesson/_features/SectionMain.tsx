@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { CardMedia } from '@mui/material';
-import { SectionEntry } from '../_components/SectionEntry';
 import { SectionButton } from '../_components/SectionButton';
 import { SectionSaveButt } from '../_components/SectionSaveButt';
-import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-// import { useCreateLessonMutation } from '@/generated';
+import { ActionLinkButton } from '@/components/ActionLinkButton';
+import { Field } from '@/components/Field';
+import { TextareaField } from '@/components/TextareaField';
+import { ImageUploadCard } from '@/components/ImageUploadCard';
+import { useParams, useRouter } from 'next/navigation';
+import { useCreateLessonMutation } from '@/generated';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
 
 export const SectionMain = () => {
   const [imageUrl, setImageUrl] = useState<string>('');
-  const [inputData, setInputData] = useState({
-    title: '',
-    content: '',
-  });
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [inputKey, setInputKey] = useState<string>(Date.now().toString());
   const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { courseId } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
-    setDisabled(!(inputData.title.trim() && inputData.content.trim() && imageUrl));
-  }, [imageUrl, inputData]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setInputData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    setDisabled(!(title.trim() && content.trim()));
+  }, [title, content]);
 
   const fileChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
     if (event?.target?.files?.[0]) {
       const selectedFile = event.target.files[0];
       await uploadHandler(selectedFile);
+      setInputKey(Date.now().toString());
     }
   };
 
   const uploadHandler = async (file: File) => {
+    setIsLoading(true);
     if (file) {
       const data = new FormData();
       data.append('file', file);
@@ -54,66 +55,72 @@ export const SectionMain = () => {
 
         if (resJson.url) {
           setImageUrl(resJson.url);
+        } else {
+          throw new Error('Upload failed');
         }
       } catch (error) {
+        setError('Error uploading image. Please try again.');
         console.error('Error uploading image:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
-  // const [createLesson] = useCreateLessonMutation();
+  const [createLesson] = useCreateLessonMutation();
 
-  // const handelCreateLesson = async () => {
-  //   try {
-  //     await createLesson({
-  //       variables: {
-  //         createInput: {
-  //           courseId: null,
-  //           title: inputData.title,
-  //           thumbnail: imageUrl,
-  //           content: inputData.content
-  //         }
-  //       }
-  //     })
-  //   }
-  // }
+  const handelCreateLesson = async () => {
+    try {
+      await createLesson({
+        variables: {
+          createInput: {
+            courseId: courseId,
+            title: title,
+            thumbnail: imageUrl,
+            content: content,
+          },
+        },
+      });
 
-  const handleValue = () => {
-    console.log(inputData, imageUrl);
+      router.push(`${courseId}`);
+    } catch (error) {
+      const message = (error as Error).message;
+      setError(message);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center  bg-[#F7F7F8] w-[100% ] h-[100%]">
-      <div>
-        <Button variant="ghost" className="flex w-[310px] justify-between items-center mb-[15px] mt-[25px]">
-          <ArrowLeft />
-          <p className=" text-base font-semibold">Хичээлийн ерөнхий мэдээлэл</p>
-        </Button>
-        <div className="bg-white w-[1250px] h-[900px] flex flex-col items-center justify-center rounded-[12px] m-[30px]">
-          <label htmlFor="file-upload" className="cursor-pointer">
-            <div className="relative">
-              <input id="file-upload" type="file" onChange={fileChangeHandler} style={{ display: 'none' }} />
-              {imageUrl && (
-                <CardMedia
-                  component="img"
-                  src={imageUrl}
-                  style={{
-                    borderRadius: '8px',
-                    width: '580px',
-                    height: '230px',
-                    position: 'absolute',
-                    marginTop: '312px',
-                    marginLeft: '5px',
-                  }}
-                  alt="uploaded"
-                />
-              )}
-              <SectionEntry inputData={inputData} handleInputChange={handleInputChange} />
-            </div>
-          </label>
-          <div className="pt-[24px] flex flex-col items-center gap-[32px]">
-            <SectionButton />
-            <SectionSaveButt disabled={disabled} onClick={handleValue} />
+    <div className="mx-auto container gap-2">
+      <ActionLinkButton label="Хичээлийн ерөнхий мэдээлэл" Icon={ArrowLeft} href={`/${courseId}`} />
+
+      <div className="bg-white h-[900px] mt-5 flex flex-col gap-3 items-center justify-center rounded-[12px]">
+        <h1>Add Lesson for Course {courseId}</h1>
+
+        <Field label="Хичээлийн гарчиг" value={title} dataTestid="lesson-title" onChange={setTitle} />
+
+        <TextareaField label="Дэлгэрэнгүй" placeholder="Энд бичнэ үү..." value={content} dataTestid="lesson-content" onChange={setContent} />
+
+        <ImageUploadCard
+          label="Хичээлийн зураг"
+          type="file"
+          onChange={fileChangeHandler}
+          imageUrl={imageUrl}
+          key={inputKey}
+          dataTestid="lesson-upload-photo"
+          UploadedDataTestid="lesson-uploaded-photo"
+          isLoading={isLoading}
+        />
+
+        {error && (
+          <div className="text-red-500" data-testid="error-message">
+            {error}
+          </div>
+        )}
+
+        <div className="pt-[24px] flex flex-col items-center gap-[32px]">
+          <SectionButton />
+          <div data-testid="save-button">
+            <SectionSaveButt disabled={disabled} onClick={handelCreateLesson} />
           </div>
         </div>
       </div>

@@ -1,15 +1,17 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { FC, ElementType } from 'react';
+import { FC, ElementType, MouseEvent } from 'react';
 
 interface ActionLinkButtonProps {
   label: string;
   href: string;
   variant?: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined;
   Icon?: ElementType;
+  // eslint-disable-next-line no-unused-vars
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void; // Adjusted for Button component
 }
 
-export const ActionLinkButton: FC<ActionLinkButtonProps> = ({ label, href, variant, Icon }) => {
+export const ActionLinkButton: FC<ActionLinkButtonProps> = ({ href, label, variant, Icon }) => {
   return (
     <Link href={href} data-testid="action-link">
       <Button className="mt-5" variant={variant} data-testid="action-link-button">
