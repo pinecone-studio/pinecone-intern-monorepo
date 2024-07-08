@@ -22,8 +22,9 @@ export const studentsSchema = new Schema({
     required: true,
   },
   active: {
-    type: Boolean,
-    default: Boolean(true),
+    type: String,
+    enum: ['ACTIVE', 'PASSIVE'],
+    default: 'ACTIVE',
   },
   phoneNumber: {
     type: String,

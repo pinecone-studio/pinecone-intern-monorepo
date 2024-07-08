@@ -9,7 +9,7 @@ export const studentsSchema = gql`
     studentCode: String!
     profileImgUrl: String!
     classId: String!
-    active: Boolean
+    active: StudentStatus
     phoneNumber: String!
     email: String!
   }
@@ -21,6 +21,7 @@ export const studentsSchema = gql`
     classId: String!
     phoneNumber: String!
     email: String!
+    active: String!
   }
   input deleteStudentInput {
     studentId: String!
@@ -34,8 +35,13 @@ export const studentsSchema = gql`
     classId: String!
     phoneNumber: String!
     email: String!
+    active: String!
   }
 
+  enum StudentStatus {
+    ACTIVE
+    PASSIVE
+  }
   type Query {
     getStudentsByClassId(classId: String!): [Student!]
   }
