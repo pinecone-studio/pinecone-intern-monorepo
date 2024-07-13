@@ -1,8 +1,6 @@
 name: CI
 on:
   pull_request:
-    types:
-      - 'labeled'
     branches:
       - main
 
@@ -12,6 +10,42 @@ permissions:
   pull-requests: write
 
 jobs:
+  cloud:
+    runs-on: ubuntu-latest
+    if: "${{ contains(github.event.pull_request.labels.*.name, 'Cloud') }}"
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cache node_modules
+        id: cache-nodemodules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+            */*/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.10
+      - run: bun install -y
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Vercel CLI
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: bun add --global vercel@latest
+      - name: Setup Canvas
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: npm rebuild canvas
+
+      - run: git branch --track main origin/main
+      - name: Get NX BASE and NX HEAD
+        uses: nrwl/nx-set-shas@v4
+      - name: Run lint on affected projects
+        run: NX_VERBOSE_LOGGING=true bunx nx affected -t lint test --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
   lint:
     runs-on: ubuntu-latest
     if: "${{ github.event.label.name == 'PR status: code ready' }}"

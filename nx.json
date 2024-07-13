@@ -1,16 +1,16 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "libs"
-  },
+  "affected": { "defaultBase": "main" },
+  "workspaceLayout": { "appsDir": "apps", "libsDir": "libs" },
   "appsDir": "apps",
   "libsDir": "libs",
   "tasksRunnerOptions": {
-    "default": {}
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "test", "lint", "preview"]
+      }
+    }
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -30,58 +30,21 @@
     "sharedGlobals": []
   },
   "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
-    },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore", "{workspaceRoot}/tools/eslint-rules/**/*"]
-    },
-    "e2e": {
-      "inputs": ["default", "^production"]
-    },
-    "@nx/esbuild:esbuild": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    }
+    "build": { "dependsOn": ["^build"], "inputs": ["production", "^production"] },
+    "test": { "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"] },
+    "lint": { "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore", "{workspaceRoot}/tools/eslint-rules/**/*"] },
+    "e2e": { "inputs": ["default", "^production"] },
+    "@nx/esbuild:esbuild": { "cache": true, "dependsOn": ["^build"], "inputs": ["production", "^production"] },
+    "@nx/js:tsc": { "cache": true, "dependsOn": ["^build"], "inputs": ["production", "^production"] }
   },
   "generators": {
     "@nx/react": {
-      "application": {
-        "style": "css",
-        "linter": "eslint",
-        "bundler": "webpack",
-        "babel": true
-      },
-      "component": {
-        "style": "css"
-      },
-      "library": {
-        "style": "css",
-        "linter": "eslint",
-        "unitTestRunner": "jest"
-      }
+      "application": { "style": "css", "linter": "eslint", "bundler": "webpack", "babel": true },
+      "component": { "style": "css" },
+      "library": { "style": "css", "linter": "eslint", "unitTestRunner": "jest" }
     },
-    "@nx/next": {
-      "application": {
-        "appDir": true,
-        "src": true,
-        "style": "css",
-        "linter": "eslint",
-        "e2eTestRunner": "none"
-      }
-    },
-    "@nx/workspace:move": {
-      "projectNameAndRootFormat": "as-provided"
-    }
-  }
+    "@nx/next": { "application": { "appDir": true, "src": true, "style": "css", "linter": "eslint", "e2eTestRunner": "none" } },
+    "@nx/workspace:move": { "projectNameAndRootFormat": "as-provided" }
+  },
+  "nxCloudAccessToken": "ZDM3ZTZjZDYtZTljMC00YTE2LTgyZGUtZmU1NDIxMWVlZmM2fHJlYWQtd3JpdGU="
 }
