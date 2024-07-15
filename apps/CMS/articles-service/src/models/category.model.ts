@@ -1,15 +1,15 @@
-import { Category } from '@/graphql/generated';
-import { Schema, model, Model, models } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const categorySchema = new Schema({
+export type Category = {
+  _id: string;
+  name: string;
+};
+
+const CategorySchema = new Schema<Category>({
   name: {
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
-export const CategoryModel: Model<Category> = models.category || model<Category>('category', categorySchema);
+export const CategoryModel = model<Category>('Category', CategorySchema);
