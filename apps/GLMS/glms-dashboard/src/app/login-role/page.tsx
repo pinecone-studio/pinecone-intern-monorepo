@@ -1,4 +1,4 @@
-import RoleTableFeature from './_features/RoleTable';
+import RoleTableFeature from './_features/RoleTableFeature';
 
 const LoginRole = () => {
   return (

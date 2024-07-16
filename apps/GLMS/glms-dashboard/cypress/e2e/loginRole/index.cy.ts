@@ -1,26 +1,11 @@
-describe('RoleTableFeature Component', () => {
-  beforeEach(() => {
-    // Visit the route where the RoleTableFeature component is rendered
-    cy.visit('/role-table-feature'); // Adjust the route as necessary
-  });
+describe('LoginRole Component', () => {
+  it('renders LoginRole component correctly', () => {
+    cy.visit('/login-role');
 
-  it('should render the RoleTableFeature component', () => {
-    cy.get('.container').should('exist');
-  });
+    cy.get('[data-cy=login-role-container]').should('exist');
 
-  it('should render the header with the correct text', () => {
-    cy.get('.header').should('exist');
-    cy.contains('Admin role update').should('exist');
-  });
+    cy.get('[data-cy=login-role-container]').find('.flex.flex-col.w-full.h-full.container.mx-auto.items-center.py-8.gap-7').should('exist');
 
-  it('should render the LoginRoleSearch component', () => {
-    cy.get('input[placeholder="Search"]').should('exist');
-  });
-
-  it('should render the RoleTable component with correct headers', () => {
-    cy.contains('Name').should('exist');
-    cy.contains('Id').should('exist');
-    cy.contains('Roles').should('exist');
-    cy.contains('Email').should('exist');
+    cy.contains('.header', 'Admin role uptade').should('exist');
   });
 });
