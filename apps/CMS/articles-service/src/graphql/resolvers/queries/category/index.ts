@@ -1,2 +1,2 @@
 export * from './get-categories';
-export * from './get-category';
+export * from './get-category-by-id';

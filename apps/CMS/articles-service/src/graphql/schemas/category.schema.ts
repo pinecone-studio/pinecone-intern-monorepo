@@ -7,7 +7,7 @@ export const categoryTypeDefs = gql`
   }
 
   type Query {
-    getCategory(_id: ID!): Category!
+    getCategoryById(_id: ID!): Category!
     getCategories: [Category!]!
   }
 
