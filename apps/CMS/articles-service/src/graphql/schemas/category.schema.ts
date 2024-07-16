@@ -1,32 +1,18 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-server-cloud-functions';
 
 export const categoryTypeDefs = gql`
-  scalar Date
-  enum ArticleStatus {
-    DRAFT
-    PUBLISHED
-    ARCHIVED
-  }
   type Category {
     _id: ID!
-    name: String!
-    createdAt: Date
-  }
-
-  input CreateCategoryInput {
-    name: String!
-    createdAt: Date
-  }
-
-  input CategoryInput {
-    name: String!
+    name: String
   }
 
   type Query {
+    getCategoryById(_id: ID!): Category!
     getCategories: [Category!]!
   }
 
   type Mutation {
-    createCategory(categoryInput: CreateCategoryInput!): Category!
+    createCategory(name: String!): Category!
+    updateCategory(_id: ID!, name: String!): Category!
   }
 `;

@@ -23,9 +23,7 @@ export default async function Index() {
         {() => (
           <Form>
             <div className="flex items-center justify-center">
-              {/* Left container */}
               <LeftSection />
-              {/* Right container */}
               <RightSection typeText="submit" />
             </div>
           </Form>

@@ -1,4 +1,4 @@
-import { getArticles } from '@/graphql/resolvers/queries/get-articles-by-id';
+import { getArticles } from '@/graphql/resolvers/queries';
 import { GraphQLError } from 'graphql';
 import { ArticleModel } from '@/models/articles.model';
 
