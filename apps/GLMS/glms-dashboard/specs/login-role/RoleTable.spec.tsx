@@ -10,6 +10,6 @@ describe('RoleTable Component', () => {
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('Id')).toBeInTheDocument();
     expect(screen.getByText('Roles')).toBeInTheDocument();
-    expect(screen.getAllByText('Email')).toBeInTheDocument;
+    expect(screen.getAllByText('Email')).toBeInTheDocument();
   });
 });
