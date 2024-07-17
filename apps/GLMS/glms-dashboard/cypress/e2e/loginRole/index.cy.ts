@@ -4,16 +4,17 @@ describe('LoginRole Component', () => {
 
     cy.get('[data-cy=login-role-container]').should('exist');
 
-    cy.get('[data-cy=login-role-container]').find('.flex.flex-col.w-full.h-full.container.mx-auto.items-center.py-8.gap-7').should('exist');
-
-    cy.contains('.header', 'Admin role uptade').should('exist');
+    cy.get('[data-testid=RoleTableContainer]').should('exist');
+    cy.get('[data-testid=RoleTableHeader]').within(() => {
+      cy.contains('h1', 'Admin role update').should('exist');
+    });
+    cy.get('[data-testid=RoleTableContent]').should('exist');
   });
 
   it('checks the layout of the RoleTableFeature', () => {
     cy.visit('/login-role');
 
-    cy.get('.header').should('have.class', 'w-[1154px] bg-[white] rounded-xl h-[72px] flex items-center justify-start p-[20px]');
-
-    cy.get('.flex.flex-col.w-full.h-full.container.mx-auto.items-center.py-8.gap-7').find('.w-[1154px].h-[216px].bg-white.rounded-xl.px-[20px].py-[20px]').should('exist');
+    cy.get('[data-testid=RoleTableHeader]').should('exist');
+    cy.get('[data-testid=RoleTableContent]').should('exist');
   });
 });

@@ -7,4 +7,5 @@ const LoginRole = () => {
     </div>
   );
 };
+
 export default LoginRole;
