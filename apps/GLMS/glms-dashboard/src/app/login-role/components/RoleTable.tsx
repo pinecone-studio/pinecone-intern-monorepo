@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
+import RoleModal from './RoleModal';
 const RoleTable = () => {
   return (
     <Table className="px-6">
@@ -23,12 +23,14 @@ const RoleTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {/* Example row for data, repeat or map over your data */}
         <TableRow>
           <TableCell>John Doe</TableCell>
           <TableCell>12345</TableCell>
           <TableCell>Admin</TableCell>
           <TableCell>john.doe@example.com</TableCell>
+          <TableCell>
+            <RoleModal />
+          </TableCell>
         </TableRow>
       </TableBody>
       <TableFooter />
