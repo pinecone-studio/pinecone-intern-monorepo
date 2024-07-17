@@ -1,12 +1,20 @@
 'use client';
 
-import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Employee } from '@/generated';
+import { useRouter } from 'next/navigation';
 
 export const TableDemo = ({ employees }: { employees: Employee[] }) => {
+  const { push } = useRouter();
+
+  const addToDetails = (employee: Employee) => {
+    sessionStorage.setItem('employeeDetails', JSON.stringify(employee));
+    console.log('Selected employee', employee);
+    push('/employee-details/employee-detail');
+  };
+
   return (
-    <Table className="px-6 ">
+    <Table className="px-6">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow data-testid="content" className="bg-[#F7F7F8]">
@@ -41,6 +49,9 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
             <TableCell data-testid={`tableCell-4-${index}`}>{employee.department}</TableCell>
             <TableCell data-testid={`tableCell-5-${index}`} className="text-right">
               {employee.employmentStatus}
+            </TableCell>
+            <TableCell>
+              <button onClick={() => addToDetails(employee)}>edit</button>
             </TableCell>
           </TableRow>
         ))}
