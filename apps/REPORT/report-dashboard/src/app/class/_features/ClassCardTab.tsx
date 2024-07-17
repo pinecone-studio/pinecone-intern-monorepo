@@ -7,77 +7,104 @@ import { Button } from '@/components/ui/button';
 import { useGetClassesQuery } from '@/generated';
 import { useState, useEffect } from 'react';
 import { AddClassModal } from './AddClassModal';
+import { ApolloError } from '@apollo/client';
 
-const ClassCardTab = () => {
+interface SearchInputProps {
+  searchTerm: string;
+  setSearchTerm: (_term: string) => void;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({ searchTerm, setSearchTerm }) => (
+  <div className="relative flex items-center w-[373px]">
+    <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
+    <Input placeholder="Сурагч, Анги, гэх/м..." className="pl-8" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+  </div>
+);
+
+interface AddButtonProps {
+  setIsOpen: (_isOpen: boolean) => void;
+}
+
+const AddButton: React.FC<AddButtonProps> = ({ setIsOpen }) => (
+  <Button data-testid="openModalButton" className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]" onClick={() => setIsOpen(true)}>
+    <p>Анги</p>
+    <span>
+      <Plus className="h-4 w-4" />
+    </span>
+  </Button>
+);
+
+interface ClassContentProps {
+  classData: Class[];
+  classType: string;
+}
+
+const ClassContent: React.FC<ClassContentProps> = ({ classData, classType }) => (
+  <TabsContent value={classType} className="grid grid-cols-4 gap-4 absolute top-0 left-0 w-full overflow-auto">
+    {classData
+      .filter((item) => classType === 'Бүгд' || item.classType === ClassType[classType as keyof typeof ClassType])
+      .map((item, index) => (
+        <ClassCard key={index} data={item} />
+      ))}
+  </TabsContent>
+);
+
+const TabsListComponent: React.FC = () => (
+  <TabsList className="grid w-[404px] grid-cols-3">
+    <TabsTrigger value="Бүгд">Бүгд</TabsTrigger>
+    <TabsTrigger value="Coding">Кодинг</TabsTrigger>
+    <TabsTrigger value="Design">Дизайн</TabsTrigger>
+  </TabsList>
+);
+
+const ClassContentWrapper: React.FC<{ classData: Class[] }> = ({ classData }) => (
+  <>
+    <ClassContent classData={classData} classType="Бүгд" />
+    <ClassContent classData={classData} classType="Coding" />
+    <ClassContent classData={classData} classType="Design" />
+  </>
+);
+
+interface ContentRendererProps {
+  loading: boolean;
+  error: undefined | ApolloError;
+  classData: Class[];
+}
+
+const ContentRenderer: React.FC<ContentRendererProps> = ({ loading, error, classData }) => {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error?.message}</p>;
+  if (classData.length === 0) return <p>No classes found</p>;
+  return <ClassContentWrapper classData={classData} />;
+};
+
+const ClassCardTab: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const { data, loading, error, refetch } = useGetClassesQuery({
     variables: { search: searchTerm || undefined },
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const classData = data?.getClasses;
 
   useEffect(() => {
     refetch({ search: searchTerm || undefined });
   }, [searchTerm, refetch]);
+
+  const classData = data?.getClasses || [];
 
   return (
     <div className="flex justify-center" data-testid="class-card-tab">
       <div className="w-[1720px] py-[24px]">
         <Tabs defaultValue="Бүгд" className="flex flex-col gap-[36px]">
           <div className="flex flex-row justify-between items-center gap-[16px]">
-            <div className="relative flex items-center w-[373px] ">
-              <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
-              <Input placeholder="Сурагч, Анги, гэх/м..." className="pl-8" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            </div>
+            <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <div className="flex flex-row gap-[12px]">
-              <TabsList className="grid w-[404px] grid-cols-3">
-                <TabsTrigger value="Бүгд">Бүгд</TabsTrigger>
-                <TabsTrigger value="Coding">Кодинг</TabsTrigger>
-                <TabsTrigger value="Design">Дизайн</TabsTrigger>
-              </TabsList>
-              <Button data-testid="openModalButton" className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]" onClick={() => setIsOpen(true)}>
-                <p>Анги</p>
-                <span>
-                  <Plus className="h-4 w-4" />
-                </span>
-              </Button>
+              <TabsListComponent />
+              <AddButton setIsOpen={setIsOpen} />
               <AddClassModal open={isOpen} onOpenChange={setIsOpen} />
             </div>
           </div>
           <div className="relative h-[600px]">
-            {loading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>Error: {error?.message}</p>
-            ) : (
-              <div>
-                {classData && classData.length > 0 ? (
-                  <>
-                    <TabsContent value="Бүгд" className="grid grid-cols-4 gap-4 absolute top-0 left-0 w-full overflow-auto">
-                      {classData.map((item, index) => (
-                        <ClassCard key={index} data={item} />
-                      ))}
-                    </TabsContent>
-                    <TabsContent value="Coding" className="grid grid-cols-4 gap-4 absolute top-0 left-0 w-full overflow-auto">
-                      {classData
-                        .filter((item: Class) => item.classType === ClassType.Coding)
-                        .map((item: Class, index) => (
-                          <ClassCard key={index} data={item} />
-                        ))}
-                    </TabsContent>
-                    <TabsContent value="Design" className="grid grid-cols-4 gap-4 absolute top-0 left-0 w-full overflow-auto">
-                      {classData
-                        .filter((item: Class) => item.classType === ClassType.Design)
-                        .map((item: Class, index) => (
-                          <ClassCard key={index} data={item} />
-                        ))}
-                    </TabsContent>
-                  </>
-                ) : (
-                  <p>No classes found</p>
-                )}
-              </div>
-            )}
+            <ContentRenderer loading={loading} error={error} classData={classData} />
           </div>
         </Tabs>
       </div>
