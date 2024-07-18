@@ -13,10 +13,10 @@ export const CourseCardMain = () => {
   }
 
   return (
-    <div className="grid grid-cols-4 mx-auto container gap-6">
+    <div className="gap-6 grid grid-cols-4 mx-auto container">
       {data?.getCourses?.map((course) => (
         <div key={course?.id} className="flex justify-end">
-          <CourseCard href={`/${course?.id}`} title={course?.title} content={course?.content} thumbnail={course?.thumbnail} />
+          <CourseCard href={`/admin/${course?.id}`} title={course?.title} content={course?.content} thumbnail={course?.thumbnail} />
         </div>
       ))}
     </div>
