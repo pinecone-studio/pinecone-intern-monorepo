@@ -4,14 +4,28 @@ export const quizTypeDefs = gql`
   scalar Date
 
   type Query {
-    getQuiz(_id: ID!): Quiz
+    getQuiz(id: ID!): Quiz
     getQuizzes: [Quiz]
+
+    getQuestions(quizId: ID!): [Question]
+    getQuestion(id: ID!): Question
+
+    getOptions(questionId: ID!): [Option]
+    getOption(id: ID!): Option
   }
 
   type Mutation {
-    createQuiz(createInput: CreateQuizInput): Quiz
-    updateQuiz(updateInput: UpdateQuizInput): Quiz
+    createQuiz(createInput: CreateQuizInput!): Quiz
+    updateQuiz(updateInput: UpdateQuizInput!): Quiz
     deleteQuiz(id: ID!): Quiz
+
+    createQuestion(createInput: CreateQuestionInput!): Question
+    updateQuestion(updateInput: UpdateQuestionInput!): Question
+    deleteQuestion(id: ID!): Question
+
+    createOption(createInput: CreateOptionInput!): Option
+    updateOption(updateInput: UpdateOptionInput!): Option
+    deleteOption(id: ID!): Option
   }
 
   type Quiz {
@@ -23,37 +37,56 @@ export const quizTypeDefs = gql`
 
   type Question {
     id: ID!
+    quizId: ID!
     text: String!
     options: [Option]
-    correctAnswer: String
+    correctAnswer: ID!
     createdAt: Date
   }
 
   type Option {
+    id: ID!
+    questionId: ID!
     optionText: String!
     isCorrect: Boolean!
     createdAt: Date
   }
 
+  # Quiz's input
   input CreateQuizInput {
     lessonId: ID!
-    questions: [QuestionInput]!
+    questions: [CreateQuestionInput]!
   }
 
   input UpdateQuizInput {
     id: ID!
     lessonId: ID
-    questions: [QuestionInput]
+    questions: [UpdateQuestionInput]
   }
 
-  input QuestionInput {
+  # Question's input 
+  input CreateQuestionInput {
     text: String!
-    options: [OptionInput]!
-    correctAnswer: String
+    options: [CreateOptionInput]!
+    correctAnswer: ID!
   }
 
-  input OptionInput {
+  input UpdateQuestionInput {
+    id: ID!
+    text: String
+    options: [UpdateOptionInput]
+    correctAnswer: ID
+  }
+
+  # Option's input
+  input CreateOptionInput {
     optionText: String!
-    isCorrect: Boolean! 
+    isCorrect: Boolean!
+  }
+
+  input UpdateOptionInput {
+    id: ID!
+    optionText: String
+    isCorrect: Boolean
   }
 `;
