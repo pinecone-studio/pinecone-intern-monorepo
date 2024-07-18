@@ -12,4 +12,13 @@ describe('RoleTable Component', () => {
     expect(screen.getByText('Roles')).toBeInTheDocument();
     expect(screen.getByText('Email')).toBeInTheDocument();
   });
+
+  test('renders table cells correctly', () => {
+    render(<RoleTable />);
+
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('12345')).toBeInTheDocument();
+    expect(screen.getByText('Admin')).toBeInTheDocument();
+    expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
+  });
 });

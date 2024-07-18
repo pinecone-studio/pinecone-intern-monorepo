@@ -2,6 +2,9 @@
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import RoleModal from './RoleModal';
+import DeleteIcon from '@/assets/icons/DeleteIcon';
+import { Button } from '@/components/ui/button';
+
 const RoleTable = () => {
   return (
     <Table className="px-6">
@@ -17,9 +20,11 @@ const RoleTable = () => {
           <TableHead data-testid="tableHead-3" className="w-[170px] h-[30px] text-black">
             Roles
           </TableHead>
-          <TableHead data-testid="tableHead-4" className="w-[170px] rounded-tr-xl text-black">
+          <TableHead data-testid="tableHead-4" className="w-[170px] text-black">
             Email
           </TableHead>
+          <TableHead className="w-[20px] h-[30px] text-black"></TableHead>
+          <TableHead className="w-[20px] h-[30px] rounded-tr-xl text-black"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -30,6 +35,11 @@ const RoleTable = () => {
           <TableCell>john.doe@example.com</TableCell>
           <TableCell>
             <RoleModal />
+          </TableCell>
+          <TableCell>
+            <Button aria-label="delete" className="border-none" variant={'outline'}>
+              <DeleteIcon />
+            </Button>
           </TableCell>
         </TableRow>
       </TableBody>
