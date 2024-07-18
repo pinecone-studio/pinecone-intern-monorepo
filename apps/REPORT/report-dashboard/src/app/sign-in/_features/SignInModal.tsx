@@ -44,7 +44,7 @@ const SignInModal = () => {
   return (
     <div data-testid="sign-in-page" className="w-[440px] h-[484px] border border-[1px solid #ECEDF0] dark:border-[#E1E7EF] rounded-[16px] p-[40px]">
       <form onSubmit={formik.handleSubmit} className="flex flex-col items-center gap-[24px]">
-        <h1 className="text-[36px] font-semibold">Report</h1>
+        <h1 className="text-[36px] font-semibold">Report!</h1>
         <div className="flex flex-col items-center gap-[16px]">
           <div className="flex flex-col gap-2">
             <p className="font-semibold">Таны имэйл эсвэл утасны дугаар</p>
