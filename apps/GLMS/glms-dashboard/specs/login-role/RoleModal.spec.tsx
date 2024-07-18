@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RoleModal from '../../src/app/login-role/components/RoleModal';
 
@@ -34,7 +34,7 @@ describe('RoleModal Component', () => {
     expect(saveButton).toBeInTheDocument();
   });
 
-  test('selects a role from the dropdown', () => {
+  test('selects a role from the dropdown', async () => {
     render(<RoleModal />);
     const editButton = screen.getByRole('button');
     fireEvent.click(editButton);
@@ -42,6 +42,14 @@ describe('RoleModal Component', () => {
     const selectTrigger = screen.getByText('Select roles');
     fireEvent.mouseDown(selectTrigger);
 
-    expect(screen.getByText('Admin')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Admin')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Admin'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Admin')).toBeInTheDocument();
+    });
   });
 });
