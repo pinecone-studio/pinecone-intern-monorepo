@@ -4,8 +4,8 @@ export const quizTypeDefs = gql`
   scalar Date
 
   type Query {
-    getQuiz(id: ID!): Quiz
     getQuizzes: [Quiz]
+    getQuiz(id: ID!): Quiz
 
     getQuestions(quizId: ID!): [Question]
     getQuestion(id: ID!): Question
