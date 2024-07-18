@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 import EditICon from '@/assets/icons/EditIcon';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 const RoleModal = () => {
   return (
@@ -32,6 +32,7 @@ const RoleModal = () => {
                   <SelectItem value="Teacher">Teacher</SelectItem>
                   <SelectItem value="Student">Student</SelectItem>
                 </SelectGroup>
+                <SelectSeparator></SelectSeparator>
               </SelectContent>
             </Select>
           </div>
