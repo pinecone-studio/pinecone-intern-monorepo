@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Employee } from '@/generated';
 import { useRouter } from 'next/navigation';
@@ -9,7 +10,6 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
 
   const addToDetails = (employee: Employee) => {
     sessionStorage.setItem('employeeDetails', JSON.stringify(employee));
-    console.log('Selected employee', employee);
     push('/employee-details/employee-detail');
   };
 
@@ -51,7 +51,7 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
               {employee.employmentStatus}
             </TableCell>
             <TableCell>
-              <button onClick={() => addToDetails(employee)}>edit</button>
+              <Button onClick={() => addToDetails(employee)}>edit</Button>
             </TableCell>
           </TableRow>
         ))}

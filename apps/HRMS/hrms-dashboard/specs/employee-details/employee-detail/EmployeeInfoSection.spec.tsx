@@ -5,7 +5,6 @@ import EmployeeInfoContainer from '../../../src/app/employee-details/employee-de
 
 describe('EmployeeInfoContainer', () => {
   it('renders correctly with info fields', () => {
-    // Mock sessionStorage
     const mockEmployee = {
       dateOfEmployment: '2023-03-09',
       department: 'Хөгжүүлэлтийн хэлтэс',
