@@ -1,6 +1,5 @@
 describe('ClassCard Component', () => {
   beforeEach(() => {
-    // Mock the API call that fetches the class data
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses') {
         req.reply({
@@ -19,7 +18,6 @@ describe('ClassCard Component', () => {
       }
     }).as('getClasses');
 
-    // Visit the page that contains the ClassCard component
     cy.visit('/class');
     cy.wait('@getClasses');
   });
@@ -46,7 +44,7 @@ describe('ClassCard Component', () => {
   });
 
   it('renders the DropDownMenuButton', () => {
-    cy.get('[data-testid="class-card"] button').should('exist'); // Assuming DropDownMenuButton renders a button
+    cy.get('[data-testid="class-card"] button').should('exist');
   });
 
   it('has correct styling', () => {
@@ -67,7 +65,6 @@ describe('ClassCard Component', () => {
   });
 
   it('handles missing data gracefully', () => {
-    // Mock an API response with incomplete data
     cy.intercept('POST', '/graphql', {
       data: {
         getClasses: [{ name: 'Incomplete Class' }],

@@ -1,54 +1,43 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { StudentsInformation } from '../../src/app/student/_features/studentsTable/StudentsInformation';
+import { render, screen } from '@testing-library/react';
+import { StudentsInformation } from '../../src/app/student/_components/StudentsInformation';
+import { useGetStudentByClassIdQuery } from '../../src/generated';
+import StudentsTable from '../../src/app/student/_components/StudentsTable';
 
+// Mock the generated hook
 jest.mock('@/generated', () => ({
   useGetStudentByClassIdQuery: jest.fn(),
 }));
 
-describe('StudentsInformation component', () => {
-  it('renders loading state', async () => {
-    const mockUseGetStudentByClassIdQuery = {
-      data: undefined,
+// Mock the StudentsTable component
+jest.mock('../../src/app/student/_components/StudentsTable', () => jest.fn(() => null));
+
+describe('StudentsInformation', () => {
+  it('renders loading state', () => {
+    (useGetStudentByClassIdQuery as jest.Mock).mockReturnValue({
       loading: true,
-      error: undefined,
-    };
-    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
-    let component;
-    await act(async () => {
-      component = render(<StudentsInformation />);
+      data: undefined,
     });
 
-    expect(component.getByTestId('Loading')).toBeDefined();
+    render(<StudentsInformation />);
+    expect(screen.getByTestId('Loading')).toBeDefined();
   });
 
-  it('renders success state', async () => {
-    const mockStudentsData = [
-      {
-        firstName: 'TEST',
-        studentCode: '123456789',
-        email: 'TEST@gmail.com',
-        phoneNumber: '98989898989',
-        active: true,
-        profileImgUrl: '1234567URL',
-      },
-    ];
-    const mockUseGetStudentByClassIdQuery = {
-      data: {
-        getStudentsByClassId: mockStudentsData,
-      },
+  it('renders StudentsTable when data is loaded', () => {
+    const mockStudents = [{ id: '1', name: 'John Doe' }];
+    (useGetStudentByClassIdQuery as jest.Mock).mockReturnValue({
       loading: false,
-      error: undefined,
-    };
-    require('@/generated').useGetStudentByClassIdQuery.mockReturnValue(mockUseGetStudentByClassIdQuery);
-
-    let component;
-    await act(async () => {
-      component = render(<StudentsInformation />);
+      data: { getStudentsByClassId: mockStudents },
     });
 
-    const tableRows = component.getAllByRole('row');
-    expect(tableRows.length).toBe(mockStudentsData.length + 1);
+    render(<StudentsInformation />);
+    expect(StudentsTable).toHaveBeenCalledWith({ studentsData: mockStudents }, {});
+  });
+
+  it('calls useGetStudentByClassIdQuery with correct variables', () => {
+    render(<StudentsInformation />);
+    expect(useGetStudentByClassIdQuery).toHaveBeenCalledWith({
+      variables: { classId: '12345' },
+    });
   });
 });
