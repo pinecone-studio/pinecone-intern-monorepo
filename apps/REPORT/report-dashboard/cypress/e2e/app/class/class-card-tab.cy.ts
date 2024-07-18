@@ -84,7 +84,6 @@ describe('ClassCardTab Component', () => {
   });
 
   it('allows searching and updates results', () => {
-    // Mock the GraphQL query for search
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
         req.reply({
@@ -97,14 +96,11 @@ describe('ClassCardTab Component', () => {
 
     cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('Coding');
     cy.wait('@searchClasses');
-
-    // Check if the grid has been updated with filtered results
     cy.get('.grid-cols-4').children().should('have.length', 1);
     cy.contains('Coding Class').should('be.visible');
   });
 
   it('shows no results message when search returns empty', () => {
-    // Mock the GraphQL query for an empty search result
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
         req.reply({
@@ -119,7 +115,6 @@ describe('ClassCardTab Component', () => {
     cy.contains('No classes found').should('be.visible');
   });
   it('resets search results when input is cleared', () => {
-    // First, perform a search
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
         req.reply({
@@ -132,12 +127,8 @@ describe('ClassCardTab Component', () => {
 
     cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('Coding');
     cy.wait('@searchClasses');
-
-    // Then clear the search input
     cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').clear();
     cy.wait('@getClasses');
-
-    // Check if all original classes are displayed again
     cy.get('.grid-cols-4').children().should('have.length', 3);
   });
 });

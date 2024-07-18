@@ -1,5 +1,3 @@
-// cypress/integration/addClassModal.spec.ts
-
 describe('AddClassModal', () => {
   beforeEach(() => {
     cy.intercept('POST', '/graphql', (req) => {

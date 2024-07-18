@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { AddClassModal } from '../../src/app/class/_features/AddClassModal';
 import '@testing-library/jest-dom';
 
-// Mock the hooks and modules
 jest.mock('../../src/generated', () => ({
   ClassType: {
     Coding: 'CODING',
@@ -89,10 +88,8 @@ describe('AddClassModal', () => {
 
     fireEvent.click(screen.getByTestId('submit-button'));
 
-    // Assert that the button is initially disabled
     expect(screen.getByTestId('submit-button')).toBeDisabled;
 
-    // Wait for the loading state to resolve (button should become enabled)
     await waitFor(
       () => {
         expect(screen.getByTestId('submit-button')).not.toBeDisabled();
