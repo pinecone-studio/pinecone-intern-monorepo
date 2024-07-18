@@ -2,7 +2,6 @@ import { ClassType } from '@/generated';
 
 describe('ClassCardTab Component', () => {
   beforeEach(() => {
-    // Mock the GraphQL query
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses') {
         req.reply({
@@ -17,8 +16,7 @@ describe('ClassCardTab Component', () => {
       }
     }).as('getClasses');
 
-    // Visit the page containing the ClassCardTab component
-    cy.visit('/class'); // Assuming the component is on the home page
+    cy.visit('/class');
     cy.wait('@getClasses');
   });
 
