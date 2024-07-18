@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CourseEntry, InputData } from '../../src/app/addCourse/_components/CourseEntry';
+import { CourseEntry, InputData } from '../../src/app/admin/addCourse/_components/CourseEntry';
 
 describe('LessonEntry Component', () => {
   const mockInputData: InputData = {

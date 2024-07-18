@@ -8,12 +8,12 @@ export const Hero: React.FC = () => {
   const router = useRouter();
 
   const navigateToIndex = () => {
-    router.push('/addCourse');
+    router.push('/admin/addCourse');
   };
 
   return (
-    <div className="border-b bg-white">
-      <div className="container mx-auto grid grid-cols-2 items-center">
+    <div className="bg-white border-b">
+      <div className="items-center grid grid-cols-2 mx-auto container">
         <div className="flex flex-col gap-[32px]">
           <div>
             <div className="font-medium text-4xl">Сайн уу?</div>
@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
             </Button>
           </div>
         </div>
-        <div className="flex justify-end items-center pt-12 px-12">
+        <div className="flex justify-end items-center px-12 pt-12">
           <Book />
         </div>
       </div>
