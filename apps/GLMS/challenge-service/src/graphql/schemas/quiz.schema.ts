@@ -18,6 +18,7 @@ export const quizTypeDefs = gql`
     id: ID!
     lessonId: ID!
     questions: [Question]
+    createdAt: Date
   }
 
   type Question {
@@ -25,11 +26,13 @@ export const quizTypeDefs = gql`
     text: String!
     options: [Option]
     correctAnswer: String
+    createdAt: Date
   }
 
   type Option {
     optionText: String!
     isCorrect: Boolean!
+    createdAt: Date
   }
 
   input CreateQuizInput {
