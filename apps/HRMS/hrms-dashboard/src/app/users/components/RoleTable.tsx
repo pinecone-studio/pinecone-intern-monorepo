@@ -2,8 +2,22 @@
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+// type usersDataType= ({
+//   __typename?: "hrmsUser";
+//   _id?: string | null;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   role: HrmsRoles;
+//   password: string;
+// } | null)[] | null | undefined 
 
-const RoleTable = () => {
+// type HrmsRoles={
+//   type: String,
+//   enum: ['EMPLOYEE', 'ADMIN'],
+// }
+
+const RoleTable = ({usersData}:{usersData:any}) => {
 
   return (
     <Table className="px-6">
@@ -25,13 +39,14 @@ const RoleTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-       
-        <TableRow>
-          <TableCell>John Doe</TableCell>
-          <TableCell>12345</TableCell>
-          <TableCell>Admin</TableCell>
-          <TableCell>john.doe@example.com</TableCell>
-        </TableRow>
+     {usersData?.map((item:any, index:any) => {
+      return <TableRow key={index}>
+      <TableCell>{item.firstName}</TableCell>
+      <TableCell>{item._id}</TableCell>
+      <TableCell>{item.role}</TableCell>
+      <TableCell>{item.email}</TableCell>
+    </TableRow>
+     })}
       </TableBody>
       <TableFooter />
     </Table>

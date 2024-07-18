@@ -1,0 +1,10 @@
+query GetHrmsUsers {
+  getHrmsUsers {
+      _id
+    firstName
+    lastName
+    email
+    role
+    password
+  }
+}
