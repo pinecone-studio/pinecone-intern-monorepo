@@ -16,11 +16,19 @@ const CourseDetail = () => {
   });
 
   if (error) {
-    return <div data-testid="error-message">Error: {error.message}</div>;
+    return (
+      <div className="w-[100vw] h-[100vh] flex justify-center items-center" data-testid="error-message">
+        Error: {error.message}
+      </div>
+    );
   }
 
   if (loading || !data) {
-    return <div data-testid="loading">Loading...</div>;
+    return (
+      <div className=" w-[100vw] h-[100vh] flex justify-center items-center" data-testid="loading">
+        Loading...
+      </div>
+    );
   }
 
   return (

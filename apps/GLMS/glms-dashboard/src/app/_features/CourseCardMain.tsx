@@ -2,7 +2,8 @@ import { CourseCard } from '@/components/CourseCard';
 import { useGetCoursesQuery } from '@/generated';
 
 export const CourseCardMain = () => {
-  const { data, loading, error } = useGetCoursesQuery();
+  const { data, loading, error, refetch } = useGetCoursesQuery();
+  refetch();
 
   if (error) {
     return <div data-testid="error-message">Error: {error.message}</div>;

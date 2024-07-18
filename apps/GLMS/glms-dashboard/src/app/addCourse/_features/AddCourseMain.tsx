@@ -7,6 +7,7 @@ import { InputData } from '../_components/CourseEntry';
 import { useCreateCourseMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { Toaster, toast } from 'sonner';
 
 export const AddCourseMain: React.FC = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ export const AddCourseMain: React.FC = () => {
   const navigateToHome = () => {
     router.push('/');
   };
+
   const [createCourse] = useCreateCourseMutation();
 
   const handleCreateMutation = async () => {
@@ -48,21 +50,22 @@ export const AddCourseMain: React.FC = () => {
           },
         },
       });
-      console.log('Course created successfully!');
+      toast.success('Хичээл амжилтай нэмэгдлээ!');
     } catch (error) {
-      console.error('Error creating course:', error);
+      toast.error('Хичээл нэмэх явцад алдаа гарлаа!');
     }
   };
 
   return (
-    <div className="w-[100%] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
+    <div className="w-[100%] h-[100vh] bg-[#F7F7F8] flex flex-col items-center">
+      <Toaster />
       <div className="p-[30px]">
         <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px]">
           <ArrowLeft />
           <p className="ml-[10px] text-base font-semibold">Нүүр хуудас</p>
         </Button>
         <div className="rounded-[12px] bg-white p-[24px] w-[1250px] max-w-full">
-          <h2 className="text-2xl font-bold ">Сэдвийн ерөнхий мэдээлэл</h2>
+          <h2 className="text-2xl font-bold">Сэдвийн ерөнхий мэдээлэл</h2>
           <div className="flex justify-between gap-[32px]">
             <CourseEntry inputData={inputData} handleInputChange={handleInputChange} />
             <PicUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
