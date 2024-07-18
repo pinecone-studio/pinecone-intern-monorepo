@@ -33,4 +33,15 @@ describe('RoleModal Component', () => {
     const saveButton = screen.getByText('Save changes');
     expect(saveButton).toBeInTheDocument();
   });
+
+  test('selects a role from the dropdown', () => {
+    render(<RoleModal />);
+    const editButton = screen.getByRole('button');
+    fireEvent.click(editButton);
+
+    const selectTrigger = screen.getByText('Select roles');
+    fireEvent.mouseDown(selectTrigger);
+
+    expect(screen.getByText('Admin')).toBeInTheDocument();
+  });
 });
