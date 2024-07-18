@@ -16,15 +16,8 @@ export const quizTypeDefs = gql`
 
   type Quiz {
     id: ID!
-    lessonId: Lesson
+    lessonId: ID!
     questions: [Question]
-  }
-
-  type Lesson {
-    id: ID!
-    title: String!
-    description: String
-    quizzes: [Quiz]
   }
 
   type Question {
