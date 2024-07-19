@@ -1,4 +1,4 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { helloChallengeSchema } from './hello.schema';
+import { quizTypeDefs } from './quiz.schema';
 
-export const typeDefs = mergeTypeDefs([helloChallengeSchema]);
+export const typeDefs = mergeTypeDefs([quizTypeDefs]);
