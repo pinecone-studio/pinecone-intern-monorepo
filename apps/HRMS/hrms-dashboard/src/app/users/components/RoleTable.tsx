@@ -1,19 +1,10 @@
 'use client';
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-type usersDataType= ({
-  __typename?: "hrmsUser";
-  _id?: string | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string | undefined;
-  password: string;
-} | null)[] 
+import { HrmsUser } from '@/generated';
 
 
-const RoleTable = ({usersData}:{usersData: usersDataType}) => {
+const RoleTable = ({usersData}:{usersData: HrmsUser[]}) => {
 return (
     <Table className="px-6">
       <TableCaption></TableCaption>

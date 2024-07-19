@@ -2,7 +2,7 @@
 
 import LoginRoleSearch from '../components/UserRoleSearch';
 import RoleTable from '../components/RoleTable';
-import { useGetHrmsUsersQuery } from '@/generated';
+import { HrmsUser, useGetHrmsUsersQuery} from '@/generated';
 
 
 const RoleTableFeature = () => {
@@ -16,7 +16,7 @@ const RoleTableFeature = () => {
      
       <div data-testid="RoleTableContent" className="w-[1154px] bg-white rounded-xl px-[20px] py-[20px]">
         <LoginRoleSearch />
-        <RoleTable usersData={usersData}/>
+        <RoleTable usersData={usersData as HrmsUser[]}/>
       </div>
     </div>
   );
