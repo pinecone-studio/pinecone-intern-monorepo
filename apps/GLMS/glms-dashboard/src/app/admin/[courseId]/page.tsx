@@ -24,12 +24,12 @@ const CourseDetail = () => {
   }
 
   return (
-    <div data-testid="course-details" className="mx-auto container mb-4">
+    <div data-testid="course-details" className="mx-auto mb-4 container">
       <ActionLinkButton label="Hүүр хуудас" href={'/'} Icon={ArrowLeft} />
       <div className="bg-white mt-5 p-5 rounded-[12px]">
-        <div className="grid grid-cols-3 gap-5 ">
-          <div className="col-span-2 flex flex-col gap-10">
-            <h1 data-testid="course-title" className="text-8xl font-bold">
+        <div className="gap-5 grid grid-cols-3">
+          <div className="flex flex-col gap-10 col-span-2">
+            <h1 data-testid="course-title" className="font-bold text-8xl">
               {data.getCourse?.title}
             </h1>
             <p data-testid="course-content" className="text-lg">
@@ -40,7 +40,7 @@ const CourseDetail = () => {
               <Lessons />
             </div>
           </div>
-          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <></>}</div>
+          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} className='rounded-[12px]'/> : <></>}</div>
         </div>
       </div>
     </div>
