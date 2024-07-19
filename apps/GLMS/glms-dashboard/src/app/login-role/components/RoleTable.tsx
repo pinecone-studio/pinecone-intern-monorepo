@@ -4,6 +4,11 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import RoleModal from './RoleModal';
 import DeleteIcon from '@/assets/icons/DeleteIcon';
 import { Button } from '@/components/ui/button';
+import { useGetGlmsUsersQuery } from '@/generated';
+const { data, refetch, loading } = useGetGlmsUsersQuery();
+data?.getGlmsUsers?.map(() => {
+  return;
+});
 
 const RoleTable = () => {
   return (
@@ -11,20 +16,20 @@ const RoleTable = () => {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow data-testid="table-row" className="bg-[#f7f7f8]">
-          <TableHead data-testid="tableHead-1" className="w-[150px] rounded-tl-xl text-black">
+          <TableHead data-testid="tableHead-1" className="w-[220px] rounded-tl-xl text-black">
             Name
           </TableHead>
-          <TableHead data-testid="tableHead-2" className="w-[170px] h-[30px] text-black">
+          <TableHead data-testid="tableHead-2" className="w-[220px] h-[30px] text-black">
             Id
           </TableHead>
-          <TableHead data-testid="tableHead-3" className="w-[170px] h-[30px] text-black">
+          <TableHead data-testid="tableHead-3" className="w-[220px] h-[30px] text-black">
             Roles
           </TableHead>
-          <TableHead data-testid="tableHead-4" className="w-[170px] text-black">
+          <TableHead data-testid="tableHead-4" className="w-[200px] text-black">
             Email
           </TableHead>
-          <TableHead className="w-[20px] h-[30px] text-black"></TableHead>
-          <TableHead className="w-[20px] h-[30px] rounded-tr-xl text-black"></TableHead>
+          <TableHead className=" w-[10px] text-black"></TableHead>
+          <TableHead className="w-[20px] rounded-tr-xl text-black"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

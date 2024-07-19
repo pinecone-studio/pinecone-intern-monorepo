@@ -1,0 +1,11 @@
+query GetGlmsUsers {
+  getGlmsUsers {
+    _id
+    firstName
+    lastName
+    email
+    password
+    roles
+    avatar
+  }
+}
