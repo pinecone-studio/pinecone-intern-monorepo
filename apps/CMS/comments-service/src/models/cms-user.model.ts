@@ -1,14 +1,7 @@
+import { CmsUser } from '@/graphql/generated';
 import { Model, Schema, model, models } from 'mongoose';
 
-interface ICmsUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  roles: string[];
-}
-
-const cmsUserSchema = new Schema<ICmsUser>({
+const cmsUserSchema = new Schema<CmsUser>({
   firstName: {
     type: String,
     required: true,
@@ -32,4 +25,4 @@ const cmsUserSchema = new Schema<ICmsUser>({
   },
 });
 
-export const cmsUserModel: Model<ICmsUser> = models.cmsUser || model<ICmsUser>('cmsUser', cmsUserSchema);
+export const cmsUserModel: Model<CmsUser> = models.cmsUser || model<CmsUser>('cmsUser', cmsUserSchema);
