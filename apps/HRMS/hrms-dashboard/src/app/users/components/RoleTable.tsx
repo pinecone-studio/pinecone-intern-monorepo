@@ -2,24 +2,19 @@
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-// type usersDataType= ({
-//   __typename?: "hrmsUser";
-//   _id?: string | null;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   role: HrmsRoles;
-//   password: string;
-// } | null)[] | null | undefined 
+type usersDataType= ({
+  __typename?: "hrmsUser";
+  _id?: string | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string | undefined;
+  password: string;
+} | null)[] 
 
-// type HrmsRoles={
-//   type: String,
-//   enum: ['EMPLOYEE', 'ADMIN'],
-// }
 
-const RoleTable = ({usersData}:{usersData:any}) => {
-
-  return (
+const RoleTable = ({usersData}:{usersData: usersDataType}) => {
+return (
     <Table className="px-6">
       <TableCaption></TableCaption>
       <TableHeader>
@@ -39,12 +34,12 @@ const RoleTable = ({usersData}:{usersData:any}) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-     {usersData?.map((item:any, index:any) => {
+     {usersData?.map((item, index) => {
       return <TableRow key={index}>
-      <TableCell>{item.firstName}</TableCell>
-      <TableCell>{item._id}</TableCell>
-      <TableCell>{item.role}</TableCell>
-      <TableCell>{item.email}</TableCell>
+      <TableCell>{item?.firstName}</TableCell>
+      <TableCell>{item?._id}</TableCell>
+      <TableCell>{item?.role}</TableCell>
+      <TableCell>{item?.email}</TableCell>
     </TableRow>
      })}
       </TableBody>

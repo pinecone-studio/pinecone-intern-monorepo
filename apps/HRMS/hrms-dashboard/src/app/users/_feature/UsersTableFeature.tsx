@@ -4,6 +4,7 @@ import LoginRoleSearch from '../components/UserRoleSearch';
 import RoleTable from '../components/RoleTable';
 import { useGetHrmsUsersQuery } from '@/generated';
 
+
 const RoleTableFeature = () => {
   const { data } = useGetHrmsUsersQuery();
   const usersData = data?.getHrmsUsers
