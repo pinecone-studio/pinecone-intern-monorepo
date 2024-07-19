@@ -59,11 +59,11 @@ describe('Table components', () => {
     });
   });
 
-  it('should call addToDetails function and push to the correct path when edit button is clicked', () => {
+  it('should call addToDetails function and push to the correct path when row is clicked', () => {
     mockEmployees.forEach((employee, index) => {
-      const editButton = screen.getAllByText('edit')[index];
+      const tableRow = screen.getByTestId(`TableContent-${index}`);
 
-      fireEvent.click(editButton);
+      fireEvent.click(tableRow);
 
       expect(setItemMock).toHaveBeenCalledWith('employeeDetails', JSON.stringify(employee));
       expect(pushMock).toHaveBeenCalledWith('/employee-details/employee-detail');
