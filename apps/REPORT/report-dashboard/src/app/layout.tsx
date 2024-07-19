@@ -2,6 +2,9 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { FederationProvider } from '../common';
 import './global.css';
 import { ProjectHeader } from '@/components/ProjectHeader';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { AuthProvider } from '@/common/providers/AuthProvider';
 
 export const metadata = {
   title: 'Welcome to CMS-dashboard',
@@ -12,12 +15,16 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className="relative">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <FederationProvider>
-            <ProjectHeader />
-            {children}
-          </FederationProvider>
-        </ThemeProvider>
+        <FederationProvider>
+          <AuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              <ToastContainer />
+              <ProjectHeader />
+              <ToastContainer />
+              {children}
+            </ThemeProvider>
+          </AuthProvider>
+        </FederationProvider>
       </body>
     </html>
   );
