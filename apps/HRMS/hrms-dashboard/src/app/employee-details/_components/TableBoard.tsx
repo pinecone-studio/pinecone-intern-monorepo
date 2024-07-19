@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Employee } from '@/generated';
 import { useRouter } from 'next/navigation';
@@ -37,7 +36,7 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
       </TableHeader>
       <TableBody>
         {employees?.map((employee, index) => (
-          <TableRow data-testid={`TableContent-${index}`} key={employee.firstname}>
+          <TableRow data-testid={`TableContent-${index}`} key={employee.firstname} onClick={() => addToDetails(employee)} className="hover:bg-gray-100 cursor-pointer">
             <TableCell data-testid={`tableCell-1-${index}`} className="font-medium">
               <div className="flex gap-3 justify-start items-center">
                 <div className="flex w-[40px] h-[40px] rounded-full" style={{ backgroundImage: `URL(${employee.imageURL})`, backgroundPosition: 'center', backgroundSize: 'cover' }}></div>
@@ -50,9 +49,7 @@ export const TableDemo = ({ employees }: { employees: Employee[] }) => {
             <TableCell data-testid={`tableCell-5-${index}`} className="text-right">
               {employee.employmentStatus}
             </TableCell>
-            <TableCell>
-              <Button onClick={() => addToDetails(employee)}>edit</Button>
-            </TableCell>
+            <TableCell></TableCell>
           </TableRow>
         ))}
       </TableBody>
