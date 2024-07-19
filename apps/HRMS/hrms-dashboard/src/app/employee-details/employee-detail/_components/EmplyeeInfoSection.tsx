@@ -28,11 +28,11 @@ const EmployeeInfoSection = () => {
   if (!employee) return <div>No employee selected</div>;
 
   const infoFields = [
-    { title: 'Албан тушаал', value: employee.jobTitle },
-    { title: 'Хэлтэс', value: employee.department },
-    { title: 'Ажилд орсон өдөр', value: '2023-03-09' },
-    { title: 'Ажилласан хугацаа', value: '1 жил' },
-    { title: 'Төлөв', value: employee.employmentStatus },
+    { title: 'Албан тушаал', value: employee.jobTitle || 'Албан тушаал' },
+    { title: 'Хэлтэс', value: employee.department || 'Хэлтэс' },
+    { title: 'Ажилд орсон өдөр', value: '2023-03-09' || 'Ажилд орсон өдөр' },
+    { title: 'Ажилласан хугацаа', value: '1 жил' || 'Ажилласан хугацаа' },
+    { title: 'Төлөв', value: employee.employmentStatus || 'Төлөв' },
   ];
 
   return (
