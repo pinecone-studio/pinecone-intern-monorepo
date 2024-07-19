@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CourseEntButton } from '../../src/app/addCourse/_components/CourseEntButton';
+import { CourseEntButton } from '../../src/app/admin/addCourse/_components/CourseEntButton';
 
 const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({

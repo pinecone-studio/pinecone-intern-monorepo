@@ -1,5 +1,5 @@
-query GetClasses {
-  getClasses {
+query GetClasses($search: String) {
+  getClasses(search: $search) {
     _id
     name
     startDate

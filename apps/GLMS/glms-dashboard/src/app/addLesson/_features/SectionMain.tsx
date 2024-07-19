@@ -82,7 +82,7 @@ export const SectionMain = () => {
         },
       });
 
-      router.push(`${courseId}`);
+      router.push(`/admin/${courseId}`);
     } catch (error) {
       const message = (error as Error).message;
       setError(message);
@@ -90,10 +90,10 @@ export const SectionMain = () => {
   };
 
   return (
-    <div className="mx-auto container gap-2">
+    <div className="gap-2 mx-auto container">
       <ActionLinkButton label="Хичээлийн ерөнхий мэдээлэл" Icon={ArrowLeft} href={`/${courseId}`} />
 
-      <div className="bg-white h-[900px] mt-5 flex flex-col gap-3 items-center justify-center rounded-[12px]">
+      <div className="flex flex-col justify-center items-center gap-3 bg-white mt-5 rounded-[12px] h-[900px]">
         <h1>Add Lesson for Course {courseId}</h1>
 
         <Field label="Хичээлийн гарчиг" value={title} dataTestid="lesson-title" onChange={setTitle} />
@@ -117,7 +117,7 @@ export const SectionMain = () => {
           </div>
         )}
 
-        <div className="pt-[24px] flex flex-col items-center gap-[32px]">
+        <div className="flex flex-col items-center gap-[32px] pt-[24px]">
           <SectionButton />
           <div data-testid="save-button">
             <SectionSaveButt disabled={disabled} onClick={handelCreateLesson} />

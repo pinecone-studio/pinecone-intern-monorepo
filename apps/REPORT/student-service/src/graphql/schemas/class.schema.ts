@@ -31,7 +31,7 @@ export const classSchema = gql`
     classType: String
   }
   type Query {
-    getClasses: [Class!]!
+    getClasses(search: String): [Class!]!
     getClassById(classId: ID!): Class!
   }
   type Mutation {

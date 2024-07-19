@@ -2,7 +2,6 @@ import { ClassType } from '@/generated';
 
 describe('ClassCardTab Component', () => {
   beforeEach(() => {
-    // Mock the GraphQL query
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetClasses') {
         req.reply({
@@ -17,8 +16,7 @@ describe('ClassCardTab Component', () => {
       }
     }).as('getClasses');
 
-    // Visit the page containing the ClassCardTab component
-    cy.visit('/class'); // Assuming the component is on the home page
+    cy.visit('/class');
     cy.wait('@getClasses');
   });
 
@@ -85,8 +83,61 @@ describe('ClassCardTab Component', () => {
     cy.contains('Error').should('be.visible');
   });
 
-  it('allows searching', () => {
+  it('allows searching and updates results', () => {
+    // Mock the GraphQL query for search
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
+        req.reply({
+          data: {
+            getClasses: [{ id: '1', name: 'Coding Class', classType: ClassType.Coding }],
+          },
+        });
+      }
+    }).as('searchClasses');
+
     cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('Coding');
-    // Note: Implement search functionality in the component and update this test
+    cy.wait('@searchClasses');
+
+    // Check if the grid has been updated with filtered results
+    cy.get('.grid-cols-4').children().should('have.length', 1);
+    cy.contains('Coding Class').should('be.visible');
+  });
+
+  it('shows no results message when search returns empty', () => {
+    // Mock the GraphQL query for an empty search result
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
+        req.reply({
+          data: {
+            getClasses: [],
+          },
+        });
+      }
+    }).as('emptySearchClasses');
+    cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('NonexistentClass');
+    cy.wait('@emptySearchClasses');
+    cy.contains('No classes found').should('be.visible');
+  });
+  it('resets search results when input is cleared', () => {
+    // First, perform a search
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetClasses' && req.body.variables.search) {
+        req.reply({
+          data: {
+            getClasses: [{ id: '1', name: 'Coding Class', classType: ClassType.Coding }],
+          },
+        });
+      }
+    }).as('searchClasses');
+
+    cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').type('Coding');
+    cy.wait('@searchClasses');
+
+    // Then clear the search input
+    cy.get('input[placeholder="Сурагч, Анги, гэх/м..."]').clear();
+    cy.wait('@getClasses');
+
+    // Check if all original classes are displayed again
+    cy.get('.grid-cols-4').children().should('have.length', 3);
   });
 });
