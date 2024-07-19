@@ -1,8 +1,6 @@
-import 'cypress-file-upload';
-
 describe('StudentAddModal', () => {
   beforeEach(() => {
-    cy.visit('/student');
+    cy.visit('/class/class-123');
     cy.get('[data-testid="openModalButton"]').click();
   });
 

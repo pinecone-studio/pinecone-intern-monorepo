@@ -41,16 +41,17 @@ export const CustomToastError: React.FC<CustomToastProps> = ({ message }) => <di
 interface AddStudentModalProps {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
+  classId: string;
 }
 
-export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenChange }) => {
+export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenChange, classId }) => {
   const [createStudent] = useCreateStudentMutation();
   const [uploadImg, setUploadImg] = useState<string>('');
   const [activeStatus, setActiveStatus] = useState('ACTIVE');
 
   const { refetch } = useGetStudentByClassIdQuery({
     variables: {
-      classId: '12345',
+      classId: classId,
     },
   });
   const formik = useFormik({
@@ -61,7 +62,7 @@ export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenCh
       phoneNumber: '',
       studentCode: '',
       profileImgUrl: '',
-      classId: '12345',
+      classId: '',
       active: '',
     },
     validationSchema: validationSchema,
@@ -73,6 +74,7 @@ export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenCh
               ...values,
               profileImgUrl: uploadImg,
               active: activeStatus,
+              classId: classId,
             },
           },
         });
@@ -82,6 +84,8 @@ export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenCh
         refetch();
       } catch (error) {
         toast.error(<CustomToastError message="Алдаа гарлаа Дахин оролдоно уу." />);
+        console.log(error);
+        console.log('param', classId);
       }
       onOpenChange(false);
     },
