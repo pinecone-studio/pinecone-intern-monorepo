@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { TableDemo } from '../../src/app/employee-details/_components/TableBoard';
+import { useRouter } from 'next/navigation';
 
 const mockEmployees = [
   {
@@ -21,9 +22,24 @@ const mockEmployees = [
     imageURL: 'path_to_image_url',
   },
 ];
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
+const pushMock = jest.fn();
+const setItemMock = jest.spyOn(Storage.prototype, 'setItem');
+
+(useRouter as jest.Mock).mockReturnValue({
+  push: pushMock,
+});
+
 describe('Table components', () => {
-  it('should render table components correctly', () => {
+  beforeEach(() => {
     render(<TableDemo employees={mockEmployees} />);
+  });
+
+  it('should render table components correctly', () => {
     const tableContent = screen.getByTestId('content');
     expect(tableContent).toBeInTheDocument();
 
@@ -40,6 +56,17 @@ describe('Table components', () => {
         const bodyData = screen.getByTestId(`tableCell-${i}-${index}`);
         expect(bodyData).toBeInTheDocument();
       }
+    });
+  });
+
+  it('should call addToDetails function and push to the correct path when edit button is clicked', () => {
+    mockEmployees.forEach((employee, index) => {
+      const editButton = screen.getAllByText('edit')[index];
+
+      fireEvent.click(editButton);
+
+      expect(setItemMock).toHaveBeenCalledWith('employeeDetails', JSON.stringify(employee));
+      expect(pushMock).toHaveBeenCalledWith('/employee-details/employee-detail');
     });
   });
 });
