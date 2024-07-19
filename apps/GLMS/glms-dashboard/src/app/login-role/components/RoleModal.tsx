@@ -14,9 +14,9 @@ const RoleModal = () => {
       <DialogContent className="w-[425px] h-[284px] bg-[white]">
         <DialogHeader>
           <DialogTitle className="text-[20px] font-semibold">Edit roles</DialogTitle>
-          <DialogDescription>ID:901923101</DialogDescription>
+          <DialogDescription className="mb-5">ID:901923101</DialogDescription>
         </DialogHeader>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mb-4">
           <div className="flex items-center gap-5">
             <label htmlFor="Roles" className="text-right">
               Roles
