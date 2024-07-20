@@ -3,8 +3,23 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import EmployeeInfoContainer from '../../../src/app/employee-details/employee-detail/_components/EmplyeeInfoSection';
 
-describe('EmployeeInfoSection', () => {
+describe('EmployeeInfoContainer', () => {
   it('renders correctly with info fields', () => {
+    const mockEmployee = {
+      dateOfEmployment: '2023-03-09',
+      department: 'Хөгжүүлэлтийн хэлтэс',
+      email: 'example@example.com',
+      employmentStatus: 'Үндсэн ажилтан',
+      firstname: 'John',
+      id: '1',
+      imageURL: '',
+      jobTitle: ['Дизайнер'],
+      lastname: 'Doe',
+      salary: '1000',
+      __typename: 'Employee',
+    };
+    sessionStorage.setItem('employeeDetails', JSON.stringify(mockEmployee));
+
     render(<EmployeeInfoContainer />);
 
     expect(screen.getByText('Хөдөлмөр эрхлэлтийн мэдээлэл')).toBeInTheDocument();
@@ -19,7 +34,7 @@ describe('EmployeeInfoSection', () => {
 
     infoFields.forEach((field) => {
       expect(screen.getByText(field.title)).toBeInTheDocument();
-      expect(screen.getByPlaceholderText(field.value)).toBeInTheDocument();
+      expect(screen.getByText(field.value)).toBeInTheDocument();
     });
 
     expect(screen.getByRole('button', { name: 'Засварлах' })).toBeInTheDocument();
