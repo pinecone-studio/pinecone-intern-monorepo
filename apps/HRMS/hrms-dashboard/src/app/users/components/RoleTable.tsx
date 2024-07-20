@@ -6,7 +6,7 @@ import { HrmsUser } from '@/generated';
 
 const RoleTable = ({usersData}:{usersData: HrmsUser[]}) => {
 return (
-    <Table className="px-6">
+    <Table className="px-6 overflow-hidden">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow data-testid="table-row" className="bg-[#f7f7f8]">
@@ -25,14 +25,14 @@ return (
         </TableRow>
       </TableHeader>
       <TableBody>
-     {usersData?.map((item, index) => {
-      return <TableRow key={index}>
+     {usersData?.map((item, index) => (
+      <TableRow key={index}>
       <TableCell>{item?.firstName}</TableCell>
       <TableCell>{item?._id}</TableCell>
       <TableCell>{item?.role}</TableCell>
       <TableCell>{item?.email}</TableCell>
     </TableRow>
-     })}
+))}
       </TableBody>
       <TableFooter />
     </Table>
