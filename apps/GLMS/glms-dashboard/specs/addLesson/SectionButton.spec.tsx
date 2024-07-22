@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { SectionButton } from '../../src/app/addLesson/_components/SectionButton';
+import { SectionButton } from '../../src/app/admin/addLesson/_components/SectionButton';
 
 jest.mock('@/components/ui/button', () => ({
   Button: ({ children, className }: never) => (
