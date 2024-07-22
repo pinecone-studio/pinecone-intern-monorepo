@@ -11,7 +11,7 @@ jest.mock('@/graphql/models/user.models', () => ({
         lastName: 'Baldan',
         email: 'baldan@yahoo.com',
         password: 'baldan123',
-        role: 'STUDENT',
+        roles: ['STUDENT'],
       })
       .mockRejectedValueOnce(null),
   },
@@ -29,7 +29,7 @@ describe('Create user', () => {
       lastName: 'Baldan',
       email: 'baldan@yahoo.com',
       password: 'baldan123',
-      role: 'STUDENT',
+      roles: ['STUDENT'],
     };
 
     const result = await createUser!(
@@ -41,7 +41,7 @@ describe('Create user', () => {
           lastName: 'Baldan',
           email: 'baldan@yahoo.com',
           password: 'baldan123',
-          role: 'STUDENT',
+          roles: ['STUDENT'],
         },
       },
       {},
@@ -58,7 +58,7 @@ describe('Create user', () => {
       lastName: 'Baldan',
       email: 'baldan@yahoo.com',
       password: 'baldan123',
-      role: 'STUDENT',
+      roles: ['STUDENT'],
     };
 
     try {

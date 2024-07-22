@@ -20,7 +20,7 @@ describe('Delete User', () => {
       lastName: 'testlast',
       email: '23@gmail.com',
       password: '123',
-      role: 'STUDENT',
+      roles: ['STUDENT'],
     };
     (UserModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce(mockuser);
 

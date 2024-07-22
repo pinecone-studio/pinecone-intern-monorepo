@@ -21,7 +21,7 @@ describe('Get user by query', () => {
         lastName: 'Baldan',
         email: 'baldan@yahoo.com',
         password: 'baldan123',
-        role: 'STUDENT',
+        roles: ['STUDENT'],
       },
     ];
 

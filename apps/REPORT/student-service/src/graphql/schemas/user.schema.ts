@@ -7,7 +7,7 @@ export const userTypeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    roles: [Roles!]!
+    roles: [Roles]!
   }
 
   enum Roles {
@@ -20,7 +20,7 @@ export const userTypeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    roles: [Roles!]!
+    roles: [Roles]!
   }
 
   input updateUserInput {
