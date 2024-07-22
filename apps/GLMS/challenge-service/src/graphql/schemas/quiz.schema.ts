@@ -38,7 +38,7 @@ export const quizTypeDefs = gql`
 
   type Question {
     id: ID!
-    quizId: ID!
+    quizId: ID
     text: String!
     options: [Option]
     # correctAnswer: ID!
@@ -65,7 +65,7 @@ export const quizTypeDefs = gql`
     questions: [UpdateQuestionInput]
   }
 
-  # Question's input 
+  # Question's input
   input CreateQuestionInput {
     text: String!
     options: [CreateOptionInput]!
