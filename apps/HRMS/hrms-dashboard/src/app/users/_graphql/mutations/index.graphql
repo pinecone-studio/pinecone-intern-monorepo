@@ -1,0 +1,21 @@
+mutation DeletedHrmsUser($_id: ID!) {
+  deletedHrmsUser(_id: $_id) {
+    _id
+    firstName
+    lastName
+    email
+    role
+    password
+  }
+}
+
+mutation UpdatedHrmsUser($_id: ID!, $input: hrmsUpdateUserInput!) {
+  updatedHrmsUser(_id: $_id, input: $input) {
+    _id
+    firstName
+    lastName
+    email
+    role
+    password
+  }
+}
