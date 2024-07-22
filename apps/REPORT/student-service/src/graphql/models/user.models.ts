@@ -18,7 +18,7 @@ export const userSchema = new Schema({
     required: true,
   },
   role: {
-    type: String,
+    type: [String],
     enum: ['ADMIN', 'STUDENT'],
     required: true,
     default: 'STUDENT',
