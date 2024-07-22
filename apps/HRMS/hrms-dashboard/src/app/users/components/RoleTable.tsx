@@ -34,26 +34,26 @@ const RoleTable = ({usersData}:{usersData: HrmsUser[]}) => {
       }
     };
 return (
-    <Table data-cy="tableBody"  className="px-6 overflow-hidden">
+    <Table className="px-6 overflow-hidden">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow className="bg-[#f7f7f8]">
-          <TableHead data-cy="tableHead-1" className="w-[150px] rounded-tl-xl text-black">
+          <TableHead className="w-[150px] rounded-tl-xl text-black">
             Name
           </TableHead>
-          <TableHead data-cy="tableHead-2" className="w-[170px] h-[30px] text-black">
+          <TableHead className="w-[170px] h-[30px] text-black">
             Id
           </TableHead>
-          <TableHead data-cy="tableHead-3" className="w-[170px] h-[30px] text-black">
+          <TableHead className="w-[170px] h-[30px] text-black">
             Roles
           </TableHead>
-          <TableHead data-cy="tableHead-4" className="w-[170px] rounded-tr-xl text-black">
+          <TableHead  className="w-[170px] rounded-tr-xl text-black">
             Email
           </TableHead>
-          <TableHead data-cy="tableHead-4" className="w-[5px] rounded-tr-xl text-black">
+          <TableHead  className="w-[5px] rounded-tr-xl text-black">
           
           </TableHead>
-          <TableHead data-cy="tableHead-4" className="w-[5px] rounded-tr-xl text-black">
+          <TableHead className="w-[5px] rounded-tr-xl text-black">
          
           </TableHead>
         </TableRow>

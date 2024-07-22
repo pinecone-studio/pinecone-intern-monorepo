@@ -39,7 +39,7 @@
       },
       "dependsOn": [
         {
-          "target": "",
+          "target": "clean",
           "params": "forward"
         },
         {
