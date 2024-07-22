@@ -4,17 +4,18 @@ export const articleTypeDefs = gql`
   scalar Date
 
   type Article {
-    _id: ID
-    title: String
-    coverPhoto: String
-    content: String
-    author: String
-    status: ArticleStatus
+    _id: ID!
+    title: String!
+    content: String!
+    coverPhoto: String!
+    author: String!
+    status: String!
     slug: String
-    createdAt: Date
-    publishedAt: Date
-    updatedAt: Date
-    articleId: String
+    category: [Category!]!
+    createdAt: Date!
+    publishedAt: Date!
+    updatedAt: Date!
+    scheduledAt: Date!
   }
 
   enum ArticleStatus {
@@ -24,30 +25,27 @@ export const articleTypeDefs = gql`
     SCHEDULED
   }
 
-  input CreateArticleInput {
-    articleId: String
-    title: String
-    coverPhoto: String
-    content: String
-    author: String
-    status: ArticleStatus
+  input ArticleInput {
+    title: String!
+    content: String!
+    coverPhoto: String!
+    author: String!
+    status: String!
     slug: String
+    category: String!
+    createdAt: Date
+    publishedAt: Date
+    updatedAt: Date
+    scheduledAt: Date
   }
-
-  input UpdateArticleInput {
-    title: String
-    coverPhoto: String
-    content: String
-    status: ArticleStatus
-    slug: String
-  }
-
+  
   type Query {
     getArticles: [Article!]!
   }
 
   type Mutation {
-    createArticle(articleInput: CreateArticleInput): Article!
-    updateArticle(_id: String!, input: UpdateArticleInput): Article!
+    createArticle(articleInput: ArticleInput!): Article
+    updateArticle(id: ID!, articleInput: ArticleInput!): Article
+    deleteArticle(id: ID!): Article
   }
 `;

@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { updateCategory } from '../../../../src/graphql/resolvers/mutations';
 
-jest.mock('../../../../src/models', () => ({
+jest.mock('@/models/category.model', () => ({
   CategoryModel: {
     findByIdAndUpdate: jest
       .fn()
