@@ -7,7 +7,7 @@ export const userTypeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    role: [Roles!]!
+    roles: [Roles!]!
   }
 
   enum Roles {
@@ -20,7 +20,7 @@ export const userTypeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    role: [Roles!]!
+    roles: [Roles!]!
   }
 
   input updateUserInput {
@@ -28,7 +28,7 @@ export const userTypeDefs = gql`
     lastName: String
     email: String
     password: String
-    role: [Roles]
+    roles: [Roles]
   }
 
   input SignInInput {
@@ -38,7 +38,7 @@ export const userTypeDefs = gql`
 
   type Query {
     getUsers: [User]
-    getUserById(_id: ID!): User
+    getUserById(_id: String!): User
   }
 
   type Token {

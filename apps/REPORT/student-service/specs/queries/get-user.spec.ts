@@ -10,7 +10,7 @@ jest.mock('@/graphql/models', () => ({
         firstName: 'George',
         lastName: 'Jorge',
         email: 'test@hotmail.com',
-        role: ['ADMIN'],
+        roles: ['ADMIN'],
         password: 'supersecret',
       })
       .mockResolvedValueOnce(undefined)
@@ -26,7 +26,7 @@ describe('get user', () => {
       firstName: 'George',
       lastName: 'Jorge',
       email: 'test@hotmail.com',
-      role: ['ADMIN'],
+      roles: ['ADMIN'],
       password: 'supersecret',
     });
   });
