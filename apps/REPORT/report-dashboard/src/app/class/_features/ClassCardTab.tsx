@@ -1,3 +1,5 @@
+'use client';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ClassCard from '../_components/ClassCard';
 import { Class, ClassType } from '@/generated';

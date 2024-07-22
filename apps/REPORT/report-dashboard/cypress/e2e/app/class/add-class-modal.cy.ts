@@ -1,122 +1,116 @@
-// cypress/integration/addClassModal.spec.ts
+import { ClassType } from '@/generated';
 
-describe('AddClassModal', () => {
+describe('AddClassModal Component (within ClassCardTab)', () => {
   beforeEach(() => {
-    cy.intercept('POST', '/graphql', (req) => {
-      if (req.body.operationName === 'CreateClass') {
-        req.reply({ data: { createClass: { id: '1' } } });
-      }
-      if (req.body.operationName === 'GetClasses') {
-        req.reply({ data: { classes: [] } });
-      }
-    }).as('graphqlOperation');
-
     cy.visit('/class');
-    cy.contains('Анги').click();
-    cy.contains('Анги нэмэх').should('be.visible');
-    cy.get('div[role="dialog"]').should('be.visible');
   });
 
-  it('renders the modal correctly', () => {
+  it('opens when the "Анги" button is clicked', () => {
+    cy.get('[data-testid="openModalButton"]').click();
     cy.get('[data-testid="modal-content"]').should('be.visible');
     cy.get('[data-testid="modal-header"]').should('contain', 'Анги нэмэх');
   });
 
-  it('validates required fields', () => {
-    cy.get('[data-testid="submit-button"]').click();
+  it('displays all input fields correctly', () => {
+    cy.get('[data-testid="openModalButton"]').click();
+    const inputFields = [
+      { testId: 'name-input', label: 'Ангийн нэр' },
+      { testId: 'teacher1-input', label: 'Багш 1-н нэр' },
+      { testId: 'teacher2-input', label: 'Багш 2-н нэр' },
+      { testId: 'startDate-input', label: 'Эхлэх огноо' },
+      { testId: 'endDate-input', label: 'Дуусах огноо' },
+    ];
 
-    cy.get('[data-testid="class-name-input"]').parent().should('contain', 'This field is required');
-    cy.get('[data-testid="teacher1-input"]').parent().should('contain', 'This field is required');
-    cy.get('[data-testid="teacher2-input"]').parent().should('contain', 'This field is required');
-    cy.get('[data-testid="start-date-input"]').parent().should('contain', 'This field is required');
-    cy.get('[data-testid="end-date-input"]').parent().should('contain', 'This field is required');
+    inputFields.forEach(({ testId, label }) => {
+      cy.get(`[data-testid="${testId}-label"]`).should('contain', label);
+      cy.get(`[data-testid="${testId}"]`).should('be.visible');
+    });
   });
 
-  it('allows input in all fields', () => {
-    cy.get('[data-testid="class-name-input"]').should('be.visible').type('Test Cllass');
-    cy.get('[data-testid="teacher1-input"]').should('be.visible').type('Teacher One');
-    cy.get('[data-testid="teacher2-input"]').should('be.visible').type('Teacher Two');
-    cy.get('[data-testid="start-date-input"]').should('be.visible').type('2024-01-01');
-    cy.get('[data-testid="end-date-input"]').should('be.visible').type('2024-12-31');
-
-    cy.get('[data-testid="class-name-input"]').should('have.value', 'Test Cllass');
-    cy.get('[data-testid="teacher1-input"]').should('have.value', 'Teacher One');
-    cy.get('[data-testid="teacher2-input"]').should('have.value', 'Teacher Two');
-    cy.get('[data-testid="start-date-input"]').should('have.value', '2024-01-01');
-    cy.get('[data-testid="end-date-input"]').should('have.value', '2024-12-31');
+  it('displays radio buttons for class type', () => {
+    cy.get('[data-testid="openModalButton"]').click();
+    cy.get('[data-testid="class-type-radio-group"]').should('be.visible');
+    cy.get('[data-testid="coding-radio-container"]').should('be.visible');
+    cy.get('[data-testid="design-radio-container"]').should('be.visible');
   });
 
-  it('selects class types correctly', () => {
+  it('allows selection of class type', () => {
+    cy.get('[data-testid="openModalButton"]').click();
     cy.get('[data-testid="coding-radio-button"]').should('have.attr', 'aria-checked', 'true');
-    cy.get('[data-testid="design-radio-button"]').should('have.attr', 'aria-checked', 'false');
-
     cy.get('[data-testid="design-radio-button"]').click();
-
-    cy.get('[data-testid="coding-radio-button"]').should('have.attr', 'aria-checked', 'false');
     cy.get('[data-testid="design-radio-button"]').should('have.attr', 'aria-checked', 'true');
-
-    cy.get('[data-testid="coding-radio-button"]').click();
-
-    cy.get('[data-testid="coding-radio-button"]').should('have.attr', 'aria-checked', 'true');
-    cy.get('[data-testid="design-radio-button"]').should('have.attr', 'aria-checked', 'false');
   });
 
-  it('validates empty fields and submits the form with valid data', () => {
-    cy.get('[data-testid="submit-button"]').click({ force: true });
+  it('displays validation errors for empty required fields', () => {
+    cy.get('[data-testid="openModalButton"]').click();
+    cy.get('[data-testid="submit-button"]').click();
+    cy.get('.text-red-500').should('have.length', 5);
+  });
 
-    cy.get('div[role="dialog"]').within(() => {
-      cy.contains('This field is required').should('be.visible');
-      cy.contains('This field is required').should('be.visible');
-      cy.contains('This field is required').should('be.visible');
-      cy.contains('This field is required').should('be.visible');
-      cy.contains('This field is required').should('be.visible');
+  it('submits the form with valid data and closes the modal', () => {
+    cy.get('[data-testid="openModalButton"]').click();
+
+    const formData = {
+      name: 'Test Class',
+      teacher1: 'John Doe',
+      teacher2: 'Jane Smith',
+      startDate: '2024-08-01',
+      endDate: '2024-12-31',
+    };
+
+    Object.entries(formData).forEach(([testId, value]) => {
+      cy.get(`[data-testid="${testId}-input"]`).type(value);
     });
 
     cy.get('[data-testid="submit-button"]').click();
 
-    cy.contains('This field is required').should('be.visible');
+    cy.get('[data-testid="modal-content"]').should('not.exist');
+
+    cy.get('[data-testid="class-card"]').should('contain', 'Test Class');
   });
 
-  it('resets form after successful submission', () => {
-    cy.get('[data-testid="class-name-input"]').type('Test Class');
-    cy.get('[data-testid="teacher1-input"]').type('Teacher One');
-    cy.get('[data-testid="teacher2-input"]').type('Teacher Two');
-    cy.get('[data-testid="start-date-input"]').type('2024-01-01');
-    cy.get('[data-testid="end-date-input"]').type('2024-12-31');
-
-    cy.get('[data-testid="submit-button"]').click();
-
-    cy.get('[data-testid="openModalButton"]').click();
-
-    cy.get('[data-testid="class-name-input"]').should('have.value', '');
-    cy.get('[data-testid="teacher1-input"]').should('have.value', '');
-    cy.get('[data-testid="teacher2-input"]').should('have.value', '');
-    cy.get('[data-testid="start-date-input"]').should('have.value', '');
-    cy.get('[data-testid="end-date-input"]').should('have.value', '');
-    cy.get('[data-testid="coding-radio-button"]').should('have.attr', 'aria-checked', 'true');
-  });
-
-  it('handles GraphQL errors', () => {
+  it('disables submit button while loading', () => {
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'CreateClass') {
         req.reply({
-          statusCode: 200,
-          body: {
-            errors: [{ message: 'Failed to create class' }],
+          delay: 2000,
+          data: {
+            createClass: {
+              id: '2',
+              name: 'Test Class',
+              classType: ClassType.Coding,
+              teachers: ['John Doe', 'Jane Smith'],
+              startDate: '2024-08-01',
+              endDate: '2024-12-31',
+            },
           },
-          delayMs: 500,
         });
       }
-    }).as('graphqlErrorOperation');
+    }).as('createClassMutation');
 
-    cy.get('[data-testid="class-name-input"]').type('Test Class');
-    cy.get('[data-testid="teacher1-input"]').type('Teacher One');
-    cy.get('[data-testid="teacher2-input"]').type('Teacher Two');
-    cy.get('[data-testid="start-date-input"]').type('2024-01-01');
-    cy.get('[data-testid="end-date-input"]').type('2024-12-31');
+    cy.get('[data-testid="openModalButton"]').click();
+
+    const formData = {
+      name: 'Test Class',
+      teacher1: 'John Doe',
+      teacher2: 'Jane Smith',
+      startDate: '2024-08-01',
+      endDate: '2024-12-31',
+    };
+
+    Object.entries(formData).forEach(([field, value]) => {
+      cy.get(`[data-testid="${field}-input"]`).type(value);
+    });
 
     cy.get('[data-testid="submit-button"]').click();
+    cy.get('[data-testid="submit-button"]').should('be.disabled');
+    cy.wait('@createClassMutation');
+    cy.get('[data-testid="submit-button"]').should('not.be.disabled');
+  });
 
-    cy.wait('@graphqlErrorOperation');
+  it('closes the modal when clicking outside', () => {
+    cy.get('[data-testid="openModalButton"]').click();
+    cy.get('body').click();
+    cy.get('[data-testid="modal-content"]').should('not.exist');
   });
 });

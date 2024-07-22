@@ -112,14 +112,14 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
         </DialogTrigger>
         <DialogContent data-testid="modal-content">
           <DialogHeader data-testid="modal-header">Анги нэмэх</DialogHeader>
-          {renderInput('name', 'Ангийн нэр', 'class-name-input')}
+          {renderInput('name', 'Ангийн нэр', 'name-input')}
           <div data-testid="teachers-container" className="flex justify-between">
             {renderInput('teacher1', 'Багш 1-н нэр', 'teacher1-input')}
             {renderInput('teacher2', 'Багш 2-н нэр', 'teacher2-input')}
           </div>
           <div data-testid="dates-container" className="flex justify-between">
-            {renderInput('startDate', 'Эхлэх огноо', 'start-date-input')}
-            {renderInput('endDate', 'Дуусах огноо', 'end-date-input')}
+            {renderInput('startDate', 'Эхлэх огноо', 'startDate-input')}
+            {renderInput('endDate', 'Дуусах огноо', 'endDate-input')}
           </div>
           {renderRadioGroup()}
           <Button disabled={loading} type="submit" onClick={() => formik.handleSubmit()} data-testid="submit-button" className="w-[200px]">
