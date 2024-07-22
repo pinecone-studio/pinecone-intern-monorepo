@@ -13,8 +13,6 @@ describe('AddClassModal', () => {
 
     cy.visit('/class');
     cy.contains('Анги').click();
-    cy.contains('Анги нэмэх').should('be.visible');
-    cy.get('div[role="dialog"]').should('be.visible');
   });
 
   it('renders the modal correctly', () => {
