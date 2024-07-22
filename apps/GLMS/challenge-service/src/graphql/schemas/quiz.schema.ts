@@ -10,7 +10,8 @@ export const quizTypeDefs = gql`
     getQuestions(quizId: ID!): [Question]
     getQuestion(id: ID!): Question
 
-    getOptions(questionId: ID!): [Option]
+    # getOptions(questionId: ID!): [Option]
+    getOptions: [Option]
     getOption(id: ID!): Option
   }
 
@@ -40,13 +41,13 @@ export const quizTypeDefs = gql`
     quizId: ID!
     text: String!
     options: [Option]
-    correctAnswer: ID!
+    # correctAnswer: ID!
     createdAt: Date
   }
 
   type Option {
     id: ID!
-    questionId: ID!
+    questionId: ID
     optionText: String!
     isCorrect: Boolean!
     createdAt: Date
@@ -68,14 +69,14 @@ export const quizTypeDefs = gql`
   input CreateQuestionInput {
     text: String!
     options: [CreateOptionInput]!
-    correctAnswer: ID!
+    # correctAnswer: ID!
   }
 
   input UpdateQuestionInput {
     id: ID!
     text: String
     options: [UpdateOptionInput]
-    correctAnswer: ID
+    # correctAnswer: ID
   }
 
   # Option's input
