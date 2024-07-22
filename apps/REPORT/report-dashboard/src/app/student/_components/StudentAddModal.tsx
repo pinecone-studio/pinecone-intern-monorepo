@@ -37,18 +37,15 @@ type FormValues = {
 };
 export const CustomToast: React.FC<CustomToastProps> = ({ message }) => <div data-cy="toast-message">{message}</div>;
 export const CustomToastError: React.FC<CustomToastProps> = ({ message }) => <div data-cy="toast-message-error">{message}</div>;
-
 interface AddStudentModalProps {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   classId: string;
 }
-
 export const StudentAddModal: React.FC<AddStudentModalProps> = ({ open, onOpenChange, classId }) => {
   const [createStudent] = useCreateStudentMutation();
   const [uploadImg, setUploadImg] = useState<string>('');
   const [activeStatus, setActiveStatus] = useState('ACTIVE');
-
   const { refetch } = useGetStudentByClassIdQuery({
     variables: {
       classId: classId,

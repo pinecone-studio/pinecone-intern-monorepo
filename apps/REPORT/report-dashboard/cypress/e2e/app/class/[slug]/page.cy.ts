@@ -8,7 +8,7 @@ describe('Dynamic Page Component', () => {
       email: 'john.doe@example.com',
       studentCode: '12345',
       active: 'ACTIVE',
-      profileImgUrl: 'https://res.cloudinary.com/deyylvaoy/image/upload/v1721308916/eoqmcvotks2gupl22ct7.jpg',
+      profileImgUrl: '',
     },
   ];
 
