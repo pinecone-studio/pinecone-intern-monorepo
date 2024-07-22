@@ -5,6 +5,10 @@ import { useState } from 'react';
 import { StudentAddModal } from './StudentAddModal';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { FiEdit } from 'react-icons/fi';
+import { RiDeleteBack2Line } from 'react-icons/ri';
 
 const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,11 +49,30 @@ const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
               <TableCell data-cy="student-code">{student.studentCode}</TableCell>
               <TableCell data-cy="student-email">{student.email}</TableCell>
               <TableCell data-cy="student-phone-number">{student.phoneNumber}</TableCell>
-              <TableCell className="font-medium bg-white flex items-center gap-2 h-[64px]  text-right">
-                <div className={`border rounded-md  px-2 py-1 w-[90px] flex justify-center items-center ${student.active === 'ACTIVE' ? 'bg-white' : 'bg-[#EF4444] text-white'}`}>
-                  {student.active === 'ACTIVE' ? 'Идэвхтэй' : 'Идэвхгүй'}
-                </div>
-              </TableCell>
+              <div className="flex items-center">
+                <TableCell className="font-medium bg-white flex items-center gap-2 h-[64px]  text-right">
+                  <div className={`border rounded-md  px-2 py-1 w-[90px] flex justify-center items-center ${student.active === 'ACTIVE' ? 'bg-white' : 'bg-[#EF4444] text-white'}`}>
+                    {student.active === 'ACTIVE' ? 'Идэвхтэй' : 'Идэвхгүй'}
+                  </div>
+                </TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <HiOutlineDotsHorizontal className="h-5 w-5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel></DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <FiEdit />
+                      Засах
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <RiDeleteBack2Line />
+                      Устгах
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </TableRow>
           ))}
         </TableBody>
