@@ -19,7 +19,7 @@ describe('SectionMain Component', () => {
   };
 
   beforeEach(() => {
-    cy.visit('/addLesson/475e4247-4ac0-4115-a7f2-18c638ca47b9');
+    cy.visit('/admin/addLesson/475e4247-4ac0-4115-a7f2-18c638ca47b9');
   });
 
   const generateResponse = (state: string) => {

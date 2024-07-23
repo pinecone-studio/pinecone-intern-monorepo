@@ -36,7 +36,7 @@ const CourseDetail = () => {
               {data.getCourse?.content}
             </p>
             <div className="flex flex-col gap-2">
-              <ActionLinkButton variant="outline" label="Add Lesson" Icon={CirclePlus} href={`/addLesson/${courseId}`} />
+              <ActionLinkButton variant="outline" label="Add Lesson" Icon={CirclePlus} href={`/admin/addLesson/${courseId}`} />
               <Lessons />
             </div>
           </div>
