@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { ActionLinkButton } from '@/components/ActionLinkButton';
 import { Lessons } from './_features/Lessons';
 import { CirclePlus } from 'lucide-react';
+import { Quiz } from './_features/Quiz';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -38,6 +39,7 @@ const CourseDetail = () => {
             <div className="flex flex-col gap-2">
               <ActionLinkButton variant="outline" label="Add Lesson" Icon={CirclePlus} href={`/admin/addLesson/${courseId}`} />
               <Lessons />
+              <Quiz/>
             </div>
           </div>
           <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} className='rounded-[12px]'/> : <></>}</div>
