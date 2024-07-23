@@ -1,5 +1,5 @@
 'use client';
-import { LeftSection, RightSection } from '../_features';
+import { LeftSection, RightSection } from '../_features/add';
 import { Formik, Form, FormikHelpers, FormikTouched } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
 
@@ -33,7 +33,7 @@ export default async function Index() {
             <div className="flex items-center justify-center">
               <LeftSection />
               {/* Right container */}
-              <RightSection text="submit" />
+              <RightSection/>
             </div>
           </Form>
         )}

@@ -14,9 +14,9 @@ export const InputField = ({ ...props }): JSX.Element => {
         {...field}
         placeholder={props.placeholder}
         key={props.key}
-        className={`input rounded-lg py-[18px] mt-3 px-6 focus:outline-none focus:border-blue-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
+        className={`input rounded-lg py-[18px] mt-3 px-6 focus:outline-offset-1 focus:outline-sky-500 focus:bg-white focus:placeholder-transparent w-full h-full ${props.addClass}`}
       />
-      {meta.touched && meta.error && <div className="text-base mt-4 absolute text-red-600">{meta.error}</div>}
+      {meta.touched && meta.error && <div className="text-base mt-1 absolute text-red-600">{meta.error}</div>}
     </>
   );
 };

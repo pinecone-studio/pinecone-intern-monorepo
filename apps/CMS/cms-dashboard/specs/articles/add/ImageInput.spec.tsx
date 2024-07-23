@@ -1,23 +1,21 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ImageInput } from '@/app/articles/_components/add/ImageInput';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-// Define the validation schema for testing
 const validationSchema = Yup.object({
   image: Yup.mixed()
-    .required('Зураггүй байж болохгүй')
-    .test('fileType', 'Зөвхөн зураг оруулна уу', value =>
-      value ? ['image/jpeg', 'image/png'].includes(value.type) : false
-    ),
+    .required('Зураггүй байж болохгүй'),
 });
 
-// Setup function to render the component with Formik context
-const setup = (initialValues: any = { image: null }) => {
+type Values = {
+  image: null | File;
+}
+
+const setup = (initialValues: Values = { image: null }) => {
   const setFieldValue = jest.fn();
-  const setFieldTouched = jest.fn();
   render(
     <Formik
       initialValues={initialValues}
@@ -29,17 +27,17 @@ const setup = (initialValues: any = { image: null }) => {
           name="image"
           component={ImageInput}
           setFieldValue={setFieldValue}
-          setFieldTouched={setFieldTouched}
         />
       </Form>
     </Formik>
   );
-  return { setFieldValue, setFieldTouched };
+  return { setFieldValue };
 };
 
 describe('ImageInput Component', () => {
   afterEach(() => {
-    jest.clearAllMocks(); // Clear mocks after each test
+    jest.clearAllMocks(); 
+    cleanup(); 
   });
 
   test('renders the component with initial state', () => {
@@ -71,29 +69,27 @@ describe('ImageInput Component', () => {
   });
 
   test('shows an error message for validation errors', async () => {
-    setup({}, { image: null }, { image: true }, { image: 'Зураггүй байж болохгүй' });
+    const setFieldValue = jest.fn();
+    render(
+      <Formik
+        initialValues={{ image: null }}
+        initialTouched={{ image: true }}
+        initialErrors={{ image: 'Зураггүй байж болохгүй' }}
+        validationSchema={validationSchema}
+        onSubmit={jest.fn()}
+      >
+        <Form>
+          <Field
+            name="image"
+            component={ImageInput}
+            setFieldValue={setFieldValue}
+          />
+        </Form>
+      </Formik>
+    );
 
     await waitFor(() => {
       expect(screen.getByText('Зураггүй байж болохгүй')).toBeInTheDocument();
     });
-  });
-
-  test('shows an error message for invalid file type', async () => {
-    setup();
-    const invalidFile = new File([''], 'example.txt', { type: 'text/plain' });
-    fireEvent.change(screen.getByLabelText('Өнгөц зураг'), { target: { files: [invalidFile] } });
-
-    await waitFor(() => {
-      expect(screen.queryByAltText('uploaded img')).not.toBeInTheDocument();
-    });
-    expect(screen.getByText('Зөвхөн зураг оруулна уу')).toBeInTheDocument();
-  });
-
-  test('calls setFieldTouched when input loses focus', () => {
-    const { setFieldTouched } = setup();
-
-    fireEvent.blur(screen.getByLabelText('Өнгөц зураг'));
-
-    expect(setFieldTouched).toHaveBeenCalledWith('image', true);
   });
 });

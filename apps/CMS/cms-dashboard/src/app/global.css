@@ -87,11 +87,14 @@
   
   .ql-toolbar {
     border: none !important;
-    border-bottom: 1px solid #ccc; 
   }
   
   .ql-editor {
     min-height: 200px;
     padding: 0;
+  }
+  .ql-editor::before {
+    font-size: 18px;
+    color: #999;
   }
 }
