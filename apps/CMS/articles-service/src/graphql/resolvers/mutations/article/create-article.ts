@@ -10,7 +10,6 @@ export const createArticle: MutationResolvers['createArticle'] = async (_, { art
     if (!category) {
       category = await CategoryModel.create({ name: articleInput?.category });
     }
-    console.log(category);
     const newArticleData = {
       ...articleInput,
       category: [category],
@@ -21,7 +20,6 @@ export const createArticle: MutationResolvers['createArticle'] = async (_, { art
     if (!newArticle) {
       throw new Error('Failed to create article');
     }
-    console.log(newArticle);
 
     return newArticle;
   } catch (error) {
