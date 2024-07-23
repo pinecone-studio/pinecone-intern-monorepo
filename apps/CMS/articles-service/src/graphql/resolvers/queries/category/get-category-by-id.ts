@@ -1,5 +1,5 @@
 import { QueryResolvers } from '@/graphql/generated';
-import { CategoryModel } from '@/models';
+import { CategoryModel } from '@/models/category.model';
 
 export const getCategoryById: QueryResolvers['getCategoryById'] = async (_, { _id }) => {
   const category = await CategoryModel.findById(_id);

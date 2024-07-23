@@ -1,8 +1,8 @@
 import { getArticles } from '@/graphql/resolvers/queries';
 import { GraphQLError } from 'graphql';
-import { ArticleModel } from '@/models/articles.model';
+import { ArticleModel } from '@/models';
 
-jest.mock('@/models/articles.model', () => ({
+jest.mock('@/models/article.model', () => ({
   ArticleModel: {
     find: jest.fn(),
   },

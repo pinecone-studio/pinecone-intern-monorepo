@@ -1,1 +1,1 @@
-export * from './get-articles-by-id';
+export * from './get-article-query';

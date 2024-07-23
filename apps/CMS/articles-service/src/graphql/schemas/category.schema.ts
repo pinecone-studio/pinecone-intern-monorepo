@@ -2,8 +2,9 @@ import { gql } from 'apollo-server-cloud-functions';
 
 export const categoryTypeDefs = gql`
   type Category {
-    _id: ID!
+    _id: ID
     name: String
+    createdAt: Date
   }
 
   type Query {
