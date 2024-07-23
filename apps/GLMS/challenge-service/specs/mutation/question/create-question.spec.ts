@@ -57,7 +57,7 @@ describe('Create Question', () => {
 
     (QuestionModel.create as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-    await expect(createQuestion({}, { createInput: input })).rejects.toThrow(`Failed to create option: ${errorMessage}`);
+    await expect(createQuestion({}, { createInput: input })).rejects.toThrow(`Failed to create question: ${errorMessage}`);
 
     expect(QuestionModel.create).toHaveBeenCalledTimes(1);
     expect(QuestionModel.create).toHaveBeenCalledWith({ ...input });

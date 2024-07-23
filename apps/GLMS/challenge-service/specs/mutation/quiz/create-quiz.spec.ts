@@ -49,7 +49,7 @@ describe('Create Quiz', () => {
 
     (QuizModel.create as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-    await expect(createQuiz({}, { createInput: input })).rejects.toThrow(new GraphQLError(`Failed to create option: ${errorMessage}`));
+    await expect(createQuiz({}, { createInput: input })).rejects.toThrow(new GraphQLError(`Failed to create quiz: ${errorMessage}`));
 
     expect(QuizModel.create).toHaveBeenCalledTimes(1);
     expect(QuizModel.create).toHaveBeenCalledWith({ ...input });
