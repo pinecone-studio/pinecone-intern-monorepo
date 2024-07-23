@@ -8,6 +8,6 @@ export const createQuiz = async (_: unknown, { createInput }: { createInput: Cre
     return newQuiz;
   } catch (error) {
     const message = (error as Error).message;
-    throw new GraphQLError(`Failed to create option: ${message}`);
+    throw new GraphQLError(`Failed to create quiz: ${message}`);
   }
 };

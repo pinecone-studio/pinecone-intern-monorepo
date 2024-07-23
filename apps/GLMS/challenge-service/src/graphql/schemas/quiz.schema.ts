@@ -66,6 +66,7 @@ export const quizTypeDefs = gql`
   # Question's input
   input CreateQuestionInput {
     text: String!
+    quizId: ID!
     options: [CreateOptionInput]!
     # correctAnswer: ID!
   }
