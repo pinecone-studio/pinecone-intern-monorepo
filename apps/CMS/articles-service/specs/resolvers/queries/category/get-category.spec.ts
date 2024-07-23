@@ -1,7 +1,7 @@
 import { getCategoryById } from '@/graphql/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('../../../../src/models', () => ({
+jest.mock('@/models/category.model', () => ({
   CategoryModel: {
     findById: jest
       .fn()

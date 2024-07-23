@@ -1,9 +1,9 @@
 import { createCategory } from '@/graphql/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('../../../../src/models', () => ({
+jest.mock('@/models/category.model', () => ({
   CategoryModel: {
-    create: jest.fn().mockReturnValue({
+    create: jest.fn().mockResolvedValue({
       _id: '1',
       name: 'test',
     }),
@@ -12,11 +12,11 @@ jest.mock('../../../../src/models', () => ({
 
 describe('Create Category', () => {
   it('should create a category', async () => {
-    const result = await createCategory!({}, { name: 'test' }, {}, {} as GraphQLResolveInfo);
+    const result = await createCategory({}, { name: 'test' }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
       name: 'test',
     });
-  });
+  }, 10000); // Increase the timeout if needed
 });

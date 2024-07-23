@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@/graphql/generated';
 import { GraphQLError } from 'graphql';
-import { ArticleModel } from '@/models/articles.model';
+import { ArticleModel } from '@/models';
 
 export const getArticles: QueryResolvers['getArticles'] = async () => {
   try {
