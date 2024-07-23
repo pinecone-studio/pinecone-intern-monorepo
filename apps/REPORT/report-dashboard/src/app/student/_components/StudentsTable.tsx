@@ -9,6 +9,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
+import { UpdateStudentInput } from '@/generated';
+import { useFormik } from 'formik';
 
 const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +64,7 @@ const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel></DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="flex items-center gap-2">
+                    <DropdownMenuItem onClick={() => setIsOpen(true)} className="flex items-center gap-2">
                       <FiEdit />
                       Засах
                     </DropdownMenuItem>
