@@ -34,6 +34,7 @@ describe('Dynamic Page Component', () => {
       }
     }).as('getStudentsError');
 
+    cy.visit('/class/class-123');
     cy.wait('@getStudentsError');
     cy.get('[data-testid="Error"]').should('be.visible');
     cy.contains('Error').should('be.visible');
