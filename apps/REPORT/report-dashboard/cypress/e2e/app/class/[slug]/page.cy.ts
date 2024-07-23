@@ -19,7 +19,7 @@ describe('Dynamic Page Component', () => {
   it('should display loading state', () => {
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetStudentByClassId') {
-        req.reply({ delay: 1000, fixture: 'students.json' });
+        req.reply({ delay: 1000 });
       }
     }).as('getStudents');
 

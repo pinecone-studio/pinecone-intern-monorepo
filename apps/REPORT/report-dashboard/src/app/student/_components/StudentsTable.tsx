@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 const StudentsTable = ({ studentsData, classId }: { studentsData: Student[]; classId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div data-testid="students-table" className="container mx-auto">
+    <div data-testid="StudentsTable" className="container mx-auto">
       <div className="flex justify-between">
         <StudentAddModal classId={classId} open={isOpen} onOpenChange={setIsOpen} />
         <Button data-testid="openModalButton" className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]" onClick={() => setIsOpen(true)}>
