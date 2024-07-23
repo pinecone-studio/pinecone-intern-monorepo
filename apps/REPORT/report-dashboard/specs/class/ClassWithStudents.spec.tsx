@@ -9,6 +9,7 @@ const mockUseGetStudentByClassIdQuery = jest.fn();
 
 // Define the props type for StudentsTable
 type StudentsTableProps = {
+  classId: string;
   studentsData: Student[];
 };
 
@@ -20,7 +21,7 @@ jest.mock('@/generated', () => ({
   useGetStudentByClassIdQuery: (...args: any) => mockUseGetStudentByClassIdQuery(...args),
 }));
 
-jest.mock('@/app/student/_features/studentsTable/StudentsTable', () => ({
+jest.mock('../../src/app/student/_components/StudentsTable', () => ({
   __esModule: true,
   default: (props: StudentsTableProps) => mockStudentsTable(props),
 }));
@@ -50,7 +51,18 @@ describe('Page Component', () => {
   });
 
   it('renders StudentsTable when data is loaded', () => {
-    const mockStudentsData = [{ id: '1', name: 'John Doe' }];
+    const mockStudentsData = [
+      {
+        firstName: 'John',
+        lastName: 'Doe',
+        studentCode: '123',
+        email: 'john.doe@example.com',
+        phoneNumber: '123-456-7890',
+        active: 'ACTIVE',
+        profileImgUrl: 'https://example.com/profile.jpg',
+        classId: mockParams.slug,
+      },
+    ];
     mockUseGetStudentByClassIdQuery.mockReturnValue({
       loading: false,
       error: undefined,
@@ -59,7 +71,11 @@ describe('Page Component', () => {
 
     render(<Page params={mockParams} />);
     expect(screen.getByTestId('students-table')).toBeInTheDocument();
-    expect(mockStudentsTable).toHaveBeenCalledWith({ studentsData: mockStudentsData });
+    expect(mockStudentsTable).toHaveBeenCalledWith({
+      classId: mockParams.slug,
+      studentsData: mockStudentsData,
+      'data-testid': 'StudentsTable',
+    });
   });
 
   it('renders error message when there is an error', () => {
