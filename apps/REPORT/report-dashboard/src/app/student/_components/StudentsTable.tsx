@@ -6,12 +6,12 @@ import { StudentAddModal } from './StudentAddModal';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
+const StudentsTable = ({ studentsData, classId }: { studentsData: Student[]; classId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
+    <div data-testid="StudentsTable" className="container mx-auto">
       <div className="flex justify-between">
-        <StudentAddModal open={isOpen} onOpenChange={setIsOpen} />
+        <StudentAddModal classId={classId} open={isOpen} onOpenChange={setIsOpen} />
         <Button data-testid="openModalButton" className="flex h-[40px] px-[16px] py-[8px] justify-center items-center gap-[8px]" onClick={() => setIsOpen(true)}>
           <p>Сурагч</p>
           <span>
@@ -35,7 +35,7 @@ const StudentsTable = ({ studentsData }: { studentsData: Student[] }) => {
         </TableHeader>
         <TableBody className="h-[70px]">
           {studentsData?.map((student, index) => (
-            <TableRow key={index}>
+            <TableRow data-testid="StudentRow" key={index}>
               <TableCell className="font-medium flex items-center gap-2 w-[200px] h-[64px]">
                 <Image data-cy="student-profile" className="h-[40px] w-[40px] rounded-full" src={student.profileImgUrl} alt="student" width={40} height={40} />
                 <h1 data-cy="students-name" className="font-medium">
