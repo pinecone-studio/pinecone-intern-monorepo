@@ -1,11 +1,17 @@
 'use client';
-import { TableContent } from './dashboard/_components';
+import { TableContent } from './dashboard/_components/TableContent';
+import { FooterButtons } from './dashboard/_features';
 
 const Home = () => {
   return (
-    <div className="bg-[#F7F7F8] h-[93.5vh]">
-      <TableContent></TableContent>
+    <div>
+      <TableContent />
+      <div className="flex justify-center py-6 sticky bottom-0">
+        <FooterButtons />
+      </div>
     </div>
   );
 };
+
 export default Home;
+
