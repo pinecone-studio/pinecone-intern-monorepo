@@ -5,7 +5,7 @@ export const quizTypeDefs = gql`
 
   type Query {
     getQuizzes: [Quiz]
-    getQuiz(id: ID!): Quiz
+    getQuiz(courseId: ID!): Quiz
 
     getQuestions(quizId: ID!): [Question]
     getQuestion(_id: ID!): Question
