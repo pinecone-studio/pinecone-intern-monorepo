@@ -6,6 +6,9 @@ export const articleSchema = Yup.object({
 	image: Yup.mixed()
     .required('Зураггүй байж болохгүй')
     .test('fileType', 'Зөвхөн зураг оруулна уу', value => {
-      return value && (value.type === 'image/jpeg' || value.type === 'image/png');
+      if (value instanceof File) {
+        return value.type === 'image/jpeg' || value.type === 'image/png';
+      }
+      return false;
     }),
 });

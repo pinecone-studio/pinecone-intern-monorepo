@@ -22,7 +22,6 @@ export default async function Index() {
       image: true,
     };
     setTouched(touchedFields);
-    console.log(values);
   };
 
   return (

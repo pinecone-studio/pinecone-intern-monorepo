@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { RiImageAddFill } from 'react-icons/ri';
 import { FieldProps, useField, useFormikContext } from 'formik';
 import Image from 'next/image';
