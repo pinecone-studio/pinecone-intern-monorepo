@@ -47,6 +47,8 @@ describe('Dynamic Page Component', () => {
       }
     }).as('getStudentsSuccess');
 
+    cy.visit('/class/class-123');
+
     cy.wait('@getStudentsSuccess');
 
     cy.get('[data-testid="StudentsTable"]').should('exist');
