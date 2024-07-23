@@ -31,8 +31,7 @@ export const quizTypeDefs = gql`
 
   type Quiz {
     id: ID!
-    lessonId: ID!
-    questions: [Question]
+    courseId: ID!
     createdAt: Date
   }
 
@@ -55,8 +54,7 @@ export const quizTypeDefs = gql`
 
   # Quiz's input
   input CreateQuizInput {
-    lessonId: ID!
-    questions: [CreateQuestionInput]!
+    courseId: ID!
   }
 
   input UpdateQuizInput {
@@ -65,7 +63,7 @@ export const quizTypeDefs = gql`
     questions: [UpdateQuestionInput]
   }
 
-  # Question's input 
+  # Question's input
   input CreateQuestionInput {
     text: String!
     options: [CreateOptionInput]!
