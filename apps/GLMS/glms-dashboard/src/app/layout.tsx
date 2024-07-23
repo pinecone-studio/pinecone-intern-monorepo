@@ -5,6 +5,7 @@ import { FederationProvider } from '../common';
 import './global.css';
 import { ProjectHeader } from '@/components/ProjectHeader';
 import { usePathname } from 'next/navigation';
+import { Toaster } from 'sonner';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             {!isSignInPage && <ProjectHeader />}
             {children}
           </FederationProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

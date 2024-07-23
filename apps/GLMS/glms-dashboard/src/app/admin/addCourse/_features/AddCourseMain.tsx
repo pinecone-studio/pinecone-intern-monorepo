@@ -7,6 +7,7 @@ import { InputData } from '../_components/CourseEntry';
 import { useCreateCourseMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { Toaster, toast } from 'sonner';
 
 export const AddCourseMain: React.FC = () => {
   const router = useRouter();
@@ -48,14 +49,15 @@ export const AddCourseMain: React.FC = () => {
           },
         },
       });
-      console.log('Course created successfully!');
+      toast.success('Хичээл амжилтай нэмэгдлээ!');
     } catch (error) {
-      console.error('Error creating course:', error);
+      toast.error('Хичээл нэмэх явцад алдаа гарлаа!');
     }
   };
 
   return (
     <div className="w-[100%] h-[100vh] bg-[#F7F7F8] flex flex-col items-center ">
+      <Toaster richColors />
       <div className="p-[30px]">
         <Button variant="ghost" onClick={navigateToHome} className="flex items-center cursor-pointer mb-[15px]">
           <ArrowLeft />

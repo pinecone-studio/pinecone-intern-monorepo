@@ -20,7 +20,11 @@ const CourseDetail = () => {
   }
 
   if (loading || !data) {
-    return <div data-testid="loading">Loading...</div>;
+    return (
+      <div className=" w-[100vw] h-[100vh] flex justify-center items-center" data-testid="loading">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -40,7 +44,7 @@ const CourseDetail = () => {
               <Lessons />
             </div>
           </div>
-          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} className='rounded-[12px]'/> : <></>}</div>
+          <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} className="rounded-[12px]" /> : <></>}</div>
         </div>
       </div>
     </div>

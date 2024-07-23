@@ -8,6 +8,7 @@ import { TextareaField } from '@/components/TextareaField';
 import { ImageUploadCard } from '@/components/ImageUploadCard';
 import { useParams, useRouter } from 'next/navigation';
 import { useCreateLessonMutation } from '@/generated';
+import { Toaster, toast } from 'sonner';
 
 const CLOUD_NAME = 'dbtqkhmu5';
 const UPLOAD_PRESET = 'gbgzau24';
@@ -25,8 +26,8 @@ export const SectionMain = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setDisabled(!(title.trim() && content.trim()));
-  }, [title, content]);
+    setDisabled(!(title.trim() && content.trim() && imageUrl.trim()));
+  }, [title, content, imageUrl]);
 
   const fileChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setError(null);
@@ -83,7 +84,9 @@ export const SectionMain = () => {
       });
 
       router.push(`/admin/${courseId}`);
+      toast.success('Хичээл амжилтай нэмэгдлээ!');
     } catch (error) {
+      toast.error('Хичээл нэмэх явцад алдаа гарлаа!');
       const message = (error as Error).message;
       setError(message);
     }
@@ -91,12 +94,11 @@ export const SectionMain = () => {
 
   return (
     <div className="gap-2 mx-auto container">
+      <Toaster richColors />
       <ActionLinkButton label="Хичээлийн ерөнхий мэдээлэл" Icon={ArrowLeft} href={`/${courseId}`} />
 
       <div className="flex flex-col justify-center items-center gap-3 bg-white mt-5 rounded-[12px] h-[900px]">
-        <h1>Add Lesson for Course {courseId}</h1>
-
-        <Field label="Хичээлийн гарчиг" value={title} dataTestid="lesson-title" onChange={setTitle} />
+        <Field placeholder="Оруулна уу..." label="Хичээлийн гарчиг" value={title} dataTestid="lesson-title" onChange={setTitle} />
 
         <TextareaField label="Дэлгэрэнгүй" placeholder="Энд бичнэ үү..." value={content} dataTestid="lesson-content" onChange={setContent} />
 

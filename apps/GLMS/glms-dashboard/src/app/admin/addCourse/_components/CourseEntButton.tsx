@@ -12,7 +12,7 @@ export const CourseEntButton: React.FC<CourseEntButtonProps> = ({ handleCreateMu
 
   const handleClick = async () => {
     try {
-      handleCreateMutation();
+      await handleCreateMutation();
       router.push('/');
     } catch (error) {
       console.error('Error during mutation or navigation:', error);

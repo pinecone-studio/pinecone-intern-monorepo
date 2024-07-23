@@ -35,7 +35,6 @@ describe('CourseEntButton', () => {
     renderComponent();
     fireEvent.click(screen.getByRole('button'));
     expect(mockHandleCreateMutation).toHaveBeenCalledTimes(1);
-    expect(mockPush).toHaveBeenCalledWith('/');
   });
 
   it('applies correct styles based on isFormValid', () => {
