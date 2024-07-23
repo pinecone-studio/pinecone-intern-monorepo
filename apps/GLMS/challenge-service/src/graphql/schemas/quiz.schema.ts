@@ -8,7 +8,7 @@ export const quizTypeDefs = gql`
     getQuiz(id: ID!): Quiz
 
     getQuestions(quizId: ID!): [Question]
-    getQuestion(id: ID!): Question
+    getQuestion(_id: ID!): Question
 
     # getOptions(questionId: ID!): [Option]
     getOptions: [Option]
@@ -37,7 +37,7 @@ export const quizTypeDefs = gql`
 
   type Question {
     id: ID!
-    quizId: ID!
+    quizId: Quiz
     text: String!
     options: [Option]
     # correctAnswer: ID!
