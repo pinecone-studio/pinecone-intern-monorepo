@@ -8,6 +8,6 @@ export const createQuestion = async (_: unknown, { createInput }: { createInput:
     return newQuestion;
   } catch (error) {
     const message = (error as Error).message;
-    throw new GraphQLError(`Failed to create option: ${message}`);
+    throw new GraphQLError(`Failed to create question: ${message}`);
   }
 };
