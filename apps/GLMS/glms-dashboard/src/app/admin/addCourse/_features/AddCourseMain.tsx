@@ -4,7 +4,7 @@ import { PicUpload } from './PicUpload';
 import { CourseEntButton } from '../_components/CourseEntButton';
 import { CourseEntry } from '../_components/CourseEntry';
 import { InputData } from '../_components/CourseEntry';
-import { useCreateCourseMutation } from '@/generated';
+import { useCreateCourseMutation, useCreateQuizMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -36,10 +36,11 @@ export const AddCourseMain: React.FC = () => {
     router.push('/');
   };
   const [createCourse] = useCreateCourseMutation();
+  const [createQuiz] = useCreateQuizMutation();
 
   const handleCreateMutation = async () => {
     try {
-      await createCourse({
+      const courseResponse = await createCourse({
         variables: {
           createInput: {
             title: inputData.title,
@@ -48,7 +49,18 @@ export const AddCourseMain: React.FC = () => {
           },
         },
       });
-      console.log('Course created successfully!');
+
+      const courseId = courseResponse.data?.createCourse?.id;
+
+      await createQuiz({
+        variables: {
+          createInput: {
+            courseId: courseId as string
+          }
+        }
+      })
+
+      console.log('Course created successfully!', createQuiz);
     } catch (error) {
       console.error('Error creating course:', error);
     }

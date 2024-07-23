@@ -1,0 +1,7 @@
+mutation CreateQuiz($createInput: CreateQuizInput!) {
+  createQuiz(createInput: $createInput) {
+    id
+    courseId
+    createdAt
+  }
+}

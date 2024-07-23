@@ -18,6 +18,7 @@ query GetCourses {
 
 mutation CreateCourse($createInput: CreateCourseInput) {
   createCourse(createInput: $createInput) {
+    id
     title
     thumbnail
     content
