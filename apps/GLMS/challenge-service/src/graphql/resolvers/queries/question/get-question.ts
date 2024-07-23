@@ -6,7 +6,7 @@ export const getQuestion: QueryResolvers['getQuestion'] = async (_: unknown, { _
   try {
     const question = await QuestionModel.findById(_id).populate({
       path: 'quizId',
-      model: 'GLMS-Quizzes',
+      model: 'GLMS-Quiz',
     });
 
     if (!question) {
