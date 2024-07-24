@@ -2,7 +2,12 @@
 import { LeftSection, RightSection } from '../_features/add';
 import { Formik, Form, FormikHelpers, FormikTouched } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
+import { useState, useCallback } from 'react';
 
+interface Values {
+  title: string;
+  body: string;
+}
 export default async function Index() {
   type Values = {
     title: string;
