@@ -2,13 +2,13 @@
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { HrmsUser } from '@/generated';
-import { useDeletedHrmsUserMutation } from '@/generated';
+// import { useDeletedHrmsUserMutation } from '@/generated';
 // import RoleModal from './RoleModal';
-import DeleteIcon from '@/assets/icons/DeleteIcon';
-import { Button } from '@/components/ui/button';
-import { ApolloError } from '@apollo/client';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+// import DeleteIcon from '@/assets/icons/DeleteIcon';
+// import { Button } from '@/components/ui/button';
+// import { ApolloError } from '@apollo/client';
+// import { toast } from 'react-toastify';
+// import { useRouter } from 'next/navigation';
 
 
 const RoleTable = ({usersData}:{usersData: HrmsUser[]}) => {
