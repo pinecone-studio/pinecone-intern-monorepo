@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import { ImageInput } from '../../_components/add/ImageInput';
+import { ImageInput, CategoryInput } from '../../_components/add/';
 import { ArticlesButton } from '../../_components/add/ArticlesButton';
 import { useFormikContext } from 'formik';
 
 type FieldProps = {
   typeText?: 'submit' | 'button' | 'reset';
+  selectedCategories: string[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export const RightSection = ({ typeText }: FieldProps) => {
+export const RightSection = ({ typeText, selectedCategories, setSelectedCategories }: FieldProps) => {
   const [file, setFile] = useState<File | null>(null);
   const { values, touched } = useFormikContext<{ title: string; body: string }>();
   const isDisabled = !touched.title || !touched.body || values.title === '' || values.body === '';
   const buttonClasses = isDisabled ? 'opacity-50 cursor-not-allowed' : '';
 
-  console.log('Formik values:', values);
-  console.log('Formik touched:', touched);
-  console.log('Button disabled:', isDisabled);
-  console.log(file);
-
   return (
     <div className="bg-white flex-1 p-6 h-[93.5vh] flex flex-col justify-between">
+      <CategoryInput label="Шошгонууд" name="category" placeholder="Шошго" selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
       <ImageInput setFile={setFile} />
       <div className="flex flex-col gap-4">
         <ArticlesButton
