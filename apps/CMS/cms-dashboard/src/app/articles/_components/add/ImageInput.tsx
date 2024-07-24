@@ -50,7 +50,7 @@ export const ImageInput = ({ field: formikField, setFieldValue }: ImageInputProp
           </div>
         )}
       </div>
-      {meta.touched && meta.error && <div className="text-base mt-1 text-red-600">{meta.error}</div>}
+      {meta.touched && meta.error && <div className="text-base text-red-600">{meta.error}</div>}
     </div>
   );
 };
