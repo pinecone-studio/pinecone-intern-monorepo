@@ -1,20 +1,27 @@
 'use client';
-import { LeftSection } from '../_features/add';
-import { RightSection } from '../_features/add';
-import { Formik, Form } from 'formik';
+import { LeftSection, RightSection } from '../_features/add';
+import { Formik, Form, FormikHelpers, FormikTouched } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
 
 export default async function Index() {
-  interface Values {
+  type Values = {
     title: string;
     body: string;
+    image: File | null;
   }
 
   const initialValues: Values = {
     title: '',
     body: '',
+    image: null,
   };
-  const handleSubmit = async () => {
+  const handleSubmit = (values: Values, { setTouched }:FormikHelpers<Values>) => {
+    const touchedFields: FormikTouched<Values> = {
+      title: true,
+      body: true,
+      image: true,
+    };
+    setTouched(touchedFields);
   };
 
   return (
@@ -24,7 +31,8 @@ export default async function Index() {
           <Form>
             <div className="flex items-center justify-center">
               <LeftSection />
-              <RightSection typeText="submit" />
+              {/* Right container */}
+              <RightSection/>
             </div>
           </Form>
         )}
