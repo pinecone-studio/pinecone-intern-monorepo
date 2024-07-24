@@ -2,6 +2,12 @@ mutation CreateQuiz($createInput: CreateQuizInput!) {
   createQuiz(createInput: $createInput) {
     id
     courseId
-    createdAt
+  }
+}
+
+query GetQuiz($courseId: ID!) {
+  getQuiz(courseId: $courseId) {
+    id
+    courseId
   }
 }
