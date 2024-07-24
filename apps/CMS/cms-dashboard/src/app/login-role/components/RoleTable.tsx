@@ -3,7 +3,6 @@ import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import RoleModal from './RoleModal';
 import DeleteIcon from '@/assets/icons/DeleteIcon';
-import { Button } from '@/components/ui/button';
 
 const RoleTable = () => {
   return (
@@ -37,9 +36,9 @@ const RoleTable = () => {
             <RoleModal />
           </TableCell>
           <TableCell>
-            <Button aria-label="delete" className="border-none" variant={'outline'}>
+            <button aria-label="delete" className="border-none">
               <DeleteIcon />
-            </Button>
+            </button>
           </TableCell>
         </TableRow>
       </TableBody>
