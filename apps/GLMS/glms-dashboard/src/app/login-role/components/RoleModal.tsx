@@ -7,9 +7,9 @@ const RoleModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="border-none " variant={'outline'}>
+        <button className="border-none">
           <EditICon />
-        </Button>
+        </button>
       </DialogTrigger>
       <DialogContent className="w-[425px] h-[284px] bg-[white]">
         <DialogHeader>
