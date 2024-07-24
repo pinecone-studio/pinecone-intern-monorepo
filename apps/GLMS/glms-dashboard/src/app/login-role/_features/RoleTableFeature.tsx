@@ -7,7 +7,7 @@ const RoleTableFeature = () => {
       <div data-testid="RoleTableHeader" className="w-[1154px] bg-[white] rounded-xl h-[72px] flex items-center justify-start p-[20px]">
         <h1 className="text-[24px] font-bold text-blacks">Admin role update</h1>
       </div>
-      <div data-testid="RoleTableContent" className="w-[1154px] h-[216px] bg-white rounded-xl px-[20px] py-[20px]">
+      <div data-testid="RoleTableContent" className="w-[1154px]  bg-white rounded-xl px-[20px] py-[20px]">
         <LoginRoleSearch />
         <RoleTable />
       </div>
