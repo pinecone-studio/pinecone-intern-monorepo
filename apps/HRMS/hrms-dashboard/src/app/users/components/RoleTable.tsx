@@ -3,7 +3,7 @@ import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { HrmsUser } from '@/generated';
 import { useDeletedHrmsUserMutation } from '@/generated';
-import RoleModal from './RoleModal';
+// import RoleModal from './RoleModal';
 import DeleteIcon from '@/assets/icons/DeleteIcon';
 import { Button } from '@/components/ui/button';
 import { ApolloError } from '@apollo/client';
@@ -12,28 +12,29 @@ import { useRouter } from 'next/navigation';
 
 
 const RoleTable = ({usersData}:{usersData: HrmsUser[]}) => {
-  const  [deletedId] = useDeletedHrmsUserMutation();
+  // const  [deletedId] = useDeletedHrmsUserMutation();
   
-  const router = useRouter();
-  const handleDelete = async (_id: string ) => {
-    try {
-      const { data: deletedData } = await deletedId({
-        variables: {
-          _id,
-        },
-      });
-      router.push('/');
-    } catch (error) {
-        if (error instanceof ApolloError) {
-          toast.error('Sign in error has occurred', {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: true,
-          });
-        }
-      }
-    };
+  // const router = useRouter();
+  // const handleDelete = async (_id: string ) => {
+  //   try {
+  //     const { data: deletedData } = await deletedId({
+  //       variables: {
+  //         _id,
+  //       },
+  //     });
+  //     router.push('/');
+  //   } catch (error) {
+  //       if (error instanceof ApolloError) {
+  //         toast.error('deleted error has occurred', {
+  //           position: 'top-center',
+  //           autoClose: 3000,
+  //           hideProgressBar: true,
+  //         });
+  //       }
+  //     }
+  //   };
 return (
+  <div data-testid="user-table">
     <Table className="px-6 overflow-hidden">
       <TableCaption></TableCaption>
       <TableHeader>
@@ -50,12 +51,13 @@ return (
           <TableHead  className="w-[170px] rounded-tr-xl text-black">
             Email
           </TableHead>
-          <TableHead  className="w-[5px] rounded-tr-xl text-black">
+          {/* <TableHead  className="w-[5px] rounded-tr-xl text-black">
           
           </TableHead>
           <TableHead className="w-[5px] rounded-tr-xl text-black">
          
-          </TableHead>
+          </TableHead> */}
+          
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -65,21 +67,25 @@ return (
       <TableCell >{item?._id}</TableCell>
       <TableCell >{item?.role}</TableCell>
       <TableCell >{item?.email}</TableCell>
-      <TableCell>
-            <RoleModal item={item}/>
+      {/* <TableCell>
+           <RoleModal item={item}/>
       </TableCell>
       <TableCell>
             <Button aria-label="delete"  onClick={() => handleDelete(item?._id as string)} 
               className="border-none" variant={'outline'}>
               <DeleteIcon />
             </Button>
-      </TableCell>
+      </TableCell> */}
     </TableRow>
+    
 ))}
+
       </TableBody>
+      
       <TableFooter />
     </Table>
-  );
+    </div>
+    );
 };
 
 export default RoleTable;
