@@ -5,7 +5,12 @@ import { GraphQLError } from 'graphql';
 export const createQuestion = async (_: unknown, { createInput }: { createInput: CreateQuestionInput }) => {
   try {
     const newQuestion = await QuestionModel.create({ ...createInput });
-    return newQuestion;
+
+    const populatedQuestion = await QuestionModel.findById(newQuestion._id).populate({
+      path: 'quizId',
+      model: 'GLMS-Quizzes',
+    })
+    return populatedQuestion;
   } catch (error) {
     const message = (error as Error).message;
     throw new GraphQLError(`Failed to create question: ${message}`);
