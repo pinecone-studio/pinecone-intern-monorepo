@@ -4,7 +4,10 @@ import { CreateQuestionInput } from '@/graphql/generated';
 
 jest.mock('@/models/question-model', () => ({
   QuestionModel: {
-    create: jest.fn() as jest.Mock,
+    create: jest.fn(),
+    findById: jest.fn().mockReturnThis(),
+    populate: jest.fn().mockReturnThis(),
+    exec: jest.fn(),
   },
 }));
 
@@ -26,30 +29,39 @@ describe('Create Question', () => {
 
   it('should create a question successfully', async () => {
     (QuestionModel.create as jest.Mock).mockResolvedValue({
-      quizId: '1',
-      text: 'test1',
-      options: [
-        {
-          optionText: 'test1',
-          isCorrect: true,
-        },
-      ],
+      _id: '1',
+      ...input
+    });
+
+    (QuestionModel.findById as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue({
+        _id: '1',
+        ...input,
+        quizId: {
+          _id: '1',
+          courseId: '1'
+        }
+      })
     });
 
     const result = await createQuestion({}, { createInput: input });
 
     expect(result).toEqual({
-      quizId: '1',
-      text: 'test1',
-      options: [
-        {
-          optionText: 'test1',
-          isCorrect: true,
-        },
-      ],
+      _id: '1',
+      ...input,
+      quizId: {
+        _id: '1',
+        courseId: '1'
+      }
     });
+
     expect(QuestionModel.create).toHaveBeenCalledTimes(1);
     expect(QuestionModel.create).toHaveBeenCalledWith({ ...input });
+    expect(QuestionModel.findById).toHaveBeenCalledWith('1');
+    expect(QuestionModel.findById('1').populate).toHaveBeenCalledWith({
+      path: 'quizId',
+      model: 'GLMS-Quizzes',
+    });
   });
 
   it('should handle errors when database operation fails', async () => {
@@ -63,3 +75,4 @@ describe('Create Question', () => {
     expect(QuestionModel.create).toHaveBeenCalledWith({ ...input });
   });
 });
+

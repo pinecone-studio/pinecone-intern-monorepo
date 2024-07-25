@@ -46,7 +46,7 @@ export const quizTypeDefs = gql`
 
   type Option {
     id: ID!
-    questionId: ID
+    questionId: Question
     optionText: String!
     isCorrect: Boolean!
     createdAt: Date
