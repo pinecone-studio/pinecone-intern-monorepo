@@ -1,0 +1,5 @@
+mutation deleteClass($classId: ID!) {
+  deleteClass(classId: $classId) {
+    _id
+  }
+}

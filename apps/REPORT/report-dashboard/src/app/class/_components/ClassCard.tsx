@@ -1,5 +1,5 @@
 import { Class } from '@/generated';
-import DropDownMenuButton from './DropDownMenuButton';
+import DropDownMenuButton from '../_features/DropDownMenuButton';
 export type ClassWithTypename = Class & { __typename?: 'Class' };
 import { useRouter } from 'next/navigation';
 
@@ -24,7 +24,7 @@ const ClassCard = ({ data }: { data: ClassWithTypename }) => {
           </div>
         ))}
       </div>
-      <DropDownMenuButton />
+      <DropDownMenuButton classId={data._id} />
     </div>
   ) : (
     <p>No data available</p>
