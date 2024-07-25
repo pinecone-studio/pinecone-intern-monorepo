@@ -1,15 +1,15 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 import EditICon from '@/assets/icons/EditIcon';
-import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 const RoleModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="border-none ">
+        <button className="border-none ">
           <EditICon />
-        </Button>
+        </button>
       </DialogTrigger>
       <DialogContent className="w-[425px] h-[284px] bg-[white]">
         <DialogHeader>
@@ -38,10 +38,10 @@ const RoleModal = () => {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="w-[126px] h-[40px] rounded-lg">Save changes</Button>
+          <button className="w-[126px] h-[40px] rounded-lg">Save changes</button>
         </div>
         <div>
-          <Button className="w-[64px] h-[20px] rounded-xl text-[14px]">Admin</Button>
+          <button className="w-[64px] h-[20px] rounded-xl text-[14px]">Admin</button>
         </div>
         <DialogFooter></DialogFooter>
       </DialogContent>
