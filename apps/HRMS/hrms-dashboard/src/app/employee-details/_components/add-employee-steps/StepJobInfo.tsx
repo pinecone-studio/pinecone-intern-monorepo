@@ -23,9 +23,9 @@ export const StepJobInfo = ({
   return (
     <div data-testid="job-info" className="flex flex-col">
       <div data-testid="step-job-info" className="flex gap-4 flex-col">
-        <div className="flex flex-col gap-1">
+        <div cy-testid="select-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Хэлтэс'}</label>
-          <Select data-testid="department-select" onValueChange={(value) => setValueFormik('department', value)}>
+          <Select onValueChange={(value) => setValueFormik('department', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue />
             </SelectTrigger>
@@ -49,7 +49,7 @@ export const StepJobInfo = ({
           </label>
           <Input className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]" type="text" id="salary" name="salary" value={salary} onChange={onChangeHandler} />
         </div>
-        <div className="flex flex-col gap-1">
+        <div cy-testid="select-two" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Ажлын цаг'}</label>
           <Select data-testid="status-select" onValueChange={(value) => setValueFormik('employmentStatus', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">

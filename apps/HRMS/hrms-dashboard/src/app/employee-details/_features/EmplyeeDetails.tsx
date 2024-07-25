@@ -27,7 +27,7 @@ const UPLOAD_PRESET = 'gxjou9af';
 export const EmployeeDetails = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [createEmployeeMutation] = useCreateEmployeeMutation();
   const { data } = useGetEmployeesQuery();
   const { refetch } = useGetEmployeesQuery();
@@ -83,15 +83,8 @@ export const EmployeeDetails = () => {
     { title: 'Step 2', content: 'Хөдөлмөр эрхлэлтийн мэдээлэл' },
     { title: 'Step 3', content: 'Нэмэлт мэдээлэл' },
   ];
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
   const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
     await formik.handleSubmit(event);
-    handleCloseModal();
   };
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
@@ -140,8 +133,6 @@ export const EmployeeDetails = () => {
             currentStep={currentStep}
             steps={steps}
             imageUrl={imageUrl}
-            handleOpenModal={handleOpenModal}
-            isModalOpen={isModalOpen}
             inputOne={inputOne}
             isValidPersonalInfo={isPersonalInfoInvalid}
             handleNextStepJI={handleNextStepJI}

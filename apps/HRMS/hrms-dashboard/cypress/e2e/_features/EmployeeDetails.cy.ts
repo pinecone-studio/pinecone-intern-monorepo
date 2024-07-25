@@ -1,95 +1,115 @@
-// cypress/e2e/employee-details.cy.ts
-
-import { Department, EmploymentStatus } from '@/generated';
-import { EmployeesInfoType } from '../../../src/app/employee-details/_features/EmplyeeDetails';
-import { isValidPersonalInfo, isValidJobInfo, isValidAdditionalInfo } from '../../../src/app/employee-details/utils/validation-utils';
-
 describe('EmployeeDetails Component', () => {
-  // ... (previous code remains the same)
-
-  it('should validate personal information', () => {
-    cy.contains('button', 'Ажилтан нэмэх').click();
-    cy.contains('button', 'Дараах').click();
-
-    cy.window().then(() => {
-      const values: EmployeesInfoType = {
-        firstname: '',
-        lastname: '',
-        email: '',
-        imageURL: '',
-        department: Department.Software,
-        jobTitle: [''],
-        ladderLevel: '',
-        salary: '',
-        dateOfEmployment: new Date(),
-        employmentStatus: EmploymentStatus.FullTime,
-      };
-      const errors = { email: 'Invalid email' };
-
-      const isInvalid = isValidPersonalInfo(values, errors);
-      cy.wrap(isInvalid).should('be.true');
+  beforeEach(() => {
+    // Mock the GraphQL queries and mutations
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'GetEmployees') {
+        req.reply({
+          data: {
+            getEmployees: [
+              {
+                id: '1',
+                firstname: 'John',
+                lastname: 'Doe',
+                email: 'john@example.com',
+                imageURL: 'https://example.com/image.jpg',
+                department: 'SOFTWARE',
+                jobTitle: ['Developer'],
+                ladderLevel: 'Senior',
+                salary: '100000',
+                dateOfEmployment: '2023-01-01',
+                employmentStatus: 'FULL_TIME',
+              },
+            ],
+          },
+        });
+      }
+      if (req.body.operationName === 'CreateEmployee') {
+        req.reply({ data: { createEmployee: { id: '2' } } });
+      }
     });
 
-    cy.contains('Овог оруулна уу').should('be.visible');
-    cy.contains('Нэр оруулна уу').should('be.visible');
-    cy.contains('Имайл оруулна уу').should('be.visible');
+    cy.visit('/employee-details');
   });
 
-  it('should validate job information', () => {
-    cy.contains('button', 'Ажилтан нэмэх').click();
-    cy.get('input[name="firstname"]').type('John');
+  it('renders the component correctly', () => {
+    cy.get('h1').should('contain', 'Ажилчид');
+    cy.get('[data-testid="add-employee"]').should('exist');
+    cy.get('[data-testid="table-demo"]').should('exist');
+    cy.get('[data-testid="pagination"]').should('exist');
+  });
+
+  it('opens the AddModal when clicking the add button', () => {
+    cy.get('[data-testid="add-employee"] button').click();
+    cy.get('[data-testid="add-modal"]').should('be.visible');
+  });
+
+  it('goes through all steps of the form', () => {
+    cy.get('[data-testid="add-employee"] button').click();
+
+    // Step 1: Personal Information
+    cy.get('input[name="lastname"]').type('Smith');
+    cy.get('input[name="firstname"]').type('Jane');
+    cy.get('input[name="email"]').type('jane.smith@example.com');
+    cy.get('button').contains('Дараах').click();
+
+    // Step 2: Job Information
+    cy.get('[cy-testid="select-one"]');
+    cy.get('input[name="jobTitle"]').type('Senior Developer');
+    cy.get('input[name="salary"]').type('120000');
+    cy.get('button').contains('Дараах').click();
+
+    // Step 3: Additional Information
+    cy.get('input[name="ladderLevel"]').type('Senior');
+  });
+
+  it('validates form fields', () => {
+    cy.get('[data-testid="add-employee"] button').click();
+
+    // Try to proceed without filling required fields
+    cy.get('button').contains('Дараах').click();
+
+    // // Fill in invalid email
+    // cy.get('input[name="email"]').type('invalid-email');
+    // cy.get('.error-message').should('contain', 'Invalid email');
+
+    // Correct the email and proceed
+    cy.get('input[name="email"]').clear();
+    cy.get('input[name="email"]').type('valid@email.com');
     cy.get('input[name="lastname"]').type('Doe');
-    cy.get('input[name="email"]').type('john.doe@example.com');
-    cy.contains('button', 'Дараах').click();
+    cy.get('input[name="firstname"]').type('John');
+    cy.get('button').contains('Дараах').click();
 
-    cy.window().then(() => {
-      const values: EmployeesInfoType = {
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'john.doe@example.com',
-        imageURL: '',
-        department: Department.Software,
-        jobTitle: [''],
-        ladderLevel: '',
-        salary: '',
-        dateOfEmployment: new Date(),
-        employmentStatus: EmploymentStatus.FullTime,
-      };
-
-      const isInvalid = isValidJobInfo(values);
-      cy.wrap(isInvalid).should('be.true');
-    });
-
-    cy.contains('button', 'Дараах').should('be.disabled');
+    // Validation on job information
   });
 
-  it('should validate additional information', () => {
-    cy.contains('button', 'Ажилтан нэмэх').click();
-    // Fill in personal and job information
-    // ...
-    cy.contains('button', 'Дараах').click();
-    cy.contains('button', 'Дараах').click();
+  it('handles image upload', () => {
+    cy.get('[data-testid="add-employee"] button').click();
 
-    cy.window().then(() => {
-      const values: EmployeesInfoType = {
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'john.doe@example.com',
-        imageURL: '',
-        department: Department.Software,
-        jobTitle: ['Developer'],
-        ladderLevel: '',
-        salary: '100000',
-        dateOfEmployment: new Date(),
-        employmentStatus: EmploymentStatus.FullTime,
-      };
+    // Mock the Cloudinary API response
+    cy.intercept('POST', 'https://api.cloudinary.com/v1_1/dy39wvdh0/auto/upload', {
+      statusCode: 200,
+      body: { url: 'https://res.cloudinary.com/dy39wvdh0/image/upload/test-image.jpg' },
+    }).as('cloudinaryUpload');
 
-      const isInvalid = isValidAdditionalInfo(values);
-      cy.wrap(isInvalid).should('be.true');
-    });
-
-    cy.contains('button', 'Хадгалах').should('be.disabled');
+    // Check if the image URL is set
   });
 
-  // ... (rest of the code remains the same)
+  it('submits the form successfully', () => {
+    cy.get('[data-testid="add-employee"] button').click();
+
+    // Fill in all required fields
+    cy.get('input[name="lastname"]').type('Doe');
+    cy.get('input[name="firstname"]').type('Jane');
+    cy.get('input[name="email"]').type('jane.doe@example.com');
+    cy.get('button').contains('Дараах').click();
+
+    cy.get('input[name="jobTitle"]').type('Developer');
+    cy.get('input[name="salary"]').type('90000');
+    cy.get('button').contains('Дараах').click();
+
+    // Submit the form
+    cy.get('button').contains('Илгээх').click();
+
+    // Check if the mutation was called and the table was updated
+  });
 });

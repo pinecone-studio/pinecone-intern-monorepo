@@ -28,8 +28,6 @@ export const AddModal = ({
   currentStep,
   steps,
   imageUrl,
-  isModalOpen,
-  handleOpenModal,
   inputOne,
   isValidPersonalInfo,
   handleNextStepJI,
@@ -53,8 +51,6 @@ export const AddModal = ({
   currentStep: number;
   steps: StepsType;
   imageUrl: string;
-  isModalOpen: boolean;
-  handleOpenModal: () => void;
   inputOne: InputOneType;
   isValidPersonalInfo: boolean;
   handleNextStepJI: () => void;
@@ -63,55 +59,57 @@ export const AddModal = ({
   isValidAdditionalInfo: boolean;
 }) => {
   return (
-    <Dialog open={isModalOpen} onOpenChange={handleOpenModal}>
-      <DialogTrigger asChild>
-        <Button data-testid="addEmployeeBtn" variant={'secondary'} className="bg-[#F7F7F8] text-[#121316] hover:bg-gray-200 duration-600 ease-in-out h-9 px-4 py-2 ">
-          <MdOutlineAdd data-testid="add-icon" className="w-5 h-5" />
-          Ажилтан нэмэх
-        </Button>
-      </DialogTrigger>
-      <DialogContent data-testid="modalContent" className="flex gap-10 flex-col sm:max-w-[620px] px-8">
-        <DialogHeader>
-          <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
-          <DialogDescription></DialogDescription>
-          <Stepper currentStep={currentStep} steps={steps} />
-          {currentStep == 0 && (
-            <StepPersonalInfo
-              firstname={firstname}
-              lastname={lastname}
-              email={email}
-              onChangeHandler={onChangeHandler}
-              validEmail={validEmail}
-              nextStep={handleNextStepPI}
-              inputOne={inputOne}
-              isValidPersonalInfo={isValidPersonalInfo}
-            />
-          )}
-          {currentStep == 1 && (
-            <StepJobInfo
-              jobTitle={jobTitle}
-              salary={salary}
-              onChangeHandler={onChangeHandler}
-              setValueFormik={setValueFormik}
-              nextStep={handleNextStepJI}
-              prevStep={prevStep}
-              isValidJobInfo={isValidJobInfo}
-            />
-          )}
-          {currentStep == 2 && (
-            <StepAdditionalInfo
-              ladderLevel={ladderLevel}
-              fileChangeHandler={fileChangeHandler}
-              onChangeHandler={onChangeHandler}
-              prevStep={prevStep}
-              imageUrl={imageUrl}
-              handleSubmitAI={handleSubmitAI}
-              isValidAdditionalInfo={isValidAdditionalInfo}
-            />
-          )}
-        </DialogHeader>
-        <DialogFooter></DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <div data-testid="add-modal">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button data-testid="addEmployeeBtn" variant={'secondary'} className="bg-[#F7F7F8] text-[#121316] hover:bg-gray-200 duration-600 ease-in-out h-9 px-4 py-2 ">
+            <MdOutlineAdd data-testid="add-icon" className="w-5 h-5" />
+            Ажилтан нэмэх
+          </Button>
+        </DialogTrigger>
+        <DialogContent data-testid="modalContent" className="flex gap-10 flex-col sm:max-w-[620px] px-8">
+          <DialogHeader>
+            <DialogTitle data-testid="title">Ажилтан нэмэх</DialogTitle>
+            <DialogDescription></DialogDescription>
+            <Stepper currentStep={currentStep} steps={steps} />
+            {currentStep == 0 && (
+              <StepPersonalInfo
+                firstname={firstname}
+                lastname={lastname}
+                email={email}
+                onChangeHandler={onChangeHandler}
+                validEmail={validEmail}
+                nextStep={handleNextStepPI}
+                inputOne={inputOne}
+                isValidPersonalInfo={isValidPersonalInfo}
+              />
+            )}
+            {currentStep == 1 && (
+              <StepJobInfo
+                jobTitle={jobTitle}
+                salary={salary}
+                onChangeHandler={onChangeHandler}
+                setValueFormik={setValueFormik}
+                nextStep={handleNextStepJI}
+                prevStep={prevStep}
+                isValidJobInfo={isValidJobInfo}
+              />
+            )}
+            {currentStep == 2 && (
+              <StepAdditionalInfo
+                ladderLevel={ladderLevel}
+                fileChangeHandler={fileChangeHandler}
+                onChangeHandler={onChangeHandler}
+                prevStep={prevStep}
+                imageUrl={imageUrl}
+                handleSubmitAI={handleSubmitAI}
+                isValidAdditionalInfo={isValidAdditionalInfo}
+              />
+            )}
+          </DialogHeader>
+          <DialogFooter></DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };

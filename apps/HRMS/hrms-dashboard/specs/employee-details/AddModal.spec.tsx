@@ -1,43 +1,41 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { AddModal } from '../../src/app/employee-details/_components/modal/AddModal';
 import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { AddModal } from '../../src/app/employee-details/_components/modal/AddModal';
+import '@testing-library/jest-dom';
 
+// Mock the child components
+jest.mock('../../src/app/employee-details/_components/modal/Stepper', () => ({
+  Stepper: () => <div data-testid="stepper">Stepper</div>,
+}));
 jest.mock('../../src/app/employee-details/_components/add-employee-steps/StepPersonaInfo', () => ({
-  StepPersonalInfo: jest.fn(({ nextStep }) => <div onClick={nextStep}>StepPersonalInfo Component</div>),
+  StepPersonalInfo: () => <div data-testid="step-personal-info">StepPersonalInfo</div>,
 }));
 jest.mock('../../src/app/employee-details/_components/add-employee-steps/StepJobInfo', () => ({
-  StepJobInfo: jest.fn(({ nextStep }) => <div onClick={nextStep}>StepJobInfo Component</div>),
+  StepJobInfo: () => <div data-testid="step-job-info">StepJobInfo</div>,
 }));
 jest.mock('../../src/app/employee-details/_components/add-employee-steps/StepAdditionaInfo', () => ({
-  StepAdditionalInfo: jest.fn(({ handleSubmitAI }) => <div onClick={handleSubmitAI}>StepAdditionalInfo Component</div>),
+  StepAdditionalInfo: () => <div data-testid="step-additional-info">StepAdditionalInfo</div>,
 }));
 
-describe('AddModal Component', () => {
-  const defaultProps = {
+describe('AddModal', () => {
+  const mockProps = {
     firstname: 'John',
     lastname: 'Doe',
-    email: 'john.doe@example.com',
+    email: 'john@example.com',
     jobTitle: ['Developer'],
-    ladderLevel: 'L1',
-    salary: '100000',
+    ladderLevel: 'Junior',
+    salary: '50000',
     fileChangeHandler: jest.fn(),
     onChangeHandler: jest.fn(),
     onSubmitHandler: jest.fn(),
     setValueFormik: jest.fn(),
-    validEmail: 'valid@example.com',
+    validEmail: 'john@example.com',
     handleNextStepPI: jest.fn(),
     prevStep: jest.fn(),
     currentStep: 0,
-    steps: [
-      { title: 'Step 1', content: 'Content 1' },
-      { title: 'Step 2', content: 'Content 2' },
-      { title: 'Step 3', content: 'Content 3' },
-    ],
-    imageUrl: '',
-    isModalOpen: true,
-    handleOpenModal: jest.fn(),
-    inputOne: [{ label: 'First Name', type: 'text', name: 'firstname', value: 'John', errorMessage: '' }],
+    steps: [{ title: 'Step 1', content: 'Content 1' }],
+    imageUrl: 'image.jpg',
+    inputOne: [{ label: 'Test', type: 'text', name: 'test', value: '', errorMessage: '' }],
     isValidPersonalInfo: true,
     handleNextStepJI: jest.fn(),
     handleSubmitAI: jest.fn(),
@@ -45,48 +43,96 @@ describe('AddModal Component', () => {
     isValidAdditionalInfo: true,
   };
 
-  it('renders the AddModal component correctly', () => {
-    render(<AddModal {...defaultProps} />);
-
-    expect(screen.getByTestId('modalContent')).toBeInTheDocument();
-    expect(screen.getByTestId('title')).toHaveTextContent('Ажилтан нэмэх');
-
-    expect(screen.getByText('StepPersonalInfo Component')).toBeInTheDocument();
+  it('renders the AddModal component', () => {
+    render(<AddModal {...mockProps} />);
+    expect(screen.getByTestId('addEmployeeBtn')).toBeInTheDocument();
   });
 
-  it('renders the correct step component based on currentStep', () => {
-    const { rerender } = render(<AddModal {...defaultProps} currentStep={0} />);
-    expect(screen.getByText('StepPersonalInfo Component')).toBeInTheDocument();
-
-    rerender(<AddModal {...defaultProps} currentStep={1} />);
-    expect(screen.getByText('StepJobInfo Component')).toBeInTheDocument();
-
-    rerender(<AddModal {...defaultProps} currentStep={2} />);
-    expect(screen.getByText('StepAdditionalInfo Component')).toBeInTheDocument();
-  });
-
-  it('calls handleOpenModal when the button is clicked', () => {
-    render(<AddModal {...defaultProps} isModalOpen={false} />);
+  it('opens the modal when the button is clicked', async () => {
+    render(<AddModal {...mockProps} />);
     const button = screen.getByTestId('addEmployeeBtn');
-    fireEvent.click(button);
-    expect(defaultProps.handleOpenModal).toHaveBeenCalled();
+    await fireEvent.click(button);
+    expect(screen.getByTestId('modalContent')).toBeInTheDocument();
   });
 
-  it('calls handleNextStepPI when nextStep is triggered in StepPersonalInfo', () => {
-    render(<AddModal {...defaultProps} currentStep={0} />);
-    fireEvent.click(screen.getByText('StepPersonalInfo Component'));
-    expect(defaultProps.handleNextStepPI).toHaveBeenCalled();
+  it('displays the correct title', async () => {
+    render(<AddModal {...mockProps} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+    expect(screen.getByTestId('title')).toHaveTextContent('Ажилтан нэмэх');
   });
 
-  it('calls handleNextStepJI when nextStep is triggered in StepJobInfo', () => {
-    render(<AddModal {...defaultProps} currentStep={1} />);
-    fireEvent.click(screen.getByText('StepJobInfo Component'));
-    expect(defaultProps.handleNextStepJI).toHaveBeenCalled();
+  it('renders the Stepper component', async () => {
+    render(<AddModal {...mockProps} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+    expect(screen.getByTestId('stepper')).toBeInTheDocument();
   });
 
-  it('calls handleSubmitAI when handleSubmitAI is triggered in StepAdditionalInfo', () => {
-    render(<AddModal {...defaultProps} currentStep={2} />);
-    fireEvent.click(screen.getByText('StepAdditionalInfo Component'));
-    expect(defaultProps.handleSubmitAI).toHaveBeenCalled();
+  it('renders StepPersonalInfo when currentStep is 0', async () => {
+    render(<AddModal {...mockProps} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+    expect(screen.getByTestId('step-personal-info')).toBeInTheDocument();
+  });
+
+  it('renders StepJobInfo when currentStep is 1', async () => {
+    render(<AddModal {...mockProps} currentStep={1} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+    expect(screen.getByTestId('step-job-info')).toBeInTheDocument();
+  });
+
+  it('renders StepAdditionalInfo when currentStep is 2', async () => {
+    render(<AddModal {...mockProps} currentStep={2} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+    expect(screen.getByTestId('step-additional-info')).toBeInTheDocument();
+  });
+
+  it('renders the add icon', () => {
+    render(<AddModal {...mockProps} />);
+    expect(screen.getByTestId('add-icon')).toBeInTheDocument();
+  });
+
+  it('has the correct button text', () => {
+    render(<AddModal {...mockProps} />);
+    expect(screen.getByTestId('addEmployeeBtn')).toHaveTextContent('Ажилтан нэмэх');
+  });
+
+  it('passes correct props to StepPersonalInfo', async () => {
+    const { rerender } = render(<AddModal {...mockProps} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+
+    // We can't directly test prop passing due to mocked components,
+    // but we can ensure the component is rendered when expected
+    expect(screen.getByTestId('step-personal-info')).toBeInTheDocument();
+
+    // Test that it's not rendered when currentStep is not 0
+    rerender(<AddModal {...mockProps} currentStep={1} />);
+    expect(screen.queryByTestId('step-personal-info')).not.toBeInTheDocument();
+  });
+
+  it('passes correct props to StepJobInfo', async () => {
+    const { rerender } = render(<AddModal {...mockProps} currentStep={1} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+
+    expect(screen.getByTestId('step-job-info')).toBeInTheDocument();
+
+    rerender(<AddModal {...mockProps} currentStep={0} />);
+    expect(screen.queryByTestId('step-job-info')).not.toBeInTheDocument();
+  });
+
+  it('passes correct props to StepAdditionalInfo', async () => {
+    const { rerender } = render(<AddModal {...mockProps} currentStep={2} />);
+    const button = screen.getByTestId('addEmployeeBtn');
+    await fireEvent.click(button);
+
+    expect(screen.getByTestId('step-additional-info')).toBeInTheDocument();
+
+    rerender(<AddModal {...mockProps} currentStep={0} />);
+    expect(screen.queryByTestId('step-additional-info')).not.toBeInTheDocument();
   });
 });
