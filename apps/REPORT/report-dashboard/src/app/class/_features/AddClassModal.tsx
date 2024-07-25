@@ -8,6 +8,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { ClassType, useGetClassesQuery, useCreateClassMutation } from '@/generated';
 import * as yup from 'yup';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { cn } from '@/lib/utils';
 
 interface FormValues {
   name: string;
@@ -28,13 +33,12 @@ const initialValues: FormValues = {
 };
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('This field is required'),
-  teacher1: yup.string().required('This field is required'),
-  teacher2: yup.string().required('This field is required'),
-  startDate: yup.string().required('This field is required'),
-  endDate: yup.string().required('This field is required'),
+  name: yup.string().required('Ангийн нэр оруулна уу').min(2, 'Ангийн нэр хамгийн багадаа 2 тэмдэгт байна').max(50, 'Ангийн нэр хамгийн ихдээ 50 тэмдэгт байна'),
+  teacher1: yup.string().required('Багш 1-н нэр оруулна уу').min(2, 'Багшийн нэр хамгийн багадаа 2 тэмдэгт байна').max(50, 'Багшийн нэр хамгийн ихдээ 50 тэмдэгт байна'),
+  teacher2: yup.string().required('Багш 2-н нэр оруулна уу').min(2, 'Багшийн нэр хамгийн багадаа 2 тэмдэгт байна').max(50, 'Багшийн нэр хамгийн ихдээ 50 тэмдэгт байна'),
+  startDate: yup.date().required('Эхлэх огноо оруулна уу').min(new Date(), 'Эхлэх огноо өнөөдрөөс хойш байх ёстой'),
+  endDate: yup.date().required('Дуусах огноо оруулна уу').min(yup.ref('startDate'), 'Дуусах огноо нь эхлэх огнооноос хойш байх ёстой'),
 });
-
 interface AddClassModalProps {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
@@ -83,6 +87,29 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
     </div>
   );
 
+  const renderDatePicker = (name: 'startDate' | 'endDate', label: string, testId: string) => (
+    <div className="flex flex-col gap-2">
+      <Label data-testid={`${testId}-label`}>{label}</Label>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant={'outline'} className={'w-[220px] justify-start text-left font-normal'}>
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {formik.values[name] ? formik.values[name] : <span>Pick a date</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+          <Calendar
+            mode="single"
+            selected={formik.values[name] ? new Date(formik.values[name]) : undefined}
+            onSelect={(date) => formik.setFieldValue(name, date ? format(date, 'yyyy-MM-dd') : '')}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+      {formik.touched[name] && formik.errors[name] && <div className="text-red-500 text-sm">{formik.errors[name]}</div>}
+    </div>
+  );
+
   const renderRadioGroup = useCallback(
     () => (
       <RadioGroup data-testid="class-type-radio-group" onValueChange={(value) => formik.setFieldValue('classType', value)} className="flex flex-row-reverse" defaultValue={ClassType.Coding}>
@@ -115,8 +142,8 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
             {renderInput('teacher2', 'Багш 2-н нэр', 'teacher2-input')}
           </div>
           <div data-testid="dates-container" className="flex justify-between">
-            {renderInput('startDate', 'Эхлэх огноо', 'start-date-input')}
-            {renderInput('endDate', 'Дуусах огноо', 'end-date-input')}
+            {renderDatePicker('startDate', 'Эхлэх огноо', 'start-date-input')}
+            {renderDatePicker('endDate', 'Дуусах огноо', 'end-date-input')}
           </div>
           {renderRadioGroup()}
           <Button disabled={loading} type="submit" onClick={() => formik.handleSubmit()} data-testid="submit-button" className="w-[200px]">
