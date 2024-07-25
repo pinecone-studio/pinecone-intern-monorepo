@@ -37,18 +37,4 @@ describe('DropDownMenuButton', () => {
     cy.get('[data-testid="delete-menu-item"]').click({ force: true });
     cy.wait('@getClass');
   });
-  // it('logs error on failed delete', () => {
-  //   cy.stub(window.console, 'error');
-  //   cy.intercept('POST', '/graphql', (req) => {
-  //     if (req.body.operationName === 'DeleteClass') {
-  //       req.reply({
-  //         errors: [{ message: 'Error deleting class' }],
-  //       });
-  //     }
-  //   }).as('deleteClass');
-  //   cy.get('[data-testid="delete-menu-item"]').click({ force: true });
-  //   cy.wait('@deleteClass').then(() => {
-  //     expect(window.console.error).to.have.been.calledWith('Error deleting class');
-  //   });
-  // });
 });
