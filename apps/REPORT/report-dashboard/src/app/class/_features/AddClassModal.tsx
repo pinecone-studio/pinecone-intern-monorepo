@@ -12,7 +12,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
-import { cn } from '@/lib/utils';
 
 interface FormValues {
   name: string;
@@ -49,9 +48,10 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
   const { refetch } = useGetClassesQuery({});
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = useCallback(
-    async (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
-      setLoading(true);
+  const handleSubmit = async (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
+    setLoading(true);
+
+    try {
       await createClass({
         variables: {
           input: {
@@ -63,15 +63,16 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
           },
         },
       });
-      setTimeout(() => {
-        setLoading(false);
-        resetForm();
-        refetch();
-        onOpenChange(false);
-      }, 2000);
-    },
-    [createClass, refetch, onOpenChange]
-  );
+      setLoading(false);
+      resetForm();
+      refetch();
+      onOpenChange(false);
+      alert('Ангийг амжилттай нэмлээ!');
+    } catch (error) {
+      alert('Ангийг нэмэхэд алдаа гарлаа.');
+      setLoading(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues,
@@ -92,7 +93,7 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
       <Label data-testid={`${testId}-label`}>{label}</Label>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant={'outline'} className={'w-[220px] justify-start text-left font-normal'}>
+          <Button variant={'outline'} className={'w-[220px] justify-start text-left font-normal'} data-testid={`${testId}`}>
             <CalendarIcon className="mr-2 h-4 w-4" />
             {formik.values[name] ? formik.values[name] : <span>Pick a date</span>}
           </Button>
@@ -110,22 +111,19 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
     </div>
   );
 
-  const renderRadioGroup = useCallback(
-    () => (
-      <RadioGroup data-testid="class-type-radio-group" onValueChange={(value) => formik.setFieldValue('classType', value)} className="flex flex-row-reverse" defaultValue={ClassType.Coding}>
-        {[ClassType.Coding, ClassType.Design].map((type) => (
-          <div
-            key={type}
-            data-testid={`${type.toLowerCase()}-radio-container`}
-            className={`flex items-center space-x-2 border p-2 rounded-md w-[220px] ${formik.values.classType === type ? 'bg-slate-100' : 'bg-white'}`}
-          >
-            <RadioGroupItem data-testid={`${type.toLowerCase()}-radio-button`} value={type} />
-            <Label data-testid={`${type.toLowerCase()}-radio-label`}>{type === ClassType.Coding ? 'Кодинг анги' : 'Дизайн анги'}</Label>
-          </div>
-        ))}
-      </RadioGroup>
-    ),
-    [formik]
+  const renderRadioGroup = () => (
+    <RadioGroup data-testid="class-type-radio-group" onValueChange={(value) => formik.setFieldValue('classType', value)} className="flex flex-row-reverse" defaultValue={ClassType.Coding}>
+      {[ClassType.Coding, ClassType.Design].map((type) => (
+        <div
+          key={type}
+          data-testid={`${type.toLowerCase()}-radio-container`}
+          className={`flex items-center space-x-2 border p-2 rounded-md w-[220px] ${formik.values.classType === type ? 'bg-slate-100' : 'bg-white'}`}
+        >
+          <RadioGroupItem data-testid={`${type.toLowerCase()}-radio-button`} value={type} />
+          <Label data-testid={`${type.toLowerCase()}-radio-label`}>{type === ClassType.Coding ? 'Кодинг анги' : 'Дизайн анги'}</Label>
+        </div>
+      ))}
+    </RadioGroup>
   );
 
   return (
