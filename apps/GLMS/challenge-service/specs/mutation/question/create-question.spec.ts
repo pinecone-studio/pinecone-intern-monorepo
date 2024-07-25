@@ -6,8 +6,6 @@ jest.mock('@/models/question-model', () => ({
   QuestionModel: {
     create: jest.fn(),
     findById: jest.fn().mockReturnThis(),
-    populate: jest.fn().mockReturnThis(),
-    exec: jest.fn(),
   },
 }));
 
