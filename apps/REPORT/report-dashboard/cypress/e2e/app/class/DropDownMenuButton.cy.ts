@@ -19,11 +19,11 @@ describe('DropDownMenuButton', () => {
           },
         });
       }
-    }).as('getClass');
-    cy.wait('@getClass');
+    }).as('getClasses');
+    cy.wait('@getClasses');
   });
 
-  it('renders the dropdown menu button and refetch', () => {
+  it('renders the dropdown menu button', () => {
     cy.get('[data-testid="dropdown-menu-button"]').should('exist');
   });
 
@@ -35,8 +35,7 @@ describe('DropDownMenuButton', () => {
     cy.get('[data-testid="delete-menu-item"]').should('exist');
     cy.get('[data-testid="delete-menu-item"]').click({ force: true });
 
-    cy.visit('/class');
-    cy.wait('@getClass');
+    cy.wait('@getClasses');
   });
 
   it('handles GraphQL errors', () => {
