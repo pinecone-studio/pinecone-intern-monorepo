@@ -25,7 +25,7 @@ export const StepJobInfo = ({
       <div data-testid="step-job-info" className="flex gap-4 flex-col">
         <div cy-testid="select-one" className="flex flex-col gap-1">
           <label className=" text-[16px] font-normal text-[#121316]">{'Хэлтэс'}</label>
-          <Select onValueChange={(value) => setValueFormik('department', value)}>
+          <Select data-testid="department-select" onValueChange={(value) => setValueFormik('department', value)}>
             <SelectTrigger className="h-[56px] px-[8px] py-[8px] bg-[#F7F7F8]">
               <SelectValue />
             </SelectTrigger>
