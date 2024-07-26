@@ -20,8 +20,6 @@ describe('DropDownMenuButton', () => {
         });
       }
     }).as('getClass');
-
-    // Wait for the classes to load
     cy.wait('@getClass');
   });
 
@@ -36,6 +34,8 @@ describe('DropDownMenuButton', () => {
     cy.get('[data-testid="edit-menu-item"]').should('exist');
     cy.get('[data-testid="delete-menu-item"]').should('exist');
     cy.get('[data-testid="delete-menu-item"]').click({ force: true });
+
+    cy.visit('/class');
     cy.wait('@getClass');
   });
 
