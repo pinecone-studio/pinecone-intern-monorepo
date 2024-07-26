@@ -26,24 +26,25 @@ jest.mock('../../src/app/student/_components/UploadImage', () => ({
 
 describe('StudentAddModal', () => {
   const mockOnOpenChange = jest.fn();
+  const mockClassId = 'class123';
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('renders the modal content when open', () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
     expect(screen.getByTestId('add-student-modal')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Сурагчийн Нэр, Код ...')).toBeInTheDocument();
   });
 
   it('does not render the modal content when closed', () => {
-    render(<StudentAddModal open={false} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={false} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
     expect(screen.queryByTestId('openModalButton')).not.toBeInTheDocument();
   });
 
   it('renders all input fields', () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
     expect(screen.getByTestId('student-code-input')).toBeInTheDocument();
     expect(screen.getByTestId('lastName-input')).toBeInTheDocument();
     expect(screen.getByTestId('firstName-input')).toBeInTheDocument();
@@ -52,14 +53,14 @@ describe('StudentAddModal', () => {
   });
 
   it('renders the radio group for active status', () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
     expect(screen.getByRole('radiogroup')).toBeInTheDocument();
     expect(screen.getByTestId('active-radio-group-item')).toBeInTheDocument();
     expect(screen.getByTestId('passive-radio-group-item')).toBeInTheDocument();
   });
 
   it('shows validation errors when submitting empty form', async () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
 
     fireEvent.click(screen.getByTestId('add-student-button'));
 
@@ -69,7 +70,10 @@ describe('StudentAddModal', () => {
   });
 
   it('submits the form with valid data and closes modal', async () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    const mockCreateStudent = jest.fn().mockResolvedValue({});
+    jest.spyOn(require('@/generated'), 'useCreateStudentMutation').mockReturnValue([mockCreateStudent]);
+
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
 
     fireEvent.change(screen.getByTestId('student-code-input'), { target: { value: '12345' } });
     fireEvent.change(screen.getByTestId('lastName-input'), { target: { value: 'Doe' } });
@@ -84,26 +88,43 @@ describe('StudentAddModal', () => {
     });
 
     await waitFor(() => {
+      expect(mockCreateStudent).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            studentCode: '12345',
+            lastName: 'Doe',
+            firstName: 'John',
+            phoneNumber: '1234567890',
+            email: 'john@example.com',
+            profileImgUrl: '',
+            active: 'PASSIVE',
+            classId: mockClassId,
+          },
+        },
+      });
       expect(mockOnOpenChange).toHaveBeenCalledWith(false);
     });
   });
 
   it('changes active status when radio button is clicked', async () => {
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
 
-    expect(screen.getByText('Идэвхитэй').closest('div')).toHaveClass('bg-slate-200');
-    expect(screen.getByText('Идэвхгүй').closest('div')).toHaveClass('bg-white');
+    const activeRadio = screen.getByTestId('active-radio-group-item');
+    const passiveRadio = screen.getByTestId('passive-radio-group-item');
 
-    fireEvent.click(screen.getByTestId('passive-radio-group-item'));
+    expect(activeRadio.parentElement).toHaveClass('bg-slate-200');
+    expect(passiveRadio.parentElement).toHaveClass('bg-white');
 
-    expect(screen.getByText('Идэвхитэй').closest('div')).toHaveClass('bg-white');
-    expect(screen.getByText('Идэвхгүй').closest('div')).toHaveClass('bg-slate-200');
+    fireEvent.click(passiveRadio);
+
+    expect(activeRadio.parentElement).toHaveClass('bg-white');
+    expect(passiveRadio.parentElement).toHaveClass('bg-slate-200');
   });
 
   it('displays uploaded image when image is selected', async () => {
     render(
       <MockedProvider>
-        <StudentAddModal open={true} onOpenChange={jest.fn()} />
+        <StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />
       </MockedProvider>
     );
 
@@ -116,10 +137,10 @@ describe('StudentAddModal', () => {
 
   it('displays success toast on successful submission', async () => {
     const { toast } = require('sonner');
-    const { useCreateStudentMutation } = require('../../src/generated');
-    useCreateStudentMutation.mockImplementation(() => [jest.fn().mockResolvedValue({})]);
+    const mockCreateStudent = jest.fn().mockResolvedValue({});
+    jest.spyOn(require('@/generated'), 'useCreateStudentMutation').mockReturnValue([mockCreateStudent]);
 
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
 
     fireEvent.change(screen.getByTestId('student-code-input'), { target: { value: '12345' } });
     fireEvent.change(screen.getByTestId('lastName-input'), { target: { value: 'Doe' } });
@@ -136,10 +157,10 @@ describe('StudentAddModal', () => {
 
   it('displays error toast on submission failure', async () => {
     const { toast } = require('sonner');
-    const { useCreateStudentMutation } = require('../../src/generated');
-    useCreateStudentMutation.mockImplementation(() => [jest.fn().mockRejectedValue(new Error('Submission failed'))]);
+    const mockCreateStudent = jest.fn().mockRejectedValue(new Error('Submission failed'));
+    jest.spyOn(require('@/generated'), 'useCreateStudentMutation').mockReturnValue([mockCreateStudent]);
 
-    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} />);
+    render(<StudentAddModal open={true} onOpenChange={mockOnOpenChange} classId={mockClassId} />);
 
     fireEvent.change(screen.getByTestId('student-code-input'), { target: { value: '12345' } });
     fireEvent.change(screen.getByTestId('lastName-input'), { target: { value: 'Doe' } });
