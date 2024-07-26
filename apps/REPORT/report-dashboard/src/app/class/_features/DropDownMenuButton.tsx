@@ -20,7 +20,7 @@ const DropDownMenuButton = ({ classId }: DropDownMenuButtonProps) => {
         refetch();
       }
     } catch (error) {
-      console.log(error);
+      console.log('error message', error);
     }
   };
 

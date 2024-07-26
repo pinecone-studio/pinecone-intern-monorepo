@@ -1,3 +1,5 @@
+import { ClassType } from '@/generated';
+
 describe('DropDownMenuButton', () => {
   beforeEach(() => {
     cy.visit('/class');
@@ -7,12 +9,11 @@ describe('DropDownMenuButton', () => {
           data: {
             getClasses: [
               {
-                _id: '1',
-                __typename: 'Class',
                 name: 'Test Class',
                 startDate: '2023-01-01',
                 endDate: '2023-12-31',
                 teachers: ['Teacher 1', 'Teacher 2'],
+                ClassType: ClassType.Design,
               },
             ],
           },
@@ -36,5 +37,25 @@ describe('DropDownMenuButton', () => {
     cy.get('[data-testid="delete-menu-item"]').should('exist');
     cy.get('[data-testid="delete-menu-item"]').click({ force: true });
     cy.wait('@getClass');
+  });
+
+  it('handles GraphQL errors', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'deleteClass') {
+        req.reply({
+          forceNetworkError: true,
+        });
+      }
+    }).as('deleteClassError');
+
+    cy.get('[data-testid="class-card"]').first().trigger('mouseover');
+    cy.get('[data-testid="more-horizontal-button"]').should('exist');
+    cy.get('[data-testid="more-horizontal-button"]').click({ force: true });
+    cy.get('[data-testid="edit-menu-item"]').should('exist');
+    cy.get('[data-testid="delete-menu-item"]').should('exist');
+    cy.get('[data-testid="delete-menu-item"]').click({ force: true });
+
+    cy.visit('/class');
+    cy.wait('@deleteClassError');
   });
 });
