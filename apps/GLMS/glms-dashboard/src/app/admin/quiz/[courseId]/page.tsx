@@ -8,34 +8,37 @@ import { AddQuestionFeature } from "../_features/AddQuestionFeature";
 
 
 const QuizDetails = () => {
-    const {courseId} = useParams()
+  const {courseId} = useParams()
 
-    const {data, loading, error, refetch} = useGetQuizQuery({
+  const {data, loading, error, refetch} = useGetQuizQuery({
         variables: {courseId: courseId}
-    })
+  })
 
-    refetch()
+  refetch()
 
-    if(error){
-        return <div data-testid="error-message">Error: {error.message}</div>
-      }
+  if(error){
+    return <div data-testid="error-message">Error: {error.message}</div>
+  }
   
-      if (loading || !data) {
-        return <div  data-testid="loading">Quiz loading...</div>
-      }
-      console.log('Quiz data:', data);
+  if (loading || !data) {
+    return <div  data-testid="loading">Quiz loading...</div>
+  }
+
+  const quizId = data?.getQuiz?.id;
     
-    return <div className="mx-auto container">
+  return (
+    <div className="mx-auto container">
       <ActionLinkButton label={"Cэдэв рүү буцах"} href={`/admin/${courseId}`} Icon={ArrowLeft}/>
       <div className="mt-4 bg-white rounded-[12px] p-5">
-      <h1>Quiz</h1>
-        <div>Quiz Id: {data?.getQuiz?.id}</div>
-        <div>Course id: {data?.getQuiz?.courseId}</div>
-        <div className="mt-2 flex gap-2">
-        <AddQuestionFeature/>
+       <h1>Quiz</h1>
+         <div>Quiz Id: {data?.getQuiz?.id}</div>
+         <div>Course id: {data?.getQuiz?.courseId}</div>
+         <div className="mt-2 flex gap-2">
+         {quizId && <AddQuestionFeature quizId={quizId} />}
         </div>
       </div>
     </div>
+  )
 }
 
 export default QuizDetails
