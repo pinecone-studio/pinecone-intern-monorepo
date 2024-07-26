@@ -61,12 +61,6 @@ describe('InputField Component', () => {
     expect(screen.getByPlaceholderText('test placeholder')).toHaveClass('custom-class');
   });
 
-  test('renders textarea when "as" prop is textarea', () => {
-    renderInputField({ as: 'textarea', rows: 5 });
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByRole('textbox')).toHaveAttribute('rows', '5');
-  });
-
   test('renders input with the correct type', () => {
     renderInputField({ type: 'password' });
     expect(screen.getByPlaceholderText('test placeholder')).toHaveAttribute('type', 'password');

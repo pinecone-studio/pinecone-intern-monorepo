@@ -71,19 +71,16 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({ open, onOpenChange
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
 
-  const renderInput = useCallback(
-    (name: keyof FormValues, label: string, testId: string) => (
-      <div className="flex flex-col gap-2">
-        <Label data-testid={`${testId}-label`}>{label}</Label>
-        <Input data-testid={testId} name={name} value={formik.values[name]} onChange={formik.handleChange} className="w-[220px]" />
-        {formik.errors[name] && <div className="text-red-500">{formik.errors[name]}</div>}
-      </div>
-    ),
-    [formik]
+  const renderInput = (name: keyof FormValues, label: string, testId: string) => (
+    <div className="flex flex-col gap-2">
+      <Label data-testid={`${testId}-label`}>{label}</Label>
+      <Input data-testid={testId} name={name} value={formik.values[name]} onChange={(e) => formik.setFieldValue(name, e.target.value)} className="w-[220px]" />
+      {formik.touched[name as keyof FormValues] && formik.errors[name as keyof FormValues] && <div className="text-red-500 text-sm">{formik.errors[name as keyof FormValues]}</div>}
+    </div>
   );
 
   const renderRadioGroup = useCallback(

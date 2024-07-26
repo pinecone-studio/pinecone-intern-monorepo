@@ -8,4 +8,4 @@ const QuizSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: () => new Date() },
 });
 
-export const QuizModel = mongoose.models['GLMS-Quiz'] || mongoose.model('GLMS-Quiz', QuizSchema);
+export const QuizModel = mongoose.models['GLMS-Quizzes'] || mongoose.model('GLMS-Quizzes', QuizSchema);

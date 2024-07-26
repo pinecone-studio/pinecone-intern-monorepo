@@ -40,7 +40,7 @@ describe('RoleModal Component', () => {
     fireEvent.click(editButton);
 
     const selectTrigger = screen.getByText('Select roles');
-    fireEvent.click(selectTrigger);
+    fireEvent.mouseDown(selectTrigger);
 
     await waitFor(() => {
       expect(screen.getByText('Admin')).toBeInTheDocument();
@@ -49,8 +49,7 @@ describe('RoleModal Component', () => {
     fireEvent.click(screen.getByText('Admin'));
 
     await waitFor(() => {
-      const selectedRole = screen.getByText('Admin');
-      expect(selectedRole).toBeInTheDocument();
+      expect(screen.getByText('Admin')).toBeInTheDocument();
     });
   });
 });
