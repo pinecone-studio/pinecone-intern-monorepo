@@ -10,13 +10,17 @@ interface DropDownMenuButtonProps {
 }
 
 const DropDownMenuButton = ({ classId }: DropDownMenuButtonProps) => {
-  const [deleteClass, { loading, error }] = useDeleteClassMutation();
+  const [deleteClass] = useDeleteClassMutation();
   const { refetch } = useGetClassesQuery();
 
   const handleDelete = async () => {
-    if (classId) {
-      await deleteClass({ variables: { classId } });
-      refetch();
+    try {
+      if (classId) {
+        await deleteClass({ variables: { classId } });
+        refetch();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
