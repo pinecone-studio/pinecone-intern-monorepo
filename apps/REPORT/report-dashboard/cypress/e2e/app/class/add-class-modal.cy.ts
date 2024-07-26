@@ -78,6 +78,7 @@ describe('AddClassModal', () => {
     cy.get('[name="day"]').contains(futureDate).click();
 
     cy.get('[data-testid="submit-button"]').click();
+    cy.visit('/class');
     cy.wait('@graphqlSuccess');
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Ангийг амжилттай нэмлээ!');
