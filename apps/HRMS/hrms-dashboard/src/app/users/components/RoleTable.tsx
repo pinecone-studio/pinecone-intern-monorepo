@@ -9,7 +9,7 @@ interface RoleTableProps {
   usersData: HrmsUser[];
   handleDelete: (id: string) => void;
 }
-const RoleTable: React.FC<RoleTableProps> = ({ usersData, handleDelete }) => {
+const RoleTable: React.FC<RoleTableProps> = ({ usersData, handleDelete: _handleDelete  }) => {
 return (
   <div data-testid="user-table">
     <Table className="px-6 overflow-hidden">
@@ -42,7 +42,7 @@ return (
       <TableCell >{item?.role}</TableCell>
       <TableCell >{item?.email}</TableCell>
       <TableCell>
-            <Button data-testid="delete-user-button" aria-label="delete"  onClick={() => handleDelete(item?._id as string)} 
+            <Button data-testid="delete-user-button" aria-label="delete"  onClick={() => _handleDelete(item?._id as string)} 
               className="border-none" variant={'outline'}>
               <DeleteIcon />
             </Button>
