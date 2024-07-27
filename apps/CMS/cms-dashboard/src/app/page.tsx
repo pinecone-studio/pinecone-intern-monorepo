@@ -1,14 +1,14 @@
 'use client';
+
 import { FooterButtons } from './dashboard/_features';
 
-const Home = () => {
+export default async function ArticlesPage() {
   return (
     <div>
-      <div className="flex justify-center py-6 sticky bottom-0">
+      <h1 data-cy="Article-Page">hello from ArticlesPage</h1>
+      <div className="flex justify-center m-auto">
         <FooterButtons />
       </div>
     </div>
   );
-};
-
-export default Home;
+}

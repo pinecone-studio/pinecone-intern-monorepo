@@ -2,7 +2,7 @@
 
 describe('ArticlesPage', () => {
   beforeEach(() => {
-    cy.visit('/articles');
+    cy.visit('/');
   });
 
   it('Should render the Article-Page heading', () => {
