@@ -1,16 +1,23 @@
 import React from 'react';
 
+type CustomButtonType = 'submit' | 'reset' | 'draft-button';
+
 type ArticlesButtonProps = {
   able: boolean;
   addClass?: string;
-  text: 'Save Draft' | 'Publish' | 'Ноорогт хадгалах' | 'Нийтлэх';
-  typeText?: 'submit' | 'reset' | 'draft-button';
+  text: string;
+  typeText?: CustomButtonType;
   dataCy: string;
 };
 
-export const ArticlesButton = ({ able, addClass, text, typeText, dataCy }: ArticlesButtonProps) => {
+export const ArticlesButton = ({ able, addClass, text, typeText = 'submit', dataCy }: ArticlesButtonProps) => {
   return (
-    <button type={typeText} disabled={able} className={`button ${addClass}`} data-cy={dataCy}>
+    <button
+      type={typeText as CustomButtonType}
+      disabled={able}
+      className={`button ${addClass}`}
+      data-cy={dataCy}
+    >
       {text}
     </button>
   );
