@@ -38,7 +38,7 @@ describe('Form Page', () => {
     cy.get('[data-cy="submit-button"]').should('be.disabled');
   });
   
-  it('should submit the form successfully', () => {
+  it('Should submit the form successfully', () => {
      // eslint-disable-next-line
      cy.wait(1000);
     const testTitle = 'Mocked Title';
