@@ -1,3 +1,3 @@
-export * from './TableContent';
 export * from './NavigateLink';
-export * from './NavigateLinkWithIcon'
+export * from './NavigateLinkWithIcon';
+export * from './ArticleEditButton';

@@ -1,0 +1,83 @@
+query GetArticles {
+  getArticles {
+    _id
+    title
+    content
+    coverPhoto
+    author
+    status
+    slug
+    category {
+      _id
+      name
+      createdAt
+    }
+    createdAt
+    publishedAt
+    updatedAt
+    scheduledAt
+  }
+}
+
+mutation CreateArticle($articleInput: ArticleInput!) {
+  createArticle(articleInput: $articleInput) {
+    _id
+    title
+    content
+    coverPhoto
+    author
+    status
+    slug
+    category {
+      _id
+      name
+      createdAt
+    }
+    createdAt
+    publishedAt
+    updatedAt
+    scheduledAt
+  }
+}
+
+mutation UpdateArticle($updateArticleId: ID!, $articleInput: ArticleInput!) {
+  updateArticle(id: $updateArticleId, articleInput: $articleInput) {
+    _id
+    title
+    content
+    coverPhoto
+    author
+    status
+    slug
+    category {
+      _id
+      name
+      createdAt
+    }
+    createdAt
+    publishedAt
+    updatedAt
+    scheduledAt
+  }
+}
+
+mutation DeleteArticle($deleteArticleId: ID!) {
+  deleteArticle(id: $deleteArticleId) {
+    _id
+    title
+    content
+    coverPhoto
+    author
+    status
+    slug
+    category {
+      _id
+      name
+      createdAt
+    }
+    createdAt
+    publishedAt
+    updatedAt
+    scheduledAt
+  }
+}
