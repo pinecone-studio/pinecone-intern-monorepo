@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 interface RoleTableProps {
   usersData: HrmsUser[];
-  handleDelete: (id: string) => void;
+  handleDelete: (_id: string) => void;
 }
 const RoleTable: React.FC<RoleTableProps> = ({ usersData, handleDelete: _handleDelete  }) => {
 return (
