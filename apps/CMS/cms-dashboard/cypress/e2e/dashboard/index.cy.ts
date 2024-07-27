@@ -1,6 +1,6 @@
 describe('FooterButtons Component', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/dashboard');
   });
 
   it('AdminNavigateLinksFeature must be defined', () => {
@@ -9,8 +9,8 @@ describe('FooterButtons Component', () => {
 
   it('should render all NavigateLinks with correct text and href', () => {
     cy.get('[data-cy="admin-navigate-links-feature-cy-id"]').within(() => {
-      cy.contains('Нүүр').should('have.attr', 'href', '/articles');
-      cy.contains('Контент').should('have.attr', 'href', '/');
+      cy.contains('Нүүр').should('have.attr', 'href', '/');
+      cy.contains('Контент').should('have.attr', 'href', '/dashboard');
       cy.contains('Сэтгэгдэл').should('have.attr', 'href', '/comments');
       cy.contains('Статистик').should('have.attr', 'href', '/statistics');
     });
