@@ -24,7 +24,7 @@ const mockedArticles = {
   ],
 };
 
-describe('dashboard page', () => {
+describe('Dashboard page', () => {
   beforeEach(() => {
     cy.intercept('POST', '/graphql', (req) => {
       if (req.body.operationName === 'GetArticles') {
