@@ -44,7 +44,7 @@ export const AddQuestionDialog: React.FC<AddQuestionDialogPropsTypes> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <Toaster richColors position="top-right"/>
+      <Toaster richColors position="top-right" data-testid="dialog-toaster"/>
       <DialogTrigger asChild>
         <Button variant="outline" className='' onClick={() => setIsOpen(true)} data-testid="open-dialog-button">
           <Plus className="h-5 w-5 mr-2" />Асуулт нэмэх

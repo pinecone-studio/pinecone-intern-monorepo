@@ -19,26 +19,26 @@ query GetCourses {
 mutation CreateCourse($createInput: CreateCourseInput) {
   createCourse(createInput: $createInput) {
     id
-    title
-    thumbnail
-    content
+    # title
+    # thumbnail
+    # content
   }
 }
 
 mutation UpdateCourse($updateInput: UpdateCourseInput) {
   updateCourse(updateInput: $updateInput) {
     id
-    thumbnail
-    title
-    content
+    # thumbnail
+    # title
+    # content
   }
 }
 
 mutation DeleteCourse($deleteCourseId: ID!) {
   deleteCourse(id: $deleteCourseId) {
     id
-    title
-    thumbnail
-    content
+    # title
+    # thumbnail
+    # content
   }
 }

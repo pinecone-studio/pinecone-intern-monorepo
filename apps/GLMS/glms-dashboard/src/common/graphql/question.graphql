@@ -1,15 +1,15 @@
 mutation CreateQuestion($createInput: CreateQuestionInput!) {
   createQuestion(createInput: $createInput) {
     id
-    quizId {
-      id
-      courseId
-    }
-    text
-    options {
-      id
-      optionText
-      isCorrect
-    }
+    # quizId {
+    #   id
+    #   courseId
+    # }
+    # text
+    # options {
+    #   id
+    #   optionText
+    #   isCorrect
+    # }
   }
 }

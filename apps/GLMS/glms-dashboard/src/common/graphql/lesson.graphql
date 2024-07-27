@@ -3,28 +3,20 @@ query GetLessons($courseId: ID!) {
     id
     courseId {
       id
-      title
-      thumbnail
-      content
     }
     title
-    thumbnail
-    content
   }
 }
 
 mutation CreateLesson($createInput: CreateLessonInput) {
   createLesson(createInput: $createInput) {
     id
-    courseId {
-      id
-      title
-      thumbnail
-      content
-    }
-    title
-    thumbnail
-    content
+    # courseId {
+    #   id
+    # }
+    # title
+    # thumbnail
+    # content
   }
 }
 
@@ -34,9 +26,6 @@ query GetLessonDetails($id: ID!) {
     id
     courseId {
       id
-      title
-      thumbnail
-      content
     }
     title
     thumbnail

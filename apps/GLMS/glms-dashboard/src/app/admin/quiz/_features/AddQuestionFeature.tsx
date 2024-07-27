@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 "use client"
 
 import { useCreateQuestionMutation } from "@/generated";
@@ -10,19 +11,22 @@ interface Option {
   isCorrect: boolean;
 }
 
-interface AddQuestionDialogProps {
+interface AddQuestionFeatureProps {
     quizId: string;
 }
 
-export const AddQuestionFeature: React.FC<AddQuestionDialogProps> = ({ quizId }) => {
+const initialOptions = [
+  { optionText: '', isCorrect: false },
+  { optionText: '', isCorrect: false },
+  { optionText: '', isCorrect: false },
+  { optionText: '', isCorrect: false }
+];
+
+export const AddQuestionFeature: React.FC<AddQuestionFeatureProps> = ({ quizId }) => {
   const [questionText, setQuestionText] = useState<string>('');
-  const [options, setOptions] = useState<Option[]>([
-    { optionText: '', isCorrect: false },
-    { optionText: '', isCorrect: false },
-    { optionText: '', isCorrect: false },
-    { optionText: '', isCorrect: false },
-  ]);
+  const [options, setOptions] = useState<Option[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false)
+
 
   const handleOptionChange = (index: number, field: keyof Option, value: string | boolean) => {
     setOptions(prevOptions => {
@@ -39,18 +43,29 @@ export const AddQuestionFeature: React.FC<AddQuestionDialogProps> = ({ quizId })
 
   const [createQuestion, { loading }] = useCreateQuestionMutation();
 
-  const handleSubmit = async () => {
+  const inputValidation = () => {
     if (questionText.trim() === '') {
-      toast.error("Question text cannot be empty.");
-      return;
+      toast.error("Question text cannot be empty.", {className: "error-toast"});
+      return false;
     };
-  
-    for (const option of options) {
-      if (option.optionText.trim() === '') {
-        toast.error("Option text cannot be empty.");
-        return;
-      }
-    };
+
+    if (options.some(option => option.optionText.trim() === '')) {
+      toast.error("All option texts cannot be empty.", {className: "error-toast"});
+      return false;    
+    }
+
+    if (!options.some(option => option.isCorrect)) {
+      toast.error("At least one option must be marked as correct.", { className: 'error-toast' });
+      return false;
+    }
+
+    return true
+  }
+
+  const handleSubmit = async () => {
+    if (!inputValidation()){
+      return
+    }
 
     try {
       await createQuestion({
@@ -68,21 +83,16 @@ export const AddQuestionFeature: React.FC<AddQuestionDialogProps> = ({ quizId })
 
       setIsOpen(false);
       resetForm();
-      toast.success("Question create Successfully");
+      toast.success("Question create successfully", { className: 'success-toast'});
     } catch (error) {
-      toast.error('Асуулт үүсгэхэд алдаа гарлаа');
+      toast.error('Failed to create question', { className: 'error-toast'});
       console.error("Error creating question:", error);
     }
   };
 
   const resetForm = () => {
     setQuestionText('');
-    setOptions([
-      { optionText: '', isCorrect: false },
-      { optionText: '', isCorrect: false },
-      { optionText: '', isCorrect: false },
-      { optionText: '', isCorrect: false },
-    ]);
+    setOptions([...initialOptions]);
   };
 
   return (
@@ -98,5 +108,3 @@ export const AddQuestionFeature: React.FC<AddQuestionDialogProps> = ({ quizId })
     />
   );
 };
-
-
