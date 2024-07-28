@@ -1,9 +1,7 @@
-import { useSelectedCategories } from '@/common/providers/CategoryContext';
-import { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import { useField } from 'formik';
 
 type Category = string;
-
-const mockCategories: Category[] = ['Coding', 'Morphosis', 'Leap', 'Frontend', 'Backend'];
 
 interface CategoryInputProps {
   name: string;
@@ -12,10 +10,13 @@ interface CategoryInputProps {
 }
 
 export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder, label }) => {
-  const [categories, setCategories] = useState<Category[]>(mockCategories);
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(['Coding', 'Morphosis', 'Leap', 'Frontend', 'Backend']);
   const [inputValue, setInputValue] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+  const [field, meta, helpers] = useField<Category[]>(name);
+  const { value: selectedCategories = [] } = field;
+  const { setValue: setSelectedCategories } = helpers;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -73,10 +74,14 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
         {label}
       </label>
       <div className="flex items-center flex-wrap gap-2 mt-4">
-        {selectedCategories.map((category) => (
+        {selectedCategories.map((category: Category) => (
           <div key={category} className="flex items-center bg-[#eaeaea] rounded-md px-2 py-1">
             <span className="mr-1">{category}</span>
-            <button type="button" onClick={() => handleDeleteCategory(category)} className="text-slate-500 ml-2 focus:outline-none">
+            <button
+              type="button"
+              onClick={() => handleDeleteCategory(category)}
+              className="text-slate-500 ml-2 focus:outline-none"
+            >
               &times;
             </button>
           </div>
@@ -97,7 +102,11 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
           {categories
             .filter((category) => !selectedCategories.includes(category))
             .map((category: Category) => (
-              <li key={category} onClick={() => handleCategorySelect(category)} className="p-2 hover:bg-gray-100 cursor-pointer">
+              <li
+                key={category}
+                onClick={() => handleCategorySelect(category)}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+              >
                 {category}
               </li>
             ))}
