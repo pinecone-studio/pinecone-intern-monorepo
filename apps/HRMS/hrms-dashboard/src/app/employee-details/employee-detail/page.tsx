@@ -1,7 +1,6 @@
 import { EmployeesOtherInformation } from '../_components/employee-other-information/EmployeesOtherInformation';
 import { EmployeePersonalInfo } from './_components/EmployeePersonalInfo';
-
-import EmployeeInfoSection from './_components/EmplyeeInfoSection';
+import { EmployeeInfoSection } from './_components/EmplyeeInfoSection';
 
 const Index = () => {
   return (

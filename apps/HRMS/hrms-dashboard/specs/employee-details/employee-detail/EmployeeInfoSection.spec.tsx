@@ -88,6 +88,11 @@ describe('EmployeeInfoSection', () => {
       render(<EmployeeInfoSection />);
     });
 
-    expect(screen.getByTestId('status-value')).toHaveTextContent('Төлөв');
+    // Find the specific element we're interested in
+    const statusElement = screen.getByText((content, element) => {
+      return element !== null && element.tagName.toLowerCase() === 'p' && element.textContent === 'Төлөв' && element.previousElementSibling?.textContent === 'Төлөв';
+    });
+
+    expect(statusElement).toBeInTheDocument();
   });
 });
