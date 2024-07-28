@@ -77,11 +77,7 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
         {selectedCategories.map((category: Category) => (
           <div key={category} className="flex items-center bg-[#eaeaea] rounded-md px-2 py-1">
             <span className="mr-1">{category}</span>
-            <button
-              type="button"
-              onClick={() => handleDeleteCategory(category)}
-              className="text-slate-500 ml-2 focus:outline-none"
-            >
+            <button type="button" onClick={() => handleDeleteCategory(category)} className="text-slate-500 ml-2 focus:outline-none">
               &times;
             </button>
           </div>
@@ -97,16 +93,13 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
           onFocus={() => setIsDropdownOpen(true)}
         />
       </div>
+      {meta.touched && meta.error && <div className="text-base text-red-600">{meta.error}</div>}
       {isDropdownOpen && (
         <ul className="absolute z-10 bg-white border border-gray-300 rounded-md w-full max-h-40 overflow-y-auto">
           {categories
             .filter((category) => !selectedCategories.includes(category))
             .map((category: Category) => (
-              <li
-                key={category}
-                onClick={() => handleCategorySelect(category)}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-              >
+              <li key={category} onClick={() => handleCategorySelect(category)} className="p-2 hover:bg-gray-100 cursor-pointer">
                 {category}
               </li>
             ))}

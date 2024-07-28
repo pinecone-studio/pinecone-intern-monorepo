@@ -11,4 +11,5 @@ export const articleSchema = Yup.object({
       }
       return false;
     }),
+	category: Yup.mixed().required("Шошгогүй байж болохгүй"),
 });

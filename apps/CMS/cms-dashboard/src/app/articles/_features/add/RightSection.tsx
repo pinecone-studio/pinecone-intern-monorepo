@@ -1,5 +1,5 @@
 import { Field, FormikValues, useFormikContext } from 'formik';
-import { ImageInput, ArticlesButton } from '../../_components/add/';
+import { ImageInput, ArticlesButton, CategoryInput } from '../../_components/add/';
 
 export const RightSection = () => {
   const { setFieldValue, values } = useFormikContext<FormikValues>();
@@ -10,6 +10,7 @@ export const RightSection = () => {
 
   return (
     <div className="bg-white flex flex-col justify-between flex-1 p-6 h-[93.5vh]">
+      <CategoryInput name={'category'} placeholder={"Шошгонууд"} label={"Шошго"}/>
       <Field
         name="image"
         component={ImageInput}

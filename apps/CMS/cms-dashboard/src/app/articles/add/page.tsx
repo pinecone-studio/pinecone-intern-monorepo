@@ -3,29 +3,30 @@ import { LeftSection, RightSection } from '../_features/add';
 import { Formik, Form, FormikHelpers, FormikTouched } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
 
-interface Values {
-  title: string;
-  body: string;
-}
 export default async function Index() {
   type Values = {
     title: string;
     body: string;
     image: File | null;
+    category: string[];
   }
 
   const initialValues: Values = {
     title: '',
     body: '',
     image: null,
+    category: [''],
   };
   const handleSubmit = (values: Values, { setTouched }:FormikHelpers<Values>) => {
     const touchedFields: FormikTouched<Values> = {
       title: true,
       body: true,
       image: true,
+      category: true,
     };
     setTouched(touchedFields);
+    console.log(values);
+    
   };
 
   return (
@@ -35,7 +36,6 @@ export default async function Index() {
           <Form>
             <div className="flex items-center justify-center">
               <LeftSection />
-              {/* Right container */}
               <RightSection/>
             </div>
           </Form>
