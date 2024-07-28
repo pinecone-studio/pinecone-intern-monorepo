@@ -5,11 +5,9 @@ import { useFormikContext } from 'formik';
 
 type FieldProps = {
   typeText?: 'submit' | 'button' | 'reset';
-  selectedCategories: string[];
-  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export const RightSection = ({ typeText, selectedCategories, setSelectedCategories }: FieldProps) => {
+export const RightSection = ({ typeText }: FieldProps) => {
   const [file, setFile] = useState<File | null>(null);
   const { values, touched } = useFormikContext<{ title: string; body: string }>();
   const isDisabled = !touched.title || !touched.body || values.title === '' || values.body === '';
@@ -17,7 +15,7 @@ export const RightSection = ({ typeText, selectedCategories, setSelectedCategori
 
   return (
     <div className="bg-white flex-1 p-6 h-[93.5vh] flex flex-col justify-between">
-      <CategoryInput label="Шошгонууд" name="category" placeholder="Шошго" selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
+      <CategoryInput label="Шошгонууд" name="category" placeholder="Шошго" />
       <ImageInput setFile={setFile} />
       <div className="flex flex-col gap-4">
         <ArticlesButton

@@ -3,7 +3,8 @@ import { LeftSection } from '../_features/add';
 import { RightSection } from '../_features/add';
 import { Formik, Form } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
-import { useState, useCallback } from 'react';
+// import { SelectedCategoriesProvider, useSelectedCategories } from '@/common/providers/CategoryContext';
+
 
 interface Values {
   title: string;
@@ -15,10 +16,11 @@ export default async function Index() {
     body: '',
   };
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // const { selectedCategories } = useSelectedCategories();
 
   const handleSubmit = async () => {
-    console.log(selectedCategories);
+    // console.log(selectedCategories);
+    
   };
 
   return (
@@ -28,7 +30,7 @@ export default async function Index() {
           <Form>
             <div className="flex items-center justify-center">
               <LeftSection />
-              <RightSection typeText="submit" selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
+              <RightSection typeText="submit"  />
             </div>
           </Form>
         )}
