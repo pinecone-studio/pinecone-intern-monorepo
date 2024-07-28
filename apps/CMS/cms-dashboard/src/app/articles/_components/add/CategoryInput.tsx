@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import { useSelectedCategories } from '@/common/providers/CategoryContext';
+import { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
 
 type Category = string;
 
@@ -8,13 +9,11 @@ interface CategoryInputProps {
   name: string;
   placeholder: string;
   label: string;
-  selectedCategories: Category[];
-  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder, label, selectedCategories, setSelectedCategories }) => {
+export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder, label }) => {
   const [categories, setCategories] = useState<Category[]>(mockCategories);
-//   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 

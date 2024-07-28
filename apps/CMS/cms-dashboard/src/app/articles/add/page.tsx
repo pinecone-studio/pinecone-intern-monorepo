@@ -2,7 +2,8 @@
 import { LeftSection, RightSection } from '../_features/add';
 import { Formik, Form, FormikHelpers, FormikTouched } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
-import { useState, useCallback } from 'react';
+// import { SelectedCategoriesProvider, useSelectedCategories } from '@/common/providers/CategoryContext';
+
 
 interface Values {
   title: string;
