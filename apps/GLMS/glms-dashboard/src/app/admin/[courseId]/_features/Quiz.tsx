@@ -25,7 +25,7 @@ export const Quiz = () => {
 
     return (
     <div>
-        <QuizCard href={`/admin/quiz/${data?.getQuiz?.courseId}`} title={`${data?.getQuiz?.courseId}`} />
+      <QuizCard href={`/admin/quiz/${data?.getQuiz?.courseId}`} title={`${data?.getQuiz?.courseId}`} />
     </div>
   ); 
 };
