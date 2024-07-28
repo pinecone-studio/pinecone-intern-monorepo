@@ -12,7 +12,8 @@ interface Option {
 }
 
 interface AddQuestionFeatureProps {
-    quizId: string;
+  quizId: string;
+  refetchQuestions: () => void;
 }
 
 const initialOptions = [
@@ -22,7 +23,7 @@ const initialOptions = [
   { optionText: '', isCorrect: false }
 ];
 
-export const AddQuestionFeature: React.FC<AddQuestionFeatureProps> = ({ quizId }) => {
+export const AddQuestionFeature: React.FC<AddQuestionFeatureProps> = ({ quizId, refetchQuestions }) => {
   const [questionText, setQuestionText] = useState<string>('');
   const [options, setOptions] = useState<Option[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -83,6 +84,7 @@ export const AddQuestionFeature: React.FC<AddQuestionFeatureProps> = ({ quizId }
 
       setIsOpen(false);
       resetForm();
+      refetchQuestions()
       toast.success("Question create successfully", { className: 'success-toast'});
     } catch (error) {
       toast.error('Failed to create question', { className: 'error-toast'});

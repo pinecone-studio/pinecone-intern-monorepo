@@ -13,3 +13,18 @@ mutation CreateQuestion($createInput: CreateQuestionInput!) {
     # }
   }
 }
+
+query GetQuestions($quizId: ID!) {
+  getQuestions(quizId: $quizId) {
+    id
+    quizId {
+      id
+    }
+    text
+    options {
+      id
+      optionText
+      isCorrect
+    }
+  }
+}
