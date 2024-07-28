@@ -3,8 +3,6 @@ import { LeftSection } from '../_features/add';
 import { RightSection } from '../_features/add';
 import { Formik, Form } from 'formik';
 import { articleSchema } from '@/lib/validation-schema';
-// import { SelectedCategoriesProvider, useSelectedCategories } from '@/common/providers/CategoryContext';
-
 
 interface Values {
   title: string;
@@ -16,11 +14,9 @@ export default async function Index() {
     body: '',
   };
 
-  // const { selectedCategories } = useSelectedCategories();
-
-  const handleSubmit = async () => {
-    // console.log(selectedCategories);
-    
+  const handleSubmit = async (values) => {   
+    console.log(values);
+     
   };
 
   return (
