@@ -133,6 +133,6 @@ describe('AddQuestionDialog', ()=>{
       );
     
       expect(screen.getByTestId('submit-button')).toBeDisabled();
-      expect(screen.getByText('Please wait')).toBeInTheDocument();
+      expect(screen.getByText('Түр хүлээгээрэй')).toBeInTheDocument();
   });
 })
