@@ -25,19 +25,17 @@ export const GetQuestionsFeature: React.FC<GetQuestionsFeaturePropsTypes> = ({ q
   };
 
   const checkQuiz = () => {
-    if (!data?.getQuestions) return;
-
-    const newResults: { [key: string]: boolean | null } = {};
-    data.getQuestions.forEach(question => {
-      if (question && question.options) {
-        const selectedOptionId = selectedOptions[question.id];
-        const correctOption = question.options.find(option => option?.isCorrect);
-        newResults[question.id] = correctOption ? correctOption.id === selectedOptionId : null;
-      }
+    const newResults: { [key: string]: boolean } = {};
+    data?.getQuestions?.forEach(question => {
+      const selectedOptionId = selectedOptions[question.id];
+      const correctOption = question?.options?.find(option => option?.isCorrect);
+      newResults[question.id] = correctOption?.id === selectedOptionId;
     });
-
+  
     setResults(newResults);
   };
+  
+  
 
   if (loading) {
     return <div data-testid='loading'><LoaderCircle className="h-4 w-4 animate-spin" /></div>;
@@ -54,38 +52,34 @@ export const GetQuestionsFeature: React.FC<GetQuestionsFeaturePropsTypes> = ({ q
   return (
     <div className="flex flex-col gap-4 w-[500px]">
       {data.getQuestions.map((question, index) => (
-        question ? (
           <div
-            key={question.id}
+            key={question?.id}
             className={`flex flex-col border bg-gray-50 p-5 rounded-[12px] shadow-sm ${results[question.id] !== undefined ? (results[question.id] ? 'border-green-500 bg-green-100' : 'border-red-500 bg-red-100') : ''}`}
             data-testid={`question-${index}`}
           >
-            <h3 className="text-lg font-bold mb-1">{question.text}</h3>
+            <h3 className="text-lg font-bold mb-1">{question?.text}</h3>
             <div>
-              {question.options?.map(option => (
-                option ? (
-                  <div key={option.id} className="flex items-center mb-1 bg-white p-2 rounded-md border">
+              {question?.options?.map(option => (
+                  <div key={option?.id} className="flex items-center mb-1 bg-white p-2 rounded-md border">
                     <input
                       type="radio"
                       name={`question-${index}`}
-                      value={option.id}
-                      id={`option-${option.id}`}
+                      value={option?.id}
+                      id={`option-${option?.id}`}
                       onChange={() => handleOptionChange(question.id, option.id)}
-                      data-testid={`option-${option.id}`}
+                      data-testid={`option-${option?.id}`}
                       className='cursor-pointer'
                     />
                     <label
-                      htmlFor={`option-${option.id}`}
+                      htmlFor={`option-${option?.id}`}
                       className="ml-2 cursor-pointer"
                     >
-                      {option.optionText}
+                      {option?.optionText}
                     </label>
                   </div>
-                ) : null
               ))}
             </div>
           </div>
-        ) : null
       ))}
 
       <Button onClick={checkQuiz}>Check Quiz</Button>
