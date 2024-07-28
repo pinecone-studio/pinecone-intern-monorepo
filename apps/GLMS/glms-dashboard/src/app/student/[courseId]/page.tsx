@@ -6,6 +6,7 @@ import { Lessons } from '../_features/Lessons';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import { ActionLinkButton } from '@/components/ActionLinkButton';
+import { Quiz } from '../_features/Quiz';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -35,6 +36,7 @@ const CourseDetail = () => {
               {data.getCourse?.content}
             </p>
             <Lessons />
+            <Quiz/>
           </div>
           <div>{data.getCourse?.thumbnail ? <Image src={data.getCourse.thumbnail} alt="Course Thumbnail" width={500} height={300} /> : <></>}</div>
         </div>
