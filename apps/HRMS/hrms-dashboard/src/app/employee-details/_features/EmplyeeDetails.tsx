@@ -27,7 +27,6 @@ const UPLOAD_PRESET = 'gxjou9af';
 export const EmployeeDetails = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [createEmployeeMutation] = useCreateEmployeeMutation();
   const { data } = useGetEmployeesQuery();
   const { refetch } = useGetEmployeesQuery();
