@@ -35,7 +35,7 @@ describe('LessonDetails', () => {
 
   beforeEach(() => {
     interceptGraphQL('default');
-    cy.visit('/student/475e4247-4ac0-4115-a7f2-18c638ca47b9/45ea42d4-139c-4cff-9c8d-7b0b828d57dd');
+    cy.visit('/student/course-page/lesson-page');
   });
 
   it('displays error message on failure', () => {
