@@ -15,7 +15,7 @@ export default async function Index() {
     title: '',
     body: '',
     image: null,
-    category: [''],
+    category: [],
   };
   const handleSubmit = (values: Values, { setTouched }:FormikHelpers<Values>) => {
     const touchedFields: FormikTouched<Values> = {
@@ -25,8 +25,6 @@ export default async function Index() {
       category: true,
     };
     setTouched(touchedFields);
-    console.log(values);
-    
   };
 
   return (

@@ -37,15 +37,58 @@ describe('Form Page', () => {
     cy.get('[data-cy="image-input"]').attachFile('example.jpg');
     cy.get('[data-cy="submit-button"]').should('be.disabled');
   });
-  
+
+  it('should render the category input field and dropdown', () => {
+    cy.get('[id="category"]').should('exist');
+    cy.get('[id="category"]').focus();
+    cy.get('ul').should('exist');
+  });
+
+  it('should allow adding a new category', () => {
+    const newCategory = 'New Category';
+    // eslint-disable-next-line
+    cy.wait(1000);
+    cy.get('[id="category"]').type(newCategory);
+    cy.get('[id="category"]').type('{enter}');
+    cy.contains(newCategory).should('exist');
+  });
+
+  it('should display categories in the dropdown and allow selection', () => {
+    const categoryToSelect = 'Coding';
+    cy.get('[id="category"]').focus();
+    cy.contains(categoryToSelect).click();
+    cy.contains(categoryToSelect).should('exist');
+  });
+
+  it('should allow deleting a selected category', () => {
+    const categoryToDelete = 'Coding';
+    // eslint-disable-next-line
+    cy.wait(1000);
+    cy.get('[id="category"]').type(categoryToDelete);
+    cy.get('[id="category"]').type('{enter}');
+    cy.contains(categoryToDelete).should('exist');
+    cy.get(`[data-testid="delete-button-${categoryToDelete}"]`).click();
+    cy.contains(categoryToDelete).should('not.exist');
+  });
+
+  it('should close the dropdown when clicking outside', () => {
+    cy.get('[id="category"]').focus();
+    cy.contains('Coding').should('exist');
+    cy.get('body').click();
+    cy.contains('Coding').should('not.exist');
+  });
+
   it('should submit the form successfully', () => {
-     // eslint-disable-next-line
-     cy.wait(1000);
+    // eslint-disable-next-line
+    cy.wait(1000);
     const testTitle = 'Mocked Title';
     const testBody = 'Mocked Body Content';
+    const categoryToSelect = 'Coding';
     cy.get('#title').type(testTitle);
     cy.get('#body').type(testBody);
-    cy.get('[data-cy="image-input"]').attachFile('example.jpg'); 
+    cy.get('[id="category"]').focus();
+    cy.contains(categoryToSelect).click();
+    cy.get('[data-cy="image-input"]').attachFile('example.jpg');
     cy.get('[data-cy="submit-button"]').click();
   });
 });

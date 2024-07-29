@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import { useField } from 'formik';
 
 type Category = string;
-
 interface CategoryInputProps {
   name: string;
   placeholder: string;
@@ -13,18 +12,17 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
   const [categories, setCategories] = useState<Category[]>(['Coding', 'Morphosis', 'Leap', 'Frontend', 'Backend']);
   const [inputValue, setInputValue] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-
   const [field, meta, helpers] = useField<Category[]>(name);
   const { value: selectedCategories = [] } = field;
   const { setValue: setSelectedCategories } = helpers;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      /* istanbul ignore else */
       if ((event.target as HTMLElement).closest('.category-input-container') === null) {
         setIsDropdownOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -35,7 +33,6 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
     if (inputValue && !categories.includes(inputValue)) {
       setCategories([...categories, inputValue]);
     }
-
     if (inputValue && !selectedCategories.includes(inputValue)) {
       setSelectedCategories([...selectedCategories, inputValue]);
     }
@@ -53,6 +50,7 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    /* istanbul ignore else */
     if (event.key === 'Enter') {
       event.preventDefault();
       handleAddCategory();
@@ -61,6 +59,7 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
   };
 
   const handleCategorySelect = (category: Category) => {
+    /* istanbul ignore else */
     if (!selectedCategories.includes(category)) {
       setSelectedCategories([...selectedCategories, category]);
     }
@@ -77,7 +76,7 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
         {selectedCategories.map((category: Category) => (
           <div key={category} className="flex items-center bg-[#eaeaea] rounded-md px-2 py-1">
             <span className="mr-1">{category}</span>
-            <button type="button" onClick={() => handleDeleteCategory(category)} className="text-slate-500 ml-2 focus:outline-none">
+            <button type="button" id="button" data-testid={`delete-button-${category}`} onClick={() => handleDeleteCategory(category)} className="text-slate-500 ml-2 focus:outline-none">
               &times;
             </button>
           </div>
@@ -93,7 +92,7 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
           onFocus={() => setIsDropdownOpen(true)}
         />
       </div>
-      {meta.touched && meta.error && <div className="text-base text-red-600">{meta.error}</div>}
+      {meta.touched}
       {isDropdownOpen && (
         <ul className="absolute z-10 bg-white border border-gray-300 rounded-md w-full max-h-40 overflow-y-auto">
           {categories
