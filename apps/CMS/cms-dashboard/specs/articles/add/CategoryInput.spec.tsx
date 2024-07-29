@@ -2,13 +2,13 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { Formik, Form } from 'formik';
-import { CategoryInput } from '@/app/articles/_components/add'; // Adjust the import path as needed
+import { CategoryInput } from '@/app/articles/_components/add'; 
 
 type Values = {
-  categories: [];
+  categories: string[];
 };
 
-const setup = (initialValues: Values = { categories: [] }) => {
+const setup = (initialValues: Values = { categories: [''] }) => {
   const setFieldValue = jest.fn();
   render(
     <Formik initialValues={initialValues} onSubmit={jest.fn()}>
@@ -30,10 +30,8 @@ describe('CategoryInput', () => {
     setup();
     expect(screen.getByLabelText('Categories')).toBeInTheDocument();
   });
-
-  test('handles category addition and displays in dropdown', () => {
+  test('should handle category addition and displays in dropdown', () => {
     setup();
-
     const inputElement = screen.getByPlaceholderText('Add a category');
 
     act(() => {
@@ -44,11 +42,9 @@ describe('CategoryInput', () => {
     expect(screen.getByText('New Category')).toBeInTheDocument();
   });
 
-  test('handles category selection from dropdown', () => {
+  test('should handle category selection from dropdown', () => {
     setup();
-
     const inputElement = screen.getByPlaceholderText('Add a category');
-
     act(() => {
       fireEvent.change(inputElement, { target: { value: 'Coding' } });
       fireEvent.focus(inputElement);
@@ -61,22 +57,27 @@ describe('CategoryInput', () => {
     });
 
     expect(screen.getByText('Coding')).toBeInTheDocument();
-  });
 
-  test('handles category deletion', () => {
+    act(() => {
+      fireEvent.click(categoryItem);
+    });
+    expect(screen.getByText('Coding')).toBeInTheDocument();
+  });
+  test('should handle category deletion', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
     act(() => {
       fireEvent.change(inputElement, { target: { value: 'Coding' } });
       fireEvent.keyPress(inputElement, { key: 'Enter', code: 'Enter', charCode: 13 });
     });
-    screen.debug(); 
+    screen.debug();
     const deleteButton = screen.getByTestId('delete-button-Coding');
     act(() => {
       fireEvent.click(deleteButton);
     });
     expect(screen.queryByText('Coding')).not.toBeInTheDocument();
   });
+
   test('closes dropdown when clicking outside', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
@@ -90,7 +91,21 @@ describe('CategoryInput', () => {
     });
     expect(screen.queryByText('Coding')).not.toBeInTheDocument();
   });
-  test('handles input change and dropdown open state', () => {
+
+  test('should open dropdown when clicking inside', () => {
+    setup();
+    const inputElement = screen.getByPlaceholderText('Add a category');
+    act(() => {
+      fireEvent.change(inputElement, { target: { value: 'Coding' } });
+      fireEvent.focus(inputElement);
+    });
+    expect(screen.getByText('Coding')).toBeInTheDocument();
+    act(() => {
+      fireEvent.mouseDown(inputElement);
+    });
+    expect(screen.getByText('Coding')).toBeInTheDocument();
+  });
+  test('should handle input change and dropdown open state', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
     act(() => {
@@ -98,7 +113,7 @@ describe('CategoryInput', () => {
     });
     expect(screen.getByText('Frontend')).toBeInTheDocument();
   });
-  test('handles click outside to close dropdown', () => {
+  test('should handle click outside to close dropdown', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
     act(() => {
@@ -111,7 +126,7 @@ describe('CategoryInput', () => {
     });
     expect(screen.queryByText('Backend')).not.toBeInTheDocument();
   });
-  test('handles empty input and category addition', () => {
+  test('should handle empty input and category addition', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
     act(() => {
@@ -125,13 +140,22 @@ describe('CategoryInput', () => {
     });
     expect(screen.getByText('New Category')).toBeInTheDocument();
   });
-  test('handles default value when selectedCategories is undefined', () => {
-    setup({}); 
+  test('should handle default value when selectedCategories is undefined', () => {
+    setup({});
     const inputElement = screen.getByPlaceholderText('Add a category');
     act(() => {
       fireEvent.change(inputElement, { target: { value: 'Coding' } });
       fireEvent.keyPress(inputElement, { key: 'Enter', code: 'Enter', charCode: 13 });
     });
     expect(screen.getByText('Coding')).toBeInTheDocument();
+  });
+  test('should open dropdown when non-enter key is pressed', () => {
+    setup();
+    const inputElement = screen.getByPlaceholderText('Add a category');
+    act(() => {
+      fireEvent.change(inputElement, { target: { value: 'New Category' } });
+      fireEvent.keyPress(inputElement, { key: 'a', code: 'KeyA', charCode: 97 });
+    });
+    expect(screen.getByRole('list')).toBeInTheDocument();
   });
 });

@@ -18,9 +18,10 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      /* istanbul ignore else */
       if ((event.target as HTMLElement).closest('.category-input-container') === null) {
         setIsDropdownOpen(false);
+      } else {
+        setIsDropdownOpen(true);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -50,21 +51,17 @@ export const CategoryInput: React.FC<CategoryInputProps> = ({ name, placeholder,
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    /* istanbul ignore else */
     if (event.key === 'Enter') {
       event.preventDefault();
       handleAddCategory();
       setIsDropdownOpen(false);
+    } else {
+      setIsDropdownOpen(true);
     }
   };
 
   const handleCategorySelect = (category: Category) => {
-    /* istanbul ignore else */
-    if (!selectedCategories.includes(category)) {
       setSelectedCategories([...selectedCategories, category]);
-    }
-    setIsDropdownOpen(false);
-    setInputValue('');
   };
 
   return (

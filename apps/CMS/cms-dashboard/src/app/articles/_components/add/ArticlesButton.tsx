@@ -4,7 +4,7 @@ type ArticlesButtonProps = {
   able: boolean;
   addClass?: string;
   text: 'Save Draft' | 'Publish' | 'Ноорогт хадгалах' | 'Нийтлэх';
-  typeText?: 'submit' | 'button' | 'reset' | undefined;
+  typeText?: 'submit' | 'reset' | undefined;
   dataCy: string;
 };
 
