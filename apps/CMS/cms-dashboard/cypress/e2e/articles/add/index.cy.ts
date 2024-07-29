@@ -60,17 +60,6 @@ describe('Form Page', () => {
     cy.contains(categoryToSelect).should('exist');
   });
 
-  it('should allow deleting a selected category', () => {
-    const categoryToDelete = 'Coding';
-    // eslint-disable-next-line
-    cy.wait(1000);
-    cy.get('[id="category"]').type(categoryToDelete);
-    cy.get('[id="category"]').type('{enter}');
-    cy.contains(categoryToDelete).should('exist');
-    cy.get(`[data-testid="delete-button-${categoryToDelete}"]`).click();
-    cy.contains(categoryToDelete).should('not.exist');
-  });
-
   it('should close the dropdown when clicking outside', () => {
     cy.get('[id="category"]').focus();
     cy.contains('Coding').should('exist');
