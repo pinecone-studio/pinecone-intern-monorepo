@@ -29,7 +29,7 @@ export const Lessons = () => {
         {data?.getLessons?.map((lesson) => (
           // eslint-disable-next-line react/jsx-key
           <div key={lesson?.id} data-testid={`lesson-${lesson?.id}`}>
-            <LessonCard title={lesson?.title} id={lesson?.id} href={`/${courseId}/${lesson?.id}`} />
+            <LessonCard title={lesson?.title} id={lesson?.id} href={`/admin/${courseId}/${lesson?.id}`} />
           </div>
         ))}
       </div>

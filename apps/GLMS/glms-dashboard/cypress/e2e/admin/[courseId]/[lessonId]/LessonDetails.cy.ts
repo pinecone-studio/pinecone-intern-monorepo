@@ -1,19 +1,19 @@
-describe('CourseDetail Component Tests', () => {
+describe('LessonDetails', () => {
   const generateResponse = (state: string) => {
     switch (state) {
       case 'loading':
         return { data: null, loading: true, error: null };
       case 'error':
-        return { data: null, errors: [{ message: 'Error fetching course details' }] };
+        return { data: null, errors: [{ message: 'Error fetching lesson details' }] };
       case 'empty':
-        return { data: { getCourse: null } };
+        return { data: { getLessonDetails: null } };
       default:
         return {
           data: {
-            getCourse: {
+            getLessonDetails: {
               id: '1',
-              title: 'Example Course',
-              content: 'This is a detailed description of an example course.',
+              title: 'Example lesson details',
+              content: 'This is a detailed description of an example course',
               // eslint-disable-next-line no-secrets/no-secrets
               thumbnail: 'http://res.cloudinary.com/dbtqkhmu5/image/upload/v1719917674/n6801dl7s9tyszvrdgli.png',
             },
@@ -26,7 +26,7 @@ describe('CourseDetail Component Tests', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       console.log('Intercepting request:', req.body);
 
-      if (req.body.operationName === 'GetCourse') {
+      if (req.body.operationName === 'GetLessonDetails') {
         const response = generateResponse(state);
         req.reply(response);
       }
@@ -35,27 +35,27 @@ describe('CourseDetail Component Tests', () => {
 
   beforeEach(() => {
     interceptGraphQL('default');
-    cy.visit('/student/course-page');
+    cy.visit('/admin/course-page/lesson-page');
   });
 
   it('displays error message on failure', () => {
     interceptGraphQL('error');
     cy.reload();
     cy.wait('@error');
-    cy.get('[data-testid="error-message"]').should('be.visible').and('contain', 'Error fetching course details');
+    cy.get('[data-testid="error-message"]').should('be.visible').and('contain', 'Error fetching lesson details');
   });
 
-  it('displays the course details successfully', () => {
+  it('displays the lesson details successfully', () => {
     cy.wait('@default');
-    cy.get('[data-testid="course-details"]').should('be.visible');
-    cy.get('[data-testid="course-title"]').should('contain', 'Example Course');
-    cy.get('[data-testid="course-content"]').should('contain', 'This is a detailed description');
+    cy.get('[data-testid="lesson-details"]').should('be.visible');
+    cy.get('[data-testid="lesson-title"]').should('contain', 'Example lesson details');
+    cy.get('[data-testid="lesson-content"]').should('contain', 'This is a detailed description of an example course');
   });
 
-  it('displays a message if no course details are available', () => {
+  it('displays a message if no lesson details are available', () => {
     interceptGraphQL('empty');
     cy.reload();
     cy.wait('@empty');
-    cy.get('[data-testid="course-details"]').should('not.exist');
+    cy.get('[data-testid="lesson-details"]').should('not.exist');
   });
 });

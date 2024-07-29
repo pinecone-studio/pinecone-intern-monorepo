@@ -1,41 +1,59 @@
 'use client';
 import React from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { HrmsUser } from '@/generated';
+import DeleteIcon from '@/assets/icons/DeleteIcon';
+import { Button } from '@/components/ui/button';
 
-
-const RoleTable = () => {
-
-  return (
-    <Table className="px-6">
+interface RoleTableProps {
+  usersData: HrmsUser[];
+  handleDelete: (_id: string) => void;
+}
+const RoleTable: React.FC<RoleTableProps> = ({ usersData, handleDelete: _handleDelete  }) => {
+return (
+  <div data-testid="user-table">
+    <Table className="px-6 overflow-hidden">
       <TableCaption></TableCaption>
       <TableHeader>
-        <TableRow data-testid="table-row" className="bg-[#f7f7f8]">
-          <TableHead data-testid="tableHead-1" className="w-[150px] rounded-tl-xl text-black">
+        <TableRow className="bg-[#f7f7f8]">
+          <TableHead className="w-[150px] rounded-tl-xl text-black">
             Name
           </TableHead>
-          <TableHead data-testid="tableHead-2" className="w-[170px] h-[30px] text-black">
+          <TableHead className="w-[170px] h-[30px] text-black">
             Id
           </TableHead>
-          <TableHead data-testid="tableHead-3" className="w-[170px] h-[30px] text-black">
+          <TableHead className="w-[170px] h-[30px] text-black">
             Roles
           </TableHead>
-          <TableHead data-testid="tableHead-4" className="w-[170px] rounded-tr-xl text-black">
+          <TableHead  className="w-[170px] rounded-tr-xl text-black">
             Email
           </TableHead>
+          <TableHead  className="w-[5px] rounded-tr-xl text-black">
+          Action
+          </TableHead>
+ 
         </TableRow>
       </TableHeader>
       <TableBody>
-       
-        <TableRow>
-          <TableCell>John Doe</TableCell>
-          <TableCell>12345</TableCell>
-          <TableCell>Admin</TableCell>
-          <TableCell>john.doe@example.com</TableCell>
-        </TableRow>
+     {usersData?.map((item, index) => (
+      <TableRow key={index}>
+      <TableCell >{item?.firstName}</TableCell>
+      <TableCell >{item?._id}</TableCell>
+      <TableCell >{item?.role}</TableCell>
+      <TableCell >{item?.email}</TableCell>
+      <TableCell>
+            <Button data-testid="delete-user-button" aria-label="delete"  onClick={() => _handleDelete(item?._id as string)} 
+              className="border-none" variant={'outline'}>
+              <DeleteIcon />
+            </Button>
+      </TableCell>
+    </TableRow>
+))}
       </TableBody>
       <TableFooter />
     </Table>
-  );
+    </div>
+    );
 };
 
 export default RoleTable;
