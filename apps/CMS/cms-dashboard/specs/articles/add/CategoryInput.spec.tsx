@@ -19,13 +19,11 @@ const setup = (initialValues: Values = { categories: [''] }) => {
   );
   return { setFieldValue };
 };
-
 describe('CategoryInput', () => {
   afterEach(() => {
     cleanup();
     jest.clearAllMocks();
   });
-
   test('renders without crashing', () => {
     setup();
     expect(screen.getByLabelText('Categories')).toBeInTheDocument();
@@ -33,15 +31,12 @@ describe('CategoryInput', () => {
   test('should handle category addition and displays in dropdown', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
-
     act(() => {
       fireEvent.change(inputElement, { target: { value: 'New Category' } });
       fireEvent.keyPress(inputElement, { key: 'Enter', code: 'Enter', charCode: 13 });
     });
-
     expect(screen.getByText('New Category')).toBeInTheDocument();
   });
-
   test('should handle category selection from dropdown', () => {
     setup();
     const inputElement = screen.getByPlaceholderText('Add a category');
@@ -49,15 +44,11 @@ describe('CategoryInput', () => {
       fireEvent.change(inputElement, { target: { value: 'Coding' } });
       fireEvent.focus(inputElement);
     });
-
     const categoryItem = screen.getByText('Coding');
-
     act(() => {
       fireEvent.click(categoryItem);
     });
-
     expect(screen.getByText('Coding')).toBeInTheDocument();
-
     act(() => {
       fireEvent.click(categoryItem);
     });
