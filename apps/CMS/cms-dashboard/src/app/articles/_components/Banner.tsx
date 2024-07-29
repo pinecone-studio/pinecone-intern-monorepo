@@ -13,9 +13,6 @@ type BannerProps = {
 };
 const Banner = (props: BannerProps) => {
   const [isShown, setIsShown] = useState(false);
-  const handleModalClose = () => {
-    setIsShown(false);
-  };
   const { date, categories, articlesTitle, cover, id } = props;
   const router = useRouter();
 
@@ -36,7 +33,7 @@ const Banner = (props: BannerProps) => {
       <div className="w-full h-full flex">
         <img className="w-full h-full object-cover" data-cy="main-cover" data-testid="mainCover" src={cover} alt="article-cover" />
       </div>
-      <div className="w-full fixed top-0 bg-white p-5 h-[48px] z-10 p-4 box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;">
+      <div className="w-full fixed top-0 bg-white p-5 h-[48px] z-10 box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;">
         <img data-testid="imgButton" width={36} height={34} className="absolute top-2 left-[20%] b-6" src="Logo.svg" />
         <AiOutlineUser data-testid="jumper" color="#000" style={{ position: 'absolute', right: '20%', width: 36, height: 36, bottom: 6 }} onClick={jumper} />
       </div>
@@ -45,8 +42,7 @@ const Banner = (props: BannerProps) => {
           <p data-cy="main-date" data-testid="mainDate" className="font-bold text-[15px] text-white">
             {date?.slice(0, -14)}
           </p>
-          <div className="w-1 h-1 rounded-full bg-white"></div>
-
+          <div className="w-1 h-1 rounded-full bg-white">{date}</div>
           <p data-cy="main-categories" data-testid="mainCategory" className="text-white">
             #{categories}
           </p>
