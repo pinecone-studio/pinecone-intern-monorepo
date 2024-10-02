@@ -214,7 +214,6 @@ yarn nx run {project-name}:add-secrets --group {project-name} --env {which envir
 
 ```json
 npx nx get-secrets { project-name }
-
 ```
 
 
