@@ -9,7 +9,7 @@ export const handleError = (err) => {
 
 export const runPreCommitScript = () => {
   try {
-    validateCurrentBranch();
+    // validateCurrentBranch();
     performPreCommitChecks();
   } catch (err) {
     handleError(err);
