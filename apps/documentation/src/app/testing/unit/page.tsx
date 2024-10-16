@@ -73,7 +73,7 @@ const Page = () => {
 
       <References items={references} />
 
-      <NextPageButton label="Apollo Server" path="/graphql/apollo-server" />
+      <NextPageButton label="E2E Testing" path="/testing/e2e" />
     </Stack>
   );
 };

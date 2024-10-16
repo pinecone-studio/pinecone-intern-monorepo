@@ -12,6 +12,22 @@ export type SubSection = {
 
 export const SECTIONS: Section[] = [
   {
+    title: 'NX Monorepo',
+    items: [
+      { title: 'Introduction', path: '/nx/introduction' },
+      // { title: 'Folder Structure', path: '/nx/folder-structure' },
+      // { title: 'Environments', path: '/nx/environments' },
+    ],
+  },
+  {
+    title: 'Github Repository Setup',
+    items: [
+      { title: 'SSH setup', path: '/github-repository-setup/ssh-setup' },
+      { title: 'Github Repository Clone', path: '/github-repository-setup/repository-clone' },
+      { title: 'Run Project', path: '/github-repository-setup/run-project' },
+    ],
+  },
+  {
     title: 'GraphQL',
     items: [
       { title: 'Introduction', path: '/graphql/introduction' },
@@ -21,26 +37,18 @@ export const SECTIONS: Section[] = [
     ],
   },
   {
-    title: 'NX Monorepo',
+    title: 'Testing',
     items: [
-      { title: 'Introduction', path: '/nx/introduction' },
-      { title: 'Folder Structure', path: '/nx/folder-structure' },
-      { title: 'Environments', path: '/nx/environments' },
+      { title: 'Unit testing', path: '/testing/unit' },
+      { title: 'E2E testing', path: '/testing/e2e' },
     ],
   },
   {
     title: 'Pull Requests',
     items: [
-      { title: 'Item 1', path: '/section-3/item-1' },
-      { title: 'Item 2', path: '/section-3/item-2' },
-      { title: 'Item 3', path: '/section-3/item-3' },
-    ],
-  },
-  {
-    title: 'Testing',
-    items: [
-      { title: 'Unit testing', path: '/testing/unit' },
-      { title: 'E2E testing', path: '/testing/e2e' },
+      { title: 'Commit Push', path: '/pull-request/commit-push' },
+      { title: 'Create Pull Request', path: '/pull-request/create-pull-request' },
+      { title: 'Pull Request Merge', path: '/pull-request/pull-request-merge' },
     ],
   },
 ];
