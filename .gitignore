@@ -53,6 +53,7 @@ Thumbs.db
 **/generated.tsx
 generated.ts
 generated.tsx
+**/generated
 
 #cypress
 
