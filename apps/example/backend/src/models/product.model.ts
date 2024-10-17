@@ -1,5 +1,5 @@
-import { Schema, Types, model } from "mongoose";
-import { CategoryType } from "./category.model";
+import { Schema, Types, model, models } from 'mongoose';
+import { CategoryType } from './category.model';
 
 export type ProductType = {
   _id: string;
@@ -31,7 +31,7 @@ const productSchema = new Schema<ProductType>({
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: "category",
+    ref: 'category',
     required: true,
   },
   createdAt: {
@@ -50,4 +50,4 @@ export type ProductPopulatedType = ProductType & {
   category: CategoryType;
 };
 
-export const productModel = model("product", productSchema);
+export const productModel = models['product'] || model('product', productSchema);

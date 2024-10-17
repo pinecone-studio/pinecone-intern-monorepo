@@ -1,0 +1,35 @@
+{
+  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["**/ui/*.ts", "**/ui/*.tsx"],
+      "rules": {
+        "jsx-a11y/heading-has-content": "off",
+        "jsx-a11y/anchor-has-content": "off"
+      }
+    },
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "max-lines": "off",
+        "no-unused-vars": "off",
+        "complexity": ["error", { "max": 20 }],
+        "camelcase": ["error", { "properties": "never" }],
+        "unicorn/filename-case": ["error", { "case": "kebabCase" }]
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
-import { Schema, Types, model } from "mongoose";
-import { UserType } from "./user.model";
-import { ProductPopulatedType } from "./product.model";
+import { Schema, Types, model, models } from 'mongoose';
+import { UserType } from './user.model';
+import { ProductPopulatedType } from './product.model';
 
 export type SaveType = {
   _id: string;
@@ -13,12 +13,12 @@ export type SaveType = {
 const saveSchema = new Schema<SaveType>({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
   product: {
     type: Schema.Types.ObjectId,
-    ref: "product",
+    ref: 'product',
     required: true,
   },
   createdAt: {
@@ -38,4 +38,4 @@ export type SavePopulatedType = SaveType & {
   product: ProductPopulatedType;
 };
 
-export const saveModel = model("save", saveSchema);
+export const saveModel = models['save'] || model('save', saveSchema);

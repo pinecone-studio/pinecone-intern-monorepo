@@ -14,3 +14,6 @@ coverage/
 coverage-report/
 **/cypress/results/
 .cy/
+
+apps/secret-manager/
+apps/example

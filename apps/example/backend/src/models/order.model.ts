@@ -1,6 +1,6 @@
-import { Schema, Types, model } from "mongoose";
-import { UserType } from "./user.model";
-import { ProductPopulatedType } from "./product.model";
+import { Schema, Types, model, models } from 'mongoose';
+import { UserType } from './user.model';
+import { ProductPopulatedType } from './product.model';
 
 export type OrderType = {
   _id: string;
@@ -17,14 +17,14 @@ export type OrderType = {
 const orderSchema = new Schema<OrderType>({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
   products: [
     {
       product: {
         type: Schema.Types.ObjectId,
-        ref: "product",
+        ref: 'product',
         required: true,
       },
       quantity: {
@@ -58,4 +58,4 @@ export type OrderPopulatedType = OrderType & {
   }[];
 };
 
-export const orderModel = model("order", orderSchema);
+export const orderModel = models['order'] || model('order', orderSchema);
