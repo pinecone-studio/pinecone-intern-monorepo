@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from 'mongoose';
 
 export type CategoryType = {
   _id: string;
@@ -24,4 +24,4 @@ const categorySchema = new Schema<CategoryType>({
   },
 });
 
-export const categoryModel = model("category", categorySchema);
+export const categoryModel = models['category'] || model('category', categorySchema);

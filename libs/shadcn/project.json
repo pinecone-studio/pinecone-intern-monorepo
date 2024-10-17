@@ -1,0 +1,16 @@
+{
+  "name": "shadcn",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shadcn/src",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared", "type:util"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shadcn/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

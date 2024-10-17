@@ -18,7 +18,10 @@
     "paths": {
       "@pinecone-intern-monorepo/file-management": ["libs/file-management/src/index.ts"],
       "@pinecone-intern-monorepo/scripts": ["libs/scripts/src/index.ts"],
-      "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"]
+      "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"],
+      "@pinecone-intern-monorepo/shad": ["libs/shad/src/index.ts"],
+      "@pinecone-intern-monorepo/shad/server": ["libs/shad/src/server.ts"],
+      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from 'mongoose';
 
 export type UserType = {
   _id: string;
@@ -44,4 +44,4 @@ const userSchema = new Schema<UserType>({
   },
 });
 
-export const userModel = model("user", userSchema);
+export const userModel = models['user'] || model('user', userSchema);
