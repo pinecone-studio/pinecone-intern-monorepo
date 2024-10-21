@@ -1,4 +1,3 @@
-/* eslint-disable @nx/workspace/jsx-no-inline-function */
 'use client';
 
 import { X } from 'lucide-react';
@@ -22,7 +21,7 @@ export const MultiSelect = ({ options, value, onValueChange, placeholder }: Mult
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState('');
 
-  const handleUnselect =(option: Option) => onValueChange(value.filter((s) => s.value !== option.value));
+  const handleUnselect = (option: Option) => onValueChange(value.filter((s) => s.value !== option.value));
 
   const handleKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const input = inputRef.current;
@@ -90,7 +89,7 @@ export const MultiSelect = ({ options, value, onValueChange, placeholder }: Mult
                   return (
                     <CommandItem
                       key={option.value}
-                      onMouseDown={(e) => {
+                      onMouseDown={(e: { preventDefault: () => void; stopPropagation: () => void }) => {
                         e.preventDefault();
                         e.stopPropagation();
                       }}

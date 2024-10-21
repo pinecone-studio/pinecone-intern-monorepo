@@ -1,5 +1,3 @@
-/* eslint-disable react/function-component-definition */
-
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -126,7 +124,7 @@ const Page = () => {
   }, [env, project]);
 
   if (loading) return null;
-
+  console.log(editables);
   return (
     <div className="flex flex-col gap-4">
       {editables.map((secret, index) => (
