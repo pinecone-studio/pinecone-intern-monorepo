@@ -51,6 +51,36 @@
         }
       ]
     },
+    "get-secrets:dev": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "development": {
+          "groups": ["example-backend"],
+          "env": "dev"
+        }
+      }
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
+        "testing": {
+          "groups": ["example-backend"],
+          "env": "testing"
+        }
+      }
+    },
+    "get-secrets:prod": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "prod",
+      "configurations": {
+        "prod": {
+          "groups": ["example-backend"],
+          "env": "prod"
+        }
+      }
+    },
     "codegen": {
       "executor": "nx:run-commands",
       "options": {
