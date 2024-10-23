@@ -31,4 +31,3 @@ export const handler = startServerAndCreateNextHandler<NextRequest, Context>(ser
     };
   },
 });
-console.log('testing');
