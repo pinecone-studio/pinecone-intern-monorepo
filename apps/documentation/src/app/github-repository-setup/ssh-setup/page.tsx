@@ -14,10 +14,13 @@ const Page = () => {
         <iframe
           width="560"
           height="315"
-          src="https://youtu.be/axvKBxTTMPU"
+          src="https://www.youtube.com/embed/axvKBxTTMPU?si=F2OQuoeZzlR2Uk6r"
           title="YouTube video player"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        />
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
       </Stack>
 
       <NextPageButton label="Repository Clone" path="/github-repository-setup/repository-clone" />
