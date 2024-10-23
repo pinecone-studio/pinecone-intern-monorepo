@@ -53,6 +53,7 @@ Thumbs.db
 **/generated.tsx
 generated.ts
 generated.tsx
+**/generated
 
 #cypress
 
@@ -66,3 +67,12 @@ generated.tsx
 .vercel
 .env
 .env.preview
+
+
+# Terraform
+
+**/.terraform
+**/.terraform.lock.hcl
+**/.terraform.tfstate.lock.info
+**/*.tfstate
+**/*.tfstate.*

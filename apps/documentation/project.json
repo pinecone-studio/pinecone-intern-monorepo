@@ -57,6 +57,69 @@
         "codeCoverage": true,
         "passWithNoTests": true
       }
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "local": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.local graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "development": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.development graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "preview": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.preview graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "production": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.production graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        }
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/documentation", "rm -rf .vercel"]
+      }
+    },
+    "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["cms-dashboard"],
+          "env": "prod"
+        }
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/documentation/.env | xargs)"],
+        "parallel": false
+      }
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_x2G5xQxqTssHcb0YLIR5f908SxWF -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx env-cmd -f apps/documentation/.env vercel build --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_x2G5xQxqTssHcb0YLIR5f908SxWF -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
     }
   },
   "tags": []

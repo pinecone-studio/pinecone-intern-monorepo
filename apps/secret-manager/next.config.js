@@ -8,7 +8,7 @@ const { composePlugins, withNx } = require('@nx/next');
  **/
 const nextConfig = {
   env: {
-    MONGO_URI: process.env.MONGO_URI,
+    MONGO_URI: 'mongodb+srv://developer:IqORt9VO7B4zTKF5@cluster0.zd5kvja.mongodb.net/secrets?retryWrites=true&w=majority&appName=Cluster0',
   },
   nx: {
     svgr: false,

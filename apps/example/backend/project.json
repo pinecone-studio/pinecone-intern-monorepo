@@ -14,9 +14,14 @@
       "configurations": {
         "development": {
           "outputPath": "apps/example/backend"
-        },
-        "production": {}
-      }
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
