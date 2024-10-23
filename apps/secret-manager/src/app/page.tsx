@@ -6,8 +6,9 @@ import { Table, TableBody, TableCell, TableFooter, TableRow } from '@/components
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Trash } from 'lucide-react';
+import { Loader2, Trash } from 'lucide-react';
 import { useConfirmation } from './_components/ConfirmationProvider';
+import { useRefresh } from './_components/RefreshProvider';
 
 export type Project = {
   _id: string;
@@ -25,7 +26,9 @@ const Page = () => {
   const router = useRouter();
 
   const { confirm } = useConfirmation();
+  const { refreshId } = useRefresh();
 
+  const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [page, setPage] = useState(1);
 
@@ -52,17 +55,26 @@ const Page = () => {
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
+
       const response = await fetch('/api/groups');
 
       const data = await response.json();
 
       setProjects(data);
+
+      setLoading(false);
     };
 
     fetchProjects();
-  }, []);
+  }, [refreshId]);
 
-  if (projects.length === 0) return null;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center w-full h-[300px]">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
 
   return (
     <Table>

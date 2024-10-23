@@ -50,3 +50,20 @@ export async function PUT(req: NextRequest) {
 
   return Response.json({ success: true });
 }
+
+export async function POST(req: NextRequest) {
+  await connect(process.env.MONGO_URI as string);
+
+  const name = req.nextUrl.pathname.split('/').at(-1);
+
+  await SecretGroupModel.create({
+    groupName: name,
+    secrets: {
+      test: {},
+      prod: {},
+      dev: {},
+    },
+  });
+
+  return Response.json({ success: true });
+}
