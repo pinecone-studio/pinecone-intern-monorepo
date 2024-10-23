@@ -14,7 +14,7 @@ const Page = () => {
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/rXJGNnHTYBA?si=BEAGyBSDLXV3_nHC"
+          src="https://youtu.be/axvKBxTTMPU"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         />
