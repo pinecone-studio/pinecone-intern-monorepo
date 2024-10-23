@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Fragment, useMemo } from 'react';
 import { capitalize } from 'src/utils/capitalize';
+import { CreateProjectButton } from './CreateProjectButton';
 
 type Params = {
   project?: string;
@@ -43,10 +44,7 @@ export const Header = () => {
           <BreadcrumbItem>
             {list.length === 0 ? (
               <BreadcrumbPage className="flex items-center gap-4 text-xl font-semibold">
-                Projects{' '}
-                <Button size="sm" className="p-1 h-fit">
-                  <Plus size={16} />
-                </Button>
+                Projects <CreateProjectButton />
               </BreadcrumbPage>
             ) : (
               <BreadcrumbLink className="text-xl font-semibold">
