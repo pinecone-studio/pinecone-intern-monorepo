@@ -24,6 +24,7 @@ export const SECTIONS: Section[] = [
     items: [
       { title: 'SSH setup', path: '/github-repository-setup/ssh-setup' },
       { title: 'Github Repository Clone', path: '/github-repository-setup/repository-clone' },
+      { title: 'Get Secrets', path: '/github-repository-setup/get-secrets' },
       { title: 'Run Project', path: '/github-repository-setup/run-project' },
     ],
   },
