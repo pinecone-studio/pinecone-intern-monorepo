@@ -10,13 +10,16 @@ const Page = () => {
         Run Project
       </Typography>
       <Stack my={2}>
-        {/* <iframe
+        <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/rXJGNnHTYBA?si=BEAGyBSDLXV3_nHC"
+          src="https://www.youtube.com/embed/HMrc1SznYz4?si=QmLomCzm9iR5lz2Q"
           title="YouTube video player"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        /> */}
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
       </Stack>
     </Stack>
   );
