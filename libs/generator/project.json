@@ -1,0 +1,41 @@
+{
+  "name": "generator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/generator/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/generator",
+        "main": "libs/generator/src/index.ts",
+        "tsConfig": "libs/generator/tsconfig.lib.json",
+        "assets": [
+          "libs/generator/*.md",
+          {
+            "input": "./libs/generator/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/generator/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/generator",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/generator",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

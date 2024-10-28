@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "<%= parentDirs %>/tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
     "allowJs": true,
@@ -11,10 +11,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "module": "esnext",
     "plugins": [
       {
         "name": "next"
@@ -22,6 +18,6 @@
     ],
     "types": ["jest", "node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/example/backend/.next/types/**/*.ts", "../../../dist/apps/example/backend/.next/types/**/*.ts", "next-env.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "<%= parentDirs %>/<%= directory %>/.next/types/**/*.ts", "<%= parentDirs %>/dist/a<%= directory %>/.next/types/**/*.ts", "next-env.d.ts"],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

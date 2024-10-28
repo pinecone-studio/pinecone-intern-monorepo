@@ -1,0 +1,14 @@
+{
+  "generators": {
+    "service": {
+      "factory": "./src/generators/service/generator",
+      "schema": "./src/generators/service/schema.json",
+      "description": "service generator"
+    },
+    "dash": {
+      "factory": "./src/generators/dash/generator",
+      "schema": "./src/generators/dash/schema.json",
+      "description": "dash generator"
+    }
+  }
+}
