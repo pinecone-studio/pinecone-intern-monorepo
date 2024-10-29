@@ -1,5 +1,3 @@
-'use client';
-
 import { Footer, Header } from '../../components';
 import { PropsWithChildren } from 'react';
 import { ToastContainer } from 'react-toastify';

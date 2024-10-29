@@ -68,7 +68,6 @@ generated.tsx
 .env
 .env.preview
 
-
 # Terraform
 
 **/.terraform
@@ -76,3 +75,7 @@ generated.tsx
 **/.terraform.tfstate.lock.info
 **/*.tfstate
 **/*.tfstate.*
+
+**/cypress/results
+.cy
+**/cypress/downloads
