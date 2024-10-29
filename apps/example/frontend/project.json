@@ -57,5 +57,20 @@
       }
     }
   },
+  "test": {
+    "executor": "@nx/jest:jest",
+    "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "options": {
+      "jestConfig": "apps/example/frontend/jest.config.ts",
+      "passWithNoTests": true,
+      "codeCoverage": true
+    },
+    "dependsOn": [
+      {
+        "target": "codegen",
+        "params": "forward"
+      }
+    ]
+  },
   "tags": []
 }
