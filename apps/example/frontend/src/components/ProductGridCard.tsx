@@ -6,7 +6,7 @@ import { Product } from '../generated';
 
 export const ProductGridCard = ({ _id, price, name, images }: Product) => {
   return (
-    <div>
+    <div data-testid="product-card">
       <Link href={`/products/${_id}`}>
         <div key={price} className="space-y-2">
           <div className="p-6 shadow-xl rounded-2xl">

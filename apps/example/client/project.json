@@ -111,7 +111,7 @@
           "ci": true
         }
       },
-      "dependsOn": [{ "target": "graphql-codegen" }]
+      "dependsOn": [{ "target": "graphql-codegen:local" }]
     },
     "graphql-codegen:local": {
       "executor": "nx:run-commands",
