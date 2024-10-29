@@ -1,30 +1,21 @@
-"use client";
-// ^ this file needs the "use client" pragma
+'use client';
 
-import { HttpLink } from "@apollo/client";
-import {
-  ApolloNextAppProvider,
-  ApolloClient,
-  InMemoryCache,
-} from "@apollo/experimental-nextjs-app-support";
-import { PropsWithChildren } from "react";
+import { HttpLink } from '@apollo/client';
+import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support';
+import { PropsWithChildren } from 'react';
 
-function makeClient() {
+const makeClient = () => {
   const httpLink = new HttpLink({
-    uri: "http://localhost:4200/api/graphql",
-    fetchOptions: { cache: "no-store" },
+    uri: 'http://localhost:4200/api/graphql',
+    fetchOptions: { cache: 'no-store' },
   });
 
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: httpLink,
   });
-}
+};
 
-export function ApolloWrapper({ children }: PropsWithChildren) {
-  return (
-    <ApolloNextAppProvider makeClient={makeClient}>
-      {children}
-    </ApolloNextAppProvider>
-  );
-}
+export const ApolloWrapper = ({ children }: PropsWithChildren) => {
+  return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+};

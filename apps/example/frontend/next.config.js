@@ -10,6 +10,13 @@ const nextConfig = {
   nx: {
     svgr: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: '*',
+      },
+    ],
+  },
 };
 
 const plugins = [withNx];

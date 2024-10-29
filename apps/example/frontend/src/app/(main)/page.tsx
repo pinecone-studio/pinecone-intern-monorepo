@@ -1,5 +1,7 @@
-import { ProductsGrid } from "@/components";
+import { ProductsGrid } from '../../components';
 
-export default function Home() {
+const Home = () => {
   return <ProductsGrid />;
-}
+};
+
+export default Home;

@@ -1,12 +1,19 @@
-import { Footer, Header } from "@/components";
-import { PropsWithChildren } from "react";
+'use client';
 
-export default function Layout({ children }: PropsWithChildren) {
+import { Footer, Header } from '../../components';
+import { PropsWithChildren } from 'react';
+import { ApolloWrapper } from '../../components/providers';
+
+const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1">{children}</div>
-      <Footer />
-    </div>
+    <ApolloWrapper>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </div>
+    </ApolloWrapper>
   );
-}
+};
+
+export default MainLayout;
