@@ -25,8 +25,8 @@ export const ProductsGrid = () => {
       )}
 
       <div className="grid grid-cols-4 grid-rows-6 [&>div:nth-child(7)]:h-[700px] [&>div:nth-child(8)]:h-[700px] [&>div:nth-child(7)]:col-span-2 [&>div:nth-child(7)]:row-span-2 [&>div:nth-child(8)]:col-span-2 [&>div:nth-child(8)]:row-span-2 gap-5">
-        {data?.getProducts.map((product, index) => (
-          <ProductGridCard key={index} {...product} />
+        {data?.getProducts.map((product) => (
+          <ProductGridCard key={product._id} {...product} />
         ))}
       </div>
     </Container>

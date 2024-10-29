@@ -50,6 +50,21 @@
         "lintFilePatterns": ["apps/example/frontend/**/*.{ts,tsx,js,jsx}"]
       }
     },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "{projectRoot}/jest.config.ts",
+        "passWithNoTests": true,
+        "codeCoverage": true
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
     "codegen": {
       "executor": "nx:run-commands",
       "options": {
@@ -177,20 +192,6 @@
       ]
     }
   },
-  "test": {
-    "executor": "@nx/jest:jest",
-    "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-    "options": {
-      "jestConfig": "{projectRoot}/jest.config.ts",
-      "passWithNoTests": true,
-      "codeCoverage": true
-    },
-    "dependsOn": [
-      {
-        "target": "codegen",
-        "params": "forward"
-      }
-    ]
-  },
+
   "tags": []
 }
