@@ -14,9 +14,13 @@
       "configurations": {
         "development": {
           "outputPath": "apps/example/frontend"
-        },
-        "production": {}
-      }
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -35,7 +39,8 @@
           "buildTarget": "example-frontend:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -69,7 +74,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config ./apps/example/frontend/codegen.ts"]
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:dev"
+        }
+      ]
     },
     "get-secrets:dev": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
