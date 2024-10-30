@@ -39,7 +39,7 @@
       },
       "dependsOn": [
         {
-          "target": "graphql-codegen:local"
+          "target": "graphql-codegen"
         }
       ]
     },
@@ -56,17 +56,7 @@
         "lintFilePatterns": ["apps/example/server/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "graphql-codegen:local": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config apps/example/server/codegen.ts"]
-      },
-      "dependsOn": [
-        {
-          "target": "get-secrets:development"
-        }
-      ]
-    },
+
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
@@ -137,13 +127,19 @@
         "parallel": false
       }
     },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/example/server", "rm -rf .vercel"]
+      }
+    },
     "deploy-dev": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3ibNtLp9PrLqRLPSiuBi3dtjvpnZ -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_2FoxI3mjkx14N5hgXG6shvCtB29v -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_3ibNtLp9PrLqRLPSiuBi3dtjvpnZ -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_2FoxI3mjkx14N5hgXG6shvCtB29v -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -152,10 +148,13 @@
           "target": "clean"
         },
         {
-          "target": "graphql-codegen:local"
+          "target": "graphql-codegen"
         },
         {
           "target": "export-env"
+        },
+        {
+          "target": "get-secrets:development"
         }
       ]
     },
@@ -163,9 +162,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_dRwZTK5gVQeuIcYjV35t3r0muSBC -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_908aVqj2NLarCpn9ooGMdUpdxUFs -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_dRwZTK5gVQeuIcYjV35t3r0muSBC -- vercel --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_908aVqj2NLarCpn9ooGMdUpdxUFs -- vercel --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -178,6 +177,9 @@
         },
         {
           "target": "export-env"
+        },
+        {
+          "target": "get-secrets:testing"
         }
       ]
     },
@@ -185,9 +187,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_dRwZTK5gVQeuIcYjV35t3r0muSBC -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_908aVqj2NLarCpn9ooGMdUpdxUFs -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_dRwZTK5gVQeuIcYjV35t3r0muSBC -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_908aVqj2NLarCpn9ooGMdUpdxUFs -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -200,6 +202,9 @@
         },
         {
           "target": "export-env"
+        },
+        {
+          "target": "get-secrets:testing"
         }
       ]
     },
@@ -207,9 +212,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_AfmuJxq4AgAqYQa2wsD5mtXXEJ5d -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_j8F2ZBNZMn2wQRAFU7gi3pwY4GU1 -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_DqGGgGmMFvEQF0TUpV2NV3WY -v VERCEL_PROJECT_ID=prj_AfmuJxq4AgAqYQa2wsD5mtXXEJ5d -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_j8F2ZBNZMn2wQRAFU7gi3pwY4GU1 -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },

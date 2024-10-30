@@ -12,6 +12,10 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  env: {
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+    MONGODB_URL: process.env.MONGODB_URL,
+  },
 };
 
 const plugins = [

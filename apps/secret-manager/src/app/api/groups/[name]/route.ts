@@ -59,9 +59,15 @@ export async function POST(req: NextRequest) {
   await SecretGroupModel.create({
     groupName: name,
     secrets: {
-      test: {},
-      prod: {},
-      dev: {},
+      test: {
+        KEY: 'VALUE',
+      },
+      prod: {
+        KEY: 'VALUE',
+      },
+      dev: {
+        KEY: 'VALUE',
+      },
     },
   });
 
