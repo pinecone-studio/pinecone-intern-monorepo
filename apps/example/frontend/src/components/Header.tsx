@@ -1,11 +1,15 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useAuth } from './providers';
 
 export const Header = () => {
+  const { user, signout } = useAuth();
+
   return (
     <div className="z-10 flex justify-between px-8 py-4 text-white bg-black mb-14">
-      <div className="flex items-center gap-4 w-72">
+      <div className="flex items-center gap-4">
         <Link href="/">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -20,6 +24,24 @@ export const Header = () => {
         </Link>
         <Link href="/category">Бүтээгдэхүүн</Link>
       </div>
+
+      {!user && (
+        <div className="flex items-center gap-4">
+          <Link href="/signin">
+            <Button>Нэвтрэх</Button>
+          </Link>
+
+          <Link href="/signup">
+            <Button>Бүртгүүлэх</Button>
+          </Link>
+        </div>
+      )}
+
+      {user && (
+        <div className="flex items-center gap-4">
+          <Button onClick={signout}>Гарах</Button>
+        </div>
+      )}
     </div>
   );
 };
