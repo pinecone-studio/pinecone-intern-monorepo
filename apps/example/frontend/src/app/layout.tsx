@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
