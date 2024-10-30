@@ -118,7 +118,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
     },
     "export-env": {
       "executor": "nx:run-commands",
