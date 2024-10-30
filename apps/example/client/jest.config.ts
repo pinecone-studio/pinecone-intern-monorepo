@@ -8,5 +8,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/apps/example/client',
-  collectCoverageFrom: ['!**/index.ts', '!src/app/**/*.tsx', "!*.*"],
+  collectCoverageFrom: ['!**/index.ts', '!src/app/**/*.tsx', '!*.*', '!src/components/providers/ApolloProvider.tsx'],
 };
