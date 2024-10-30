@@ -7,8 +7,10 @@ export type UserType = {
   email: string;
   phone: string;
   address: string;
+  password: string;
   createdAt: Date;
   updatedAt: Date;
+  otp?: string;
 };
 
 const userSchema = new Schema<UserType>({
@@ -31,6 +33,13 @@ const userSchema = new Schema<UserType>({
   address: {
     type: String,
     required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  otp: {
+    type: String,
   },
   createdAt: {
     type: Date,

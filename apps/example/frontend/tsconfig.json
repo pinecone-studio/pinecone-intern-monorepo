@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
@@ -16,6 +17,9 @@
         "name": "next"
       }
     ],
+    "paths": {
+      "@/components/ui/*": ["../../../libs/shadcn/src/lib/ui/*"]
+    },
     "types": ["jest", "node"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/example/frontend/.next/types/**/*.ts", "../../../dist/apps/example/frontend/.next/types/**/*.ts", "next-env.d.ts"],

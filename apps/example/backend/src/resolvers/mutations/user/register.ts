@@ -9,7 +9,9 @@ export const register: MutationResolvers['register'] = async (_, { input }) => {
 
   if (user) throw new Error('User already exists');
 
-  const newUser = await userModel.create(input);
+  const newUser = await userModel.create({
+    ...input,
+  });
 
   const token = jwt.sign(
     {
