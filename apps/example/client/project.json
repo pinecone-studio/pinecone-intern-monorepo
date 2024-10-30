@@ -80,7 +80,7 @@
         }
       }
     },
-    "test": {
+    "test:local": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
@@ -107,24 +107,17 @@
           "ci": true
         }
       },
-      "dependsOn": [{ "target": "graphql-codegen" }]
+      "dependsOn": [
+        {
+          "target": "graphql-codegen"
+        }
+      ]
     },
+
     "graphql-codegen": {
       "executor": "nx:run-commands",
-      "defaultConfiguration": "preview",
-      "configurations": {
-        "local": {
-          "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "development": {
-          "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "preview": {
-          "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        },
-        "production": {
-          "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
-        }
+      "options": {
+        "commands": ["npx env-cmd -f apps/example/client/.env graphql-codegen --config ./apps/example/client/graphql-codegen.yml"]
       }
     },
     "export-env": {

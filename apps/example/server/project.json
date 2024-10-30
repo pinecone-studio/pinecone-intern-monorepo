@@ -39,7 +39,7 @@
       },
       "dependsOn": [
         {
-          "target": "graphql-codegen:local"
+          "target": "graphql-codegen"
         }
       ]
     },
@@ -56,17 +56,7 @@
         "lintFilePatterns": ["apps/example/server/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "graphql-codegen:local": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config apps/example/server/codegen.ts"]
-      },
-      "dependsOn": [
-        {
-          "target": "get-secrets:development"
-        }
-      ]
-    },
+
     "graphql-codegen": {
       "executor": "nx:run-commands",
       "options": {
@@ -158,7 +148,7 @@
           "target": "clean"
         },
         {
-          "target": "graphql-codegen:local"
+          "target": "graphql-codegen"
         },
         {
           "target": "export-env"

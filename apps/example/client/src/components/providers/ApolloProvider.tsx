@@ -3,7 +3,7 @@
 import { HttpLink } from '@apollo/client';
 import { ApolloClient, ApolloNextAppProvider, InMemoryCache } from '@apollo/experimental-nextjs-app-support';
 
-const uri = process.env.ENROLLMENT_SERVICE_ENDPOINT ?? 'http://localhost:8000/api/graphql';
+const uri = process.env.API_URL ?? 'http://localhost:8000/api/graphql';
 
 function makeClient() {
   const httpLink = new HttpLink({
