@@ -18,8 +18,11 @@
       }
     ],
     "paths": {
-      "@/components/ui/*": ["../../../libs/shadcn/src/lib/ui/*"]
+      "@/components/ui/*": ["../../../libs/shadcn/src/lib/ui/*"],
+      "@/*": ["src/*"],
+      
     },
+    
     "types": ["jest", "node"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/example/frontend/.next/types/**/*.ts", "../../../dist/apps/example/frontend/.next/types/**/*.ts", "next-env.d.ts"],

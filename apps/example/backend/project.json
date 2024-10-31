@@ -39,7 +39,15 @@
           "buildTarget": "example-backend:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",

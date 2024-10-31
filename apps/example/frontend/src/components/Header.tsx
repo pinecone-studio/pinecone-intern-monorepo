@@ -22,7 +22,7 @@ export const Header = () => {
             />
           </svg>
         </Link>
-        <Link href="/category">Бүтээгдэхүүн</Link>
+        {/* <Link href="/category">Бүтээгдэхүүн</Link> */}
       </div>
 
       {!user && (

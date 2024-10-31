@@ -15,5 +15,5 @@ export const updateBook: MutationResolvers['updateBook'] = async (_, { _id, titl
     throw new Error('Book not found');
   }
 
-  return book;
+  return book as Book;
 };

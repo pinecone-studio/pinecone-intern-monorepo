@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type Product {
@@ -18,6 +18,6 @@ export const typeDefs = gql`
 
   type Query {
     getProducts(options: QueryOptions): [Product!]!
-    getProductById(_id: ID!): Product
+    getProductById(_id: ID!): Product!
   }
 `;

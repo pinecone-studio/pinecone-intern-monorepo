@@ -8,5 +8,5 @@ export const getBook: QueryResolvers['getBook'] = async (_, { _id }) => {
     throw new Error('Book not found');
   }
 
-  return book;
+  return book as Book;
 };
