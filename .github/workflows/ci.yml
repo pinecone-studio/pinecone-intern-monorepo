@@ -1,15 +1,20 @@
 name: CI
 on:
   pull_request:
-    types:
-      - 'labeled'
+    types: [labeled, synchronize, edited]
     branches:
       - main
+    paths-ignore:
+      - '.nxignore'
 
 permissions:
   id-token: write
   contents: read
   pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
