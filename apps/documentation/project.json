@@ -114,9 +114,6 @@
           "target": "clean"
         },
         {
-          "target": "get-secrets"
-        },
-        {
           "target": "export-env"
         }
       ]

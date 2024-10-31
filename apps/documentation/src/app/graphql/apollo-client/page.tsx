@@ -2,7 +2,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton, References } from '../../../components';
+import { References } from '../../../components';
 
 const references = [
   {
@@ -28,15 +28,13 @@ const Page = () => {
           height="315"
           src="https://www.youtube.com/embed/GcER4OvG9j0?si=Q4pyKgqADMhYLn9J"
           title="YouTube video player"
-          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         ></iframe>
       </Stack>
-      
+
       <References items={references} />
-      <NextPageButton label="Codegen" path="/graphql/codegen" />
     </Stack>
   );
 };

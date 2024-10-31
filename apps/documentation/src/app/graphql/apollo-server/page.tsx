@@ -2,7 +2,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton, References } from '../../../components';
+import { References } from '../../../components';
 
 const references = [
   {
@@ -43,8 +43,6 @@ const Page = () => {
       </Stack>
 
       <References items={references} />
-
-      <NextPageButton label="Apollo Client" path="/graphql/apollo-client" />
     </Stack>
   );
 };

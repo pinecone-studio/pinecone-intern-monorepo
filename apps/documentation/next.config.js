@@ -10,6 +10,9 @@ const nextConfig = {
   nx: {
     svgr: false,
   },
+  env: {
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+  },
 };
 
 const plugins = [withNx];

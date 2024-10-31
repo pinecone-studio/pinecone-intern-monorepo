@@ -2,7 +2,6 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton } from '../../../components';
 
 const Page = () => {
   return (
@@ -21,8 +20,6 @@ const Page = () => {
           allowFullScreen
         />
       </Stack>
-
-      <NextPageButton label="Pull Request Merge" path="/pull-request/pull-request-merge" />
     </Stack>
   );
 };
