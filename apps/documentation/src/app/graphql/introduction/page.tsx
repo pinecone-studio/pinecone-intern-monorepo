@@ -2,7 +2,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton, References } from '../../../components';
+import { References } from '../../../components';
 
 const references = [
   {
@@ -49,7 +49,6 @@ const Page = () => {
           height="315"
           src="https://www.youtube.com/embed/3HBdtwg4cmc?si=PE3hVlRIlKwTurNZ"
           title="YouTube video player"
-          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
@@ -57,8 +56,6 @@ const Page = () => {
       </Stack>
 
       <References items={references} />
-
-      <NextPageButton label="Apollo Server" path="/graphql/apollo-server" />
     </Stack>
   );
 };

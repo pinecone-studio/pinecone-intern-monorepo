@@ -36,6 +36,19 @@
         }
       }
     },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/secret-manager", "rm -rf .vercel"]
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/secret-manager/.env | xargs)"],
+        "parallel": false
+      }
+    },
     "export": {
       "executor": "@nx/next:export",
       "options": {
@@ -57,6 +70,25 @@
         "codeCoverage": true,
         "passWithNoTests": true
       }
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_4UQNppZDJmC4XNfaofx3fTEqNJMy -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_4UQNppZDJmC4XNfaofx3fTEqNJMy -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
     }
   },
   "tags": []
