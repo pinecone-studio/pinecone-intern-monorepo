@@ -7,7 +7,10 @@ const Page = () => {
   return (
     <Stack>
       <Typography variant="h4" fontWeight="bold">
-        Run Example Frontend and Backend Project with Install node_modules
+        Install node_modules
+      </Typography>
+      <Typography variant="h4" fontWeight="bold">
+        Run Example Frontend and Backend Project
       </Typography>
       <Stack my={2}>
         <iframe
