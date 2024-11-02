@@ -17,10 +17,7 @@ export const SECTIONS: Section[] = [
   },
   {
     title: 'Github Project',
-    items: [
-      { title: 'Github project', path: '/github=project-and-issue/github-project' },
-      { title: 'Github project Issue', path: '/github=project-and-issue/github-issue' },
-    ],
+    items: [{ title: 'Github project Issue', path: '/github-project-and-issue/project-issue' }],
   },
   {
     title: 'Github Repository Setup',

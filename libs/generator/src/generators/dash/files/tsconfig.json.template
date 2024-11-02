@@ -1,6 +1,7 @@
 {
   "extends": "<%= parentDirs %>/tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
@@ -16,6 +17,11 @@
         "name": "next"
       }
     ],
+      "paths": {
+      "@/components/ui/*": ["<%= parentDirs %>/libs/shadcn/src/lib/ui/*"],
+      "@/*": ["src/*"],
+      
+    },
     "types": ["jest", "node"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "<%= parentDirs %>/<%= directory %>/.next/types/**/*.ts", "<%= parentDirs %>/dist/a<%= directory %>/.next/types/**/*.ts", "next-env.d.ts"],

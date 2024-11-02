@@ -11,7 +11,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/example/frontend/pages"]
+        "@next/next/no-html-link-for-pages": ["error", "<%= directory %>/pages"]
       }
     },
     {
@@ -27,6 +27,10 @@
       "env": {
         "jest": true
       }
+    },
+    {
+      "files": ["*.cy.{ts,js,tsx,jsx}", "cypress/**/*.{ts,js,tsx,jsx}"],
+      "rules": {}
     }
   ]
 }
