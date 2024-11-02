@@ -1,6 +1,7 @@
 'use client';
 
 import { Product } from '@/generated';
+import { PiHeartStraightFill } from 'react-icons/pi'
 import Image from 'next/image';
 
 export const SaveProductCard = ({ _id, price, name, images }: Product) => {
@@ -18,7 +19,7 @@ export const SaveProductCard = ({ _id, price, name, images }: Product) => {
                     <button className='bg-blue-600 px-3 py-1 text-white rounded-full text-sm'>Сагслах</button>
                 </div>
                 <button className='min-w-10 h-10 flex justify-center items-center'>
-                    {/* <PiHeartStraightFill onClick={handleRemoveSave} className='w-6 h-6' /> */}
+                    <PiHeartStraightFill className='w-6 h-6' />
                 </button>
             </div>
         </div>
