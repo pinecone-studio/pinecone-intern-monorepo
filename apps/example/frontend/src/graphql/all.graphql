@@ -166,3 +166,7 @@ mutation RequestChangePassword($input: RequestChangePasswordInput!) {
 mutation ChangePassword($input: ChangePasswordInput!) {
   changePassword(input: $input)
 }
+
+mutation ToggleSaveProduct($input: ID!) {
+  toggleSaveProduct(productId: $input)
+}
