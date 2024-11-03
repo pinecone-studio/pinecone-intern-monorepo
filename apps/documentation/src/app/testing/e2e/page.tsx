@@ -32,10 +32,21 @@ const Page = () => {
       </Typography>
 
       <Stack my={3}>
+        <Typography>Part 1 </Typography>
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/r8d_i9F4M9I?si=CgBEnODmQQXn4CU2"
+          src="https://www.youtube.com/embed/NtGEk8cUr2g?si=uYuTDLrxKs5jdqbB"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+        <Typography>Part 2 </Typography>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/ynFQSMGUib0?si=CpDXHSjun9HP9Uik"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
