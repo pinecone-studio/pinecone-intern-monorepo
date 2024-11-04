@@ -32,26 +32,15 @@ const Page = () => {
       </Typography>
 
       <Stack my={3}>
-        <Typography>Part 1 </Typography>
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/NtGEk8cUr2g?si=uYuTDLrxKs5jdqbB"
+          src="https://www.youtube.com/embed/X8gXJIPD_wY?si=RLsA0fEZH-5dwu_R"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-        />
-        <Typography>Part 2 </Typography>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/ynFQSMGUib0?si=CpDXHSjun9HP9Uik"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        />
+        ></iframe>
       </Stack>
 
       <Typography variant="h6" fontWeight="bold">
