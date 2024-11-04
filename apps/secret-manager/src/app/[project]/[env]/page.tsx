@@ -128,7 +128,7 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-4">
       {editables.map((secret, index) => (
-        <div key={secret.key} className="flex items-center gap-4">
+        <div key={index} className="flex items-center gap-4">
           <Input className="flex-[1]" placeholder="Key" value={secret.key} onChange={handleKeyChange(index)} />
           <Input className="flex-[2]" placeholder="Value" value={secret.value} onChange={handleValueChange(index)} />
           <Button variant="outline" onClick={confirmDeleteSecret(index)}>
