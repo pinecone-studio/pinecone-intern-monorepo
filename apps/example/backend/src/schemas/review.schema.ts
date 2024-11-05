@@ -7,8 +7,8 @@ export const typeDefs = gql`
     product: Product!
     rating: Int!
     comment: String!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   type Query {

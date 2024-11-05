@@ -1,4 +1,4 @@
-import { Schema, Types, model, models } from 'mongoose';
+import { Model, Schema, Types, model, models } from 'mongoose';
 import { UserType } from './user.model';
 import { ProductPopulatedType } from './product.model';
 
@@ -50,4 +50,4 @@ export type ReviewPopulatedType = ReviewType & {
   product: ProductPopulatedType;
 };
 
-export const reviewModel = models['review'] || model('review', reviewSchema);
+export const reviewModel: Model<ReviewType> = models['review'] || model('review', reviewSchema);
