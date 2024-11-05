@@ -98,9 +98,6 @@
         }
       }
     },
-    "add-secrets": {
-      "executor": "@pinecone-intern-monorepo/secrets:add"
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
