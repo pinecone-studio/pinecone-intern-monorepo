@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 export type Book = {
   _id: string;
@@ -18,4 +18,4 @@ const BookSchema = new Schema<Book>({
   },
 });
 
-export const BookModel = model<Book>('Book', BookSchema);
+export const BookModel = models.Book || model<Book>('Book', BookSchema);

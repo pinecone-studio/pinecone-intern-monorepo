@@ -46,7 +46,7 @@ const productSchema = new Schema<ProductType>({
   },
 });
 
-export type ProductPopulatedType = ProductType & {
+export type ProductPopulatedType = Omit<ProductType, 'category'> & {
   category: CategoryType;
 };
 

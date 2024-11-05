@@ -2,7 +2,6 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton } from '../../../components';
 
 const Page = () => {
   return (
@@ -19,8 +18,6 @@ const Page = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         />
       </Stack> */}
-
-      <NextPageButton label="Create Pull Request" path="/pull-request/create-pull-request" />
     </Stack>
   );
 };

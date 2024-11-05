@@ -15,7 +15,6 @@ const Page = () => {
           height="315"
           src="https://www.youtube.com/embed/Xwm44Dxdumg?si=-BVn1LepF6DTCsTZ"
           title="YouTube video player"
-          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen

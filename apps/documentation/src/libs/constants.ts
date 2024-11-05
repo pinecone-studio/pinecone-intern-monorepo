@@ -13,11 +13,15 @@ export type SubSection = {
 export const SECTIONS: Section[] = [
   {
     title: 'NX Monorepo',
-    items: [
-      { title: 'Introduction', path: '/nx/introduction' },
-      // { title: 'Folder Structure', path: '/nx/folder-structure' },
-      // { title: 'Environments', path: '/nx/environments' },
-    ],
+    items: [{ title: 'Introduction', path: '/nx/introduction' }],
+  },
+  {
+    title: 'Github Project',
+    items: [{ title: 'Github project Issue', path: '/github-project-and-issue/project-issue' }],
+  },
+  {
+    title: 'Repository setup on Windows Guide',
+    items: [{ title: 'Repository setup on Windows Guide', path: '/repository-setup-on-windows/setup-on-windows' }],
   },
   {
     title: 'Github Repository Setup',
@@ -49,7 +53,6 @@ export const SECTIONS: Section[] = [
     items: [
       { title: 'Commit Push', path: '/pull-request/commit-push' },
       { title: 'Create Pull Request', path: '/pull-request/create-pull-request' },
-      { title: 'Pull Request Merge', path: '/pull-request/pull-request-merge' },
     ],
   },
 ];

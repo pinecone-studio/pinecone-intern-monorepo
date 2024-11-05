@@ -14,9 +14,13 @@
       "configurations": {
         "development": {
           "outputPath": "apps/example/frontend"
-        },
-        "production": {}
-      }
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -35,7 +39,13 @@
           "buildTarget": "example-frontend:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -69,7 +79,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config ./apps/example/frontend/codegen.ts"]
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:dev"
+        }
+      ]
     },
     "get-secrets:dev": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
@@ -112,6 +127,57 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["rm -rf dist/apps/example/frontend", "rm -rf .vercel"]
+      }
+    },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["npx nx cypress example-frontend"],
+        "parallel": false
+      },
+      "dependsOn": [{ "target": "cypress:clean" }]
+    },
+    "e2e:open": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["npx nx cypress example-frontend --watch"],
+        "parallel": false
+      },
+      "dependsOn": [{ "target": "cypress:clean" }]
+    },
+    "cypress:clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf apps/example/frontend/cypress/results", "rm -rf apps/example/frontend/.nyc_output", "rm -rf apps/example/frontend/.cy", "rm -rf apps/example/frontend/coverage"],
+        "parallel": false
+      }
+    },
+    "cypress": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/example/frontend/cypress.config.ts",
+        "testingType": "e2e",
+        "reporter": "mochawesome",
+        "devServerTarget": "example-frontend:serve:development",
+        "browser": "chrome"
+      },
+      "dependsOn": [
+        {
+          "target": "cypress-generate-all-page-json"
+        },
+        {
+          "target": "get-secrets"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    },
+    "cypress-generate-all-page-json": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["npx ts-node apps/example/frontend/cypress/utils/get-all-pages.ts"],
+        "parallel": false
       }
     },
     "preview": {

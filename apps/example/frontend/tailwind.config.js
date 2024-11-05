@@ -5,7 +5,7 @@ const { join } = require('path');
 
 module.exports = {
   darkMode: 'class',
-  content: [join(__dirname, 'src/**/*.{ts,tsx}'), '../../libs/shadcn/src/lib/ui/*.{ts,tsx}', ...createGlobPatternsForDependencies(__dirname)],
+  content: [join(__dirname, 'src/**/*.{ts,tsx}'), '../../../libs/shadcn/src/lib/ui/*.{ts,tsx}', ...createGlobPatternsForDependencies(__dirname)],
   theme: {
     extend: {
       colors: {

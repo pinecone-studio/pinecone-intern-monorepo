@@ -1,7 +1,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { NextPageButton, References } from '../../../components';
+import { References } from '../../../components';
 
 const references = [
   {
@@ -23,8 +23,6 @@ const Page = () => {
       </Typography>
 
       <References items={references} />
-
-      <NextPageButton label="Unit testing" path="/testing/unit" />
     </Stack>
   );
 };

@@ -6,5 +6,5 @@ export const getProductById: QueryResolvers['getProductById'] = async (_, { _id 
 
   if (!product) throw new Error('Product not found');
 
-  return product;
+  return product as ProductPopulatedType;
 };

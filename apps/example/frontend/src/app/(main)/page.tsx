@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductsGrid } from '../../components';
 
 const Home = () => {
