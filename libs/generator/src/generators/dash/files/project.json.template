@@ -43,9 +43,18 @@
       },
       "dependsOn": [
         {
+          "target": "get-secrets:dev",
+          "params": "forward"
+        },
+
+        {
           "target": "codegen",
           "params": "forward"
-        }
+        },
+        {
+          "target": "export-env",
+          "params": "forward"
+        },
       ]
     },
     "export": {
