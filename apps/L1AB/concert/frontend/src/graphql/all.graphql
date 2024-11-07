@@ -1,0 +1,40 @@
+query GetAllTasks {
+  getAllTasks {
+    _id
+    taskName
+    isDone
+    priority
+    createdAt
+    updatedAt
+  }
+}
+query GetDoneTasksLists {
+  getDoneTasksLists {
+    _id
+    taskName
+    isDone
+    priority
+    createdAt
+    updatedAt
+  }
+}
+mutation AddTask($taskName: String!, $priority: Int!) {
+  addTask(taskName: $taskName, priority: $priority) {
+    _id
+    taskName
+    isDone
+    priority
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateTask($taskId: ID!, $taskName: String, $priority: Int, $isDone: Boolean) {
+  updateTask(taskId: $taskId, taskName: $taskName, priority: $priority, isDone: $isDone) {
+    _id
+    taskName
+    isDone
+    priority
+    createdAt
+    updatedAt
+  }
+}
