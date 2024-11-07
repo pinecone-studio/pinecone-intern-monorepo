@@ -12,6 +12,13 @@ export const typeDefs = gql`
     updatedAt: Date!
   }
 
+  type SearchProduct {
+    _id: ID!
+    name: String!
+    price: Int!
+    images: [String!]!
+  }
+
   input QueryOptions {
     filter: JSON
   }
@@ -19,5 +26,6 @@ export const typeDefs = gql`
   type Query {
     getProducts(options: QueryOptions): [Product!]!
     getProductById(_id: ID!): Product!
+    getProductsBySearch(searchValue: String!): [SearchProduct!]!
   }
 `;

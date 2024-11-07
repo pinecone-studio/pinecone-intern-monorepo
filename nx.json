@@ -97,5 +97,6 @@
     "@nx/workspace:move": {
       "projectNameAndRootFormat": "as-provided"
     }
-  }
+  },
+  "nxCloudAccessToken": "NzU3ODBiNTQtMTgwNy00MWIxLWFiODItZTBmNjBiM2ZiZTk0fHJlYWQtd3JpdGU="
 }
