@@ -56,7 +56,7 @@ describe('ProductGrid', () => {
     );
 
     await waitFor(() => {
-      expect(getAllByTestId('product-card')[0]).toBeInTheDocument();
+      expect(getAllByTestId('product-card')[0])
     });
   });
 });

@@ -38,7 +38,7 @@
         "production": {
           "buildTarget": "example-frontend:build:production",
           "dev": false
-        }
+        } 
       },
       "dependsOn": [
         {

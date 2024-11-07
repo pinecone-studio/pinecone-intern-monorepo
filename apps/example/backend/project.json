@@ -42,10 +42,13 @@
       },
       "dependsOn": [
         {
-          "target": "get-secrets:testing"
+          "target": "get-secrets:dev"
         },
         {
           "target": "export-env"
+        },
+        {
+          "target": "codegen"
         }
       ]
     },

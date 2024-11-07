@@ -6,7 +6,6 @@ import Image from 'next/image';
 
 export const ProductsGrid = () => {
   const { data } = useGetProductsQuery();
-
   const firstProduct = data?.getProducts[0];
 
   return (
