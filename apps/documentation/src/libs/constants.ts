@@ -24,12 +24,17 @@ export const SECTIONS: Section[] = [
     items: [{ title: 'Repository setup on Windows Guide', path: '/repository-setup-on-windows/setup-on-windows' }],
   },
   {
+    title: 'Repository setup on IOS',
+    items: [{ title: 'Repository setup on IOS', path: '/repository-setup-on-ios' }],
+  },
+  {
     title: 'Github Repository Setup',
     items: [
       { title: 'SSH setup', path: '/github-repository-setup/ssh-setup' },
       { title: 'Github Repository Clone', path: '/github-repository-setup/repository-clone' },
       { title: 'Get Secrets', path: '/github-repository-setup/get-secrets' },
       { title: 'Run Project', path: '/github-repository-setup/run-project' },
+      { title: 'Add secrets', path: '/github-repository-setup/add-secrets' },
     ],
   },
   {
