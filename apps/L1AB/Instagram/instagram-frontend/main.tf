@@ -14,20 +14,6 @@ resource "vercel_project" "instagram-frontend" {
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "instagram-frontend" {
-  name             = "instagram-frontend"
-  build_command    = "nx build --skip-nx-cache instagram-frontend"
-  output_directory = "./dist/apps/L1AB/Instagram/instagram-frontend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "instagram-frontend" {
-  name             = "instagram-frontend"
-  build_command    = "nx build --skip-nx-cache instagram-frontend"
-  output_directory = "./dist/apps/L1AB/Instagram/instagram-frontend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
 
 variable "VERCEL_TOKEN" {
   type        = string
