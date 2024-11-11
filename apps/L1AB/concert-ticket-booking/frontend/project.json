@@ -95,7 +95,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["ticket-frontend"],
+          "groups": ["concert-ticket-booking"],
           "env": "dev"
         }
       }
@@ -105,7 +105,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["ticket-frontend"],
+          "groups": ["concert-ticket-booking"],
           "env": "test"
         }
       }
@@ -115,7 +115,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["ticket-frontend"],
+          "groups": ["concert-ticket-booking"],
           "env": "prod"
         }
       }
