@@ -2,17 +2,17 @@ import { model, models, Schema, Types } from 'mongoose';
 
 export type BookingType = {
   _id: string;
-  user_id: Types.ObjectId;
-  event_id: Types.ObjectId;
+  userId: Types.ObjectId;
+  eventId: Types.ObjectId;
 };
 
 const BookingSchema = new Schema({
-  user_id: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
-  event_id: {
+  eventId: {
     type: Schema.Types.ObjectId,
     ref: 'event',
     required: true,
