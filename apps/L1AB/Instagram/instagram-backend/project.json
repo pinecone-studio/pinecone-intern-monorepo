@@ -61,7 +61,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["instagram-backend"],
+          "groups": ["Instagram"],
           "env": "dev"
         }
       }
@@ -71,7 +71,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["instagram-backend"],
+          "groups": ["Instagram"],
           "env": "test"
         }
       }
@@ -81,7 +81,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["instagram-backend"],
+          "groups": ["Instagram"],
           "env": "prod"
         }
       }
