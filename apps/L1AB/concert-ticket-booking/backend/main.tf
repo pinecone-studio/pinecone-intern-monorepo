@@ -7,22 +7,16 @@ terraform {
   }
 }
 
-resource "vercel_project" "backend" {
-  name             = "backend"
+resource "vercel_project" "concert_ticket_service_prod" {
+  name             = "concert-ticket-service-prod"
   build_command    = "nx build --skip-nx-cache backend"
   output_directory = "./dist/apps/L1AB/concert-ticket-booking/backend/.next"
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "backend" {
-  name             = "backend"
-  build_command    = "nx build --skip-nx-cache backend"
-  output_directory = "./dist/apps/L1AB/concert-ticket-booking/backend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "backend" {
-  name             = "backend"
+
+resource "vercel_project" "concert_ticket_service_testing" {
+  name             = "concert-ticket-service-testing"
   build_command    = "nx build --skip-nx-cache backend"
   output_directory = "./dist/apps/L1AB/concert-ticket-booking/backend/.next"
   framework        = "nextjs"
