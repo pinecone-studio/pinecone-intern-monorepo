@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose';
+import { model, models, Schema, Types } from 'mongoose';
 
 export type UserType = {
   _id: string;
@@ -6,6 +6,7 @@ export type UserType = {
   phone: string;
   role: string;
   password: string;
+  venues: [Types.ObjectId];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -23,6 +24,13 @@ const UserSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  venues: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'venues',
+      required: true,
+    },
+  ],
   phone: {
     type: String,
     required: true,

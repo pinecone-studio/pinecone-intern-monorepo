@@ -7,6 +7,7 @@ export const typeDefs = gql`
     password: String!
     phone: String!
     role: String
+    venues: [Venue!]!
     createdAt: Date!
     updatedAt: Date!
   }

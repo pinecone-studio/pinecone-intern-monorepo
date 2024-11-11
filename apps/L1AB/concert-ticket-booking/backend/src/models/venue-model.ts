@@ -2,13 +2,22 @@ import { model, models, Schema } from 'mongoose';
 
 export type VenuesType = {
   _id: string;
-  name: string;
+  name: {
+    nameType: string;
+    quantity: number;
+  }[];
   price: number;
-  additional: [string];
+  additional: string[];
 };
+
 const VenueSchema = new Schema({
   name: {
-    type: String,
+    type: [
+      {
+        nameType: { type: String, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
     required: true,
   },
   price: {

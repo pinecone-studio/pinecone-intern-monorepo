@@ -4,9 +4,11 @@ export const typeDefs = gql`
   type Event {
     _id: ID!
     name: String!
+    artistName: [String!]!
     description: String!
     startTime: Date!
     endTime: Date!
-    venues: Venue!
+    images: [String!]!
+    venues: [Venue!]!
   }
 `;
