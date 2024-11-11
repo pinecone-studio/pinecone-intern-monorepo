@@ -17,3 +17,4 @@ export const authorTypeDefs = gql`
     deleteAuthor(_id: ID!): Author!
   }
 `;
+ 
