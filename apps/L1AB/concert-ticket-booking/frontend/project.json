@@ -13,12 +13,12 @@
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/L1AB/concert-ticket-booking/frontend"
+          "outputPath": "dist/apps/L1AB/concert-ticket-booking/frontend"
         }
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:testing",
           "params": "forward"
         }
       ]
@@ -43,12 +43,7 @@
       },
       "dependsOn": [
         {
-          "target": "get-secrets:dev",
-          "params": "forward"
-        },
-
-        {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         },
         {
@@ -73,23 +68,42 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:testing",
           "params": "forward"
         }
       ]
     },
-
-    "codegen": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/L1AB/concert-ticket-booking/frontend/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "codegen:dev": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config ./apps/L1AB/concert-ticket-booking/frontend/codegen.ts"]
       },
-      "dependsOn": [
-        {
-          "target": "get-secrets:dev"
-        }
-      ]
+      "dependsOn": [{ "target": "get-secrets:dev" }]
     },
+
+    "codegen:testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./apps/L1AB/concert-ticket-booking/frontend/codegen.ts"]
+      },
+      "dependsOn": [{ "target": "get-secrets:testing" }]
+    },
+
+    "codegen:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./apps/L1AB/concert-ticket-booking/frontend/codegen.ts"]
+      },
+      "dependsOn": [{ "target": "get-secrets:prod" }]
+    },
+
     "get-secrets:dev": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
       "defaultConfiguration": "development",
@@ -110,6 +124,7 @@
         }
       }
     },
+
     "get-secrets:prod": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
       "defaultConfiguration": "prod",
@@ -175,7 +190,7 @@
           "target": "cypress-generate-all-page-json"
         },
         {
-          "target": "get-secrets"
+          "target": "get-secrets:testing"
         },
         {
           "target": "export-env"
@@ -193,9 +208,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LTozo89aM1qTtOhORKlgda1v9SYg -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/L1AB/concert-ticket-booking/frontend/.env vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LTozo89aM1qTtOhORKlgda1v9SYg -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -204,57 +219,21 @@
           "target": "clean"
         },
         {
-          "target": "get-secrets:testing"
-        },
-        {
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:testing",
           "params": "forward"
         }
       ]
-    },
-    "deploy-dev": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
-          "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
-        ],
-        "parallel": false
-      },
-      "dependsOn": [
-        {
-          "target": "clean"
-        },
-        {
-          "target": "get-secrets:dev"
-        },
-        {
-          "target": "export-env"
-        },
-        {
-          "target": "codegen",
-          "params": "forward"
-        }
-      ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/L1AB/concert-ticket-booking/frontend/**/*.{ts,tsx,js,jsx}"]
-      }
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LTozo89aM1qTtOhORKlgda1v9SYg -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID= -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LTozo89aM1qTtOhORKlgda1v9SYg -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
@@ -263,13 +242,10 @@
           "target": "clean"
         },
         {
-          "target": "get-secrets:prod"
-        },
-        {
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:prod",
           "params": "forward"
         }
       ]
