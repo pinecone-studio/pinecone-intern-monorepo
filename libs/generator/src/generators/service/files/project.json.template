@@ -9,11 +9,11 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "<%= directory %>"
+        "outputPath": "dist/<%= directory %>"
       },
       "configurations": {
         "development": {
-          "outputPath": "<%= directory %>"
+          "outputPath": "dist/<%= directory %>"
         }
       },
       "dependsOn": [
