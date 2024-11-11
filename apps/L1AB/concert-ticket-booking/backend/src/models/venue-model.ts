@@ -1,6 +1,6 @@
 import { model, models, Schema } from 'mongoose';
 
-export type Venuesype = {
+export type VenuesType = {
   _id: string;
   name: string;
   price: number;
