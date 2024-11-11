@@ -1,0 +1,19 @@
+{
+  "name": "instagram-backend",
+  "version": "0.0.1",
+  "dependencies": {
+    "@apollo/server": "4.11.0",
+    "@as-integrations/next": "3.1.0",
+    "@graphql-tools/merge": "9.0.0",
+    "graphql": "16.6.0",
+    "graphql-tag": "2.12.6",
+    "mongoose": "8.2.2",
+    "next": "14.2.14",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.3.2"
+  },
+  "scripts": {
+    "start": "next start"
+  }
+}
