@@ -8,6 +8,8 @@ import { setContext } from '@apollo/client/link/context';
 const uri = process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql';
 
 const makeClient = () => {
+  console.log(uri, 'uriuriuriuri');
+
   const httpLink = new HttpLink({
     uri,
     fetchOptions: { cache: 'no-store' },

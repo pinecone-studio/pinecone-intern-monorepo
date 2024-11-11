@@ -6,7 +6,6 @@ terraform {
     }
   }
 }
-
 resource "vercel_project" "hotel-booking-frontend" {
   name             = "hotel-booking-frontend"
   build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
@@ -14,21 +13,6 @@ resource "vercel_project" "hotel-booking-frontend" {
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "hotel-booking-frontend" {
-  name             = "hotel-booking-frontend"
-  build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
-  output_directory = "./dist/apps/L1AB/hotel-booking/frontend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "hotel-booking-frontend" {
-  name             = "hotel-booking-frontend"
-  build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
-  output_directory = "./dist/apps/L1AB/hotel-booking/frontend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-
 variable "VERCEL_TOKEN" {
   type        = string
   description = "Optionally say something about this variable"
