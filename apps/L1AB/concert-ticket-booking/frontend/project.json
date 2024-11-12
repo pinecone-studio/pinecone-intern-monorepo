@@ -183,7 +183,7 @@
         "testingType": "e2e",
         "reporter": "mochawesome",
         "devServerTarget": "ticket-frontend:serve:development",
-        "browser": "chrome"
+        "browser": "electron"
       },
       "dependsOn": [
         {
