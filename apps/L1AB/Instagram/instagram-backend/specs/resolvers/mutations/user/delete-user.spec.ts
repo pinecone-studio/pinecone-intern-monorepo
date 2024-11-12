@@ -1,8 +1,8 @@
+import { deleteUser } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import { deleteUser } from '../../../../src/resolvers/mutations/user';
 
 jest.mock('../../../../src/models', () => ({
-  UserModel: {
+  userModel: {
     findByIdAndDelete: jest
       .fn()
       .mockReturnValueOnce({
