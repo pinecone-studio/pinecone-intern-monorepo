@@ -1,5 +1,5 @@
+import { deleteUser } from 'apps/L1AB/Instagram/instagram-backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import { deleteUser } from '../../../../src/resolvers/mutations/user';
 
 jest.mock('../../../../src/models', () => ({
   userModel: {
