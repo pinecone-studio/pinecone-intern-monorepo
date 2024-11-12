@@ -3,6 +3,8 @@ import { Schema, model, models } from 'mongoose';
 export type UserType = {
   _id: string;
   username: string;
+  fullname: string;
+  gender: string;
   email: string;
   password: string;
   profilePicture: string[];
@@ -17,6 +19,15 @@ const UserSchema = new Schema<UserType>({
     type: String,
     required: true,
     default: 'no name',
+  },
+  fullname: {
+    type: String,
+    required: false,
+  },
+  gender: {
+    type: String,
+    required: false,
+    enum: ['male', 'female', 'prefet not to say'],
   },
   email: {
     type: String,

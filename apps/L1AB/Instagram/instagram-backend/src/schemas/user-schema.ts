@@ -6,6 +6,7 @@ export const typeDefs = gql`
     email: String!
     username: String!
     fullname: String!
+    gender: String!
     password: String!
     profilePicture: String!
     bio: String!
