@@ -12,4 +12,18 @@ export const typeDefs = gql`
     quantity: Int!
     price: Int!
   }
+
+  input VenueInput {
+    nameType: String!
+    quantity: Int!
+    price: Int!
+  }
+
+  type Query {
+    getVenues: [Venue!]!
+  }
+
+  type Mutation {
+    createVenue(name: [VenueInput!]!, additional: [String!]!): Venue!
+  }
 `;
