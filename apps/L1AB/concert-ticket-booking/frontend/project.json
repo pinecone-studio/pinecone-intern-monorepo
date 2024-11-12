@@ -145,7 +145,7 @@
     "clean": {
       "executor": "nx:run-commands",
       "options": {
-        "comman ds": ["rm -rf dist/apps/L1AB/concert-ticket-booking/frontend", "rm -rf .vercel"]
+        "commands": ["rm -rf dist/apps/L1AB/concert-ticket-booking/frontend", "rm -rf .vercel"]
       }
     },
     "e2e": {
@@ -183,7 +183,7 @@
         "testingType": "e2e",
         "reporter": "mochawesome",
         "devServerTarget": "ticket-frontend:serve:development",
-        "browser": "electron"
+        "browser": "chrome"
       },
       "dependsOn": [
         {
