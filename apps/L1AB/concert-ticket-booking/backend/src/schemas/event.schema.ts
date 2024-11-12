@@ -12,4 +12,7 @@ export const typeDefs = gql`
     venues: [Venue!]!
     discount: Int!
   }
+  type Query {
+    getAllEvents: [Event!]!
+  }
 `;
