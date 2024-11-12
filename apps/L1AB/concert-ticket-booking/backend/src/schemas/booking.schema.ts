@@ -5,5 +5,8 @@ export const typeDefs = gql`
     _id: ID!
     userId: User!
     eventId: Event!
+    venues: [Venue!]!
+    phone: String!
+    email: String!
   }
 `;

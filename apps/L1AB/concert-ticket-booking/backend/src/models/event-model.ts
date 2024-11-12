@@ -1,14 +1,18 @@
 import { model, models, Schema, Types } from 'mongoose';
+import { VenuesType } from './venue-model';
 
 export type EventType = {
   _id: string;
   name: string;
   artistName: [string];
   description: string;
-  startTime: Date;
-  endTime: Date;
+  eventDate: Date;
+  eventTime: Date;
   images: [string];
   venues: [Types.ObjectId];
+  discount: number;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const EventSchema = new Schema({
@@ -28,12 +32,16 @@ const EventSchema = new Schema({
     type: String,
     required: true,
   },
-  startTime: {
+  eventDate: {
     type: Date,
     required: false,
   },
-  endTime: {
+  eventTime: {
     type: Date,
+    required: true,
+  },
+  discount: {
+    type: Number,
     required: false,
   },
   venues: [
@@ -54,5 +62,9 @@ const EventSchema = new Schema({
     default: Date.now,
   },
 });
+
+export type EventPopulatedType = EventType & {
+  venues: VenuesType;
+};
 
 export const EventModel = models['event'] || model('event', EventSchema);

@@ -6,9 +6,10 @@ export const typeDefs = gql`
     name: String!
     artistName: [String!]!
     description: String!
-    startTime: Date!
-    endTime: Date!
+    eventDate: Date!
+    eventTime: Date!
     images: [String!]!
     venues: [Venue!]!
+    discount: Int!
   }
 `;

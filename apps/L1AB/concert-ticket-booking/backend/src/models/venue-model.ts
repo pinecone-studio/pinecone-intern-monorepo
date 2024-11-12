@@ -5,23 +5,21 @@ export type VenuesType = {
   name: {
     nameType: string;
     quantity: number;
+    price: number;
   }[];
-  price: number;
   additional: string[];
+  createdAt: Date;
+  updatedAt: Date;
 };
-
 const VenueSchema = new Schema({
   name: {
     type: [
       {
         nameType: { type: String, required: true },
         quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
       },
     ],
-    required: true,
-  },
-  price: {
-    type: Number,
     required: true,
   },
   additional: {
