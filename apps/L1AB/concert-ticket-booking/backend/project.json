@@ -27,16 +27,16 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "backend:build",
+        "buildTarget": "ticket-backend:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "backend:build:development",
+          "buildTarget": "ticket-backend:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "backend:build:production",
+          "buildTarget": "ticket-backend:build:production",
           "dev": false
         }
       }
@@ -95,7 +95,7 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "backend:build:production"
+        "buildTarget": "ticket-backend:build:production"
       }
     },
     "export-env": {
