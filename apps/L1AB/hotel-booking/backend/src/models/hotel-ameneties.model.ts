@@ -1,18 +1,18 @@
-import mongoose, {Schema, model} from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 
 const hotelAmenitiesSchema = new Schema({
 
-    hotel_id:{
-        type:Schema.Types.ObjectId,
+    hotelId: {
+        type: Schema.Types.ObjectId,
         ref: "hotel",
         required: true,
     },
-    amenities:[{
+    amenities: [{
         type: Schema.Types.ObjectId,
-        ref:"amenity",
+        ref: "amenity",
         required: true,
     }],
 });
 
-export const hotelAmenitiesModel =mongoose.models.hotelAmenities || model("hotelAmenities", hotelAmenitiesSchema)
+export const hotelAmenitiesModel = mongoose.models.hotelAmenities || model("hotelAmenities", hotelAmenitiesSchema)
