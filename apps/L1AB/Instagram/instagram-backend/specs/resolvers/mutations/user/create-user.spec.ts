@@ -1,4 +1,4 @@
-import { createUser } from "apps/L1AB/Instagram/instagram-backend/src/resolvers/mutations"
+import { createUser } from "../../../../src/resolvers/mutations"
 import { GraphQLResolveInfo } from "graphql"
 
 const mock = {
