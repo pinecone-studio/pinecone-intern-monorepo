@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background-admin: 0 0% 100%;
+    --background-main: 0 100% 0%;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
@@ -43,7 +44,8 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    --background-admin: 240 10% 3.9%;
+    --background-main: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
     --card: 240 10% 3.9%;
@@ -84,12 +86,10 @@
   * {
     @apply border-border;
     font-family: 'Inter', sans-serif;
-    background-color: black;
   }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
-    background-color: black;
 
     .error {
       color: red;

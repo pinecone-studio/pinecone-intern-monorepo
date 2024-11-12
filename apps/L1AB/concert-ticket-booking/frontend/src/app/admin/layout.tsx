@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import './admin.css';
 import { ApolloWrapper } from '@/components/providers';
 
 export const metadata = {
@@ -10,8 +9,10 @@ export const metadata = {
 const AdminLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+      <body className="bg-white">
+        <ApolloWrapper>
+          <div>{children}</div>
+        </ApolloWrapper>
       </body>
     </html>
   );

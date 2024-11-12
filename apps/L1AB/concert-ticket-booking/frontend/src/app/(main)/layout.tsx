@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import './main.css';
 import { ApolloWrapper } from '@/components/providers';
 
 export const metadata = {
@@ -10,8 +9,10 @@ export const metadata = {
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+      <body className="bg-black">
+        <ApolloWrapper>
+          <div className="bg-background-main">{children}</div>
+        </ApolloWrapper>
       </body>
     </html>
   );
