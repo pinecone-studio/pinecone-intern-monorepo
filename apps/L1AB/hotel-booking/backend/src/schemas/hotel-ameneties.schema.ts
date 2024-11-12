@@ -1,14 +1,9 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Query {
-    getAllHotelsAmenities: [HotelAmenities!]!
-    getHotelAmenityById(id: ID!): HotelAmenities!
-  }
-
   type HotelAmenities {
     _id: ID!
-    hotel_id: ID!
+    hotel_id: Hotel!
     amenities: [Amenity!]!
   }
 
@@ -19,6 +14,11 @@ export const typeDefs = gql`
 
   input UpdateHotelAmenitiesInput {
     amenities: [ID!]
+  }
+
+  type Query {
+    getAllHotelsAmenities: [HotelAmenities!]!
+    getHotelAmenityById(id: ID!): HotelAmenities!
   }
 
   type Mutation {

@@ -1,13 +1,11 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  scalar Date
-
   enum RoomType {
     ONE
     TWO
   }
-  
+
   type Room {
     id: ID!
     name: String!
@@ -41,7 +39,7 @@ export const typeDefs = gql`
 
   type Query {
     getRooms: [Room!]
-    getRoomById(id: ID!): Room! 
+    getRoomById(id: ID!): Room!
   }
 
   type Mutation {
