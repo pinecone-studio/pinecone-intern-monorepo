@@ -30,6 +30,12 @@
         "buildTarget": "ticket-backend:build",
         "dev": true
       },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ],
       "configurations": {
         "development": {
           "buildTarget": "ticket-backend:build:development",
