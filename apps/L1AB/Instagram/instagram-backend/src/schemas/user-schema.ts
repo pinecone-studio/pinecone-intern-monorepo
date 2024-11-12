@@ -13,4 +13,7 @@ export const UserTypeDefs = gql`
     createdAt: Date!
     updatedAt: Date!
   }
+  type Mutation {
+    deleteUser(_id: ID): User!
+  }
 `;
