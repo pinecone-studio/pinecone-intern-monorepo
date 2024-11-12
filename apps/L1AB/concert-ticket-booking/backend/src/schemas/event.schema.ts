@@ -14,5 +14,6 @@ export const typeDefs = gql`
   }
   type Query {
     getAllEvents: [Event!]!
+    getEventById(_id: ID!): Event!
   }
 `;

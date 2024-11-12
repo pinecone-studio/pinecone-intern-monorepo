@@ -6,6 +6,7 @@ export const typeDefs = gql`
     email: String!
     username: String!
     fullname: String!
+    gender: String!
     password: String!
     profilePicture: String!
     bio: String!
@@ -13,7 +14,18 @@ export const typeDefs = gql`
     createdAt: Date!
     updatedAt: Date!
   }
+  type Query {
+    getAllUsers: [User!]!
+    getUserById(_id: ID!): User!
+  }
+  input RegisterInput {
+    fullname: String!
+    username: String!
+    email: String!
+    password: String!
+  }
   type Mutation {
     deleteUser(_id: ID): User!
+    createUser(input: RegisterInput!): User!
   }
 `;
