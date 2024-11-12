@@ -145,7 +145,7 @@
     "clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf dist/apps/L1AB/concert-ticket-booking/frontend", "rm -rf .vercel"]
+        "comman ds": ["rm -rf dist/apps/L1AB/concert-ticket-booking/frontend", "rm -rf .vercel"]
       }
     },
     "e2e": {
