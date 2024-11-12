@@ -13,6 +13,10 @@ export const typeDefs = gql`
     createdAt: Date!
     updatedAt: Date!
   }
+  type Query {
+    getAllUsers: [User!]!
+    getUserById(_id: ID!): User!
+  }
   type Mutation {
     deleteUser(_id: ID): User!
   }
