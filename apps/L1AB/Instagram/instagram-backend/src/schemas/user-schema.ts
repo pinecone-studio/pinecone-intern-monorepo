@@ -5,6 +5,7 @@ export const UserTypeDefs = gql`
     _id: ID!
     email: String!
     username: String!
+    fullname: String!
     password: String!
     profilePicture: String!
     bio: String!
