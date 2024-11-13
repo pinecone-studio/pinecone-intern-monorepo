@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { ApolloWrapper } from '@/components/providers';
+import { MainFooter } from '@/components/MainFooter';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -11,7 +12,10 @@ const MainLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body className="bg-black">
         <ApolloWrapper>
-          <div className="bg-background-main">{children}</div>
+          <div className="bg-background-main">
+            {children}
+            <MainFooter />
+          </div>
         </ApolloWrapper>
       </body>
     </html>
