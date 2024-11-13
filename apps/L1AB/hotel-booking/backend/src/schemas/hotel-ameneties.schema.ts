@@ -3,16 +3,17 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type HotelAmenities {
     _id: ID!
-    hotel_id: Hotel!
+    hotelId: Hotel!
     amenities: [Amenity!]!
   }
 
   input CreateHotelAmenitiesInput {
-    hotel_id: ID!
+    hotelId: ID!
     amenities: [ID!]!
   }
 
   input UpdateHotelAmenitiesInput {
+    _id: ID!
     amenities: [ID!]
   }
 
@@ -23,7 +24,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createHotelAmenities(input: CreateHotelAmenitiesInput): HotelAmenities!
-    updateHotelAmenities(_id: ID!, input: UpdateHotelAmenitiesInput): HotelAmenities!
+    updateHotelAmenities(input: UpdateHotelAmenitiesInput!): HotelAmenities!
     deleteHotelAmenities(_id: ID!): Response!
   }
 `;
