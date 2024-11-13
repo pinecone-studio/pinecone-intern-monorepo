@@ -1,6 +1,8 @@
 'use client';
 
-import { Container } from '@/components/providers';
+import { Container } from "@/components/Container";
+
+
 
 const Page = () => {
   return (
