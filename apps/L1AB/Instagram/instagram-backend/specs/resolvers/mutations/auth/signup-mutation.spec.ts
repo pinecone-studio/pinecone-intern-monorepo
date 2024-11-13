@@ -1,10 +1,9 @@
 import { signup } from '../../../../src/resolvers/mutations/auth/signup';
 import { userModel } from '../../../../src/models';
-import bcrypt from 'bcrypt';
 
 jest.mock('bcrypt', () => ({
-  genSalt: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8Kb9Lc0SiVJlOUTqgVpmL7RAgsBHxQNUWOvkKg5fDJR6'),
-  hash: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8Kb9Lc0SiVJlOUTqgVpmL7RAgsBHxQNUWOvkKg5fDJR6'),
+  genSalt: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8'),
+  hash: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8'),
 }));
 
 jest.mock('../../../../src/models', () => ({
@@ -28,7 +27,7 @@ describe('signup mutation', () => {
   it('should create a new user with valid input', async () => {
     const expectedUser = {
       ...mockUser,
-      password: '$2b$12$QSSxgLwQf8Kb9Lc0SiVJlOUTqgVpmL7RAgsBHxQNUWOvkKg5fDJR6',
+      password: '$2b$12$QSSxgLwQf8',
     };
 
     (userModel.create as jest.Mock).mockResolvedValueOnce(expectedUser);
@@ -71,7 +70,7 @@ describe('signup mutation', () => {
   it('should pass through all provided fields to userModel.create', async () => {
     const expectedUser = {
       ...mockUser,
-      password: '$2b$12$QSSxgLwQf8Kb9Lc0SiVJlOUTqgVpmL7RAgsBHxQNUWOvkKg5fDJR6',
+      password: '$2b$12$QSSxgLwQf8',
     };
 
     (userModel.create as jest.Mock).mockResolvedValueOnce(expectedUser);

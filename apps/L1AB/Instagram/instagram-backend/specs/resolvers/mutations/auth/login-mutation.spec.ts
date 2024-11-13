@@ -22,7 +22,7 @@ describe('login resolver', () => {
     _id: 'user123',
     username: 'testuser',
     email: 'test@example.com',
-    password: '$2a$12$yEjN2.JZ0xrdCvZZ/Drw.eZ03V7DRRYum7cZXbZVt1lZGOn.GST4S',
+    password: '$2a$12$yEjN2.JZ0xrdCvZZ/Drw',
   };
 
   const mockToken = 'mocked.jwt.token';
