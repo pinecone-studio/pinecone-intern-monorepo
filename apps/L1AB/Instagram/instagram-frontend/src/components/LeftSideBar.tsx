@@ -23,7 +23,7 @@ export const LeftSideBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-[260px]  h-screen pl-4 pt-8 pb-4 border-r">
+    <div className="w-[260px]  h-screen pl-4 pt-8 pb-4 border-r fixed l-0">
       <div className="h-full flex flex-col">
         <div className="space-y-12 flex flex-col ">
           <div className="w-[103px] h-[29px] relative">
