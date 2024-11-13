@@ -30,6 +30,12 @@
         "buildTarget": "hotel-booking-backend:build",
         "dev": true
       },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ],
       "configurations": {
         "development": {
           "buildTarget": "hotel-booking-backend:build:development",
