@@ -1,4 +1,4 @@
-import { Container } from '@/components/providers';
+import { Container } from '@/components';
 import { CancelComponent } from '@/components/providers/CancelComponent';
 
 const Page = () => {
