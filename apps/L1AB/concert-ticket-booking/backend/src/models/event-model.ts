@@ -1,5 +1,4 @@
-import { model, models, Schema, Types } from 'mongoose';
-import { VenuesType } from './venue-model';
+import { model, models, Schema } from 'mongoose';
 
 export type EventType = {
   _id: string;
@@ -9,7 +8,13 @@ export type EventType = {
   eventDate: Date;
   eventTime: Date;
   images: [string];
-  venues: [Types.ObjectId];
+  venues: [
+    {
+      name: string;
+      quantity: number;
+      price: number;
+    }
+  ];
   discount: number;
   createdAt: Date;
   updatedAt: Date;
@@ -46,9 +51,55 @@ const EventSchema = new Schema({
   },
   venues: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'venues',
-      required: true,
+      name: {
+        type: String,
+        required: true,
+        default: 'VIP',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+    },
+    {
+      name: {
+        type: String,
+        required: true,
+        default: 'Regular',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+    },
+    {
+      name: {
+        type: String,
+        required: true,
+        default: 'Fanzone',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
     },
   ],
   createdAt: {
@@ -62,10 +113,5 @@ const EventSchema = new Schema({
     default: Date.now,
   },
 });
-
-export type EventPopulatedType = EventType& {
-  venues: VenuesType[];
-};
-
 
 export const EventModel = models['event'] || model('event', EventSchema);
