@@ -39,7 +39,8 @@
           "buildTarget": "instagram-backend:build:production",
           "dev": false
         }
-      }
+      },
+      "dependsOn": [{ "target": "codegen" }, { "target": "get-secrets:dev" }, { "target": "clean" }]
     },
     "test": {
       "executor": "@nx/jest:jest",

@@ -1,7 +1,13 @@
 'use client';
 
+import { LeftSideBar } from '@/components/LeftSideBar';
+
 const Page = () => {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <LeftSideBar />
+    </div>
+  );
 };
 
 export default Page;
