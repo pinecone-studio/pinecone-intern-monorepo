@@ -26,7 +26,8 @@ const UserSchema = new Schema<UserType>({
   },
   gender: {
     type: String,
-    required: false,
+    required: true,
+    default: 'prefet not to say',
     enum: ['male', 'female', 'prefet not to say'],
   },
   email: {
@@ -40,6 +41,7 @@ const UserSchema = new Schema<UserType>({
   profilePicture: {
     type: [String],
     required: true,
+    default: ['no picture'],
   },
   bio: {
     type: String,
