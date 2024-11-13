@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { EventModel } from 'apps/L1AB/concert-ticket-booking/backend/src/models';
-import { createEvent } from 'apps/L1AB/concert-ticket-booking/backend/src/resolvers/mutations';
+import { EventModel } from '../../../../src/models';
+import { createEvent } from '../../../../src/resolvers/mutations';
 
 // Mock EventModel's create function
 jest.mock('apps/L1AB/concert-ticket-booking/backend/src/models', () => ({
