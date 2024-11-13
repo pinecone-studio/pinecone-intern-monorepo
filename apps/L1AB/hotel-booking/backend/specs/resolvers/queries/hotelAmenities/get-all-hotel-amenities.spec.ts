@@ -16,13 +16,11 @@ describe('get all hotel amenities', () => {
     expect(result).toEqual({ _id: '2', amenities: ['1', '2'] });
   });
 
-  it('should return error', async () => {
+  it('should throw an error', async () => {
     try {
       await getAllHotelAmenities!({}, {}, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to get all hotel amenities');
-      }
+      expect(error).toEqual(new Error('Failed to get all hotel amenities'));
     }
   });
 });

@@ -3,12 +3,12 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
   amenityModel: {
-    find: jest.fn().mockResolvedValueOnce({ name: 'test' }).mockRejectedValueOnce([]),
+    find: jest.fn().mockResolvedValueOnce({ name: 'test' }).mockRejectedValueOnce(""),
   },
 }));
 
 describe('getAllAmenities', () => {
-  it('should get all users', async () => {
+  it('should get all amenities', async () => {
     const res = await getAllAmenities!({}, {}, {}, {} as GraphQLResolveInfo);
 
     expect(res).toEqual({ name: 'test' });
@@ -18,7 +18,7 @@ describe('getAllAmenities', () => {
     try {
       await getAllAmenities!({}, {}, {}, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new Error('Error fetching all amenities'));
+      expect(error).toEqual(new Error('Failed to get all amenities'));
     }
   });
 });

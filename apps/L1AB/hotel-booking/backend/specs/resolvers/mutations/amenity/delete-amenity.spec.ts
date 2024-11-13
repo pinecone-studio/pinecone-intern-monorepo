@@ -8,7 +8,7 @@ jest.mock('../../../../src/models', () => ({
 }));
 
 describe('Delete amenity', () => {
-  it('should delete amenity', async () => {
+  it('should delete amenity successfully', async () => {
     const result = await deleteAmenity!({}, { _id: '1' }, {} as any, {} as GraphQLResolveInfo);
     expect(result).toEqual({ _id: '1' });
   });

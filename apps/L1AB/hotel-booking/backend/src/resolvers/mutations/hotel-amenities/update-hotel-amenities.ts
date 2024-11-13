@@ -3,8 +3,8 @@ import { hotelAmenitiesModel } from '../../../models';
 
 export const updateHotelAmenities: MutationResolvers['updateHotelAmenities'] = async (_: unknown, { input }) => {
   try {
-    const response = await hotelAmenitiesModel.findByIdAndUpdate(input._id, input, { new: true });
-    return response;
+    const updatedHotelAmenities = await hotelAmenitiesModel.findByIdAndUpdate(input._id, input, { new: true });
+    return updatedHotelAmenities;
   } catch (error) {
     throw new Error('Failed to update hotel amenities');
   }

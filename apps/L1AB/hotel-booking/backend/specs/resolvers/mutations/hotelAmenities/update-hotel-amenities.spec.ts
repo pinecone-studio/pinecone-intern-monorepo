@@ -26,9 +26,7 @@ describe('Update hotel amenities', () => {
     try {
       await updateHotelAmenities!({}, { input: { _id: '1', amenities: ['1', '2'] } }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to update hotel amenities');
-      }
+      expect(error).toEqual(new Error('Failed to update hotel amenities'));
     }
   });
 });

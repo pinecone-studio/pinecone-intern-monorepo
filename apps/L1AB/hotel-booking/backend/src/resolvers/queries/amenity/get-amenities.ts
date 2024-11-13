@@ -6,6 +6,6 @@ export const getAllAmenities: QueryResolvers['getAllAmenities'] = async () => {
     const amenities = await amenityModel.find();
     return amenities;
   } catch (error) {
-    throw new Error('Error fetching all amenities');
+    throw new Error('Failed to get all amenities');
   }
 };

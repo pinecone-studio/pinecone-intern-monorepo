@@ -45,9 +45,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addRoom(input: RoomInput): Room!
-    deleteRoom(_id:ID!): Room!
+    createRoom(input: RoomInput): Room!
+    deleteRoom(_id: ID!): Room!
     updateRoom(input: UpdateRoomInput!): Room!
   }
-
 `;

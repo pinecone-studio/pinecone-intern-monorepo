@@ -8,23 +8,26 @@ jest.mock('../../../../src/models', () => ({
       .mockResolvedValueOnce({
         name: 'test',
       })
+      .mockRejectedValueOnce({
+        code: 11000,
+        message: 'E11000 duplicate key error collection: hotel-booking-dev.amenities index: name_1 dup key: { name: "test" }',
+      })
       .mockRejectedValueOnce(new Error('Failed to create amenity')),
   },
 }));
+
 describe('Create amenity', () => {
-  it('should create a amenity successfully', async () => {
+  it('should create an amenity successfully', async () => {
     const mockInput = {
       name: 'test',
     };
-
     const result = await createAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
-
     expect(result).toEqual({
       name: 'test',
     });
   });
 
-  it('should return error when amenity creation fails', async () => {
+  it('should throw an error when duplicate amenity name is used', async () => {
     const mockInput = {
       name: 'test',
     };
@@ -32,9 +35,19 @@ describe('Create amenity', () => {
     try {
       await createAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to create amenity');
-      }
+      expect(error).toEqual(new Error('An amenity with the name "test" already exists.'));
+    }
+  });
+
+  it('should throw a generic error when amenity creation fails', async () => {
+    const mockInput = {
+      name: 'test',
+    };
+
+    try {
+      await createAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('Failed to create amenity'));
     }
   });
 });

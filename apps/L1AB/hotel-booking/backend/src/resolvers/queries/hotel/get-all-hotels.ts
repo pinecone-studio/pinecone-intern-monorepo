@@ -3,8 +3,8 @@ import { hotelModel } from '../../../models';
 
 export const getAllHotels: QueryResolvers['getAllHotels'] = async () => {
   try {
-    const response = await hotelModel.find();
-    return response;
+    const hotels = await hotelModel.find();
+    return hotels;
   } catch (error) {
     throw new Error('Failed to get all hotels');
   }

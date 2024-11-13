@@ -26,9 +26,7 @@ describe('Update room', () => {
     try {
       await updateRoom!({}, { input: { _id: '1', name: 'buudal' } }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to update room');
-      }
+      expect(error).toEqual(new Error('Failed to update room'));
     }
   });
 });

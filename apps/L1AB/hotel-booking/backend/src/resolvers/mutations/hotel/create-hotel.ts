@@ -3,8 +3,8 @@ import { hotelModel } from '../../../models';
 
 export const createHotel: MutationResolvers['createHotel'] = async (_: unknown, { input }) => {
   try {
-    const response = await hotelModel.create(input);
-    return response;
+    const hotel = await hotelModel.create(input);
+    return hotel;
   } catch (error) {
     throw new Error('Failed to create hotel');
   }
