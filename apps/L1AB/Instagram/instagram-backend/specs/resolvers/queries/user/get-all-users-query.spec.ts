@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getAllUsers } from '../../../src/resolvers/queries/get-all-users-query';
+import { getAllUsers } from '../../../../src/resolvers/queries';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   userModel: {
     find: jest.fn().mockResolvedValueOnce(['test']).mockReturnValueOnce([]),
   },

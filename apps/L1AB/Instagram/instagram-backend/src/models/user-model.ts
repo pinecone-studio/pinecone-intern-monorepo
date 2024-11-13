@@ -7,9 +7,9 @@ export type UserType = {
   gender: string;
   email: string;
   password: string;
-  profilePicture: string[];
+  profilePicture: string;
   bio: string;
-  isPrivave: boolean;
+  isPrivate: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -22,7 +22,7 @@ const UserSchema = new Schema<UserType>({
   },
   fullname: {
     type: String,
-    required: false,
+    required: true,
   },
   gender: {
     type: String,
@@ -39,15 +39,16 @@ const UserSchema = new Schema<UserType>({
     required: true,
   },
   profilePicture: {
-    type: [String],
+    type: String,
     required: true,
-    default: ['no picture'],
+    default: 'no picture',
   },
   bio: {
     type: String,
     required: false,
+    default: '',
   },
-  isPrivave: {
+  isPrivate: {
     type: Boolean,
     required: true,
     default: false,
