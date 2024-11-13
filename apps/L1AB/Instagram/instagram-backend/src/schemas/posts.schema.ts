@@ -15,6 +15,9 @@ export const typeDefs = gql`
     images: [String!]!
     caption: String!
   }
+  type Query {
+    getAllPosts: [Posts!]!
+  }
   type Mutation {
     createPost(input: CreatePostInput!): Posts!
   }
