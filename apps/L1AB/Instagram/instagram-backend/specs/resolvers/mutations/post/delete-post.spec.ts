@@ -1,4 +1,4 @@
-import { deletePost, deleteUser } from '../../../../src/resolvers/mutations';
+import { deletePost } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
