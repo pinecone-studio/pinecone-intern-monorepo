@@ -14,5 +14,6 @@ export const typeDefs = gql`
 
   type Mutation {
     deleteFollower(followerId: ID!, followeeId: ID!): Followers!
+    createFollowers(followerId: ID!, followeeId: ID!): Followers!
   }
 `;
