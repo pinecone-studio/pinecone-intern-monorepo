@@ -6,8 +6,8 @@ export type EventType = {
   name: string;
   artistName: [string];
   description: string;
-  eventDate: Date;
-  eventTime: Date;
+  eventDate: [string];
+  eventTime: [string];
   images: [string];
   venues: [Types.ObjectId];
   discount: number;
@@ -33,11 +33,11 @@ const EventSchema = new Schema({
     required: true,
   },
   eventDate: {
-    type: Date,
-    required: false,
+    type: [String],
+    required: true,
   },
   eventTime: {
-    type: Date,
+    type: [String],
     required: true,
   },
   discount: {
@@ -63,9 +63,8 @@ const EventSchema = new Schema({
   },
 });
 
-export type EventPopulatedType = EventType& {
+export type EventPopulatedType = EventType & {
   venues: VenuesType[];
 };
-
 
 export const EventModel = models['event'] || model('event', EventSchema);
