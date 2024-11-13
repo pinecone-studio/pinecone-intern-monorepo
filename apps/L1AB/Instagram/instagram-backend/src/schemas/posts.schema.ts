@@ -10,4 +10,12 @@ export const typeDefs = gql`
     createdAt: Date!
     updatedAt: Date!
   }
+  input CreatePostInput {
+    userId: ID!
+    images: [String!]!
+    caption: String!
+  }
+  type Mutation {
+    createPost(input: CreatePostInput!): Posts!
+  }
 `;
