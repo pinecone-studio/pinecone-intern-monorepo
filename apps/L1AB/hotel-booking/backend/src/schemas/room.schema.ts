@@ -7,7 +7,7 @@ export const typeDefs = gql`
   }
 
   type Room {
-    id: ID!
+    _id: ID!
     name: String!
     roomNumber: String!
     price: Int!
@@ -28,7 +28,7 @@ export const typeDefs = gql`
   }
 
   input UpdateRoomInput {
-    id: ID!
+    _id: ID!
     name: String!
     roomNumber: String!
     price: Int!
@@ -39,12 +39,12 @@ export const typeDefs = gql`
 
   type Query {
     getRooms: [Room!]
-    getRoomById(id: ID!): Room!
+    getRoomById(_id: ID!): Room!
   }
 
   type Mutation {
     addRoom(input: RoomInput): Room!
-    deleteRoom(id: ID!): Room!
+    deleteRoom(_id: ID!): Room!
     updateRoom(input: UpdateRoomInput): Room!
   }
 `;

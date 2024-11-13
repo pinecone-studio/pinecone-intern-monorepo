@@ -18,12 +18,12 @@ export const typeDefs = gql`
 
   type Query {
     getAllHotelsAmenities: [HotelAmenities!]!
-    getHotelAmenityById(id: ID!): HotelAmenities!
+    getHotelAmenityById(_id: ID!): HotelAmenities!
   }
 
   type Mutation {
     createHotelAmenities(input: CreateHotelAmenitiesInput): HotelAmenities!
-    updateHotelAmenities(id: ID!, input: UpdateHotelAmenitiesInput): HotelAmenities!
-    deleteHotelAmenities(id: ID!): Response!
+    updateHotelAmenities(_id: ID!, input: UpdateHotelAmenitiesInput): HotelAmenities!
+    deleteHotelAmenities(_id: ID!): Response!
   }
 `;
