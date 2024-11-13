@@ -1,5 +1,4 @@
-import { updateUser } from 'apps/L1AB/Instagram/instagram-backend/src/resolvers/mutations';
-
+import { updateUser } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 const input = { fullname: 'boldoo', username: 'bold', bio: 'hi', gender: 'male', profilePicture: 'image' };
