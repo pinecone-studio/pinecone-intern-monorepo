@@ -3,7 +3,6 @@ import { UserType } from './user-model';
 
 export type FollowerType = {
   _id: string;
-  userId: Types.ObjectId;
   followerId: Types.ObjectId;
   followeeId: Types.ObjectId;
   createdAt: Date;
@@ -26,7 +25,6 @@ const FollowerSchema = new Schema<FollowerType>({
 });
 
 export type FollowersPopulatedType = FollowerType & {
-  userId: UserType;
   followerId: UserType;
   followeeId: UserType;
 };
