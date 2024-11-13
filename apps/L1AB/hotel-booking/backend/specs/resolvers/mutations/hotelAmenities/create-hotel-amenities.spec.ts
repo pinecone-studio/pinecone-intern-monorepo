@@ -40,9 +40,7 @@ describe('Create hotel amenities', () => {
     try {
       await createHotelAmenities!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to create hotel amenities');
-      }
+      expect(error).toEqual(new Error('Failed to create hotel amenities'));
     }
   });
 });

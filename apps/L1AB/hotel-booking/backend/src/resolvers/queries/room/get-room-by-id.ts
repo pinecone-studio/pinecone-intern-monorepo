@@ -3,9 +3,9 @@ import { QueryResolvers } from '../../../generated';
 
 export const getRoomById: QueryResolvers['getRoomById'] = async (_, { _id }) => {
   try {
-    const author = await roomModel.findById(_id);
-    return author;
+    const room = await roomModel.findById(_id);
+    return room;
   } catch (error) {
-    throw new Error('Failed to get room by Id');
+    throw new Error('Failed to get room by id');
   }
 };

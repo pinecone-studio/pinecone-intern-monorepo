@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { addRoom } from '../../../../src/resolvers/mutations';
 import { RoomType } from 'apps/L1AB/hotel-booking/backend/src/generated';
+import { createRoom } from 'apps/L1AB/hotel-booking/backend/src/resolvers/mutations';
 
 jest.mock('../../../../src/models', () => ({
   roomModel: {
@@ -32,7 +32,7 @@ describe('Create room', () => {
       hotelId: 'dahs',
     };
 
-    const result = await addRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
+    const result = await createRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
@@ -58,11 +58,9 @@ describe('Create room', () => {
     };
 
     try {
-      await addRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
+      await createRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to add room');
-      }
+      expect(error).toEqual(new Error('Failed to add room'));
     }
   });
 });
