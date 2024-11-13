@@ -20,7 +20,7 @@ describe('LeftSideBar', () => {
   });
   it('should apply font-light class when pathname does not match path.path', () => {
     const { getByTestId } = render(<LeftSideBar />);
-    const link = getByTestId('/notif');
+    const link = getByTestId('/notification');
     expect(link).toHaveClass('font-light');
   });
 });
