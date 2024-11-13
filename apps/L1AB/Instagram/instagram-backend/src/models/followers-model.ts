@@ -5,21 +5,16 @@ export type FollowerType = {
   _id: string;
   userId: Types.ObjectId;
   followerId: Types.ObjectId;
-  followingId: Types.ObjectId;
+  followeeId: Types.ObjectId;
   createdAt: Date;
 };
 const FollowerSchema = new Schema<FollowerType>({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
   followerId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  followingId: {
+  followeeId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -33,7 +28,7 @@ const FollowerSchema = new Schema<FollowerType>({
 export type FollowersPopulatedType = FollowerType & {
   userId: UserType;
   followerId: UserType;
-  followingId: UserType;
+  followeeId: UserType;
 };
 
 export const followersModel = models['Followers'] || model('Followers', FollowerSchema);

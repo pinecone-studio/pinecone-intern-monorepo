@@ -5,7 +5,7 @@ export const typeDefs = gql`
     _id: ID!
     userId: ID!
     followerId: ID!
-    followingId: ID!
+    followeeId: ID!
     createdAt: Date!
   }
 `;
