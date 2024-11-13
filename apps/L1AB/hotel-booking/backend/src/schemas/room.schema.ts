@@ -40,7 +40,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    getRooms: [Room!]
+    getAllRooms: [Room!]
     getRoomById(_id: ID!): Room!
   }
 
