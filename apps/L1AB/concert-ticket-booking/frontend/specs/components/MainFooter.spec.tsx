@@ -1,8 +1,8 @@
-import { MainNavbar } from '@/components';
+import { MainFooter } from '@/components';
 import { render } from '@testing-library/react';
 
-describe('MainNavbar', () => {
+describe('MainFooter', () => {
   it('should render successfully', async () => {
-    render(<MainNavbar />);
+    render(<MainFooter />);
   });
 });

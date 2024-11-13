@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { ApolloWrapper } from '@/components/providers';
-import { AdminNavbar } from '@/components/providers/AdminNavbar';
+import { AdminNavbar } from '@/components/AdminNavbar';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
