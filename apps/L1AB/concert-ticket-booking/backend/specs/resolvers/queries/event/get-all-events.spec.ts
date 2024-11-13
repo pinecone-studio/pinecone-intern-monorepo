@@ -1,36 +1,23 @@
-import { getAllEvents,} from "../../../..//src/resolvers/queries";
-import { GraphQLResolveInfo } from "graphql";
+import { getAllEvents } from '../../../../src/resolvers/queries';
+import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock("../../../../src/models", () => ({
-    EventModel: {
-        find: jest.fn().mockReturnValueOnce({
-            populate:jest.fn().mockResolvedValue({
-                _id:"1",
-            }),
-        })
-        .mockReturnValueOnce({
-            populate: jest.fn().mockResolvedValue(null),
-        }),
-    },
+jest.mock('../../../../src/models', () => ({
+  EventModel: {
+    find: jest
+      .fn()
+      .mockResolvedValueOnce([{ _id: '1', name: 'Sample Event' }]) // First call returns one event
+      .mockResolvedValueOnce([]), // Second call returns an empty array
+  },
 }));
 
-describe("getAllEvent", () => {
-    it("should get all event", async () => {
-      if (getAllEvents) {
-      const event = await getAllEvents({},{_id:"1"}, {name: "tu"}, {} as GraphQLResolveInfo)
-      expect(event).toEqual({_id:'1'})
-      }
-    })
-    
+describe('getAllEvents', () => {
+  it('should return all events', async () => {
+    const events = await getAllEvents!({}, {}, { name: 'tu' }, {} as GraphQLResolveInfo);
+    expect(events).toEqual([{ _id: '1', name: 'Sample Event' }]);
+  });
+
+  it('should return an empty array if no events are found', async () => {
+    const events = await getAllEvents!({}, {}, { name: 'tu' }, {} as GraphQLResolveInfo);
+    expect(events).toEqual([]);
+  });
 });
-
-
-it("should not get all event", async () => {
-    try {
-      if (getAllEvents) {
-      await getAllEvents({},{_id:"1"}, {name: "tu"}, {} as GraphQLResolveInfo)
-      }
-    } catch (error) {
-        expect(error).toEqual(new Error("No events"));
-    }
-})

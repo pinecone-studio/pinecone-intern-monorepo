@@ -7,4 +7,12 @@ export const typeDefs = gql`
     followeeId: ID!
     createdAt: Date!
   }
+
+  type Query {
+    getFollowersById(_id: ID!): [Followers!]!
+  }
+
+  type Mutation {
+    deleteFollower(followerId: ID!, followeeId: ID!): Followers!
+  }
 `;
