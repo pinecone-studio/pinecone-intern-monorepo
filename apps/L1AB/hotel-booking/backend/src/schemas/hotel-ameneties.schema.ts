@@ -18,7 +18,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    getAllHotelsAmenities: [HotelAmenities!]!
+    getAllHotelAmenities: [HotelAmenities!]!
     getHotelAmenityById(_id: ID!): HotelAmenities!
   }
 
