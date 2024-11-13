@@ -3,3 +3,4 @@ export * from './user/sample-mutation';
 export * from './user/create-user';
 export * from './user/update-user';
 export * from './followers';
+export * from './post';
