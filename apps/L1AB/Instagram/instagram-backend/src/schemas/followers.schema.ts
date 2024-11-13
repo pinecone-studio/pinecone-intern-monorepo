@@ -11,4 +11,8 @@ export const typeDefs = gql`
   type Query {
     getFollowersById(_id: ID!): [Followers!]!
   }
+
+  type Mutation {
+    deleteFollower(followerId: ID!, followeeId: ID!): Followers!
+  }
 `;
