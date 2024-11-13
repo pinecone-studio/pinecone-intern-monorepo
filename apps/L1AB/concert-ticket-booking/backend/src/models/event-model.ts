@@ -5,8 +5,8 @@ export type EventType = {
   name: string;
   artistName: [string];
   description: string;
-  eventDate: Date;
-  eventTime: Date;
+  eventDate: string;
+  eventTime: string;
   images: [string];
   venues: [
     {
@@ -38,11 +38,11 @@ const EventSchema = new Schema({
     required: true,
   },
   eventDate: {
-    type: Date,
-    required: false,
+    type: String,
+    required: true,
   },
   eventTime: {
-    type: Date,
+    type: String,
     required: true,
   },
   discount: {

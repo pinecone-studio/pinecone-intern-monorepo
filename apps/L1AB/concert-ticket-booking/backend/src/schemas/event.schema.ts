@@ -6,19 +6,42 @@ export const typeDefs = gql`
     quantity: Int!
     price: Int!
   }
+
   type Event {
     _id: ID!
     name: String!
     artistName: [String!]!
     description: String!
-    eventDate: Date!
-    eventTime: Date!
+    eventDate: String!
+    eventTime: String!
     images: [String!]!
     venues: [Venue!]!
     discount: Int!
   }
+
+  input EventInput {
+    name: String!
+    artistName: [String!]!
+    description: String!
+    eventDate: String!
+    eventTime: String!
+    images: [String!]!
+    venues: [VenueInput!]!
+    discount: Int
+  }
+
+  input VenueInput {
+    name: String!
+    quantity: Int!
+    price: Int!
+  }
+
   type Query {
     getAllEvents: [Event!]!
     getEventById(_id: ID!): Event!
+  }
+
+  type Mutation {
+    createEvent(input: EventInput!): Event!
   }
 `;
