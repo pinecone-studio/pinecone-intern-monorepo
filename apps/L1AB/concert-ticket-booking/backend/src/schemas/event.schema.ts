@@ -12,11 +12,22 @@ export const typeDefs = gql`
     name: String!
     artistName: [String!]!
     description: String!
-    eventDate: String!
-    eventTime: String!
+    eventDate: [String!]!
+    eventTime: [String!]!
     images: [String!]!
     venues: [Venue!]!
     discount: Int!
+  }
+
+  input UpdateEventInput {
+    eventId: ID!
+    name: String
+    artistName: [String]
+    description: String
+    eventDate: [String]
+    eventTime: [String]
+    images: [String]
+    discount: Int
   }
 
   input EventInput {
@@ -39,6 +50,10 @@ export const typeDefs = gql`
   type Query {
     getAllEvents: [Event!]!
     getEventById(_id: ID!): Event!
+  }
+
+  type Mutation {
+    updateEvent(input: UpdateEventInput!): Event!
   }
 
   type Mutation {
