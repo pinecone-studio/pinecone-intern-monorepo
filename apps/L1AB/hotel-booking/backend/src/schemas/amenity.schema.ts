@@ -1,39 +1,30 @@
-import gql from "graphql-tag"
+import gql from 'graphql-tag';
 
-export  const typeDefs = gql `
-
-type  Amenity {
+export const typeDefs = gql`
+  type Amenity {
     _id: ID!
-    name:String!
+    name: String!
     createdAt: Date!
     updatedAt: Date!
-}
+  }
 
-input CreateAmenityInput {
+  input CreateAmenityInput {
     name: String!
+  }
 
-}
-input UpdateAmenityInput {
+  input UpdateAmenityInput {
     _id: ID!
     name: String!
-}
+  }
 
-type Query {
-    getAllAmenities:[Amenity!]!
-    getAmenityById(_id: ID!):Amenity!
-}
+  type Query {
+    getAllAmenities: [Amenity!]!
+    getAmenityById(_id: ID!): Amenity!
+  }
 
-type Mutation {
-    createAmenity(input:CreateAmenityInput!): Amenity!
+  type Mutation {
+    createAmenity(input: CreateAmenityInput!): Amenity!
     UpdateAmenity(input: UpdateAmenityInput!): Amenity!
-    deleteAmenity(_id:ID!): Response!
-}
+    deleteAmenity(_id: ID!): Response!
+  }
 `;
-
-
-
-
-    
-
-
-
