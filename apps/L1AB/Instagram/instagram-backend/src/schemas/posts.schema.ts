@@ -17,6 +17,7 @@ export const typeDefs = gql`
   }
   type Query {
     getAllPosts: [Posts!]!
+    getPostById(postId: ID!): Posts!
   }
 
   input UpdatePostInput {
