@@ -7,4 +7,8 @@ export const typeDefs = gql`
     followeeId: ID!
     createdAt: Date!
   }
+
+  type Query {
+    getFollowersById(_id: ID!): [Followers!]!
+  }
 `;
