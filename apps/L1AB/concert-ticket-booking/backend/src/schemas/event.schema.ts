@@ -1,6 +1,11 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
+  type Venue {
+    name: String!
+    quantity: Int!
+    price: Int!
+  }
   type Event {
     _id: ID!
     name: String!

@@ -1,3 +1,3 @@
 export * from './sample-query';
-export * from './venue';
+export * from './artist';
 export * from './event';
