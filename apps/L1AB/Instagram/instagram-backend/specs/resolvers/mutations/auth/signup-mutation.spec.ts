@@ -4,6 +4,7 @@ import { userModel } from '../../../../src/models';
 jest.mock('bcrypt', () => ({
   genSalt: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8'),
   hash: jest.fn().mockResolvedValue('$2b$12$QSSxgLwQf8'),
+  compare: jest.fn().mockResolvedValue(true),
 }));
 
 jest.mock('../../../../src/models', () => ({
