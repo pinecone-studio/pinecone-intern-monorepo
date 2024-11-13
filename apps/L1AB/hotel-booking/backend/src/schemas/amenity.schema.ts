@@ -24,7 +24,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createAmenity(input: CreateAmenityInput!): Amenity!
-    UpdateAmenity(input: UpdateAmenityInput!): Amenity!
+    updateAmenity(input: UpdateAmenityInput!): Amenity!
     deleteAmenity(_id: ID!): Response!
   }
 `;
