@@ -4,9 +4,8 @@ import { GraphQLResolveInfo } from 'graphql';
 const mock = {
   userId: '1',
   postId: '1',
-  comment: 'test comment',
+  comment: 'test comment 2',
 };
-
 jest.mock('../../../../src/models', () => ({
   commentsModel: {
     create: jest.fn().mockResolvedValue({
@@ -14,7 +13,6 @@ jest.mock('../../../../src/models', () => ({
     }),
   },
 }));
-
 describe('leave comment on a post', () => {
   it('Should add comment on a post by an Id', async () => {
     const result = await createComment!(
@@ -32,7 +30,7 @@ describe('leave comment on a post', () => {
     expect(result).toEqual({
       userId: '1',
       postId: '1',
-      comment: 'test comment',
+      comment: 'test comment 2',
     });
   });
 });
