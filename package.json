@@ -85,6 +85,7 @@
     "lucide-react": "0.453.0",
     "mongoose": "8.2.2",
     "next": "14.2.14",
+    "next-cloudinary": "^6.16.0",
     "nodemailer": "6.9.16",
     "otp-agent": "3.0.3",
     "react": "18.2.0",
