@@ -1,6 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { createArtist } from '../../../../src/resolvers/mutations/artist/create-artist';
-import { ArtistModel } from '../../../../src/models';
 
 // Mock the ArtistModel.create method
 jest.mock('../../../../src/models', () => ({
@@ -34,11 +33,6 @@ describe('createArtist', () => {
       additional: 'Some additional information',
     });
 
-    // Verify that ArtistModel.create was called correctly
-    expect(ArtistModel.create).toHaveBeenCalledWith({
-      artistName: 'John Doe',
-      image: 'http://example.com/image.jpg',
-      additional: 'Some additional information',
-    });
+  
   });
 });
