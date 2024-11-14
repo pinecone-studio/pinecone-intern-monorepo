@@ -1,6 +1,5 @@
 import { SvgCircle, SvgPedia } from '@/components/svgs/Svgs'
 import { Copyright } from 'lucide-react';
-import React from 'react'
 
 export const Footer = () => {
     return (
