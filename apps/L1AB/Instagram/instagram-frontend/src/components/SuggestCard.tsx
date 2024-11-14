@@ -2,7 +2,10 @@
 "use client";
 import Image from "next/image";
 
+
 export const SuggestCard = () => {
+
+
     type Follow = {
         title: string;
         name: string;
@@ -35,9 +38,9 @@ export const SuggestCard = () => {
                     <p className="text-sm font-medium cursor-pointer">See All</p>
                 </div>
 
-                <div className="flex-col">
+                <div className="flex-col pt-4">
                     {followed.map((follow, index) => (
-                        <div key={index} className="m-2 border rounded p-1 flex items-center justify-between">
+                        <div key={index} className="  rounded p-1 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <div className="relative h-12 w-12 border rounded-full overflow-hidden">
                                     <Image
@@ -50,7 +53,9 @@ export const SuggestCard = () => {
 
                                 <div className="flex flex-col">
                                     <p className="font-semibold">{follow.name}</p>
-                                    <p className="text-sm text-[#71717A]">{follow.title}</p>
+                                    <p className="text-sm text-[#71717A]">{follow.title}
+                                        
+                                    </p>
                                 </div>
                             </div>
 
@@ -59,6 +64,11 @@ export const SuggestCard = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                <div className="text-[#71717A] text-xs flex  justify-center pt-8 w-full flex-col">
+                    <p className=" flex">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
+                    <p className="flex pt-4">© 2024 INSTAGRAM FROM META</p>
                 </div>
             </div>
         </>
