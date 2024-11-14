@@ -31,9 +31,15 @@ export const typeDefs = gql`
     gender: String!
     profilePicture: String!
   }
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
   type Mutation {
     deleteUser(_id: ID): User!
     createUser(input: RegisterInput!): User!
     updateUser(input: UpdateInput!, _id: ID!): User!
+    login(username: String, email: String, password: String!): AuthPayload!
+    signup(fullname: String!, username: String!, email: String!, password: String!): User!
   }
 `;

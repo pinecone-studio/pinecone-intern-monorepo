@@ -5,3 +5,5 @@ export * from './user/update-user';
 export * from './followers';
 export * from './post';
 export * from './followers/create-followers';
+export * from './auth/login';
+export * from './auth/signup';
