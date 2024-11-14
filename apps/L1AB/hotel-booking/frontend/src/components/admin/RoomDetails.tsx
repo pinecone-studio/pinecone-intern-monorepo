@@ -28,16 +28,14 @@ const roomInfo = [
 export const RoomDetails = () => {
   return (
     <>
-      <div>RoomDetails</div>
-
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit</Button>
+          <Button className="text-[#2563EB] bg-white hover:bg-white">Edit</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>General Info</DialogTitle>
-            
+
             <DialogDescription></DialogDescription>
           </DialogHeader>
           <div className="flexf flex-col gap-4 py-4 ">
@@ -47,7 +45,7 @@ export const RoomDetails = () => {
               </Label>
               <Input id="name" defaultValue="Chingis Khaan Hotel" className="" />
             </div>
-        
+
             <div className="flex flex-col gap-4 w-full mb-5">
               <Label htmlFor="username" className="text-left">
                 Type
@@ -66,32 +64,28 @@ export const RoomDetails = () => {
                 </SelectContent>
               </Select>
             </div>
-   
+
             <div className="flex flex-col gap-4 mb-5">
               <Label htmlFor="username" className="text-left">
                 Price per night
               </Label>
               <Input id="Price per night" defaultValue="150,000₮" className="col-span-3" />
             </div>
-           
+
             <div className="flex flex-col gap-4 mb-5">
               <Label htmlFor="username" className="text-left">
                 Room information
               </Label>
-              <Input id="Price per night" defaultValue="150,000₮" className="col-span-3"
-
-              
-              />
-                 <div className=" border py-2 px-3 flex-wrap gap-2 flex w-full ">
-                 {roomInfo?.map((item, index) => {
-                   return (
-                     <div key={index} className="flex  ">
-                        <div className=' rounded-xl text-xs font-semibold px-2 py-1 bg-[#F4F4F5]'>     { item.info}</div>
-               
-                     </div>
-                   );
-                 })}
-               </div>
+              <Input id="Price per night" defaultValue="150,000₮" className="col-span-3" />
+              <div className=" border py-2 px-3 flex-wrap gap-2 flex w-full ">
+                {roomInfo?.map((item, index) => {
+                  return (
+                    <div key={index} className="flex  ">
+                      <div className=" rounded-xl text-xs font-semibold px-2 py-1 bg-[#F4F4F5]"> {item.info}</div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <DialogFooter className="flex sm:justify-between w-full">
