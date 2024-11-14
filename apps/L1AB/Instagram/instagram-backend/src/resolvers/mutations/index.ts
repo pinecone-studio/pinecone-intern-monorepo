@@ -8,3 +8,4 @@ export * from './followers/create-followers';
 export * from './auth/login';
 export * from './auth/signup';
 export * from "./comment/create-comment"
+export * from './story';
