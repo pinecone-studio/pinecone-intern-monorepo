@@ -1,4 +1,4 @@
-import { createComment } from 'apps/L1AB/Instagram/instagram-backend/src/resolvers/mutations';
+import { createComment } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 const mock = {
