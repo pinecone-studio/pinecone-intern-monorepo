@@ -7,3 +7,4 @@ export * from './post';
 export * from './followers/create-followers';
 export * from './auth/login';
 export * from './auth/signup';
+export * from './story';
