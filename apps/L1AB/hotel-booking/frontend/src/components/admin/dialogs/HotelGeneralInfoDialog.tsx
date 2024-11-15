@@ -79,6 +79,7 @@ export const HotelGeneralInfoDailog = () => {
                   <SelectItem value="8.6 Excellent">8.6 Excellent</SelectItem>
                   <SelectItem value="8 Very Good">8 Very Good</SelectItem>
                   <SelectItem value="7 good">7 good</SelectItem>
+                  <SelectItem value="7 good">5 bad</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
