@@ -35,8 +35,8 @@ export const typeDefs = gql`
     name: String!
     artistName: [String!]!
     description: String!
-    eventDate: String!
-    eventTime: String!
+    eventDate: [String!]!
+    eventTime: [String!]!
     images: [String!]!
     venues: [VenueInput!]!
     discount: Int
