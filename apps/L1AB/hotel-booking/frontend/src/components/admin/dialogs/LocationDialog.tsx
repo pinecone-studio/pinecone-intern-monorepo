@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 
 import { Button } from '@/components/ui/button';
 
-export const AdminLocation = () => {
+export const LocationDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>

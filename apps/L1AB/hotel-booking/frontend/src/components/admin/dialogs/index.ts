@@ -1,1 +1,1 @@
-export * from './AdminLocation';
+export * from './LocationDialog';
