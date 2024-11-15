@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../generated';
-import { postsModel } from '../../../models';
+import { postsModel, PostsPopulatedType } from '../../../models';
 
 export const getAllPosts: QueryResolvers['getAllPosts'] = async () => {
-  const posts = await postsModel.find();
+  const posts = await postsModel.find().populate<PostsPopulatedType>('userId');
   return posts;
 };
