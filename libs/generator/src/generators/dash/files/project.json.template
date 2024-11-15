@@ -13,12 +13,12 @@
       },
       "configurations": {
         "development": {
-          "outputPath": "<%= directory %>"
+          "outputPath": "dist/<%= directory %>"
         }
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -43,12 +43,7 @@
       },
       "dependsOn": [
         {
-          "target": "get-secrets:dev",
-          "params": "forward"
-        },
-
-        {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         },
         {
@@ -73,20 +68,8 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:testing",
           "params": "forward"
-        }
-      ]
-    },
-
-      "codegen": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config ./<%= directory %>/codegen.ts"]
-      },
-       "dependsOn": [
-        {
-          "target": "get-secrets:dev"
         }
       ]
     },
@@ -205,7 +188,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:testing",
           "params": "forward"
         }
       ]
@@ -231,7 +214,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -242,6 +225,35 @@
       "options": {
         "lintFilePatterns": ["<%= directory %>/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "codegen:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./<%= directory %>/codegen.ts"]
+      },
+       "dependsOn": [
+        {
+          "target": "get-secrets:prod"
+        }
+      ]
+    },
+    "codegen:dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./<%= directory %>/codegen.ts"]
+      },
+      "dependsOn": [{ "target": "get-secrets:dev" }]
+    },
+    "codegen:testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./<%= directory %>/codegen.ts"]
+      },
+       "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -264,7 +276,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:prod",
           "params": "forward"
         }
       ]
