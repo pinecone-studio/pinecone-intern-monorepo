@@ -2,6 +2,7 @@ import React from 'react';
 import { DetailsCard, DetailsContainer, DetailsLeft, DetailsRight } from './assets';
 import { RoomServicesDialog } from './dialogs/RoomServicesDialog';
 import { GeneralInfoDialog } from './dialogs';
+import { DetailsUpcomingBookings } from './assets/DetailsUpcomingBookings';
 
 export const RoomDetails = () => {
   return (
@@ -12,7 +13,7 @@ export const RoomDetails = () => {
           <GeneralInfoDialog/>
         </DetailsCard>
         <DetailsCard>
-          <div>Upcoming Bookings</div>
+          <DetailsUpcomingBookings/>
         </DetailsCard>
         <DetailsCard>
           <div>Room Services</div>
