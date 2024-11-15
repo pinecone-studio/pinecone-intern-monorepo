@@ -27,9 +27,11 @@ export const typeDefs = gql`
     phone: String!
     city: String!
     stars: Float!
+    rating: Float!
   }
 
   input UpdateHotelInput {
+    _id: ID!
     name: String
     description: String
     images: [String!]
@@ -42,7 +44,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createHotel(input: CreateHotelInput): Hotel!
-    updateHotel(_id: ID!, input: UpdateHotelInput): Hotel!
+    updateHotel(input: UpdateHotelInput!): Hotel!
     deleteHotel(_id: ID!): Response!
   }
 `;

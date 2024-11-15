@@ -7,7 +7,8 @@ export const typeDefs = gql`
   }
 
   type Room {
-    id: ID!
+    _id: ID!
+    hotelId: Hotel!
     name: String!
     roomNumber: String!
     price: Int!
@@ -20,6 +21,7 @@ export const typeDefs = gql`
 
   input RoomInput {
     name: String!
+    hotelId: ID!
     roomNumber: String!
     price: Int!
     description: String!
@@ -28,23 +30,23 @@ export const typeDefs = gql`
   }
 
   input UpdateRoomInput {
-    id: ID!
-    name: String!
-    roomNumber: String!
-    price: Int!
-    description: String!
+    _id: ID!
+    name: String
+    roomNumber: String
+    price: Int
+    description: String
     photos: [String!]
-    roomType: RoomType!
+    roomType: RoomType
   }
 
   type Query {
-    getRooms: [Room!]
-    getRoomById(id: ID!): Room!
+    getAllRooms: [Room!]
+    getRoomById(_id: ID!): Room!
   }
 
   type Mutation {
-    addRoom(input: RoomInput): Room!
-    deleteRoom(id: ID!): Room!
-    updateRoom(input: UpdateRoomInput): Room!
+    createRoom(input: RoomInput): Room!
+    deleteRoom(_id: ID!): Room!
+    updateRoom(input: UpdateRoomInput!): Room!
   }
 `;

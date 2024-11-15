@@ -3,6 +3,7 @@ import { typeDefs as CommonTypeDefs } from './common.schema';
 import { typeDefs as UserTypeDefs } from './user.schema';
 import { typeDefs as BookingTypeDefs } from './booking.schema';
 import { typeDefs as EventTypeDefs } from './event.schema';
-import { typeDefs as VenueTypeDefs } from './venue.schema';
+import { typeDefs as ArtistTypeDefs } from './artist.schema';
+import { typeDefs as CanceltypeDefs } from './cancel-booking.schema';
 
-export const typeDefs = mergeTypeDefs([CommonTypeDefs, UserTypeDefs, BookingTypeDefs, EventTypeDefs, VenueTypeDefs]);
+export const typeDefs = mergeTypeDefs([CommonTypeDefs, UserTypeDefs, BookingTypeDefs, EventTypeDefs, ArtistTypeDefs, CanceltypeDefs]);
