@@ -1,35 +1,26 @@
-import { AddImage } from '@/components/AddImage';
 import { DatePickerWithRange } from './DatePickerWithRange';
 import { DialogItem } from '@/components/DialogItem';
 import { TimePicker } from '@/components/TimePicker';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ReactNode } from 'react';
+import { PenIcon } from 'lucide-react';
 
-type DialogComponentPropsType = {
-  showAddImage: boolean;
-  children: ReactNode;
-};
-
-export const styles = {
-  trigger: 'flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff]',
-};
-
-export const DialogComponent = ({ showAddImage = false, children }: DialogComponentPropsType) => {
+export const UpdateEventComponent = () => {
   return (
     <Dialog>
-      {children}
+      <DialogTrigger>
+        <PenIcon className="bg-[#F4F4F5] rounded p-1" />
+      </DialogTrigger>
       <DialogContent className=" flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">Тасалбар нэмэх</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold">Тасалбар шинэчлэх</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" />
         </DialogItem>
-        {showAddImage ? <AddImage /> : <></>}
         <DialogItem htmlFor="description" name="Хөтөлбөрийн тухай">
           <Textarea className="min-h-16" placeholder="Дэлгэрэнгүй мэдээлэл" name="description" />
         </DialogItem>
@@ -71,7 +62,7 @@ export const DialogComponent = ({ showAddImage = false, children }: DialogCompon
             <Input type="number" placeholder="Үнэ" name="openQuantity" />
           </DialogItem>
         </div>
-        <Button className="w-full">{showAddImage ? 'Үүсгэх' : 'Шинэчлэх'}</Button>
+        <Button className="w-full">Шинэчлэх</Button>
       </DialogContent>
     </Dialog>
   );

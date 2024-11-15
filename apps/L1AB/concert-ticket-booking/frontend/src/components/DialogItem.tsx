@@ -12,7 +12,7 @@ export const DialogItem = ({ htmlFor, children, name, withLabel = true }: Dialog
   return (
     <div className="flex flex-col w-full gap-2">
       <Label htmlFor={htmlFor} className="text-[#09090B]" datatest-id="dialog-item-name">
-        {withLabel ? name : <></>}
+        {withLabel && name}
         <span className="text-[#E11D48]">*</span>
       </Label>
       {children}

@@ -15,13 +15,13 @@ export const TimePicker = () => {
     <div className="flex items-center gap-2">
       <div className="w-1/3">
         <Select value={hour} onValueChange={handleHourChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full" data-testid="time-picker">
             <SelectValue placeholder="Цаг" />
           </SelectTrigger>
           <SelectContent>
-            {hours.map((h) => (
-              <SelectItem key={h} value={h}>
-                {h}
+            {hours.map((hour) => (
+              <SelectItem key={hour} value={hour} data-testid={'hour'}>
+                {hour}
               </SelectItem>
             ))}
           </SelectContent>
@@ -32,13 +32,13 @@ export const TimePicker = () => {
 
       <div className="w-1/3">
         <Select value={minute} onValueChange={handleMinuteChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full" data-testid="minute-picker">
             <SelectValue placeholder="Минут" />
           </SelectTrigger>
           <SelectContent>
-            {minutes.map((m) => (
-              <SelectItem key={m} value={m}>
-                {m}
+            {minutes.map((minute) => (
+              <SelectItem key={minute} value={minute} data-testid={'minute'}>
+                {minute}
               </SelectItem>
             ))}
           </SelectContent>

@@ -21,7 +21,7 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
         <PopoverTrigger asChild>
           <Button id="date" variant={'outline'} className={cn('w-[300px] justify-start text-left font-normal')}>
             <CalendarIcon />
-            {date?.from ? (
+            {/* {date?.from ? (
               date.to ? (
                 <>
                   {format(date.from, 'LLL dd, y')} - {format(date.to, 'LLL dd, y')}
@@ -30,8 +30,8 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
                 format(date.from, 'LLL dd, y')
               )
             ) : (
-              <span>Өдөр сонгох</span>
-            )}
+            )} */}
+            <span>Өдөр сонгох</span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
