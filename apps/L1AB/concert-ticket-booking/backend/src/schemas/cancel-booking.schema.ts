@@ -9,6 +9,8 @@ export const typeDefs = gql`
     status: String!
     userId: User!
     amountTotal: Int!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   input CancelInput {

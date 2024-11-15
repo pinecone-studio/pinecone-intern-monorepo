@@ -6,6 +6,8 @@ export const typeDefs = gql`
     artistName: String!
     image: String!
     additional: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   input ArtistInput {
