@@ -25,12 +25,12 @@ const roomInfo = [
   },
 ];
 
-export const GeneralInfiDialog = () => {
+export const GeneralInfoDialog = () => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="text-[#2563EB] bg-white hover:bg-white">Edit</Button>
+          <Button variant="ghost" className="text-[#2563EB]">Edit</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -89,7 +89,7 @@ export const GeneralInfiDialog = () => {
             </div>
           </div>
           <DialogFooter className="flex sm:justify-between w-full">
-            <Button type="submit" className="bg-gray-200">
+            <Button type="submit" variant="ghost" className="text-[#09090B">
               Cancel
             </Button>
             <Button type="submit" className="bg-[#2563EB]">
