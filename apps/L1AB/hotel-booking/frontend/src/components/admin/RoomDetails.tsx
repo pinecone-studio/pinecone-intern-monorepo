@@ -30,7 +30,7 @@ export const RoomDetails = () => {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="text-[#2563EB] bg-white hover:bg-white">Edit</Button>
+          <Button className="text-[#2563EB]">Edit</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
