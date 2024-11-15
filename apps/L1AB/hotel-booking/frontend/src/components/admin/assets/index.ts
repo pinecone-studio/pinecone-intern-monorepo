@@ -7,3 +7,4 @@ export * from './DetailsContainer';
 export * from './DetailsLeft';
 export * from './DetailsRight';
 export * from './DetailsCard';
+

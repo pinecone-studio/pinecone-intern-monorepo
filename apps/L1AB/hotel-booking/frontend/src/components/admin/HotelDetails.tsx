@@ -1,7 +1,7 @@
 import React from 'react';
 import { DetailsCard, DetailsContainer, DetailsLeft, DetailsRight } from './assets';
 import { AmenityDialog } from './dialogs/AmenityDialog';
-import { LocationDialog } from './dialogs';
+import { HotelGeneralInfoDailog, LocationDialog } from './dialogs';
 export const HotelDetails = () => {
     return (
       <DetailsContainer name={'Flower Hotel Ulaanbaatar'}>
@@ -14,6 +14,7 @@ export const HotelDetails = () => {
           </DetailsCard>
           <DetailsCard>
             <div>General Info</div>
+            <HotelGeneralInfoDailog/>
           </DetailsCard>
           <DetailsCard>
             <div>Amenities</div>
