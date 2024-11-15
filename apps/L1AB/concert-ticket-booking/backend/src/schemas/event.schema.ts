@@ -14,8 +14,6 @@ export const typeDefs = gql`
     description: String!
     eventDate: [String!]!
     eventTime: [String!]!
-    eventDate: [String!]!
-    eventTime: [String!]!
     images: [String!]!
     venues: [Venue!]!
     discount: Int!
