@@ -10,8 +10,8 @@ jest.mock('apps/L1AB/concert-ticket-booking/backend/src/models', () => ({
       name: 'Music Fiesta',
       artistName: ['John Doe'],
       description: 'A thrilling karaoke night event',
-      eventDate: 'December 25, 2024',
-      eventTime: '20:00',
+      eventDate: ['December 25, 2024'],
+      eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
       venues: [
@@ -33,8 +33,8 @@ describe('createEvent', () => {
         name: 'Music Fiesta',
         artistName: ['John Doe'],
         description: 'A thrilling karaoke night event',
-        eventDate: 'December 25, 2024',
-        eventTime: '20:00',
+        eventDate: ['December 25, 2024'],
+        eventTime: ['20:00'],
         discount: 10,
         images: ['http://example.com/image1.jpg'],
         venues: [
@@ -56,8 +56,8 @@ describe('createEvent', () => {
       name: 'Music Fiesta',
       artistName: ['John Doe'],
       description: 'A thrilling karaoke night event',
-      eventDate: 'December 25, 2024',
-      eventTime: '20:00',
+      eventDate: ['December 25, 2024'],
+      eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
       venues: [
@@ -74,8 +74,8 @@ describe('createEvent', () => {
       name: 'Music Fiesta',
       artistName: ['John Doe'],
       description: 'A thrilling karaoke night event',
-      eventDate: 'December 25, 2024',
-      eventTime: '20:00',
+      eventDate: ['December 25, 2024'],
+      eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
       venues: [

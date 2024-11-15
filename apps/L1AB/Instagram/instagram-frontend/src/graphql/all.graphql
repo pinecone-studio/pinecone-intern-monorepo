@@ -1,7 +1,11 @@
 query Query {
   sampleQuery
 }
-
-mutation Mutation {
-  sampleMutation
+mutation Signup($fullname: String!, $username: String!, $email: String!, $password: String!) {
+  signup(fullname: $fullname, username: $username, email: $email, password: $password) {
+    username
+    email
+    fullname
+    password
+  }
 }
