@@ -1,5 +1,6 @@
 import React from 'react'
 import { DetailsCard, DetailsContainer, DetailsLeft, DetailsRight } from './assets';
+import { AmenityDialog } from './dialogs/AmenityDialog';
 
 export const HotelDetails = () => {
   return (
@@ -16,6 +17,7 @@ export const HotelDetails = () => {
         </DetailsCard>
         <DetailsCard>
           <div>Amenities</div>
+          <AmenityDialog />
         </DetailsCard>
         <DetailsCard>
           <div>About this property</div>
