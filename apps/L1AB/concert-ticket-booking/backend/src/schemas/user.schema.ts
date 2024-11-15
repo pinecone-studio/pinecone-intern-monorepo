@@ -8,6 +8,8 @@ export const typeDefs = gql`
     password: String!
     phone: String!
     role: String
+    createdAt: Date!
+    updatedAt: Date!
   }
   input UserInput {
     name: String!

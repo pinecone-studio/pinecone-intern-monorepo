@@ -7,5 +7,7 @@ export const typeDefs = gql`
     eventId: Event!
     phone: String!
     email: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;

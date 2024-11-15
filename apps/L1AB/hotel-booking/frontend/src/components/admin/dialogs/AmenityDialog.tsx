@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 
 import React from 'react';
 
-export const Amenity = () => {
+export const AmenityDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
