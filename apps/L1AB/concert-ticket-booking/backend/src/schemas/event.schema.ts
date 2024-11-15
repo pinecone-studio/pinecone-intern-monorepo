@@ -27,6 +27,7 @@ export const typeDefs = gql`
     eventDate: [String]
     eventTime: [String]
     images: [String]
+    venues: [VenueInput]
     discount: Int
   }
 
