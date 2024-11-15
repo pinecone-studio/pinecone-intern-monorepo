@@ -1,5 +1,5 @@
 import { Container } from '@/components';
-import { CancelComponent } from '@/components/providers/CancelComponent';
+import { CancelComponent } from '@/components/CancelComponent';
 
 const Page = () => {
   return (
