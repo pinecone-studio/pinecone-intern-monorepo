@@ -3,17 +3,18 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { usePathname } from 'next/navigation';
-import { FiColumns } from 'react-icons/fi';
+import { HeaderIcon } from '@/components/icon';
 
 export const Header = () => {
   const pathname = usePathname();
   const paths = ['Hotels', 'Hotel Details', 'Room Details', 'Guest Info'];
   const pathnames = (pathname ?? '').split('/').filter((path) => path);
   return (
-    <div data-testid="header" className="min-h-16 border-y flex items-center">
-      <div className="mr-4 ml-[22px]" data-testid="header-icon">
-        <FiColumns className='w-4 h-4' />
+    <div data-testid="header" className="h-16 flex items-center px-4 gap-2">
+      <div data-testid="header-icon">
+        <HeaderIcon />
       </div>
+      <div className="h-4 border-l mr-2"></div>
       <Breadcrumb>
         <BreadcrumbList>
           {pathnames.map((_, index) => {
@@ -21,7 +22,9 @@ export const Header = () => {
             return (
               <React.Fragment key={index}>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href={href}>{paths[index]}</BreadcrumbLink>
+                  <BreadcrumbLink className={index === pathnames.length - 1 ? 'text-black' : ''} href={href}>
+                    {paths[index]}
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 {index < pathnames.length - 1 && <BreadcrumbSeparator />}
               </React.Fragment>
