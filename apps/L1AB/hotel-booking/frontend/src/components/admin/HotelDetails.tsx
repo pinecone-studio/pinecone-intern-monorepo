@@ -35,13 +35,12 @@ export const HotelDetails = () => {
         <DetailsRight>
           <DetailsCard>
             <div>Location</div>
-            <LocationDialog/>
+            <LocationDialog />
           </DetailsCard>
           <DetailsCard>
             <div>Images</div>
           </DetailsCard>
         </DetailsRight>
       </DetailsContainer>
-      
     );
   };
