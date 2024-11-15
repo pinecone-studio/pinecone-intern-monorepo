@@ -2,6 +2,7 @@ import { model, models, Schema } from 'mongoose';
 
 export type UserType = {
   _id: string;
+  name: string;
   email: string;
   phone: string;
   role: string;
@@ -10,6 +11,10 @@ export type UserType = {
   updatedAt: Date;
 };
 const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
