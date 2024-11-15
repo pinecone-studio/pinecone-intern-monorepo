@@ -14,6 +14,8 @@ export const typeDefs = gql`
     description: String!
     eventDate: [String!]!
     eventTime: [String!]!
+    eventDate: [String!]!
+    eventTime: [String!]!
     images: [String!]!
     venues: [Venue!]!
     discount: Int!
@@ -53,11 +55,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    updateEvent(input: UpdateEventInput!): Event!
-  }
-
-  type Mutation {
     createEvent(input: EventInput!): Event!
+    updateEvent(input: UpdateEventInput!): Event!
     deleteEvent(_id: ID!): Event!
   }
 `;

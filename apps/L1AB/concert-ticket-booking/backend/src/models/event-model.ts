@@ -114,8 +114,4 @@ const EventSchema = new Schema({
   },
 });
 
-export type EventPopulatedType = EventType & {
-  venues: VenuesType[];
-};
-
 export const EventModel = models['event'] || model('event', EventSchema);
