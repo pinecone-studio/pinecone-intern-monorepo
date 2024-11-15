@@ -5,3 +5,8 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+query GetAllUsers {
+  getAllUsers {
+    username
+  }
+}
