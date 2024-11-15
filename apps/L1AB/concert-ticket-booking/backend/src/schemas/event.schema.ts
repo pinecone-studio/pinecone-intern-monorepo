@@ -17,6 +17,8 @@ export const typeDefs = gql`
     images: [String!]!
     venues: [Venue!]!
     discount: Int!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   input UpdateEventInput {
