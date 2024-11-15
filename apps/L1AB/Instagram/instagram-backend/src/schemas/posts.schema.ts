@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type Posts {
     _id: ID!
-    userId: ID!
+    userId: User!
     images: [String!]!
     caption: String!
     likeCounts: Int!
@@ -15,14 +15,13 @@ export const typeDefs = gql`
     images: [String!]!
     caption: String!
   }
-  type Query {
-    getAllPosts: [Posts!]!
-    getPostById(postId: ID!): Posts!
-  }
-
   input UpdatePostInput {
     caption: String
     images: [String]
+  }
+  type Query {
+    getAllPosts: [Posts!]!
+    getPostById(postId: ID!): Posts!
   }
 
   type Mutation {

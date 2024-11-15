@@ -5,3 +5,39 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+query GetAllEvents {
+  getAllEvents {
+    _id
+    name
+    artistName
+    description
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      quantity
+      price
+    }
+    discount
+  }
+}
+
+mutation CreateEvent($input: EventInput!) {
+  createEvent(input: $input) {
+    _id
+    name
+    artistName
+    description
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      quantity
+      price
+    }
+    discount
+  }
+}

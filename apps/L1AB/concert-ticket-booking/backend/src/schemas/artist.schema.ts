@@ -20,5 +20,6 @@ export const typeDefs = gql`
 
   type Mutation {
     createArtist(input: ArtistInput!): Artist!
+    deleteArtist(_id: ID!): Artist!
   }
 `;

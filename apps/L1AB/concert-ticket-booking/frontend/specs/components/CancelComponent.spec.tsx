@@ -1,4 +1,4 @@
-import { CancelComponent } from '@/components/providers/CancelComponent';
+import { CancelComponent } from '@/components/CancelComponent';
 import { render } from '@testing-library/react';
 
 describe('CancelComponent', () => {
