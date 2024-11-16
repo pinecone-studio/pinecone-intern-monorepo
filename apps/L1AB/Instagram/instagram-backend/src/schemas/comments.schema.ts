@@ -10,13 +10,20 @@ export const typeDefs = gql`
     createdAt: Date!
   }
 
-  input AddComment {
+  input AddCommentInput {
+    comment: String!
+    userId: ID!
+    postId: ID!
+  }
+
+  input UpdateCommentInput {
     comment: String!
     userId: ID!
     postId: ID!
   }
 
   type Mutation {
-    createComment(input: AddComment!): Comments!
+    createComment(input: AddCommentInput!): Comments!
+    updateComment(input: UpdateCommentInput!, _id: ID!): Comments!
   }
 `;
