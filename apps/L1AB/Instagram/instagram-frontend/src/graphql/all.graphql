@@ -9,3 +9,8 @@ mutation Signup($fullname: String!, $username: String!, $email: String!, $passwo
     password
   }
 }
+query GetAllUsers {
+  getAllUsers {
+    username
+  }
+}
