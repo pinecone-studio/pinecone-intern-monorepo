@@ -134,7 +134,7 @@ const Page = () => {
                   .
                 </p>
               </div>
-              <button className="w-full h-12 bg-[#2563EB50] rounded-lg text-white my-6" data-cy="Sign-Up-Submit-Button" type="submit" disabled={isSubmitting}>
+              <button className="w-full h-12 bg-[#2563EB50] rounded-lg text-white my-6 hover:bg-blue-500" data-cy="Sign-Up-Submit-Button" type="submit" disabled={isSubmitting}>
                 Sign up{' '}
               </button>
             </Form>
