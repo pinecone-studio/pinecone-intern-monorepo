@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { ApolloWrapper } from '@/components/providers';
 import { MainFooter } from '@/components/MainFooter';
 import { MainNavbar } from '@/components';
 
@@ -20,9 +19,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
           <MainNavbar />
         </header>
         <main className="flex-grow">
-          <ApolloWrapper>
-            <div>{children}</div>
-          </ApolloWrapper>
+          <div>{children}</div>
         </main>
         <footer className="flex-shrink-0">
           <MainFooter />

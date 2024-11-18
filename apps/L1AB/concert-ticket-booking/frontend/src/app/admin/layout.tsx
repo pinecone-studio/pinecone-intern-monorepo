@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { ApolloWrapper } from '@/components/providers';
 import { AdminNavbar } from '@/components/AdminNavbar';
 
 export const metadata = {
@@ -15,18 +14,12 @@ const AdminLayout = ({ children }: PropsWithChildren) => {
         <meta name="description" content={metadata.description} />
       </head>
       <body className="bg-white h-full flex flex-col">
-        
-        <ApolloWrapper>
-          <header className="flex-shrink-0">
-            <AdminNavbar />
-          </header>
+        <header className="flex-shrink-0">
+          <AdminNavbar />
+        </header>
 
-          <main className="flex-grow p-4">{children}</main>
-          <footer className='flex-shrink-0 opacity-50 flex justify-center items-center py-5'>
-          ©2024 Copyright
-          </footer>
-          
-        </ApolloWrapper>
+        <main className="flex-grow p-4">{children}</main>
+        <footer className="flex-shrink-0 opacity-50 flex justify-center items-center py-5">©2024 Copyright</footer>
       </body>
     </html>
   );
