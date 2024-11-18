@@ -1,7 +1,9 @@
 'use client'
 
+import { FilterHotels } from '@/components/main';
+
 const HotelsPage = () => {
-    return <div>Hotels Page</div>
+    return <FilterHotels />;
 }
 
 export default HotelsPage;

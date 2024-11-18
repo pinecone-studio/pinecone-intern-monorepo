@@ -1,7 +1,8 @@
 'use client'
 
+import { UserContact } from '@/components/main';
 const UserContactPage = () => {
-    return <div>User Contact Page</div>
+    return <UserContact />;
 };
 
 export default UserContactPage;

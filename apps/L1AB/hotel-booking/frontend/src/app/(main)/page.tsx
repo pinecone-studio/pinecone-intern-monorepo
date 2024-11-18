@@ -1,7 +1,13 @@
 'use client';
 
+import { HotelsGrid } from '@/components/main';
+
 const Page = () => {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <HotelsGrid />
+    </>
+  );
 };
 
 export default Page;
