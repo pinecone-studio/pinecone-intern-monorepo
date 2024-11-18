@@ -5,7 +5,7 @@ import { Container } from '@/components/Container';
 const Page = () => {
   return (
     <Container>
-      <div className="h-20 w-full  text-white text-center"></div>
+      <div className="text-white">Main</div>
     </Container>
   );
 };

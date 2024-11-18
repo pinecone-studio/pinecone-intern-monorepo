@@ -10,15 +10,23 @@ export const metadata = {
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en">
-      <body className="bg-black">
-        <ApolloWrapper>
-          <div>
-            <MainNavbar />
-            {children}
-            <MainFooter />
-          </div>
-        </ApolloWrapper>
+    <html lang="en" className="h-full">
+      <head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </head>
+      <body className="bg-black h-full flex flex-col">
+        <header className="flex-shrink-0">
+          <MainNavbar />
+        </header>
+        <main className="flex-grow">
+          <ApolloWrapper>
+            <div>{children}</div>
+          </ApolloWrapper>
+        </main>
+        <footer className="flex-shrink-0">
+          <MainFooter />
+        </footer>
       </body>
     </html>
   );
