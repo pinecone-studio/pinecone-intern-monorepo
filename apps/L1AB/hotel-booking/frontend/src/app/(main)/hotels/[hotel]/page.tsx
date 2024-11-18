@@ -1,7 +1,9 @@
 'use client'
 
+import { HotelDetails } from '@/components/main';
+
 const HotelDetailsPage = () => {
-    return <div>Hotel Details Page</div>
+    return <HotelDetails />;
 }
 
 export default HotelDetailsPage;

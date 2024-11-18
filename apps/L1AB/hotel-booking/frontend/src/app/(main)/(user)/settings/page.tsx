@@ -1,7 +1,9 @@
 'use client'
 
+import { UserSettings } from '@/components/main';
+
 const UserSettingsPage = () => {
-    return <div>User Settings Page</div>
+    return <UserSettings />;
 };
 
 export default UserSettingsPage;
