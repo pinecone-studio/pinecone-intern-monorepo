@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        backBlue: '#013B94',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
