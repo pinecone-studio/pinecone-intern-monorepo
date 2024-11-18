@@ -15,3 +15,6 @@ export * from './TimePicker';
 export * from './DialogItem';
 export * from './StageStyle';
 export * from './UpdateEventComponent';
+export * from './UserHistory';
+export * from './UserProfile';
+export * from './ForgetPassword';
