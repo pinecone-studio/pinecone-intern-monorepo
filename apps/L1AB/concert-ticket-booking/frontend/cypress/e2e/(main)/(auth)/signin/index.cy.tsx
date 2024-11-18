@@ -9,8 +9,12 @@ describe('Sign-In-Page', () => {
     cy.get('[data-cy=Sign-In-Email-Input]').type('test@gmail.com');
     cy.get('[data-cy=Sign-In-Submit-Button]').click();
   });
-  it('', () => {
+  it('3', () => {
     cy.get('[data-cy=Sign-In-Password-Input]').type('test');
     cy.get('[data-cy=Sign-In-Submit-Button]').click();
+  });
+  it('4', () => {
+    cy.get('[data-cy=Sign-In-Password-Input]').type('test');
+    cy.get('[data-cy=Sign-In-Password-Input-Icons]').click();
   });
 });
