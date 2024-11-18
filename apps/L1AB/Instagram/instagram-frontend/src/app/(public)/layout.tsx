@@ -1,7 +1,7 @@
 'use client';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
+  return <div className="min-h-screen min-w-full">{children}</div>;
 };
 
 export default Layout;
