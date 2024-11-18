@@ -1,11 +1,12 @@
 import React from 'react';
+import { Container } from './assets';
 
 export const UserHeader = () => {
   return (
-    <>
+    <Container backgroundColor="bg-white">
       <div className="flex items-center gap-2">
-        <div className="container bg-green-100 px-4 m-auto flex  items-center justify-between">
-          <div className="flex gap-1 py-3 items-center">
+        <div className="container bg-green-100 px-4 flex items-center justify-between">
+          <div className="flex gap-1 py-3 items-center bg-yellow-500">
             <div className="w-5 h-5 rounded-full bg-[#2563EB]"></div>
             <div className="font-normal text-xl flex font-sans">Pedia</div>
           </div>
@@ -37,9 +38,8 @@ export const UserHeader = () => {
             <div className="w-4 h-4 rounded-full bg-[#09090B]"></div>
             <div className="font-normal text-base flex font-sans">Pedia</div>
           </div>
-       
         </div>
       </div>
-    </>
+    </Container>
   );
 };
