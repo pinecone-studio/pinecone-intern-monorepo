@@ -61,7 +61,7 @@ const Page = () => {
                   Forgot password?
                 </Link>
               </div>
-              <button className="w-full h-10 bg-[#2563EB50] rounded-lg text-white my-6" data-cy="Login-Submit-Button" type="submit" disabled={isSubmitting}>
+              <button className="w-full h-10 bg-[#2563EB50] hover:bg-blue-500 rounded-lg text-white my-6" data-cy="Login-Submit-Button" type="submit" disabled={isSubmitting}>
                 Login{' '}
               </button>
             </Form>
