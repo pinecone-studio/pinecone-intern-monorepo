@@ -19,7 +19,7 @@ export const PriceDetailDialog = ()=>{
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Price Detail</DialogTitle>
+          <DialogTitle>Price Detail </DialogTitle>
           <DialogDescription>
           </DialogDescription>
         </DialogHeader >
