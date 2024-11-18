@@ -31,5 +31,6 @@ export const typeDefs = gql`
   }
   type Query {
     getAllUsers: [User!]!
+    getUserById(_id: ID!): User!
   }
 `;
