@@ -15,12 +15,17 @@ const AdminLayout = ({ children }: PropsWithChildren) => {
         <meta name="description" content={metadata.description} />
       </head>
       <body className="bg-white h-full flex flex-col">
+        
         <ApolloWrapper>
           <header className="flex-shrink-0">
             <AdminNavbar />
           </header>
 
           <main className="flex-grow p-4">{children}</main>
+          <footer className='flex-shrink-0 opacity-50 flex justify-center items-center py-5'>
+          ©2024 Copyright
+          </footer>
+          
         </ApolloWrapper>
       </body>
     </html>

@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TrashIcon } from 'lucide-react';
 import { UpdateEventComponent } from './UpdateEventComponent';
+import { AdminPagination } from './AdminDashPagination';
 
 function createData(eventName: string, artist: string, quantity: string, Vip: string, reguler: string, fanzone: string, startdate: string, sumprice: string) {
   return { eventName, artist, quantity, Vip, reguler, startdate, fanzone, sumprice };
@@ -84,7 +85,9 @@ export const AdminDashboard = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      
       </div>
+      <AdminPagination/>
     </div>
   );
 };
