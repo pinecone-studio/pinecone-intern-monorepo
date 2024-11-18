@@ -20,4 +20,7 @@ export const typeDefs = gql`
   type Mutation {
     createUser(input: UserInput!): User!
   }
+  type Query {
+    getAllUsers: [User!]!
+  }
 `;
