@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { GeneralInfiDialog } from '../../../../src/components/admin/assets/GeneralInfiDialog';
+import { GeneralInfoDialog } from '../../../../src/components/admin/dialogs/GeneralInfoDialog';
 
-describe('Admin GeneralInfoDialog', () => {
+describe('Admin General Info Dialog', () => {
   it('should render the GeneralInfoDialog', () => {
-    render(<GeneralInfiDialog />);
+    render(<GeneralInfoDialog />);
   });
 });
