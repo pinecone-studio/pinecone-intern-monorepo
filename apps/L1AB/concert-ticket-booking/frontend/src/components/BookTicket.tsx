@@ -6,8 +6,9 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
+import Link from 'next/link';
 
- export const tickets = [
+export const tickets = [
   { id: 1, name: 'Завсарын тасалбар', count: 38, price: '99’000₮', color: '#C772C4' },
   { id: 2, name: 'Арын тасалбар', count: 24, price: '89’000₮', color: '#D7D7F8' },
   { id: 3, name: 'Нүүрний тасалбар ', count: 15, price: '79’000₮', color: '#4651C9' },
@@ -25,23 +26,21 @@ export const BookTicket = () => {
   };
 
   const decrementCount = (index: number) => {
-    setCounts((prevCounts) => 
-      prevCounts.map((count, i) => 
-        i === index ? Math.max(count - 1, 0) : count
-      )
-    );
+    setCounts((prevCounts) => prevCounts.map((count, i) => (i === index ? Math.max(count - 1, 0) : count)));
   };
-  
+
   return (
-    <div className="py-10   h-screen ">
+    <div>
       <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] pb-8 px-12">
-        <Button className="bg-[#1F1F1F] h-10 w-10 text-white">
-          <FaArrowLeft />
-        </Button>
+        <Link href={`/`}>
+          <Button className="bg-[#1F1F1F] h-10 w-10 text-white">
+            <FaArrowLeft />
+          </Button>
+        </Link>
         <p className="text-2xl font-semibold text-white">Тасалбар захиалах</p>
         <p></p>
       </nav>
-      <div className="my-24 flex justify-around items-center h-fit">
+      <div className=" flex justify-around items-center py-6">
         <div>
           <StageStyle />
         </div>
