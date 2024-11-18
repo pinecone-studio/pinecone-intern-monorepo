@@ -3,9 +3,9 @@ import { Container } from './assets';
 
 export const UserHeader = () => {
   return (
-    <Container backgroundColor="bg-white">
+    <Container backgroundColor="bg-white ">
       <div className="flex items-center gap-2">
-        <div className="container bg-green-100 px-4 flex items-center justify-between">
+        <div className="container bg-green-100 px-5 flex items-center justify-between">
           <div className="flex gap-1 py-3 items-center bg-yellow-500">
             <div className="w-5 h-5 rounded-full bg-[#2563EB]"></div>
             <div className="font-normal text-xl flex font-sans">Pedia</div>
