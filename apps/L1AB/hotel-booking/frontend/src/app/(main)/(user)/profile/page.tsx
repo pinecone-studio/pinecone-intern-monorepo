@@ -1,9 +1,19 @@
-'use client'
+'use client';
 
-import { UserProfile } from '@/components/main';
+
+import { UserHeader, UserProfile } from '@/components/main';
+
 
 const UserProfilePage = () => {
-    return <UserProfile />;
+    return(
+
+    <>
+    <UserProfile />
+    <UserHeader/>
+    
+    </>
+
+    )
 };
 
 export default UserProfilePage;
