@@ -1,4 +1,4 @@
-import { TimePicker } from '@/components/TimePicker';
+import { TimePicker } from '@/components';
 import { fireEvent, render } from '@testing-library/react';
 
 describe('Time Picker', () => {

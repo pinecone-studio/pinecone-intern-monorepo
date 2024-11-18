@@ -1,6 +1,6 @@
+import { MainFooter, MainNavbar } from '@/components/maincomponents';
 import { PropsWithChildren } from 'react';
-import { MainFooter } from '@/components/MainFooter';
-import { MainNavbar } from '@/components';
+
 
 export const metadata = {
   title: 'Concert Ticket Booking',
@@ -22,7 +22,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
           <div>{children}</div>
         </main>
         <footer className="flex-shrink-0">
-          <MainFooter />
+          <MainFooter/>
         </footer>
       </body>
     </html>

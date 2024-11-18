@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BookTicket, tickets } from '@/components/BookTicket';
+import { BookTicket, tickets } from '@/components';
 
 describe('BookTicket Component', () => {
   it('should match snapshot', () => {

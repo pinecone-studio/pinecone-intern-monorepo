@@ -1,4 +1,4 @@
-import { CancelComponent } from '@/components/CancelComponent';
+import { CancelComponent } from '@/components';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { GetAllCancelBookingDocument, UpdateCancelDocument } from '@/generated';
