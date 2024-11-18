@@ -1,6 +1,6 @@
 'use client';
 
-import { Container, Event } from '@/components/maincomponents';
+import { Container, Event } from '@/components';
 
 const Page = () => {
   return (
