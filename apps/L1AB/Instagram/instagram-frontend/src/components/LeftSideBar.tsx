@@ -12,7 +12,7 @@ interface Path {
   path: string;
 }
 const paths: Path[] = [
-  { icon: <House />, title: 'Home', path: '/' },
+  { icon: <House />, title: 'Home', path: '/home' },
   { icon: <Search />, title: 'Search', path: '/search' },
   { icon: <Heart />, title: 'Notification', path: '/notification' },
   { icon: <SquarePlus />, title: <CreateDropDownMenu />, path: '/' },
@@ -23,7 +23,7 @@ export const LeftSideBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="w-[260px]  h-screen pl-4 pt-8 pb-4 border-r fixed l-0">
+    <div className="w-[260px] h-screen pl-4 pt-8 pb-4 border-r l-0">
       <div className="h-full flex flex-col">
         <div className="space-y-12 flex flex-col ">
           <div className="w-[103px] h-[29px] relative">

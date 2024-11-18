@@ -1,12 +1,12 @@
 'use client';
-
-import { SuggestCard } from "@/components/SuggestCard";
-
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 const Page = () => {
-  return <div>ass
-    <SuggestCard/>
+  const router = useRouter();
+  const pathname = usePathname();
 
-  </div>;
+  pathname === '/' && router.push('/home');
+  return <></>;
 };
 
 export default Page;
