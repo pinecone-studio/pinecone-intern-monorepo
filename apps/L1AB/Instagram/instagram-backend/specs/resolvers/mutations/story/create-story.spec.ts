@@ -5,13 +5,13 @@ const input = { userId: '1', image: 'image' };
 
 jest.mock('../../../../src/models', () => ({
   storyModel: {
-    create: jest.fn().mockResolvedValue({ id: '1' }),
+    create: jest.fn().mockResolvedValue('Success'),
   },
 }));
 
 describe('Create story', () => {
   it('should create story', async () => {
     const result = await createStory!({}, { input }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({ id: '1' });
+    expect(result).toBe('Success');
   });
 });

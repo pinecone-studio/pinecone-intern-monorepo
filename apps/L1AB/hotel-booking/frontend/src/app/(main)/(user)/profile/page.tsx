@@ -1,9 +1,15 @@
-'use client'
+'use client';
 
 import { UserProfile } from '@/components/main';
+import { Loading } from '@/components/main/assets';
 
 const UserProfilePage = () => {
-    return <UserProfile />;
+  return (
+    <>
+      <UserProfile />
+      <Loading />
+    </>
+  );
 };
 
 export default UserProfilePage;

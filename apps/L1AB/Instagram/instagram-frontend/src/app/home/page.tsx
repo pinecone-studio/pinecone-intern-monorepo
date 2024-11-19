@@ -1,7 +1,13 @@
 'use client';
 
+import NewsFeed from '@/components/NewsFeed';
+
 const Page = () => {
-  return <div>end post card story</div>;
+  return (
+    <div>
+      <NewsFeed />
+    </div>
+  );
 };
 
 export default Page;
