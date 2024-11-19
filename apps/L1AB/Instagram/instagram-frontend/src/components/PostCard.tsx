@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import { Heart } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
-import { Smile } from 'lucide-react';
+// import { Smile } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -13,10 +13,11 @@ type PropsType = {
   images: string[];
   profilePicture: string;
   caption: string;
+  keyy: number;
 };
 
-const PostCard = ({ userName, likeCount, images, profilePicture, caption }: PropsType) => {
-  const [comment, setComment] = useState('');
+const PostCard = ({ userName, likeCount, images, profilePicture, caption, keyy }: PropsType) => {
+  // const [comment, setComment] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const prev = () => {
@@ -28,8 +29,8 @@ const PostCard = ({ userName, likeCount, images, profilePicture, caption }: Prop
   };
 
   return (
-    <div>
-      <div className="w-1/4 mx-auto p-2">
+    <div data-testid={`NewsFeedPostCard-${keyy}`}>
+      <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <div className="w-10 h-10 rounded-full border overflow-hidden relative">
@@ -47,17 +48,17 @@ const PostCard = ({ userName, likeCount, images, profilePicture, caption }: Prop
             <div className="flex transition-transform ease-in-out duration-500" style={{ transform: `translateX(-${(currentImageIndex * 100) / images.length}%)` }}>
               {images.map((image, i) => {
                 return (
-                  <div key={i} className="relative w-[477px] overflow-hidden">
+                  <div key={i} className="relative w-[528px] overflow-hidden">
                     <Image className="object-cover" alt="no" src={image} fill />
                   </div>
                 );
               })}
             </div>
             <div className="absolute inset-0 flex items-center justify-between p-4">
-              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev}>
+              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev} data-testid="PrevButton">
                 <ChevronLeft size={20} />
               </button>
-              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={next} data-testid="PostCardNextButtonId">
+              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={next} data-testid="NextButton">
                 <ChevronRight size={20} />
               </button>
             </div>
