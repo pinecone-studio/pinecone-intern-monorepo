@@ -7,11 +7,16 @@ import { HeaderIcon } from '@/components/icon';
 
 export const Header = () => {
   const pathname = usePathname();
-  const paths = ['Hotels', 'Hotel Details', 'Room Details', 'Guest Info'];
-  const pathnames = (pathname ?? '').split('/').filter((path) => path);
+  const Hotelpaths = ['Hotels', 'Hotel Details', 'Room Details', 'Guest Info'];
+  const GuestPaths = ['Guests', 'Guest Info'];
+  const pathnames = pathname
+    .replace('/admin', '')
+    .split('/')
+    .filter((path) => path);
+
   return (
     <div data-testid="header" className="h-16 flex items-center px-4 gap-2">
-      <div data-testid="header-icon">
+      <div>
         <HeaderIcon />
       </div>
       <div className="h-4 border-l mr-2"></div>
@@ -23,7 +28,7 @@ export const Header = () => {
               <React.Fragment key={index}>
                 <BreadcrumbItem>
                   <BreadcrumbLink className={index === pathnames.length - 1 ? 'text-black' : ''} href={href}>
-                    {paths[index]}
+                    {href.startsWith('/hotels') ? Hotelpaths[index] : href.startsWith('/guests') ? GuestPaths[index] : ''}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 {index < pathnames.length - 1 && <BreadcrumbSeparator />}
