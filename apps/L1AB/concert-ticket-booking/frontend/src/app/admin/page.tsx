@@ -1,6 +1,6 @@
 'use client';
-import { AdminDash } from '@/components/AdminDash';
-import { Container } from '@/components/Container';
+import { AdminDash } from '@/components';
+import { Container } from '@/components';
 
 const Page = () => {
   return (

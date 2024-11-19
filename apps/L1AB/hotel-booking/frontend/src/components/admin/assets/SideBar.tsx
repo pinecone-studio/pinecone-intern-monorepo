@@ -18,14 +18,14 @@ export const SideBar = () => {
           </div>
         </div>
         <div className="m-2">
-          <Link href="/admin">
-            <div className={`w-full flex items-center p-2 gap-2 rounded-sm ${pathname === '/admin' ? 'text-black bg-gray-100' : ''} hover:text-[#334155]`}>
+          <Link href="/admin/hotels">
+            <div className={`w-full flex items-center p-2 gap-2 rounded-sm ${pathname.startsWith('/admin/hotels') ? 'text-black bg-gray-100' : ''} hover:text-[#334155]`}>
               <LightningIcon />
               <p>Hotels</p>
             </div>
           </Link>
           <Link href="/admin/guests">
-            <div className={`w-full flex items-center p-2 gap-2 rounded-sm ${pathname === '/admin/guests' ? 'text-black bg-gray-100' : ''} hover:text-[#334155]`}>
+            <div className={`w-full flex items-center p-2 gap-2 rounded-sm ${pathname.startsWith('/admin/guests') ? 'text-black bg-gray-100' : ''} hover:text-[#334155]`}>
               <LightningIcon />
               <p>Guests</p>
             </div>
