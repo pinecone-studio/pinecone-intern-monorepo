@@ -22,3 +22,4 @@ export * from './PasswordRecovery';
 export * from './RecoveryEmail';
 export * from './SearchPageComponent';
 export * from './SignUp';
+
