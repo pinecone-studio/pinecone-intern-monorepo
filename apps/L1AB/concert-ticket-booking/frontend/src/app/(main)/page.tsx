@@ -1,11 +1,13 @@
 'use client';
 
-import { Container } from '@/components/Container';
+import { Container, Event } from '@/components';
 
 const Page = () => {
   return (
     <Container>
-      <div className="text-white">Main</div>
+      <div className="text-white">
+        <Event />
+      </div>
     </Container>
   );
 };

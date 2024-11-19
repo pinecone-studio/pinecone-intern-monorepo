@@ -1,5 +1,5 @@
+import { AdminNavbar } from '@/components/admincomponents';
 import { PropsWithChildren } from 'react';
-import { AdminNavbar } from '@/components/AdminNavbar';
 
 export const metadata = {
   title: 'Admin',
