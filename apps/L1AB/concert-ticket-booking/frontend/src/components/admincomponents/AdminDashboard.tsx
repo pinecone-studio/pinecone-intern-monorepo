@@ -11,9 +11,20 @@ import { TrashIcon } from 'lucide-react';
 import { UpdateEventComponent } from './UpdateEventComponent';
 import { AdminPagination } from './AdminDashPagination';
 import { useGetAllEventsQuery } from '@/generated';
-
-export const AdminDashboard = () => {
+type AdminDashboardComponent={
+  searchValue: string;
+}
+export const AdminDashboard = ({searchValue}:AdminDashboardComponent) => {
   const {data}= useGetAllEventsQuery (); 
+  const filteredData = data?.getAllEvents.filter((item) => {
+    // Make searchValue and item fields lowercase for case-insensitive search
+    const lowerCaseSearchValue = searchValue.toLowerCase()
+
+    return (
+      item.name.toLowerCase().includes(lowerCaseSearchValue)|| // Search in event name
+      item.artistName[0].toLowerCase().includes(lowerCaseSearchValue)  
+    );
+  });
   return (
     <div className="flex flex-col gap-6 mt-9">
       <div className="border"></div>
@@ -49,31 +60,42 @@ export const AdminDashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.getAllEvents.map((item,index) => (
-                <TableRow key={index} data-testid={`get-events-${index}`} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="center">{item.artistName}</TableCell>
-                  <TableCell align="center" className="font-medium">
-                    {item.venues[0].quantity}
-                  </TableCell>     
-                  <TableCell align="center" className="font-medium">
-                    {item.venues[1].quantity}
-                  </TableCell>
-                  <TableCell align="center">{item.venues[2].quantity}</TableCell>
-                  <TableCell align="center">{item.venues[2].quantity}</TableCell>
-                  <TableCell>{item.eventDate}</TableCell>
-                  <TableCell align="center">{item.venues[2].price}₮</TableCell>
-                  <TableCell className="flex items-center gap-1">
-                    <UpdateEventComponent />
-                    <button>
-                      {' '}
-                      <TrashIcon className="bg-[#F4F4F5]  rounded p-1" />
-                    </button>
+            {filteredData?.length > 0 ? (
+                filteredData.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    data-testid={`get-events-${index}`}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
+                      {item.name}
+                    </TableCell>
+                    <TableCell align="center">{item.artistName}</TableCell>
+                    <TableCell align="center" className="font-medium">
+                      {item.venues[0].quantity}
+                    </TableCell>
+                    <TableCell align="center" className="font-medium">
+                      {item.venues[1].quantity}
+                    </TableCell>
+                    <TableCell align="center">{item.venues[2].quantity}</TableCell>
+                    <TableCell align="center">{item.venues[2].quantity}</TableCell>
+                    <TableCell>{item.eventDate}</TableCell>
+                    <TableCell align="center">{item.venues[2].price}₮</TableCell>
+                    <TableCell className="flex items-center gap-1">
+                      <UpdateEventComponent />
+                      <button>
+                        <TrashIcon className="bg-[#F4F4F5] rounded p-1" />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={9} align="center">
+                    Хайлт тохирох үр дүн олдсонгүй.
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
