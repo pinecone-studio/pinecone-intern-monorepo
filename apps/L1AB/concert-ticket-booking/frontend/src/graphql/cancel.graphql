@@ -1,0 +1,18 @@
+query GetAllCancelBooking {
+  getAllCancelBooking {
+    _id
+    bankName
+    bankAccount
+    status
+    amountTotal
+    createdAt
+    userId {
+      _id
+      name
+    }
+    eventId {
+      _id
+      name
+    }
+  }
+}
