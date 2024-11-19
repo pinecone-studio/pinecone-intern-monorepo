@@ -7,16 +7,15 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
 
+describe('Admin Side Bar', () => {
+  it('should render the admin side bar hotels path', () => {
+    usePathname.mockReturnValue('/admin/hotels');
 
-describe("Admin Side Bar", () => {
-    it("should render the admin side bar hotels path", () => {
-        usePathname.mockReturnValue('/admin');
+    render(<SideBar />);
+  });
+  it('should render the admin side bar guests path', () => {
+    usePathname.mockReturnValue('/admin/guests');
 
-        render(<SideBar />)
-    })
-    it("should render the admin side bar guests path", () => {
-        usePathname.mockReturnValue('/admin/guests');
-
-        render(<SideBar />)
-    })
-})
+    render(<SideBar />);
+  });
+});
