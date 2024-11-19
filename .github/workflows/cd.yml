@@ -56,7 +56,7 @@ jobs:
           export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
           bash ./tools/scripts/export-action-env.sh
       - name: Deploy Affected Apps to Development
-        run: yarn nx deploy-dev-action scripts
+        run: bunx nx deploy-dev-action scripts
 
   deploy-testing:
     if: github.event.pull_request.merged == true
@@ -102,7 +102,7 @@ jobs:
           export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
           bash ./tools/scripts/export-action-env.sh
       - name: Deploy Affected Apps to Development
-        run: yarn nx deploy-testing-action scripts
+        run: bunx nx deploy-testing-action scripts
 
   deploy-prod:
     if: github.event.pull_request.merged == true
@@ -148,4 +148,4 @@ jobs:
           export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
           bash ./tools/scripts/export-action-env.sh
       - name: Deploy Affected Apps to Development
-        run: yarn nx deploy-prod-action scripts
+        run: bunx nx deploy-prod-action scripts

@@ -18,7 +18,7 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
           </ApolloWrapper>
         </Suspense>
         {pathname == '/home' ? (
-          <div className="flex flex-col gap-y-4 py-10">
+          <div className="flex flex-col py-10 gap-y-4">
             <RightSideBar />
             <SuggestCard />
           </div>
