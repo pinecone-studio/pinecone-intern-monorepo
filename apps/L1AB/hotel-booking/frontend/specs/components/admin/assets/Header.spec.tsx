@@ -8,17 +8,40 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe("Admin Header", () => {
-    it("should render the admin header with breadcrumbs", () => {
-        usePathname.mockReturnValue('/admin/1/11/111');
-        
+    it('should render the admin header with hotel breadcrumbs', () => {
+      const hotelPaths = ['/admin/hotels', '/admin/hotels/1', '/admin/hotels/1/11', '/admin/hotels/1/11/111'];
+      const expectedHotelLabels = ['Hotels', 'Hotel Details', 'Room Details', 'Guest Info'];
+
+      hotelPaths.forEach((path, index) => {
+        usePathname.mockReturnValue(path);
         render(<Header />);
 
-        const breadcrumbLinks = ["Hotels", "Hotel Details", "Room Details", "Guest Info"];
-        
-        breadcrumbLinks.forEach((text) => {
-            expect(screen.getByText(text)).toBeInTheDocument();
-        });
+        expect(screen.getByText(expectedHotelLabels[index])).toBeInTheDocument();
+      });
+    });
+    it('should render the admin header with guest breadcrumbs', () => {
+      const guestPaths = ['/admin/guests', '/admin/guests/1'];
 
-        expect(screen.getByTestId('header-icon')).toBeInTheDocument();
+      const expectedGuestLabels = ['Guests', 'Guest Info'];
+
+      guestPaths.forEach((path, index) => {
+        usePathname.mockReturnValue(path);
+        render(<Header />);
+
+        expect(screen.getByText(expectedGuestLabels[index])).toBeInTheDocument();
+      });
+    });
+    it('renders only the header icon for an undefined path', () => {
+      const unknownPaths = ['/admin/unknown/path', '/admin/another/path/with/no/label', '/unknown'];
+      const unexpectedLinks = ['Hotels', 'Hotel Details', 'Guests', 'Room Details', 'Guest Info'];
+
+      unknownPaths.forEach((path) => {
+        usePathname.mockReturnValue(path);
+        render(<Header />);
+
+        unexpectedLinks.forEach((text) => {
+          expect(screen.queryByText(text)).not.toBeInTheDocument();
+        });
+      });
     });
 });
