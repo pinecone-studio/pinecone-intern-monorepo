@@ -1,26 +1,31 @@
+"use client"
+
+import { AddImage } from '@/components';
 import { DatePickerWithRange } from './DatePickerWithRange';
-import { DialogItem } from '@/components/DialogItem';
-import { TimePicker } from '@/components/TimePicker';
+import { DialogItem } from '@/components';
+import { TimePicker } from '@/components';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { PenIcon } from 'lucide-react';
+import { PlusCircleIcon } from 'lucide-react';
 
-export const UpdateEventComponent = () => {
+export const AddEventComponent = () => {
   return (
     <Dialog>
-      <DialogTrigger>
-        <PenIcon className="bg-[#F4F4F5] rounded p-1" />
+      <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff]">
+        Тасалбар Нэмэх
+        <PlusCircleIcon />
       </DialogTrigger>
       <DialogContent className=" flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">Тасалбар шинэчлэх</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold">Тасалбар Нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" />
         </DialogItem>
+        <AddImage />
         <DialogItem htmlFor="description" name="Хөтөлбөрийн тухай">
           <Textarea className="min-h-16" placeholder="Дэлгэрэнгүй мэдээлэл" name="description" />
         </DialogItem>
@@ -62,7 +67,7 @@ export const UpdateEventComponent = () => {
             <Input type="number" placeholder="Үнэ" name="openQuantity" />
           </DialogItem>
         </div>
-        <Button className="w-full">Шинэчлэх</Button>
+        <Button className="w-full">Үүсгэх</Button>
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,4 @@
-import { DatePickerWithRange } from '@/components/DatePickerWithRange';
+import { DatePickerWithRange } from '@/components';
 import { render } from '@testing-library/react';
 
 describe('Date Picker With Range', () => {

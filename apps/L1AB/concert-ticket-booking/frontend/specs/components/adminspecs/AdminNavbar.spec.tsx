@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { AdminNavbar } from '@/components/AdminNavbar';
+import { AdminNavbar } from '@/components';
 import { usePathname } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({

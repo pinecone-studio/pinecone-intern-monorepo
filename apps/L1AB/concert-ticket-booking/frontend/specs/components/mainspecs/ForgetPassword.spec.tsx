@@ -1,4 +1,4 @@
-import { ForgetPassword } from '@/components/ForgetPassword';
+import { ForgetPassword } from '@/components/maincomponents/ForgetPassword';
 import { render } from '@testing-library/react';
 
 describe('ForgetPassword', () => {
