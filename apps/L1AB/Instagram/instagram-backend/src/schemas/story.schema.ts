@@ -17,7 +17,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createStory(input: CreateStoryInput!): Story!
+    createStory(input: CreateStoryInput!): Response!
     deleteStory(_id: ID!): Response!
   }
 `;
