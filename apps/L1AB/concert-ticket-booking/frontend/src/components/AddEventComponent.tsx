@@ -1,3 +1,5 @@
+"use client"
+
 import { AddImage } from '@/components/AddImage';
 import { DatePickerWithRange } from './DatePickerWithRange';
 import { DialogItem } from '@/components/DialogItem';

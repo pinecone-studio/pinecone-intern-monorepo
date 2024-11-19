@@ -23,7 +23,6 @@ query GetAllEvents {
     discount
   }
 }
-
 mutation CreateEvent($input: EventInput!) {
   createEvent(input: $input) {
     _id

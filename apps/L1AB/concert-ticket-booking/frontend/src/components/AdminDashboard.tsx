@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,19 +10,10 @@ import Paper from '@mui/material/Paper';
 import { TrashIcon } from 'lucide-react';
 import { UpdateEventComponent } from './UpdateEventComponent';
 import { AdminPagination } from './AdminDashPagination';
+import { useGetAllEventsQuery } from '@/generated';
 
-function createData(eventName: string, artist: string, quantity: string, Vip: string, reguler: string, fanzone: string, startdate: string, sumprice: string) {
-  return { eventName, artist, quantity, Vip, reguler, startdate, fanzone, sumprice };
-}
-
-const rows = [
-  createData('Хайртай аав', 'Davaidasha', '234/300', '234/300', '234/300', '234/300', '4/10', '316’000’000'),
-  createData('Үүрд мөнх', 'Болдбаатар', '234/300', '234/300', '234/300', '234/300', '4/10', '316’000’000'),
-  createData('Only you', 'Sally', '234/300', '234/300', '234/300', '234/300', '10/23, 10/24, 10/25', '316’000’000'),
-  createData('Чамайг хүлээнэ', 'Ариунаа', '234/300', '234/300', '234/300', '234/300', '4/10', '316’000’000'),
-  createData('Эх орон', 'Хурд', '234/300', '234/300', '234/300', '234/300', '10/23, 10/24, 10/25', '316’000’000'),
-];
 export const AdminDashboard = () => {
+  const {data}= useGetAllEventsQuery (); 
   return (
     <div className="flex flex-col gap-6 mt-9">
       <div className="border"></div>
@@ -57,22 +49,22 @@ export const AdminDashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.eventName} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              {data?.getAllEvents.map((item,index) => (
+                <TableRow key={index} data-testid={`get-events-${index}`} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
-                    {row.eventName}
+                    {item.name}
                   </TableCell>
-                  <TableCell align="center">{row.artist}</TableCell>
+                  <TableCell align="center">{item.artistName}</TableCell>
                   <TableCell align="center" className="font-medium">
-                    {row.quantity}
-                  </TableCell>
+                    {item.venues[0].quantity}
+                  </TableCell>     
                   <TableCell align="center" className="font-medium">
-                    {row.Vip}
+                    {item.venues[1].quantity}
                   </TableCell>
-                  <TableCell align="center">{row.reguler}</TableCell>
-                  <TableCell align="center">{row.fanzone}</TableCell>
-                  <TableCell>{row.startdate}</TableCell>
-                  <TableCell align="center">{row.sumprice}₮</TableCell>
+                  <TableCell align="center">{item.venues[2].quantity}</TableCell>
+                  <TableCell align="center">{item.venues[2].quantity}</TableCell>
+                  <TableCell>{item.eventDate}</TableCell>
+                  <TableCell align="center">{item.venues[2].price}₮</TableCell>
                   <TableCell className="flex items-center gap-1">
                     <UpdateEventComponent />
                     <button>
