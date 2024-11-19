@@ -14,3 +14,4 @@ export * from './UserSettings';
 export * from './FilterHotels';
 export * from './Otp';
 export * from './PriceDetails';
+export * from './UserHeader';
