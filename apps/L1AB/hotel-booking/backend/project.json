@@ -20,9 +20,6 @@
         {
           "target": "codegen",
           "params": "forward"
-        },
-        {
-          "target": "get-secrets:dev"
         }
       ]
     },
