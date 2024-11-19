@@ -11,12 +11,19 @@ export const typeDefs = gql`
     createdAt: Date!
     updatedAt: Date!
   }
-  input UserInput {
+
+  type AuthResponse {
+    user: User!
+    token: String!
+  }
+
+  input SignUpUser {
     name: String!
     email: String!
     password: String!
     phone: String!
   }
+
   input UserUpdateInput {
     userId: ID!
     name: String!
@@ -24,9 +31,10 @@ export const typeDefs = gql`
     password: String!
     phone: String!
   }
-  
+
   type Mutation {
-    createUser(input: UserInput!): User!
+    signUpUser(input: SignUpUser!): AuthResponse!
+    createUser(input: SignUpUser!): User!
     updateUser(input: UserUpdateInput!): User!
   }
   type Query {
