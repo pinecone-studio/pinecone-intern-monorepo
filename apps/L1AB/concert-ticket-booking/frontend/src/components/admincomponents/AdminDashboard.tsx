@@ -77,9 +77,8 @@ export const AdminDashboard = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      
       </div>
-      <AdminPagination/>
+      <AdminPagination />
     </div>
   );
 };

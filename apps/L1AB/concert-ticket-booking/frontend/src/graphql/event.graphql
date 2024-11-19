@@ -1,13 +1,5 @@
-query Query {
-  sampleQuery
-}
-
-mutation Mutation {
-  sampleMutation
-}
-
-mutation CreateEvent($input: EventInput!) {
-  createEvent(input: $input) {
+query GetAllEvents {
+  getAllEvents {
     _id
     name
     artistName
@@ -21,5 +13,7 @@ mutation CreateEvent($input: EventInput!) {
       price
     }
     discount
+    createdAt
+    updatedAt
   }
 }

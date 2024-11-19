@@ -1,4 +1,4 @@
-import { AddImage } from '@/components/AddImage';
+import { AddImage } from '@/components';
 import { render } from '@testing-library/react';
 
 describe('AddImage', () => {

@@ -1,4 +1,4 @@
-import { UserHistory } from "@/components/UserHistory"
+import { UserHistory } from "@/components/maincomponents/UserHistory"
 import { render } from "@testing-library/react"
 
 describe('UserHistory', () => {
