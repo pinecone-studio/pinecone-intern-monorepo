@@ -17,7 +17,7 @@ describe('getProjectInfo', () => {
     };
     const mockProjectInfo = JSON.stringify(mockProject);
     const mockProjectName = 'example-project';
-    const mockCommand = `yarn nx show project ${mockProjectName}`;
+    const mockCommand = `npx nx show project ${mockProjectName}`;
 
     const mockExecSync = execSync as jest.MockedFunction<typeof execSync>;
 
