@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,19 +18,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-
-function createData(eventName: string, bankAccount: string, userName: string, sumPrice: number, createdAt: string, status: string) {
-  return { eventName, bankAccount, userName, sumPrice, createdAt, status };
-}
-
-const rows = [
-  createData('Хайртай аав', 'Голомт: 21342242294', 'И.Алтангэрэл', 182000, '2024-10-01T10:00:00Z', 'шилжүүлсэн'),
-  createData('Үүрд мөнх', 'Голомт: 21342242294', 'Ч.Сүрэнхорлоо', 220000, '2024-10-02T10:00:00Z', 'дуусгах'),
-  createData('Only you', 'Голомт: 21342242294', 'Л.Амаржаргал', 154600, '2024-10-03T10:00:00Z', 'дуусгах'),
-  createData('Чамайг хүлээнэ', 'Голомт: 21342242294', 'Ч.Солонго', 102000, '2024-10-04T10:00:00Z', 'шилжүүлсэн'),
-  createData('Эх орон', 'Голомт: 21342242294', 'Э.Биндэръяа', 286000, '2024-10-05T10:00:00Z', 'шилжүүлсэн'),
-];
+import { useGetAllCancelBookingQuery } from '@/generated';
 export const CancelComponent = () => {
+  const { data } = useGetAllCancelBookingQuery();
   return (
     <div className="flex flex-col gap-6 mt-9">
       <div className="flex flex-col items-start">
@@ -61,36 +52,38 @@ export const CancelComponent = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.eventName} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              {data?.getAllCancelBooking.map((item, index) => (
+                <TableRow data-testid={`getCancel-${index}`} key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
-                    {row.eventName}
+                    {item.eventId.name}
                   </TableCell>
-                  <TableCell align="center">{row.bankAccount}</TableCell>
+                  <TableCell align="center">
+                    {item.bankName}:{item.bankAccount}
+                  </TableCell>
                   <TableCell align="center" className="font-medium">
-                    {row.userName}
+                    {item.userId.name}
                   </TableCell>
                   <TableCell align="center" className="font-medium">
-                    {row.sumPrice.toLocaleString()}₮
+                    {item.amountTotal.toLocaleString()}₮
                   </TableCell>
-                  <TableCell align="center">{row.createdAt.slice(5, 10)}</TableCell>
+                  <TableCell align="center">{item.createdAt.slice(5, 10)}</TableCell>
                   <TableCell align="center">
                     <AlertDialog>
                       <AlertDialogTrigger>
                         <div
-                          className={`w-fit h-fit ${
-                            row.status === 'шилжүүлсэн'
-                              ? 'bg-[#F4F4F5] px-[10px] py-[2px] rounded-lg font-semibold text-xs'
+                          className={`w-fit h-fit  ${
+                            item.status === 'Шилжүүлсэн'
+                              ? 'bg-[#b1b1b1] px-[10px] py-[2px] rounded-lg font-semibold text-xs'
                               : 'bg-[#FFFFFF] text-[14px] py-2 font-medium rounded-lg  px-3 border cursor-pointer'
                           }`}
                         >
-                          {row.status}
+                          {item.status}
                         </div>
                       </AlertDialogTrigger>
                       <AlertDialogContent className="bg-[#FAFAFA]">
                         <AlertDialogHeader>
                           <AlertDialogTitle>Төлөв өөрчлөх</AlertDialogTitle>
-                          <AlertDialogDescription>{row.userName} харилцагчийн төлбөрийн буцаалтын шилжүүлсэн үү</AlertDialogDescription>
+                          <AlertDialogDescription>{item.userId.name} Харилцагчийн төлбөрийн буцаалтын шилжүүлсэн үү</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Шилжүүлээгүй</AlertDialogCancel>

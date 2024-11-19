@@ -17,7 +17,20 @@ export const typeDefs = gql`
     password: String!
     phone: String!
   }
+  input UserUpdateInput {
+    userId: ID!
+    name: String!
+    email: String!
+    password: String!
+    phone: String!
+  }
+  
   type Mutation {
     createUser(input: UserInput!): User!
+    updateUser(input: UserUpdateInput!): User!
+  }
+  type Query {
+    getAllUsers: [User!]!
+    getUserById(_id: ID!): User!
   }
 `;

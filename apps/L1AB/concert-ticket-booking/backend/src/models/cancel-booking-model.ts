@@ -40,7 +40,7 @@ const CancelSchema = new Schema({
   status: {
     type: String,
     required: true,
-    default: 'New',
+    default: 'Шилжүүлээгүй',
   },
   createdAt: {
     type: Date,
