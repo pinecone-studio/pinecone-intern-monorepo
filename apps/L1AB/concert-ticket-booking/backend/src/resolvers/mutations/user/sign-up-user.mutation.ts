@@ -5,17 +5,14 @@ import bcrypt from 'bcrypt';
 
 export const signUpUser: MutationResolvers['signUpUser'] = async (_, { input }) => {
   const { email, password } = input;
-
   const user = await userModel.findOne({ email });
 
   if (user) throw new Error('Unable to process request');
 
   const saltRounds = parseInt(process.env.SALTROUNDS as string);
-
   const salt = await bcrypt.genSalt(saltRounds);
   const hash = await bcrypt.hash(password, salt);
   const newUser = await userModel.create({ ...input, password: hash });
-
   const token = jwt.sign(
     {
       userId: newUser._id,
