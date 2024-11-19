@@ -36,7 +36,7 @@ export const addCommentIfPreviewUrlAvailable = async (
   affectedApps: string[]
 ): Promise<void> => {
   const affectedFederationServices = getAffectedFederationServices(affectedApps);
-  console.log(affectedFederationServices);
+
   if (isActionPreviewUrlAvailable(federationPreviewUrl, federationProjectsPreviewUrl, otherProjectsPreviewLinks)) {
     const previewData: (ProjectPreview | string)[] = [buildFederationPreviewUrl(federationPreviewUrl, affectedFederationServices), ...federationProjectsPreviewUrl, ...otherProjectsPreviewLinks];
     await addCommentToPullRequest(previewData as ProjectPreview[]);
@@ -52,7 +52,6 @@ export const runGeneratePreviewAction = async () => {
     const federationPreviewUrl = await handleAffectedFederationServices(affectedApps);
     const federationProjectsPreviewUrl = await handleAffectedFederationProjects(affectedApps, federationPreviewUrl);
     const otherProjectsPreviewLinks = await handleOtherProjects(affectedApps);
-    console.log('Affected projects and servicesssssssssss');
     await addCommentIfPreviewUrlAvailable(federationPreviewUrl, federationProjectsPreviewUrl, otherProjectsPreviewLinks, affectedApps);
   } catch (error) {
     handleError(error);

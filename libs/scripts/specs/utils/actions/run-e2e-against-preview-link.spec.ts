@@ -43,7 +43,7 @@ describe('doesProjectHaveE2ECommand', () => {
     mockGetProjectInfo.mockReturnValueOnce(mockProjectInfo);
 
     const result = runE2eAgainstPreviewLink.doesProjectHaveE2ECommand('test');
-    expect(result).toEqual(mockProjectInfo.targets['cypress:run']);
+    expect(result).toEqual(mockProjectInfo.targets['e2e']);
   });
 });
 
