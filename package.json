@@ -99,7 +99,7 @@
     "lodash": "4.17.21",
     "lucide-react": "0.387.0",
     "mongoose": "8.2.2",
-    "next": "13.4.1",
+    "next": "14.2.14",
     "next-cloudinary": "6.16.0",
     "next-themes": "0.3.0",
     "node-modules": "1.0.1",
