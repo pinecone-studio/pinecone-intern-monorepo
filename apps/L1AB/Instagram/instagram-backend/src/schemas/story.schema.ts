@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type Story {
     _id: ID!
-    userId: ID!
+    userId: User!
     image: String!
     views: [User!]!
     createdAt: Date!
