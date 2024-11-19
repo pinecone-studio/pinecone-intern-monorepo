@@ -18,6 +18,7 @@ export const typeDefs = gql`
   input UpdatePostInput {
     caption: String
     images: [String]
+    likeCounts: Int
   }
   type Query {
     getAllPosts: [Posts!]!
@@ -25,7 +26,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createPost(input: CreatePostInput!): Posts!
+    createPost(input: CreatePostInput!): Response!
     updatePostById(postId: ID!, input: UpdatePostInput!): Posts!
     deletePost(_id: ID!): Response!
   }
