@@ -16,3 +16,9 @@ query GetAllCancelBooking {
     }
   }
 }
+mutation UpdateCancel($input: CancelUpateInput!) {
+  updateCancel(input: $input) {
+    _id
+    status
+  }
+}

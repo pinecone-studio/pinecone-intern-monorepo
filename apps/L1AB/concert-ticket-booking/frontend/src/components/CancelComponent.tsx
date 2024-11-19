@@ -18,9 +18,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useGetAllCancelBookingQuery } from '@/generated';
+import { useGetAllCancelBookingQuery, useUpdateCancelMutation } from '@/generated';
+
 export const CancelComponent = () => {
   const { data } = useGetAllCancelBookingQuery();
+  const [updateCancel] = useUpdateCancelMutation();
+
+  const handleUpdateStatus = async (cancelId: string, status: string) => {
+    await updateCancel({
+      variables: {
+        input: { _id: cancelId, status },
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col gap-6 mt-9">
       <div className="flex flex-col items-start">
@@ -69,7 +80,7 @@ export const CancelComponent = () => {
                   <TableCell align="center">{item.createdAt.slice(5, 10)}</TableCell>
                   <TableCell align="center">
                     <AlertDialog>
-                      <AlertDialogTrigger>
+                      <AlertDialogTrigger data-testid={`click1-${index}`}>
                         <div
                           className={`w-fit h-fit  ${
                             item.status === 'Шилжүүлсэн'
@@ -86,8 +97,12 @@ export const CancelComponent = () => {
                           <AlertDialogDescription>{item.userId.name} Харилцагчийн төлбөрийн буцаалтын шилжүүлсэн үү</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Шилжүүлээгүй</AlertDialogCancel>
-                          <AlertDialogAction>Шилжүүлсэн</AlertDialogAction>
+                          <AlertDialogCancel onClick={() => handleUpdateStatus(item._id, 'Шилжүүлээгүй')} data-testid="cancelButton">
+                            Шилжүүлээгүй
+                          </AlertDialogCancel>
+                          <AlertDialogAction onClick={() => handleUpdateStatus(item._id, 'Шилжүүлсэн')} data-testid="actionButton">
+                            Шилжүүлсэн
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
