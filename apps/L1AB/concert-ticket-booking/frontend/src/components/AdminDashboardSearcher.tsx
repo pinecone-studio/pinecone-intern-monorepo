@@ -1,5 +1,4 @@
 'use client';
-import * as React from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
@@ -7,13 +6,14 @@ import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@mui/material';
 import { format } from 'date-fns';
+import { useState } from 'react';
 
 const options = ['Хурд', 'Харанга', 'Davaidasha', 'Болдбаатар', 'Ариунаа'];
 
 export const AdminSearcher = () => {
   const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(today);
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+  const [date, setDate] = useState<Date | undefined>(today);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const handleSelectChange = (value: string) => {
     setSelectedValues((prevValues) => {      
