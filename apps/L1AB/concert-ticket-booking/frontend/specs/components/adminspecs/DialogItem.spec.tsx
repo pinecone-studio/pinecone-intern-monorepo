@@ -1,4 +1,4 @@
-import { DialogItem } from '@/components/DialogItem';
+import { DialogItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { render } from '@testing-library/react';
 

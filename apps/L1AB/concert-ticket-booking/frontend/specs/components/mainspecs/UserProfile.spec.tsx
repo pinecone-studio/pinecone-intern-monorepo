@@ -1,4 +1,4 @@
-import { UserProfile } from "@/components/UserProfile"
+import { UserProfile } from "@/components/maincomponents/UserProfile"
 import { render } from "@testing-library/react"
 
 describe('UserProfile', () => {

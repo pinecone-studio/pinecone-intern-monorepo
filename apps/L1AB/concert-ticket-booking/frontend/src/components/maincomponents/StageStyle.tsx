@@ -22,7 +22,7 @@ import {
   TopMiddle,
   TopOut,
   TopSmallMiddle,
-} from './assets/icons';
+} from '../assets/icons';
 
 export const StageStyle = () => {
   return (

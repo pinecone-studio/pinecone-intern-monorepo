@@ -1,11 +1,15 @@
 'use client';
-import { AdminDash } from '@/components';
+
 import { Container } from '@/components';
+import { useParams } from 'next/navigation';
+import React from 'react';
 
 const Page = () => {
+  const { id } = useParams();
+
   return (
     <Container>
-      <AdminDash />
+      <p className="text-white">Id: {id}</p>
     </Container>
   );
 };
