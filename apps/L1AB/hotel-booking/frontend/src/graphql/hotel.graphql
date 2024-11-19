@@ -1,0 +1,60 @@
+query GetAllHotels {
+  getAllHotels {
+    _id
+    name
+    description
+    images
+    address
+    phone
+    city
+    rating
+    stars
+    createdAt
+    updatedAt
+  }
+}
+query GetHotelById($id: ID!) {
+  getHotelById(_id: $id) {
+    _id
+    name
+    description
+    images
+    address
+    phone
+    city
+    rating
+    stars
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateHotel($input: CreateHotelInput) {
+  createHotel(input: $input) {
+    _id
+    name
+    description
+    images
+    address
+    phone
+    city
+    rating
+    stars
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateHotel($input: UpdateHotelInput!) {
+  updateHotel(input: $input) {
+    _id
+    name
+    description
+    images
+    address
+    phone
+    city
+    rating
+    stars
+    createdAt
+    updatedAt
+  }
+}

@@ -21,6 +21,10 @@ export const typeDefs = gql`
     userId: ID!
     amountTotal: Int!
   }
+  input CancelUpateInput{
+    _id: ID!
+    status: String
+  }
 
   type Query {
     getAllCancelBooking: [Cancel!]!
@@ -28,5 +32,6 @@ export const typeDefs = gql`
 
   type Mutation {
     createCancel(input: CancelInput!): Cancel!
+    updateCancel(input: CancelUpateInput!): Cancel!
   }
 `;
