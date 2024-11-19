@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ["/./","/.//forget","/.//signin","/.//signup","/.//bookTicket","/.//bookTicket/[id]","/.//events","/.//events/[id]","/.//profile","/.//admin","/.//admin/cancel"]
+=======
+["/./","/.//recovery","/.//signin","/.//signup","/.//bookTicket","/.//events","/.//events/[id]","/.//profile","/.//admin","/.//admin/cancel"]
+>>>>>>> 5328f267 (feat(ticket-fe): ticketfe)
