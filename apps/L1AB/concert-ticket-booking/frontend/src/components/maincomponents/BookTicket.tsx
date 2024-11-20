@@ -3,7 +3,6 @@
 import { StageStyle } from './StageStyle';
 import { Button } from '@mui/material';
 import { FaArrowLeft } from 'react-icons/fa6';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -47,21 +46,6 @@ export const BookTicket = () => {
         <div className="bg-[#131313] rounded-2xl px-6 ">
           <div className="h-fit grid gap-2 py-6">
             <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
-            <Select>
-              <SelectTrigger className="w-[300px] text-[#FAFAFA] bg-[#27272A]">
-                <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
-              </SelectTrigger>
-              <SelectContent className="bg-[#27272A] text-[#FAFAFA]">
-                <SelectGroup>
-                  <SelectItem value="apple" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
-                    Apple
-                  </SelectItem>
-                  <SelectItem value="banana" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
-                    Banana
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
           </div>
           <div>
             {tickets.map((ticket, index) => (
