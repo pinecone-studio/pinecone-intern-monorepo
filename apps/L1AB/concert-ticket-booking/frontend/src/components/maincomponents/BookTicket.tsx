@@ -30,7 +30,7 @@ export const BookTicket = () => {
   };
 
   return (
-    <div>
+    <div data-testid="Book-Ticket-Component">
       <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] pb-8 px-12">
         <Link href={`/`}>
           <Button className="bg-[#1F1F1F] h-10 w-10 text-white">

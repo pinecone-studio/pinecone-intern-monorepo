@@ -38,18 +38,29 @@ const EventName = ({ name, description }: { name: string; description: string })
   </div>
 );
 
-const EventLocation = ({ eventDate }: { eventDate: string[] }) => (
-  <div className="flex justify-between">
-    <div className="flex gap-2 text-[#A1A1AA] items-center">
-      <FiCalendar className="w-4 h-4" />
-      <p>{eventDate}</p>
+const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
+  let formattedDate = 'No Date';
+
+  if (eventDate.length === 2) {
+    const start = eventDate[0].split('-').slice(1).join('.');
+    const end = eventDate[1].split('-').slice(1).join('.');
+    formattedDate = `${start}-${end}`;
+  } else if (eventDate.length === 1) {
+    formattedDate = eventDate[0].split('-').slice(1).join('.');
+  }
+  return (
+    <div className="flex justify-between">
+      <div className="flex gap-2 text-[#A1A1AA] items-center">
+        <FiCalendar className="w-4 h-4" />
+        <p>{formattedDate}</p>
+      </div>
+      <div className="flex gap-2 text-[#A1A1AA] items-center">
+        <IoLocationOutline className="w-4 h-4" />
+        <p>UG ARENA</p>
+      </div>
     </div>
-    <div className="flex gap-2 text-[#A1A1AA] items-center">
-      <IoLocationOutline className="w-4 h-4" />
-      <p>UG ARENA</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export const EventCard = ({ _id, name, description, eventDate, images, venues, discount }: EventCardProps) => {
   const originalPrice = venues[2]?.price || 0;
