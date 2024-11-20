@@ -29,5 +29,6 @@ export const typeDefs = gql`
     createPost(input: CreatePostInput!): Response!
     updatePostById(postId: ID!, input: UpdatePostInput!): Posts!
     deletePost(_id: ID!): Response!
+    likePost(postId: ID!, userId: ID!): Posts!
   }
 `;

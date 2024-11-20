@@ -30,6 +30,7 @@ const PostsSchema = new Schema<PostsType>({
     type: Number,
     default: 0,
     required: true,
+    min: [0, 'Like count cannot be less than 0'],
   },
   likedUsers: {
     type: [Schema.Types.ObjectId],
