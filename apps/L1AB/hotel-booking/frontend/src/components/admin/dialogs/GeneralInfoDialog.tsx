@@ -30,7 +30,7 @@ export const GeneralInfoDialog = () => {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="ghost" className="text-[#2563EB]">Edit</Button>
+          <Button className="text-blue-600 bg-white hover:bg-white">Edit</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
