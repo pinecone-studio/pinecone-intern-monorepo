@@ -1,0 +1,19 @@
+query GetAllEvents {
+  getAllEvents {
+    _id
+    name
+    artistName
+    description
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      quantity
+      price
+    }
+    discount
+    createdAt
+    updatedAt
+  }
+}

@@ -5,7 +5,7 @@ const mock = { _id: '1', userId: '1', images: ['images'], caption: 'hi', likeCou
 
 jest.mock('../../../../src/models', () => ({
   postsModel: {
-    create: jest.fn().mockResolvedValue({ toObject: () => mock }),
+    create: jest.fn().mockResolvedValue('Success'),
   },
 }));
 

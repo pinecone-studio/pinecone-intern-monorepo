@@ -1,5 +1,4 @@
-import { Container } from '@/components';
-import { BookTicket } from '@/components/BookTicket';
+import { BookTicket, Container } from '@/components';
 import React from 'react';
 
 const Page = () => {

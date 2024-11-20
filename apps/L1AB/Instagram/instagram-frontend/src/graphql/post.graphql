@@ -1,0 +1,23 @@
+query GetAllPosts {
+  getAllPosts {
+    _id
+    userId {
+      _id
+      email
+      username
+      fullname
+      gender
+      password
+      profilePicture
+      bio
+      isPrivate
+      createdAt
+      updatedAt
+    }
+    images
+    caption
+    likeCounts
+    createdAt
+    updatedAt
+  }
+}
