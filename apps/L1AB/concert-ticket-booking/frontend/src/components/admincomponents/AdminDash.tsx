@@ -5,7 +5,7 @@ import { AdminSearcher } from './AdminDashboardSearcher';
 
 export const AdminDash = () => {
   return (
-    <div className="py-9">
+    <div data-testid="Admin-Dash" className="admin-dash py-9">
       <div className="flex justify-between w-full text-center text-black h-fit">
         <div className="flex flex-col items-start gap-[1px]">
           <h3 className="text-lg">Тасалбар</h3>
