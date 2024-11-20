@@ -14,7 +14,6 @@ export const typeDefs = gql`
   }
   type Query {
     getAllStories: [[Story]]
-    getStoriesByUserId(userId: ID!): [Story!]!
   }
 
   type Mutation {
