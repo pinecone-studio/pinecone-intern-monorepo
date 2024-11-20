@@ -5,6 +5,7 @@ export const typeDefs = gql`
     _id: ID!
     userId: User!
     image: String!
+
     createdAt: Date!
   }
   input CreateStoryInput {
@@ -12,7 +13,8 @@ export const typeDefs = gql`
     image: String!
   }
   type Query {
-    getAllStories: [Story!]!
+    getAllStories: [[Story]]
+    getStoriesByUserId(userId: ID!): [Story!]!
   }
 
   type Mutation {
