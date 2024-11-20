@@ -1,9 +1,14 @@
 /* eslint-disable no-secrets/no-secrets */
 import * as previewAction from '../../../src/actions/preview/preview-action';
 import * as getAffectedApps from '../../../src/utils/affected/get-affected-apps';
+import '@testing-library/jest-dom';
 
 jest.mock('../../../src/utils/deploy-project', () => ({
   deployProject: jest.fn(),
+}));
+
+jest.mock('../../../src/utils/actions/run-e2e-against-preview-link', () => ({
+  runE2EActionAgainstPreviewLink: jest.fn(),
 }));
 
 jest.mock('../../../src/utils/federation/federation-services-action-utils', () => ({

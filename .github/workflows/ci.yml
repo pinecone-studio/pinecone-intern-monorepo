@@ -106,13 +106,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Vercel CLI
+        run: yarn global add vercel
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Cypress
+        run: yarn add cypress install
       - name: Setup Canvas
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
         run: npm rebuild canvas
-      - name: Install Cypress
-        run: yarn add cypress install
-      - name: Install Vercel CLI
-        run: yarn global add vercel
       - uses: nrwl/nx-set-shas@v4
       - name: Export NX BASE AND HEAD
         run: |
