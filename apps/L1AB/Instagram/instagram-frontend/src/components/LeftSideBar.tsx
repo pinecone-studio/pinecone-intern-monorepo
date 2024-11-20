@@ -24,12 +24,12 @@ export const LeftSideBar = () => {
 
   return (
     <div className="w-[260px] h-screen pl-4 pt-8 pb-4 border-r l-0">
-      <div className="h-full flex flex-col">
-        <div className="space-y-12 flex flex-col ">
+      <div className="flex flex-col h-full">
+        <div className="flex flex-col space-y-12 ">
           <div className="w-[103px] h-[29px] relative">
             <Image src={'/Logo.png'} alt="instagram logo" fill />
           </div>
-          <div className=" space-y-2">
+          <div className="space-y-2 ">
             {paths.map((path, index) => (
               <Link key={index} href={path.path}>
                 <div data-testid={path.path} className={`flex items-center gap-4 p-[14px] cursor-pointer group ${pathname === path.path ? 'font-bold' : 'font-light'}`}>

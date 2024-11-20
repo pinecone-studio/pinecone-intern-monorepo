@@ -17,11 +17,22 @@ export const typeDefs = gql`
     token: String!
   }
 
+  enum UserRole {
+    user
+    admin
+  }
+
   input SignUpUser {
     name: String!
     email: String!
     password: String!
     phone: String!
+    role: UserRole
+  }
+
+  input SignInUser {
+    email: String!
+    password: String!
   }
 
   input UserUpdateInput {
@@ -34,6 +45,7 @@ export const typeDefs = gql`
 
   type Mutation {
     signUpUser(input: SignUpUser!): AuthResponse!
+    signInUser(input: SignInUser!): AuthResponse!
     createUser(input: SignUpUser!): User!
     updateUser(input: UserUpdateInput!): User!
   }

@@ -4,7 +4,7 @@ export const typeDefs = gql`
   type HotelAmenities {
     _id: ID!
     hotelId: Hotel!
-    amenities: [Amenity!]!
+    amenities: [Amenity!]
   }
 
   input CreateHotelAmenitiesInput {
