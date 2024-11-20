@@ -146,7 +146,7 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress example-frontend"],
+        "commands": ["npx nx cypress instagram-frontend"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]
