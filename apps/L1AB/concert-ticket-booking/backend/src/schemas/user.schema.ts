@@ -17,11 +17,17 @@ export const typeDefs = gql`
     token: String!
   }
 
+  enum UserRole {
+    user
+    admin
+  }
+
   input SignUpUser {
     name: String!
     email: String!
     password: String!
     phone: String!
+    role: UserRole
   }
 
   input SignInUser {
