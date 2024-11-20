@@ -18,6 +18,7 @@ export const typeDefs = gql`
   input UpdatePostInput {
     caption: String
     images: [String]
+    likeCounts: Int
   }
   type Query {
     getAllPosts: [Posts!]!

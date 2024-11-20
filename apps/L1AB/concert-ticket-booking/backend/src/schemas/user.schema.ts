@@ -30,6 +30,11 @@ export const typeDefs = gql`
     role: UserRole
   }
 
+  input SignInUser {
+    email: String!
+    password: String!
+  }
+
   input UserUpdateInput {
     userId: ID!
     name: String!
@@ -40,6 +45,7 @@ export const typeDefs = gql`
 
   type Mutation {
     signUpUser(input: SignUpUser!): AuthResponse!
+    signInUser(input: SignInUser!): AuthResponse!
     createUser(input: SignUpUser!): User!
     updateUser(input: UserUpdateInput!): User!
   }

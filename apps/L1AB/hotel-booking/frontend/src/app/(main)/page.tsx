@@ -1,11 +1,12 @@
 'use client';
 
-import { HotelsGrid } from '@/components/main';
+import { HotelsGrid, PriceDetailDialog } from '@/components/main';
 
 const Page = () => {
   return (
     <>
       <HotelsGrid />
+      <PriceDetailDialog/>
     </>
   );
 };
