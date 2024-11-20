@@ -8,10 +8,10 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 export const UserHistoryDialog = () => {
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline" className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black">
+    <div >
+      <Dialog >
+        <DialogTrigger asChild >
+          <Button variant="outline" className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black" >
             Цуцлах
           </Button>
         </DialogTrigger>
@@ -25,9 +25,9 @@ export const UserHistoryDialog = () => {
           <div className="grid gap-4 py-4">
             <div className="flex items-center gap-4 justify-end text-base font-medium">
               <Label className="text-right text-white">Банк </Label>
-              <Select>
+              <Select data-cy="Profile-Select-Input">
                 <SelectTrigger className="w-[304px] text-white border-[#27272A]">
-                  <SelectValue placeholder="Сонгох" />
+                  <SelectValue placeholder="Сонгох"  />
                 </SelectTrigger>
                 <SelectContent className="text-white bg-black border-[#27272A]">
                   <SelectGroup>
@@ -43,18 +43,18 @@ export const UserHistoryDialog = () => {
               <Label htmlFor="name" className="text-right">
                 Дансны №
               </Label>
-              <Input type="number" placeholder="Дансны дугаар" className="text-[#A1A1AA] col-span-3 border-[#27272A]" />
+              <Input type="number" placeholder="Дансны дугаар" className="text-[#A1A1AA] col-span-3 border-[#27272A]" data-cy="Profile-Account-Input" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4 text-white">
               <Label htmlFor="username" className="text-right">
                 Нэр
               </Label>
-              <Input type="text" placeholder="Эзэмшигчийн нэр" className="col-span-3 text-[#A1A1AA] border-[#27272A]" />
+              <Input type="text" placeholder="Эзэмшигчийн нэр" className="col-span-3 text-[#A1A1AA] border-[#27272A]" data-cy="Profile-User-Name-Input" />
             </div>
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button type="submit" className="bg-[#18181a] hover:bg-[#00B7F4] hover:text-black px-4 py-3">
+              <Button type="submit" className="bg-[#18181a] hover:bg-[#00B7F4] hover:text-black px-4 py-3" data-cy="Profile-Submit-Button">
                 Цуцлах хүсэлт илгээх
               </Button>
             </DialogClose>

@@ -7,12 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 export const UserHistory = () => {
-
   return (
-    <div className="w-full h-fit flex flex-col gap-6 ">
+    <div className="w-full h-fit flex flex-col gap-6 " data-cy="Profile-Page-History">
       <p className="font-semibold text-2xl text-white">Захиалагчийн мэдээлэл</p>
       <div className="p-8 grid gap-4 text-[#FAFAFA] bg-[#131313] rounded-xl">
-        <div className="flex justify-between items-center text-base font-normal text-white">
+        <div className="flex justify-between items-center text-base font-normal text-white" >
           <div className="flex gap-4">
             <div className="flex gap-2">
               <p className="text-[#878787]">Захиалгын дугаар: </p>
@@ -24,9 +23,9 @@ export const UserHistory = () => {
             </div>
           </div>
           <UserHistoryDialog />
-          <div className='flex text-white items-center gap-2 text-sm font-medium'>
+          <div className="flex text-white items-center gap-2 text-sm font-medium">
             <Label>Төлөв:</Label>
-            <Button className='py-1 px-2 bg-[#27272A] '>Цуцлах хүсэлт илгээсэн</Button>
+            <Button className="py-1 px-2 bg-[#27272A] ">Цуцлах хүсэлт илгээсэн</Button>
           </div>
         </div>
         <div className="flex flex-col gap-2">
