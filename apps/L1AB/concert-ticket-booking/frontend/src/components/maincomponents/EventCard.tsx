@@ -70,7 +70,7 @@ export const EventCard = ({ _id, name, description, eventDate, images, venues, d
     router.push(`/events/${_id}`);
   };
   return (
-    <div className="w-full ">
+    <div className="w-full " data-testid="eventhaha">
       <div className="border border-[#18181B] rounded-[8px] cursor-pointer" onClick={clickHandler} data-testid="EventCardClickId">
         <div className="relative h-[250px] w-full">
           <Image src={images[0]} alt="Event image" fill className="object-cover" />
