@@ -1,6 +1,5 @@
+import { signUp } from 'apps/L1AB/hotel-booking/backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import { createUser } from 'apps/L1AB/hotel-booking/backend/src/resolvers/mutations/user/create-user';
-import { userModel } from '../../../../src/models';
 
 jest.mock('../../../../src/models', () => ({
   userModel: {
@@ -8,7 +7,7 @@ jest.mock('../../../../src/models', () => ({
       .fn()
       .mockResolvedValueOnce({
         email: 'test@gmail.com',
-        password: "hashedpassword",
+        password: "12345678",
       })
       .mockRejectedValueOnce(new Error('Failed to create user')),
   },
@@ -21,9 +20,10 @@ describe('Create user', () => {
         password: "12345678",
     };
 
-    const result = await createUser!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
+    const result = await signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
+      user: mockInput,
       success: true,
       message: 'User test@gmail.com created successfully',
     });
@@ -35,7 +35,7 @@ describe('Create user', () => {
         password: "12345678",
     };
 
-    const result = await createUser!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
+    const result = await signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       success: false,
@@ -49,7 +49,7 @@ describe('Create user', () => {
       password: "12345678",
     };
 
-    const result = await createUser!({}, { input: invalidEmailInput }, {} as any, {} as GraphQLResolveInfo);
+    const result = await signUp!({}, { input: invalidEmailInput }, {} as any, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       success: false,

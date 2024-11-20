@@ -1,3 +1,2 @@
-export * from './create-user';
+export * from './sign-up';
 export * from './delete-user';
-export * from './update-user';
