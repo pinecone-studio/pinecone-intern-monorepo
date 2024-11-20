@@ -45,7 +45,7 @@ describe('Event Component', () => {
     );
 
     // Wait for loading state to resolve
-    await waitFor(() => expect(screen.queryByText('Loading...')));
+    await waitFor(() => expect(screen.getByTestId('eventhaha')));
 
     // Check that event cards are rendered
     const eventCards = screen;

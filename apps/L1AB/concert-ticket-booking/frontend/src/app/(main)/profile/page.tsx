@@ -7,7 +7,7 @@ const Page = () => {
   return (
     <Container>
       <div className="px-28 py-12 flex gap-6 bg-[#09090B]">
-        <ForgetPassword />
+        <ForgetPassword data-cy="ForgetPasswordComponent" />
       </div>
     </Container>
   );
