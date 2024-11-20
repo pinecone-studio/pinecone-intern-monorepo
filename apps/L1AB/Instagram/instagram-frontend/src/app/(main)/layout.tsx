@@ -1,5 +1,5 @@
 'use client';
-import { createContext, PropsWithChildren, Suspense } from 'react';
+import { createContext, PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { ApolloWrapper } from '@/components/providers';
 import { LeftSideBar } from '@/components/LeftSideBar';
 import RightSideBar from '@/components/RightSideBar';
@@ -10,15 +10,20 @@ import { useGetUserByIdQuery } from '@/generated';
 export const userContext = createContext<object | null>(null);
 
 const HomeLayout = ({ children }: PropsWithChildren) => {
+  const [userId, setUserId] = useState<string | null>(null);
+
   const pathname = usePathname();
   const router = useRouter();
 
-  const userId = localStorage.getItem('userId');
-  const userToken = localStorage.getItem('userToken');
+  useEffect(() => {
+    const id = localStorage.getItem('userId');
+    const token = localStorage.getItem('userToken');
+    setUserId(id);
+    if (!token || !id) {
+      router.push('/login');
+    }
+  }, []);
 
-  if (!userToken) {
-    router.push('/login');
-  }
   const { data } = useGetUserByIdQuery({
     variables: { id: userId || '' },
   });
