@@ -1,6 +1,20 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, Schema, Types } from 'mongoose';
+import { hotelType } from './hotel.model';
 
-const roomSchema = new Schema(
+export type roomType = {
+  _id: string;
+  name: string;
+  description: string;
+  photos: string[];
+  roomNumber: string;
+  price: number;
+  roomType: string;
+  hotelId: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const roomSchema = new Schema<roomType>(
   {
     name: {
       type: String,
@@ -32,12 +46,16 @@ const roomSchema = new Schema(
       required: true,
     },
     hotelId: {
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'hotel',
       required: true,
     },
   },
   { timestamps: true }
 );
+
+export type roomPopulatedType = roomType & {
+  hotelId: hotelType
+};
 
 export const roomModel = mongoose.models.room || model('room', roomSchema);

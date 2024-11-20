@@ -1,10 +1,6 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Query {
-    getAllHotels: [Hotel!]!
-    getHotelById(_id: ID!): Hotel!
-  }
   type Hotel {
     _id: ID!
     name: String!
@@ -15,6 +11,8 @@ export const typeDefs = gql`
     city: String!
     rating: Float!
     stars: Float!
+    rooms: [Room!]
+    hotelAmenities: HotelAmenities!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -40,6 +38,11 @@ export const typeDefs = gql`
     city: String
     rating: Float
     stars: Float
+  }
+
+  type Query {
+    getAllHotels: [Hotel!]!
+    getHotelById(_id: ID!): Hotel!
   }
 
   type Mutation {
