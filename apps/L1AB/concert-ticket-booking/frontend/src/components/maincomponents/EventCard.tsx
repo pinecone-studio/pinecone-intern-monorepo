@@ -13,7 +13,7 @@ interface Venue {
 interface EventCardProps {
   _id: string;
   name: string;
-  description: string;
+  artistName: string[];
   eventDate: string[];
   images: string[];
   venues: Venue[];
@@ -31,10 +31,10 @@ const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPric
   </div>
 );
 
-const EventName = ({ name, description }: { name: string; description: string }) => (
+const EventName = ({ name, artistName }: { name: string; artistName: string }) => (
   <div>
     <h1 className="text-xl text-[#FAFAFA] w-fit">{name}</h1>
-    <h6 className="text-[16px] text-[#A1A1AA] w-fit">{description}</h6>
+    <h6 className="text-[16px] text-[#A1A1AA] w-fit">{artistName}</h6>
   </div>
 );
 
@@ -62,22 +62,19 @@ const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
   );
 };
 
-export const EventCard = ({ _id, name, description, eventDate, images, venues, discount }: EventCardProps) => {
+export const EventCard = ({ _id, name, artistName, eventDate, images, venues, discount }: EventCardProps) => {
   const originalPrice = venues[2]?.price || 0;
   const discountedPrice = discount > 0 ? Math.floor(originalPrice * (1 - discount / 100)) : originalPrice;
   const router = useRouter();
-  const clickHandler = () => {
-    router.push(`/events/${_id}`);
-  };
   return (
-    <div className="w-full " data-testid="eventhaha">
-      <div className="border border-[#18181B] rounded-[8px] cursor-pointer" onClick={clickHandler} data-testid="EventCardClickId">
+    <div className="w-full  " data-testid="eventhaha">
+      <div className="border border-[#18181B] rounded-[8px] cursor-pointer overflow-hidden" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
         <div className="relative h-[250px] w-full">
           <Image src={images[0]} alt="Event image" fill className="object-cover" />
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}
         </div>
         <div className="bg-[#131313] py-8 px-6 h-fit gap-6 grid">
-          <EventName name={name} description={description} />
+          <EventName name={name} artistName={artistName[0]} />
           {venues[2] ? <EventPrice originalPrice={originalPrice} discountedPrice={discountedPrice} discount={discount} /> : <h1 className="text-red-500">{`Don't have index 2 element :)`}</h1>}
           <EventLocation eventDate={eventDate} />
         </div>

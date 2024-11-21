@@ -1,12 +1,5 @@
-import { BookTicket, Container } from '@/components';
-import React from 'react';
-
 const Page = () => {
-  return (
-    <Container>
-      <BookTicket />
-    </Container>
-  );
+  return <div></div>;
 };
 
 export default Page;

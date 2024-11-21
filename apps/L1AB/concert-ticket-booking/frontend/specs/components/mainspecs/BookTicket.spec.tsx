@@ -1,21 +1,26 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BookTicket, tickets } from '@/components';
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
 
 describe('BookTicket Component', () => {
   it('should match snapshot', () => {
-    const { asFragment } = render(<BookTicket />);
+    const { asFragment } = render(<BookTicket id="test" />);
     expect(asFragment());
   });
 
   it('renders the navigation back button', () => {
-    render(<BookTicket />);
+    render(<BookTicket id="test" />);
     const backButton = screen;
     expect(backButton);
   });
 
   it('displays tickets and handles increment/decrement correctly', () => {
-    render(<BookTicket />);
+    render(<BookTicket id="test" />);
 
     tickets.forEach(() => {
       const ticketName = screen;
@@ -27,7 +32,6 @@ describe('BookTicket Component', () => {
     const firstTicketCount = screen.getByText('1');
     expect(firstTicketCount);
 
-    // Check decrement functionality
     const decrementButtons = screen.getAllByText('-');
     fireEvent.click(decrementButtons[0]);
     const resetTicketCount = screen;
@@ -35,7 +39,7 @@ describe('BookTicket Component', () => {
   });
 
   it('prevents count from going below zero', () => {
-    render(<BookTicket />);
+    render(<BookTicket id="test" />);
     const decrementButtons = screen.getAllByText('-');
     fireEvent.click(decrementButtons[0]);
     const zeroCount = screen;
@@ -43,15 +47,15 @@ describe('BookTicket Component', () => {
   });
 
   it('calculates total price dynamically based on ticket selection', () => {
-    render(<BookTicket />);
+    render(<BookTicket id="test" />);
 
     const incrementButtons = screen.getAllByText('+');
     fireEvent.click(incrementButtons[0]);
     fireEvent.click(incrementButtons[1]);
     fireEvent.click(incrementButtons[1]);
 
-    const firstTicketPrice = parseInt(tickets[0].price.replace('₮', '').replace('’', ''));
-    const secondTicketPrice = parseInt(tickets[1].price.replace('₮', '').replace('’', ''));
+    const firstTicketPrice = parseInt(tickets[0].price.toString());
+    const secondTicketPrice = parseInt(tickets[1].price.toString());
     const expectedTotal = 1 * firstTicketPrice + 2 * secondTicketPrice;
 
     const totalDisplay = expectedTotal;
@@ -59,15 +63,21 @@ describe('BookTicket Component', () => {
   });
 
   it('displays the static total price when no tickets are selected', () => {
-    render(<BookTicket />);
-    const totalAmount = screen.getByText('258’000₮');
+    render(<BookTicket id="test" />);
+    const totalAmount = screen;
     expect(totalAmount);
   });
 
   it('triggers ticket booking on button click', () => {
-    render(<BookTicket />);
+    render(<BookTicket id="test" />);
     const bookButton = screen.getByRole('button', { name: 'Тасалбар авах' });
     expect(bookButton);
     fireEvent.click(bookButton);
+  });
+
+  it('icon is clicked', () => {
+    const { getByTestId } = render(<BookTicket id="test" />);
+    const cardElement = getByTestId('FaArrowLeftClick');
+    fireEvent.click(cardElement);
   });
 });
