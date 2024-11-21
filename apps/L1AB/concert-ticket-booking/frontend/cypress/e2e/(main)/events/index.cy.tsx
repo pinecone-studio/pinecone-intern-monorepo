@@ -1,5 +1,5 @@
 describe(' events Page', () => {
-  it('Should render events page', () => {
+  it('1.Should render events page', () => {
     cy.visit('/events');
   });
 });
