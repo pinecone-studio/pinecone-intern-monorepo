@@ -6,3 +6,4 @@ export * from './MailIcon';
 export * from './PhoneIcon';
 export * from './HeadPhoneIcon';
 export * from './FooterLogo';
+export * from './CalendarIcon';

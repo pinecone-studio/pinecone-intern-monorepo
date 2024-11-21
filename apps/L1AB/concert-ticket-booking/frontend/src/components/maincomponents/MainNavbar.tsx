@@ -20,7 +20,7 @@ export const MainNavbar = () => {
   ];
 
   return (
-    <div className=" py-6 px-12 flex justify-between">
+    <div className=" py-6 px-12 flex justify-between border-b border-[#27272A]">
       <Link href={`/`}>
         <div className="flex items-center">
           <GoDotFill className="w-8 h-8 text-[#00B7F4]" />

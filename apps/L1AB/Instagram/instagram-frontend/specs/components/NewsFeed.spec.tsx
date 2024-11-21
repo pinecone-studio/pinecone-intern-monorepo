@@ -21,7 +21,6 @@ const mock: MockedResponse = {
           userId: '1',
           images: ['/https://picsum.photos/900/890', '/https://picsum.photos/900/890'],
           caption: 'caption',
-          likeCounts: 1,
           createdAt: 'date',
           updatedAt: 'date',
         },

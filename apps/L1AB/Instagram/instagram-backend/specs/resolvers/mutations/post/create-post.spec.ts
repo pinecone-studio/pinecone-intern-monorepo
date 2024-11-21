@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { createPost } from '../../../../src/resolvers/mutations';
 
-const mock = { _id: '1', userId: '1', images: ['images'], caption: 'hi', likeCounts: 1, createdAt: new Date(), updatedAt: new Date() };
+const mock = { _id: '1', userId: '1', images: ['images'], caption: 'hi', createdAt: new Date(), updatedAt: new Date() };
 
 jest.mock('../../../../src/models', () => ({
   postsModel: {

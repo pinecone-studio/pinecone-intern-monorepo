@@ -6,8 +6,8 @@ import { ProfilePageFirstPost } from './ProfilePageFirstPost';
 
 export const styles = {
   button: 'bg-white hover:bg-white text-[#2563EB] font-medium leading-5 text-[14px] outline-none',
-  selected: 'flex gap-[7px] items-center py-[17px] border-t-[1.5px] border-[#09090B] text-[#09090B]',
-  notSelected: 'flex gap-[7px] items-center py-[17px] text-[#71717A]',
+  selected: 'flex gap-[7px] items-center py-[17px] border-t-[1.5px] border-[#09090B] text-[#09090B] cursor-pointer',
+  notSelected: 'flex gap-[7px] items-center py-[17px] text-[#71717A] cursor-pointer',
   line: 'border-[#E4E4E7] border-t-[1px] w-[935px] flex justify-center uppercase gap-12',
   imageContainer: 'relative size-[309px]',
   postsContainer: 'grid grid-cols-3 gap-1',
