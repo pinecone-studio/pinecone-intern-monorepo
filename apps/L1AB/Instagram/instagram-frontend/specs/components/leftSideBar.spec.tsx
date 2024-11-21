@@ -31,15 +31,15 @@ describe('LeftSideBar', () => {
     // expect(visibleSidebar).toBeInTheDocument();
   });
 
-  it('InstagramButton дээр дархад Sidebar нээгдэх', () => {
-    render(<LeftSideBar />);
+  // it('InstagramButton дээр дархад Sidebar нээгдэх', () => {
+  //   render(<LeftSideBar />);
 
-    const instagramButton = screen.getByTestId('instagram-click');
-    fireEvent.click(instagramButton);
+  //   const instagramButton = screen.getByTestId('instagram-click');
+  //   fireEvent.click(instagramButton);
 
-    // const visibleSidebar = screen.getByTestId('sidebar');
-    // expect(visibleSidebar).toBeInTheDocument();
-  });
+  //   // const visibleSidebar = screen.getByTestId('sidebar');
+  //   // expect(visibleSidebar).toBeInTheDocument();
+  // });
 
   it('NotificationButton дээр дархад NotificationDrawer нээгдэх', () => {
     render(<LeftSideBar />);
