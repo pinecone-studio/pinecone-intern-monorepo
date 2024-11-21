@@ -1,12 +1,11 @@
-import { AdminDash, } from "@/components";
-import { GetAllEventsDocument } from "@/generated";
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { render, waitFor } from "@testing-library/react";
-
+import { AdminDash } from '@/components';
+import { GetAllEventsDocument } from '@/generated';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { render, waitFor } from '@testing-library/react';
 
 const mock: MockedResponse = {
   request: {
-    query: GetAllEventsDocument, 
+    query: GetAllEventsDocument,
   },
   result: {
     data: {
@@ -18,24 +17,15 @@ const mock: MockedResponse = {
           description: 'Event description',
           eventDate: '2022-01-01',
           eventTime: '18:00',
-          images: ['image_url_1', 'image_url_2'], 
+          images: ['image_url_1', 'image_url_2'],
           venues: [
-            {
-              name: 'VIP',
-              quantity: 100,
-              price: 100, 
-            },
-            {
-                name: 'fanzone',
-                quantity: 100,
-                price: 100, 
-              },{
-                name: 'regular',
-                quantity: 100,
-                price: 100, 
-              },
+            { name: 'Venue A', quantity: 100, price: 50 },
+            { name: 'Venue B', quantity: 150, price: 70 },
+            { name: 'Venue B', quantity: 150, price: 70 },
           ],
-          discount: 10, 
+          discount: 10,
+          createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-14T06:24:52.763Z',
         },
       ],
     },
@@ -43,16 +33,14 @@ const mock: MockedResponse = {
 };
 describe('AdminDash', () => {
   it('should render successfully', async () => {
-    const {getByTestId}=
-    render(
+    const { getByTestId } = render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <AdminDash />
       </MockedProvider>
     );
-    await waitFor(()=>{
-      const table = getByTestId('get-events-0')
-      expect(table)
-    })
+    await waitFor(() => {
+      const table = getByTestId('get-events-0');
+      expect(table);
+    });
   });
 });
-
