@@ -2,6 +2,7 @@
 import { AnimationControls, motion } from 'framer-motion';
 import NavigationLink from './NavigationLink';
 import { Annoyed } from 'lucide-react';
+import Link from 'next/link';
 
 interface ProfileProps {
   isOpen: boolean;
@@ -9,7 +10,7 @@ interface ProfileProps {
 }
 export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
   return (
-    <>
+    <Link href={'/profile'}>
       <NavigationLink name={isOpen ? '' : 'Profile'}>
         <Annoyed className="stroke-inherit stroke-[1.5] min-w-6 w-6 group">
           <motion.path
@@ -21,6 +22,6 @@ export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
           />
         </Annoyed>
       </NavigationLink>
-    </>
+    </Link>
   );
 };
