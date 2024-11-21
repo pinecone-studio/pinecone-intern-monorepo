@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import { UserContact } from '@/components/main';
 const UserContactPage = () => {
-    return <UserContact />;
+  return <UserContact />;
 };
 
 export default UserContactPage;
