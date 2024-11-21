@@ -67,9 +67,8 @@ export const EventCard = ({ _id, name, artistName, eventDate, images, venues, di
   const discountedPrice = discount > 0 ? Math.floor(originalPrice * (1 - discount / 100)) : originalPrice;
   const router = useRouter();
   return (
-    <div className="w-full " data-testid="eventhaha">
-      router.push(`/events/${_id}`);
-      <div className="border border-[#18181B] rounded-[8px] cursor-pointer" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
+    <div className="w-full  " data-testid="eventhaha">
+      <div className="border border-[#18181B] rounded-[8px] cursor-pointer overflow-hidden" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
         <div className="relative h-[250px] w-full">
           <Image src={images[0]} alt="Event image" fill className="object-cover" />
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}

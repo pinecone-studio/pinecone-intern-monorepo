@@ -6,11 +6,11 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 const Page = () => {
-  const { _id } = useParams();
+  const { id } = useParams();
 
   return (
     <Container>
-      <EventDetails _id={_id} />
+      <EventDetails id={id} />
     </Container>
   );
 };

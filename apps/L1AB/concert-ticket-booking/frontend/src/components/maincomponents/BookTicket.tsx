@@ -6,9 +6,10 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface BookTicketProps {
-  _id: string | string[];
+  id: string | string[];
 }
 
 export const tickets = [
@@ -17,7 +18,7 @@ export const tickets = [
   { id: 3, name: 'Нүүрний тасалбар ', count: 15, price: 79000, color: '#4651C9' },
 ];
 
-export const BookTicket = ({ _id }: BookTicketProps) => {
+export const BookTicket = ({ id }: BookTicketProps) => {
   const [counts, setCounts] = useState<number[]>(tickets.map(() => 0));
 
   const incrementCount = (index: number) => {
@@ -39,7 +40,7 @@ export const BookTicket = ({ _id }: BookTicketProps) => {
   return (
     <div data-testid="Book-Ticket-Component">
       <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] pb-8 px-12">
-        <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${_id}`)}>
+        <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
           <FaArrowLeft />
         </Button>
         <p className="text-2xl font-semibold text-white">Тасалбар захиалах</p>
@@ -51,7 +52,22 @@ export const BookTicket = ({ _id }: BookTicketProps) => {
         </div>
         <div className="bg-[#131313] rounded-2xl px-6">
           <div className="h-fit grid gap-2 py-6">
-            <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
+            <p className="opacity-50 text-white ">Тоглолт үзэх өдрөө сонгоно уу.</p>
+            <Select>
+              <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none">
+                <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#27272A] text-[#FAFAFA]">
+                <SelectGroup>
+                  <SelectItem value="apple" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
+                    Apple
+                  </SelectItem>
+                  <SelectItem value="banana" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
+                    Banana
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div>
             {tickets.map((ticket, index) => (

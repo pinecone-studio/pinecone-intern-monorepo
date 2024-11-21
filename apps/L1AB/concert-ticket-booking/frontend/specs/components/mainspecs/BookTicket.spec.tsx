@@ -32,7 +32,6 @@ describe('BookTicket Component', () => {
     const firstTicketCount = screen.getByText('1');
     expect(firstTicketCount);
 
-    // Check decrement functionality
     const decrementButtons = screen.getAllByText('-');
     fireEvent.click(decrementButtons[0]);
     const resetTicketCount = screen;

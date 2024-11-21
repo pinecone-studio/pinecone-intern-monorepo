@@ -2,13 +2,13 @@
 import { BookTicket, Container } from '@/components';
 import { useParams } from 'next/navigation';
 
-const page = () => {
-  const { _id } = useParams();
+const Page = () => {
+  const { id } = useParams();
   return (
     <Container>
-      <BookTicket _id={_id} />
+      <BookTicket id={id} />
     </Container>
   );
 };
 
-export default page;
+export default Page;
