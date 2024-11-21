@@ -2,7 +2,11 @@ import CheckPoint from '@/components/maincomponents/CheckPoint';
 import React from 'react';
 
 const Page = () => {
-  return <CheckPoint footerText="Амжилттай үүсгэлээ." />;
+  return (
+    <div>
+      <CheckPoint footerText="Амжилттай үүсгэлээ." />;
+    </div>
+  );
 };
 
 export default Page;

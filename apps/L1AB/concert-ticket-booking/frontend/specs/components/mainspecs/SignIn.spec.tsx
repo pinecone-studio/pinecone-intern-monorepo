@@ -2,7 +2,7 @@ import SignIn from '@/components/maincomponents/SignIn';
 import { render } from '@testing-library/react';
 
 describe('SignIn-Page', () => {
-  it('should render RecoveryEmail', async () => {
+  it('should render Signin', async () => {
     render(
       <SignIn
         header="Нэвтрэх"
