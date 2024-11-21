@@ -22,8 +22,8 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({ header, passwordLab
             <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]">{header}</p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px]">
-            <PasswordInput id="password" label={passwordLabel} dataCy="SignUp-Password-Input" />
-            <PasswordInput id="password" label={comfirmPasswordLabel} dataCy="SignUp-Password-Input" />
+            <PasswordInput id="password" label={passwordLabel} dataCy="PasswordRecovery-Input" />
+            <PasswordInput id="password" label={comfirmPasswordLabel} dataCy="PasswordRecovery-comfirm-Input" />
             <Button
               data-cy="PasswordRecovery-Submit-Button"
               className="flex h-9 py-2 px-4 items-center w-full gap-2 self-stretch rounded-[6px] bg-[#00B7F4] shadow-sm text-[#18181B] hover:text-[#000000] hover:bg-[#54d0f9]"

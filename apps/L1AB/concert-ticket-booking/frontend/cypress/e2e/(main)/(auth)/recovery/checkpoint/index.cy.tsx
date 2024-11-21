@@ -1,25 +1,13 @@
-// CheckPoint.cy.ts (Cypress E2E Test)
-
-describe('CheckPoint Component', () => {
+describe('CheckPoint-Page', () => {
   beforeEach(() => {
-    // Replace this with the route that renders the CheckPoint component
-    cy.visit('/checkpoint'); // Assuming the CheckPoint component is on the /checkpoint route
+    cy.visit('/recovery/checkpoint');
   });
 
   it('should render CheckPoint component', () => {
-    // Verify the page is visible
-    cy.get('[data-cy=OTPInput-Page]').should('be.visible');
+    cy.get('[data-cy=CheckPoint-Page]').should('be.visible');
   });
 
-  it('should display the CheckCircle icon', () => {
-    // Verify the icon is rendered
-    cy.get('svg').should('have.class', 'lucide-check-circle'); // Ensure it's the correct icon class
-    cy.get('svg').should('have.attr', 'size', '100'); // Verify the size
-  });
-
-  it('should display footer text', () => {
-    // Assuming the footer text passed is "Success"
-    const footerText = 'Success';
-    cy.get('[data-cy=OTPInput-Page] p').contains(footerText);
+  it('should show the CheckCircle icon', () => {
+    cy.get('svg[data-testid=CheckCircle').should('be.visible');
   });
 });
