@@ -19,7 +19,7 @@ export const SearchPageComponent = () => {
   if (loading) {
     return (
       <div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 px-28 py-12">
           <Skeleton className="w-[233px] h-[42px] bg-gray-900"></Skeleton>
           <Skeleton className="w-[280px] h-[42px] bg-gray-900"></Skeleton>
         </div>
@@ -43,9 +43,9 @@ export const SearchPageComponent = () => {
   });
 
   return (
-    <div className="text-white flex flex-col" data-testid="searchpagecomponent" data-cy="getEvents">
-      <div className="flex gap-2 items-center">
-        <div className="py-1 px-2 border border-[#FAFAFA] flex justify-center items-center rounded-lg">
+    <div className="text-white flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
+      <div className="flex gap-2 items-center px-28">
+        <div className="py-1 px-2 border border-[#27272A] flex justify-center items-center rounded-lg">
           <input
             data-cy="Search-Events"
             className="py-1 px-3 bg-[#09090B] text-[#A1A1AA] outline-none"
@@ -60,7 +60,12 @@ export const SearchPageComponent = () => {
         <div className="flex items-center gap-2">
           <Popover>
             <PopoverTrigger asChild>
-              <Button data-testid="calendar-button" data-cy="Search-Date-Events" variant="outline" className="w-[280px] justify-start text-left font-normal', !date && 'text-muted-foreground">
+              <Button
+                data-testid="calendar-button"
+                data-cy="Search-Date-Events"
+                variant="outline"
+                className="w-[280px] border border-[#27272A] justify-start text-left font-normal', !date && 'text-muted-foreground"
+              >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date ? format(date, 'PPP') : 'Pick a date'}
               </Button>
@@ -83,7 +88,7 @@ export const SearchPageComponent = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 py-12">
+      <div className="grid grid-cols-3 gap-8 py-24 px-28">
         {searchedData?.length ? searchedData.map((event) => <EventCard key={event._id} {...event} />) : <p className="text-[#A1A1AA] text-2xl col-span-3 text-center">Тохирох үйл явдал олдсонгүй.</p>}
       </div>
     </div>

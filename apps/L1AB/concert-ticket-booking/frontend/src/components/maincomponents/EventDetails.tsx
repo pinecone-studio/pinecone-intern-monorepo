@@ -21,8 +21,8 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }
   return (
-    <div>
-      <div className="relative h-[250px] w-full">
+    <div data-cy="event-details">
+      <div className="relative h-[250px] w-full" data-cy="event-details">
         <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} className="object-cover" />
         <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2 ">
           <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.artistName[0]}</p>

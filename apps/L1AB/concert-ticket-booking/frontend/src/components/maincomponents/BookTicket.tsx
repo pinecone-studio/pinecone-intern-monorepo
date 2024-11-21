@@ -39,7 +39,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
 
   return (
     <div data-testid="Book-Ticket-Component">
-      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] pb-8 px-12">
+      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12">
         <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
           <FaArrowLeft />
         </Button>
