@@ -31,7 +31,7 @@ const SignUp: React.FC<SignUpProps> = ({ header, emailLabel, nameLabel, phoneLab
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px]">
             <FormInput id="name" label={nameLabel} type="name" placeholder="Your name here ..." dataCy="SignUp-Name-Input" />
-            <FormInput id="phone" label={phoneLabel} type="phone" placeholder="Your phone number here ..." dataCy="SignUp-Phone-Input" />
+            <FormInput id="phone" label={phoneLabel} type="number" placeholder="Your phone number here ..." dataCy="SignUp-Phone-Input" />
             <FormInput id="email" label={emailLabel} type="email" placeholder="name@example.com" dataCy="SignUp-Email-Input" />
             <PasswordInput id="password" label={passwordLabel} dataCy="SignUp-Password-Input" />
             <PasswordInput id="password" label={comfirmPasswordLabel} dataCy="SignUp-Password-Input" />
