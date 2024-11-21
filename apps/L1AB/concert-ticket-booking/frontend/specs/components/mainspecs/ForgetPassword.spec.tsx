@@ -1,8 +1,12 @@
 import { ForgetPassword } from '@/components/maincomponents/ForgetPassword';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 describe('ForgetPassword', () => {
   it('should render successfully', async () => {
-    render(<ForgetPassword />);
+    const { getByTestId } = render(<ForgetPassword />);
+    const eyeOne = getByTestId('eyeOne-btn');
+    fireEvent.click(eyeOne)
+    const eyeTwo = getByTestId('eyeTwo-btn');
+    fireEvent.click(eyeTwo)
   });
 });
