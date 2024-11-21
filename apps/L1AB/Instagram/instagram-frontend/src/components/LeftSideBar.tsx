@@ -1,50 +1,116 @@
 'use client';
-import { Heart, House, Menu, SquarePlus, Search } from 'lucide-react';
-import { CreateDropDownMenu } from './CreateDropDownMenu';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { Profile } from './Profile';
-import Image from 'next/image';
 
-interface Path {
-  icon: React.ReactNode;
-  title: string | React.ReactNode;
-  path: string;
-}
-const paths: Path[] = [
-  { icon: <House />, title: 'Home', path: '/home' },
-  { icon: <Search />, title: 'Search', path: '/search' },
-  { icon: <Heart />, title: 'Notification', path: '/notification' },
-  { icon: <SquarePlus />, title: <CreateDropDownMenu />, path: '/' },
-  { icon: <Profile />, title: 'Profile', path: '/profile' },
-];
+import { useEffect, useState } from 'react';
+import { motion, useAnimationControls } from 'framer-motion';
+import { SearchDrawer } from './SearchDrawer';
+import { MoreButton } from './MoreButton';
+import { InstagramButton } from './InstagramButton';
+import { NotificationDrawer } from './NotificationDrawer';
+import { CreateButton } from './CreateButton';
+import { NotificationButton } from './NotificationButton';
+import { SearchButton } from './SearchButton';
+import { HomeButton } from './HomeButton';
+import { ProfileButton } from './ProfileButton';
+
+const containerVariants = {
+  close: {
+    width: '5rem',
+    transition: {
+      type: 'spring',
+      damping: 15,
+      duration: 0.5,
+    },
+  },
+  open: {
+    width: '20rem',
+    transition: {
+      type: 'spring',
+      damping: 15,
+      duration: 0.5,
+    },
+  },
+};
 
 export const LeftSideBar = () => {
-  const pathname = usePathname();
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+
+  const containerControls = useAnimationControls();
+  const svgControls = useAnimationControls();
+
+  const toggleSearchDrawer = () => {
+    if (isSideBarOpen && notifOpen) {
+      setIsSideBarOpen(true);
+      setNotifOpen(false);
+      setSearchOpen((prev) => !prev);
+    } else {
+      setIsSideBarOpen(!isSideBarOpen);
+      setNotifOpen(false);
+      setSearchOpen((prev) => !prev);
+    }
+  };
+
+  const toggleNotificationDrawer = () => {
+    if (isSideBarOpen && searchOpen) {
+      setIsSideBarOpen(true);
+      setSearchOpen(false);
+      setNotifOpen((prev) => !prev);
+    } else {
+      setIsSideBarOpen(!isSideBarOpen);
+      setSearchOpen(false);
+      setNotifOpen((prev) => !prev);
+    }
+  };
+
+  const toggleHomeDrawer = async () => {
+    setIsSideBarOpen(false);
+    setSearchOpen(false);
+    setNotifOpen(false);
+  };
+
+  useEffect(() => {
+    if (isSideBarOpen) {
+      containerControls.start('close');
+      svgControls.start('close');
+    } else {
+      containerControls.start('open');
+      svgControls.start('open');
+    }
+  }, [isSideBarOpen]);
 
   return (
-    <div className="w-[260px] h-screen pl-4 pt-8 pb-4 border-r l-0">
-      <div className="flex flex-col h-full">
-        <div className="flex flex-col space-y-12 ">
-          <div className="w-[103px] h-[29px] relative">
-            <Image src={'/Logo.png'} alt="instagram logo" fill />
-          </div>
-          <div className="space-y-2 ">
-            {paths.map((path, index) => (
-              <Link key={index} href={path.path}>
-                <div data-testid={path.path} className={`flex items-center gap-4 p-[14px] cursor-pointer group ${pathname === path.path ? 'font-bold' : 'font-light'}`}>
-                  <div>{path.icon}</div>
-                  <p>{path.title}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="flex gap-4 p-[14px] mt-auto b-0">
-          <Menu />
-          <p className="font-light">More</p>
-        </div>
+    <div>
+      <div>
+        <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} />
+        <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
       </div>
+      <motion.nav
+        data-testid="sidebar"
+        variants={containerVariants}
+        initial="close"
+        animate={containerControls}
+        className={`flex flex-col z-50 gap-20 p-4 fixed top-0 left-0 h-full  z-100 bg-white ${isSideBarOpen ? 'shadow shadow-neutral-200' : 'border'}`}
+      >
+        <div onClick={toggleHomeDrawer}>
+          <InstagramButton isOpen={isSideBarOpen} />
+        </div>
+
+        <div className="space-y-3">
+          <div onClick={toggleHomeDrawer}>
+            <HomeButton svgControls={svgControls} isOpen={isSideBarOpen} />
+          </div>
+          <SearchButton handleOpenClose={toggleSearchDrawer} svgControls={svgControls} isOpen={isSideBarOpen} />
+          <NotificationButton handleOpenClose={toggleNotificationDrawer} svgControls={svgControls} isOpen={isSideBarOpen} />
+          <CreateButton isOpen={isSideBarOpen} svgControls={svgControls} />
+          <div onClick={toggleHomeDrawer}>
+            <ProfileButton svgControls={svgControls} isOpen={isSideBarOpen} />
+          </div>
+        </div>
+        <div className="mt-auto">
+          <MoreButton isOpen={isSideBarOpen} svgControls={svgControls} />
+        </div>
+      </motion.nav>
     </div>
   );
 };
