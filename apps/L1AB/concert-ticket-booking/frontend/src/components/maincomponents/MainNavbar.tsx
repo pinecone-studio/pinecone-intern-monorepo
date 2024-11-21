@@ -34,23 +34,11 @@ export const MainNavbar = () => {
           <Link className=" text-white flex relative items-center text-sm" href={`/events`}>
             <LuSearch className="w-6 h-6" />
           </Link>
-
-          <div className="text-white text-sm font-medium flex gap-4">
-            <Link className=" text-white flex relative items-center text-sm" href={`/search`}>
-              <LuSearch className="w-6 h-6" />
+          {paths.map((path) => (
+            <Link href={path.path} key={path.name}>
+              <Button className={`border border-[#27272A] py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black  ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>{path.name}</Button>
             </Link>
-
-            <div className="text-white text-sm font-medium flex gap-4">
-              <Link className=" text-white flex relative items-center text-sm" href={`/search`}>
-                <LuSearch className="w-6 h-6" />
-              </Link>
-              {paths.map((path) => (
-                <Link href={path.path} key={path.name}>
-                  <Button className={`border border-[#27272A] py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black  ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>{path.name}</Button>
-                </Link>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </Container>

@@ -1,7 +1,6 @@
 'use client';
 import { useGetAllEventsQuery } from '@/generated';
 import { EventCard } from './EventCard';
-import { EventCardSkeleton } from './EventCardSkeleton';
 import { LuSearch } from 'react-icons/lu';
 import { useState } from 'react';
 import { Calendar } from '@/components/ui/calendar';
@@ -10,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { CalendarIcon, XIcon } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
+import { EventCardSkeleton } from './Skeletons/EventCardSkeleton';
 
 export const SearchPageComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
