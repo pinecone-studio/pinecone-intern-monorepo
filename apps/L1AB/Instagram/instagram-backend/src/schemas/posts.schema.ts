@@ -6,7 +6,6 @@ export const typeDefs = gql`
     userId: User!
     images: [String!]!
     caption: String!
-    likeCounts: Int!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -18,7 +17,6 @@ export const typeDefs = gql`
   input UpdatePostInput {
     caption: String
     images: [String]
-    likeCounts: Int
   }
   type Query {
     getAllPosts: [Posts!]!
@@ -29,6 +27,5 @@ export const typeDefs = gql`
     createPost(input: CreatePostInput!): Response!
     updatePostById(postId: ID!, input: UpdatePostInput!): Posts!
     deletePost(_id: ID!): Response!
-    likePost(postId: ID!, userId: ID!): Posts!
   }
 `;

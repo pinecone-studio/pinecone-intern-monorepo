@@ -17,4 +17,17 @@ describe('Sign-In-Page', () => {
     cy.get('[data-cy=Sign-In-Password-Input]').type('test');
     cy.get('[data-cy=Sign-In-Password-Input-Icons]').click();
   });
+  it('Should toggle password visibility when the toggle button is clicked', () => {
+    cy.get('[data-cy=Sign-In-Password-Input]').type('password123');
+
+    cy.get('[data-cy=Sign-In-Password-Input]').should('have.attr', 'type', 'password');
+
+    cy.get('[data-cy=Sign-In-Password-Input-Icons]').click();
+
+    cy.get('[data-cy=Sign-In-Password-Input]').should('have.attr', 'type', 'text');
+
+    cy.get('[data-cy=Sign-In-Password-Input-Icons]').click();
+
+    cy.get('[data-cy=Sign-In-Password-Input]').should('have.attr', 'type', 'password');
+  });
 });

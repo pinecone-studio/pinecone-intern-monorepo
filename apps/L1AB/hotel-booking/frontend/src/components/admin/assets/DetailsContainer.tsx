@@ -19,7 +19,7 @@ export const DetailsContainer = ({ children, name }: DContainerProps) => {
         </Link>
         <span className="text-lg font-semibold">{name}</span>
       </div>
-      <div className="flex w-full gap-4">{children}</div>
+      <div className="flex w-full gap-4 mb-4">{children}</div>
     </div>
   );
 };
