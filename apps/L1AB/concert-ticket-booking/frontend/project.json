@@ -58,7 +58,7 @@
         "buildTarget": "ticket-frontend:build:production"
       }
     },
-    "test": {
+     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
