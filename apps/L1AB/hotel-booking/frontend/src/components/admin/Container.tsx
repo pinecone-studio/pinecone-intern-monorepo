@@ -7,7 +7,7 @@ export const Container = ({ children }: PropsWithChildren) => {
             <SideBar />
             <div className="bg-secondary w-full flex flex-col justify-between">
                 <Header />
-                <div style={{ height: 'calc(100vh - 112px)' }} className='overflow-hidden'>
+                <div style={{ height: 'calc(100vh - 112px)' }} className='overflow-y-scroll'>
                     {children}
                 </div>
                 <Footer />

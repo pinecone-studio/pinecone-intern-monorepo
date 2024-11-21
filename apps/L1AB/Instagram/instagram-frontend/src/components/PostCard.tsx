@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import { Heart } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
-// import { Smile } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -16,7 +15,6 @@ type PropsType = {
 };
 
 const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType) => {
-  // const [comment, setComment] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const prev = () => {
