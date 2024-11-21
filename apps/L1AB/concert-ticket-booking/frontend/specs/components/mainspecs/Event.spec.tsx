@@ -1,4 +1,4 @@
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { Event } from '@/components';
 import { GetAllEventsDocument } from '@/generated';
@@ -23,13 +23,15 @@ const mock = {
           eventTime: '20-30',
           artistName: 'test',
           description: 'Event 1 Description',
-          images: ['https://via.placeholder.com/150'],
+          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
           venues: [
-            { _id: '1', name: 'test', quantity: 20, price: 20 },
-            { _id: '2', name: 'test', quantity: 20, price: 20 },
-            { _id: '3', name: 'test', quantity: 20, price: 20 },
+            { name: 'test', quantity: 20, price: 20 },
+            { name: 'test', quantity: 20, price: 20 },
+            { name: 'test', quantity: 20, price: 20 },
           ],
           discount: 20,
+          createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-14T06:24:52.763Z',
         },
       ],
     },
@@ -38,17 +40,15 @@ const mock = {
 
 describe('Event Component', () => {
   it('renders events successfully', async () => {
-    render(
+    const { getByTestId } = render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <Event />
       </MockedProvider>
     );
 
-    // Wait for loading state to resolve
-    await waitFor(() => expect(screen.getByTestId('eventhaha')));
-
-    // Check that event cards are rendered
-    const eventCards = screen;
-    expect(eventCards);
+    await waitFor(() => {
+      const eventCards = getByTestId('eventhaha');
+      expect(eventCards);
+    });
   });
 });
