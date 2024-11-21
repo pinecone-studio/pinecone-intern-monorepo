@@ -2,7 +2,7 @@
 
 import { useGetAllEventsQuery } from '@/generated';
 import { EventCard } from './EventCard';
-import { EventCardSkeleton } from './EventCardSkeleton';
+import { EventCardSkeleton } from './Skeletons/EventCardSkeleton';
 export const Event = () => {
   const { data, loading } = useGetAllEventsQuery();
   if (loading) {
