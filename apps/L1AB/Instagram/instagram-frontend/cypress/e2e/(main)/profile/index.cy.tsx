@@ -1,3 +1,7 @@
 describe('Profile Page', () => {
-  afterEach(() => {});
+  afterEach(() => {
+    it(`Should render profile page`, () => {
+      cy.visit('/profile');
+    });
+  });
 });
