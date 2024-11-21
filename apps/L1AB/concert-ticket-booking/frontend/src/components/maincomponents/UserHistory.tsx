@@ -3,8 +3,7 @@
 import { MdAccessTime } from 'react-icons/md';
 import { GoDotFill } from 'react-icons/go';
 import { UserHistoryDialog } from './UserHistoryDialog';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+
 
 export const UserHistory = () => {
   return (
@@ -23,10 +22,6 @@ export const UserHistory = () => {
             </div>
           </div>
           <UserHistoryDialog />
-          <div className="flex text-white items-center gap-2 text-sm font-medium">
-            <Label>Төлөв:</Label>
-            <Button className="py-1 px-2 bg-[#27272A] ">Цуцлах хүсэлт илгээсэн</Button>
-          </div>
         </div>
         <div className="flex flex-col gap-2">
           <div className="border px-6 py-4 flex justify-between rounded-lg border-dashed border-[#27272A] ">
