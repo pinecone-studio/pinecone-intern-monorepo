@@ -9,10 +9,16 @@ export * from './Skeletons/EventCardSkeleton';
 export * from './UserHistory';
 export * from './UserProfile';
 export * from './ForgetPassword';
-<<<<<<< HEAD
-export * from './UserHistoryDialog'
-export * from './ForgetPasswordEyeInputs'
-=======
+export * from './CheckPoint';
+export * from './UserHistoryDialog';
+export * from './EventDetails';
 export * from './SignIn';
 export * from './FormInput';
->>>>>>> 5328f267 (feat(ticket-fe): ticketfe)
+export * from './ForgetPasswordEyeInputs';
+export * from './MainHero';
+export * from './OtpInput';
+export * from './PasswordInput';
+export * from './PasswordRecovery';
+export * from './RecoveryEmail';
+export * from './SearchPageComponent';
+export * from './SignUp';
