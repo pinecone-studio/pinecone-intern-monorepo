@@ -8,10 +8,10 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 export const UserHistoryDialog = () => {
   return (
-    <div >
-      <Dialog >
-        <DialogTrigger asChild >
-          <Button variant="outline" className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black" >
+    <div data-testid="dis-btn">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black">
             Цуцлах
           </Button>
         </DialogTrigger>
@@ -27,7 +27,7 @@ export const UserHistoryDialog = () => {
               <Label className="text-right text-white">Банк </Label>
               <Select data-cy="Profile-Select-Input">
                 <SelectTrigger className="w-[304px] text-white border-[#27272A]">
-                  <SelectValue placeholder="Сонгох"  />
+                  <SelectValue placeholder="Сонгох" />
                 </SelectTrigger>
                 <SelectContent className="text-white bg-black border-[#27272A]">
                   <SelectGroup>
