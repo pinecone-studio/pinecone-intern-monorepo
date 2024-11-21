@@ -1,16 +1,12 @@
 'use client';
-
-import { Container } from '@/components';
-import { EventDetails } from '@/components/maincomponents/EventDetails';
+import { BookTicket, Container } from '@/components';
 import { useParams } from 'next/navigation';
-import React from 'react';
 
 const Page = () => {
   const { id } = useParams();
-
   return (
     <Container>
-      <EventDetails id={id} />
+      <BookTicket id={id} />
     </Container>
   );
 };

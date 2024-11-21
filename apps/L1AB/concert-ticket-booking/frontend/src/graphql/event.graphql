@@ -17,3 +17,20 @@ query GetAllEvents {
     updatedAt
   }
 }
+query GetEventById($id: ID!) {
+  getEventById(_id: $id) {
+    _id
+    name
+    artistName
+    description
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      quantity
+      price
+    }
+    discount
+  }
+}
