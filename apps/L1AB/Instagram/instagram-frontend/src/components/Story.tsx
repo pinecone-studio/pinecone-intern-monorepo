@@ -1,15 +1,20 @@
-import { useGetAllStoriesQuery } from '@/generated';
 import StoryCard from './StoryCard';
+import { useStory } from './providers/StoryProvider';
 
 const Story = () => {
-  const { data } = useGetAllStoriesQuery();
-  const stories = data?.getAllStories;
-  console.log('sssss', stories);
+  const data = useStory();
+  const storyData = data.groupStories;
 
   return (
     <div className="flex gap-4">
-      {stories?.map((story, index) => {
-        return <StoryCard key={index} testId={index} image={story.image} username={story.userId.username} profilePicture={story.userId.profilePicture} />;
+      {storyData?.map((group, index) => {
+        return (
+          <div key={index}>
+            {group.slice(0, 1).map((story, i) => {
+              return <StoryCard key={i} username={story.userId.username} profilePicture={story.userId.profilePicture} userId={story.userId._id} />;
+            })}
+          </div>
+        );
       })}
     </div>
   );
