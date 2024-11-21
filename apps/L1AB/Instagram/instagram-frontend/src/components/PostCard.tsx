@@ -9,14 +9,13 @@ import { useState } from 'react';
 
 type PropsType = {
   userName: string;
-  likeCount: number;
   images: string[];
   profilePicture: string;
   caption: string;
   keyy: number;
 };
 
-const PostCard = ({ userName, likeCount, images, profilePicture, caption, keyy }: PropsType) => {
+const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType) => {
   // const [comment, setComment] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -74,7 +73,7 @@ const PostCard = ({ userName, likeCount, images, profilePicture, caption, keyy }
             <div className="flex gap-4">
               <div className="flex gap-1">
                 <Heart />
-                <div>{likeCount}</div>
+                <div>12</div>
               </div>
               <MessageCircle />
             </div>
