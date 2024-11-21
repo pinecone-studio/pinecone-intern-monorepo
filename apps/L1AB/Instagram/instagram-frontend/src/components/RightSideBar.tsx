@@ -1,9 +1,24 @@
-
 'use client';
 import { Avatar } from '@/components/ui/avatar';
 import { useGetAllUsersQuery } from '@/generated';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useEffect, useState } from 'react';
+
+interface RightSideBarProps {
+  user?: {
+    _id: string;
+    email: string;
+    username: string;
+    fullname: string;
+    gender: string;
+    password: string;
+    profilePicture: string;
+    bio: string;
+    isPrivate: boolean;
+    createdAt: string;
+  updatedAt: string;
+  };
+}
 
 const getLoggedInUserIdentifier = () => {
   const token = localStorage.getItem('userToken');
@@ -21,7 +36,7 @@ const getLoggedInUserIdentifier = () => {
   }
 };
 
-const RightSideBar = () => {
+const RightSideBar: React.FC<RightSideBarProps> = ({ user }) => {
   const { data } = useGetAllUsersQuery();
   const [isClient, setIsClient] = useState(false);
   
@@ -40,7 +55,7 @@ const RightSideBar = () => {
   const loggedInUser = users?.find(
     (user) =>
       user.username === loggedInUserIdentifier || user.email === loggedInUserIdentifier
-  );
+  ) || user;
 
   if (!loggedInUser) {
     return (
