@@ -11,7 +11,7 @@ export const signInUser: MutationResolvers['signInUser'] = async (_, { input }) 
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error('Username or Password incorrect');
-
+  
   const token = jwt.sign(
     {
       userId: user._id,
