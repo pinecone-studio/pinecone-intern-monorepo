@@ -1,33 +1,27 @@
 import Image from 'next/image';
-import StoryDetail from './StoryDetail';
+import Link from 'next/link';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 type PropsType = {
   username: string;
-  image: string;
   profilePicture: string;
-  testId: number;
+  userId: string;
 };
 
-const StoryCard = ({ username, image, profilePicture, testId }: PropsType) => {
+const StoryCard = ({ username, profilePicture, userId }: PropsType) => {
   const [isHidden, setIsHidden] = useState(false);
+
   return (
     <div className="py-4">
       <div className="w-[64px]  flex flex-col items-center">
-        <div className="w-full h-[64px] border-2 rounded-full overflow-hidden  border-orange-600  flex justify-center items-center">
-          <Dialog>
-            <DialogTrigger>
-              <div className="rounded-full overflow-hidden relative h-[58px] w-[58px]">
-                <Image alt="userProfile" src={profilePicture} fill onClick={() => setIsHidden(!isHidden)} />
-              </div>
-            </DialogTrigger>
-            <DialogContent className="absolute left-72 top-10">
-              <StoryDetail />
-            </DialogContent>
-          </Dialog>
-          <div className={`${isHidden ? 'flex' : 'hidden'}`}></div>
-        </div>
+        <Link href={`/story?userId=${userId}`}>
+          <div className={` w-full h-[64px] border-2 rounded-full overflow-hidden flex justify-center items-center  border-orange-600  `}>
+            <div className="rounded-full overflow-hidden relative h-[58px] w-[58px]">
+              <Image alt="userProfile" src={profilePicture} fill onClick={() => setIsHidden(!isHidden)} />
+            </div>
+            <div className={`${isHidden ? 'flex' : 'hidden'}`}></div>
+          </div>
+        </Link>
         <div className="text-[12px] text-[#09090B]">{username}</div>
       </div>
     </div>
