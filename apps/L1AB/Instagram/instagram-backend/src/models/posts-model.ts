@@ -6,8 +6,6 @@ export type PostsType = {
   userId: Types.ObjectId;
   images: string[];
   caption: string;
-  likeCounts: number;
-  likedUsers: [Schema.Types.ObjectId];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -25,16 +23,6 @@ const PostsSchema = new Schema<PostsType>({
   caption: {
     type: String,
     required: true,
-  },
-  likeCounts: {
-    type: Number,
-    default: 0,
-    required: true,
-    min: [0, 'Like count cannot be less than 0'],
-  },
-  likedUsers: {
-    type: [Schema.Types.ObjectId],
-    required: false,
   },
   createdAt: {
     type: Date,

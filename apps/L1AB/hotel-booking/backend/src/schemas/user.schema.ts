@@ -15,16 +15,25 @@ export const typeDefs = gql`
     message: String!
   }
 
-  input CreateUserInput {
+  input SignInInput {
     email: String!
     password: String!
   }
 
-  input UpdateUserInput {
-    _id: ID!
-    email: String
-    password: String
-    phone: String
+  input SignUpInput {
+    email: String!
+    password: String!
+  }
+
+  type SignUpResponse {
+    user: User
+    success: Boolean!
+    message: String!
+  }
+
+  type AuthResponse {
+    user: User!
+    token: String!
   }
 
   type Query {
@@ -33,8 +42,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): Response!
-    updateUser(input: UpdateUserInput!): User!
+    signIn(input: SignInInput!): AuthResponse!
+    signUp(input: SignUpInput!): SignUpResponse!
     deleteUser(_id: ID!): Response!
   }
 `;

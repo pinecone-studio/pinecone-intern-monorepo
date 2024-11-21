@@ -20,7 +20,7 @@ export const MainNavbar = () => {
   ];
 
   return (
-    <div className=" py-6 px-12 flex justify-between">
+    <div className=" py-6 px-12 flex justify-between border-b border-[#27272A]">
       <Link href={`/`}>
         <div className="flex items-center">
           <GoDotFill className="w-8 h-8 text-[#00B7F4]" />
@@ -29,7 +29,7 @@ export const MainNavbar = () => {
       </Link>
 
       <div className="text-white text-sm font-medium flex gap-4">
-        <Link className=" text-white flex relative items-center text-sm" href={`/search`}>
+        <Link className=" text-white flex relative items-center text-sm" href={`/events`}>
           <LuSearch className="w-6 h-6" />
         </Link>
         {paths.map((path) => (

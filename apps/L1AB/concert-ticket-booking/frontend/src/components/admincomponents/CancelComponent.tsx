@@ -33,7 +33,7 @@ export const CancelComponent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 mt-9">
+    <div data-cy="Cancel-Component" className="cancel-component flex flex-col gap-6 mt-9">
       <div className="flex flex-col items-start">
         <div className="text-[#09090B] text-lg font-medium text-center">Хүсэлтүүд</div>
         <div className="text-[14px] text-[#71717A]">Ирсэн цуцлах хүсэлтүүд</div>

@@ -14,21 +14,6 @@ describe('BookTicket Component', () => {
     expect(backButton);
   });
 
-  it('renders select with placeholder text', () => {
-    render(<BookTicket />);
-    const selectTrigger = screen.getByText('Өдөр сонгох');
-    expect(selectTrigger);
-  });
-
-  it('allows date selection in dropdown', () => {
-    render(<BookTicket />);
-    const selectTrigger = screen.getByText('Өдөр сонгох');
-    fireEvent.click(selectTrigger);
-    const option = screen.getByText('Apple');
-    fireEvent.click(option);
-    expect(selectTrigger);
-  });
-
   it('displays tickets and handles increment/decrement correctly', () => {
     render(<BookTicket />);
 

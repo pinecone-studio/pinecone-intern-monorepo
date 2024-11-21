@@ -4,7 +4,7 @@ import { userModel } from '../../../models';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const createUser: MutationResolvers['createUser'] = async (_: unknown, { input }) => {
+export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input }) => {
   try {
     if (!emailRegex.test(input.email)) {
       return {
@@ -21,6 +21,7 @@ export const createUser: MutationResolvers['createUser'] = async (_: unknown, { 
     });
 
     return {
+      user: user,
       success: true,
       message: `User ${user.email} created successfully`,
     };

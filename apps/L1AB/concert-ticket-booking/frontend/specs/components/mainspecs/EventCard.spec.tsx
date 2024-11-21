@@ -21,7 +21,19 @@ const sampleEvent = {
   ],
   discount: 20,
 };
-
+const sampleEvent1 = {
+  _id: '1',
+  name: 'Sample Event',
+  description: 'test event',
+  eventDate: ['2024-12-25', '2024-12-25'],
+  images: ['https://via.placeholder.com/150'],
+  venues: [
+    { name: 'Venue1', price: 5000, quantity: 100 },
+    { name: 'Venue2', price: 6000, quantity: 100 },
+    { name: 'Venue3', price: 7000, quantity: 50 },
+  ],
+  discount: 20,
+};
 const noDiscountEvent = {
   ...sampleEvent,
   discount: 0,
@@ -38,7 +50,11 @@ describe('EventCard', () => {
 
     expect(screen);
   });
+  it('renders event card with discount', () => {
+    render(<EventCard {...sampleEvent1} />);
 
+    expect(screen);
+  });
   it('renders event card without discount', () => {
     render(<EventCard {...noDiscountEvent} />);
 

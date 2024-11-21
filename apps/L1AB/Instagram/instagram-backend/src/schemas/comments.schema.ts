@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type Comments {
     _id: ID!
-    userId: ID!
-    postId: ID!
+    userId: User
+    postId: Posts
     comment: String!
     updatedAt: Date!
     createdAt: Date!
@@ -25,5 +25,10 @@ export const typeDefs = gql`
   type Mutation {
     createComment(input: AddCommentInput!): Comments!
     updateComment(input: UpdateCommentInput!, _id: ID!): Comments!
+    deleteComment(_id: ID!): Response!
+  }
+
+  type Query {
+    getCommentsByPostId(postId: ID!): [Comments!]!
   }
 `;
