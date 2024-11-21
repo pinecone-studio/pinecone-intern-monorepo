@@ -13,8 +13,8 @@ export const UsersMap = () => {
         <div key={index} className="rounded flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar className="w-10 h-10">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={user.profilePicture} alt="@shadcn" />
+              <AvatarFallback className="uppercase">{user.username.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <p data-testid="username" className="font-semibold">
