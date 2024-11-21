@@ -36,14 +36,31 @@ export const typeDefs = gql`
     token: String!
   }
 
+  input PasswordRecoveryRequestInput {
+    email: String!
+  }
+
+  input PasswordChangeInput {
+    otp: String!
+    email: String!
+    password: String!
+  }
+
+  input PaginationInput {
+    limit: Int
+    offset: Int
+  }
+
   type Query {
-    getAllUsers: [User!]!
+    getAllUsers(pagination: PaginationInput): [User!]!
     getUserById(_id: ID!): User!
   }
 
   type Mutation {
     signIn(input: SignInInput!): AuthResponse!
     signUp(input: SignUpInput!): SignUpResponse!
+    passwordRecoveryRequest(input: PasswordRecoveryRequestInput!): Response!
+    passwordChange(input: PasswordChangeInput!): Response!
     deleteUser(_id: ID!): Response!
   }
 `;
