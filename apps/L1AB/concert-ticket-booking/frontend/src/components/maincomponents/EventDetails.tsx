@@ -9,6 +9,7 @@ import { GoClock, GoDotFill } from 'react-icons/go';
 import { tickets } from './BookTicket';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
+import { RelatedEvents } from './RelatedEvents';
 
 interface EventDetailsProps {
   id: string | string[];
@@ -23,9 +24,9 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   return (
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
-        <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} className="object-cover" />
+        <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} priority className="object-cover" />
         <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2 ">
-          <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.artistName[0]}</p>
+          <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.description}</p>
           <div className="grid h-fit gap-6 w-fit">
             <p className="text-5xl font-bold text-white">{eventDetails?.name}</p>
             <div className="flex items-center gap-2">
@@ -110,6 +111,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           </div>
         </div>
       </div>
+      <RelatedEvents id={id} />
     </div>
   );
 };
