@@ -1,8 +1,7 @@
-
-import { updateCancel,  } from '../../../../src/resolvers/mutations';
+import { updateBooking } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models', () => ({
-  cancelModel: {
+  bookingModel: {
     findByIdAndUpdate: jest
       .fn()
       .mockResolvedValueOnce({
@@ -16,30 +15,30 @@ jest.mock('../../../../src/models', () => ({
 
 describe('Update Event Mutation', () => {
   it('Should update event', async () => {
-    const result = await updateCancel(
+    const result = await updateBooking(
       {},
       {
         input: {
           _id: '1',
-        status: 'Updated'
+          status: 'Updated',
         },
       }
     );
 
     expect(result).toEqual({
-       _id: '1',
-        status: 'Updated'
+      _id: '1',
+      status: 'Updated',
     });
   });
 
   it('Should throw an error if the event is not found', async () => {
     try {
-      await updateCancel(
+      await updateBooking(
         {},
         {
           input: {
-             _id: '1',
-        status: 'Updated'
+            _id: '1',
+            status: 'Updated',
           },
         }
       );
@@ -54,12 +53,12 @@ describe('Update Event Mutation', () => {
 
   it('Should throw an error if there is a database error', async () => {
     try {
-      await updateCancel(
+      await updateBooking(
         {},
         {
           input: {
             _id: '1',
-        status: 'Updated'
+            status: 'Updated',
           },
         }
       );
