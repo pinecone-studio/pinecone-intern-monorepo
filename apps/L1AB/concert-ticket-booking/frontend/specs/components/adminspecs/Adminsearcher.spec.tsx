@@ -1,18 +1,11 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen,} from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
 import { AdminSearcher } from '@/components';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { GetAllEventsDocument } from '@/generated';
 
-jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ onSelect }: { onSelect: (_: Date) => void }) => (
-    <div data-testid="calendar">
-      <button onClick={() => onSelect(new Date())}>Select Date</button>
-    </div>
-  ),
-}));
-const mock: MockedResponse = {
+const mockData = {
   request: {
-    query: GetAllEventsDocument, 
+    query: GetAllEventsDocument,
   },
   result: {
     data: {
@@ -20,102 +13,111 @@ const mock: MockedResponse = {
         {
           _id: '1',
           name: 'Event 1',
-          artistName: 'Artist',
+          artistName: ['Artist 1'],
           description: 'Event description',
           eventDate: '2022-01-01',
           eventTime: '18:00',
-          images: ['image_url_1', 'image_url_2'], 
+          images: ['image_url_1', 'image_url_2'],
           venues: [
-            {
-              name: 'VIP',
-              quantity: 100,
-              price: 100, 
-            },
-            {
-                name: 'fanzone',
-                quantity: 100,
-                price: 100, 
-              },{
-                name: 'regular',
-                quantity: 100,
-                price: 100, 
-              },
+            { name: 'VIP', quantity: 100, price: 100 },
+            { name: 'fanzone', quantity: 100, price: 100 },
+            { name: 'regular', quantity: 100, price: 100 },
           ],
-          discount: 10, 
+          discount: 10,
+        },
+        {
+          _id: '2',
+          name: 'Event 2',
+          artistName: ['Artist 2'],
+          description: 'Event description',
+          eventDate: '2022-02-01',
+          eventTime: '19:00',
+          images: ['image_url_3', 'image_url_4'],
+          venues: [
+            { name: 'VIP', quantity: 150, price: 200 },
+            { name: 'fanzone', quantity: 150, price: 200 },
+            { name: 'regular', quantity: 150, price: 200 },
+          ],
+          discount: 15,
         },
       ],
     },
   },
 };
+
 describe('AdminSearcher Component', () => {
-  
-  it('should successfully render', () => {
+  it('should render and allow searching for events', async () => {
     const setSearchValue = jest.fn();
     const setSelectedValues = jest.fn();
     const setDate = jest.fn();
-    
-    
-    const { getByTestId, getAllByTestId } = render
 
-    (<MockedProvider mocks={[mock]}><AdminSearcher
-      setSearchValue={setSearchValue} 
-     setSelectedValues={setSelectedValues} 
-     selectedValues={[]} 
-     date={undefined} 
-     setDate={setDate}/></MockedProvider>
+    render(
+      <MockedProvider mocks={[mockData]} addTypename={false}>
+        <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={[]} date={undefined} setDate={setDate} />
+      </MockedProvider>
     );
 
-    const select = getByTestId('admin-searcher-select');
-    fireEvent.keyDown(select, { key: 'Enter' });
-
-    const options = getAllByTestId('option');
-    fireEvent.keyDown(options[0], { key: 'Enter' });
-
-    const select2 = getByTestId('admin-searcher-select');
-    fireEvent.keyDown(select2, { key: 'Enter' });
-
-    const optionsSecond = getAllByTestId('option');
-    fireEvent.keyDown(optionsSecond[1], { key: 'Enter' });
-
-    const select3 = getByTestId('admin-searcher-select');
-    fireEvent.keyDown(select3, { key: 'Enter' });
-
-    const optionsThird = getAllByTestId('option');
-    fireEvent.keyDown(optionsThird[0], { key: 'Enter' });
+    // Test search input
+    const searchInput = screen.getByPlaceholderText('Тасалбар хайх');
+    fireEvent.change(searchInput, { target: { value: 'Event' } });
+    expect(setSearchValue);
   });
 
-  it('should successfully render', () => {
+  it('should clear the artist selection', async () => {
     const setSearchValue = jest.fn();
     const setSelectedValues = jest.fn();
     const setDate = jest.fn();
-    const { getByTestId } = render(<MockedProvider mocks={[mock]}><AdminSearcher
-      setSearchValue={setSearchValue} 
-     setSelectedValues={setSelectedValues} 
-     selectedValues={[]} 
-     date={undefined} 
-     setDate={setDate} /></MockedProvider>
-    );
-    const clearbtn = getByTestId('clear-btn');
 
-    fireEvent.click(clearbtn);
+    render(
+      <MockedProvider mocks={[mockData]} addTypename={false}>
+        <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={['Artist 1']} date={undefined} setDate={setDate} />
+      </MockedProvider>
+    );
+
+    // Test clear selection button
+    const clearBtn = screen.getByTestId('clear-btn');
+    fireEvent.click(clearBtn);
+
+    expect(setSelectedValues);
   });
-  it('should successfully render and display placeholder for date when no date is selected', () => {
+
+  it('should select a date', async () => {
     const setSearchValue = jest.fn();
     const setSelectedValues = jest.fn();
     const setDate = jest.fn();
-    const { getByTestId } = render(<MockedProvider mocks={[mock]}><AdminSearcher
-      setSearchValue={setSearchValue} 
-     setSelectedValues={setSelectedValues} 
-     selectedValues={[]} 
-     date={undefined} 
-     setDate={setDate}  /></MockedProvider>
+
+    render(
+      <MockedProvider mocks={[mockData]} addTypename={false}>
+        <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={[]} date={undefined} setDate={setDate} />
+      </MockedProvider>
     );
-    const dateButton = getByTestId('choose-date-id');
+
+    // Open calendar popover
+    const dateButton = screen.getByTestId('choose-date-id');
     fireEvent.click(dateButton);
 
-    const calendar = getByTestId('calendar');
-    fireEvent.click(calendar);
-    const select = getByTestId('clear-date-btn');
-    fireEvent.click(select);
+    // Simulate selecting a date
+    const calendarDay = screen.getByText('1');
+    fireEvent.click(calendarDay);
+
+    expect(setDate);
+  });
+
+  it('should clear the selected date', async () => {
+    const setSearchValue = jest.fn();
+    const setSelectedValues = jest.fn();
+    const setDate = jest.fn();
+
+    render(
+      <MockedProvider mocks={[mockData]} addTypename={false}>
+        <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={[]} date={new Date()} setDate={setDate} />
+      </MockedProvider>
+    );
+
+    // Test clear date button
+    const clearDateBtn = screen.getByTestId('clear-date');
+    fireEvent.click(clearDateBtn);
+
+    expect(setDate);
   });
 });

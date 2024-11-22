@@ -15,35 +15,32 @@ import { useGetAllEventsQuery } from '@/generated';
 type AdminDashboardComponent = {
   searchValue: string;
   selectedValues: string[];
-  date:Date | undefined;
+  date: Date | undefined;
 };
 
-export const AdminDashboard = ({ searchValue, selectedValues, date}: AdminDashboardComponent) => {
-  const { data, loading, error } = useGetAllEventsQuery();
+export const AdminDashboard = ({ searchValue, selectedValues, date }: AdminDashboardComponent) => {
+  const { data, loading } = useGetAllEventsQuery();
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading events...</div>;
 
-  const filteredData =
-    data?.getAllEvents?.filter((item) => {
-      const lowerCaseSearchValue = searchValue.toLowerCase();
-      const lowerCasedate = date
-      const lowerCaseSelectedValues = selectedValues.map((value) => value.toLowerCase());
-      if (lowerCasedate) {
-        return item.eventDate.some((eventtime) => {
-          const eventDate = new Date(eventtime);
-          return eventDate.getDate() === lowerCasedate.getDate() && eventDate.getMonth() === lowerCasedate.getMonth() && eventDate.getFullYear() === lowerCasedate.getFullYear();
-        }
-    )}
-      if (lowerCaseSelectedValues.length > 0) {
-        return item.artistName.some((artist) => lowerCaseSelectedValues.includes(artist.toLowerCase()));
-      }
-      if (lowerCaseSearchValue) {
-        return item.name.toLowerCase().includes(lowerCaseSearchValue);
-      }
-      return true;
-      
-    }) ?? [];
+  const filteredData = data?.getAllEvents?.filter((item) => {
+    const lowerCaseSearchValue = searchValue.toLowerCase();
+    const lowerCasedate = date;
+    const lowerCaseSelectedValues = selectedValues.map((value) => value.toLowerCase());
+    if (lowerCasedate) {
+      return item.eventDate.some((eventtime) => {
+        const eventDate = new Date(eventtime);
+        return eventDate.getDate() === lowerCasedate.getDate() && eventDate.getMonth() === lowerCasedate.getMonth() && eventDate.getFullYear() === lowerCasedate.getFullYear();
+      });
+    }
+    if (lowerCaseSelectedValues.length > 0) {
+      return item.artistName.some((artist) => lowerCaseSelectedValues.includes(artist.toLowerCase()));
+    }
+    if (lowerCaseSearchValue) {
+      return item.name.toLowerCase().includes(lowerCaseSearchValue);
+    }
+    return true;
+  });
 
   return (
     <div className="flex flex-col gap-6 mt-9">
@@ -79,13 +76,13 @@ export const AdminDashboard = ({ searchValue, selectedValues, date}: AdminDashbo
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredData.length > 0 ? (
-                filteredData?.map((item, index) => (
+              {filteredData?.length ? (
+                filteredData.map((item, index) => (
                   <TableRow key={index} data-testid={`get-events-${index}`} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
                       {item.name}
                     </TableCell>
-                    <TableCell align="center">{item.artistName.join(' , ')}</TableCell> 
+                    <TableCell align="center">{item.artistName.join(' , ')}</TableCell>
                     <TableCell align="center" className="font-medium">
                       {item.venues[0].quantity}
                     </TableCell>
@@ -94,7 +91,7 @@ export const AdminDashboard = ({ searchValue, selectedValues, date}: AdminDashbo
                     </TableCell>
                     <TableCell align="center">{item.venues[2].quantity}</TableCell>
                     <TableCell align="center">{item.venues[2].quantity}</TableCell>
-                    <TableCell > {item.eventDate.join(' , ')}</TableCell>
+                    <TableCell>{item.eventDate.join(' , ')}</TableCell>
                     <TableCell align="center">{item.venues[2].price}₮</TableCell>
                     <TableCell className="flex items-center gap-1">
                       <UpdateEventComponent />
@@ -107,7 +104,7 @@ export const AdminDashboard = ({ searchValue, selectedValues, date}: AdminDashbo
               ) : (
                 <TableRow>
                   <TableCell colSpan={9} align="center">
-                    Хайлт тохирох үр дүн олдсонгүй.
+                    <p className="text-[#A1A1AA] text-2xl text-center">Хайлт тохирох үр дүн олдсонгүй.</p>
                   </TableCell>
                 </TableRow>
               )}
