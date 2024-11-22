@@ -22,8 +22,8 @@ const styles = {
 
 export const ProfilePageTop = ({ profileImg, profileUsername, postCount, followersCount, followingCount, profileFullname, description }: props) => {
   return (
-    <div className={styles.container}>
-      <Avatar className="size-[150px]">
+    <div className={styles.container} data-cy="Profile-page-top">
+      <Avatar className="w-[150px] h-[150px]">
         <AvatarImage src={profileImg} className="object-cover" />
         <AvatarFallback>{profileUsername && profileUsername.slice(0, 2)}</AvatarFallback>
       </Avatar>

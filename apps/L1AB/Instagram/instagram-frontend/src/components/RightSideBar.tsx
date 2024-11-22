@@ -16,7 +16,7 @@ interface RightSideBarProps {
     bio: string;
     isPrivate: boolean;
     createdAt: string;
-  updatedAt: string;
+    updatedAt: string;
   };
 }
 
@@ -39,11 +39,11 @@ const getLoggedInUserIdentifier = () => {
 const RightSideBar: React.FC<RightSideBarProps> = ({ user }) => {
   const { data } = useGetAllUsersQuery();
   const [isClient, setIsClient] = useState(false);
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
-  
+
   if (!isClient) {
     return null;
   }
@@ -52,10 +52,7 @@ const RightSideBar: React.FC<RightSideBarProps> = ({ user }) => {
 
   const loggedInUserIdentifier = getLoggedInUserIdentifier();
 
-  const loggedInUser = users?.find(
-    (user) =>
-      user.username === loggedInUserIdentifier || user.email === loggedInUserIdentifier
-  ) || user;
+  const loggedInUser = users?.find((user) => user.username === loggedInUserIdentifier || user.email === loggedInUserIdentifier) || user;
 
   if (!loggedInUser) {
     return (
@@ -66,24 +63,26 @@ const RightSideBar: React.FC<RightSideBarProps> = ({ user }) => {
   }
 
   return (
-    <div className="flex flex-col w-[326px]">
+    <div className="flex flex-col w-[326px]" data-cy="RightSideBar">
       <div className="flex w-full h-[56px] justify-between items-center">
         <div className="flex items-center gap-3">
           <Avatar className="w-10 h-10">
-            <AvatarImage src="https://github.com/shadcn.png" alt={loggedInUser.username} />
+            <AvatarImage src={user?.profilePicture} alt={loggedInUser.username} />
             <AvatarFallback>{loggedInUser?.username}</AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-semibold" data-testid="username">{loggedInUser.username || loggedInUser.email}</h3>
+            <h3 className="font-semibold" data-testid="username">
+              {loggedInUser.username || loggedInUser.email}
+            </h3>
             <h4>{loggedInUser.fullname}</h4>
           </div>
         </div>
         <button
-        data-testid="btn-logout"
+          data-testid="btn-logout"
           className="text-[11px] font-semibold text-[#2563EB]"
           onClick={() => {
             localStorage.removeItem('userToken');
-            location.reload(); 
+            location.reload();
           }}
         >
           Log out

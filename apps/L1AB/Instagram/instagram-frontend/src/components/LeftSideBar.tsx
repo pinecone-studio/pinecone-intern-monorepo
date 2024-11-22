@@ -80,7 +80,7 @@ export const LeftSideBar = () => {
   }, [isSideBarOpen]);
 
   return (
-    <div>
+    <div data-cy="LeftSideBar">
       <div>
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
@@ -90,7 +90,7 @@ export const LeftSideBar = () => {
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col z-50 gap-20 p-4 fixed top-0 left-0 h-full  z-100 bg-white ${isSideBarOpen ? 'shadow shadow-neutral-200' : 'border'}`}
+        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${isSideBarOpen ? 'shadow shadow-neutral-200' : 'border'}`}
       >
         <div onClick={toggleHomeDrawer}>
           <InstagramButton isOpen={isSideBarOpen} />

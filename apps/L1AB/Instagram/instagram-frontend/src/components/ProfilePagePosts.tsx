@@ -9,9 +9,9 @@ export const styles = {
   selected: 'flex gap-[7px] items-center py-[17px] border-t-[1.5px] border-[#09090B] text-[#09090B] cursor-pointer',
   notSelected: 'flex gap-[7px] items-center py-[17px] text-[#71717A] cursor-pointer',
   line: 'border-[#E4E4E7] border-t-[1px] w-[935px] flex justify-center uppercase gap-12',
-  imageContainer: 'relative size-[309px]',
+  imageContainer: 'relative w-[309px] h-[309px]',
   postsContainer: 'grid grid-cols-3 gap-1',
-  container: 'flex flex-col gap-4',
+  container: 'flex flex-col gap-4 min-h-full',
   textContainer: 'w-[935px] mt-7 text-center flex flex-col gap-4 text-[12px] text-[#71717A] leading-4',
 };
 
@@ -21,7 +21,7 @@ export const ProfilePagePosts = ({ postImage }: { postImage: string | null }) =>
   const type = searchParams.get('type');
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-cy="Profile-page-posts">
       <div className={styles.line}>
         <div
           className={type === 'posts' ? styles.selected : styles.notSelected}
