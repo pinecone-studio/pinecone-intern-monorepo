@@ -18,16 +18,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useGetAllCancelBookingQuery, useUpdateCancelMutation } from '@/generated';
+import { useGetAllBookingQuery, useUpdateBookingMutation } from '@/generated';
 
 export const CancelComponent = () => {
-  const { data } = useGetAllCancelBookingQuery();
-  const [updateCancel] = useUpdateCancelMutation();
+  const { data } = useGetAllBookingQuery();
+  const [updateCancel] = useUpdateBookingMutation();
 
-  const handleUpdateStatus = async (cancelId: string, status: string) => {
+  const handleUpdateStatus = async (bookingId: string, status: string) => {
     await updateCancel({
       variables: {
-        input: { _id: cancelId, status },
+        input: { _id: bookingId, status },
       },
     });
   };
@@ -63,7 +63,7 @@ export const CancelComponent = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.getAllCancelBooking.map((item, index) => (
+              {data?.getAllBooking.map((item, index) => (
                 <TableRow data-testid={`getCancel-${index}`} key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
                     {item.eventId.name}
@@ -75,7 +75,7 @@ export const CancelComponent = () => {
                     {item.userId.name}
                   </TableCell>
                   <TableCell align="center" className="font-medium">
-                    {item.amountTotal.toLocaleString()}₮
+                    {item.amountTotal ? item.amountTotal.toLocaleString() + '₮' : '0₮'}
                   </TableCell>
                   <TableCell align="center">{item.createdAt.slice(5, 10)}</TableCell>
                   <TableCell align="center">
