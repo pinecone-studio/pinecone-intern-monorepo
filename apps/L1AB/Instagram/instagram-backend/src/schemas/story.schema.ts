@@ -5,15 +5,19 @@ export const typeDefs = gql`
     _id: ID!
     userId: User!
     image: String!
-
     createdAt: Date!
   }
   input CreateStoryInput {
     userId: ID!
     image: String!
   }
+
+  # type GetAllStoriesResponse {
+  #   userId: [Story!]!
+  # }
+
   type Query {
-    getAllStories: [[Story]]
+    getAllStories: [Story!]!
   }
 
   type Mutation {

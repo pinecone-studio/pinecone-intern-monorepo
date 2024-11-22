@@ -2,17 +2,17 @@ import StoryCard from './StoryCard';
 import { useStory } from './providers/StoryProvider';
 
 const Story = () => {
-  const data = useStory();
-  const storyData = data.groupStories;
+  const { groupedStories } = useStory();
+  if (!groupedStories) return <p>Loading...</p>;
 
   return (
-    <div className="flex gap-4">
-      {storyData?.map((group, index) => {
+    <div className="flex flex-wrap gap-4">
+      {Object.keys(groupedStories).map((userId) => {
+        const group = groupedStories[userId];
+
         return (
-          <div key={index}>
-            {group.slice(0, 1).map((story, i) => {
-              return <StoryCard key={i} username={story.userId.username} profilePicture={story.userId.profilePicture} userId={story.userId._id} />;
-            })}
+          <div key={userId} className="flex flex-col items-start gap-2">
+            <StoryCard username={group.userId.username as string} profilePicture={group.userId.profilePicture as string} userId={group.userId._id as string} />
           </div>
         );
       })}
