@@ -80,7 +80,7 @@ export const LeftSideBar = () => {
   }, [isSideBarOpen]);
 
   return (
-    <div>
+    <div data-cy="LeftSideBar">
       <div>
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />

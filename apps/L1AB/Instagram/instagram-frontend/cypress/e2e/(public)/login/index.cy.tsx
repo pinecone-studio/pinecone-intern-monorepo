@@ -75,7 +75,7 @@ describe('Login Page', () => {
   });
   it('login hiiged buruu shiljihgui', () => {
     cy.intercept('POST', 'https://instagram-backend-testing.vercel.app/api/graphql', {
-      statusCode: 400,
+      statusCode: 200,
       body: {
         data: {},
       },

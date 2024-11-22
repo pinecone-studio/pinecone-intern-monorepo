@@ -2,7 +2,7 @@
 import { UsersMap } from './UsersMap';
 export const SuggestCard = () => {
   return (
-    <div className="h-fit w-[326px] flex-col">
+    <div className="h-fit w-[326px] flex-col" data-cy="SuggestSideBar">
       <div className="flex justify-between">
         <p className="text-[#71717A] text-sm font-medium">Suggestions for you</p>
         <p className="text-sm font-medium cursor-pointer">See All</p>

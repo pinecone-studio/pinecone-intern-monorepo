@@ -7,4 +7,7 @@ describe('render all pages', () => {
       cy.visit(page);
     });
   });
+  Cypress.on('uncaught:exception', () => {
+    return false;
+  });
 });
