@@ -10,7 +10,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 export const UserProfile = () => {
-  const today = new Date()
+  const today = new Date();
   const [date, setDate] = React.useState<Date | undefined>(today);
 
   return (
@@ -53,7 +53,6 @@ export const UserProfile = () => {
               </Popover>
               <p className="text-[#71717A] text-sm font-thin mb-6">Your date of birth is used to calculate your age.</p>
             </div>
-           
           </div>
           <Button variant="secondary" className="bg-[#2563EB] text-[#FAFAFA] font-medium ">
             Update profile
