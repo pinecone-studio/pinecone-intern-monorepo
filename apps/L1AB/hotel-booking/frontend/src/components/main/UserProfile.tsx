@@ -8,18 +8,24 @@ import { CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { UserSettings } from './UserSettings';
 
-export const UserProfile = () => {
+type PropsType = {
+  update: () => void;
+};
+
+export const UserProfile = ({ update }: PropsType) => {
   const today = new Date();
   const [date, setDate] = React.useState<Date | undefined>(today);
 
   return (
-    <Container backgroundColor="bg-white">
+    <Container backgroundColor="bg-white w-full">
       <div className="m-auto">
         <div className="container m-auto h-fit px-6 pt-10 pb-16 ">
           <h3 className="text-lg font-medium text-[#09090B]">Personal Information</h3>
           <p className="text-[#71717A] text-sm font-thin mb-6">This is how others will see you on the site.</p>
           <div className="border border-x-2 mb-6"></div>
+          {/*  */}
           <div className="flex gap-6">
             <div className="flex flex-col gap-4 mb-5">
               <Label htmlFor="name" className="text-left">
@@ -34,6 +40,7 @@ export const UserProfile = () => {
               <Input id="Last Name" defaultValue="" placeholder="Placeholder" />
             </div>
           </div>
+          {/*  */}
           <div className="">
             <div className="flex flex-col gap-4 mb-5">
               <Label htmlFor="name" className="text-left">
@@ -54,7 +61,8 @@ export const UserProfile = () => {
               <p className="text-[#71717A] text-sm font-thin mb-6">Your date of birth is used to calculate your age.</p>
             </div>
           </div>
-          <Button variant="secondary" className="bg-[#2563EB] text-[#FAFAFA] font-medium ">
+          {/*  */}
+          <Button variant="secondary" className="bg-[#2563EB] text-[#FAFAFA] font-medium " onClick={update}>
             Update profile
           </Button>
         </div>

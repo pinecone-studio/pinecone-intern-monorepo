@@ -1,7 +1,11 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import { Container } from './assets';
+import { UserProfile } from './UserProfile';
+import { UserContact } from './UserContact';
 
 export const UserHeader = () => {
+  const [tab, setTab] = useState('profile');
   return (
     <Container backgroundColor="bg-white ">
       <div className="flex items-center gap-2">
@@ -16,23 +20,31 @@ export const UserHeader = () => {
           </div>
         </div>
       </div>
+      {/*  */}
       <div className="flex m-auto">
         <div className="container m-auto h-fit px-6 pt-10 pb-16 flex-1">
           <h3 className="text-2xl font-semibold text-[#09090B]">Hi, Shagai</h3>
           <p className="text-[#71717A] text-base font-thin mb-6">n.shagai@pinecone.mn</p>
           <div className="border border-x-2 mb-6"></div>
-          <div className="flex">
-            <div className="flex justify-start w-[250px]  flex-col ">
-              <button className="pl-4  flex py-2 bg-[#F4F4F5] rounded-md">Profile</button>
-              <button className="px-4 flex py-2  ">Account</button>
-              <button className="px-4 flex py-2 ">Appearance</button>
-              <button className="px-4  flex py-2 ">Notification</button>
-              <button className="px-4 flex py-2 ">Display</button>
+          <div className="bg-green-50 w-full flex">
+            <div className="flex">
+              <div className="flex justify-start w-[250px]  flex-col ">
+                <button className="pl-4  flex py-2 bg-[#F4F4F5] rounded-md" onClick={() => setTab('profile')}>
+                  Profile
+                </button>
+                <button className="px-4 flex py-2  " onClick={() => setTab('account')}>
+                  Contact
+                </button>
+                <button className="px-4 flex py-2 " onClick={() => setTab('appearance')}>
+                  Settings
+                </button>
+              </div>
             </div>
+            <div className="flex w-full">{tab === 'profile' ? <UserProfile update={() => setTab('contact')} /> : <UserContact />} </div>
           </div>
         </div>
-        <div className="flex flex-1"></div>
       </div>
+      {/*  */}
       <div className="flex items-center gap-2">
         <div className="container m-auto flex  items-center justify-between">
           <div className="flex gap-1 py-3 px-4 items-center mt-96">
