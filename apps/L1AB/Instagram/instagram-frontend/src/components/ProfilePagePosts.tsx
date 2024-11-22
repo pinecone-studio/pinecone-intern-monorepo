@@ -21,7 +21,7 @@ export const ProfilePagePosts = ({ postImage }: { postImage: string | null }) =>
   const type = searchParams.get('type');
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-cy="Profile-page-posts">
       <div className={styles.line}>
         <div
           className={type === 'posts' ? styles.selected : styles.notSelected}

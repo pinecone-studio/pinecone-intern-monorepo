@@ -63,7 +63,7 @@ const RightSideBar: React.FC<RightSideBarProps> = ({ user }) => {
   }
 
   return (
-    <div className="flex flex-col w-[326px]">
+    <div className="flex flex-col w-[326px]" data-cy="RightSideBar">
       <div className="flex w-full h-[56px] justify-between items-center">
         <div className="flex items-center gap-3">
           <Avatar className="w-10 h-10">
