@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { HotelDetails } from "@/components/admin"
+import { HotelDetails } from '@/components/admin';
 
 const AdminHotelDetailsPage = () => {
-    return <HotelDetails />
-}
+  return <HotelDetails />;
+};
 
-export default AdminHotelDetailsPage
+export default AdminHotelDetailsPage;

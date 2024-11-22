@@ -1,23 +1,27 @@
-query GetAllCancelBooking {
-  getAllCancelBooking {
+query GetAllBooking {
+  getAllBooking {
     _id
-    bankName
-    bankAccount
-    status
-    amountTotal
-    createdAt
-    userId {
-      _id
-      name
-    }
     eventId {
       _id
       name
     }
+    bankName
+    bankAccount
+    status
+    userId {
+      _id
+      name
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    createdAt
+    updatedAt
   }
 }
-mutation UpdateCancel($input: CancelUpateInput!) {
-  updateCancel(input: $input) {
+mutation UpdateBooking($input: UpdateBookingInput!) {
+  updateBooking(input: $input) {
     _id
     status
   }
