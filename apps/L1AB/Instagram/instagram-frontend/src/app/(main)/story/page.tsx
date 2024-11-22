@@ -11,7 +11,7 @@ const Story = () => {
   const userId = searchParams.get('userId');
 
   return (
-    <div className="w-screen h-screen bg-[#18181a]">
+    <div className=" bg-[#18181a] w-screen h-screen">
       <div className="p-6 flex justify-between ">
         <div>
           <Image src={'/LogoWhite.png'} width={103} height={29} alt="instagram-logo" />
