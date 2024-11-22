@@ -1,0 +1,14 @@
+mutation CreateLike($userId: ID!, $postId: ID!) {
+  createLike(userId: $userId, postId: $postId) {
+    postId
+    userId
+    _id
+  }
+}
+query GetLikesByPostId($postId: ID!) {
+  getLikesByPostId(postId: $postId) {
+    _id
+    userId
+    postId
+  }
+}

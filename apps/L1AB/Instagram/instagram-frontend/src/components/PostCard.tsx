@@ -1,11 +1,11 @@
 'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
+import { useCreateCommentMutation, useCreateLikeMutation, useGetCommentsByPostIdQuery, useGetLikesByPostIdQuery } from '@/generated';
+import { ChevronLeft, ChevronRight, EllipsisVertical, Smile } from 'lucide-react';
 import { Heart } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { Bookmark } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type PropsType = {
   userName: string;
@@ -13,10 +13,66 @@ type PropsType = {
   profilePicture: string;
   caption: string;
   keyy: number;
+  postId: string;
 };
 
-const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType) => {
+const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: PropsType) => {
+  const [comment, setComment] = useState('');
+  const [userId, setUserId] = useState<string | null>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const { data, refetch } = useGetCommentsByPostIdQuery({
+    variables: { postId: postId },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  console.log(userId);
+
+  const [createComment] = useCreateCommentMutation();
+
+  const [createLike] = useCreateLikeMutation();
+
+  const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId: postId } });
+
+  const commentsData = data?.getCommentsByPostId;
+
+  const likesData = likedata?.getLikesByPostId;
+  const isLiked = userId ? likesData?.some((like) => like.userId === userId) : false;
+
+  const handleComment = async (postId: string) => {
+    if (!userId) return;
+
+    await createComment({
+      variables: {
+        input: {
+          comment: comment,
+          postId: postId,
+          userId: userId,
+        },
+      },
+    });
+    await refetch();
+    setComment('');
+  };
+  const handeLike = async () => {
+    console.log({
+      variables: {
+        userId: userId,
+        postId: postId,
+      },
+    });
+
+    if (!userId) return;
+    await createLike({
+      variables: {
+        userId: userId,
+        postId: postId,
+      },
+    });
+
+    await likesRefetch();
+  };
 
   const prev = () => {
     setCurrentImageIndex((curr) => (curr === 0 ? images.length - 1 : curr - 1));
@@ -25,6 +81,11 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
   const next = () => {
     setCurrentImageIndex((curr) => (curr === images.length - 1 ? 0 : curr + 1));
   };
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId');
+    setUserId(id);
+  }, []);
 
   return (
     <div data-testid={`NewsFeedPostCard-${keyy}`}>
@@ -72,8 +133,8 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
           <div className="flex justify-between pt-3">
             <div className="flex gap-4">
               <div className="flex gap-1">
-                <Heart />
-                <div>12</div>
+                <Heart data-testid="likeButton" onClick={handeLike} className={`cursor-pointer ${isLiked ? 'text-[#ff0000]' : ''}`} fill={`${isLiked ? 'red' : 'white'}`} />
+                <div>{likesData?.length}</div>
               </div>
               <MessageCircle />
             </div>
@@ -84,14 +145,22 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
           <div>
             <span className="font-semibold h-fit"> {userName}</span> {caption}
           </div>
-          {/* <div className="text-[#71717A]">
-            <div>View all {commentCount} comments</div>
+          <div className="text-[#71717A]">
+            <div>View all {commentsData?.length} comments</div>
             <div className="flex justify-between pt-2 items-center">
-              <input value={comment} onChange={(e) => setComment(e.target.value)} type="text" className="w-3/4 focus:outline-none " placeholder="Add a comment ..." />
-              <div className={`text-blue-500 font-semibold ${comment ? 'block' : 'hidden'}`}>Post</div>
+              <input data-testid="commentInput" value={comment} onChange={(e) => setComment(e.target.value)} className="w-3/4 focus:outline-none" placeholder="Add comment ..." />
+              <div
+                onClick={() => {
+                  handleComment(postId);
+                }}
+                data-testid="handleComment"
+                className={`text-blue-500 font-semibold ${comment ? 'block' : 'hidden'} cursor-pointer`}
+              >
+                Post
+              </div>
               <Smile className="h-4 w-4" />
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
