@@ -1,8 +1,8 @@
-import { getAllCancelBooking } from '../../../../src/resolvers/queries/cancel';
+import { getAllBooking } from '../../../../src/resolvers/queries/booking';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
-  cancelModel: {
+  bookingModel: {
     find: jest.fn().mockReturnValue({
       populate: jest.fn().mockResolvedValue({
         _id: '1',
@@ -13,8 +13,8 @@ jest.mock('../../../../src/models', () => ({
 
 describe('getAllCancelBooking', () => {
   it('should getAllCancelBooking', async () => {
-    if (getAllCancelBooking) {
-      const res = await getAllCancelBooking({}, {}, {}, {} as GraphQLResolveInfo);
+    if (getAllBooking) {
+      const res = await getAllBooking({}, {}, {}, {} as GraphQLResolveInfo);
       expect(res).toEqual({
         _id: '1',
       });
