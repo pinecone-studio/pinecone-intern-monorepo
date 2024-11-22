@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+ 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @layer base {
   :root {
     --background-admin: 0 0% 100%;
@@ -85,7 +97,6 @@
 @layer base {
   * {
     @apply border-border;
-    font-family: 'Inter', sans-serif;
   }
   body {
     @apply bg-background text-foreground;

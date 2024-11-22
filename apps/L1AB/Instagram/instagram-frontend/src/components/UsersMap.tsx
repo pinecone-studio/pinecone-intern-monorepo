@@ -12,7 +12,7 @@ export const UsersMap = () => {
       {users.slice(0, 5).map((user, index) => (
         <div key={index} className="rounded flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="size-11">
+            <Avatar className="w-10 h-10">
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

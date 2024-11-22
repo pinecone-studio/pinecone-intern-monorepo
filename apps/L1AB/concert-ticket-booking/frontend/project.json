@@ -58,7 +58,7 @@
         "buildTarget": "ticket-frontend:build:production"
       }
     },
-    "test": {
+     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
@@ -151,7 +151,7 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress example-frontend"],
+        "commands": ["npx nx cypress ticket-frontend"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]

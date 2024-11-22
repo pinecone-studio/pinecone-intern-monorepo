@@ -1,6 +1,8 @@
+'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Settings } from 'lucide-react';
+import { FollowersDialog } from './FollowersDialog';
 
 interface props {
   profileImg: string;
@@ -23,7 +25,7 @@ export const ProfilePageTop = ({ profileImg, profileUsername, postCount, followe
     <div className={styles.container}>
       <Avatar className="size-[150px]">
         <AvatarImage src={profileImg} className="object-cover" />
-        <AvatarFallback>{profileUsername.slice(0, 2)}</AvatarFallback>
+        <AvatarFallback>{profileUsername && profileUsername.slice(0, 2)}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col gap-5">
         <div className="flex gap-4 items-center">
@@ -39,10 +41,7 @@ export const ProfilePageTop = ({ profileImg, profileUsername, postCount, followe
             <p className="font-semibold">{postCount}</p>
             <p>posts</p>
           </div>
-          <div className={styles.textContainer}>
-            <p className="font-semibold">{followersCount}</p>
-            <p>followers</p>
-          </div>
+          <FollowersDialog followersCount={followersCount} />
           <div className={styles.textContainer}>
             <p className="font-semibold">{followingCount}</p>
             <p>following</p>

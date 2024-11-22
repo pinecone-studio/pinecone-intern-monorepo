@@ -16,7 +16,6 @@ query GetAllPosts {
     }
     images
     caption
-    likeCounts
     createdAt
     updatedAt
   }
