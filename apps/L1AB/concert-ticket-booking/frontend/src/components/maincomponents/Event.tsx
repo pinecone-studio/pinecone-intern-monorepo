@@ -2,7 +2,7 @@
 
 import { useGetAllEventsQuery } from '@/generated';
 import { EventCard } from './EventCard';
-import { EventCardSkeleton } from './EventCardSkeleton';
+import { EventCardSkeleton } from './Skeletons/EventCardSkeleton';
 export const Event = () => {
   const { data, loading } = useGetAllEventsQuery();
   if (loading) {
@@ -11,7 +11,7 @@ export const Event = () => {
 
   return (
     <div className="text-white" data-testid="event">
-      <div className="grid grid-cols-3 gap-8 py-12">
+      <div className="grid grid-cols-3 gap-8 py-12 px-28">
         {data?.getAllEvents?.map((event) => (
           <EventCard key={event._id} {...event} />
         ))}
