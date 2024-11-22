@@ -1,4 +1,4 @@
-import { render, fireEvent, screen,} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { AdminSearcher } from '@/components';
 import { GetAllEventsDocument } from '@/generated';
@@ -57,7 +57,6 @@ describe('AdminSearcher Component', () => {
       </MockedProvider>
     );
 
-    // Test search input
     const searchInput = screen.getByPlaceholderText('Тасалбар хайх');
     fireEvent.change(searchInput, { target: { value: 'Event' } });
     expect(setSearchValue);
@@ -92,11 +91,9 @@ describe('AdminSearcher Component', () => {
       </MockedProvider>
     );
 
-    // Open calendar popover
     const dateButton = screen.getByTestId('choose-date-id');
     fireEvent.click(dateButton);
 
-    // Simulate selecting a date
     const calendarDay = screen.getByText('1');
     fireEvent.click(calendarDay);
 
@@ -113,8 +110,6 @@ describe('AdminSearcher Component', () => {
         <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={[]} date={new Date()} setDate={setDate} />
       </MockedProvider>
     );
-
-    // Test clear date button
     const clearDateBtn = screen.getByTestId('clear-date');
     fireEvent.click(clearDateBtn);
 
