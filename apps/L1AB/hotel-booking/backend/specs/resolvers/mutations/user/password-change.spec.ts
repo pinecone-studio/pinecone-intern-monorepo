@@ -24,9 +24,7 @@ describe('passwordChange', () => {
   it('should throw an error if OTP is expired', async () => {
     (otpModel.findOne as jest.Mock).mockResolvedValue(null);
 
-    await expect(
-      passwordChange!({}, { input: { email: 'test@example.com', password: 'newpassword', otp: 'expiredotp' } }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('OTP is expired');
+    await expect(passwordChange!({}, { input: { email: 'test@example.com', password: 'newpassword', otp: 'expiredotp' } }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('OTP is expired');
 
     expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(userModel.updateOne).not.toHaveBeenCalled();
@@ -35,9 +33,7 @@ describe('passwordChange', () => {
   it('should throw an error if OTP does not match', async () => {
     (otpModel.findOne as jest.Mock).mockResolvedValue({ email: 'test@example.com', otp: 'validotp' });
 
-    await expect(
-      passwordChange!({}, { input: { email: 'test@example.com', password: 'newpassword', otp: 'invalidotp' } }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('Invalid OTP');
+    await expect(passwordChange!({}, { input: { email: 'test@example.com', password: 'newpassword', otp: 'invalidotp' } }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Invalid OTP');
 
     expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(userModel.updateOne).not.toHaveBeenCalled();
