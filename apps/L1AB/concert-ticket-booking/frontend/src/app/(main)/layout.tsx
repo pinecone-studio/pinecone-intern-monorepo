@@ -1,6 +1,6 @@
+import { AuthProvider } from '@/components';
 import { MainFooter, MainNavbar } from '@/components/maincomponents';
 import { PropsWithChildren } from 'react';
-
 
 export const metadata = {
   title: 'Concert Ticket Booking',
@@ -9,23 +9,19 @@ export const metadata = {
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en" className="h-full">
-      <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </head>
-      <body className="bg-black h-full flex flex-col">
+    <div className="flex flex-col h-full bg-black">
+      <AuthProvider>
         <header className="flex-shrink-0">
           <MainNavbar />
         </header>
         <main className="flex-grow">
           <div>{children}</div>
         </main>
-        <footer className="flex-shrink-0">
-          <MainFooter/>
-        </footer>
-      </body>
-    </html>
+      </AuthProvider>
+      <footer className="flex-shrink-0">
+        <MainFooter />
+      </footer>
+    </div>
   );
 };
 
