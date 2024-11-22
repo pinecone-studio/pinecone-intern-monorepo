@@ -10,7 +10,7 @@ const Page = () => {
 
   return (
     <Container>
-      <div className="px-28 py-12 flex gap-6 bg-[#09090B]">
+      <div className="px-28 py-12 flex gap-6 h-full">
         <div className="flex flex-col gap-2">
           <button
             data-cy="Profile-Page"
@@ -54,12 +54,12 @@ const UserProfileMerge = ({ selected }: Names) => (
     )}
     {selected === 'history' && (
       <div>
-        <UserHistory data-cy="Profile-Page-History"/>
+        <UserHistory data-cy="Profile-Page-History" />
       </div>
     )}
     {selected === 'forgetPassword' && (
       <div>
-        <ForgetPassword data-cy="Profile-Page-ForgetPassword"/>
+        <ForgetPassword data-cy="Profile-Page-ForgetPassword" />
       </div>
     )}
   </div>
