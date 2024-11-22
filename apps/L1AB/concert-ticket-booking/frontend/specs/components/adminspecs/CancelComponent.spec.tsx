@@ -1,45 +1,53 @@
 import { CancelComponent } from '@/components';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { GetAllCancelBookingDocument, UpdateCancelDocument } from '@/generated';
+import { GetAllBookingDocument, UpdateBookingDocument } from '@/generated';
 
 const mock: MockedResponse = {
   request: {
-    query: GetAllCancelBookingDocument,
+    query: GetAllBookingDocument,
   },
   result: {
     data: {
-      getAllCancelBooking: [
+      getAllBooking: [
         {
           _id: '1',
           bankName: 'Golomt',
           bankAccount: '1234567',
           status: 'Шилжүүлсэн',
-          amountTotal: 100,
+          amountTotal: 100000,
+          phone: '99999999',
+          email: 'user1@example.com',
+          selectedDate: '2024-12-01',
           createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-15T06:24:52.763Z',
           userId: {
             _id: '1',
-            name: 'naba',
+            name: 'Naba',
           },
           eventId: {
             _id: '1',
-            name: 'rockconcert',
+            name: 'Rock Concert',
           },
         },
         {
           _id: '2',
-          bankName: 'Golomt',
-          bankAccount: '1234567',
-          status: 'йыбйыб',
-          amountTotal: 100,
+          bankName: 'Khan Bank',
+          bankAccount: '7654321',
+          status: 'Баталгаажаагүй',
+          amountTotal: undefined,
+          phone: '88888888',
+          email: 'user2@example.com',
+          selectedDate: '2024-12-05',
           createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-15T06:24:52.763Z',
           userId: {
-            _id: '1',
-            name: 'naba',
+            _id: '2',
+            name: 'Sara',
           },
           eventId: {
-            _id: '1',
-            name: 'rockconcert',
+            _id: '2',
+            name: 'Jazz Night',
           },
         },
       ],
@@ -49,7 +57,7 @@ const mock: MockedResponse = {
 
 const mockUpdate: MockedResponse = {
   request: {
-    query: UpdateCancelDocument,
+    query: UpdateBookingDocument,
     variables: {
       input: { _id: '1', status: 'Шилжүүлээгүй' },
     },
@@ -65,7 +73,7 @@ const mockUpdate: MockedResponse = {
 };
 const mockUpdate1: MockedResponse = {
   request: {
-    query: UpdateCancelDocument,
+    query: UpdateBookingDocument,
     variables: {
       input: { _id: '1', status: 'Шилжүүлсэн' },
     },
