@@ -5,6 +5,7 @@ import { Settings } from 'lucide-react';
 import { FollowersDialog } from './FollowersDialog';
 import { useContext } from 'react';
 import { userContext } from '@/app/(main)/layout';
+import Link from 'next/link';
 
 const styles = {
   button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9',
@@ -25,7 +26,9 @@ export const ProfilePageTop = () => {
         <div className="flex gap-4 items-center">
           <h2 className={styles.header}>{user?.username}</h2>
           <div className="flex gap-2">
-            <Button className={styles.button}>Edit Profile</Button>
+            <Link href={'/editprofile'}>
+              <Button className={styles.button}>Edit Profile</Button>
+            </Link>
             <Button className={styles.button}>Ad tools</Button>
           </div>
           <Settings size={24} absoluteStrokeWidth={true} strokeWidth={1} />

@@ -3,8 +3,39 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { useUpdateUserMutation } from '@/generated';
+import { useState } from 'react';
 
 export const EditProfile = () => {
+  const [UpdateUser] = useUpdateUserMutation();
+  console.log(useUpdateUserMutation);
+  // const [username, setUsername] = useState('');
+  // const [gender, setGender] = useState('');
+  // const [profilePicture, setProfilePicture] = useState('');
+  // const [bio, setBio] = useState('');
+
+  const [updateData, setUpdateData] = useState({
+    username: '',
+    gender: '',
+    profilePicture: '',
+    bio: '',
+    fullname: '',
+    email: '',
+    password: '',
+  });
+
+  const handleUpdateUser = async () => {
+    await UpdateUser({
+      variables: {
+        input: {
+          ...updateData,
+        },
+      },
+    });
+  };
+
+  const 
+
   return (
     <div className="flex justify-center items-center flex-col pt-16">
       <div className="w-[600px] h-fit flex flex-col ">
@@ -16,7 +47,7 @@ export const EditProfile = () => {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <p className="flex items-center">upvox_</p>
+            <p className="flex items-center"></p>
           </div>
           <div className="flex">
             <Select>
@@ -34,7 +65,8 @@ export const EditProfile = () => {
 
         <div className="mt-5">
           <p className="text-[#262626] text-lg font-semibold font-sans ">Name</p>
-          <Input className="mt-2" placeholder="Name" />
+          <Input className="mt-2" placeholder="Name"></Input>
+
           <p className="pt-3 text-[#8E8E8E] font-sans font-normal text-xs">Help people discover your account by using the name you`re known by: either your full name, nickname, or business name.</p>
           <p className="pt-3 text-[#8E8E8E] font-normal  font-sans text-xs">You can only change your name twice within 14 days.</p>
         </div>
