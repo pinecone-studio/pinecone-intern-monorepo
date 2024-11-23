@@ -32,10 +32,12 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     const token: any = localStorage.getItem('userToken');
-    if (!token) router.push('/login');
-
-    const decodedUser = decodeToken(token);
-    setUser(decodedUser);
+    if (token) {
+      const decodedUser = decodeToken(token);
+      setUser(decodedUser);
+    } else {
+      router.push('/login');
+    }
   }, []);
 
   return (
