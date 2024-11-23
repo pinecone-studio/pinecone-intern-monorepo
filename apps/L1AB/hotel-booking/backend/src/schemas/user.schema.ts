@@ -21,6 +21,7 @@ export const typeDefs = gql`
   }
 
   input SignUpInput {
+    otp: String!
     email: String!
     password: String!
   }
@@ -57,6 +58,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    signUpSendOtp(email: String!): Response!
     signIn(input: SignInInput!): AuthResponse!
     signUp(input: SignUpInput!): SignUpResponse!
     passwordRecoveryRequest(input: PasswordRecoveryRequestInput!): Response!
