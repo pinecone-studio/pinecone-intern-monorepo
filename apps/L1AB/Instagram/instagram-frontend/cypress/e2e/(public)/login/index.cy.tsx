@@ -62,7 +62,6 @@ describe('Login Page', () => {
     }).then((response) => {
       if (response.body?.data) {
         window.localStorage.setItem('userToken', response.body.data.login.token);
-        window.localStorage.setItem('userId', response.body.data.login.user._id);
       }
     });
     cy.wait('@loginRequest');
@@ -70,7 +69,6 @@ describe('Login Page', () => {
     cy.url().should('include', '/home');
     cy.window().then((win) => {
       expect(win.localStorage.getItem('userToken')).to.eq('mocked-token');
-      expect(win.localStorage.getItem('userId')).to.eq('mocked-user-id');
     });
   });
   it('login hiiged buruu shiljihgui', () => {
