@@ -22,7 +22,7 @@ const containerVariants = {
     },
   },
   open: {
-    width: '20rem',
+    width: '260px',
     transition: {
       type: 'spring',
       damping: 15,

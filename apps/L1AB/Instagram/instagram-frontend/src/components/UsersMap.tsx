@@ -1,4 +1,3 @@
-/* eslint-disable no-secrets/no-secrets */
 'use client';
 import { useGetAllUsersQuery } from '@/generated';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -6,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 export const UsersMap = () => {
   const { data } = useGetAllUsersQuery();
 
-  const users = data?.getAllUsers || [];
+  const users = data?.getAllUsers;
   return (
     <div className="flex flex-col pt-4 gap-4">
-      {users.slice(0, 5).map((user, index) => (
+      {users?.slice(0, 5).map((user, index) => (
         <div key={index} className="rounded flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar className="w-10 h-10">
