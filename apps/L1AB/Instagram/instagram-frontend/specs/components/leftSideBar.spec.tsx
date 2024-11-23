@@ -1,10 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { LeftSideBar } from '@/components/LeftSideBar';
 import '@testing-library/jest-dom';
+import { LeftSideBar } from '@/components/LeftSideBar';
+import { userContext } from '../../src/app/(main)/layout';
 
 describe('LeftSideBar', () => {
+  const mockUser = {
+    _id: '134124',
+    email: '123@gmail.com',
+    username: 'blabla',
+    fullname: 'blabla',
+    gender: 'blabla',
+    password: 'blabla',
+    profilePicture: 'blabla',
+    bio: 'blabla',
+    isPrivate: false,
+    createdAt: 'blabla',
+    updatedAt: 'blabla',
+  };
   it('should toggle the search drawer when the SearchButton is clicked', () => {
-    render(<LeftSideBar />);
+    render(
+      <userContext.Provider value={{ user: mockUser }}>
+        <LeftSideBar />
+      </userContext.Provider>
+    );
 
     const searchButton = screen.getByTestId('search-click');
     fireEvent.click(searchButton);
@@ -22,7 +40,11 @@ describe('LeftSideBar', () => {
   });
 
   it('HomeButton дээр дархад Sidebar-г хаах', () => {
-    render(<LeftSideBar />);
+    render(
+      <userContext.Provider value={{ user: mockUser }}>
+        <LeftSideBar />
+      </userContext.Provider>
+    );
 
     const homeButton = screen.getByTestId('home-click');
     fireEvent.click(homeButton);
@@ -42,7 +64,11 @@ describe('LeftSideBar', () => {
   // });
 
   it('NotificationButton дээр дархад NotificationDrawer нээгдэх', () => {
-    render(<LeftSideBar />);
+    render(
+      <userContext.Provider value={{ user: mockUser }}>
+        <LeftSideBar />
+      </userContext.Provider>
+    );
 
     const notificationButton = screen.getByTestId('notif-click');
     fireEvent.click(notificationButton);

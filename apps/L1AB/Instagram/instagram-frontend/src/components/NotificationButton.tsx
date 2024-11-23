@@ -13,7 +13,7 @@ interface NotificationProps {
 export const NotificationButton = ({ isOpen, svgControls, handleOpenClose }: NotificationProps) => {
   return (
     <>
-      <NavigationLink name={isOpen ? '' : 'Notification'}>
+      <NavigationLink href={undefined} name={isOpen ? '' : 'Notification'}>
         <Heart data-testid="notif-click" className="stroke-inherit stroke-[1.5] min-w-6 w-6" onClick={() => handleOpenClose()}>
           <motion.path
             transition={{

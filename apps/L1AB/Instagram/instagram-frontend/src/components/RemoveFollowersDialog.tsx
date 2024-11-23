@@ -2,10 +2,9 @@
 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 
 const style = {
-  remove: 'bg-[#F4F4F5] hover:bg-[#F4F4F5] text-[#18181B] h-9',
+  remove: 'bg-[#F4F4F5] hover:bg-[#F4F4F5] text-[#18181B] h-9 py-2 px-4 rounded-lg flex items-center justify-center text-[14px]',
   container: 'flex flex-col justify-center items-center w-[324px] h-[244px] gap-4 p-6',
   button: 'h-9 bg-white hover:bg-white border',
   desc: 'text-center leading-5 text-[14px] font-light',
@@ -15,9 +14,7 @@ const style = {
 export const RemoveFollowersDialog = ({ img }: { img: string }) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Button className={style.remove}>Remove</Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger className={style.remove}>Remove</AlertDialogTrigger>
       <AlertDialogContent className={style.container}>
         <Avatar className="size-[52px]">
           <AvatarImage src={img} alt="@shadcn" />

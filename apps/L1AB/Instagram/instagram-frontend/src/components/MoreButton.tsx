@@ -15,7 +15,7 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:ring-0  outline-none w-full">
-          <NavigationLink name={isOpen ? '' : 'More'}>
+          <NavigationLink href={undefined} name={isOpen ? '' : 'More'}>
             <Menu className="stroke-inherit stroke-[1.5] min-w-6 w-6 group">
               <motion.path
                 transition={{

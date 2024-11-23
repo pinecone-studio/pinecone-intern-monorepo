@@ -6,7 +6,6 @@ interface props {
   img: string;
   fullname: string;
   suggest: string;
-  id: string;
 }
 const style = {
   container: 'px-3 flex gap-3 items-center py-1',
@@ -20,7 +19,7 @@ export const FollowersDialogRemove = ({ name, img, fullname, suggest }: props) =
   return (
     <div className={style.container}>
       <div className={style.subContainer}>
-        <Avatar className="size-11">
+        <Avatar className="w-11 h-11">
           <AvatarImage src={img} alt="@shadcn" />
           <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
         </Avatar>

@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 
@@ -10,9 +10,11 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="flex">
-        <ApolloWrapper>{children}</ApolloWrapper>
-      </body>
+      <Suspense>
+        <ApolloWrapper>
+          <body className="flex">{children}</body>
+        </ApolloWrapper>
+      </Suspense>
     </html>
   );
 };

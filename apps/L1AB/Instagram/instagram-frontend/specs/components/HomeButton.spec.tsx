@@ -2,7 +2,11 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { HomeButton } from '@/components/HomeButton';
 import { AnimationControls } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
 const mockSvgControls: AnimationControls = {
   start: jest.fn(),
   stop: jest.fn(),
@@ -18,17 +22,11 @@ const sampleProps = {
   isOpen: true,
   svgControls: mockSvgControls,
 };
-const sampleProps1 = {
-  isOpen: false,
-  svgControls: mockSvgControls,
-};
 
 describe('HomeButton', () => {
-  it('should render successfully', () => {
-    render(<HomeButton {...sampleProps} />);
-  });
+  usePathname.mockReturnValue('/home');
 
   it('should render successfully', () => {
-    render(<HomeButton {...sampleProps1} />);
+    render(<HomeButton {...sampleProps} />);
   });
 });

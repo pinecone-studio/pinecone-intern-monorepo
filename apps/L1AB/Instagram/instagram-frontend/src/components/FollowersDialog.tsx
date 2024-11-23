@@ -39,7 +39,7 @@ export const FollowersDialog = ({ followersCount }: { followersCount: string }) 
               <Input className={style.input} />
             </div>
             <div className={style.followersContainer}>
-              <FollowersDialogRemove name="test" img="" fullname="test test" suggest="kk" id="" />
+              <FollowersDialogRemove name="test" img="" fullname="test test" suggest="kk" />
             </div>
           </div>
         </div>
