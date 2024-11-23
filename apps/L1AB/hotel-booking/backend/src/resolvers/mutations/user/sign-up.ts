@@ -1,34 +1,33 @@
 import { MutationResolvers } from '../../../generated';
 import bcrypt from 'bcrypt';
-import { userModel } from '../../../models';
+import { otpModel, userModel } from '../../../models';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 
 export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input }) => {
-  try {
-    if (!emailRegex.test(input.email)) {
-      return {
-        success: false,
-        message: 'Invalid email format',
-      };
-    }
+  const { email, otp, password } = input;
 
-    const hashedPassword = await bcrypt.hash(input.password, 10);
+  const response = await otpModel.findOne({ email });
 
-    const user = await userModel.create({
-      email: input.email,
-      password: hashedPassword,
-    });
-
-    return {
-      user: user,
-      success: true,
-      message: `User ${user.email} created successfully`,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: 'Failed to create user',
-    };
+  if (!response) {
+    throw new Error('No OTP found for the provided email');
   }
+
+  if (otp !== response.otp) {
+    throw new Error('Invalid OTP');
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await userModel.create({
+    email: email,
+    password: hashedPassword,
+  });
+
+  return {
+    user: user,
+    success: true,
+    message: `User ${user.email} created successfully`,
+  };
 };
+
