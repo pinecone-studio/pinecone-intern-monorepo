@@ -10,10 +10,10 @@ interface Venue {
   price: number;
   quantity: number;
 }
-interface EventCardProps {
+export interface EventCardProps {
   _id: string;
   name: string;
-  artistName: string[];
+  description: string;
   eventDate: string[];
   images: string[];
   venues: Venue[];
@@ -26,15 +26,17 @@ const formatNumber = (value: number): string => {
 
 const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPrice: number; discountedPrice: number; discount: number }) => (
   <div className="w-fit flex items-end gap-2">
-    <h1 className="text-2xl text-[#FAFAFA] font-bold">{formatNumber(originalPrice)}₮</h1>
-    {discount > 0 && <h2 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(discountedPrice)}₮</h2>}
+    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
+    <h2 className="text-2xl text-[#FAFAFA] font-bold ">{formatNumber(discountedPrice)}₮</h2>
   </div>
 );
 
-const EventName = ({ name, artistName }: { name: string; artistName: string }) => (
-  <div>
-    <h1 className="text-xl text-[#FAFAFA] w-fit">{name}</h1>
-    <h6 className="text-[16px] text-[#A1A1AA] w-fit">{artistName}</h6>
+const EventName = ({ name, description }: { name: string; description: string }) => (
+  <div className="">
+    <div className="max-w-[250px] overflow-hidden  min-h-[28px]">
+      <h1 className="text-xl text-[#FAFAFA] truncate w-full ">{name}</h1>
+    </div>
+    <h6 className="text-[16px] text-[#A1A1AA] w-fit">{description}</h6>
   </div>
 );
 
@@ -62,7 +64,7 @@ const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
   );
 };
 
-export const EventCard = ({ _id, name, artistName, eventDate, images, venues, discount }: EventCardProps) => {
+export const EventCard = ({ _id, name, description, eventDate, images, venues, discount }: EventCardProps) => {
   const originalPrice = venues[2]?.price || 0;
   const discountedPrice = discount > 0 ? Math.floor(originalPrice * (1 - discount / 100)) : originalPrice;
   const router = useRouter();
@@ -74,7 +76,7 @@ export const EventCard = ({ _id, name, artistName, eventDate, images, venues, di
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}
         </div>
         <div className="bg-[#131313] py-8 px-6 h-fit gap-6 grid">
-          <EventName name={name} artistName={artistName[0]} />
+          <EventName name={name} description={description} />
           {venues[2] ? <EventPrice originalPrice={originalPrice} discountedPrice={discountedPrice} discount={discount} /> : <h1 className="text-red-500">{`Don't have index 2 element :)`}</h1>}
           <EventLocation eventDate={eventDate} />
         </div>
