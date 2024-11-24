@@ -19,7 +19,7 @@ describe('LeftSideBar', () => {
   };
   it('should toggle the search drawer when the SearchButton is clicked', () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <LeftSideBar />
       </userContext.Provider>
     );
@@ -41,7 +41,7 @@ describe('LeftSideBar', () => {
 
   it('HomeButton дээр дархад Sidebar-г хаах', () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <LeftSideBar />
       </userContext.Provider>
     );
@@ -65,7 +65,7 @@ describe('LeftSideBar', () => {
 
   it('NotificationButton дээр дархад NotificationDrawer нээгдэх', () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <LeftSideBar />
       </userContext.Provider>
     );

@@ -24,7 +24,9 @@ export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
         }
       >
         <AvatarImage src={user?.profilePicture} alt={user?.username} />
-        <AvatarFallback data-testid="avatar-fallback">{user?.username}</AvatarFallback>
+        <AvatarFallback data-testid="avatar-fallback" className="uppercase text-[#ccc]">
+          {user?.username.slice(0, 1)}
+        </AvatarFallback>
         <motion.path
           transition={{
             duration: 0.5,

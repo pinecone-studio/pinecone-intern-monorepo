@@ -17,9 +17,12 @@ describe('ProfilePagePosts', () => {
     createdAt: 'blabla',
     updatedAt: 'blabla',
   };
+  jest.mock('../../src/generated/index', () => ({
+    useGetFollowersByIdQuery: jest.fn(),
+  }));
   it('should render successfully', async () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <ProfilePageTop />
       </userContext.Provider>
     );
