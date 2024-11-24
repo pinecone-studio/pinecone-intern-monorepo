@@ -54,6 +54,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createBooking(input: CreateBookingInput!): Booking!
+    createBookingTotalAmount(input: CreateBookingInput!): Booking!
     updateBooking(input: UpdateBookingInput!): Booking!
   }
 `;
