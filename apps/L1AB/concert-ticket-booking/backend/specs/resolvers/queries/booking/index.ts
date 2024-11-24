@@ -1,2 +1,2 @@
 export * from './get-all-booking.spec';
-export * from './get-userIdBy-booking.spec';
+export * from './get-userId-booking.spec';
