@@ -49,6 +49,7 @@ export const typeDefs = gql`
 
   type Query {
     getAllBooking: [Booking!]!
+    getBookingByUserId(userId: ID!): [Booking!]!
   }
 
   type Mutation {
