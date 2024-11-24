@@ -31,7 +31,7 @@ describe('RightSideBar', () => {
 
   test('renders the user information correctly', () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <RightSideBar />
       </userContext.Provider>
     );
@@ -40,7 +40,7 @@ describe('RightSideBar', () => {
   test('logs the user out when the logout button is clicked', () => {
     localStorage.setItem('userToken', 'some-token');
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <RightSideBar />
       </userContext.Provider>
     );
