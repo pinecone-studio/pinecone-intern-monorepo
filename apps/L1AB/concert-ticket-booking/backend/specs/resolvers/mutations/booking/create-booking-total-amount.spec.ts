@@ -69,4 +69,25 @@ describe('createBookingTotalAmount', () => {
 
     expect(res.amountTotal).toBe(100000); // Verifies the total calculation
   });
+  it('should handle undefined venues gracefully', async () => {
+    const bookingInput = {
+      input: {
+        bankName: 'golomt',
+        bankAccount: 11,
+        eventId: '222',
+        userId: 'dfff',
+        status: 'Баталгаажаагүй',
+        phone: '99999999',
+        email: 'user@example.com',
+        selectedDate: '2024-12-01',
+        venues: undefined,
+      },
+    };
+
+    const res = await createBookingTotalAmount!({}, bookingInput, { userId: 'id' }, {} as GraphQLResolveInfo);
+
+    expect(res.bankName).toEqual('golomt');
+
+    expect(res.amountTotal).toBe(100000);
+  });
 });
