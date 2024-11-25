@@ -4,6 +4,13 @@ import { RoomServicesDialog } from './dialogs/RoomServicesDialog';
 import { GeneralInfoDialog } from './dialogs';
 import { DetailsUpcomingBookings } from './assets/DetailsUpcomingBookings';
 
+const mockBookings = [
+  { _id: 1, guestName: 'John Doe', status: 'Confirmed', date: '2024-12-15' },
+  { _id: 2, guestName: 'Jane Smith', status: 'Pending', date: '2024-12-20' },
+  { _id: 3, guestName: 'Emily White', status: 'Confirmed', date: '2024-12-25' },
+  { _id: 4, guestName: 'Michael Brown', status: 'Cancelled', date: '2025-01-05' },
+];
+
 export const RoomDetails = () => {
   return (
     <DetailsContainer name={'Flower Hotel Ulaanbaatar'}>
@@ -13,7 +20,7 @@ export const RoomDetails = () => {
           <GeneralInfoDialog/>
         </DetailsCard>
         <DetailsCard>
-          <DetailsUpcomingBookings/>
+          <DetailsUpcomingBookings mockBookings={mockBookings}/>
         </DetailsCard>
         <DetailsCard>
           <div>Room Services</div>
