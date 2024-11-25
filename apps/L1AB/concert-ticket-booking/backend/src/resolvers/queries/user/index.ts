@@ -1,2 +1,2 @@
 export * from './getall-users';
-export * from './get-me';
+export * from './get-user-by-id';

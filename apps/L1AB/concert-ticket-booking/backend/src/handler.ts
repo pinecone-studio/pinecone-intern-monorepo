@@ -16,15 +16,6 @@ const server = new ApolloServer({
 
 export const handler = startServerAndCreateNextHandler<NextRequest>(server, {
   context: async (req) => {
-    try {
-      const authorization = req.headers.get('Authorization');
-      if (!authorization) return { user: null };
-
-      const token = authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-      return { user: decoded };
-    } catch (error) {
-      return { user: null };
-    }
+    return { req };
   },
 });
