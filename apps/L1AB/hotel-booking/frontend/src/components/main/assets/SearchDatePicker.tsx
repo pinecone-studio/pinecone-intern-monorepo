@@ -28,7 +28,7 @@ export const SearchDatePicker = ({ startDate, endDate, onChange }: SearchDatePic
     <div data-testid="date-picker" className="grid gap-2 w-full">
       <Popover>
         <PopoverTrigger asChild>
-          <Button id="date" variant={'outline'} className={`w-full justify-between truncate`}>
+          <Button id="date" variant={'outline'} className={`w-full justify-between truncate border h-10`}>
             {date?.from ? (
               date.to ? (
                 <>
