@@ -9,6 +9,17 @@ query GetAllHotels {
     city
     rating
     stars
+    rooms {
+      _id
+      name
+      roomNumber
+      price
+      description
+      photos
+      roomType
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -24,6 +35,17 @@ query GetHotelById($id: ID!) {
     city
     rating
     stars
+    rooms {
+      _id
+      name
+      roomNumber
+      price
+      description
+      photos
+      roomType
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }

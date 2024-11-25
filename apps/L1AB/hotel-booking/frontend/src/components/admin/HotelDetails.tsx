@@ -1,27 +1,46 @@
+'use client';
+
 import React from 'react';
 import { DetailsCard, DetailsContainer, DetailsLeft, DetailsRight } from './assets';
-import { HotelDetailsAboutThisProperty, HotelDetailsFrequently, HotelDetailsPolicies, HotelDetailsPolicies2 } from './assets/hotel-details';
-
-import { HotelDetailsUpcomingBookings } from './assets/hotel-details/HotelDetailsUpcomingBookings';
-import { HotelDetailsRoomTypes } from './assets/hotel-details/HotelDetailsRoomTypes';
-import { HotelDetailsGeneralInfo } from './assets/hotel-details/HotelDetailsGeneralInfo';
-import { HotelDetailsAmenities } from './assets/hotel-details/HotelDetailsAmenities';
-import { HotelDetailsLocation } from './assets/hotel-details/HotelDetailsLocation';
+import {
+  HotelDetailsAboutThisProperty,
+  HotelDetailsAmenities,
+  HotelDetailsFrequently,
+  HotelDetailsGeneralInfo,
+  HotelDetailsImages,
+  HotelDetailsLocation,
+  HotelDetailsPolicies,
+  HotelDetailsPolicies2,
+  HotelDetailsRoomTypes,
+  HotelDetailsUpcomingBookings,
+} from './assets/hotel-details';
+import { useParams } from 'next/navigation';
+import { useGetHotelByIdQuery } from '@/generated';
 export const HotelDetails = () => {
+  const { hotel } = useParams();
+  const { data } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
+  const hotelDetails = data?.getHotelById;
+  // const decodedHotelName = React.useMemo(() => {
+  //   if (hotelDetails?.name) return hotelDetails.name;
+  //   if (hotel) {
+  //     return Array.isArray(hotel) ? decodeURIComponent(hotel[0]) : decodeURIComponent(hotel || '');
+  //   }
+  //   return '';
+  // }, [hotel, hotelDetails]);
   return (
-    <DetailsContainer name={'Flower Hotel Ulaanbaatar'}>
+    <DetailsContainer name={'decodedHotelName'}>
       <DetailsLeft>
         <DetailsCard>
           <HotelDetailsUpcomingBookings />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsRoomTypes/>
+          <HotelDetailsRoomTypes />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsGeneralInfo/>
+          <HotelDetailsGeneralInfo />
         </DetailsCard>
         <DetailsCard>
-         <HotelDetailsAmenities/>
+          <HotelDetailsAmenities />
         </DetailsCard>
         <DetailsCard>
           <HotelDetailsAboutThisProperty />
@@ -38,10 +57,10 @@ export const HotelDetails = () => {
       </DetailsLeft>
       <DetailsRight>
         <DetailsCard>
-          <HotelDetailsLocation/>
+          <HotelDetailsLocation location={hotelDetails?.address} />
         </DetailsCard>
         <DetailsCard>
-          <div>Images</div>
+          <HotelDetailsImages />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

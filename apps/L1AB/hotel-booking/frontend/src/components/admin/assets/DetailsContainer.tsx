@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
@@ -13,11 +14,13 @@ export const DetailsContainer = ({ children, name }: DContainerProps) => {
     <div className="max-w-screen-xl m-auto">
       <div className="py-4 flex gap-4 items-center">
         <Link href={'/' + pathnames.slice(0, -1).join('/')}>
-          <div className="bg-white size-8 text-black flex justify-center items-center rounded-md shadow-sm border hover:bg-gray-50">
+          <div className="bg-white w-8 h-8 text-black flex justify-center items-center rounded-md shadow-sm border hover:bg-gray-50">
             <ChevLeftIcon />
           </div>
         </Link>
-        <span className="text-lg font-semibold">{name}</span>
+        <span data-testid={`hotel-${name}`} className="text-lg font-semibold">
+          {name}
+        </span>
       </div>
       <div className="flex w-full gap-4 mb-4">{children}</div>
     </div>
