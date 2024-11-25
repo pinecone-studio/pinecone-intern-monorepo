@@ -1,0 +1,55 @@
+mutation SignUpUser($input: SignUpUser!) {
+  signUpUser(input: $input) {
+    token
+    user {
+      _id
+      name
+      email
+      password
+      phone
+      role
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+mutation SignInUser($input: SignInUser!) {
+  signInUser(input: $input) {
+    token
+    user {
+      _id
+      name
+      email
+      password
+      phone
+      role
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+mutation RequestPasswordRecovery($input: RequestRecoverPasswordInput!) {
+  requestPasswordRecovery(input: $input) {
+    success
+    email
+  }
+}
+
+mutation PasswordRecovery($input: RecoverPasswordInput!) {
+  passwordRecovery(input: $input)
+}
+
+query GetMe {
+  getMe {
+    _id
+    name
+    email
+    password
+    phone
+    role
+    createdAt
+    updatedAt
+  }
+}
