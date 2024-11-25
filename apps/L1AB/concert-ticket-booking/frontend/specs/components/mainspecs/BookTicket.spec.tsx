@@ -89,4 +89,9 @@ describe('BookTicket Component', () => {
 
     expect(screen.getByTestId('total-price'));
   });
+  it('icon is clicked', () => {
+    const { getByTestId } = render(<BookTicket id="test" />);
+    const OrderPush = getByTestId('Orderpush');
+    fireEvent.click(OrderPush);
+  });
 });

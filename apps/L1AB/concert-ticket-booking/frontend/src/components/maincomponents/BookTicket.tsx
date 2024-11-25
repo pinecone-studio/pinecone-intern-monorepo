@@ -127,7 +127,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               </p>
             </div>
           </div>
-          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="book-ticket-button">
+          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="Orderpush" onClick={() => router.push(`/order/${id}`)}>
             Тасалбар авах
           </Button>
         </div>
