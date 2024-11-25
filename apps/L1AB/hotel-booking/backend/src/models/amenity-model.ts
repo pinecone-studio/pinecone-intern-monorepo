@@ -1,6 +1,13 @@
 import mongoose, { model, Schema } from 'mongoose';
 
-const amenitySchema = new Schema(
+export type amenityType = {
+  _id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const amenitySchema = new Schema<amenityType>(
   {
     name: {
       type: String,

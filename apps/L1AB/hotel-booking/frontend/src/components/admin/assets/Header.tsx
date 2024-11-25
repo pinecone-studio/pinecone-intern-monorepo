@@ -27,7 +27,7 @@ export const Header = () => {
             return (
               <React.Fragment key={index}>
                 <BreadcrumbItem>
-                  <BreadcrumbLink className={index === pathnames.length - 1 ? 'text-black' : ''} href={href}>
+                  <BreadcrumbLink className={index === pathnames.length - 1 ? 'text-black' : ''} href={'admin' + href}>
                     {href.startsWith('/hotels') ? Hotelpaths[index] : href.startsWith('/guests') ? GuestPaths[index] : ''}
                   </BreadcrumbLink>
                 </BreadcrumbItem>

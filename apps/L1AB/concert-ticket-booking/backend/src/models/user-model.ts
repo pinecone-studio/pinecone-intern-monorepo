@@ -10,7 +10,7 @@ export type UserType = {
   createdAt: Date;
   updatedAt: Date;
 };
-const UserSchema = new Schema({
+const UserSchema = new Schema<UserType>({
   name: {
     type: String,
     required: true,

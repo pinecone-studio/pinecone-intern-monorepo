@@ -1,22 +1,46 @@
-query Query {
-  sampleQuery
-}
 mutation Signup($fullname: String!, $username: String!, $email: String!, $password: String!) {
   signup(fullname: $fullname, username: $username, email: $email, password: $password) {
     username
     email
     fullname
-    password
   }
 }
 mutation Login($username: String!, $email: String!, $password: String!) {
   login(username: $username, email: $email, password: $password) {
     token
+    user {
+      _id
+    }
   }
 }
 
 query GetAllUsers {
   getAllUsers {
+    _id
+    email
     username
+    fullname
+    gender
+    password
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
+  }
+}
+query getUserById($id: ID!) {
+  getUserById(_id: $id) {
+    _id
+    email
+    username
+    fullname
+    gender
+    password
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
   }
 }

@@ -1,9 +1,13 @@
-'use client'
+'use client';
 
 import { UserProfile } from '@/components/main';
 
 const UserProfilePage = () => {
-    return <UserProfile />;
+  return (
+    <>
+      <UserProfile />
+    </>
+  );
 };
 
 export default UserProfilePage;

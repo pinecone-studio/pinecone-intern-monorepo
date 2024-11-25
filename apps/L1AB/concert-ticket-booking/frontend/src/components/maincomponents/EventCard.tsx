@@ -10,7 +10,7 @@ interface Venue {
   price: number;
   quantity: number;
 }
-interface EventCardProps {
+export interface EventCardProps {
   _id: string;
   name: string;
   description: string;
@@ -26,41 +26,51 @@ const formatNumber = (value: number): string => {
 
 const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPrice: number; discountedPrice: number; discount: number }) => (
   <div className="w-fit flex items-end gap-2">
-    <h1 className="text-2xl text-[#FAFAFA] font-bold">{formatNumber(originalPrice)}₮</h1>
-    {discount > 0 && <h2 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(discountedPrice)}₮</h2>}
+    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
+    <h2 className="text-2xl text-[#FAFAFA] font-bold ">{formatNumber(discountedPrice)}₮</h2>
   </div>
 );
 
 const EventName = ({ name, description }: { name: string; description: string }) => (
-  <div>
-    <h1 className="text-xl text-[#FAFAFA] w-fit">{name}</h1>
+  <div className="">
+    <div className="max-w-[250px] overflow-hidden  min-h-[28px]">
+      <h1 className="text-xl text-[#FAFAFA] truncate w-full ">{name}</h1>
+    </div>
     <h6 className="text-[16px] text-[#A1A1AA] w-fit">{description}</h6>
   </div>
 );
 
-const EventLocation = ({ eventDate }: { eventDate: string[] }) => (
-  <div className="flex justify-between">
-    <div className="flex gap-2 text-[#A1A1AA] items-center">
-      <FiCalendar className="w-4 h-4" />
-      <p>{eventDate}</p>
+const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
+  let formattedDate = 'No Date';
+
+  if (eventDate.length === 2) {
+    const start = eventDate[0].split('-').slice(1).join('.');
+    const end = eventDate[1].split('-').slice(1).join('.');
+    formattedDate = `${start}-${end}`;
+  } else if (eventDate.length === 1) {
+    formattedDate = eventDate[0].split('-').slice(1).join('.');
+  }
+  return (
+    <div className="flex justify-between">
+      <div className="flex gap-2 text-[#A1A1AA] items-center">
+        <FiCalendar className="w-4 h-4" />
+        <p>{formattedDate}</p>
+      </div>
+      <div className="flex gap-2 text-[#A1A1AA] items-center">
+        <IoLocationOutline className="w-4 h-4" />
+        <p>UG ARENA</p>
+      </div>
     </div>
-    <div className="flex gap-2 text-[#A1A1AA] items-center">
-      <IoLocationOutline className="w-4 h-4" />
-      <p>UG ARENA</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export const EventCard = ({ _id, name, description, eventDate, images, venues, discount }: EventCardProps) => {
   const originalPrice = venues[2]?.price || 0;
   const discountedPrice = discount > 0 ? Math.floor(originalPrice * (1 - discount / 100)) : originalPrice;
   const router = useRouter();
-  const clickHandler = () => {
-    router.push(`/events/${_id}`);
-  };
   return (
-    <div className="w-full ">
-      <div className="border border-[#18181B] rounded-[8px] cursor-pointer" onClick={clickHandler} data-testid="EventCardClickId">
+    <div className="w-full  " data-testid="eventhaha">
+      <div className="border border-[#18181B] rounded-[8px] cursor-pointer overflow-hidden" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
         <div className="relative h-[250px] w-full">
           <Image src={images[0]} alt="Event image" fill className="object-cover" />
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}

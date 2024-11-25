@@ -15,26 +15,54 @@ export const typeDefs = gql`
     message: String!
   }
 
-  input CreateUserInput {
+  input SignInInput {
     email: String!
     password: String!
   }
 
-  input UpdateUserInput {
-    _id: ID!
-    email: String
-    password: String
-    phone: String
+  input SignUpInput {
+    otp: String!
+    email: String!
+    password: String!
+  }
+
+  type SignUpResponse {
+    user: User
+    success: Boolean!
+    message: String!
+  }
+
+  type AuthResponse {
+    user: User!
+    token: String!
+  }
+
+  input PasswordRecoveryRequestInput {
+    email: String!
+  }
+
+  input PasswordChangeInput {
+    otp: String!
+    email: String!
+    password: String!
+  }
+
+  input PaginationInput {
+    limit: Int
+    offset: Int
   }
 
   type Query {
-    getAllUsers: [User!]!
+    getAllUsers(pagination: PaginationInput): [User!]!
     getUserById(_id: ID!): User!
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): Response!
-    updateUser(input: UpdateUserInput!): User!
+    signUpSendOtp(email: String!): Response!
+    signIn(input: SignInInput!): AuthResponse!
+    signUp(input: SignUpInput!): SignUpResponse!
+    passwordRecoveryRequest(input: PasswordRecoveryRequestInput!): Response!
+    passwordChange(input: PasswordChangeInput!): Response!
     deleteUser(_id: ID!): Response!
   }
 `;

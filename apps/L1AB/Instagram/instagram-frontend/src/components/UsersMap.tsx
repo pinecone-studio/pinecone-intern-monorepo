@@ -1,20 +1,20 @@
-/* eslint-disable no-secrets/no-secrets */
 'use client';
-import { useGetAllUsersQuery } from '@/generated';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useContext } from 'react';
+import { userContext } from '@/app/(main)/layout';
+import { User } from '@/generated';
 
 export const UsersMap = () => {
-  const { data } = useGetAllUsersQuery();
-
-  const users = data?.getAllUsers || [];
+  const { users }: any = useContext(userContext);
+  const slicedUsers = Array.isArray(users) ? users.slice(0, 5) : [];
   return (
     <div className="flex flex-col pt-4 gap-4">
-      {users.slice(0, 5).map((user, index) => (
+      {slicedUsers.slice(0, 5).map((user: User, index: number) => (
         <div key={index} className="rounded flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="size-11">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={user.profilePicture} alt="@shadcn" />
+              <AvatarFallback className="uppercase">{user.username.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <p data-testid="username" className="font-semibold">
