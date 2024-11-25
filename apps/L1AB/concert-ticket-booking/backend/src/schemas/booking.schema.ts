@@ -46,15 +46,32 @@ export const typeDefs = gql`
     _id: ID!
     status: String
   }
+  input updateBookInput {
+    bookingID: ID!
+    eventId: Event!
+    bankName: String
+    bankAccount: Int
+    status: String!
+    userId: User!
+    amountTotal: Int
+    phone: String
+    email: String
+    selectedDate: String
+    venues: [Venue]
+    createdAt: Date!
+    updatedAt: Date!
+  }
 
   type Query {
     getAllBooking: [Booking!]!
     getBookingByUserId(userId: ID!): [Booking!]!
+    getBookingById(_id: ID!): Booking!
   }
 
   type Mutation {
     createBooking(input: CreateBookingInput!): Booking!
     createBookingTotalAmount(input: CreateBookingInput!): Booking!
     updateBooking(input: UpdateBookingInput!): Booking!
+    updateBookingEverything(input: updateBookInput!): Booking!
   }
 `;

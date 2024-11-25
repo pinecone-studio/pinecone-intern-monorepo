@@ -42,10 +42,12 @@ export const typeDefs = gql`
     images: [String!]!
     venues: [VenueInput!]!
     discount: Int
+    status: String!
   }
 
   input VenueInput {
     name: String!
+    firstquantity: Int!
     quantity: Int!
     price: Int!
   }

@@ -18,6 +18,7 @@ export type BookingType = {
       name: string;
       quantity: number;
       price: number;
+      firstQuantity: number;
     }
   ];
   createdAt: Date;
@@ -32,10 +33,12 @@ const BookingSchema = new Schema({
   },
   bankName: {
     type: String,
+    default: '',
     required: false,
   },
   bankAccount: {
     type: Number,
+    default: '',
     required: false,
   },
   userId: {
@@ -45,6 +48,7 @@ const BookingSchema = new Schema({
   },
   amountTotal: {
     type: Number,
+    default: '',
     required: false,
   },
   status: {
@@ -80,6 +84,11 @@ const BookingSchema = new Schema({
         default: 0,
       },
       price: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+      firstQuantity: {
         type: Number,
         required: false,
         default: 0,
