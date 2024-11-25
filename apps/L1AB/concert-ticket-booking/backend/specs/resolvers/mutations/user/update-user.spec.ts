@@ -5,13 +5,13 @@ jest.mock('../../../../src/models', () => ({
     findByIdAndUpdate: jest
       .fn()
       .mockResolvedValueOnce({
-        _id: '1',
-        name: "Name",
-        password: "123",
-        email: "tur5455@gmail.com",
-        phone: "1234567890",
+        name: 'Name',
+        password: '123',
+        email: 'tur5455@gmail.com',
+        phone: '1234567890',
       })
-      .mockResolvedValueOnce(null) 
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({ id: '123', name: 'Test User' })
       .mockRejectedValueOnce(new Error('Database error')),
   },
 }));
@@ -22,44 +22,65 @@ describe('Update User Mutation', () => {
       {},
       {
         input: {
-          userId: "1",
-          name: "Name",
-          password: "123",
-          email: "tur5455@gmail.com",
-          phone: "1234567890",
+          name: 'Name',
+          password: '123',
+          email: 'tur5455@gmail.com',
+          phone: '1234567890',
         },
-      }
+      },
+      { user: { userId: '1' } }
     );
 
     expect(result).toEqual({
-      _id: "1",
-      name: "Name",
-      password: "123",
-      email: "tur5455@gmail.com",
-      phone: "1234567890",
+      name: 'Name',
+      password: '123',
+      email: 'tur5455@gmail.com',
+      phone: '1234567890',
     });
   });
 
-  
-  it('Should throw an error if there is a database error', async () => {
+  it('Should throw an error if the user is not found', async () => {
     try {
       await updateUser(
         {},
         {
           input: {
-            userId: "1",
-            name: "Name",
-            password: "123",
-            email: "tur5455@gmail.com",
-            phone: "1234567890",
+            name: 'Test Name',
+            password: 'testPassword',
+            email: 'testemail@example.com',
+            phone: '1234567890',
           },
-        }
+        },
+        { user: { userId: 'nonexistent-id' } }
       );
     } catch (error) {
       if (error instanceof Error) {
-        expect(error.message).toEqual("Failed to update user");
+        expect(error.message).toEqual('Failed to update user');
       } else {
-        fail('Expected error to be an instance of Error');
+        fail('Failed to update user');
+      }
+    }
+  });
+
+  it('Should throw an error if there is a database error', async () => {
+    try {
+      await updateUser!(
+        {},
+        {
+          input: {
+            name: undefined,
+            password: undefined,
+            email: undefined,
+            phone: undefined,
+          },
+        },
+        { user: { userId: '' } }
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        expect(error.message).toEqual('Failed to update user');
+      } else {
+        fail('Failed to update user');
       }
     }
   });
