@@ -9,19 +9,19 @@ export const metadata = {
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="flex flex-col h-full bg-black">
+    <body className="flex flex-col h-full bg-black">
       <AuthProvider>
-        <header className="flex-shrink-0">
+        <header>
           <MainNavbar />
         </header>
-        <main className="flex-grow">
+        <main>
           <div>{children}</div>
         </main>
       </AuthProvider>
-      <footer className="flex-shrink-0">
+      <footer>
         <MainFooter />
       </footer>
-    </div>
+    </body>
   );
 };
 

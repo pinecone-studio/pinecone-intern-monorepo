@@ -14,7 +14,7 @@ export const ApolloWrapper = ({ children }: PropsWithChildren) => {
       uri,
       cache: new InMemoryCache(),
       headers: {
-        authorization: token ? `Bearer ${token}` : '',
+        Authorization: token ? `Bearer ${token}` : '',
       },
     });
 
