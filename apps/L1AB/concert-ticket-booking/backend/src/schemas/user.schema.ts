@@ -69,6 +69,6 @@ export const typeDefs = gql`
 
   type Query {
     getAllUsers: [User!]!
-    getMe: User
+    getUserById(_id: ID!): User!
   }
 `;
