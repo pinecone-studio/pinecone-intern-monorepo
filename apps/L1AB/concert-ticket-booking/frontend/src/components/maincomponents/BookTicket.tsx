@@ -1,5 +1,5 @@
 'use client';
-
+import { useGetEventByIdQuery } from '@/generated';
 import { StageStyle } from './StageStyle';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft } from 'react-icons/fa6';
@@ -12,28 +12,37 @@ interface BookTicketProps {
   id: string | string[];
 }
 
-export const tickets = [
-  { id: 1, name: 'Завсарын тасалбар', count: 38, price: 99000, color: '#C772C4' },
-  { id: 2, name: 'Арын тасалбар', count: 24, price: 89000, color: '#D7D7F8' },
-  { id: 3, name: 'Нүүрний тасалбар ', count: 15, price: 79000, color: '#4651C9' },
-];
-
 export const BookTicket = ({ id }: BookTicketProps) => {
-  const [counts, setCounts] = useState<number[]>(tickets.map(() => 0));
+  const { data } = useGetEventByIdQuery({ variables: { id: id as string } });
+  const eventDetails = data?.getEventById;
+  // const [createBooking] = useCreateBookingTotalAmountMutation();
+  const [counts, setCounts] = useState<number[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const incrementCount = (index: number) => {
     setCounts((prevCounts) => {
       const newCounts = [...prevCounts];
-      newCounts[index] += 1;
+      const venueQuantity = eventDetails?.venues[index].quantity || 0;
+      if ((newCounts[index] || 0) < venueQuantity) {
+        newCounts[index] = (newCounts[index] || 0) + 1;
+        setError(null);
+      } else {
+        setError(`Үлдсэн ${venueQuantity}ш тасалбараас илүү тасалбар авах боломжгүй.`);
+      }
       return newCounts;
     });
   };
 
   const decrementCount = (index: number) => {
-    setCounts((prevCounts) => prevCounts.map((count, i) => (i === index ? Math.max(count - 1, 0) : count)));
+    setCounts((prevCounts) => {
+      const newCounts = [...prevCounts];
+      newCounts[index] = Math.max((newCounts[index] || 0) - 1, 0);
+      setError(null);
+      return newCounts;
+    });
   };
 
-  const calculateTotal = () => tickets.reduce((total, ticket, index) => total + ticket.price * counts[index], 0);
+  const calculateTotal = () => eventDetails?.venues.reduce((total, venue, index) => total + venue.price * (counts[index] || 0), 0) || 0;
 
   const router = useRouter();
 
@@ -52,65 +61,75 @@ export const BookTicket = ({ id }: BookTicketProps) => {
         </div>
         <div className="bg-[#131313] rounded-2xl px-6">
           <div className="h-fit grid gap-2 py-6">
-            <p className="opacity-50 text-white ">Тоглолт үзэх өдрөө сонгоно уу.</p>
+            <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
             <Select>
               <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none">
                 <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
               </SelectTrigger>
               <SelectContent className="bg-[#27272A] text-[#FAFAFA]">
                 <SelectGroup>
-                  <SelectItem value="apple" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
-                    Apple
-                  </SelectItem>
-                  <SelectItem value="banana" className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
-                    Banana
-                  </SelectItem>
+                  {eventDetails?.eventDate.map((item, index) => (
+                    <SelectItem key={index} value={item} className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
           <div>
-            {tickets.map((ticket, index) => (
-              <div key={ticket.id} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed border-[#27272A]">
-                <div className="flex items-center">
-                  <GoDotFill className="w-8 h-8" style={{ color: ticket.color }} />
-                  <div>
-                    <p className="text-[12px]" style={{ color: ticket.color }}>
-                      {ticket.name} ({ticket.count})
+            {eventDetails?.venues.map((venue, index) => {
+              const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
+              const color = colors[index % colors.length];
+              return (
+                <div key={index} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed border-[#27272A]">
+                  <div className="flex items-center">
+                    <GoDotFill className="w-8 h-8" style={{ color }} />
+                    <div>
+                      <p className="text-[12px]" style={{ color }}>
+                        {venue.name} ({venue.quantity})
+                      </p>
+                      <p className="text-[16px] text-white">{venue.price.toLocaleString()}₮</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
+                      -
+                    </button>
+                    <p className="text-white" data-testid={`ticket-count-${index}`}>
+                      {counts[index] || 0}
                     </p>
-                    <p className="text-[16px] text-white">{ticket.price.toLocaleString()}₮</p>
+                    <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
+                      +
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
-                    -
-                  </button>
-                  <p className="text-white">{counts[index]}</p>
-                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <div className="h-fit grid gap-4 mt-6">
-            {tickets.map(
-              (ticket, index) =>
-                counts[index] > 0 && (
-                  <div key={ticket.id} className="flex justify-between text-[#A1A1AA]">
+            {eventDetails?.venues.map(
+              (venue, index) =>
+                (counts[index] || 0) > 0 && (
+                  <div key={index} className="flex justify-between text-[#A1A1AA]">
                     <p>
-                      {ticket.name} x {counts[index]}
+                      {venue.name} x {counts[index]}
                     </p>
-                    <p>{(ticket.price * counts[index]).toLocaleString()}₮</p>
+                    <p>{(venue.price * counts[index]).toLocaleString()}₮</p>
                   </div>
                 )
             )}
             <div className="flex justify-between">
               <p className="text-[#A1A1AA]">Нийт төлөх дүн:</p>
-              <p className="text-[20px] font-bold text-white">{calculateTotal().toLocaleString()}₮</p>
+              <p className="text-[20px] font-bold text-white" data-testid="total-price">
+                {calculateTotal().toLocaleString()}₮
+              </p>
             </div>
           </div>
-          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]">Тасалбар авах</Button>
+          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="book-ticket-button">
+            Тасалбар авах
+          </Button>
         </div>
       </div>
     </div>
