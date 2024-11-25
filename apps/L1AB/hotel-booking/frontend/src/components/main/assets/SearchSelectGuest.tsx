@@ -40,7 +40,7 @@ export const SearchSelectGuest = ({ value, onChange }: SearchSelectGuestProps) =
                 <Button data-testid="minus" className="bg-white text-black border hover:bg-gray-50" onClick={handleMinusClick}>
                   -
                 </Button>
-                <div className="size-10 flex items-center justify-center">{adult}</div>
+                <div className="w-10 h-10 flex items-center justify-center">{adult}</div>
                 <Button data-testid="plus" className="bg-white text-black border hover:bg-gray-50" onClick={handlePlusClick}>
                   +
                 </Button>
