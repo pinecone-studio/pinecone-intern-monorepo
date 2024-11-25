@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 import React from 'react';
 
@@ -8,7 +8,9 @@ export const AmenityDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="text-[#2563EB]">Edit</button>
+        <Button variant="ghost" className="text-[#2563EB]">
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[626px]">
         <DialogHeader>
@@ -21,9 +23,11 @@ export const AmenityDialog = () => {
           </div>
         </div>
         <DialogFooter className="flex sm:justify-between w-full">
-          <button className=" text-[#09090B]" type="submit">
-            Cancel
-          </button>
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Cencel
+            </Button>
+          </DialogClose>
           <Button className=" bg-[#2563EB] text-[#FAFAFA]" type="submit">
             Save
           </Button>
