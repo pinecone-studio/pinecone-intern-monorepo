@@ -1,1 +1,7 @@
-export type Context = unknown;
+type User = {
+  userId: string;
+};
+
+export type Context = {
+  user: User;
+};
