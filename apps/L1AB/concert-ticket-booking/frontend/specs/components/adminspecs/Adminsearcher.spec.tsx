@@ -1,4 +1,5 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+/* eslint-disable max-lines */
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { AdminSearcher } from '@/components';
 import { GetAllEventsDocument } from '@/generated';
@@ -73,7 +74,6 @@ describe('AdminSearcher Component', () => {
       </MockedProvider>
     );
 
-    // Test clear selection button
     const clearBtn = screen.getByTestId('clear-btn');
     fireEvent.click(clearBtn);
 
@@ -114,5 +114,41 @@ describe('AdminSearcher Component', () => {
     fireEvent.click(clearDateBtn);
 
     expect(setDate);
+  });
+  it('should successfully render', async () => {
+    const setSearchValue = jest.fn();
+
+    const setDate = jest.fn();
+    const setSelectedValuesMock = jest.fn();
+
+    const { getByTestId } = render(
+      <MockedProvider mocks={[mockData]}>
+        <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValuesMock} selectedValues={[]} date={undefined} setDate={setDate} />
+      </MockedProvider>
+    );
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+
+    await waitFor(async () => {
+      const select = getByTestId('admin-searcher-select');
+      fireEvent.keyDown(select, { key: 'Enter' });
+
+      const options = await screen.getAllByTestId('option');
+      fireEvent.keyDown(options[0], { key: 'Enter' });
+
+      // const select2 = getByTestId('admin-searcher-select');
+      // fireEvent.keyDown(select2, { key: 'Enter' });
+
+      // const optionsSecond = await screen.getAllByTestId('option');
+      // fireEvent.keyDown(optionsSecond[1], { key: 'Enter' });
+
+      // const select3 = getByTestId('admin-searcher-select');
+      // fireEvent.keyDown(select3, { key: 'Enter' });
+
+      // const optionsThird = await screen.getAllByTestId('option');
+      // fireEvent.keyDown(optionsThird[0], { key: 'Enter' });
+    });
   });
 });

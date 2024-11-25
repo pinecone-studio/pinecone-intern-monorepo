@@ -5,7 +5,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button';
 import { CalendarIcon, XIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@mui/material';
 import { format } from 'date-fns';
 import { useGetAllEventsQuery } from '@/generated';
 
@@ -21,23 +20,18 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchArtist, setSearchArtist] = useState<string>('');
   const { data } = useGetAllEventsQuery();
-  // const selection = [' hurd', 'haranga'];
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'search' | 'artist') => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (type === 'search') {
+    {
       setSearchTerm(value);
       setSearchValue(value);
-    } else if (type === 'artist') {
-      setSearchArtist(value);
     }
   };
 
   const handleSelectChange = (value: string) => {
-    if (!selectedValues.includes(value)) {
-      setSelectedValues((prevValues) => [...prevValues, value]);
-      setSearchArtist(value);
-    }
+    setSelectedValues([value]);
+    setSearchArtist(value);
   };
 
   const handleClearSelection = () => {
@@ -48,16 +42,19 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
   const handleClearDate = () => {
     setDate(undefined);
   };
-  const handleArtistInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchArtist(value);
-  };
 
   return (
-    <div className="flex justify-between">
+    <div data-testid="searchpagecomponent" className="flex justify-between">
       <div className="flex gap-2 border p-3">
         <div>
-          <input onChange={(e) => handleInputChange(e, 'search')} type="search" placeholder="Тасалбар хайх" className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]" value={searchTerm} />
+          <input
+            onChange={(e) => handleInputChange(e)}
+            data-testid="searchinput"
+            type="search"
+            placeholder="Тасалбар хайх"
+            className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]"
+            value={searchTerm}
+          />
         </div>
 
         <div className="flex gap-2">
@@ -76,13 +73,9 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Input
-            type="submit"
-            onChange={handleArtistInputChange}
-            data-testid="button-input"
-            className={`w-fit flex gap-5 ${selectedValues?.length > 0 ? 'bg-secondary px-3 font[8px]' : ''}`}
-            value={selectedValues.join('  ,  ') || searchArtist}
-          />
+          <div data-testid="button-input" className={`w-fit justify-center items-center flex gap-5 ${selectedValues?.length > 0 ? 'bg-secondary px-3 font[8px]' : ''}`}>
+            {selectedValues.join(' , ') || searchArtist}
+          </div>
         </div>
         <div className="flex items-center bg-white border rounded px-5 text-[14px] h-[36px] gap-5">
           <span>Цэвэрлэх</span>

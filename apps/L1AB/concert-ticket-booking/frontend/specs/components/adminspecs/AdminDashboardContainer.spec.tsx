@@ -32,9 +32,46 @@ const mock: MockedResponse = {
   },
 };
 describe('AdminDashboard', () => {
+  it('should display the "No results found" message when no events match the filters', async () => {
+    const searchValue = 'NonExistentEvent';
+    const selectedValues: string[] = [];
+    const date = new Date('2024-01-01');
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      const noResultsMessage = screen.getByText('Хайлт тохирох үр дүн олдсонгүй.');
+      expect(noResultsMessage);
+    });
+  });
+  it('should render all events when no filters are applied', async () => {
+    const searchValue = '';
+    const selectedValues: string[] = [];
+    const date = undefined;
+
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      const tableRow = screen.getByTestId('get-events-0');
+      expect(tableRow);
+    });
+
+    // Ensure the event data is shown
+    expect(screen.getByText('Event 1'));
+    expect(screen.getByText('Artist'));
+    expect(screen.getByText('100'));
+  });
+
   it('should render successfully with event data', async () => {
     const searchValue = '';
-    const selectedValues = [''];
+    const selectedValues = ['artist'];
     const date = undefined;
 
     const { getByTestId } = render(
@@ -61,7 +98,7 @@ describe('AdminDashboard', () => {
     );
 
     await waitFor(() => {
-      const tableRow = screen.getByTestId('get-events-');
+      const tableRow = screen.getByTestId('get-events-0');
       expect(tableRow);
     });
 
