@@ -4,30 +4,25 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 const images = [
-  'http://example.com/image1.jpg',
-  'http://example.com/image1.jpg',
   'http://example.com/image2.jpg',
-  'http://example.com/image1.jpg',
-  'http://example.com/image1.jpg',
-  'http://example.com/image1.jpg',
-  'http://example.com/image1.jpg',
+  'http://example.com/image2.jpg',
+  'http://example.com/image2.jpg',
+  'http://example.com/image2.jpg',
+  'http://example.com/image2.jpg',
+  'http://example.com/image2.jpg',
+  'http://example.com/image2.jpg',
 ];
 export const ImagesCarousel = () => {
   return (
     <>
-      <div className="grid grid-cols-2 gap-1 mt-4">
-        <div className="col-span-2 h-64 rounded-sm overflow-hidden relative">
-          <Image src={images[0]} alt="carousel image 0" fill></Image>
-        </div>
-        <div className="h-32 rounded-sm overflow-hidden relative">
-          <Image src={images[1]} alt="carousel image 1" fill></Image>
-        </div>
-        <div className="h-32 rounded-sm overflow-hidden relative">
-          <Image src={images[2]} alt="carousel image 2" fill></Image>
-        </div>
-        <div className="h-32 rounded-sm overflow-hidden relative">
-          <Image src={images[3]} alt="carousel image 3" fill></Image>
-        </div>
+      <div className="grid grid-cols-2 gap-1 mt-4 [&>div:first-child]:col-span-2 [&>div:first-child]:h-64">
+        {images.slice(0, 4).map((image, index) => {
+          return (
+            <div key={index} className="h-32 rounded-sm overflow-hidden relative">
+              <Image src={image} alt={`carousel image ${index}`} fill></Image>
+            </div>
+          );
+        })}
         <Dialog>
           <DialogTrigger asChild>
             <Button className="h-32 rounded-sm overflow-hidden relative">
@@ -46,8 +41,8 @@ export const ImagesCarousel = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="size-12 -left-6 border-none bg-black text-white" />
-              <CarouselNext className="size-12 -right-6 border-none bg-black text-white" />
+              <CarouselPrevious className="w-12 h-12 -left-6 border-none bg-black text-white" />
+              <CarouselNext className="w-12 h-12 -right-6 border-none bg-black text-white" />
             </Carousel>
           </DialogContent>
         </Dialog>

@@ -26,3 +26,15 @@ mutation UpdateBooking($input: UpdateBookingInput!) {
     status
   }
 }
+mutation CreateBookingTotalAmount($input: CreateBookingInput!) {
+  createBookingTotalAmount(input: $input) {
+    _id
+    amountTotal
+    venues {
+      name
+      price
+      quantity
+    }
+    status
+  }
+}

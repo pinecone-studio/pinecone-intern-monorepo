@@ -1,0 +1,8 @@
+query getFollowersById($id: ID!) {
+  getFollowersById(_id: $id) {
+    _id
+    followerId
+    followeeId
+    createdAt
+  }
+}

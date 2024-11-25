@@ -16,9 +16,17 @@ mutation Login($username: String!, $email: String!, $password: String!) {
 
 query GetAllUsers {
   getAllUsers {
+    _id
+    email
     username
     fullname
-    email
+    gender
+    password
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
   }
 }
 query getUserById($id: ID!) {
