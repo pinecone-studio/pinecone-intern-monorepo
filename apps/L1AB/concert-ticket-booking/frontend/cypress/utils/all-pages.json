@@ -1,1 +1,1 @@
-["/./","/.//recovery","/.//recovery/checkpoint","/.//recovery/otpInput","/.//recovery/passwordRecovery","/.//signin","/.//signup","/.//bookTicket","/.//bookTicket/[id]","/.//events","/.//events/[id]","/.//profile","/.//admin","/.//admin/cancel"]
+["/./","/.//order","/.//order/[id]","/.//recovery","/.//recovery/checkpoint","/.//recovery/otpInput","/.//recovery/passwordRecovery","/.//signin","/.//signup","/.//succes","/.//bookTicket","/.//bookTicket/[id]","/.//events","/.//events/[id]","/.//payment","/.//payment/[id]","/.//profile","/.//admin","/.//admin/cancel"]
