@@ -3,21 +3,18 @@ import { bookingModel } from '../../../models';
 
 export const updateBookingEverything = async (_: unknown, { input }: { input: UpdateBookInput }) => {
   try {
-    const { eventId, bankName, bankAccount, userId, amountTotal, status, email, phone, selectedDate, venues, createdAt } = input;
+    const { bankName, bankAccount, amountTotal, status, email, phone, selectedDate, venues } = input;
     const updatedBooking = await bookingModel.findByIdAndUpdate(
-      { _id: input.bookingID },
+      { _id: input._id},
       {
-        eventId,
         bankName,
         bankAccount,
-        userId,
         amountTotal,
         status,
         email,
         phone,
         selectedDate,
         venues,
-        createdAt,
         updatedAt: new Date(),
       },
       { new: true }

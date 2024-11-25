@@ -1,7 +1,7 @@
-import { UpdateBookingInput } from '../../../generated';
+import {UpdateEventStatus } from '../../../generated';
 import { EventModel } from '../../../models';
 
-export const updateEventStatus = async (_: unknown, { input }: { input: UpdateBookingInput }) => {
+export const updateEventStatus = async (_: unknown, { input }: { input:UpdateEventStatus }) => {
   try {
     const { status } = input;
     const updateEventStatus = await EventModel.findByIdAndUpdate(

@@ -12,7 +12,7 @@ export const typeDefs = gql`
     eventId: Event!
     bankName: String
     bankAccount: Int
-    status: String!
+    status: String
     userId: User!
     amountTotal: Int
     phone: String
@@ -47,19 +47,15 @@ export const typeDefs = gql`
     status: String
   }
   input updateBookInput {
-    bookingID: ID!
-    eventId: Event!
+    _id: ID!
     bankName: String
     bankAccount: Int
-    status: String!
-    userId: User!
+    status: String
     amountTotal: Int
     phone: String
     email: String
     selectedDate: String
-    venues: [Venue]
-    createdAt: Date!
-    updatedAt: Date!
+    venues: [VenueInput]
   }
 
   type Query {

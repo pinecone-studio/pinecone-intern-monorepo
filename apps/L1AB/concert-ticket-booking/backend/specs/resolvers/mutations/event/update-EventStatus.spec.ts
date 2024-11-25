@@ -1,5 +1,5 @@
-import { updateEventStatus } from 'apps/L1AB/concert-ticket-booking/backend/src/resolvers/mutations/event/update-event.status';
-import { updateBooking } from '../../../../src/resolvers/mutations';
+import { updateEventStatus } from '../../../../src/resolvers/mutations/event/update-event.status';
+
 
 jest.mock('../../../../src/models', () => ({
   EventModel: {
@@ -54,7 +54,7 @@ describe('Update Event Mutation', () => {
 
   it('Should throw an error if there is a database error', async () => {
     try {
-      await updateBooking(
+      await updateEventStatus(
         {},
         {
           input: {
