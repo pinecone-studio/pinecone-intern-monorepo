@@ -1,7 +1,7 @@
 'use client';
 
 import { StageStyle } from './StageStyle';
-import { Button } from '@mui/material';
+import { Button } from '@/components/ui/button';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
