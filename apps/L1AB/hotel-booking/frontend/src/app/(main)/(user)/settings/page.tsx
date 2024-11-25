@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
 import { UserSettings } from '@/components/main';
 
 const UserSettingsPage = () => {
-    return <UserSettings />;
+  return <UserSettings />;
 };
 
 export default UserSettingsPage;

@@ -19,12 +19,12 @@ export const MainHeroComponent = () => {
 
   const slideRight = () => {
     setIsTransitioning(true);
-    setCurrent((prev) => (prev === 2 ? 0 : prev + 1));
+    setCurrent((prev) => (prev === 4 ? 0 : prev + 1));
   };
 
   const slideLeft = () => {
     setIsTransitioning(true);
-    setCurrent((prev) => (prev === 0 ? 2 : prev - 1));
+    setCurrent((prev) => (prev === 0 ? 4 : prev - 1));
   };
   if (loading) {
     return <Skeleton className=" h-[550px] w-full bg-gray-900"></Skeleton>;
@@ -34,14 +34,14 @@ export const MainHeroComponent = () => {
     <div className="relative w-full overflow-hidden h-[550px]" data-testid="main-hero">
       <div
         data-testid="carousel-track"
-        style={{ transform: `translateX(-${(current * 100) / 3}%)` }}
-        className={`carousel-track absolute bg-gray-700 w-[300%] flex h-full ${isTransitioning ? 'duration-1000 ease-in-out' : ''}`}
+        style={{ transform: `translateX(-${(current * 100) / 5}%)` }}
+        className={`carousel-track absolute bg-gray-700 w-[500%] flex h-full ${isTransitioning ? 'duration-1000 ease-in-out' : ''}`}
         onMouseEnter={() => setAutoplay(false)}
         onMouseLeave={() => setAutoplay(true)}
       >
-        {data?.getAllEvents?.slice(0, 3)?.map((item, index) => (
+        {data?.getAllEvents?.slice(0, 5)?.map((item, index) => (
           <div data-testid={`getCancel-${index}`} key={index} className="relative h-[550px] w-full">
-            <Image src={item.images[1] || '/placeholder.jpg'} fill alt={`Event Image ${index + 1}`} className="object-cover" />
+            <Image src={item.images[1] || '/placeholder.jpg'} fill alt={`Event Image ${index + 1}`} className="object-cover" quality={100} priority />
             <div className="h-[550px] bg-black bg-opacity-50 z-50 space-y-4 absolute text-white flex justify-center items-center w-full">
               <div className="rounded text-center  bg-opacity-20 backdrop-filter backdrop-blur-md px-4 py-2">
                 <div className="text-xl mt-4 flex gap-2 items-center justify-center">
