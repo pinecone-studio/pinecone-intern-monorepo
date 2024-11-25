@@ -10,7 +10,7 @@ export const UserProfile = () => {
       <div className="p-8 grid gap-6 text-[#FAFAFA] bg-[#131313] rounded-xl">
         <div className="grid gap-2">
           <Label htmlFor="Утасны дугаар:">Утасны дугаар:</Label>
-          <input
+          <Input
             type="number"
             placeholder="9900-0000"
             className="px-3 py-1 border-[#27272A] bg-[#09090B]"

@@ -2,6 +2,14 @@ import React from 'react';
 import { DetailsCard, DetailsContainer, DetailsLeft, DetailsRight, ImagesCarousel } from './assets';
 import { RoomServicesDialog } from './dialogs/RoomServicesDialog';
 import { GeneralInfoDialog } from './dialogs';
+import { DetailsUpcomingBookings } from './assets/DetailsUpcomingBookings';
+
+const mockBookings = [
+  { _id: 1, guestName: 'John Doe', status: 'Confirmed', date: '2024-12-15' },
+  { _id: 2, guestName: 'Jane Smith', status: 'Pending', date: '2024-12-20' },
+  { _id: 3, guestName: 'Emily White', status: 'Confirmed', date: '2024-12-25' },
+  { _id: 4, guestName: 'Michael Brown', status: 'Cancelled', date: '2025-01-05' },
+];
 import { Button } from '@/components/ui/button';
 
 export const RoomDetails = () => {
@@ -17,6 +25,7 @@ export const RoomDetails = () => {
           <div>one</div>
         </DetailsCard>
         <DetailsCard>
+          <DetailsUpcomingBookings mockBookings={mockBookings}/>
           <div className="flex justify-between items-center">
             <h1 className="text-lg font-semibold">Upcoming Bookings</h1>
           </div>

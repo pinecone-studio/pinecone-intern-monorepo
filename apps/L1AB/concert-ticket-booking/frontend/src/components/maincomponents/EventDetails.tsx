@@ -6,9 +6,9 @@ import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GoClock, GoDotFill } from 'react-icons/go';
-import { tickets } from './BookTicket';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
+import { RelatedEvents } from './RelatedEvents';
 
 interface EventDetailsProps {
   id: string | string[];
@@ -23,9 +23,9 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   return (
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
-        <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} className="object-cover" />
+        <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} priority className="object-cover" />
         <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2 ">
-          <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.artistName[0]}</p>
+          <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.description}</p>
           <div className="grid h-fit gap-6 w-fit">
             <p className="text-5xl font-bold text-white">{eventDetails?.name}</p>
             <div className="flex items-center gap-2">
@@ -86,19 +86,24 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
         <div className="w-fit">
           <div className=" rounded-2xl px-6 ">
             <div className="grid h-fit gap-2">
-              {tickets.map((ticket) => (
-                <div key={ticket.id} className=" py-4 px-6  border-[2px] border-dashed border-[#27272A] rounded-[6px]">
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex gap-2 items-center">
-                      <GoDotFill className="w-8 h-8 " style={{ color: ticket.color }} />
-                      <p className="text-[12px] " style={{ color: ticket.color }}>
-                        {ticket.name} ({ticket.count})
-                      </p>
+              {eventDetails?.venues.map((item, index) => {
+                const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
+                const color = colors[index % colors.length]; // Cycle through colors for indices beyond 2 if needed
+
+                return (
+                  <div key={index} className="py-4 px-6 border-[2px] border-dashed border-[#27272A] rounded-[6px]">
+                    <div className="flex items-center justify-between w-full gap-5">
+                      <div className="flex gap-2 items-center">
+                        <GoDotFill className="w-8 h-8" style={{ color }} />
+                        <p className="text-[12px]" style={{ color }}>
+                          {item.name} тасалбар ({item.quantity})
+                        </p>
+                      </div>
+                      <p className="text-[16px] text-white">{item.price.toLocaleString()}₮</p>
                     </div>
-                    <p className="text-[16px] text-white">{ticket.price}₮</p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <button
               className="bg-[#00B7F4] rounded-md text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]"
@@ -110,6 +115,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           </div>
         </div>
       </div>
+      <RelatedEvents id={id} />
     </div>
   );
 };

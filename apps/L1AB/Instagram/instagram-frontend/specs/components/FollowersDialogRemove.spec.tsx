@@ -1,9 +1,15 @@
-import { FollowersDialogRemove } from '@/components/FollowersDialogRemove';
-import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
+import { FollowersDialogRemove } from '@/components/FollowersDialogRemove';
 
 describe('FollowersDialogRemove', () => {
-  it('should render successfully', async () => {
-    render(<FollowersDialogRemove name="test" img="" fullname="test test" suggest="kk" id="" />);
+  const defaultProps = {
+    name: 'test',
+    img: '/avatar.jpg',
+    fullname: 'test',
+    suggest: 'blabla',
+  };
+
+  it('renders all components correctly', () => {
+    render(<FollowersDialogRemove {...defaultProps} />);
   });
 });

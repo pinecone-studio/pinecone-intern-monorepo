@@ -51,11 +51,10 @@ export const typeDefs = gql`
   }
 
   input UserUpdateInput {
-    userId: ID!
-    name: String!
-    email: String!
-    password: String!
-    phone: String!
+    name: String
+    email: String
+    password: String
+    phone: String
   }
 
   type Mutation {
@@ -69,6 +68,6 @@ export const typeDefs = gql`
 
   type Query {
     getAllUsers: [User!]!
-    getUserById(_id: ID!): User!
+    getMe: User
   }
 `;
