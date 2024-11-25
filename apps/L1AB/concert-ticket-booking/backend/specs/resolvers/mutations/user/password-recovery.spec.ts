@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { passwordRecovery } from 'apps/L1AB/concert-ticket-booking/backend/src/resolvers/mutations';
-import { Response } from 'apps/L1AB/concert-ticket-booking/backend/src/generated';
+import { passwordRecovery } from '../../../../src/resolvers/mutations';
+import { Response } from '../../../../src/generated';
 
 jest.mock('../../../../src/models', () => ({
   otpModel: {
@@ -22,19 +22,19 @@ describe('Password Recovery', () => {
     expect(response).toEqual(Response.Success);
   });
 
-    it('should throw user not found error', async () => {
-      try {
-        await passwordRecovery!({}, { input: { email: '', password: '', otp: '1111' } }, { userId: null }, {} as GraphQLResolveInfo);
-      } catch (error) {
-        expect(error).toEqual(new Error('User not found'));
-      }
-    });
+  it('should throw user not found error', async () => {
+    try {
+      await passwordRecovery!({}, { input: { email: '', password: '', otp: '1111' } }, { userId: null }, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('User not found'));
+    }
+  });
 
-    it('should throw invalid otp error', async () => {
-      try {
-        await passwordRecovery!({}, { input: { email: '', password: '', otp: '1112' } }, { userId: null }, {} as GraphQLResolveInfo);
-      } catch (error) {
-        expect(error).toEqual(new Error('Invalid OTP'));
-      }
-    });
+  it('should throw invalid otp error', async () => {
+    try {
+      await passwordRecovery!({}, { input: { email: '', password: '', otp: '1112' } }, { userId: null }, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('Invalid OTP'));
+    }
+  });
 });

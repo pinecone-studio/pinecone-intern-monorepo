@@ -5,7 +5,7 @@ export const createBookingTotalAmount: MutationResolvers['createBooking'] = asyn
   const venues = input.venues || [];
 
   const amountTotal = venues.reduce((total, venue) => {
-    return total + (venue.quantity || 0) * (venue.price || 0);
+    return total + venue.quantity * venue.price;
   }, 0);
 
   const bookingData = {
