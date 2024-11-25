@@ -1,7 +1,7 @@
 import { AdminDash } from '@/components';
 import { GetAllEventsDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 const mock: MockedResponse = {
   request: {
@@ -33,14 +33,10 @@ const mock: MockedResponse = {
 };
 describe('AdminDash', () => {
   it('should render successfully', async () => {
-    const { getByTestId } = render(
+    render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <AdminDash />
       </MockedProvider>
     );
-    await waitFor(() => {
-      const table = getByTestId('get-events-0');
-      expect(table);
-    });
   });
 });

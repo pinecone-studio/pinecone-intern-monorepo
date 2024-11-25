@@ -1,40 +1,60 @@
 'use client';
+import { useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, XIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@mui/material';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useGetAllEventsQuery } from '@/generated';
 
-const options = ['Хурд', 'Харанга', 'Davaidasha', 'Болдбаатар', 'Ариунаа'];
+interface AdminSearcherProps {
+  setSearchValue: (_value: string) => void;
+  setSelectedValues: (_values: string[] | ((_prevValues: string[]) => string[])) => void;
+  selectedValues: string[];
+  date: Date | undefined;
+  setDate: (_date: Date | undefined) => void;
+}
 
-export const AdminSearcher = () => {
-  const today = new Date()
-  const [date, setDate] = useState<Date | undefined>(today);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValues, date, setDate }: AdminSearcherProps) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchArtist, setSearchArtist] = useState<string>('');
+  const { data } = useGetAllEventsQuery();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    {
+      setSearchTerm(value);
+      setSearchValue(value);
+    }
+  };
 
   const handleSelectChange = (value: string) => {
-    setSelectedValues((prevValues) => {      
-      if (prevValues.includes(value)) {
-        return [...prevValues]; 
-      }
-      {
-        return [...prevValues, value];
-      }
-    });
+    setSelectedValues([value]);
+    setSearchArtist(value);
   };
 
   const handleClearSelection = () => {
     setSelectedValues([]);
+    setSearchArtist('');
+  };
+
+  const handleClearDate = () => {
+    setDate(undefined);
   };
 
   return (
-    <div className="flex justify-between ">
-      <div className="flex gap-2 border p-3 ">
+    <div data-testid="searchpagecomponent" className="flex justify-between">
+      <div className="flex gap-2 border p-3">
         <div>
-          <input type="search" placeholder="Тасалбар хайх" className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]" />
+          <input
+            onChange={(e) => handleInputChange(e)}
+            data-testid="searchinput"
+            type="search"
+            placeholder="Тасалбар хайх"
+            className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]"
+            value={searchTerm}
+          />
         </div>
 
         <div className="flex gap-2">
@@ -45,37 +65,42 @@ export const AdminSearcher = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Уран бүтээлч</SelectLabel>
-                {options.map((option) => {
-                  return (
-                    <SelectItem key={option} value={option} data-testid={`option`}>
-                      {option}
-                    </SelectItem>
-                  );
-                })}
+                {data?.getAllEvents.map((item, index) => (
+                  <SelectItem key={index} value={item.artistName[0]} data-testid="option">
+                    {item.artistName[0]}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-
-          <Input data-testid="selection-input" type="text" className={`pl-3 mr-auto h-[36px] w-fit`} value={selectedValues.join(' ')} readOnly required />
+          <div data-testid="button-input" className={`w-fit justify-center items-center flex gap-5 ${selectedValues?.length > 0 ? 'bg-secondary px-3 font[8px]' : ''}`}>
+            {selectedValues.join(' , ') || searchArtist}
+          </div>
         </div>
         <div className="flex items-center bg-white border rounded px-5 text-[14px] h-[36px] gap-5">
           <span>Цэвэрлэх</span>
           <button data-testid="clear-btn" type="button" onClick={handleClearSelection}>
-            X
+            <XIcon className="w-5 h-5" />
           </button>
         </div>
       </div>
+
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant={'outline'} className={`w-[240px] justify-between text-left font-normal h-[36px]'`} data-testid="choose-date-id">
-            { date && format(date, 'dd MMM yyyy')}
+          <Button variant="outline" className="w-[240px] justify-between text-left font-normal h-[36px]" data-testid="choose-date-id">
+            {date ? format(date, 'dd MMM yyyy') : 'Сонгох огноо'}
             <CalendarIcon />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow"  />
+          <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow" />
         </PopoverContent>
       </Popover>
+      {date && (
+        <Button onClick={handleClearDate} className="flex gap-1 items-center text-gray-600 text-[14px] h-[36px] px-2 rounded-md" data-testid="clear-date">
+          <XIcon className="w-5 h-5 border rounded" />
+        </Button>
+      )}
     </div>
   );
 };
