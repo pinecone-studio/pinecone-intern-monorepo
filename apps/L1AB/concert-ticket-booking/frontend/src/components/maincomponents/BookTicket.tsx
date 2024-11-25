@@ -1,5 +1,5 @@
 'use client';
-import { useGetEventByIdQuery } from '@/generated';
+import { useCreateBookingTotalAmountMutation, useGetEventByIdQuery } from '@/generated';
 import { StageStyle } from './StageStyle';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft } from 'react-icons/fa6';
@@ -7,17 +7,16 @@ import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
 interface BookTicketProps {
   id: string | string[];
 }
-
 export const BookTicket = ({ id }: BookTicketProps) => {
   const { data } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
-  // const [createBooking] = useCreateBookingTotalAmountMutation();
+  const [createBooking] = useCreateBookingTotalAmountMutation();
   const [counts, setCounts] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const incrementCount = (index: number) => {
     setCounts((prevCounts) => {
@@ -32,7 +31,6 @@ export const BookTicket = ({ id }: BookTicketProps) => {
       return newCounts;
     });
   };
-
   const decrementCount = (index: number) => {
     setCounts((prevCounts) => {
       const newCounts = [...prevCounts];
@@ -41,11 +39,32 @@ export const BookTicket = ({ id }: BookTicketProps) => {
       return newCounts;
     });
   };
-
   const calculateTotal = () => eventDetails?.venues.reduce((total, venue, index) => total + venue.price * (counts[index] || 0), 0) || 0;
-
   const router = useRouter();
-
+  const handleBooking = async () => {
+    const userId = '673ac0020068c1269721bb5b';
+    const status = 'Баталгаажаагүй';
+    const bookingInput = {
+      input: {
+        eventId: id as string,
+        selectedDate: selectedDate,
+        status: status,
+        userId: userId,
+        venues: eventDetails?.venues.map((venue, index) => ({
+          name: venue.name,
+          price: venue.price,
+          quantity: counts[index] || 0,
+        })),
+      },
+    };
+    try {
+      const result = await createBooking({ variables: { input: bookingInput.input } });
+      router.push(`/order/${result.data?.createBookingTotalAmount?._id}`);
+    } catch (err) {
+      setError('Тасалбар захиалах явцад алдаа гарлаа.');
+    }
+    
+  };
   return (
     <div data-testid="Book-Ticket-Component">
       <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12">
@@ -62,7 +81,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
         <div className="bg-[#131313] rounded-2xl px-6">
           <div className="h-fit grid gap-2 py-6">
             <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
-            <Select>
+            <Select value={selectedDate ?? undefined} onValueChange={setSelectedDate}>
               <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none">
                 <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
               </SelectTrigger>
@@ -127,7 +146,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               </p>
             </div>
           </div>
-          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="Orderpush" onClick={() => router.push(`/order/${id}`)}>
+          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="Orderpush" onClick={handleBooking}>
             Тасалбар авах
           </Button>
         </div>
