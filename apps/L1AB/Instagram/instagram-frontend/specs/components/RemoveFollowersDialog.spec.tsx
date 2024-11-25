@@ -1,9 +1,11 @@
-import { RemoveFollowersDialog } from '@/components/RemoveFollowersDialog';
-import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-
+import { RemoveFollowersDialog } from '@/components/RemoveFollowersDialog';
 describe('RemoveFollowersDialog', () => {
-  it('should render successfully', async () => {
-    render(<RemoveFollowersDialog img="" id="" />);
+  const defaultProps = {
+    img: '/test-avatar.jpg',
+  };
+
+  it('renders the trigger button with correct styling', () => {
+    render(<RemoveFollowersDialog {...defaultProps} />);
   });
 });

@@ -17,7 +17,7 @@ export const CreateButton = ({ svgControls, isOpen }: CreateProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:ring-0  outline-none w-full rounded">
-          <NavigationLink name={isOpen ? '' : 'Create'}>
+          <NavigationLink href={undefined} name={isOpen ? '' : 'Create'}>
             <SquarePlus className="stroke-inherit stroke-[1.5] min-w-6 w-6 group ">
               <motion.path
                 transition={{

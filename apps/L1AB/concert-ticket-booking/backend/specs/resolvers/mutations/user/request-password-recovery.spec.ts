@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { requestPasswordRecovery } from 'apps/L1AB/concert-ticket-booking/backend/src/resolvers/mutations';
+import { requestPasswordRecovery } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models', () => ({
   userModel: {
