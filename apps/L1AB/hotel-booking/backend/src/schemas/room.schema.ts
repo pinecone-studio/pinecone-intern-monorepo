@@ -41,7 +41,7 @@ export const typeDefs = gql`
 
   type Query {
     getAllRooms: [Room!]
-    getRoomById(_id: ID!): Room!
+    getRoomById(_id: ID!): [Room!]!
   }
 
   type Mutation {
