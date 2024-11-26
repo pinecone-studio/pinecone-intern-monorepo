@@ -10,9 +10,9 @@ const RightSideBar = () => {
     <div className="flex flex-col w-[326px]" data-cy="RightSideBar">
       <div className="flex w-full h-[56px] justify-between items-center">
         <div className="flex items-center gap-3">
-          <Avatar className="w-10 h-10">
+          <Avatar className="w-10 h-10 flex items-center justify-center">
             <AvatarImage src={user?.profilePicture} alt={user?.username} />
-            <AvatarFallback>{user?.username}</AvatarFallback>
+            <AvatarFallback className="uppercase text-[#ccc]">{user?.username.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div>
             <h3 className="font-semibold" data-testid="username">

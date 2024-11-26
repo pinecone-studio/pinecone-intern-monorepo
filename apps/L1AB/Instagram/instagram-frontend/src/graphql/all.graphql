@@ -21,7 +21,6 @@ query GetAllUsers {
     username
     fullname
     gender
-    password
     profilePicture
     bio
     isPrivate
@@ -36,7 +35,6 @@ query getUserById($id: ID!) {
     username
     fullname
     gender
-    password
     profilePicture
     bio
     isPrivate

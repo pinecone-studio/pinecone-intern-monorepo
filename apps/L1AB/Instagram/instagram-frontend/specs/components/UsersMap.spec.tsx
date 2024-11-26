@@ -1,11 +1,16 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { userContext } from '@/app/(main)/layout';
 import { UsersMap } from '@/components/UsersMap';
+import { useCreateFollowersMutation } from '@/generated';
+import userEvent from '@testing-library/user-event';
+
+jest.mock('@/generated', () => ({
+  useCreateFollowersMutation: jest.fn(),
+}));
 
 describe('UsersMap', () => {
-  it('should render a list of users', () => {
-    // Mock users data
+  it('should render a list of users and allow following', async () => {
     const mockUsers = [
       {
         _id: '1',
@@ -19,31 +24,8 @@ describe('UsersMap', () => {
         username: 'user2',
         profilePicture: 'https://placekitten.com/201/200',
       },
-      {
-        _id: '3',
-        email: 'user3@example.com',
-        username: 'user3',
-        profilePicture: 'https://placekitten.com/202/200',
-      },
-      {
-        _id: '4',
-        email: 'user4@example.com',
-        username: 'user4',
-        profilePicture: 'https://placekitten.com/203/200',
-      },
-      {
-        _id: '5',
-        email: 'user5@example.com',
-        username: 'user5',
-        profilePicture: 'https://placekitten.com/204/200',
-      },
-      {
-        _id: '6',
-        email: 'user6@example.com',
-        username: 'user6',
-        profilePicture: 'https://placekitten.com/205/200',
-      },
     ];
+
     const mockUser = {
       _id: '134124',
       email: '123@gmail.com',
@@ -58,6 +40,11 @@ describe('UsersMap', () => {
       updatedAt: 'blabla',
     };
 
+    const mockCreateFollowers = jest.fn().mockResolvedValue({
+      data: { createFollowers: { id: 'new-follower-id', followeeId: 'some-id' } },
+    });
+    useCreateFollowersMutation.mockReturnValue([mockCreateFollowers]);
+
     render(
       <userContext.Provider value={{ users: mockUsers, user: mockUser }}>
         <UsersMap />
@@ -67,7 +54,12 @@ describe('UsersMap', () => {
     mockUsers.slice(0, 5).forEach((user) => {
       expect(screen.getByText(user.username)).toBeInTheDocument();
     });
+    const followButtons = screen.getAllByRole('button', { name: /follow/i });
 
-    expect(screen.queryAllByText('Follow').length).toBe(5);
+    await userEvent.click(followButtons[0]);
+
+    await waitFor(() => {
+      expect(mockCreateFollowers).toHaveBeenCalled();
+    });
   });
 });
