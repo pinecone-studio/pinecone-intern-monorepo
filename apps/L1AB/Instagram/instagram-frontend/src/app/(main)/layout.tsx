@@ -49,7 +49,7 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
     <userContext.Provider value={{ user, users }}>
       <div className="flex min-w-full">
         <LeftSideBar />
-        <div className="flex gap-[72px] mx-auto">
+        <div className="flex gap-[72px] mx-auto max-h-screen overflow-y-scroll">
           <div>{children}</div>
           {pathname == '/home' ? (
             <div className="flex flex-col py-10 gap-y-4">
