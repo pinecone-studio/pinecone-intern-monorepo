@@ -43,7 +43,7 @@ describe('ProfileButton', () => {
   }));
   it('should render successfully', () => {
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <ProfileButton {...sampleProps} />
       </userContext.Provider>
     );

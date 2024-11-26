@@ -2,7 +2,11 @@ import { ProfilePageTop } from '@/components/ProfilePageTop';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { userContext } from '../../src/app/(main)/layout';
+import { useGetFollowersByIdQuery } from '@/generated';
 
+jest.mock('@/generated', () => ({
+  useGetFollowersByIdQuery: jest.fn(),
+}));
 describe('ProfilePagePosts', () => {
   const mockUser = {
     _id: '134124',
@@ -17,10 +21,19 @@ describe('ProfilePagePosts', () => {
     createdAt: 'blabla',
     updatedAt: 'blabla',
   };
-  jest.mock('../../src/generated/index', () => ({
-    useGetFollowersByIdQuery: jest.fn(),
-  }));
   it('should render successfully', async () => {
+    const mockFollowersData = {
+      data: {
+        getFollowersById: [
+          { id: '1', username: 'follower1' },
+          { id: '2', username: 'follower2' },
+        ],
+      },
+    };
+
+    useGetFollowersByIdQuery.mockReturnValue({
+      data: mockFollowersData,
+    });
     render(
       <userContext.Provider value={{ user: mockUser, users: mockUser }}>
         <ProfilePageTop />

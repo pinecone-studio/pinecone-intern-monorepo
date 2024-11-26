@@ -5,6 +5,7 @@ import { Settings } from 'lucide-react';
 import { FollowersDialog } from './FollowersDialog';
 import { useContext } from 'react';
 import { userContext } from '@/app/(main)/layout';
+import { useGetFollowersByIdQuery } from '@/generated';
 
 const styles = {
   button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9',
@@ -15,6 +16,8 @@ const styles = {
 
 export const ProfilePageTop = () => {
   const { user }: any = useContext(userContext);
+  const { data } = useGetFollowersByIdQuery({ variables: { id: user?._id } });
+  console.log(data, 'getfollowers');
   return (
     <div className={styles.container} data-cy="Profile-page-top">
       <Avatar className="w-[150px] h-[150px]">
