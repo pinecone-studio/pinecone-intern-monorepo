@@ -6,7 +6,6 @@ import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GoClock, GoDotFill } from 'react-icons/go';
-import { tickets } from './BookTicket';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { RelatedEvents } from './RelatedEvents';
@@ -87,19 +86,24 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
         <div className="w-fit">
           <div className=" rounded-2xl px-6 ">
             <div className="grid h-fit gap-2">
-              {tickets.map((ticket) => (
-                <div key={ticket.id} className=" py-4 px-6  border-[2px] border-dashed border-[#27272A] rounded-[6px]">
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex gap-2 items-center">
-                      <GoDotFill className="w-8 h-8 " style={{ color: ticket.color }} />
-                      <p className="text-[12px] " style={{ color: ticket.color }}>
-                        {ticket.name} ({ticket.count})
-                      </p>
+              {eventDetails?.venues.map((item, index) => {
+                const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
+                const color = colors[index % colors.length]; // Cycle through colors for indices beyond 2 if needed
+
+                return (
+                  <div key={index} className="py-4 px-6 border-[2px] border-dashed border-[#27272A] rounded-[6px]">
+                    <div className="flex items-center justify-between w-full gap-5">
+                      <div className="flex gap-2 items-center">
+                        <GoDotFill className="w-8 h-8" style={{ color }} />
+                        <p className="text-[12px]" style={{ color }}>
+                          {item.name} тасалбар ({item.quantity})
+                        </p>
+                      </div>
+                      <p className="text-[16px] text-white">{item.price.toLocaleString()}₮</p>
                     </div>
-                    <p className="text-[16px] text-white">{ticket.price}₮</p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <button
               className="bg-[#00B7F4] rounded-md text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]"
