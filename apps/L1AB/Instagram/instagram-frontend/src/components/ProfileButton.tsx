@@ -15,7 +15,7 @@ export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
   const { user }: any = useContext(userContext);
 
   return (
-    <NavigationLink href="/profile" name={isOpen ? '' : 'Profile'}>
+    <NavigationLink href={`/profile?username=${user?.username}`} name={isOpen ? '' : 'Profile'}>
       <Avatar
         className={
           pathname == '/profile'

@@ -3,6 +3,9 @@ import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogTrigger 
 import { Input } from '@/components/ui/input';
 import { Search, X } from 'lucide-react';
 import { FollowersDialogRemove } from './FollowersDialogRemove';
+import { useContext } from 'react';
+import { userContext } from '@/app/(main)/layout';
+import * as _ from 'lodash';
 
 const style = {
   triggerContainer: 'text-[#262626] flex gap-1',
@@ -16,12 +19,14 @@ const style = {
   input: 'border-0 outline-none p-0 ',
 };
 
-export const FollowersDialog = ({ followersCount }: { followersCount: string }) => {
+export const FollowersDialog = ({ followers }: { followers: any }) => {
+  const { users }: any = useContext(userContext);
+  const sortId = _.groupBy(users, '_id');
   return (
     <AlertDialog>
       <AlertDialogTrigger>
         <div className={style.triggerContainer}>
-          <p className="font-semibold">{followersCount}</p>
+          <p className="font-semibold">{followers?.length || 0}</p>
           <p>followers</p>
         </div>
       </AlertDialogTrigger>
@@ -39,7 +44,15 @@ export const FollowersDialog = ({ followersCount }: { followersCount: string }) 
               <Input className={style.input} />
             </div>
             <div className={style.followersContainer}>
-              <FollowersDialogRemove name="test" img="" fullname="test test" suggest="kk" />
+              {followers?.map((follow: any, i: any) => (
+                <FollowersDialogRemove
+                  key={i}
+                  name={sortId[follow?.followerId][0]?.username}
+                  img={sortId[follow?.followerId][0]?.profilePicture}
+                  fullname={sortId[follow?.followerId][0]?.fullname}
+                  suggest="kk"
+                />
+              ))}
             </div>
           </div>
         </div>

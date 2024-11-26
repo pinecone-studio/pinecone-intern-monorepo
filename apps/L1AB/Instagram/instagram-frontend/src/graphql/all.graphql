@@ -42,3 +42,18 @@ query getUserById($id: ID!) {
     updatedAt
   }
 }
+query GetUserByUsername($username: String!) {
+  getUserByUsername(username: $username) {
+    _id
+    email
+    username
+    fullname
+    gender
+    password
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
+  }
+}

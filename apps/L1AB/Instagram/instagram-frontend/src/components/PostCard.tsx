@@ -1,4 +1,5 @@
 'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import { Heart } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
@@ -30,9 +31,10 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
       <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
-            <div className="w-10 h-10 rounded-full border overflow-hidden relative">
-              <Image className="" alt="no picture" src={profilePicture} fill />
-            </div>
+            <Avatar className="w-10 h-10 flex items-center justify-center">
+              <AvatarImage src={profilePicture} alt={userName} />
+              <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
+            </Avatar>
             <div>{userName}</div>
             <div className="text-[#71717A]">5h</div>
           </div>
