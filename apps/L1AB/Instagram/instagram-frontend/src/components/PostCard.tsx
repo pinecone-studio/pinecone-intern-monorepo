@@ -32,7 +32,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <Avatar className="w-10 h-10 flex items-center justify-center">
-              <AvatarImage src={profilePicture} alt={userName} />
+              <AvatarImage src={profilePicture} alt={userName} className="object-cover" />
               <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div>{userName}</div>

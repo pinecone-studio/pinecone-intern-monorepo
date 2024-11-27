@@ -14,7 +14,7 @@ export const FollowersDialogRemove = ({ name, img, fullname, suggest }: any) => 
     <div className={style.container}>
       <div className={style.subContainer}>
         <Avatar className="w-11 h-11">
-          <AvatarImage src={img} alt="@shadcn" />
+          <AvatarImage src={img} alt="@shadcn" className="object-cover" />
           <AvatarFallback>{name?.slice(0, 1)}</AvatarFallback>
         </Avatar>
         <div>
