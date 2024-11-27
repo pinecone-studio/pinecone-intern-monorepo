@@ -5,4 +5,5 @@ describe('DialogComponent', () => {
   it('should render successfully', () => {
     render(<AddEventComponent />);
   });
+
 });
