@@ -37,6 +37,7 @@ export const typeDefs = gql`
     images: [String]
     venues: [VenueInput]
     discount: Int
+    status: String
   }
 
   input EventInput {
@@ -48,7 +49,7 @@ export const typeDefs = gql`
     images: [String!]!
     venues: [VenueInput!]!
     discount: Int
-    status: String!
+    status: String
   }
 
   input VenueInput {
