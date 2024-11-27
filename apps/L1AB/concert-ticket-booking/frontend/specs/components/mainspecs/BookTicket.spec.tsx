@@ -126,4 +126,5 @@ describe('BookTicket Component', () => {
     const cardElement = getByTestId('FaArrowLeftClick');
     fireEvent.click(cardElement);
   });
+  
 });
