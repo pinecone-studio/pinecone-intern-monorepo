@@ -1,6 +1,5 @@
 mutation SignUpUser($input: SignUpUser!) {
   signUpUser(input: $input) {
-    token
     user {
       _id
       name
@@ -11,6 +10,7 @@ mutation SignUpUser($input: SignUpUser!) {
       createdAt
       updatedAt
     }
+    token
   }
 }
 

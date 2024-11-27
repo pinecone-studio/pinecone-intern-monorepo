@@ -9,6 +9,7 @@ import { GoClock, GoDotFill } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { RelatedEvents } from './RelatedEvents';
+import { toast } from 'react-toastify';
 
 interface EventDetailsProps {
   id: string | string[];
@@ -20,6 +21,16 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }
+  const token = localStorage.getItem('token');
+  const checkUser = () => {
+    if (token) {
+      router.push(`/bookTicket/${eventDetails?._id}`);
+    } else {
+      toast.error('Please sign in');
+      router.push(`/signin`);
+    }
+  };
+
   return (
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
@@ -88,7 +99,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
             <div className="grid h-fit gap-2">
               {eventDetails?.venues.map((item, index) => {
                 const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
-                const color = colors[index % colors.length]; // Cycle through colors for indices beyond 2 if needed
+                const color = colors[index % colors.length];
 
                 return (
                   <div key={index} className="py-4 px-6 border-[2px] border-dashed border-[#27272A] rounded-[6px]">
@@ -105,11 +116,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 );
               })}
             </div>
-            <button
-              className="bg-[#00B7F4] rounded-md text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]"
-              data-testid="book-ticket-btn"
-              onClick={() => router.push(`/bookTicket/${eventDetails?._id}`)}
-            >
+            <button className="bg-[#00B7F4] rounded-md text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]" data-testid="book-ticket-btn" onClick={checkUser}>
               Тасалбар авах
             </button>
           </div>

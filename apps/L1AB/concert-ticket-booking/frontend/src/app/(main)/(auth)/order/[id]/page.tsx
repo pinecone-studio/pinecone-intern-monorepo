@@ -6,11 +6,10 @@ import { useParams } from 'next/navigation';
 
 const Page = () => {
   const { id } = useParams();
-  console.log(id);
 
   return (
     <Container>
-      <OrderCheckout id={id}/>
+      <OrderCheckout id={id} />
     </Container>
   );
 };
