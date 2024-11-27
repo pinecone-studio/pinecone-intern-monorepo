@@ -17,7 +17,6 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   const [counts, setCounts] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
   const incrementCount = (index: number) => {
     setCounts((prevCounts) => {
       const newCounts = [...prevCounts];
@@ -44,17 +43,20 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   const handleBooking = async () => {
     const userId = '673ac0020068c1269721bb5b';
     const status = 'Баталгаажаагүй';
+    const venuesToBook = eventDetails?.venues
+      .map((venue, index) => ({
+        name: venue.name,
+        price: venue.price,
+        quantity: counts[index],
+      }))
+      .filter((venue) => venue.quantity > 0);
     const bookingInput = {
       input: {
         eventId: id as string,
         selectedDate: selectedDate,
         status: status,
         userId: userId,
-        venues: eventDetails?.venues.map((venue, index) => ({
-          name: venue.name,
-          price: venue.price,
-          quantity: counts[index] || 0,
-        })),
+        venues: venuesToBook,
       },
     };
     try {
@@ -64,6 +66,16 @@ export const BookTicket = ({ id }: BookTicketProps) => {
       setError('Тасалбар захиалах явцад алдаа гарлаа.');
     }
   };
+  const isButtonDisabled = () => {
+    return !selectedDate || !counts.some((count) => count > 0);
+  };
+  const getButtonStyles = () => {
+    const disabled = isButtonDisabled();
+    return {
+      opacity: disabled ? 0.5 : 1,
+      cursor: disabled ? 'not-allowed' : 'pointer',
+    };
+  };
   return (
     <div data-testid="Book-Ticket-Component">
       <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12">
@@ -71,23 +83,20 @@ export const BookTicket = ({ id }: BookTicketProps) => {
           <FaArrowLeft />
         </Button>
         <p className="text-2xl font-semibold text-white">Тасалбар захиалах</p>
-        <p></p>
       </nav>
       <div className="flex flex-wrap justify-around items-center py-6">
-        <div>
-          <StageStyle />
-        </div>
+        <StageStyle />
         <div className="bg-[#131313] rounded-2xl px-6">
           <div className="h-fit grid gap-2 py-6">
             <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
             <Select value={selectedDate ?? undefined} onValueChange={setSelectedDate}>
-              <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none">
+              <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none" data-testid="SelectTrigger">
                 <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
               </SelectTrigger>
               <SelectContent className="bg-[#27272A] text-[#FAFAFA]">
                 <SelectGroup>
                   {eventDetails?.eventDate.map((item, index) => (
-                    <SelectItem key={index} value={item} className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]">
+                    <SelectItem key={index} value={item} className="bg-[#27272A] text-[#FAFAFA] hover:bg-[#3A3A3D]" data-testid="option">
                       {item}
                     </SelectItem>
                   ))}
@@ -95,36 +104,34 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               </SelectContent>
             </Select>
           </div>
-          <div>
-            {eventDetails?.venues.map((venue, index) => {
-              const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
-              const color = colors[index % colors.length];
-              return (
-                <div key={index} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed border-[#27272A]">
-                  <div className="flex items-center">
-                    <GoDotFill className="w-8 h-8" style={{ color }} />
-                    <div>
-                      <p className="text-[12px]" style={{ color }}>
-                        {venue.name} ({venue.quantity})
-                      </p>
-                      <p className="text-[16px] text-white">{venue.price.toLocaleString()}₮</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
-                      -
-                    </button>
-                    <p className="text-white" data-testid={`ticket-count-${index}`}>
-                      {counts[index] || 0}
+          {eventDetails?.venues.map((venue, index) => {
+            const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
+            const color = colors[index % colors.length];
+            return (
+              <div key={index} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed border-[#27272A]">
+                <div className="flex items-center">
+                  <GoDotFill className="w-8 h-8" style={{ color }} />
+                  <div>
+                    <p className="text-[12px]" style={{ color }}>
+                      {venue.name} ({venue.quantity})
                     </p>
-                    <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
-                      +
-                    </button>
+                    <p className="text-[16px] text-white">{venue.price.toLocaleString()}₮</p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+                <div className="flex items-center gap-4">
+                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
+                    -
+                  </button>
+                  <p className="text-white" data-testid={`ticket-count-${index}`}>
+                    {counts[index] || 0}
+                  </p>
+                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
+                    +
+                  </button>
+                </div>
+              </div>
+            );
+          })}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <div className="h-fit grid gap-4 mt-6">
             {eventDetails?.venues.map(
@@ -132,7 +139,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
                 (counts[index] || 0) > 0 && (
                   <div key={index} className="flex justify-between text-[#A1A1AA]">
                     <p>
-                      {venue.name} x {counts[index]}
+                      {venue.name}x{counts[index]}
                     </p>
                     <p>{(venue.price * counts[index]).toLocaleString()}₮</p>
                   </div>
@@ -145,7 +152,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               </p>
             </div>
           </div>
-          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb']" data-testid="Orderpush" onClick={handleBooking}>
+          <Button className="bg-[#00B7F4] text-black w-full py-2 px-4 my-6 hover:bg-[#6fcceb]" data-testid="Orderpush" onClick={handleBooking} disabled={isButtonDisabled()} style={getButtonStyles()}>
             Тасалбар авах
           </Button>
         </div>
