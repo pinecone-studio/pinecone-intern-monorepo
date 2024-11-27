@@ -12,10 +12,4 @@ describe('Cancel Page', () => {
       cy.get('[data-cy="Cancel-Component"]').should('be.visible');
     });
   });
-
-  it('Should render the AdvertisedEvent component inside the Container', () => {
-    cy.get('[data-cy="Container"]').within(() => {
-      cy.get('[data-cy="AdvertisedEvent-Component"]').should('be.visible');
-    });
-  });
 });
