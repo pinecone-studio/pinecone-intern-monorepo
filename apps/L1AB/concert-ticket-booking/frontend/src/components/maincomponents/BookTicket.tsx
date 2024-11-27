@@ -138,9 +138,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               (venue, index) =>
                 (counts[index] || 0) > 0 && (
                   <div key={index} className="flex justify-between text-[#A1A1AA]">
-                    <p>
-                      {venue.name}x{counts[index]}
-                    </p>
+                    <p>{venue.name}x{counts[index]}</p>
                     <p>{(venue.price * counts[index]).toLocaleString()}₮</p>
                   </div>
                 )
