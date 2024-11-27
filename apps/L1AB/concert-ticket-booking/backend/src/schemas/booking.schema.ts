@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Venue {
+  type BookingVenue {
     name: String
     quantity: Int
     price: Int
@@ -18,7 +18,7 @@ export const typeDefs = gql`
     phone: String
     email: String
     selectedDate: String
-    venues: [Venue]
+    venues: [BookingVenue]
     createdAt: Date!
     updatedAt: Date!
   }
@@ -33,10 +33,14 @@ export const typeDefs = gql`
     phone: String
     email: String
     selectedDate: String
-    venues: [VenueInput]
+    venues: [CreateBookingVenueInput]
   }
-
-  input VenueInput {
+  input CreateBookingVenueInput {
+    name: String!
+    quantity: Int!
+    price: Int!
+  }
+  input BookingVenueInput {
     name: String
     quantity: Int
     price: Int
@@ -55,7 +59,7 @@ export const typeDefs = gql`
     phone: String
     email: String
     selectedDate: String
-    venues: [VenueInput]
+    venues: [BookingVenueInput]
   }
 
   type Query {

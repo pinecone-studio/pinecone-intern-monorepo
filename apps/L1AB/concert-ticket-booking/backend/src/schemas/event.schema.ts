@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Venue {
     name: String!
     quantity: Int!
+    firstquantity: Int!
     price: Int!
   }
 
@@ -20,9 +21,8 @@ export const typeDefs = gql`
     discount: Int!
     createdAt: Date!
     updatedAt: Date!
-
   }
-  input updateEventStatus{
+  input updateEventStatus {
     _id: ID!
     status: String
   }
