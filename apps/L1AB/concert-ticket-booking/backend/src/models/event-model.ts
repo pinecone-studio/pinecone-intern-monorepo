@@ -61,29 +61,7 @@ const EventSchema = new Schema({
       name: {
         type: String,
         required: true,
-        default: 'VIP',
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-      firstquantity: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-      price: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-    },
-    {
-      name: {
-        type: String,
-        required: true,
-        default: 'Regular',
+        default: 'Энгийн',
       },
       quantity: {
         type: Number,
@@ -106,6 +84,28 @@ const EventSchema = new Schema({
         type: String,
         required: true,
         default: 'Fanzone',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      firstquantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+    },
+    {
+      name: {
+        type: String,
+        required: true,
+        default: 'VIP',
       },
       quantity: {
         type: Number,
