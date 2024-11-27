@@ -4,8 +4,7 @@ import React from 'react';
 import { Container } from '@/components';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import FormInput from './FormInput';
-import PasswordInput from './PasswordInput';
+import { Input } from '@/components/ui/input';
 
 interface SignInProps {
   header: string;
@@ -20,17 +19,19 @@ interface SignInProps {
   footerLinkHref: string;
 }
 
-const SignIn: React.FC<SignInProps> = ({ header, emailLabel, passwordLabel, recoveryLinkHref, recoveryLinkText, buttonText, footerText, footerTextEnd, footerLinkText, footerLinkHref }) => {
+const SignIn: React.FC<SignInProps> = ({ header, recoveryLinkHref, recoveryLinkText, buttonText, footerText, footerTextEnd, footerLinkText, footerLinkHref }) => {
   return (
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem]" data-cy="SignIn-Page">
         <div className="rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
           <div className="flex py-2 flex-col justify-center items-center">
-            <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]" data-cy="SignIn-Header">{header}</p>
+            <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]" data-cy="SignIn-Header">
+              {header}
+            </p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px]">
-            <FormInput id="email" label={emailLabel} type="email" placeholder="name@example.com" dataCy="SignIn-Email-Input" />
-            <PasswordInput id="password" label={passwordLabel} dataCy="SignIn-Password-Input" />
+            <Input id="email" type="email" placeholder="name@example.com" data-cy="SignIn-Email-Input" />
+            <Input id="password" data-cy="SignIn-Password-Input" />
             <Link href={recoveryLinkHref} className="flex justify-end text-[#A1A1AA] self-stretch text-center text-sm leading-5 tracking-wide" data-cy="SignIn-Link">
               {recoveryLinkText}
             </Link>

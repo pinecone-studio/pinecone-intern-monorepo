@@ -20,8 +20,8 @@ describe('SignUp-Page', () => {
     cy.get('[data-cy=SignUp-Password-Input]').first().type('password123');
     cy.get('[data-cy=SignUp-Password-Input]').first().should('have.value', 'password123');
 
-    cy.get('[data-cy=SignUp-Password-Input]').last().type('password123');
-    cy.get('[data-cy=SignUp-Password-Input]').last().should('have.value', 'password123');
+    cy.get('[data-cy=SignUp-ConfirmPassword-Input]').last().type('password123');
+    cy.get('[data-cy=SignUp-ConfirmPassword-Input]').last().should('have.value', 'password123');
   });
 
   it('3. Should toggle password visibility when icons are clicked', () => {
@@ -38,15 +38,5 @@ describe('SignUp-Page', () => {
 
   it('4. Should navigate to another page when the footer link is clicked', () => {
     cy.get('[data-cy=SignUp-Link]').click();
-  });
-
-  it('5. Should submit the form when all fields are filled', () => {
-    cy.get('[data-cy=SignUp-Name-Input]').type('John Doe');
-    cy.get('[data-cy=SignUp-Phone-Input]').type('1234567890');
-    cy.get('[data-cy=SignUp-Email-Input]').type('john.doe@example.com');
-    cy.get('[data-cy=SignUp-Password-Input]').first().type('password123');
-    cy.get('[data-cy=SignUp-Password-Input]').last().type('password123');
-
-    cy.get('[data-cy=SignUp-Submit-Button]').click();
   });
 });

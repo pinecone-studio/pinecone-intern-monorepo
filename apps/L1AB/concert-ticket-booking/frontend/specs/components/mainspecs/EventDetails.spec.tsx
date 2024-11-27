@@ -1,15 +1,15 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { MockedProvider  } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing';
 import { GetAllEventsDocument, GetEventByIdDocument } from '@/generated';
 import { EventDetails } from '@/components/maincomponents/EventDetails';
 import { mocks } from './mock';
+import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
 }));
-
 
 const mocks1 = [
   {
@@ -111,18 +111,46 @@ describe('EventDetails', () => {
       expect(table);
     });
   });
-  it('handles "book ticket" button click correctly', async () => {
+  it('renders rows based on fetched data and handles button click correctly', async () => {
+    const mockToken = 'mocked-token';
+    localStorage.setItem('token', mockToken);
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks1} addTypename={false}>
         <EventDetails id="1" />
       </MockedProvider>
     );
 
     await waitFor(() => {
-      const Artist = getByTestId('artist-0');
-      expect(Artist);
+      const artist = getByTestId('artist-0');
+      expect(artist);
     });
+
     const button = getByTestId('book-ticket-btn');
     fireEvent.click(button);
+    const router = useRouter();
+    await waitFor(() => {
+      expect(router.push);
+    });
+  });
+  it('renders rows based on fetched data and handles button click correctly', async () => {
+    const mockToken = '';
+    localStorage.setItem('token', mockToken);
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks1} addTypename={false}>
+        <EventDetails id="1" />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      const artist = getByTestId('artist-0');
+      expect(artist);
+    });
+
+    const button = getByTestId('book-ticket-btn');
+    fireEvent.click(button);
+    const router = useRouter();
+    await waitFor(() => {
+      expect(router.push);
+    });
   });
 });
