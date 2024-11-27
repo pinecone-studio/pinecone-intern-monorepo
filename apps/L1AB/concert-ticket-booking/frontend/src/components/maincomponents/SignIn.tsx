@@ -30,8 +30,8 @@ const SignIn: React.FC<SignInProps> = ({ header, recoveryLinkHref, recoveryLinkT
             </p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px]">
-            <Input placeholder="name@example.com" />
-            <Input />
+            <Input id="email" type="email" placeholder="name@example.com" data-cy="SignIn-Email-Input" />
+            <Input id="password" data-cy="SignIn-Password-Input" />
             <Link href={recoveryLinkHref} className="flex justify-end text-[#A1A1AA] self-stretch text-center text-sm leading-5 tracking-wide" data-cy="SignIn-Link">
               {recoveryLinkText}
             </Link>

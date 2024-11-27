@@ -3,6 +3,7 @@
 import React from 'react';
 import { Container } from '@/components';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface RecoveryEmailProps {
   header: string;
@@ -19,7 +20,7 @@ const RecoveryEmail: React.FC<RecoveryEmailProps> = ({ header, buttonText }) => 
             <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]">{header}</p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px]">
-            <input id="email" type="email" placeholder="name@example.com" />
+            <Input id="email" type="email" placeholder="name@example.com" data-cy="RecoveryEmail-Email-Input" />
             <Button
               data-cy="RecoveryEmail-Submit-Button"
               className="flex h-9 py-2 px-4 items-center w-full gap-2 self-stretch rounded-[6px] bg-[#00B7F4] shadow-sm text-[#18181B] hover:text-[#000000] hover:bg-[#54d0f9]"
