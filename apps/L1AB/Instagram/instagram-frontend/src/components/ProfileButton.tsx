@@ -23,7 +23,7 @@ export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
             : 'w-6 h-6 overflow-hidden rounded-full flex justify-center items-center uppercase'
         }
       >
-        <AvatarImage src={user?.profilePicture} alt={user?.username} />
+        <AvatarImage src={user?.profilePicture} alt={user?.username} className="object-cover" />
         <AvatarFallback data-testid="avatar-fallback" className="uppercase text-[#ccc]">
           {user?.username.slice(0, 1)}
         </AvatarFallback>
