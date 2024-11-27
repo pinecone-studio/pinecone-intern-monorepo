@@ -10,7 +10,7 @@ const Page = () => {
       phoneLabel="Утасны дугаар:"
       emailLabel="Имэйл хаяг:"
       passwordLabel="Нууц үг:"
-      comfirmPasswordLabel="Нууц үг давтах:"
+      confirmPasswordLabel="Нууц үг давтах:"
       buttonText="Бүртгүүлэх"
       footerText="Та бүртгэлтэй хаягтай бол"
       footerLinkText="нэвтрэх"

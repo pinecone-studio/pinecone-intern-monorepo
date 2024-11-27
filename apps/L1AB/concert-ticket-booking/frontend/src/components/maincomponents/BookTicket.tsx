@@ -63,7 +63,6 @@ export const BookTicket = ({ id }: BookTicketProps) => {
     } catch (err) {
       setError('Тасалбар захиалах явцад алдаа гарлаа.');
     }
-    
   };
   return (
     <div data-testid="Book-Ticket-Component">
