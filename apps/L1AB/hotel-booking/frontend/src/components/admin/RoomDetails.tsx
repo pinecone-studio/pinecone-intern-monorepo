@@ -25,7 +25,7 @@ export const RoomDetails = () => {
           <div>one</div>
         </DetailsCard>
         <DetailsCard>
-          <DetailsUpcomingBookings mockBookings={mockBookings}/>
+          <DetailsUpcomingBookings mockBookings={mockBookings} />
           <div className="flex justify-between items-center">
             <h1 className="text-lg font-semibold">Upcoming Bookings</h1>
           </div>
@@ -46,7 +46,7 @@ export const RoomDetails = () => {
             <h1 className="text-lg font-semibold">Images</h1>
             <Button className="text-blue-600 bg-white hover:bg-white">Edit</Button>
           </div>
-          <ImagesCarousel />
+          <ImagesCarousel images={['https://example.com/image1.jpg']} />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>
