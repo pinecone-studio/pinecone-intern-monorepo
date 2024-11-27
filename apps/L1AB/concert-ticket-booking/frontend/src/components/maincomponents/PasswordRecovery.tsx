@@ -13,7 +13,7 @@ interface PasswordRecoveryProps {
   buttonText: string;
 }
 
-const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({ header, passwordLabel, comfirmPasswordLabel, buttonText }) => {
+const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({ header, buttonText }) => {
   return (
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem]" data-cy="PasswordRecovery-Page">
