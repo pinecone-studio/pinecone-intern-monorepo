@@ -1,0 +1,13 @@
+mutation PasswordRecoveryRequest($input: PasswordRecoveryRequestInput!) {
+  passwordRecoveryRequest(input: $input) {
+    success
+    message
+  }
+}
+
+mutation PasswordChange($input: PasswordChangeInput!) {
+  passwordChange(input: $input) {
+    success
+    message
+  }
+}
