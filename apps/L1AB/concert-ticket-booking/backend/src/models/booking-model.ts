@@ -18,7 +18,6 @@ export type BookingType = {
       name: string;
       quantity: number;
       price: number;
-      firstQuantity: number;
     }
   ];
   createdAt: Date;
@@ -84,11 +83,6 @@ const BookingSchema = new Schema({
         default: 0,
       },
       price: {
-        type: Number,
-        required: false,
-        default: 0,
-      },
-      firstQuantity: {
         type: Number,
         required: false,
         default: 0,

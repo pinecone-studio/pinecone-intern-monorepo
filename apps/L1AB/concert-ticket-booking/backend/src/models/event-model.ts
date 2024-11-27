@@ -13,6 +13,7 @@ export type EventType = {
       name: string;
       quantity: number;
       price: number;
+      firstquantity: number;
     }
   ];
   discount: number;
