@@ -1,13 +1,14 @@
 'use client';
 
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
-
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
+
 export const OtpForm = ({ setInputData, setCurrentIndex, inputData, handleOnchange }) => {
   const handleClick = () => {
     setCurrentIndex(2);
     setInputData({ otp: inputData.otp });
+    console.log(inputData)
   };
 
   return (
