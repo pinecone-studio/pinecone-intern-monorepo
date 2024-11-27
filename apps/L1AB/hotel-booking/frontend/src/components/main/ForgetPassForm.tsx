@@ -1,7 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export const ForgetPassForm = () => {
+export const ForgetPassForm = ({ setInputData, setCurrentIndex, inputData, handleOnchange }) => {
+
+  
+  const handleClick = () => {
+    setInputData({ email: inputData.email });
+    setCurrentIndex(1);
+  };
   return (
     <div className="flex justify-center">
       <div className="mt-[200px] flex flex-col items-center gap-6 w-[350px]">
@@ -15,8 +21,10 @@ export const ForgetPassForm = () => {
         </div>
         <div className="w-full space-y-2">
           <p className="font-medium">Email</p>
-          <Input placeholder="name@example.com" />
-          <Button className="w-full bg-[#2563EB]">Continue</Button>
+          <Input placeholder="name@example.com" name="email" onChange={handleOnchange} />
+          <Button className="w-full bg-[#2563EB]" onClick={handleClick}>
+            Continue
+          </Button>
         </div>
       </div>
     </div>

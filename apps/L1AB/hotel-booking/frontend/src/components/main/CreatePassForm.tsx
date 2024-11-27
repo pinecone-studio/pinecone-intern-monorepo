@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export const CreatePassForm = () => {
+export const CreatePassForm = ({ setInputData, inputData, handleOnchange }) => {
   return (
     <div className="flex justify-center">
       <div className="mt-[200px] flex flex-col items-center gap-6 w-[350px]">
