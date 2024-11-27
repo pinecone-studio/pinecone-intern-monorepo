@@ -21,7 +21,6 @@ query GetAllUsers {
     username
     fullname
     gender
-    password
     profilePicture
     bio
     isPrivate
@@ -31,6 +30,20 @@ query GetAllUsers {
 }
 query getUserById($id: ID!) {
   getUserById(_id: $id) {
+    _id
+    email
+    username
+    fullname
+    gender
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
+  }
+}
+query GetUserByUsername($username: String!) {
+  getUserByUsername(username: $username) {
     _id
     email
     username

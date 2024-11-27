@@ -1,12 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { RemoveFollowersDialog } from './RemoveFollowersDialog';
 
-interface props {
-  name: string;
-  img: string;
-  fullname: string;
-  suggest: string;
-}
 const style = {
   container: 'px-3 flex gap-3 items-center py-1',
   subContainer: 'w-full flex gap-3 items-center',
@@ -15,13 +9,13 @@ const style = {
   suggest: 'text-[10px] leading-4 text-[#71717A]',
 };
 
-export const FollowersDialogRemove = ({ name, img, fullname, suggest }: props) => {
+export const FollowersDialogRemove = ({ name, img, fullname, suggest }: any) => {
   return (
     <div className={style.container}>
       <div className={style.subContainer}>
         <Avatar className="w-11 h-11">
-          <AvatarImage src={img} alt="@shadcn" />
-          <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
+          <AvatarImage src={img} alt="@shadcn" className="object-cover" />
+          <AvatarFallback>{name?.slice(0, 1)}</AvatarFallback>
         </Avatar>
         <div>
           <h3 className={style.name}>{name}</h3>
