@@ -11,7 +11,6 @@ import { HotelNameDialog } from './dialogs';
 
 export const HotelsTable = () => {
   const { data } = useGetAllHotelsQuery();
-  const hotels = data?.getAllHotels || [];
   const router = useRouter();
   return (
     <div className="p-4">
@@ -32,7 +31,7 @@ export const HotelsTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {hotels.map((hotel) => {
+            {data?.getAllHotels.map((hotel) => {
               // const totalRooms = hotel.rooms ?? [];
               return (
                 <TableRow data-testid="one-hotel" key={hotel._id} onClick={() => router.push(`/admin/hotels/${hotel._id}`)} className="cursor-pointer">

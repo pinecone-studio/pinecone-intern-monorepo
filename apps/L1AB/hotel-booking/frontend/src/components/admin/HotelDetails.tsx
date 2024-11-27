@@ -37,7 +37,7 @@ export const HotelDetails = () => {
           <HotelDetailsRoomTypes />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsGeneralInfo />
+          <HotelDetailsGeneralInfo name={hotelDetails?.name} phone={hotelDetails?.phone} desc={hotelDetails?.description} rating={hotelDetails?.rating} stars={hotelDetails?.stars} />
         </DetailsCard>
         <DetailsCard>
           <HotelDetailsAmenities />
@@ -60,7 +60,7 @@ export const HotelDetails = () => {
           <HotelDetailsLocation location={hotelDetails?.address} />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsImages />
+          <HotelDetailsImages images={hotelDetails?.images} />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

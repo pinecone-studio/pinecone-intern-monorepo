@@ -1,28 +1,25 @@
+'use client';
 import React from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-const images = [
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-  'http://example.com/image2.jpg',
-];
-export const ImagesCarousel = () => {
+
+type ImagesCarouselProps = {
+  images: string[];
+};
+
+export const ImagesCarousel = ({ images }: ImagesCarouselProps) => {
   return (
-    <>
-      <div className="grid grid-cols-2 gap-1 mt-4 [&>div:first-child]:col-span-2 [&>div:first-child]:h-64">
-        {images.slice(0, 4).map((image, index) => {
-          return (
-            <div key={index} className="h-32 rounded-sm overflow-hidden relative">
-              <Image src={image} alt={`carousel image ${index}`} fill></Image>
-            </div>
-          );
-        })}
+    <div className="grid grid-cols-2 gap-1 mt-4 [&>div:first-child]:col-span-2 [&>div:first-child]:h-64">
+      {images.slice(0, 4).map((image, index) => {
+        return (
+          <div key={index} className="h-32 rounded-sm overflow-hidden relative">
+            <Image src={image} alt={`carousel image ${index}`} fill></Image>
+          </div>
+        );
+      })}
+      {images.length > 4 && (
         <Dialog>
           <DialogTrigger asChild>
             <Button className="h-32 rounded-sm overflow-hidden relative">
@@ -46,7 +43,7 @@ export const ImagesCarousel = () => {
             </Carousel>
           </DialogContent>
         </Dialog>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
