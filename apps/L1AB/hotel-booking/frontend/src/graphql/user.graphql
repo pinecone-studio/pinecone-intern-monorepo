@@ -1,0 +1,78 @@
+mutation SignIn($input: SignInInput!) {
+  signIn(input: $input) {
+    user {
+      _id
+      email
+      phone
+      isAdmin
+      createdAt
+      updatedAt
+    }
+    token
+  }
+}
+
+mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    user {
+      _id
+      email
+      phone
+      isAdmin
+      createdAt
+      updatedAt
+    }
+    success
+    message
+  }
+}
+
+mutation SignUpSendOtp($email: String!) {
+  signUpSendOtp(email: $email) {
+    success
+    message
+  }
+}
+
+mutation PasswordRecoveryRequest($input: PasswordRecoveryRequestInput!) {
+  passwordRecoveryRequest(input: $input) {
+    success
+    message
+  }
+}
+
+mutation PasswordChange($input: PasswordChangeInput!) {
+  passwordChange(input: $input) {
+    success
+    message
+  }
+}
+
+mutation DeleteUser($id: ID!) {
+  deleteUser(_id: $id) {
+    success
+    message
+  }
+}
+
+query GetAllUsers($pagination: PaginationInput) {
+  getAllUsers(pagination: $pagination) {
+    _id
+    email
+    phone
+    isAdmin
+    createdAt
+    updatedAt
+  }
+}
+
+query GetUserById($id: ID!) {
+  getUserById(_id: $id) {
+    _id
+    email
+    phone
+    isAdmin
+    createdAt
+    updatedAt
+  }
+}
