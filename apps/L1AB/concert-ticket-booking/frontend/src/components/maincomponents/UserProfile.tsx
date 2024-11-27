@@ -2,8 +2,10 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '../providers';
 
 export const UserProfile = () => {
+  const { signout } = useAuth();
   return (
     <div className="w-full h-fit flex flex-col gap-6  " data-testid="userProfile">
       <p className="font-semibold text-2xl text-white">Захиалагчийн мэдээлэл</p>
@@ -36,6 +38,11 @@ export const UserProfile = () => {
             Хадгалах
           </button>
         </div>
+      </div>
+      <div className=" w-full flex justify-end">
+        <button className="w-fit  font-medium text-sm hover:text-black hover:bg-[#00B7F4] text-white hover:border-none px-4 py-2  rounded-md bg-[#272729]" onClick={signout}>
+          Гарах
+        </button>
       </div>
     </div>
   );
