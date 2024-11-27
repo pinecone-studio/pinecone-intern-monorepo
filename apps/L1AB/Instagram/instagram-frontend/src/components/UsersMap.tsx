@@ -22,7 +22,7 @@ export const UsersMap = () => {
         <Link href={`/profile?type=posts&username=${user?.username}`} key={index} className="rounded flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar className="w-10 h-10">
-              <AvatarImage src={user.profilePicture} alt={user.username} />
+              <AvatarImage src={user.profilePicture} alt={user.username} className="object-cover" />
               <AvatarFallback className="uppercase text-[#ccc]">{user.username.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
