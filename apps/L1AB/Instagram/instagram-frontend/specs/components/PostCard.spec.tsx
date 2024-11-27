@@ -1,4 +1,6 @@
 import PostCard from '@/components/PostCard';
+
+import { MockedProvider } from '@apollo/client/testing';
 import { render, fireEvent } from '@testing-library/react';
 
 export type PropsType = {
@@ -14,21 +16,37 @@ jest.mock('next/image', () => ({
 const sampleProps = {
   userName: 'John Doe',
   likeCount: 123,
-  images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+  images: ['/image1.jpg', '/image2.jpg', '/image3.jpg'],
   profilePicture: 'profile.jpg',
   caption: 'This is a sample caption',
   keyy: 1,
+  postId: '2',
 };
 
 describe('PostCard Component - prev/next functionality', () => {
-  it('next image garna', () => {
-    const { getByTestId } = render(<PostCard {...sampleProps} />);
+  it('image slider', async () => {
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn().mockReturnValue('11'),
+      },
+    });
 
-    fireEvent.click(getByTestId('NextButton'));
-    fireEvent.click(getByTestId('PrevButton'));
-    fireEvent.click(getByTestId('PrevButton'));
-    fireEvent.click(getByTestId('NextButton'));
-    fireEvent.click(getByTestId('NextButton'));
-    fireEvent.click(getByTestId('NextButton'));
+    const { getByTestId } = render(
+      <MockedProvider>
+        <PostCard {...sampleProps} />
+      </MockedProvider>
+    );
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const NextButton = getByTestId('NextButton');
+    const PrevButton = getByTestId('PrevButton');
+
+    fireEvent.click(NextButton);
+    fireEvent.click(PrevButton);
+    fireEvent.click(PrevButton);
+    fireEvent.click(NextButton);
+    fireEvent.click(NextButton);
+    fireEvent.click(NextButton);
   });
 });
