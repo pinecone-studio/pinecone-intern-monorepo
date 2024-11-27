@@ -58,6 +58,7 @@ describe('createBookingTotalAmount', () => {
             name: 'VIP Section',
             quantity: 2,
             price: 50000,
+            firstquantity: 1000,
           },
         ],
       },

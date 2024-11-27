@@ -49,6 +49,12 @@ const EventSchema = new Schema({
     type: Number,
     required: false,
   },
+  status: {
+    type: String,
+    required: true,
+    default: 'Regular',
+    enum: ['Онцлох , Deleted'],
+  },
   venues: [
     {
       name: {
@@ -57,6 +63,11 @@ const EventSchema = new Schema({
         default: 'VIP',
       },
       quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      firstquantity: {
         type: Number,
         required: true,
         default: 0,
@@ -78,6 +89,11 @@ const EventSchema = new Schema({
         required: true,
         default: 0,
       },
+      firstquantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
       price: {
         type: Number,
         required: true,
@@ -91,6 +107,11 @@ const EventSchema = new Schema({
         default: 'Fanzone',
       },
       quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      firstquantity: {
         type: Number,
         required: true,
         default: 0,
