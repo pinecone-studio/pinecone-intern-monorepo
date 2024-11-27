@@ -1,0 +1,21 @@
+mutation CreateComment($input: AddCommentInput!) {
+  createComment(input: $input) {
+    _id
+    comment
+    updatedAt
+    createdAt
+  }
+}
+query GetCommentsByPostId($postId: ID!) {
+  getCommentsByPostId(postId: $postId) {
+    _id
+    userId {
+      username
+      _id
+    }
+    postId {
+      _id
+    }
+    comment
+  }
+}
