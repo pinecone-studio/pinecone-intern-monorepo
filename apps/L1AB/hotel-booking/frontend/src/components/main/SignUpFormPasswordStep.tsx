@@ -32,7 +32,7 @@ interface FormValues {
   confirmPassword: string;
 }
 
-export const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ email, otp, signUpMutation, signUpLoading }) => {
+const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ email, otp, signUpMutation, signUpLoading }) => {
   const { register, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: '', confirmPassword: '' },
@@ -63,3 +63,5 @@ export const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ 
     </form>
   );
 };
+
+export default SignUpFormPasswordStep;
