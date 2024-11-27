@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import SignUpFormPasswordStep from '@/components/main/SignUpFormPasswordStep';
+import { SignUpFormPasswordStep } from '@/components/main/SignUpFormPasswordStep';
 
-describe('SignUpFormPasswordStep', () => {
+describe('Sign Up Form Password Step', () => {
   it('should show alert when sign-up is successful', async () => {
     const signUpMutation = jest.fn().mockResolvedValue({
       data: {
