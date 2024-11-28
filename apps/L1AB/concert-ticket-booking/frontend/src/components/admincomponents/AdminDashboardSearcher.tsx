@@ -84,23 +84,20 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
           </button>
         </div>
       </div>
-
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[240px] justify-between text-left font-normal h-[36px]" data-testid="choose-date-id">
-            {date ? format(date, 'dd MMM yyyy') : 'Сонгох огноо'}
-            <CalendarIcon />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow" />
-        </PopoverContent>
-      </Popover>
-      {date && (
-        <Button onClick={handleClearDate} className="flex gap-1 items-center text-gray-600 text-[14px] h-[36px] px-2 rounded-md" data-testid="clear-date">
-          <XIcon className="w-5 h-5 border rounded" />
-        </Button>
-      )}
+      <div className="flex justify-center items-center">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-[240px] justify-between text-left font-normal h-[36px]" data-testid="choose-date-id">
+              {date ? format(date, 'dd MMM yyyy') : 'Сонгох огноо'}
+              <CalendarIcon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow" />
+          </PopoverContent>
+        </Popover>
+        {date && <XIcon className="w-5 h-5 border rounded cursor-pointer mx-2 " onClick={handleClearDate} data-testid="clear-date" />}
+      </div>
     </div>
   );
 };

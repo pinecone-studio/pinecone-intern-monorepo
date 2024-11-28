@@ -3,7 +3,6 @@ import { Container } from './assets';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { LucideKey, Mail } from 'lucide-react';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 export const UserSettings = () => {
   return (
@@ -31,7 +30,6 @@ export const UserSettings = () => {
               <div>Change passowrd</div>
             </div>
             <div>
-              <MdOutlineKeyboardArrowRight />
             </div>
           </Button>
         </div>

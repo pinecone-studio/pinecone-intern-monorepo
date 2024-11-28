@@ -5,21 +5,3 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
-
-mutation CreateEvent($input: EventInput!) {
-  createEvent(input: $input) {
-    _id
-    name
-    artistName
-    description
-    eventDate
-    eventTime
-    images
-    venues {
-      name
-      quantity
-      price
-    }
-    discount
-  }
-}
