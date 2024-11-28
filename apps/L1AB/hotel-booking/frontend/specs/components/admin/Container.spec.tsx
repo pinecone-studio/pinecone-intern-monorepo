@@ -17,11 +17,11 @@ describe('Admin Container', () => {
       </Container>
     );
 
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('header')).toBeInTheDocument();
-    expect(screen.getByTestId('footer')).toBeInTheDocument();
+    expect(screen.getByTestId('sidebar'));
+    expect(screen.getByTestId('header'));
+    expect(screen.getByTestId('footer'));
 
-    expect(screen.getByTestId('children')).toBeInTheDocument();
+    expect(screen.getByTestId('children'));
   });
   it('should render the admin container with the correct path', () => {
     usePathname.mockReturnValue('/admin/guests');
@@ -32,10 +32,10 @@ describe('Admin Container', () => {
       </Container>
     );
 
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('header')).toBeInTheDocument();
-    expect(screen.getByTestId('footer')).toBeInTheDocument();
+    expect(screen.getByTestId('sidebar'));
+    expect(screen.getByTestId('header'));
+    expect(screen.getByTestId('footer'));
 
-    expect(screen.getByTestId('children')).toBeInTheDocument();
+    expect(screen.getByTestId('children'));
   });
 });

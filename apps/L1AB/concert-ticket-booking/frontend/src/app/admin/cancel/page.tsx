@@ -1,4 +1,4 @@
-import { Container } from '@/components';
+import { AdvertisedEvent, Container } from '@/components';
 import { CancelComponent } from '@/components';
 
 const Page = () => {
@@ -6,6 +6,7 @@ const Page = () => {
     <Container>
       <div className="h-fit w-full text-black text-center ">
         <CancelComponent />
+        <AdvertisedEvent />
       </div>
     </Container>
   );

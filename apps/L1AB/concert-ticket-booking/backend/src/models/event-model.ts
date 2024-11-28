@@ -8,6 +8,7 @@ export type EventType = {
   eventDate: [string];
   eventTime: [string];
   images: [string];
+  status: string;
   venues: [
     {
       name: string;
@@ -53,8 +54,8 @@ const EventSchema = new Schema({
   status: {
     type: String,
     required: true,
+    enum: ['Regular', 'Онцлох', 'Deleted'],
     default: 'Regular',
-    enum: ['Онцлох , Deleted'],
   },
   venues: [
     {

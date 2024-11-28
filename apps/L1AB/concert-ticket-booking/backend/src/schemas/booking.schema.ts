@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type BookingVenue {
-    name: String
-    quantity: Int
-    price: Int
+    name: String!
+    quantity: Int!
+    price: Int!
   }
 
   type Booking {
@@ -40,16 +40,12 @@ export const typeDefs = gql`
     quantity: Int!
     price: Int!
   }
-  input BookingVenueInput {
-    name: String
-    quantity: Int
-    price: Int
-  }
 
   input UpdateBookingInput {
     _id: ID!
     status: String
   }
+
   input updateBookInput {
     _id: ID!
     bankName: String
@@ -59,7 +55,31 @@ export const typeDefs = gql`
     phone: String
     email: String
     selectedDate: String
-    venues: [BookingVenueInput]
+    venues: [CreateBookingVenueInput]
+  }
+  type Event {
+    _id: ID!
+    name: String!
+    artistName: [String!]!
+    description: String!
+    eventDate: [String!]!
+    eventTime: [String!]!
+    images: [String!]!
+    venues: [Venue!]!
+    status: String
+    discount: Int!
+    createdAt: Date!
+    updatedAt: Date!
+  }
+  input BookingVenueInput {
+    name: String!
+    quantity: Int!
+    price: Int!
+  }
+  input UpdateEventQuantityInput {
+    _id: ID!
+    venues: [BookingVenueInput!]!
+    eventId: String!
   }
 
   type Query {
@@ -73,5 +93,6 @@ export const typeDefs = gql`
     createBookingTotalAmount(input: CreateBookingInput!): Booking!
     updateBooking(input: UpdateBookingInput!): Booking!
     updateBookingEverything(input: updateBookInput!): Booking!
+    updateEventQuantityBooking(input: UpdateEventQuantityInput!): Booking!
   }
 `;
