@@ -25,7 +25,6 @@ const Page = () => {
     variables: { userId: userData?._id || '' },
   });
   const posts = getPostByUserId.data?.getPostByUserId;
-  console.log(posts);
 
   return (
     <div className="py-[36px] flex flex-col gap-[59px] max-h-screen overflow-auto">

@@ -1,9 +1,9 @@
 import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { LeftSideBar } from '@/components/LeftSideBar';
-import { userContext } from '../../src/app/(main)/layout';
 import { GetUserBySearchDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
+import { UserContext } from '@/components/providers/UserProvider';
 
 const getUserBySearchMock = {
   request: {
@@ -43,9 +43,9 @@ describe('LeftSideBar', () => {
   it('1. Should toggle the search drawer when the SearchButton is clicked', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getUserBySearchMock]}>
-        <userContext.Provider value={{ user: mockUser, users: mockUser }}>
+        <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
           <LeftSideBar />
-        </userContext.Provider>
+        </UserContext.Provider>
       </MockedProvider>
     );
     const searchButton = getByTestId('search-click');
@@ -64,9 +64,9 @@ describe('LeftSideBar', () => {
   it('2. Should toggle the notif drawer', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getUserBySearchMock]}>
-        <userContext.Provider value={{ user: mockUser, users: mockUser }}>
+        <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
           <LeftSideBar />
-        </userContext.Provider>
+        </UserContext.Provider>
       </MockedProvider>
     );
     const notifyButton = getByTestId('notif-click');

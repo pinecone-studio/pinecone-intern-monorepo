@@ -4,8 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Search, X } from 'lucide-react';
 import { FollowersDialogRemove } from './FollowersDialogRemove';
 import { useContext } from 'react';
-import { userContext } from '@/app/(main)/layout';
 import * as _ from 'lodash';
+import { UserContext } from './providers';
 
 const style = {
   triggerContainer: 'text-[#262626] flex gap-1',
@@ -20,7 +20,7 @@ const style = {
 };
 
 export const FollowersDialog = ({ followers }: { followers: any }) => {
-  const { users }: any = useContext(userContext);
+  const { users }: any = useContext(UserContext);
   const sortId = _.groupBy(users, '_id');
   return (
     <AlertDialog>
@@ -47,10 +47,10 @@ export const FollowersDialog = ({ followers }: { followers: any }) => {
               {followers?.map((follow: any, i: any) => (
                 <FollowersDialogRemove
                   key={i}
-                  name={sortId[follow?.followerId][0]?.username}
-                  img={sortId[follow?.followerId][0]?.profilePicture}
-                  fullname={sortId[follow?.followerId][0]?.fullname}
-                  suggest="kk"
+                  name={sortId[follow?.followerId]?.[0].username}
+                  img={sortId[follow?.followerId]?.[0].profilePicture}
+                  fullname={sortId[follow?.followerId]?.[0].fullname}
+                  suggest=""
                 />
               ))}
             </div>

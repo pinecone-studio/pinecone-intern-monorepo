@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { FollowersDialog } from '@/components/FollowersDialog';
-import { userContext } from '@/app/(main)/layout';
+import { UserContext } from '@/components/providers';
 
 jest.mock('@/components/FollowersDialogRemove', () => ({
   FollowersDialogRemove: jest.fn(() => <div>FollowersDialogRemove</div>),
@@ -17,9 +17,9 @@ describe('FollowersDialog', () => {
 
   it('renders correctly with mocked followers', () => {
     render(
-      <userContext.Provider value={{ users: mockUsers }}>
+      <UserContext.Provider value={{ users: mockUsers }}>
         <FollowersDialog followers={mockFollowers} />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
   });
 });
