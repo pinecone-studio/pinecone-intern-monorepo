@@ -16,9 +16,14 @@ export const UserHistoryDialog = () => {
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6">
-          <DialogHeader className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
+          <DialogHeader className="flex flex-col gap-1 ">
+            <div className='flex justify-between'>
+               <div className="flex items-center justify-between">
               <DialogTitle className="text-white text-lg font-semibold">Тасалбар цуцлах</DialogTitle>
+            </div>
+            <DialogClose asChild className="text-white ">
+              <p className="cursor-pointer text-lg">x</p>
+            </DialogClose>
             </div>
             <DialogDescription className="text-base font-normal">#23583 тасалбараа цуцлахдаа итгэлтэй байна уу?</DialogDescription>
           </DialogHeader>
