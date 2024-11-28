@@ -44,3 +44,24 @@ mutation UpdateEventStatus($input: updateEventStatus!) {
     status
   }
 }
+
+mutation CreateEvent($input: EventInput!) {
+  createEvent(input: $input) {
+    _id
+    name
+    artistName
+    description
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      firstquantity
+      price
+      quantity
+    }
+    discount
+    createdAt
+    updatedAt
+  }
+}
