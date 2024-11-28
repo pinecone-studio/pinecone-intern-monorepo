@@ -16,4 +16,4 @@ export * from './OtpForm';
 export * from './PriceDetails';
 export * from './UserHeader';
 export * from './Loading';
-export * from "./PopularHotelsCard"
+export * from './assets/PopularHotelsCard';
