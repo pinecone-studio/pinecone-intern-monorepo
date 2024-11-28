@@ -17,3 +17,4 @@ export * from './PriceDetails';
 export * from './UserHeader';
 export * from './Loading';
 export * from './UserContainer';
+export * from './assets/PopularHotelsCard';
