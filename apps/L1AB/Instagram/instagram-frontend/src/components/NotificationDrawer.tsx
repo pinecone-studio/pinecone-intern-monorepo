@@ -3,24 +3,8 @@
 import { motion } from 'framer-motion';
 
 const variants = {
-  close: {
-    x: -491,
-    opacity: 0,
-    transition: {
-      type: 'spring',
-      damping: 15,
-      duration: 0.5,
-    },
-  },
-  open: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: 'spring',
-      damping: 15,
-      duration: 0.5,
-    },
-  },
+  close: { x: -491, opacity: 0, transition: { type: 'spring', damping: 15, duration: 0.5 } },
+  open: { x: 0, opacity: 1, transition: { type: 'spring', damping: 15, duration: 0.5 } },
 };
 
 interface Props {
