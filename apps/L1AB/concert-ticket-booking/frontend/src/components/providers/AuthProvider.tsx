@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signInUser.token);
       setUser(data.signInUser.user);
       router.push('/');
+      toast('Signin successful!');
     },
     onError: (error) => {
       toast.error(error.message);
