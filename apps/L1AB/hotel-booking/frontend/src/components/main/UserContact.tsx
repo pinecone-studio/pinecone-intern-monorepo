@@ -9,14 +9,14 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 
 export const UserContact = () => {
   return (
-    <Container backgroundColor="bg-white">
-      <div className="m-auto">
-        <div className="container m-auto h-fit px-6 pt-10 pb-4">
+    <Container backgroundColor="bg-white ">
+      <div className="w-[672px]">
+        <div className="container m-auto h-fit px-6 pb-4">
           <h3 className="text-lg font-medium text-[#09090B]">Contact info</h3>
           <p className="text-[#71717A] text-sm font-thin mb-6">Receive account activity alerts and trip updates by sharing this information</p>
           <div className="border border-x-1 mb-6"></div>
-          <div className="flex gap-6">
-            <div className="flex flex-col gap-4 mb-5">
+          <div className="flex gap-6 w-full">
+            <div className="flex flex-col gap-4 mb-5 w-full">
               <Label htmlFor="name" className="text-left">
                 Phone number
               </Label>
@@ -28,23 +28,23 @@ export const UserContact = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 mb-5">
+            <div className="flex flex-col gap-4 mb-10 w-full">
               <Label htmlFor="name" className="text-left">
                 Email address
               </Label>
               <Input id="Email adress" defaultValue="" placeholder="" />
             </div>
           </div>
-        </div>
 
-        <div className="flex border border-x-1 mb-6"></div>
+          <div className="flex border border-x-1 mb-6"></div>
+        </div>
 
         <div className="container m-auto h-fit px-6 pt-2 pb-4">
           <h3 className="text-lg font-medium text-[#09090B]">Emergency Contact</h3>
           <p className="text-[#71717A] text-sm font-thin mb-6">In case of emergencies, having someone we can reach out to is essential.</p>
 
-          <div className="flex gap-6">
-            <div className="flex flex-col gap-4 mb-5">
+          <div className="flex gap-6 w-full">
+            <div className="flex flex-col gap-4 mb-5 w-full">
               <Label htmlFor="name" className="text-left">
                 Phone number
               </Label>
@@ -54,12 +54,12 @@ export const UserContact = () => {
                 <Input id="Phone number" defaultValue="" placeholder="" />
               </div>
             </div>
-            <div className="flex flex-col gap-4 mb-8">
+            <div className="flex flex-col gap-4 mb-8 w-full">
               <Label htmlFor="name" className="text-left">
                 Relationship
               </Label>
               <Select>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[320px]">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
