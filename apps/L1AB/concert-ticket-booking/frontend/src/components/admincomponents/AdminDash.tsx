@@ -8,7 +8,6 @@ export const AdminDash = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [date, setDate] = useState<Date | undefined>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  
 
   return (
     <div data-testid="Admin-Dash" className="admin-dash py-9">
@@ -23,7 +22,7 @@ export const AdminDash = () => {
 
       <AdminSearcher setSearchValue={setSearchValue} setSelectedValues={setSelectedValues} selectedValues={selectedValues} date={date} setDate={setDate} />
 
-      <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} />
+      <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} eventStatus={''} />
     </div>
   );
 };

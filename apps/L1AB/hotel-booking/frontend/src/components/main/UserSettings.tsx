@@ -3,12 +3,11 @@ import { Container } from './assets';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { LucideKey, Mail } from 'lucide-react';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 export const UserSettings = () => {
   return (
     <Container backgroundColor="bg-white">
-      <div className="flex flex-col gap-4 mb-1 mt-10 w-[652px]">
+      <div className="flex flex-col gap-4 mb-1 w-[652px]">
         <Label htmlFor="name" className="text-left text-lg">
           Security & Settings
         </Label>
@@ -31,7 +30,6 @@ export const UserSettings = () => {
               <div>Change passowrd</div>
             </div>
             <div>
-              <MdOutlineKeyboardArrowRight />
             </div>
           </Button>
         </div>

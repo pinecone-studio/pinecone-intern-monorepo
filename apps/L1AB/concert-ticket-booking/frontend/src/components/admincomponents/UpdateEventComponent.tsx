@@ -1,6 +1,4 @@
-import { DatePickerWithRange } from './DatePickerWithRange';
 import { DialogItem } from '@/components';
-import { TimePicker } from '@/components';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -30,14 +28,14 @@ export const UpdateEventComponent = () => {
             Бусад артист нэмэх +
           </Button>
         </DialogItem>
-        <div className="flex justify-between w-full gap-2">
+        {/* <div className="flex justify-between w-full gap-2">
           <DialogItem htmlFor="eventDate" name="Тоглолтын өдөр сонгох">
-            <DatePickerWithRange />
+            <DatePickerWithRange  />
           </DialogItem>
           <DialogItem htmlFor="eventTime" name="Тоглолтын цаг сонгох">
             <TimePicker />
           </DialogItem>
-        </div>
+        </div> */}
         <div className="flex w-full gap-2">
           <DialogItem htmlFor="vip" name="VIP">
             <Input type="number" placeholder="Нийт тоо хэмжээ" name="vip" />

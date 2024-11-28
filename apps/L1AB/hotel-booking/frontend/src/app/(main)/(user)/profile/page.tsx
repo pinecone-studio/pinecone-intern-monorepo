@@ -1,13 +1,9 @@
 'use client';
 
-import { UserProfile } from '@/components/main';
+import { UserContainer } from '@/components/main';
 
 const UserProfilePage = () => {
-  return (
-    <>
-      <UserProfile />
-    </>
-  );
+  return <UserContainer />;
 };
 
 export default UserProfilePage;
