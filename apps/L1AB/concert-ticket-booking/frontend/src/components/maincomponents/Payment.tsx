@@ -50,7 +50,7 @@ export const Payment = ({ id }: PaymentProps) => {
         serviceName: 'ticket',
         venues,
         bookingId: bookingDetails._id,
-        eventId: bookingDetails.eventId,
+        eventId: bookingDetails.eventId._id,
       });
 
       setQr(data);
