@@ -56,8 +56,18 @@ export const typeDefs = gql`
     password: String
     phone: String
   }
+  input PasswordUpdateInput {
+    oldPassword: String!
+    newPassword: String!
+  }
+
+  type passwordUpdateResponse {
+    success: Boolean!
+    message: String!
+  }
 
   type Mutation {
+    passwordUpdate(input: PasswordUpdateInput!): passwordUpdateResponse!
     signUpUser(input: SignUpUser!): AuthResponse!
     signInUser(input: SignInUser!): AuthResponse!
     createUser(input: SignUpUser!): User!
