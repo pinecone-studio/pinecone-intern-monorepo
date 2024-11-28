@@ -14,7 +14,7 @@ export const AdvertisedEvent = ({ eventId }: { eventId: string }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleUpdateStatus = async () => {
-    const status = selectedOption === 'Тийм' ? 'Онцлох' : 'Reqular';
+    const status = selectedOption === 'Тийм' ? 'Онцлох' : 'Regular';
 
     await updatestatus({
       variables: {
