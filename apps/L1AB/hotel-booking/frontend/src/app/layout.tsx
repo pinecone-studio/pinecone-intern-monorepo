@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 
