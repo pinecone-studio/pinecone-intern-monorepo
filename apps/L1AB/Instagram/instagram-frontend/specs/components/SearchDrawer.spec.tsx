@@ -1,29 +1,155 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { fireEvent, getByTestId, render, screen, waitFor } from '@testing-library/react';
 import { SearchDrawer } from '@/components/SearchDrawer';
+import { GetUserBySearchDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
 
-const mockToggleDrawer = jest.fn();
-
-const sampleProps = {
-  isOpen: true,
-  toggleSearchDrawer: mockToggleDrawer,
+const getUserBySearchMock = {
+  request: {
+    query: GetUserBySearchDocument,
+    variables: {
+      searchInput: 'alt',
+    },
+  },
+  result: {
+    data: {
+      getUserBySearch: [
+        {
+          _id: '2',
+          fullname: 'odnoo',
+          profilePicture: 'picture',
+          username: 'altaa',
+        },
+      ],
+    },
+  },
 };
 
-const sampleProps1 = {
+const getUserBySearchWithProfile = {
+  request: {
+    query: GetUserBySearchDocument,
+    variables: {
+      searchInput: 'alt',
+    },
+  },
+  result: {
+    data: {
+      getUserBySearch: [
+        {
+          _id: '2',
+          fullname: 'odnoo',
+          profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-C_UAhXq9GfuGO452EEzfbKnh1viQB9EDBQ&s',
+          username: 'altaa',
+        },
+      ],
+    },
+  },
+};
+const mockToggleDrawer = jest.fn();
+
+const samplePropsWithVisitedUsers = {
+  isOpen: true,
+  toggleSearchDrawer: mockToggleDrawer,
+  visitedUsers: [
+    {
+      _id: '2',
+      fullname: 'odnoo',
+      profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-C_UAhXq9GfuGO452EEzfbKnh1viQB9EDBQ&s',
+      username: 'altaa',
+    },
+  ],
+  visitedUsersHandler: jest.fn(),
+};
+
+const samplePropsWithoutVisitedUsers = {
+  isOpen: false,
+  toggleSearchDrawer: mockToggleDrawer,
+  visitedUsers: [
+    {
+      _id: '2',
+      fullname: 'odnoo',
+      profilePicture: '',
+      username: 'altaa',
+    },
+  ],
+  visitedUsersHandler: jest.fn(),
+};
+
+const samplePropsWithFalse = {
   isOpen: false,
   toggleSearchDrawer: mockToggleDrawer,
 };
 
 describe('SearchDrawer', () => {
-  it('should render successfully', () => {
-    render(<SearchDrawer {...sampleProps} />);
+  it('Should get query successfully', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchMock]} addTypename={false}>
+        <SearchDrawer {...samplePropsWithVisitedUsers} />
+      </MockedProvider>
+    );
 
-    expect(mockToggleDrawer);
+    const searchInput = getByTestId('search-input') as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'alt' } });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const saveUser = getByTestId('to-profile-0');
+    fireEvent.click(saveUser);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 
-  it('should render successfully', () => {
-    render(<SearchDrawer {...sampleProps1} />);
+  it('isOpen false ', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchMock]} addTypename={false}>
+        <SearchDrawer {...samplePropsWithVisitedUsers} />
+      </MockedProvider>
+    );
 
-    expect(mockToggleDrawer);
+    const deleteVisitedUser = getByTestId('delete-one-0');
+    fireEvent.click(deleteVisitedUser);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const deleteAll = getByTestId('delete-all');
+    fireEvent.click(deleteAll);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
+
+  it('Clear search input', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchMock]} addTypename={false}>
+        <SearchDrawer {...samplePropsWithVisitedUsers} />
+      </MockedProvider>
+    );
+
+    const searchInput = getByTestId('search-input') as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'alt' } });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const deleteButton = getByTestId('search-clear');
+    fireEvent.click(deleteButton);
+
+    await waitFor(() => expect(searchInput.value).toEqual(''));
+  });
+
+  it('getUser By Search With Profile picture', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchWithProfile]} addTypename={false}>
+        <SearchDrawer {...samplePropsWithoutVisitedUsers} />
+      </MockedProvider>
+    );
+    const searchInput = getByTestId('search-input') as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'alt' } });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
+
+  it('Should get query successfully with visited user', async () => {
+    render(
+      <MockedProvider mocks={[getUserBySearchMock]} addTypename={false}>
+        <SearchDrawer {...samplePropsWithVisitedUsers} />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 });

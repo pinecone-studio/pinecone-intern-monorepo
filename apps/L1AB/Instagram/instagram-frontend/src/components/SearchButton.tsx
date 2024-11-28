@@ -11,7 +11,7 @@ interface SearchProps {
 
 export const SearchButton = ({ isOpen, svgControls, handleOpenClose }: SearchProps) => {
   return (
-    <NavigationLink href={undefined} name={isOpen ? '' : 'Search'} onClick={() => handleOpenClose()}>
+    <NavigationLink data-testid="searchButton" href={undefined} name={isOpen ? '' : 'Search'} onClick={() => handleOpenClose()}>
       <Search data-testid="search-click" className="stroke-inherit stroke-[1.5] min-w-6 min-w-6 group">
         <motion.path
           transition={{
