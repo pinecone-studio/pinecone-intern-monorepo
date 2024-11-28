@@ -53,3 +53,12 @@ query GetMe {
     updatedAt
   }
 }
+mutation UpdateUser($input: UserUpdateInput!) {
+  updateUser(input: $input) {
+    _id
+
+    email
+
+    phone
+  }
+}
