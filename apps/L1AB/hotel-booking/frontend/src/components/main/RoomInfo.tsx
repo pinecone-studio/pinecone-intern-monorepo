@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { AirVent, BedDouble, LampDeskIcon, BathIcon, Wifi, KeyIcon, ShowerHead, ForkKnife,  GlassWater, ParkingCircle } from 'lucide-react';
-import { FaPeopleArrows, FaPhotoFilm } from 'react-icons/fa6';
 
 export const RoomInfo = () => {
   const roomFeatures = [
@@ -26,7 +25,7 @@ export const RoomInfo = () => {
     },
     {
       title: 'Sleeps 2',
-      icon: FaPeopleArrows,
+      icon: Wifi,
     },
     {
       title: 'Free WiFi',
@@ -46,7 +45,7 @@ export const RoomInfo = () => {
     },
     {
       title: '18 sq m',
-      icon: FaPhotoFilm,
+      icon: ForkKnife,
     },
     {
       title: 'Free bottle water',
