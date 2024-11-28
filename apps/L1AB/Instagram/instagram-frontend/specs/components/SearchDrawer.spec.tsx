@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, getByTestId, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { SearchDrawer } from '@/components/SearchDrawer';
 import { GetUserBySearchDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
@@ -73,11 +73,6 @@ const samplePropsWithoutVisitedUsers = {
     },
   ],
   visitedUsersHandler: jest.fn(),
-};
-
-const samplePropsWithFalse = {
-  isOpen: false,
-  toggleSearchDrawer: mockToggleDrawer,
 };
 
 describe('SearchDrawer', () => {

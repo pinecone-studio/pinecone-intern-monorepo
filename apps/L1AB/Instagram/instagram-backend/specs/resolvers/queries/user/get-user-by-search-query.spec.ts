@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getUserBySearch } from 'apps/L1AB/instagram/instagram-backend/src/resolvers/queries';
+import { getUserBySearch } from '../../../../src/resolvers/queries';
 
 jest.mock('../../../../src/models', () => ({
   userModel: {

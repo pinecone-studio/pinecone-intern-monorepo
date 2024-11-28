@@ -1,4 +1,4 @@
-import { fireEvent, getByTestId, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { LeftSideBar } from '@/components/LeftSideBar';
 import { userContext } from '../../src/app/(main)/layout';
