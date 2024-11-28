@@ -27,23 +27,6 @@ describe('SignUpForm', () => {
         request: {
           query: SignUpDocument,
           variables: {
-            input: { email: 'test@example.com', otp: '1234' },
-          },
-        },
-        result: {
-          data: {
-            signUp: {
-              success: true,
-              message: 'OTP verified successfully',
-              user: null,
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: SignUpDocument,
-          variables: {
             input: { email: 'test@example.com', otp: '1234', password: 'strongpassword' },
           },
         },
@@ -52,7 +35,7 @@ describe('SignUpForm', () => {
             signUp: {
               success: true,
               message: 'User test@example.com created successfully',
-              user: { email: 'test@example.com' },
+              user: { _id: '12', phone: '99119911', isAdmin: false, email: 'test@example.com', createdAt: '2024-11-14T06:24:52.763Z', updatedAt: '2024-11-14T06:24:52.763Z' },
             },
           },
         },
