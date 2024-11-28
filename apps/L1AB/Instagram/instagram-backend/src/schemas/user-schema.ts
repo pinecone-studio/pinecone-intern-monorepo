@@ -19,6 +19,7 @@ export const typeDefs = gql`
     getAllUsers: [User!]!
     getUserById(_id: ID!): User!
     getUserByUsername(username: String!): User!
+    getUserBySearch(searchInput: String!): [User!]
   }
 
   input RegisterInput {

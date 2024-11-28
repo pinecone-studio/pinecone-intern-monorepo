@@ -2,12 +2,13 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BookTicket } from '@/components';
-import { useGetEventByIdQuery, useCreateBookingTotalAmountMutation } from '@/generated';
+import { useGetEventByIdQuery, useCreateBookingTotalAmountMutation, useGetMeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 jest.mock('@/generated', () => ({
   useGetEventByIdQuery: jest.fn(),
   useCreateBookingTotalAmountMutation: jest.fn(),
+  useGetMeQuery: jest.fn(),
 }));
 
 jest.mock('next/navigation', () => ({
@@ -25,11 +26,23 @@ const mockEventData = {
     ],
   },
 };
-
+const mockUserData = {
+  getMe: [
+    {
+      _id: '1',
+    },
+    {
+      _id: undefined,
+    },
+  ],
+};
 describe('BookTicket Component', () => {
   beforeEach(() => {
     (useGetEventByIdQuery as jest.Mock).mockReturnValue({
       data: mockEventData,
+    });
+    (useGetMeQuery as jest.Mock).mockReturnValue({
+      data: mockUserData,
     });
     (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
   });
@@ -167,5 +180,4 @@ describe('BookTicket Component', () => {
     const cardElement = getByTestId('FaArrowLeftClick');
     fireEvent.click(cardElement);
   });
-  
 });

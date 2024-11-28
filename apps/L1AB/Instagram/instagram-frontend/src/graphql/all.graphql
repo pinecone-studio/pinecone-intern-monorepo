@@ -57,3 +57,11 @@ query GetUserByUsername($username: String!) {
     updatedAt
   }
 }
+query GetUserBySearch($searchInput: String!) {
+  getUserBySearch(searchInput: $searchInput) {
+    _id
+    fullname
+    profilePicture
+    username
+  }
+}

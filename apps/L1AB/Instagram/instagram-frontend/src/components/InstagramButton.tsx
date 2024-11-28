@@ -8,7 +8,7 @@ interface InstagramProps {
 
 export const InstagramButton = ({ isOpen }: InstagramProps) => {
   return (
-    <div className="flex flex-row" data-testid="instagram-button">
+    <div className="flex flex-row cursor-pointer" data-testid="instagram-button">
       {isOpen ? (
         <div className=" hover:bg-gray-50 rounded flex justify-center items-center h-12 w-12 ">
           <motion.div className="flex justify-center items-center" initial={{ scale: 0.5 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
