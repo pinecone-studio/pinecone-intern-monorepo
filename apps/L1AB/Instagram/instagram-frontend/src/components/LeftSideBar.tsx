@@ -31,6 +31,10 @@ const containerVariants = {
   },
 };
 
+const errorChecker = (a: boolean, b: boolean) => {
+  return a || b;
+};
+
 export const LeftSideBar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -85,25 +89,25 @@ export const LeftSideBar = () => {
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${notifOpen || searchOpen ? 'shadow shadow-neutral-200' : 'border'}`}
+        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200' : 'border'}`}
       >
         <div onClick={toggleHomeDrawer}>
-          <InstagramButton isOpen={notifOpen || searchOpen} />
+          <InstagramButton isOpen={errorChecker(notifOpen, searchOpen)} />
         </div>
 
         <div className="space-y-3">
           <div data-testid="homeButton" onClick={toggleHomeDrawer}>
             <HomeButton svgControls={svgControls} isOpen={notifOpen || searchOpen} />
           </div>
-          <SearchButton handleOpenClose={toggleSearchDrawer} svgControls={svgControls} isOpen={notifOpen || searchOpen} />
-          <NotificationButton data-testid="notifyButton" handleOpenClose={toggleNotificationDrawer} svgControls={svgControls} isOpen={notifOpen || searchOpen} />
-          <CreateButton data-testid="createButton" isOpen={notifOpen || searchOpen} svgControls={svgControls} />
+          <SearchButton handleOpenClose={toggleSearchDrawer} svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
+          <NotificationButton data-testid="notifyButton" handleOpenClose={toggleNotificationDrawer} svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
+          <CreateButton data-testid="createButton" isOpen={errorChecker(notifOpen, searchOpen)} svgControls={svgControls} />
           <div data-testid="profileButton" onClick={toggleHomeDrawer}>
-            <ProfileButton svgControls={svgControls} isOpen={notifOpen || searchOpen} />
+            <ProfileButton svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
           </div>
         </div>
         <div data-testid="moreButton" className="mt-auto">
-          <MoreButton isOpen={notifOpen || searchOpen} svgControls={svgControls} />
+          <MoreButton isOpen={errorChecker(notifOpen, searchOpen)} svgControls={svgControls} />
         </div>
       </motion.nav>
     </div>

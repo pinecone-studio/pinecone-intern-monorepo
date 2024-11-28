@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import '@testing-library/jest-dom';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { SearchDrawer } from '@/components/SearchDrawer';

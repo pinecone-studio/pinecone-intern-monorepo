@@ -27,10 +27,8 @@ describe('getUserBySearch', () => {
       expect(error).toEqual(new Error(`User with the search term "bat" does not exist.`));
     }
   });
-});
 
-// describe('getUserBySearch', () => {
-//   it('it should return empty array', async () => {
-//     await getUserBySearch!({}, { searchInput: 'bat' }, {}, {} as GraphQLResolveInfo);
-//   });
-// });
+  it('input empty', async () => {
+    await getUserBySearch!({}, { searchInput: '' }, {}, {} as GraphQLResolveInfo);
+  });
+});
