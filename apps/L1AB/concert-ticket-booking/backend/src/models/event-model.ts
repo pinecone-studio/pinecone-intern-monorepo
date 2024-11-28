@@ -54,6 +54,7 @@ const EventSchema = new Schema({
   status: {
     type: String,
     required: true,
+    enum: ['Regular', 'Онцлох', 'Deleted'],
     default: 'Regular',
   },
   venues: [
