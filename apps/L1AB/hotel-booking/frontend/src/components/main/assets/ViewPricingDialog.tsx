@@ -7,7 +7,9 @@ export const ViewPricingDialog = () => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="text-blue-600 bg-white hover:bg-white">Click</Button>
+          <Button variant="ghost" className="text-[#2563EB]">
+            View pricing details
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
