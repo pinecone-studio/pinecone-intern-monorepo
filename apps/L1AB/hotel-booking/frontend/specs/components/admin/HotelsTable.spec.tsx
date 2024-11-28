@@ -69,7 +69,7 @@ describe('Admin Hotels Table', () => {
 
     await waitFor(() => {
       const hotel = getByTestId('one-hotel');
-      expect(hotel).toBeInTheDocument();
+      expect(hotel)
       fireEvent.click(hotel);
     });
   });

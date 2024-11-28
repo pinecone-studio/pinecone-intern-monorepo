@@ -19,7 +19,7 @@ export const signUpSendOtp: MutationResolvers['signUpSendOtp'] = async (_, { ema
       message: 'User already exists',
     };
   }
-
+  
   const generatedOTP = Math.floor(1000 + Math.random() * 9000);
   const hashedOTP = String(generatedOTP); 
 

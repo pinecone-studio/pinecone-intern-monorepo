@@ -23,6 +23,9 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+    SALTROUNDS: process.env.SALTROUNDS,
   },
   nx: {
     svgr: false,
