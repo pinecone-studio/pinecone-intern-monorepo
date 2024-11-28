@@ -8,7 +8,7 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 export const UserSettings = () => {
   return (
     <Container backgroundColor="bg-white">
-      <div className="flex flex-col gap-4 mb-1 mt-10 w-[652px]">
+      <div className="flex flex-col gap-4 mb-1 w-[652px]">
         <Label htmlFor="name" className="text-left text-lg">
           Security & Settings
         </Label>
