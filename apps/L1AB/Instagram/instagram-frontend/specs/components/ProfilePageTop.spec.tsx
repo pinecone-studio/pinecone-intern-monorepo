@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { ProfilePageTop } from '@/components/ProfilePageTop';
-import { userContext } from '@/app/(main)/layout';
 import { useGetFollowersByIdQuery } from '@/generated';
+import { UserContext } from '@/components/providers';
 
 jest.mock('@/generated', () => ({
   useGetFollowersByIdQuery: jest.fn(),
@@ -48,9 +48,9 @@ describe('ProfilePageTop', () => {
   it('should render "Edit Profile" and "Ad tools" buttons when viewing own profile', () => {
     useGetFollowersByIdQuery({ variables: { id: mockUser._id || '' } });
     render(
-      <userContext.Provider value={{ user: mockUser, users: [mockUser] }}>
+      <UserContext.Provider value={{ user: mockUser, users: [mockUser] }}>
         <ProfilePageTop userProfile={mockUserProfile} postsCount={[]} />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
   });
 
@@ -59,9 +59,9 @@ describe('ProfilePageTop', () => {
 
     const differentUser = { ...mockUser, username: 'differentUser' };
     render(
-      <userContext.Provider value={{ user: differentUser, users: [differentUser] }}>
+      <UserContext.Provider value={{ user: differentUser, users: [differentUser] }}>
         <ProfilePageTop userProfile={mockUserProfile} postsCount={[]} />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
   });
 });

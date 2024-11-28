@@ -14,7 +14,7 @@ import { ProfileButton } from './ProfileButton';
 
 const containerVariants = {
   close: {
-    width: '5rem',
+    width: '260px',
     transition: {
       type: 'spring',
       damping: 15,
