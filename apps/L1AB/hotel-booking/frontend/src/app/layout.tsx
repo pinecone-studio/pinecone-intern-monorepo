@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
+import { AuthProvider } from '@/components/providers/Auth.Provider';
 
 export const metadata = {
   title: 'Hotel Booking',
@@ -11,7 +12,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          {' '}
+          <AuthProvider>{children} </AuthProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );

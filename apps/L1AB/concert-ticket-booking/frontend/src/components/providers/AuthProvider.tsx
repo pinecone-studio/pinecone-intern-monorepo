@@ -29,7 +29,7 @@ type RequestPasswordRecoveryParams = {
 };
 
 type AuthContextType = {
-  signin: (_params: SignInParams) => void;
+  signin: (_param: SignInParams) => void;
   signup: (_params: SignUpParams) => void;
   signout: () => void;
   requestPasswordRecovery: (_params: RequestPasswordRecoveryParams) => void;
