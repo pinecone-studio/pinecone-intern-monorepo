@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 const BookingPage = () => {
-    return <div>Booking Page</div>
+  return <div>Booking Page</div>;
 };
 
 export default BookingPage;

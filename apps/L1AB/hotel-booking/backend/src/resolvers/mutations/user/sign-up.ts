@@ -2,8 +2,6 @@ import { MutationResolvers } from '../../../generated';
 import bcrypt from 'bcrypt';
 import { otpModel, userModel } from '../../../models';
 
-
-
 export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input }) => {
   const { email, otp, password } = input;
 
@@ -30,4 +28,3 @@ export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input })
     message: `User ${user.email} created successfully`,
   };
 };
-
