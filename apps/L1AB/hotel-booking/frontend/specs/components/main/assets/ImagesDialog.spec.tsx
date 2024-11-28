@@ -16,7 +16,9 @@ jest.mock('@/components/ui/dialog', () => ({
 
 describe('Admin images dialog', () => {
   it('should render the admin image dialog', () => {
-    render(<ImageDialog />);
+    const mockSetDialogOpen=jest.fn();
+
+    render(<ImageDialog  dialogOpen={false} setDialogOpen={mockSetDialogOpen} images={['https://example.com/image1.jpg','https://example.com/image2.jpg']}  />);
 
     const viewMoreButton = screen.getByTestId('view-more');
     fireEvent.click(viewMoreButton);

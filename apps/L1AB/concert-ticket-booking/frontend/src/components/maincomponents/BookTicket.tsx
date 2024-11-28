@@ -1,5 +1,5 @@
 'use client';
-import { useCreateBookingTotalAmountMutation, useGetEventByIdQuery } from '@/generated';
+import { useCreateBookingTotalAmountMutation, useGetEventByIdQuery, useGetMeQuery } from '@/generated';
 import { StageStyle } from './StageStyle';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft } from 'react-icons/fa6';
@@ -13,6 +13,7 @@ interface BookTicketProps {
 export const BookTicket = ({ id }: BookTicketProps) => {
   const { data } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
+  const { data: user } = useGetMeQuery();
   const [createBooking] = useCreateBookingTotalAmountMutation();
   const [counts, setCounts] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -41,15 +42,9 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   const calculateTotal = () => eventDetails?.venues.reduce((total, venue, index) => total + venue.price * (counts[index] || 0), 0) || 0;
   const router = useRouter();
   const handleBooking = async () => {
-    const userId = '673ac0020068c1269721bb5b';
+    const userId = user?.getMe?._id || '674811296dd8cdcbd2b60cbe';
     const status = 'Баталгаажаагүй';
-    const venuesToBook = eventDetails?.venues
-      .map((venue, index) => ({
-        name: venue.name,
-        price: venue.price,
-        quantity: counts[index],
-      }))
-      .filter((venue) => venue.quantity > 0);
+    const venuesToBook = eventDetails?.venues.map((venue, index) => ({ name: venue.name, price: venue.price, quantity: counts[index] })).filter((venue) => venue.quantity > 0);
     const bookingInput = {
       input: {
         eventId: id as string,
@@ -138,7 +133,9 @@ export const BookTicket = ({ id }: BookTicketProps) => {
               (venue, index) =>
                 (counts[index] || 0) > 0 && (
                   <div key={index} className="flex justify-between text-[#A1A1AA]">
-                    <p>{venue.name}x{counts[index]}</p>
+                    <p>
+                      {venue.name}x{counts[index]}
+                    </p>
                     <p>{(venue.price * counts[index]).toLocaleString()}₮</p>
                   </div>
                 )
