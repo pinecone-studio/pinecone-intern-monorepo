@@ -1,7 +1,6 @@
 'use client';
 
 import PasswordRecovery from '@/components/maincomponents/PasswordRecovery';
-import React from 'react';
 
 const Page = () => {
   return (

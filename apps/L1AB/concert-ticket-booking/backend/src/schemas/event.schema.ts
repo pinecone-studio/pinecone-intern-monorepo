@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Venue {
     name: String!
     quantity: Int!
+    firstquantity: Int!
     price: Int!
   }
 
@@ -16,9 +17,14 @@ export const typeDefs = gql`
     eventTime: [String!]!
     images: [String!]!
     venues: [Venue!]!
+    status: String
     discount: Int!
     createdAt: Date!
     updatedAt: Date!
+  }
+  input updateEventStatus {
+    _id: ID!
+    status: String
   }
 
   input UpdateEventInput {
@@ -31,6 +37,7 @@ export const typeDefs = gql`
     images: [String]
     venues: [VenueInput]
     discount: Int
+    status: String
   }
 
   input EventInput {
@@ -42,10 +49,12 @@ export const typeDefs = gql`
     images: [String!]!
     venues: [VenueInput!]!
     discount: Int
+    status: String
   }
 
   input VenueInput {
     name: String!
+    firstquantity: Int!
     quantity: Int!
     price: Int!
   }
@@ -58,6 +67,7 @@ export const typeDefs = gql`
   type Mutation {
     createEvent(input: EventInput!): Event!
     updateEvent(input: UpdateEventInput!): Event!
+    updateEventStatus(input: updateEventStatus!): Event!
     deleteEvent(_id: ID!): Event!
   }
 `;

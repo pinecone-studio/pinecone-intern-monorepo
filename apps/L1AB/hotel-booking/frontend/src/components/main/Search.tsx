@@ -18,10 +18,10 @@ export const Search = () => {
     },
   });
   return (
-    <div>
+    <>
       <Container backgroundColor="bg-backBlue">
         <form onSubmit={searchForm.handleSubmit} className="relative h-24">
-          <div className="absolute top-10 bg-white w-[1160px] flex justify-between items-end gap-4 p-4 rounded-md border-[3px] border-[#FFB700]">
+          <div className="absolute top-10 bg-white w-[1160px] left-[60px] flex justify-between items-end gap-4 p-4 rounded-md border-[3px] border-[#FFB700]">
             <div className="w-full flex gap-4">
               <div className="space-y-1 flex-1">
                 <p className="text-sm">Dates</p>
@@ -45,7 +45,7 @@ export const Search = () => {
           </div>
         </form>
       </Container>
-      <Container backgroundColor="bg-white">ss</Container>
-    </div>
+      <Container backgroundColor="bg-white h-12"></Container>
+    </>
   );
 };

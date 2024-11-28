@@ -14,11 +14,13 @@ jest.mock('apps/L1AB/concert-ticket-booking/backend/src/models', () => ({
       eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
+      status: 'regular',
       venues: [
         {
           name: 'VIP',
           price: 150,
           quantity: 50,
+          firstquantity: 1000,
         },
       ],
     }),
@@ -37,11 +39,13 @@ describe('createEvent', () => {
         eventTime: ['20:00'],
         discount: 10,
         images: ['http://example.com/image1.jpg'],
+        status: 'regular',
         venues: [
           {
             name: 'VIP',
             price: 150,
             quantity: 50,
+            firstquantity: 1000,
           },
         ],
       },
@@ -60,11 +64,14 @@ describe('createEvent', () => {
       eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
+      status: 'regular',
+  
       venues: [
         {
           name: 'VIP',
           price: 150,
           quantity: 50,
+          firstquantity: 1000,
         },
       ],
     });
@@ -78,11 +85,13 @@ describe('createEvent', () => {
       eventTime: ['20:00'],
       discount: 10,
       images: ['http://example.com/image1.jpg'],
+      status: 'regular',
       venues: [
         {
           name: 'VIP',
           price: 150,
           quantity: 50,
+          firstquantity: 1000,
         },
       ],
     });

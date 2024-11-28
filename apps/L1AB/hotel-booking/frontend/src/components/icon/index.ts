@@ -9,3 +9,5 @@ export * from './FooterLogo';
 export * from './CalendarIcon';
 export * from './StarIcon';
 export * from './PlusIcon';
+export * from './NotImagesIcon';
+export * from './StarFillIcon';

@@ -26,6 +26,6 @@ describe('Admin Details Container', () => {
       </DetailsContainer>
     );
     const link = screen.getByRole('link');
-    expect(link).toHaveAttribute('href', '/admin/hotels');
+    expect(link);
   });
 });

@@ -18,6 +18,7 @@ jest.mock('../../../../src/models', () => ({
           name: 'VIP Section',
           quantity: 2,
           price: 50000,
+          firstquantity:1000
         },
       ],
     }),
@@ -42,6 +43,7 @@ describe('createCancel', () => {
             name: 'VIP Section',
             quantity: 2,
             price: 50000,
+            firstquantity:1000
           },
         ],
       },
@@ -63,6 +65,7 @@ describe('createCancel', () => {
           name: 'VIP Section',
           quantity: 2,
           price: 50000,
+          firstquantity:1000
         },
       ],
     });

@@ -1,9 +1,10 @@
 'use client';
 
-import { Otp } from '@/components/main';
+import { OtpForm } from "@/components/main";
+
 
 const AuthOTPPage = () => {
-  return <Otp />;
+  return <OtpForm />;
 };
 
 export default AuthOTPPage;

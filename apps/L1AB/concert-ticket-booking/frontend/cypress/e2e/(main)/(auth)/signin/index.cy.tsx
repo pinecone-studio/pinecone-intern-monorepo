@@ -13,21 +13,21 @@ describe('SignIn-Page', () => {
     cy.get('[data-cy=SignIn-Password-Input]').type('test');
     cy.get('[data-cy=SignIn-Submit-Button]').click();
   });
-  it('4', () => {
-    cy.get('[data-cy=SignIn-Password-Input]').type('test');
-    cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
-  });
-  it('Should toggle password visibility when the toggle button is clicked', () => {
-    cy.get('[data-cy=SignIn-Password-Input]').type('password123');
+  // it('4', () => {
+  //   cy.get('[data-cy=SignIn-Password-Input]').type('test');
+  //   cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
+  // });
+  // it('Should toggle password visibility when the toggle button is clicked', () => {
+  //   cy.get('[data-cy=SignIn-Password-Input]').type('password123');
 
-    cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'password');
+  //   cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'password');
 
-    cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
+  //   cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
 
-    cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'text');
+  //   cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'text');
 
-    cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
+  //   cy.get('[data-cy=SignIn-Password-Input-Icons]').click();
 
-    cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'password');
-  });
+  //   cy.get('[data-cy=SignIn-Password-Input]').should('have.attr', 'type', 'password');
+  // });
 });

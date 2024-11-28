@@ -10,3 +10,4 @@ export * from './DatePickerWithRange';
 export * from './TimePicker';
 export * from './DialogItem';
 export * from './UpdateEventComponent';
+export * from './AdvertisedEvent';

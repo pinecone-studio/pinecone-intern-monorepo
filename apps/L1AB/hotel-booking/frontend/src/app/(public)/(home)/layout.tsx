@@ -4,7 +4,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <MainHeader />
-      <HeroSection/>
+      <HeroSection />
       <Search />
       {children}
       <MainFooter />

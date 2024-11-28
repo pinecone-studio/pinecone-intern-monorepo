@@ -32,10 +32,12 @@ const BookingSchema = new Schema({
   },
   bankName: {
     type: String,
+    default: '',
     required: false,
   },
   bankAccount: {
     type: Number,
+    default: '',
     required: false,
   },
   userId: {
@@ -45,6 +47,7 @@ const BookingSchema = new Schema({
   },
   amountTotal: {
     type: Number,
+    default: '',
     required: false,
   },
   status: {

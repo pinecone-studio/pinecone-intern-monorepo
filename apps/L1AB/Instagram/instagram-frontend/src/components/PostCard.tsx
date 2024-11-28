@@ -1,10 +1,9 @@
 'use client';
 import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
-import { Heart } from 'lucide-react';
-import { MessageCircle } from 'lucide-react';
-import { Bookmark } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PostCardCommentSection from './PostCardCommentSection';
+import PostCardLikeSection from './PostCardLikeSection';
 
 type PropsType = {
   userName: string;
@@ -12,9 +11,11 @@ type PropsType = {
   profilePicture: string;
   caption: string;
   keyy: number;
+  postId: string;
 };
 
-const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType) => {
+const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: PropsType) => {
+  const [userId, setUserId] = useState<string | null>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const prev = () => {
@@ -24,6 +25,11 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
   const next = () => {
     setCurrentImageIndex((curr) => (curr === images.length - 1 ? 0 : curr + 1));
   };
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId');
+    setUserId(id);
+  }, []);
 
   return (
     <div data-testid={`NewsFeedPostCard-${keyy}`}>
@@ -67,29 +73,13 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy }: PropsType
               </div>
             </div>
           </div>
-          <div className="flex justify-between pt-3">
-            <div className="flex gap-4">
-              <div className="flex gap-1">
-                <Heart />
-                <div>12</div>
-              </div>
-              <MessageCircle />
-            </div>
-            <Bookmark />
-          </div>
+          <PostCardLikeSection postId={postId} userId={userId || ''} />
         </div>
         <div className="py-2 flex flex-col gap-2">
           <div>
             <span className="font-semibold h-fit"> {userName}</span> {caption}
           </div>
-          {/* <div className="text-[#71717A]">
-            <div>View all {commentCount} comments</div>
-            <div className="flex justify-between pt-2 items-center">
-              <input value={comment} onChange={(e) => setComment(e.target.value)} type="text" className="w-3/4 focus:outline-none " placeholder="Add a comment ..." />
-              <div className={`text-blue-500 font-semibold ${comment ? 'block' : 'hidden'}`}>Post</div>
-              <Smile className="h-4 w-4" />
-            </div>
-          </div> */}
+          <PostCardCommentSection postId={postId} userId={userId || ''} />
         </div>
       </div>
     </div>

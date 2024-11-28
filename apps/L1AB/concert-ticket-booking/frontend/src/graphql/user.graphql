@@ -1,6 +1,5 @@
 mutation SignUpUser($input: SignUpUser!) {
   signUpUser(input: $input) {
-    token
     user {
       _id
       name
@@ -11,6 +10,7 @@ mutation SignUpUser($input: SignUpUser!) {
       createdAt
       updatedAt
     }
+    token
   }
 }
 
@@ -51,5 +51,14 @@ query GetMe {
     role
     createdAt
     updatedAt
+  }
+}
+mutation UpdateUser($input: UserUpdateInput!) {
+  updateUser(input: $input) {
+    _id
+
+    email
+
+    phone
   }
 }

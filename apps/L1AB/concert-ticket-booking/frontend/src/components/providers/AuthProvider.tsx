@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signInUser.token);
       setUser(data.signInUser.user);
       router.push('/');
+      toast('Signin successful!');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -58,6 +59,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signUpUser.token);
       setUser(data.signUpUser.user);
       router.push('/');
+      toast('Signup successful!');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -108,6 +110,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const signout = () => {
     localStorage.removeItem('token');
+    router.push('/');
+    toast.success('Successfully signed out');
     setUser(null);
   };
 

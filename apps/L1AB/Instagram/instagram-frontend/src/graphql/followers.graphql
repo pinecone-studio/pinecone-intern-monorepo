@@ -1,5 +1,14 @@
-query getFollowersById($id: ID!) {
+query GetFollowersById($id: ID!) {
   getFollowersById(_id: $id) {
+    _id
+    followerId
+    followeeId
+    createdAt
+  }
+}
+
+mutation CreateFollowers($followerId: ID!, $followeeId: ID!) {
+  createFollowers(followerId: $followerId, followeeId: $followeeId) {
     _id
     followerId
     followeeId
