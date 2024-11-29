@@ -10,7 +10,7 @@ const Page = () => {
 
   return (
     <Container>
-      <div className="px-28 py-12 flex gap-6 h-[48rem] ">
+      <div className="px-28 py-12 flex gap-6 min-h-[48rem] max-h-fit ">
         <div className="flex flex-col gap-2">
           <button
             data-cy="Profile-Page"
