@@ -5,8 +5,10 @@ import { Container, SearchDatePicker, SearchSelectGuest } from './assets';
 import { Button } from '@/components/ui/button';
 import { useFormik } from 'formik';
 import { addDays } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 export const Search = () => {
+  const router = useRouter();
   const searchForm = useFormik({
     initialValues: {
       startDate: new Date(),
@@ -14,6 +16,7 @@ export const Search = () => {
       guests: 1,
     },
     onSubmit: (values) => {
+      router.push('/hotels');
       console.log(values);
     },
   });

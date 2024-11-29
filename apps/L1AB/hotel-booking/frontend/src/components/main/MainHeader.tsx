@@ -1,17 +1,25 @@
 import React from 'react';
 import { Container } from './assets';
+import Link from 'next/link';
 
 export const MainHeader = () => {
-  return <Container backgroundColor="bg-backBlue text-white">
-    <div className='flex justify-between items-center p-[10px]'>
-      <PediaLogo/>
-      <div className='flex gap-4'>
-        <button className='px-4 py-[10px]'>Register</button>
-        <button className='px-4 py-[10px]'>Sign In</button>
+  return (
+    <Container backgroundColor="bg-backBlue text-white">
+      <div className="flex justify-between items-center p-[10px]">
+        <Link href="/">
+          <PediaLogo />
+        </Link>
+        <div className="flex gap-4">
+          <Link href="/signup">
+            <button className="px-4 py-[10px]">Register</button>
+          </Link>
+          <Link href="/signin">
+            <button className="px-4 py-[10px]">Log In</button>
+          </Link>
+        </div>
       </div>
-    </div>
-  </Container>;
-  
+    </Container>
+  );
 };
 export const PediaLogo = () => {
   return (

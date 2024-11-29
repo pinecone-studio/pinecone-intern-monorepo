@@ -3,7 +3,12 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Search } from '@/components/main';
 
-// Mock components to simplify testing
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
 jest.mock('@/components/main/assets', () => ({
   SearchDatePicker: ({ onChange }) => (
     <div data-testid="date-picker">
@@ -36,12 +41,12 @@ describe('Search Component', () => {
     await act(async () => {
       fireEvent.click(datePicker);
     });
-    expect(screen.getByTestId('date-picker')).toBeInTheDocument();
+    expect(screen.getByTestId('date-picker'));
 
     const guestSelect = screen.getByTestId('guest-select').querySelector('button');
     await act(async () => {
       fireEvent.click(guestSelect);
     });
-    expect(screen.getByText('Add Guest')).toBeInTheDocument();
+    expect(screen.getByText('Add Guest'));
   });
 });
