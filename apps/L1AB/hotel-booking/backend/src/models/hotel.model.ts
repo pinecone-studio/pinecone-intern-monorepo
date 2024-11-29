@@ -34,7 +34,6 @@ const hotelSchema = new Schema<hotelType>(
     ],
     address: {
       type: String,
-      required: true,
       trim: true,
     },
     phone: {
@@ -42,7 +41,6 @@ const hotelSchema = new Schema<hotelType>(
     },
     city: {
       type: String,
-      required: true,
       trim: true,
     },
     rating: {
@@ -50,7 +48,7 @@ const hotelSchema = new Schema<hotelType>(
     },
     stars: {
       type: Number,
-    }
+    },
   },
   { timestamps: true }
 );
