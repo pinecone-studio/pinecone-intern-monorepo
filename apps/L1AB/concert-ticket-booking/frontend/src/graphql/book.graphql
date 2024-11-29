@@ -82,3 +82,31 @@ mutation CreateBookingTotalAmount($input: CreateBookingInput!) {
     status
   }
 }
+query getBookingByUserId($userId: ID!) {
+  getBookingByUserId(userId: $userId) {
+    _id
+    eventId {
+      _id
+      name
+      artistName
+    }
+    bankName
+    bankAccount
+    status
+    userId {
+      _id
+      name
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    venues {
+      name
+      quantity
+      price
+    }
+    createdAt
+    updatedAt
+  }
+}
