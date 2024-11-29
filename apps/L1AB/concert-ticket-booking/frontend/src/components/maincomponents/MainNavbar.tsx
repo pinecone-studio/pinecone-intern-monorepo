@@ -25,27 +25,33 @@ export const MainNavbar = () => {
 
   return (
     <Container>
-      <div className=" py-6 px-12 flex justify-between border-b border-[#27272A]">
+      <div className=" py-6 px-12 flex justify-between border-b border-[#27272A] items-center">
         <Link href={`/`}>
           <div className="flex items-center">
-            <GoDotFill className="w-8 h-8 text-[#00B7F4]" />
-            <h1 className="text-white font-semibold text-2xl">TICKET BOOKING</h1>
+            <GoDotFill className="w-8 h-8 text-[#00B7F4] max-sm:w-5 max-sm:h-5" />
+            <h1 className="text-white font-semibold text-2xl max-sm:text-sm">TICKET BOOKING</h1>
           </div>
         </Link>
 
         <div className="text-white text-sm font-medium flex gap-4 items-center">
           <Link className=" text-white flex relative items-center text-sm" href={`/events`}>
-            <LuSearch className="w-6 h-6" />
+            <LuSearch className="w-6 h-6 max-sm:w-5 max-sm:h-5" />
           </Link>
           {token ? (
-            <Link href={'/profile'}>
-              <div className="text-white">{data?.getMe?.email}</div>
+            <Link href={'/profile'} className="max-sm:w-[80px]">
+              <div className="text-white max-sm:w-full max-sm:truncate ">{data?.getMe?.email}</div>
             </Link>
           ) : (
             <>
               {paths.map((path) => (
-                <Link href={path.path} key={path.name}>
-                  <Button className={`border border-[#27272A] py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black  ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>{path.name}</Button>
+                <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden' : ''}`}>
+                  <Button
+                    className={`border border-[#27272A] py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black max-sm:px-2 max-sm:py-1 max-sm:text-sm ${
+                      pathname === path.path ? 'bg-[#00B7F4]' : ''
+                    }`}
+                  >
+                    {path.name}
+                  </Button>
                 </Link>
               ))}
             </>

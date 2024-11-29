@@ -4,7 +4,7 @@ const eventData = new Array(12).fill(null);
 
 export const EventCardSkeleton = () => {
   return (
-    <div className="w-full grid grid-cols-3 gap-8 py-12 px-28">
+    <div className="w-full grid grid-cols-3 gap-8 py-12 px-28  max-sm:grid-cols-1 max-sm:px-0">
       {eventData.map((_, index) => (
         <div key={index} className="border border-[#18181B] rounded-[8px]">
           <Skeleton className="h-[250px] bg-gray-900 w-full"></Skeleton>

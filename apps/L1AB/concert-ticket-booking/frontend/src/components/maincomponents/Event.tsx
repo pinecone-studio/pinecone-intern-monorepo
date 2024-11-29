@@ -11,7 +11,7 @@ export const Event = () => {
 
   return (
     <div className="text-white" data-testid="event">
-      <div className="grid grid-cols-3 gap-8 py-12 px-28">
+      <div className="grid grid-cols-3 gap-8 py-12 px-28 max-sm:grid-cols-1 max-sm:px-0">
         {data?.getAllEvents?.map((event) => (
           <EventCard key={event._id} {...event} />
         ))}

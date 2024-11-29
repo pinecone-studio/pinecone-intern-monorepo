@@ -26,7 +26,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
     if (token) {
       router.push(`/bookTicket/${eventDetails?._id}`);
     } else {
-      toast.error('Please sign in');
+      toast.error('Please sign in', { autoClose: 2000 });
       router.push(`/signin`);
     }
   };

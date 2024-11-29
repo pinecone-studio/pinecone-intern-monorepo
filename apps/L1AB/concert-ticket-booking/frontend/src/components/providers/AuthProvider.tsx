@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signInUser.token);
       setUser(data.signInUser.user);
       router.push('/');
-      toast('Signin successful!');
+      toast.success('Signin successful!', { autoClose: 2000 });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -59,28 +59,28 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signUpUser.token);
       setUser(data.signUpUser.user);
       router.push('/');
-      toast('Signup successful!');
+      toast('Signup successful!', { autoClose: 2000 });
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
   const [requestPasswordRecoveryMutation] = useRequestPasswordRecoveryMutation({
     onCompleted: (data) => {
-      toast.success('Амжилттай илгээлээ');
+      toast.success('Амжилттай илгээлээ', { autoClose: 2000 });
       router.push(`/change-password?email=${data.requestPasswordRecovery.email}`);
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
   const [passwordRecoveryMutation] = usePasswordRecoveryMutation({
     onCompleted: () => {
-      toast.success('Амжилттай солигдлоо');
+      toast.success('Амжилттай солигдлоо', { autoClose: 2000 });
       router.push('/signin');
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
 
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signout = () => {
     localStorage.removeItem('token');
     router.push('/');
-    toast.success('Successfully signed out');
+    toast.success('Successfully signed out', { autoClose: 2000 });
     setUser(null);
   };
 
