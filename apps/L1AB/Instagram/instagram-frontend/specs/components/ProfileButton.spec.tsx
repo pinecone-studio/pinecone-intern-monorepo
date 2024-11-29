@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { ProfileButton } from '@/components/ProfileButton';
 import { AnimationControls } from 'framer-motion';
-import { userContext } from '../../src/app/(main)/layout';
 import { render } from '@testing-library/react';
 import { usePathname } from 'next/navigation';
+import { UserContext } from '@/components/providers/UserProvider';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
@@ -43,18 +43,18 @@ describe('ProfileButton', () => {
   }));
   it('should render successfully', () => {
     render(
-      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
+      <UserContext.Provider value={{ user: mockUser, users: mockUser }}>
         <ProfileButton {...sampleProps} />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
   });
   it('should render Avatar with the correct className when pathname is /profile', () => {
     usePathname.mockReturnValue('/profile');
 
     render(
-      <userContext.Provider value={{ user: mockUser }}>
+      <UserContext.Provider value={{ user: mockUser }}>
         <ProfileButton {...sampleProps} />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
   });
 });

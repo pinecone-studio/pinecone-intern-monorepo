@@ -55,7 +55,7 @@ export const SearchDrawer = ({ isOpen, visitedUsers, visitedUsersHandler }: Sear
         animate={isOpen ? 'open' : 'close'}
         exit="close"
         transition={{ type: 'spring', damping: 15, duration: 0.5 }}
-        className={`drawer fixed space-y-5 w-[411px] border z-10 h-full left-[80px] rounded-r-2xl divide-y divide-slate-200 transition-transform duration-100 ${
+        className={`drawer bg-white fixed space-y-5 w-[411px] border z-10 h-full left-[80px] rounded-r-2xl divide-y divide-slate-200 transition-transform duration-100 ${
           isOpen ? 'translate-x-[-411px]' : 'translate-x-0'
         }`}
         style={{
