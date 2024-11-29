@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { decodeToken } from '@/components/utils/decode-utils';
 import { useGetAllUsersQuery } from '@/generated';
 import { ApolloWrapper } from '@/components/providers';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 interface User {
   _id: string;
   email: string;
@@ -42,15 +43,15 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
   return (
     <UserProvider>
       <div className="flex min-w-full">
-        <LeftSideBar />
-        <div className="flex gap-[72px] mx-auto">
-          <div className="flex min-w-full">
-            <StoryProvider>
-              {pathname.includes('/story') ? null : <LeftSideBar />}
+        <StoryProvider>
+          {pathname.includes('/story') ? null : <LeftSideBar />}
+
+          <div className="flex gap-[72px] mx-auto">
+            <div className="flex min-w-full">
               <div className="flex gap-[72px] mx-auto">
                 <Suspense>
                   <ApolloWrapper>
-                    <div>{children}</div>
+                    <NuqsAdapter>{children}</NuqsAdapter>
                   </ApolloWrapper>
                 </Suspense>
                 {pathname == '/home' ? (
@@ -60,9 +61,9 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
                   </div>
                 ) : null}
               </div>
-            </StoryProvider>
+            </div>
           </div>
-        </div>
+        </StoryProvider>
       </div>
     </UserProvider>
   );
