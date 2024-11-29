@@ -1,0 +1,27 @@
+query GetRoomById($id: ID!) {
+  getRoomById(_id: $id) {
+    _id
+    name
+    roomNumber
+    price
+    description
+    photos
+    roomType
+    createdAt
+    updatedAt
+  }
+}
+
+query GetAllRooms {
+  getAllRooms {
+    _id
+    name
+    roomNumber
+    price
+    description
+    photos
+    roomType
+    createdAt
+    updatedAt
+  }
+}
