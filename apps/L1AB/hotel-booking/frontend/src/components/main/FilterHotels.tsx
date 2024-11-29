@@ -92,7 +92,7 @@ export const FilterHotels = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="w-full space-y-4">
+          <div className="w-full flex flex-col gap-4">
             {data?.getAllHotels.map((item, index) => (
               <FilterHotelCard key={index} id={item._id} name={item.name} image={item.images[0]} stars={item.stars} rating={item.rating} />
             ))}
