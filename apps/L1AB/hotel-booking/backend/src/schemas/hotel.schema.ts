@@ -19,13 +19,13 @@ export const typeDefs = gql`
 
   input CreateHotelInput {
     name: String!
-    description: String!
-    images: [String!]!
-    address: String!
-    phone: String!
-    city: String!
-    stars: Float!
-    rating: Float!
+    description: String
+    images: [String!]
+    address: String
+    phone: String
+    city: String
+    stars: Float
+    rating: Float
   }
 
   input UpdateHotelInput {

@@ -1,4 +1,3 @@
-
 'use client';
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
@@ -10,13 +9,13 @@ type BookingType = {
   guestName: string;
   status: string;
   date: string;
-}
+};
 
-type DetailsUpcomingBookingsPropsType = { 
-  mockBookings: BookingType[]
-}
+type DetailsUpcomingBookingsPropsType = {
+  mockBookings: BookingType[];
+};
 
-export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookingsPropsType) => {
+export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBookingsPropsType) => {
   const [statusFilter, setStatusFilter] = useState<'Confirmed' | 'Pending' | 'Cancelled' | ''>(''); // Default no filter
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc'); // Sort by Date or ID
 
@@ -48,14 +47,13 @@ export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookin
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-lg font-normal text-black">Upcoming Booking</h1>
-      <div className="flex flex-col rounded-t-md overflow-hidden w-full">
+    <>
+      <div className="flex justify-between items-center">
+        <h1 className="text-lg font-semibold">Upcoming Bookings</h1>
+      </div>
+      <div className="mt-4 flex flex-col rounded-t-md overflow-hidden w-full">
         <Table className="w-full">
-          <TableCaption>
-            
-          </TableCaption>
-
+          <TableCaption></TableCaption>
           <TableHeader className="bg-[#f4f4f5] border w-full">
             <TableRow className="w-full border-b">
               <TableHead className="text-black p-3 w-[82px] text-center border-r">ID</TableHead>
@@ -64,18 +62,8 @@ export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookin
                 <div className="flex gap-2 justify-center items-center">
                   <p>Status</p>
                   <div className="flex flex-col h-4 w-4">
-                    <IoIosArrowUp
-                      className="text-black cursor-pointer"
-                      data-testid="arrow-up-status"
-
-                      onClick={cycleStatus}
-                    />
-                    <IoIosArrowDown
-                      className="text-black cursor-pointer"
-                      data-testid="arrow-down-status"
-
-                      onClick={cycleStatus}
-                    />
+                    <IoIosArrowUp className="text-black cursor-pointer" data-testid="arrow-up-status" onClick={cycleStatus} />
+                    <IoIosArrowDown className="text-black cursor-pointer" data-testid="arrow-down-status" onClick={cycleStatus} />
                   </div>
                 </div>
               </TableHead>
@@ -83,10 +71,8 @@ export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookin
                 <div className="flex gap-2 justify-center items-center">
                   <p>Date</p>
                   <div className="text-sm flex flex-col justify-center items-center gap-0 h-4 w-4">
-                    <IoIosArrowUp onClick={handleSort}   data-testid="arrow-up-date"
-                    />
-                    <IoIosArrowDown onClick={handleSort}   data-testid="arrow-down-date"
- />
+                    <IoIosArrowUp onClick={handleSort} data-testid="arrow-up-date" />
+                    <IoIosArrowDown onClick={handleSort} data-testid="arrow-down-date" />
                   </div>
                 </div>
               </TableHead>
@@ -97,11 +83,11 @@ export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookin
             {sortedBookings.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="text-center text-gray-500 p-3">
-                <p className="text-gray-600 h-[18px] w-[18px] mb-4 text-lg">
-              <RxCountdownTimer />
-            </p>
-            <h1 className="text-black">Upcoming Bookings</h1>
-            <p>Your future bookings will appear here once confirmed.</p>
+                  <p className="text-gray-600 h-[18px] w-[18px] mb-4 text-lg">
+                    <RxCountdownTimer />
+                  </p>
+                  <h1 className="text-black">Upcoming Bookings</h1>
+                  <p>Your future bookings will appear here once confirmed.</p>
                 </TableCell>
               </TableRow>
             ) : (
@@ -117,6 +103,6 @@ export const DetailsUpcomingBookings = ( { mockBookings }: DetailsUpcomingBookin
           </TableBody>
         </Table>
       </div>
-    </div>
+    </>
   );
 };
