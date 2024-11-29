@@ -8,22 +8,22 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 export const UserHistoryDialog = () => {
   return (
-    <div data-testid="dis-btn">
+    <div data-testid="dis-btn ">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black">
             Цуцлах
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6">
+        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6 bg-black">
           <DialogHeader className="flex flex-col gap-1 ">
-            <div className='flex justify-between'>
-               <div className="flex items-center justify-between">
-              <DialogTitle className="text-white text-lg font-semibold">Тасалбар цуцлах</DialogTitle>
-            </div>
-            <DialogClose asChild className="text-white ">
-              <p className="cursor-pointer text-lg">x</p>
-            </DialogClose>
+            <div className="flex justify-between">
+              <div className="flex items-center justify-between">
+                <DialogTitle className="text-white text-lg font-semibold">Тасалбар цуцлах</DialogTitle>
+              </div>
+              <DialogClose asChild className="text-white ">
+                <p className="cursor-pointer text-lg">X</p>
+              </DialogClose>
             </div>
             <DialogDescription className="text-base font-normal">#23583 тасалбараа цуцлахдаа итгэлтэй байна уу?</DialogDescription>
           </DialogHeader>
