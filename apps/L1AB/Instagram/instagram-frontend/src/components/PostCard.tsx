@@ -29,7 +29,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   };
 
   useEffect(() => {
-    const id = localStorage.getItem('userId');
+    const id = localStorage.getItem('userToken');
     setUserId(id);
   }, []);
 
