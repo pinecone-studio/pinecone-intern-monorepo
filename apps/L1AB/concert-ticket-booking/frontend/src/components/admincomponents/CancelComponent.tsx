@@ -23,7 +23,7 @@ import { useGetAllBookingQuery, useUpdateBookingMutation } from '@/generated';
 export const CancelComponent = () => {
   const { data } = useGetAllBookingQuery();
   const [updateCancel] = useUpdateBookingMutation();
-
+  const filteredData = data?.getAllBooking.filter((booking) => booking.status === 'Цуцлах хүсэлт илгээсэн' || booking.status === 'Цуцлагдсан');
   const handleUpdateStatus = async (bookingId: string, status: string) => {
     await updateCancel({
       variables: {
@@ -63,7 +63,7 @@ export const CancelComponent = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.getAllBooking.map((item, index) => (
+              {filteredData?.map((item, index) => (
                 <TableRow data-testid={`getCancel-${index}`} key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
                     {item.eventId.name}
@@ -83,7 +83,7 @@ export const CancelComponent = () => {
                       <AlertDialogTrigger data-testid={`click1-${index}`}>
                         <div
                           className={`w-fit h-fit  ${
-                            item.status === 'Шилжүүлсэн'
+                            item.status === 'Цуцлагдсан'
                               ? 'bg-[#b1b1b1] px-[10px] py-[2px] rounded-lg font-semibold text-xs'
                               : 'bg-[#FFFFFF] text-[14px] py-2 font-medium rounded-lg  px-3 border cursor-pointer'
                           }`}
@@ -97,10 +97,10 @@ export const CancelComponent = () => {
                           <AlertDialogDescription>{item.userId.name} Харилцагчийн төлбөрийн буцаалтын шилжүүлсэн үү</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel onClick={() => handleUpdateStatus(item._id, 'Шилжүүлээгүй')} data-testid="cancelButton">
+                          <AlertDialogCancel onClick={() => handleUpdateStatus(item._id, 'Цуцлах хүсэлт илгээсэн')} data-testid="cancelButton">
                             Шилжүүлээгүй
                           </AlertDialogCancel>
-                          <AlertDialogAction onClick={() => handleUpdateStatus(item._id, 'Шилжүүлсэн')} data-testid="actionButton">
+                          <AlertDialogAction onClick={() => handleUpdateStatus(item._id, 'Цуцлагдсан')} data-testid="actionButton">
                             Шилжүүлсэн
                           </AlertDialogAction>
                         </AlertDialogFooter>

@@ -14,7 +14,7 @@ const mock: MockedResponse = {
           _id: '1',
           bankName: 'Golomt',
           bankAccount: '1234567',
-          status: 'Шилжүүлсэн',
+          status: 'Цуцлах хүсэлт илгээсэн',
           amountTotal: 100000,
           phone: '99999999',
           email: 'user1@example.com',
@@ -34,7 +34,7 @@ const mock: MockedResponse = {
           _id: '2',
           bankName: 'Khan Bank',
           bankAccount: '7654321',
-          status: 'Баталгаажаагүй',
+          status: 'Цуцлагдсан',
           amountTotal: undefined,
           phone: '88888888',
           email: 'user2@example.com',
@@ -59,14 +59,14 @@ const mockUpdate: MockedResponse = {
   request: {
     query: UpdateBookingDocument,
     variables: {
-      input: { _id: '1', status: 'Шилжүүлээгүй' },
+      input: { _id: '1', status: 'Цуцлах хүсэлт илгээсэн' },
     },
   },
   result: {
     data: {
       updateCancel: {
         _id: '1',
-        status: 'Шилжүүлээгүй',
+        status: 'Цуцлах хүсэлт илгээсэн',
       },
     },
   },
@@ -75,14 +75,14 @@ const mockUpdate1: MockedResponse = {
   request: {
     query: UpdateBookingDocument,
     variables: {
-      input: { _id: '1', status: 'Шилжүүлсэн' },
+      input: { _id: '1', status: 'Цуцлагдсан' },
     },
   },
   result: {
     data: {
       updateCancel: {
         _id: '1',
-        status: 'Шилжүүлээгүй',
+        status: 'Цуцлагдсан',
       },
     },
   },
