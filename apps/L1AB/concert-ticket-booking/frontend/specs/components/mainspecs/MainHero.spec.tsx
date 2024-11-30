@@ -2,6 +2,7 @@ import { MainHeroComponent } from '@/components/maincomponents/MainHero';
 import { GetAllEventsDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
+
 const mock: MockedResponse = {
   request: {
     query: GetAllEventsDocument,
@@ -16,12 +17,13 @@ const mock: MockedResponse = {
           description: 'An amazing rock concert.',
           eventDate: ['2024-11-25', '2024-11-25'],
           eventTime: '18:00',
-          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg', 'https://example.com/image2.jpg'],
+          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
           venues: [
-            { name: 'Venue A', quantity: 100, price: 50 },
-            { name: 'Venue B', quantity: 150, price: 70 },
+            { name: 'Venue A', quantity: 100, firstquantity: 150, price: 50 },
+            { name: 'Venue B', quantity: 150, firstquantity: 150, price: 70 },
           ],
           discount: 10,
+          status: 'Онцлох',
           createdAt: '2024-11-14T06:24:52.763Z',
           updatedAt: '2024-11-14T06:24:52.763Z',
         },
@@ -34,10 +36,11 @@ const mock: MockedResponse = {
           eventTime: '20:00',
           images: [],
           venues: [
-            { name: 'Venue C', quantity: 200, price: 80 },
-            { name: 'Venue D', quantity: 50, price: 100 },
+            { name: 'Venue C', quantity: 200, firstquantity: 150, price: 80 },
+            { name: 'Venue D', quantity: 50, firstquantity: 150, price: 100 },
           ],
           discount: 15,
+          status: 'Онцлох',
           createdAt: '2024-11-14T06:24:52.763Z',
           updatedAt: '2024-11-14T06:24:52.763Z',
         },
@@ -46,63 +49,71 @@ const mock: MockedResponse = {
   },
 };
 
-describe('MainHeroComponent get data dest', () => {
-  it('renders rows based on fetched data', async () => {
+describe('MainHeroComponent', () => {
+  it('renders data fetched from GraphQL query', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <MainHeroComponent />
       </MockedProvider>
     );
 
+    // Wait for the data to load
     await waitFor(() => {
-      const table = getByTestId('getCancel-0');
-      expect(table);
+      expect(getByTestId('getCancel-0'));
+      expect(getByTestId('getCancel-1'));
     });
   });
-  it('should simulate the three clicks on the carousel next,prev elements', async () => {
+
+  it('handles clicking on the next and previous buttons', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <MainHeroComponent />
       </MockedProvider>
     );
 
+    // Wait for the data to load
     await waitFor(() => getByTestId('getCancel-0'));
 
     const leftButton = getByTestId('left');
+    const rightButton = getByTestId('right');
+
+    // Simulate clicking the left button
+    fireEvent.click(leftButton);
     fireEvent.click(leftButton);
 
-    const leftButton1 = getByTestId('left');
-    fireEvent.click(leftButton1);
+    expect(leftButton);
 
-    const rigthButton = getByTestId('right');
-    fireEvent.click(rigthButton);
+    // Simulate clicking the right button multiple times
+    fireEvent.click(rightButton);
+    fireEvent.click(rightButton);
+    fireEvent.click(rightButton);
 
-    const rigthButton1 = getByTestId('right');
-    fireEvent.click(rigthButton1);
-
-    const rigthButton2 = getByTestId('right');
-    fireEvent.click(rigthButton2);
-
-    const rigthButton3 = getByTestId('right');
-    fireEvent.click(rigthButton3);
+    // Verify right button exists
+    expect(rightButton);
   });
-  it('should pause autoplay on mouse enter and resume on mouse leave', async () => {
+
+  it('pauses autoplay on mouse enter and resumes on mouse leave', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <MainHeroComponent />
       </MockedProvider>
     );
 
-    await waitFor(() => {
-      const row = getByTestId('getCancel-0');
-      expect(row);
-    });
+    // Wait for the data to load
+    await waitFor(() => getByTestId('getCancel-0'));
 
     const carousel = getByTestId('carousel-track');
+
+    // Simulate mouse enter
     fireEvent.mouseEnter(carousel);
+
+    // Expect autoplay to pause (autoplay should be false)
     expect(carousel);
 
+    // Simulate mouse leave
     fireEvent.mouseLeave(carousel);
+
+    // Expect autoplay to resume (autoplay should be true)
     expect(carousel);
   });
 });

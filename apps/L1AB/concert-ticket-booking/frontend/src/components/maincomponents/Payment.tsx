@@ -55,7 +55,7 @@ export const Payment = ({ id }: PaymentProps) => {
 
       setQr(data);
     } catch (error) {
-      // console.error('Error generating QR code:', error);
+      console.error('Error generating QR code:', error);
     } finally {
       setLoading(false);
     }
