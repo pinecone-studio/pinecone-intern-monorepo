@@ -10,6 +10,7 @@ export const typeDefs = gql`
 
   type Query {
     getFollowersById(_id: ID!): [Followers!]!
+    getFollowingById(_id: ID!): [Followers!]!
   }
 
   type Mutation {
