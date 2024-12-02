@@ -1,10 +1,8 @@
-'use client';
 import { Container } from '@/components';
 import { Payment } from '@/components/maincomponents/Payment';
-import { useParams } from 'next/navigation';
 
-const Page = () => {
-  const { id } = useParams();
+const Page = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   return (
     <Container>
       <Payment id={id} />
