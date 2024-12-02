@@ -1,6 +1,7 @@
 import { green, red } from 'chalk';
 import * as cheerio from 'cheerio';
 import fs from 'fs';
+import path from 'path';
 
 export const parseCoverageReport = (reportFilePath: string) => {
   const fileContent = fs.readFileSync(reportFilePath, 'utf8');
@@ -19,6 +20,20 @@ export const calculateTotalCoverage = ({ statementsCoverage, branchesCoverage, f
   const total = Math.ceil((parsePercentage(statementsCoverage) + parsePercentage(branchesCoverage) + parsePercentage(functionsCoverage) + parsePercentage(linesCoverage)) / 4);
 
   return total;
+};
+
+export const getReportFileHtml = (reportFolderPath: string, deployedLink: string) => {
+  const fileContent = fs.readFileSync(path.join(reportFolderPath, 'index.html'), 'utf8');
+  const $ = cheerio.load(fileContent);
+  $('a').each(function () {
+    const filePath = $(this).attr('href');
+
+    $(this).attr('href', deployedLink + filePath);
+  });
+
+  const html = '<table class="coverage-summary">' + $('table').html() + '</table>';
+
+  return html;
 };
 
 export const displayCoverageRow = (statistic, value) => {

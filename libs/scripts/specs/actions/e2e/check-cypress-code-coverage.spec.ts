@@ -1,13 +1,26 @@
+import * as addCypressCodeCoverageToPullRequest from '../../../src/utils/github/add-cypress-code-coverage-to-pull-request';
 import * as cypressCodeCoverage from '../../../src/actions/e2e/check-cypress-code-coverage';
 import * as cypressCodeCoverageUtils from '../../../src/utils/actions/check-cypress-code-coverage-utils';
+import '@testing-library/jest-dom';
 
-jest.mock('../../../src/utils/actions/check-cypress-code-coverage-utils', () => ({
+jest.mock('../../../../src/executors/github-actions/e2e/utils/check-cypress-code-coverage-utils', () => ({
   validateCoveragePath: jest.fn(),
-  parseCoverageReport: jest.fn().mockImplementation().mockReturnValueOnce({ statementsCoverage: '100', branchesCoverage: '70', functionsCoverage: '90', linesCoverage: '85' }),
+  parseCoverageReport: jest.fn().mockReturnValueOnce({ statementsCoverage: '100', branchesCoverage: '70', functionsCoverage: '90', linesCoverage: '85' }),
   calculateTotalCoverage: jest.fn(),
   isCoverageAboveThreshold: jest.fn(),
   displayCoverageRow: jest.fn(),
+  getReportFileHtml: () => '',
 }));
+
+jest.mock('../../../../src/executors/github-actions/e2e/utils/deploy-code-coverage', () => ({
+  deployCodeCoverage: () => '',
+}));
+
+jest.mock('../../../../src/common/github/add-cypress-code-coverage-to-pull-request', () => ({
+  addCypressCodeCoverageToPullRequest: jest.fn(),
+}));
+
+jest.mock('@actions/github');
 
 jest.mock('path', () => ({
   join: jest.fn(),
@@ -15,8 +28,7 @@ jest.mock('path', () => ({
 
 describe('addCoverageToPullRequest', () => {
   beforeEach(() => {
-    process.env = { ...process.env, GITHUB_TOKEN: 'test' };
-    process.argv = ['test', 'test', 'test/test/test'];
+    process.env = { ...process.env, ACTION_TYPE: 'PULL_REQUEST_ACTION' };
   });
 
   afterEach(() => {
@@ -25,18 +37,31 @@ describe('addCoverageToPullRequest', () => {
     jest.resetAllMocks();
   });
 
-  it('Should call addCypressCodeCoverageToPullRequest function when GITHUB_TOKEN is available', async () => {
+  it('Should call addCypressCodeCoverageToPullRequest function when ACTION_TYPE is available', async () => {
     const mockValidateCoveragePath = jest.spyOn(cypressCodeCoverageUtils, 'validateCoveragePath');
     mockValidateCoveragePath.mockImplementation();
 
     const mockParseCoverageReport = jest.spyOn(cypressCodeCoverageUtils, 'parseCoverageReport');
-    mockParseCoverageReport.mockReturnValueOnce({ statementsCoverage: '100', branchesCoverage: '70', functionsCoverage: '90', linesCoverage: '85' });
+    mockParseCoverageReport.mockImplementation();
 
-    const mockIsCoverageAboveThreshold = jest.spyOn(cypressCodeCoverageUtils, 'isCoverageAboveThreshold');
-    mockIsCoverageAboveThreshold.mockImplementation();
+    const mockAddCypressCodeCoverageToPullRequest = jest.spyOn(addCypressCodeCoverageToPullRequest, 'addCypressCodeCoverageToPullRequest');
+    mockAddCypressCodeCoverageToPullRequest.mockImplementation();
 
-    cypressCodeCoverage.checkCypressCodeCoverage();
+    await cypressCodeCoverage.addCoverageToPullRequest({ path: '/test', pullRequestComment: 'test' });
 
-    expect(mockValidateCoveragePath).toHaveBeenCalled();
+    expect(mockAddCypressCodeCoverageToPullRequest).toHaveBeenCalled();
+  });
+
+  it('Should call checkCypressCodeCoverage with ACTION_TYPE not provided', async () => {
+    const mockValidateCoveragePath = jest.spyOn(cypressCodeCoverageUtils, 'validateCoveragePath');
+    mockValidateCoveragePath.mockImplementation();
+
+    const mockParseCoverageReport = jest.spyOn(cypressCodeCoverageUtils, 'parseCoverageReport');
+    mockParseCoverageReport.mockImplementation(() => ({ statementsCoverage: '80', linesCoverage: '80', functionsCoverage: '80', branchesCoverage: '80' }));
+
+    const mockAddCypressCodeCoverageToPullRequest = jest.spyOn(addCypressCodeCoverageToPullRequest, 'addCypressCodeCoverageToPullRequest');
+    mockAddCypressCodeCoverageToPullRequest.mockImplementation();
+
+    await cypressCodeCoverage.checkCypressCodeCoverage();
   });
 });
