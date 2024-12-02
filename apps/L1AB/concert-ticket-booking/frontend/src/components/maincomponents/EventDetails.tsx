@@ -26,7 +26,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
     if (token) {
       router.push(`/bookTicket/${eventDetails?._id}`);
     } else {
-      toast.error('Please sign in');
+      toast.error('Please sign in', { autoClose: 2000 });
       router.push(`/signin`);
     }
   };
@@ -35,10 +35,12 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
         <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} priority className="object-cover" />
-        <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2 ">
-          <p className="border w-fit px-3 py-[6px] text-[16px] text-white border-[#FAFAFA33] rounded-full"> {eventDetails?.description}</p>
+        <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2">
+          <p className="border w-fit px-3 py-[6px] text-[16px] max-sm:text-sm max-sm:px-2  max-sm:py-1 max-md:text-md max-md:px-2  max-md:py-1 text-white border-[#FAFAFA33] rounded-full">
+            {eventDetails?.description}
+          </p>
           <div className="grid h-fit gap-6 w-fit">
-            <p className="text-5xl font-bold text-white">{eventDetails?.name}</p>
+            <p className="text-5xl font-bold text-white max-sm:text-xl max-lg:text-xl">{eventDetails?.name}</p>
             <div className="flex items-center gap-2">
               <LuCalendar className="text-[#FAFAFA80]" />
               <div className="text-[#FAFAFA]  opacity-80 font-bold flex gap-2">
@@ -51,7 +53,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
         </div>
       </div>
 
-      <div className="flex px-[212px] py-12">
+      <div className="flex px-[212px] py-12 max-sm:grid max-sm:px-3 max-sm:gap-3 max-md:grid max-md:px-3 max-md:gap-3 max-lg:grid max-lg:px-3 max-lg:gap-3  max-xl:grid max-xl:px-3 max-xl:gap-3  max-2xl:grid max-2xl:px-3 max-2xl:gap-3">
         <div className=" flex-1 grid gap-5 ">
           <div className="flex justify-between ">
             <div className="flex items-center gap-6">
@@ -88,13 +90,13 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           </div>
           <div className="grid gap-2 ">
             <p className="text-[#FAFAFA] font-light">Stage plan:</p>
-            <div className="h-[600px] w-full relative">
+            <div className="h-[600px] w-full relative max-sm:h-[300px] max-2xl:h-[800px] ">
               <Image src={`/Stage.png`} alt="hi" fill />
             </div>
           </div>
         </div>
 
-        <div className="w-fit">
+        <div className="w-fit max-md:px-36 max-sm:px-0 max-lg:px-44  max-xl:w-full max-2xl:w-full">
           <div className=" rounded-2xl px-6 ">
             <div className="grid h-fit gap-2">
               {eventDetails?.venues.map((item, index) => {

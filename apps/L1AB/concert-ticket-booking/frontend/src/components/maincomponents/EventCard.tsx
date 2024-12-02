@@ -26,8 +26,8 @@ const formatNumber = (value: number): string => {
 
 const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPrice: number; discountedPrice: number; discount: number }) => (
   <div className="w-fit flex items-end gap-2">
-    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
     <h2 className="text-2xl text-[#FAFAFA] font-bold ">{formatNumber(discountedPrice)}₮</h2>
+    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
   </div>
 );
 
