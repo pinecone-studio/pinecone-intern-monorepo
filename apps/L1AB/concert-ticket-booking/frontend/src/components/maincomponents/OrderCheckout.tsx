@@ -60,15 +60,15 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
     return '#D7D7F8';
   };
   return (
-    <div className="h-[48rem]">
-      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12">
+    <div className="h-[48rem] max-sm:h-full max-md:h-full max-lg:h-full">
+      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12 max-sm:px-3 max-sm:justify-evenly max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly">
         <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="BacktoPush" onClick={() => router.push(`/bookTicket/${bookingDetails?.eventId._id}`)}>
           <FaArrowLeft />
         </Button>
-        <p className="text-2xl font-semibold text-white">Захиалга баталгаажуулах</p>
+        <p className="text-2xl font-semibold text-white max-sm:text-xl">Захиалга баталгаажуулах</p>
         <p></p>
       </nav>
-      <div className="flex gap-8 px-28 py-[60px]">
+      <div className="flex gap-8 px-28 py-[60px] max-sm:px-0 max-sm:grid max-sm:gap-8 max-md:px-3 max-md:grid max-md:gap-8 max-lg:grid max-lg:gap-8">
         <div className="flex-1 bg-[#131313] p-8 rounded-md">
           <div className="w-full h-fit flex flex-col gap-6">
             <p className="font-bold text-2xl text-white">Захиалагчийн мэдээлэл</p>
@@ -105,7 +105,7 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
             </div>
           </div>
         </div>
-        <div className="w-[392px] bg-[#131313] p-6 rounded-md">
+        <div className="w-[392px] bg-[#131313] p-6 rounded-md max-md:w-full max-lg:w-full">
           <div className="flex gap-8">
             <p className="font-extralight text-white opacity-50 w-full">Бүтээгдэхүүний тоо</p>
             <p className="text-white font-semibold">{bookingDetails?.venues?.reduce((acc, item) => acc + (item?.quantity || 0), 0)}</p>

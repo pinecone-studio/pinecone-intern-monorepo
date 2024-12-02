@@ -15,7 +15,7 @@ export const UserHistoryDialog = () => {
             Цуцлах
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6 bg-black">
+        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6 bg-black max-sm:w-full max-sm:px-3">
           <DialogHeader className="flex flex-col gap-1 ">
             <div className="flex justify-between">
               <div className="flex items-center justify-between">

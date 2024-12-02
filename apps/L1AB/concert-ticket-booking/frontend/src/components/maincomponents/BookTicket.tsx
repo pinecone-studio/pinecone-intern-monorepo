@@ -73,15 +73,16 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   };
   return (
     <div data-testid="Book-Ticket-Component">
-      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12">
+      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12 max-sm:px-3 max-sm:justify-evenly  max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly max-2xl:justify-between">
         <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
           <FaArrowLeft />
         </Button>
-        <p className="text-2xl font-semibold text-white">Тасалбар захиалах</p>
+        <p className="text-2xl font-semibold text-white max-sm:text-xl">Тасалбар захиалах</p>
+        <p></p>
       </nav>
-      <div className="flex flex-wrap justify-around items-center py-6">
+      <div className="flex flex-wrap justify-around items-center py-6 max-md:grid  max-lg:grid  max-lg:gap-12  ">
         <StageStyle />
-        <div className="bg-[#131313] rounded-2xl px-6">
+        <div className="bg-[#131313] rounded-2xl px-6 max-sm:px-3  max-md:px-3">
           <div className="h-fit grid gap-2 py-6">
             <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
             <Select value={selectedDate ?? undefined} onValueChange={setSelectedDate}>

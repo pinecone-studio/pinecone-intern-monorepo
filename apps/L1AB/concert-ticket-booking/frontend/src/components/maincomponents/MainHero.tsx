@@ -34,7 +34,7 @@ export const MainHeroComponent = () => {
   }
 
   return (
-    <div className="relative w-full overflow-hidden h-[550px]" data-testid="main-hero">
+    <div className="relative w-full overflow-hidden h-[550px] max-md:w-full" data-testid="main-hero">
       <div
         data-testid="carousel-track"
         style={{

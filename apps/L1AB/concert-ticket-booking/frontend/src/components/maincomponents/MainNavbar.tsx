@@ -44,7 +44,7 @@ export const MainNavbar = () => {
           ) : (
             <>
               {paths.map((path) => (
-                <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden' : ''}`}>
+                <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden max-md:hidden' : ''}`}>
                   <Button
                     className={`border border-[#27272A] py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black max-sm:px-2 max-sm:py-1 max-sm:text-sm ${
                       pathname === path.path ? 'bg-[#00B7F4]' : ''

@@ -20,7 +20,6 @@ const filterEventsByDate = (events: EventCardProps[], targetDate: string) => {
     .sort((a, b) => {
       const dateA = new Date(a.eventDate[0]);
       const dateB = new Date(b.eventDate[0]);
-
       const diffA = Math.abs(dateA.getTime() - target.getTime());
       const diffB = Math.abs(dateB.getTime() - target.getTime());
 
@@ -41,8 +40,11 @@ export const RelatedEvents = ({ id }: RelatedEventsProps) => {
 
   return (
     <div>
-      <p className="text-white font-extralight text-xl px-28">Холбоотой эвент болон тоглолтууд</p>
-      <div className="grid grid-cols-4 gap-8 py-12 px-28" data-testid={`RelatedEvents-0`}>
+      <p className="text-white font-extralight text-xl px-28 max-sm:px-3  max-md:px-3 max-lg:px-3 max-xl:px-3   max-2xl:px-3 ">Холбоотой эвент болон тоглолтууд</p>
+      <div
+        className="grid grid-cols-4 gap-8 py-12 px-28 max-sm:px-3 max-sm:grid-cols-1 max-sm:py-4 max-md:px-3 max-md:grid-cols-2 max-md:py-4 max-lg:px-3 max-lg:grid-cols-2 max-lg:py-4 max-xl:grid-cols-3 max-xl:py-4 max-xl:px-3 max-2xl:grid-cols-3 max-2xl:py-4 max-2xl:px-3 "
+        data-testid={`RelatedEvents-0`}
+      >
         {filteredEvents.length > 0 ? filteredEvents.map((event) => <EventCard {...event} key={event._id} />) : <p>No related events found</p>}
       </div>
     </div>
