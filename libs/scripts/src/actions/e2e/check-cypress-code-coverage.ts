@@ -6,6 +6,7 @@ import { calculateTotalCoverage, displayCoverageRow, getReportFileHtml, isCovera
 
 export const addCoverageToPullRequest = async ({ path, pullRequestComment }: { path: string; pullRequestComment: string }) => {
   if (process.env.ACTION_TYPE === 'PULL_REQUEST_ACTION') {
+    console.log('commentcommentcommentcomment', path, pullRequestComment);
     await addCypressCodeCoverageToPullRequest({ path, commentBody: pullRequestComment });
   }
 };
@@ -19,6 +20,7 @@ const getCoverageMetricIcon = (coverageNumber: number) => {
 };
 
 export const checkCypressCodeCoverage = async () => {
+  console.log('projectPathprojectPathprojectPathprojectPath');
   const projectPath = process.argv.slice(2)[0];
   validateCoveragePath(projectPath);
   const coverageFolderPath = path.join(projectPath, 'coverage', 'lcov-report');

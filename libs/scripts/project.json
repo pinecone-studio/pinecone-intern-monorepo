@@ -71,6 +71,19 @@
       },
       "dependsOn": [{ "target": "export-env" }]
     },
+    "check-cypress-code-coverage": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/e2e/check-cypress-code-coverage.ts"
+      }
+    },
+    "execute-cypress": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/cypress/execute-cypress.ts"
+      }
+    },
+
     "deploy-prod-action": {
       "executor": "nx:run-commands",
       "options": {

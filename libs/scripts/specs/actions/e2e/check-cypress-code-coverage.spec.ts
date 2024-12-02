@@ -1,9 +1,8 @@
 import * as addCypressCodeCoverageToPullRequest from '../../../src/utils/github/add-cypress-code-coverage-to-pull-request';
 import * as cypressCodeCoverage from '../../../src/actions/e2e/check-cypress-code-coverage';
 import * as cypressCodeCoverageUtils from '../../../src/utils/actions/check-cypress-code-coverage-utils';
-import '@testing-library/jest-dom';
 
-jest.mock('../../../../src/executors/github-actions/e2e/utils/check-cypress-code-coverage-utils', () => ({
+jest.mock('../../../src/utils/actions/check-cypress-code-coverage-utils.ts', () => ({
   validateCoveragePath: jest.fn(),
   parseCoverageReport: jest.fn().mockReturnValueOnce({ statementsCoverage: '100', branchesCoverage: '70', functionsCoverage: '90', linesCoverage: '85' }),
   calculateTotalCoverage: jest.fn(),
@@ -12,11 +11,11 @@ jest.mock('../../../../src/executors/github-actions/e2e/utils/check-cypress-code
   getReportFileHtml: () => '',
 }));
 
-jest.mock('../../../../src/executors/github-actions/e2e/utils/deploy-code-coverage', () => ({
+jest.mock('../../../src/actions/e2e/utils/deploy-code-coverage.ts', () => ({
   deployCodeCoverage: () => '',
 }));
 
-jest.mock('../../../../src/common/github/add-cypress-code-coverage-to-pull-request', () => ({
+jest.mock('../../../src/utils/github/add-cypress-code-coverage-to-pull-request.ts', () => ({
   addCypressCodeCoverageToPullRequest: jest.fn(),
 }));
 
