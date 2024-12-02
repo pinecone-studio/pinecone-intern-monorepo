@@ -12,7 +12,7 @@ export * from './UserProfile';
 export * from './UserContact';
 export * from './UserSettings';
 export * from './FilterHotels';
-export * from './OtpForm';
 export * from './PriceDetails';
 export * from './UserHeader';
 export * from './Loading';
+export * from './OtpForm';

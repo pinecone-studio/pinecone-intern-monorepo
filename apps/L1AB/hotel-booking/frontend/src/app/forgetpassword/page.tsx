@@ -2,12 +2,27 @@
 
 import { CreatePassForm, ForgetPassForm, OtpForm } from '@/components/main';
 import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-type InputDataType = {
+export type InputDataType = {
   email: string;
   otp: string;
   password: string;
+  rePassword: string;
 };
+
+type SetCurrentIndexType = Dispatch<SetStateAction<number>>;
+type SetInputDataType = Dispatch<SetStateAction<InputDataType>>;
+type handleOnchangeType = (_event: React.ChangeEvent<HTMLInputElement>) => void;
+
+export type ForgetPassFormProps = {
+  setInputData: SetInputDataType;
+  setCurrentIndex: SetCurrentIndexType;
+  handleOnchange: handleOnchangeType;
+  inputData: InputDataType;
+};
+
+const STEP_COMPONENTS = [ForgetPassForm, OtpForm, CreatePassForm];
 
 const Page = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -15,7 +30,10 @@ const Page = () => {
     email: '',
     otp: '',
     password: '',
+    rePassword: '',
   });
+
+  const Component = STEP_COMPONENTS[currentIndex];
 
   const handleOnchange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputData((prev) => ({
@@ -24,13 +42,7 @@ const Page = () => {
     }));
   };
 
-  return (
-    <div>
-      {currentIndex === 0 && <ForgetPassForm setInputData={setInputData} setCurrentIndex={setCurrentIndex} handleOnchange={handleOnchange} inputData={inputData} />}
-      {currentIndex === 1 && <OtpForm setInputData={setInputData} setCurrentIndex={setCurrentIndex} handleOnchange={handleOnchange} inputData={inputData} />}
-      {currentIndex === 2 && <CreatePassForm setInputData={setInputData} inputData={inputData} handleOnchange={handleOnchange} />}
-    </div>
-  );
+  return <Component setInputData={setInputData} setCurrentIndex={setCurrentIndex} handleOnchange={handleOnchange} inputData={inputData} />;
 };
 
 export default Page;
