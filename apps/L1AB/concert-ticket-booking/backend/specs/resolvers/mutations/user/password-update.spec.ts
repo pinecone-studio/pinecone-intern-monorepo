@@ -28,40 +28,46 @@ describe('update password', () => {
 
     const result = await passwordUpdate!({}, { input: { oldPassword: 'oldpassword', newPassword: 'newpassword' } }, { user: { userId: '123' } }, {} as GraphQLResolveInfo);
 
+    expect(userModel.findById).toHaveBeenCalledWith('123');
+    expect(bcrypt.compare).toHaveBeenCalledWith('oldpassword', 'hashedOldPassword');
+    expect(bcrypt.hash).toHaveBeenCalledWith('newpassword', 10);
+    expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith('123', { password: 'hashedNewPassword' });
     expect(result).toEqual({
       success: true,
       message: 'Нууц үг амжилттай шинэчлэгдлээ.',
     });
-
-    expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith('123', { password: 'hashedNewPassword' });
   });
 
   it('should return error when old password does not match', async () => {
     (userModel.findById as jest.Mock).mockResolvedValue({ userId: '123', password: 'hashedOldPassword' });
-    (bcrypt.compare as jest.Mock).mockResolvedValueOnce(false);
+    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-    const result = await passwordUpdate!({}, { input: { oldPassword: 'wrongOldPassword', newPassword: 'newpassword' } }, { user: { userId: '123' } }, {} as GraphQLResolveInfo);
+    await expect(
+      passwordUpdate!({}, { input: { oldPassword: 'wrongOldPassword', newPassword: 'newpassword' } }, { user: { userId: '123' } }, {} as GraphQLResolveInfo)
+    ).rejects.toThrow('Хуучин нууц үг таарахгүй байна.');
 
-    expect(result);
+    expect(userModel.findById).toHaveBeenCalledWith('123');
+    expect(bcrypt.compare).toHaveBeenCalledWith('wrongOldPassword', 'hashedOldPassword');
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
   it('should return error when user is not found', async () => {
     (userModel.findById as jest.Mock).mockResolvedValue(null);
 
-    const result = await passwordUpdate!({}, { input: { oldPassword: 'oldpassword', newPassword: 'newpassword' } }, { user: { userId: '123' } }, {} as GraphQLResolveInfo);
+    await expect(
+      passwordUpdate!({}, { input: { oldPassword: 'oldpassword', newPassword: 'newpassword' } }, { user: { userId: '123' } }, {} as GraphQLResolveInfo)
+    ).rejects.toThrow('Хэрэглэгч олдсонгүй');
 
-    expect(result).toEqual({
-      success: false,
-      message: 'Хэрэглэгч олдсонгүй.',
-    });
+    expect(userModel.findById).toHaveBeenCalledWith('123');
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
   it('should return error when user is not logged in', async () => {
-    const result = await passwordUpdate!({}, { input: { oldPassword: 'oldpassword', newPassword: 'newpassword' } }, { user: null }, {} as GraphQLResolveInfo);
+    await expect(
+      passwordUpdate!({}, { input: { oldPassword: 'oldpassword', newPassword: 'newpassword' } }, { user: null }, {} as GraphQLResolveInfo)
+    ).rejects.toThrow('Та нэвтэрнэ үү!');
 
-    expect(result).toEqual({
-      success: false,
-      message: 'Хэрэглэгч нэвтэрч ороогүй байна.',
-    });
+    expect(userModel.findById).not.toHaveBeenCalled();
+    expect(userModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 });
