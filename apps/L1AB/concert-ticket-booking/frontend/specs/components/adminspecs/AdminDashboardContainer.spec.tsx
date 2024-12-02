@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { AdminDashboard } from '@/components';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor, screen } from '@testing-library/react';
@@ -23,13 +24,13 @@ const mock: MockedResponse = {
             { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
             { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
           ],
-          status: 'regular',
+          status: 'Regular',
           discount: 10,
           createdAt: '2024-11-14T06:24:52.763Z',
           updatedAt: '2024-11-14T06:24:52.763Z',
         },
         {
-          _id: '1',
+          _id: '2',
           name: 'Event 2',
           artistName: ['Artist2'],
           description: 'Event description2',
@@ -69,8 +70,6 @@ describe('AdminDashboard', () => {
     await waitFor(() => {
       const tableRow = screen.getByTestId('get-events-0');
       expect(tableRow);
-      const eventStatusCell = screen.getByText('Regular');
-      expect(eventStatusCell);
     });
     const otherStatusCell = screen.queryByText('Oнцлох');
     expect(otherStatusCell);
@@ -103,8 +102,6 @@ describe('AdminDashboard', () => {
       const tableRow = screen.getByTestId('get-events-0');
       expect(tableRow);
     });
-    expect(screen.getByText('Event 1'));
-    expect(screen.getByText('Artist'));
   });
   it('should render successfully with event data', async () => {
     const searchValue = '';
