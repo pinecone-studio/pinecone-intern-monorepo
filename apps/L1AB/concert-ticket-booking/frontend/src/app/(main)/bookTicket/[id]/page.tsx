@@ -1,9 +1,7 @@
-'use client';
 import { BookTicket, Container } from '@/components';
-import { useParams } from 'next/navigation';
 
-const Page = () => {
-  const { id } = useParams();
+const Page = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   return (
     <Container>
       <BookTicket id={id} />
