@@ -11,15 +11,11 @@ export const requestPasswordRecovery: MutationResolvers['requestPasswordRecovery
   const user = await userModel.findOne({
     email,
   });
-  
   if (!user) throw new Error('User not found');
-  
-  await otpModel.create({
-    email,
-    otp,
-  });
 
-  await sendEmail(email, `Your OTP is ${otp}. This will expire in 5 minute`);
+  await otpModel.findOneAndUpdate({ email }, { otp, createdAt: new Date() }, { upsert: true });
+
+  await sendEmail(email, `Your OTP is ${otp}. This will expire in 5 minutes, but if you send another OTP request before it's expiration this OTP will be replaced by new one.`);
 
   return {
     success: true,
