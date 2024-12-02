@@ -1,8 +1,8 @@
 'use client';
-import { BookingDetails } from '@/components/main/BookingDetails';
+import BookingEmptyState from '@/components/main/BookingEmptyState';
 
 const BookingDetailsPage = () => {
-  return <BookingDetails />;
+  return <BookingEmptyState />;
 };
 
 export default BookingDetailsPage;
