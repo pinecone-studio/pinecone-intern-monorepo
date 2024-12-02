@@ -1,9 +1,7 @@
-'use client'
-
-import { GuestsTable } from "@/components/admin"
-
+'use client';
+import { GuestsTable } from '@/components/admin';
 const AdminGuestsPage = () => {
-    return <GuestsTable />
-}
+  return <GuestsTable />;
+};
 
-export default AdminGuestsPage
+export default AdminGuestsPage;
