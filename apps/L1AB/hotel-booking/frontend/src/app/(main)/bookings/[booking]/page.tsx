@@ -1,8 +1,9 @@
 'use client';
-import { BookingDetails } from '@/components/main/BookingDetails';
+
+import CheckOutHome from '@/components/main/CheckoutHome';
 
 const BookingDetailsPage = () => {
-  return <BookingDetails />;
+  return <CheckOutHome />;
 };
 
 export default BookingDetailsPage;
