@@ -23,6 +23,8 @@ const nextConfig = {
     JWT_SECRET: process.env.JWT_SECRET,
     VERCEL_TOKEN: process.env.VERCEL_TOKEN,
     SALTROUNDS: process.env.SALTROUNDS,
+    NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
+    NEXT_PUBLIC_CLOUDINARY_URL: process.env.NEXT_PUBLIC_CLOUDINARY_URL,
   },
 };
 
