@@ -8,7 +8,7 @@ export const metadata = {
 
 const AdminLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col min-h-screen bg-white ">
       <header className="flex-shrink-0">
         <AdminNavbar />
       </header>
