@@ -71,3 +71,10 @@ mutation UpdateUser($input: UserUpdateInput!) {
     phone
   }
 }
+
+mutation PasswordUpdate($input: PasswordUpdateInput!) {
+  passwordUpdate(input: $input) {
+    success
+    message
+  }
+}
