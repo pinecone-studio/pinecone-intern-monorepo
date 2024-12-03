@@ -1,0 +1,47 @@
+import { green, red } from 'chalk';
+import { execSync, spawn } from 'child_process';
+
+export const executeCypressTest = async () => {
+  const app = process.argv.slice(2)[0];
+  const { root } = JSON.parse(execSync(`bunx nx show project ${app}`).toString().trim());
+
+  const result = await new Promise((resolve, _reject) => {
+    const command = `bunx nx cypress ${process.argv.slice(2).join(' ')} --parallel`;
+    const childProcess = spawn(command, [], { shell: true });
+
+    childProcess.stdout.on('data', (data) => {
+      console.log(data.toString());
+    });
+
+    childProcess.on('error', (data) => {
+      console.error(data.toString());
+      resolve('Failed');
+    });
+
+    childProcess.on('close', () => {
+      console.log(red('closed'));
+      resolve('Pass');
+    });
+  });
+
+  console.log(`> npx mochawesome-merge ${root}/cypress/results/*.json -o ${root}/.nyc_output/out.json`);
+  execSync(`npx mochawesome-merge ${root}/cypress/results/*.json -o ${root}/.nyc_output/out.json`);
+  console.log(green('Success mochawesome-merge'));
+
+  console.log(`> npx marge ${root}/.nyc_output/out.json -o ${root}/.nyc_output`);
+  execSync(`npx marge ${root}/.nyc_output/out.json -o ${root}/.nyc_output -f index.html`);
+  console.log(green('Success marge'));
+
+  console.log(`> npx nx check-cypress-code-coverage scripts ${root}`);
+  console.log(
+    'execSync(`npx nx check-cypress-code-coverage scripts ${root}`execSync(`npx nx check-cypress-code-coverage scripts ${root}`execSync(`npx nx check-cypress-code-coverage scripts ${root}`',
+    execSync(`npx nx check-cypress-code-coverage scripts ${root}`)
+  );
+  execSync(`npx nx check-cypress-code-coverage scripts ${root}`);
+
+  if (result === 'Failed') process.exit(1);
+
+  console.log(green('Success check-cypress-code-coverage tools'));
+};
+
+executeCypressTest();
