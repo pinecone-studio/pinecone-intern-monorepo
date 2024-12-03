@@ -16,7 +16,7 @@ const Story = () => {
 
   return (
     <NuqsAdapter>
-      <div className=" bg-[#18181a] w-screen h-screen ">
+      <div className="bg-[#18181a] w-screen h-screen flex flex-col">
         <div className="p-6 flex justify-between ">
           <div>
             <Image src={'/LogoWhite.png'} width={103} height={29} alt="instagram-logo" />
@@ -26,27 +26,8 @@ const Story = () => {
           </Link>
         </div>
 
-        <div className="flex justify-center items-center">
-          <div className="border w-fit ">
-            <StoryDetail userId={userId!} setUserId={setUserId} />
-          </div>
-
-          {/* {Object.keys(groupedStories).map((userId) => {
-          const group = groupedStories[userId];
-          return (
-            <div>
-              {' '}
-              {group.stories.map((item, index) => (
-                <div>
-                  {' '}
-                  <div className="relative w-[245px] h-[344px]">
-                    <Image fill src={item.image} alt="" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-        })} */}
+        <div className="flex-1">
+          <StoryDetail userId={userId!} setUserId={setUserId} />
         </div>
       </div>
     </NuqsAdapter>
