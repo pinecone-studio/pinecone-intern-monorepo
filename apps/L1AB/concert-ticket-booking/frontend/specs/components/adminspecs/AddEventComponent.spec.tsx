@@ -2,7 +2,7 @@ import { AddEventComponent } from '@/components/admincomponents/AddEventComponen
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
-import { createEventMock, createEventMockWithError } from './Mock';
+import { createEventMock, createEventMockWithError } from './mock';
 
 type AddImageProps = {
   onUpload: (_urls: string[]) => void;
