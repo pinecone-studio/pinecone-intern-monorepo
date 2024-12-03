@@ -29,7 +29,7 @@ export const StageStyle = () => {
   return (
     <>
       <div className="h-[600px] w-full relative hidden max-xl:hidden max-md:block max-md:h-[340px] max-sm:block max-sm:h-[340px]">
-        <Image src={`/Stage.png`} alt="hi" fill />
+        <Image src={`/Stage.png`} alt="hi" fill priority />
       </div>
 
       <div className=" h-fit  w-fit max-sm:hidden max-md:hidden">

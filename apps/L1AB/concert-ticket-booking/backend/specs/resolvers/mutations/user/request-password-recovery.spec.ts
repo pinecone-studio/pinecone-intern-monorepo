@@ -6,7 +6,7 @@ jest.mock('../../../../src/models', () => ({
     findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ email: '' }),
   },
   otpModel: {
-    create: jest.fn().mockResolvedValue({}),
+    findOneAndUpdate: jest.fn().mockResolvedValue({}),
   },
 }));
 
