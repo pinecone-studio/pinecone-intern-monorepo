@@ -6,3 +6,4 @@ export * from './notifications-model';
 export * from './posts-model';
 export * from './story-model';
 export * from './otp-model';
+export * from './saved-model';
