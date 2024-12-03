@@ -4,18 +4,35 @@ mutation CreateComment($input: AddCommentInput!) {
     comment
     updatedAt
     createdAt
+    postId {
+      _id
+    }
+    userId {
+      _id
+    }
   }
 }
 query GetCommentsByPostId($postId: ID!) {
   getCommentsByPostId(postId: $postId) {
     _id
+    comment
+    updatedAt
+    createdAt
     userId {
-      username
       _id
+      email
+      username
+      fullname
+      gender
+      password
+      profilePicture
+      bio
+      isPrivate
+      createdAt
+      updatedAt
     }
     postId {
       _id
     }
-    comment
   }
 }

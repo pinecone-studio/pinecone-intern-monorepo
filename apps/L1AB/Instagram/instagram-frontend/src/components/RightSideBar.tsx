@@ -27,7 +27,7 @@ const RightSideBar = () => {
           className="text-[11px] font-semibold text-[#2563EB]"
           onClick={() => {
             localStorage.removeItem('userToken');
-            location.reload();
+            // location.reload();
           }}
         >
           Log out

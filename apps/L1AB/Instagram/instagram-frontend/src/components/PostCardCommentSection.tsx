@@ -7,6 +7,10 @@ import { useState } from 'react';
 export type CardPropsType = {
   postId: string;
   userId: string;
+  userName: string;
+  images: string[];
+  profilePicture: string;
+  caption: string;
 };
 
 const PostCardCommentSection = ({ postId, userId }: CardPropsType) => {

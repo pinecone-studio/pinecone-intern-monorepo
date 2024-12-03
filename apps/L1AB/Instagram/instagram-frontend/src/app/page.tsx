@@ -5,8 +5,9 @@ const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  pathname === '/' && router.push('/home');
-  return <></>;
+  pathname == '/' && router.push('/home');
+  
+  return <div></div>;
 };
 
 export default Page;

@@ -1,11 +1,14 @@
 import { useCreateLikeMutation, useGetLikesByPostIdQuery } from '@/generated';
 import { CardPropsType } from './PostCardCommentSection';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Heart, Bookmark } from 'lucide-react';
+import PostDetail from './PostDetail';
 
-const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
+const PostCardLikeSection = ({ postId, userId, userName, images, profilePicture, caption}: CardPropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId: postId } });
 
   const likesData = likedata?.getLikesByPostId;
+  
+  
 
   const [createLike] = useCreateLikeMutation();
 
@@ -30,7 +33,7 @@ const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
             <Heart data-testid="likeButton" onClick={handeLike} className={`cursor-pointer ${isLiked ? 'text-[#ff0000]' : ''}`} fill={`${isLiked ? 'red' : 'white'}`} />
             <div>{likesData?.length}</div>
           </div>
-          <MessageCircle />
+          <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId || ''}/>
         </div>
         <Bookmark />
       </div>

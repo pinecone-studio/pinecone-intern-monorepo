@@ -20,15 +20,4 @@ query GetAllPosts {
     updatedAt
   }
 }
-query GetPostByUserId($userId: ID!) {
-  getPostByUserId(userId: $userId) {
-    _id
-    images
-    caption
-    createdAt
-    updatedAt
-    userId {
-      _id
-    }
-  }
-}
+

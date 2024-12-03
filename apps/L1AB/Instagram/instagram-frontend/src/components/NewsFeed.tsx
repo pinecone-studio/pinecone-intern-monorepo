@@ -6,6 +6,8 @@ const NewsFeed = () => {
   const { data } = useGetAllPostsQuery();
   const posts = data?.getAllPosts;
 
+  console.log(posts);
+
   return (
     <div>
       <div className="flex flex-col gap-2">

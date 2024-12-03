@@ -76,13 +76,15 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               </div>
             </div>
           </div>
-          <PostCardLikeSection postId={postId} userId={userId || ''} />
+          <div className='flex gap-2'>
+            <PostCardLikeSection images={images} caption={caption} profilePicture={profilePicture} userName={userName} postId={postId} userId={userId || ''} />
+          </div>
         </div>
         <div className="py-2 flex flex-col gap-2">
           <div>
             <span className="font-semibold h-fit"> {userName}</span> {caption}
           </div>
-          <PostCardCommentSection postId={postId} userId={userId || ''} />
+          <PostCardCommentSection images={images} caption={caption} profilePicture={profilePicture} userName={userName} postId={postId} userId={userId || ''} />
         </div>
       </div>
     </div>

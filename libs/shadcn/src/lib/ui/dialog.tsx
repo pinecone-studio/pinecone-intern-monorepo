@@ -40,13 +40,13 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
         {...props}
       >
         {children}
-        <DialogPrimitive.Close
+        {/* <DialogPrimitive.Close
           onClick={onClose}
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
         >
           <X className="w-5 h-5 text-black mt-3 mr-2" />
           <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
+        </DialogPrimitive.Close> */}
       </DialogPrimitive.Content>
     </DialogPortal>
   )
