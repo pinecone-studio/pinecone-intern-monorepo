@@ -85,7 +85,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
               ))}
             </div>
             <p className="text-[#FAFAFA] font-extralight">Тоглолтийн цагийн хуваарь:</p>
-            <li className="font-semibold text-[#FFFFFF] px-3">Door open: 6pm</li>
+            <li className="font-semibold text-[#FFFFFF] px-3">Door open: 4pm</li>
             <li className="font-semibold text-[#FFFFFF] px-3">Music start: {eventDetails?.eventTime}pm</li>
           </div>
           <div className="grid gap-2 ">
