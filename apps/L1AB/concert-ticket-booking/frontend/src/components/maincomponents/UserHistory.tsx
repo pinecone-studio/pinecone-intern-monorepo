@@ -35,7 +35,7 @@ export const UserHistory = () => {
                   <p>{item.status}</p>
                 </div>
               </div>
-              <UserHistoryDialog />
+              <UserHistoryDialog bookingId={item._id} />
             </div>
             <div className="flex flex-col gap-2 max-sm:grid max-md:grid max-xl:grid  ">
               {item.venues?.map((venue, index2) => {
