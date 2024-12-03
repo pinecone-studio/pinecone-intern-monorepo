@@ -4,6 +4,7 @@ query GetAllEvents {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
@@ -25,6 +26,7 @@ query GetEventById($id: ID!) {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
