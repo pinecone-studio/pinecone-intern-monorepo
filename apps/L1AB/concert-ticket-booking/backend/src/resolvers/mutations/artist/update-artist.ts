@@ -2,7 +2,7 @@ import { MutationResolvers } from '../../../generated';
 import { ArtistModel } from '../../../models';
 
 export const updateArtist: MutationResolvers['updateArtist'] = async (_, { input }) => {
-  const { _id, artistName, image, additional } = input;
+  const { _id, artistName, image, additional, status } = input;
 
   const updatedArtist = await ArtistModel.findByIdAndUpdate(
     _id,
@@ -10,6 +10,7 @@ export const updateArtist: MutationResolvers['updateArtist'] = async (_, { input
       artistName,
       image,
       additional,
+      status, 
       updatedAt: new Date(),
     },
     { new: true }

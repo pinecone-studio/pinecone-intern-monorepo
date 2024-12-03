@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useUpdateBookingEverythingMutation } from '@/generated';
@@ -68,7 +69,7 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
               <Label htmlFor="name" className="text-right">
                 Дансны №
               </Label>
-              <input
+              <Input
                 value={bankAccount}
                 data-testid="NumberInput"
                 onChange={(e) => setBankAccount(Number(e.target.value))}
@@ -82,7 +83,7 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
               <Label htmlFor="username" className="text-right">
                 Нэр
               </Label>
-              <input type="text" placeholder="Эзэмшигчийн нэр" className="col-span-3 text-[#A1A1AA] border-[#27272A]" data-cy="Profile-User-Name-Input" />
+              <Input type="text" placeholder="Эзэмшигчийн нэр" className="col-span-3 text-[#A1A1AA] border-[#27272A]" data-cy="Profile-User-Name-Input" />
             </div>
           </div>
           <DialogFooter>
