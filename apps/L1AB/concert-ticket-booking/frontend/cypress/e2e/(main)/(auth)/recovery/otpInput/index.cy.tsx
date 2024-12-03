@@ -12,6 +12,8 @@ describe('OTPInput-Page', () => {
     cy.get('[data-testid=OTPInput]').type('1');
     cy.get('[data-testid=OTPInput]').type('1');
     cy.get('[data-testid=OTPInput]').type('1');
+    cy.get('[data-testid=OTPInput]').type('1');
+    cy.get('[data-testid=OTPInput]').type('1');
   });
 
   it('should show the MoveLeft icon', () => {

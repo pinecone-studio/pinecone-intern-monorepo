@@ -1,6 +1,6 @@
 'use client';
 
-import OTPInput from '@/components/maincomponents/OtpInput';
+import OTPInput from '@/components/maincomponents/VerifyOtp';
 import React from 'react';
 
 const Page = () => {
