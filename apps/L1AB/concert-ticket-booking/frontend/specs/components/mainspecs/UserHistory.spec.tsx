@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react';
 import { UserHistory } from '@/components/maincomponents/UserHistory';
-import { useGetBookingByUserIdQuery, useGetMeQuery } from '@/generated';
+import { useGetBookingByUserIdQuery, useGetMeQuery, useUpdateBookingEverythingMutation } from '@/generated';
 
 jest.mock('@/generated', () => ({
   useGetBookingByUserIdQuery: jest.fn(),
   useGetMeQuery: jest.fn(),
+  useUpdateBookingEverythingMutation: jest.fn(),
 }));
 
 const mockBookingData = {
@@ -45,6 +46,7 @@ describe('UserHistory', () => {
       loading: false,
       error: null,
     });
+    (useUpdateBookingEverythingMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
   });
 
   it('should render successfully', async () => {
