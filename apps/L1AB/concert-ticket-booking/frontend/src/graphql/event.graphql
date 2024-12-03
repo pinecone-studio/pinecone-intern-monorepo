@@ -53,14 +53,15 @@ mutation CreateEvent($input: EventInput!) {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
     venues {
       name
+      quantity
       firstquantity
       price
-      quantity
     }
     discount
     createdAt
