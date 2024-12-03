@@ -1,13 +1,21 @@
 'use client';
-import { Container } from '@/components';
+import { Container, useAuth } from '@/components';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { MoveLeft, RefreshCcw } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 interface VerifyOtpProps {
   footerText: string;
 }
 
 export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
+  const { verifyOtp } = useAuth();
+  const [value, setValue] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email');
+
   return (
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:px-3" data-cy="OTPInput-Page">
@@ -16,7 +24,7 @@ export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
             <p className="text-[#A1A1AA] self-stretch text-center text-base leading-7 tracking-wide">{footerText}</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-6 self-stretch w-[327px] max-sm:w-full">
-            <InputOTP maxLength={6} data-testid="OTPInput">
+            <InputOTP maxLength={6} data-testid="OTPInput" onChange={(value) => setValue(value)}>
               <InputOTPGroup>
                 <InputOTPSlot data-testid="OTPInput-Slot-0" className="h-14 w-14" index={0} />
                 <InputOTPSlot data-testid="OTPInput-Slot-1" className="h-14 w-14" index={1} />

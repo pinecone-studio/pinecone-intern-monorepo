@@ -71,8 +71,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     },
   });
   const [requestPasswordRecoveryMutation] = useRequestPasswordRecoveryMutation({
-    onCompleted: () => {
+    onCompleted: (data) => {
       toast.success('Амжилттай илгээлээ', { autoClose: 2000 });
+      router.push(`?step=2&email=${data.requestPasswordRecovery.email}`);
     },
     onError: (error) => {
       toast.error(error.message, { autoClose: 2000 });
@@ -80,8 +81,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   });
 
   const [verifyOtpMutation] = useVerifyOtpMutation({
-    onCompleted: () => {
+    onCompleted: (data) => {
       toast.success('Амжилттай баталгаажлаа', { autoClose: 2000 });
+      router.push(`?step=3&email=${data.verifyOtp.email}&token=${data.verifyOtp.accessToken}`);
     },
     onError: (error) => {
       toast.error(error.message, { autoClose: 2000 });
