@@ -13,7 +13,7 @@ export const typeDefs = gql`
     name: String!
     artistName: [String!]!
     description: String!
-    location: String
+    location: String!
     eventDate: [String!]!
     eventTime: [String!]!
     images: [String!]!
