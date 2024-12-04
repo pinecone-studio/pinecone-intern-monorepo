@@ -10,7 +10,7 @@ const CheckOutHome = () => {
             <h1 className="font-bold">Pedia</h1>
           </div>
           <div className="flex gap-4 flex-row">
-            <h1>My Booking</h1>
+            <h1>My booking</h1>
             <h1>Shagai</h1>
           </div>
         </div>
