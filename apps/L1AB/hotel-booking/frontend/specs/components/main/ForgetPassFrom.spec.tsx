@@ -3,7 +3,6 @@ import { usePasswordRecoveryRequestMutation } from '@/generated';
 import { ForgetPassForm } from '@/components/main';
 import '@testing-library/jest-dom';
 
-
 jest.mock('@/generated', () => ({
   usePasswordRecoveryRequestMutation: jest.fn(),
 }));
@@ -16,7 +15,7 @@ describe('ForgetPassForm Component', () => {
   const mockProps = {
     setInputData,
     setCurrentIndex,
-    inputData: { email: '' },
+    inputData: { email: '', otp: '', password: '', rePassword: '' },
     handleOnchange: jest.fn(),
   };
 

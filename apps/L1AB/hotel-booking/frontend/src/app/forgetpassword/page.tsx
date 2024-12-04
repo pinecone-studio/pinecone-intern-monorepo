@@ -22,6 +22,17 @@ export type ForgetPassFormProps = {
   inputData: InputDataType;
 };
 
+export type OtpFormProps = {
+  setInputData: SetInputDataType;
+  setCurrentIndex: SetCurrentIndexType;
+  inputData: InputDataType;
+};
+
+export type CreatePassFormProps = {
+  handleOnchange: handleOnchangeType;
+  inputData: InputDataType;
+};
+
 const STEP_COMPONENTS = [ForgetPassForm, OtpForm, CreatePassForm];
 
 const Page = () => {

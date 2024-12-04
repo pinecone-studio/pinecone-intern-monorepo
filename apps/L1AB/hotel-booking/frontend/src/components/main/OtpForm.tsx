@@ -5,9 +5,9 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { Button } from '@/components/ui/button';
 import { usePasswordChangeMutation, usePasswordRecoveryRequestMutation } from '@/generated';
 import { useState, useEffect, useCallback } from 'react';
-import { ForgetPassFormProps } from '@/app/forgetpassword/page';
+import { OtpFormProps } from '@/app/forgetpassword/page';
 
-export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: ForgetPassFormProps) => {
+export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: OtpFormProps) => {
   const [passwordChange, { loading, error }] = usePasswordChangeMutation();
   const [passwordRecoveryRequest] = usePasswordRecoveryRequestMutation();
   const [timer, setTimer] = useState<number>(60);
@@ -59,13 +59,13 @@ export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: ForgetPass
   }, [inputData.email, passwordRecoveryRequest]);
 
   return (
-    <div className="flex justify-center" data-testid="otp-form">
+    <div className="flex justify-center">
       <div className="mt-[200px] flex flex-col items-center gap-6 w-[350px]">
-        <div className="flex gap-2 items-center justify-center max-h-5" data-testid="otp-form-header">
+        <div className="flex gap-2 items-center justify-center max-h-5">
           <p className="h-5 w-5 bg-[#2563EB] rounded-full"></p>
           <p className="text-[20px]">Pedia</p>
         </div>
-        <div className="flex items-center flex-col" data-testid="otp-form-instructions">
+        <div className="flex items-center flex-col">
           <p className="text-[24px] font-semibold leading-8">Confirm email</p>
           <p className="text-[#71717A] text-sm text-center">
             To continue, enter the secure code we sent to {inputData.email}. Check junk mail if it’s not in your inbox.
@@ -79,10 +79,10 @@ export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: ForgetPass
             data-testid="otp-input-group"
           >
             <InputOTPGroup>
-              <InputOTPSlot index={0} aria-label="OTP input 1" data-testid="otp-input-1" />
-              <InputOTPSlot index={1} aria-label="OTP input 2" data-testid="otp-input-2" />
-              <InputOTPSlot index={2} aria-label="OTP input 3" data-testid="otp-input-3" />
-              <InputOTPSlot index={3} aria-label="OTP input 4" data-testid="otp-input-4" />
+              <InputOTPSlot index={0} aria-label="OTP input 1" />
+              <InputOTPSlot index={1} aria-label="OTP input 2" />
+              <InputOTPSlot index={2} aria-label="OTP input 3" />
+              <InputOTPSlot index={3} aria-label="OTP input 4" />
             </InputOTPGroup>
           </InputOTP>
           {loading ? (

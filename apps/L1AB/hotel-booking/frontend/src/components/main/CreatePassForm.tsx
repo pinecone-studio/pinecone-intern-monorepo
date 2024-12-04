@@ -1,11 +1,13 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import { usePasswordChangeMutation } from '@/generated';
-import { ForgetPassFormProps } from '@/app/forgetpassword/page';
+import { CreatePassFormProps } from '@/app/forgetpassword/page';
 
-export const CreatePassForm = ({ inputData, handleOnchange }: ForgetPassFormProps) => {
+export const CreatePassForm = ({ inputData, handleOnchange }: CreatePassFormProps) => {
   const [passwordChange, { loading, error }] = usePasswordChangeMutation();
   const router = useRouter();
 
@@ -43,13 +45,13 @@ export const CreatePassForm = ({ inputData, handleOnchange }: ForgetPassFormProp
         <div className="w-full space-y-2">
           <div className="space-y-2">
             <Label>Password</Label>
-            <Input type="password" onChange={handleOnchange} name="password" placeholder="********" value={inputData.password} disabled={loading} />
+            <Input data-testid="password-input" type="password" onChange={handleOnchange} name="password" placeholder="********" value={inputData.password} disabled={loading} />
           </div>
           <div className="space-y-2 pt-2">
             <Label>Confirm Password</Label>
-            <Input type="password" onChange={handleOnchange} name="rePassword" placeholder="********" value={inputData.rePassword} disabled={loading} />
+            <Input data-testid="rePassword-input" type="password" onChange={handleOnchange} name="rePassword" placeholder="********" value={inputData.rePassword} disabled={loading} />
           </div>
-          <Button className="w-full bg-[#2563EB]" onClick={handleClick} disabled={!isPasswordValid || loading}>
+          <Button data-testid="continue-button" className="w-full bg-[#2563EB]" onClick={handleClick} disabled={!isPasswordValid || loading}>
             {loading ? 'Setting password...' : 'Continue'}
           </Button>
         </div>
