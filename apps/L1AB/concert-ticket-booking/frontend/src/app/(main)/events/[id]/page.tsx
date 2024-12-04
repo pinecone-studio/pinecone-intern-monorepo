@@ -1,8 +1,9 @@
 import { Container } from '@/components';
 import { EventDetails } from '@/components/maincomponents/EventDetails';
 
-const Page = ({ params }: { params: { id: string } }) => {
+const MainPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+
   return (
     <Container>
       <EventDetails id={id} />
@@ -10,4 +11,4 @@ const Page = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default Page;
+export default MainPage;

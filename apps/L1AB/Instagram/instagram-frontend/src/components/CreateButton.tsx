@@ -6,6 +6,8 @@ import { BookOpenCheck, Image as LucidImage, SquarePlus } from 'lucide-react';
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import NavigationLink from './NavigationLink';
 import { AnimationControls, motion } from 'framer-motion';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import CreateStory from './CreateStory';
 
 interface CreateProps {
   isOpen: boolean;
@@ -38,12 +40,15 @@ export const CreateButton = ({ svgControls, isOpen }: CreateProps) => {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="outline-none rounded">
-              <div className="flex gap-12 justify-between items-center px-2 py-1 hover:bg-gray-100 font-light rounded">
-                <p>Story</p>
-                <BookOpenCheck className="stroke-1 text-gray-500" size={20} />
-              </div>
-            </DropdownMenuItem>
+            <Dialog>
+              <DialogTrigger className="w-full">
+                <div className="flex gap-12 justify-between items-center px-2 py-1 hover:bg-gray-100 font-light rounded w-full">
+                  <p>Story</p>
+                  <BookOpenCheck className="stroke-1 text-gray-500" size={20} />
+                </div>
+              </DialogTrigger>
+              <CreateStory />
+            </Dialog>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -15,6 +15,7 @@ export const SearchPageComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
   const { data, loading } = useGetAllEventsQuery();
+  // console.log(data?.getAllEvents[0].eventDate);
 
   if (loading) {
     return (
@@ -30,7 +31,7 @@ export const SearchPageComponent = () => {
 
   const searchedData = data?.getAllEvents.filter((event) => {
     const lowerCaseTerm = searchTerm.toLowerCase();
-    const matchesSearchTerm = event.name.toLowerCase().includes(lowerCaseTerm) || event.artistName[0]?.toLowerCase().includes(lowerCaseTerm);
+    const matchesSearchTerm = event.name.toLowerCase().includes(lowerCaseTerm) || event.artistName[0]?.toLowerCase().includes(lowerCaseTerm) || event.location?.toLowerCase().includes(lowerCaseTerm);
 
     const matchesDate = date
       ? event.eventDate.some((eventDate) => {

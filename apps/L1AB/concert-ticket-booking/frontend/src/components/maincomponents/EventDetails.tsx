@@ -72,7 +72,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
             </div>
             <div className="flex gap-2 text-[#A1A1AA] items-center">
               <IoLocationOutline className="w-5 h-5" />
-              <p className="w-full text-[#FAFAFA] text-[16px] underline underline-offset-2">UG ARENA</p>
+              <p className="w-full text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
             </div>
           </div>
           <div className="h-fit grid gap-2 ">
@@ -85,7 +85,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
               ))}
             </div>
             <p className="text-[#FAFAFA] font-extralight">Тоглолтийн цагийн хуваарь:</p>
-            <li className="font-semibold text-[#FFFFFF] px-3">Door open: 6pm</li>
+            <li className="font-semibold text-[#FFFFFF] px-3">Door open: 4pm</li>
             <li className="font-semibold text-[#FFFFFF] px-3">Music start: {eventDetails?.eventTime}pm</li>
           </div>
           <div className="grid gap-2 ">

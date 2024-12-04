@@ -1,88 +1,41 @@
-import { AddEventComponent } from '@/components';
-import { CreateEventDocument } from '@/generated';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { AddEventComponent } from '@/components/admincomponents/AddEventComponent';
+import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
-const createEventMock: MockedResponse = {
-  request: {
-    query: CreateEventDocument,
-    variables: {
-      input: {
-        name: 'Test Event',
-        artistName: ['Test Artist'],
-        description: 'Test Description',
-        eventDate: ['2024-10-20'],
-        eventTime: ['01:00'],
-        images: [''],
-        discount: 20,
-        venues: [
-          { firstquantity: 100, name: 'Энгийн', price: 5000, quantity: 100 },
-          { firstquantity: 100, name: 'Fan-Zone', price: 5000, quantity: 100 },
-          { firstquantity: 5000, name: 'Vip', price: 100, quantity: 5000 },
-        ],
-      },
-    },
-  },
-  result: {
-    data: {
-      createEvent: {
-        id: '1',
-        name: 'Test Event',
-        artistName: ['Test Artist'],
-        description: 'Test Description',
-        eventDate: ['2024-10-20'],
-        eventTime: ['01:00'],
-        images: [''],
-        venues: [
-          { name: 'Энгийн', firstquantity: 100, price: 5000, quantity: 100 },
-          { name: 'Fan-Zone', firstquantity: 100, price: 5000, quantity: 100 },
-          { name: 'Vip', firstquantity: 5000, price: 100, quantity: 5000 },
-        ],
-        discount: 20,
-        createdAt: '2024-10-20',
-        updatedAt: '2024-10-20',
-      },
-    },
-  },
+import { createEventMock, createEventMockWithError } from './mock';
+
+type AddImageProps = {
+  onUpload: (_urls: string[]) => void;
+  handleSubmit: () => void;
 };
 
-const createEventMockWithError: MockedResponse = {
-  request: {
-    query: CreateEventDocument,
-    variables: {
-      input: {
-        name: 'Test Event',
-        artistName: ['Test Artist'],
-        description: 'Test Description',
-        eventDate: ['2024-10-20'],
-        eventTime: ['01:00'],
-        images: [''],
-        discount: 20,
-        venues: [
-          { firstquantity: 100, name: 'Энгийн', price: 5000, quantity: 100 },
-          { firstquantity: 100, name: 'Fan-Zone', price: 5000, quantity: 100 },
-          { firstquantity: 5000, name: 'Vip', price: 100, quantity: 5000 },
-        ],
-      },
-    },
+jest.mock('@/components', () => ({
+  ...jest.requireActual('@/components'),
+  AddImage: ({ onUpload, handleSubmit }: AddImageProps) => {
+    return (
+      <>
+        <button
+          type="button"
+          data-testid="add-image-button"
+          onClick={() => {
+            onUpload(['add-image']);
+          }}
+        ></button>
+        <button
+          type="button"
+          data-testid="create-Event-Button"
+          onClick={() => {
+            handleSubmit();
+          }}
+        ></button>
+      </>
+    );
   },
-  error: new Error('Event creation failed'),
-};
+}));
 
 describe('AddEventComponent', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-  jest.mock('react-toastify', () => ({
-    toast: {
-      success: jest.fn(),
-      error: jest.fn(),
-    },
-  }));
-
   it('should render and handle form submission successfully', async () => {
-    const mockSetIsOpen = jest.fn();
-    const mockSetFormData = {
+    const setFormData = {
       name: '',
       artistName: [''],
       description: '',
@@ -95,8 +48,8 @@ describe('AddEventComponent', () => {
         { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
         { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
       ],
+      location: '',
     };
-
     const { getByTestId, getByPlaceholderText, getAllByTestId } = render(
       <MockedProvider mocks={[createEventMock]} addTypename={false}>
         <AddEventComponent />
@@ -104,6 +57,7 @@ describe('AddEventComponent', () => {
     );
 
     fireEvent.click(getByTestId('DialogOpen'));
+
     fireEvent.change(getByPlaceholderText('Нэр оруулах'), { target: { value: 'Test Event' } });
     fireEvent.change(getByPlaceholderText('Артистын нэр'), { target: { value: 'Test Artist' } });
     fireEvent.change(getByPlaceholderText('Дэлгэрэнгүй мэдээлэл'), { target: { value: 'Test Description' } });
@@ -126,13 +80,19 @@ describe('AddEventComponent', () => {
     const time2 = getAllByTestId('hour');
     fireEvent.keyDown(time2[1], { key: 'Enter' });
 
-    fireEvent.click(getByTestId('createEventButton'));
+    const uploadButton = getByTestId('add-image-button');
+    fireEvent.click(uploadButton);
+
+    const createEventButton = getByTestId('createEventButton');
+    expect(createEventButton);
+    fireEvent.click(createEventButton);
+
+    const createEventButton1 = getByTestId('create-Event-Button');
+    expect(createEventButton1);
+    fireEvent.click(createEventButton1);
     await waitFor(() => {
-      expect(mockSetFormData);
-
+      expect(setFormData);
       expect(toast.success);
-
-      expect(mockSetIsOpen);
     });
   });
 
@@ -149,7 +109,13 @@ describe('AddEventComponent', () => {
     fireEvent.change(getByPlaceholderText('Артистын нэр'), { target: { value: 'Test Artist' } });
     fireEvent.change(getByPlaceholderText('Дэлгэрэнгүй мэдээлэл'), { target: { value: 'Test Description' } });
 
-    fireEvent.click(getByTestId('createEventButton'));
+    const createEventButton = getByTestId('createEventButton');
+    expect(createEventButton);
+    fireEvent.click(createEventButton);
+
+    const createEventButton1 = getByTestId('create-Event-Button');
+    expect(createEventButton1);
+    fireEvent.click(createEventButton1);
 
     await waitFor(() => {
       expect(mockSetIsOpen);
