@@ -13,7 +13,7 @@ export const ImageDialog = ({ dialogOpen, setDialogOpen, images }: ImageDialogPr
   const [count, setCount] = React.useState(6);
 
   const handleMore = () => {
-    setCount(count + 4);
+    setCount((prevCount) => prevCount + 4);
   };
 
   return (
@@ -22,18 +22,20 @@ export const ImageDialog = ({ dialogOpen, setDialogOpen, images }: ImageDialogPr
         <DialogHeader>
           <DialogTitle className="mb-2">Image</DialogTitle>
           <div className="grid grid-cols-2 gap-x-2 gap-y-3">
-            {images?.map((photo, index) => (
+            {images?.slice(0, count).map((photo, index) => (
               <div key={index} className="relative w-full h-80 rounded-md overflow-hidden">
-                <Image src={photo} alt="img" fill />
+                <Image src={photo} alt={`Image ${index + 1}`} fill />
               </div>
             ))}
           </div>
         </DialogHeader>
-        <DialogFooter>
-          <Button data-testid="view-more" onClick={handleMore} variant="ghost" className="border w-full">
-            View more
-          </Button>
-        </DialogFooter>
+        {count < (images?.length || 0) && (
+          <DialogFooter>
+            <Button data-testid="view-more" onClick={handleMore} variant="ghost" className="border w-full">
+              View more
+            </Button>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

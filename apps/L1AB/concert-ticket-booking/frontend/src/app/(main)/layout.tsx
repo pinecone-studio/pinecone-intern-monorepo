@@ -9,7 +9,7 @@ export const metadata = {
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <body className="flex flex-col h-full bg-black ">
+    <div className="flex flex-col h-full bg-black ">
       <AuthProvider>
         <header>
           <MainNavbar />
@@ -21,7 +21,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
       <footer>
         <MainFooter />
       </footer>
-    </body>
+    </div>
   );
 };
 

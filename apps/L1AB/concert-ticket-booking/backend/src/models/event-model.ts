@@ -5,6 +5,7 @@ export type EventType = {
   name: string;
   artistName: [string];
   description: string;
+  location: string;
   eventDate: [string];
   eventTime: [string];
   images: [string];
@@ -36,6 +37,10 @@ const EventSchema = new Schema({
     required: true,
   },
   description: {
+    type: String,
+    required: true,
+  },
+  location: {
     type: String,
     required: true,
   },

@@ -37,6 +37,14 @@ mutation RequestPasswordRecovery($input: RequestRecoverPasswordInput!) {
   }
 }
 
+mutation VerifyOtp($input: VerifyOtpInput!) {
+  verifyOtp(input: $input) {
+    success
+    email
+    accessToken
+  }
+}
+
 mutation PasswordRecovery($input: RecoverPasswordInput!) {
   passwordRecovery(input: $input)
 }
@@ -61,5 +69,12 @@ mutation UpdateUser($input: UserUpdateInput!) {
     email
 
     phone
+  }
+}
+
+mutation PasswordUpdate($input: PasswordUpdateInput!) {
+  passwordUpdate(input: $input) {
+    success
+    message
   }
 }
