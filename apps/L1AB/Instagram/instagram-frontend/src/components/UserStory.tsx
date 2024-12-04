@@ -7,7 +7,6 @@ import { Story } from '@/generated';
 
 type PropsType = {
   userId: string;
-
   stories: Story[];
   username: string;
   profilePicture: string;
@@ -20,6 +19,9 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
   const { groupedStories } = useStory();
   if (!groupedStories) return <p>Loading...</p>;
   const userStoriesGroup = groupedStories[userId];
+
+  const date = userStoriesGroup.stories.find((el) => el.createdAt);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const prev = async () => {
@@ -78,6 +80,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
               <Image fill alt="" src={profilePicture} objectFit="cover" />
             </div>
             <h1 className="text-white">{username}</h1>
+            <div>{date?.createdAt}</div>
           </div>
         </div>
       </div>
