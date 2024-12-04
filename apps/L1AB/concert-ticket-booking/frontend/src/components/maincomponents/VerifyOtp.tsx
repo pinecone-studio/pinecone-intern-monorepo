@@ -3,7 +3,7 @@ import { Container, useAuth } from '@/components';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { MoveLeft, RefreshCcw } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface VerifyOtpProps {
   footerText: string;
@@ -11,10 +11,41 @@ interface VerifyOtpProps {
 
 export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
   const { verifyOtp } = useAuth();
+  const { requestPasswordRecovery } = useAuth();
   const [value, setValue] = useState('');
-  const router = useRouter();
+  const [refreshCounter, setRefreshCounter] = useState(60);
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (value.length === 6) {
+      handleSubmit();
+    }
+  }, [value]);
+
+  const handleSubmit = async () => {
+    await verifyOtp({
+      email: email as string,
+      otp: value,
+    });
+  };
+
+  const handleBack = async () => {
+    router.push('/recovery?step=1');
+  };
+
+  const handleRefresh = async () => {
+    await requestPasswordRecovery({ email: email as string });
+    setRefreshCounter(60);
+  };
+
+  useEffect(() => {
+    if (refreshCounter > 0) {
+      const timer = setTimeout(() => setRefreshCounter(refreshCounter - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [refreshCounter]);
 
   return (
     <Container>
@@ -34,9 +65,19 @@ export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
                 <InputOTPSlot data-testid="OTPInput-Slot-5" className="h-14 w-14" index={5} />
               </InputOTPGroup>
             </InputOTP>
-            <div className="flex justify-between w-[211px] max-sm:w-full">
-              <MoveLeft data-testid="MoveLeft" className="w-5 h-5" />
-              <RefreshCcw data-testid="RefreshCcw" className="w-5 h-5" />
+            <div className="flex justify-around w-full max-sm:w-full">
+              <div className="w-1/2">
+                <MoveLeft onClick={handleBack} data-testid="MoveLeft" className="w-5 h-5 cursor-pointer hover:text-[#54d0f9] hover:scale-125 duration-200" />
+                <p className="text-xs text-gray-400">{`Буцах`}</p>
+              </div>
+              <div className="flex flex-col items-end w-1/2">
+                <RefreshCcw
+                  onClick={refreshCounter === 0 ? handleRefresh : undefined}
+                  data-testid="RefreshCcw"
+                  className={`w-5 h-5 cursor-pointer ${refreshCounter === 0 ? 'hover:text-[#54d0f9] hover:scale-125 duration-200' : 'text-gray-400 cursor-not-allowed'}`}
+                />
+                <p className="text-xs text-gray-400">{refreshCounter > 0 ? `${refreshCounter} секунд хүлээнэ үү.` : 'OTP дахин илгээх.'}</p>
+              </div>
             </div>
           </div>
         </div>

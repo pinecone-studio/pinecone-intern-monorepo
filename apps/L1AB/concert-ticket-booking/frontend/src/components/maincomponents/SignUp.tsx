@@ -68,7 +68,7 @@ const SignUp: React.FC<SignUpProps> = ({ header, nameLabel, phoneLabel, emailLab
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:px-3" data-cy="SignUp-Page">
         <form onSubmit={handleSubmit} className="rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6 ">
-          <div className="flex py-2 flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center py-2">
             <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]">{header}</p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px] max-sm:w-full ">
@@ -77,7 +77,7 @@ const SignUp: React.FC<SignUpProps> = ({ header, nameLabel, phoneLabel, emailLab
             <FormInput id="email" label={emailLabel} type="email" placeholder="name@example.com" value={formData.email} onChange={handleChange} dataCy="SignUp-Email-Input" />
             <PasswordInput id="password" label={passwordLabel} value={formData.password} onChange={handleChange} dataCy="SignUp-Password-Input" />
             <PasswordInput id="confirmPassword" label={confirmPasswordLabel} value={formData.confirmPassword} onChange={handleChange} dataCy="SignUp-ConfirmPassword-Input" />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-sm text-red-500">{error}</p>}
             <Button
               data-testid="clickSubmit"
               data-cy="SignUp-Submit-Button"

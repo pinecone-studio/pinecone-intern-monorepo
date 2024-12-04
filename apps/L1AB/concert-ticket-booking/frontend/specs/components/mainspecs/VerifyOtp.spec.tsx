@@ -9,6 +9,6 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 
 describe('VerifyOtp Component', () => {
   it('should update state value when OTP input slots change', () => {
-    render(<VerifyOtp footerText={'Имэйл хаяг руу илгээсээн 6 оронтой кодыг оруулна уу'} />);
+    render(<VerifyOtp footerText={'Имэйл хаяг руу илгээсэн 6 оронтой кодыг оруулна уу'} />);
   });
 });

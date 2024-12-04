@@ -10,14 +10,16 @@ const PasswordRecoveryPage = () => {
   const step = searchParams.get('step');
 
   useEffect(() => {
-    router.push('/recovery?step=1');
-  }, []);
+    if (!step) {
+      router.push('/recovery?step=1');
+    }
+  }, [step, router]);
 
   return (
     <div className="flex justify-center">
       {Number(step) === 1 && <RecoveryEmail header="OTP хүсэлт илгээх" emailLabel="Имэйл хаяг:" buttonText="Хүсэлт илгээх" />}
       {Number(step) === 2 && <VerifyOtp footerText="Имэйл хаяг руу илгээсэн 6 оронтой кодыг оруулна уу" />}
-      {Number(step) === 3 && <PasswordRecovery header="" buttonText="" passwordLabel="" confirmPasswordLabel="" />}
+      {Number(step) === 3 && <PasswordRecovery header="Нууц үг шинэчлэх" buttonText="Шинэчлэх" passwordLabel="Нууц үг оруулах..." confirmPasswordLabel="Нууц үг давтан оруулах" />}
     </div>
   );
 };
