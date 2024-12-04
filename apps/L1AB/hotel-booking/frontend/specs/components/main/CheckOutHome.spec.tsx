@@ -1,4 +1,4 @@
-import CheckOutHome from '@/components/main/CheckoutHome';
+import { CheckOutHome } from '@/components/main';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 

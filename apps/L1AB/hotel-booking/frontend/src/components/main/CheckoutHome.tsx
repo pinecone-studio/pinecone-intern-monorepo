@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
-const CheckOutHome = () => {
+export const CheckOutHome = () => {
   return (
     <div className="w-full p-3">
       <div className=" flex justify-center ">
@@ -152,4 +152,3 @@ const CheckOutHome = () => {
     </div>
   );
 };
-export default CheckOutHome;
