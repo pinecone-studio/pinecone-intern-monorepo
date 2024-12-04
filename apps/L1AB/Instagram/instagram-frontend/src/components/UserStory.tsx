@@ -57,24 +57,24 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
             }}
           >
             {stories.map((images, index) => (
-              <div className="flex-1 h-full relative">
+              <div className="flex-1 h-full relative rounded-lg overflow-hidden">
                 <Image src={images.image} alt={`Story image ${index + 1}`} fill objectFit="cover" />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="absolute left-5 top-1 p-3 w-[93%]">
-          <div className="flex gap-2 w-full ">
+        <div className="absolute left-5 top-1 p-3 w-[93%] h-full">
+          <div className="flex gap-2 w-full">
             {Array.from({ length: userStoriesGroup.stories.length }).map((_, i) => (
               <div className="w-full ">
-                <div className={`${currentImageIndex === i ? 'bg-white' : 'bg-[#8C8C8C]'} flex gap-1 p-0.5 rounded-xl `}></div>
+                <div className={`${currentImageIndex === i ? 'bg-white' : 'bg-[#8C8C8C]'} flex gap-1 p-0.5 rounded-xl  ${mainUserStory === userId ? '' : 'hidden'}`}></div>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center gap-3 mt-4">
-            <div className="relative w-11 h-11 rounded-full overflow-hidden">
+          <div className={`flex gap-3 mt-4 w-full ${mainUserStory === userId ? ' items-center' : 'flex-col justify-center items-center h-full'}`}>
+            <div className="relative w-12 h-12 rounded-full overflow-hidden">
               <Image fill alt="" src={profilePicture} objectFit="cover" />
             </div>
             <h1 className="text-white">{username}</h1>
@@ -83,10 +83,10 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
       </div>
 
       <div className={` ${mainUserStory === userStoriesGroup.userId._id ? 'absolute inset-0 flex items-center justify-between ' : 'hidden'}`}>
-        <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev} data-testid="PrevButton">
+        <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white -left-11 absolute" onClick={prev} data-testid="PrevButton">
           <ChevronLeft size={20} />
         </button>
-        <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={next} data-testid="NextButton">
+        <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white absolute -right-11" onClick={next} data-testid="NextButton">
           <ChevronRight size={20} />
         </button>
       </div>
