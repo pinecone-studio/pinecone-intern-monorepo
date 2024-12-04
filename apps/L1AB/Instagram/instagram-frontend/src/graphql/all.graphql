@@ -65,3 +65,6 @@ query GetUserBySearch($searchInput: String!) {
     username
   }
 }
+mutation CreateStory($input: CreateStoryInput!) {
+  createStory(input: $input)
+}

@@ -13,7 +13,6 @@ interface ProfileProps {
 export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
   const pathname = usePathname();
   const { user }: any = useContext(UserContext);
-  console.log(pathname);
   return (
     <NavigationLink href={`/profile?username=${user?.username}`} name={isOpen ? '' : 'Profile'}>
       <Avatar

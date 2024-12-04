@@ -2,8 +2,10 @@ import { model, models, Schema } from 'mongoose';
 
 export type ArtistType = {
   _id: string;
-
+  artistName: string;
+  image: string;
   additional: string;
+  status: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -13,7 +15,13 @@ const ArtistSchema = new Schema({
   additional: {
     type: String,
     required: true,
-    default: ['no additional information added'],
+    default: 'no additional information added',
+  },
+  status: {
+    type: String,
+    required: true,
+    default: 'Энгийн', 
+    enum: ['Энгийн', 'Устгагдсан'], 
   },
   createdAt: {
     type: Date,

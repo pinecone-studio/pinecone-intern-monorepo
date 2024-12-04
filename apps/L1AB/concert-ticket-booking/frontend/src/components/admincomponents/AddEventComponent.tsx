@@ -9,18 +9,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircleIcon } from 'lucide-react';
-import { useCreateEventMutation } from '@/generated';
+import { useCreateEventMutation, Venue } from '@/generated';
 import { AddEventVenue } from './AddEventVenue';
 
 export const AddEventComponent = () => {
   const [createEvent] = useCreateEventMutation();
   const [isOpen, setIsOpen] = useState(false);
-  type Venue = {
-    firstquantity: number;
-    name: string;
-    price: number;
-    quantity: number;
-  };
+  const [check, setCheck] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -35,6 +30,7 @@ export const AddEventComponent = () => {
       { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
       { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
     ],
+    location: 'Төв Цэнгэлдэх',
   });
 
   const handleInputChange = <K extends keyof typeof formData>(key: K, value: typeof formData[K]) => {
@@ -44,8 +40,10 @@ export const AddEventComponent = () => {
   const handleVenueChange = <T extends keyof Venue>(index: number, field: T, value: Venue[T]) => {
     setFormData((prev) => {
       const updatedVenues = [...prev.venues];
-      updatedVenues[index][field] = value;
-
+      updatedVenues[index] = {
+        ...updatedVenues[index],
+        [field]: value,
+      };
       if (field === 'quantity' || field === 'firstquantity') {
         updatedVenues[index].quantity = value as number;
         updatedVenues[index].firstquantity = value as number;
@@ -54,14 +52,23 @@ export const AddEventComponent = () => {
       return { ...prev, venues: updatedVenues };
     });
   };
+  const handleImageUpload = (urls: string[]) => {
+    handleInputChange('images', urls);
+  };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (uploadedUrls: string[]) => {
     try {
+      const updatedFormData = {
+        ...formData,
+        images: uploadedUrls,
+      };
+
       await createEvent({
         variables: {
-          input: { ...formData },
+          input: updatedFormData,
         },
       });
+
       setFormData({
         name: '',
         artistName: [''],
@@ -75,7 +82,9 @@ export const AddEventComponent = () => {
           { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
           { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
         ],
+        location: '',
       });
+
       toast.success('Event created successfully');
       setIsOpen(false);
     } catch (error) {
@@ -89,7 +98,7 @@ export const AddEventComponent = () => {
         Тасалбар Нэмэх
         <PlusCircleIcon />
       </DialogTrigger>
-      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs" data-testid="event-dialog-content">
+      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll h-screen" data-testid="event-dialog-content">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">Тасалбар Нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
@@ -97,7 +106,7 @@ export const AddEventComponent = () => {
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" value={formData.name} onChange={(e) => handleInputChange('name', e.target.value)} />
         </DialogItem>
-        <AddImage />
+        <AddImage onUpload={handleImageUpload} handleSubmit={handleSubmit} check={check} setCheck={setCheck} />
         <DialogItem htmlFor="description" name="Хөтөлбөрийн тухай">
           <Textarea className="min-h-16" placeholder="Дэлгэрэнгүй мэдээлэл" name="description" value={formData.description} onChange={(e) => handleInputChange('description', e.target.value)} />
         </DialogItem>
@@ -122,7 +131,7 @@ export const AddEventComponent = () => {
           </DialogItem>
         </div>
         <AddEventVenue handleVenueChange={handleVenueChange} formData={formData} />
-        <Button className="w-full" onClick={handleSubmit} data-testid="createEventButton">
+        <Button className="w-full" onClick={() => setCheck(!check)} data-testid="createEventButton">
           Үүсгэх
         </Button>
       </DialogContent>

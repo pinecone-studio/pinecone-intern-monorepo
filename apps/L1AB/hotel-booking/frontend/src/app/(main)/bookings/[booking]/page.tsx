@@ -1,8 +1,9 @@
 'use client';
-import BookingEmptyState from '@/components/main/BookingEmptyState';
+
+import { CheckOutHome } from '@/components/main';
 
 const BookingDetailsPage = () => {
-  return <BookingEmptyState />;
+  return <CheckOutHome />;
 };
 
 export default BookingDetailsPage;

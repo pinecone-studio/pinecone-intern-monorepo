@@ -12,6 +12,7 @@ export const typeDefs = gql`
     eventId: Event!
     bankName: String
     bankAccount: Int
+    bankAccountName: String
     status: String
     userId: User!
     amountTotal: Int
@@ -50,6 +51,7 @@ export const typeDefs = gql`
     _id: ID!
     bankName: String
     bankAccount: Int
+    bankAccountName: String
     status: String
     amountTotal: Int
     phone: String

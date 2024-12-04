@@ -39,6 +39,7 @@ export const typeDefs = gql`
   }
 
   input UpdateBookingInput {
+    _id: ID!
     status: UpdateStatusType!
   }
 
