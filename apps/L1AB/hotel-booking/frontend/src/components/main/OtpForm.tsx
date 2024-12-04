@@ -5,18 +5,28 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { Button } from '@/components/ui/button';
 import { usePasswordChangeMutation, usePasswordRecoveryRequestMutation } from '@/generated';
 import { useState, useEffect, useCallback } from 'react';
-import { OtpFormProps } from '@/app/forgetpassword/page';
+import { OtpFormProps } from '@/app/(public)/(auth)/forgetpassword/page';
 
 export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: OtpFormProps) => {
   const [passwordChange, { loading, error }] = usePasswordChangeMutation();
   const [passwordRecoveryRequest] = usePasswordRecoveryRequestMutation();
   const [timer, setTimer] = useState<number>(60);
-  const [timerRunning, setTimerRunning] = useState<boolean>(false);
+  const [timerRunning, setTimerRunning] = useState<boolean>(true);
 
   useEffect(() => {
-    setTimer(60);
-    setTimerRunning(true);
-  }, []);
+    const changePassword = async () => {
+      if (inputData.otp.length === 4) {
+        await passwordChange({
+          variables: {
+            input: { otp: inputData.otp, email: inputData.email, password: '' },
+          },
+        });
+        setCurrentIndex(2);
+      }
+    };
+
+    changePassword();
+  }, [inputData, passwordChange, setCurrentIndex]);
 
   useEffect(() => {
     if (timerRunning && timer > 0) {
@@ -24,19 +34,9 @@ export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: OtpFormPro
         setTimer((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(interval);
-    } else if (timer === 0) {
-      setTimerRunning(false);
     }
+    setTimerRunning(false);
   }, [timer, timerRunning]);
-
-  const handleClick = useCallback(async () => {
-    await passwordChange({
-      variables: {
-        input: { otp: inputData.otp, email: inputData.email, password: '' },
-      },
-    });
-    setCurrentIndex(2);
-  }, [inputData, passwordChange, setCurrentIndex]);
 
   const handleValueChange = useCallback(
     (value: string) => {
@@ -67,17 +67,10 @@ export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: OtpFormPro
         </div>
         <div className="flex items-center flex-col">
           <p className="text-[24px] font-semibold leading-8">Confirm email</p>
-          <p className="text-[#71717A] text-sm text-center">
-            To continue, enter the secure code we sent to {inputData.email}. Check junk mail if it’s not in your inbox.
-          </p>
+          <p className="text-[#71717A] text-sm text-center">To continue, enter the secure code we sent to {inputData.email}. Check junk mail if it’s not in your inbox.</p>
         </div>
         <div className="flex flex-col gap-4 items-center">
-          <InputOTP
-            onChange={handleValueChange}
-            maxLength={4}
-            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-            data-testid="otp-input-group"
-          >
+          <InputOTP onChange={handleValueChange} maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} data-testid="otp-input-group">
             <InputOTPGroup>
               <InputOTPSlot index={0} aria-label="OTP input 1" />
               <InputOTPSlot index={1} aria-label="OTP input 2" />
@@ -85,21 +78,8 @@ export const OtpForm = ({ setInputData, setCurrentIndex, inputData }: OtpFormPro
               <InputOTPSlot index={3} aria-label="OTP input 4" />
             </InputOTPGroup>
           </InputOTP>
-          {loading ? (
-            <Button variant="ghost" disabled data-testid="continue-button-disabled">
-              Verifying...
-            </Button>
-          ) : (
-            <Button onClick={handleClick} data-testid="continue-button">
-              Continue
-            </Button>
-          )}
-          <Button
-            variant="ghost"
-            onClick={resendOtp}
-            disabled={timerRunning}
-            data-testid="resend-button"
-          >
+          {loading && <p>Verifying...</p>}
+          <Button variant="ghost" onClick={resendOtp} disabled={timerRunning} data-testid="resend-button">
             {timerRunning ? `Send again (${timer}s)` : 'Send again'}
           </Button>
           {error && (

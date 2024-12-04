@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import { usePasswordChangeMutation } from '@/generated';
-import { CreatePassFormProps } from '@/app/forgetpassword/page';
+import { CreatePassFormProps } from '@/app/(public)/(auth)/forgetpassword/page';
 
 export const CreatePassForm = ({ inputData, handleOnchange }: CreatePassFormProps) => {
   const [passwordChange, { loading, error }] = usePasswordChangeMutation();

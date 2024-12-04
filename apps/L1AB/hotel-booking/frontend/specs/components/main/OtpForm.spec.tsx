@@ -13,7 +13,6 @@ jest.mock('@/generated', () => ({
   usePasswordChangeMutation: jest.fn(),
   usePasswordRecoveryRequestMutation: jest.fn(),
 }));
-
 describe('OtpForm Component', () => {
   const mockPasswordChange = jest.fn();
   const mockPasswordRecoveryRequest = jest.fn();
@@ -36,7 +35,6 @@ describe('OtpForm Component', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
-
   it('renders the OTP inputs and buttons', () => {
     render(<OtpForm {...mockProps} />);
 
@@ -44,7 +42,7 @@ describe('OtpForm Component', () => {
     expect(screen.getByLabelText('OTP input 2')).toBeInTheDocument();
     expect(screen.getByLabelText('OTP input 3')).toBeInTheDocument();
     expect(screen.getByLabelText('OTP input 4')).toBeInTheDocument();
-    expect(screen.getByText('Continue')).toBeInTheDocument();
+    expect(screen.getByText('Confirm email')).toBeInTheDocument();
     expect(screen.getByTestId('resend-button')).toBeInTheDocument();
     expect(screen.getByText(/Send again/)).toBeInTheDocument();
   });
@@ -58,47 +56,29 @@ describe('OtpForm Component', () => {
         email: 'test@example.com',
       },
     };
-  
+
     render(<OtpForm {...mockProps} />);
-  
+
     const otpInput = screen.getByTestId('otp-input-group');
-  
     fireEvent.change(otpInput, { target: { value: '1234' } });
-  
+
     const expectedState = { otp: '1234', email: 'test@example.com' };
-  
+
     expect(mockSetInputData).toHaveBeenCalled();
     const updateFn = mockSetInputData.mock.calls[0][0];
     const newState = typeof updateFn === 'function' ? updateFn(mockProps.inputData) : updateFn;
-  
+
     expect(newState).toEqual(expectedState);
   });
-  
 
-  it('calls passwordChange mutation when Continue is clicked', async () => {
-    render(<OtpForm {...mockProps} />);
-
-    const continueButton = screen.getByText('Continue');
-    fireEvent.click(continueButton);
-
-    await waitFor(() =>
-      expect(mockPasswordChange).toHaveBeenCalledWith({
-        variables: {
-          input: { otp: mockProps.inputData.otp, email: mockProps.inputData.email, password: '' },
-        },
-      })
-    );
-  });
-
-  it('disables the Continue button when loading', () => {
+  it('shows Verifying when loading', () => {
     (usePasswordChangeMutation as jest.Mock).mockReturnValue([mockPasswordChange, { loading: true, error: null }]);
 
     render(<OtpForm {...mockProps} />);
 
-    const continueButton = screen.getByText('Verifying...');
-    expect(continueButton).toBeDisabled();
+    const verifyingText = screen.getByText('Verifying...');
+    expect(verifyingText).toBeInTheDocument();
   });
-
   it('calls passwordRecoveryRequest mutation when Resend OTP is clicked', async () => {
     const mockPasswordRecoveryRequest = jest.fn();
     (usePasswordRecoveryRequestMutation as jest.Mock).mockReturnValue([mockPasswordRecoveryRequest]);
@@ -117,9 +97,7 @@ describe('OtpForm Component', () => {
     act(() => {
       jest.advanceTimersByTime(60000);
     });
-
     expect(resendButton).not.toBeDisabled();
-
     fireEvent.click(resendButton);
 
     await waitFor(() =>
@@ -128,12 +106,32 @@ describe('OtpForm Component', () => {
       })
     );
   });
-
   it('displays an error message if an error occurs', async () => {
     (usePasswordChangeMutation as jest.Mock).mockReturnValue([mockPasswordChange, { loading: false, error: { message: 'Invalid OTP' } }]);
 
     render(<OtpForm {...mockProps} />);
 
     expect(screen.getByText('Invalid OTP')).toBeInTheDocument();
+  });
+  it('calls passwordChange mutation and sets current index when OTP length is 4', async () => {
+    const mockPasswordChange = jest.fn().mockResolvedValue({ data: {} });
+    const mockSetCurrentIndex = jest.fn();
+    const mockProps = {
+      setInputData: jest.fn(),
+      setCurrentIndex: mockSetCurrentIndex,
+      inputData: { email: 'test@example.com', otp: '1234', password: '', rePassword: '' },
+    };
+    (usePasswordChangeMutation as jest.Mock).mockReturnValue([mockPasswordChange, { loading: false, error: null }]);
+    render(<OtpForm {...mockProps} />);
+
+    await waitFor(() => {
+      expect(mockPasswordChange).toHaveBeenCalledWith({
+        variables: { input: { otp: '1234', email: 'test@example.com', password: '' } },
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockSetCurrentIndex).toHaveBeenCalledWith(2);
+    });
   });
 });

@@ -1,4 +1,4 @@
-import { ForgetPassFormProps } from '@/app/forgetpassword/page';
+import { ForgetPassFormProps } from '@/app/(public)/(auth)/forgetpassword/page';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePasswordRecoveryRequestMutation } from '@/generated';
