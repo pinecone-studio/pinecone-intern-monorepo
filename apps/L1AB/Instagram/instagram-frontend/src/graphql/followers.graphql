@@ -1,15 +1,6 @@
 query GetFollowersById($id: ID!) {
   getFollowersById(_id: $id) {
     _id
-    email
-    username
-    fullname
-    gender
-    profilePicture
-    bio
-    isPrivate
-    createdAt
-    updatedAt
   }
 }
 

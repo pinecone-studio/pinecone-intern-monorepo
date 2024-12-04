@@ -6,6 +6,7 @@ import { FollowersDialog } from './FollowersDialog';
 import { useGetFollowersByIdQuery } from '@/generated';
 import { useContext } from 'react';
 import { UserContext } from './providers';
+import Link from 'next/link';
 
 const styles = {
   button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9',
@@ -33,7 +34,9 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
           <h2 className={styles.header}>{userProfile?.username}</h2>
           {user?.username == userProfile?.username ? (
             <div className="flex gap-2">
-              <Button className={styles.button}>Edit Profile</Button>
+              <Link href={'editprofile'}>
+                <Button className={styles.button}>Edit Profile</Button>
+              </Link>
               <Button className={styles.button}>Ad tools</Button>
             </div>
           ) : (
