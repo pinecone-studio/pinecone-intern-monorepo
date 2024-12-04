@@ -94,8 +94,8 @@ describe('AdminSearcher Component', () => {
     const dateButton = screen.getByTestId('choose-date-id');
     fireEvent.click(dateButton);
 
-    // const calendarDay = screen.getByTestId('1');
-    // fireEvent.click(calendarDay);
+    const calendarDay = screen.getByText('20');
+    fireEvent.click(calendarDay);
 
     expect(setDate);
   });

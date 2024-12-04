@@ -5,3 +5,4 @@ export * from './post';
 export * from './story';
 export * from './comments';
 export * from './like';
+export * from './save';

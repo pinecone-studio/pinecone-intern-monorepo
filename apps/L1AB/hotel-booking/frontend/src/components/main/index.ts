@@ -19,3 +19,4 @@ export * from './Loading';
 export * from './UserContainer';
 export * from './assets/PopularHotelsCard';
 export * from './PrevoiusBooking';
+export * from './CheckoutHome';

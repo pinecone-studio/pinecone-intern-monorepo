@@ -1,12 +1,8 @@
-'use client';
-
 import { Container } from '@/components';
 import { EventDetails } from '@/components/maincomponents/EventDetails';
-import { useParams } from 'next/navigation';
-import React from 'react';
 
-const Page = () => {
-  const { id } = useParams();
+const MainPage = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
 
   return (
     <Container>
@@ -15,4 +11,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default MainPage;

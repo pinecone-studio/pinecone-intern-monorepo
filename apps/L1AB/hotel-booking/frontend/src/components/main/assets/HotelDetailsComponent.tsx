@@ -1,5 +1,8 @@
+'use client';
+
 import { PhoneIcon, StarFillIcon } from '@/components/icon';
 import { Button } from '@/components/ui/button';
+import * as Icons from 'lucide-react';
 
 type HotelDetailsComponentProps = {
   name?: string;
@@ -10,16 +13,21 @@ type HotelDetailsComponentProps = {
   location?: string;
 };
 
-const Amenities = [
-  { name: 'Parking available' },
-  { name: '24/7 front desk' },
-  { name: 'Air conditioning' },
-  { name: 'Gym' },
-  { name: 'Pet-friendly' },
-  { name: 'Non-smoking' },
-  { name: 'Bar' },
-  { name: 'Restaurant' },
-  { name: 'Laundry' },
+type Amenity = {
+  name: string;
+  icon: keyof typeof Icons; // This ensures the icon is a valid key from the 'lucide-react' Icons module
+};
+
+const Amenities: Amenity[] = [
+  { name: 'Parking available', icon: 'CircleParkingOff' },
+  { name: '24/7 front desk', icon: 'ConciergeBell' },
+  { name: 'Air conditioning', icon: 'AirVent' },
+  { name: 'Gym', icon: 'Dumbbell' },
+  { name: 'Pet-friendly', icon: 'Cat' },
+  { name: 'Non-smoking', icon: 'CigaretteOff' },
+  { name: 'Bar', icon: 'Martini' },
+  { name: 'Restaurant', icon: 'Utensils' },
+  { name: 'Laundry', icon: 'WashingMachine' },
 ];
 export const HotelDetailsComponent = ({ name, phone, desc, rating, stars, location }: HotelDetailsComponentProps) => {
   return (
@@ -32,7 +40,6 @@ export const HotelDetailsComponent = ({ name, phone, desc, rating, stars, locati
               <StarFillIcon key={index} />
             ))}
           </div>
-
           <p>{desc}</p>
         </div>
         <div className="flex gap-2 items-center ">
@@ -45,15 +52,18 @@ export const HotelDetailsComponent = ({ name, phone, desc, rating, stars, locati
           </div>
         </div>
         <div className="border-t-[1px] border-border my-4"></div>
-
         <div className="flex flex-col gap-4">
           <p className="font-bold">Most popular facilities</p>
           <div className="grid grid-cols-3 gap-4  ">
-            {Amenities.map((amenity, index) => (
-              <div key={index} className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
-                <p className="text-sm font-medium">{amenity.name}</p>
-              </div>
-            ))}
+            {Amenities.map((amenity, index) => {
+              const IconComponent = Icons[amenity.icon] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+              return (
+                <div key={index} className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                  <IconComponent className="w-4 h-4" />
+                  <p className="text-sm font-medium">{amenity.name}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

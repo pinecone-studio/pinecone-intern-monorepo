@@ -7,6 +7,7 @@ export type BookingType = {
   eventId: Types.ObjectId;
   bankName: string;
   bankAccount: number;
+  bankAccountName: string;
   userId: Types.ObjectId;
   amountTotal: number;
   status: string;
@@ -37,6 +38,11 @@ const BookingSchema = new Schema({
   },
   bankAccount: {
     type: Number,
+    default: '',
+    required: false,
+  },
+  bankAccountName: {
+    type: String,
     default: '',
     required: false,
   },

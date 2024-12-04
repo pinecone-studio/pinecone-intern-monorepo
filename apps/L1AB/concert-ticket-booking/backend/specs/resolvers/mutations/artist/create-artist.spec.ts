@@ -9,6 +9,7 @@ jest.mock('../../../../src/models', () => ({
       artistName: 'John Doe',
       image: 'http://example.com/image.jpg',
       additional: 'Some additional information',
+      status: 'Энгийн',
     }),
   },
 }));
@@ -20,6 +21,7 @@ describe('createArtist', () => {
         artistName: 'John Doe',
         image: 'http://example.com/image.jpg',
         additional: 'Some additional information',
+        status: 'Энгийн',
       },
     };
 
@@ -31,8 +33,7 @@ describe('createArtist', () => {
       artistName: 'John Doe',
       image: 'http://example.com/image.jpg',
       additional: 'Some additional information',
+      status: 'Энгийн',
     });
-
-  
   });
 });
