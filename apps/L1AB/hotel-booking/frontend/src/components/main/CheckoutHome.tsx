@@ -29,7 +29,7 @@ const CheckOutHome = () => {
               <input type="text" className="w-full h-[36px] border rounded-xl " />
               <h1 className="text-[#71717A]">Please give us the name of one of the people staying in this room.</h1>
               <div>
-                <h1>Middle Name (Optional)</h1>
+                <h1>Middle name (Optional)</h1>
                 <input type="text" className="w-full h-[36px] border rounded-xl " />
               </div>
               <div>
@@ -39,7 +39,7 @@ const CheckOutHome = () => {
               <div className="w-full border border-[#71717A] mt-5"></div>
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold">2. Contact information</h1>
-                <h1>Email address</h1>
+                <h1>Email Address</h1>
                 <input type="text" className="w-full h-[36px] border rounded-xl " />
                 <h1 className="text-[#71717A]">Your confirmation email goes here</h1>
                 <div className="flex flex-col gap-2 mt-3">
