@@ -18,6 +18,7 @@ export * from './UserHeader';
 export * from './Loading';
 export * from './UserContainer';
 export * from './assets/PopularHotelsCard';
+export * from './BookingConfirmedBooking';
 export * from './BookingEmptyState';
 export * from './PrevoiusBooking';
 export * from './CheckoutHome';
