@@ -47,10 +47,12 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
     await refetch();
     setComments('');
   };
+  console.log(comments);
+  
   return (
     <Dialog>
       <DialogTrigger>
-        <MessageCircle />
+        <MessageCircle data-testid='MessageCircleIcon'/>
       </DialogTrigger>
       <DialogContent className="max-w-[90vw] w-fit bg-transparent border-none p-0">
         <div className="relative flex w-full h-[74vh] bg-background">
@@ -143,6 +145,7 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
                 <Smile className="h-4 w-4" />
                 <input data-testid="commentInput" value={comments} onChange={(e) => setComments(e.target.value)} className="w-3/4 focus:outline-none" placeholder="Add comment ..." />
                 <div
+                  data-testid="handleComment"
                   onClick={() => {handleComment(postId);}}
                   className={`text-blue-500 font-semibold ${commentsData ? 'block' : 'hidden'} cursor-pointer`}>
                   Post
