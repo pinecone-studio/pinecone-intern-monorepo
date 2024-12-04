@@ -1,10 +1,11 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { styles } from './ProfilePagePosts';
 import { Camera } from 'lucide-react';
 
 export const ProfilePageFirstPost = () => {
   return (
-    <div className="flex flex-col items-center mt-[64px] gap-5">
+    <div className="flex flex-col items-center mt-[64px] gap-5" data-testId="profilePageFirstPost">
       <div className="flex flex-col gap-4 items-center">
         <div className="p-[25px] rounded-full border-2 border-[#09090B]">
           <Camera size={40} strokeWidth={1.5} />

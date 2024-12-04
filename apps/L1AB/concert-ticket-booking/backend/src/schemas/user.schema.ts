@@ -22,6 +22,12 @@ export const typeDefs = gql`
     email: String!
   }
 
+  type VerifyOtpResponse {
+    success: Boolean
+    email: String!
+    accessToken: String!
+  }
+
   enum UserRole {
     user
     admin
@@ -44,10 +50,15 @@ export const typeDefs = gql`
     email: String!
   }
 
+  input VerifyOtpInput {
+    email: String!
+    otp: String!
+  }
+
   input RecoverPasswordInput {
     email: String!
+    accessToken: String!
     password: String!
-    otp: String!
   }
 
   input UserUpdateInput {
@@ -56,13 +67,24 @@ export const typeDefs = gql`
     password: String
     phone: String
   }
+  input PasswordUpdateInput {
+    oldPassword: String!
+    newPassword: String!
+  }
+
+  type passwordUpdateResponse {
+    success: Boolean!
+    message: String!
+  }
 
   type Mutation {
+    passwordUpdate(input: PasswordUpdateInput!): passwordUpdateResponse!
     signUpUser(input: SignUpUser!): AuthResponse!
     signInUser(input: SignInUser!): AuthResponse!
     createUser(input: SignUpUser!): User!
     updateUser(input: UserUpdateInput!): User!
     requestPasswordRecovery(input: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
+    verifyOtp(input: VerifyOtpInput!): VerifyOtpResponse!
     passwordRecovery(input: RecoverPasswordInput!): Response!
   }
 

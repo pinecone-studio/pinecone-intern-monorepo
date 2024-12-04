@@ -7,7 +7,7 @@
     text-wrap: balance;
   }
 }
- 
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -53,6 +53,7 @@ input::-webkit-inner-spin-button {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
   }
 
   .dark {
@@ -105,5 +106,44 @@ input::-webkit-inner-spin-button {
     .error {
       color: red;
     }
+  }
+}
+/* Extra Small */
+@media (max-width: 640px) {
+  body {
+    font-size: 12px;
+    background-color: black;
+  }
+}
+
+/* Small */
+@media (min-width: 641px) and (max-width: 768px) {
+  body {
+    font-size: 14px;
+    background-color: black;
+  }
+}
+
+/* Medium */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+    background-color: black;
+  }
+}
+
+/* Large */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  body {
+    font-size: 18px;
+    background-color: black;
+  }
+}
+
+/* Extra Large */
+@media (min-width: 1281px) and (max-width: 1536px) {
+  body {
+    font-size: 20px;
+    background-color: black;
   }
 }

@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { userContext } from '@/app/(main)/layout';
 import { UsersMap } from '@/components/UsersMap';
 import { useCreateFollowersMutation } from '@/generated';
 import userEvent from '@testing-library/user-event';
+import { UserContext } from '@/components/providers';
 
 jest.mock('@/generated', () => ({
   useCreateFollowersMutation: jest.fn(),
@@ -46,16 +46,16 @@ describe('UsersMap', () => {
     useCreateFollowersMutation.mockReturnValue([mockCreateFollowers]);
 
     render(
-      <userContext.Provider value={{ users: mockUsers, user: mockUser }}>
+      <UserContext.Provider value={{ sortedUsers: mockUsers, user: mockUser, users: mockUsers, followers: '' }}>
         <UsersMap />
-      </userContext.Provider>
+      </UserContext.Provider>
     );
 
     mockUsers.slice(0, 5).forEach((user) => {
       expect(screen.getByText(user.username)).toBeInTheDocument();
     });
-    const followButtons = screen.getAllByRole('button', { name: /follow/i });
 
+    const followButtons = screen.getAllByRole('button', { name: /follow/i });
     await userEvent.click(followButtons[0]);
 
     await waitFor(() => {

@@ -16,7 +16,7 @@ export const RemoveFollowersDialog = ({ img }: { img: string }) => {
     <AlertDialog>
       <AlertDialogTrigger className={style.remove}>Remove</AlertDialogTrigger>
       <AlertDialogContent className={style.container}>
-        <Avatar className="size-[52px]">
+        <Avatar className="w-[52px] h-[52px]">
           <AvatarImage src={img} alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

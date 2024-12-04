@@ -14,6 +14,7 @@ export interface EventCardProps {
   _id: string;
   name: string;
   description: string;
+  location: string;
   eventDate: string[];
   images: string[];
   venues: Venue[];
@@ -26,8 +27,8 @@ const formatNumber = (value: number): string => {
 
 const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPrice: number; discountedPrice: number; discount: number }) => (
   <div className="w-fit flex items-end gap-2">
-    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
     <h2 className="text-2xl text-[#FAFAFA] font-bold ">{formatNumber(discountedPrice)}₮</h2>
+    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
   </div>
 );
 
@@ -40,7 +41,7 @@ const EventName = ({ name, description }: { name: string; description: string })
   </div>
 );
 
-const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
+const EventLocation = ({ eventDate, location }: { eventDate: string[]; location: string }) => {
   let formattedDate = 'No Date';
 
   if (eventDate.length === 2) {
@@ -58,13 +59,13 @@ const EventLocation = ({ eventDate }: { eventDate: string[] }) => {
       </div>
       <div className="flex gap-2 text-[#A1A1AA] items-center">
         <IoLocationOutline className="w-4 h-4" />
-        <p>UG ARENA</p>
+        <p>{location}</p>
       </div>
     </div>
   );
 };
 
-export const EventCard = ({ _id, name, description, eventDate, images, venues, discount }: EventCardProps) => {
+export const EventCard = ({ _id, name, description, eventDate, images, venues, discount, location }: EventCardProps) => {
   const originalPrice = venues[2]?.price || 0;
   const discountedPrice = discount > 0 ? Math.floor(originalPrice * (1 - discount / 100)) : originalPrice;
   const router = useRouter();
@@ -78,7 +79,7 @@ export const EventCard = ({ _id, name, description, eventDate, images, venues, d
         <div className="bg-[#131313] py-8 px-6 h-fit gap-6 grid">
           <EventName name={name} description={description} />
           {venues[2] ? <EventPrice originalPrice={originalPrice} discountedPrice={discountedPrice} discount={discount} /> : <h1 className="text-red-500">{`Don't have index 2 element :)`}</h1>}
-          <EventLocation eventDate={eventDate} />
+          <EventLocation location={location} eventDate={eventDate} />
         </div>
       </div>
     </div>

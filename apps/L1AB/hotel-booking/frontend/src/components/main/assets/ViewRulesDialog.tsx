@@ -6,11 +6,10 @@ import { Label } from '@/components/ui/label';
 
 export const ViewRulesDialog = () => {
   return (
-    <div>
-      ViewRulesDialog
+    <div className="w-full">
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="secondary" className="text-[#2563EB]">
+        <DialogTrigger asChild className="w-full justify-center flex">
+          <Button variant="ghost" className="text-[#18181B]  flex ">
             View rules & restrictions
           </Button>
         </DialogTrigger>

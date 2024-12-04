@@ -4,6 +4,7 @@ query GetAllEvents {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
@@ -11,8 +12,10 @@ query GetAllEvents {
       name
       quantity
       price
+      firstquantity
     }
     discount
+    status
     createdAt
     updatedAt
   }
@@ -23,6 +26,7 @@ query GetEventById($id: ID!) {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
@@ -30,7 +34,37 @@ query GetEventById($id: ID!) {
       name
       quantity
       price
+      firstquantity
     }
     discount
+    status
+  }
+}
+mutation UpdateEventStatus($input: updateEventStatus!) {
+  updateEventStatus(input: $input) {
+    _id
+    status
+  }
+}
+
+mutation CreateEvent($input: EventInput!) {
+  createEvent(input: $input) {
+    _id
+    name
+    artistName
+    description
+    location
+    eventDate
+    eventTime
+    images
+    venues {
+      name
+      quantity
+      firstquantity
+      price
+    }
+    discount
+    createdAt
+    updatedAt
   }
 }

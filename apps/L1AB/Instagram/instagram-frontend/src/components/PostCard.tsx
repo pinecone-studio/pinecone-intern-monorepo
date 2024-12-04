@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import PostCardCommentSection from './PostCardCommentSection';
 import PostCardLikeSection from './PostCardLikeSection';
+import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type PropsType = {
   userName: string;
@@ -35,13 +37,14 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
     <div data-testid={`NewsFeedPostCard-${keyy}`}>
       <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
-          <div className="flex gap-2 items-center">
-            <div className="w-10 h-10 rounded-full border overflow-hidden relative">
-              <Image className="" alt="no picture" src={profilePicture} fill />
-            </div>
+          <Link href={`/profile?type=posts&username=${userName}`} className="flex gap-2 items-center">
+            <Avatar className="w-10 h-10 flex items-center justify-center">
+              <AvatarImage src={profilePicture} alt={userName} className="object-cover" />
+              <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
+            </Avatar>
             <div>{userName}</div>
             <div className="text-[#71717A]">5h</div>
-          </div>
+          </Link>
           <div>
             <EllipsisVertical className="w-4 h-4" />
           </div>

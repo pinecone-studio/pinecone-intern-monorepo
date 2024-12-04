@@ -94,7 +94,7 @@ describe('AdminSearcher Component', () => {
     const dateButton = screen.getByTestId('choose-date-id');
     fireEvent.click(dateButton);
 
-    const calendarDay = screen.getByText('1');
+    const calendarDay = screen.getByText('20');
     fireEvent.click(calendarDay);
 
     expect(setDate);
@@ -137,18 +137,6 @@ describe('AdminSearcher Component', () => {
 
       const options = await screen.getAllByTestId('option');
       fireEvent.keyDown(options[0], { key: 'Enter' });
-
-      // const select2 = getByTestId('admin-searcher-select');
-      // fireEvent.keyDown(select2, { key: 'Enter' });
-
-      // const optionsSecond = await screen.getAllByTestId('option');
-      // fireEvent.keyDown(optionsSecond[1], { key: 'Enter' });
-
-      // const select3 = getByTestId('admin-searcher-select');
-      // fireEvent.keyDown(select3, { key: 'Enter' });
-
-      // const optionsThird = await screen.getAllByTestId('option');
-      // fireEvent.keyDown(optionsThird[0], { key: 'Enter' });
     });
   });
 });

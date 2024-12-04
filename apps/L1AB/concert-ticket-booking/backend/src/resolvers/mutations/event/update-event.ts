@@ -3,13 +3,14 @@ import { EventModel } from '../../../models';
 
 export const updateEvent = async (_: unknown, { input }: { input: UpdateEventInput }) => {
   try {
-    const { name, artistName, description, eventDate, eventTime, images, venues, discount } = input;
+    const { name, artistName, description, eventDate, eventTime, images, venues, discount, location } = input;
     const updatedEvent = await EventModel.findByIdAndUpdate(
       { _id: input.eventId },
       {
         name,
         artistName,
         description,
+        location,
         eventDate,
         eventTime,
         images,

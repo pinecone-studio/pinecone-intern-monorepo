@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { MutationResolvers } from '../../../generated';
 import bcrypt from 'bcrypt';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'jwtsecret';
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const login: MutationResolvers['login'] = async (_: unknown, { username, email, password }) => {
   const checkUser = await userModel.findOne({

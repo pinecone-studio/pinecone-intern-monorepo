@@ -37,6 +37,14 @@ mutation RequestPasswordRecovery($input: RequestRecoverPasswordInput!) {
   }
 }
 
+mutation VerifyOtp($input: VerifyOtpInput!) {
+  verifyOtp(input: $input) {
+    success
+    email
+    accessToken
+  }
+}
+
 mutation PasswordRecovery($input: RecoverPasswordInput!) {
   passwordRecovery(input: $input)
 }
@@ -51,5 +59,22 @@ query GetMe {
     role
     createdAt
     updatedAt
+  }
+}
+
+mutation UpdateUser($input: UserUpdateInput!) {
+  updateUser(input: $input) {
+    _id
+
+    email
+
+    phone
+  }
+}
+
+mutation PasswordUpdate($input: PasswordUpdateInput!) {
+  passwordUpdate(input: $input) {
+    success
+    message
   }
 }

@@ -15,13 +15,14 @@ export const SearchPageComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
   const { data, loading } = useGetAllEventsQuery();
+  // console.log(data?.getAllEvents[0].eventDate);
 
   if (loading) {
     return (
       <div>
-        <div className="flex gap-2 px-28 py-12">
+        <div className="flex gap-2 px-28 py-12 max-sm:px-3 max-md:px-3 ">
           <Skeleton className="w-[233px] h-[42px] bg-gray-900"></Skeleton>
-          <Skeleton className="w-[280px] h-[42px] bg-gray-900"></Skeleton>
+          <Skeleton className="w-[280px] h-[42px] bg-gray-900 max-sm:hidden"></Skeleton>
         </div>
         <EventCardSkeleton />;
       </div>
@@ -30,7 +31,7 @@ export const SearchPageComponent = () => {
 
   const searchedData = data?.getAllEvents.filter((event) => {
     const lowerCaseTerm = searchTerm.toLowerCase();
-    const matchesSearchTerm = event.name.toLowerCase().includes(lowerCaseTerm) || event.artistName[0]?.toLowerCase().includes(lowerCaseTerm);
+    const matchesSearchTerm = event.name.toLowerCase().includes(lowerCaseTerm) || event.artistName[0]?.toLowerCase().includes(lowerCaseTerm) || event.location?.toLowerCase().includes(lowerCaseTerm);
 
     const matchesDate = date
       ? event.eventDate.some((eventDate) => {
@@ -44,7 +45,7 @@ export const SearchPageComponent = () => {
 
   return (
     <div className="text-white flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
-      <div className="flex gap-2 items-center px-28">
+      <div className="flex gap-2 items-center px-28 max-sm:px-3 max-md:px-3 max-lg:px-3  max-xl:px-3  ">
         <div className="py-1 px-2 border border-[#27272A] flex justify-center items-center rounded-lg">
           <input
             data-cy="Search-Events"
@@ -57,7 +58,7 @@ export const SearchPageComponent = () => {
           <LuSearch className="w-6 h-6" />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 max-sm:hidden">
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -88,8 +89,12 @@ export const SearchPageComponent = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 py-24 px-28">
-        {searchedData?.length ? searchedData.map((event) => <EventCard key={event._id} {...event} />) : <p className="text-[#A1A1AA] text-2xl col-span-3 text-center">Тохирох үйл явдал олдсонгүй.</p>}
+      <div className="grid grid-cols-3 gap-8 py-24 px-28 max-sm:grid  max-sm:grid-cols-1 max-sm:px-3 max-sm:py-4 max-md:grid  max-md:grid-cols-2 max-md:px-3 max-md:py-4 max-lg:grid  max-lg:grid-cols-2 max-lg:px-3 max-xl:px-3 max-lg:py-4 max-xl:py-4">
+        {searchedData?.length ? (
+          searchedData.map((event) => <EventCard key={event._id} {...event} />)
+        ) : (
+          <p className="text-[#A1A1AA] text-2xl col-span-3 text-center max-sm:text-sm">Тохирох үйл явдал олдсонгүй.</p>
+        )}
       </div>
     </div>
   );

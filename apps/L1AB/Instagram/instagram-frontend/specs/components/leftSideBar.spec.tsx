@@ -1,7 +1,30 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { LeftSideBar } from '@/components/LeftSideBar';
-import { userContext } from '../../src/app/(main)/layout';
+import { GetUserBySearchDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
+import { UserContext } from '@/components/providers/UserProvider';
+
+const getUserBySearchMock = {
+  request: {
+    query: GetUserBySearchDocument,
+    variables: {
+      searchInput: 'alt',
+    },
+  },
+  result: {
+    data: {
+      getUserBySearch: [
+        {
+          _id: '2',
+          fullname: 'odnoo',
+          profilePicture: 'picture',
+          username: 'altaa',
+        },
+      ],
+    },
+  },
+};
 
 describe('LeftSideBar', () => {
   const mockUser = {
@@ -17,66 +40,36 @@ describe('LeftSideBar', () => {
     createdAt: 'blabla',
     updatedAt: 'blabla',
   };
-  it('should toggle the search drawer when the SearchButton is clicked', () => {
-    render(
-      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
-        <LeftSideBar />
-      </userContext.Provider>
+  it('1. Should toggle the search drawer when the SearchButton is clicked', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchMock]}>
+        <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
+          <LeftSideBar />
+        </UserContext.Provider>
+      </MockedProvider>
     );
-
-    const searchButton = screen.getByTestId('search-click');
-    fireEvent.click(searchButton);
-    const notificationButton = screen.getByTestId('notif-click');
-    fireEvent.click(notificationButton);
-    const searchButton1 = screen.getByTestId('search-click');
-    fireEvent.click(searchButton1);
-    const notificationButton1 = screen.getByTestId('notif-click');
-    fireEvent.click(notificationButton1);
-    const searchButton2 = screen.getByTestId('search-click');
-    fireEvent.click(searchButton2);
-
-    // const visibleSearchDrawer = screen.getByTestId('search-drawer');
-    // expect(visibleSearchDrawer).toBeInTheDocument();
-  });
-
-  it('HomeButton дээр дархад Sidebar-г хаах', () => {
-    render(
-      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
-        <LeftSideBar />
-      </userContext.Provider>
-    );
-
-    const homeButton = screen.getByTestId('home-click');
+    const searchButton = getByTestId('search-click');
+    const homeButton = getByTestId('homeButton');
     fireEvent.click(homeButton);
+    fireEvent.click(searchButton);
 
-    // const visibleSidebar = screen.getByTestId('sidebar');
-    // expect(visibleSidebar).toBeInTheDocument();
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+
+    const clearAll = getByTestId('delete-all');
+    fireEvent.click(clearAll);
   });
 
-  // it('InstagramButton дээр дархад Sidebar нээгдэх', () => {
-  //   render(<LeftSideBar />);
-
-  //   const instagramButton = screen.getByTestId('instagram-click');
-  //   fireEvent.click(instagramButton);
-
-  //   // const visibleSidebar = screen.getByTestId('sidebar');
-  //   // expect(visibleSidebar).toBeInTheDocument();
-  // });
-
-  it('NotificationButton дээр дархад NotificationDrawer нээгдэх', () => {
-    render(
-      <userContext.Provider value={{ user: mockUser, users: mockUser }}>
-        <LeftSideBar />
-      </userContext.Provider>
+  it('2. Should toggle the notif drawer', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getUserBySearchMock]}>
+        <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
+          <LeftSideBar />
+        </UserContext.Provider>
+      </MockedProvider>
     );
-
-    const notificationButton = screen.getByTestId('notif-click');
-    fireEvent.click(notificationButton);
-    const searchButton = screen.getByTestId('search-click');
-    fireEvent.click(searchButton);
-    const notificationButton1 = screen.getByTestId('notif-click');
-    fireEvent.click(notificationButton1);
-    // const visibleNotificationDrawer = screen.getByTestId('notification-drawer');
-    // expect(visibleNotificationDrawer).toBeInTheDocument();
+    const notifyButton = getByTestId('notif-click');
+    fireEvent.click(notifyButton);
   });
 });

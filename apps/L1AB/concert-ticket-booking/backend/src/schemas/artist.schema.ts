@@ -1,11 +1,14 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
+  scalar Date
+
   type Artist {
     _id: ID!
     artistName: String!
     image: String!
     additional: String!
+    status: String!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -14,6 +17,15 @@ export const typeDefs = gql`
     artistName: String!
     image: String!
     additional: String!
+    status: String
+  }
+
+  input UpdateArtistInput {
+    _id: ID!
+    artistName: String
+    image: String
+    additional: String
+    status: String
   }
 
   type Query {
@@ -23,5 +35,6 @@ export const typeDefs = gql`
   type Mutation {
     createArtist(input: ArtistInput!): Artist!
     deleteArtist(_id: ID!): Artist!
+    updateArtist(input: UpdateArtistInput!): Artist!
   }
 `;

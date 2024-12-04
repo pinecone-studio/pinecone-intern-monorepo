@@ -6,9 +6,9 @@ const eventData = new Array(12).fill(null);
 
 export const RelatedEventsSkeleton = () => {
   return (
-    <div className="h-fit px-28">
+    <div className="h-fit px-28 max-sm:px-3 max-md:px-3 max-lg:px-3 max-xl:px-3 max-2xl:px-3">
       <Skeleton className="h-[24px] bg-gray-900 w-[320px] "></Skeleton>
-      <div className="w-full grid grid-cols-4 gap-8 py-12 ">
+      <div className="w-full grid grid-cols-4 gap-8 py-12 max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2   max-xl:grid-cols-3  max-2xl:grid-cols-3  ">
         {eventData.map((_, index) => (
           <div key={index} className="border border-[#18181B] rounded-[8px]">
             <Skeleton className="h-[250px] bg-gray-900 w-full"></Skeleton>
