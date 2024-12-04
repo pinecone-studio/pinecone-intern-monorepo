@@ -1,12 +1,12 @@
 'use client';
 
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from '@apollo/client';
 
 const uri = process.env.BACKEND_URI || 'http://localhost:4200/api/graphql';
 
 export const ApolloWrapper = ({ children }: PropsWithChildren) => {
-  const [client, setClient] = useState<ApolloClient<any> | null>(null);
+  const [client, setClient] = useState<ApolloClient<NormalizedCacheObject> | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

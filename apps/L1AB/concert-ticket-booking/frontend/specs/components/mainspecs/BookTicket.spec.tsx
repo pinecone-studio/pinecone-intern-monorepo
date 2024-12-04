@@ -1,13 +1,14 @@
+/* eslint-disable max-lines */
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BookTicket } from '@/components';
-import { useGetEventByIdQuery, useCreateBookingTotalAmountMutation } from '@/generated';
+import { useGetEventByIdQuery, useCreateBookingTotalAmountMutation, useGetMeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
-// Mocking the GraphQL query and mutation hooks
 jest.mock('@/generated', () => ({
   useGetEventByIdQuery: jest.fn(),
   useCreateBookingTotalAmountMutation: jest.fn(),
+  useGetMeQuery: jest.fn(),
 }));
 
 jest.mock('next/navigation', () => ({
@@ -25,11 +26,23 @@ const mockEventData = {
     ],
   },
 };
-
+const mockUserData = {
+  getMe: [
+    {
+      _id: '1',
+    },
+    {
+      _id: undefined,
+    },
+  ],
+};
 describe('BookTicket Component', () => {
   beforeEach(() => {
     (useGetEventByIdQuery as jest.Mock).mockReturnValue({
       data: mockEventData,
+    });
+    (useGetMeQuery as jest.Mock).mockReturnValue({
+      data: mockUserData,
     });
     (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
   });
@@ -92,9 +105,9 @@ describe('BookTicket Component', () => {
     render(<BookTicket id="test" />);
     const incrementButtons = screen.getAllByTestId('incrementCount');
 
-    fireEvent.click(incrementButtons[0]); // VIP Section
-    fireEvent.click(incrementButtons[1]); // General Section
-    fireEvent.click(incrementButtons[1]); // General Section
+    fireEvent.click(incrementButtons[0]);
+    fireEvent.click(incrementButtons[1]);
+    fireEvent.click(incrementButtons[1]);
 
     expect(screen.getByTestId('total-price'));
   });
@@ -114,11 +127,52 @@ describe('BookTicket Component', () => {
     (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([mockCreateBooking, { loading: false }]);
 
     const { getByTestId } = render(<BookTicket id="test" />);
-    const OrderPushButton = getByTestId('Orderpush');
-    fireEvent.click(OrderPushButton);
+
+    const select = getByTestId('SelectTrigger');
+    fireEvent.keyDown(select, { key: 'Enter' });
+
+    const options = await screen.getAllByTestId('option');
+    fireEvent.keyDown(options[0], { key: 'Enter' });
+
+    const incrementButtons = screen.getAllByTestId('incrementCount');
+
+    fireEvent.click(incrementButtons[0]);
+    fireEvent.click(incrementButtons[1]);
+    fireEvent.click(incrementButtons[1]);
+
+    const orderPushButton = getByTestId('Orderpush');
+    fireEvent.click(orderPushButton);
 
     await waitFor(() => expect(mockCreateBooking));
+
     await waitFor(() => expect(mockPush));
+  });
+  it('should display an error message when booking fails', async () => {
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+
+    const mockCreateBooking = jest.fn().mockRejectedValue(new Error('Booking failed'));
+
+    (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([mockCreateBooking, { loading: false }]);
+
+    const { getByTestId } = render(<BookTicket id="test" />);
+
+    const select = getByTestId('SelectTrigger');
+    fireEvent.keyDown(select, { key: 'Enter' });
+
+    const options = await screen.getAllByTestId('option');
+    fireEvent.keyDown(options[0], { key: 'Enter' });
+
+    const incrementButtons = screen.getAllByTestId('incrementCount');
+
+    fireEvent.click(incrementButtons[0]);
+    fireEvent.click(incrementButtons[1]);
+    fireEvent.click(incrementButtons[1]);
+
+    const orderPushButton = getByTestId('Orderpush');
+    fireEvent.click(orderPushButton);
+
+    await waitFor(() => expect(mockCreateBooking));
   });
 
   it('should handle icon click correctly', () => {

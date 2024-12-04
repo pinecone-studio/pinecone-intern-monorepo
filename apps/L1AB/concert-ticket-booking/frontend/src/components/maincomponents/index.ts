@@ -16,7 +16,7 @@ export * from './SignIn';
 export * from './FormInput';
 export * from './ForgetPasswordEyeInputs';
 export * from './MainHero';
-export * from './OtpInput';
+export * from './VerifyOtp';
 export * from './PasswordInput';
 export * from './PasswordRecovery';
 export * from './RecoveryEmail';

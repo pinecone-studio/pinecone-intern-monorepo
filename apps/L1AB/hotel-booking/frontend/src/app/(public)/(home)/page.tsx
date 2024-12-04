@@ -1,16 +1,9 @@
 'use client';
 
-import { HotelsGrid, PriceDetailDialog } from '@/components/main';
-import { ImageDialog } from '@/components/main/assets';
+import { HotelsGrid } from '@/components/main';
 
 const Page = () => {
-  return (
-    <>
-      <HotelsGrid />
-      <PriceDetailDialog/>
-      <ImageDialog/>
-    </>
-  );
+  return <HotelsGrid />;
 };
 
 export default Page;

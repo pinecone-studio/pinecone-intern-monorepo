@@ -1,16 +1,11 @@
-'use client';
-
 import { Container } from '@/components';
 import { OrderCheckout } from '@/components/maincomponents/OrderCheckout';
-import { useParams } from 'next/navigation';
 
-const Page = () => {
-  const { id } = useParams();
-  console.log(id);
-
+const Page = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   return (
     <Container>
-      <OrderCheckout id={id}/>
+      <OrderCheckout id={id} />
     </Container>
   );
 };

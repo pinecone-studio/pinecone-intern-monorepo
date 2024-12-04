@@ -4,7 +4,7 @@ import NavigationLink from './NavigationLink';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
-import { userContext } from '@/app/(main)/layout';
+import { UserContext } from './providers';
 
 interface ProfileProps {
   isOpen: boolean;
@@ -12,8 +12,7 @@ interface ProfileProps {
 }
 export const ProfileButton = ({ isOpen, svgControls }: ProfileProps) => {
   const pathname = usePathname();
-  const { user }: any = useContext(userContext);
-
+  const { user }: any = useContext(UserContext);
   return (
     <NavigationLink href={`/profile?username=${user?.username}`} name={isOpen ? '' : 'Profile'}>
       <Avatar

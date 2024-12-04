@@ -1,6 +1,5 @@
 'use client';
-
-import { usePasswordRecoveryMutation, User, useRequestPasswordRecoveryMutation, useSignInUserMutation, useSignUpUserMutation } from '@/generated';
+import { usePasswordRecoveryMutation, User, useRequestPasswordRecoveryMutation, useSignInUserMutation, useSignUpUserMutation, useVerifyOtpMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -18,22 +17,28 @@ type SignInParams = {
   password: string;
 };
 
-type PasswordRecoveryParams = {
-  email: string;
-  password: string;
-  otp: string;
-};
-
 type RequestPasswordRecoveryParams = {
   email: string;
 };
 
+type VerifyOtpParams = {
+  email: string;
+  otp: string;
+};
+
+type PasswordRecoveryParams = {
+  email: string;
+  accessToken: string;
+  password: string;
+};
+
 type AuthContextType = {
-  signin: (_params: SignInParams) => void;
+  signin: (_param: SignInParams) => void;
   signup: (_params: SignUpParams) => void;
   signout: () => void;
   requestPasswordRecovery: (_params: RequestPasswordRecoveryParams) => void;
   passwordRecovery: (_params: PasswordRecoveryParams) => void;
+  verifyOtp: (_params: VerifyOtpParams) => void;
   user: User | null;
 };
 
@@ -48,6 +53,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signInUser.token);
       setUser(data.signInUser.user);
       router.push('/');
+      toast.success('Signin successful!', { autoClose: 2000 });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -58,37 +64,44 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('token', data.signUpUser.token);
       setUser(data.signUpUser.user);
       router.push('/');
+      toast('Signup successful!', { autoClose: 2000 });
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
   const [requestPasswordRecoveryMutation] = useRequestPasswordRecoveryMutation({
-    onCompleted: (data) => {
-      toast.success('Амжилттай илгээлээ');
-      router.push(`/change-password?email=${data.requestPasswordRecovery.email}`);
+    onCompleted: () => {
+      toast.success('Амжилттай илгээлээ', { autoClose: 2000 });
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
+
+  const [verifyOtpMutation] = useVerifyOtpMutation({
+    onCompleted: () => {
+      toast.success('Амжилттай баталгаажлаа', { autoClose: 2000 });
+    },
+    onError: (error) => {
+      toast.error(error.message, { autoClose: 2000 });
+    },
+  });
+
   const [passwordRecoveryMutation] = usePasswordRecoveryMutation({
     onCompleted: () => {
-      toast.success('Амжилттай солигдлоо');
+      toast.success('Амжилттай солигдлоо', { autoClose: 2000 });
       router.push('/signin');
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { autoClose: 2000 });
     },
   });
 
   const signin = async ({ email, password }: SignInParams) => {
     await signinMutation({
       variables: {
-        input: {
-          email,
-          password,
-        },
+        input: { email, password },
       },
     });
   };
@@ -96,44 +109,39 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signup = async ({ name, email, password, phone }: SignUpParams) => {
     await signupMutation({
       variables: {
-        input: {
-          name,
-          email,
-          password,
-          phone,
-        },
+        input: { name, email, password, phone },
       },
     });
   };
 
   const signout = () => {
     localStorage.removeItem('token');
+    router.push('/');
+    toast.success('Successfully signed out', { autoClose: 2000 });
     setUser(null);
   };
 
   const requestPasswordRecovery = async ({ email }: RequestPasswordRecoveryParams) => {
     await requestPasswordRecoveryMutation({
-      variables: {
-        input: {
-          email,
-        },
-      },
+      variables: { input: { email } },
     });
   };
 
-  const passwordRecovery = async ({ email, password, otp }: PasswordRecoveryParams) => {
+  const verifyOtp = async ({ email, otp }: VerifyOtpParams) => {
+    await verifyOtpMutation({
+      variables: { input: { email, otp } },
+    });
+  };
+
+  const passwordRecovery = async ({ email, accessToken, password }: PasswordRecoveryParams) => {
     await passwordRecoveryMutation({
       variables: {
-        input: {
-          email,
-          password,
-          otp,
-        },
+        input: { email, accessToken, password },
       },
     });
   };
 
-  return <AuthContext.Provider value={{ signin, signup, user, signout, requestPasswordRecovery, passwordRecovery }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signup, user, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

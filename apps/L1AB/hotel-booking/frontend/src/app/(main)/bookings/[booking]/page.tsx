@@ -1,7 +1,9 @@
-'use client'
+'use client';
+
+import { CheckOutHome } from '@/components/main';
 
 const BookingDetailsPage = () => {
-    return <div>Booking Details Page</div>
+  return <CheckOutHome />;
 };
 
 export default BookingDetailsPage;

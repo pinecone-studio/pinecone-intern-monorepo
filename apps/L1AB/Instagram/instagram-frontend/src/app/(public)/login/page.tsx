@@ -18,7 +18,7 @@ const Page = () => {
       },
     });
     if (data) {
-      localStorage.setItem('userToken', data.login.token);
+      localStorage.setItem('userToken', data.login.user._id);
       router.push('/home');
     }
   };

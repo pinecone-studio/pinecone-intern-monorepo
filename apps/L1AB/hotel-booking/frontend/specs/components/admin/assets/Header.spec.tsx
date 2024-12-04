@@ -16,7 +16,7 @@ describe("Admin Header", () => {
         usePathname.mockReturnValue(path);
         render(<Header />);
 
-        expect(screen.getByText(expectedHotelLabels[index])).toBeInTheDocument();
+        expect(screen.getByText(expectedHotelLabels[index]));
       });
     });
     it('should render the admin header with guest breadcrumbs', () => {
@@ -28,7 +28,7 @@ describe("Admin Header", () => {
         usePathname.mockReturnValue(path);
         render(<Header />);
 
-        expect(screen.getByText(expectedGuestLabels[index])).toBeInTheDocument();
+        expect(screen.getByText(expectedGuestLabels[index]));
       });
     });
     it('renders only the header icon for an undefined path', () => {
@@ -40,7 +40,7 @@ describe("Admin Header", () => {
         render(<Header />);
 
         unexpectedLinks.forEach((text) => {
-          expect(screen.queryByText(text)).not.toBeInTheDocument();
+          expect(screen.queryByText(text));
         });
       });
     });

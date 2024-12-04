@@ -5,9 +5,11 @@ export type EventType = {
   name: string;
   artistName: [string];
   description: string;
+  location: string;
   eventDate: [string];
   eventTime: [string];
   images: [string];
+  status: string;
   venues: [
     {
       name: string;
@@ -38,6 +40,10 @@ const EventSchema = new Schema({
     type: String,
     required: true,
   },
+  location: {
+    type: String,
+    required: true,
+  },
   eventDate: {
     type: [String],
     required: true,
@@ -53,37 +59,15 @@ const EventSchema = new Schema({
   status: {
     type: String,
     required: true,
+    enum: ['Regular', 'Онцлох', 'Deleted'],
     default: 'Regular',
-    enum: ['Онцлох , Deleted'],
   },
   venues: [
     {
       name: {
         type: String,
         required: true,
-        default: 'VIP',
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-      firstquantity: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-      price: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-    },
-    {
-      name: {
-        type: String,
-        required: true,
-        default: 'Regular',
+        default: 'Энгийн',
       },
       quantity: {
         type: Number,
@@ -106,6 +90,28 @@ const EventSchema = new Schema({
         type: String,
         required: true,
         default: 'Fanzone',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      firstquantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+    },
+    {
+      name: {
+        type: String,
+        required: true,
+        default: 'VIP',
       },
       quantity: {
         type: Number,

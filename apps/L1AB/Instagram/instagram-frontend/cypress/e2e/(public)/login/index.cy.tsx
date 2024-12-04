@@ -61,14 +61,14 @@ describe('Login Page', () => {
       failOnStatusCode: false,
     }).then((response) => {
       if (response.body?.data) {
-        window.localStorage.setItem('userToken', response.body.data.login.token);
+        window.localStorage.setItem('userToken', response.body.data.user._id);
       }
     });
     cy.wait('@loginRequest');
 
     cy.url().should('include', '/home');
     cy.window().then((win) => {
-      expect(win.localStorage.getItem('userToken')).to.eq('mocked-token');
+      expect(win.localStorage.getItem('userToken')).to.eq('mocked-user-id');
     });
   });
   it('login hiiged buruu shiljihgui', () => {

@@ -13,6 +13,7 @@ export const typeDefs = gql`
     name: String!
     artistName: [String!]!
     description: String!
+    location: String!
     eventDate: [String!]!
     eventTime: [String!]!
     images: [String!]!
@@ -32,23 +33,26 @@ export const typeDefs = gql`
     name: String
     artistName: [String]
     description: String
+    location: String
     eventDate: [String]
     eventTime: [String]
     images: [String]
     venues: [VenueInput]
     discount: Int
+    status: String
   }
 
   input EventInput {
     name: String!
     artistName: [String!]!
     description: String!
+    location: String
     eventDate: [String!]!
     eventTime: [String!]!
     images: [String!]!
     venues: [VenueInput!]!
     discount: Int
-    status: String!
+    status: String
   }
 
   input VenueInput {

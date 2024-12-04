@@ -14,7 +14,7 @@ import { ProfileButton } from './ProfileButton';
 
 const containerVariants = {
   close: {
-    width: '5rem',
+    width: '260px',
     transition: {
       type: 'spring',
       damping: 15,
@@ -31,58 +31,57 @@ const containerVariants = {
   },
 };
 
+const errorChecker = (a: boolean, b: boolean) => {
+  return a || b;
+};
+
 export const LeftSideBar = () => {
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [visitedUsers, setVisitedUsers] = useState<any>([]);
 
   const containerControls = useAnimationControls();
   const svgControls = useAnimationControls();
 
+  const visitedUsersHandler = (users: Record<string, string>[]) => {
+    setVisitedUsers(users);
+  };
+
   const toggleSearchDrawer = () => {
-    if (isSideBarOpen && notifOpen) {
-      setIsSideBarOpen(true);
-      setNotifOpen(false);
-      setSearchOpen((prev) => !prev);
-    } else {
-      setIsSideBarOpen(!isSideBarOpen);
-      setNotifOpen(false);
-      setSearchOpen((prev) => !prev);
-    }
+    setSearchOpen((prev) => !prev);
+    setNotifOpen(false);
   };
 
   const toggleNotificationDrawer = () => {
-    if (isSideBarOpen && searchOpen) {
-      setIsSideBarOpen(true);
-      setSearchOpen(false);
-      setNotifOpen((prev) => !prev);
-    } else {
-      setIsSideBarOpen(!isSideBarOpen);
-      setSearchOpen(false);
-      setNotifOpen((prev) => !prev);
-    }
+    setNotifOpen((prev) => !prev);
+    setSearchOpen(false);
   };
 
   const toggleHomeDrawer = async () => {
-    setIsSideBarOpen(false);
+    containerControls.start('open');
+    svgControls.start('close');
+
     setSearchOpen(false);
     setNotifOpen(false);
   };
 
   useEffect(() => {
-    if (isSideBarOpen) {
+    const storedUsers = JSON.parse(localStorage.getItem('visitedUsers') || '[]');
+    setVisitedUsers(storedUsers);
+
+    if (searchOpen || notifOpen) {
       containerControls.start('close');
       svgControls.start('close');
     } else {
       containerControls.start('open');
       svgControls.start('open');
     }
-  }, [isSideBarOpen]);
+  }, [searchOpen, notifOpen]);
 
   return (
     <div data-cy="LeftSideBar">
       <div>
-        <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} />
+        <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} visitedUsers={visitedUsers} visitedUsersHandler={visitedUsersHandler} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
       </div>
       <motion.nav
@@ -90,25 +89,25 @@ export const LeftSideBar = () => {
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${isSideBarOpen ? 'shadow shadow-neutral-200' : 'border'}`}
+        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200' : 'border'}`}
       >
         <div onClick={toggleHomeDrawer}>
-          <InstagramButton isOpen={isSideBarOpen} />
+          <InstagramButton isOpen={errorChecker(notifOpen, searchOpen)} />
         </div>
 
         <div className="space-y-3">
-          <div onClick={toggleHomeDrawer}>
-            <HomeButton svgControls={svgControls} isOpen={isSideBarOpen} />
+          <div data-testid="homeButton" onClick={toggleHomeDrawer}>
+            <HomeButton svgControls={svgControls} isOpen={notifOpen || searchOpen} />
           </div>
-          <SearchButton handleOpenClose={toggleSearchDrawer} svgControls={svgControls} isOpen={isSideBarOpen} />
-          <NotificationButton handleOpenClose={toggleNotificationDrawer} svgControls={svgControls} isOpen={isSideBarOpen} />
-          <CreateButton isOpen={isSideBarOpen} svgControls={svgControls} />
-          <div onClick={toggleHomeDrawer}>
-            <ProfileButton svgControls={svgControls} isOpen={isSideBarOpen} />
+          <SearchButton handleOpenClose={toggleSearchDrawer} svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
+          <NotificationButton data-testid="notifyButton" handleOpenClose={toggleNotificationDrawer} svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
+          <CreateButton data-testid="createButton" isOpen={errorChecker(notifOpen, searchOpen)} svgControls={svgControls} />
+          <div data-testid="profileButton" onClick={toggleHomeDrawer}>
+            <ProfileButton svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
           </div>
         </div>
-        <div className="mt-auto">
-          <MoreButton isOpen={isSideBarOpen} svgControls={svgControls} />
+        <div data-testid="moreButton" className="mt-auto">
+          <MoreButton isOpen={errorChecker(notifOpen, searchOpen)} svgControls={svgControls} />
         </div>
       </motion.nav>
     </div>

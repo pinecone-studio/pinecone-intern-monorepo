@@ -1,0 +1,112 @@
+query GetAllBooking {
+  getAllBooking {
+    _id
+    eventId {
+      _id
+      name
+    }
+    bankName
+    bankAccount
+    status
+    userId {
+      _id
+      name
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    createdAt
+    updatedAt
+  }
+}
+query GetBookingById($id: ID!) {
+  getBookingById(_id: $id) {
+    _id
+    eventId {
+      _id
+    }
+    status
+    userId {
+      _id
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    venues {
+      name
+      quantity
+      price
+    }
+  }
+}
+mutation UpdateBookingEverything($input: updateBookInput!) {
+  updateBookingEverything(input: $input) {
+    _id
+    bankName
+    bankAccount
+    status
+    userId {
+      _id
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    venues {
+      name
+      quantity
+      price
+    }
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateBooking($input: UpdateBookingInput!) {
+  updateBooking(input: $input) {
+    _id
+    status
+  }
+}
+mutation CreateBookingTotalAmount($input: CreateBookingInput!) {
+  createBookingTotalAmount(input: $input) {
+    _id
+    amountTotal
+    venues {
+      name
+      price
+      quantity
+    }
+    status
+  }
+}
+query getBookingByUserId($userId: ID!) {
+  getBookingByUserId(userId: $userId) {
+    _id
+    eventId {
+      _id
+      name
+      artistName
+    }
+    bankName
+    bankAccount
+    status
+    userId {
+      _id
+      name
+    }
+    amountTotal
+    phone
+    email
+    selectedDate
+    venues {
+      name
+      quantity
+      price
+    }
+    createdAt
+    updatedAt
+  }
+}
