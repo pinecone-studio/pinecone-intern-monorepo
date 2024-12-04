@@ -1,7 +1,13 @@
 'use client';
 
+import PreviousBooking from '@/components/main/PrevoiusBooking';
+
 const BookingPage = () => {
-  return <div>Booking Page</div>;
+  return (
+    <div>
+      <PreviousBooking />
+    </div>
+  );
 };
 
 export default BookingPage;
