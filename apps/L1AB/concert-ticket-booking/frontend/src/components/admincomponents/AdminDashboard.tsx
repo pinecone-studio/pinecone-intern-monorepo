@@ -124,7 +124,7 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
                     <TableCell>
                       <div className="flex items-center justify-center gap-2">
                         <AdvertisedEvent eventId={item._id} />
-                        <UpdateEventComponent />
+                        <UpdateEventComponent eventId={item._id} />
                         <DeletedEvent eventId={item._id} />
                       </div>
                     </TableCell>
