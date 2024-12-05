@@ -65,7 +65,7 @@ export const StageStyle = () => {
           </div>
           {sections.map(({ component: Component, position, text }, index) => (<div key={index} className={`absolute ${position} group`}>
             <Component />
-            <div className="absolute top-10 left-0 w-max bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 text-sm">
+            <div className="absolute top-10 left-0 w-max bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 ">
 
               {text}
             </div>
