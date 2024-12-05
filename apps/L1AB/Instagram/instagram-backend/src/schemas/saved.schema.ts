@@ -10,7 +10,7 @@ export const typeDefs = gql`
 
   type Query {
     getAllSavedPosts(userId: ID!): [SavedPost!]!
-    getSavedByPostId(postId: ID!): [SavedPost!]!
+    getSavedByPostId(postId: ID!): SavedPost!
   }
   type Mutation {
     createSave(postId: ID!, userId: ID!): Response!
