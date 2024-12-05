@@ -2,8 +2,8 @@
 
 import { HotelsGrid } from '@/components/main';
 
-const Page = () => {
+const HomePage = () => {
   return <HotelsGrid />;
 };
 
-export default Page;
+export default HomePage;
