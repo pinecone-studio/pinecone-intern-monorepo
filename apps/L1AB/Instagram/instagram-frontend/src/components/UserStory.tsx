@@ -18,8 +18,7 @@ type PropsType = {
 
 export const UserStory = ({ userId, stories, username, profilePicture, prevUser, nextUser, mainUserStory }: PropsType) => {
   const { groupedStories } = useStory();
-  if (!groupedStories) return <p>Loading...</p>;
-  const userStoriesGroup = groupedStories[userId];
+  const userStoriesGroup = groupedStories![userId];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
