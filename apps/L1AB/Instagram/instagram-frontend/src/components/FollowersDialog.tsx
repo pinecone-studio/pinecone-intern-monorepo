@@ -3,9 +3,7 @@ import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogTrigger 
 import { Input } from '@/components/ui/input';
 import { Search, X } from 'lucide-react';
 import { FollowersDialogRemove } from './FollowersDialogRemove';
-import { useContext } from 'react';
-import * as _ from 'lodash';
-import { UserContext } from './providers';
+import { useDeleteFollowerMutation } from '@/generated';
 
 const style = {
   triggerContainer: 'text-[#262626] flex gap-1',
@@ -19,44 +17,103 @@ const style = {
   input: 'border-0 outline-none p-0 ',
 };
 
-export const FollowersDialog = ({ followers }: { followers: any }) => {
-  const { users }: any = useContext(UserContext);
-  const sortId = _.groupBy(users, '_id');
+export const FollowersDialog = ({ handleFollowersUpdate, followersData, followingData, profileUser }: any) => {
+  const [deleteFollower] = useDeleteFollowerMutation();
+
+  const handleRemoveFollower = async (id: string) => {
+    await deleteFollower({ variables: { followerId: id, followeeId: profileUser._id } });
+
+    handleFollowersUpdate();
+  };
+
+  const handleRemoveFollowing = async (id: string) => {
+    await deleteFollower({ variables: { followerId: profileUser._id, followeeId: id } });
+
+    handleFollowersUpdate();
+  };
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        <div className={style.triggerContainer}>
-          <p className="font-semibold">{followers?.length || 0}</p>
-          <p>followers</p>
-        </div>
-      </AlertDialogTrigger>
-      <AlertDialogContent className={style.dialogContent}>
-        <div>
-          <div className={style.dialogContentSubContainer}>
-            <h3 className={style.header}>Followers</h3>
-            <AlertDialogCancel className={style.dialogCancel}>
-              <X size={16} strokeWidth={1.6} />
-            </AlertDialogCancel>
+    <>
+      <AlertDialog data-testId="followers-dialog">
+        <AlertDialogTrigger>
+          <div className={style.triggerContainer} data-testId="followers-button">
+            <p className="font-semibold">{followersData?.length || 0}</p>
+            <p>followers</p>
           </div>
-          <div className={style.bottomContainer}>
-            <div className={style.inputContainer}>
-              <Search color="#71717A" strokeWidth={1} size={16} />
-              <Input className={style.input} />
+        </AlertDialogTrigger>
+        <AlertDialogContent className={style.dialogContent}>
+          <div>
+            <div className={style.dialogContentSubContainer}>
+              <h3 className={style.header}>Followers</h3>
+              <AlertDialogCancel className={style.dialogCancel}>
+                <X size={16} strokeWidth={1.6} />
+              </AlertDialogCancel>
             </div>
-            <div className={style.followersContainer}>
-              {followers?.map((follow: any, i: any) => (
-                <FollowersDialogRemove
-                  key={i}
-                  name={sortId[follow?.followerId]?.[0].username}
-                  img={sortId[follow?.followerId]?.[0].profilePicture}
-                  fullname={sortId[follow?.followerId]?.[0].fullname}
-                  suggest=""
-                />
-              ))}
+            <div className={style.bottomContainer}>
+              <div className={style.inputContainer}>
+                <Search color="#71717A" strokeWidth={1} size={16} />
+                <Input className={style.input} />
+              </div>
+              <div className={style.followersContainer}>
+                {followersData?.map((follow: any, i: any) => (
+                  <FollowersDialogRemove
+                    handleRemoveFollower={handleRemoveFollower}
+                    handleRemoveFollowing={handleRemoveFollowing}
+                    type={'followers'}
+                    profileUser={profileUser}
+                    id={follow._id}
+                    key={i}
+                    name={follow.username}
+                    img={follow.profilePicture}
+                    fullname={follow.fullname}
+                    suggest=""
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog>
+        <AlertDialogTrigger>
+          <div className={style.triggerContainer} data-testId="following-button">
+            <p className="font-semibold">{followingData?.length || 0}</p>
+            <p>following</p>
+          </div>
+        </AlertDialogTrigger>
+        <AlertDialogContent className={style.dialogContent}>
+          <div>
+            <div className={style.dialogContentSubContainer}>
+              <h3 className={style.header}>Following</h3>
+              <AlertDialogCancel className={style.dialogCancel}>
+                <X size={16} strokeWidth={1.6} />
+              </AlertDialogCancel>
+            </div>
+            <div className={style.bottomContainer}>
+              <div className={style.inputContainer}>
+                <Search color="#71717A" strokeWidth={1} size={16} />
+                <Input className={style.input} />
+              </div>
+              <div className={style.followersContainer}>
+                {followingData?.map((follow: any, i: any) => (
+                  <FollowersDialogRemove
+                    handleRemoveFollower={handleRemoveFollower}
+                    handleRemoveFollowing={handleRemoveFollowing}
+                    type={'following'}
+                    profileUser={profileUser}
+                    id={follow._id}
+                    key={i}
+                    name={follow.username}
+                    img={follow.profilePicture}
+                    fullname={follow.fullname}
+                    suggest=""
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
