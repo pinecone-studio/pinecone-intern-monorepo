@@ -7,12 +7,12 @@ const Story = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {Object.keys(groupedStories).map((userId) => {
-        const group = groupedStories[userId];
+      {Object.keys(groupedStories!).map((userId, index) => {
+        const group = groupedStories![userId];
 
         return (
-          <div key={userId} className="flex flex-col items-start gap-2">
-            <StoryCard username={group.userId.username as string} profilePicture={group.userId.profilePicture as string} userId={group.userId._id as string} />
+          <div data-testid={`StoryCard-${index}`} key={userId} className="flex flex-col items-start gap-2">
+            <StoryCard index={index} username={group.userId.username as string} profilePicture={group.userId.profilePicture as string} userId={group.userId._id as string} />
           </div>
         );
       })}

@@ -6,13 +6,14 @@ type PropsType = {
   username: string;
   profilePicture: string;
   userId: string;
+  index: number;
 };
 
-const StoryCard = ({ username, profilePicture, userId }: PropsType) => {
+const StoryCard = ({ username, profilePicture, userId, index }: PropsType) => {
   const [isHidden, setIsHidden] = useState(false);
 
   return (
-    <div className="py-4">
+    <div className="py-4" data-testid={`StoryCard-${index}`}>
       <div className="w-[64px]  flex flex-col items-center">
         <Link href={`/story?userId=${userId}`}>
           <div className={`w-full h-[64px] rounded-full overflow-hidden flex justify-center items-center border-2 border-orange-600 ${isHidden ? 'border-gray-500' : ''}`}>
