@@ -1,33 +1,33 @@
-import { useCreateLikeMutation, useCreateSaveMutation, useGetLikesByPostIdQuery, useGetSavedByPostIdQuery } from '@/generated';
+import { useCreateLikeMutation, useGetLikesByPostIdQuery } from '@/generated';
 import { CardPropsType } from './PostCardCommentSection';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle } from 'lucide-react';
 
-const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
-  const saveFillColor = isSaved ? 'black' : 'white';
+// const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
+//   const saveFillColor = isSaved ? 'black' : 'white';
 
-  return <Bookmark data-testid="saveButton" onClick={handleSave} className="cursor-pointer" fill={saveFillColor} />;
-};
+//   return <Bookmark data-testid="saveButton" onClick={handleSave} className="cursor-pointer" fill={saveFillColor} />;
+// };
 
 const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
-  const { data: savedData, refetch: savedRefetch } = useGetSavedByPostIdQuery({ variables: { postId } });
+  // const { data: savedData, refetch: savedRefetch } = useGetSavedByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId;
 
   const [createLike] = useCreateLikeMutation();
-  const [createSave] = useCreateSaveMutation();
+  // const [createSave] = useCreateSaveMutation();
 
-  const handleSave = async () => {
-    await createSave({
-      variables: {
-        userId,
-        postId,
-      },
-    });
-    await savedRefetch();
-  };
+  // const handleSave = async () => {
+  //   await createSave({
+  //     variables: {
+  //       userId,
+  //       postId,
+  //     },
+  //   });
+  //   await savedRefetch();
+  // };
 
   const isLiked = userId ? likesData?.some((like) => like.userId === userId) : false;
-  const isSaved = savedData?.getSavedByPostId[0]?.postId === postId;
+  // const isSaved = savedData?.getSavedByPostId[0]?.postId === postId;
 
   const handeLike = async () => {
     if (!userId) return;
@@ -50,7 +50,7 @@ const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
           </div>
           <MessageCircle />
         </div>
-        <SaveButton isSaved={isSaved} handleSave={handleSave} />
+        {/* <SaveButton isSaved={isSaved} handleSave={handleSave} /> */}
       </div>
     </div>
   );

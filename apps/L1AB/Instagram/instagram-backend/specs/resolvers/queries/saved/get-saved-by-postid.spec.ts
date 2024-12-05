@@ -1,9 +1,31 @@
+import { getSavedByPostId } from 'apps/L1AB/Instagram/instagram-backend/src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
-import { getSavedByPostId } from '../../../../src/resolvers/queries';
 
 jest.mock('../../../../src/models', () => ({
   savedModel: {
-    find: jest.fn().mockResolvedValue({ _id: '1', userId: '2', postId: '3', createdAt: 'date' }).mockReturnValueOnce(undefined),
+    findOne: jest
+      .fn()
+      .mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockResolvedValue({
+            _id: '1',
+            userId: {
+              _id: '2',
+              username: 'zorg',
+            },
+            postId: {
+              _id: '1',
+              caption: 'caption',
+            },
+            createdAt: 'date',
+          }),
+        }),
+      })
+      .mockReturnValueOnce({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValueOnce(undefined),
+        }),
+      }),
   },
 }));
 describe('getSavedByPostId', () => {
@@ -14,10 +36,19 @@ describe('getSavedByPostId', () => {
       expect(error).toEqual(new Error('No saved posts found for this user'));
     }
   });
-
   it('should get saved by postId', async () => {
     const res = await getSavedByPostId!({}, { postId: '3' }, {}, {} as GraphQLResolveInfo);
-
-    expect(res).toEqual({ _id: '1', userId: '2', postId: '3', createdAt: 'date' });
+    expect(res).toEqual({
+      _id: '1',
+      userId: {
+        _id: '2',
+        username: 'zorg',
+      },
+      postId: {
+        _id: '1',
+        caption: 'caption',
+      },
+      createdAt: 'date',
+    });
   });
 });
