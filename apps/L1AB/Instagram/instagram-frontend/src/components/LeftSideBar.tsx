@@ -89,7 +89,7 @@ export const LeftSideBar = () => {
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen  z-100 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200' : 'border'}`}
+        className={`flex flex-col gap-20 p-4 top-0 left-0 min-h-screen z-50 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200' : 'border'}`}
       >
         <div onClick={toggleHomeDrawer}>
           <InstagramButton isOpen={errorChecker(notifOpen, searchOpen)} />
