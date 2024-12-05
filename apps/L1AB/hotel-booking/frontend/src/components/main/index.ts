@@ -22,3 +22,7 @@ export * from './BookingConfirmedBooking';
 export * from './BookingEmptyState';
 export * from './PrevoiusBooking';
 export * from './CheckoutHome';
+export * from './CheckingConfirm';
+export * from './CheckingQpay';
+export * from './Header';
+export * from './Footer';
