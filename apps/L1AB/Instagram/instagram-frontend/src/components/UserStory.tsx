@@ -4,6 +4,7 @@ import { useStory } from './providers';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Story } from '@/generated';
+import { formatDistanceToNow } from 'date-fns';
 
 type PropsType = {
   userId: string;
@@ -19,8 +20,6 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
   const { groupedStories } = useStory();
   if (!groupedStories) return <p>Loading...</p>;
   const userStoriesGroup = groupedStories[userId];
-
-  const date = userStoriesGroup.stories.find((el) => el.createdAt);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -39,6 +38,8 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
+
+  const date = userStoriesGroup.stories[currentImageIndex]?.createdAt;
 
   return (
     <div
@@ -59,7 +60,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
             }}
           >
             {stories.map((images, index) => (
-              <div className="flex-1 h-full relative rounded-lg overflow-hidden">
+              <div className="flex-1 h-full relative rounded-lg overflow-hidden" key={index}>
                 <Image src={images.image} alt={`Story image ${index + 1}`} fill objectFit="cover" />
               </div>
             ))}
@@ -69,7 +70,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
         <div className="absolute left-5 top-1 p-3 w-[93%] h-full">
           <div className="flex gap-2 w-full">
             {Array.from({ length: userStoriesGroup.stories.length }).map((_, i) => (
-              <div className="w-full ">
+              <div className="w-full" key={i}>
                 <div className={`${currentImageIndex === i ? 'bg-white' : 'bg-[#8C8C8C]'} flex gap-1 p-0.5 rounded-xl  ${mainUserStory === userId ? '' : 'hidden'}`}></div>
               </div>
             ))}
@@ -80,7 +81,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
               <Image fill alt="" src={profilePicture} objectFit="cover" />
             </div>
             <h1 className="text-white">{username}</h1>
-            <div>{date?.createdAt}</div>
+            <div className="text-white"> {date ? formatDistanceToNow(new Date(date), { addSuffix: true }) : 'Just now'}</div>
           </div>
         </div>
       </div>

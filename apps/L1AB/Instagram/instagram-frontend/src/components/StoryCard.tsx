@@ -15,7 +15,7 @@ const StoryCard = ({ username, profilePicture, userId }: PropsType) => {
     <div className="py-4">
       <div className="w-[64px]  flex flex-col items-center">
         <Link href={`/story?userId=${userId}`}>
-          <div className={` w-full h-[64px] border-2 rounded-full overflow-hidden flex justify-center items-center  border-orange-600  `}>
+          <div className={`w-full h-[64px] rounded-full overflow-hidden flex justify-center items-center border-2 border-orange-600 ${isHidden ? 'border-gray-500' : ''}`}>
             <div className="rounded-full overflow-hidden relative h-[58px] w-[58px]">
               <Image alt="userProfile" src={profilePicture} fill onClick={() => setIsHidden(!isHidden)} />
             </div>
