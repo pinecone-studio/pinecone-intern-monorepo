@@ -1,3 +1,4 @@
+'use client'
 import { HeroSection, MainFooter, MainHeader, Search } from '@/components/main';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
