@@ -38,4 +38,20 @@ describe('AdminNavbar', () => {
 
     expect(cancelLink).toHaveClass('border-b-black border-b-2');
   });
+  it('should not apply "border-b-black border-b-2" class to "/admin/artist" link when pathname is "/admin"', () => {
+    usePathname.mockReturnValue('/admin');
+
+    const { getByTestId } = render(<AdminNavbar />);
+    const artistLink = getByTestId('/admin/artist');
+
+    expect(artistLink).not.toHaveClass('border-b-black border-b-2');
+  });
+  it('should apply "border-b-black border-b-2" class when pathname is "/admin/artist"', () => {
+    usePathname.mockReturnValue('/admin/artist');
+
+    const { getByTestId } = render(<AdminNavbar />);
+    const artistLink = getByTestId('/admin/artist');
+
+    expect(artistLink).toHaveClass('border-b-black border-b-2');
+  });
 });
