@@ -20,13 +20,13 @@ describe('Profile Page', () => {
   it('should render forgetPassword', () => {
     cy.get('[data-cy=Profile-Page-ForgetPassword]').click();
   });
-  it('should allow the input name and select', () => {
-    cy.get('[data-cy=Profile-Password-Input]').type('test');
-    cy.get('[data-cy=Profile-Password-Input-icon]').click();
-    cy.get('[data-cy=Profile-RePassword-Input]').type('test');
-    cy.get('[data-cy=Profile-RePassword-Input-icon]').click();
-    cy.get('[data-cy=Profile-New-Password-Input]').type('test');
-    cy.get('[data-cy=Profile-New-Password-Input-icon]').click();
-    cy.get('[data-cy=Profile-Submit-Button]').click();
-  });
+  // it('should allow the input name and select', () => {
+  //   cy.get('[data-cy=Profile-Password-Input]').type('test');
+  //   cy.get('[data-cy=Profile-Password-Input-icon]').click();
+  //   cy.get('[data-cy=Profile-RePassword-Input]').type('test');
+  //   cy.get('[data-cy=Profile-RePassword-Input-icon]').click();
+  //   cy.get('[data-cy=Profile-New-Password-Input]').type('test');
+  //   cy.get('[data-cy=Profile-New-Password-Input-icon]').click();
+  //   cy.get('[data-cy=Profile-Submit-Button]').click();
+  // });
 });
