@@ -31,3 +31,11 @@ query GetFollowingById($id: ID!) {
     updatedAt
   }
 }
+mutation DeleteFollower($followerId: ID!, $followeeId: ID!) {
+  deleteFollower(followerId: $followerId, followeeId: $followeeId) {
+    _id
+    followerId
+    followeeId
+    createdAt
+  }
+}
