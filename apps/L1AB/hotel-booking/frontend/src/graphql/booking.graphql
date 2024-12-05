@@ -1,0 +1,93 @@
+mutation CreateBooking($input: CreateBookingInput!) {
+  createBooking(input: $input) {
+    success
+    message
+  }
+}
+
+mutation UpdateBooking($input: UpdateBookingInput!) {
+  updateBooking(input: $input) {
+    success
+    message
+  }
+}
+
+query GetAllBookings {
+  getAllBookings {
+    _id
+    roomId {
+      _id
+      name
+      roomNumber
+      price
+      description
+      photos
+      roomType
+      createdAt
+      updatedAt
+      hotelId {
+        _id
+        name
+        description
+        images
+        address
+        phone
+        city
+        rating
+        stars
+        createdAt
+        updatedAt
+      }
+    }
+    firstName
+    lastName
+    email
+    phoneNumber
+    status
+    checkIn
+    checkOut
+    traveller
+    createdAt
+    updatedAt
+  }
+}
+
+query GetBookingById($id: ID!) {
+  getBookingById(_id: $id) {
+    _id
+    roomId {
+      _id
+      name
+      roomNumber
+      price
+      description
+      photos
+      roomType
+      createdAt
+      updatedAt
+      hotelId {
+        _id
+        name
+        description
+        images
+        address
+        phone
+        city
+        rating
+        stars
+        createdAt
+        updatedAt
+      }
+    }
+    firstName
+    lastName
+    email
+    phoneNumber
+    status
+    checkIn
+    checkOut
+    traveller
+    createdAt
+    updatedAt
+  }
+}
