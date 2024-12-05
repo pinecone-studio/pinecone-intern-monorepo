@@ -22,6 +22,7 @@ export const typeDefs = gql`
     getAllPosts: [Posts!]!
     getPostById(postId: ID!): Posts!
     getPostByUserId(userId: ID!): [Posts!]!
+    getPostsByFollowersId(followerId: ID!): [Posts!]!
   }
 
   type Mutation {

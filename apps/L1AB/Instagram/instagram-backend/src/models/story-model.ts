@@ -4,7 +4,6 @@ import { UserType } from './user-model';
 export type StoryType = {
   _id: string;
   userId: Types.ObjectId;
-  views: Types.ObjectId[];
   image: string;
   createdAt: Date;
 };
@@ -19,11 +18,6 @@ const StorySchema = new Schema<StoryType>({
     type: String,
     required: true,
   },
-  views: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    default: [],
-    required: true,
-  },
   createdAt: {
     type: Date,
     required: true,
@@ -31,11 +25,8 @@ const StorySchema = new Schema<StoryType>({
   },
 });
 
-StorySchema.index({ views: 1 });
-
 export type StoryPopulatedType = StoryType & {
   userId: UserType;
-  views: UserType[];
 };
 
 export const storyModel = models['Story'] || model('Story', StorySchema);

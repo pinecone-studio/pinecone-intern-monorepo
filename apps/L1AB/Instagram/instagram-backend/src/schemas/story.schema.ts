@@ -5,7 +5,6 @@ export const typeDefs = gql`
     _id: ID!
     userId: User!
     image: String!
-    views: [User!]!
     createdAt: Date!
   }
   input CreateStoryInput {

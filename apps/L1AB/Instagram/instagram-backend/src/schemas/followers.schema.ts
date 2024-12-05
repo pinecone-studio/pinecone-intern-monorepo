@@ -19,6 +19,10 @@ export const typeDefs = gql`
     followeeId: ID!
     createdAt: Date!
   }
+  type CreateFollowerMessage {
+    message: String!
+  }
+
   type Query {
     getFollowersById(_id: ID!): [Follower!]!
     getFollowingById(_id: ID!): [Follower!]!
@@ -26,6 +30,6 @@ export const typeDefs = gql`
 
   type Mutation {
     deleteFollower(followerId: ID!, followeeId: ID!): Followers!
-    createFollowers(followerId: ID!, followeeId: ID!): Followers!
+    createFollowers(followerId: ID!, followeeId: ID!): CreateFollowerMessage!
   }
 `;
