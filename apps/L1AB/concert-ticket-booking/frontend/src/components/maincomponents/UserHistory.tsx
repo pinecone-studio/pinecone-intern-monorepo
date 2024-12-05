@@ -4,10 +4,12 @@ import { MdAccessTime } from 'react-icons/md';
 import { GoDotFill } from 'react-icons/go';
 import { UserHistoryDialog } from './UserHistoryDialog';
 import { useGetBookingByUserIdQuery, useGetMeQuery } from '@/generated';
+// import { useRouter } from 'next/navigation';
 
 export const UserHistory = () => {
   const { data: user } = useGetMeQuery();
   const { data } = useGetBookingByUserIdQuery({ variables: { userId: user?.getMe?._id as string } });
+  // const router = useRouter();
 
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
@@ -25,7 +27,9 @@ export const UserHistory = () => {
     <div className="w-full h-fit flex flex-col gap-6" data-cy="Profile-Page-History">
       <p className="font-semibold text-2xl text-white max-sm:text-xl">Захиалгын мэдээлэл</p>
       {data?.getBookingByUserId.map((item, index) => {
-        const showButton = !(item.status === 'Цуцлах хүсэлт илгээсэн' || item.status === 'Цуцлагдсан') && isWithin24Hours(item.updatedAt);
+        const showButton = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
+        // const showButton2 = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
+
         return (
           <div className="p-8 grid gap-4 text-[#FAFAFA] bg-[#131313] rounded-xl" key={index}>
             <div className="flex justify-between items-center text-base font-normal text-white max-sm:grid max-md:grid max-xl:grid">
@@ -40,10 +44,16 @@ export const UserHistory = () => {
                 </div>
                 <div className="flex text-base font-normal text-white items-center gap-2">
                   <p className="text-[#878787] max-sm:text-sm">Төлөв:</p>
-                  <p>{item.status}</p>
+                  <p
+                    // onClick={() => router.push(`/order/${item._id}`)}
+                    className="cursor-pointer text-blue-500 hover:underline"
+                  >
+                    {item.status}
+                  </p>
                 </div>
               </div>
               {showButton && <UserHistoryDialog bookingId={item._id} />}
+              {/* {showButton2 && <UserHistoryDialog bookingId={item._id} />} */}
             </div>
             <div className="flex flex-col gap-2 max-sm:grid max-md:grid max-xl:grid">
               {item.venues?.map((venue, index2) => {
