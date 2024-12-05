@@ -3,15 +3,12 @@ query GetFollowersById($id: ID!) {
     _id
   }
 }
-
 mutation CreateFollowers($followerId: ID!, $followeeId: ID!) {
   createFollowers(followerId: $followerId, followeeId: $followeeId) {
-    _id
-    followerId
-    followeeId
-    createdAt
+    message
   }
 }
+
 query GetFollowingById($id: ID!) {
   getFollowingById(_id: $id) {
     _id
