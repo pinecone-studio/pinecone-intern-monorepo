@@ -4,7 +4,7 @@ import { GraphQLResolveInfo } from 'graphql';
 jest.mock('../../../../src/models', () => ({
   followersModel: {
     find: jest.fn().mockReturnValue({
-      select: jest.fn().mockResolvedValue([{ followerId: '1' }, { followerId: '2' }]),
+      select: jest.fn().mockResolvedValue([{ followerId: '3' }, { followerId: '2' }]),
     }),
   },
   postsModel: {
@@ -38,7 +38,7 @@ jest.mock('../../../../src/models', () => ({
 }));
 describe('getPostsbyFollowersId', () => {
   it('', async () => {
-    const res = await getPostsByFollowersId!({}, { followeeId: '3' }, {}, {} as GraphQLResolveInfo);
+    const res = await getPostsByFollowersId!({}, { followerId: '3' }, {}, {} as GraphQLResolveInfo);
     expect(res).toEqual([
       {
         _id: '67502569e2f6ddc43a5b1891',
