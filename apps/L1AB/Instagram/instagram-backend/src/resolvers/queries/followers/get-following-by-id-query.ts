@@ -5,7 +5,7 @@ export const getFollowingById: QueryResolvers['getFollowingById'] = async (_, { 
   const followers = await followersModel.find({ followerId: _id }).populate('followeeId');
 
   if (!followers.length) {
-    throw new Error('Following not found');
+    return [];
   }
 
   return followers.map((follow) => follow.followeeId);
