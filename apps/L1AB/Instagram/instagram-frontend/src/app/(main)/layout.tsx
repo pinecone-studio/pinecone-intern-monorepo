@@ -7,7 +7,7 @@ import { SuggestCard } from '@/components/SuggestCard';
 import { usePathname, useRouter } from 'next/navigation';
 import { decodeToken } from '@/components/utils/decode-utils';
 import { useGetAllUsersQuery } from '@/generated';
-import { ApolloWrapper } from '@/components/providers';
+import { ApolloWrapper, UserProvider } from '@/components/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 interface User {
   _id: string;
