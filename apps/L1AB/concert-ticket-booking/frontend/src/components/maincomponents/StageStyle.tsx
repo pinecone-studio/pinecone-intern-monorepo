@@ -60,12 +60,13 @@ export const StageStyle = () => {
           <div className="relative px-[36px] top-2 left-1">
             <SubTract />
             <div className="absolute w-[200px] h-[80px] rounded-2xl bg-gray-900 top-2 left-10">
-              <p className="absolute top-8 left-[76px] font-semibold text-white">ТАЙЗ</p>
+              <p className="absolute top-8 left-[76px] font-semibold text-white ">ТАЙЗ</p>
             </div>
           </div>
           {sections.map(({ component: Component, position, text }, index) => (<div key={index} className={`absolute ${position} group`}>
             <Component />
-            <div className="absolute top-10 left-0 w-max bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+            <div className="absolute top-10 left-0 w-max bg-black text-white text-sm py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 text-sm">
+
               {text}
             </div>
           </div>))}
