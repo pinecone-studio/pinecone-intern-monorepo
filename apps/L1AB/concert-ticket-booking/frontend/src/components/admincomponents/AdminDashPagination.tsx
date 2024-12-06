@@ -1,35 +1,47 @@
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-   
-   
-  } from "@/components/ui/pagination"
-import { ChevronLeft, ChevronRight,} from "lucide-react"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-  export const AdminPagination=()=>{
-    return (
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-          <PaginationLink className="border rounded mr-6" href="#"><ChevronLeft/></PaginationLink>
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (_page: number) => void;
+}
+
+export const AdminPagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      onPageChange(page);
+    } else {
+      onPageChange(currentPage);
+    }
+  };
+  return (
+    <Pagination>
+      <PaginationContent className="cursor-pointer">
+        <PaginationItem>
+          <PaginationLink className="border rounded mx-3" data-testid="left-btn" onClick={() => handlePageChange(currentPage - 1)}>
+            <ChevronLeft />
+          </PaginationLink>
+        </PaginationItem>
+        {[...Array(totalPages)].map((_, index) => (
+          <PaginationItem key={index}>
+            <PaginationLink
+              className={`border rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+              key={index}
+              data-testid={`page-${index}`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </PaginationLink>
           </PaginationItem>
-          <PaginationItem>
-            <PaginationLink className="border rounded " href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink className="border rounded " href="#">2</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis/>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink className="border rounded mr-6 " href="#"><ChevronRight/></PaginationLink>
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    )
-  }
+        ))}
+        <PaginationItem>
+          <PaginationLink className="border rounded mx-3" data-testid="right-btn" onClick={() => handlePageChange(currentPage + 1)}>
+            <ChevronRight />
+          </PaginationLink>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
