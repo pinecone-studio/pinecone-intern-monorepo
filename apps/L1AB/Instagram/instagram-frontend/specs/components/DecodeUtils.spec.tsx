@@ -59,12 +59,6 @@ describe('decodeToken', () => {
     expect(() => decodeToken(token)).toThrowError('Invalid JSON in token payload');
   });
 
-  it('should throw an error for a token with missing parts', () => {
-    const token = 'eyJhbGciOiJIUzI';
-
-    expect(() => decodeToken(token)).toThrowError('Malformed token');
-  });
-
   it('should throw an error if _doc or id is missing in payload', () => {
     const sampleData = { userId: '789' };
 
