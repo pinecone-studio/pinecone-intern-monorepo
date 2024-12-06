@@ -1,8 +1,8 @@
 'use client';
 import { Container } from './assets';
 import { Button } from '@/components/ui/button';
+import { History } from 'lucide-react';
 import Link from 'next/link';
-import { FaClockRotateLeft } from 'react-icons/fa6';
 
 export const BookingConfirmedBooking = () => {
   return (
@@ -51,7 +51,7 @@ export const BookingConfirmedBooking = () => {
 
           <div className="flex flex-col justify-center items-center">
             <div className=" text-[#71717A] text-sm">
-              <FaClockRotateLeft className="w-5 h-5" />
+              <History className="w-5 h-5" />
             </div>
             <div className="text-sm font-medium text-[#09090B]">No Previous Bookings</div>
             <div className="text-sm font-normal text-[#71717A]">&quot;Your past stays will appear here once completed.&quot;</div>

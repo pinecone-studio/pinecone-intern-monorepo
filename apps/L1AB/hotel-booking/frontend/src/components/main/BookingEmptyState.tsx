@@ -1,4 +1,4 @@
-import { FaClockRotateLeft } from 'react-icons/fa6';
+import { History } from 'lucide-react';
 const BookingEmptyState = () => {
   return (
     <div className="w-full flex justify-center flex-col gap-5">
@@ -16,7 +16,7 @@ const BookingEmptyState = () => {
           <div className="w-[896px] h-[132px] ">
             <h1 className="text-xl font-bold">Previous Booking</h1>
             <div className="flex flex-col gap-3 justify-center items-center">
-              <FaClockRotateLeft className="text-[#71717A]" />
+              <History className="text-[#71717A]" />
               <h1>No Previous Bookings</h1>
               <h1 className="text-[#71717A]">Your past stays will appear here once completed.</h1>
             </div>
