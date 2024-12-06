@@ -6,7 +6,7 @@ export const CheckOutHome = () => {
     <div className="w-full p-3">
       <div className=" flex justify-center "></div>
       <div className="flex justify-center p-3">
-        <div className="w-[1280px] h-[1521px]  flex flex-row gap-5 justify-center ">
+        <div className="w-full p-3  flex flex-row gap-5 justify-center ">
           <div className="w-[581px] h-[1487px]  p-3">
             <div>
               <h1 className="font-bold">1. Who’s checking in?</h1>
@@ -123,7 +123,7 @@ export const CheckOutHome = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[515px] h-[189px] border border-black rounded-xl mt-3 p-3">
+            <div className=" border border-black rounded-xl mt-3 p-3">
               <h1 className="font-bold">Price Detail</h1>
               <h1 className="mt-3">1 room x 1 night</h1>
               <div className="flex flex-row justify-between">

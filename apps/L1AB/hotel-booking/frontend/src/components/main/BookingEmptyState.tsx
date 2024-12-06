@@ -2,18 +2,7 @@ import { FaClockRotateLeft } from 'react-icons/fa6';
 const BookingEmptyState = () => {
   return (
     <div className="w-full flex justify-center flex-col gap-5">
-      <div className="flex justify-center">
-        <div className="w-[1280px] h-[40px]  flex flex-row justify-between">
-          <div className="flex flex-row gap-1 items-center">
-            <div className="w-[20px] h-[20px] rounded-full bg-blue-600"></div>
-            <h1 className="font-bold">Pedia</h1>
-          </div>
-          <div className="flex flex-row gap-4">
-            <h1>My Booking</h1>
-            <h1>Shagai</h1>
-          </div>
-        </div>
-      </div>
+      <div className="flex justify-center"></div>
       <div className="flex justify-center">
         <div className="w-[960px] h-[954px]  gap-5 flex flex-col p-3">
           <div className="w-[896px] h-[296px] ">
