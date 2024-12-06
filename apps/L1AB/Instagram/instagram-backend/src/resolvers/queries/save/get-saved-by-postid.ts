@@ -7,7 +7,6 @@ export const getSavedByPostId: QueryResolvers['getSavedByPostId'] = async (_, { 
   if (!savedPosts) {
     throw new Error('No saved posts found for this user');
   }
-  console.log(savedPosts);
 
   return savedPosts;
 };
