@@ -1,5 +1,12 @@
 import { decodeToken } from '@/components/utils/decode-utils';
 
+const generateToken = (payload: object, header = { alg: 'HS256', typ: 'JWT' }, signature = 'dummy-signature') => {
+  const headerBase64Url = btoa(JSON.stringify(header)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const payloadBase64Url = btoa(JSON.stringify(payload)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const signatureBase64Url = signature.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  return `${headerBase64Url}.${payloadBase64Url}.${signatureBase64Url}`;
+};
+
 describe('decodeToken', () => {
   beforeEach(() => {
     jest.spyOn(console, 'log').mockImplementation(jest.fn());
@@ -9,54 +16,37 @@ describe('decodeToken', () => {
     jest.clearAllMocks();
   });
 
-  it('should correctly decode a JWT token and return _doc content', () => {
+  it('should correctly decode a JWT token and return the id and iat', () => {
     const sampleData = {
-      _doc: {
-        userId: '123',
-        email: 'test@example.com',
-        role: 'user',
-      },
-      iat: 1516239022,
+      id: '6736de8f281cb64d91e94b7b',
+      iat: 1733473631,
     };
 
-    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-    const payload = btoa(JSON.stringify(sampleData));
-    const signature = 'dummy-signature';
-
-    const headerBase64Url = header.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    const payloadBase64Url = payload.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    const signatureBase64Url = signature.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-
-    const token = `${headerBase64Url}.${payloadBase64Url}.${signatureBase64Url}`;
-
+    const token = generateToken(sampleData);
     const result = decodeToken(token);
 
-    expect(result).toEqual(sampleData._doc);
-    expect(result.userId).toBe('123');
-    expect(result.email).toBe('test@example.com');
-    expect(result.role).toBe('user');
+    expect(result).toEqual({
+      id: '6736de8f281cb64d91e94b7b',
+      iat: 1733473631,
+    });
   });
 
   it('should handle tokens with padding characters correctly', () => {
     const sampleData = {
-      _doc: {
-        userId: '456',
-        permissions: ['read', 'write'],
-      },
+      id: 'abcdef123456',
+      iat: 1733473640,
     };
 
-    const header = 'eyJhbGciOiJIUzI';
     const payload = btoa(JSON.stringify(sampleData)) + '==';
-    const signature = 'dummy-signature';
-
-    const payloadBase64Url = payload.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    const token = `${header}.${payloadBase64Url}.${signature}`;
+    console.log(payload);
+    const token = generateToken(sampleData, { alg: 'HS256', typ: 'JWT' }, 'dummy-signature');
 
     const result = decodeToken(token);
 
-    expect(result).toEqual(sampleData._doc);
-    expect(result.userId).toBe('456');
-    expect(result.permissions).toEqual(['read', 'write']);
+    expect(result).toEqual({
+      id: 'abcdef123456',
+      iat: 1733473640,
+    });
   });
 
   it('should throw an error for malformed JSON in payload', () => {
@@ -64,9 +54,16 @@ describe('decodeToken', () => {
     const payload = btoa('{"malformed json"');
     const signature = 'dummy-signature';
 
-    const payloadBase64Url = payload.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    const token = `${header}.${payloadBase64Url}.${signature}`;
+    const token = `${header}.${payload}.${signature}`;
 
-    expect(() => decodeToken(token)).toThrow();
+    expect(() => decodeToken(token)).toThrowError('Invalid JSON in token payload');
+  });
+
+  it('should throw an error if _doc or id is missing in payload', () => {
+    const sampleData = { userId: '789' };
+
+    const token = generateToken(sampleData);
+
+    expect(() => decodeToken(token)).toThrowError('Missing id in token payload');
   });
 });

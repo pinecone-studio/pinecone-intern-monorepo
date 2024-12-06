@@ -28,9 +28,6 @@ describe('Login Page', () => {
         data: {
           login: {
             token: 'mocked-token',
-            user: {
-              _id: 'mocked-user-id',
-            },
           },
         },
       },
@@ -46,9 +43,6 @@ describe('Login Page', () => {
       mutation Login($username: String!, $email: String!, $password: String!) {
         login(username: $username, email: $email, password: $password) {
           token
-          user {
-            _id
-          }
         }
       }
     `,
@@ -61,14 +55,14 @@ describe('Login Page', () => {
       failOnStatusCode: false,
     }).then((response) => {
       if (response.body?.data) {
-        window.localStorage.setItem('userToken', response.body.data.user._id);
+        window.localStorage.setItem('userToken', response.body.data.token);
       }
     });
     cy.wait('@loginRequest');
 
     cy.url().should('include', '/home');
     cy.window().then((win) => {
-      expect(win.localStorage.getItem('userToken')).to.eq('mocked-user-id');
+      expect(win.localStorage.getItem('userToken')).to.eq('mocked-token');
     });
   });
   it('login hiiged buruu shiljihgui', () => {
@@ -89,9 +83,7 @@ describe('Login Page', () => {
       mutation Login($username: String!, $email: String!, $password: String!) {
         login(username: $username, email: $email, password: $password) {
           token
-          user {
-            _id
-          }
+
         }
       }
     `,
