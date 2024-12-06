@@ -2,6 +2,7 @@
 import { useGetAllUsersQuery, useGetFollowersByIdQuery, useGetFollowingByIdQuery, useGetUserByIdQuery } from '@/generated';
 import { createContext, PropsWithChildren, useEffect, useState } from 'react';
 import * as _ from 'lodash';
+import { decodeToken } from '../utils/decode-utils';
 
 interface UserContextType {
   user: any;
@@ -14,8 +15,9 @@ export const UserContext = createContext<UserContextType | undefined>(undefined)
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const [userId, setUserId] = useState();
   useEffect(() => {
-    const userId = localStorage.getItem('userToken');
-    setUserId(userId as any);
+    const userToken = localStorage.getItem('userToken');
+    const user = decodeToken(userToken as string);
+    setUserId(user.id);
   }, []);
 
   const getUserById = useGetUserByIdQuery({ variables: { id: userId as any } });
