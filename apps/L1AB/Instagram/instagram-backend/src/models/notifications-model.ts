@@ -40,7 +40,6 @@ const NotificationsSchema = new Schema<NotificationsType>({
 
 export type NotificationsPopulatedType = NotificationsType & {
   userId: UserType;
-  notifiedUserId: UserType;
   postId: PostsType;
 };
 
