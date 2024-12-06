@@ -1,0 +1,47 @@
+query GetArtists {
+  getArtists {
+    _id
+    artistName
+    image
+    additional
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CreateArtist($input: ArtistInput!) {
+  createArtist(input: $input) {
+    _id
+    artistName
+    image
+    additional
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateArtist($input: UpdateArtistInput!) {
+  updateArtist(input: $input) {
+    _id
+    artistName
+    image
+    additional
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteArtist($id: ID!) {
+  deleteArtist(_id: $id) {
+    _id
+    artistName
+    image
+    additional
+    status
+    createdAt
+    updatedAt
+  }
+}
