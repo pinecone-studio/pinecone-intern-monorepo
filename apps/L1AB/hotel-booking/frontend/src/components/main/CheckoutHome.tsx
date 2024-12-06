@@ -1,6 +1,6 @@
 'use client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AiOutlineThunderbolt } from 'react-icons/ai';
+import { Zap } from 'lucide-react';
 export const CheckOutHome = () => {
   return (
     <div className="w-full p-3">
@@ -104,19 +104,19 @@ export const CheckOutHome = () => {
                 <div>
                   <div className="flex flex-row gap-7 mt-3">
                     <div className="flex items-center">
-                      <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> 1 Queen Bed
+                      <Zap className="w-[26px] h-[16px]" /> 1 Queen Bed
                     </div>
                     <div className="flex items-center">
-                      <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Non Smoking
+                      <Zap className="w-[26px] h-[16px]" /> Non Smoking
                     </div>
                   </div>
                   <div>
                     <div className="flex flex-row gap-7 mt-3">
                       <div className="flex items-center">
-                        <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Breakfast included
+                        <Zap className="w-[26px] h-[16px]" /> Breakfast included
                       </div>
                       <div className="flex items-center">
-                        <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Pet friendly
+                        <Zap className="w-[26px] h-[16px]" /> Pet friendly
                       </div>
                     </div>
                   </div>
