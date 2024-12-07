@@ -47,8 +47,8 @@ describe('Login Page', () => {
       }
     `,
         variables: {
-          username: 'bat',
-          email: 'bat',
+          username: 'mock-user',
+          email: 'mock-user',
           password: 'password',
         },
       },
@@ -58,8 +58,11 @@ describe('Login Page', () => {
         window.localStorage.setItem('userToken', response.body.data.token);
       }
     });
-    cy.wait('@loginRequest', { timeout: 10000 });
+    cy.wait('@loginRequest');
     cy.url().should('include', '/home');
+    cy.window().then((win) => {
+      expect(win.localStorage.getItem('userToken')).to.eq('mocked-token');
+    });
   });
   it('login hiiged buruu shiljihgui', () => {
     cy.intercept('POST', 'https://instagram-backend-testing.vercel.app/api/graphql', {
@@ -90,7 +93,7 @@ describe('Login Page', () => {
       },
       failOnStatusCode: false,
     });
-    cy.wait('@loginRequest', { timeout: 10000 });
+    cy.wait('@loginRequest');
     cy.url().should('include', '/login');
   });
 });
