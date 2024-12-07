@@ -2,7 +2,8 @@
 import { useGetAllUsersQuery, useGetFollowersByIdQuery, useGetFollowingByIdQuery, useGetUserByIdQuery } from '@/generated';
 import { createContext, PropsWithChildren, useEffect, useState } from 'react';
 import * as _ from 'lodash';
-import { decodeToken } from '../utils/decode-utils';
+import jwt from 'jsonwebtoken';
+import { useRouter } from 'next/navigation';
 
 interface UserContextType {
   user: any;
@@ -13,11 +14,20 @@ interface UserContextType {
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
   const [userId, setUserId] = useState();
   useEffect(() => {
     const userToken = localStorage.getItem('userToken');
-    const user = decodeToken(userToken as string);
-    setUserId(user.id);
+
+    if (userToken) {
+      const user: any = jwt.decode(userToken as string);
+
+      if (!user?.id) {
+        return router.push('/login');
+      }
+
+      return setUserId(user?.id as any);
+    }
   }, []);
 
   const getUserById = useGetUserByIdQuery({ variables: { id: userId as any } });
