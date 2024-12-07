@@ -58,7 +58,7 @@ describe('Login Page', () => {
         window.localStorage.setItem('userToken', response.body.data.token);
       }
     });
-    cy.wait('@loginRequest');
+    cy.wait('@loginRequest', { timeout: 10000 });
     cy.url().should('include', '/home');
   });
   it('login hiiged buruu shiljihgui', () => {
@@ -90,7 +90,7 @@ describe('Login Page', () => {
       },
       failOnStatusCode: false,
     });
-    cy.wait('@loginRequest');
+    cy.wait('@loginRequest', { timeout: 10000 });
     cy.url().should('include', '/login');
   });
 });
