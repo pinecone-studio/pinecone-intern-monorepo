@@ -22,9 +22,9 @@ const SignUpForm: React.FC = () => {
       case 0:
         return <SignUpFormEmailStep setEmail={setEmail} nextHandler={nextHandler} signUpSendOtpMutation={signUpSendOtpMutation} otpLoading={otpLoading} otpError={otpError} />;
       case 1:
-        return <SignUpFormOtpStep setOtp={setOtp} nextHandler={nextHandler} email={email} otp={otp} signUpMutation={signUpMutation} signUpLoading={signUpLoading} signUpError={signUpError} />;
+        return <SignUpFormOtpStep setOtp={setOtp} nextHandler={nextHandler} />;
       case 2:
-        return <SignUpFormPasswordStep email={email} signUpMutation={signUpMutation} signUpLoading={signUpLoading} signUpError={signUpError} />;
+        return <SignUpFormPasswordStep email={email} otp={otp} signUpMutation={signUpMutation} signUpLoading={signUpLoading} signUpError={signUpError} />;
     }
   };
 
