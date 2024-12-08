@@ -4,6 +4,7 @@ import { Settings } from 'lucide-react';
 import { useGetFollowersByIdQuery, useGetFollowingByIdQuery, User } from '@/generated';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './providers';
+import Link from 'next/link';
 import FollowingButton from './FollowingButton';
 import { FollowersDialog } from './FollowersDialog';
 
@@ -45,12 +46,10 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
           <h2 className={styles.header}>{userProfile?.username}</h2>
           {user?.username === userProfile?.username ? (
             <div className="flex gap-2">
-              <Button className={styles.button} data-testid="edit-profile-button">
-                Edit Profile
-              </Button>
-              <Button className={styles.button} data-testid="ad-tools-button">
-                Ad Tools
-              </Button>
+              <Link href={'editprofile'}>
+                <Button className={styles.button} data-testid="edit-profile-button">Edit Profile</Button>
+              </Link>
+              <Button className={styles.button} data-testid="ad-tools-button">Ad tools</Button>
             </div>
           ) : (
             <FollowingButton isFollowing={isFollow} setIsFollow={setIsFollow} userId={user?._id} profileUserId={userProfile?._id} handleFollowersUpdate={handleFollowersUpdate} />
