@@ -17,9 +17,11 @@ const Page = () => {
         password: values.password,
       },
     });
-    if (data) {
+    if (data && data.login && data.login.token) {
       localStorage.setItem('userToken', data.login.token);
       router.push('/home');
+    } else {
+      console.error('Login failed: Invalid data received.');
     }
   };
 
