@@ -2,24 +2,18 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import PostDetail from '@/components/PostDetail';
 import { MockedProvider } from '@apollo/client/testing';
-import { CreateCommentDocument, GetCommentsByPostIdDocument, useCreateCommentMutation, useGetCommentsByPostIdQuery } from '@/generated';
-import userEvent from '@testing-library/user-event';
+import { CreateCommentDocument, GetCommentsByPostIdDocument } from '@/generated';
 import { InMemoryCache } from '@apollo/client';
-jest.mock('@/generated', () => ({
-  useCreateCommentMutation: jest.fn(),
-  useGetCommentsByPostIdQuery: jest.fn(),
-}));
+
 const mockPostData = {
   postimages: ['/image1.jpg', '/image2.jpg'],
   postcaption: 'Test Caption',
   userName: 'testuser',
   userProfile: '/profile.jpg',
-  postId: 'post123',
-  userId: 'user456',
+  postId: '2',
+  userId: '11',
 };
-const mockCommentsData = {
-  getCommentsByPostId: [{ userId: { username: 'commenter1', profilePicture: '/commenter1.jpg' }, comment: 'Great post!' }],
-};
+
 export const createCommentMock = {
   request: { query: CreateCommentDocument, variables: { input: { comment: 'comment', postId: '2', userId: '11' } } },
   result: { data: { createComment: { _id: '1', comment: 'Great post!', updatedAt: 'user123', createdAt: '2023-10-01' } } },
@@ -39,23 +33,46 @@ export const getCommentsMock = {
       data: {
         getCommentsByPostId: [
           { _id: '1', userId: { username: 'name', _id: '2' }, postId: { _id: '2' }, comment: 'testComment' },
-          { _id: '2', userId: { username: 'name', _id: '2' }, postId: { _id: '2' }, comment: 'testComment' },
-        ],
-      },
-    };
+          { _id: '2', userId: { username: 'name', _id: '2' }, postId: { _id: '2' }, comment: 'testComment' }]}};
   },
 };
 describe('PostDetail Component', () => {
-  // beforeEach(() => {
-  //   const cache = new InMemoryCache();
-  //   cache.reset();
-  //   (useGetCommentsByPostIdQuery as jest.Mock).mockReturnValue({
-  //     data: mockCommentsData,
-  //     refetch: jest.fn(),
-  //   });
-  //   (useCreateCommentMutation as jest.Mock).mockReturnValue([jest.fn()]);
-  // });
-  it('image slider', async () => {
+  beforeEach(() => {
+    const cache = new InMemoryCache();
+    cache.reset();
+  });
+  it('should navigate to the previous image correctly', () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getCommentsMock, createCommentMock]}>
+        <PostDetail {...mockPostData} />
+      </MockedProvider>
+    );
+    const messageCircleIcon = getByTestId('MessageCircleIcon');
+    fireEvent.click(messageCircleIcon);
+
+    const PrevButton = getByTestId('PrevButton');
+
+    expect(PrevButton).toBeTruthy();
+
+    fireEvent.click(PrevButton);
+  });
+
+  it('should navigate to the next image correctly', () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getCommentsMock, createCommentMock]}>
+        <PostDetail {...mockPostData} />
+      </MockedProvider>
+    );
+    const messageCircleIcon = getByTestId('MessageCircleIcon');
+    fireEvent.click(messageCircleIcon);
+
+    const NextButton = getByTestId('NextButton');
+
+    expect(NextButton).toBeTruthy();
+
+    fireEvent.click(NextButton);
+  });
+  it('should handle multiple next and prev navigations', async () => {
     const { getByTestId } = render(
       <MockedProvider>
         <PostDetail {...mockPostData} />
@@ -63,78 +80,76 @@ describe('PostDetail Component', () => {
     );
     const message = getByTestId('MessageCircleIcon');
     fireEvent.click(message);
+
     const NextButton = getByTestId('NextButton');
     const PrevButton = getByTestId('PrevButton');
+    
     fireEvent.click(NextButton);
     fireEvent.click(PrevButton);
+    fireEvent.click(PrevButton);
+    fireEvent.click(NextButton);
+    fireEvent.click(NextButton);
+    fireEvent.click(NextButton);
   });
-  it('displays post details correctly', () => {
-    render(
+  it('displays post details correctly', async () => {
+    const { debug } =render(
       <MockedProvider>
         <PostDetail {...mockPostData} />
       </MockedProvider>
     );
-    expect(screen.getByText(mockPostData.userName)).toBeInTheDocument();
-    expect(screen.getByText(mockPostData.postcaption)).toBeInTheDocument();
+
+    const messageIcon = screen.getByTestId('MessageCircleIcon');
+    fireEvent.click(messageIcon);
+
+    debug();
+
+    const usernameElements = screen.getAllByText(mockPostData.userName);
+    expect(usernameElements.length).toBeGreaterThan(0);
+
+    const captionElements = screen.getAllByText(mockPostData.postcaption);
+    expect(captionElements.length).toBeGreaterThan(0);
+
+    const images = screen.getAllByRole('img');
+    expect(images.length).toBeGreaterThanOrEqual(mockPostData.postimages.length);
   });
-  it('Create comment', async () => {
-    const { getByTestId } = render(
+
+  it('should create new comment', async () => {
+    render(
       <MockedProvider mocks={[getCommentsMock, createCommentMock]} addTypename={false}>
         <PostDetail {...mockPostData} />
       </MockedProvider>
     );
 
-    const message = getByTestId('MessageCircleIcon');
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const message = screen.getByTestId('MessageCircleIcon');
     fireEvent.click(message);
-    const commentInput = getByTestId('commentInput') as HTMLInputElement;
+
+    const commentInput = screen.getByTestId('commentInput') as HTMLInputElement;
+    const postButton = screen.getByTestId('handleComment');
 
     fireEvent.change(commentInput, { target: { value: 'comment' } });
-
-    const createComment = getByTestId('handleComment');
-    fireEvent.click(createComment);
+    fireEvent.click(postButton);
 
     await waitFor(() => expect(commentInput.value).toEqual(''));
   });
-  it('should handle comment input and submission', async () => {
-    const createCommentMock = jest.fn();
-    (useCreateCommentMutation as jest.Mock).mockReturnValue([createCommentMock]);
+
+  it('handles comment creation with no user ID gracefully', async () => {
+    const postDataNoUser = { ...mockPostData, userId: '' };
+
     render(
       <MockedProvider>
-        <PostDetail {...mockPostData} />
+        <PostDetail {...postDataNoUser} />
       </MockedProvider>
     );
+
+    const messageIcon = screen.getByTestId('MessageCircleIcon');
+    fireEvent.click(messageIcon);
 
     const commentInput = screen.getByTestId('commentInput');
-    userEvent.type(commentInput, 'This is a test comment');
-    const postButton = screen.getByText(/Post/i);
-    userEvent.click(postButton);
+    const postButton = screen.getByTestId('handleComment');
 
-    expect(createCommentMock).calledOnceWith({
-      variables: {
-        input: {
-          comment: 'This is a test comment',
-          postId: '123',
-          userId: '456',
-        },
-      },
-    });
-
+    fireEvent.change(commentInput, { target: { value: 'comment' } });
+    fireEvent.click(postButton);
   });
-
-  it('should display the existing comments', () => {
-    render(
-      <MockedProvider>
-        <PostDetail {...mockPostData} />
-      </MockedProvider>
-    );
-  });
-
-  it('should open the dialog when the MessageCircle icon is clicked', () => {
-    render(
-      <MockedProvider>
-        <PostDetail {...mockPostData} />
-      </MockedProvider>
-    );
-    fireEvent.click(screen.getByRole('button', { name: /message/i }));
-  });
-});
+})

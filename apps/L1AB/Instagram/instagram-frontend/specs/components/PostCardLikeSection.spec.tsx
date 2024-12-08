@@ -6,11 +6,19 @@ import { fireEvent, render } from '@testing-library/react';
 export const PostCardSampleProps = {
   postId: '2',
   userId: '11',
+  images: ['/image1.jpg', '/image2.jpg'],
+  caption: 'Test Caption',
+  userName: 'testuser',
+  profilePicture: '/profile.jpg',
 };
 
 const PostCardSamplePropsWithoutUserId = {
   postId: '2',
   userId: '',
+  images: [],
+  caption: '',
+  userName: '',
+  profilePicture: '',
 };
 
 export const createLikeMock = {
@@ -114,12 +122,7 @@ export const getLikesByPostIdMock = {
 //           },
 //           {
 //             postId: '2',
-//           },
-//         ],
-//       },
-//     };
-//   },
-// };
+//           }]}}}};
 describe('PostCardLikeSection', () => {
   it('Like post', async () => {
     const { getByTestId } = render(

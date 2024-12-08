@@ -1,6 +1,6 @@
 import { useCreateLikeMutation, useGetLikesByPostIdQuery } from '@/generated';
 import { CardPropsType } from './PostCardCommentSection';
-import { Heart, Bookmark } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import PostDetail from './PostDetail';
 
 // const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
@@ -9,13 +9,11 @@ import PostDetail from './PostDetail';
 //   return <Bookmark data-testid="saveButton" onClick={handleSave} className="cursor-pointer" fill={saveFillColor} />;
 // };
 
-const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
+const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, userName }: CardPropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
   // const { data: savedData, refetch: savedRefetch } = useGetSavedByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId;
   
-  
-
   const [createLike] = useCreateLikeMutation();
   // const [createSave] = useCreateSaveMutation();
 

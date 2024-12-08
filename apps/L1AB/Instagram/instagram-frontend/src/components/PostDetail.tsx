@@ -62,11 +62,10 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
                 return (
                   <div key={i} className="relative h-full w-[528px] overflow-hidden">
                     <Image className="object-cover" alt="no" src={image} fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-                  </div>
-                );
+                  </div>);
               })}
             </div>
-            <div className="absolute inset-0 flex items-center justify-between p-4">
+            <div  className="absolute inset-0 flex items-center justify-between p-4">
               <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev} data-testid="PrevButton">
                 <ChevronLeft size={20} />
               </button>
