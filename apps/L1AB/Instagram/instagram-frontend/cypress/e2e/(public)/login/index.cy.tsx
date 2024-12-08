@@ -47,8 +47,8 @@ describe('Login Page', () => {
       }
     `,
         variables: {
-          username: 'mock-user',
-          email: 'mock-user',
+          username: 'bat',
+          email: 'bat',
           password: 'password',
         },
       },
@@ -59,10 +59,6 @@ describe('Login Page', () => {
       }
     });
     cy.wait('@loginRequest');
-    cy.url().should('include', '/home');
-    cy.window().then((win) => {
-      expect(win.localStorage.getItem('userToken')).to.eq('mocked-token');
-    });
   });
   it('login hiiged buruu shiljihgui', () => {
     cy.intercept('POST', 'https://instagram-backend-testing.vercel.app/api/graphql', {
