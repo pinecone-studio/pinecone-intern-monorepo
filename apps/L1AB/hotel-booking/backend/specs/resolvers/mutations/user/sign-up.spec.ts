@@ -4,9 +4,6 @@ import bcrypt from 'bcrypt';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
-  otpModel: {
-    findOne: jest.fn(),
-  },
   userModel: {
     create: jest.fn(),
   },
@@ -24,17 +21,14 @@ describe('signUp Resolver', () => {
   it('should create a user successfully', async () => {
     const mockInput = {
       email: 'test@gmail.com',
-      otp: '1234',
       password: '12345678',
     };
 
-    (otpModel.findOne as jest.Mock).mockResolvedValue({ email: 'test@gmail.com', otp: '1234' });
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
     (userModel.create as jest.Mock).mockResolvedValue({ email: 'test@gmail.com', password: 'hashedPassword' });
 
     const result = await signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
 
-    expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@gmail.com' });
     expect(bcrypt.hash).toHaveBeenCalledWith('12345678', 10);
     expect(userModel.create).toHaveBeenCalledWith({
       email: 'test@gmail.com',
@@ -47,23 +41,6 @@ describe('signUp Resolver', () => {
     });
   });
 
-  it('should return error when OTP is invalid', async () => {
-    const mockInput = {
-      email: 'test@gmail.com',
-      otp: '5678',
-      password: '12345678',
-    };
-
-    (otpModel.findOne as jest.Mock).mockResolvedValue({ email: 'test@gmail.com', otp: '1234' });
-
-    await expect(
-      signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('Invalid OTP');
-
-    expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@gmail.com' });
-    expect(userModel.create).not.toHaveBeenCalled();
-  });
-
   it('should return error when user creation fails', async () => {
     const mockInput = {
       email: 'test@gmail.com',
@@ -71,36 +48,14 @@ describe('signUp Resolver', () => {
       password: '12345678',
     };
 
-    (otpModel.findOne as jest.Mock).mockResolvedValue({ email: 'test@gmail.com', otp: '1234' });
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
     (userModel.create as jest.Mock).mockRejectedValue(new Error('Failed to create user'));
 
-    await expect(
-      signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('Failed to create user');
+    await expect(signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Failed to create user');
 
-    expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@gmail.com' });
     expect(userModel.create).toHaveBeenCalledWith({
       email: 'test@gmail.com',
       password: 'hashedPassword',
     });
   });
-
-  it('should return error for missing OTP', async () => {
-    const mockInput = {
-      email: 'test@gmail.com',
-      otp: '5678',
-      password: '12345678',
-    };
-  
-    (otpModel.findOne as jest.Mock).mockResolvedValue(null);
-  
-    await expect(
-      signUp!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('No OTP found for the provided email');
-  
-    expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@gmail.com' });
-    expect(userModel.create).not.toHaveBeenCalled();
-  });
-  
 });

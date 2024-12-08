@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useSignUpMutation } from '@/generated';
 
 const otpSchema = z.object({
   otp: z
@@ -17,19 +18,27 @@ const otpSchema = z.object({
 interface SignUpFormOtpStepProps {
   setOtp: React.Dispatch<React.SetStateAction<string>>;
   nextHandler: () => void;
+  email: string;
+  signUpMutation: ReturnType<typeof useSignUpMutation>[0];
 }
 
 interface FormValues {
   otp: string;
 }
 
-const SignUpFormOtpStep: React.FC<SignUpFormOtpStepProps> = ({ setOtp, nextHandler }) => {
+const SignUpFormOtpStep: React.FC<SignUpFormOtpStepProps> = ({ setOtp, nextHandler, email, signUpMutation }) => {
   const { register, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(otpSchema),
     defaultValues: { otp: '' },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = ({ otp }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({ otp }) => {
+    const response = await signUpMutation({
+      variables: { input: { email, otp, password } },
+    });
+    if (response.data?.signUp?.success) {
+      alert('User created successfully!');
+    }
     setOtp(otp);
     nextHandler();
   };
