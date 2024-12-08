@@ -12,58 +12,10 @@ const mockBookingData = {
   getBookingByUserId: [
     {
       _id: 'booking1',
-      status: 'Цуцлагдсан',
-      amountTotal: 500000,
-      createdAt: '2024-11-01T00:00:00Z',
-      updatedAt: '2024-11-01T00:00:00Z',
-      eventId: {
-        name: 'Rock Concert',
-      },
-      venues: [
-        { name: 'Энгийн', price: 100000, quantity: undefined },
-        { name: 'Fanzone', price: undefined, quantity: 100 },
-        { name: 'Vip', price: 50000, quantity: 100 },
-        { name: undefined, price: 50000, quantity: 100 },
-      ],
-    },
-    {
-      _id: 'booking1',
-      status: 'Done',
-      amountTotal: 500000,
-      createdAt: '2024-11-01T00:00:00Z',
-      updatedAt: '2024-12-02T00:00:00Z',
-      eventId: {
-        name: 'Rock Concert',
-      },
-      venues: [
-        { name: 'Энгийн', price: 100000, quantity: undefined },
-        { name: 'Fanzone', price: undefined, quantity: 100 },
-        { name: 'Vip', price: 50000, quantity: 100 },
-        { name: undefined, price: 50000, quantity: 100 },
-      ],
-    },
-    {
-      _id: 'booking1',
-      status: 'Done',
+      status: 'Баталгаажсан',
       amountTotal: 500000,
       createdAt: '2024-11-01T00:00:00Z',
       updatedAt: new Date().toISOString(),
-      eventId: {
-        name: 'Rock Concert',
-      },
-      venues: [
-        { name: 'Энгийн', price: 100000, quantity: undefined },
-        { name: 'Fanzone', price: undefined, quantity: 100 },
-        { name: 'Vip', price: 50000, quantity: 100 },
-        { name: undefined, price: 50000, quantity: 100 },
-      ],
-    },
-    {
-      _id: 'booking1',
-      status: 'Цуцлах хүсэлт илгээсэн',
-      amountTotal: 500000,
-      createdAt: '2024-11-01T00:00:00Z',
-      updatedAt: '2024-11-01T00:00:00Z',
       eventId: {
         name: 'Rock Concert',
       },

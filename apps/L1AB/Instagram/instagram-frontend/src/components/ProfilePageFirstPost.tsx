@@ -13,7 +13,9 @@ export const ProfilePageFirstPost = () => {
         <h1 className="text-[30px] font-semibold leading-9 tracking-[-0.75px]">Share Photos</h1>
       </div>
       <p className="font-semibold leading-6 text-center w-[327px]">When you share photos, they will appear on your profile.</p>
-      <Button className={styles.button}>Share your first photo</Button>
+      <Button className={styles.button} data-testId="share-first-photo">
+        Share your first photo
+      </Button>
       <div className={styles.textContainer}>
         <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
         <p>© 2024 INSTAGRAM FROM META</p>

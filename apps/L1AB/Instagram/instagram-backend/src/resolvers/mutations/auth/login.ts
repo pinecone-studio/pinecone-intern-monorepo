@@ -18,10 +18,9 @@ export const login: MutationResolvers['login'] = async (_: unknown, { username, 
     throw new Error('Username or password incorrect');
   }
 
-  const token = jwt.sign({ ...checkUser }, JWT_SECRET);
+  const token = jwt.sign({ id: checkUser.id }, JWT_SECRET);
 
   return {
     token,
-    user: checkUser,
   };
 };

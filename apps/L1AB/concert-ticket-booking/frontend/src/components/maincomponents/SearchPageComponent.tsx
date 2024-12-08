@@ -15,7 +15,6 @@ export const SearchPageComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
   const { data, loading } = useGetAllEventsQuery();
-  // console.log(data?.getAllEvents[0].eventDate);
 
   if (loading) {
     return (
@@ -49,7 +48,7 @@ export const SearchPageComponent = () => {
         <div className="py-1 px-2 border border-[#27272A] flex justify-center items-center rounded-lg">
           <input
             data-cy="Search-Events"
-            className="py-1 px-3 bg-[#09090B] text-[#A1A1AA] outline-none"
+            className="py-[2px] px-3 bg-[#09090B] text-[#A1A1AA] outline-none"
             placeholder="Хайлт"
             value={searchTerm}
             data-testid="searchinput"

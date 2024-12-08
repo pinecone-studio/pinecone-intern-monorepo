@@ -1,6 +1,6 @@
 import { model, models, Schema, Types } from 'mongoose';
 import { UserType } from './user-model';
-import { PostsPopulatedType } from './posts-model';
+import { PostsType } from './posts-model';
 
 export type SavedType = {
   _id: string;
@@ -28,7 +28,7 @@ const SavedSchema = new Schema<SavedType>({
 
 export type SavedPopulatedType = SavedType & {
   userId: UserType;
-  postId: PostsPopulatedType;
+  postId: PostsType;
 };
 
 export const savedModel = models['Saved'] || model('Saved', SavedSchema);

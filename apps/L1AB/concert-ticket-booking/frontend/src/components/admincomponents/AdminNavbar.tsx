@@ -31,6 +31,11 @@ export const AdminNavbar = () => {
             Цуцлах хүсэлт
           </div>
         </Link>
+        <Link href={`/admin/artist`}>
+          <div data-testid="/admin/artist" className={`py-2 px-4 text-[14px] font-medium cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}>
+            Артист
+          </div>
+        </Link>
       </div>
     </div>
   );

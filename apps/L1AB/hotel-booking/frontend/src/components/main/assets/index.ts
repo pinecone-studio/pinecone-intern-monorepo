@@ -7,3 +7,4 @@ export * from './ImageDialog';
 export * from './CheckInDialog';
 export * from './ViewPricingDialog';
 export * from './ViewRulesDialog';
+export * from './BookingSvg';

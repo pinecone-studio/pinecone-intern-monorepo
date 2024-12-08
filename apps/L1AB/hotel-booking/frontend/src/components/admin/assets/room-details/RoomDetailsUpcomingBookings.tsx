@@ -1,8 +1,8 @@
 'use client';
+
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-import { RxCountdownTimer } from 'react-icons/rx';
 import { useState } from 'react';
+import { ArrowDownUp, History } from 'lucide-react';
 
 type BookingType = {
   _id: number;
@@ -17,7 +17,7 @@ type DetailsUpcomingBookingsPropsType = {
 
 export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBookingsPropsType) => {
   const [statusFilter, setStatusFilter] = useState<'Confirmed' | 'Pending' | 'Cancelled' | ''>(''); // Default no filter
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc'); // Sort by Date or ID
+  const [sortDirection, setSortDirection] = useState(true); // Sort by Date or ID
 
   // Filter based on the selected status
   const filteredBookings = mockBookings.filter((booking) => {
@@ -27,7 +27,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
 
   // Sort bookings by date or ID
   const sortedBookings = filteredBookings.sort((a, b) => {
-    if (sortDirection === 'asc') {
+    if (sortDirection) {
       return a.date.localeCompare(b.date); // Sort by date
     } else {
       return b.date.localeCompare(a.date); // Sort by date in descending order
@@ -35,7 +35,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
   });
 
   const handleSort = () => {
-    setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    setSortDirection(!sortDirection);
   };
 
   // Handle status change (cycling through statuses)
@@ -62,8 +62,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
                 <div className="flex gap-2 justify-center items-center">
                   <p>Status</p>
                   <div className="flex flex-col h-4 w-4">
-                    <IoIosArrowUp className="text-black cursor-pointer" data-testid="arrow-up-status" onClick={cycleStatus} />
-                    <IoIosArrowDown className="text-black cursor-pointer" data-testid="arrow-down-status" onClick={cycleStatus} />
+                    <ArrowDownUp className="text-black cursor-pointer" data-testid="status-sort" onClick={cycleStatus} />
                   </div>
                 </div>
               </TableHead>
@@ -71,8 +70,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
                 <div className="flex gap-2 justify-center items-center">
                   <p>Date</p>
                   <div className="text-sm flex flex-col justify-center items-center gap-0 h-4 w-4">
-                    <IoIosArrowUp onClick={handleSort} data-testid="arrow-up-date" />
-                    <IoIosArrowDown onClick={handleSort} data-testid="arrow-down-date" />
+                    <ArrowDownUp data-testid="date-sort" onClick={handleSort} />
                   </div>
                 </div>
               </TableHead>
@@ -84,7 +82,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
               <TableRow>
                 <TableCell colSpan={4} className="text-center text-gray-500 p-3">
                   <p className="text-gray-600 h-[18px] w-[18px] mb-4 text-lg">
-                    <RxCountdownTimer />
+                    <History />
                   </p>
                   <h1 className="text-black">Upcoming Bookings</h1>
                   <p>Your future bookings will appear here once confirmed.</p>

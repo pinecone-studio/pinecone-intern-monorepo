@@ -5,13 +5,21 @@ jest.mock('../../../../src/models', () => ({
   likesModel: {
     findOne: jest
       .fn()
-      .mockResolvedValueOnce({
+      .mockResolvedValue({
         _id: '11',
         userId: '1',
         postId: '2',
         createdAt: 'Date',
       })
-      .mockReturnValueOnce(null),
+      .mockReturnValueOnce(null)
+      .mockReturnValueOnce({
+        populate: jest.fn().mockResolvedValue({
+          _id: '11',
+          userId: '1',
+          postId: { _id: '2', userId: '11' },
+          createdAt: 'Date',
+        }),
+      }),
     deleteOne: jest.fn().mockResolvedValueOnce({ id: '1' }),
     create: jest.fn().mockResolvedValueOnce({
       _id: '11',
@@ -19,6 +27,9 @@ jest.mock('../../../../src/models', () => ({
       postId: '2',
       createdAt: 'Date',
     }),
+  },
+  notificationsModel: {
+    create: jest.fn().mockResolvedValue({ userId: '1', postId: '2', notifiedUserId: '11' }),
   },
 }));
 

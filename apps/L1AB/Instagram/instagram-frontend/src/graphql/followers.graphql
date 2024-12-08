@@ -1,6 +1,15 @@
 query GetFollowersById($id: ID!) {
   getFollowersById(_id: $id) {
     _id
+    email
+    username
+    fullname
+    gender
+    profilePicture
+    bio
+    isPrivate
+    createdAt
+    updatedAt
   }
 }
 mutation CreateFollowers($followerId: ID!, $followeeId: ID!) {
@@ -8,7 +17,6 @@ mutation CreateFollowers($followerId: ID!, $followeeId: ID!) {
     message
   }
 }
-
 query GetFollowingById($id: ID!) {
   getFollowingById(_id: $id) {
     _id
@@ -21,5 +29,13 @@ query GetFollowingById($id: ID!) {
     isPrivate
     createdAt
     updatedAt
+  }
+}
+mutation DeleteFollower($followerId: ID!, $followeeId: ID!) {
+  deleteFollower(followerId: $followerId, followeeId: $followeeId) {
+    _id
+    followerId
+    followeeId
+    createdAt
   }
 }

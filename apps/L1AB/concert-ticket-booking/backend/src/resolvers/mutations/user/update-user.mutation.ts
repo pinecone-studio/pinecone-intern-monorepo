@@ -1,8 +1,8 @@
 import { UserUpdateInput } from '../../../generated';
 import { userModel } from '../../../models';
-import { Context } from '../../../types';
+import { Context, User } from '../../../types';
 
-const checkUserAuthentication = (user: any) => {
+const checkUserAuthentication = (user: User) => {
   if (!user || !user.userId) {
     throw new Error('User is not authenticated');
   }

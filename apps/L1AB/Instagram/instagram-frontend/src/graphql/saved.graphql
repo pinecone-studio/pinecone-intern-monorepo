@@ -3,6 +3,8 @@ mutation CreateSave($postId: ID!, $userId: ID!) {
 }
 query GetSavedByPostId($postId: ID!) {
   getSavedByPostId(postId: $postId) {
-    postId
+    postId {
+      _id
+    }
   }
 }

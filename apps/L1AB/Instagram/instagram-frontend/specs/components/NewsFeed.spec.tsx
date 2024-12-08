@@ -1,28 +1,48 @@
 import '@testing-library/jest-dom';
 import { render, waitFor } from '@testing-library/react';
 import NewsFeed from '@/components/NewsFeed';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { GetAllPostsDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
+import { GetPostsByFollowersIdDocument } from '@/generated';
 import { PropsType } from './PostCard.spec';
+import { UserContext } from '@/components/providers';
+const mockUser = {
+  _id: '134124',
+  email: '123@gmail.com',
+  username: 'blabla',
+  fullname: 'blabla',
+  gender: 'blabla',
+  password: 'blabla',
+  profilePicture: 'blabla',
+  bio: 'blabla',
+  isPrivate: false,
+  createdAt: 'blabla',
+  updatedAt: 'blabla',
+};
 
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: PropsType) => <img src={src} alt={alt} />,
 }));
-const mock: MockedResponse = {
+const getPostsByFollowersIdMock = {
   request: {
-    query: GetAllPostsDocument,
+    query: GetPostsByFollowersIdDocument,
+    variables: {
+      followerId: '134124',
+    },
   },
   result: {
     data: {
-      getAllPosts: [
+      getPostsByFollowersId: [
         {
-          _id: '1',
-          userId: '1',
-          images: ['/https://picsum.photos/900/890', '/https://picsum.photos/900/890'],
-          caption: 'caption',
+          _id: 'post1',
+          userId: {
+            username: 'zorigoo',
+            _id: 'zorID',
+            profilePicture: 'zurag',
+          },
+          images: ['zurag'],
+          caption: 'noCap',
           createdAt: 'date',
-          updatedAt: 'date',
         },
       ],
     },
@@ -32,12 +52,24 @@ const mock: MockedResponse = {
 describe('NewsFeed', () => {
   it('should render successfully', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[mock]}>
-        <NewsFeed />
-      </MockedProvider>
+      <UserContext.Provider value={{ user: mockUser }}>
+        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+          <NewsFeed />
+        </MockedProvider>
+      </UserContext.Provider>
     );
     await waitFor(() => {
       expect(getByTestId('NewsFeedPostCard-0'));
     });
+  });
+
+  it('should render successfully', async () => {
+    render(
+      <UserContext.Provider value={{ user: null }}>
+        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+          <NewsFeed />
+        </MockedProvider>
+      </UserContext.Provider>
+    );
   });
 });

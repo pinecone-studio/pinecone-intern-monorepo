@@ -110,7 +110,6 @@ export const UpdateEventComponent = ({ eventId }: { eventId: string }) => {
       toast.error('Failed to update event');
     }
   };
-  console.log(formData);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

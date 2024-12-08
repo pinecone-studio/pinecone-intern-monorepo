@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../generated';
-import { likesModel } from '../../../models';
+import { likesModel, notificationsModel } from '../../../models';
 
 export const createLike: MutationResolvers['createLike'] = async (_, { userId, postId }) => {
   const like = await likesModel.findOne({ postId: postId, userId: userId });
@@ -9,6 +9,18 @@ export const createLike: MutationResolvers['createLike'] = async (_, { userId, p
     return like;
   } else {
     const newLike = await likesModel.create({ userId, postId });
+    const liked = await likesModel.findOne({ postId: postId, userId: userId }).populate('postId');
+
+    if (liked) {
+      const notifiedUserIdliked = liked.postId.userId;
+
+      await notificationsModel.create({
+        userId: userId,
+        type: 'like',
+        postId: postId,
+        notifiedUserId: notifiedUserIdliked,
+      });
+    }
     return newLike;
   }
 };
