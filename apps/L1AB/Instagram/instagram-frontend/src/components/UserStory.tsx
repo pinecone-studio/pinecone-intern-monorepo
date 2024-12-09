@@ -86,7 +86,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
       </div>
 
       <div className={` ${mainUserStory === userStoriesGroup.userId._id ? 'absolute inset-0 flex items-center justify-between ' : 'hidden'}`}>
-        <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white -left-11 absolute" onClick={prev} data-testid="PrevButton">
+        <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white -left-11 absolute" onClick={prev} data-testid={`PrevButton`}>
           <ChevronLeft size={20} />
         </button>
         <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white absolute -right-11" onClick={next} data-testid="NextButton">
