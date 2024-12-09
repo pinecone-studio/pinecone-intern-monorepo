@@ -14,7 +14,7 @@ const NewsFeed = () => {
     },
   });
 
-  if (loading) return <Loading width={`[500px]`} size={40} py={100} />;
+  if (loading) return <Loading size={30} />;
   const posts = data?.getPostsByFollowersId;
 
   console.log(posts);
