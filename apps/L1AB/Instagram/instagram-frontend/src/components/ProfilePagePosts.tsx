@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './providers';
 import { User } from '@/generated';
 import ProfilePagePostsAndSaved from './ProfilePagePostsAndSaved';
+import Loading from './Loading';
 
 export const styles = {
   button: 'bg-white hover:bg-white text-[#2563EB] font-medium leading-5 text-[14px] outline-none',
@@ -16,7 +17,7 @@ export const styles = {
   textContainer: 'w-[935px] mt-7 text-center flex flex-col gap-4 text-[12px] text-[#71717A] leading-4',
 };
 
-export const ProfilePagePosts = ({ userPosts, userProfile }: any) => {
+export const ProfilePagePosts = ({ userPosts, userProfile, loading }: any) => {
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const { user, sortedUsers }: any = useContext(UserContext);
 
@@ -29,7 +30,7 @@ export const ProfilePagePosts = ({ userPosts, userProfile }: any) => {
   return (
     <div className={styles.container} data-cy="Profile-page-posts">
       <div className={styles.line}>{userProfile?.isPrivate == true ? isFollow ? null : <ProfilePagePostsAndSaved user={user} /> : <ProfilePagePostsAndSaved user={user} />}</div>
-      <ProfilePostsSection userPosts={userPosts} profileUser={userProfile} isFollow={isFollow} user={user} />
+      {loading ? <Loading size={40} py={100} /> : <ProfilePostsSection userPosts={userPosts} profileUser={userProfile} isFollow={isFollow} user={user} />}
     </div>
   );
 };
