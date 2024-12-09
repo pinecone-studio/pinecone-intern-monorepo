@@ -17,7 +17,7 @@ const StoryDetail = ({ userId, setUserId }: PropsType) => {
   if (!groupedStories) return <p>Loading...</p>;
 
   const mainUserStory = Object.keys(groupedStories).find((item) => item === userId);
-
+  console.log(mainUserStory, 'main user story');
   const [api, setApi] = React.useState<CarouselApi>();
 
   const currentIndex = useMemo(() => {
