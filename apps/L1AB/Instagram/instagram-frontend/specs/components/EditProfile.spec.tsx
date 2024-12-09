@@ -64,7 +64,7 @@ describe('Editprofile', () => {
       </MockedProvider>
     );
     fireEvent.change(getByPlaceholderText('Name'), { target: { value: 'name' } });
-    fireEvent.change(getByPlaceholderText('UserName'), { target: { value: 'fullName' } });
+    fireEvent.change(getByPlaceholderText('Username'), { target: { value: 'fullName' } });
 
     const Bio = getByTestId('Bio');
     fireEvent.change(Bio, { target: { value: 'bioshu' } });
@@ -102,7 +102,7 @@ describe('Editprofile', () => {
       </MockedProvider>
     );
     fireEvent.change(getByPlaceholderText('Name'), { target: { value: 'name' } });
-    fireEvent.change(getByPlaceholderText('UserName'), { target: { value: 'fullName' } });
+    fireEvent.change(getByPlaceholderText('Username'), { target: { value: 'fullName' } });
 
     fireEvent.click(getByTestId('updateSumbit'));
     await waitFor(() => {
