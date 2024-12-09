@@ -30,7 +30,7 @@ export const ProfilePagePosts = ({ userPosts, userProfile, loading }: any) => {
   return (
     <div className={styles.container} data-cy="Profile-page-posts">
       <div className={styles.line}>{userProfile?.isPrivate == true ? isFollow ? null : <ProfilePagePostsAndSaved user={user} /> : <ProfilePagePostsAndSaved user={user} />}</div>
-      {loading ? <Loading size={40} py={100} /> : <ProfilePostsSection userPosts={userPosts} profileUser={userProfile} isFollow={isFollow} user={user} />}
+      {loading ? <Loading size={30} /> : <ProfilePostsSection userPosts={userPosts} profileUser={userProfile} isFollow={isFollow} user={user} />}
     </div>
   );
 };

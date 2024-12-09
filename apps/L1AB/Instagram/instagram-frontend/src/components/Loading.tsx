@@ -1,6 +1,6 @@
-const Loading = ({ size, py, color = '#555555', width = 'full' }: any) => {
+const Loading = ({ size, color = '#555555', pageReload = 'min-w-[500px] py-[100px]' }: any) => {
   return (
-    <div className={`min-w-${width} flex justify-center items-center py-[${py}px]`} data-testId="Loading">
+    <div className={`${pageReload} flex justify-center items-center`} data-testId="Loading">
       <div className={`animate-spin w-[${size}px] h-[${size}px]`}>
         <svg width={size} height={size} viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="Frame">
