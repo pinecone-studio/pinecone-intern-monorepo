@@ -33,7 +33,7 @@ export const typeDefs = gql`
 
   input UpdateRoomInput {
     _id: ID!
-    maxCapacity: Int!
+    maxCapacity: Int
     name: String
     roomNumber: String
     price: Int
