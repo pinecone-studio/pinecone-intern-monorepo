@@ -8,6 +8,7 @@ export const typeDefs = gql`
 
   type Room {
     _id: ID!
+    maxCapacity: Int!
     hotelId: Hotel!
     name: String!
     roomNumber: String!
@@ -21,6 +22,7 @@ export const typeDefs = gql`
 
   input RoomInput {
     name: String!
+    maxCapacity: Int!
     hotelId: ID!
     roomNumber: String!
     price: Int!
@@ -31,6 +33,7 @@ export const typeDefs = gql`
 
   input UpdateRoomInput {
     _id: ID!
+    maxCapacity: Int!
     name: String
     roomNumber: String
     price: Int

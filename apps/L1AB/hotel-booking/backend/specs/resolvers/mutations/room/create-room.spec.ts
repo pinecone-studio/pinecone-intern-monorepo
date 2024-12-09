@@ -15,6 +15,7 @@ jest.mock('../../../../src/models', () => ({
         description: 'Test',
         photos: ['url1', 'url2'],
         hotelId: 'dahs',
+        maxCapacity: 2,
       })
       .mockRejectedValueOnce(new Error('Failed to add room')),
   },
@@ -30,6 +31,7 @@ describe('Create room', () => {
       description: 'Test',
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
+      maxCapacity: 2,
     };
 
     const result = await createRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
@@ -40,6 +42,7 @@ describe('Create room', () => {
       roomNumber: '12',
       price: 200,
       roomType: RoomType.One,
+      maxCapacity: 2,
       description: 'Test',
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
@@ -55,6 +58,7 @@ describe('Create room', () => {
       description: 'Test',
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
+      maxCapacity: 2,
     };
 
     try {
