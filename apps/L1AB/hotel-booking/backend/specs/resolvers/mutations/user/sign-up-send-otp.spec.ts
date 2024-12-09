@@ -25,14 +25,14 @@ describe('signUpSendOtp Resolver', () => {
 
   it('should return an error response for invalid email format', async () => {
     const invalidEmail = 'invalid-email';
-  
+
     const result = await signUpSendOtp!({}, { email: invalidEmail }, {} as any, {} as GraphQLResolveInfo);
-  
+
     expect(result).toEqual({
       success: false,
       message: 'Invalid email format',
     });
-  
+
     expect(userModel.findOne).not.toHaveBeenCalled();
     expect(otpModel.create).not.toHaveBeenCalled();
     expect(transporter.sendMail).not.toHaveBeenCalled();
@@ -40,21 +40,19 @@ describe('signUpSendOtp Resolver', () => {
 
   it('should return an error response when user already exists', async () => {
     (userModel.findOne as jest.Mock).mockResolvedValue({ email: 'existent@example.com' });
-  
-    await expect(
-      signUpSendOtp!({}, { email: 'existent@example.com' }, {} as any, {} as GraphQLResolveInfo)
-    ).resolves.toEqual({
+
+    await expect(signUpSendOtp!({}, { email: 'existent@example.com' }, {} as any, {} as GraphQLResolveInfo)).resolves.toEqual({
       success: false,
       message: 'User already exists',
     });
-  
+
     expect(userModel.findOne).toHaveBeenCalledWith({ email: 'existent@example.com' });
     expect(otpModel.create).not.toHaveBeenCalled();
     expect(transporter.sendMail).not.toHaveBeenCalled();
   });
 
   it('should send OTP successfully for a new user', async () => {
-    (userModel.findOne as jest.Mock).mockResolvedValue(null); 
+    (userModel.findOne as jest.Mock).mockResolvedValue(null);
     (otpModel.create as jest.Mock).mockResolvedValue({});
     (transporter.sendMail as jest.Mock).mockResolvedValue({});
 
@@ -79,5 +77,4 @@ describe('signUpSendOtp Resolver', () => {
       message: 'OTP sent successfully. Please check your email.',
     });
   });
-
 });
