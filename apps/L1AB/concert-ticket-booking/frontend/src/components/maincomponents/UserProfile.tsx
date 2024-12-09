@@ -24,7 +24,7 @@ export const UserProfile = () => {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = 'Имэйл хаяг оруулна уу!';
-    }
+    } 
 
     setErrors(errors);
 

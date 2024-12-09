@@ -7,11 +7,11 @@ export const signInUser: MutationResolvers['signInUser'] = async (_, { input }) 
   const { email, password } = input;
 
   const user = await userModel.findOne({ email });
-  if (!user) throw new Error('Invalid credentials');
+  if (!user) throw new Error('Майл эсвэл утас оруулна уу!');
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error('Username or Password incorrect');
-  
+
   const token = jwt.sign(
     {
       userId: user._id,

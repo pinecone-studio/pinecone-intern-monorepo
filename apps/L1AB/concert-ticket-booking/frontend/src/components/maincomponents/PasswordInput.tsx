@@ -10,9 +10,10 @@ interface PasswordInputProps {
   dataCy: string;
   value: string;
   onChange: (_event: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string | undefined;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, dataCy, value, onChange }) => {
+const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, dataCy, value, onChange, error }) => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -30,6 +31,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, dataCy, value,
           aria-label={label}
           className="mt-1 block w-full rounded-md border border-gray-700 bg-[#09090B] p-2 text-white text-sm"
         />
+        {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+
         <button
           type="button"
           onClick={() => setVisible(!visible)}
