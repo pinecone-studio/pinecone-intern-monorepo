@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import RightSideBar from '@/components/RightSideBar';
 import { UserContext } from '@/components/providers/UserProvider';
+import LogoutDialog from '@/components/LogoutButton';
 
 beforeAll(() => {
   Object.defineProperty(window, 'location', {
@@ -45,10 +46,12 @@ describe('RightSideBar', () => {
       </UserContext.Provider>
     );
 
-    const logoutButton = screen.getByTestId('btn-logout');
-    fireEvent.click(logoutButton);
-
-    expect(localStorage.getItem('userToken'));
+    const dialogButton = screen.getByTestId('btn-logout');
+    fireEvent.click(dialogButton);
+    render(<LogoutDialog />);
+    const LogOutButton = screen.getByTestId('log-out-button');
+    fireEvent.click(LogOutButton);
+    expect(localStorage.removeItem('userToken'));
     expect(window.location.reload);
   });
 });

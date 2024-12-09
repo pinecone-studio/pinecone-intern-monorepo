@@ -75,9 +75,9 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
                     <SelectValue placeholder="Профайл зураг солих" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Upload New Photo">Шинэ зураг оруулах</SelectItem>
-                    <SelectItem value="Remove Current Photo">Одоогийн зургаа устгах</SelectItem>
-                    <SelectItem value="Cancel">Цуцлах</SelectItem>
+                    <SelectItem value="Upload New Photo">Upload New Photo</SelectItem>
+                    <SelectItem value="Remove Current Photo">Remove Current Photo</SelectItem>
+                    <SelectItem value="Cancel">Cancel</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -95,7 +95,7 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
 
           <div className="pt-5">
             <p className="text-[#262626] text-base font-semibold font-sans">UserName</p>
-            <Input className="mt-2 font-sans" placeholder="UserName" value={updateData.username} onChange={(e) => setUpdateData({ ...updateData, username: e.target.value })} />
+            <Input className="mt-2 font-sans" placeholder="Username" value={updateData.username} onChange={(e) => setUpdateData({ ...updateData, username: e.target.value })} />
           </div>
 
           <div className="pt-5">
