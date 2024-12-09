@@ -16,7 +16,7 @@ export const LocationDialog = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle> Location</DialogTitle>
+          <DialogTitle>Location</DialogTitle>
         </DialogHeader>
         <Textarea id="address" name="address" placeholder="Location" onChange={addHotelForm.handleChange} onBlur={addHotelForm.handleBlur} value={addHotelForm.values.address} />
         {showError('address', addHotelForm.errors, addHotelForm.touched) && <label className="text-sm text-red-600 px-3">{addHotelForm.errors.address}</label>}

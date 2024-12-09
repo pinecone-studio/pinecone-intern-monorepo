@@ -8,7 +8,7 @@ type HotelDetailsImagesProps = {
 };
 export const HotelDetailsImages = ({ images }: HotelDetailsImagesProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div data-testid="HotelDetailsImages" className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Images</h1>
         <Button variant="ghost" className="text-blue-600">

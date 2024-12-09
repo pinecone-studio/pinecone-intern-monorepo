@@ -14,14 +14,10 @@ import {
   HotelDetailsRoomTypes,
   HotelDetailsUpcomingBookings,
 } from './assets/hotel-details';
-import { useParams } from 'next/navigation';
-import { useGetHotelByIdQuery } from '@/generated';
+
 export const HotelDetails = () => {
-  const { hotel } = useParams();
-  const { data } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
-  const hotelDetails = data?.getHotelById;
   return (
-    <DetailsContainer name={hotelDetails?.name || 'New Hotel'}>
+    <DetailsContainer>
       <DetailsLeft>
         <DetailsCard>
           <HotelDetailsUpcomingBookings />
@@ -53,7 +49,7 @@ export const HotelDetails = () => {
           <HotelDetailsLocation />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsImages images={hotelDetails?.images} />
+          <HotelDetailsImages />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

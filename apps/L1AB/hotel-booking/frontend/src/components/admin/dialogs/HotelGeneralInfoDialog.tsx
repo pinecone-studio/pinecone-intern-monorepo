@@ -35,7 +35,6 @@ export const HotelGeneralInfoDailog = () => {
                 Description
               </Label>
               <Textarea id="description" name="description" value={addHotelForm.values.description} onChange={addHotelForm.handleChange} onBlur={addHotelForm.handleBlur} />
-              {showError('description', addHotelForm.errors, addHotelForm.touched) && <label className="text-sm text-red-600 px-3">{addHotelForm.errors.description}</label>}
             </div>
           </div>
           <div className="flex flex-col gap-4 w-full mb-5">

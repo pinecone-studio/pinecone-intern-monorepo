@@ -1,79 +1,65 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
 import { HotelDetails } from '@/components/admin';
-import { useParams } from 'next/navigation';
-import { GetHotelByIdDocument } from '@/generated';
-import { MockedProvider } from '@apollo/client/testing';
-import React, { ReactNode } from 'react';
+import { useAdmin } from '@/components/providers/AdminProvider';
 
-jest.mock('next/navigation', () => ({
-  useParams: jest.fn(() => ({ hotel: '1' })),
+// Mocking AdminProvider and other dependencies
+jest.mock('@/components/providers/AdminProvider', () => ({
+  useAdmin: jest.fn(),
 }));
 
+// Mocking assets used in the HotelDetails component
 jest.mock('@/components/admin/assets', () => ({
-  DetailsContainer: ({ children, name }: { children: ReactNode; name: string }) => <div data-testid={`container-${name}`}>{children}</div>,
-  DetailsLeft: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  DetailsRight: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  DetailsCard: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  DetailsContainer: ({ children }: { children: React.ReactNode }) => <div data-testid="DetailsContainer">{children}</div>,
+  DetailsLeft: ({ children }: { children: React.ReactNode }) => <div data-testid="DetailsLeft">{children}</div>,
+  DetailsRight: ({ children }: { children: React.ReactNode }) => <div data-testid="DetailsRight">{children}</div>,
+  DetailsCard: ({ children }: { children: React.ReactNode }) => <div data-testid="DetailsCard">{children}</div>,
 }));
 
-const mocks = [
-  {
-    request: {
-      query: GetHotelByIdDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        getHotelById: {
-          _id: '1',
-          name: 'Hotel',
-          description: '5 stars Hotel',
-          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-          address: 'Sun Road 1-st District',
-          phone: '11111111',
-          city: 'ub',
-          rating: 8,
-          stars: 3,
-          rooms: [
-            {
-              _id: '1',
-              name: 'single room',
-              roomNumber: '20',
-              price: 2000,
-              description: 'desc',
-              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-              roomType: 'ONE',
-              createdAt: '2024-11-12T06:24:52.763Z',
-              updatedAt: '2024-11-12T06:24:52.763Z',
-            },
-            {
-              _id: '2',
-              name: 'double room',
-              roomNumber: '20',
-              price: 2000,
-              description: 'desc',
-              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-              roomType: 'TWO',
-              createdAt: '2024-11-12T06:24:52.763Z',
-              updatedAt: '2024-11-12T06:24:52.763Z',
-            },
-          ],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
-        },
+describe('HotelDetails Component', () => {
+  const mockAdminProvider = {
+    addHotelForm: {
+      values: {
+        name: '',
+        phone: '',
+        stars: 0,
+        rating: 0,
+        description: '',
       },
+      handleChange: jest.fn(),
+      handleBlur: jest.fn(),
+      setFieldValue: jest.fn(),
+      handleSubmit: jest.fn(),
+      errors: {},
+      touched: {},
     },
-  },
-];
-describe('Admin Hotel Details', () => {
-  it('handles no data gracefully', async () => {
-    useParams.mockReturnValue({ hotel: '1' });
+    showError: jest.fn((field, errors, touched) => touched[field] && errors[field]),
+  };
+  beforeEach(() => {
+    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+  });
+  it('renders the container and sections', () => {
+    render(<HotelDetails />);
 
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <HotelDetails />
-      </MockedProvider>
-    );
+    // Check if the container and sections are rendered
+    expect(screen.getByTestId('DetailsContainer'));
+    expect(screen.getByTestId('DetailsLeft'));
+    expect(screen.getByTestId('DetailsRight'));
+
+    // Check if each card is rendered
+    expect(screen.getAllByTestId('DetailsCard'));
+
+    // Check if each section inside the cards is rendered
+    expect(screen.getByTestId('HotelDetailsUpcomingBookings'));
+    expect(screen.getByTestId('HotelDetailsRoomTypes'));
+    expect(screen.getByTestId('HotelDetailsGeneralInfo'));
+    expect(screen.getByTestId('HotelDetailsAmenities'));
+    expect(screen.getByTestId('HotelDetailsAboutThisProperty'));
+    expect(screen.getByTestId('HotelDetailsPolicies'));
+    expect(screen.getByTestId('HotelDetailsPolicies2'));
+    expect(screen.getByTestId('HotelDetailsFrequently'));
+    expect(screen.getByTestId('HotelDetailsLocation'));
+    expect(screen.getByTestId('HotelDetailsImages'));
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const HotelDetailsUpcomingBookings = () => {
-return <div>Hotel Details Upcoming Bookings</div>
+return <div data-testid="HotelDetailsUpcomingBookings">Hotel Details Upcoming Bookings</div>;
 };

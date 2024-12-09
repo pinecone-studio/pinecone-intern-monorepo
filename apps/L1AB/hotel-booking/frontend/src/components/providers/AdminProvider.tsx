@@ -67,8 +67,11 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
         ...hotelData.getHotelById,
       });
     }
-  }, [hotelData]);
+  }, [addHotelForm, hotelData]);
   const showError = (field: keyof HotelFormValues, errors: FormikErrors<HotelFormValues>, touched: FormikTouched<HotelFormValues>) => {
+    if (!errors || !touched) {
+      return false;
+    }
     return Boolean(errors[field] && touched[field]);
   };
   // useEffect(() => {
