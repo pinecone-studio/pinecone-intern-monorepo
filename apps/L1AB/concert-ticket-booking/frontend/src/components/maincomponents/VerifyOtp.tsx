@@ -36,13 +36,15 @@ export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
   };
 
   const handleRefresh = async () => {
-    await requestPasswordRecovery({ email: email as string });
-    setRefreshCounter(60);
+    if (refreshCounter === 0) {
+      await requestPasswordRecovery({ email: email as string });
+      setRefreshCounter(60); // Reset to 60 seconds
+    }
   };
 
   useEffect(() => {
     if (refreshCounter > 0) {
-      const timer = setTimeout(() => setRefreshCounter(refreshCounter - 1), 1000);
+      const timer = setTimeout(() => setRefreshCounter((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     }
   }, [refreshCounter]);
@@ -71,12 +73,21 @@ export const VerifyOtp = ({ footerText }: VerifyOtpProps) => {
                 <p className="text-xs text-gray-400">{`Буцах`}</p>
               </div>
               <div className="flex flex-col items-end w-1/2">
-                <RefreshCcw
-                  onClick={refreshCounter === 0 ? handleRefresh : undefined}
-                  data-testid="RefreshCcw"
-                  className={`w-5 h-5 cursor-pointer ${refreshCounter === 0 ? 'hover:text-[#54d0f9] hover:scale-125 duration-200' : 'text-gray-400 cursor-not-allowed'}`}
-                />
-                <p className="text-xs text-gray-400">{refreshCounter > 0 ? `${refreshCounter} секунд хүлээнэ үү.` : 'OTP дахин илгээх.'}</p>
+                {refreshCounter === 0 ? (
+                  <>
+                    <RefreshCcw
+                      role="button"
+                      onClick={handleRefresh}
+                      data-testid="RefreshButton"
+                      className={`w-5 h-5 cursor-pointer ${refreshCounter === 0 ? 'hover:text-[#54d0f9] hover:scale-125 duration-200' : 'text-gray-400 cursor-not-allowed'}`}
+                    />
+                    <p className="text-xs text-gray-400">OTP дахин илгээх.</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xs text-gray-400">{refreshCounter > 0 ? `${refreshCounter} секунд хүлээнэ үү.` : 'Баярлалаа!'}</p>
+                  </>
+                )}
               </div>
             </div>
           </div>

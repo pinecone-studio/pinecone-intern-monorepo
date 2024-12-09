@@ -60,7 +60,15 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                 Нууц үг
               </Label>
               <div className="flex items-center border-[1px] rounded-md pr-3">
-                <Input id="password" type={visible ? 'text' : 'password'} className="border-none" data-cy="Password-Recovery-Input" placeholder={passwordLabel} onChange={handleChange} />
+                <Input
+                  data-testid="password"
+                  id="password"
+                  type={visible ? 'text' : 'password'}
+                  className="border-none"
+                  data-cy="Password-Recovery-Input"
+                  placeholder={passwordLabel}
+                  onChange={handleChange}
+                />
                 <button type="button" data-testid="toggleVisibility" onClick={() => setVisible(!visible)}>
                   {visible ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
                 </button>
@@ -72,6 +80,7 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
               </Label>
               <div className="flex items-center border-[1px] rounded-md pr-3">
                 <Input
+                  data-testid="confirmPassword"
                   id="confirmPassword"
                   type={visible ? 'text' : 'password'}
                   className="border-none"
@@ -79,12 +88,13 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                   placeholder={confirmPasswordLabel}
                   onChange={handleChange}
                 />
-                <button type="button" data-testid="toggleVisibility" onClick={() => setVisible(!visible)}>
+                <button type="button" data-testid="toggleVisibility1" onClick={() => setVisible(!visible)}>
                   {visible ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
                 </button>
               </div>
             </div>
             <Button
+              data-testid="recoveryButton"
               onClick={handleSubmit}
               data-cy="PasswordRecovery-Submit-Button"
               className="flex h-9 py-2 px-4 items-center w-full gap-2 self-stretch rounded-[6px] bg-[#00B7F4] shadow-sm text-[#18181B] hover:text-[#000000] hover:bg-[#54d0f9]"
