@@ -8,6 +8,7 @@ jest.mock('../../../../src/models', () => ({
       .mockResolvedValueOnce({
         _id: '1',
         roomId: '2',
+        userId: '2',
         firstName: 'test',
         lastName: 'test',
         email: 'test@gmail.com',
@@ -25,6 +26,7 @@ describe('create booking', () => {
   const mockInput = {
     _id: '1',
     roomId: '2',
+    userId: '2',
     firstName: 'test',
     lastName: 'test',
     email: 'test@gmail.com',

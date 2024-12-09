@@ -3,6 +3,7 @@ import { RoomType } from '../generated';
 
 export type bookingType = {
   _id: string;
+  userId: Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;
@@ -18,6 +19,10 @@ export type bookingType = {
 
 const bookingSchema = new Schema<bookingType>(
   {
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+    },
     roomId: {
       type: mongoose.Schema.ObjectId,
       ref: 'room',
