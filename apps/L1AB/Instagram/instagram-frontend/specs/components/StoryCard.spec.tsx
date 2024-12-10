@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 describe('StoryCard Component', () => {
   const props = {
     username: 'hi',
-    profilePicture: '/avatar1.jpg',
+    profilePicture: '/avatar2.jpg',
     userId: '1',
   };
 
