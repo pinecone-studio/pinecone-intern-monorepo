@@ -21,13 +21,13 @@ export const ForgetPasswordEyeInputs = ({ value, onChange }: ForgetPasswordEyeIn
         <Input
           type={isEyeOpenPassword ? 'text' : 'password'}
           data-testid="NewPassword"
-          className="px-3 py-1 border-[#27272A] bg-[#09090B] "
+          className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
           data-cy="Profile-RePassword-Input"
           value={value}
           onChange={onChange}
         />
       </div>
-      <div className=" text-white hover:text-[#878787] absolute right-3 top-9" data-testid="eye-btn" data-cy="Profile-RePassword-Input-icon" onClick={() => setIsEyeOpenPassword(!isEyeOpenPassword)}>
+      <div className=" dark:text-white text-black hover:text-[#878787] absolute right-3 top-9" data-testid="eye-btn" data-cy="Profile-RePassword-Input-icon" onClick={() => setIsEyeOpenPassword(!isEyeOpenPassword)}>
         {isEyeOpenPassword ? <FaRegEye /> : <FaRegEyeSlash />}
       </div>
     </div>

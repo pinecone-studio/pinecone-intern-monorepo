@@ -57,7 +57,7 @@ export const MainHeroComponent = () => {
                     </div>
                   ))}
                 </div>
-                <h1 className="text-6xl font-semibold max-sm:text-2xl max-sm:max-w-[160px] ">{item.name}</h1>
+                <h1 className="text-6xl font-semibold max-sm:text-2xl max-sm:max-w-[160px]">{item.name}</h1>
                 <div className="text-xl mt-4 flex gap-2 items-center justify-center">
                   {item.eventDate.map((date, index) => (
                     <div className="flex gap-1 justify-center items-center max-sm:text-sm " key={index}>
