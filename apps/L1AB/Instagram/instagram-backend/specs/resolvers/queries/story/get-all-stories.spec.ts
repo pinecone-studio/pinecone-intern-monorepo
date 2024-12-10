@@ -4,7 +4,7 @@ import { GraphQLResolveInfo } from 'graphql';
 jest.mock('../../../../src/models', () => ({
   storyModel: {
     find: jest.fn().mockReturnValue({
-      populate: jest.fn().mockResolvedValue([
+      populate: jest.fn().mockReturnValueOnce([
         {
           createdAt: new Date('2024-01-01T12:00:00Z'),
           _id: 'story1',
