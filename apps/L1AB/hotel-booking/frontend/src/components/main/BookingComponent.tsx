@@ -8,23 +8,20 @@ export const BookingComponent = () => {
   // const bookingId = '6756c4120bf3c5bc42b9020c' as string;
 
   const { data } = useGetBookingByIdQuery({ variables: { id: bookingId } });
-  console.log(data);
 
   const confirmedData = data?.getBookingById.filter((el) => el.status === 'booked');
-  console.log(confirmedData);
 
   const previousData = data?.getBookingById.filter((el) => el.status !== 'booked');
-  console.log(previousData);
 
   return (
     <div className="max-w-fit m-auto">
       {confirmedData?.length !== 0 ? (
         <div>
           <p className="font-bold text-2xl mt-10">Confirmed Booking</p>
-          {confirmedData?.map((el) => (
-            <div className="mt-5">
+          {confirmedData?.map((el, index) => (
+            <div className="mt-5" data-testid={`confirmedData-${index}`}>
               <BookingCard
-                image={el.roomId.photos}
+                photos={el.roomId.photos!}
                 hotelName={el.roomId.hotelId.name}
                 checkIn={el.checkIn}
                 description={el.roomId.description}
@@ -37,17 +34,18 @@ export const BookingComponent = () => {
           ))}
         </div>
       ) : (
-        <p>
+        <>
           <StartBooking />
           <NoPreviousBooking />
-        </p>
+        </>
       )}
+
       {previousData?.length !== 0 ? (
         <p>previousData Bainaaaaa</p>
       ) : (
-        <p>
+        <>
           <NoPreviousBooking />
-        </p>
+        </>
       )}
     </div>
   );

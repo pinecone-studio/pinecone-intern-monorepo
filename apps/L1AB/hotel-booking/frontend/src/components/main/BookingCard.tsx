@@ -10,10 +10,10 @@ type BookingCardType = {
   status: string;
   traveller: number;
   roomType: string;
-  image?: string[] | null;
+  photos: string[];
 };
 
-export const BookingCard = ({ hotelName, description, checkIn, status, traveller, roomType, image, checkOut }: BookingCardType) => {
+export const BookingCard = ({ hotelName, description, checkIn, status, traveller, roomType, photos, checkOut }: BookingCardType) => {
   const checkInDate = new Date(checkIn);
   const checkOutDate = new Date(checkOut);
 
@@ -21,13 +21,11 @@ export const BookingCard = ({ hotelName, description, checkIn, status, traveller
   const formattedCheckIn = format(checkInDate, 'eeee, MMMM d, h:mm a');
 
   return (
-    <div className="w-full border flex  rounded-xl">
+    <div className="w-full border flex  rounded-xl" data-testid="bookingCardMOCKshu">
       <div className="flex borde rounded-xl">
-        {image?.length && (
-          <div className="">
-            <Image src={image[0]} alt="img" width={395} height={222} className="rounded-xl " />
-          </div>
-        )}
+        <div className="">
+          <Image src={photos[0]} alt="img" width={395} height={222} className="rounded-xl " />
+        </div>
       </div>
       <div className="p-2 w-[501px] ">
         <div className="p-3 flex flex-col gap-2">
