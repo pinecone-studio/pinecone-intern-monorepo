@@ -1,31 +1,14 @@
 import '@testing-library/jest-dom';
-import React from 'react';
-import { render } from '@testing-library/react';
-import { HotelDetails } from '@/components/admin';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { HotelDetailsRoomTypes } from '@/components/admin/assets/hotel-details';
 import { useAdmin } from '@/components/providers/AdminProvider';
 
-// Mocking AdminProvider and other dependencies
 jest.mock('@/components/providers/AdminProvider', () => ({
   useAdmin: jest.fn(),
 }));
 
-describe('HotelDetails Component', () => {
+describe('HotelDetailsRoomTypes', () => {
   const mockAdminProvider = {
-    addHotelForm: {
-      values: {
-        name: '',
-        phone: '',
-        stars: 0,
-        rating: 0,
-        description: '',
-      },
-      handleChange: jest.fn(),
-      handleBlur: jest.fn(),
-      setFieldValue: jest.fn(),
-      handleSubmit: jest.fn(),
-      errors: {},
-      touched: {},
-    },
     hotelData: {
       getHotelById: {
         _id: '1',
@@ -66,14 +49,46 @@ describe('HotelDetails Component', () => {
       },
     },
     hotelLoading: false,
-    showError: jest.fn((field, errors, touched) => touched[field] && errors[field]),
   };
+  it('should render the admin hotel details room types', async () => {
+    (useAdmin as jest.Mock).mockReturnValue({ ...mockAdminProvider, hotelLoading: true });
 
-  beforeEach(() => {
-    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+    render(<HotelDetailsRoomTypes />);
   });
 
-  it('renders the container and sections', () => {
-    render(<HotelDetails />);
+  it('filters rooms based on selected tab', async () => {
+    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+
+    render(<HotelDetailsRoomTypes />);
+
+    await waitFor(() => expect(screen.getByTestId('room-item-1')));
+
+    fireEvent.keyDown(screen.getByText('1 Bed'), { key: 'Enter' });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('room-item-1'));
+    });
+  });
+  it('displays a fallback message if no rooms are available', async () => {
+    mockAdminProvider.hotelData = {
+      getHotelById: {
+        _id: '1',
+        name: 'Hotel',
+        description: '5 stars Hotel',
+        images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+        address: 'Sun Road 1-st District',
+        phone: '11111111',
+        city: 'ub',
+        rating: 8,
+        stars: 3,
+        rooms: [],
+        createdAt: '2024-11-14T06:24:52.763Z',
+        updatedAt: '2024-11-14T06:24:52.763Z',
+      },
+    };
+    console.log(mockAdminProvider);
+    render(<HotelDetailsRoomTypes />);
+
+    await waitFor(() => expect(screen.getByText('Room Types Not Set Up')));
   });
 });

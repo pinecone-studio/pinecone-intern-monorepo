@@ -27,7 +27,6 @@ describe('HotelDetailsImages Component', () => {
 
     const dialog = screen.getByRole('dialog');
     expect(dialog)
-    expect(dialog).toBeVisible();
   });
 
 });

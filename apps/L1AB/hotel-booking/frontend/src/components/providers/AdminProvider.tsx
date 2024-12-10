@@ -1,6 +1,6 @@
 'use client';
 
-import { useCreateHotelMutation, useGetHotelByIdQuery } from '@/generated';
+import { GetHotelByIdQuery, useCreateHotelMutation, useGetHotelByIdQuery } from '@/generated';
 import { FormikErrors, FormikProps, FormikTouched, useFormik } from 'formik';
 import { useParams } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
@@ -20,13 +20,15 @@ type HotelFormValues = {
 type AdminContextType = {
   isAdmin: boolean;
   addHotelForm: FormikProps<HotelFormValues>;
+  hotelData: GetHotelByIdQuery | undefined;
+  hotelLoading: boolean;
   // eslint-disable-next-line no-unused-vars
   showError: (field: keyof HotelFormValues, errors: FormikErrors<HotelFormValues>, touched: FormikTouched<HotelFormValues>) => boolean;
 };
 const AdminContext = createContext<AdminContextType>({} as AdminContextType);
 export const AdminProvider = ({ children }: PropsWithChildren) => {
   const { hotel } = useParams();
-  const { data: hotelData } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
+  const { data: hotelData, loading: hotelLoading } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
   const [createHotel] = useCreateHotelMutation();
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -67,7 +69,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
         ...hotelData.getHotelById,
       });
     }
-  }, [addHotelForm, hotelData]);
+  }, [hotelData]);
   const showError = (field: keyof HotelFormValues, errors: FormikErrors<HotelFormValues>, touched: FormikTouched<HotelFormValues>) => {
     if (!errors || !touched) {
       return false;
@@ -78,7 +80,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
   //   console.log('Is form valid:', addHotelForm.isValid); // Logs true/false based on validation status
   //   console.log('Validation errors:', addHotelForm.errors); // Logs validation errors, if any
   // }, [addHotelForm.isValid, addHotelForm.errors]);
-  return <AdminContext.Provider value={{ isAdmin: true, addHotelForm, showError }}>{children}</AdminContext.Provider>;
+  return <AdminContext.Provider value={{ isAdmin: true, addHotelForm, showError, hotelData, hotelLoading }}>{children}</AdminContext.Provider>;
 };
 
 export const useAdmin = () => useContext(AdminContext);
