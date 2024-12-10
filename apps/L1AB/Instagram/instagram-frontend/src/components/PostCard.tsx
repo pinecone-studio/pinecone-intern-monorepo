@@ -35,7 +35,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   }, []);
 
   return (
-    <div data-testid={`NewsFeedPostCard-${keyy}`}>
+    <div data-testid={`NewsFeedPostCard-${keyy}`} className="border-b">
       <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
           <Link href={`/profile?type=posts&username=${userName}`} className="flex gap-2 items-center">
