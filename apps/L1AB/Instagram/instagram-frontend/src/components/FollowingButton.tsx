@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { styles } from './ProfilePageTop';
 import { useCreateFollowersMutation, useDeleteFollowerMutation } from '@/generated';
 import { useState } from 'react';
 import Loading from './Loading';
+import { styles } from './ProfilePageTop';
 
 interface FollowingButtonProps {
   isFollowing: boolean;
