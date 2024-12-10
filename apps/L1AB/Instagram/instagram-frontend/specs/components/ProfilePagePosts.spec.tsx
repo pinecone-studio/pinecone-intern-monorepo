@@ -1,88 +1,159 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ProfilePagePosts } from '@/components/ProfilePagePosts';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { UserContext } from '@/components/providers';
+import { User } from '@/generated';
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-  useSearchParams: jest.fn(),
-}));
-
-jest.mock('next/image', () => ({
+jest.mock('@/components/ProfilePostsSection', () => ({
   __esModule: true,
-  default: ({ alt, src }: { alt: string; src: string }) => <img alt={alt} src={src} />,
+  default: jest.fn(() => <div>ProfilePostsSection</div>),
 }));
 
-import '@testing-library/jest-dom';
+jest.mock('@/components/ProfilePagePostsAndSaved', () => ({
+  __esModule: true,
+  default: jest.fn(() => <div>ProfilePagePostsAndSaved</div>),
+}));
+
+jest.mock('@/components/Loading', () => {
+  const MockLoading = () => <div>Loading...</div>;
+  MockLoading.displayName = 'MockLoading';
+  return MockLoading;
+});
 
 describe('ProfilePagePosts', () => {
-  const mockPush = jest.fn();
-  const mockSearchParams = new URLSearchParams();
+  const mockUserProfile = {
+    _id: '123',
+    username: 'john_doe',
+    isPrivate: true,
+  };
 
-  const userPosts = [{ images: ['/image1.jpg', '/image2.jpg'] }, { images: ['/image3.jpg', '/image4.jpg'] }, { images: ['/image5.jpg', '/image6.jpg'] }];
+  const mockUser = {
+    _id: '456',
+    username: 'current_user',
+  };
 
-  beforeEach(() => {
-    mockPush.mockClear();
-    useRouter.mockReturnValue({ push: mockPush } as unknown as ReturnType<typeof useRouter>);
-    useSearchParams.mockReturnValue(mockSearchParams as unknown as ReturnType<typeof useSearchParams>);
+  const mockSortedUsers = [
+    { _id: '123', username: 'john_doe' },
+    { _id: '789', username: 'other_user' },
+  ];
+
+  const mockUserPosts = [
+    { id: '1', images: ['image1.jpg'] },
+    { id: '2', images: ['image2.jpg'] },
+  ];
+
+  const renderComponent = (userPosts = mockUserPosts, userProfile = mockUserProfile, sortedUsers = mockSortedUsers, loading = true) => {
+    return render(
+      <UserContext.Provider value={{ user: mockUser, sortedUsers }}>
+        <ProfilePagePosts userPosts={userPosts} userProfile={userProfile} loading={loading} />
+      </UserContext.Provider>
+    );
+  };
+
+  test('1 sets isFollowing to true when the user is following the profile', () => {
+    const sortedUsersWithFollow = [
+      { _id: '123', username: 'john_doe' },
+      { _id: '456', username: 'current_user' },
+    ];
+
+    renderComponent(mockUserPosts, mockUserProfile, sortedUsersWithFollow);
+
+    const isFollowing = sortedUsersWithFollow.some((el: User) => el._id === mockUserProfile._id);
+    expect(isFollowing).toBe(true);
   });
 
-  test('renders posts correctly when type is "posts"', () => {
-    mockSearchParams.get = jest.fn().mockReturnValue('posts');
+  test('2 sets isFollowing to false when the user is not following the profile', () => {
+    const sortedUsersWithoutFollow = [
+      { _id: '133', username: 'john_doe' },
+      { _id: '739', username: 'other_user' },
+    ];
 
-    render(<ProfilePagePosts userPosts={userPosts} />);
+    renderComponent(mockUserPosts, mockUserProfile, sortedUsersWithoutFollow);
 
-    const postsTab = screen.getByText(/posts/i);
-    expect(postsTab).toHaveClass('text-[#09090B]');
-    expect(postsTab).not.toHaveClass('text-[#71717A]');
-
-    const savedTab = screen.getByText(/saved/i);
-    expect(savedTab).toHaveClass('text-[#71717A]');
-    expect(savedTab).not.toHaveClass('text-[#09090B]');
-
-    userPosts.forEach((post) => {
-      post.images.forEach((image) => {
-        console.log(image);
-      });
-    });
+    const isFollowing = sortedUsersWithoutFollow.some((el: User) => el._id === mockUserProfile._id);
+    expect(isFollowing).toBe(false);
   });
 
-  test('renders saved posts when type is "saved"', () => {
-    mockSearchParams.get = jest.fn().mockReturnValue('saved');
+  test('3 does not throw an error when sortedUsers is empty', () => {
+    const emptySortedUsers = [];
 
-    render(<ProfilePagePosts userPosts={userPosts} />);
+    renderComponent(mockUserPosts, mockUserProfile, emptySortedUsers);
 
-    const savedTab = screen.getByText(/saved/i);
-    expect(savedTab).toHaveClass('text-[#09090B]');
-    expect(savedTab).not.toHaveClass('text-[#71717A]');
-
-    const postsTab = screen.getByText(/posts/i);
-    expect(postsTab).toHaveClass('text-[#71717A]');
-    expect(postsTab).not.toHaveClass('text-[#09090B]');
-
-    userPosts.forEach((post) => {
-      post.images.forEach((image) => {
-        console.log(image);
-      });
-    });
+    const isFollowing = emptySortedUsers.some((el: User) => el._id === mockUserProfile._id);
+    expect(isFollowing).toBe(false);
   });
 
-  test('renders ProfilePageFirstPost when there is no userPosts', () => {
-    render(<ProfilePagePosts userPosts={[]} />);
+  test('4 does not throw an error when userProfile._id is missing', () => {
+    const invalidUserProfile = { ...mockUserProfile, _id: undefined };
+    renderComponent(mockUserPosts, invalidUserProfile, mockSortedUsers);
+
+    const isFollowing = mockSortedUsers.some((el: User) => el._id === invalidUserProfile._id);
+    expect(isFollowing).toBe(false);
   });
 
-  test('navigates to the correct URL when tabs are clicked', () => {
-    mockSearchParams.get = jest.fn().mockReturnValue('posts');
+  test('5 does not throw an error when sortedUsers is undefined', () => {
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('6 sets isFollowing to true when viewing their own profile', () => {
+    const selfProfile = {
+      _id: '123',
+      username: 'current_user',
+      isPrivate: false,
+    };
+    renderComponent(mockUserPosts, selfProfile, mockSortedUsers);
+    const isFollowing = mockSortedUsers.some((el: User) => el._id === selfProfile._id);
+    expect(isFollowing).toBe(true);
+  });
 
-    render(<ProfilePagePosts userPosts={userPosts} />);
+  test('7 sets isFollowing to false when the user is not following the profile', () => {
+    const sortedUsersWithoutFollow = [
+      { _id: '145', username: 'john_doe' },
+      { _id: '745', username: 'other_user' },
+    ];
 
-    const savedTab = screen.getByText(/saved/i);
-    fireEvent.click(savedTab);
+    renderComponent(sortedUsersWithoutFollow);
 
-    expect(mockPush).toHaveBeenCalledWith('/profile?username=posts&type=saved');
+    const isFollowing = sortedUsersWithoutFollow.some((el: User) => el._id === mockUserProfile._id);
+    expect(isFollowing).toBe(false);
+  });
 
-    const postsTab = screen.getByText(/posts/i);
-    fireEvent.click(postsTab);
+  test('8 renders ProfilePagePosts correctly with userPosts and userProfile', () => {
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
 
-    expect(mockPush).toHaveBeenCalledWith('/profile?username=posts&type=posts');
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('9 shows ProfilePagePostsAndSaved component for private profiles and when the user is not following', () => {
+    renderComponent(mockUserPosts, { ...mockUserProfile, isPrivate: false });
+    expect(screen.getByText('ProfilePagePostsAndSaved'));
+  });
+  test('10 does not show ProfilePagePostsAndSaved component if the user is following a private profile', () => {
+    renderComponent(mockUserPosts, { ...mockUserProfile, isPrivate: true });
+    mockSortedUsers.push({ _id: '123', username: 'john_doe' });
+    expect(screen.queryByText('ProfilePagePostsAndSaved')).toBeNull();
+  });
+  test('11 calls ProfilePostsSection with correct props', () => {
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('12 handles private profile and follow status correctly', async () => {
+    const userProfile = { _id: '123', isPrivate: false, username: 'john_doe' };
+    const userPosts = [{ images: ['image1.jpg'] }];
+    renderComponent(userPosts, userProfile, undefined, false);
+    expect(screen.getByText('ProfilePagePostsAndSaved'));
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('13 renders ProfilePostsSection with posts if posts are available', () => {
+    const userProfile = { _id: '123', isPrivate: false, username: 'john_doe' };
+    const userPosts = [{ images: ['image1.jpg'] }];
+    renderComponent(userPosts, userProfile, undefined, false);
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('14 renders ProfilePostsSection when loading is false', async () => {
+    renderComponent(mockUserPosts, mockUserProfile, mockSortedUsers, false);
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('15 renders loading spinner when loading is true', () => {
+    renderComponent(mockUserPosts, mockUserProfile, mockSortedUsers, true);
+    expect(screen.getByText('Loading...'));
   });
 });

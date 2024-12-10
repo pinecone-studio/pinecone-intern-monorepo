@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
-import { ApolloWrapper } from '@/components/providers';
+import { ApolloWrapper, AuthProvider } from '@/components/providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,10 +12,12 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="bg-black">
+      <body className="bg-lightGray">
         <ApolloWrapper>
-          {children}
-          <ToastContainer theme="dark" />
+          <AuthProvider>
+            {children}
+            <ToastContainer theme="dark" />
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>

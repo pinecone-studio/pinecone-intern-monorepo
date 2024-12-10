@@ -20,6 +20,19 @@ query GetAllPosts {
     updatedAt
   }
 }
+query GetPostsByFollowersId($followerId: ID!) {
+  getPostsByFollowersId(followerId: $followerId) {
+    _id
+    userId {
+      username
+      _id
+      profilePicture
+    }
+    images
+    caption
+    createdAt
+  }
+}
 query GetPostByUserId($userId: ID!) {
   getPostByUserId(userId: $userId) {
     _id

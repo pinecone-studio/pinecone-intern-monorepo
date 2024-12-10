@@ -15,6 +15,7 @@ export const typeDefs = gql`
   type Booking {
     _id: ID!
     roomId: Room!
+    userId: User!
     firstName: String!
     lastName: String!
     email: String!
@@ -29,6 +30,7 @@ export const typeDefs = gql`
 
   input CreateBookingInput {
     roomId: ID!
+    userId: ID!
     firstName: String!
     lastName: String!
     email: String!
@@ -39,6 +41,7 @@ export const typeDefs = gql`
   }
 
   input UpdateBookingInput {
+    _id: ID!
     status: UpdateStatusType!
   }
 

@@ -1,7 +1,21 @@
+import { ForgetPassFormProps } from '@/app/(public)/(auth)/forgetpassword/page';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { usePasswordRecoveryRequestMutation } from '@/generated';
 
-export const ForgetPassForm = () => {
+export const ForgetPassForm = ({ setInputData, setCurrentIndex, inputData, handleOnchange }: ForgetPassFormProps) => {
+  const [passwordRecoveryRequest, { loading, error }] = usePasswordRecoveryRequestMutation();
+
+  const handleClick = async () => {
+    await passwordRecoveryRequest({
+      variables: {
+        input: { email: inputData.email },
+      },
+    });
+    setInputData({ email: inputData.email, otp: '', password: '', rePassword: '' });
+    setCurrentIndex(1);
+  };
+
   return (
     <div className="flex justify-center">
       <div className="mt-[200px] flex flex-col items-center gap-6 w-[350px]">
@@ -15,8 +29,11 @@ export const ForgetPassForm = () => {
         </div>
         <div className="w-full space-y-2">
           <p className="font-medium">Email</p>
-          <Input placeholder="name@example.com" />
-          <Button className="w-full bg-[#2563EB]">Continue</Button>
+          <Input data-testid="email-input" placeholder="name@example.com" name="email" value={inputData.email} onChange={handleOnchange} />
+          {error && <p className="text-red-500 text-sm">{error.message}</p>}
+          <Button data-testid="send-otp-button" className="w-full bg-[#2563EB]" onClick={handleClick} disabled={loading}>
+            {loading ? 'Sending OTP...' : 'Send OTP'}
+          </Button>
         </div>
       </div>
     </div>

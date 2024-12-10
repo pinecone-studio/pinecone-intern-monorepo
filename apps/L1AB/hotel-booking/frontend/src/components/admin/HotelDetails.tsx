@@ -14,21 +14,10 @@ import {
   HotelDetailsRoomTypes,
   HotelDetailsUpcomingBookings,
 } from './assets/hotel-details';
-import { useParams } from 'next/navigation';
-import { useGetHotelByIdQuery } from '@/generated';
+
 export const HotelDetails = () => {
-  const { hotel } = useParams();
-  const { data } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
-  const hotelDetails = data?.getHotelById;
-  // const decodedHotelName = React.useMemo(() => {
-  //   if (hotelDetails?.name) return hotelDetails.name;
-  //   if (hotel) {
-  //     return Array.isArray(hotel) ? decodeURIComponent(hotel[0]) : decodeURIComponent(hotel || '');
-  //   }
-  //   return '';
-  // }, [hotel, hotelDetails]);
   return (
-    <DetailsContainer name={'decodedHotelName'}>
+    <DetailsContainer>
       <DetailsLeft>
         <DetailsCard>
           <HotelDetailsUpcomingBookings />
@@ -37,7 +26,7 @@ export const HotelDetails = () => {
           <HotelDetailsRoomTypes />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsGeneralInfo name={hotelDetails?.name} phone={hotelDetails?.phone} desc={hotelDetails?.description} rating={hotelDetails?.rating} stars={hotelDetails?.stars} />
+          <HotelDetailsGeneralInfo />
         </DetailsCard>
         <DetailsCard>
           <HotelDetailsAmenities />
@@ -57,10 +46,10 @@ export const HotelDetails = () => {
       </DetailsLeft>
       <DetailsRight>
         <DetailsCard>
-          <HotelDetailsLocation location={hotelDetails?.address} />
+          <HotelDetailsLocation />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsImages images={hotelDetails?.images} />
+          <HotelDetailsImages />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

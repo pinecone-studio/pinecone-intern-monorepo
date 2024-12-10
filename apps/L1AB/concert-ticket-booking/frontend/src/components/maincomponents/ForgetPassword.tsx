@@ -37,15 +37,15 @@ export const ForgetPassword = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-6" data-cy="Profile-Page-ForgetPassword">
-      <p className="font-semibold text-2xl text-white">Захиалагчийн мэдээлэл</p>
-      <div className="p-8 grid gap-6 text-[#FAFAFA] bg-[#131313] rounded-xl">
+      <p className="font-semibold text-2xl dark:text-white text-black">Захиалагчийн мэдээлэл</p>
+      <div className="p-8 grid gap-6 dark:text-[#FAFAFA] dark:bg-[#131313] bg-[#f2f2f2] text-black rounded-xl">
         <div className="grid gap-2 relative">
           <div className="grid gap-2">
             <Label htmlFor="Хуучин нууц үг:">Хуучин нууц үг:</Label>
             <Input
               data-testid="OldPassword"
               type={isEyeOpen ? 'text' : 'password'}
-              className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+              className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
               data-cy="Profile-Password-Input"
               value={oldPassword}
               onChange={(event) => setOldPassword(event.target.value)}
@@ -62,14 +62,14 @@ export const ForgetPassword = () => {
             <Input
               data-testid="ComfirmPassword"
               type={isEyeOpenRePassword ? 'text' : 'password'}
-              className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+              className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
               data-cy="Profile-New-Password-Input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <div
-            className="text-white hover:text-[#878787] w-fit absolute right-3 top-9"
+            className="dark:text-white hover:text-[#878787] text-black w-fit absolute right-3 top-9"
             data-testid="eyeTwo-btn"
             data-cy="Profile-New-Password-Input-icon"
             onClick={() => setIsEyeOpenRePassword(!isEyeOpenRePassword)}
@@ -99,7 +99,7 @@ interface Icontypes {
 }
 
 const IconChange = ({ setIsEyeOpen, isEyeOpen }: Icontypes) => (
-  <div className="text-white hover:text-[#878787] flex w-fit absolute right-3 top-9" data-testid="eyeOne-btn" data-cy="Profile-Password-Input-icon" onClick={() => setIsEyeOpen(!isEyeOpen)}>
+  <div className="dark:text-white hover:text-[#878787] text-black flex w-fit absolute right-3 top-9" data-testid="eyeOne-btn" data-cy="Profile-Password-Input-icon" onClick={() => setIsEyeOpen(!isEyeOpen)}>
     {isEyeOpen ? <FaRegEye /> : <FaRegEyeSlash />}
   </div>
 );

@@ -1,0 +1,12 @@
+query GetAllStories {
+  getAllStories {
+    _id
+    userId {
+      _id
+      username
+      profilePicture
+    }
+    image
+    createdAt
+  }
+}

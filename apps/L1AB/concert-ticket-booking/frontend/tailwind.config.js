@@ -8,6 +8,9 @@ module.exports = {
   content: [join(__dirname, 'src/**/*.{ts,tsx}'), '../../../../libs/shadcn/src/lib/ui/*.{ts,tsx}', ...createGlobPatternsForDependencies(__dirname)],
   theme: {
     extend: {
+      fontFamily: {
+        gip: ['GIP', 'sans-serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -42,6 +45,7 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        
       },
       borderRadius: {
         lg: `var(--radius)`,

@@ -1,7 +1,28 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Schema, Types, model } from 'mongoose';
+import { RoomType } from '../generated';
 
-const bookingSchema = new Schema(
+export type bookingType = {
+  _id: string;
+  userId: Types.ObjectId;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  roomId: Types.ObjectId;
+  status: string;
+  traveller: number;
+  checkIn: Date;
+  checkOut: Date;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const bookingSchema = new Schema<bookingType>(
   {
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+    },
     roomId: {
       type: mongoose.Schema.ObjectId,
       ref: 'room',
@@ -43,5 +64,9 @@ const bookingSchema = new Schema(
   },
   { timestamps: true }
 );
+
+export type bookingPopulatedType = {
+  roomId: RoomType;
+};
 
 export const bookingModel = mongoose.models.booking || model('booking', bookingSchema);

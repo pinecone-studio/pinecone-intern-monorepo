@@ -4,10 +4,12 @@ import { MdAccessTime } from 'react-icons/md';
 import { GoDotFill } from 'react-icons/go';
 import { UserHistoryDialog } from './UserHistoryDialog';
 import { useGetBookingByUserIdQuery, useGetMeQuery } from '@/generated';
+// import { useRouter } from 'next/navigation';
 
 export const UserHistory = () => {
   const { data: user } = useGetMeQuery();
   const { data } = useGetBookingByUserIdQuery({ variables: { userId: user?.getMe?._id as string } });
+  // const router = useRouter();
 
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
@@ -23,34 +25,42 @@ export const UserHistory = () => {
   };
   return (
     <div className="w-full h-fit flex flex-col gap-6" data-cy="Profile-Page-History">
-      <p className="font-semibold text-2xl text-white max-sm:text-xl">Захиалгын мэдээлэл</p>
+      <p className="font-semibold text-2xl dark:text-white text-black max-sm:text-xl">Захиалгын мэдээлэл</p>
       {data?.getBookingByUserId.map((item, index) => {
-        const showButton = !(item.status === 'Цуцлах хүсэлт илгээсэн' || item.status === 'Цуцлагдсан') && isWithin24Hours(item.updatedAt);
+        const showButton = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
+        // const showButton2 = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
+
         return (
-          <div className="p-8 grid gap-4 text-[#FAFAFA] bg-[#131313] rounded-xl" key={index}>
+          <div className="p-8 grid gap-4 dark:text-[#FAFAFA] dark:bg-[#131313] bg-[#f2f2f2] rounded-xl" key={index}>
             <div className="flex justify-between items-center text-base font-normal text-white max-sm:grid max-md:grid max-xl:grid">
               <div className="flex gap-4 max-sm:grid max-md:grid max-xl:grid">
                 <div className="flex gap-2">
                   <p className="text-[#878787]">Захиалгын дугаар: </p>
-                  <p>{item._id}</p>
+                  <p className='text-black dark:text-white'>{item._id}</p>
                 </div>
-                <div className="flex text-base font-normal text-white items-center gap-2">
+                <div className="flex text-base font-normal dark:text-white text-black items-center gap-2">
                   <MdAccessTime />
                   <p>{item.createdAt.slice(0, 10)}</p>
                 </div>
                 <div className="flex text-base font-normal text-white items-center gap-2">
                   <p className="text-[#878787] max-sm:text-sm">Төлөв:</p>
-                  <p>{item.status}</p>
+                  <p
+                    // onClick={() => router.push(`/order/${item._id}`)}
+                    className=" dark:text-white cursor-pointer text-blue-500 hover:underline"
+                  >
+                    {item.status}
+                  </p>
                 </div>
               </div>
               {showButton && <UserHistoryDialog bookingId={item._id} />}
+              {/* {showButton2 && <UserHistoryDialog bookingId={item._id} />} */}
             </div>
             <div className="flex flex-col gap-2 max-sm:grid max-md:grid max-xl:grid">
               {item.venues?.map((venue, index2) => {
                 const color = getColorForVenue(venue?.name ?? undefined);
                 return (
                   <div key={index2} className="border px-6 py-4 flex justify-between rounded-lg border-dashed border-[#27272A]">
-                    <div className="flex items-center gap-2 text-sm font-bold hover:text-[#00B7F4] text-white">
+                    <div className="flex items-center gap-2 text-sm font-bold hover:text-[#00B7F4] dark:text-white text-black">
                       <GoDotFill className="w-8 h-8" style={{ color }} />
                       <p>{venue?.name}</p>
                     </div>

@@ -35,12 +35,12 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
         <Image src={eventDetails?.images[1] || '/image.png'} alt="hi" fill quality={100} priority className="object-cover" />
-        <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2">
-          <p className="border w-fit px-3 py-[6px] text-[16px] max-sm:text-sm max-sm:px-2  max-sm:py-1 max-md:text-md max-md:px-2  max-md:py-1 text-white border-[#FAFAFA33] rounded-full">
-            {eventDetails?.description}
+        <div className="absolute h-fit grid gap-3 top-12 left-24 backdrop-blur-sm px-4 py-2 ">
+          <p className="border w-fit h-fit px-3 py-[6px] text-[16px] max-sm:text-sm max-sm:px-2  max-sm:py-1 max-md:text-md max-md:px-2  max-md:py-1 text-white border-[#FAFAFA33] rounded-full">
+            {eventDetails?.artistName[0]}
           </p>
           <div className="grid h-fit gap-6 w-fit">
-            <p className="text-5xl font-bold text-white max-sm:text-xl max-lg:text-xl">{eventDetails?.name}</p>
+            <p className="text-5xl font-bold text-white max-sm:text-xl max-lg:text-xl h-fit">{eventDetails?.name}</p>
             <div className="flex items-center gap-2">
               <LuCalendar className="text-[#FAFAFA80]" />
               <div className="text-[#FAFAFA]  opacity-80 font-bold flex gap-2">
@@ -58,40 +58,40 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           <div className="flex justify-between ">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <LuCalendar className="text-[#FAFAFA80]" />
-                <div className="text-[#FAFAFA]  opacity-80 font-light flex gap-2">
+                <LuCalendar className="dark:text-[#FAFAFA80]" />
+                <div className="root:text-black opacity-80 font-light flex gap-2 dark:text-white">
                   {eventDetails?.eventDate?.map((date) => (
                     <div key={date}>{format(new Date(date), 'MM.dd')}</div>
                   ))}
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
-                <GoClock className="text-[#FAFAFA80] w-4 h-4" />
-                <p className="text-[#FAFAFA]  opacity-80">{eventDetails?.eventTime}</p>
+              <div className="flex gap-2 items-center ">
+                <GoClock className="dark:text-[#FAFAFA80]  w-4 h-4" />
+                <p className="root:text-black dark:text-white opacity-80">{eventDetails?.eventTime}</p>
               </div>
             </div>
-            <div className="flex gap-2 text-[#A1A1AA] items-center">
+            <div className="flex gap-2 dark:text-[#A1A1AA] items-center">
               <IoLocationOutline className="w-5 h-5" />
-              <p className="w-full text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
+              <p className="w-full dark:text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
             </div>
           </div>
           <div className="h-fit grid gap-2 ">
-            <p className="text-[#FAFAFA] font-extralight">Special Artist</p>
-            <div className="font-semibold text-[#FFFFFF] px-3 ">
+            <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Special Artist</p>
+            <div className="font-semibold dark:text-[#FFFFFF] root:text-black px-3 ">
               {eventDetails?.artistName?.map((artist, index) => (
                 <li key={index} data-testid={`artist-${index}`}>
                   {artist}
                 </li>
               ))}
             </div>
-            <p className="text-[#FAFAFA] font-extralight">Тоглолтийн цагийн хуваарь:</p>
-            <li className="font-semibold text-[#FFFFFF] px-3">Door open: 4pm</li>
-            <li className="font-semibold text-[#FFFFFF] px-3">Music start: {eventDetails?.eventTime}pm</li>
+            <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Тоглолтийн цагийн хуваарь:</p>
+            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Door open: 4pm</li>
+            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Music start: {eventDetails?.eventTime}pm</li>
           </div>
           <div className="grid gap-2 ">
-            <p className="text-[#FAFAFA] font-light">Stage plan:</p>
+            <p className="dark:text-[#FAFAFA] font-light root:text-black">Stage plan:</p>
             <div className="h-[600px] w-full relative max-sm:h-[300px] max-2xl:h-[800px] ">
-              <Image src={`/Stage.png`} alt="hi" fill />
+              <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 const color = colors[index % colors.length];
 
                 return (
-                  <div key={index} className="py-4 px-6 border-[2px] border-dashed border-[#27272A] rounded-[6px]">
+                  <div key={index} className="py-4 px-6 border-[2px] border-dashed dark:border-[#27272A] rounded-[6px]">
                     <div className="flex items-center justify-between w-full gap-5">
                       <div className="flex gap-2 items-center">
                         <GoDotFill className="w-8 h-8" style={{ color }} />

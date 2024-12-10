@@ -4,17 +4,20 @@ export const typeDefs = gql`
   type Amenity {
     _id: ID!
     name: String!
+    icon: String!
     createdAt: Date!
     updatedAt: Date!
   }
 
   input CreateAmenityInput {
     name: String!
+    icon: String!
   }
 
   input UpdateAmenityInput {
     _id: ID!
     name: String!
+    icon: String!
   }
 
   type Query {

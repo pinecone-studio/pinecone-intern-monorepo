@@ -1,4 +1,4 @@
-import { getLikesByPostId } from 'apps/L1AB/Instagram/instagram-backend/src/resolvers/queries';
+import { getLikesByPostId } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

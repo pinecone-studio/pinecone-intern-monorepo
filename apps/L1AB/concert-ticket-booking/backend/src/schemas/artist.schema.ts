@@ -6,23 +6,23 @@ export const typeDefs = gql`
   type Artist {
     _id: ID!
     artistName: String!
-    image: String!
     additional: String!
+    status: String!
     createdAt: Date!
     updatedAt: Date!
   }
 
   input ArtistInput {
     artistName: String!
-    image: String!
     additional: String!
+    status: String
   }
 
   input UpdateArtistInput {
     _id: ID!
     artistName: String
-    image: String
     additional: String
+    status: String
   }
 
   type Query {

@@ -1,5 +1,7 @@
+/* eslint-disable complexity */
 'use client';
-import React from 'react';
+
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -20,10 +22,22 @@ type AdminDashboardComponent = {
   date: Date | undefined;
   eventStatus: string;
 };
-
 export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus }: AdminDashboardComponent) => {
   const { data, loading } = useGetAllEventsQuery();
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const headers: { label: string; align: 'center' | 'left' | 'right' | 'inherit' | 'justify' }[] = [
+    { label: '', align: 'center' },
+    { label: 'Тоглолтын нэр', align: 'left' },
+    { label: 'Артист', align: 'center' },
+    { label: 'Нийт тоо', align: 'center' },
+    { label: 'Энгийн', align: 'center' },
+    { label: 'FanZone', align: 'center' },
+    { label: 'VIP', align: 'center' },
+    { label: 'Тоглох өдрүүд', align: 'left' },
+    { label: 'Нийт орлого', align: 'right' },
+    { label: 'Үйлдэл', align: 'center' },
+  ];
   if (loading) return <div>Loading...</div>;
   const filteredData = data?.getAllEvents?.filter((item) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -46,7 +60,20 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
     }
     return true;
   });
+
   const filterDeletedEvents = filteredData?.filter((event) => event.status === 'Онцлох' || event.status === 'Regular');
+
+  const sortedEvents = filterDeletedEvents?.sort((a, b) => {
+    if (a.status === 'Онцлох' && b.status !== 'Онцлох') {
+      return -1;
+    }
+    if (b.status === 'Онцлох' && a.status !== 'Онцлох') {
+      return 1;
+    }
+    return 0;
+  });
+  const totalPages = sortedEvents && sortedEvents.length > 0 ? Math.ceil(sortedEvents.length / itemsPerPage) : 0;
+  const currentPageData = sortedEvents?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="flex flex-col gap-6 mt-9">
@@ -55,43 +82,23 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 600 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell align="center" className="text-[#71717A] text-[14px]"></TableCell>
-                <TableCell className="text-[#71717A] text-[14px]">Тоглолтын нэр</TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  Артист
-                </TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  Нийт тоо
-                </TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  Энгийн
-                </TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  FanZone
-                </TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  VIP
-                </TableCell>
-                <TableCell className="text-[#71717A] text-[14px]">Тоглох өдрүүд</TableCell>
-                <TableCell align="right" className="text-[#71717A] text-[14px]">
-                  Нийт орлого
-                </TableCell>
-                <TableCell align="center" className="text-[#71717A] text-[14px]">
-                  Үйлдэл
-                </TableCell>
+              <TableRow className="text-[#71717A] text-[14px]" data-testid={`get-rows`}>
+                {headers.map((header, index) => (
+                  <TableCell key={index} align={header.align}>
+                    {header.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {filterDeletedEvents?.length ? (
-                filterDeletedEvents?.map((item, index) => (
-                  <TableRow key={index} data-testid={`get-events-${index}`} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              {currentPageData?.length ? (
+                currentPageData?.map((item, index) => (
+                  <TableRow key={index} data-testid={`get-events-${index}`}>
                     <TableCell align="center" className="font-medium">
-                      {item.status === 'Онцлох' && <IoStar data-testid="star-icon" />}
+                      {item.status === 'Онцлох' && <IoStar />}
                     </TableCell>
-                    <TableCell component="th" scope="row" className="text-[#09090B] text-[16px] font-semibold">
-                      {item.name}
-                    </TableCell>
+                    <TableCell>{item.name}</TableCell>
                     <TableCell align="center">{item.artistName.slice(0, 2).join(', ')}</TableCell>
                     <TableCell align="center" className="font-medium">
                       {item.venues[0].quantity + item.venues[1].quantity + item.venues[2].quantity}/{item.venues[0].firstquantity + item.venues[1].firstquantity + item.venues[2].firstquantity}
@@ -120,11 +127,10 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
                       ).toLocaleString()}
                       ₮
                     </TableCell>
-
                     <TableCell>
                       <div className="flex items-center justify-center gap-2">
                         <AdvertisedEvent eventId={item._id} />
-                        <UpdateEventComponent />
+                        <UpdateEventComponent eventId={item._id} />
                         <DeletedEvent eventId={item._id} />
                       </div>
                     </TableCell>
@@ -133,7 +139,7 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
               ) : (
                 <TableRow>
                   <TableCell colSpan={10} align="center">
-                    <p className="text-[#A1A1AA] text-2xl text-center">Хайлт тохирох үр дүн олдсонгүй.</p>
+                    <p className="text-[#A1A1AA] text-2xl">Хайлт тохирох үр дүн олдсонгүй.</p>
                   </TableCell>
                 </TableRow>
               )}
@@ -141,7 +147,7 @@ export const AdminDashboard = ({ searchValue, selectedValues, date, eventStatus 
           </Table>
         </TableContainer>
       </div>
-      <AdminPagination />
+      <AdminPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </div>
   );
 };

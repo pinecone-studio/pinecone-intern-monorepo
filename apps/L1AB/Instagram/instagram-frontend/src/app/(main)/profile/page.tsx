@@ -21,15 +21,15 @@ const Page = () => {
   });
   const userData = getUserByUsername?.data?.getUserByUsername;
 
-  const getPostByUserId = useGetPostByUserIdQuery({
+  const { data, loading } = useGetPostByUserIdQuery({
     variables: { userId: userData?._id || '' },
   });
-  const posts = getPostByUserId.data?.getPostByUserId;
+  const posts = data?.getPostByUserId;
 
   return (
     <div className="py-[36px] flex flex-col gap-[59px] max-h-screen overflow-auto">
       <ProfilePageTop userProfile={userData} postsCount={posts} />
-      <ProfilePagePosts userPosts={posts as any} />
+      <ProfilePagePosts userPosts={posts as any} userProfile={userData as any} loading={loading} />
     </div>
   );
 };

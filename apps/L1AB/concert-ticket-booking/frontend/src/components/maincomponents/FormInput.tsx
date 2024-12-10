@@ -11,12 +11,13 @@ interface FormInputProps {
   dataCy: string;
   value: string;
   onChange: (_event: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string | undefined;
 }
 
-const FormInput: React.FC<FormInputProps> = ({ id, label, type, placeholder, dataCy, value, onChange }) => {
+const FormInput: React.FC<FormInputProps> = ({ id, label, type, placeholder, dataCy, value, onChange, error }) => {
   return (
     <div className="flex flex-col items-start gap-1 self-stretch">
-      <label htmlFor={id} className="block text-base font-medium text-gray-200">
+      <label htmlFor={id} className="block text-base font-medium dark:text-gray-200 text-black">
         {label}
       </label>
       <Input
@@ -27,8 +28,9 @@ const FormInput: React.FC<FormInputProps> = ({ id, label, type, placeholder, dat
         placeholder={placeholder}
         data-cy={dataCy}
         aria-label={label}
-        className="mt-1 block w-full rounded-md border border-gray-700 bg-[#09090B] p-2 text-white text-sm"
+        className="mt-1 block w-full rounded-md border dark:border-gray-700 dark:bg-[#09090B] bg-white p-2 dark:text-white text-black text-sm"
       />
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </div>
   );
 };

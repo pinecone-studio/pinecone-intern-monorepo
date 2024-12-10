@@ -7,6 +7,7 @@ import { GetAllEventsDocument } from '@/generated';
 const mock: MockedResponse = {
   request: {
     query: GetAllEventsDocument,
+    variables: {},
   },
   result: {
     data: {
@@ -47,24 +48,56 @@ const mock: MockedResponse = {
           createdAt: '2024-11-14T06:24:52.763Z',
           updatedAt: '2024-11-14T06:24:52.763Z',
         },
+        {
+          _id: '3',
+          name: 'Event 3',
+          artistName: ['Artist3'],
+          description: 'Event description3',
+          eventDate: ['2022-01-03'],
+          eventTime: '18:00',
+          images: ['image_url_2', 'image_url_4'],
+          venues: [
+            { name: 'Venue A', quantity: 100, price: 50, firstquantity: 1 },
+            { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
+            { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
+          ],
+          status: 'Онцлох',
+          discount: 10,
+          createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-14T06:24:52.763Z',
+        },
+        {
+          _id: '4',
+          name: 'Event 4',
+          artistName: ['Artist4'],
+          description: 'Event description4',
+          eventDate: ['2022-01-05'],
+          eventTime: '18:04',
+          images: ['image_url_1', 'image_url_2'],
+          venues: [
+            { name: 'Venue A', quantity: 100, price: 50, firstquantity: 1 },
+            { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
+            { name: 'Venue B', quantity: 150, price: 70, firstquantity: 1 },
+          ],
+          status: 'Regular',
+          discount: 10,
+          createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-14T06:24:52.763Z',
+        },
       ],
     },
   },
 };
+
 describe('AdminDashboard', () => {
   it('should filter events by eventStatus', async () => {
-    const searchValue = ''; // No search value
-    const selectedValues: string[] = []; // No selected values
-    const date = undefined; // No specific date filter
-    const eventStatus = 'regular'; // Filter by status 'regular'
+    const searchValue = '';
+    const selectedValues: string[] = [];
+    const date = undefined;
+    const eventStatus = 'regular';
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>
-        <AdminDashboard
-          searchValue={searchValue}
-          selectedValues={selectedValues}
-          date={date}
-          eventStatus={eventStatus} // Apply the eventStatus filter
-        />
+        <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} eventStatus={eventStatus} />
       </MockedProvider>
     );
     await waitFor(() => {
@@ -148,4 +181,33 @@ describe('AdminDashboard', () => {
     });
     expect(screen.getByText('2022-01-01'));
   });
+
+  //   const setCurrentPage = jest.fn();
+  //   const totalPages = 3;
+  //   const searchValue = '';
+  //   const selectedValues = [''];
+  //   const date = new Date('2022-01-01');
+
+  //   const handlePageChange = (page: number) => {
+  //     setCurrentPage(page >= 1 && page <= totalPages ? page : 1);
+  //   };
+  //   const onPageChange = jest.fn();
+  //   const currentPage = 1;
+
+  //   render(
+  //     <MockedProvider mocks={[mock]} addTypename={false}>
+  //       <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} eventStatus={''} />
+  //     </MockedProvider>
+  //   );
+
+  //   // Test a valid page change
+  //   handlePageChange(2); // Valid page (within range)
+  //   expect(setCurrentPage);
+
+  //   handlePageChange(0);
+  //   expect(setCurrentPage);
+
+  //   handlePageChange(4);
+  //   expect(setCurrentPage);
+  // });
 });

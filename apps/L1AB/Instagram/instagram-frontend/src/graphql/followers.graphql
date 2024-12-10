@@ -12,13 +12,9 @@ query GetFollowersById($id: ID!) {
     updatedAt
   }
 }
-
 mutation CreateFollowers($followerId: ID!, $followeeId: ID!) {
   createFollowers(followerId: $followerId, followeeId: $followeeId) {
-    _id
-    followerId
-    followeeId
-    createdAt
+    message
   }
 }
 query GetFollowingById($id: ID!) {
@@ -33,5 +29,13 @@ query GetFollowingById($id: ID!) {
     isPrivate
     createdAt
     updatedAt
+  }
+}
+mutation DeleteFollower($followerId: ID!, $followeeId: ID!) {
+  deleteFollower(followerId: $followerId, followeeId: $followeeId) {
+    _id
+    followerId
+    followeeId
+    createdAt
   }
 }

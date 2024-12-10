@@ -53,27 +53,27 @@ const SignIn: React.FC<SignInProps> = ({ header, recoveryLinkHref, recoveryLinkT
   return (
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:mx-3" data-cy="SignIn-Page">
-        <form onSubmit={handleSubmit} className="rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
+        <form onSubmit={handleSubmit} className="rounded-2xl dark:border-slate-500 bg-[#f0efef] dark:border-[1px] dark:bg-black flex-col py-8 px-12 gap-6">
           <div className="flex flex-col items-center justify-center py-2">
-            <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px]" data-cy="SignIn-Header">
+            <p className="dark:text-[#FAFAFA] text-black text-2xl font-semibold tracking-[-0.6px]" data-cy="SignIn-Header">
               {header}
             </p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px] max-sm:w-full">
             <div className="flex flex-col justify-start w-full gap-1">
-              <Label htmlFor="email" className="block text-base font-medium text-gray-200">
+              <Label htmlFor="email" className="block text-base font-medium dark:text-gray-200 text-black">
                 {emailLabel}
               </Label>
-              <Input id="email" type="email" placeholder="name@example.com" data-cy="SignIn-Email-Input" value={formData.email} onChange={handleChange} />
+              <Input id="email" type="email" placeholder="name@example.com" data-cy="SignIn-Email-Input" value={formData.email} onChange={handleChange} className='bg-white dark:bg-[#09090B]'/>
             </div>
             <div className="flex flex-col justify-start w-full gap-1">
-              <Label htmlFor="password" className="block text-base font-medium text-gray-200">
+              <Label htmlFor="password" className="block text-base font-medium dark:text-gray-200 text-black">
                 {passwordLabel}
               </Label>
-              <div className="flex items-center border-[1px] rounded-md pr-3">
+              <div className="flex items-center border-[1px] rounded-md pr-3 text-black dark:text-white bg-white dark:bg-[#09090B]">
                 <Input id="password" type={visible ? 'text' : 'password'} data-cy="SignIn-Password-Input" className="border-none" value={formData.password} onChange={handleChange} />
-                <button type="button" data-testid="toggleVisibility" onClick={() => setVisible(!visible)}>
-                  {visible ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
+                <button type="button" data-testid="toggleVisibility" onClick={() => setVisible(!visible)} >
+                  {visible ? <EyeIcon size={20} className="dark:text-gray-400 text-black cursor-pointer dark:hover:text-white hover:text-gray-400" /> : <EyeOffIcon  size={20} className="dark:text-gray-400 text-black cursor-pointer dark:hover:text-white hover:text-gray-400" />}
                 </button>
               </div>
             </div>

@@ -28,9 +28,9 @@ export const RecoveryEmail = ({ header, buttonText, emailLabel }: RecoveryEmailP
   return (
     <Container>
       <div className="text-amber-50 flex items-center justify-center h-[48rem]" data-cy="RecoveryEmail-Page">
-        <div className="rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
+        <div className="rounded-2xl dark:border-slate-500 bg-[#f2f2f2] dark:bg-black border-[1px] flex-col py-8 px-12 gap-6">
           <div className="flex flex-col items-center justify-center py-2">
-            <p className="text-[#FAFAFA] text-2xl font-semibold tracking-[-0.6px] max-sm:text-xl">{header}</p>
+            <p className="dark:text-[#FAFAFA] text-black text-2xl font-semibold tracking-[-0.6px] max-sm:text-xl">{header}</p>
           </div>
           <div className="flex flex-col items-center gap-6 self-stretch w-[350px] max-sm:w-full">
             <div className="flex flex-col justify-start w-full gap-1">

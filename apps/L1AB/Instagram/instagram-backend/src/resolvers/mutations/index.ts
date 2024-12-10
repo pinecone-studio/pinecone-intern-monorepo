@@ -14,3 +14,4 @@ export * from './comment/create-comment';
 export * from './comment/update-comment';
 export * from './user/request-change-password';
 export * from './user/change-password';
+export * from './save';

@@ -32,7 +32,7 @@ interface FormValues {
   confirmPassword: string;
 }
 
-const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ email, otp, signUpMutation, signUpLoading }) => {
+const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ email, signUpMutation, signUpLoading }) => {
   const { register, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: '', confirmPassword: '' },
@@ -40,7 +40,7 @@ const SignUpFormPasswordStep: React.FC<SignUpFormPasswordStepProps> = ({ email, 
 
   const onSubmit: SubmitHandler<FormValues> = async ({ password }) => {
     const response = await signUpMutation({
-      variables: { input: { email, otp, password } },
+      variables: { input: { email, password } },
     });
     if (response.data?.signUp?.success) {
       alert('User created successfully!');

@@ -1,10 +1,23 @@
 'use client';
-import { useGetAllPostsQuery } from '@/generated';
+import { useGetPostsByFollowersIdQuery } from '@/generated';
 import PostCard from './PostCard';
+import { UserContext } from './providers';
+import { useContext } from 'react';
+import Loading from './Loading';
 
 const NewsFeed = () => {
-  const { data } = useGetAllPostsQuery();
-  const posts = data?.getAllPosts;
+  const { user }: any = useContext(UserContext);
+
+  const { data, loading } = useGetPostsByFollowersIdQuery({
+    variables: {
+      followerId: user ? user._id : '',
+    },
+  });
+
+  if (loading) return <Loading size={30} />;
+  const posts = data?.getPostsByFollowersId;
+
+  console.log(posts);
 
   return (
     <div>

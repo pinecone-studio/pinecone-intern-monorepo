@@ -1,7 +1,12 @@
 'use client';
+import { BookingConfirmedBooking } from '@/components/main';
 
 const BookingPage = () => {
-  return <div>Booking Page</div>;
+  return (
+    <div>
+      <BookingConfirmedBooking />
+    </div>
+  );
 };
 
 export default BookingPage;

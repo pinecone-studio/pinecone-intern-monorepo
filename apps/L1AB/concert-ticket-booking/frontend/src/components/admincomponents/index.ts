@@ -11,3 +11,5 @@ export * from './TimePicker';
 export * from './DialogItem';
 export * from './UpdateEventComponent';
 export * from './AdvertisedEvent';
+export * from './AddArtistComponent'
+export * from './ArtistComponent'

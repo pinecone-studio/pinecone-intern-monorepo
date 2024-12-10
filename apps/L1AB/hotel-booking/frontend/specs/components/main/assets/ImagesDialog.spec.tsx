@@ -15,12 +15,36 @@ jest.mock('@/components/ui/dialog', () => ({
 }));
 
 describe('Admin images dialog', () => {
-  it('should render the admin image dialog', () => {
-    const mockSetDialogOpen=jest.fn();
+  it('should render the admin image dialog and handle "View more" click', () => {
+    const mockSetDialogOpen = jest.fn();
 
-    render(<ImageDialog  dialogOpen={false} setDialogOpen={mockSetDialogOpen} images={['https://example.com/image1.jpg','https://example.com/image2.jpg']}  />);
+    render(
+      <ImageDialog
+        dialogOpen={true}
+        setDialogOpen={mockSetDialogOpen}
+        images={[
+          'https://example.com/image1.jpg',
+          'https://example.com/image2.jpg',
+          'https://example.com/image3.jpg',
+          'https://example.com/image4.jpg',
+          'https://example.com/image5.jpg',
+          'https://example.com/image6.jpg',
+          'https://example.com/image7.jpg',
+        ]}
+      />
+    );
+
+    const images = screen.getAllByRole('img');
+    expect(images.length).toBe(6);
 
     const viewMoreButton = screen.getByTestId('view-more');
+    expect(viewMoreButton);
+
     fireEvent.click(viewMoreButton);
+  });
+  it('should close the dialog when "Close" button is clicked', () => {
+    const mockSetDialogOpen = jest.fn();
+
+    render(<ImageDialog dialogOpen={true} setDialogOpen={mockSetDialogOpen} images={[]} />);
   });
 });

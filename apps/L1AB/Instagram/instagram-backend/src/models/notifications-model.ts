@@ -25,7 +25,7 @@ const NotificationsSchema = new Schema<NotificationsType>({
   postId: {
     type: Schema.Types.ObjectId,
     ref: 'Posts',
-    required: true,
+    required: false,
   },
   type: {
     type: String,
@@ -40,7 +40,6 @@ const NotificationsSchema = new Schema<NotificationsType>({
 
 export type NotificationsPopulatedType = NotificationsType & {
   userId: UserType;
-  notifiedUserId: UserType;
   postId: PostsType;
 };
 

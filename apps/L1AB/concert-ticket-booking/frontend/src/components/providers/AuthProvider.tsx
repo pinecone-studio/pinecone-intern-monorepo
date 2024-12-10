@@ -53,13 +53,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     onCompleted: (data) => {
       localStorage.setItem('token', data.signInUser.token);
       setUser(data.signInUser.user);
-      router.push('/');
       toast.success('Signin successful!', { autoClose: 2000 });
+
+      const userRole = data.signInUser.user.role;
+      console.log(userRole);
+
+      if (userRole === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/');
+      }
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
+
   const [signupMutation] = useSignUpUserMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.signUpUser.token);

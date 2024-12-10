@@ -33,11 +33,13 @@ query GetEventById($id: ID!) {
     venues {
       name
       quantity
-      price
       firstquantity
+      price
     }
-    discount
     status
+    discount
+    createdAt
+    updatedAt
   }
 }
 mutation UpdateEventStatus($input: updateEventStatus!) {
@@ -53,17 +55,35 @@ mutation CreateEvent($input: EventInput!) {
     name
     artistName
     description
+    location
     eventDate
     eventTime
     images
     venues {
       name
+      quantity
       firstquantity
       price
-      quantity
     }
     discount
     createdAt
     updatedAt
+  }
+}
+mutation UpdateEvent($input: UpdateEventInput!) {
+  updateEvent(input: $input) {
+    _id
+    artistName
+    description
+    eventDate
+    eventTime
+    venues {
+      name
+      quantity
+      firstquantity
+      price
+    }
+    name
+    discount
   }
 }

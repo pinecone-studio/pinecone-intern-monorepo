@@ -8,23 +8,37 @@ jest.mock('../../../../src/models', () => ({
       .mockResolvedValueOnce({
         _id: '1',
         name: 'test',
+        icon: 'testicon',
       })
       .mockRejectedValueOnce(''),
   },
 }));
 
 describe('Update amenity', () => {
-  it('should update a amenity successfully', async () => {
-    const result = await updateAmenity!({}, { input: { _id: '1', name: 'test' } }, {} as any, {} as GraphQLResolveInfo);
+  it('should update an amenity successfully', async () => {
+    const mockInput = {
+      _id: '1',
+      name: 'test',
+      icon: 'testicon',
+    };
+
+    const result = await updateAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       _id: '1',
       name: 'test',
+      icon: 'testicon',
     });
   });
 
-  it('should return error when there is a failure in updating the amenity', async () => {
+  it('should return an error when there is a failure in updating the amenity', async () => {
+    const mockInput = {
+      _id: '1',
+      name: 'test',
+      icon: 'testicon',
+    };
+
     try {
-      await updateAmenity!({}, { input: { _id: '1', name: 'test' } }, {} as any, {} as GraphQLResolveInfo);
+      await updateAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('Failed to update amenity'));
     }

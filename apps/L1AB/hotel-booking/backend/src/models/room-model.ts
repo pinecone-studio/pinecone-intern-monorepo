@@ -10,12 +10,17 @@ export type roomType = {
   price: number;
   roomType: string;
   hotelId: Types.ObjectId;
+  maxCapacity: number;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 const roomSchema = new Schema<roomType>(
   {
+    maxCapacity: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -55,7 +60,7 @@ const roomSchema = new Schema<roomType>(
 );
 
 export type roomPopulatedType = roomType & {
-  hotelId: hotelType
+  hotelId: hotelType;
 };
 
 export const roomModel = mongoose.models.room || model('room', roomSchema);

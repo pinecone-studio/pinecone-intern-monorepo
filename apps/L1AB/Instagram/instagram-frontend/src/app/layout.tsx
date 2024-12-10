@@ -1,6 +1,7 @@
 import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
+import PageLoading from '@/components/PageLoading';
 
 export const metadata = {
   title: 'Instagram',
@@ -11,7 +12,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body className="flex">
-        <Suspense>
+        <Suspense fallback={<PageLoading />}>
           <ApolloWrapper>{children} </ApolloWrapper>
         </Suspense>
       </body>

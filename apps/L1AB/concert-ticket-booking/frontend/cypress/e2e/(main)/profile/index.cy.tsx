@@ -20,6 +20,7 @@ describe('Profile Page', () => {
   it('should render forgetPassword', () => {
     cy.get('[data-cy=Profile-Page-ForgetPassword]').click();
   });
+  
   // it('should allow the input name and select', () => {
   //   cy.get('[data-cy=Profile-Password-Input]').type('test');
   //   cy.get('[data-cy=Profile-Password-Input-icon]').click();

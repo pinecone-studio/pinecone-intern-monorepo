@@ -2,18 +2,38 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '../providers';
 import { useUpdateUserMutation } from '@/generated';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const UserProfile = () => {
-  const { signout } = useAuth();
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({ phone: '', email: '' });
+
   const [UpdateUser] = useUpdateUserMutation();
 
+  const validateForm = () => {
+    const errors: { phone: string; email: string } = { phone: '', email: '' };
+
+    if (!phone) {
+      errors.phone = 'Утасны дугаар оруулна уу!';
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Имэйл хаяг оруулна уу!';
+    }
+
+    setErrors(errors);
+
+    return !errors.phone && !errors.email;
+  };
+
   const handleUpdateUser = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     await UpdateUser({
       variables: {
         input: {
@@ -24,18 +44,20 @@ export const UserProfile = () => {
     });
     setPhone('');
     setEmail('');
-    toast.success('Таны мэдээлэл амжилттай шинэчлэгдсэн');
+    toast.success('Таны мэдээлэл амжилттай шинэчлэгдсэн', { autoClose: 1500 });
   };
+
   return (
     <div className="w-full h-fit flex flex-col gap-6  " data-testid="userProfile">
-      <p className="font-semibold text-2xl text-white">Захиалагчийн мэдээлэл</p>
-      <div className="p-8 grid gap-6 text-[#FAFAFA] bg-[#131313] rounded-xl">
+      <p className="font-semibold text-2xl dark:text-white text-black">Захиалагчийн мэдээлэл</p>
+      <div className="p-8 grid gap-6 dark:text-[#FAFAFA] text-black dark:bg-[#131313] bg-[#f2f2f2] rounded-xl">
         <div className="grid gap-2">
-          <Label htmlFor="Утасны дугаар:">Утасны дугаар:</Label>
+          <Label htmlFor="phone">Утасны дугаар:</Label>
           <Input
+            id="phone"
             type="number"
             placeholder="9900-0000"
-            className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+            className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
             data-testid="searchinput"
             data-cy="Profile-Phone-Input"
             onInput={(e) => {
@@ -47,21 +69,26 @@ export const UserProfile = () => {
             value={phone}
             onChange={(event) => {
               setPhone(event.target.value);
+              if (errors.phone) setErrors({ ...errors, phone: '' });
             }}
           />
+          {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="Имэйл хаяг:">Имэйл хаяг:</Label>
+          <Label htmlFor="email">Имэйл хаяг:</Label>
           <Input
+            id="email"
             type="email"
             placeholder="name@example.com"
-            className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+            className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
             data-cy="Profile-Email-Input"
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
+              if (errors.email) setErrors({ ...errors, email: '' });
             }}
           />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         </div>
         <div className="flex justify-end">
           <button
@@ -73,11 +100,6 @@ export const UserProfile = () => {
             Хадгалах
           </button>
         </div>
-      </div>
-      <div className=" w-full flex justify-end">
-        <button className="w-fit  font-medium text-sm hover:text-black hover:bg-[#00B7F4] text-white hover:border-none px-4 py-2  rounded-md bg-[#272729]" onClick={signout}>
-          Гарах
-        </button>
       </div>
     </div>
   );

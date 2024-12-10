@@ -1,8 +1,10 @@
 'use client';
-import { Bookmark, Grid3x3 } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { ProfilePageFirstPost } from './ProfilePageFirstPost';
+import ProfilePostsSection from './ProfilePostsSection';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from './providers';
+import { User } from '@/generated';
+import ProfilePagePostsAndSaved from './ProfilePagePostsAndSaved';
+import Loading from './Loading';
 
 export const styles = {
   button: 'bg-white hover:bg-white text-[#2563EB] font-medium leading-5 text-[14px] outline-none',
@@ -15,45 +17,20 @@ export const styles = {
   textContainer: 'w-[935px] mt-7 text-center flex flex-col gap-4 text-[12px] text-[#71717A] leading-4',
 };
 
-export const ProfilePagePosts = ({ userPosts }: { userPosts: any }) => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const type = searchParams.get('type');
-  const username = searchParams.get('username');
+export const ProfilePagePosts = ({ userPosts, userProfile, loading }: any) => {
+  const [isFollow, setIsFollow] = useState<boolean>(false);
+  const { user, sortedUsers }: any = useContext(UserContext);
 
+  useEffect(() => {
+    if (userProfile?._id && sortedUsers) {
+      const isFollowing = sortedUsers?.some((el: User) => el._id === userProfile._id);
+      setIsFollow(isFollowing);
+    }
+  }, [userProfile, sortedUsers]);
   return (
     <div className={styles.container} data-cy="Profile-page-posts">
-      <div className={styles.line}>
-        <div
-          className={type === 'posts' ? styles.selected : styles.notSelected}
-          onClick={() => {
-            router.push(`/profile?username=${username}&type=posts`);
-          }}
-        >
-          <Grid3x3 strokeWidth={2} size={16} />
-          posts
-        </div>
-        <div
-          className={type === 'saved' ? styles.selected : styles.notSelected}
-          onClick={() => {
-            router.push(`/profile?username=${username}&type=saved`);
-          }}
-        >
-          <Bookmark strokeWidth={2} size={16} />
-          saved
-        </div>
-      </div>
-      {type == 'posts' && userPosts?.length > 0 ? (
-        <div className={styles.postsContainer}>
-          {userPosts?.map((post: any, i: any) => (
-            <div key={i} className={styles.imageContainer}>
-              <Image src={post.images[0]} objectFit="cover" fill alt="post" />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <ProfilePageFirstPost />
-      )}
+      <div className={styles.line}>{userProfile?.isPrivate == true ? isFollow ? null : <ProfilePagePostsAndSaved user={user} /> : <ProfilePagePostsAndSaved user={user} />}</div>
+      {loading ? <Loading size={30} /> : <ProfilePostsSection userPosts={userPosts} profileUser={userProfile} isFollow={isFollow} user={user} />}
     </div>
   );
 };

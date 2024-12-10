@@ -1,79 +1,79 @@
 import '@testing-library/jest-dom';
+import React from 'react';
 import { render } from '@testing-library/react';
 import { HotelDetails } from '@/components/admin';
-import { useParams } from 'next/navigation';
-import { GetHotelByIdDocument } from '@/generated';
-import { MockedProvider } from '@apollo/client/testing';
-import React, { ReactNode } from 'react';
+import { useAdmin } from '@/components/providers/AdminProvider';
 
-jest.mock('next/navigation', () => ({
-  useParams: jest.fn(() => ({ hotel: '1' })),
+// Mocking AdminProvider and other dependencies
+jest.mock('@/components/providers/AdminProvider', () => ({
+  useAdmin: jest.fn(),
 }));
 
-jest.mock('@/components/admin/assets', () => ({
-  DetailsContainer: ({ children, name }: { children: ReactNode; name: string }) => <div data-testid={`container-${name}`}>{children}</div>,
-  DetailsLeft: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  DetailsRight: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  DetailsCard: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-}));
-
-const mocks = [
-  {
-    request: {
-      query: GetHotelByIdDocument,
-      variables: { id: '1' },
+describe('HotelDetails Component', () => {
+  const mockAdminProvider = {
+    addHotelForm: {
+      values: {
+        name: '',
+        phone: '',
+        stars: 0,
+        rating: 0,
+        description: '',
+      },
+      handleChange: jest.fn(),
+      handleBlur: jest.fn(),
+      setFieldValue: jest.fn(),
+      handleSubmit: jest.fn(),
+      errors: {},
+      touched: {},
     },
-    result: {
-      data: {
-        getHotelById: {
-          _id: '1',
-          name: 'Hotel',
-          description: '5 stars Hotel',
-          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-          address: 'Sun Road 1-st District',
-          phone: '11111111',
-          city: 'ub',
-          rating: 8,
-          stars: 3,
-          rooms: [
-            {
-              _id: '1',
-              name: 'single room',
-              roomNumber: '20',
-              price: 2000,
-              description: 'desc',
-              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-              roomType: 'ONE',
-              createdAt: '2024-11-12T06:24:52.763Z',
-              updatedAt: '2024-11-12T06:24:52.763Z',
-            },
-            {
-              _id: '2',
-              name: 'double room',
-              roomNumber: '20',
-              price: 2000,
-              description: 'desc',
-              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-              roomType: 'TWO',
-              createdAt: '2024-11-12T06:24:52.763Z',
-              updatedAt: '2024-11-12T06:24:52.763Z',
-            },
-          ],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
-        },
+    hotelData: {
+      getHotelById: {
+        _id: '1',
+        name: 'Hotel',
+        description: '5 stars Hotel',
+        images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+        address: 'Sun Road 1-st District',
+        phone: '11111111',
+        city: 'ub',
+        rating: 8,
+        stars: 3,
+        rooms: [
+          {
+            _id: '1',
+            name: 'single room',
+            roomNumber: '20',
+            price: 2000,
+            description: 'desc',
+            photos: [],
+            roomType: 'ONE',
+            createdAt: '2024-11-12T06:24:52.763Z',
+            updatedAt: '2024-11-12T06:24:52.763Z',
+          },
+          {
+            _id: '2',
+            name: 'double room',
+            roomNumber: '20',
+            price: 2000,
+            description: 'desc',
+            photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+            roomType: 'TWO',
+            createdAt: '2024-11-12T06:24:52.763Z',
+            updatedAt: '2024-11-12T06:24:52.763Z',
+          },
+        ],
+        createdAt: '2024-11-14T06:24:52.763Z',
+        updatedAt: '2024-11-14T06:24:52.763Z',
       },
     },
-  },
-];
-describe('Admin Hotel Details', () => {
-  it('handles no data gracefully', async () => {
-    useParams.mockReturnValue({ hotel: '1' });
+    hotelLoading: false,
+    showError: jest.fn((field, errors, touched) => touched[field] && errors[field]),
+  };
 
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <HotelDetails />
-      </MockedProvider>
-    );
+  beforeEach(() => {
+    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+  });
+
+  it('renders the container and sections', () => {
+    render(<HotelDetails />);
   });
 });
