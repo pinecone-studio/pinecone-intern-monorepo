@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { AddEventComponent } from './AddEventComponent';
 import { AdminDashboard } from './AdminDashboard';
 import { AdminSearcher } from './AdminDashboardSearcher';
+import { useGetAllEventsQuery } from '@/generated';
 
 export const AdminDash = () => {
+  const { refetch } = useGetAllEventsQuery();
   const [searchValue, setSearchValue] = useState<string>('');
   const [date, setDate] = useState<Date | undefined>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -16,7 +18,7 @@ export const AdminDash = () => {
           <h3 className="text-lg">Тасалбар</h3>
           <p className="text-sm text-[#71717A]">Идэвхитэй зарагдаж буй тасалбарууд</p>
         </div>
-        <AddEventComponent />
+        <AddEventComponent refetch={refetch} />
       </div>
       <div className="border-t-[1px] my-6"></div>
 
