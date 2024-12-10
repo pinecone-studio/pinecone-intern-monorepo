@@ -3,6 +3,7 @@ import { useGetPostsByFollowersIdQuery } from '@/generated';
 import PostCard from './PostCard';
 import { UserContext } from './providers';
 import { useContext } from 'react';
+import Loading from './Loading';
 
 const NewsFeed = () => {
   const { user }: any = useContext(UserContext);
@@ -13,8 +14,10 @@ const NewsFeed = () => {
     },
   });
 
-  if (loading) return <div>Loading posts...</div>;
+  if (loading) return <Loading size={30} />;
   const posts = data?.getPostsByFollowersId;
+
+  console.log(posts);
 
   return (
     <div>

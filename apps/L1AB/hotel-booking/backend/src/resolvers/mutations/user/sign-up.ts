@@ -1,19 +1,9 @@
 import { MutationResolvers } from '../../../generated';
 import bcrypt from 'bcrypt';
-import { otpModel, userModel } from '../../../models';
+import { userModel } from '../../../models';
 
 export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input }) => {
-  const { email, otp, password } = input;
-
-  const response = await otpModel.findOne({ email });
-
-  if (!response) {
-    throw new Error('No OTP found for the provided email');
-  }
-
-  if (otp !== response.otp) {
-    throw new Error('Invalid OTP');
-  }
+  const { email, password } = input;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 

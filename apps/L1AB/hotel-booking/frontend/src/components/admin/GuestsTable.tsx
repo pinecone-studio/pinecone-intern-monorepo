@@ -1,12 +1,9 @@
 'use client';
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { PiMagnifyingGlassLight } from 'react-icons/pi';
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
-import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
-import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
 
 const invoices = [
   {
@@ -73,7 +70,7 @@ export const GuestsTable = () => {
             </SelectTrigger>
             <SelectContent>
               <div className="flex gap-2 justify-center items-center text-[#71717A] p-1">
-                <PiMagnifyingGlassLight />
+                <ChevronDown />
                 Search option...
               </div>
               <div className=" flex px-4 gap-3">
@@ -124,16 +121,16 @@ export const GuestsTable = () => {
             </div>
             <div className="flex gap-2 ">
               <button className="w-[32px] h-[32px] border flex justify-center items-center rounded-md">
-                <MdKeyboardDoubleArrowLeft />
+                <ChevronsLeft />
               </button>
               <button className="w-[32px] h-[32px] border flex justify-center items-center rounded-md">
-                <RxCaretLeft />
+                <ChevronLeft />
               </button>
               <button className="w-[32px] h-[32px] border flex justify-center items-center rounded-md">
-                <RxCaretRight />
+                <ChevronRight />
               </button>
               <button className="w-[32px] h-[32px] border flex justify-center items-center rounded-md">
-                <MdKeyboardDoubleArrowRight />
+                <ChevronsRight />
               </button>
             </div>
           </div>

@@ -2,35 +2,30 @@ import React from 'react';
 import { HotelGeneralInfoDailog } from '../../dialogs';
 import { Phone } from 'lucide-react';
 import { StarFillIcon, StarIcon } from '@/components/icon';
+import { useAdmin } from '@/components/providers/AdminProvider';
 
-type HotelDetailsGeneralInfoProps = {
-  name?: string;
-  phone?: string;
-  desc?: string;
-  rating?: number;
-  stars?: number;
-};
-export const HotelDetailsGeneralInfo = ({ name, phone, desc, rating, stars }: HotelDetailsGeneralInfoProps) => {
+export const HotelDetailsGeneralInfo = () => {
+  const { addHotelForm } = useAdmin();
   return (
-    <div className="flex flex-col">
+    <div data-testid="HotelDetailsGeneralInfo" className="flex flex-col">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">General info</h3>
-        <HotelGeneralInfoDailog name={name || ''} phone={phone || ''} desc={desc || ''} stars={stars || 0} />
+        <HotelGeneralInfoDailog />
       </div>
       <div className="border-t w-full my-6"></div>
       <div className="flex flex-col gap-6">
-        {DetailName(name)}
+        {DetailName(addHotelForm.values.name)}
         <div className="w-full text-sm flex justify-between items-center">
-          {DetailPhone(phone)}
-          {DetailRating(rating)}
-          {DetailStars(stars)}
+          {DetailPhone(addHotelForm.values.phone)}
+          {DetailRating(addHotelForm.values.rating)}
+          {DetailStars(addHotelForm.values.stars)}
         </div>
-        {DetailDescription(desc)}
+        {DetailDescription(addHotelForm.values.description)}
       </div>
     </div>
   );
 };
-const DetailName = (name?: string) => (
+const DetailName = (name: string) => (
   <div className="w-full text-sm">
     <div className="flex flex-col gap-1">
       <p className="text-muted-foreground text-sm ">Name</p>
@@ -38,7 +33,7 @@ const DetailName = (name?: string) => (
     </div>
   </div>
 );
-const DetailPhone = (phone?: string) => (
+const DetailPhone = (phone: string) => (
   <div className="flex flex-col gap-1 w-[245.33px] justify-start">
     <p className="text-muted-foreground text-sm ">Phone Number</p>
     <div className="flex gap-2 items-center">
@@ -47,7 +42,7 @@ const DetailPhone = (phone?: string) => (
     </div>
   </div>
 );
-const DetailRating = (rating?: number) => (
+const DetailRating = (rating: number) => (
   <div className="flex flex-col gap-1 w-[245.33px] justify-start">
     <p className="text-muted-foreground text-sm ">Rating</p>
     <div className="flex gap-2 items-center">
@@ -58,7 +53,7 @@ const DetailRating = (rating?: number) => (
     </div>
   </div>
 );
-const DetailStars = (stars?: number) => (
+const DetailStars = (stars: number) => (
   <div className="flex flex-col gap-1 w-[245.33px] justify-start">
     <p className="text-muted-foreground text-sm ">Stars Rating</p>
     <div className="flex gap-2 items-center">
@@ -66,7 +61,7 @@ const DetailStars = (stars?: number) => (
     </div>
   </div>
 );
-const DetailDescription = (desc?: string) => (
+const DetailDescription = (desc: string) => (
   <div className="flex flex-col gap-1 ">
     <p className="text-muted-foreground text-sm ">Description</p>
     <div className="flex gap-2 items-center">{desc ? <p>{desc}</p> : <p>-/-</p>}</div>

@@ -20,4 +20,3 @@ export { default as SubTract } from './SubTract';
 export { default as TopInside } from './TopInside';
 export { default as TopMiddle } from './TopMiddle';
 export { default as TopOut } from './TopOut';
-export { default as TopSmallMiddle } from './TopSmallMiddle';

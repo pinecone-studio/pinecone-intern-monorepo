@@ -4,6 +4,7 @@ import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useContext } from 'react';
 import { UserContext } from './providers';
 import Link from 'next/link';
+import LogoutDialog from './LogoutButton';
 
 const RightSideBar = () => {
   const { user }: any = useContext(UserContext);
@@ -22,16 +23,7 @@ const RightSideBar = () => {
             <h4>{user?.fullname}</h4>
           </div>
         </Link>
-        <button
-          data-testid="btn-logout"
-          className="text-[11px] font-semibold text-[#2563EB]"
-          onClick={() => {
-            localStorage.removeItem('userToken');
-            location.reload();
-          }}
-        >
-          Log out
-        </button>
+        <LogoutDialog />
       </div>
     </div>
   );

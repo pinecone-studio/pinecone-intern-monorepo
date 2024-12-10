@@ -24,7 +24,7 @@ export const UserProfile = () => {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = 'Имэйл хаяг оруулна уу!';
-    }
+    } 
 
     setErrors(errors);
 
@@ -50,16 +50,16 @@ export const UserProfile = () => {
   };
 
   return (
-    <div className="w-full h-fit flex flex-col gap-6" data-testid="userProfile">
-      <p className="font-semibold text-2xl text-white">Захиалагчийн мэдээлэл</p>
-      <div className="p-8 grid gap-6 text-[#FAFAFA] bg-[#131313] rounded-xl">
+    <div className="w-full h-fit flex flex-col gap-6  " data-testid="userProfile">
+      <p className="font-semibold text-2xl dark:text-white text-black">Захиалагчийн мэдээлэл</p>
+      <div className="p-8 grid gap-6 dark:text-[#FAFAFA] text-black dark:bg-[#131313] bg-[#f2f2f2] rounded-xl">
         <div className="grid gap-2">
           <Label htmlFor="phone">Утасны дугаар:</Label>
           <Input
             id="phone"
             type="number"
             placeholder="9900-0000"
-            className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+            className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
             data-testid="searchinput"
             data-cy="Profile-Phone-Input"
             onInput={(e) => {
@@ -82,7 +82,7 @@ export const UserProfile = () => {
             id="email"
             type="email"
             placeholder="name@example.com"
-            className="px-3 py-1 border-[#27272A] bg-[#09090B]"
+            className="px-3 py-1 dark:border-[#27272A] dark:bg-[#09090B] border-[#c6c6c6] bg-white"
             data-cy="Profile-Email-Input"
             value={email}
             onChange={(event) => {

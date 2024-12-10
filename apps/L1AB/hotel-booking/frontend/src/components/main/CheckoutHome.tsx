@@ -1,22 +1,12 @@
+'use client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AiOutlineThunderbolt } from 'react-icons/ai';
+import { Zap } from 'lucide-react';
 export const CheckOutHome = () => {
   return (
     <div className="w-full p-3">
-      <div className=" flex justify-center ">
-        <div className="w-[1280px] h-[40px] border flex flex-row justify-between">
-          <div className="flex flex-row gap-1 items-center">
-            <div className="w-[20px] h-[20px] rounded-full bg-blue-600"></div>
-            <h1 className="font-bold">Pedia</h1>
-          </div>
-          <div className="flex gap-4 flex-row">
-            <h1>My Booking</h1>
-            <h1>Shagai</h1>
-          </div>
-        </div>
-      </div>
+      <div className=" flex justify-center "></div>
       <div className="flex justify-center p-3">
-        <div className="w-[1280px] h-[1521px]  flex flex-row gap-5 justify-center ">
+        <div className="w-full p-3  flex flex-row gap-5 justify-center ">
           <div className="w-[581px] h-[1487px]  p-3">
             <div>
               <h1 className="font-bold">1. Who’s checking in?</h1>
@@ -114,26 +104,26 @@ export const CheckOutHome = () => {
                 <div>
                   <div className="flex flex-row gap-7 mt-3">
                     <div className="flex items-center">
-                      <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> 1 Queen Bed
+                      <Zap className="w-[26px] h-[16px]" /> 1 Queen Bed
                     </div>
                     <div className="flex items-center">
-                      <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Non Smoking
+                      <Zap className="w-[26px] h-[16px]" /> Non Smoking
                     </div>
                   </div>
                   <div>
                     <div className="flex flex-row gap-7 mt-3">
                       <div className="flex items-center">
-                        <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Breakfast included
+                        <Zap className="w-[26px] h-[16px]" /> Breakfast included
                       </div>
                       <div className="flex items-center">
-                        <AiOutlineThunderbolt className="w-[26px] h-[16px]" /> Pet friendly
+                        <Zap className="w-[26px] h-[16px]" /> Pet friendly
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-[515px] h-[189px] border border-black rounded-xl mt-3 p-3">
+            <div className=" border border-black rounded-xl mt-3 p-3">
               <h1 className="font-bold">Price Detail</h1>
               <h1 className="mt-3">1 room x 1 night</h1>
               <div className="flex flex-row justify-between">

@@ -43,12 +43,12 @@ export const SearchPageComponent = () => {
   });
 
   return (
-    <div className="text-white flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
+    <div className="dark:text-white text-black flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
       <div className="flex gap-2 items-center px-28 max-sm:px-3 max-md:px-3 max-lg:px-3  max-xl:px-3  ">
-        <div className="py-1 px-2 border border-[#27272A] flex justify-center items-center rounded-lg">
+        <div className="py-1 px-2 border dark:border-[#27272A] border-[#c6c6c6] flex justify-center items-center rounded-lg">
           <input
             data-cy="Search-Events"
-            className="py-[2px] px-3 bg-[#09090B] text-[#A1A1AA] outline-none"
+            className="py-1 px-3 dark:bg-[#09090B] bg-white text-[#A1A1AA] outline-none"
             placeholder="Хайлт"
             value={searchTerm}
             data-testid="searchinput"
@@ -64,7 +64,7 @@ export const SearchPageComponent = () => {
                 data-testid="calendar-button"
                 data-cy="Search-Date-Events"
                 variant="outline"
-                className="w-[280px] border border-[#27272A] justify-start text-left font-normal', !date && 'text-muted-foreground"
+                className="w-[280px] border dark:border-[#27272A] border-[#c6c6c6] justify-start text-left font-normal', !date && 'text-muted-foreground"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date ? format(date, 'PPP') : 'Pick a date'}

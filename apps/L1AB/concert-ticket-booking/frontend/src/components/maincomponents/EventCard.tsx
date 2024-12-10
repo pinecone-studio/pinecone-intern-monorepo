@@ -26,16 +26,16 @@ const formatNumber = (value: number): string => {
 };
 
 const EventPrice = ({ originalPrice, discountedPrice, discount }: { originalPrice: number; discountedPrice: number; discount: number }) => (
-  <div className="w-fit flex items-end gap-2">
-    <h2 className="text-2xl text-[#FAFAFA] font-bold ">{formatNumber(discountedPrice)}₮</h2>
-    {discount > 0 && <h1 className="text-[16px] text-[#FAFAFA] opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
+  <div className="w-fit flex items-end gap-2 ">
+    <h2 className="text-2xl dark:text-[#FAFAFA] font-bold root:text-black">{formatNumber(discountedPrice)}₮</h2>
+    {discount > 0 && <h1 className="text-[16px] dark:text-[#FAFAFA] root:text-black opacity-50 line-through">{formatNumber(originalPrice)}₮</h1>}
   </div>
 );
 
 const EventName = ({ name, description }: { name: string; description: string }) => (
   <div className="">
     <div className="max-w-[250px] overflow-hidden  min-h-[28px]">
-      <h1 className="text-xl text-[#FAFAFA] truncate w-full ">{name}</h1>
+      <h1 className="text-xl dark:text-[#FAFAFA] truncate w-full root:text-black">{name}</h1>
     </div>
     <h6 className="text-[16px] text-[#A1A1AA] w-fit">{description}</h6>
   </div>
@@ -71,13 +71,13 @@ export const EventCard = ({ _id, name, description, eventDate, images, venues, d
   const router = useRouter();
   return (
     <div className="w-full  " data-testid="eventhaha">
-      <div className="border border-[#18181B] rounded-[8px] cursor-pointer overflow-hidden" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
+      <div className="dark:border dark:border-[#18181B] rounded-[8px] cursor-pointer overflow-hidden" onClick={() => router.push(`/events/${_id}`)} data-testid="EventCardClickId">
         <div className="relative h-[250px] w-full">
           <Image src={images[0]} alt="Event image" fill className="object-cover" />
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}
         </div>
-        <div className="bg-[#131313] py-8 px-6 h-fit gap-6 grid">
-          <EventName name={name} description={description} />
+        <div className="dark:bg-[#131313] bg-[#f3f2f2] py-8 px-6 h-fit gap-6 grid ">
+          <EventName name={name} description={description}  />
           {venues[2] ? <EventPrice originalPrice={originalPrice} discountedPrice={discountedPrice} discount={discount} /> : <h1 className="text-red-500">{`Don't have index 2 element :)`}</h1>}
           <EventLocation location={location} eventDate={eventDate} />
         </div>

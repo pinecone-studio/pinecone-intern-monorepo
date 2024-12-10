@@ -11,20 +11,21 @@ describe('DetailsUpcomingBookings Component', () => {
   it('filters bookings by status when the status filter arrows are clicked', async () => {
     render(<RoomDetailsUpcomingBookings mockBookings={mockBookings} />);
 
-    const button1 = screen.getByTestId('arrow-up-status');
-    fireEvent.click(button1);
-    const button2 = screen.getByTestId('arrow-down-status');
-    fireEvent.click(button2);
+    const statusSortButton = screen.getByTestId('status-sort');
+    fireEvent.click(statusSortButton);
+
+    const dateSortButton = screen.getByTestId('date-sort');
+    fireEvent.click(dateSortButton);
   });
 
   it('sorts bookings by date when the date sorting arrows are clicked', async () => {
     render(<RoomDetailsUpcomingBookings mockBookings={mockBookings} />);
 
-    const button3 = screen.getByTestId('arrow-up-date');
-    fireEvent.click(button3);
-
-    const button4 = screen.getByTestId('arrow-down-date');
-    fireEvent.click(button4);
+    const statusSortButton = screen.getByTestId('status-sort');
+    fireEvent.click(statusSortButton);
+    
+    const dateSortButton = screen.getByTestId('date-sort');
+    fireEvent.click(dateSortButton);
   });
   it('should display a "No upcoming bookings available" message when there are no bookings', async () => {
     render(<RoomDetailsUpcomingBookings mockBookings={[]} />);

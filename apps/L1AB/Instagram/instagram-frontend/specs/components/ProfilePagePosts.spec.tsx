@@ -13,6 +13,12 @@ jest.mock('@/components/ProfilePagePostsAndSaved', () => ({
   default: jest.fn(() => <div>ProfilePagePostsAndSaved</div>),
 }));
 
+jest.mock('@/components/Loading', () => {
+  const MockLoading = () => <div>Loading...</div>;
+  MockLoading.displayName = 'MockLoading';
+  return MockLoading;
+});
+
 describe('ProfilePagePosts', () => {
   const mockUserProfile = {
     _id: '123',
@@ -35,10 +41,10 @@ describe('ProfilePagePosts', () => {
     { id: '2', images: ['image2.jpg'] },
   ];
 
-  const renderComponent = (userPosts = mockUserPosts, userProfile = mockUserProfile, sortedUsers = mockSortedUsers) => {
+  const renderComponent = (userPosts = mockUserPosts, userProfile = mockUserProfile, sortedUsers = mockSortedUsers, loading = true) => {
     return render(
       <UserContext.Provider value={{ user: mockUser, sortedUsers }}>
-        <ProfilePagePosts userPosts={userPosts} userProfile={userProfile} />
+        <ProfilePagePosts userPosts={userPosts} userProfile={userProfile} loading={loading} />
       </UserContext.Provider>
     );
   };
@@ -85,20 +91,16 @@ describe('ProfilePagePosts', () => {
   });
 
   test('5 does not throw an error when sortedUsers is undefined', () => {
-    renderComponent(mockUserPosts, mockUserProfile, undefined);
-
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
     expect(screen.getByText('ProfilePostsSection'));
   });
-
   test('6 sets isFollowing to true when viewing their own profile', () => {
     const selfProfile = {
       _id: '123',
       username: 'current_user',
       isPrivate: false,
     };
-
     renderComponent(mockUserPosts, selfProfile, mockSortedUsers);
-
     const isFollowing = mockSortedUsers.some((el: User) => el._id === selfProfile._id);
     expect(isFollowing).toBe(true);
   });
@@ -116,44 +118,42 @@ describe('ProfilePagePosts', () => {
   });
 
   test('8 renders ProfilePagePosts correctly with userPosts and userProfile', () => {
-    renderComponent();
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
 
     expect(screen.getByText('ProfilePostsSection'));
   });
-
   test('9 shows ProfilePagePostsAndSaved component for private profiles and when the user is not following', () => {
     renderComponent(mockUserPosts, { ...mockUserProfile, isPrivate: false });
-
     expect(screen.getByText('ProfilePagePostsAndSaved'));
   });
-
   test('10 does not show ProfilePagePostsAndSaved component if the user is following a private profile', () => {
     renderComponent(mockUserPosts, { ...mockUserProfile, isPrivate: true });
-
     mockSortedUsers.push({ _id: '123', username: 'john_doe' });
-
     expect(screen.queryByText('ProfilePagePostsAndSaved')).toBeNull();
   });
-
   test('11 calls ProfilePostsSection with correct props', () => {
-    renderComponent(mockUserPosts, mockUserProfile);
-
+    renderComponent(mockUserPosts, mockUserProfile, undefined, false);
     expect(screen.getByText('ProfilePostsSection'));
   });
-
   test('12 handles private profile and follow status correctly', async () => {
     const userProfile = { _id: '123', isPrivate: false, username: 'john_doe' };
     const userPosts = [{ images: ['image1.jpg'] }];
-
-    renderComponent(userPosts, userProfile);
-
+    renderComponent(userPosts, userProfile, undefined, false);
     expect(screen.getByText('ProfilePagePostsAndSaved'));
     expect(screen.getByText('ProfilePostsSection'));
   });
-
   test('13 renders ProfilePostsSection with posts if posts are available', () => {
-    renderComponent();
-
+    const userProfile = { _id: '123', isPrivate: false, username: 'john_doe' };
+    const userPosts = [{ images: ['image1.jpg'] }];
+    renderComponent(userPosts, userProfile, undefined, false);
     expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('14 renders ProfilePostsSection when loading is false', async () => {
+    renderComponent(mockUserPosts, mockUserProfile, mockSortedUsers, false);
+    expect(screen.getByText('ProfilePostsSection'));
+  });
+  test('15 renders loading spinner when loading is true', () => {
+    renderComponent(mockUserPosts, mockUserProfile, mockSortedUsers, true);
+    expect(screen.getByText('Loading...'));
   });
 });

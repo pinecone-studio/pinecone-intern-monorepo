@@ -1,7 +1,7 @@
 import React from 'react';
 export const HotelDetailsAboutThisProperty = () => {
   return (
-    <div>
+    <div data-testid="HotelDetailsAboutThisProperty">
       <h3 className="text-lg font-semibold">About this property</h3>
       <div className="border-t w-full my-6"></div>
       <div className="w-full text-sm">
