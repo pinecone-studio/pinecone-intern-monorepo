@@ -27,7 +27,7 @@ describe('SignUpForm', () => {
         request: {
           query: SignUpDocument,
           variables: {
-            input: { email: 'test@example.com', otp: '1234', password: 'strongpassword' },
+            input: { email: 'test@example.com', password: 'strongpassword' },
           },
         },
         result: {
