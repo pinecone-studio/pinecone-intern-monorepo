@@ -27,11 +27,11 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
         <DialogTrigger asChild data-testid="select">
           <div className="text-sm font-medium px-3 py-2 bg-[#27272A] rounded-md hover:bg-[#00B7F4] hover:text-black cursor-pointer">Цуцлах</div>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6 bg-black max-sm:w-full max-sm:px-3">
+        <DialogContent className="sm:max-w-[462px] border-[#27272A] p-6 dark:bg-black bg-white max-sm:w-full max-sm:px-3">
           <DialogHeader className="flex flex-col gap-1 ">
             <div className="flex justify-between">
               <div className="flex items-center justify-between">
-                <DialogTitle className="text-white text-lg font-semibold">Тасалбар цуцлах</DialogTitle>
+                <DialogTitle className="dark:text-white text-black text-lg font-semibold">Тасалбар цуцлах</DialogTitle>
               </div>
               <DialogClose asChild className="text-white ">
                 <p className="cursor-pointer text-lg">X</p>
@@ -41,12 +41,12 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="flex items-center gap-4 justify-end text-base font-medium">
-              <Label className="text-right text-white">Банк </Label>
+              <Label className="text-right dark:text-white text-black">Банк </Label>
               <Select data-cy="Profile-Select-Input" onValueChange={(value) => setBankName(value)}>
-                <SelectTrigger className="w-[304px] text-white border-[#27272A]" data-testid="bankName-select">
+                <SelectTrigger className="w-[304px] dark:text-white text-black border-[#27272A]" data-testid="bankName-select">
                   <SelectValue placeholder="Сонгох" />
                 </SelectTrigger>
-                <SelectContent className="text-white bg-black border-[#27272A]">
+                <SelectContent className="dark:text-white text-black dark:bg-black border-[#27272A]">
                   <SelectGroup>
                     <SelectItem data-testid="option" value="Хаан банк">
                       Хаан банк
@@ -65,7 +65,7 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4 text-white ">
+            <div className="grid grid-cols-4 items-center gap-4 dark:text-white text-black">
               <Label htmlFor="name" className="text-right">
                 Дансны №
               </Label>
@@ -74,23 +74,23 @@ export const UserHistoryDialog = ({ bookingId }: UserHistoryDialogProps) => {
                 data-testid="NumberInput"
                 onChange={(e) => setBankAccount(Number(e.target.value))}
                 type="number"
-                placeholder="Дансны дугаар"
-                className="text-[#A1A1AA] col-span-3 border-[#27272A]"
+                placeholder=" Дансны дугаар"
+                className="dark:text-[#A1A1AA] text-black col-span-3 dark:border-[#27272A] py-2 rounded-md border "
                 data-cy="Profile-Account-Input"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4 text-white">
+            <div className="grid grid-cols-4 items-center gap-4 dark:text-white text-black">
               <Label htmlFor="username" className="text-right">
                 Нэр
               </Label>
-              <Input type="text" placeholder="Эзэмшигчийн нэр" className="col-span-3 text-[#A1A1AA] border-[#27272A]" data-cy="Profile-User-Name-Input" />
+              <input type="text" placeholder=" Эзэмшигчийн нэр" className="col-span-3 dark:text-[#A1A1AA] text-black dark:border-[#27272A] py-2 rounded-md border" data-cy="Profile-User-Name-Input" />
             </div>
           </div>
           <DialogFooter>
             <DialogClose>
               <Button
                 type="submit"
-                className="bg-[#18181a] hover:bg-[#00B7F4] hover:text-black px-4 py-3"
+                className="bg-[#18181a] hover:bg-[#00B7F4] hover:text-black dark:text-white px-4 py-3"
                 data-cy="Profile-Submit-Button"
                 data-testid="end"
                 onClick={() => {

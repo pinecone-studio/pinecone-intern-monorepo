@@ -1,7 +1,10 @@
 import { MainNavbar } from '@/components';
 import { GetMeDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { useTheme } from 'next-themes';
+import '@testing-library/jest-dom';
+
 import { usePathname } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
@@ -21,7 +24,21 @@ const mock: MockedResponse = {
   },
 };
 
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'dark',
+}));
+
 describe('MainNavbar', () => {
+  const mockSetTheme = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useTheme as jest.Mock).mockImplementation(() => ({
+      theme: 'dark',
+      setTheme: mockSetTheme,
+    }));
+  });
   it('should render successfully', async () => {
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>
@@ -65,5 +82,15 @@ describe('MainNavbar', () => {
     );
 
     expect(screen);
+  });
+
+  it('should click dark button', async () => {
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <MainNavbar />
+      </MockedProvider>
+    );
+    fireEvent.click(screen.getByTestId('light'));
+    expect(mockSetTheme);
   });
 });

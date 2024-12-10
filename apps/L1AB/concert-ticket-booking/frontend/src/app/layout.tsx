@@ -12,7 +12,7 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="bg-black">
+      <body className="bg-lightGray">
         <ApolloWrapper>
           {children}
           <ToastContainer theme="dark" />
