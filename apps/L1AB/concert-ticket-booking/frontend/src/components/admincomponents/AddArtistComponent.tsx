@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { PlusCircleIcon } from 'lucide-react';
 import { useCreateArtistMutation } from '@/generated';
 
-export const AddArtistComponent = () => {
+export const AddArtistComponent = ({ refetch }: { refetch: () => void }) => {
   const [createArtist] = useCreateArtistMutation();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -37,32 +37,25 @@ export const AddArtistComponent = () => {
     return true;
   };
 
-  const resetForm = () => {
-    setFormData({ artistName: '', additional: '', status: 'Энгийн'});
-  };
-
   const submitForm = async () => {
     try {
       await createArtist({
         variables: { input: { ...formData } },
       });
       toast.success('Артист амжилттай үүслээ.');
-      resetForm();
+      setFormData({
+        artistName: '',
+        additional: '',
+        status: 'Энгийн',
+      });
       setIsOpen(false);
+      refetch();
     } catch (error: any) {
-      console.error('GraphQL Error:', error);
-      if (error.networkError) {
-        console.error('Network Error:', error.networkError);
-      }
-      if (error.graphQLErrors) {
-        error.graphQLErrors.forEach((err) => console.error('GraphQL Error:', err.message));
-      }
-      toast.error('Алдаа гарлаа. Дахин оролдоно уу.');
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const handleSubmit = async () => {
     if (!isValidForm()) return;
@@ -81,34 +74,22 @@ export const AddArtistComponent = () => {
           <DialogTitle className="text-2xl font-semibold">Артист Нэмэх</DialogTitle>
         </DialogHeader>
 
-        {/* Artist Name */}
         <DialogItem htmlFor="ArtistName" name="Артистын нэр">
-          <Input
-            placeholder="Артистын нэр оруулах"
-            name="ArtistName"
-            value={formData.artistName}
-            onChange={(e) => handleInputChange('artistName', e.target.value)}
-          />
+          <Input placeholder="Артистын нэр оруулах" data-testid="artistName" name="ArtistName" value={formData.artistName} onChange={(e) => handleInputChange('artistName', e.target.value)} />
         </DialogItem>
 
-        {/* Additional Info */}
         <DialogItem htmlFor="additional" name="Артистын тухай">
           <Textarea
             className="min-h-16"
             placeholder="Дэлгэрэнгүй мэдээлэл"
+            data-testid="description"
             name="additional"
             value={formData.additional}
             onChange={(e) => handleInputChange('additional', e.target.value)}
           />
         </DialogItem>
 
-        {/* Submit Button */}
-        <Button
-          className="w-full"
-          onClick={handleSubmit}
-          data-testid="createArtistButton"
-          disabled={isLoading}
-        >
+        <Button className="w-full" onClick={handleSubmit} data-testid="createArtistButton" disabled={isLoading}>
           {isLoading ? 'Үүсгэж байна...' : 'Үүсгэх'}
         </Button>
       </DialogContent>
