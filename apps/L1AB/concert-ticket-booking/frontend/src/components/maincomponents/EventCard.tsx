@@ -19,6 +19,7 @@ export interface EventCardProps {
   images: string[];
   venues: Venue[];
   discount: number;
+  status?: string | null | undefined;
 }
 
 const formatNumber = (value: number): string => {
@@ -77,7 +78,7 @@ export const EventCard = ({ _id, name, description, eventDate, images, venues, d
           {discount > 0 && <div className="absolute bg-[#EF4444] py-2 px-3 text-xl font-bold text-[#FAFAFA] rounded-[8px] -bottom-5 left-5">{discount}%</div>}
         </div>
         <div className="dark:bg-[#131313] bg-[#f3f2f2] py-8 px-6 h-fit gap-6 grid ">
-          <EventName name={name} description={description}  />
+          <EventName name={name} description={description} />
           {venues[2] ? <EventPrice originalPrice={originalPrice} discountedPrice={discountedPrice} discount={discount} /> : <h1 className="text-red-500">{`Don't have index 2 element :)`}</h1>}
           <EventLocation location={location} eventDate={eventDate} />
         </div>

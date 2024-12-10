@@ -9,12 +9,15 @@ import { Container } from './Container';
 import { useGetMeQuery } from '@/generated';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { IoIosLogOut } from 'react-icons/io';
+import { useAuth } from '../providers';
 
 export const MainNavbar = () => {
   const pathname = usePathname();
   const token = localStorage.getItem('token');
   const { data } = useGetMeQuery();
   const { theme, setTheme } = useTheme();
+  const { signout } = useAuth();
 
   const paths = [
     {
@@ -40,32 +43,39 @@ export const MainNavbar = () => {
           <Link className="flex relative items-center text-sm " href={`/events`}>
             <LuSearch className="w-6 h-6 max-sm:w-5 max-sm:h-5 text-black dark:text-white" />
           </Link>
+          <div className="flex items-center">
+            {theme === 'dark' ? (
+              <button data-testid="light" onClick={() => setTheme('light')}>
+                <SunIcon />
+              </button>
+            ) : (
+              <button data-testid="dark" onClick={() => setTheme('dark')}>
+                <MoonIcon />
+              </button>
+            )}
+          </div>
           {token ? (
-            <Link href={'/profile'} className="max-sm:w-[80px]">
-              <div className="text-black max-sm:w-full max-sm:truncate dark:text-white">{data?.getMe?.email}</div>
-            </Link>
+            <>
+              <Link href={'/profile'} className="max-sm:w-[80px]">
+                <div className="text-black max-sm:w-full max-sm:truncate dark:text-white">{data?.getMe?.email}</div>
+              </Link>
+              <IoIosLogOut onClick={signout} className='w-6 h-6 cursor-pointer' />
+            </>
           ) : (
             <>
               {paths.map((path) => (
                 <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden max-md:hidden' : ''}`}>
-                  <Button className={`py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black dark:bg-black dark:border-[#4e4e51] dark:border dark:hover:text-black dark:hover:bg-[#00B7F4] text-white max-sm:px-2 max-sm:py-1 max-sm:text-sm ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>
+                  <Button
+                    className={`py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black dark:bg-black dark:border-[#4e4e51] dark:border dark:hover:text-black dark:hover:bg-[#00B7F4] text-white max-sm:px-2 max-sm:py-1 max-sm:text-sm ${
+                      pathname === path.path ? 'bg-[#00B7F4]' : ''
+                    }`}
+                  >
                     {path.name}
                   </Button>
                 </Link>
               ))}
             </>
           )}
-          <div className='flex items-center'>
-            {theme === 'dark' ? (
-              <button data-testid="light" onClick={() => setTheme('light')}>
-                <SunIcon />
-              </button>
-            ) :  (
-              <button data-testid="dark" onClick={() => setTheme('dark')}>
-                <MoonIcon />
-              </button>
-            )}
-          </div>
         </div>
       </div>
     </Container>

@@ -2,13 +2,11 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '../providers';
 import { useUpdateUserMutation } from '@/generated';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const UserProfile = () => {
-  const { signout } = useAuth();
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({ phone: '', email: '' });
@@ -24,7 +22,7 @@ export const UserProfile = () => {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = 'Имэйл хаяг оруулна уу!';
-    } 
+    }
 
     setErrors(errors);
 
@@ -102,11 +100,6 @@ export const UserProfile = () => {
             Хадгалах
           </button>
         </div>
-      </div>
-      <div className="w-full flex justify-end">
-        <button className="w-fit font-medium text-sm hover:text-black hover:bg-[#00B7F4] text-white hover:border-none px-4 py-2 rounded-md bg-[#272729]" onClick={signout}>
-          Гарах
-        </button>
       </div>
     </div>
   );
