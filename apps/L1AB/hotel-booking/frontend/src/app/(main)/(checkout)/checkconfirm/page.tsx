@@ -1,10 +1,10 @@
 'use client';
-import { CheckingConfirm } from '@/components/main';
+import { BookingConfirmedBooking } from '@/components/main';
 
 const CheckConfirm = () => {
   return (
     <div>
-      <CheckingConfirm />
+      <BookingConfirmedBooking />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 'use client';
 import { Container } from './assets';
 import { Button } from '@/components/ui/button';
-import { History } from 'lucide-react';
 import Link from 'next/link';
 
 export const BookingConfirmedBooking = () => {
@@ -11,7 +10,7 @@ export const BookingConfirmedBooking = () => {
         <h3 className="text-2xl font-semibold mb-3">Confirmed Booking</h3>
         <div className="border rounded-xl">
           <div className="flex">
-            <div className="flex flex-1 bg-blue-100 w-72 h-56 rounded-xl">Image</div>
+            <div className="flex flex-1 bg-blue-100 w-72 h-56 rounded-xl"></div>
             <div className="flex flex-1 flex-col px-3">
               <div className="flex flex-col mt-3 gap-1 mb-12">
                 <div>
@@ -43,18 +42,6 @@ export const BookingConfirmedBooking = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-8">
-          <h3 className="text-2xl font-semibold mb-3">Previous Booking</h3>
-
-          <div className="flex flex-col justify-center items-center">
-            <div className=" text-[#71717A] text-sm">
-              <History className="w-5 h-5" />
-            </div>
-            <div className="text-sm font-medium text-[#09090B]">No Previous Bookings</div>
-            <div className="text-sm font-normal text-[#71717A]">&quot;Your past stays will appear here once completed.&quot;</div>
           </div>
         </div>
       </div>
