@@ -6,18 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DoorClosed } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { useGetHotelByIdQuery } from '@/generated';
+
+import { useAdmin } from '@/components/providers/AdminProvider';
 
 export const HotelDetailsRoomTypes = () => {
   const [activeTab, setActiveTab] = useState('ALL');
-  const { hotel } = useParams() || {};
-  const { data: hotelData, loading } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
-  const hotelRooms = hotelData?.getHotelById.rooms;
+  const { hotelData, hotelLoading } = useAdmin();
 
+  const hotelRooms = hotelData?.getHotelById.rooms;
   const filteredRooms = activeTab === 'ALL' ? hotelRooms : hotelRooms?.filter((room) => room.roomType === activeTab);
 
-  if (loading) {
+  if (hotelLoading) {
     return <div>Loading...</div>;
   }
 
