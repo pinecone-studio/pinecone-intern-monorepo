@@ -1,12 +1,38 @@
-import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
+import { useAdmin } from '@/components/providers/AdminProvider';
+import '@testing-library/jest-dom';
 import { HotelDetailsLocation } from '@/components/admin/assets/hotel-details';
 
-describe('Admin Hotel Details Location', () => {
-  it('should render the admin hotel details location', () => {
-    render(<HotelDetailsLocation location="New York, USA" />);
+jest.mock('@/components/providers/AdminProvider', () => ({
+  useAdmin: jest.fn(),
+}));
+
+jest.mock('@/components/admin/dialogs', () => ({
+  LocationDialog: jest.fn(() => <div>Location Dialog</div>),
+}));
+
+describe('HotelDetailsLocation Component', () => {
+  it('renders location details correctly', () => {
+    (useAdmin as jest.Mock).mockReturnValue({
+      addHotelForm: {
+        values: {
+          address: '123 Main Street, Cityville',
+        },
+      },
+    });
+
+    render(<HotelDetailsLocation />);
   });
-  it('should render the admin hotel details location with default location', () => {
+
+  it('renders a placeholder when address is not provided', () => {
+    (useAdmin as jest.Mock).mockReturnValue({
+      addHotelForm: {
+        values: {
+          address: '',
+        },
+      },
+    });
+
     render(<HotelDetailsLocation />);
   });
 });

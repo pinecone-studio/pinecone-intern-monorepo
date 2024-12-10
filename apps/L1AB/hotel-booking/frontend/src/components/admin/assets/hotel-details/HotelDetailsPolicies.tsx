@@ -1,7 +1,7 @@
 import React from 'react';
 export const HotelDetailsPolicies = () => {
   return (
-    <div>
+    <div data-testid="HotelDetailsPolicies">
       <h3 className="text-lg font-semibold">Policies</h3>
 
       <div className="border-t w-full my-6"></div>
@@ -31,7 +31,7 @@ export const HotelDetailsPolicies = () => {
           </div>
         </div>
 
-        <div className='space-y-2'>
+        <div className="space-y-2">
           <h1 className="font-semibold text-lg">Special check-in instructions</h1>
           <p>
             This property offers transfers from the airport (surcharges may apply); guests must contact the property with arrival details before travel, using the contact information on the booking
@@ -41,17 +41,17 @@ export const HotelDetailsPolicies = () => {
           <p>This property does not offer after-hours check-in</p>
         </div>
 
-        <div className='space-y-2'>
+        <div className="space-y-2">
           <h1 className="font-semibold text-lg">Access methods</h1>
           <p>Staffed front desk</p>
         </div>
-        <div className='space-y-2'>
+        <div className="space-y-2">
           <h1 className="font-semibold text-lg">Pets</h1>
 
           <p>No pets or service animals allowed</p>
         </div>
 
-        <div className='space-y-2'>
+        <div className="space-y-2">
           <h1 className="font-semibold text-lg">Children and extra beds</h1>
           <p>Children are welcome</p>
           <p>Cribs (infant beds) are not available</p>

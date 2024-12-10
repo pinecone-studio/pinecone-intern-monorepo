@@ -33,7 +33,6 @@ describe('Sign Up Form Password Step', () => {
         variables: {
           input: {
             email: 'test@example.com',
-            otp: '1234',
             password: 'strongpassword',
           },
         },
@@ -73,7 +72,6 @@ describe('Sign Up Form Password Step', () => {
         variables: {
           input: {
             email: 'test@example.com',
-            otp: '1234',
             password: 'strongpassword',
           },
         },

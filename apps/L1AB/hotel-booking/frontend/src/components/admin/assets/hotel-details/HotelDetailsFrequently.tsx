@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 export const HotelDetailsFrequently = () => {
   return (
-    <div>
+    <div data-testid="HotelDetailsFrequently">
       <h1 className="font-semibold text-lg mb-2">Frequently asked questions</h1>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">

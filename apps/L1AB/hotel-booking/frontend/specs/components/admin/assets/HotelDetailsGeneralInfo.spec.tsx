@@ -1,12 +1,55 @@
 import '@testing-library/jest-dom';
-import { HotelDetailsGeneralInfo } from '@/components/admin/assets/hotel-details';
 import { render } from '@testing-library/react';
+import { useAdmin } from '@/components/providers/AdminProvider';
+import { HotelDetailsGeneralInfo } from '@/components/admin/assets/hotel-details';
 
-describe('Admin Hotel Detatails general Info', () => {
-  it('should render the admin hotel details general info', () => {
+jest.mock('@/components/providers/AdminProvider', () => ({
+  useAdmin: jest.fn(),
+}));
+
+describe('HotelDetailsGeneralInfo Component', () => {
+  const mockAdminProvider = {
+    addHotelForm: {
+      values: {
+        name: '',
+        phone: '',
+        stars: 0,
+        rating: 0,
+        description: '',
+      },
+      handleChange: jest.fn(),
+      handleBlur: jest.fn(),
+      setFieldValue: jest.fn(),
+      handleSubmit: jest.fn(),
+      errors: {},
+      touched: {},
+    },
+    showError: jest.fn((field, errors, touched) => touched[field] && errors[field]),
+  };
+  beforeEach(() => {
+    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+  });
+  it('renders correctly with data', () => {
+    mockAdminProvider.addHotelForm.values = {
+      name: 'Hotel Sunrise',
+      phone: '+123456789',
+      stars: 4,
+      rating: 8,
+      description: 'A beautiful hotel by the beach.',
+    };
+
     render(<HotelDetailsGeneralInfo />);
   });
-  it('should render the admin hotel details general info with default values', () => {
-    render(<HotelDetailsGeneralInfo name="Hotel Paradise" phone="123-456-7890" desc="A luxurious hotel." rating={9.5} stars={4} />);
+
+  it('renders fallback values when data is missing', () => {
+    mockAdminProvider.addHotelForm.values = {
+      name: '',
+      phone: '',
+      stars: 0,
+      rating: 0,
+      description: '',
+    };
+
+    render(<HotelDetailsGeneralInfo />);
   });
 });

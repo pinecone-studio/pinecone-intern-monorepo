@@ -4,7 +4,7 @@ export const HotelDetailsAmenities = () => {
   const amenities = ['Airport transfer', 'Gym', 'Non-Smoking', 'Free parking', '24/7 front desk', 'Restaurant', 'Bar', 'Spa', 'Air conditioning', 'Laundry facilities', 'Free WiFi'];
 
   return (
-    <div className="flex flex-col">
+    <div data-testid="HotelDetailsAmenities" className="flex flex-col">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Amenities</h3>
         <AmenityDialog />
