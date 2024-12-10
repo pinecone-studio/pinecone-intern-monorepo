@@ -3,7 +3,7 @@ import { Container } from './assets';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export const BookingConfirmedBooking = () => {
+export const BookingConfirmedBooking = ({ data }: any) => {
   return (
     <Container backgroundColor="bg-white">
       <div className="w-[960px] flex flex-col p-3 m-auto">
@@ -11,6 +11,7 @@ export const BookingConfirmedBooking = () => {
         <div className="border rounded-xl">
           <div className="flex">
             <div className="flex flex-1 bg-blue-100 w-72 h-56 rounded-xl"></div>
+            <div className="flex flex-1 bg-blue-100 w-72 h-56">{}</div>
             <div className="flex flex-1 flex-col px-3">
               <div className="flex flex-col mt-3 gap-1 mb-12">
                 <div>

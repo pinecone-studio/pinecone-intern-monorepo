@@ -1,10 +1,10 @@
 'use client';
-import { BookingConfirmedBooking } from '@/components/main';
+import { BookingComponent } from '@/components/main';
 
 const BookingPage = () => {
   return (
-    <div>
-      <BookingConfirmedBooking />
+    <div className="max-w-fit m-auto">
+      <BookingComponent />
     </div>
   );
 };

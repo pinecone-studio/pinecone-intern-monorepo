@@ -1,4 +1,11 @@
+import { BookingCard } from '@/components/main';
+import { BookingDetails } from '@/components/main/BookingDetails';
+
 const PrevBooking = () => {
-  return <div>.</div>;
+  return (
+    <div>
+      <BookingDetails />
+    </div>
+  );
 };
 export default PrevBooking;

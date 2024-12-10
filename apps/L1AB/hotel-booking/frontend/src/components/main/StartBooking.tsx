@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import BookingSvg from './assets/BookingSvg';
+Link;
 export const StartBooking = () => {
   return (
     <div className="p-3 ">
@@ -10,7 +12,9 @@ export const StartBooking = () => {
           <BookingSvg />
         </div>
         <h1>Shagai, you have no upcoming trips. Where are you going next?</h1>
-        <button className="w-[124px] h-[36px] rounded-xl bg-blue-600 text-white flex items-center justify-center">Start Exploring</button>
+        <Link href="/">
+          <button className="w-[124px] h-[36px] rounded-xl bg-blue-600 text-white flex items-center justify-center">Start Exploring</button>
+        </Link>
       </div>
     </div>
   );
