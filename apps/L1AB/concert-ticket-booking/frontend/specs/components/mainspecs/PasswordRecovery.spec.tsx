@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import PasswordRecovery from '@/components/maincomponents/PasswordRecovery';
 import { MockedProvider } from '@apollo/client/testing';
 import { PasswordRecoveryDocument } from '@/generated';
