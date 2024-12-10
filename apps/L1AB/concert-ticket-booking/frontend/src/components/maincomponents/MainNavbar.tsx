@@ -48,14 +48,14 @@ export const MainNavbar = () => {
             <>
               {paths.map((path) => (
                 <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden max-md:hidden' : ''}`}>
-                  <Button className={`py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black max-sm:px-2 max-sm:py-1 max-sm:text-sm ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>
+                  <Button className={`py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black dark:bg-black dark:border-[#4e4e51] dark:border dark:hover:text-black dark:hover:bg-[#00B7F4] text-white max-sm:px-2 max-sm:py-1 max-sm:text-sm ${pathname === path.path ? 'bg-[#00B7F4]' : ''}`}>
                     {path.name}
                   </Button>
                 </Link>
               ))}
             </>
           )}
-          <div >
+          <div className='flex items-center'>
             {theme === 'dark' ? (
               <button data-testid="light" onClick={() => setTheme('light')}>
                 <SunIcon />
