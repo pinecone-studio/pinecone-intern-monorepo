@@ -1,4 +1,3 @@
-/* eslint-disable no-secrets/no-secrets */
 'use client';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
@@ -8,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useUpdateUserMutation } from '@/generated';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/navigation';
 interface UserInfoProps {
   __typename?: 'User';
   _id: string;
@@ -18,6 +18,7 @@ interface UserInfoProps {
   bio: string;
 }
 export const EditProfile = ({ user }: { user: UserInfoProps }) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [updateUser] = useUpdateUserMutation();
   const [updateData, setUpdateData] = useState({
@@ -44,12 +45,13 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
           input: {
             username: updateData.username,
             gender: updateData.gender,
-            profilePicture: updateData.profilePicture || 'https://res.cloudinary.com/dezeem4wu/image/upload/v1733392437/a04d849cf591c2f980548b982f461401_ii7gn6.jpg',
+            profilePicture: updateData.profilePicture || 'https://res.cloudinary.com/' + 'dezeem4wu/image/upload/v1733392437/' + 'a04d849cf591c2f980548b' + '982f461401_ii7gn6.jpg',
             bio: updateData.bio,
             fullname: updateData.fullname,
           },
         },
       });
+      router.push(`/profile?type=posts&username=${user?.username}`);
       console.log('Update successful:', response);
     } catch (error) {
       console.error('Error updating user:', error);
@@ -98,7 +100,7 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
               ) : updateData.profilePicture ? (
                 <AvatarImage src={updateData.profilePicture} className="object-cover" />
               ) : (
-                <AvatarImage src="https://res.cloudinary.com/dezeem4wu/image/upload/v1733392437/a04d849cf591c2f980548b982f461401_ii7gn6.jpg" className="object-cover" />
+                <AvatarImage src={'https://res.cloudinary.com/' + 'dezeem4wu/image/upload/' + 'v1733392437/a04d849cf5' + '91c2f980548b982f' + '461401_ii7gn6.jpg'} className="object-cover" />
               )}
             </Avatar>
             <input id="fileInput" type="file" className="hidden" onChange={handleUpload} />

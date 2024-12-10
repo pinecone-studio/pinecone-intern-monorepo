@@ -16,7 +16,7 @@ const Story = () => {
 
   return (
     <NuqsAdapter>
-      <div className="bg-[#18181a] w-screen h-screen flex flex-col">
+      <div className="bg-[#18181a] w-screen h-screen flex flex-col overflow-hidden">
         <div className="p-6 flex justify-between ">
           <div>
             <Image src={'/LogoWhite.png'} width={103} height={29} alt="instagram-logo" />
