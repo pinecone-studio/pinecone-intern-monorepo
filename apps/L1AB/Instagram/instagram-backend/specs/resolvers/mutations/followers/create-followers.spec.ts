@@ -15,6 +15,9 @@ jest.mock('../../../../src/models', () => ({
       .mockReturnValueOnce([]),
     create: jest.fn().mockResolvedValueOnce({ name: 'test' }).mockRejectedValueOnce(new Error('There is no followers with this ID')),
   },
+  notificationsModel: {
+    create: jest.fn().mockResolvedValue({ userId: '2', notifiedUserId: '3' }),
+  },
 }));
 
 describe(' Create followers', () => {

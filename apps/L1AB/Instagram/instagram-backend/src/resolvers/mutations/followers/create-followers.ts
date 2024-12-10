@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../generated';
-import { followersModel } from '../../../models';
+import { followersModel, notificationsModel } from '../../../models';
 
 export const createFollowers: MutationResolvers['createFollowers'] = async (_: unknown, { followerId, followeeId }) => {
   const isFollowed = await followersModel.find({ followerId: followerId, followeeId: followeeId });
@@ -9,6 +9,11 @@ export const createFollowers: MutationResolvers['createFollowers'] = async (_: u
       followerId: followerId,
       followeeId: followeeId,
       createdAt: new Date(),
+    });
+    await notificationsModel.create({
+      userId: followerId,
+      type: 'follow',
+      notifiedUserId: followeeId,
     });
     return { message: 'Successfully followed' };
   } else {
