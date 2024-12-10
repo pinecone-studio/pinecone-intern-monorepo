@@ -77,7 +77,7 @@ const SignIn: React.FC<SignInProps> = ({ header, recoveryLinkHref, recoveryLinkT
                 </button>
               </div>
             </div>
-            <Link href={recoveryLinkHref} className="flex justify-end text-[#A1A1AA] self-stretch text-center text-sm leading-5 tracking-wide" data-cy="SignIn-Link">
+            <Link href={recoveryLinkHref} className="flex justify-end text-[#A1A1AA] self-stretch text-center text-sm leading-5 tracking-wide hover:text-[#54d0f9]" data-cy="SignIn-Link">
               {recoveryLinkText}
             </Link>
             {error && <p className="text-sm text-red-500">{error}</p>}

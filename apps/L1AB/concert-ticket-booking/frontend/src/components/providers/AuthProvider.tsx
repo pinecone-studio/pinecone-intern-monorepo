@@ -40,6 +40,7 @@ type AuthContextType = {
   passwordRecovery: (_params: PasswordRecoveryParams) => void;
   verifyOtp: (_params: VerifyOtpParams) => void;
   user: User | null;
+  loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -79,9 +80,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       toast.error(error.message, { autoClose: 2000 });
     },
   });
-  const [requestPasswordRecoveryMutation] = useRequestPasswordRecoveryMutation({
-    onCompleted: () => {
+  const [requestPasswordRecoveryMutation, { loading }] = useRequestPasswordRecoveryMutation({
+    onCompleted: (data) => {
       toast.success('Амжилттай илгээлээ', { autoClose: 2000 });
+      router.push(`?step=2&email=${data.requestPasswordRecovery.email}`);
     },
     onError: (error) => {
       toast.error(error.message, { autoClose: 2000 });
@@ -89,8 +91,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   });
 
   const [verifyOtpMutation] = useVerifyOtpMutation({
-    onCompleted: () => {
+    onCompleted: (data) => {
       toast.success('Амжилттай баталгаажлаа', { autoClose: 2000 });
+      router.push(`?step=3&email=${data.verifyOtp.email}&token=${data.verifyOtp.accessToken}`);
     },
     onError: (error) => {
       toast.error(error.message, { autoClose: 2000 });
@@ -150,7 +153,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  return <AuthContext.Provider value={{ signin, signup, user, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signup, user, loading, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
