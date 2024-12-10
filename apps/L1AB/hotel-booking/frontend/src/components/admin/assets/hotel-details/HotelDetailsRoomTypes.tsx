@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import Image from 'next/image';
@@ -33,10 +33,18 @@ export const HotelDetailsRoomTypes = () => {
       </div>
       <Tabs data-testid="" value={activeTab} onValueChange={setActiveTab} className="w-[223px] mb-4">
         <TabsList>
-          <TabsTrigger data-testid='tab-trigger-ALL' value="ALL">All Rooms</TabsTrigger>
-          <TabsTrigger data-testid='tab-trigger-ONE' value="ONE">1 Bed</TabsTrigger>
-          <TabsTrigger data-testid='tab-trigger-TWO' value="TWO">2 Beds</TabsTrigger>
-          <TabsTrigger data-testid='tab-trigger-MORE' value="MORE">3 or More Beds</TabsTrigger>
+          <TabsTrigger data-testid="tab-trigger-ALL" value="ALL">
+            All Rooms
+          </TabsTrigger>
+          <TabsTrigger data-testid="tab-trigger-ONE" value="ONE">
+            1 Bed
+          </TabsTrigger>
+          <TabsTrigger data-testid="tab-trigger-TWO" value="TWO">
+            2 Beds
+          </TabsTrigger>
+          <TabsTrigger data-testid="tab-trigger-MORE" value="MORE">
+            3 or More Beds
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
@@ -52,8 +60,8 @@ export const HotelDetailsRoomTypes = () => {
           </TableHeader>
           <TableBody>
             {filteredRooms?.length ? (
-              filteredRooms.map((room) => (
-                <TableRow data-testid="room-item" key={room._id}>
+              filteredRooms.map((room, index) => (
+                <TableRow data-testid={`room-item${index}`} key={room._id}>
                   <TableCell className="border-r">{room._id}</TableCell>
                   <TableCell className="flex items-center gap-3">
                     <div className="relative w-12 h-12 rounded-md overflow-hidden bg-gray-200">
