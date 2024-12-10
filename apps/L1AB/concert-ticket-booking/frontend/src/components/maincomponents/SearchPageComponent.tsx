@@ -41,6 +41,7 @@ export const SearchPageComponent = () => {
 
     return matchesSearchTerm && matchesDate;
   });
+  const filteredEvents = searchedData?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох');
 
   return (
     <div className="dark:text-white text-black flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
@@ -89,8 +90,8 @@ export const SearchPageComponent = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-8 py-24 px-28 max-sm:grid  max-sm:grid-cols-1 max-sm:px-3 max-sm:py-4 max-md:grid  max-md:grid-cols-2 max-md:px-3 max-md:py-4 max-lg:grid  max-lg:grid-cols-2 max-lg:px-3 max-xl:px-3 max-lg:py-4 max-xl:py-4">
-        {searchedData?.length ? (
-          searchedData.map((event) => <EventCard key={event._id} {...event} />)
+        {filteredEvents?.length ? (
+          filteredEvents.map((event) => <EventCard key={event._id} {...event} />)
         ) : (
           <p className="text-[#A1A1AA] text-2xl col-span-3 text-center max-sm:text-sm">Тохирох үйл явдал олдсонгүй.</p>
         )}
