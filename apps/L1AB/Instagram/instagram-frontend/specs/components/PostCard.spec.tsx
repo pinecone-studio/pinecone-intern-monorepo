@@ -1,4 +1,5 @@
 import PostCard from '@/components/PostCard';
+import { UserContext } from '@/components/providers';
 
 import { MockedProvider } from '@apollo/client/testing';
 import { render, fireEvent } from '@testing-library/react';
@@ -22,7 +23,7 @@ const sampleProps = {
   keyy: 1,
   postId: '2',
 };
-
+const mockUser = { _id: '123' };
 describe('PostCard Component - prev/next functionality', () => {
   it('image slider', async () => {
     Object.defineProperty(window, 'localStorage', {
@@ -32,9 +33,11 @@ describe('PostCard Component - prev/next functionality', () => {
     });
 
     const { getByTestId } = render(
-      <MockedProvider>
-        <PostCard {...sampleProps} />
-      </MockedProvider>
+      <UserContext.Provider value={{ user: mockUser }}>
+        <MockedProvider>
+          <PostCard {...sampleProps} />
+        </MockedProvider>
+      </UserContext.Provider>
     );
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
