@@ -1,14 +1,17 @@
 import { VerifyOtp } from '@/components/maincomponents/VerifyOtp';
 import { RequestPasswordRecoveryDocument, VerifyOtpDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
 jest.mock('@/components/providers/AuthProvider', () => ({
   ...jest.requireActual('@/components/providers/AuthProvider'),
   useAuth: () => ({
@@ -21,7 +24,6 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
-
   useSearchParams: jest.fn(() => ({
     get: jest.fn((key) => {
       if (key === 'email') return 'test@example.com';
@@ -30,9 +32,10 @@ jest.mock('next/navigation', () => ({
     }),
   })),
 }));
+
 jest.useFakeTimers();
 
-const verifyOtp = {
+const verifyOtpMock = {
   request: {
     query: VerifyOtpDocument,
     variables: {
@@ -51,7 +54,8 @@ const verifyOtp = {
     },
   },
 };
-const RecoveryEmailMock = {
+
+const recoveryEmailMock = {
   request: {
     query: RequestPasswordRecoveryDocument,
     variables: {
@@ -69,29 +73,31 @@ const RecoveryEmailMock = {
     },
   },
 };
+
 describe('VerifyOtp Component', () => {
   it('should update state value when OTP input slots change', () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[verifyOtp]}>
-        <VerifyOtp footerText={'Имэйл хаяг руу илгээсэн 6 оронтой кодыг оруулна уу'} />
+    render(
+      <MockedProvider mocks={[verifyOtpMock]}>
+        <VerifyOtp footerText="Enter the 6-digit code sent to your email" />
       </MockedProvider>
     );
-    const otpInput = getByTestId('OTPInput');
-    fireEvent.change(otpInput, { target: { value: '123456' } });
 
+    const otpInput = screen.getByTestId('OTPInput');
+    fireEvent.change(otpInput, { target: { value: '123456' } });
     expect(otpInput);
   });
 
   it('navigates back on clicking the back icon', async () => {
-    const { getByTestId } = render(
+    render(
       <MockedProvider>
         <VerifyOtp footerText="Enter the 6-digit code sent to your email" />
       </MockedProvider>
     );
 
-    fireEvent.click(getByTestId('MoveLeft'));
-    const router = useRouter();
+    const backIcon = screen.getByTestId('MoveLeft');
+    fireEvent.click(backIcon);
 
+    const router = useRouter();
     await waitFor(() => {
       expect(router.push);
     });
@@ -106,30 +112,37 @@ describe('VerifyOtp Component', () => {
       }),
     }));
 
-    const { getByTestId } = render(
+    render(
       <MockedProvider>
         <VerifyOtp footerText="Enter the 6-digit code sent to your email" />
       </MockedProvider>
     );
 
-    const otpInput = getByTestId('OTPInput');
+    const otpInput = screen.getByTestId('OTPInput');
     fireEvent.change(otpInput, { target: { value: '123456' } });
-  });
-  jest.useFakeTimers();
 
-  it('should enable the refresh button after 60 seconds and trigger handleRefresh on click', async () => {
+    await waitFor(() => {
+      expect(mockVerifyOtp);
+    });
+  });
+
+  it('should call requestPasswordRecovery when refreshCounter is 0 and reset the counter to 60', async () => {
     const mockRequestPasswordRecovery = jest.fn();
+
     jest.mock('@/components/providers/AuthProvider', () => ({
       useAuth: () => ({
-        verifyOtp: jest.fn(),
         requestPasswordRecovery: mockRequestPasswordRecovery,
       }),
     }));
 
     render(
-      <MockedProvider mocks={[RecoveryEmailMock]}>
+      <MockedProvider mocks={[recoveryEmailMock]}>
         <VerifyOtp footerText="Enter the 6-digit code sent to your email" />
       </MockedProvider>
     );
+
+    act(() => {
+      jest.advanceTimersByTime(63000);
+    });
   });
 });

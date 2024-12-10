@@ -17,7 +17,8 @@ interface PasswordRecoveryProps {
 
 export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPasswordLabel }: PasswordRecoveryProps) => {
   const { passwordRecovery } = useAuth();
-  const [visible, setVisible] = useState(false);
+  const [password, setPassword] = useState(false);
+  const [rePassword, setRePassword] = useState(false);
   const [formData, setFormData] = useState<{
     password: string;
     confirmPassword: string;
@@ -63,14 +64,14 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                 <Input
                   data-testid="password"
                   id="password"
-                  type={visible ? 'text' : 'password'}
+                  type={password ? 'text' : 'password'}
                   className="border-none"
                   data-cy="Password-Recovery-Input"
                   placeholder={passwordLabel}
                   onChange={handleChange}
                 />
-                <button type="button" data-testid="toggleVisibility" onClick={() => setVisible(!visible)}>
-                  {visible ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
+                <button type="button" data-testid="toggleVisibility" onClick={() => setPassword(!password)}>
+                  {password ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
                 </button>
               </div>
             </div>
@@ -82,14 +83,14 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                 <Input
                   data-testid="confirmPassword"
                   id="confirmPassword"
-                  type={visible ? 'text' : 'password'}
+                  type={rePassword ? 'text' : 'password'}
                   className="border-none"
                   data-cy="Password-Recovery-confirm-Input"
                   placeholder={confirmPasswordLabel}
                   onChange={handleChange}
                 />
-                <button type="button" data-testid="toggleVisibility1" onClick={() => setVisible(!visible)}>
-                  {visible ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
+                <button type="button" data-testid="toggleVisibility1" onClick={() => setRePassword(!rePassword)}>
+                  {rePassword ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
                 </button>
               </div>
             </div>
