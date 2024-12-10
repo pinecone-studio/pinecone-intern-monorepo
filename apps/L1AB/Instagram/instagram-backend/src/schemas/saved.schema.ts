@@ -3,9 +3,12 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type SavedPost {
     _id: ID!
-    userId: User!
-    postId: Posts!
+    userId: User
+    postId: Posts
     createdAt: Date!
+  }
+  type Message {
+    message: String!
   }
 
   type Query {
@@ -13,6 +16,6 @@ export const typeDefs = gql`
     getSavedByPostId(postId: ID!): SavedPost!
   }
   type Mutation {
-    createSave(postId: ID!, userId: ID!): Response!
+    createSave(postId: ID!, userId: ID!): Message!
   }
 `;

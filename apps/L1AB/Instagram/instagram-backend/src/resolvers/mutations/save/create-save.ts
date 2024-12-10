@@ -1,14 +1,14 @@
-import { MutationResolvers, Response } from '../../../generated';
+import { MutationResolvers } from '../../../generated';
 import { savedModel } from '../../../models';
 
 export const createSave: MutationResolvers['createSave'] = async (_, { userId, postId }) => {
-  const savedPost = await savedModel.findOne({ postId: postId, userId: userId });
+  const existingSave = await savedModel.findOne({ userId, postId });
 
-  if (savedPost) {
-    await savedModel.deleteOne({ postId: postId, userId: userId });
-    return Response.Success;
-  } else {
-    await savedModel.create({ userId: userId, postId });
-    return Response.Success;
+  if (existingSave) {
+    await savedModel.deleteOne({ userId, postId });
+    return { message: 'Unsaved post successfully' };
   }
+
+  await savedModel.create({ userId, postId });
+  return { message: 'Saved post successfully' };
 };
