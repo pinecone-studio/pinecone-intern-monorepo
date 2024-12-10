@@ -1,4 +1,3 @@
-import { savedModel } from 'apps/L1AB/instagram/instagram-backend/src/models';
 import { createSave } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
