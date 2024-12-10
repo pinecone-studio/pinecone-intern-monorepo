@@ -2,14 +2,14 @@
 
 import { useStory } from './providers';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { type CarouselApi } from '@/components/ui/carousel';
 import { Options } from 'nuqs';
 import { UserStory } from './UserStory';
 
 type PropsType = {
   userId: string;
-  setUserId: (value: string | ((old: string) => string | null) | null, options?: Options) => Promise<URLSearchParams>;
+  setUserId: (_value: string | ((_old: string) => string | null) | null, _options?: Options) => Promise<URLSearchParams>;
 };
 
 const StoryDetail = ({ userId, setUserId }: PropsType) => {

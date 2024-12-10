@@ -1,5 +1,5 @@
 import StoryCard from '@/components/StoryCard';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 describe('StoryCard Component', () => {
   const props = {

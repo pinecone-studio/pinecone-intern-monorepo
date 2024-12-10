@@ -1,6 +1,5 @@
 import StoryDetail from '@/components/StoryDetail';
 import { fireEvent, render } from '@testing-library/react';
-import { UseEmblaCarouselType } from 'embla-carousel-react';
 import { PropsWithChildren } from 'react';
 
 jest.mock('@/components/providers', () => ({
@@ -43,10 +42,10 @@ jest.mock('@/components/providers', () => ({
 jest.mock('@/components/ui/carousel', () => {
   return {
     ...jest.requireActual('@/components/ui/carousel'),
-    Carousel: ({ setApi }: PropsWithChildren<{ setApi: (val: { scrollTo: () => void }) => void }>) => {
+    Carousel: ({ setApi }: PropsWithChildren<{ setApi: (_val: { scrollTo: () => void }) => void }>) => {
       const handleClick = () => {
         setApi({
-          scrollTo: () => {},
+          scrollTo: jest.fn(),
         });
       };
       return (

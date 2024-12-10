@@ -1,12 +1,11 @@
 'use client';
-import { createContext, PropsWithChildren, Suspense, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, Suspense, useEffect } from 'react';
 import { LeftSideBar } from '@/components/LeftSideBar';
 import { StoryProvider } from '@/components/providers/StoryProvider';
 import RightSideBar from '@/components/RightSideBar';
 import { SuggestCard } from '@/components/SuggestCard';
 import { usePathname, useRouter } from 'next/navigation';
-import { decodeToken } from '@/components/utils/decode-utils';
-import { useGetAllUsersQuery } from '@/generated';
+
 import { ApolloWrapper, UserProvider } from '@/components/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 interface User {

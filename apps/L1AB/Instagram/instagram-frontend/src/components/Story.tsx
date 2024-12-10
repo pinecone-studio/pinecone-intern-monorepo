@@ -7,7 +7,7 @@ const Story = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {Object.keys(groupedStories).map((userId, index) => {
+      {Object.keys(groupedStories).map((userId) => {
         const group = groupedStories[userId];
 
         return (
