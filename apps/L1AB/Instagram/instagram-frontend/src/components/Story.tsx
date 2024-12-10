@@ -3,10 +3,10 @@ import { useStory } from './providers/StoryProvider';
 
 const Story = () => {
   const { groupedStories } = useStory();
-  if (!groupedStories) return <p>Loading...</p>;
+  if (!groupedStories) return;
 
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-4 w-[630px]">
       {Object.keys(groupedStories).map((userId) => {
         const group = groupedStories[userId];
 
