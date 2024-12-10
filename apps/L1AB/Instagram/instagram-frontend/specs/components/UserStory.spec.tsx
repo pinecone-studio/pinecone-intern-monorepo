@@ -17,7 +17,7 @@ jest.mock('@/components/providers', () => {
           stories: [
             {
               _id: '675168f668ea2b7a405f57a7',
-              userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'image' },
+              userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'http://image' },
               image: 'http://image',
               createdAt: undefined,
             },
@@ -25,7 +25,7 @@ jest.mock('@/components/providers', () => {
               _id: '675168f668ea2b7a405f57a7',
               createdAt: '2024-12-05T08:48:54.229Z',
               image: 'http://image',
-              userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'image' },
+              userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'http://image' },
             },
           ],
         },
@@ -43,7 +43,7 @@ describe('User Story', () => {
           _id: '675168f668ea2b7a405f57a7',
           createdAt: '2024-12-05T08:48:54.229Z',
           image: 'http://image',
-          userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'image' },
+          userId: { _id: '673c49c6af669269e5cc56fc', username: 'gerle', profilePicture: 'http://image' },
         },
       ],
       username: 'gerle',
@@ -68,6 +68,7 @@ describe('User Story', () => {
     fireEvent.click(prev);
     fireEvent.click(prev);
   });
+
   it('should render user stories correctly', () => {
     const props = {
       userId: '673c49c6af669269e5cc56fc',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useStory } from './providers/StoryProvider';
+import { useStory } from './providers';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import React, { useEffect, useMemo, useState } from 'react';
 import { type CarouselApi } from '@/components/ui/carousel';
@@ -14,10 +14,9 @@ type PropsType = {
 
 const StoryDetail = ({ userId, setUserId }: PropsType) => {
   const { groupedStories } = useStory();
-  if (!groupedStories) return <p>Loading...</p>;
 
-  const mainUserStory = Object.keys(groupedStories).find((item) => item === userId);
-  console.log(mainUserStory, 'main user story');
+  const mainUserStory = Object.keys(groupedStories || {}).find((item) => item === userId);
+
   const [api, setApi] = React.useState<CarouselApi>();
 
   const currentIndex = useMemo(() => {
@@ -26,16 +25,14 @@ const StoryDetail = ({ userId, setUserId }: PropsType) => {
   }, [userId, groupedStories]);
 
   const prevUser = async () => {
-    if (!groupedStories) return;
-    const prevIndex = (Object.keys(groupedStories).length + currentIndex - 1) % Object.keys(groupedStories).length;
-    const prevUserId = Object.keys(groupedStories)[prevIndex];
+    const prevIndex = (Object.keys(groupedStories!).length + currentIndex - 1) % Object.keys(groupedStories!).length;
+    const prevUserId = Object.keys(groupedStories!)[prevIndex];
     await setUserId(prevUserId);
   };
 
   const nextUser = async () => {
-    if (!groupedStories) return;
-    const prevIndex = (currentIndex + 1) % Object.keys(groupedStories).length;
-    const prevUserId = Object.keys(groupedStories)[prevIndex];
+    const prevIndex = (currentIndex + 1) % Object.keys(groupedStories!).length;
+    const prevUserId = Object.keys(groupedStories!)[prevIndex];
     await setUserId(prevUserId);
   };
 
