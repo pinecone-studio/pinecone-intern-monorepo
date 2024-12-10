@@ -20,7 +20,7 @@ export const typeDefs = gql`
   type Query {
     getAllHotelAmenities: [HotelAmenities!]!
     getHotelAmenityById(_id: ID!): [HotelAmenities!]!
-    getHotelIdByHotelAmenities(_id: ID!): HotelAmenities!
+    getHotelIdByHotelAmenities(_id: ID!): HotelAmenities
   }
 
   type Mutation {
