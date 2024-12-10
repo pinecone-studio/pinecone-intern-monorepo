@@ -17,8 +17,6 @@ const NewsFeed = () => {
   if (loading) return <Loading size={30} />;
   const posts = data?.getPostsByFollowersId;
 
-  console.log(posts);
-
   return (
     <div>
       <div className="flex flex-col gap-2">

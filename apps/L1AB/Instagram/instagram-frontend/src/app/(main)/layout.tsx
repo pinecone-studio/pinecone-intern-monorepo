@@ -44,23 +44,18 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
       <div className="flex min-w-full">
         <StoryProvider>
           {pathname.includes('/story') ? null : <LeftSideBar />}
-
-          <div className="flex gap-[72px] mx-auto">
-            <div className="flex min-w-full">
-              <div className="flex gap-[72px] mx-auto">
-                <Suspense>
-                  <ApolloWrapper>
-                    <NuqsAdapter>{children}</NuqsAdapter>
-                  </ApolloWrapper>
-                </Suspense>
-                {pathname == '/home' ? (
-                  <div className="flex flex-col py-10 gap-y-4">
-                    <RightSideBar />
-                    <SuggestCard />
-                  </div>
-                ) : null}
+          <div className="flex gap-[72px] mx-auto max-h-screen overflow-y-scroll">
+            <Suspense>
+              <ApolloWrapper>
+                <NuqsAdapter>{children}</NuqsAdapter>
+              </ApolloWrapper>
+            </Suspense>
+            {pathname == '/home' ? (
+              <div className="flex flex-col py-10 gap-y-4">
+                <RightSideBar />
+                <SuggestCard />
               </div>
-            </div>
+            ) : null}
           </div>
         </StoryProvider>
       </div>

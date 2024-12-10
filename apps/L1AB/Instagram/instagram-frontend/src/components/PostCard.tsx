@@ -1,11 +1,12 @@
 'use client';
 import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PostCardCommentSection from './PostCardCommentSection';
 import PostCardLikeSection from './PostCardLikeSection';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserContext } from './providers';
 
 type PropsType = {
   userName: string;
@@ -19,6 +20,7 @@ type PropsType = {
 const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: PropsType) => {
   const [userId, setUserId] = useState<string | null>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { user }: any = useContext(UserContext);
 
   const prev = () => {
     setCurrentImageIndex((curr) => (curr === 0 ? images.length - 1 : curr - 1));
@@ -29,8 +31,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   };
 
   useEffect(() => {
-    const id = localStorage.getItem('userId');
-    setUserId(id);
+    setUserId(user._id);
   }, []);
 
   return (
@@ -76,7 +77,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               </div>
             </div>
           </div>
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <PostCardLikeSection images={images} caption={caption} profilePicture={profilePicture} userName={userName} postId={postId} userId={userId || ''} />
           </div>
         </div>

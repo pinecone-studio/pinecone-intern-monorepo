@@ -10,3 +10,22 @@ query GetSavedByPostId($postId: ID!) {
     }
   }
 }
+query GetAllSavedPosts($userId: ID!) {
+  getAllSavedPosts(userId: $userId) {
+    _id
+    postId {
+      _id
+      userId {
+        _id
+      }
+      images
+      caption
+      createdAt
+      updatedAt
+    }
+    createdAt
+    userId {
+      _id
+    }
+  }
+}
