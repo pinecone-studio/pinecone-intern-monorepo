@@ -1,30 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useGetAllRoomsQuery } from '@/generated';
 import { DoorClosed } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { useGetHotelByIdQuery } from '@/generated';
 
 export const HotelDetailsRoomTypes = () => {
-  const [activeTab, setActiveTab] = React.useState('ALL');
-  const { data, loading, error } = useGetAllRoomsQuery();
-  const RoomDetails = data?.getAllRooms;
+  const [activeTab, setActiveTab] = useState('ALL');
+  const { hotel } = useParams() || {};
+  const { data: hotelData, loading } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
+  const hotelRooms = hotelData?.getHotelById.rooms;
 
-  const filteredRooms = activeTab === 'ALL' ? RoomDetails : RoomDetails?.filter((room) => room.roomType === activeTab);
+  const filteredRooms = activeTab === 'ALL' ? hotelRooms : hotelRooms?.filter((room) => room.roomType === activeTab);
 
   if (loading) {
-    return <div>Loading rooms...</div>;
-  }
-
-  if (error) {
-    return <div>Failed to load rooms. Please try again later.</div>;
+    return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex flex-col">
+    <div data-testid="HotelDetailsRoomTypes" className="flex flex-col">
       <div className="flex justify-between">
         <div className="font-semibold mb-6 text-lg">Room Types</div>
         <Button className="border-none text-[#2563EB]" variant="outline">
@@ -33,18 +31,10 @@ export const HotelDetailsRoomTypes = () => {
       </div>
       <Tabs data-testid="" value={activeTab} onValueChange={setActiveTab} className="w-[223px] mb-4">
         <TabsList>
-          <TabsTrigger data-testid="tab-trigger-ALL" value="ALL">
-            All Rooms
-          </TabsTrigger>
-          <TabsTrigger data-testid="tab-trigger-ONE" value="ONE">
-            1 Bed
-          </TabsTrigger>
-          <TabsTrigger data-testid="tab-trigger-TWO" value="TWO">
-            2 Beds
-          </TabsTrigger>
-          <TabsTrigger data-testid="tab-trigger-MORE" value="MORE">
-            3 or More Beds
-          </TabsTrigger>
+          <TabsTrigger value="ALL">All Rooms</TabsTrigger>
+          <TabsTrigger value="ONE">1 Bed</TabsTrigger>
+          <TabsTrigger value="TWO">2 Beds</TabsTrigger>
+          <TabsTrigger value="MORE">3 or More Beds</TabsTrigger>
         </TabsList>
       </Tabs>
 
@@ -60,8 +50,8 @@ export const HotelDetailsRoomTypes = () => {
           </TableHeader>
           <TableBody>
             {filteredRooms?.length ? (
-              filteredRooms.map((room, index) => (
-                <TableRow data-testid={`room-item${index}`} key={room._id}>
+              filteredRooms.map((room, _index) => (
+                <TableRow data-testid={`room-item-${room._id}`} key={room._id}>
                   <TableCell className="border-r">{room._id}</TableCell>
                   <TableCell className="flex items-center gap-3">
                     <div className="relative w-12 h-12 rounded-md overflow-hidden bg-gray-200">

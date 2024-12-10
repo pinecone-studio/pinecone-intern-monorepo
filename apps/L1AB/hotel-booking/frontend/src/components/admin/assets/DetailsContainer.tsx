@@ -10,10 +10,10 @@ import { PropsWithChildren } from 'react';
 export const DetailsContainer = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
   const { addHotelForm } = useAdmin();
-  const pathnames = pathname.split('/').filter((path) => path);
+  const pathnames = (pathname || '').split('/').filter((path) => path);
   const name = addHotelForm.values.name;
   return (
-    <div className="max-w-screen-xl m-auto">
+    <div data-testid="DetailsContainer" className="max-w-screen-xl m-auto">
       <form onSubmit={addHotelForm.handleSubmit}>
         <div className="py-4 flex justify-between">
           <div className="flex gap-4 items-center">
