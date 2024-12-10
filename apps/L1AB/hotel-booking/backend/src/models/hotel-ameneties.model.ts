@@ -5,10 +5,11 @@ import { amenityType } from './amenity-model';
 export type hotelAmenitiesType = {
   _id: string;
   amenities: Types.ObjectId[];
-  hotelId: Types.ObjectId
+  hotelId: Types.ObjectId;
+  icon?: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 const hotelAmenitiesSchema = new Schema(
   {
@@ -23,12 +24,16 @@ const hotelAmenitiesSchema = new Schema(
         ref: 'amenity',
       },
     ],
+    icon: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
 export type hotelAmenitiesPopulatedType = hotelAmenitiesType & {
-  hotelId: hotelType
+  hotelId: hotelType;
   amenitiesId: amenityType[];
 };
 
