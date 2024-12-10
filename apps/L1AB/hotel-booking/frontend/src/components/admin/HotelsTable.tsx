@@ -7,7 +7,8 @@ import { useGetAllHotelsQuery } from '@/generated';
 import { StarIcon } from '../icon';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { HotelNameDialog } from './dialogs';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 
 export const HotelsTable = () => {
   const { data } = useGetAllHotelsQuery();
@@ -16,7 +17,10 @@ export const HotelsTable = () => {
     <div className="p-4">
       <div className="flex justify-between">
         <h3 className="text-2xl font-semibold">Hotels</h3>
-        <HotelNameDialog />
+        <Button data-testid="addHotel" onClick={() => router.push('/admin/hotels/addHotel')} className=" bg-[#2563EB] text-[#FAFAFA] px-6 space-x-2">
+          <Plus />
+          <span>Add Hotel</span>
+        </Button>
       </div>
       <HotelsSearchBar />
       <div className="border rounded-md overflow-hidden">
