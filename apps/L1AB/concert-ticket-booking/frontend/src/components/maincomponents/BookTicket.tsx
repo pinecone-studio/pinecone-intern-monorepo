@@ -81,7 +81,7 @@ export const BookTicket = ({ id }: BookTicketProps) => {
         <p></p>
       </nav>
       <div className="flex flex-wrap justify-around items-center py-6 max-md:grid  max-lg:grid  max-lg:gap-12  ">
-        <StageStyle />
+        <StageStyle   venue={eventDetails?.venues} />
         <div className="bg-[#131313] rounded-2xl px-6 max-sm:px-3  max-md:px-3">
           <div className="h-fit grid gap-2 py-6">
             <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
