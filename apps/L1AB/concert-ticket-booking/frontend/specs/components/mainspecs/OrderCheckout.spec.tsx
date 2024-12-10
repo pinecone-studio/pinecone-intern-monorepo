@@ -1,7 +1,9 @@
 import { OrderCheckout } from '@/components/maincomponents/OrderCheckout';
 import { useGetBookingByIdQuery, useUpdateBookingEverythingMutation } from '@/generated';
+
 import '@testing-library/jest-dom';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+
 jest.mock('@/generated', () => ({
   useGetBookingByIdQuery: jest.fn(),
   useUpdateBookingEverythingMutation: jest.fn(),
@@ -11,6 +13,7 @@ jest.mock('next/navigation', () => ({
     push: jest.fn(),
   })),
 }));
+
 const mockEventData = {
   getBookingById: {
     eventDate: ['2024-12-01'],
@@ -25,6 +28,7 @@ const mockEventData = {
     ],
   },
 };
+
 describe('OrderCheckout', () => {
   beforeEach(() => {
     (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
@@ -48,7 +52,7 @@ describe('OrderCheckout', () => {
   it('should render successfully and handle input change', async () => {
     const { getByTestId } = render(<OrderCheckout id="123" />);
 
-    const OrderInput = getByTestId('EmailInput');
+    const OrderInput = getByTestId('Email');
     expect(OrderInput);
 
     fireEvent.input(OrderInput, { target: { value: '1234wwwqq5678' } });
@@ -57,11 +61,29 @@ describe('OrderCheckout', () => {
   it('should render successfully and handle input change', async () => {
     const { getByTestId } = render(<OrderCheckout id="123" />);
 
-    const OrderInput = getByTestId('EmailInput');
+    const OrderInput = getByTestId('Email');
     expect(OrderInput);
 
     fireEvent.input(OrderInput, { target: { value: '1234wwwqq5678@gmail.com' } });
     expect(OrderInput);
+  });
+  it('should render wrong email', async () => {
+    const { getByTestId } = render(<OrderCheckout id="123" />);
+
+    const OrderInput = getByTestId('Email');
+    fireEvent.change(OrderInput, { target: { value: '1234wwwqq5678' } });
+    const searchInput = getByTestId('PaymentToPush');
+    fireEvent.click(searchInput);
+    expect(screen.getByText('Имэйл хаяг буруу байна.'));
+  });
+  it('should render wrong phone number', async () => {
+    const { getByTestId } = render(<OrderCheckout id="123" />);
+
+    const OrderInput = getByTestId('NumberInput');
+    fireEvent.change(OrderInput, { target: { value: 'sbgdsbf' } });
+    const searchInput = getByTestId('PaymentToPush');
+    fireEvent.click(searchInput);
+    expect(screen.getByText('Утасны дугаар буруу байна.'));
   });
   it('should render successfully and handle input change', async () => {
     const { getByTestId } = render(<OrderCheckout id="123" />);
@@ -83,7 +105,7 @@ describe('OrderCheckout', () => {
   it('should render successfully and handle input change', async () => {
     const { getByTestId } = render(<OrderCheckout id="123" />);
 
-    const OrderInput = getByTestId('EmailInput');
+    const OrderInput = getByTestId('Email');
     expect(OrderInput);
     fireEvent.input(OrderInput, { target: { value: '1234wwwqq5678@gmail.com' } });
     expect(OrderInput);
