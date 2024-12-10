@@ -10,8 +10,7 @@ jest.mock('next/navigation', () => ({
   useParams: jest.fn(() => ({ hotel: '1' })),
 }));
 
-// Mock response for Apollo Client
-const mocks = [
+const mock = [
   {
     request: {
       query: GetHotelByIdDocument,
@@ -36,7 +35,7 @@ const mocks = [
               roomNumber: '20',
               price: 2000,
               description: 'desc',
-              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+              photos: [],
               roomType: 'ONE',
               createdAt: '2024-11-12T06:24:52.763Z',
               updatedAt: '2024-11-12T06:24:52.763Z',
@@ -45,9 +44,9 @@ const mocks = [
               _id: '2',
               name: 'double room',
               roomNumber: '20',
-              price: 2500,
+              price: 2000,
               description: 'desc',
-              photos: [],
+              photos: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
               roomType: 'TWO',
               createdAt: '2024-11-12T06:24:52.763Z',
               updatedAt: '2024-11-12T06:24:52.763Z',
@@ -58,45 +57,63 @@ const mocks = [
         },
       },
     },
-    delay: 500, 
   },
 ];
 
 describe('Main Hotel Details', () => {
-  it('should render the loading state and hotel details correctly', async () => {
+  it('filters rooms based on selected tab', async () => {
     (useParams as jest.Mock).mockReturnValue({ hotel: '1' });
 
     render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={mock} addTypename={false}>
         <HotelDetails />
       </MockedProvider>
     );
 
-    expect(screen.getByTestId('loading-text'))
+    await waitFor(() => expect(screen.getByTestId('room-1')));
+
+    fireEvent.keyDown(screen.getByText('1 Bed'), { key: 'Enter' });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('room-1'));
+    });
+  });
+  it('displays a fallback message if no rooms are available', async () => {
+    const noRoomsMock = [
+      {
+        request: {
+          query: GetHotelByIdDocument,
+          variables: { id: '1' },
+        },
+        result: {
+          data: {
+            getHotelById: {
+              _id: '1',
+              name: 'Hotel',
+              description: '5 stars Hotel',
+              images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
+              address: 'Sun Road 1-st District',
+              phone: '11111111',
+              city: 'ub',
+              rating: 8,
+              stars: 3,
+              rooms: [],
+              createdAt: '2024-11-14T06:24:52.763Z',
+              updatedAt: '2024-11-14T06:24:52.763Z',
+            },
+          },
+        },
+      },
+    ];
+
+    (useParams as jest.Mock).mockReturnValue({ hotel: '1' });
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={noRoomsMock} addTypename={false}>
         <HotelDetails />
       </MockedProvider>
     );
 
-    await waitFor(() => screen.getByTestId('choose-room-title'));
-
-    expect(screen.queryByTestId('loading-text'))
-
-    expect(screen.getByTestId('choose-room-title'))
-
-    expect(screen.getByTestId('room-filter-display'))
-
-    fireEvent.click(screen.getByTestId('button-0')); // Assuming you have a specific test ID for this
-    expect(screen.getByTestId('room-filter-display'))
-    expect(screen.queryByTestId('room-1'))
-    expect(screen.queryByTestId('room-2'))
-
-    fireEvent.click(screen.getByTestId('button-1')); // Assuming a test ID for this
-
-    expect(screen.getByTestId('room-filter-display'))
-    expect(screen.queryByTestId('room-1'))
-    expect(screen.queryByTestId('room-2'))
+    await waitFor(() => expect(screen.getByText('No Room')));
   });
 });

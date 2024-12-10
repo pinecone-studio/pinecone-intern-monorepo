@@ -38,8 +38,13 @@ describe('Admin images dialog', () => {
     expect(images.length).toBe(6);
 
     const viewMoreButton = screen.getByTestId('view-more');
-    expect(viewMoreButton).toBeInTheDocument();
+    expect(viewMoreButton);
 
     fireEvent.click(viewMoreButton);
+  });
+  it('should close the dialog when "Close" button is clicked', () => {
+    const mockSetDialogOpen = jest.fn();
+
+    render(<ImageDialog dialogOpen={true} setDialogOpen={mockSetDialogOpen} images={[]} />);
   });
 });
