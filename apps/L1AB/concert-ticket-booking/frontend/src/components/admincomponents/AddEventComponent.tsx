@@ -5,7 +5,7 @@ import { AddImage, DatePickerWithRange } from '@/components';
 import { DialogItem } from '@/components';
 import { TimePicker } from '@/components';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircleIcon } from 'lucide-react';
@@ -103,6 +103,9 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">Тасалбар Нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
+          <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
+            <p className="text-black text-2xl">x</p>
+          </DialogClose>
         </DialogHeader>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" value={formData.name} onChange={(e) => handleInputChange('name', e.target.value)} />

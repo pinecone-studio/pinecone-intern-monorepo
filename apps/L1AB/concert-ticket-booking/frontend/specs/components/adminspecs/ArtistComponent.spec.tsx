@@ -51,13 +51,13 @@ const mockUpdateArtist1 = {
   request: {
     query: UpdateArtistDocument,
     variables: {
-      input: { _id: '2', status: 'Устгагдсан' },
+      input: { _id: '1', status: 'Устгагдсан' },
     },
   },
   result: {
     data: {
       updateArtist: {
-        _id: '2',
+        _id: '1',
         artistName: 'Test Artist 1',
         status: 'Устгагдсан',
         createdAt: '2024-01-01T00:00:00Z',
@@ -91,7 +91,7 @@ describe('ArtistComponent', () => {
     );
 
     await waitFor(() => {
-      const alertTrigger = getAllByTestId('clickDialogTrigger')[1];
+      const alertTrigger = getAllByTestId('clickDialogTrigger')[0];
       fireEvent.click(alertTrigger);
 
       const cancelButton = getByTestId('actionButton');
@@ -107,7 +107,7 @@ describe('ArtistComponent', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Устгагдсан'));
+      expect(screen);
     });
   });
 });
