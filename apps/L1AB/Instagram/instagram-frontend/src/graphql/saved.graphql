@@ -1,10 +1,10 @@
-mutation CreateSave($postId: ID!, $userId: ID!) {
-  createSave(postId: $postId, userId: $userId)
-}
-query GetSavedByPostId($postId: ID!) {
-  getSavedByPostId(postId: $postId) {
-    postId {
-      _id
-    }
-  }
-}
+# mutation CreateSave($postId: ID!, $userId: ID!) {
+#   createSave(postId: $postId, userId: $userId)
+# }
+# query GetSavedByPostId($postId: ID!) {
+#   getSavedByPostId(postId: $postId) {
+#     postId {
+#       _id
+#     }
+#   }
+# }
