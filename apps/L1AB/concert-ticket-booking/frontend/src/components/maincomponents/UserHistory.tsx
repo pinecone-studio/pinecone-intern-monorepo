@@ -3,13 +3,15 @@
 import { MdAccessTime } from 'react-icons/md';
 import { GoDotFill } from 'react-icons/go';
 import { UserHistoryDialog } from './UserHistoryDialog';
-import { useGetBookingByUserIdQuery, useGetMeQuery } from '@/generated';
-// import { useRouter } from 'next/navigation';
+import { useGetBookingByUserIdQuery } from '@/generated';
+import { useAuth } from '../providers';
 
 export const UserHistory = () => {
-  const { data: user } = useGetMeQuery();
-  const { data } = useGetBookingByUserIdQuery({ variables: { userId: user?.getMe?._id as string } });
-  // const router = useRouter();
+  const { user } = useAuth();
+  const { data: bookings } = useGetBookingByUserIdQuery({
+    variables: { userId: user?._id as string },
+    skip: !user?._id,
+  });
 
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
@@ -26,17 +28,15 @@ export const UserHistory = () => {
   return (
     <div className="w-full h-fit flex flex-col gap-6" data-cy="Profile-Page-History">
       <p className="font-semibold text-2xl dark:text-white text-black max-sm:text-xl">Захиалгын мэдээлэл</p>
-      {data?.getBookingByUserId.map((item, index) => {
+      {bookings?.getBookingByUserId.map((item, index) => {
         const showButton = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
-        // const showButton2 = item.status === 'Баталгаажсан' && isWithin24Hours(item.updatedAt);
-
         return (
           <div className="p-8 grid gap-4 dark:text-[#FAFAFA] dark:bg-[#131313] bg-[#f2f2f2] rounded-xl" key={index}>
             <div className="flex justify-between items-center text-base font-normal text-white max-sm:grid max-md:grid max-xl:grid">
               <div className="flex gap-4 max-sm:grid max-md:grid max-xl:grid">
                 <div className="flex gap-2">
                   <p className="text-[#878787]">Захиалгын дугаар: </p>
-                  <p className='text-black dark:text-white'>{item._id}</p>
+                  <p className="text-black dark:text-white">{item._id}</p>
                 </div>
                 <div className="flex text-base font-normal dark:text-white text-black items-center gap-2">
                   <MdAccessTime />
@@ -44,16 +44,10 @@ export const UserHistory = () => {
                 </div>
                 <div className="flex text-base font-normal text-white items-center gap-2">
                   <p className="text-[#878787] max-sm:text-sm">Төлөв:</p>
-                  <p
-                    // onClick={() => router.push(`/order/${item._id}`)}
-                    className=" dark:text-white cursor-pointer text-blue-500 hover:underline"
-                  >
-                    {item.status}
-                  </p>
+                  <p className=" dark:text-white cursor-pointer text-blue-500 hover:underline">{item.status}</p>
                 </div>
               </div>
               {showButton && <UserHistoryDialog bookingId={item._id} />}
-              {/* {showButton2 && <UserHistoryDialog bookingId={item._id} />} */}
             </div>
             <div className="flex flex-col gap-2 max-sm:grid max-md:grid max-xl:grid">
               {item.venues?.map((venue, index2) => {

@@ -5,12 +5,12 @@ import { act } from 'react-dom/test-utils';
 import { useTheme } from 'next-themes';
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
-  theme: 'light',
+  theme: 'dark',
 }));
 describe('Sign-In-Page', () => {
   beforeEach(() => {
     (useTheme as jest.Mock).mockImplementation(() => ({
-      theme: 'dark',
+      theme: 'light',
     }));
   });
   it('should render sign-in form with all fields', async () => {

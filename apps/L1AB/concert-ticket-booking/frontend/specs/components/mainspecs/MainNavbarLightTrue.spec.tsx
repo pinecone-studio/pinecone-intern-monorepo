@@ -1,9 +1,10 @@
-import { MainNavbar } from '@/components';
+import { MainNavbar, useAuth } from '@/components';
 import { GetMeDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
 import { useTheme } from 'next-themes';
 import '@testing-library/jest-dom';
+import { usePathname } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
@@ -21,6 +22,10 @@ const mock: MockedResponse = {
     },
   },
 };
+jest.mock('@/components/providers/AuthProvider', () => ({
+  ...jest.requireActual('@/components/providers/AuthProvider'),
+  useAuth: jest.fn(),
+}));
 
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
@@ -36,6 +41,13 @@ describe('MainNavbar', () => {
       theme: 'light',
       setTheme: mockSetTheme,
     }));
+    (usePathname as jest.Mock).mockReturnValue('/signup');
+    (useAuth as jest.Mock).mockReturnValue({
+      user: {
+        email: 'test@example.com',
+      },
+      signout: jest.fn(),
+    });
   });
   it('should render successfully', async () => {
     render(

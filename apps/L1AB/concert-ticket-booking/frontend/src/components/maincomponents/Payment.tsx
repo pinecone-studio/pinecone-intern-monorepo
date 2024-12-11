@@ -15,10 +15,6 @@ export const Payment = ({ id }: PaymentProps) => {
   const router = useRouter();
   const [qr, setQr] = useState<string>('');
   const [loading, setLoading] = useState(false);
-
-  // const { data } = useGetBookingByIdQuery({ variables: { id: '6744701ff9507660ab5b664b' }, pollInterval: 2000 });
-  // const isBookingPaid = data?.getBookingById;
-
   const { data } = useGetBookingByIdQuery({ variables: { id: id as string }, pollInterval: 2000 });
   const bookingDetails = data?.getBookingById;
 
@@ -68,6 +64,7 @@ export const Payment = ({ id }: PaymentProps) => {
           <FaArrowLeft />
         </Button>
         <p className="text-2xl font-semibold dark:text-white text-black max-sm:tex-sm">Захиалга баталгаажуулах</p>
+        <p></p>
       </nav>
       {bookingDetails?.status === 'Баталгаажсан' ? (
         <div className="flex flex-col items-center justify-center gap-2 text-center mt-24">

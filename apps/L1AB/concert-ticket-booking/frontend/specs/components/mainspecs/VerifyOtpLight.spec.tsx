@@ -76,13 +76,13 @@ const recoveryEmailMock = {
 };
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
-  theme: 'light',
+  theme: 'dark',
 }));
 
 describe('VerifyOtp Component', () => {
   beforeEach(() => {
     (useTheme as jest.Mock).mockImplementation(() => ({
-      theme: 'dark',
+      theme: 'light',
     }));
   });
   it('should update state value when OTP input slots change', () => {

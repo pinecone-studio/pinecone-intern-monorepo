@@ -39,7 +39,7 @@ describe('Sign In User', () => {
     try {
       await signInUser!({}, { input: { email: '', password: '' } }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
-      expect(error).toEqual(new Error('Майл эсвэл утас оруулна уу!'));
+      expect(error).toEqual(new Error('Майл бүртгэлгүй байна!'));
     }
   });
 });
