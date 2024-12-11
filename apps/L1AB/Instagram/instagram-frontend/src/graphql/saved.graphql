@@ -5,7 +5,14 @@ mutation CreateSave($postId: ID!, $userId: ID!) {
 }
 query GetSavedByPostId($postId: ID!) {
   getSavedByPostId(postId: $postId) {
+    _id
     postId {
+      _id
+      images
+      caption
+    }
+    createdAt
+    userId {
       _id
     }
   }

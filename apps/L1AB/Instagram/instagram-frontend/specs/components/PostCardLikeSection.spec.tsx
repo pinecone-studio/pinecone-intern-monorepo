@@ -1,5 +1,6 @@
+/* eslint-disable max-lines */
 import PostCardLikeSection from '@/components/PostCardLikeSection';
-import { CreateLikeDocument, GetLikesByPostIdDocument } from '@/generated';
+import { CreateLikeDocument, CreateSaveDocument, GetLikesByPostIdDocument, GetSavedByPostIdDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -40,24 +41,24 @@ export const createLikeMock = {
   },
 };
 
-// export const createSaveMock = {
-//   request: {
-//     query: CreateSaveDocument,
-//     variables: {
-//       postId: '2',
-//       userId: '11',
-//     },
-//   },
-//   result: {
-//     data: {
-//       createSave: {
-//         _id: '1',
-//         postId: '2',
-//         userId: '11',
-//       },
-//     },
-//   },
-// };
+export const createSaveMock = {
+  request: {
+    query: CreateSaveDocument,
+    variables: {
+      postId: '2',
+      userId: '11',
+    },
+  },
+  result: {
+    data: {
+      createSave: {
+        _id: '1',
+        postId: '2',
+        userId: '11',
+      },
+    },
+  },
+};
 
 export const getLikesByPostIdMock = {
   request: {
@@ -97,32 +98,40 @@ export const getLikesByPostIdMock = {
   },
 };
 
-// export const getSavedByPostIdMock = {
-//   request: {
-//     query: GetSavedByPostIdDocument,
-//     variables: {
-//       postId: '2',
-//     },
-//   },
-//   result: {
-//     data: {
-//       getSavedByPostId: [
-//         {
-//           postId: '2',
-//         },
-//       ],
-//     },
-//   },
-//   newData: () => {
-//     return {
-//       data: {
-//         getSavedByPostId: [
-//           {
-//             postId: '2',
-//           },
-//           {
-//             postId: '2',
-//           }]}}}};
+export const getSavedByPostIdMock = {
+  request: {
+    query: GetSavedByPostIdDocument,
+    variables: {
+      postId: '2',
+    },
+  },
+  result: {
+    data: {
+      getSavedByPostId: {
+        postId: {
+          _id: '2',
+        },
+        userId: {
+          _id: '11',
+        },
+      },
+    },
+  },
+  newData: () => {
+    return {
+      data: {
+        getSavedByPostId: {
+          postId: {
+            _id: '2',
+          },
+          userId: {
+            _id: '11',
+          },
+        },
+      },
+    };
+  },
+};
 describe('PostCardLikeSection', () => {
   it('Like post', async () => {
     const { getByTestId } = render(
@@ -146,15 +155,39 @@ describe('PostCardLikeSection', () => {
     const likeButton = getByTestId('likeButton');
     fireEvent.click(likeButton);
   });
-  // it('save post', async () => {
-  //   const { getByTestId } = render(
-  //     <MockedProvider mocks={[createSaveMock, getSavedByPostIdMock]} addTypename={false}>
-  //       <PostCardLikeSection {...PostCardSampleProps} />
-  //     </MockedProvider>
-  //   );
-  //   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  //   const saveButton = getByTestId('saveButton');
-  //   fireEvent.click(saveButton);
-  // });
+  it('save post', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[createSaveMock, getSavedByPostIdMock]} addTypename={false}>
+        <PostCardLikeSection {...PostCardSampleProps} />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const saveButton = getByTestId('saveButton');
+    fireEvent.click(saveButton);
+  });
+  it('save post', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[createSaveMock, getSavedByPostIdMock]} addTypename={false}>
+        <PostCardLikeSection {...PostCardSamplePropsWithoutUserId} />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const saveButton = getByTestId('saveButton');
+    fireEvent.click(saveButton);
+  });
+
+  it('saved post', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[createSaveMock, getSavedByPostIdMock]} addTypename={false}>
+        <PostCardLikeSection {...PostCardSampleProps} />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const saveButton = getByTestId('saveButton');
+    fireEvent.click(saveButton);
+  });
 });
