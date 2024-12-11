@@ -26,6 +26,8 @@ const nextConfig = {
     JWT_SECRET: process.env.JWT_SECRET,
     VERCEL_TOKEN: process.env.VERCEL_TOKEN,
     SALTROUNDS: process.env.SALTROUNDS,
+    NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL,
+    NODEMAILER_PASS: process.env.NODEMAILER_PASS,
   },
   nx: {
     svgr: false,

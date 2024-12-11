@@ -6,7 +6,6 @@ export const typeDefs = gql`
   type Artist {
     _id: ID!
     artistName: String!
-    image: String!
     additional: String!
     status: String!
     createdAt: Date!
@@ -15,7 +14,6 @@ export const typeDefs = gql`
 
   input ArtistInput {
     artistName: String!
-    image: String!
     additional: String!
     status: String
   }
@@ -23,7 +21,6 @@ export const typeDefs = gql`
   input UpdateArtistInput {
     _id: ID!
     artistName: String
-    image: String
     additional: String
     status: String
   }

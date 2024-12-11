@@ -12,7 +12,7 @@ import { PlusCircleIcon } from 'lucide-react';
 import { useCreateEventMutation, Venue } from '@/generated';
 import { AddEventVenue } from './AddEventVenue';
 
-export const AddEventComponent = () => {
+export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
   const [createEvent] = useCreateEventMutation();
   const [isOpen, setIsOpen] = useState(false);
   const [check, setCheck] = useState(false);
@@ -87,6 +87,7 @@ export const AddEventComponent = () => {
 
       toast.success('Event created successfully');
       setIsOpen(false);
+      refetch();
     } catch (error) {
       console.log('Error creating event:', error);
     }

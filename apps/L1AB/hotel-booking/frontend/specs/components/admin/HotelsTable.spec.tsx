@@ -152,6 +152,8 @@ describe('Admin Hotels Table', () => {
     await waitFor(() => {
       const hotel = getByTestId('one-hotel');
       fireEvent.click(hotel);
+      const addHotel = getByTestId('addHotel');
+      fireEvent.click(addHotel);
     });
   });
 });

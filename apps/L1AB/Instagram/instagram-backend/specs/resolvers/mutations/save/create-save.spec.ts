@@ -20,12 +20,12 @@ describe('create save', () => {
   it('should unsave a post if it is already saved', async () => {
     const res = await createSave!({}, { userId: '6736de8f281cb64d91e94b7b', postId: '673da5414a0c0fa573e0d256' }, {}, {} as GraphQLResolveInfo);
 
-    expect(res).toBe('Success');
+    expect(res).toEqual({ message: 'Unsaved post successfully' });
   });
   it('should save a post if it is not already saved', async () => {
     jest.setTimeout(10000);
     const res = await createSave!({}, { userId: '6736de8f281cb64d91e94b7b', postId: '673da5414a0c0fa573e0d256' }, {}, {} as GraphQLResolveInfo);
 
-    expect(res).toBe('Success');
+    expect(res).toEqual({ message: 'Saved post successfully' });
   });
 });

@@ -73,20 +73,20 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   };
   return (
     <div data-testid="Book-Ticket-Component">
-      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12 max-sm:px-3 max-sm:justify-evenly  max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly max-2xl:justify-between">
+      <nav className="flex items-center justify-between border-b-[2px] dark:border-[#27272A] border-[#c6c6c6] py-8 px-12 max-sm:px-3 max-sm:justify-evenly  max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly max-2xl:justify-between">
         <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
           <FaArrowLeft />
         </Button>
-        <p className="text-2xl font-semibold text-white max-sm:text-xl">Тасалбар захиалах</p>
+        <p className="text-2xl font-semibold dark:text-white text-black max-sm:text-xl">Тасалбар захиалах</p>
         <p></p>
       </nav>
       <div className="flex flex-wrap justify-around items-center py-6 max-md:grid  max-lg:grid  max-lg:gap-12  ">
-        <StageStyle />
-        <div className="bg-[#131313] rounded-2xl px-6 max-sm:px-3  max-md:px-3">
+        <StageStyle   venue={eventDetails?.venues} />
+        <div className="dark:bg-[#131313] bg-[#f2f2f2] rounded-2xl px-6 max-sm:px-3  max-md:px-3">
           <div className="h-fit grid gap-2 py-6">
-            <p className="opacity-50 text-white">Тоглолт үзэх өдрөө сонгоно уу.</p>
+            <p className="opacity-50 dark:text-white text-black">Тоглолт үзэх өдрөө сонгоно уу.</p>
             <Select value={selectedDate ?? undefined} onValueChange={setSelectedDate}>
-              <SelectTrigger className="w-[345px] text-[#FAFAFA] bg-[#27272A] border-none" data-testid="SelectTrigger">
+              <SelectTrigger className="w-[345px] dark:text-[#FAFAFA] dark:bg-[#27272A] bg-white text-black border-none" data-testid="SelectTrigger">
                 <SelectValue placeholder="Өдөр сонгох" className="text-[#FAFAFA] outline-none" />
               </SelectTrigger>
               <SelectContent className="bg-[#27272A] text-[#FAFAFA]">
@@ -104,24 +104,24 @@ export const BookTicket = ({ id }: BookTicketProps) => {
             const colors = ['#D7D7F8', '#C772C4', '#4651C9'];
             const color = colors[index % colors.length];
             return (
-              <div key={index} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed border-[#27272A]">
+              <div key={index} className="flex items-center py-4 justify-between gap-2 border-t-[2px] border-dashed dark:border-[#27272A] border-[#c6c6c6]">
                 <div className="flex items-center">
                   <GoDotFill className="w-8 h-8" style={{ color }} />
                   <div>
                     <p className="text-[12px]" style={{ color }}>
                       {venue.name} ({venue.quantity})
                     </p>
-                    <p className="text-[16px] text-white">{venue.price.toLocaleString()}₮</p>
+                    <p className="text-[16px] dark:text-white text-black">{venue.price.toLocaleString()}₮</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
+                  <button className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
                     -
                   </button>
-                  <p className="text-white" data-testid={`ticket-count-${index}`}>
+                  <p className="dark:text-white text-black" data-testid={`ticket-count-${index}`}>
                     {counts[index] || 0}
                   </p>
-                  <button className="px-4 py-2 rounded-xl border border-[#27272A] text-white bg-[#1F1F1F] cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
+                  <button className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
                     +
                   </button>
                 </div>
@@ -133,17 +133,17 @@ export const BookTicket = ({ id }: BookTicketProps) => {
             {eventDetails?.venues.map(
               (venue, index) =>
                 (counts[index] || 0) > 0 && (
-                  <div key={index} className="flex justify-between text-[#A1A1AA]">
+                  <div key={index} className="flex justify-between dark:text-[#A1A1AA] text-black opacity-50">
                     <p>
-                      {venue.name}x{counts[index]}
+                      {venue.name} x {counts[index]}
                     </p>
                     <p>{(venue.price * counts[index]).toLocaleString()}₮</p>
                   </div>
                 )
             )}
             <div className="flex justify-between">
-              <p className="text-[#A1A1AA]">Нийт төлөх дүн:</p>
-              <p className="text-[20px] font-bold text-white" data-testid="total-price">
+              <p className="dark:text-[#A1A1AA] text-black opacity-50">Нийт төлөх дүн:</p>
+              <p className="text-[20px] font-bold dark:text-white text-black" data-testid="total-price">
                 {calculateTotal().toLocaleString()}₮
               </p>
             </div>

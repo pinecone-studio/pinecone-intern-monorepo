@@ -63,11 +63,11 @@ export const Payment = ({ id }: PaymentProps) => {
 
   return (
     <div className="h-[48rem] max-sm:h-full">
-      <nav className="flex items-center justify-between border-b-[2px] border-[#27272A] py-8 px-12 max-sm:px-3 max-sm:justify-evenly max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly">
+      <nav className="flex items-center justify-between border-b-[2px] dark:border-[#27272A] border-[#c6c6c6] py-8 px-12 max-sm:px-3 max-sm:justify-evenly max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly">
         <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="BacktoPush" onClick={() => router.push(`/order/${id}`)}>
           <FaArrowLeft />
         </Button>
-        <p className="text-2xl font-semibold text-white max-sm:tex-sm">Захиалга баталгаажуулах</p>
+        <p className="text-2xl font-semibold dark:text-white text-black max-sm:tex-sm">Захиалга баталгаажуулах</p>
       </nav>
       {bookingDetails?.status === 'Баталгаажсан' ? (
         <div className="flex flex-col items-center justify-center gap-2 text-center mt-24">
@@ -79,10 +79,10 @@ export const Payment = ({ id }: PaymentProps) => {
           </Button>
         </div>
       ) : (
-        <div className="bg-[#131313] w-fit p-6 grid gap-4 rounded-[12px] m-auto my-[60px]">
-          <div className="flex items-center py-3 justify-between gap-2">
-            <p className="font-extralight text-white">Нийт төлөх дүн</p>
-            <p className="font-bold text-xl text-white max-sm:text-sm">{bookingDetails?.amountTotal}₮</p>
+        <div className="dark:bg-[#131313] bg-[#f2f2f2] w-fit p-6 grid gap-4 rounded-[12px] m-auto my-[60px]">
+          <div className="flex items-center py-3 justify-between gap-2 dark:text-white text-black">
+            <p className="font-extralight">Нийт төлөх дүн</p>
+            <p className="font-bold text-xl max-sm:text-sm">{bookingDetails?.amountTotal}₮</p>
           </div>
           <div className="flex gap-3 w-[380px] justify-center max-sm:w-full">
             {qr ? (
@@ -92,11 +92,11 @@ export const Payment = ({ id }: PaymentProps) => {
             ) : loading ? (
               <>Loading...</>
             ) : (
-              <div data-testid="QpayClick" className="bg-[#27272A] relative flex-1 py-6 rounded-[8px] grid justify-center border border-transparent" onClick={paymentHandler}>
+              <div data-testid="QpayClick" className="dark:bg-[#27272A] bg-white relative flex-1 py-6 rounded-[8px] grid justify-center border border-transparent" onClick={paymentHandler}>
                 <div className="relative w-[100px] h-[100px] m-auto max-sm:w-[60px] max-sm:h-[60px]">
                   <Image src={'/QPay.png'} alt="Qpay" fill />
                 </div>
-                <p className="text-white font-medium">Qpay</p>
+                <p className="dark:text-white text-black font-medium flex justify-center pt-2">Qpay</p>
               </div>
             )}
           </div>

@@ -37,15 +37,16 @@ export const RelatedEvents = ({ id }: RelatedEventsProps) => {
 
   const targetDate = eventById.getEventById.eventDate[0];
   const filteredEvents = filterEventsByDate(data.getAllEvents, targetDate);
+  const filteredRelatedEvent = filteredEvents?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох');
 
   return (
     <div>
-      <p className="text-white font-extralight text-xl px-28 max-sm:px-3  max-md:px-3 max-lg:px-3 max-xl:px-3   max-2xl:px-3 ">Холбоотой эвент болон тоглолтууд</p>
+      <p className="dark:text-white text-black font-extralight text-xl px-28 max-sm:px-3  max-md:px-3 max-lg:px-3 max-xl:px-3   max-2xl:px-3 ">Холбоотой эвент болон тоглолтууд</p>
       <div
         className="grid grid-cols-4 gap-8 py-12 px-28 max-sm:px-3 max-sm:grid-cols-1 max-sm:py-4 max-md:px-3 max-md:grid-cols-2 max-md:py-4 max-lg:px-3 max-lg:grid-cols-2 max-lg:py-4 max-xl:grid-cols-3 max-xl:py-4 max-xl:px-3 max-2xl:grid-cols-3 max-2xl:py-4 max-2xl:px-3 "
         data-testid={`RelatedEvents-0`}
       >
-        {filteredEvents.length > 0 ? filteredEvents.map((event) => <EventCard {...event} key={event._id} />) : <p>No related events found</p>}
+        {filteredRelatedEvent.length > 0 ? filteredRelatedEvent.slice(0, 8).map((event) => <EventCard {...event} key={event._id} />) : <p>No related events found</p>}
       </div>
     </div>
   );

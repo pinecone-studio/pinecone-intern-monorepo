@@ -19,7 +19,7 @@ export const RoomDetails = () => {
   const { data } = useGetRoomByIdQuery({ variables: { id: room as string } });
   const RoomDetails = data?.getRoomById[0];
   return (
-    <DetailsContainer name={RoomDetails?.name || 'Add Room'}>
+    <DetailsContainer>
       <DetailsLeft>
         <DetailsCard>
           <RoomDetailsGeneralInfo name={RoomDetails?.name} type={RoomDetails?.roomType} price={RoomDetails?.price} />

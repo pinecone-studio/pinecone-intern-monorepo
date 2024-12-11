@@ -22,15 +22,19 @@ import { useGetArtistsQuery, useUpdateArtistMutation } from '@/generated';
 import { AddArtistComponent } from './AddArtistComponent';
 
 export const ArtistComponent = () => {
-  const { data } = useGetArtistsQuery();
+  const { data, refetch } = useGetArtistsQuery();
   const [updatedArtist] = useUpdateArtistMutation();
+
   const filteredData = data?.getArtists.filter((getArtists) => getArtists.status === 'Энгийн' || getArtists.status === 'Устгагдсан');
+
   const handleUpdateStatus = async (artist: string, status: string) => {
     await updatedArtist({
       variables: {
         input: { _id: artist, status },
       },
     });
+
+    refetch();
   };
 
   return (
@@ -41,7 +45,7 @@ export const ArtistComponent = () => {
           <div className="text-[14px] text-[#71717A]">Идэвхитэй Артистууд</div>
         </div>
 
-        <AddArtistComponent />
+        <AddArtistComponent refetch={refetch} />
       </div>
       <div className="border"></div>
       <div>
@@ -71,8 +75,8 @@ export const ArtistComponent = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    <AlertDialog>
-                      <AlertDialogTrigger data-testid={`click1-${index}`}>
+                    <AlertDialog data-testid="clickDialog">
+                      <AlertDialogTrigger data-testid="clickDialogTrigger">
                         <div
                           className={`w-fit h-fit  ${
                             item.status === 'Устгагдсан'

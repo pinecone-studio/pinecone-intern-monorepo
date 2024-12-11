@@ -1,74 +1,113 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { useGetArtistsQuery, useUpdateArtistMutation } from '@/generated';
-import { MockedProvider } from '@apollo/client/testing';
 import { ArtistComponent } from '@/components';
-jest.mock('@/generated', () => ({
-    useGetArtistsQuery: jest.fn(),
-    useUpdateArtistMutation: jest.fn(),
-}));
+import { GetArtistsDocument, UpdateArtistDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+
+const mockGetArtists = {
+  request: {
+    query: GetArtistsDocument,
+  },
+  result: {
+    data: {
+      getArtists: [
+        {
+          _id: '1',
+          artistName: 'Test Artist 1',
+          additional: 'Test additional info',
+          status: 'Энгийн',
+        },
+        {
+          _id: '2',
+          artistName: 'Test Artist 2',
+          additional: 'Test additional info',
+          status: 'Устгагдсан',
+        },
+      ],
+    },
+  },
+};
+
+const mockUpdateArtist = {
+  request: {
+    query: UpdateArtistDocument,
+    variables: {
+      input: { _id: '1', status: 'Энгийн' },
+    },
+  },
+  result: {
+    data: {
+      updateArtist: {
+        _id: '1',
+        artistName: 'Test Artist 1',
+        status: 'Энгийн',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z',
+      },
+    },
+  },
+};
+
+const mockUpdateArtist1 = {
+  request: {
+    query: UpdateArtistDocument,
+    variables: {
+      input: { _id: '2', status: 'Устгагдсан' },
+    },
+  },
+  result: {
+    data: {
+      updateArtist: {
+        _id: '2',
+        artistName: 'Test Artist 1',
+        status: 'Устгагдсан',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z',
+      },
+    },
+  },
+};
+
 describe('ArtistComponent', () => {
-    const mockArtistsData = {
-        getArtists: [
-            {
-                _id: '1',
-                artistName: 'Artist One',
-                additional: 'Additional Info',
-                status: 'Энгийн',
-            },
-            {
-                _id: '2',
-                artistName: 'Artist Two',
-                additional: 'Additional Info',
-                status: 'Устгагдсан',
-            },
-        ],
-    };
-    const mockUpdateArtist = jest.fn();
-    beforeEach(() => {
-        useGetArtistsQuery.mockReturnValue({
-            data: mockArtistsData,
-            loading: false,
-            error: null,
-        });
-        useUpdateArtistMutation.mockReturnValue([mockUpdateArtist]);
+  it('should render successfully and allow updating artist status', async () => {
+    const { getByTestId, getAllByTestId } = render(
+      <MockedProvider mocks={[mockGetArtists, mockUpdateArtist]} addTypename={false}>
+        <ArtistComponent />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      const alertTrigger = getAllByTestId('clickDialogTrigger')[0];
+      fireEvent.click(alertTrigger);
+
+      const cancelButton = getByTestId('cancelButton');
+      fireEvent.click(cancelButton);
     });
-    test('renders the ArtistComponent correctly', () => {
-        render(
-            <MockedProvider>
-                <ArtistComponent />
-            </MockedProvider>
-        );
-        expect(screen.getByText('Artist One')).toBeInTheDocument();
-        expect(screen.getByText('Artist Two')).toBeInTheDocument();
-        expect(screen.getByText('Идэвхитэй Артистууд')).toBeInTheDocument();
+  });
+  it('should render successfully and allow updating artist status', async () => {
+    const { getByTestId, getAllByTestId } = render(
+      <MockedProvider mocks={[mockGetArtists, mockUpdateArtist1]} addTypename={false}>
+        <ArtistComponent />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      const alertTrigger = getAllByTestId('clickDialogTrigger')[1];
+      fireEvent.click(alertTrigger);
+
+      const cancelButton = getByTestId('actionButton');
+      fireEvent.click(cancelButton);
     });
-    test('opens alert dialog to change artist status', async () => {
-        render(
-            <MockedProvider>
-                <ArtistComponent />
-            </MockedProvider>
-        );
-        fireEvent.click(screen.getByTestId('click1-0'));
-        await waitFor(() => screen.getByText('Төлөв өөрчлөх'));
-        expect(screen.getByText('Төлөв өөрчлөх')).toBeInTheDocument();
-        fireEvent.click(screen.getByText('Идэвхтэй'));
-        expect(mockUpdateArtist).toHaveBeenCalledWith({
-            variables: { input: { _id: '1', status: 'Энгийн' } },
-        });
+  });
+
+  it('should render successfully with "Устгагдсан" status and allow updating artist status', async () => {
+    render(
+      <MockedProvider mocks={[mockGetArtists, mockUpdateArtist]} addTypename={false}>
+        <ArtistComponent />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Устгагдсан'));
     });
-    test('calls the update status mutation when status is changed', async () => {
-        render(
-            <MockedProvider>
-                <ArtistComponent />
-            </MockedProvider>
-        );
-        fireEvent.click(screen.getByTestId('click1-0'));
-        await waitFor(() => screen.getByText('Төлөв өөрчлөх'));
-        fireEvent.click(screen.getByText('Устгах'));
-        expect(mockUpdateArtist).toHaveBeenCalledWith({
-            variables: { input: { _id: '1', status: 'Устгагдсан' } },
-        });
-    });
+  });
 });

@@ -23,3 +23,5 @@ export * from './RecoveryEmail';
 export * from './SearchPageComponent';
 export * from './SignUp';
 export * from './Payment';
+export * from './PasswordRecovery';
+export * from './VerifyOtpTimer';

@@ -2,7 +2,6 @@ query GetArtists {
   getArtists {
     _id
     artistName
-    image
     additional
     status
     createdAt
@@ -14,7 +13,6 @@ mutation CreateArtist($input: ArtistInput!) {
   createArtist(input: $input) {
     _id
     artistName
-    image
     additional
     status
     createdAt
@@ -26,7 +24,6 @@ mutation UpdateArtist($input: UpdateArtistInput!) {
   updateArtist(input: $input) {
     _id
     artistName
-    image
     additional
     status
     createdAt
@@ -38,7 +35,6 @@ mutation DeleteArtist($id: ID!) {
   deleteArtist(_id: $id) {
     _id
     artistName
-    image
     additional
     status
     createdAt

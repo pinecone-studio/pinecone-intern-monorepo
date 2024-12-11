@@ -1,12 +1,13 @@
 'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useEffect, useState } from 'react';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useUpdateUserMutation } from '@/generated';
-import { useEffect, useState } from 'react';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/navigation';
 interface UserInfoProps {
   __typename?: 'User';
   _id: string;
@@ -16,8 +17,9 @@ interface UserInfoProps {
   gender: string;
   bio: string;
 }
-
 export const EditProfile = ({ user }: { user: UserInfoProps }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [updateUser] = useUpdateUserMutation();
   const [updateData, setUpdateData] = useState({
     username: '',
@@ -43,91 +45,105 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
           input: {
             username: updateData.username,
             gender: updateData.gender,
-            profilePicture: updateData.profilePicture,
+            profilePicture: updateData.profilePicture || 'https://res.cloudinary.com/' + 'dezeem4wu/image/upload/v1733392437/' + 'a04d849cf591c2f980548b' + '982f461401_ii7gn6.jpg',
             bio: updateData.bio,
             fullname: updateData.fullname,
           },
         },
       });
+      router.push(`/profile?type=posts&username=${user?.username}`);
       console.log('Update successful:', response);
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
-
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'ig-cloudinary');
+    data.append('cloud_name', 'doqzizxvi');
+    try {
+      setLoading(true);
+      const res = await fetch('https://api.cloudinary.com/v1_1/doqzizxvi/image/upload', {
+        method: 'POST',
+        body: data,
+      });
+      const uploadedImage = await res.json();
+      setUpdateData({ ...updateData, profilePicture: uploadedImage.secure_url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleImageAction = (action: string) => {
+    if (action === 'Upload New Photo') {
+      document.getElementById('fileInput')?.click();
+    } else if (action === 'Remove Current Photo') {
+      setUpdateData({ ...updateData, profilePicture: '' });
+    }
+  };
   return (
     <div className="flex justify-center items-center flex-col pt-16">
       <div className="w-[600px] h-fit flex flex-col">
-        <p className="font-semibold text-3xl text-[#09090B] font-sans">Edit Profile</p>
-        <div className="pt-11 ">
-          <div className="flex">
+        <p className="font-semibold text-3xl text-[#0x9090B] font-sans">Edit Profile</p>
+        <div className="pt-11">
+          <div className="flex items-center">
             <Avatar>
-              <AvatarImage src={updateData.profilePicture || 'https://github.com/shadcn.png'} />
-              <AvatarFallback>{updateData.username}</AvatarFallback>
+              {loading ? (
+                <div className="flex justify-center items-center w-12 h-12 bg-slate-50 rounded-full">
+                  <CircularProgress size={24} />
+                </div>
+              ) : updateData.profilePicture ? (
+                <AvatarImage src={updateData.profilePicture} className="object-cover" />
+              ) : (
+                <AvatarImage src={'https://res.cloudinary.com/' + 'dezeem4wu/image/upload/' + 'v1733392437/a04d849cf5' + '91c2f980548b982f' + '461401_ii7gn6.jpg'} className="object-cover" />
+              )}
             </Avatar>
+            <input id="fileInput" type="file" className="hidden" onChange={handleUpload} />
             <div className="flex justify-between w-full pl-3 items-center">
               <div className="flex items-center gap-3">
-                <p className="text-base flex font-normal  text-[#262626] font-sans">{user?.username}</p>
+                <p className="text-base flex font-normal text-[#262626] font-sans">{user?.username}</p>
               </div>
-              <div>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Профайл зураг солих" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Upload New Photo">Upload New Photo</SelectItem>
-                    <SelectItem value="Remove Current Photo">Remove Current Photo</SelectItem>
-                    <SelectItem value="Cancel">Cancel</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-5">
-            <p className="text-[#262626] text-base font-semibold font-sans">Name</p>
-            <Input className="mt-2 font-sans text-sm" placeholder="Name" value={updateData.fullname} onChange={(e) => setUpdateData({ ...updateData, fullname: e.target.value })} />
-          </div>
-          <div className="pt-3 text-xs text-[#8E8E8E] font-[inter] font-normal">
-            <p>Help people discover your account by using the name youre known by: either your full name, nickname, or business name.</p>
-            <p className="pt-3">You can only change your name twice within 14 days.</p>
-          </div>
-
-          <div className="pt-5">
-            <p className="text-[#262626] text-base font-semibold font-sans">UserName</p>
-            <Input className="mt-2 font-sans" placeholder="Username" value={updateData.username} onChange={(e) => setUpdateData({ ...updateData, username: e.target.value })} />
-          </div>
-
-          <div className="pt-5">
-            <p className="text-[#262626] text-base font-semibold font-sans">Bio</p>
-            <Textarea className="mt-2 font-sans h-28 text-sm" placeholder="Bio" value={updateData.bio} onChange={(e) => setUpdateData({ ...updateData, bio: e.target.value })} data-testid="Bio" />
-            <div className="flex justify-end text-[#8E8E8E] font-normal font-sans text-xs">{updateData.bio?.length || 0}/150</div>
-          </div>
-
-          <div className="pt-5">
-            <p className="text-[#262626] text-base font-semibold font-sans">Gender</p>
-            <div className="pt-2 text-sm text-[#18181B] text-[inter]">
-              <Select value={updateData.gender} data-testid="selectValue" onValueChange={(value) => setUpdateData({ ...updateData, gender: value })}>
-                <SelectTrigger className="w-full " data-testid="combobox">
-                  <SelectValue placeholder="Prefer not to say" />
+              <Select onValueChange={handleImageAction}>
+                <SelectTrigger className="w-fit hover:text-[#2563EB]">
+                  <SelectValue placeholder="Change profile photo" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Female" data-testid="select">
-                    Female
-                  </SelectItem>
-                  <SelectItem value="Male" data-testid="select">
-                    Male
-                  </SelectItem>
-                  <SelectItem value="Prefer not to say" data-testid="select">
-                    Prefer not to say
-                  </SelectItem>
+                <SelectContent className="text-[#2563EB]">
+                  <SelectItem value="Upload New Photo">Upload New Photo</SelectItem>
+                  <SelectItem value="Remove Current Photo">Remove Current Photo</SelectItem>
+                  <SelectItem value="Cancel">Cancel</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-
+          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Name</p>
+          <Input className="mt-2 font-sans text-sm" placeholder="Name" value={updateData.fullname} onChange={(e) => setUpdateData({ ...updateData, fullname: e.target.value })} />
+          <div className="pt-3 text-xs text-[#8E8E8E] font-[inter]">
+            <p>Help people discover your account by using the name you’re known by: either your full name, nickname, or business name.</p>
+            <p className="pt-3">You can only change your name twice within 14 days.</p>
+          </div>
+          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Username</p>
+          <Input className="mt-2 font-sans" placeholder="Username" value={updateData.username} onChange={(e) => setUpdateData({ ...updateData, username: e.target.value })} />
+          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Bio</p>
+          <Textarea className="mt-2 font-sans h-28 text-sm" placeholder="Bio" value={updateData.bio} onChange={(e) => setUpdateData({ ...updateData, bio: e.target.value })} />
+          <div className="flex justify-end text-[#8E8E8E] font-normal text-xs">{updateData.bio?.length || 0}/150</div>
+          <p className="text-[#262626]  mt-5 text-base font-semibold">Gender</p>
+          <Select value={updateData.gender} onValueChange={(value) => setUpdateData({ ...updateData, gender: value })}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Prefer not to say" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Female">Female</SelectItem>
+              <SelectItem value="Male">Male</SelectItem>
+              <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+            </SelectContent>
+          </Select>
           <div className="flex mt-10 justify-end">
-            <Button className="bg-[#2563EB] hover:bg-[#2563EB]" onClick={handleUpdateUser} data-testid="updateSumbit">
+            <Button className="bg-[#2563EB] hover:bg-[#2563EB]" onClick={handleUpdateUser}>
               Submit
             </Button>
           </div>

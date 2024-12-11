@@ -7,6 +7,7 @@ jest.mock('../../../../src/models', () => ({
       .fn()
       .mockResolvedValueOnce({
         name: 'test',
+        icon: 'testicon',
       })
       .mockRejectedValueOnce({
         code: 11000,
@@ -20,16 +21,19 @@ describe('Create amenity', () => {
   it('should create an amenity successfully', async () => {
     const mockInput = {
       name: 'test',
+      icon: 'testicon',
     };
     const result = await createAmenity!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       name: 'test',
+      icon: 'testicon',
     });
   });
 
   it('should throw an error when duplicate amenity name is used', async () => {
     const mockInput = {
       name: 'test',
+      icon: 'testicon',
     };
 
     try {
@@ -42,6 +46,7 @@ describe('Create amenity', () => {
   it('should throw a generic error when amenity creation fails', async () => {
     const mockInput = {
       name: 'test',
+      icon: 'testicon',
     };
 
     try {

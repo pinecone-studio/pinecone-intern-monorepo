@@ -12,7 +12,7 @@ export const typeDefs = gql`
   type Notifications {
     _id: ID!
     userId: User!
-    postId: PostWithNoPopulate!
+    postId: PostWithNoPopulate
     notifiedUserId: ID!
     type: String!
     createdAt: Date!

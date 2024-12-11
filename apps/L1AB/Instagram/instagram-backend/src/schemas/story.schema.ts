@@ -11,6 +11,11 @@ export const typeDefs = gql`
     userId: ID!
     image: String!
   }
+
+  # type GetAllStoriesResponse {
+  #   userId: [Story!]!
+  # }
+
   type Query {
     getAllStories: [Story!]!
   }

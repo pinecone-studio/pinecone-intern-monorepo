@@ -1,9 +1,4 @@
-import PreviousBooking from '@/components/main/PrevoiusBooking';
 const PrevBooking = () => {
-  return (
-    <div>
-      <PreviousBooking />
-    </div>
-  );
+  return <div>.</div>;
 };
 export default PrevBooking;
