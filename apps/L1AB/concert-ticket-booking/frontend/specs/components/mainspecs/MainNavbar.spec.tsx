@@ -1,5 +1,5 @@
-import { MainNavbar, useAuth } from '@/components';
-import { GetMeDocument, useGetMeQuery } from '@/generated';
+import { MainNavbar } from '@/components';
+import { GetMeDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useTheme } from 'next-themes';
