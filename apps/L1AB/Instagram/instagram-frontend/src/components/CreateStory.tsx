@@ -6,7 +6,7 @@ import Media from 'public/Media';
 import { useContext, useState } from 'react';
 import { UserContext } from './providers';
 
-const CreateStory = () => {
+export const CreateStory = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
   const { user }: any = useContext(UserContext);
 
@@ -66,4 +66,3 @@ const CreateStory = () => {
     </DialogContent>
   );
 };
-export default CreateStory;
