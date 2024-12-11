@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type SavedPost {
-    _id: ID!
+    _id: ID
     userId: User
     postId: Posts
-    createdAt: Date!
+    createdAt: Date
   }
   type Message {
     message: String!
