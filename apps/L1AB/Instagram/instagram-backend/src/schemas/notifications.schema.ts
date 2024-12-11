@@ -18,6 +18,6 @@ export const typeDefs = gql`
     createdAt: Date!
   }
   type Query {
-    getNotificationsByUserId(userId: ID!): [Notifications]!
+    getNotificationsByUserId(userId: ID!): [Notifications!]!
   }
 `;
