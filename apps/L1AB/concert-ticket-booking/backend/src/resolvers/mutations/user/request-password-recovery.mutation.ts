@@ -15,7 +15,7 @@ export const requestPasswordRecovery: MutationResolvers['requestPasswordRecovery
 
   await otpModel.findOneAndUpdate({ email }, { otp, createdAt: new Date() }, { upsert: true });
 
-  await sendEmail(email, `Your OTP is ${otp}. This will expire in 5 minutes, but if you send another OTP request before it's expiration this OTP will be replaced by new one.`);
+  await sendEmail(email, otp);
 
   return {
     success: true,
