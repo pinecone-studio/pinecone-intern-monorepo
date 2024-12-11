@@ -1,5 +1,6 @@
 import mongoose, { Schema, Types, model } from 'mongoose';
 import { RoomType } from '../generated';
+import { UserType } from './user-model';
 
 export type bookingType = {
   _id: string;
@@ -20,11 +21,11 @@ export type bookingType = {
 const bookingSchema = new Schema<bookingType>(
   {
     userId: {
-      type: mongoose.Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'user',
     },
     roomId: {
-      type: mongoose.Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'room',
     },
 
@@ -67,6 +68,7 @@ const bookingSchema = new Schema<bookingType>(
 
 export type bookingPopulatedType = {
   roomId: RoomType;
+  userId: UserType;
 };
 
 export const bookingModel = mongoose.models.booking || model('booking', bookingSchema);
