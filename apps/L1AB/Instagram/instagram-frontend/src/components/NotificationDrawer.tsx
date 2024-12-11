@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Notifications from './Notifications';
 
 const variants = {
   close: { x: -491, opacity: 0, transition: { type: 'spring', damping: 15, duration: 0.5 } },
@@ -27,29 +28,8 @@ export const NotificationDrawer = ({ isOpen }: Props) => {
       >
         <div>
           <div className="space-y-5">
-            <h1 className="font-semibold text-2xl">Notification</h1>
-            <div className="space-y-5 divide-y divide-slate-300">
-              <div className="relative  w-full  border-gray-100 rounded-lg h-12 flex p-4 text-gray-500 gap-4">This month</div>
-              <div className="h-[44px] w-full bg-white flex gap-2">
-                <div className="h-full w-[48px] border"></div>
-
-                <div>
-                  <p>name</p>
-                  <p className="text-xs text-gray-500">r o s e t t a ‘s b e s t l i f e 💕• Followed by elizabeth</p>
-                </div>
-              </div>
-              <div className=" space-y-4 pt-4">
-                <div className="flex justify-between">Earlier</div>
-                <div className="h-[44px] w-full bg-white flex gap-2">
-                  <div className="h-full w-[48px] border"></div>
-
-                  <div>
-                    <p>name</p>
-                    <p className="text-xs text-gray-500">r o s e t t a ‘s b e s t l i f e 💕• Followed by elizabeth</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h1 className="font-semibold text-2xl">Notifications</h1>
+            <Notifications />
           </div>
         </div>
       </motion.nav>
