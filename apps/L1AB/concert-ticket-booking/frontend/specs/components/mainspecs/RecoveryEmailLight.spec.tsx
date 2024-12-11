@@ -24,7 +24,7 @@ const RecoveryEmailMock = {
 };
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
-  theme: 'light',
+  theme: 'dark',
 }));
 jest.mock('@/components/providers/AuthProvider', () => ({
   ...jest.requireActual('@/components/providers/AuthProvider'),
@@ -35,7 +35,7 @@ jest.mock('@/components/providers/AuthProvider', () => ({
 }));
 beforeEach(() => {
   (useTheme as jest.Mock).mockImplementation(() => ({
-    theme: 'dark',
+    theme: 'light',
   }));
 });
 describe('RecoveryEmail', () => {

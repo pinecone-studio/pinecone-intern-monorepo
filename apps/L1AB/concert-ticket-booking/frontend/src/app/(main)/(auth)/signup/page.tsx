@@ -14,7 +14,7 @@ const Page = () => {
       buttonText="Бүртгүүлэх"
       footerText="Та бүртгэлтэй хаягтай бол"
       footerLinkText="нэвтрэх"
-      footerTextEnd="эсгээр 
+      footerTextEnd="хэсгээр 
 орно уу."
       footerLinkHref="/signin"
     />

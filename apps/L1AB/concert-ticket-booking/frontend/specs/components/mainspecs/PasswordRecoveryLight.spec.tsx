@@ -15,7 +15,7 @@ jest.mock('@/components/providers/AuthProvider', () => ({
 }));
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
-  theme: 'light',
+  theme: 'dark',
 }));
 const passwordRecovery = {
   request: {
@@ -38,7 +38,7 @@ const passwordRecovery = {
 describe('PasswordRecovery-Page', () => {
   beforeEach(() => {
     (useTheme as jest.Mock).mockImplementation(() => ({
-      theme: 'dark',
+      theme: 'light',
     }));
   });
   it('should render PasswordRecovery and handle password visibility and form submission', async () => {

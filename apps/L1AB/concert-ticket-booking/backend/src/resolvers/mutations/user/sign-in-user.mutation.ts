@@ -7,7 +7,7 @@ export const signInUser: MutationResolvers['signInUser'] = async (_, { input }) 
   const { email, password } = input;
 
   const user = await userModel.findOne({ email });
-  if (!user) throw new Error('Майл эсвэл утас оруулна уу!');
+  if (!user) throw new Error('Майл бүртгэлгүй байна!');
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error('Username or Password incorrect');
