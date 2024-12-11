@@ -1,16 +1,16 @@
 'use client';
 import { useGetAllUsersQuery, useGetFollowersByIdQuery, useGetFollowingByIdQuery, useGetUserByIdQuery } from '@/generated';
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import * as _ from 'lodash';
 import jwt from 'jsonwebtoken';
 
 interface UserContextType {
-  user: any;
-  users: any;
-  followers: any;
-  sortedUsers: any;
+  users: any | null;
+  followers: any | null;
+  sortedUsers: any | null;
+  user: any | null;
 }
-export const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextType>({ user: null, users: null, followers: null, sortedUsers: null });
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const [userId, setUserId] = useState();
@@ -46,3 +46,4 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   return <UserContext.Provider value={{ user, users, followers, sortedUsers }}>{children}</UserContext.Provider>;
 };
+export const useUser = () => useContext(UserContext);

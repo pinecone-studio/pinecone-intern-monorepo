@@ -1,13 +1,14 @@
 'use client';
 
 import { useGetNotificationsByUserIdQuery } from '@/generated';
-import { useContext } from 'react';
-import { UserContext } from './providers';
-import Image from 'next/image';
+import { isToday, isYesterday, parseISO } from 'date-fns';
+import { useUser } from './providers';
+import TodayNotifications from './notificationComps/TodayNotifications';
+import YesterdayNotifications from './notificationComps/YesterdayNotifications';
+import EarlierNotifications from './notificationComps/EarlierNotifications';
 
 const Notifications = () => {
-  const { user }: any = useContext(UserContext);
-
+  const { user } = useUser();
   const { data } = useGetNotificationsByUserIdQuery({
     variables: {
       userId: user ? user._id : '',
@@ -15,24 +16,15 @@ const Notifications = () => {
   });
   const notifyData = data?.getNotificationsByUserId;
 
+  const todayNotifications = notifyData?.filter((el) => isToday(parseISO(el?.createdAt))).reverse() || [];
+  const yesterdayNotifications = notifyData?.filter((el) => isYesterday(parseISO(el?.createdAt))).reverse() || [];
+  const earlierNotifications = notifyData?.filter((el) => !isToday(parseISO(el?.createdAt)) && !isYesterday(parseISO(el?.createdAt))).reverse() || [];
+
   return (
-    <div className="space-y-5 divide-y divide-slate-300">
-      {notifyData?.map((el, index) => {
-        return (
-          <div key={index} className="h-[44px] w-full bg-white flex justify-between">
-            <div className="h-full w-[48px] rounded-full border relative">
-              <Image className="rounded-full" alt="no pic" src={el?.userId.profilePicture!} fill />
-            </div>
-            <div>
-              <p>{el?.userId.username}</p>
-            </div>
-            <div>liked your post</div>
-            <div className="border w-12 relative">
-              <Image src={el?.postId.images[0]!} alt="no pic" fill />
-            </div>
-          </div>
-        );
-      })}
+    <div className="space-y-5 flex flex-col gap-2">
+      <TodayNotifications todayNotifications={todayNotifications} />
+      <YesterdayNotifications yesterdayNotifications={yesterdayNotifications} />
+      <EarlierNotifications earlierNotifications={earlierNotifications} />
     </div>
   );
 };
