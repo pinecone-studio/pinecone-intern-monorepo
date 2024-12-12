@@ -42,7 +42,7 @@ export const typeDefs = gql`
     description: String
     photos: [String!]
     roomType: RoomType
-    roomAmenities: [ID!]!
+    roomAmenities: [ID!]
   }
 
   type Query {
