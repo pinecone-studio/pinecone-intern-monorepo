@@ -50,8 +50,6 @@ export const BookingDetails = () => {
               </Button>
               <div className="border border-[#E4E4E7] my-5"></div>
             </div>
-            <div></div>
-            <div></div>
           </div>
           <div className="flex flex-col gap-4">
             <div className="text-[#71717A] text-sm">Room detail</div>
