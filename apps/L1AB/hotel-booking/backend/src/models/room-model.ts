@@ -1,5 +1,6 @@
 import mongoose, { model, Schema, Types } from 'mongoose';
 import { hotelType } from './hotel.model';
+import { amenityType } from './amenity-model';
 
 export type roomType = {
   _id: string;
@@ -10,6 +11,7 @@ export type roomType = {
   price: number;
   roomType: string;
   hotelId: Types.ObjectId;
+  roomAmenities: Types.ObjectId;
   maxCapacity: number;
   createdAt: Date;
   updatedAt: Date;
@@ -55,12 +57,21 @@ const roomSchema = new Schema<roomType>(
       ref: 'hotel',
       required: true,
     },
+
+    roomAmenities: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'amenity',
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );
 
 export type roomPopulatedType = roomType & {
   hotelId: hotelType;
+  roomAmenities: amenityType[];
 };
 
 export const roomModel = mongoose.models.room || model('room', roomSchema);

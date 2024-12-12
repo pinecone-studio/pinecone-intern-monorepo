@@ -16,6 +16,10 @@ jest.mock('../../../../src/models', () => ({
         photos: ['url1', 'url2'],
         hotelId: 'dahs',
         maxCapacity: 2,
+        roomAmenities: [
+          { _id: 'a1', name: 'Free Wi-Fi', icon: 'FaHouse' },
+          { _id: 'a2', name: 'Air Conditioning', icon: 'FaPlus' },
+        ],
       })
       .mockRejectedValueOnce(new Error('Failed to add room')),
   },
@@ -32,6 +36,7 @@ describe('Create room', () => {
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
       maxCapacity: 2,
+      roomAmenities: ['a1', 'a2'],
     };
 
     const result = await createRoom!({}, { input: mockInput }, {} as any, {} as GraphQLResolveInfo);
@@ -46,6 +51,10 @@ describe('Create room', () => {
       description: 'Test',
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
+      roomAmenities: [
+        { _id: 'a1', name: 'Free Wi-Fi', icon: 'FaHouse' },
+        { _id: 'a2', name: 'Air Conditioning', icon: 'FaPlus' },
+      ],
     });
   });
 
@@ -59,6 +68,7 @@ describe('Create room', () => {
       photos: ['url1', 'url2'],
       hotelId: 'dahs',
       maxCapacity: 2,
+      roomAmenities: ['a1', 'a2'],
     };
 
     try {
