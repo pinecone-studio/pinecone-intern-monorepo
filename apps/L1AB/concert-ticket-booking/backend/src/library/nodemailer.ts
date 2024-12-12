@@ -53,7 +53,7 @@ export const QRGenerator = async (to: string, qrCodeDataURL: string) => {
     html: `
       <div>
         <h1>Танд доорх QR кодыг илгээлээ</h1>
-        <p>Захиалгын мэдээлээ харахын тулд доорх QR кодыг уншуулна уу !</p>
+        <p>Захиалгын мэдээллээ харахын тулд доорх QR кодыг уншуулна уу !</p>
         <img src="cid:qr-code" alt="QR Code" style="width:"300px; height:300px;" />
       </div>`,
     attachments: [

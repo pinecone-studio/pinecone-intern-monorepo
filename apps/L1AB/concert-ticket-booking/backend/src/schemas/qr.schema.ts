@@ -6,12 +6,7 @@ export const typeDefs = gql`
     message: String
   }
 
-  input SendQrInput {
-    email: String!
-    link: String!
-  }
-
   type Mutation {
-    sendQrToEmail(input: SendQrInput!): SendQrToEmailResponse!
+    sendQrToEmail: SendQrToEmailResponse!
   }
 `;
