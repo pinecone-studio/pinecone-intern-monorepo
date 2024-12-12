@@ -1,5 +1,5 @@
 import { Payment } from '@/components';
-import { useGetBookingByIdQuery, useUpdateBookingEverythingMutation } from '@/generated';
+import { useGetBookingByIdQuery, useSendQrToEmailMutation, useUpdateBookingEverythingMutation } from '@/generated';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
@@ -14,6 +14,7 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/generated', () => ({
   useGetBookingByIdQuery: jest.fn(),
   useUpdateBookingEverythingMutation: jest.fn(),
+  useSendQrToEmailMutation: jest.fn(() => [jest.fn(), {}]),
 }));
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -40,6 +41,7 @@ describe('Payment Component', () => {
       data: { getBookingById: mockBookingData.getBookingById },
     });
     (useUpdateBookingEverythingMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
+    useSendQrToEmailMutation as jest.Mock;
   });
 
   afterEach(() => {
@@ -119,8 +121,29 @@ describe('Payment Component', () => {
     fireEvent.click(qpayButton);
 
     expect(screen.getByText('Loading...'));
-    // await waitFor(() => {
-    //   expect(screen.getByTestId('qr'));
-    // });
+  });
+  it('should send QR to email successfully', async () => {
+    await (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
+      data: {
+        getBookingById: { ...mockBookingData.getBookingById, status: 'Баталгаажсан' },
+      },
+    });
+
+    await (useSendQrToEmailMutation as jest.Mock).mockReturnValue([
+      jest.fn().mockResolvedValue({
+        data: {
+          sendQrToEmail: {
+            success: true,
+            message: 'QR code email sent successfully to test@example.com.',
+          },
+        },
+      }),
+      {},
+    ]);
+
+    render(<Payment id="123" />);
+
+    const sendQrButton = screen.getByTestId('SendQrButton');
+    await waitFor(() => fireEvent.click(sendQrButton));
   });
 });
