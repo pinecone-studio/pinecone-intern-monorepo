@@ -13,7 +13,7 @@ export const MiddlewareWrapper = ({ children }: PropsWithChildren) => {
     }
   }, [getMeLoading, user, router]);
 
-  if (getMeLoading) {
+  if (getMeLoading || !user) {
     return <div>Loading...</div>;
   }
 

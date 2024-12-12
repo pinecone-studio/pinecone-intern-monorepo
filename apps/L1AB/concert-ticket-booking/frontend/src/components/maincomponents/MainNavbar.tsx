@@ -15,6 +15,7 @@ export const MainNavbar = () => {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { signout, user } = useAuth();
+  const token = localStorage.getItem('token');
   const paths = [
     {
       name: 'Бүртгүүлэх',
@@ -52,7 +53,7 @@ export const MainNavbar = () => {
             )}
           </div>
 
-          {user ? (
+          {user && token ? (
             <>
               <Link href={'/profile'} className="max-sm:w-[80px]">
                 <div className="text-black max-sm:w-full max-sm:truncate dark:text-white">{user?.email}</div>
