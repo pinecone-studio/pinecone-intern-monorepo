@@ -50,11 +50,14 @@ describe('MainNavbar', () => {
     });
   });
   it('should render successfully', async () => {
+    const mockToken = 'mocked-token';
+    localStorage.setItem('token', mockToken);
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <MainNavbar />
       </MockedProvider>
     );
+    expect(screen);
   });
 
   it('should click light button', async () => {
