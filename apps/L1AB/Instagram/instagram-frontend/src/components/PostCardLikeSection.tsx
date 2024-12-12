@@ -2,14 +2,15 @@
 
 import { useCreateLikeMutation, useCreateSaveMutation, useGetLikesByPostIdQuery, useGetSavedByPostIdQuery } from '@/generated';
 import { CardPropsType } from './PostCardCommentSection';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Bookmark, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import PostDetail from './PostDetail';
 
 const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
   return <Bookmark data-testid="saveButton" onClick={handleSave} className="cursor-pointer" fill={`${isSaved ? 'black' : 'white'}`} />;
 };
 
-const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
+const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, userName }: CardPropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
   const { data: savedData, refetch: saveRefetch } = useGetSavedByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId || [];
@@ -53,7 +54,7 @@ const PostCardLikeSection = ({ postId, userId }: CardPropsType) => {
             <Heart data-testid="likeButton" onClick={handleLike} className={`cursor-pointer ${isLiked ? 'text-[#ff0000]' : ''}`} fill={`${isLiked ? 'red' : 'white'}`} />
             <div>{likesData?.length}</div>
           </div>
-          <MessageCircle />
+          <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />
         </div>
         <SaveButton handleSave={handleSave} isSaved={isSaved} />
       </div>
