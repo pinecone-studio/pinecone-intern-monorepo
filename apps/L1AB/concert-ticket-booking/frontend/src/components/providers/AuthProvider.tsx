@@ -152,6 +152,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       },
     });
   };
+
   return <AuthContext.Provider value={{ signin, signup, getMeLoading, user, loading, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
 };
 

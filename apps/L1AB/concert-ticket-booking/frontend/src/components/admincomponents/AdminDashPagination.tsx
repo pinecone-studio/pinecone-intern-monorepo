@@ -18,16 +18,16 @@ export const AdminPagination: React.FC<PaginationProps> = ({ currentPage, totalP
   };
   return (
     <Pagination>
-      <PaginationContent className="cursor-pointer">
+      <PaginationContent className="cursor-pointer text-black">
         <PaginationItem>
-          <PaginationLink className="border rounded mx-3" data-testid="left-btn" onClick={() => handlePageChange(currentPage - 1)}>
+          <PaginationLink className="border rounded mx-3 text-black" data-testid="left-btn" onClick={() => handlePageChange(currentPage - 1)}>
             <ChevronLeft />
           </PaginationLink>
         </PaginationItem>
         {[...Array(totalPages)].map((_, index) => (
           <PaginationItem key={index}>
             <PaginationLink
-              className={`border rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
+              className={`border rounded text-black ${currentPage === index + 1 ? 'bg-blue-500 text-white' : ''}`}
               key={index}
               data-testid={`page-${index}`}
               onClick={() => handlePageChange(index + 1)}
