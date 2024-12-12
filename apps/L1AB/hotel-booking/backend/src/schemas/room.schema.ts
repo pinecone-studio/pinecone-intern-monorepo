@@ -16,6 +16,7 @@ export const typeDefs = gql`
     description: String!
     photos: [String!]
     roomType: RoomType!
+    roomAmenities: [Amenity!]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -29,6 +30,7 @@ export const typeDefs = gql`
     description: String!
     photos: [String!]
     roomType: RoomType!
+    roomAmenities: [ID!]!
   }
 
   input UpdateRoomInput {
@@ -40,6 +42,7 @@ export const typeDefs = gql`
     description: String
     photos: [String!]
     roomType: RoomType
+    roomAmenities: [ID!]
   }
 
   type Query {
