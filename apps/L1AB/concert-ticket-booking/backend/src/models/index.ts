@@ -4,3 +4,4 @@ export * from './event-model';
 export * from './artist-model';
 export * from './otp-model';
 export * from './access-token';
+export * from "./qr-model"

@@ -44,3 +44,27 @@ export const sendEmail = async (to: string, otp: string) => {
 
   await transporter.sendMail(options);
 };
+
+export const QRGenerator = async (to: string, qrCodeDataURL: string) => {
+  const options = {
+    from: process.env.NODEMAILER_EMAIL,
+    to,
+    subject: 'Your Booking QR Code',
+    html: `
+      <div>
+        <h1>Танд доорх QR кодыг илгээлээ</h1>
+        <p>Захиалгын мэдээллээ харахын тулд доорх QR кодыг уншуулна уу !</p>
+        <img src="cid:qr-code" alt="QR Code" style="width:"300px; height:300px;" />
+      </div>`,
+    attachments: [
+      {
+        filename: 'qrcode.png',
+        content: qrCodeDataURL.split(',')[1],
+        encoding: 'base64',
+        cid: 'qr-code',
+      },
+    ],
+  };
+
+  await transporter.sendMail(options);
+};
