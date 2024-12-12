@@ -14,6 +14,7 @@ export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, {
 
   await QRModel.create({
     email: signedUser.email,
+    link: defaultLink,
     generatedQR: generated,
   });
 
