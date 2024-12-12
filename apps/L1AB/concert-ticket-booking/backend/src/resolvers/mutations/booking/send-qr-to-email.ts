@@ -3,7 +3,6 @@ import { QRModel, userModel } from '../../../models';
 import { MutationResolvers } from '../../../generated';
 import { QRGenerator } from '../../../library/nodemailer';
 import { Context } from '../../../handler';
-import { link } from 'fs';
 
 export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, { user }: Context) => {
   if (!user?.userId) {
