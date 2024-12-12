@@ -30,5 +30,5 @@ export * from './StartBooking';
 export * from './NoPreviousBooking';
 export * from './BookingDetailRoom';
 export * from './BookingDetailBooked';
-export * from './CheckingBookingLeft';
-export * from './CheckingBookingRight';
+export * from './assets/CheckingBookingLeft';
+export * from './assets/CheckingBookingRight';
