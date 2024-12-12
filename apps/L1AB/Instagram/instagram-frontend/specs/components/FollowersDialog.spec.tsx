@@ -6,6 +6,7 @@ import { UserContext } from '@/components/providers';
 
 jest.mock('@/generated', () => ({
   useDeleteFollowerMutation: jest.fn().mockReturnValue([jest.fn().mockResolvedValue({ data: { success: true } })]),
+  useCreateFollowersMutation: jest.fn().mockReturnValue([jest.fn().mockResolvedValue({ data: { success: true } })]),
 }));
 
 jest.mock('next/navigation', () => ({
@@ -21,7 +22,13 @@ describe('FollowersDialog', () => {
     const profileUser = { _id: 'profile-user' };
     const handleFollowersUpdateMock = jest.fn();
 
-    render(<FollowersDialog followersData={followersData} followingData={[]} profileUser={profileUser} handleFollowersUpdate={handleFollowersUpdateMock} />);
+    render(
+      <UserContext.Provider value={{ user: { _id: 'profile-user', username: 'profile-user' } }}>
+        <FollowersDialog followersData={followersData} followingData={[]} profileUser={profileUser} handleFollowersUpdate={handleFollowersUpdateMock} />
+      </UserContext.Provider>
+    );
+
+    expect(screen.getByText('followers'));
   });
 
   it('handles follower removal', async () => {
