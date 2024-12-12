@@ -23,22 +23,22 @@ export const AdminNavbar = () => {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
-          <IoIosLogOut onClick={signout} className="w-8 h-8 cursor-pointer" />
+          <IoIosLogOut onClick={signout} className="w-8 h-8 cursor-pointer text-black" />
         </div>
       </div>
       <div className="flex">
         <Link href={`/admin`}>
-          <div data-testid="/admin" className={`py-2 px-4 text-[14px] font-medium cursor-pointer ${currentPath === '/admin' ? 'border-b-black border-b-2' : ''}`}>
+          <div data-testid="/admin" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin' ? 'border-b-black border-b-2' : ''}`}>
             Тасалбар
           </div>
         </Link>
         <Link href={`/admin/cancel`}>
-          <div data-testid="/admin/cancel" className={`py-2 px-4 text-[14px] font-medium cursor-pointer ${currentPath === '/admin/cancel' ? 'border-b-black border-b-2' : ''}`}>
+          <div data-testid="/admin/cancel" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/cancel' ? 'border-b-black border-b-2' : ''}`}>
             Цуцлах хүсэлт
           </div>
         </Link>
         <Link href={`/admin/artist`}>
-          <div data-testid="/admin/artist" className={`py-2 px-4 text-[14px] font-medium cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}>
+          <div data-testid="/admin/artist" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}>
             Артист
           </div>
         </Link>

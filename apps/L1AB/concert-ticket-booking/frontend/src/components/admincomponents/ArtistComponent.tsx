@@ -25,7 +25,7 @@ export const ArtistComponent = () => {
   const { data, refetch } = useGetArtistsQuery();
   const [updatedArtist] = useUpdateArtistMutation();
 
-  const filteredData = data?.getArtists.filter((getArtists) => getArtists.status === 'Энгийн' || getArtists.status === 'Устгагдсан');
+  const filteredData = data?.getArtists.filter((getArtists) => getArtists.status === 'Энгийн');
 
   const handleUpdateStatus = async (artist: string, status: string) => {
     await updatedArtist({
@@ -78,11 +78,9 @@ export const ArtistComponent = () => {
                     <AlertDialog data-testid="clickDialog">
                       <AlertDialogTrigger data-testid="clickDialogTrigger">
                         <div
-                          className={`w-fit h-fit  ${
-                            item.status === 'Устгагдсан'
-                              ? 'bg-[#b1b1b1] px-[10px] py-[2px] rounded-lg font-semibold text-xs'
-                              : 'bg-[#FFFFFF] text-[14px] py-2 font-medium rounded-lg  px-3 border cursor-pointer'
-                          }`}
+                          className={`w-fit h-fit  
+                             bg-[#FFFFFF] text-[14px] py-2 font-medium rounded-lg  px-3 border cursor-pointer
+                         `}
                         >
                           {item.status}
                         </div>

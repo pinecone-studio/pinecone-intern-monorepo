@@ -34,6 +34,7 @@ type AuthContextType = {
   verifyOtp: (_params: VerifyOtpInput) => void;
   user: User | null;
   loading: boolean;
+  getMeLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -41,14 +42,13 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-
-  useGetMeQuery({
+  const { loading: getMeLoading } = useGetMeQuery({
+    onCompleted: (data) => {
+      setUser(data.getMe!);
+    },
     onError: (error) => {
       console.error(error.message);
       setUser(null);
-    },
-    onCompleted: (data) => {
-      setUser(data.getMe!);
     },
     skip: !!user,
   });
@@ -64,6 +64,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       } else {
         router.push('/');
       }
+      localStorage.setItem('theme', 'dark');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -139,13 +140,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       variables: { input: { email } },
     });
   };
-
   const verifyOtp = async ({ email, otp }: VerifyOtpInput) => {
     await verifyOtpMutation({
       variables: { input: { email, otp } },
     });
   };
-
   const passwordRecovery = async ({ email, accessToken, password }: PasswordRecoveryParams) => {
     await passwordRecoveryMutation({
       variables: {
@@ -154,7 +153,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  return <AuthContext.Provider value={{ signin, signup, user, loading, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signup, getMeLoading, user, loading, signout, requestPasswordRecovery, verifyOtp, passwordRecovery }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
