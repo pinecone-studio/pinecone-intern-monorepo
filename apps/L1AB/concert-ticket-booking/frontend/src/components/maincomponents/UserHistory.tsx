@@ -5,6 +5,7 @@ import { GoDotFill } from 'react-icons/go';
 import { UserHistoryDialog } from './UserHistoryDialog';
 import { useGetBookingByUserIdQuery } from '@/generated';
 import { useAuth } from '../providers';
+import { useRouter } from 'next/navigation';
 
 export const UserHistory = () => {
   const { user } = useAuth();
@@ -12,6 +13,8 @@ export const UserHistory = () => {
     variables: { userId: user?._id as string },
     skip: !user?._id,
   });
+  const router = useRouter();
+
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
     if (name === 'Fanzone') return '#C772C4';
@@ -43,10 +46,20 @@ export const UserHistory = () => {
                 </div>
                 <div className="flex text-base font-normal text-white items-center gap-2">
                   <p className="text-[#878787] max-sm:text-sm">Төлөв:</p>
-                  <p className=" dark:text-white cursor-pointer text-blue-500 hover:underline">{item.status}</p>
+                  <p className=" dark:text-white  text-blue-500 ">{item.status}</p>
                 </div>
               </div>
               {showButton && <UserHistoryDialog bookingId={item._id} />}
+              {item.status === 'Баталгаажаагүй' && (
+                <div data-testid="Баталгаажаагүй" className=" dark:text-white cursor-pointer text-blue-500 hover:underline" onClick={() => router.push(`/order/${item._id}`)}>
+                  Захиалга үргэлжлүүлэх
+                </div>
+              )}
+              {item.status === 'Төлбөр хүлээгдэж буй' && (
+                <div data-testid="Төлбөр хүлээгдэж буй" className=" dark:text-white cursor-pointer text-blue-500 hover:underline" onClick={() => router.push(`/payment/${item._id}`)}>
+                  Захиалга үргэлжлүүлэх
+                </div>
+              )}
             </div>
             <div className="flex flex-col gap-2 max-sm:grid max-md:grid max-xl:grid">
               {item.venues?.map((venue, index2) => {
