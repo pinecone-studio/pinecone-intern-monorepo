@@ -44,7 +44,7 @@ describe('BookTicket Component', () => {
     (useGetMeQuery as jest.Mock).mockReturnValue({
       data: mockUserData,
     });
-    (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
+    (useCreateBookingTotalAmountMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: true }]);
   });
 
   it('should call the mutation on booking', async () => {
@@ -180,4 +180,15 @@ describe('BookTicket Component', () => {
     const cardElement = getByTestId('FaArrowLeftClick');
     fireEvent.click(cardElement);
   });
+  it('should display loading state when data is loading', () => {
+    (useGetMeQuery as jest.Mock).mockReturnValue({
+      loading: true,
+      data: null,
+    });
+  
+    const { getByText } = render(<BookTicket id="test" />);
+  
+    expect(getByText('loading...'))
+  });
+  
 });

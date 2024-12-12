@@ -12,7 +12,6 @@ export const UserHistory = () => {
     variables: { userId: user?._id as string },
     skip: !user?._id,
   });
-
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
     if (name === 'Fanzone') return '#C772C4';
