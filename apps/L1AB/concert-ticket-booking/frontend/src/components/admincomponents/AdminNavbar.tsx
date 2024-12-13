@@ -33,12 +33,20 @@ export const AdminNavbar = () => {
           </div>
         </Link>
         <Link href={`/admin/cancel`}>
-          <div data-testid="/admin/cancel" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/cancel' ? 'border-b-black border-b-2' : ''}`}>
+          <div
+            data-testid="/admin/cancel"
+            data-cy="Cancel"
+            className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/cancel' ? 'border-b-black border-b-2' : ''}`}
+          >
             Цуцлах хүсэлт
           </div>
         </Link>
         <Link href={`/admin/artist`}>
-          <div data-testid="/admin/artist" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}>
+          <div
+            data-testid="/admin/artist"
+            data-cy="Artist"
+            className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}
+          >
             Артист
           </div>
         </Link>
