@@ -52,7 +52,7 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
             data-testid="searchinput"
             type="search"
             placeholder="Тасалбар хайх"
-            className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]"
+            className="pl-3 w-[251px] h-[36px] border rounded bg-[#ffff] text-[1]  dark:text-black"
             value={searchTerm}
           />
         </div>
@@ -60,25 +60,25 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
         <div className="flex gap-2">
           <Select onValueChange={handleSelectChange}>
             <SelectTrigger className="w-[180px] h-[36px] text-black" data-testid="admin-searcher-select">
-              <SelectValue placeholder=" + Уран бүтээлч " className='text-black'/>
+              <SelectValue placeholder=" + Уран бүтээлч " className="text-black" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel className="text-black placeholder:text-black">Уран бүтээлч</SelectLabel>
+            <SelectContent className="dark:text-black dark:bg-white">
+              <SelectGroup className="dark:bg-white">
+                <SelectLabel className="text-black placeholder:text-black ">Уран бүтээлч</SelectLabel>
                 {data?.getAllEvents.map((item, index) => (
-                  <SelectItem key={index} value={item.artistName[0]} data-testid="option" className="text-black">
+                  <SelectItem key={index} value={item.artistName[0]} data-testid="option" className="text-black ">
                     {item.artistName[0]}
                   </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          <div data-testid="button-input" className={`w-fit justify-center items-center flex gap-5 ${selectedValues?.length > 0 ? 'bg-secondary px-3 font[8px]' : ''}`}>
+          <div data-testid="button-input" className={`w-fit justify-center items-center flex gap-5 rounded ${selectedValues?.length > 0 ? 'bg-secondary px-3 font[8px]' : ''}`}>
             {selectedValues.join(' , ') || searchArtist}
           </div>
         </div>
         <div className="flex items-center bg-white border rounded px-5 text-[14px] h-[36px] gap-5">
-          <span className='text-black'>Цэвэрлэх</span>
+          <span className="text-black">Цэвэрлэх</span>
           <button data-testid="clear-btn" type="button" onClick={handleClearSelection}>
             <XIcon className="w-5 h-5 text-black" />
           </button>
@@ -93,7 +93,7 @@ export const AdminSearcher = ({ setSearchValue, setSelectedValues, selectedValue
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
-            <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow text-black" />
+            <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border shadow text-black dark:bg-white" />
           </PopoverContent>
         </Popover>
         {date && <XIcon className="w-5 h-5 border rounded cursor-pointer mx-2 " onClick={handleClearDate} data-testid="clear-date" />}

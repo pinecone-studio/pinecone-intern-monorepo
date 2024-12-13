@@ -114,11 +114,11 @@ export const UpdateEventComponent = ({ eventId }: { eventId: string }) => {
       <DialogTrigger>
         <PenIcon className="bg-[#F4F4F5] rounded p-1" data-testid="DialogOpen" />
       </DialogTrigger>
-      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs">
+      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs dark:text-black">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">Тасалбар шинэчлэх</DialogTitle>
         </DialogHeader>
-        <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
+        <DialogClose asChild className="absolute right-12 top-6 cursor-pointer ">
           <p className="text-black text-2xl">x</p>
         </DialogClose>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
@@ -151,7 +151,7 @@ export const UpdateEventComponent = ({ eventId }: { eventId: string }) => {
           </DialogItem>
         </div>
         <UpdateEventVenue handleVenueChange={handleVenueChange} formData={formData} />
-        <Button className="w-full" onClick={handleUpdateEvent} data-testid="UpdateEvent">
+        <Button className="w-full hover:bg-gray-500" onClick={handleUpdateEvent} data-testid="UpdateEvent">
           Шинэчлэх
         </Button>
       </DialogContent>

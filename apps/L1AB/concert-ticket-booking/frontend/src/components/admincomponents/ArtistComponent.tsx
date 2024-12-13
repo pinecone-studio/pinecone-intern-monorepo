@@ -85,10 +85,10 @@ export const ArtistComponent = () => {
                           {item.status}
                         </div>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-[#FAFAFA]">
+                      <AlertDialogContent className="bg-[#FAFAFA] dark:text-black">
                         <AlertDialogHeader>
                           <AlertDialogTitle>Төлөв өөрчлөх</AlertDialogTitle>
-                          <AlertDialogDescription>{item.artistName} artistiig pagees ustagah uu</AlertDialogDescription>
+                          <AlertDialogDescription>{item.artistName}-н Төлөвийг өөрчлөх үү</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel onClick={() => handleUpdateStatus(item._id, 'Энгийн')} data-testid="cancelButton">
