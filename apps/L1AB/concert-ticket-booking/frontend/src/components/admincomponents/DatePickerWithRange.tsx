@@ -17,8 +17,7 @@ export const DatePickerWithRange: React.FC<DatePickerProps> = ({ value, onChange
 
   return (
     <div>
-      <input data-testid="datepicker" type="date" value={date.toISOString().split('T')[0]} onChange={(e) => handleDateChange(e.target.value)} />
+      <input className="dark:bg-white " data-testid="datepicker" type="date" value={date.toISOString().split('T')[0]} onChange={(e) => handleDateChange(e.target.value)} />
     </div>
   );
 };
-

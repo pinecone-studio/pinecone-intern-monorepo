@@ -95,11 +95,14 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff]" data-testid="DialogOpen">
+      <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff] " data-testid="DialogOpen">
         Тоглолт Нэмэх
         <PlusCircleIcon />
       </DialogTrigger>
-      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll h-screen" data-testid="event-dialog-content">
+      <DialogContent
+        className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll h-screen dark:text-black"
+        data-testid="event-dialog-content"
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">Тоглолт Нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
@@ -135,7 +138,7 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
           </DialogItem>
         </div>
         <AddEventVenue handleVenueChange={handleVenueChange} formData={formData} />
-        <Button className="w-full" onClick={() => setCheck(!check)} data-testid="createEventButton">
+        <Button className="w-full hover:bg-gray-400" onClick={() => setCheck(!check)} data-testid="createEventButton">
           Үүсгэх
         </Button>
       </DialogContent>

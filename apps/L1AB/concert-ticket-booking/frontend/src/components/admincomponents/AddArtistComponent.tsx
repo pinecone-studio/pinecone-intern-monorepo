@@ -69,7 +69,10 @@ export const AddArtistComponent = ({ refetch }: { refetch: () => void }) => {
         Артист Нэмэх
         <PlusCircleIcon />
       </DialogTrigger>
-      <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll min-h-[320px]" data-testid="Artist-dialog-content">
+      <DialogContent
+        className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll min-h-[320px] dark:text-black"
+        data-testid="Artist-dialog-content"
+      >
         <DialogHeader className="flex">
           <DialogTitle className="text-2xl font-semibold">Артист Нэмэх</DialogTitle>
           <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
@@ -92,7 +95,7 @@ export const AddArtistComponent = ({ refetch }: { refetch: () => void }) => {
           />
         </DialogItem>
 
-        <Button className="w-full" onClick={handleSubmit} data-testid="createArtistButton" disabled={isLoading}>
+        <Button className="w-full hover:bg-gray-400" onClick={handleSubmit} data-testid="createArtistButton" disabled={isLoading}>
           {isLoading ? 'Үүсгэж байна...' : 'Үүсгэх'}
         </Button>
       </DialogContent>

@@ -93,7 +93,7 @@ export const CancelComponent = () => {
                           {item.status}
                         </div>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-[#FAFAFA]">
+                      <AlertDialogContent className="bg-[#FAFAFA]  dark:text-black">
                         <AlertDialogHeader>
                           <AlertDialogTitle>Төлөв өөрчлөх</AlertDialogTitle>
                           <AlertDialogDescription>{item.userId.name} Харилцагчийн төлбөрийн буцаалтын шилжүүлсэн үү</AlertDialogDescription>
