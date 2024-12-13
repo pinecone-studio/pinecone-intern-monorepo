@@ -1,6 +1,6 @@
 import { AddEventComponent } from '@/components/admincomponents/AddEventComponent';
 import { MockedProvider } from '@apollo/client/testing';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import { createEventMock, createEventMockWithError } from './mock';
 
@@ -52,7 +52,11 @@ describe('AddEventComponent', () => {
     };
     const { getByTestId, getByPlaceholderText, getAllByTestId } = render(
       <MockedProvider mocks={[createEventMock]} addTypename={false}>
-        <AddEventComponent />
+        <AddEventComponent
+          refetch={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </MockedProvider>
     );
 
@@ -100,7 +104,11 @@ describe('AddEventComponent', () => {
     const mockSetIsOpen = jest.fn();
     const { getByTestId, getByPlaceholderText } = render(
       <MockedProvider mocks={[createEventMockWithError]} addTypename={false}>
-        <AddEventComponent />
+        <AddEventComponent
+          refetch={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </MockedProvider>
     );
 
@@ -118,6 +126,38 @@ describe('AddEventComponent', () => {
     fireEvent.click(createEventButton1);
 
     await waitFor(() => {
+      expect(mockSetIsOpen);
+    });
+  });
+  it('should remove an artist name when clicking the delete button', async () => {
+    const mockSetIsOpen = jest.fn();
+    const mockSetFormData = jest.fn();
+    render(
+      <MockedProvider mocks={[createEventMock]} addTypename={false}>
+        <AddEventComponent
+          refetch={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </MockedProvider>
+    );
+    fireEvent.click(screen.getByTestId('DialogOpen'));
+    fireEvent.change(screen.getByPlaceholderText('Нэр оруулах'), { target: { value: 'name' } });
+    fireEvent.change(screen.getByPlaceholderText('Дэлгэрэнгүй мэдээлэл'), { target: { value: 'Test Description' } });
+    fireEvent.click(screen.getByText('Бусад артист нэмэх'));
+    fireEvent.click(screen.getByText('Бусад артист нэмэх'));
+    const deleteButtons = screen.getAllByText('Устгах');
+    expect(deleteButtons.length);
+    fireEvent.click(deleteButtons[0]);
+    await waitFor(() => {
+      expect(screen.queryAllByPlaceholderText('Артистын нэр').length);
+    });
+    const remainingArtistInput = screen.getByPlaceholderText('Артистын нэр');
+    expect(remainingArtistInput);
+    fireEvent.click(screen.getByText('Шинэчлэх'));
+    await waitFor(() => {
+      expect(toast.error);
+      expect(mockSetFormData);
       expect(mockSetIsOpen);
     });
   });

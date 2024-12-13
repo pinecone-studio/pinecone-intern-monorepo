@@ -33,6 +33,9 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
     location: 'Төв Цэнгэлдэх',
   });
 
+  // New state for managing multiple artist names
+  const [artistNames, setArtistNames] = useState<string[]>(['']);
+
   const handleInputChange = <K extends keyof typeof formData>(key: K, value: typeof formData[K]) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
@@ -52,6 +55,7 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
       return { ...prev, venues: updatedVenues };
     });
   };
+
   const handleImageUpload = (urls: string[]) => {
     handleInputChange('images', urls);
   };
@@ -93,9 +97,21 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
     }
   };
 
+  // Function to handle adding a new artist field
+  const handleAddArtist = () => {
+    setArtistNames((prev) => [...prev, '']);
+  };
+
+  // Function to handle artist name change
+  const handleArtistChange = (index: number, value: string) => {
+    const updatedArtists = [...artistNames];
+    updatedArtists[index] = value;
+    setArtistNames(updatedArtists);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff] " data-testid="DialogOpen">
+      <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff]" data-testid="DialogOpen">
         Тоглолт Нэмэх
         <PlusCircleIcon />
       </DialogTrigger>
@@ -110,19 +126,33 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
             <p className="text-black text-2xl">x</p>
           </DialogClose>
         </DialogHeader>
+
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" value={formData.name} onChange={(e) => handleInputChange('name', e.target.value)} />
         </DialogItem>
+
         <AddImage onUpload={handleImageUpload} handleSubmit={handleSubmit} check={check} setCheck={setCheck} />
+
         <DialogItem htmlFor="description" name="Хөтөлбөрийн тухай">
           <Textarea className="min-h-16" placeholder="Дэлгэрэнгүй мэдээлэл" name="description" value={formData.description} onChange={(e) => handleInputChange('description', e.target.value)} />
         </DialogItem>
-        <DialogItem htmlFor="artistName" name="Үндсэн артистын нэр">
-          <Input placeholder="Артистын нэр" name="artistName" value={formData.artistName[0]} onChange={(e) => handleInputChange('artistName', [e.target.value])} />
-          <Button className="w-fit" variant="outline">
-            Бусад артист нэмэх +
+
+        <DialogItem htmlFor="artistNames" name="Артистын нэр">
+          {artistNames.map((artist, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <Input placeholder="Артистын нэр" value={artist} onChange={(e) => handleArtistChange(index, e.target.value)} />
+              {artistNames.length > 1 && (
+                <Button data-testid="Устгах" variant="outline" className="p-1" onClick={() => setArtistNames((prev) => prev.filter((_, i) => i !== index))}>
+                  Устгах
+                </Button>
+              )}
+            </div>
+          ))}
+          <Button variant="outline" onClick={handleAddArtist} data-testid="Бусад артист нэмэх">
+            Бусад артист нэмэх
           </Button>
         </DialogItem>
+
         <div className="flex justify-between w-full gap-2">
           <DialogItem htmlFor="eventDate" name="Тоглолтын өдөр сонгох" data-testid="open-date">
             <DatePickerWithRange data-testid="choose-date" value={formData.eventDate} onChange={(eventDate: string[]) => handleInputChange('eventDate', eventDate)} />
@@ -137,7 +167,9 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
             <Input type="number" placeholder="Хямдралын хувь" value={formData.discount || ''} onChange={(e) => handleInputChange('discount', Number(e.target.value))} />
           </DialogItem>
         </div>
+
         <AddEventVenue handleVenueChange={handleVenueChange} formData={formData} />
+
         <Button className="w-full hover:bg-gray-400" onClick={() => setCheck(!check)} data-testid="createEventButton">
           Үүсгэх
         </Button>
