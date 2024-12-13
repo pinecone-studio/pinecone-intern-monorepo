@@ -33,7 +33,7 @@ export const RoomDetails = () => {
       </DetailsLeft>
       <DetailsRight>
         <DetailsCard>
-          <HotelDetailsImages images={RoomDetails?.photos as string[]} />
+          <HotelDetailsImages />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

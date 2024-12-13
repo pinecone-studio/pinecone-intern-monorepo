@@ -76,10 +76,6 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
     }
     return Boolean(errors[field] && touched[field]);
   };
-  // useEffect(() => {
-  //   console.log('Is form valid:', addHotelForm.isValid); // Logs true/false based on validation status
-  //   console.log('Validation errors:', addHotelForm.errors); // Logs validation errors, if any
-  // }, [addHotelForm.isValid, addHotelForm.errors]);
   return <AdminContext.Provider value={{ isAdmin: true, addHotelForm, showError, hotelData, hotelLoading }}>{children}</AdminContext.Provider>;
 };
 
