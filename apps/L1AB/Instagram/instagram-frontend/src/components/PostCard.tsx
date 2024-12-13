@@ -23,11 +23,11 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   const { user }: any = useContext(UserContext);
 
   const prev = () => {
-    setCurrentImageIndex((curr) => (curr === 0 ? images.length - 1 : curr - 1));
+    setCurrentImageIndex((curr) => (curr === 0 ? 0 : curr - 1));
   };
 
   const next = () => {
-    setCurrentImageIndex((curr) => (curr === images.length - 1 ? 0 : curr + 1));
+    setCurrentImageIndex((curr) => (curr === images.length - 1 ? images.length - 1 : curr + 1));
   };
 
   useEffect(() => {
