@@ -63,8 +63,8 @@ describe('Timer Component', () => {
   });
 
   it('should display timer when counter is greater than 0', async () => {
-    render(<Timer initialCounter={60} />);
-    expect(screen.getByText('60 секунд хүлээнэ үү.'));
+    render(<Timer initialCounter={30} />);
+    expect(screen.getByText('30 секунд хүлээнэ үү.'));
   });
 
   it('should show the refresh button and OTP message after the timer reaches 0', async () => {

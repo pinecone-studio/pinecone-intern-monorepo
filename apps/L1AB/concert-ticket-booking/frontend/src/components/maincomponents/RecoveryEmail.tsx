@@ -41,10 +41,17 @@ export const RecoveryEmail = ({ header, buttonText, emailLabel }: RecoveryEmailP
             </div>
             <div className="flex flex-col items-center gap-6 self-stretch w-[350px] max-sm:w-full">
               <div className="flex flex-col justify-start w-full gap-1">
-                <Label htmlFor="email" className="block text-sm font-medium text-gray-200">
+                <Label htmlFor="email" className="block text-sm font-medium text-black dark:text-gray-200">
                   {emailLabel}
                 </Label>
-                <Input onChange={handleOnChange} id="email" type="email" placeholder="name@example.com" data-cy="RecoveryEmail-Email-Input" />
+                <Input
+                  onChange={handleOnChange}
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  data-cy="RecoveryEmail-Email-Input"
+                  className="bg-white dark:bg-[#09090B] dark:text-white text-black"
+                />
               </div>
               <Button
                 onClick={handleSubmit}

@@ -57,12 +57,12 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
         <BackgroundTheme theme={theme} />
         <form className="text-amber-50 flex z-10 items-center justify-center h-[48rem] " data-cy="PasswordRecovery-Page">
           <div className="rounded-2xl z-10 border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
-            <div className="flex py-2 flex-col justify-center items-center max-sm:w-full">
+            <div className="flex flex-col items-center justify-center py-2 max-sm:w-full">
               <p className="dark:text-[#FAFAFA] text-black text-2xl font-semibold tracking-[-0.6px] max-sm:text-xl">{header}</p>
             </div>
             <div className="flex flex-col items-center gap-6 self-stretch w-[350px] max-sm:w-full">
               <div className="flex flex-col justify-start w-full gap-1">
-                <Label htmlFor="password" className="block text-sm font-medium text-gray-200">
+                <Label htmlFor="password" className="block text-sm font-medium text-black dark:text-gray-200">
                   Нууц үг
                 </Label>
                 <div className="flex items-center border-[1px] rounded-md pr-3">
@@ -70,18 +70,22 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                     data-testid="password"
                     id="password"
                     type={password ? 'text' : 'password'}
-                    className="border-none"
+                    className="border-none bg-white dark:bg-[#09090B] dark:text-white text-black"
                     data-cy="Password-Recovery-Input"
                     placeholder={passwordLabel}
                     onChange={handleChange}
                   />
                   <button type="button" data-testid="toggleVisibility" onClick={() => setPassword(!password)}>
-                    {password ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
+                    {password ? (
+                      <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-[#54d0f9]" />
+                    ) : (
+                      <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-[#54d0f9]" />
+                    )}
                   </button>
                 </div>
               </div>
               <div className="flex flex-col justify-start w-full gap-1">
-                <Label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200">
+                <Label htmlFor="confirmPassword" className="block text-sm font-medium text-black dark:text-gray-200">
                   Нууц үг давтах
                 </Label>
                 <div className="flex items-center border-[1px] rounded-md pr-3">
@@ -89,13 +93,17 @@ export const PasswordRecovery = ({ header, buttonText, passwordLabel, confirmPas
                     data-testid="confirmPassword"
                     id="confirmPassword"
                     type={rePassword ? 'text' : 'password'}
-                    className="border-none"
+                    className="border-none bg-white dark:bg-[#09090B] dark:text-white text-black"
                     data-cy="Password-Recovery-confirm-Input"
                     placeholder={confirmPasswordLabel}
                     onChange={handleChange}
                   />
                   <button type="button" data-testid="toggleVisibility1" onClick={() => setRePassword(!rePassword)}>
-                    {rePassword ? <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" /> : <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-white" />}
+                    {rePassword ? (
+                      <EyeOffIcon size={20} className="text-gray-400 cursor-pointer hover:text-[#54d0f9]" />
+                    ) : (
+                      <EyeIcon size={20} className="text-gray-400 cursor-pointer hover:text-[#54d0f9]" />
+                    )}
                   </button>
                 </div>
               </div>
