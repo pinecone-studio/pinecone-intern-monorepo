@@ -1,13 +1,12 @@
 describe('Cancel Page', () => {
-  beforeEach(() => {
-    cy.visit('/admin/cancel');
-  });
-
-  it('Should render the Container component', () => {
+  it('should render', () => {
+    cy.visit('/signin');
+    cy.get('[data-cy=SignIn-Page]').should('be.visible');
+    cy.get('[data-cy=SignIn-Email-Input]').type('test@gmail.com');
+    cy.get('[data-cy=SignIn-Password-Input]').type('123');
+    cy.get('[data-cy=SignIn-Submit-Button]').click();
+    cy.get('[data-cy=Cancel]').click();
     cy.get('[data-cy="Container"]').should('be.visible');
-  });
-
-  it('Should render the CancelComponent inside the Container', () => {
     cy.get('[data-cy="Container"]').within(() => {
       cy.get('[data-cy="Cancel-Component"]').should('be.visible');
     });
