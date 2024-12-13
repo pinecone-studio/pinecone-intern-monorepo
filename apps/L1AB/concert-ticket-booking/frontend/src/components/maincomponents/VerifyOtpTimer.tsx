@@ -31,12 +31,12 @@ const Timer = ({ initialCounter }: TimerProps) => {
       {counter > 0 ? (
         <div className="flex flex-col items-end">
           <RefreshCcw size={20} color={'#9ca3af'} />
-          <p className="text-xs text-gray-400">{`${counter} секунд хүлээнэ үү.`}</p>
+          <p className="text-xs text-black dark:text-gray-400">{`${counter} секунд хүлээнэ үү.`}</p>
         </div>
       ) : (
         <div className="flex flex-col items-end">
-          <RefreshCcw size={20} role="button" onClick={handleResend} data-testid="resend-otp-button" className="cursor-pointer hover:text-[#54d0f9] hover:scale-125 duration-200" />
-          <p data-testid="resend-otp-text" className="text-xs text-gray-400">
+          <RefreshCcw size={20} role="button" onClick={handleResend} data-testid="resend-otp-button" className="cursor-pointer hover:text-[#54d0f9] hover:scale-125 duration-200 text-[#00B7F4]" />
+          <p data-testid="resend-otp-text" className="text-xs text-black dark:text-gray-400">
             OTP дахин илгээх.
           </p>
         </div>

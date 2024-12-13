@@ -152,7 +152,7 @@ describe('VerifyOtp Component', () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(63000);
+      jest.advanceTimersByTime(30000);
     });
   });
 });
