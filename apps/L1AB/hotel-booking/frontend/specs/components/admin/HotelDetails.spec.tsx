@@ -18,6 +18,7 @@ describe('HotelDetails Component', () => {
         stars: 0,
         rating: 0,
         description: '',
+        images: [],
       },
       handleChange: jest.fn(),
       handleBlur: jest.fn(),

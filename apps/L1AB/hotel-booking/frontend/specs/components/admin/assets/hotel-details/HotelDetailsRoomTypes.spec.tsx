@@ -86,7 +86,6 @@ describe('HotelDetailsRoomTypes', () => {
         updatedAt: '2024-11-14T06:24:52.763Z',
       },
     };
-    console.log(mockAdminProvider);
     render(<HotelDetailsRoomTypes />);
 
     await waitFor(() => expect(screen.getByText('Room Types Not Set Up')));
