@@ -1,0 +1,12 @@
+query getHotelIdByHotelAmenities($id: ID!) {
+  getHotelIdByHotelAmenities(_id: $id) {
+    _id
+    amenities {
+      _id
+      name
+      icon
+      createdAt
+      updatedAt
+    }
+  }
+}
