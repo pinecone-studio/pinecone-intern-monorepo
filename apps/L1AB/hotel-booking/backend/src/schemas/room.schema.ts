@@ -45,13 +45,19 @@ export const typeDefs = gql`
     roomAmenities: [ID!]
   }
 
+  input DateRangeInput {
+    checkIn: Date!
+    checkOut: Date!
+  }
+
   type Query {
-    getAllRooms: [Room!]
+    getAllRooms: [Room!]!
     getRoomById(_id: ID!): [Room!]!
+    getAvailableRooms(dateRange: DateRangeInput!, traveler: Int!): [Room!]!
   }
 
   type Mutation {
-    createRoom(input: RoomInput): Room!
+    createRoom(input: RoomInput!): Room!
     deleteRoom(_id: ID!): Room!
     updateRoom(input: UpdateRoomInput!): Room!
   }
