@@ -77,8 +77,8 @@ export const Payment = ({ id }: PaymentProps) => {
       {bookingDetails?.status === 'Баталгаажсан' ? (
         <div className="flex flex-col items-center justify-center gap-2 mt-24 text-center">
           <p className="text-lg font-bold text-green-500">Төлбөр амжилттай төлөгдлөө!</p>
-          <p className="text-sm text-white">Захиалгын дугаар: {bookingDetails._id}</p>
-          <p className="text-sm text-white">Төлсөн дүн: {bookingDetails.amountTotal}₮</p>
+          <p className="text-sm text-black dark:text-white">Захиалгын дугаар: {bookingDetails._id}</p>
+          <p className="text-sm text-black dark:text-white">Төлсөн дүн: {bookingDetails.amountTotal}₮</p>
           <Button className="mt-4 text-white bg-green-500 hover:bg-green-600" data-testid="SendQrButton" onClick={sendQrHandler}>
             {loading ? 'QR код илгээж байна...' : 'Захиалга шалгах QR код авах'}
           </Button>

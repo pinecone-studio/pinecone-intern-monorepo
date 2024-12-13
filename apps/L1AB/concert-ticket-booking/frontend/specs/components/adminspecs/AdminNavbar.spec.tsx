@@ -54,4 +54,12 @@ describe('AdminNavbar', () => {
 
     expect(artistLink).toHaveClass('border-b-black border-b-2');
   });
+  it('should apply "border-b-black border-b-2" class when pathname is "/admin/artist"', () => {
+    usePathname.mockReturnValue('/admin/bookings');
+
+    const { getByTestId } = render(<AdminNavbar />);
+    const artistLink = getByTestId('/admin/bookings');
+
+    expect(artistLink).toHaveClass('border-b-black border-b-2');
+  });
 });
