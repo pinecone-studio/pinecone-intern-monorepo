@@ -9,7 +9,7 @@ export const MiddlewareWrapper = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (!getMeLoading && (!user || user.role !== 'admin')) {
-      router.replace('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+      router.replace('https://youtu.be/TUb__jZN_2Q?t=133');
     }
   }, [getMeLoading, user, router]);
 

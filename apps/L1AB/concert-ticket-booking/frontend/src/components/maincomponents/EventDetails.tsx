@@ -104,11 +104,11 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 const color = colors[index % colors.length];
 
                 return (
-                  <div key={index} className="py-4 px-6 border-[2px] border-dashed dark:border-[#27272A] rounded-[6px]">
-                    <div className="flex items-center justify-between w-full gap-5">
+                  <div key={index} className="py-4 px-6 border-[2px] border-dashed dark:border-[#27272A] rounded-[6px] bg-slate-800 dark:bg-black">
+                    <div className="flex items-center justify-between w-full gap-5 ">
                       <div className="flex gap-2 items-center">
                         <GoDotFill className="w-8 h-8" style={{ color }} />
-                        <p className="text-[12px]" style={{ color }}>
+                        <p className="text-[12px] " style={{ color }}>
                           {item.name} тасалбар ({item.quantity})
                         </p>
                       </div>

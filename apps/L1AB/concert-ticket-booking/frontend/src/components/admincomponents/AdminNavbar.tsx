@@ -32,6 +32,11 @@ export const AdminNavbar = () => {
             Тасалбар
           </div>
         </Link>
+        <Link href={`/admin/bookings`}>
+          <div data-testid="/admin/bookings" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/bookings' ? 'border-b-black border-b-2' : ''}`}>
+            Захиалгууд
+          </div>
+        </Link>
         <Link href={`/admin/cancel`}>
           <div
             data-testid="/admin/cancel"
