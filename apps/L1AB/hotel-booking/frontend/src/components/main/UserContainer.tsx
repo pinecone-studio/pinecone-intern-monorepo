@@ -1,6 +1,5 @@
 'use client';
 import { Container } from './assets';
-import { UserHeader } from './UserHeader';
 import { UserProfile } from './UserProfile';
 import { UserContact } from './UserContact';
 import { useState } from 'react';
@@ -10,7 +9,6 @@ export const UserContainer = () => {
   const [selected, setSelected] = useState('profile');
   return (
     <>
-      <UserHeader />
       <Container backgroundColor="bg-white">
         <div className="flex m-auto">
           <div className="container m-auto h-fit px-5 pt-10 pb-10 flex-1">
@@ -43,20 +41,10 @@ export const UserContainer = () => {
           </div>
           <UserProfileMerge selected={selected} />
         </div>
-
-        <div className="flex items-center gap-2">
-          <div className="container m-auto flex  items-center justify-between">
-            <div className="flex gap-1 py-3 px-4 items-center mt-10">
-              <div className="w-4 h-4 rounded-full bg-[#09090B]"></div>
-              <div className="font-normal text-base flex font-sans">Pedia</div>
-            </div>
-          </div>
-        </div>
       </Container>
     </>
   );
 };
-
 interface Names {
   selected: string;
 }

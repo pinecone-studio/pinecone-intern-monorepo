@@ -1,4 +1,5 @@
 import { AdminNavbar } from '@/components/admincomponents';
+import { MiddlewareWrapper } from '@/components/providers/Middleware';
 import { PropsWithChildren } from 'react';
 
 export const metadata = {
@@ -8,6 +9,7 @@ export const metadata = {
 
 const AdminLayout = ({ children }: PropsWithChildren) => {
   return (
+    <MiddlewareWrapper>
     <div className="flex flex-col min-h-screen bg-white ">
       <header className="flex-shrink-0">
         <AdminNavbar />
@@ -15,6 +17,7 @@ const AdminLayout = ({ children }: PropsWithChildren) => {
       <main className="flex-grow p-4">{children}</main>
       <footer className="flex items-center justify-center flex-shrink-0 py-5 opacity-50">©2024 Copyright</footer>
     </div>
+    </MiddlewareWrapper>
   );
 };
 

@@ -1,0 +1,16 @@
+query GetNotificationsByUserId($userId: ID!) {
+  getNotificationsByUserId(userId: $userId) {
+    _id
+    postId {
+      images
+      _id
+    }
+    notifiedUserId
+    type
+    createdAt
+    userId {
+      username
+      profilePicture
+    }
+  }
+}

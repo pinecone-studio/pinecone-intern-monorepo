@@ -28,7 +28,9 @@ export const ForgetPassword = () => {
           input: { oldPassword, newPassword },
         },
       });
-
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
       toast.success('Нууц үг амжилттай шинэчлэгдлээ.', { autoClose: 2000 });
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 2000 });
@@ -99,7 +101,12 @@ interface Icontypes {
 }
 
 const IconChange = ({ setIsEyeOpen, isEyeOpen }: Icontypes) => (
-  <div className="dark:text-white hover:text-[#878787] text-black flex w-fit absolute right-3 top-9" data-testid="eyeOne-btn" data-cy="Profile-Password-Input-icon" onClick={() => setIsEyeOpen(!isEyeOpen)}>
+  <div
+    className="dark:text-white hover:text-[#878787] text-black flex w-fit absolute right-3 top-9"
+    data-testid="eyeOne-btn"
+    data-cy="Profile-Password-Input-icon"
+    onClick={() => setIsEyeOpen(!isEyeOpen)}
+  >
     {isEyeOpen ? <FaRegEye /> : <FaRegEyeSlash />}
   </div>
 );

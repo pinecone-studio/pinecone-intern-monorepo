@@ -1,20 +1,18 @@
 'use client';
 import { useGetAllUsersQuery, useGetFollowersByIdQuery, useGetFollowingByIdQuery, useGetUserByIdQuery } from '@/generated';
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import * as _ from 'lodash';
 import jwt from 'jsonwebtoken';
-import { useRouter } from 'next/navigation';
 
 interface UserContextType {
-  user: any;
-  users: any;
-  followers: any;
-  sortedUsers: any;
+  users: any | null;
+  followers: any | null;
+  sortedUsers: any | null;
+  user: any | null;
 }
-export const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextType>({ user: null, users: null, followers: null, sortedUsers: null });
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const router = useRouter();
   const [userId, setUserId] = useState();
   useEffect(() => {
     const userToken = localStorage.getItem('userToken');
@@ -22,9 +20,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     if (userToken) {
       const user: any = jwt.decode(userToken as string);
 
-      if (!user?.id) {
-        return router.push('/login');
-      }
+      // if (!user?.id) {
+      //   return router.push('/login');
+      // }
 
       return setUserId(user?.id as any);
     }
@@ -48,3 +46,4 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   return <UserContext.Provider value={{ user, users, followers, sortedUsers }}>{children}</UserContext.Provider>;
 };
+export const useUser = () => useContext(UserContext);

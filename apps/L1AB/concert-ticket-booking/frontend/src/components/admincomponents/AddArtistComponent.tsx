@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { DialogItem } from '@/components';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircleIcon } from 'lucide-react';
@@ -70,8 +70,11 @@ export const AddArtistComponent = ({ refetch }: { refetch: () => void }) => {
         <PlusCircleIcon />
       </DialogTrigger>
       <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll min-h-[320px]" data-testid="Artist-dialog-content">
-        <DialogHeader>
+        <DialogHeader className="flex">
           <DialogTitle className="text-2xl font-semibold">Артист Нэмэх</DialogTitle>
+          <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
+            <p className="text-black text-2xl">x</p>
+          </DialogClose>
         </DialogHeader>
 
         <DialogItem htmlFor="ArtistName" name="Артистын нэр">

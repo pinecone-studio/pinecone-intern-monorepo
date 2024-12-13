@@ -44,7 +44,7 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
       <div className="flex min-w-full">
         <StoryProvider>
           {pathname.includes('/story') ? null : <LeftSideBar />}
-          <div className="flex gap-[72px] mx-auto max-h-screen overflow-y-scroll">
+          <div className="flex gap-[72px] mx-auto max-h-screen">
             <Suspense>
               <ApolloWrapper>
                 <NuqsAdapter>{children}</NuqsAdapter>

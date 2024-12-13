@@ -3,7 +3,7 @@ import { requestPasswordRecovery } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models', () => ({
   userModel: {
-    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ email: '' }),
+    findOne: jest.fn().mockResolvedValueOnce({ userId: 'someUserId', email: 'test@example.com' }).mockResolvedValueOnce(null),
   },
   otpModel: {
     findOneAndUpdate: jest.fn().mockResolvedValue({}),
@@ -11,24 +11,26 @@ jest.mock('../../../../src/models', () => ({
 }));
 
 jest.mock('../../../../src/library/nodemailer', () => ({
-  sendEmail: jest.fn().mockResolvedValue({}),
+  sendEmail: jest.fn().mockResolvedValueOnce({}).mockRejectedValueOnce({}),
 }));
 
 describe('Send Password Recovery Email', () => {
-  it('should throw user not found error', async () => {
-    try {
-      await requestPasswordRecovery!({}, { input: { email: 'test1@gmail.com' } }, { userId: null }, {} as GraphQLResolveInfo);
-    } catch (error) {
-      expect(error).toEqual(new Error('User not found'));
-    }
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-
   it('it should send email', async () => {
-    const response = await requestPasswordRecovery!({}, { input: { email: '' } }, { userId: null }, {} as GraphQLResolveInfo);
+    const response = await requestPasswordRecovery!({}, { input: { email: 'test@example.com' } }, { userId: 'someUserId' }, {} as GraphQLResolveInfo);
 
     expect(response).toEqual({
       success: true,
-      email: '',
+      email: 'test@example.com',
     });
+  });
+  it('should throw user not found error', async () => {
+    try {
+      await requestPasswordRecovery!({}, { input: { email: 'test@example.com' } }, { userId: null }, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('User not found'));
+    }
   });
 });

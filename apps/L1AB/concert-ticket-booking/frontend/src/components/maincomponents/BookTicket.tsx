@@ -13,7 +13,7 @@ interface BookTicketProps {
 export const BookTicket = ({ id }: BookTicketProps) => {
   const { data } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
-  const { data: user } = useGetMeQuery();
+  const { data: user,loading } = useGetMeQuery();
   const [createBooking] = useCreateBookingTotalAmountMutation();
   const [counts, setCounts] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -41,15 +41,17 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   };
   const calculateTotal = () => eventDetails?.venues.reduce((total, venue, index) => total + venue.price * (counts[index] || 0), 0) || 0;
   const router = useRouter();
+  if (loading) {
+    return <div>loading...</div>;
+  }
   const handleBooking = async () => {
-    const userId = user?.getMe?._id || '674811296dd8cdcbd2b60cbe';
-    const status = 'Баталгаажаагүй';
+    const userId = user?.getMe?._id || 'user bhgvi bnshdee';
     const venuesToBook = eventDetails?.venues.map((venue, index) => ({ name: venue.name, price: venue.price, quantity: counts[index] })).filter((venue) => venue.quantity > 0);
     const bookingInput = {
       input: {
         eventId: id as string,
         selectedDate: selectedDate,
-        status: status,
+        status: "Баталгаажаагүй",
         userId: userId,
         venues: venuesToBook,
       },

@@ -5,7 +5,7 @@ import { AddImage, DatePickerWithRange } from '@/components';
 import { DialogItem } from '@/components';
 import { TimePicker } from '@/components';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircleIcon } from 'lucide-react';
@@ -96,13 +96,16 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className="flex self-stretch py-2 px-4 justify-center items-center gap-2 rounded-md bg-[#18181B] shadow-sm text-[#fff]" data-testid="DialogOpen">
-        Тасалбар Нэмэх
+        Тоглолт Нэмэх
         <PlusCircleIcon />
       </DialogTrigger>
       <DialogContent className="flex max-w-[640px] p-9 flex-col items-start gap-4 border-[1px] border-[#E4E4E7] bg-[#fff] shadow-xs overflow-scroll h-screen" data-testid="event-dialog-content">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">Тасалбар Нэмэх</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold">Тоглолт Нэмэх</DialogTitle>
           <DialogDescription></DialogDescription>
+          <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
+            <p className="text-black text-2xl">x</p>
+          </DialogClose>
         </DialogHeader>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" name="eventName" value={formData.name} onChange={(e) => handleInputChange('name', e.target.value)} />

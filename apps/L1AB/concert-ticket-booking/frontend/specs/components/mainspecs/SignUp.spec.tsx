@@ -20,12 +20,18 @@ const props = {
 };
 
 import { useAuth } from '@/components';
-
+import { useTheme } from 'next-themes';
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'light',
+}));
 describe('Sign-Up Page', () => {
   let signupMock: jest.Mock;
-
   beforeEach(() => {
     signupMock = jest.fn();
+    (useTheme as jest.Mock).mockImplementation(() => ({
+      theme: 'dark',
+    }));
     (useAuth as jest.Mock).mockReturnValue({ signup: signupMock });
   });
 

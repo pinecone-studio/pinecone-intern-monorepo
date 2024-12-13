@@ -6,7 +6,7 @@ const Page = () => {
   const pathname = usePathname();
 
   pathname == '/' && router.push('/home');
-  
+
   return <div></div>;
 };
 

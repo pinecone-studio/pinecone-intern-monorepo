@@ -2,6 +2,7 @@ import { VerifyOtp } from '@/components/maincomponents/VerifyOtp';
 import { RequestPasswordRecoveryDocument, VerifyOtpDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -73,8 +74,17 @@ const recoveryEmailMock = {
     },
   },
 };
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'light',
+}));
 
 describe('VerifyOtp Component', () => {
+  beforeEach(() => {
+    (useTheme as jest.Mock).mockImplementation(() => ({
+      theme: 'dark',
+    }));
+  });
   it('should update state value when OTP input slots change', () => {
     render(
       <MockedProvider mocks={[verifyOtpMock]}>
@@ -142,7 +152,7 @@ describe('VerifyOtp Component', () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(63000);
+      jest.advanceTimersByTime(30000);
     });
   });
 });

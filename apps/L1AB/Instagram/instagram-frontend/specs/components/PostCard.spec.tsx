@@ -26,12 +26,6 @@ const sampleProps = {
 const mockUser = { _id: '123' };
 describe('PostCard Component - prev/next functionality', () => {
   it('image slider', async () => {
-    Object.defineProperty(window, 'localStorage', {
-      value: {
-        getItem: jest.fn().mockReturnValue('11'),
-      },
-    });
-
     const { getByTestId } = render(
       <UserContext.Provider value={{ user: mockUser }}>
         <MockedProvider>

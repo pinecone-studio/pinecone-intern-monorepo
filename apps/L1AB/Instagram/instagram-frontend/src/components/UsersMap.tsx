@@ -10,9 +10,6 @@ export const UsersMap = () => {
   const [createFollowers] = useCreateFollowersMutation();
   const contextValue = useContext(UserContext);
 
-  if (!contextValue) {
-    return;
-  }
   const { sortedUsers, user } = contextValue;
 
   const handleFollow = async (e: React.MouseEvent, followeeId: string) => {

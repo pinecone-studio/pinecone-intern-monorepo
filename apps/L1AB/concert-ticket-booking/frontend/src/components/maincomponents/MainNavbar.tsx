@@ -6,19 +6,16 @@ import { usePathname } from 'next/navigation';
 import { GoDotFill } from 'react-icons/go';
 import { LuSearch } from 'react-icons/lu';
 import { Container } from './Container';
-import { useGetMeQuery } from '@/generated';
-import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { MoonIcon, SunIcon } from 'lucide-react';
 import { IoIosLogOut } from 'react-icons/io';
 import { useAuth } from '../providers';
 
 export const MainNavbar = () => {
   const pathname = usePathname();
-  const token = localStorage.getItem('token');
-  const { data } = useGetMeQuery();
   const { theme, setTheme } = useTheme();
-  const { signout } = useAuth();
-
+  const { signout, user } = useAuth();
+  const token = localStorage.getItem('token');
   const paths = [
     {
       name: 'Бүртгүүлэх',
@@ -29,13 +26,14 @@ export const MainNavbar = () => {
       path: '/signin',
     },
   ];
+
   return (
     <Container>
       <div className="py-6 px-12 flex justify-between border-b dark:border-[#27272A] border-[#c6c6c6] items-center" data-cy="Navbar-DarkMode">
         <Link href={`/`}>
           <div className="flex items-center ">
-            <GoDotFill className="w-8 h-8 text-[#00B7F4] max-sm:w-5 max-sm:h-5" />
-            <h1 className="font-semibold text-2xl max-sm:text-sm text-black dark:text-white">TICKET BOOKING</h1>
+            <GoDotFill className="w-10 h-10 text-[#00B7F4] max-sm:w-5 max-sm:h-5" />
+            <h1 className="font-semibold text-[24px] max-sm:text-sm text-black dark:text-white leading-[32px] tracking-[-0.6px]">TICKET BOOKING</h1>
           </div>
         </Link>
 
@@ -54,20 +52,21 @@ export const MainNavbar = () => {
               </button>
             )}
           </div>
-          {token ? (
+
+          {user && token ? (
             <>
               <Link href={'/profile'} className="max-sm:w-[80px]">
-                <div className="text-black max-sm:w-full max-sm:truncate dark:text-white">{data?.getMe?.email}</div>
+                <div className="text-black max-sm:w-full max-sm:truncate dark:text-white">{user?.email}</div>
               </Link>
-              <IoIosLogOut onClick={signout} className='w-6 h-6 cursor-pointer' />
+              <IoIosLogOut onClick={signout} className="w-6 h-6 cursor-pointer" />
             </>
           ) : (
             <>
               {paths.map((path) => (
                 <Link href={path.path} key={path.name} className={`${path.name === 'Бүртгүүлэх' ? 'max-sm:hidden max-md:hidden' : ''}`}>
                   <Button
-                    className={`py-2 px-10 rounded-md hover:bg-[#00B7F4] hover:text-black dark:bg-black dark:border-[#4e4e51] dark:border dark:hover:text-black dark:hover:bg-[#00B7F4] text-white max-sm:px-2 max-sm:py-1 max-sm:text-sm ${
-                      pathname === path.path ? 'bg-[#00B7F4]' : ''
+                    className={`py-2 px-10 rounded-[6px] font-extralight dark:border-[#4e4e51] dark:border dark:hover:bg-[#00B7F4] text-white max-sm:px-2 max-sm:py-1 max-sm:text-sm leading-[20px] ${
+                      pathname === path.path ? 'bg-[#00B7F4]' : 'dark:bg-black hover:bg-[#00B7F4] duration-500 hover:text-black dark:hover:text-black'
                     }`}
                   >
                     {path.name}

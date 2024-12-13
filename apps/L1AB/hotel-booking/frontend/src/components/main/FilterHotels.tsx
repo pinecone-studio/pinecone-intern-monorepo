@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, FilterHotelCard } from './assets';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -10,77 +10,104 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 export const FilterHotels = () => {
   const { data } = useGetAllHotelsQuery();
+  const hotels = data?.getAllHotels || [];
+
+  const [query, setQuery] = useState('');
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedStars, setSelectedStars] = useState<number | null>(null);
+  const [filteredHotels, setFilteredHotels] = useState(hotels);
+
+
+  const applyFilters = (searchQuery: string, rating: number | null, stars: number | null) => {
+    const filtered = hotels.filter((hotel) => {
+      const matchesQuery = hotel.name.toLowerCase().includes(searchQuery);
+      const matchesRating =  hotel.rating >= rating!
+      const matchesStars = stars ? hotel.stars === stars : true;
+      return matchesQuery && matchesRating && matchesStars;
+    });
+
+    setFilteredHotels(filtered);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = event.target.value.toLowerCase();
+    setQuery(searchQuery);
+    applyFilters(searchQuery, selectedRating, selectedStars);
+  };
+
+  const handleRatingFilter = (rating: number | null) => {
+    setSelectedRating(rating);
+    applyFilters(query, rating, selectedStars);
+  };
+  const handleStarsFilter = (stars: number | null) => {
+    setSelectedStars(stars);
+    applyFilters(query, selectedRating, stars);
+  };
   return (
     <Container backgroundColor="bg-white">
       <div className="py-8 px-[60px] flex justify-between gap-12 w-full">
-        <div className="min-w-[240px] space-y-2">
-          <p>Search by property name</p>
-          <Input placeholder="Search" />
-          <div className="py-4">
-            <div className="border-b"></div>
+        <div className="min-w-[240px] space-y-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">Search by property name</p>
+            <Input
+              placeholder="Search"
+              type="text"
+              value={query}
+              onChange={handleSearch}
+            />
           </div>
-          <div className="space-y-8">
-            <RadioGroup className="space-y-5 text-sm">
-              <p>Rating</p>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="plus-9" id="plus-9" />
-                <Label htmlFor="plus-9">+9</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="plus-8" id="plus-8" />
-                <Label htmlFor="plus-8">+8</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="plus-7" id="plus-7" />
-                <Label htmlFor="plus-7">+7</Label>
-              </div>
+
+          <div className="border-t pt-5">
+            <p className="text-sm font-medium">Rating</p>
+            <RadioGroup
+            data-testid="rating-radio"
+              value={selectedRating?.toString()} 
+              onValueChange={(value) => handleRatingFilter(parseInt(value, 10))}
+              className="space-y-5 text-sm mt-5"
+            >
+              {[9, 8, 7].map((rating) => (
+                <div key={rating} className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value={rating.toString()} 
+                    id={`rating-${rating}`}
+                  />
+                  <Label htmlFor={`rating-${rating}`} >
+                    +{rating}
+                  </Label>
+                </div>
+              ))}
             </RadioGroup>
-            <RadioGroup className="space-y-5 text-sm">
-              <p>Stars</p>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="5-stars" id="5-stars" />
-                <Label htmlFor="5-stars">5 stars</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="4-stars" id="4-stars" />
-                <Label htmlFor="4-stars">4 stars</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="3-stars" id="3-stars" />
-                <Label htmlFor="3-stars">3 stars</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2-stars" id="2-stars" />
-                <Label htmlFor="2-stars">2 stars</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1-star" id="1-star" />
-                <Label htmlFor="1-star">1 star</Label>
-              </div>
-            </RadioGroup>
-            <RadioGroup className="space-y-5 text-sm">
-              <p>Amenities</p>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem className="rounded-sm" value="pool" id="pool" />
-                <Label htmlFor="pool">Pool</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem className="rounded-sm" value="pet-friendly" id="pet-friendly" />
-                <Label htmlFor="pet-friendly">Pet-friendly</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem className="rounded-sm" value="airport-shuttle" id="airport-shuttle" />
-                <Label htmlFor="airport-shuttle">Airport shuttle</Label>
-              </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium">Stars</p>
+            <RadioGroup
+            data-testid="star-radio"
+              value={selectedStars?.toString()} 
+              onValueChange={(value) => handleStarsFilter(parseInt(value, 10))} 
+              className="space-y-5 text-sm mt-5"
+            >
+              {[5, 4, 3, 2, 1].map((stars) => (
+                <div key={stars} className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value={stars.toString()}
+                    id={`stars-${stars}`}
+                  />
+                  <Label htmlFor={`stars-${stars}`} >
+                    {stars} stars
+                  </Label>
+                </div>
+              ))}
             </RadioGroup>
           </div>
         </div>
+
         <div className="w-full space-y-4">
           <div className="flex justify-between">
-            <p>{data?.getAllHotels.length} properties</p>
+            <p>{filteredHotels.length} properties found</p>
             <Select>
               <SelectTrigger className="w-[240px]">
-                <SelectValue placeholder="filter" defaultValue={'Recommended'} />
+                <SelectValue placeholder="Sort by" defaultValue="Recommended" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -92,10 +119,22 @@ export const FilterHotels = () => {
               </SelectContent>
             </Select>
           </div>
+
           <div className="w-full flex flex-col gap-4">
-            {data?.getAllHotels.map((item, index) => (
-              <FilterHotelCard key={index} id={item._id} name={item.name} image={item.images[0]} stars={item.stars} rating={item.rating} />
-            ))}
+            {filteredHotels.length > 0 ? (
+              filteredHotels.map((hotel) => (
+                <FilterHotelCard
+                  key={hotel._id}
+                  id={hotel._id}
+                  name={hotel.name}
+                  image={hotel.images[0]}
+                  stars={hotel.stars}
+                  rating={hotel.rating}
+                />
+              ))
+            ) : (
+              <p>No hotels found.</p>
+            )}
           </div>
         </div>
       </div>

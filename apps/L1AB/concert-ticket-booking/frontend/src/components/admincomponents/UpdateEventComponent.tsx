@@ -1,7 +1,7 @@
 'use client';
 import { DatePickerWithRange, DialogItem, TimePicker } from '@/components';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useGetEventByIdQuery, useUpdateEventMutation } from '@/generated';
@@ -9,7 +9,6 @@ import { PenIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { UpdateEventVenue } from './UpdateEventvenue';
-
 type Venue = {
   firstquantity: number;
   name: string;
@@ -110,7 +109,6 @@ export const UpdateEventComponent = ({ eventId }: { eventId: string }) => {
       toast.error('Failed to update event');
     }
   };
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
@@ -120,6 +118,9 @@ export const UpdateEventComponent = ({ eventId }: { eventId: string }) => {
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">Тасалбар шинэчлэх</DialogTitle>
         </DialogHeader>
+        <DialogClose asChild className="absolute right-12 top-6 cursor-pointer">
+          <p className="text-black text-2xl">x</p>
+        </DialogClose>
         <DialogItem htmlFor="eventName" name="Тоглолтын нэр">
           <Input placeholder="Нэр оруулах" value={name} onChange={(e) => setName(e.target.value)} />
         </DialogItem>

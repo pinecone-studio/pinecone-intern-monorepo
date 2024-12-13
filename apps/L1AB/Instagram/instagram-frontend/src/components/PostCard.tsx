@@ -23,11 +23,11 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   const { user }: any = useContext(UserContext);
 
   const prev = () => {
-    setCurrentImageIndex((curr) => (curr === 0 ? images.length - 1 : curr - 1));
+    setCurrentImageIndex((curr) => (curr === 0 ? 0 : curr - 1));
   };
 
   const next = () => {
-    setCurrentImageIndex((curr) => (curr === images.length - 1 ? 0 : curr + 1));
+    setCurrentImageIndex((curr) => (curr === images.length - 1 ? images.length - 1 : curr + 1));
   };
 
   useEffect(() => {
@@ -70,9 +70,9 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               </button>
             </div>
             <div className="absolute bottom-4 right-0 left-0">
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1">
                 {images.map((_, i) => (
-                  <div key={i} className={`transition-all w-3 h-3 bg-white rounded-full ${currentImageIndex === i ? 'p-2' : 'bg-opacity-50'}`}></div>
+                  <div key={i} className={`transition-all w-2 h-2 bg-white rounded-full ${currentImageIndex === i ? 'p-0' : 'bg-opacity-50'}`}></div>
                 ))}
               </div>
             </div>

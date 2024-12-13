@@ -19,7 +19,7 @@ export const SearchPageComponent = () => {
   if (loading) {
     return (
       <div>
-        <div className="flex gap-2 px-28 py-12 max-sm:px-3 max-md:px-3 ">
+        <div className="flex gap-2 py-12 px-28 max-sm:px-3 max-md:px-3 ">
           <Skeleton className="w-[233px] h-[42px] bg-gray-900"></Skeleton>
           <Skeleton className="w-[280px] h-[42px] bg-gray-900 max-sm:hidden"></Skeleton>
         </div>
@@ -44,12 +44,12 @@ export const SearchPageComponent = () => {
   const filteredEvents = searchedData?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох');
 
   return (
-    <div className="dark:text-white text-black flex flex-col py-12" data-testid="searchpagecomponent" data-cy="getEvents">
-      <div className="flex gap-2 items-center px-28 max-sm:px-3 max-md:px-3 max-lg:px-3  max-xl:px-3  ">
+    <div className="flex flex-col min-h-screen py-12 text-black dark:text-white h-fit " data-testid="searchpagecomponent" data-cy="getEvents">
+      <div className="flex items-center gap-2 px-28 max-sm:px-3 max-md:px-3 max-lg:px-3 max-xl:px-3 ">
         <div className="py-1 px-2 border dark:border-[#27272A] border-[#c6c6c6] flex justify-center items-center rounded-lg">
           <input
             data-cy="Search-Events"
-            className="py-1 px-3 dark:bg-[#09090B] bg-white text-[#A1A1AA] outline-none"
+            className="py-[2.5px] px-3 dark:bg-[#09090B] bg-white text-black dark:text-[#A1A1AA] outline-none"
             placeholder="Хайлт"
             value={searchTerm}
             data-testid="searchinput"
@@ -67,7 +67,7 @@ export const SearchPageComponent = () => {
                 variant="outline"
                 className="w-[280px] border dark:border-[#27272A] border-[#c6c6c6] justify-start text-left font-normal', !date && 'text-muted-foreground"
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
+                <CalendarIcon className="w-4 h-4 mr-2" />
                 {date ? format(date, 'PPP') : 'Pick a date'}
               </Button>
             </PopoverTrigger>
@@ -89,7 +89,7 @@ export const SearchPageComponent = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 py-24 px-28 max-sm:grid  max-sm:grid-cols-1 max-sm:px-3 max-sm:py-4 max-md:grid  max-md:grid-cols-2 max-md:px-3 max-md:py-4 max-lg:grid  max-lg:grid-cols-2 max-lg:px-3 max-xl:px-3 max-lg:py-4 max-xl:py-4">
+      <div className="grid grid-cols-3 gap-8 py-24 px-28 max-sm:grid max-sm:grid-cols-1 max-sm:px-3 max-sm:py-4 max-md:grid max-md:grid-cols-2 max-md:px-3 max-md:py-4 max-lg:grid max-lg:grid-cols-2 max-lg:px-3 max-xl:px-3 max-lg:py-4 max-xl:py-4">
         {filteredEvents?.length ? (
           filteredEvents.map((event) => <EventCard key={event._id} {...event} />)
         ) : (

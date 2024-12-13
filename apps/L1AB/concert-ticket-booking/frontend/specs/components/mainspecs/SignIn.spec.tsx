@@ -2,8 +2,17 @@ import SignIn from '@/components/maincomponents/SignIn';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
-
+import { useTheme } from 'next-themes';
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'light',
+}));
 describe('Sign-In-Page', () => {
+  beforeEach(() => {
+    (useTheme as jest.Mock).mockImplementation(() => ({
+      theme: 'dark',
+    }));
+  });
   it('should render sign-in form with all fields', async () => {
     const { getByTestId } = render(
       <SignIn

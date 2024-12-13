@@ -65,7 +65,7 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
             <p className="font-semibold">{postsCount?.length || 0}</p>
             <p>posts</p>
           </div>
-          <FollowersDialog isFollow={isFollow} profileUser={userProfile} following={null} followersData={followersData} followingData={followingData} handleFollowersUpdate={handleFollowersUpdate} />
+          <FollowersDialog profileUser={userProfile} followersData={followersData} followingData={followingData} handleFollowersUpdate={handleFollowersUpdate} />
         </div>
         <div className="text-[14px] text-[#18181B] leading-5">
           <h3 className="font-semibold">{userProfile?.fullname}</h3>

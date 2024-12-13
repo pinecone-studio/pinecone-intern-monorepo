@@ -24,6 +24,8 @@ export const CancelComponent = () => {
   const { data } = useGetAllBookingQuery();
   const [updateCancel] = useUpdateBookingMutation();
   const filteredData = data?.getAllBooking.filter((booking) => booking.status === 'Цуцлах хүсэлт илгээсэн' || booking.status === 'Цуцлагдсан');
+  console.log(data);
+
   const handleUpdateStatus = async (bookingId: string, status: string) => {
     await updateCancel({
       variables: {

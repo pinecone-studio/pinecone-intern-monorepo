@@ -96,14 +96,14 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
                 <Label htmlFor="phone" className="font-extralight">
                   Утасны дугаар:
                 </Label>
-                <Input data-testid="NumberInput" id="phone" type="text" placeholder="9900-0000" value={formData.phone} onChange={handleChange} className="px-3 py-1 border-[#27272A] bg-[#09090B]" />
+                <Input data-testid="NumberInput" id="phone" type="text" placeholder="9900-0000" value={formData.phone} onChange={handleChange} className="px-3 py-1 border-[#27272A] bg-slate-300 dark:bg-[#09090B]" />
                 {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email" className="font-extralight">
                   Имэйл хаяг:
                 </Label>
-                <Input data-testid="Email" id="email" type="email" placeholder="name@example.com" value={formData.email} onChange={handleChange} className="px-3 py-1 border-[#27272A] bg-[#09090B]" />
+                <Input data-testid="Email" id="email" type="email" placeholder="name@example.com" value={formData.email} onChange={handleChange} className="px-3 py-1 border-[#27272A]  bg-slate-300 dark:bg-[#09090B]" />
                 {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
               </div>
             </div>

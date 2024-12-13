@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { FiCalendar } from 'react-icons/fi';
 import { Skeleton } from '@/components/ui/skeleton';
+import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 export const MainHeroComponent = () => {
   const [current, setCurrent] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
@@ -49,10 +50,10 @@ export const MainHeroComponent = () => {
           <div data-testid={`getCancel-${index}`} key={index} className="relative h-[550px] w-full">
             <Image src={item.images[1] || '/placeholder.jpg'} fill alt={`Event Image ${index + 1}`} className="object-cover" quality={100} priority />
             <div className="h-[550px] bg-black bg-opacity-50 z-50 space-y-4 absolute text-white flex justify-center items-center w-full">
-              <div className="rounded text-center  bg-opacity-20 backdrop-filter backdrop-blur-md px-4 py-2">
-                <div className="text-xl mt-4 max-sm:text-sm flex gap-2  items-center justify-center ">
+              <div className="rounded text-center   px-4 py-2">
+                <div className="text-xl mt-4 max-sm:text-sm border-[#FAFAFA33] rounded-full flex gap-2 border w-fit px-3 py-1.5  m-auto">
                   {item.artistName.map((artist, index) => (
-                    <div key={index} className={` ${index !== 0 ? 'max-sm:hidden' : ''}`}>
+                    <div key={index} className={` ${index !== 0 ? 'hidden' : ''}`}>
                       {artist}
                     </div>
                   ))}
@@ -74,17 +75,17 @@ export const MainHeroComponent = () => {
       <div className="w-full">
         <button
           data-testid={`left`}
-          className="z-50 absolute top-1/2 left-4 bg-gray-300 rounded-md flex items-center justify-center max-sm:h-7 h-8 w-6 cursor-pointer text-black text-3xl"
+          className="z-50 absolute top-1/2 left-4 bg-transparent rounded-[10px] flex items-center justify-center max-sm:h-7 h-9 w-9 cursor-pointer border border-gray-400  text-[#FAFAFA] text-3xl"
           onClick={slideLeft}
         >
-          &lsaquo;
+          <GoChevronLeft className="h-4 w-4" />
         </button>
         <button
           data-testid={`right`}
-          className="z-50 absolute top-1/2 right-4 bg-gray-300 rounded-md flex items-center justify-center max-sm:h-7  h-8 w-6 cursor-pointer text-black text-3xl "
+          className="z-50 absolute top-1/2 right-4 bg-transparent rounded-[10px] flex items-center justify-center max-sm:h-7  h-9 w-9 cursor-pointer border border-gray-400  text-[#FAFAFA] text-3xl "
           onClick={slideRight}
         >
-          &rsaquo;
+          <GoChevronRight className="h-4 w-4" />
         </button>
       </div>
     </div>

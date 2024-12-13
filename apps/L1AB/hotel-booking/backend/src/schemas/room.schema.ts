@@ -16,6 +16,7 @@ export const typeDefs = gql`
     description: String!
     photos: [String!]
     roomType: RoomType!
+    roomAmenities: [Amenity!]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -29,6 +30,7 @@ export const typeDefs = gql`
     description: String!
     photos: [String!]
     roomType: RoomType!
+    roomAmenities: [ID!]!
   }
 
   input UpdateRoomInput {
@@ -40,15 +42,22 @@ export const typeDefs = gql`
     description: String
     photos: [String!]
     roomType: RoomType
+    roomAmenities: [ID!]
+  }
+
+  input DateRangeInput {
+    checkIn: Date!
+    checkOut: Date!
   }
 
   type Query {
-    getAllRooms: [Room!]
+    getAllRooms: [Room!]!
     getRoomById(_id: ID!): [Room!]!
+    getAvailableRooms(dateRange: DateRangeInput!, traveler: Int!): [Room!]!
   }
 
   type Mutation {
-    createRoom(input: RoomInput): Room!
+    createRoom(input: RoomInput!): Room!
     deleteRoom(_id: ID!): Room!
     updateRoom(input: UpdateRoomInput!): Room!
   }

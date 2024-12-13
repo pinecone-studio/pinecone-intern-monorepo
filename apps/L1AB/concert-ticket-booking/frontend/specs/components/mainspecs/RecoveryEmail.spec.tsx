@@ -2,6 +2,7 @@ import { RecoveryEmail } from '@/components';
 import { RequestPasswordRecoveryDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
+import { useTheme } from 'next-themes';
 
 const RecoveryEmailMock = {
   request: {
@@ -21,7 +22,10 @@ const RecoveryEmailMock = {
     },
   },
 };
-
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'light',
+}));
 jest.mock('@/components/providers/AuthProvider', () => ({
   ...jest.requireActual('@/components/providers/AuthProvider'),
   useAuth: () => ({
@@ -29,6 +33,11 @@ jest.mock('@/components/providers/AuthProvider', () => ({
     loading: true,
   }),
 }));
+beforeEach(() => {
+  (useTheme as jest.Mock).mockImplementation(() => ({
+    theme: 'dark',
+  }));
+});
 describe('RecoveryEmail', () => {
   it('should render successfully', async () => {
     const header = 'Reset your password';

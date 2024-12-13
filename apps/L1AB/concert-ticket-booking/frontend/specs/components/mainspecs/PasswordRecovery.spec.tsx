@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { PasswordRecoveryDocument } from '@/generated';
 import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { useTheme } from 'next-themes';
 
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
@@ -12,7 +13,10 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/components/providers/AuthProvider', () => ({
   useAuth: jest.fn(),
 }));
-
+jest.mock('next-themes', () => ({
+  useTheme: jest.fn(),
+  theme: 'light',
+}));
 const passwordRecovery = {
   request: {
     query: PasswordRecoveryDocument,
@@ -32,6 +36,11 @@ const passwordRecovery = {
 };
 
 describe('PasswordRecovery-Page', () => {
+  beforeEach(() => {
+    (useTheme as jest.Mock).mockImplementation(() => ({
+      theme: 'dark',
+    }));
+  });
   it('should render PasswordRecovery and handle password visibility and form submission', async () => {
     useSearchParams.mockReturnValue({
       get: (key: string) => {

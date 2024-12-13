@@ -8,17 +8,39 @@ jest.mock('../../../../src/models', () => ({
   },
 }));
 
-describe('get room by id', () => {
-  it('should get room by id successfully', async () => {
+describe('getRoomById', () => {
+  it('should get room by id successfully, including hotelId and roomAmenities', async () => {
     jest.mocked(roomModel.find).mockReturnValueOnce({
-      populate: jest.fn().mockResolvedValueOnce([{ toObject: jest.fn().mockReturnValue({ _id: '1', name: 'uruu2', hotelId: '123' }) }]),
+      populate: jest.fn().mockResolvedValueOnce([
+        {
+          toObject: jest.fn().mockReturnValue({
+            _id: '1',
+            name: 'uruu2',
+            hotelId: { _id: '123', name: 'Hotel XYZ' },
+            roomAmenities: [
+              { _id: 'a1', name: 'Free Wi-Fi', icon: 'FaHouse' },
+              { _id: 'a2', name: 'Air Conditioning', icon: 'FaPlus' },
+            ],
+          }),
+        },
+      ]),
     } as any);
 
-    const result = await getRoomById!({}, { _id: '1' }, {} as any, {} as GraphQLResolveInfo);
-    expect(result).toEqual([{ _id: '1', name: 'uruu2', hotelId: '123' }]);
+    const result = await getRoomById!({}, { _id: '2' }, {} as any, {} as GraphQLResolveInfo);
+    expect(result).toEqual([
+      {
+        _id: '1',
+        name: 'uruu2',
+        hotelId: { _id: '123', name: 'Hotel XYZ' },
+        roomAmenities: [
+          { _id: 'a1', name: 'Free Wi-Fi', icon: 'FaHouse' },
+          { _id: 'a2', name: 'Air Conditioning', icon: 'FaPlus' },
+        ],
+      },
+    ]);
   });
 
-  it('should throw an error', async () => {
+  it('should throw an error if there is a database error', async () => {
     jest.mocked(roomModel.find).mockImplementationOnce(
       () =>
         ({
@@ -27,11 +49,9 @@ describe('get room by id', () => {
     );
 
     try {
-      await getRoomById!({}, { _id: '2' }, {} as any, {} as GraphQLResolveInfo);
+      await getRoomById!({}, { _id: '1' }, {} as any, {} as GraphQLResolveInfo);
     } catch (error) {
-      if (error instanceof Error) {
-        expect(error.message).toBe('Failed to get room by id');
-      }
+      expect(error).toEqual(new Error('Failed to get room by id'));
     }
   });
 });
