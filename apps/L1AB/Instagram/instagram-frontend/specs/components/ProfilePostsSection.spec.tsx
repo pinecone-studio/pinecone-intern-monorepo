@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { jest } from '@jest/globals';
-import ProfilePostsSection from '@/components/ProfilePostsSection';
+import ProfilePostsSection, { ReactionContainer } from '@/components/ProfilePostsSection';
 
 jest.mock('next/image', () => {
   const MockImage = ({ src, alt }) => <img src={src} alt={alt} />;
@@ -12,10 +12,13 @@ jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
 }));
 
-import { useGetAllSavedPostsQuery } from '@/generated';
+import { useGetAllSavedPostsQuery, useGetCommentsByPostIdQuery, useGetLikesByPostIdQuery } from '@/generated';
 import { useSearchParams } from 'next/navigation';
+
 jest.mock('@/generated', () => ({
   useGetAllSavedPostsQuery: jest.fn(),
+  useGetLikesByPostIdQuery: jest.fn(),
+  useGetCommentsByPostIdQuery: jest.fn(),
 }));
 
 describe('ProfilePostsSection', () => {
@@ -33,6 +36,20 @@ describe('ProfilePostsSection', () => {
         getAllSavedPosts: [{ postId: { images: ['saved_image1.jpg'] } }],
       },
       loading: false,
+    });
+
+    useGetCommentsByPostIdQuery.mockReturnValue({
+      data: {
+        getCommentsByPostId: [{ id: '1' }, { id: '2' }, { id: '3' }],
+        loading: false,
+      },
+    });
+
+    useGetLikesByPostIdQuery.mockReturnValue({
+      data: {
+        getLikesByPostId: [{ id: '1' }, { id: '2' }],
+        loading: false,
+      },
     });
 
     useSearchParams.mockReturnValue({
@@ -91,5 +108,13 @@ describe('ProfilePostsSection', () => {
 
     render(<ProfilePostsSection userPosts={[]} profileUser={mockProfileUser} isFollow={false} user={mockUser} />);
     expect(screen.getAllByAltText('post')).toHaveLength(1);
+  });
+
+  test('renders the correct number of likes and comments', () => {
+    render(<ReactionContainer postId="123" />);
+
+    expect(screen.getByText('2'));
+
+    expect(screen.getByText('3'));
   });
 });

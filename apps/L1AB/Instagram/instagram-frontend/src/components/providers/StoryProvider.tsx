@@ -34,8 +34,6 @@ export const StoryProvider = ({ children }: PropsWithChildren) => {
     return acc;
   }, {} as GroupedStories);
 
-  console.log(groupedStories);
-
   return <StoryContext.Provider value={{ groupedStories: groupedStories as GroupedStories }}>{children}</StoryContext.Provider>;
 };
 

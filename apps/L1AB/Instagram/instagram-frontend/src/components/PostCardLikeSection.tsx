@@ -63,20 +63,3 @@ const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, 
 };
 
 export default PostCardLikeSection;
-
-// const handleSave = async () => {
-//   if (!userId) return;
-//   try {
-//     if (isSaved) {
-//       setIsSaved(false);
-//       await saveRefetch();
-//       console.log(isSaved);
-//     } else {
-//       await createSave({ variables: { userId, postId } });
-//       setIsSaved(true);
-//       await saveRefetch();
-//     }
-//   } catch (error) {
-//     console.error('Error saving post:', error);
-//   }
-// };

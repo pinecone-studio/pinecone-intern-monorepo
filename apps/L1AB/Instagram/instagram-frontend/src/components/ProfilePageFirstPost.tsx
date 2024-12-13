@@ -16,6 +16,7 @@ export const ProfilePageFirstPost = () => {
       <Button className={styles.button} data-testId="share-first-photo">
         Share your first photo
       </Button>
+
       <div className={styles.textContainer}>
         <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
         <p>© 2024 INSTAGRAM FROM PINECONE</p>

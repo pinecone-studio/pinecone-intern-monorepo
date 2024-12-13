@@ -25,18 +25,11 @@ const PostCardSamplePropsWithoutUserId = {
 export const createLikeMock = {
   request: {
     query: CreateLikeDocument,
-    variables: {
-      postId: '2',
-      userId: '11',
-    },
+    variables: { postId: '2', userId: '11' },
   },
   result: {
     data: {
-      createLike: {
-        _id: '1',
-        postId: '2',
-        userId: '11',
-      },
+      createLike: { _id: '1', postId: '2', userId: '11' },
     },
   },
 };
@@ -44,18 +37,11 @@ export const createLikeMock = {
 export const createSaveMock = {
   request: {
     query: CreateSaveDocument,
-    variables: {
-      postId: '2',
-      userId: '11',
-    },
+    variables: { postId: '2', userId: '11' },
   },
   result: {
     data: {
-      createSave: {
-        _id: '1',
-        postId: '2',
-        userId: '11',
-      },
+      createSave: { _id: '1', postId: '2', userId: '11' },
     },
   },
 };
@@ -63,35 +49,19 @@ export const createSaveMock = {
 export const getLikesByPostIdMock = {
   request: {
     query: GetLikesByPostIdDocument,
-    variables: {
-      postId: '2',
-    },
+    variables: { postId: '2' },
   },
   result: {
     data: {
-      getLikesByPostId: [
-        {
-          _id: '1',
-          userId: '11',
-          postId: '2',
-        },
-      ],
+      getLikesByPostId: [{ _id: '1', userId: '11', postId: '2' }],
     },
   },
   newData: () => {
     return {
       data: {
         getLikesByPostId: [
-          {
-            _id: '1',
-            userId: '11',
-            postId: '2',
-          },
-          {
-            _id: '2',
-            userId: '11',
-            postId: '2',
-          },
+          { _id: '1', userId: '11', postId: '2' },
+          { _id: '2', userId: '11', postId: '2' },
         ],
       },
     };
@@ -101,19 +71,13 @@ export const getLikesByPostIdMock = {
 export const getSavedByPostIdMock = {
   request: {
     query: GetSavedByPostIdDocument,
-    variables: {
-      postId: '2',
-    },
+    variables: { postId: '2' },
   },
   result: {
     data: {
       getSavedByPostId: {
-        postId: {
-          _id: '2',
-        },
-        userId: {
-          _id: '11',
-        },
+        postId: { _id: '2' },
+        userId: { _id: '11' },
       },
     },
   },
@@ -121,12 +85,8 @@ export const getSavedByPostIdMock = {
     return {
       data: {
         getSavedByPostId: {
-          postId: {
-            _id: '2',
-          },
-          userId: {
-            _id: '11',
-          },
+          postId: { _id: '2' },
+          userId: { _id: '11' },
         },
       },
     };
