@@ -7,12 +7,13 @@ import { UserContext } from './providers';
 import Link from 'next/link';
 import FollowingButton from './FollowingButton';
 import { FollowersDialog } from './FollowersDialog';
+import { DarkMode } from './DarkMode';
 
 export const styles = {
   button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9',
   buttonFollow: 'bg-[#2563EB] py-2 px-4 text-white hover:bg-[#2563EB] h-9 min-w-[91px]',
   header: 'text-[20px] leading-7 font-semibold tracking-[-0.5px]',
-  container: 'flex gap-x-[100px] pl-[72px]',
+  container: 'flex gap-x-[100px] pl-[72px] dark:bg-black ',
   textContainer: 'flex gap-1',
 };
 
@@ -51,6 +52,7 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
                   Edit Profile
                 </Button>
               </Link>
+              <DarkMode />
               <Button className={styles.button} data-testid="ad-tools-button">
                 Ad tools
               </Button>

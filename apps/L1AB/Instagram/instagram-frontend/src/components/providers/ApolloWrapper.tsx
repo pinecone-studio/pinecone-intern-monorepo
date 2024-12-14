@@ -14,3 +14,9 @@ const client = new ApolloClient({
 });
 
 export const ApolloWrapper = ({ children }: PropsWithChildren) => <ApolloProvider client={client}>{children}</ApolloProvider>;
+import * as React from 'react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+
+export const ThemeProvider = ({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) => {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+};

@@ -19,7 +19,7 @@ const NewsFeed = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 dark:bg-black  dark:text-white">
         {posts?.map((post, i) => {
           return <PostCard postId={post._id} keyy={i} profilePicture={post.userId.profilePicture} images={post.images} caption={post.caption} userName={post.userId.username} key={i} />;
         })}

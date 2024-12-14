@@ -1,9 +1,10 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Bookmark, Menu, Moon, Settings, ShieldAlert, SquareActivity } from 'lucide-react';
+import { Bookmark, Menu, Settings, ShieldAlert, SquareActivity } from 'lucide-react';
 import NavigationLink from './NavigationLink';
 import { AnimationControls, motion } from 'framer-motion';
+import { DarkMode } from './DarkMode';
 
 interface MenuProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:ring-0  outline-none w-full">
-          <NavigationLink href={undefined} name={isOpen ? '' : 'More'}>
+          <NavigationLink href={undefined} name={isOpen ? '' : ''}>
             <Menu className="stroke-inherit stroke-[1.5] min-w-6 w-6 group">
               <motion.path
                 transition={{
@@ -38,11 +39,10 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           </DropdownMenuItem>
           <DropdownMenuItem className=" flex gap-2 h-12">
             <Bookmark size={18} />
-            <span>Switch appearance</span>
+            <span>Saved</span>
           </DropdownMenuItem>
           <DropdownMenuItem className=" flex gap-2 h-12">
-            <Moon size={18} />
-            <span>Switch appearance</span>
+            <DarkMode />
           </DropdownMenuItem>
           <DropdownMenuItem className=" flex gap-2 h-12">
             <ShieldAlert size={18} />

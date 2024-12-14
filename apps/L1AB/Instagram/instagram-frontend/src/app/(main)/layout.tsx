@@ -6,7 +6,7 @@ import RightSideBar from '@/components/RightSideBar';
 import { SuggestCard } from '@/components/SuggestCard';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { ApolloWrapper, UserProvider } from '@/components/providers';
+import { ApolloWrapper, ThemeProvider, UserProvider } from '@/components/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 interface User {
   _id: string;
@@ -40,26 +40,30 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <UserProvider>
-      <div className="flex min-w-full">
-        <StoryProvider>
-          {pathname.includes('/story') ? null : <LeftSideBar />}
-          <div className="flex gap-[72px] mx-auto max-h-screen">
-            <Suspense>
-              <ApolloWrapper>
-                <NuqsAdapter>{children}</NuqsAdapter>
-              </ApolloWrapper>
-            </Suspense>
-            {pathname == '/home' ? (
-              <div className="flex flex-col py-10 gap-y-4">
-                <RightSideBar />
-                <SuggestCard />
+    <div className=" h-full bg-[hsl(var(--background-main))] root:text-[hsl(var(--foreground))] dark:bg-[hsl(var(--background-main))]">
+      <UserProvider>
+        <div className="flex min-w-full">
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            <StoryProvider>
+              {pathname.includes('/story') ? null : <LeftSideBar />}
+              <div className="flex gap-[72px] mx-auto max-h-screen">
+                <Suspense>
+                  <ApolloWrapper>
+                    <NuqsAdapter>{children}</NuqsAdapter>
+                  </ApolloWrapper>
+                </Suspense>
+                {pathname == '/home' ? (
+                  <div className="flex flex-col py-10 gap-y-4">
+                    <RightSideBar />
+                    <SuggestCard />
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-          </div>
-        </StoryProvider>
-      </div>
-    </UserProvider>
+            </StoryProvider>
+          </ThemeProvider>
+        </div>
+      </UserProvider>
+    </div>
   );
 };
 
