@@ -58,7 +58,7 @@ export const QRGenerator = async (to: string, qrCodeDataURL: string, bookingData
   const { amountTotal, selectedDate, venues, phone, status, createdAt, email } = bookingData;
   const { name, location, eventDate, eventTime, artistName, images } = eventData;
 
-  const venueDetails = venues
+  const venueDetails = (venues || [])
     .map(
       (venue) => `
       <li style="margin-bottom: 10px;">
@@ -66,6 +66,8 @@ export const QRGenerator = async (to: string, qrCodeDataURL: string, bookingData
       </li>`
     )
     .join('');
+
+  const artistNames = Array.isArray(artistName) ? artistName.join(', ') : 'Unknown';
 
   const options = {
     from: process.env.NODEMAILER_EMAIL,
@@ -78,13 +80,13 @@ export const QRGenerator = async (to: string, qrCodeDataURL: string, bookingData
         <div style="background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
           <h3 style="color: #00B7F4; font-size: 20px;">Тоглолтын мэдээлэл:</h3>
           <p style="font-size: 16px; margin-bottom: 8px;"><strong>Тоглолтын нэр:</strong> ${name}</p>
-          <p style="font-size: 16px; margin-bottom: 8px;"><strong>Уран бүтээлч:</strong> ${artistName.join(', ')}</p>
+          <p style="font-size: 16px; margin-bottom: 8px;"><strong>Уран бүтээлч:</strong> ${artistNames}</p>
           <p style="font-size: 16px; margin-bottom: 8px;"><strong>Хаана:</strong> ${location}</p>
-          <p style="font-size: 16px; margin-bottom: 8px;"><strong>Хэзээ:</strong> ${eventDate[0]} ${eventTime[0]}</p>
+          <p style="font-size: 16px; margin-bottom: 8px;"><strong>Хэзээ:</strong> ${eventDate} ${eventTime}</p>
 
           <div style="margin-bottom: 20px;">
             <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-              <img src="${images[0]}" alt="Event Image" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px;" />
+              <img src="${images?.[0] || ''}" alt="Event Image" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px;" />
             </div>
           </div>
         </div>
