@@ -9,19 +9,15 @@ export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, {
     throw new Error('Unauthorized: No user found in context.');
   }
   const signedUser = await userModel.findById({ _id: user.userId });
+  const bookingDetails = await bookingModel.find({ userId: user.userId }).sort({ createdAt: -1 }).limit(1);
 
-  const [bookingDetails] = await Promise.all([bookingModel.findOne({ userId: user.userId }).sort({ createdAt: -1 })]);
-
-  if (!bookingDetails) {
+  if (!bookingDetails || bookingDetails.length === 0) {
     throw new Error('No bookings found for the user.');
   }
 
-  const eventId = bookingDetails.eventId;
-  const [eventDetails] = await Promise.all([EventModel.findOne({ _id: eventId }).sort({ date: -1 })]);
-
-  if (!eventDetails) {
-    throw new Error('No events found for the user.');
-  }
+  const bookingDetail = bookingDetails[0];
+  const eventId = bookingDetail.eventId;
+  const eventDetails = await EventModel.findOne({ _id: eventId });
 
   const defaultLink = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
   const generated = await QRCode.toDataURL(defaultLink);
@@ -32,7 +28,7 @@ export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, {
     generatedQR: generated,
   });
 
-  await QRGenerator(signedUser.email, generated, bookingDetails, eventDetails);
+  await QRGenerator(signedUser.email, generated, bookingDetail, eventDetails);
 
   return {
     success: true,
