@@ -23,28 +23,17 @@ describe('CreatePassForm', () => {
   });
 
   it('renders the component correctly', () => {
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: '', rePassword: '' }}
-        handleOnchange={jest.fn()}
-      />
-    );
-  
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: '', rePassword: '' }} handleOnchange={jest.fn()} />);
+
     expect(screen.getByText(/Set new password/i)).toBeInTheDocument();
     expect(screen.getByTestId('password-input')).toBeInTheDocument();
     expect(screen.getByTestId('rePassword-input')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /continue/i })).toBeDisabled();
   });
-  
 
   it('enables the button when passwords match and are valid', () => {
     const handleOnchange = jest.fn();
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }}
-        handleOnchange={handleOnchange}
-      />
-    );
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }} handleOnchange={handleOnchange} />);
 
     const button = screen.getByRole('button', { name: /continue/i });
     expect(button).toBeEnabled();
@@ -54,12 +43,7 @@ describe('CreatePassForm', () => {
     const errorMessage = 'Error changing password';
     (usePasswordChangeMutation as jest.Mock).mockReturnValue([mockPasswordChangeMutation, { loading: false, error: { message: errorMessage } }]);
 
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }}
-        handleOnchange={jest.fn()}
-      />
-    );
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }} handleOnchange={jest.fn()} />);
 
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
@@ -68,12 +52,7 @@ describe('CreatePassForm', () => {
     mockPasswordChangeMutation.mockResolvedValueOnce({});
     const handleOnchange = jest.fn();
 
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }}
-        handleOnchange={handleOnchange}
-      />
-    );
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }} handleOnchange={handleOnchange} />);
 
     const button = screen.getByRole('button', { name: /continue/i });
     fireEvent.click(button);
@@ -89,12 +68,7 @@ describe('CreatePassForm', () => {
   });
 
   it('disables the button when passwords do not match or are invalid', () => {
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'DifferentPass' }}
-        handleOnchange={jest.fn()}
-      />
-    );
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'DifferentPass' }} handleOnchange={jest.fn()} />);
 
     const button = screen.getByRole('button', { name: /continue/i });
     expect(button).toBeDisabled();
@@ -103,16 +77,10 @@ describe('CreatePassForm', () => {
   it('shows "Setting password..." when loading is true', () => {
     const mockMutation = jest.fn();
     (usePasswordChangeMutation as jest.Mock).mockReturnValue([mockMutation, { loading: true, error: null }]);
-  
-    render(
-      <CreatePassForm
-        inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }}
-        handleOnchange={jest.fn()}
-      />
-    );
-  
+
+    render(<CreatePassForm inputData={{ otp: '1234', email: 'test@example.com', password: 'Password123', rePassword: 'Password123' }} handleOnchange={jest.fn()} />);
+
     expect(screen.getByText(/Setting password.../i)).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeDisabled();
   });
-  
 });

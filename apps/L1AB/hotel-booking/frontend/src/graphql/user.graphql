@@ -26,6 +26,12 @@ mutation SignUp($input: SignUpInput!) {
     message
   }
 }
+mutation SignUpCheckOtp($input: OtpCheckInput!) {
+  SignUpCheckOtp(input: $input) {
+    message
+    success
+  }
+}
 
 mutation SignUpSendOtp($email: String!) {
   signUpSendOtp(email: $email) {
