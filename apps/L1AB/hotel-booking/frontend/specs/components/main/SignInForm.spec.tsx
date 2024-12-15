@@ -27,6 +27,7 @@ describe('Main Sign In Form', () => {
     await waitFor(() => expect(getByTestId('ErrorSignIn')).toBeDefined());
   });
 
+  
   it('should render the main sign in form', async () => {
     const { getByTestId } = render(<SignInForm />);
 
