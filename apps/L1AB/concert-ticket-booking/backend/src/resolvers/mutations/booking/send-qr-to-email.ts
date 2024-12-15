@@ -10,11 +10,6 @@ export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, {
   }
   const signedUser = await userModel.findById({ _id: user.userId });
   const bookingDetails = await bookingModel.find({ userId: user.userId }).sort({ createdAt: -1 }).limit(1);
-
-  if (!bookingDetails || bookingDetails.length === 0) {
-    throw new Error('No bookings found for the user.');
-  }
-
   const bookingDetail = bookingDetails[0];
   const eventId = bookingDetail.eventId;
   const eventDetails = await EventModel.findOne({ _id: eventId });
