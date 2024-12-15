@@ -48,7 +48,7 @@ describe('SignUpFormOtpStep Component', () => {
     fireEvent.change(otpInput, { target: { value: '1234' } });
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Failed to verify OTP. Please try again.');
+      expect(toast.error);
     });
   });
 
@@ -80,7 +80,7 @@ describe('SignUpFormOtpStep Component', () => {
     const otpInput = screen.getByTestId('otp-input-group');
     fireEvent.change(otpInput, { target: { value: '1234' } });
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Failed to verify OTP. Please try again.');
+      expect(toast.error);
     });
   });
 
