@@ -1,14 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, SearchDatePicker, SearchSelectGuest } from './assets';
 import { Button } from '@/components/ui/button';
 import { useFormik } from 'formik';
 import { addDays } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useGetAvailableRoomsQuery } from '@/generated';
+ 
+export const AvailableRooms = ({ dateRange, traveler }: { dateRange: { checkIn: string; checkOut: string }; traveler: number }) => {
+  const { data } = useGetAvailableRoomsQuery({
+    variables: { dateRange, traveler },
+  });
+
+  return data;
+};
 
 export const Search = () => {
   const router = useRouter();
+  const [searchParams, setSearchParams] = useState<{ dateRange: { checkIn: string; checkOut: string }; traveler: number } | null>(null);
+
   const searchForm = useFormik({
     initialValues: {
       startDate: new Date(),
@@ -16,10 +27,22 @@ export const Search = () => {
       guests: 1,
     },
     onSubmit: (values) => {
+      const formattedCheckIn = values.startDate.toISOString().split('T')[0];
+      const formattedCheckOut = values.endDate.toISOString().split('T')[0];
+
+      setSearchParams({
+        dateRange: {
+          checkIn: formattedCheckIn,
+          checkOut: formattedCheckOut,
+        },
+        traveler: values.guests,
+      });
+
       router.push('/hotels');
       console.log(values);
     },
   });
+
   return (
     <>
       <Container backgroundColor="bg-backBlue">
