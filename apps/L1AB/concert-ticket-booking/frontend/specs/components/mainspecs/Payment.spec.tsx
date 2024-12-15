@@ -91,7 +91,7 @@ describe('Payment Component', () => {
     });
     const { getByTestId } = render(<Payment id="123" />);
 
-    const searchInput = getByTestId('ProfiletoPush');
+    const searchInput = getByTestId('SendQrButton');
     expect(searchInput);
 
     fireEvent.click(searchInput);
