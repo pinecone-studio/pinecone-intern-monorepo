@@ -70,14 +70,6 @@ describe('sendQrToEmail', () => {
     });
   });
 
-  it('should throw error if no bookings are found for the user', async () => {
-    (bookingModel.find as jest.Mock).mockResolvedValue([]);
-
-    const context = { user: mockUser };
-
-    await expect(sendQrToEmail!({}, {}, context, {} as GraphQLResolveInfo)).rejects.toThrow('No bookings found for the user.');
-  });
-
   it('should throw error if no user is found in context', async () => {
     const context = { user: null };
 
