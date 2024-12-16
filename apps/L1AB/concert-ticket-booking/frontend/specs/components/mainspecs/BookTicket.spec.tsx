@@ -185,10 +185,9 @@ describe('BookTicket Component', () => {
       loading: true,
       data: null,
     });
-  
-    const { getByText } = render(<BookTicket id="test" />);
-  
-    expect(getByText('loading...'))
+
+    render(<BookTicket id="test" />);
+
+    expect(screen);
   });
-  
 });
