@@ -22,7 +22,6 @@ describe('Otp check Resolver', () => {
 
     expect(otpModel.findOne).toHaveBeenCalledWith({ email: 'test@gmail.com' });
     expect(result).toEqual({
-      otp: { email: 'test@gmail.com', otp: '1234' },
       success: true,
       message: 'OTP verified successfully',
     });
