@@ -76,3 +76,9 @@ query GetUserById($id: ID!) {
     updatedAt
   }
 }
+mutation SignUpCheckOtp($input: OtpCheckInput!) {
+  SignUpCheckOtp(input: $input) {
+    message
+    success
+  }
+}
