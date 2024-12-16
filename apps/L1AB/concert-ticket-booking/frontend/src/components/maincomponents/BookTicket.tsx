@@ -7,51 +7,42 @@ import { GoDotFill } from 'react-icons/go';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { BookTicketSkeleton } from './Skeletons/BookTicketSkeleton';
 interface BookTicketProps {
   id: string | string[];
 }
 export const BookTicket = ({ id }: BookTicketProps) => {
   const { data } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
-  const { data: user,loading } = useGetMeQuery();
+  const { data: user, loading } = useGetMeQuery();
   const [createBooking] = useCreateBookingTotalAmountMutation();
   const [counts, setCounts] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const incrementCount = (index: number) => {
-    setCounts((prevCounts) => {
+  const incrementCount = (index: number) => { setCounts((prevCounts) => {
       const newCounts = [...prevCounts];
       const venueQuantity = eventDetails?.venues[index].quantity || 0;
-      if ((newCounts[index] || 0) < venueQuantity) {
-        newCounts[index] = (newCounts[index] || 0) + 1;
-        setError(null);
+      if ((newCounts[index] || 0) < venueQuantity) { newCounts[index] = (newCounts[index] || 0) + 1;
+      setError(null);
       } else {
         setError(`Үлдсэн ${venueQuantity}ш тасалбараас илүү тасалбар авах боломжгүй.`);
       }
       return newCounts;
     });
   };
-  const decrementCount = (index: number) => {
-    setCounts((prevCounts) => {
-      const newCounts = [...prevCounts];
-      newCounts[index] = Math.max((newCounts[index] || 0) - 1, 0);
-      setError(null);
+  const decrementCount = (index: number) => { setCounts((prevCounts) => {
+      const newCounts = [...prevCounts]; newCounts[index] = Math.max((newCounts[index] || 0) - 1, 0);setError(null);
       return newCounts;
     });
   };
   const calculateTotal = () => eventDetails?.venues.reduce((total, venue, index) => total + venue.price * (counts[index] || 0), 0) || 0;
   const router = useRouter();
-  if (loading) {
-    return <div>loading...</div>;
-  }
-  const handleBooking = async () => {
-    const userId = user?.getMe?._id || 'user bhgvi bnshdee';
+  if (loading) {return (<div><BookTicketSkeleton /> </div> )}
+  const handleBooking = async () => {  const userId = user?.getMe?._id || 'user bhgvi bnshdee';
     const venuesToBook = eventDetails?.venues.map((venue, index) => ({ name: venue.name, price: venue.price, quantity: counts[index] })).filter((venue) => venue.quantity > 0);
     const bookingInput = {
       input: {
-        eventId: id as string,
-        selectedDate: selectedDate,
-        status: "Баталгаажаагүй",
+        eventId: id as string, selectedDate: selectedDate, status: 'Баталгаажаагүй',
         userId: userId,
         venues: venuesToBook,
       },
@@ -76,16 +67,16 @@ export const BookTicket = ({ id }: BookTicketProps) => {
   return (
     <div data-testid="Book-Ticket-Component">
       <nav className="flex items-center justify-between border-b-[2px] dark:border-[#27272A] border-[#c6c6c6] py-8 px-12 max-sm:px-3 max-sm:justify-evenly  max-md:px-3 max-md:justify-evenly max-lg:px-3 max-lg:justify-evenly max-2xl:justify-between">
-        <Button className="bg-[#1F1F1F] h-10 w-10 text-white" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
+        <Button className="bg-[#1F1F1F] h-10 w-10 text-white hover:bg-gray-800" data-testid="FaArrowLeftClick" onClick={() => router.push(`/events/${id}`)}>
           <FaArrowLeft />
         </Button>
         <p className="text-2xl font-semibold dark:text-white text-black max-sm:text-xl">Тасалбар захиалах</p>
         <p></p>
       </nav>
       <div className="flex flex-wrap justify-around items-center py-6 max-md:grid  max-lg:grid  max-lg:gap-12  ">
-        <StageStyle   venue={eventDetails?.venues} />
+        <StageStyle venue={eventDetails?.venues} />
         <div className="dark:bg-[#131313] bg-[#f2f2f2] rounded-2xl px-6 max-sm:px-3  max-md:px-3">
-          <div className="h-fit grid gap-2 py-6">
+          <div className="h-fit grid gap-2 py-6 ">
             <p className="opacity-50 dark:text-white text-black">Тоглолт үзэх өдрөө сонгоно уу.</p>
             <Select value={selectedDate ?? undefined} onValueChange={setSelectedDate}>
               <SelectTrigger className="w-[345px] dark:text-[#FAFAFA] dark:bg-[#27272A] bg-white text-black border-none" data-testid="SelectTrigger">
@@ -117,13 +108,21 @@ export const BookTicket = ({ id }: BookTicketProps) => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer" data-testid="decrementCount" onClick={() => decrementCount(index)}>
+                  <button
+                    className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer"
+                    data-testid="decrementCount"
+                    onClick={() => decrementCount(index)}
+                  >
                     -
                   </button>
                   <p className="dark:text-white text-black" data-testid={`ticket-count-${index}`}>
                     {counts[index] || 0}
                   </p>
-                  <button className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer" data-testid="incrementCount" onClick={() => incrementCount(index)}>
+                  <button
+                    className="px-4 py-2 rounded-xl border dark:border-[#27272A] dark:text-white text-black dark:bg-[#1F1F1F] bg-white cursor-pointer"
+                    data-testid="incrementCount"
+                    onClick={() => incrementCount(index)}
+                  >
                     +
                   </button>
                 </div>
