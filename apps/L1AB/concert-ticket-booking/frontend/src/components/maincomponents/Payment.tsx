@@ -61,8 +61,9 @@ export const Payment = ({ id }: PaymentProps) => {
   const sendQrHandler = async () => {
     setLoading(true);
     await sendQrToEmail();
-    toast.success('Таны И-мэйл рүү QR код илгээгдлээ');
+    toast.success('Амжилттай илгээгдлээ. Та И-мэйл хаягаа шалгана уу...');
     setLoading(false);
+    router.push('/');
   };
 
   return (
@@ -80,10 +81,7 @@ export const Payment = ({ id }: PaymentProps) => {
           <p className="text-sm text-black dark:text-white">Захиалгын дугаар: {bookingDetails._id}</p>
           <p className="text-sm text-black dark:text-white">Төлсөн дүн: {bookingDetails.amountTotal}₮</p>
           <Button className="mt-4 text-white bg-green-500 hover:bg-green-600" data-testid="SendQrButton" onClick={sendQrHandler}>
-            {loading ? 'QR код илгээж байна...' : 'Захиалга шалгах QR код авах'}
-          </Button>
-          <Button className="mt-4 text-white bg-green-500 hover:bg-green-600" data-testid="ProfiletoPush" onClick={() => router.push(`/profile`)}>
-            Захиалгын дэлгэрэнгүйг харах
+            {loading ? 'Хүсэлт илгээж байна...' : 'Захиалгын дэлгэрэнгүй болон QR код авах'}
           </Button>
         </div>
       ) : (
