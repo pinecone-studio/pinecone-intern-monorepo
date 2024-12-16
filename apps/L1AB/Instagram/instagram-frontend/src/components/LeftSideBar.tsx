@@ -79,7 +79,7 @@ export const LeftSideBar = () => {
   }, [searchOpen, notifOpen]);
 
   return (
-    <div data-cy="LeftSideBar" className="fixed left-0">
+    <div data-cy="LeftSideBar" className="fixed left-0 z-20">
       <div>
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} visitedUsers={visitedUsers} visitedUsersHandler={visitedUsersHandler} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />

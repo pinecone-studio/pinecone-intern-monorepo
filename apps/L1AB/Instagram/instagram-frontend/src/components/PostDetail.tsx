@@ -57,7 +57,7 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
               {postimages.map((image, i) => {
                 return (
                   <div key={i} className="relative h-full w-[528px] overflow-hidden">
-                    <Image objectFit="cover" alt="no" src={image} fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                    <Image objectFit="contain" alt="no" src={image} fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   </div>
                 );
               })}

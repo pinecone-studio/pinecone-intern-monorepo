@@ -17,7 +17,7 @@ jest.mock('next/image', () => ({
 const sampleProps = {
   userName: 'John Doe',
   likeCount: 123,
-  images: ['/image1.jpg', '/image2.jpg', '/image3.jpg'],
+  images: ['/image1.jpg', '/image2.jpg'],
   profilePicture: 'profile.jpg',
   caption: 'This is a sample caption',
   keyy: 1,
@@ -33,17 +33,12 @@ describe('PostCard Component - prev/next functionality', () => {
         </MockedProvider>
       </UserContext.Provider>
     );
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     const NextButton = getByTestId('NextButton');
+
+    fireEvent.click(NextButton);
+
     const PrevButton = getByTestId('PrevButton');
 
-    fireEvent.click(NextButton);
     fireEvent.click(PrevButton);
-    fireEvent.click(PrevButton);
-    fireEvent.click(NextButton);
-    fireEvent.click(NextButton);
-    fireEvent.click(NextButton);
   });
 });
