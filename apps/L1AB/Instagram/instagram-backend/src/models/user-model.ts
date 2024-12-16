@@ -41,7 +41,8 @@ const UserSchema = new Schema<UserType>({
   profilePicture: {
     type: String,
     required: true,
-    default: 'no picture',
+    // eslint-disable-next-line no-secrets/no-secrets
+    default: 'https://res.cloudinary.com/doqzizxvi/image/upload/v1734325766/f10ff70a7155e5ab666bcdd1b45b726d_nlrma7.jpg',
   },
   bio: {
     type: String,
