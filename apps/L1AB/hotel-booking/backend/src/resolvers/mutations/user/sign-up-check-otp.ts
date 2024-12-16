@@ -15,7 +15,6 @@ export const SignUpCheckOtp: MutationResolvers['SignUpCheckOtp'] = async (_, { i
   }
 
   return {
-    otp: { email: response.email, otp: response.otp },
     success: true,
     message: 'OTP verified successfully',
   };

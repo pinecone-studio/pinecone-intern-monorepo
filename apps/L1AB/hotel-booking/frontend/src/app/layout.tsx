@@ -3,6 +3,8 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { AuthProvider } from '@/components/providers/Auth.Provider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
   title: 'Hotel Booking',
@@ -17,6 +19,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           {' '}
           <AuthProvider>{children} </AuthProvider>
         </ApolloWrapper>
+        <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       </body>
     </html>
   );
