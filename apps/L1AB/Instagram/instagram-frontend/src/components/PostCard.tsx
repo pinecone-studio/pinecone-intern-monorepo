@@ -23,16 +23,17 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   const { user }: any = useContext(UserContext);
 
   const prev = () => {
-    setCurrentImageIndex((curr) => (curr === 0 ? 0 : curr - 1));
+    setCurrentImageIndex((curr) => curr - 1);
   };
 
   const next = () => {
-    setCurrentImageIndex((curr) => (curr === images.length - 1 ? images.length - 1 : curr + 1));
+    setCurrentImageIndex((curr) => curr + 1);
   };
 
   useEffect(() => {
     setUserId(user._id);
   }, []);
+  console.log(currentImageIndex);
 
   return (
     <div data-testid={`NewsFeedPostCard-${keyy}`} className="border-b">
@@ -44,7 +45,7 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div>{userName}</div>
-            <div className="text-[#71717A]">5h</div>
+            {/* <div className="text-[#71717A]">5h</div> */}
           </Link>
           <div>
             <EllipsisVertical className="w-4 h-4" />
@@ -56,19 +57,21 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               {images.map((image, i) => {
                 return (
                   <div key={i} className="relative w-[528px] overflow-hidden">
-                    <Image className="object-cover" alt="no" src={image} fill />
+                    <Image className="object-cover" alt={`${i}`} src={image} fill />
                   </div>
                 );
               })}
             </div>
-            <div className="absolute inset-0 flex items-center justify-between p-4">
-              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev} data-testid="PrevButton">
+            {currentImageIndex !== 0 && (
+              <button className="absolute left-2 top-[48%] p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={prev} data-testid="PrevButton">
                 <ChevronLeft size={20} />
               </button>
-              <button className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={next} data-testid="NextButton">
+            )}
+            {currentImageIndex !== images.length - 1 && (
+              <button className="absolute right-2 top-[48%] p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white" onClick={next} data-testid="NextButton">
                 <ChevronRight size={20} />
               </button>
-            </div>
+            )}
             <div className="absolute bottom-4 right-0 left-0">
               <div className="flex items-center justify-center gap-1">
                 {images.map((_, i) => (
