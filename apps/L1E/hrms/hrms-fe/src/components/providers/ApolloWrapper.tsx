@@ -1,34 +1,17 @@
 'use client';
 
-import { HttpLink } from '@apollo/client';
-import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support';
-import { PropsWithChildren } from 'react';
-import { setContext } from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { Suspense } from 'react';
 
-const uri = process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql';
+const client = new ApolloClient({
+  uri: process.env.BACKEND_URI || 'http://localhost:4200/api/graphql',
+  cache: new InMemoryCache(),
+});
 
-const makeClient = () => {
-  const httpLink = new HttpLink({
-    uri,
-    fetchOptions: { cache: 'no-store' },
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('token');
-    return {
-      headers: {
-        ...headers,
-        authorization: token ?? '',
-      },
-    };
-  });
-
-  return new ApolloClient({
-    cache: new InMemoryCache(),
-    link: authLink.concat(httpLink),
-  });
-};
-
-export const ApolloWrapper = ({ children }: PropsWithChildren) => {
-  return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+export const ApolloWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ApolloProvider client={client}>
+      <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
+    </ApolloProvider>
+  );
 };
