@@ -31,3 +31,5 @@ export * from './BookingDetailRoom';
 export * from './BookingDetailBooked';
 export * from './assets/CheckingBookingLeft';
 export * from './assets/CheckingBookingRight';
+export * from './ConfirmedBooking';
+export * from './PreviousBooking';
