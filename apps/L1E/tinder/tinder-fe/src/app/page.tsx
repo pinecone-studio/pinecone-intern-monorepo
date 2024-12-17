@@ -1,9 +1,11 @@
 'use client';
 
+import Header from '@/components/Header';
+
 const Page = () => {
   return (
     <div>
-      {/* <div className="relative">
+      <div className="relative">
         <div className="h-[787px] absolute opacity-70 w-[1512px] bg-black">as</div>
         <Header />
         <img className="" src="backround.png" alt="" />
@@ -13,7 +15,7 @@ const Page = () => {
             <button className="text-white bg-[#E11D48] font-medium text-sm p-4 rounded-full">Create Account</button>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
