@@ -9,7 +9,7 @@ const Confirm = () => {
   const [otp, setOtp] = useState<string>(''); // State to store OTP value
 
   useEffect(() => {
-    let timer = setInterval(() => {
+    const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
           clearInterval(timer);
