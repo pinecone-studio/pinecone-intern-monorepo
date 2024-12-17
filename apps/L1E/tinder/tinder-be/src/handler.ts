@@ -11,6 +11,19 @@ const server = new ApolloServer<Context>({
   resolvers,
   typeDefs,
   introspection: true,
+  plugins: [
+    {
+      requestDidStart: async () => {
+        return {
+          willSendResponse: async (context) => {
+            context.response.http.headers.set('Access-Control-Allow-Origin', '*');
+            context.response.http.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+            context.response.http.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+          },
+        };
+      },
+    },
+  ],
 });
 
 export const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {

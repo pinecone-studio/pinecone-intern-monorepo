@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["tinder-fe"],
+          "groups": ["tinder-frontend"],
           "env": "dev"
         }
       }
@@ -88,7 +88,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["tinder-fe"],
+          "groups": ["tinder-frontend"],
           "env": "test"
         }
       }
