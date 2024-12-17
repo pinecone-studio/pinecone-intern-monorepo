@@ -20,7 +20,7 @@ type User = {
 type AuthContextType = {
   signin: (_params: SignInForm) => Promise<void>;
   signout: () => void;
-
+  signInLoading: boolean;
   user: User | null;
 };
 
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
-  const [signinMutation] = useSignInMutation({
+  const [signinMutation, { loading: signInLoading }] = useSignInMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.signIn.token);
       setUser(data.signIn.user);
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     toast.success('Successfully signed out.');
   };
 
-  return <AuthContext.Provider value={{ signin, signout, user }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signout, user, signInLoading }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextType => {
