@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Suspense } from 'react';
 
 const client = new ApolloClient({
-  uri: process.env.BACKEND_URI || 'http://localhost:4200/api/graphql',
+  uri: process.env.LOCAL_BACKEND_URI || process.env.BACKEND_URI,
   cache: new InMemoryCache(),
 });
 
