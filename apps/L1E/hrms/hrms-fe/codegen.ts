@@ -2,7 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: process.env.LOCAL_BACKEND_URI ?? process.env.BACKEND_URI,
+  schema: process.env.BACKEND_URI ?? process.env.LOCAL_BACKEND_URI,
   documents: ['apps/L1E/hrms/hrms-fe/src/**/*.graphql'],
   generates: {
     'apps/L1E/hrms/hrms-fe/src/generated/index.ts': {
