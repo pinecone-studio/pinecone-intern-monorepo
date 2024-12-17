@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Confirm from './Confirm';
+
 import Link from 'next/link';
 
 const Setnewpassword = () => {
@@ -21,6 +21,7 @@ const Setnewpassword = () => {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <div className="font-medium text-sm">Password</div>
+            {step}
             <input placeholder="Password" className="w-[350px] h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]" type="text" />
           </div>
           <div className="flex flex-col gap-2">

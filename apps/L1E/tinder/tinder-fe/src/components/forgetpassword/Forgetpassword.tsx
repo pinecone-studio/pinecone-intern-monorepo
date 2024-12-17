@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import Confirm from './Confirm';
-import Setnewpassword from '../forgetpassword/Setnewpassword';
 
 const Forgetpassword = () => {
   const [step, setStep] = useState<'forget' | 'confirm' | 'newpassword'>('forget');
