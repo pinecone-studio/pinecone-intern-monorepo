@@ -8,7 +8,7 @@ interface SuccessModalProps {
   onClose: () => void;
 }
 
-export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
+const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="w-full max-w-[608px]">
@@ -33,4 +33,5 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+export default SuccessModal;

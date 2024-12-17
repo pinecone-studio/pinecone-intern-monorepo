@@ -8,21 +8,10 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import SuccessModal from './Successmodal';
-
-const requestSchema = z.object({
-  date: z.date().refine((date) => date > new Date(), {
-    message: 'өдөр сонгоно уу',
-  }),
-  startTime: z.string().nonempty('Start time is required'),
-  endTime: z.string().nonempty('End time is required'),
-  lead: z.string().nonempty('сонголт хийгээгүй байна'),
-  notes: z.string().min(5, 'хоосон байна'),
-});
-
+import requestSchema from './RequestSchema';
 const RequestcomTime1 = () => {
   const form = useForm({
     resolver: zodResolver(requestSchema),
@@ -34,14 +23,11 @@ const RequestcomTime1 = () => {
       notes: '',
     },
   });
-
   const onSubmit = (data: object) => {
     console.log(data);
     setIsOpen(true);
   };
-
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="space-y2 flex ">
       <Form {...form}>
@@ -71,7 +57,6 @@ const RequestcomTime1 = () => {
               </FormItem>
             )}
           />
-
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -97,7 +82,6 @@ const RequestcomTime1 = () => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="endTime"
@@ -123,7 +107,6 @@ const RequestcomTime1 = () => {
               )}
             />
           </div>
-
           <FormField
             control={form.control}
             name="lead"
@@ -146,7 +129,6 @@ const RequestcomTime1 = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="notes"
