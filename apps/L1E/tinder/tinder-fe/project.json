@@ -57,6 +57,7 @@
       "options": {
         "buildTarget": "tinder-fe:build:production"
       }
+      
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -73,6 +74,7 @@
         }
       ]
     },
+
     "get-secrets:dev": {
       "executor": "@pinecone-intern-monorepo/secrets:get",
       "defaultConfiguration": "development",
