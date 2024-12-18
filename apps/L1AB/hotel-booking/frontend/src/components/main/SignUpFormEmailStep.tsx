@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-
 import { toast } from 'react-toastify';
 import { useSignUpSendOtpMutation } from '@/generated';
 import Link from 'next/link';
