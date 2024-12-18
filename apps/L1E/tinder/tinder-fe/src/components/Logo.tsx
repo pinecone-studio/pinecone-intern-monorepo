@@ -1,7 +1,7 @@
 export const Logo = () => {
   return (
     <>
-      <div className="w-25 h-6 ">
+      <div className="w-25 h-6 " data-testid="mock-logo">
         <svg width="102" height="24" viewBox="0 0 102 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_10_5058)">
             <path
