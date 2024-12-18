@@ -15,6 +15,10 @@ input::-webkit-inner-spin-button {
 }
 
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+  }
   :root {
     --background-admin: 0 0% 100%;
     --background-main: 0 0% 100%;

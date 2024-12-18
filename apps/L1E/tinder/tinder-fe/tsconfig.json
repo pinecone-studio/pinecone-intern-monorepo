@@ -39,7 +39,7 @@
     "../../../../dist/aapps/L1E/tinder/tinder-fe/.next/types/**/*.ts",
     "next-env.d.ts",
     "../../../../dist/apps/L1E/tinder/tinder-fe/.next/types/**/*.ts"
-  ],
+, "specs/components/Image-upload.spec.tsx"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",
