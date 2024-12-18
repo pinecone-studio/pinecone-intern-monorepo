@@ -8,6 +8,11 @@ jest.mock('next/image', () => ({
   default: ({ src, alt, width, height, className }: any) => <img src={src} alt={alt} width={width} height={height} className={className} />,
 }));
 
+jest.mock('date-fns', () => ({
+  format: jest.fn(),
+  differenceInDays: jest.fn(),
+}));
+
 describe('BookingCard', () => {
   const mockBooking = {
     hotelName: 'Hotel ABC',
@@ -32,8 +37,8 @@ describe('BookingCard', () => {
   const mockBookingWithNoCheckout = {
     hotelName: 'Hotel ABC',
     description: 'A beautiful place to stay',
-    checkIn: null,
-    checkOut: null,
+    checkIn: '',
+    checkOut: '',
     status: 'booked',
     traveller: 2,
     roomType: 'ONE',
@@ -53,7 +58,7 @@ describe('BookingCard', () => {
     expect(statusButton);
     expect(screen);
   });
-  it('renders booking details withoput checkin checkout', () => {
+  it('renders booking details without checkin checkout', () => {
     render(<BookingCard {...mockBookingWithNoCheckout} />);
     const statusButton = screen.getByTestId('status-button');
     expect(statusButton);

@@ -17,15 +17,25 @@ const StatusButtonStyle = {
   canceled: 'w-[88px] h-[24px] rounded-xl bg-[#E11D48] flex justify-center items-center text-white text-sm',
 };
 
-export const BookingCard = ({ hotelName, description, checkIn, status, traveller, roomType, photos, checkOut }: BookingCardType) => {
+const formatRoomType = (roomType: string) => {
+  const formattedRoomType = roomType === 'ONE' ? '1 room' : roomType === 'TWO' ? '2 room' : 'Unknown room type';
+  return formattedRoomType;
+};
+
+const formatCheckIn = (checkIn: string) => {
+  const formattedCheckIn = format(checkIn, 'eeee, MMMM d, h:mm a');
+  return formattedCheckIn;
+};
+
+const convertDate = (checkIn: string, checkOut: string) => {
   const checkInDate = checkIn ? new Date(checkIn) : new Date();
   const checkOutDate = checkOut ? new Date(checkOut) : new Date();
 
   const nights = differenceInDays(checkOutDate, checkInDate);
+  return nights;
+};
 
-  const formattedCheckIn = format(checkInDate, 'eeee, MMMM d, h:mm a');
-  const formattedRoomType = roomType === 'ONE' ? '1 room' : roomType === 'TWO' ? '2 room' : 'Unknown room type';
-
+export const BookingCard = ({ hotelName, description, checkIn, status, traveller, roomType, photos, checkOut }: BookingCardType) => {
   return (
     <div className="w-full border flex  rounded-xl" data-testid="bookingCardMOCKshu">
       <div className="flex borde rounded-xl">
@@ -41,13 +51,13 @@ export const BookingCard = ({ hotelName, description, checkIn, status, traveller
           <h1 className="text-xl font-bold">{hotelName}</h1>
           <h1 className="text-[#71717A]">{description}</h1>
           <h1>
-            {nights} night • {traveller} adult • {formattedRoomType}
+            {convertDate(checkIn, checkOut)} night • {traveller} adult • {formatRoomType(roomType)}
           </h1>
         </div>
         <div className="flex flex-col p-3">
           <div className="flex gap-1">
             <h1 className="text-[#71717A]">Check in: </h1>
-            <h1>{formattedCheckIn}</h1>
+            <h1>{formatCheckIn(checkIn)}</h1>
           </div>
 
           <div className="flex flex-row justify-between">
