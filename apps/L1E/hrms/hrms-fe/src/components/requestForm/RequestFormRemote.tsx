@@ -9,40 +9,24 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import SuccessModal from './Successmodal';
-
-const requestSchema = z.object({
-  date: z.date().refine((date) => date > new Date(), {
-    message: 'өдөр сонгоно уу',
-  }),
-  lead: z.string().nonempty('сонголт хийгээгүй байна'),
-  notes: z.string().min(5, 'хоосон байна'),
-});
+import requestSchemaDay from './RequestSchemaDay';
 
 const Requestcomremote = () => {
   const form = useForm({
-    resolver: zodResolver(requestSchema),
+    resolver: zodResolver(requestSchemaDay),
     defaultValues: {
       date: new Date(),
       lead: '',
       notes: '',
     },
   });
-  const onSubmit = (data: object) => {
-    console.log(data);
-    setIsOpen(true);
-  };
 
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="space-y2">
       <Label className="text-sm">Төрөл*</Label>
-
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
+        <form className="space-y-6 w-full mx-auto pt-6">
           <FormField
             control={form.control}
             name="date"
@@ -54,13 +38,13 @@ const Requestcomremote = () => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button variant={'outline'} className="w-full pl-3 text-left font-normal">
-                          {field.value ? format(field.value, 'yyyy.MM.dd') : <span>Pick a date</span>}
+                          {format(field.value, 'yyyy.MM.dd')}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date < new Date()} initialFocus />
+                      <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -68,7 +52,6 @@ const Requestcomremote = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="lead"
@@ -91,7 +74,6 @@ const Requestcomremote = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="notes"
@@ -112,7 +94,6 @@ const Requestcomremote = () => {
           </div>
         </form>
       </Form>
-      <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };

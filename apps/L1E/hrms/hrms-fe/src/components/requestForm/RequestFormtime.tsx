@@ -9,8 +9,6 @@ import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import SuccessModal from './Successmodal';
 import requestSchema from './RequestSchema';
 const RequestcomTime1 = () => {
   const form = useForm({
@@ -23,18 +21,14 @@ const RequestcomTime1 = () => {
       notes: '',
     },
   });
-  const onSubmit = (data: object) => {
-    console.log(data);
-    setIsOpen(true);
-  };
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="space-y2 flex ">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
+        <form data-testid="form" className="space-y-6 w-full mx-auto pt-6">
           <FormField
             control={form.control}
             name="date"
+            data-testid="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel className="text-sm">Чөлөө авах өдөр*</FormLabel>
@@ -43,13 +37,13 @@ const RequestcomTime1 = () => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button variant={'outline'} className="w-full pl-3 text-left font-normal">
-                          {field.value ? format(field.value, 'yyyy.MM.dd') : <span>өдөр сонгоно уу</span>}
+                          {format(field.value, 'yyyy.MM.dd')}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="end">
-                      <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date < new Date()} initialFocus />
+                      <Calendar data-testid="calendar-input" mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -61,6 +55,7 @@ const RequestcomTime1 = () => {
             <FormField
               control={form.control}
               name="startTime"
+              data-testid="time"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Эхлэх цаг*</FormLabel>
@@ -85,6 +80,7 @@ const RequestcomTime1 = () => {
             <FormField
               control={form.control}
               name="endTime"
+              data-testid="endtime"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Дуусах цаг*</FormLabel>
@@ -110,6 +106,7 @@ const RequestcomTime1 = () => {
           <FormField
             control={form.control}
             name="lead"
+            data-testid="lead-button"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm">Хэнээр хүсэлтээ батлуулах аа сонгоно уу*</FormLabel>
@@ -132,6 +129,7 @@ const RequestcomTime1 = () => {
           <FormField
             control={form.control}
             name="notes"
+            data-testid="notes-input"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm">Чөлөө авах шалтгаан*</FormLabel>
@@ -143,13 +141,12 @@ const RequestcomTime1 = () => {
             )}
           />
           <div className="flex justify-end">
-            <Button type="submit" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
+            <Button data-testid="submit-button" type="submit" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
               Хүсэлт илгээх
             </Button>
           </div>
         </form>
       </Form>
-      <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };

@@ -1,14 +1,8 @@
 'use client';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import RequestcomTime1 from './RequestFormtime';
-import { useState } from 'react';
-import RequestcomDay1 from './RequestFormcom1';
 
 const Requestcom = () => {
-  const [timepicker, setTimepicker] = useState('hour');
-  console.log(timepicker);
-
   return (
     <div className="space-y2">
       <div className="gap-2">
@@ -21,32 +15,19 @@ const Requestcom = () => {
       <RadioGroup defaultValue="hour">
         <div className="flex mt-2 gap-4">
           <div className="flex items-center">
-            <RadioGroupItem
-              onClick={() => {
-                setTimepicker('hour');
-              }}
-              value="hour"
-              id="hour"
-            />
+            <RadioGroupItem value="hour" id="hour" />
             <Label className="text-sm cursor-pointer pl-2 " htmlFor="hour">
               Цагаар
             </Label>
           </div>
           <div className="flex items-center ">
-            <RadioGroupItem
-              onClick={() => {
-                setTimepicker('day');
-              }}
-              value="day"
-              id="day"
-            />
+            <RadioGroupItem value="day" id="day" />
             <Label className="text-sm cursor-pointer pl-2 " htmlFor="day">
               Өдрөөр
             </Label>
           </div>
         </div>
       </RadioGroup>
-      {timepicker === 'hour' ? <RequestcomTime1 /> : <RequestcomDay1 />}
     </div>
   );
 };
