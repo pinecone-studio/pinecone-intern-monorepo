@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { InterestSelect } from '@/components/UserDetails/InterestSelect';
+import { InterestSelect } from '@/components/User/InterestSelect';
 
 describe('Interest page component', () => {
   it('should render successfully', () => {

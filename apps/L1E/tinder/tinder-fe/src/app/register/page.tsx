@@ -1,7 +1,8 @@
-import { DateOfBirth } from '@/components/UserDetails/DateOfBirth';
-import { Done } from '@/components/UserDetails/Done';
-import { InterestSelect } from '@/components/UserDetails/InterestSelect';
-import { UserInformation } from '@/components/UserDetails/UserInformation';
+import { DateOfBirth } from '@/components/User/DateOfBirth';
+import { Done } from '@/components/User/Done';
+import { ImageUpload } from '@/components/User/ImageUpload';
+import { InterestSelect } from '@/components/User/InterestSelect';
+import { UserInformation } from '@/components/User/UserInformation';
 const page = () => {
   return (
     <div>
@@ -9,6 +10,7 @@ const page = () => {
       <DateOfBirth />
       <Done />
       <UserInformation />
+      <ImageUpload />
     </div>
   );
 };
