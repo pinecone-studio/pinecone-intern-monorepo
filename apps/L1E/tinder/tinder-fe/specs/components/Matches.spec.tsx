@@ -1,5 +1,5 @@
 import Matches from '@/components/Matches';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 describe('Matches', () => {
   it('should render matches', () => {

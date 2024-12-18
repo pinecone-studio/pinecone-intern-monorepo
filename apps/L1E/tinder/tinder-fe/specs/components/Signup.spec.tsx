@@ -1,5 +1,5 @@
 import Signup from '@/components/signup/Signup';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Signup', () => {
   it('should initially render the signup step', () => {

@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 
 import Addpassword from './Addpassword';
 
