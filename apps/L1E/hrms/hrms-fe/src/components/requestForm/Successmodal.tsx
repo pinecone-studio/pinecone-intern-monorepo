@@ -1,13 +1,10 @@
 'use client';
-
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Check } from 'lucide-react';
-
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

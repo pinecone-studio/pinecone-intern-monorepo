@@ -9,75 +9,50 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import SuccessModal from './Successmodal';
-
-const requestSchema = z.object({
-  dateRange: z.object({
-    from: z.date().refine((val) => val !== null, { message: 'огноо сонгох ёстой!' }),
-    to: z.date().refine((val) => val !== null, { message: 'огноо сонгох ёстой!' }),
-  }),
-  lead: z.string().nonempty('сонголт хийгээгүй байна'),
-  notes: z.string().min(5, 'хоосон байна'),
-});
+import requestSchemaDay from './RequestSchemaDay';
 
 const RequestcomPaid = () => {
   const form = useForm({
-    resolver: zodResolver(requestSchema),
+    resolver: zodResolver(requestSchemaDay),
     defaultValues: {
-      dateRange: { from: undefined, to: undefined },
+      date: new Date(),
       lead: '',
       notes: '',
     },
   });
 
-  const onSubmit = (data: object) => {
-    console.log(data);
-    setIsOpen(true);
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="space-y2">
       <Label className="text-sm">Төрөл*</Label>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
+        <form className="space-y-6 w-full mx-auto pt-6">
           <FormField
             control={form.control}
-            name="dateRange"
+            name="date"
+            data-testid="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel className="text-sm">Цалинтай чөлөө авах өдөр*</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button variant={'outline'} className="w-full pl-3 text-left font-normal">
-                        {field.value?.from ? (
-                          field.value.to ? (
-                            <>
-                              {format(field.value.from, 'yyyy.MM.dd')} - {format(field.value.to, 'yyyy.MM.dd')}
-                            </>
-                          ) : (
-                            format(field.value.from, 'yyyy.MM.dd')
-                          )
-                        ) : (
-                          <span>Хугацаа сонгох</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar initialFocus mode="range" selected={field.value} onSelect={field.onChange} numberOfMonths={2} disabled={(date) => date < new Date()} />
-                  </PopoverContent>
-                </Popover>
+                <FormLabel className="text-sm">Чөлөө авах өдөр*</FormLabel>
+                <div className="border rounded-md">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant={'outline'} className="w-full pl-3 text-left font-normal">
+                          {format(field.value, 'yyyy.MM.dd')}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="end">
+                      <Calendar data-testid="calendar-input" mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                    </PopoverContent>
+                  </Popover>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="lead"
@@ -100,7 +75,6 @@ const RequestcomPaid = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="notes"
@@ -121,7 +95,6 @@ const RequestcomPaid = () => {
           </div>
         </form>
       </Form>
-      <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };
