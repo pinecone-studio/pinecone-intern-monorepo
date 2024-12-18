@@ -15,11 +15,19 @@ export const typeDefs = gql`
     updatedAt: Date!
   }
 
+  type PopulatedFollowers {
+    _id: ID!
+    followeeId: User!
+    followerId: User!
+    createdAt: Date!
+  }
+
   type Query {
     getAllUsers: [User!]!
     getUserById(_id: ID!): User!
     getUserByUsername(username: String!): User!
     getUserBySearch(searchInput: String!): [User!]
+    getSuggestedUsers(_id: ID!): [PopulatedFollowers!]!
   }
 
   input RegisterInput {
