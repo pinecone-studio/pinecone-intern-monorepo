@@ -5,8 +5,8 @@ import Link from 'next/link';
 const Addpassword = () => {
   const [step, setStep] = useState<'forget' | 'confirm' | 'newpassword'>('forget');
 
-  const toggle = (step: 'forget' | 'confirm') => {
-    setStep(step);
+  const toggle = (el: 'forget' | 'confirm') => {
+    setStep(el);
   };
 
   return (
@@ -15,7 +15,6 @@ const Addpassword = () => {
         <img className="w-[100px] h-[24px]" src="redlogo.png" alt="Logo" />
         <div className="flex gap-2 h-[92px] w-[350px] items-center flex-col">
           <div className="font-semibold text-2xl">Create password</div>
-          {step}
           <div className="font-normal text-center text-sm text-[#71717A]">Use a minimum of 10 characters, including uppercase letters, lowercase letters, and numbers</div>
         </div>
         <div className="flex flex-col gap-4">
@@ -27,7 +26,12 @@ const Addpassword = () => {
             <div className="font-medium text-sm">Confirm password</div>
             <input placeholder="Password repeat" className="w-[350px] h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]" type="text" />
           </div>
-          <Link href="signin" className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48]" onClick={() => toggle('confirm')}>
+          <Link
+            href="signin"
+            data-testid="continue-btn"
+            className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48]"
+            onClick={() => toggle('confirm')}
+          >
             Continue
           </Link>
         </div>

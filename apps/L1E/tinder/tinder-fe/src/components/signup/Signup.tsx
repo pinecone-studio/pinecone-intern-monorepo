@@ -26,7 +26,11 @@ const Signup = () => {
                 <input placeholder="name@example.com" className="w-[350px] h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]" type="text" name="" id="" />
               </div>
             </div>
-            <button onClick={() => jumper('confirm')} className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48E5]">
+            <button
+              data-testid="continue-btn"
+              onClick={() => jumper('confirm')}
+              className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48E5]"
+            >
               Continue
             </button>
             <div className="flex justify-between items-center">
