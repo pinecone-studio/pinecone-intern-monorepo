@@ -1,7 +1,6 @@
 'use client';
 
 import { Logo } from '../common/Logo';
-
 import { Title } from '../common/Title';
 import { Tinder } from '../common/Tinder';
 import { Button } from '@/components/ui/button';
