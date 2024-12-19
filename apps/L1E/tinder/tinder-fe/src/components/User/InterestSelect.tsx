@@ -5,7 +5,7 @@ import { Logo } from '../Logo';
 import { Title } from '../common/Title';
 import { Tinder } from '../common/Tinder';
 import { Button } from '@/components/ui/button';
-import { SelectDemo } from '@/components/User/Select';
+import { SelectDemo } from '@/components/user/Select';
 
 export const InterestSelect = () => {
   return (
