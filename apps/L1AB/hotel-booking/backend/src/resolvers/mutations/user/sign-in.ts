@@ -18,7 +18,7 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input }) => {
 
   const token = jwt.sign(
     {
-      user: user,
+      user: user._id,
     },
     process.env.JWT_SECRET!
   );

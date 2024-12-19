@@ -32,12 +32,7 @@ describe('signIn resolver', () => {
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(true);
     (jwt.sign as jest.Mock).mockReturnValue('token');
 
-    const response = await signIn!(
-      {},
-      { input: { email: 'test@example.com', password: 'password' } },
-      {} as any,
-      {} as GraphQLResolveInfo
-    );
+    const response = await signIn!({}, { input: { email: 'test@example.com', password: 'password' } }, {} as any, {} as GraphQLResolveInfo);
 
     expect(response).toEqual({
       user: {
@@ -49,18 +44,13 @@ describe('signIn resolver', () => {
     });
     expect(userModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(bcrypt.compare).toHaveBeenCalledWith('password', 'hashed_password');
-    expect(jwt.sign).toHaveBeenCalledWith(
-      { user: { _id: '1', email: 'test@example.com', password: 'hashed_password' } },
-      expect.any(String) 
-    );
+    expect(jwt.sign).toHaveBeenCalledWith({ user: '1' }, 'secret');
   });
 
   it('should fail when user is not found', async () => {
     (userModel.findOne as jest.Mock).mockResolvedValueOnce(null);
 
-    await expect(
-      signIn!({}, { input: { email: 'nonexistent@example.com', password: 'password' } }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('User not found');
+    await expect(signIn!({}, { input: { email: 'nonexistent@example.com', password: 'password' } }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('User not found');
     expect(userModel.findOne).toHaveBeenCalledWith({ email: 'nonexistent@example.com' });
   });
 
@@ -72,9 +62,7 @@ describe('signIn resolver', () => {
     });
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(false);
 
-    await expect(
-      signIn!({}, { input: { email: 'test@example.com', password: 'wrong_password' } }, {} as any, {} as GraphQLResolveInfo)
-    ).rejects.toThrow('Password or email is incorrect');
+    await expect(signIn!({}, { input: { email: 'test@example.com', password: 'wrong_password' } }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Password or email is incorrect');
     expect(userModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(bcrypt.compare).toHaveBeenCalledWith('wrong_password', 'hashed_password');
   });
