@@ -1,3 +1,14 @@
 mutation CreatePost($input: CreatePostInput!) {
-  createPost(input: $input)
+  createPost(input: $input) {
+    _id
+    userId {
+      username
+      _id
+      profilePicture
+    }
+    images
+    caption
+    createdAt
+    updatedAt
+  }
 }
