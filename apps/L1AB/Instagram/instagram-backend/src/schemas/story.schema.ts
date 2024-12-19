@@ -11,17 +11,17 @@ export const typeDefs = gql`
     userId: ID!
     image: String!
   }
-
-  # type GetAllStoriesResponse {
-  #   userId: [Story!]!
-  # }
-
   type Query {
     getAllStories: [Story!]!
   }
 
+  input DeleteStoryInput {
+    _id: ID!
+    userId: ID!
+  }
+
   type Mutation {
     createStory(input: CreateStoryInput!): Response!
-    deleteStory(_id: ID!): Response!
+    deleteStory(input: DeleteStoryInput!): Response!
   }
 `;
