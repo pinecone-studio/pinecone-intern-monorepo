@@ -1,13 +1,10 @@
 import { PersonalInfo } from './PersonalInfo';
-
 import { GenderPreference } from './GenderPreference';
-
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bio } from './Bio';
-
 import Interests from './Interests';
-import { DateOfBirth } from '@/components/user/DateOfBirth';
+import { DateOfBirth } from '../user/DateOfBirth';
 
 export const ProfileSection = () => {
   return (
