@@ -1,4 +1,4 @@
-import { Done } from '@/components/UserDetails/Done';
+import Done from '../../../src/components/common/Done';
 import { render, screen } from '@testing-library/react';
 
 describe('Done page component', () => {

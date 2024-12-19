@@ -1,6 +1,5 @@
-import { SelectDemo } from '@/components/UserDetails/Select';
+import { SelectDemo } from '../../../src/components/users/Select';
 import { render, screen } from '@testing-library/react';
-
 
 describe('SelectDemo component', () => {
   it('renders successfully with a placeholder', () => {
