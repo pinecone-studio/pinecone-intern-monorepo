@@ -15,16 +15,16 @@ export type UserType = {
 const UserSchema = new Schema<UserType>({
   username: {
     type: String,
-    required: true,
+    required: false,
     default: 'no name',
   },
   fullname: {
     type: String,
-    required: true,
+    required: false,
   },
   interested: {
     type: String,
-    required: true,
+    required: false,
     default: 'prefet not to say',
     enum: ['male', 'female', 'prefet not to say'],
   },
@@ -38,7 +38,7 @@ const UserSchema = new Schema<UserType>({
   },
   profilePicture: {
     type: String,
-    required: true,
+    required: false,
     default: '',
   },
   createdAt: {
