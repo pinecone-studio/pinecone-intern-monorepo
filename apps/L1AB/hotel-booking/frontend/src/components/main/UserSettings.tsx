@@ -14,22 +14,21 @@ export const UserSettings = () => {
         <p className="text-[#71717A] text-sm font-thin mb-2">keep your account safe with a secure password</p>
 
         <div className="flex border border-x-1 mb-2"></div>
-        <div className="flex w-full gap-4">
-          <Button className=" flex w-full gap-2 bg-white text-black border  hover:bg-white">
+        <div className="flex w-full gap-4 justify-center">
+          <Button className=" flex h-[72px]  gap-2 bg-white text-black border  hover:bg-white">
             <Mail />
             <div className="flex  items-start flex-col p-4">
               <div>Email</div>
               <div>n.shagai@pinecone.mn</div>
             </div>
           </Button>
-          <Button className=" flex w-full gap-2 bg-white text-black border  hover:bg-white">
+
+          <Button className=" flex h-[72px] w-full gap-2 bg-white text-black border  hover:bg-white">
             <div>
               <LucideKey />
             </div>
             <div className="flex  items-start p-4">
               <div>Change passowrd</div>
-            </div>
-            <div>
             </div>
           </Button>
         </div>
