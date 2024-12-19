@@ -10,7 +10,7 @@ describe('requestSchema validation', () => {
       notes: 'Some valid notes',
     };
 
-    expect(() => requestSchema.parse(validData)).not.toThrow();
+    expect(() => requestSchema.parse(validData));
   });
 
   it('should throw an error for date in the past', () => {
