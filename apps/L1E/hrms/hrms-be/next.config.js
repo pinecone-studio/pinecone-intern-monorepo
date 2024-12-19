@@ -23,6 +23,7 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI,
+    LOCAL_BACKEND_URI: process.env.LOCAL_BACKEND_URI,
   },
   nx: {
     svgr: false,
