@@ -1,4 +1,4 @@
-import DateOfBirth from '../../../src/components/user/DateOfBirth';
+import DateOfBirth from '../../../src/components/users/DateOfBirth';
 import { render, screen } from '@testing-library/react';
 
 describe('Date of birth page component ', () => {

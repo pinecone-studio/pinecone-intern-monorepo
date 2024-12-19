@@ -1,4 +1,4 @@
-import { SelectDemo } from '../../../src/components/user/Select';
+import { SelectDemo } from '../../../src/components/users/Select';
 import { render, screen } from '@testing-library/react';
 
 describe('SelectDemo component', () => {

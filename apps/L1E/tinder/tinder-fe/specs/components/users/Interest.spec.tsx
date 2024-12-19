@@ -1,4 +1,4 @@
-import { InterestSelect } from '../../../src/components/user/InterestSelect';
+import { InterestSelect } from '../../../src/components/users/InterestSelect';
 import { render, screen } from '@testing-library/react';
 
 describe('Interest page component', () => {
