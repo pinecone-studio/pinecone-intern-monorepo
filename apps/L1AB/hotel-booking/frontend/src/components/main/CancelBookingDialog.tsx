@@ -1,13 +1,16 @@
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { IoChevronBack } from 'react-icons/io5';
+import Link from 'next/link';
 export const CancelBookingDialog = () => {
   return (
     <div className="w-screen flex flex-col justify-center items-center">
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col justify-start w-full">
-          <button className="w-[32px] h-[32px] border border-gray-300 rounded-xl justify-center items-center flex">
-            <IoChevronBack />
-          </button>
+          <Link href={`/bookings/6756916da16039f4108550f4`}>
+            <button className="w-[32px] h-[32px] border border-gray-300 rounded-xl justify-center items-center flex">
+              <IoChevronBack />
+            </button>
+          </Link>
           <h1 className="font-bold mt-5">Cancellation rules</h1>
         </div>
         <div className="w-[626px] h-[252px] text-s flex flex-col justify-between">

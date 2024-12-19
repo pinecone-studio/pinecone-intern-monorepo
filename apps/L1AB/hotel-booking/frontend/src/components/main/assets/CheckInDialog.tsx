@@ -3,8 +3,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+type CheckInDialogType = {
+  checkInDialogPhone: string;
+};
 
-export const CheckInDialog = () => {
+export const CheckInDialog = ({ checkInDialogPhone }: CheckInDialogType) => {
   return (
     <div>
       <Dialog>
@@ -47,7 +50,7 @@ export const CheckInDialog = () => {
                 Contact Information
               </Label>
               <p className="text-sm font-thin list-inside list-disc">
-                If you need assistance before your arrival, please contact us at <span className="border-b-2 border-[#09090B]"> +976 70080072 </span> or{' '}
+                If you need assistance before your arrival, please contact us at <span className="border-b-2 border-[#09090B]"> +976 {checkInDialogPhone} </span> or{' '}
                 <span className="border-b-2 border-[#09090B]">support@pedia.mn. </span>
               </p>
             </div>
