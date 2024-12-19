@@ -14,10 +14,12 @@ import {
   HotelDetailsRoomTypes,
   HotelDetailsUpcomingBookings,
 } from './assets/hotel-details';
+import { useAdmin } from '../providers/AdminProvider';
 
 export const HotelDetails = () => {
+  const { addHotelForm } = useAdmin();
   return (
-    <DetailsContainer>
+    <DetailsContainer name={addHotelForm.values.name || 'New Hotel'}>
       <DetailsLeft>
         <DetailsCard>
           <HotelDetailsUpcomingBookings />
@@ -49,7 +51,7 @@ export const HotelDetails = () => {
           <HotelDetailsLocation />
         </DetailsCard>
         <DetailsCard>
-          <HotelDetailsImages />
+          <HotelDetailsImages images={addHotelForm.values.images} />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>

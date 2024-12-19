@@ -1,10 +1,10 @@
 'use client';
 
-import { GetHotelByIdQuery, useCreateHotelMutation, useGetHotelByIdQuery } from '@/generated';
+import { GetHotelByIdQuery, GetRoomByIdQuery, useCreateHotelMutation, useGetHotelByIdQuery, useGetRoomByIdQuery } from '@/generated';
 import { FormikErrors, FormikProps, FormikTouched, useFormik } from 'formik';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
-import * as Yup from 'yup';
+import { hotelValidations, roomValidations } from './utils/Validations';
 
 type HotelFormValues = {
   name: string;
@@ -16,30 +16,33 @@ type HotelFormValues = {
   city: string;
   images: string[];
 };
-
+type RoomFormValues = {
+  name: string;
+  description: string;
+  roomNumber: string;
+  roomType: string;
+  price: number;
+  photos?: string[] | null;
+};
 type AdminContextType = {
   isAdmin: boolean;
   addHotelForm: FormikProps<HotelFormValues>;
+  addRoomForm: FormikProps<RoomFormValues>;
   hotelData: GetHotelByIdQuery | undefined;
+  roomData: GetRoomByIdQuery | undefined;
   hotelLoading: boolean;
+  roomLoading: boolean;
   // eslint-disable-next-line no-unused-vars
   showError: (field: keyof HotelFormValues, errors: FormikErrors<HotelFormValues>, touched: FormikTouched<HotelFormValues>) => boolean;
 };
 const AdminContext = createContext<AdminContextType>({} as AdminContextType);
 export const AdminProvider = ({ children }: PropsWithChildren) => {
-  const { hotel } = useParams();
+  const router = useRouter();
+  const { hotel, room } = useParams();
   const { data: hotelData, loading: hotelLoading } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
+  const { data: roomData, loading: roomLoading } = useGetRoomByIdQuery({ variables: { id: room as string } });
   const [createHotel] = useCreateHotelMutation();
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    phone: Yup.string().min(8, 'Phone must be at least 8 characters').required('Phone is required'),
-    description: Yup.string(),
-    rating: Yup.number().min(0).max(10),
-    stars: Yup.number().min(0).max(5),
-    address: Yup.string().required('Address is required'),
-    city: Yup.string().required('City is required'),
-    images: Yup.array().of(Yup.string().url()),
-  });
+
   const addHotelForm = useFormik<HotelFormValues>({
     enableReinitialize: true,
     initialValues: {
@@ -52,7 +55,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
       city: 'city',
       images: [],
     },
-    validationSchema,
+    validationSchema: hotelValidations,
     onSubmit: async (values) => {
       const { data: newHotelData } = await createHotel({
         variables: {
@@ -60,9 +63,31 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
         },
       });
       const newHotelId = newHotelData?.createHotel._id;
-      console.log(newHotelId);
+      router.push(`/admin/hotel/${newHotelId}`);
     },
   });
+  const addRoomForm = useFormik<RoomFormValues>({
+    enableReinitialize: true,
+    initialValues: {
+      name: '',
+      description: '',
+      roomNumber: '',
+      roomType: '',
+      price: 0,
+      photos: [],
+    },
+    validationSchema: roomValidations,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+  useEffect(() => {
+    if (roomData) {
+      addRoomForm.setValues({
+        ...roomData.getRoomById[0],
+      });
+    }
+  }, [roomData]);
   useEffect(() => {
     if (hotelData) {
       addHotelForm.setValues({
@@ -76,7 +101,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
     }
     return Boolean(errors[field] && touched[field]);
   };
-  return <AdminContext.Provider value={{ isAdmin: true, addHotelForm, showError, hotelData, hotelLoading }}>{children}</AdminContext.Provider>;
+  return <AdminContext.Provider value={{ isAdmin: true, addHotelForm, addRoomForm, showError, hotelData, roomData, hotelLoading, roomLoading }}>{children}</AdminContext.Provider>;
 };
 
 export const useAdmin = () => useContext(AdminContext);

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export const GuestInfo = () => {
   return (
-    <DetailsContainer>
+    <DetailsContainer name="no">
       <DetailsLeft>
         <DetailsCard>
           <div>

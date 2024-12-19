@@ -9,20 +9,18 @@ const mockBookings = [
   { _id: 3, guestName: 'Emily White', status: 'Confirmed', date: '2024-12-25' },
   { _id: 4, guestName: 'Michael Brown', status: 'Cancelled', date: '2025-01-05' },
 ];
-import { useGetRoomByIdQuery } from '@/generated';
-import { useParams } from 'next/navigation';
+
 import { RoomDetailsGeneralInfo, RoomDetailsRoomServices, RoomDetailsUpcomingBookings } from './assets/room-details';
 import { HotelDetailsImages } from './assets/hotel-details';
+import { useAdmin } from '../providers/AdminProvider';
 
 export const RoomDetails = () => {
-  const { room } = useParams();
-  const { data } = useGetRoomByIdQuery({ variables: { id: room as string } });
-  const RoomDetails = data?.getRoomById[0];
+  const { addRoomForm } = useAdmin();
   return (
-    <DetailsContainer>
+    <DetailsContainer name={addRoomForm.values.name || 'New Room'}>
       <DetailsLeft>
         <DetailsCard>
-          <RoomDetailsGeneralInfo name={RoomDetails?.name} type={RoomDetails?.roomType} price={RoomDetails?.price} />
+          <RoomDetailsGeneralInfo />
         </DetailsCard>
         <DetailsCard>
           <RoomDetailsUpcomingBookings mockBookings={mockBookings} />
@@ -33,7 +31,7 @@ export const RoomDetails = () => {
       </DetailsLeft>
       <DetailsRight>
         <DetailsCard>
-          <HotelDetailsImages />
+          <HotelDetailsImages images={addRoomForm.values.photos || []} />
         </DetailsCard>
       </DetailsRight>
     </DetailsContainer>
