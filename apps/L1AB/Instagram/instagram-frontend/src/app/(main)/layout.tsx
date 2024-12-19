@@ -9,6 +9,7 @@ import { ApolloWrapper, ThemeProvider, UserProvider } from '@/components/provide
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { NotificationProvider } from '@/components/providers/NotificationProvider';
 
+
 interface User {
   _id: string;
   email: string;

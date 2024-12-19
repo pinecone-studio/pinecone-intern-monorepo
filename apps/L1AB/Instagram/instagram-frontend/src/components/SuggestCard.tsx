@@ -8,7 +8,7 @@ export const SuggestCard = () => {
         <p className="text-sm font-medium cursor-pointer dark:font-sans dark:font-medium">See All</p>
       </div>
 
-      <div className="">
+      <div>
         <UsersMap />
       </div>
 

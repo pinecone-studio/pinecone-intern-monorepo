@@ -80,6 +80,7 @@ export const LeftSideBar = () => {
 
   return (
     <div data-cy="LeftSideBar" className="fixed z-20 left-0  dark:bg-black dark:text-white">
+
       <div>
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} visitedUsers={visitedUsers} visitedUsersHandler={visitedUsersHandler} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
