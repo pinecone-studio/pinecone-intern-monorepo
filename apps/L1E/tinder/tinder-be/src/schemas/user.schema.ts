@@ -21,10 +21,10 @@ export const typeDefs = gql`
   }
 
   input RegisterInput {
-    fullname: String!
-    username: String!
     email: String!
     password: String!
+    fullname: String
+    username: String
   }
 
   input UpdateInput {
