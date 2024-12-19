@@ -1,7 +1,7 @@
 'use client';
 import { Logo } from '../Logo';
-import { Title } from '../mkae/Title';
-import { Tinder } from '../mkae/Tinder2024';
+import { Title } from '../common/Title';
+import { Tinder } from '../common/Tinder2024';
 import { Button } from '@/components/ui/button';
 
 export const Done = () => {
@@ -12,8 +12,7 @@ export const Done = () => {
           <Logo />
         </div>
         <div className="w-[320px] h-[220px] flex flex-col justify-center items-center gap-6">
-          <div className="w-12 h-12">
-          </div>
+          <div className="w-12 h-12"></div>
 
           <Title text="You're all set!" desc="Your account is all set. You're ready to explore and connect!" />
           <Button className="bg-[#E11D48E5] text-white rounded-full w-[127px] h-[40px] ">Start Swiping!</Button>
