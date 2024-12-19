@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DoorClosed } from 'lucide-react';
 
 import { useAdmin } from '@/components/providers/AdminProvider';
+import Link from 'next/link';
 
 export const HotelDetailsRoomTypes = () => {
   const [activeTab, setActiveTab] = useState('ALL');
@@ -24,9 +24,9 @@ export const HotelDetailsRoomTypes = () => {
     <div data-testid="HotelDetailsRoomTypes" className="flex flex-col">
       <div className="flex justify-between">
         <div className="font-semibold mb-6 text-lg">Room Types</div>
-        <Button className="border-none text-[#2563EB]" variant="outline">
-          + Add Room
-        </Button>
+        <Link href={hotelData?.getHotelById._id ? `/admin/hotels/${hotelData?.getHotelById._id}/addRoom` : '/admin/hotels/addHotel'}>
+          <div className="text-[#2563EB] text-sm">+ Add Room</div>
+        </Link>
       </div>
       <Tabs data-testid="" value={activeTab} onValueChange={setActiveTab} className="w-[223px] mb-4">
         <TabsList>
