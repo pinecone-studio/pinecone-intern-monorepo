@@ -1,4 +1,4 @@
-import { UserInformation } from '../../../src/components/user/UserInformation';
+import { UserInformation } from '../../../src/components/users/UserInformation';
 import { render, screen } from '@testing-library/react';
 
 describe('User Information', () => {

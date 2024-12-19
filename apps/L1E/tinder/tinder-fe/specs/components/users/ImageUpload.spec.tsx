@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ImageUpload } from '../../../src/components/user/ImageUpload';
+import { ImageUpload } from '../../../src/components/users/ImageUpload';
 
 describe('ImageUpload', () => {
   it('Should the ImageUpload component success', () => {
