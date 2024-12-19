@@ -2,7 +2,7 @@
 // ene deer contextiin type aa bicheerei
 
 type User = {
-  userId: string;
+  userId?: string;
 };
 
 export type Context = {
