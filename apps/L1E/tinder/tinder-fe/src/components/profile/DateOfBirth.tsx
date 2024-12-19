@@ -1,6 +1,8 @@
 'use client';
 
-import { InputForm } from '../mkae/InputForm';
+import { InputForm } from "../common/InputForm";
+
+
 export const DateOfBirth = () => {
   return (
     <div className="">

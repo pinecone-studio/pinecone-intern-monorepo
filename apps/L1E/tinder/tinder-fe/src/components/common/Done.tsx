@@ -1,7 +1,7 @@
 'use client';
 import { Logo } from '../Logo';
-import { Title } from '../common/Title';
-import { Tinder } from '../common/Tinder';
+import { Title } from './Title';
+import { Tinder } from './Tinder';
 import { Button } from '@/components/ui/button';
 
 export const Done = () => {
