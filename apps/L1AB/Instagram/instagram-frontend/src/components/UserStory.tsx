@@ -5,6 +5,19 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Story } from '@/generated';
 import { formatDistanceToNow } from 'date-fns';
+import { IoIosMore } from 'react-icons/io';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 type PropsType = {
   userId: string;
@@ -19,8 +32,8 @@ type PropsType = {
 export const UserStory = ({ userId, stories, username, profilePicture, prevUser, nextUser, mainUserStory }: PropsType) => {
   const { groupedStories } = useStory();
   const userStoriesGroup = groupedStories![userId];
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const deleteStory = () => {};
 
   const prev = async () => {
     if (currentImageIndex === 0) {
@@ -82,6 +95,32 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
             <h1 className="text-white">{username}</h1>
             <div className="text-white"> {date ? formatDistanceToNow(new Date(date), { addSuffix: true }) : 'Just now'}</div>
           </div>
+        </div>
+        <div className="absolute z-10 top-12 right-12">
+          <AlertDialog>
+            <Popover>
+              <PopoverTrigger>
+                {' '}
+                <IoIosMore className="text-white" />
+              </PopoverTrigger>
+
+              <AlertDialogTrigger>
+                <PopoverContent className="text-red-500 w-30 h-10 flex items-center mr-20 text-[14px] cursor-pointer">Delete story </PopoverContent>{' '}
+              </AlertDialogTrigger>
+              <AlertDialogContent className="w-[350px]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete story?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You can restore unarchived stories for 24 hours, or 30 days for archived stories, from Recently deleted in Your activity. After that, it will be permanently deleted.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction className="text-red-500 bg-white">Delete</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </Popover>
+          </AlertDialog>
         </div>
       </div>
 
