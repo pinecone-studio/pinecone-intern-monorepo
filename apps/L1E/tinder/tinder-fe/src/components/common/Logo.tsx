@@ -1,4 +1,4 @@
-export const Logo = () => {
+ const Logo = () => {
   return (
     <>
       <div className="w-25 h-6 " data-testid="mock-logo">
@@ -31,3 +31,4 @@ export const Logo = () => {
     </>
   );
 };
+export default Logo

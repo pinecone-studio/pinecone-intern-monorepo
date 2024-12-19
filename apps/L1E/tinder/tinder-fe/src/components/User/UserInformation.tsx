@@ -2,9 +2,9 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
-import { Logo } from '../common/Logo';
-import { Title } from '../common/Title';
-import { Tinder } from '../common/Tinder';
+import Logo from '../common/Logo';
+import Title from '../common/Title';
+import Tinder from '../common/Tinder';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';

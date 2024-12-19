@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bio } from './Bio';
 import Interests from './Interests';
-import { DateOfBirth } from '../user/DateOfBirth';
+import DateOfBirth from '../user/DateOfBirth';
 
 export const ProfileSection = () => {
   return (

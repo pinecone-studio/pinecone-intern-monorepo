@@ -1,10 +1,10 @@
 'use client';
-import { Logo } from './Logo';
-import { Title } from './Title';
-import { Tinder } from './Tinder';
 import { Button } from '@/components/ui/button';
+import Logo from './Logo';
+import Title from './Title';
+import Tinder from './Tinder';
 
-export const Done = () => {
+const Done = () => {
   return (
     <div className="flex w-screen h-screen justify-center items-center ">
       <div className="w-screen h-screen flex flex-col justify-between items-center ">
@@ -21,3 +21,5 @@ export const Done = () => {
     </div>
   );
 };
+
+export default Done;
