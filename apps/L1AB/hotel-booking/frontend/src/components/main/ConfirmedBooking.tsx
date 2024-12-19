@@ -6,7 +6,7 @@ type ConfirmedBookingProps = {
 };
 
 export const ConfirmedBooking = ({ data }: ConfirmedBookingProps) => {
-  console.log(data, 'data===bookingData from ConfirmedBooking');
+  // console.log(data, 'data===bookingData from ConfirmedBooking');
   const confirmedData = data?.filter((el: any) => el.status === 'booked');
 
   return (

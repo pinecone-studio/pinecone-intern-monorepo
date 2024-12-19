@@ -66,7 +66,7 @@ export const BookingCard = ({ hotelName, description, checkIn, status, traveller
               <h1>72055771948934</h1>
             </div>
             <div className="flex items-center">
-              <Link href="/bookings/previousBooking">
+              <Link href={`/bookings/6756916da16039f4108550f4`}>
                 <button className="w-[100px] h-[36px] border rounded-xl flex justify-center items-center text-sm">View Detail</button>
               </Link>
             </div>

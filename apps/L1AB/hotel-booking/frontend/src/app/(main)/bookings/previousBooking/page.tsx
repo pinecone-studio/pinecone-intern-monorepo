@@ -1,10 +1,4 @@
-import { BookingDetails } from '@/components/main/BookingDetails';
-
 const PrevBooking = () => {
-  return (
-    <div>
-      <BookingDetails />
-    </div>
-  );
+  return <div>Hi previous Booking page</div>;
 };
 export default PrevBooking;

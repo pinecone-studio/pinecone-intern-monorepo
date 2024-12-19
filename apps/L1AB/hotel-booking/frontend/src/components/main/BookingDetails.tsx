@@ -1,60 +1,33 @@
 import React from 'react';
-import { CheckInDialog, Container, ViewPricingDialog, ViewRulesDialog } from './assets';
+import { Container, ViewRulesDialog } from './assets';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { BookingDetailRoom } from './BookingDetailRoom';
+import { Booking } from '@/generated';
+import { BookedComponent } from './BookedComponent';
 
-export const BookingDetails = () => {
+type BookingDetailsType = {
+  data: Booking;
+};
+
+export const BookingDetails = ({ data }: BookingDetailsType) => {
+  console.log(data, 'data=== FROM BOOKINGDETAILS component');
+
   return (
     <Container backgroundColor="bg-white">
-      <Button variant="outline" size="icon">
-        <ChevronLeft className="bg-gray-200 rounded-md" />
-      </Button>
-      <div className="flex gap-6 p-4 border ">
-        <div className="flex flex-col w-full border border-[#E4E4E7] p-3 rounded-xl">
-          <div>
-            <div className="flex justify-between gap-2 mb-4">
-              <h3 className="font-bold"> Flower Hotel Ulaanbaatar</h3>
-
-              <Button asChild className="bg-[#18BA51]">
-                <Link href="/login">Booked</Link>
-              </Button>
-            </div>
-            <div className="flex w-full gap-6 mb-4">
-              <div className="flex w-full flex-col">
-                <p className="text-[#71717A] text-sm">Check out</p>
-                <p>Tuesday, Jul 2,11:00am</p>
-              </div>
-              <div className=" flex px-4 gap-3">
-                <div className="h-full w-[1px] border border-[#E4E4E7]"></div>
-              </div>
-              <div className="flex  w-full flex-col">
-                <p className="text-[#71717A] text-sm">Check Out</p>
-                <p>Tuesday, Jul 3,11:00am</p>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <div>
-                <CheckInDialog />
-              </div>
-              <div>
-                <ViewPricingDialog />
-              </div>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Button variant="outline" className="border border-[#E4E4E7] rounded-xl">
-                Contract property
-              </Button>
-              <Button variant="secondary" className="bg-[#2563EB] text-[#FAFAFA]">
-                Cancel booking
-              </Button>
-              <div className="border border-[#E4E4E7] my-5"></div>
-            </div>
-          </div>
+      <Link href="/bookings">
+        <Button variant="outline" size="icon">
+          <ChevronLeft className="bg-gray-200 rounded-md" />
+        </Button>
+      </Link>
+      <div className="flex gap-6 p-4">
+        <div className="flex flex-col w-full border border-[#E4E4E7] p-8 rounded-xl">
+          <BookedComponent data={data} />
           <div className="flex flex-col gap-4">
             <div className="text-[#71717A] text-sm">Room detail</div>
             <div className="font-semibold ">
-              <h4>Standard Single Room, 1 King Bed</h4>
+              <h4>{data?.roomId.name}, 1 King Bed</h4>
             </div>
             <div className="flex flex-col">
               <div className="flex flex-col gap-5">
@@ -63,7 +36,9 @@ export const BookingDetails = () => {
                   <h1>Request</h1>
                 </div>
                 <div className="flex gap-10">
-                  <h1>Nyamdorj Shagai, 1 adult</h1>
+                  <h1>
+                    {data?.firstName} {data?.lastName}, {data?.traveller} adult
+                  </h1>
                   <h1>Non-Smoking</h1>
                 </div>
               </div>
@@ -83,32 +58,18 @@ export const BookingDetails = () => {
               <h3>72055771948934</h3>
             </div>
             <Button variant="outline" className="border border-[#E4E4E7] rounded-xl">
-              Call +976 70080072
+              Call +976 {data?.phoneNumber}
             </Button>
           </div>
         </div>
-        <div className="flex flex-col w-[480px] p-3 border ">
-          <div className="border border-[#E4E4E7] p-3 rounded-xl">
-            <div>
-              <div className="bg-pink-100 w-96 h-56"></div>
-            </div>
-            <div className="flex flex-col mt-3 gap-3 ">
-              <h1 className="font-bold"> Flower Hotel Ulaanbaatar</h1>
-              <p className="text-[#71717A] text-sm">Zaluuchuud Avenue, 18, Bayanzurkh, Ulaanbaatar, Ulaanbaatar, 001334</p>
-            </div>
-            <div className="flex flex-row gap-1 mt-3">
-              <button className="w-[39px] h-[20px] border rounded-3xl bg-blue-600 text-white flex justify-center items-center text-sm">8.6</button>
-              <h3>Excellent</h3>
-            </div>
-            <div className="border border-[#E4E4E7] mt-5 "></div>
-            <div className="mt-3">
-              <Link href="https://www.google.com/maps">
-                <Button className="w-full border border-[#E4E4E7] rounded-xl" variant="outline">
-                  View in Google Maps
-                </Button>
-              </Link>
-            </div>
-          </div>
+        <div className="flex flex-col w-[480px] ">
+          <BookingDetailRoom
+            hotelDetailName={data?.roomId.hotelId.name}
+            hotelDetailLocation={data?.roomId.hotelId.address}
+            HotelDetailPhone={data?.roomId.hotelId.phone}
+            photos={data?.roomId.photos ?? []}
+            rating={data?.roomId.hotelId.rating}
+          />
         </div>
       </div>
     </Container>
