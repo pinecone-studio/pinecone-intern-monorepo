@@ -2,8 +2,8 @@
 
 import { Logo } from '../Logo';
 import { SelectDemo } from './Select';
-import { Title } from '../mkae/Title';
-import { Tinder } from '../mkae/Tinder2024';
+import { Title } from '../common/Title';
+import { Tinder } from '../common/Tinder2024';
 import { Button } from '@/components/ui/button';
 
 export const InterestSelect = () => {

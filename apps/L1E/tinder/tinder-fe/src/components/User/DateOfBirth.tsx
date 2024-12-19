@@ -1,8 +1,8 @@
 'use client';
 import { Logo } from '../Logo';
-import { Title } from '../mkae/Title';
-import { Tinder } from '../mkae/Tinder2024';
-import { InputForm } from '../mkae/InputForm';
+import { Title } from '../common/Title';
+import { Tinder } from '../common/Tinder2024';
+import { InputForm } from '../common/InputForm';
 import { Button } from '@/components/ui/button';
 
 export const DateOfBirth = () => {

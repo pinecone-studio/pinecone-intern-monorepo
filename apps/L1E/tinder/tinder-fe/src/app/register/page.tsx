@@ -1,8 +1,8 @@
-import { DateOfBirth } from '@/components/User/DateOfBirth';
-import { Done } from '@/components/User/Done';
-import { ImageUpload } from '@/components/User/ImageUpload';
-import { InterestSelect } from '@/components/User/InterestSelect';
-import { UserInformation } from '@/components/User/UserInformation';
+import { DateOfBirth } from '@/components/user/DateOfBirth';
+import { Done } from '@/components/user/Done';
+import { ImageUpload } from '@/components/user/ImageUpload';
+import { InterestSelect } from '@/components/user/InterestSelect';
+import { UserInformation } from '@/components/user/UserInformation';
 const page = () => {
   return (
     <div>

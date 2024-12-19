@@ -1,4 +1,4 @@
-import { InputForm } from '@/components/mkae/InputForm';
+import { InputForm } from '@/components/common/InputForm';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('InputForm Component', () => {

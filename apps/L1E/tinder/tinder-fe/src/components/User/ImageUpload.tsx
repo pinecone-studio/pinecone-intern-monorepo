@@ -2,8 +2,8 @@
 
 import { Button } from '@/components/ui/button';
 import { Logo } from '../Logo';
-import { Title } from '../mkae/Title';
-import { Tinder } from '../mkae/Tinder2024';
+import { Title } from '../common/Title';
+import { Tinder } from '../common/Tinder2024';
 
 export const ImageUpload = () => {
   return (
