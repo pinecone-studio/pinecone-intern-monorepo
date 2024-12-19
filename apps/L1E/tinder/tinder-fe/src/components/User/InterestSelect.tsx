@@ -1,10 +1,11 @@
 'use client';
 
 import { Logo } from '../Logo';
-import { SelectDemo } from './Select';
+
 import { Title } from '../common/Title';
 import { Tinder } from '../common/Tinder';
 import { Button } from '@/components/ui/button';
+import { SelectDemo } from '@/components/User/Select';
 
 export const InterestSelect = () => {
   return (
