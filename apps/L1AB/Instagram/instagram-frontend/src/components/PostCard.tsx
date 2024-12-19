@@ -33,7 +33,6 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   useEffect(() => {
     setUserId(user._id);
   }, []);
-  console.log(currentImageIndex);
 
   return (
     <div data-testid={`NewsFeedPostCard-${keyy}`} className="border-b">
