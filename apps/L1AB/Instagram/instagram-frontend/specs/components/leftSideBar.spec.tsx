@@ -4,6 +4,7 @@ import { LeftSideBar } from '@/components/LeftSideBar';
 import { GetUserBySearchDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { UserContext } from '@/components/providers/UserProvider';
+import { NotificationProvider } from '@/components/providers/NotificationProvider';
 
 const getUserBySearchMock = {
   request: {
@@ -44,7 +45,9 @@ describe('LeftSideBar', () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getUserBySearchMock]}>
         <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
-          <LeftSideBar />
+          <NotificationProvider>
+            <LeftSideBar />
+          </NotificationProvider>
         </UserContext.Provider>
       </MockedProvider>
     );
@@ -65,7 +68,9 @@ describe('LeftSideBar', () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getUserBySearchMock]}>
         <UserContext.Provider value={{ user: mockUser, users: '', followers: '', sortedUsers: '' }}>
-          <LeftSideBar />
+          <NotificationProvider>
+            <LeftSideBar />
+          </NotificationProvider>
         </UserContext.Provider>
       </MockedProvider>
     );
