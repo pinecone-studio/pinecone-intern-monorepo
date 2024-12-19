@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useCreateUserMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
 
 interface AddpasswordProps {
   formData: {
@@ -12,6 +13,8 @@ const Addpassword: React.FC<AddpasswordProps> = ({ formData }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
+  const router = useRouter();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -36,12 +39,13 @@ const Addpassword: React.FC<AddpasswordProps> = ({ formData }) => {
           input: {
             email: formData.email,
             password,
-            fullname: '',
-            username: '',
           },
         },
       });
+      router.push('/');
     } catch (error) {
+      setError('.as');
+
       console.error('Error creating user:', error);
     }
   };

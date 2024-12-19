@@ -29,6 +29,7 @@ describe('Addpassword Component', () => {
   it('should render the component correctly', () => {
     render(<Addpassword formData={mockFormData} />);
     expect(screen.getByText('Create password'));
+
     expect(screen.getByLabelText('Password'));
     expect(screen.getByLabelText('Confirm password'));
     expect(screen.getByText('Continue'));
@@ -64,13 +65,12 @@ describe('Addpassword Component', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
+      expect(screen.getByText('Continue'));
       expect(mockCreateUser).toHaveBeenCalledWith({
         variables: {
           input: {
             email: 'test@example.com',
             password: '12345',
-            fullname: '',
-            username: '',
           },
         },
       });
