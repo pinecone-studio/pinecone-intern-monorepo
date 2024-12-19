@@ -1,44 +1,50 @@
 import Signup from '@/components/signup/Signup';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+
+// Mock the Addpassword component
+jest.mock('@/components/signup/Addpassword', () => {
+  return jest.fn(() => <div data-testid="addpassword-mock">Addpassword Mock</div>);
+});
 
 describe('Signup Component', () => {
-  it('should initially render the signup step', () => {
+  it('renders signup step by default', () => {
     render(<Signup />);
-    expect(screen.getByText(/create an account/i));
+
+    expect(screen.getByText('Create an account'));
+    expect(screen.getByLabelText('Email'));
+    expect(screen.getByTestId('continue-btn'));
   });
 
-  it('should toggle to the confirm step when the "Continue" button is clicked', async () => {
+  it('displays error message for invalid email', () => {
     render(<Signup />);
 
-    const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    const emailInput = screen.getByLabelText('Email');
+    const continueButton = screen.getByTestId('continue-btn');
 
-    // const continueButton = screen.getByTestId('continue-btn');
-    // fireEvent.click(continueButton, 'Confirm Email');
-
-    // await waitFor(() => {
-    //   expect(screen.getByText('confirm email'));
-    // });
-  });
-
-  it('should not toggle if the email is invalid', async () => {
-    render(<Signup />);
-
-    const emailInput = screen.getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-
-    const continueButton = screen.getByTestId('continue-btn');
     fireEvent.click(continueButton);
+
+    expect(screen.getByText('Please enter a valid email address.'));
   });
 
-  it('should update the email state on input change', async () => {
+  it('transitions to confirm step with valid email', () => {
     render(<Signup />);
+
+    const emailInput = screen.getByLabelText('Email');
+    const continueButton = screen.getByTestId('continue-btn');
+
+    fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
+    fireEvent.click(continueButton);
+
+    expect(screen.getByTestId('addpassword-mock'));
   });
 
-  it('should go back to the previous step if "Back" button is clicked', async () => {
+  it('renders the login link', () => {
     render(<Signup />);
 
-    const continueButton = screen.getByTestId('continue-btn');
-    fireEvent.click(continueButton);
+    const loginLink = screen.getByTestId('link');
+    expect(loginLink);
+    expect(loginLink);
+    expect(screen.getByText('Log in'));
   });
 });

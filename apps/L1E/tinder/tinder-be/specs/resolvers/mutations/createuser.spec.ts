@@ -11,7 +11,7 @@ const mockUser = {
 
 jest.mock('../../../src/models/user.model.ts', () => ({
   userModel: {
-    findOne: jest.fn().mockResolvedValue(null), // Simulate no existing user found
+    findOne: jest.fn().mockResolvedValue(null),
     create: jest.fn().mockResolvedValue({
       toObject: () => mockUser,
     }),
@@ -25,13 +25,13 @@ describe('Create user', () => {
       {
         input: {
           email: mockUser.email,
-          password: 'plainPassword', // this will be hashed in the resolver
+          password: 'plainPassword',
         },
       },
       {
-        req: undefined, // Mock request object, if needed
+        req: undefined,
       },
-      {} as GraphQLResolveInfo // Empty resolve info
+      {} as GraphQLResolveInfo
     );
   });
 });
