@@ -1,17 +1,14 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { SuggestCard } from '@/components/SuggestCard';
-import { useCreateFollowersMutation } from '@/generated';
-jest.mock('@/generated', () => ({
-  useCreateFollowersMutation: jest.fn(),
-}));
-describe('SuggestCard', () => {
-  it('sould render successfully', async () => {
-    const mockCreateFollowers = jest.fn().mockResolvedValue({
-      data: { createFollowers: { id: 'new-follower-id', followeeId: 'some-id' } },
-    });
+import { MockedProvider } from '@apollo/client/testing';
 
-    useCreateFollowersMutation.mockReturnValue([mockCreateFollowers]);
-    render(<SuggestCard />);
+describe('SuggestCard', () => {
+  it('should render successfully', async () => {
+    render(
+      <MockedProvider>
+        <SuggestCard />
+      </MockedProvider>
+    );
   });
 });
