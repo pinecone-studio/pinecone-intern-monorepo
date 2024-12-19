@@ -1,4 +1,4 @@
-import { Title } from '../../../src/components/common/Title';
+import Title from '../../../src/components/common/Title';
 import { render, screen } from '@testing-library/react';
 
 describe('Title and Descriptions component', () => {

@@ -1,12 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { InputForm } from '../common/InputForm';
-import { Title } from '../common/Title';
-import { Logo } from '../common/Logo';
-import { Tinder } from '../common/Tinder';
+import Logo from '../common/Logo';
+import Title from '../common/Title';
+import InputForm from '../common/InputForm';
+import Tinder from '../common/Tinder';
 
-export const DateOfBirth = () => {
+const DateOfBirth = () => {
   return (
     <div className="w-screen h-screen justify-between items-center flex flex-col">
       <div className="w-screen h-screen flex justify-center mt-[80px] ">
@@ -26,3 +26,5 @@ export const DateOfBirth = () => {
     </div>
   );
 };
+
+export default DateOfBirth;

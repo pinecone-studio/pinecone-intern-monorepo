@@ -12,7 +12,7 @@ const FormSchema = z.object({
   }),
 });
 
-export const InputForm = () => {
+const InputForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -44,3 +44,5 @@ export const InputForm = () => {
     </Form>
   );
 };
+
+export default InputForm;

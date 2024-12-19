@@ -3,7 +3,7 @@ type TitleProps = {
   desc: string;
 };
 
-export const Title = ({ text, desc }: TitleProps) => {
+ const Title = ({ text, desc }: TitleProps) => {
   return (
     <>
       <div data-testid="mock-title" className="w-[350px] h-[72px] flex justify-center items-center flex-col gap-[4px] ">
@@ -13,3 +13,5 @@ export const Title = ({ text, desc }: TitleProps) => {
     </>
   );
 };
+
+export default Title;

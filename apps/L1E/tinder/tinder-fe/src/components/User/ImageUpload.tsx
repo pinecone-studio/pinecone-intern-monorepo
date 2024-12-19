@@ -1,9 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Title } from '../common/Title';
-import { Tinder } from '../common/Tinder';
-import { Logo } from '../common/Logo';
+import Logo from '../common/Logo';
+import Title from '../common/Title';
+import Tinder from '../common/Tinder';
+
 
 export const ImageUpload = () => {
   return (

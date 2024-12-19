@@ -1,4 +1,4 @@
-import { InputForm } from '../../../src/components/common/InputForm';
+import InputForm from '../../../src/components/common/InputForm';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('InputForm Component', () => {
