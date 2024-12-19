@@ -34,9 +34,9 @@ const FollowingButton: React.FC<FollowingButtonProps> = ({ handleFollowersUpdate
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 dark:text-white">
       {isFollowing ? (
-        <Button className="bg-[#2563EB] py-2 px-4 text-white hover:bg-[#2563EB] h-9 min-w-[91px]" onClick={handleFollow} data-testid="follow-button">
+        <Button className="bg-[#2563EB] py-2 px-4 text-white  hover:bg-[#2563EB] h-9 min-w-[91px]" onClick={handleFollow} data-testid="follow-button">
           {isLoading ? <Loading color={'#ffffff'} size={20} pageReload /> : 'Follow'}
         </Button>
       ) : (

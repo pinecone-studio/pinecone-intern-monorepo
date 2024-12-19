@@ -4,7 +4,7 @@ const LogoutDialog = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button data-testid="btn-logout" className="p-0 text-[11px] font-semibold text-[#2563EB] bg-white hover:bg-whte">
+        <Button data-testid="btn-logout" className="p-0 text-[11px] font-semibold text-[#2563EB] dark:bg-black bg-white hover:bg-whte">
           Log out
         </Button>
       </AlertDialogTrigger>

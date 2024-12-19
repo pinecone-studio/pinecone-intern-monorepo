@@ -13,11 +13,11 @@ interface MenuProps {
 
 export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
   return (
-    <>
+    <div className="dark:bg-black">
       <DropdownMenu>
-        <DropdownMenuTrigger className="focus:ring-0  outline-none w-full">
+        <DropdownMenuTrigger className="focus:ring-0  outline-none w-full dark:bg-black" data-testid="dropDownMenu">
           <NavigationLink href={undefined} name={isOpen ? '' : ''}>
-            <Menu className="stroke-inherit stroke-[1.5] min-w-6 w-6 group">
+            <Menu className="stroke-inherit stroke-[1.5] dark:stroke-white  min-w-6 w-6 group">
               <motion.path
                 transition={{
                   duration: 0.5,
@@ -54,6 +54,6 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           <DropdownMenuItem className="  h-12">Log out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };

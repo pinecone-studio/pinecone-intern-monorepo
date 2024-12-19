@@ -13,7 +13,12 @@ export const HomeButton = ({ isOpen, svgControls }: HomeProps) => {
   const pathname = usePathname();
   return (
     <NavigationLink href="/home" name={isOpen ? '' : 'Home'}>
-      <House className={pathname == '/home' ? ' min-w-6 w-6 cursor-pointer focus:stroke-[2.5] ' : 'stroke-inherit stroke-[1.5] min-w-6 w-6 cursor-pointer focus:stroke-[2.5]'} data-testid="home-click">
+      <House
+        className={
+          pathname == '/home' ? ' min-w-6 w-6 cursor-pointer dark:text-white  focus:stroke-[2.5] ' : 'stroke-inherit stroke-[1.5] min-w-6 w-6 dark:text-white cursor-pointer focus:stroke-[2.5]'
+        }
+        data-testid="home-click"
+      >
         <motion.path
           transition={{
             duration: 0.5,

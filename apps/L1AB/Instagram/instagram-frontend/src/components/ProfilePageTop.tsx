@@ -10,11 +10,11 @@ import { FollowersDialog } from './FollowersDialog';
 import { DarkMode } from './DarkMode';
 
 export const styles = {
-  button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9',
+  button: 'bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9 dark:font-sans dark:text-white dark:font-semibold dark:bg-[#363636]',
   buttonFollow: 'bg-[#2563EB] py-2 px-4 text-white hover:bg-[#2563EB] h-9 min-w-[91px]',
-  header: 'text-[20px] leading-7 font-semibold tracking-[-0.5px]',
-  container: 'flex gap-x-[100px] pl-[72px] dark:bg-black ',
-  textContainer: 'flex gap-1',
+  header: 'text-[20px]  leading-7  font-semibold tracking-[-0.5px]',
+  container: 'flex gap-x-[100px] pl-[72px]  dark:text-white ',
+  textContainer: 'flex gap-1 dark:text-white',
 };
 
 export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
@@ -38,7 +38,7 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
   };
   return (
     <div className={styles.container} data-cy="Profile-page-top">
-      <Avatar className="w-[150px] h-[150px]">
+      <Avatar className="w-[150px] h-[150px]  ">
         <AvatarImage src={userProfile?.profilePicture} className="object-cover" />
         <AvatarFallback className="uppercase text-[50px] text-[#ccc]">{userProfile?.username.slice(0, 1)}</AvatarFallback>
       </Avatar>
@@ -70,9 +70,9 @@ export const ProfilePageTop = ({ userProfile, postsCount }: any) => {
           <FollowersDialog profileUser={userProfile} followersData={followersData} followingData={followingData} handleFollowersUpdate={handleFollowersUpdate} />
         </div>
         <div className="text-[14px] text-[#18181B] leading-5">
-          <h3 className="font-semibold">{userProfile?.fullname}</h3>
+          <h3 className="font-semibold dark:text-white">{userProfile?.fullname}</h3>
           <p className=" text-[#71717A] text-[12px] leading-4">product/service</p>
-          <p className="font-medium">{userProfile?.bio}</p>
+          <p className="font-medium dark:text-white">{userProfile?.bio}</p>
         </div>
       </div>
     </div>
