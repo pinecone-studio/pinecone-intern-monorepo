@@ -4,18 +4,18 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bio } from './Bio';
 import Interests from './Interests';
-import DateOfBirth from '../users/DateOfBirth';
+import Date from './Date';
 
 export const ProfileSection = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <div>
         <h2 className="text-lg font-medium">Personal Information</h2>
         <p className="text-sm font-normal text-gray-500">This is how others will see you on the site.</p>
       </div>
 
       <PersonalInfo />
-      <DateOfBirth />
+      <Date />
       <GenderPreference />
       <Bio />
       <Interests />
