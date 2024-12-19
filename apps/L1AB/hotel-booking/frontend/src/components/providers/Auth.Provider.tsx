@@ -34,7 +34,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     onCompleted: (data) => {
       localStorage.setItem('token', data.signIn.token);
       setUser(data.signIn.user);
-      router.push('/');
+      if (data.signIn.user.isAdmin === true) {
+        router.push('/admin/hotels');
+      } else {
+        router.push('/');
+      }
       toast.success('Sign-in successful!');
     },
     onError: (error) => {
