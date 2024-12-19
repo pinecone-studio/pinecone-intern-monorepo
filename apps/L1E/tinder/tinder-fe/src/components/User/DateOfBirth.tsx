@@ -1,7 +1,7 @@
 'use client';
 import { Logo } from '../Logo';
 import { Title } from '../common/Title';
-import { Tinder } from '../common/Tinder2024';
+import { Tinder } from '../common/Tinder';
 import { InputForm } from '../common/InputForm';
 import { Button } from '@/components/ui/button';
 
