@@ -27,7 +27,7 @@ const Page = () => {
   const posts = data?.getPostByUserId;
 
   return (
-    <div className="py-[36px] flex flex-col gap-[59px] max-h-screen">
+    <div className="py-[36px] flex flex-col gap-[59px] max-h-screen dark:bg-black">
       <ProfilePageTop userProfile={userData} postsCount={posts} />
       <ProfilePagePosts userPosts={posts as any} userProfile={userData as any} loading={loading} />
     </div>

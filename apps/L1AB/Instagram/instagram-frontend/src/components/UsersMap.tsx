@@ -37,7 +37,7 @@ export const UsersMap = () => {
           <div className="flex items-center gap-2">
             <Avatar className="w-10 h-10">
               <AvatarImage src={group[0].followeeId.profilePicture} alt={group[0].followeeId.username} className="object-cover" />
-              <AvatarFallback className="uppercase text-[#ccc]">{group[0].followeeId.username.slice(0, 1)}</AvatarFallback>
+              <AvatarFallback className="uppercase dark:font-[var(--font-weight-system-semibold)] text-[#ccc]">{group[0].followeeId.username.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <p data-testid="username" className="font-semibold">
@@ -49,7 +49,11 @@ export const UsersMap = () => {
               </p>
             </div>
           </div>
-          <Button data-testid={`follow-${i}`} className="text-sm p-0 text-[#2563EB] text-[14px] hover:bg-white bg-white cursor-pointer" onClick={(e) => handleFollow(e, group[0].followeeId._id)}>
+          <Button
+            data-testid={`follow-${i}`}
+            className="text-sm p-0 text-[#2563EB] text-[14px] dark:font-[var(--font-weight-system-semibold)] hover:bg-white bg-white cursor-pointer"
+            onClick={(e) => handleFollow(e, group[0].followeeId._id)}
+          >
             Follow
           </Button>
         </Link>

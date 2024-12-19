@@ -17,10 +17,10 @@ const RightSideBar = () => {
             <AvatarFallback className="uppercase text-[#ccc]">{user?.username.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-semibold" data-testid="username">
+            <h3 className="font-semibold " data-testid="username">
               {user?.username}
             </h3>
-            <h4>{user?.fullname}</h4>
+            <h4 className="text-sm font-sans  text-[#71717A]">{user?.fullname}</h4>
           </div>
         </Link>
         <LogoutDialog />

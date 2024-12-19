@@ -67,7 +67,7 @@ export const FollowersDialogRemove = ({ id, name, img, fullname, suggest, type, 
       );
     } else {
       return (
-        <Button role="button" className="bg-[#F4F4F5] py-2 px-4 text-[#262626] hover:bg-[#F4F4F5] h-9 min-w-[91px]" onClick={handleUnfollow} disabled={isLoading}>
+        <Button role="button" className="bg-[#F4F4F5] py-2 px-4 dark:bg-[#131313] text-[#262626] hover:bg-[#F4F4F5] h-9 min-w-[91px]" onClick={handleUnfollow} disabled={isLoading}>
           {isLoading ? <Loading size={20} pageReload /> : 'Following'}
         </Button>
       );

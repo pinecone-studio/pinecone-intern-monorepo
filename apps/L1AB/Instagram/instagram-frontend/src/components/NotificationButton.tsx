@@ -25,7 +25,7 @@ export const NotificationButton = ({ isOpen, svgControls, handleOpenClose }: Not
       <NavigationLink href={undefined} name={isOpen ? '' : 'Notification'}>
         <Heart
           data-testid="notif-click"
-          className="stroke-inherit stroke-[1.5] min-w-6 w-6 relative"
+          className="stroke-inherit stroke-[1.5] dark:text-white min-w-6 w-6 relative"
           onClick={() => {
             handleOpenClose();
             handleNewNotification();
