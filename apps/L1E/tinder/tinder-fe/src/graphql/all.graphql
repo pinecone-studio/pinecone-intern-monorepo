@@ -5,3 +5,11 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+mutation CreateUser($input: RegisterInput!) {
+  createUser(input: $input) {
+    _id
+    email
+    password
+  }
+}
