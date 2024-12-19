@@ -1,4 +1,4 @@
-import { Tinder } from '@/components/common/Tinder2024';
+import { Tinder } from '@/components/common/Tinder';
 import { render } from '@testing-library/react';
 
 describe('Tinder text', () => {

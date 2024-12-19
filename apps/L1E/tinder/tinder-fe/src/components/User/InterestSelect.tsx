@@ -3,7 +3,7 @@
 import { Logo } from '../Logo';
 import { SelectDemo } from './Select';
 import { Title } from '../common/Title';
-import { Tinder } from '../common/Tinder2024';
+import { Tinder } from '../common/Tinder';
 import { Button } from '@/components/ui/button';
 
 export const InterestSelect = () => {
