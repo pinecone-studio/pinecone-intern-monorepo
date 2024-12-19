@@ -26,7 +26,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createPost(input: CreatePostInput!): Response!
+    createPost(input: CreatePostInput!): Posts!
     updatePostById(postId: ID!, input: UpdatePostInput!): Posts!
     deletePost(_id: ID!): Response!
   }
