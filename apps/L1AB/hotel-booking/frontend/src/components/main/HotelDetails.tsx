@@ -11,11 +11,13 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { HotelDetailsAmenities, mockAmenities } from './assets/HotelamenitiesMock';
+import Link from 'next/link';
 
 export const HotelDetails = () => {
   const { hotel } = useParams();
   const { data } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
   const hotelDetails = data?.getHotelById;
+  const hotelId = data?.getHotelById._id;
   const hotelRooms = hotelDetails?.rooms;
   const [activeTab, setActiveTab] = useState('ALL');
 
@@ -72,7 +74,9 @@ export const HotelDetails = () => {
                             <RiArrowRightSLine className="text-xs text-[#2563eb]" />
                           </p>
                         </div>
-                        <Button className="w-[79px] h-[36px] bg-[#2563eb] text-xs">Reserve</Button>
+                        <Link href={`/check/${room._id}`}>
+                          <Button className="w-[79px] h-[36px] bg-[#2563eb] text-xs">Reserve</Button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -88,4 +92,3 @@ export const HotelDetails = () => {
     </Container>
   );
 };
-

@@ -1,8 +1,9 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 export const CheckingBookingLeft = () => {
   return (
-    <div>
-      <div className="w-[581px] h-[1487px]  p-3">
+    <div className="flex">
+      <div className="w-[581px] h-[1487px] p-3">
         <div>
           <h1 className="font-bold">1. Who’s checking in?</h1>
           <h1 className="text-[#71717A]">
@@ -21,7 +22,7 @@ export const CheckingBookingLeft = () => {
             <h1>Last Name</h1>
             <input type="text" className="w-full h-[36px] border rounded-xl " />
           </div>
-          <div className="w-full border border-[#71717A] mt-5"></div>
+          <div className="w-full border border-[#E4E4E7] mt-5"></div>
           <div className="flex flex-col gap-2">
             <h1 className="font-bold">2. Contact information</h1>
             <h1>Email address</h1>
@@ -43,7 +44,7 @@ export const CheckingBookingLeft = () => {
                   </Select>
                   <input type="text" className="w-[485px] h-[36px] border rounded-xl" />
                 </div>
-                <div className="w-full border border-[#71717A] mt-5"></div>
+                <div className="w-full border border-[#E4E4E7] mt-5"></div>
                 <div>
                   <h1 className="font-bold">3. Reservation card detail</h1>
                   <h1 className="text-[#71717A]">Safe, secure transactions. Your personal information is protectd</h1>
@@ -65,13 +66,14 @@ export const CheckingBookingLeft = () => {
                 </div>
                 <div className="flex row justify-between mt-5">
                   <h1 className="text-white">.</h1>
-                  <button className="w-[187px] h-[44px] text-white flex justify-center items-center bg-blue-600">Complete Booking</button>
+                  <button className="text-white flex justify-center items-center p-2 rounded-xl bg-blue-600">Complete Booking</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div></div>
     </div>
   );
 };
