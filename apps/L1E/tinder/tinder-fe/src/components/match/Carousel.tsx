@@ -17,24 +17,24 @@ type ProfileCard = {
 const profiles: ProfileCard[] = [
   {
     id: 1,
-    name: 'Maria Georgas',
+    name: 'Diddy',
     age: 29,
     title: 'Executive Assistant',
     image: 'hehe',
   },
   {
     id: 2,
-    name: 'Daisy Edgar-Jones',
+    name: 'Justin',
     age: 25,
     title: 'Actress',
-    image: 'heho',
+    image: 'haha',
   },
   {
     id: 3,
-    name: 'Taylor Swift',
+    name: 'Jay Jobz',
     age: 34,
     title: 'Singer-Songwriter',
-    image: 'hoh',
+    image: 'hoho',
   },
 ];
 

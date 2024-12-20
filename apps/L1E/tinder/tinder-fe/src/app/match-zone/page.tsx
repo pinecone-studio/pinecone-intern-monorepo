@@ -1,11 +1,9 @@
-import { CarouselUser } from '@/components/match/Carousel';
+'use client';
+
+import { UserMatchComp } from '@/components/match/UserMatchComp';
 
 const page = () => {
-  return (
-    <div className="flex justify-center items-center">
-      <CarouselUser />
-    </div>
-  );
+  return <UserMatchComp isOpen={true} userImage="123" matchImage="321" matchName="Baatarvan" />;
 };
 
 export default page;
