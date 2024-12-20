@@ -2,15 +2,15 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   enum RequestStatus {
-    PENDING
-    APPROVED
-    REJECTED
-  }
-
-  enum RequestType {
     FREE
     PAID_LEAVE
     REMOTE
+  }
+
+  enum RequestType {
+    PENDING
+    APPROVED
+    REJECTED
   }
 
   type Request {

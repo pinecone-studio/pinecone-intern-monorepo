@@ -1,14 +1,14 @@
 import { Schema, model, models } from 'mongoose';
 /* eslint-disable no-unused-vars */
 export enum RequestStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-}
-export enum RequestType {
   FREE = 'FREE',
   PAID_LEAVE = 'PAID_LEAVE',
   REMOTE = 'REMOTE',
+}
+export enum RequestType {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
 }
 /* eslint-enable no-unused-vars */
 export type Request = {

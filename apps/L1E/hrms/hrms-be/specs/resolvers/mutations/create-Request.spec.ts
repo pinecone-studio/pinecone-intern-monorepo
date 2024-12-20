@@ -6,9 +6,9 @@ jest.mock('../../../src/models', () => ({
     create: jest.fn().mockReturnValue({
       employeeId: '123',
       leadEmployeeId: '456',
-      requestStatus: 'PENDING',
+      requestStatus: 'FREE',
       reason: 'Vacation',
-      reasonRefuse: 'aaa',
+      reasonRefuse: '',
       startTime: '2024-01-01T09:00:00Z',
       endTime: '2024-01-10T18:00:00Z',
     }),
@@ -29,9 +29,9 @@ describe('createRequest Resolver', () => {
   const input = {
     employeeId: '123',
     leadEmployeeId: '456',
-    requestStatus: RequestStatus.Pending,
+    requestStatus: RequestStatus.Free,
     reason: 'Vacation',
-    reasonRefuse: 'aaa',
+    reasonRefuse: '',
     startTime: '2024-01-01T09:00:00Z',
     endTime: '2024-01-10T18:00:00Z',
   };
@@ -46,9 +46,9 @@ describe('createRequest Resolver', () => {
     expect(result).toEqual({
       employeeId: '123',
       leadEmployeeId: '456',
-      requestStatus: 'PENDING',
+      requestStatus: 'FREE',
       reason: 'Vacation',
-      reasonRefuse: 'aaa',
+      reasonRefuse: '',
       startTime: '2024-01-01T09:00:00Z',
       endTime: '2024-01-10T18:00:00Z',
     });
