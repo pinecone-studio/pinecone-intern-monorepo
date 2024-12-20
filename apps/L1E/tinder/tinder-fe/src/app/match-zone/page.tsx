@@ -1,11 +1,12 @@
-import { CarouselUser } from '@/components/match/Carousel';
+'use client';
 
-const page = () => {
+import { CarouselUser } from '@/components/match/Carousel';
+const MatchPage = () => {
   return (
-    <div className="flex justify-center items-center">
+    <>
       <CarouselUser />
-    </div>
+    </>
   );
 };
 
-export default page;
+export default MatchPage;
