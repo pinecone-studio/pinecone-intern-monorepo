@@ -14,7 +14,7 @@ import { ProfileButton } from './ProfileButton';
 
 const containerVariants = {
   close: {
-    width: '260px',
+    width: '80px',
     transition: {
       type: 'spring',
       damping: 15,
@@ -79,23 +79,22 @@ export const LeftSideBar = () => {
   }, [searchOpen, notifOpen]);
 
   return (
-    <div data-cy="LeftSideBar" className="fixed z-20 left-0  dark:bg-black dark:text-white">
-
-      <div>
+    <div data-cy="LeftSideBar" className="fixed left-0 z-50 dark:bg-black dark:text-white">
+      <div className="z-10">
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} visitedUsers={visitedUsers} visitedUsersHandler={visitedUsersHandler} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
       </div>
+
       <motion.nav
         data-testid="sidebar"
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col z-50 gap-20 p-4 top-0 left-0 min-h-screen dark:bg-black z-100 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200' : 'border'}`}
+        className={`flex flex-col gap-20 p-4 top-0 left-0 min-h-screen dark:bg-black  z-50 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200 ' : 'border'}`}
       >
         <div onClick={toggleHomeDrawer}>
           <InstagramButton isOpen={errorChecker(notifOpen, searchOpen)} />
         </div>
-
         <div className="space-y-3">
           <div data-testid="homeButton" onClick={toggleHomeDrawer}>
             <HomeButton svgControls={svgControls} isOpen={notifOpen || searchOpen} />

@@ -5,6 +5,7 @@ import { Bookmark, Menu, Settings, ShieldAlert, SquareActivity } from 'lucide-re
 import NavigationLink from './NavigationLink';
 import { AnimationControls, motion } from 'framer-motion';
 import { DarkMode } from './DarkMode';
+import LogoutDialog from './LogoutButton';
 
 interface MenuProps {
   isOpen: boolean;
@@ -15,9 +16,9 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
   return (
     <div className="dark:bg-black">
       <DropdownMenu>
-        <DropdownMenuTrigger className="focus:ring-0  outline-none w-full dark:bg-black" data-testid="dropDownMenu">
-          <NavigationLink href={undefined} name={isOpen ? '' : ''}>
-            <Menu className="stroke-inherit stroke-[1.5] dark:stroke-white  min-w-6 w-6 group">
+        <DropdownMenuTrigger className="focus:ring-0 dark:bg-black outline-none w-full" data-testid="dropDownMenu">
+          <NavigationLink href={undefined} name={isOpen ? '' : 'More'}>
+            <Menu className="">
               <motion.path
                 transition={{
                   duration: 0.5,
@@ -51,7 +52,9 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           <div className="border my-1"></div>
           <DropdownMenuItem className="  h-12">Switch account</DropdownMenuItem>
           <DropdownMenuSeparator className="text-gray-700" />
-          <DropdownMenuItem className="  h-12">Log out</DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogoutDialog buttonClassName=" !py-2 !font-light !bg-transparent !text-black !w-full !flex !justify-start !text-[14px] " />
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

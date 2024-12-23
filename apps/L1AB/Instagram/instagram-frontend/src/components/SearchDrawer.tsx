@@ -8,8 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const variants = {
-  close: { x: -491, opacity: 0, transition: { type: 'spring', damping: 15, duration: 0.5 } },
-  open: { x: 0, opacity: 1, transition: { type: 'spring', damping: 15, duration: 0.5 } },
+  close: { x: 0, opacity: 0, transition: { type: 'spring', damping: 15, duration: 0.5 }, width: 0 },
+  open: { x: 0, opacity: 1, transition: { type: 'spring', damping: 15, duration: 0.5 }, width: 411 },
 };
 
 interface SearchProps {
@@ -55,9 +55,7 @@ export const SearchDrawer = ({ isOpen, visitedUsers, visitedUsersHandler }: Sear
         animate={isOpen ? 'open' : 'close'}
         exit="close"
         transition={{ type: 'spring', damping: 15, duration: 0.5 }}
-        className={`drawer bg-white dark:bg-black  fixed space-y-5 w-[411px] border z-10 h-full left-[80px]  rounded-r-2xl divide-y divide-slate-200 transition-transform duration-100 ${
-          isOpen ? 'translate-x-[-411px]' : 'translate-x-0'
-        }`}
+        className={`z-10 drawer bg-white fixed space-y-5 dark:bg-black  border h-full left-[80px] rounded-r-2xl divide-y divide-slate-200 transition-transform duration-100 ${isOpen ? 'w-[411px]' : 'w-0'}`}
         style={{
           boxShadow: '10px 0 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05)',
         }}
