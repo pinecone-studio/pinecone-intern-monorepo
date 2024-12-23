@@ -19,24 +19,24 @@ type ProfileCard = {
 const profiles: ProfileCard[] = [
   {
     id: 1,
-    name: 'Diddy',
+    name: 'Rokitbay',
     age: 29,
     title: 'Executive Assistant',
-    image: 'hehe',
+    image: './rokitbay.jpg',
   },
   {
     id: 2,
     name: 'Justin',
     age: 25,
     title: 'Actress',
-    image: 'haha',
+    image: './bla.jpg',
   },
   {
     id: 3,
     name: 'Jay Jobz',
     age: 34,
     title: 'Singer-Songwriter',
-    image: 'hoho',
+    image: './rokitbay.jpg',
   },
 ];
 
@@ -84,7 +84,7 @@ export const CarouselUser = () => {
           </div>
         </Carousel>
       </div>
-      <UserMatchComp isOpen={isMatchOpen} onClose={() => setIsMatchOpen(false)} userImage="rokitbay" data-testid="userMatch" matchImage="fla" matchName="Baatarvan" />
+      <UserMatchComp isOpen={isMatchOpen} onClose={() => setIsMatchOpen(false)} userImage="./bla.jpg" data-testid="userMatch" matchImage="./rokitbay.jpg" matchName="Baatarvan" />
       <Tinder />
     </div>
   );
