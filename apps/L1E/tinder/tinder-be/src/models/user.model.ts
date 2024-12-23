@@ -3,30 +3,55 @@ import { Schema, model, models } from 'mongoose';
 export type UserType = {
   _id: string;
   username: string;
-  fullname: string;
-  interested: string;
+  interest: string;
+  age: string;
   email: string;
   password: string;
-  profilePicture: string;
+  profilePicture: string[];
   createdAt: Date;
   updatedAt: Date;
+  bio: string;
+  profession: string;
+  job: string;
+  hobby: string;
 };
 
 const UserSchema = new Schema<UserType>({
   username: {
     type: String,
-    required: false,
+    required: true,
     default: 'no name',
   },
-  fullname: {
+  age: {
     type: String,
-    required: false,
+    required: true,
+    default: '',
   },
-  interested: {
+  interest: {
     type: String,
-    required: false,
-    default: 'prefet not to say',
-    enum: ['male', 'female', 'prefet not to say'],
+    required: true,
+    default: '',
+    enum: ['male', 'female', 'prefer not to say'],
+  },
+  hobby: {
+    type: String,
+    required: true,
+    default: '',
+  },
+  bio: {
+    type: String,
+    required: true,
+    default: '',
+  },
+  profession: {
+    type: String,
+    required: true,
+    default: '',
+  },
+  job: {
+    type: String,
+    required: true,
+    default: '',
   },
   email: {
     type: String,
@@ -36,11 +61,13 @@ const UserSchema = new Schema<UserType>({
     type: String,
     required: true,
   },
-  profilePicture: {
-    type: String,
-    required: false,
-    default: '',
-  },
+  profilePicture: [
+    {
+      type: String,
+      required: true,
+      default: '',
+    },
+  ],
   createdAt: {
     type: Date,
     required: true,
@@ -48,9 +75,9 @@ const UserSchema = new Schema<UserType>({
   },
   updatedAt: {
     type: Date,
-    required: true,
+    required: false,
     default: Date.now,
   },
 });
 
-export const userModel = models['User'] || model('User', UserSchema);
+export const userModel = models['User'] || model<UserType>('User', UserSchema);
