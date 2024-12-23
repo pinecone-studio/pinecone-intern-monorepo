@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use client';
 import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
@@ -7,17 +8,32 @@ import PostCardLikeSection from './PostCardLikeSection';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UserContext } from './providers';
+import { formatDistanceToNow } from 'date-fns';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 type PropsType = {
   userName: string;
   images: string[];
   profilePicture: string;
   caption: string;
-  keyy: number;
   postId: string;
+  createdAt: string;
+  postOwnerId: string;
+  deletePost: (_id: string) => void;
 };
 
-const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: PropsType) => {
+const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt, postOwnerId, deletePost }: PropsType) => {
   const [userId, setUserId] = useState<string | null>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { user }: any = useContext(UserContext);
@@ -31,11 +47,13 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
   };
 
   useEffect(() => {
-    setUserId(user._id);
+    if (user) {
+      setUserId(user._id);
+    }
   }, []);
 
   return (
-    <div data-testid={`NewsFeedPostCard-${keyy}`} className="border-b">
+    <div data-testid={`NewsFeedPostCard-${postId}`} className="border-b">
       <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
           <Link href={`/profile?type=posts&username=${userName}`} className="flex gap-2 items-center">
@@ -44,10 +62,35 @@ const PostCard = ({ userName, images, profilePicture, caption, keyy, postId }: P
               <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div>{userName}</div>
-            {/* <div className="text-[#71717A]">5h</div> */}
+            <div className="text-[#71717A]"> {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</div>
           </Link>
           <div>
-            <EllipsisVertical className="w-4 h-4" />
+            <Popover>
+              <PopoverTrigger>
+                <EllipsisVertical data-testid={`deleteButton-${postId}`} className="w-4 h-4" />
+              </PopoverTrigger>
+              {userId === postOwnerId ? (
+                <PopoverContent className="w-fit py-2 px-4 cursor-pointer hover:text-red-500">
+                  <AlertDialog>
+                    <AlertDialogTrigger data-testid={`delete-${postId}`}>Delete</AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>This action cannot be undone. This will permanently delete your post.</AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction data-testid={`deletePost-${postId}`} onClick={() => deletePost(postId)}>
+                          Yes
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </PopoverContent>
+              ) : (
+                <PopoverContent className="w-fit py-2 px-4 cursor-pointer hover:text-red-500">Report</PopoverContent>
+              )}
+            </Popover>
           </div>
         </div>
         <div className="pt-3">
