@@ -14,14 +14,19 @@ const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () 
       data-testid="likeButton"
       onClick={handleLike}
       className="cursor-pointer"
-      style={{ color: isLiked ? '#ff0000' : 'inherit' }}
+      style={{ color: isLiked ? '#ff0000' : '' }}
       initial={{ scale: 1 }}
       whileTap={{ scale: 1.4 }}
       whileHover={hoverEffect}
       transition={{ duration: 0.1 }}
       animate={{ scale: 1, transition: { duration: 0.2 } }}
     >
-      <Heart fill={`${isLiked ? 'red' : 'white'}`} />
+      <Heart
+        style={{
+          fill: isLiked ? 'red' : 'white',
+        }}
+        className={`${isLiked ? 'text-[#ff0000]' : 'text-black'}`}
+      />
     </motion.div>
   );
 };

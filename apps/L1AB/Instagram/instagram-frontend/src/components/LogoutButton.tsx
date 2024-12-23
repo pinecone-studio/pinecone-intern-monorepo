@@ -9,7 +9,7 @@ const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] dark:bg-black font-semibold bg-white hover:bg-white`}>
+        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] font-semibold bg-white text-[#2563EB] hover:text-slate-900 hover:bg-white dark:bg-black font-semibold`}>
           Log out
         </Button>
       </AlertDialogTrigger>

@@ -51,7 +51,7 @@ export const UsersMap = () => {
           </div>
           <Button
             data-testid={`follow-${i}`}
-            className="text-sm p-0 text-[#2563EB] text-[14px] dark:font-[var(--font-weight-system-semibold)] hover:bg-white bg-white cursor-pointer"
+            className="text-sm p-0 text-[#2563EB] text-[14px] hover:text-slate-900 hover:bg-white bg-white cursor-pointer dark:font-[var(--font-weight-system-semibold)]"
             onClick={(e) => handleFollow(e, group[0].followeeId._id)}
           >
             Follow
