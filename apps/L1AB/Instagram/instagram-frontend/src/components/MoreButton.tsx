@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Bookmark, Menu, Moon, Settings, ShieldAlert, SquareActivity } from 'lucide-react';
 import NavigationLink from './NavigationLink';
 import { AnimationControls, motion } from 'framer-motion';
+import LogoutDialog from './LogoutButton';
 
 interface MenuProps {
   isOpen: boolean;
@@ -16,7 +17,7 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:ring-0  outline-none w-full">
           <NavigationLink href={undefined} name={isOpen ? '' : 'More'}>
-            <Menu className="stroke-inherit stroke-[1.5] min-w-6 w-6 group">
+            <Menu className="">
               <motion.path
                 transition={{
                   duration: 0.5,
@@ -51,7 +52,9 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           <div className="border my-1"></div>
           <DropdownMenuItem className="  h-12">Switch account</DropdownMenuItem>
           <DropdownMenuSeparator className="text-gray-700" />
-          <DropdownMenuItem className="  h-12">Log out</DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogoutDialog buttonClassName=" !py-2 !font-light !bg-transparent !text-black !w-full !flex !justify-start !text-[14px] " />
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

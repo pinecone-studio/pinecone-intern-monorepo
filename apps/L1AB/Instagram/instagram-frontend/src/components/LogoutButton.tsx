@@ -1,10 +1,15 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-const LogoutDialog = () => {
+
+interface LogoutDialogProps {
+  buttonClassName?: string;
+}
+
+const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button data-testid="btn-logout" className="p-0 text-[11px] font-semibold text-[#2563EB] bg-white hover:bg-whte">
+        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] font-semibold bg-white hover:bg-white`}>
           Log out
         </Button>
       </AlertDialogTrigger>

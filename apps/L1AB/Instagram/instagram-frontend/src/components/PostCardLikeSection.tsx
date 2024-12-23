@@ -5,14 +5,48 @@ import { CardPropsType } from './PostCardCommentSection';
 import { Bookmark, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PostDetail from './PostDetail';
+import { motion } from 'framer-motion';
+
+const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () => void }) => {
+  const hoverEffect = !isLiked ? { color: '#9CA3AF' } : undefined;
+  return (
+    <motion.div
+      data-testid="likeButton"
+      onClick={handleLike}
+      className="cursor-pointer"
+      style={{ color: isLiked ? '#ff0000' : 'inherit' }}
+      initial={{ scale: 1 }}
+      whileTap={{ scale: 1.4 }}
+      whileHover={hoverEffect}
+      transition={{ duration: 0.1 }}
+      animate={{ scale: 1, transition: { duration: 0.2 } }}
+    >
+      <Heart fill={`${isLiked ? 'red' : 'white'}`} />
+    </motion.div>
+  );
+};
 
 const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
-  return <Bookmark data-testid="saveButton" onClick={handleSave} className="cursor-pointer" fill={`${isSaved ? 'black' : 'white'}`} />;
+  const hoverEffect = !isSaved ? { color: '#9CA3AF' } : undefined;
+  return (
+    <motion.div
+      data-testid="saveButton"
+      onClick={handleSave}
+      className="cursor-pointer text-black"
+      initial={{ scale: 1 }}
+      whileTap={{ scale: 1.4 }}
+      whileHover={hoverEffect}
+      transition={{ duration: 0.1 }}
+      animate={{ scale: 1, transition: { duration: 0.2 } }}
+    >
+      <Bookmark fill={`${isSaved ? 'black' : 'white'}`} />
+    </motion.div>
+  );
 };
 
 const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, userName }: CardPropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
-  const { data: savedData, refetch: saveRefetch } = useGetSavedByPostIdQuery({ variables: { postId } });
+  const { data: savedData } = useGetSavedByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId || [];
   const savedByPostId = savedData?.getSavedByPostId;
 
@@ -34,7 +68,7 @@ const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, 
   const handleSave = async () => {
     if (!userId) return;
     await createSave({ variables: { userId, postId } });
-    await saveRefetch();
+    setIsSaved(!isSaved);
   };
 
   useEffect(() => {
@@ -51,10 +85,12 @@ const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, 
       <div className="flex pt-3 justify-between ">
         <div className="flex gap-4">
           <div className="flex gap-1">
-            <Heart data-testid="likeButton" onClick={handleLike} className={`cursor-pointer ${isLiked ? 'text-[#ff0000]' : ''}`} fill={`${isLiked ? 'red' : 'white'}`} />
+            <LikeButton isLiked={isLiked} handleLike={handleLike} />
             <div>{likesData?.length}</div>
           </div>
-          <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />
+          <motion.div whileHover={{ color: '#9CA3AF' }}>
+            <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />
+          </motion.div>
         </div>
         <SaveButton handleSave={handleSave} isSaved={isSaved} />
       </div>
