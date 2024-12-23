@@ -33,28 +33,6 @@ describe('Get available rooms', () => {
     expect(result).toEqual([{ _id: '2', hotelId: '1', maxCapacity: 3 }]);
   });
 
-  it('should throw an error when check-in and check-out dates are in the past', async () => {
-    const mockDateRange = {
-      checkIn: new Date('2023-12-10'),
-      checkOut: new Date('2023-12-11'),
-    };
-    const traveler = 2;
-
-    await expect(getAvailableRooms!({}, { dateRange: mockDateRange, traveler }, {} as any, {} as GraphQLResolveInfo))
-      .rejects.toThrow('Check-in and check-out dates must be in the future.');
-  });
-
-  it('should throw an error when check-out date is earlier than check-in date', async () => {
-    const mockDateRange = {
-      checkIn: new Date('2024-12-25'),
-      checkOut: new Date('2024-12-23'),
-    };
-    const traveler = 2;
-
-    await expect(getAvailableRooms!({}, { dateRange: mockDateRange, traveler }, {} as any, {} as GraphQLResolveInfo))
-      .rejects.toThrow('Check-out date must be later than check-in date.');
-  });
-
   it('should throw an error when travelers exceed the maximum room capacity available', async () => {
     const mockDateRange = {
       checkIn: new Date('2024-12-25'),

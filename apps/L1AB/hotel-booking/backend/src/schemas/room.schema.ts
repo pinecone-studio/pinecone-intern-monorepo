@@ -9,14 +9,14 @@ export const typeDefs = gql`
   type Room {
     _id: ID!
     maxCapacity: Int!
-    hotelId: Hotel!
+    hotelId: HotelForRoom!
     name: String!
     roomNumber: String!
     price: Int!
     description: String!
     photos: [String!]
     roomType: RoomType!
-    roomAmenities: [Amenity!]!
+    roomAmenities: [AmenityForRoom!]!
     createdAt: Date!
     updatedAt: Date!
   }

@@ -1,49 +1,65 @@
 'use client';
 
-import { Room, useGetAvailableRoomsLazyQuery } from '@/generated'; // Use the lazy query hook
-import { useRouter } from 'next/navigation';
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { Room, useGetAvailableRoomsQuery } from '@/generated';
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-type DateRangeType = {
-  checkIn: string;
-  checkOut: string;
+type SimplifiedRoom = Omit<Room, 'hotelId'> & {
+  hotelId: {
+    __typename?: 'Hotel';
+    _id: string;
+    name: string;
+    description: string;
+    images: string[];
+    address: string;
+    phone: string;
+    city: string;
+    rating: number;
+    stars: number;
+  };
 };
 
-type GetAvailableRoomsType = {
-  dateRange: DateRangeType;
-  traveler: number;
+type DateRangeType = {
+  checkIn: Date;
+  checkOut: Date;
 };
 
 type MainContextType = {
-  getAvailableRooms: (params: GetAvailableRoomsType) => Promise<void>;
-  availableRooms: Room[] | null;
+  setDateRange: Dispatch<SetStateAction<DateRangeType>>;
+  setTraveler: Dispatch<SetStateAction<number>>;
+  data: SimplifiedRoom[];
 };
 
-const MainContext = createContext<MainContextType | undefined>(undefined);
+const MainContext = createContext<MainContextType>({} as MainContextType);
 
 export const MainProvider = ({ children }: PropsWithChildren) => {
-  const router = useRouter();
-  const [availableRooms, setAvailableRooms] = useState<Room[] | null>(null);
+  const [dateRange, setDateRange] = useState<DateRangeType>({
+    checkIn: new Date(),
+    checkOut: new Date(),
+  });
+  const [traveler, setTraveler] = useState<number>(1);
 
-  const [fetchAvailableRooms] = useGetAvailableRoomsLazyQuery();
+  const { data } = useGetAvailableRoomsQuery({
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    variables: {
+      dateRange,
+      traveler,
+    },
+  });
 
-  const getAvailableRooms = async ({ dateRange, traveler }: GetAvailableRoomsType) => {
-    try {
-      const { data } = await fetchAvailableRooms({
-        variables: { dateRange, traveler },
-      });
-
-      if (data && data.getAvailableRooms) {
-        setAvailableRooms(data.getAvailableRooms);
-        toast.success('Rooms fetched successfully!');
-      }
-    } catch (error) {
-      toast.error(error);
-    }
-  };
-
-  return <MainContext.Provider value={{ getAvailableRooms, availableRooms }}>{children}</MainContext.Provider>;
+  return (
+    <MainContext.Provider
+      value={{
+        data: (data?.getAvailableRooms ?? []) as SimplifiedRoom[],
+        setDateRange,
+        setTraveler,
+      }}
+    >
+      {children}
+    </MainContext.Provider>
+  );
 };
 
 export const useMain = (): MainContextType => {
