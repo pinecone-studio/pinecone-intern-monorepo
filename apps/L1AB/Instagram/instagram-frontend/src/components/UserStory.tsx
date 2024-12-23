@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { useStory } from './providers';
+import { useStory, useUser } from './providers';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Story } from '@/generated';
+import { Story, useDeleteStoryMutation, useGetAllStoriesQuery } from '@/generated';
 import { formatDistanceToNow } from 'date-fns';
 import { IoIosMore } from 'react-icons/io';
 import {
@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   userId: string;
@@ -31,9 +32,30 @@ type PropsType = {
 
 export const UserStory = ({ userId, stories, username, profilePicture, prevUser, nextUser, mainUserStory }: PropsType) => {
   const { groupedStories } = useStory();
+  const { user } = useUser();
+  console.log(userId);
+  console.log(user);
+
   const userStoriesGroup = groupedStories![userId];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  // const deleteStory = () => {};
+  const [deleteStory] = useDeleteStoryMutation();
+  const { refetch } = useGetAllStoriesQuery();
+  const router = useRouter();
+  const handleDeleteStory = async () => {
+    const storyId = userStoriesGroup.stories[currentImageIndex]._id;
+
+    await deleteStory({
+      variables: {
+        input: {
+          _id: storyId,
+          userId: user._id,
+        },
+      },
+    });
+    refetch();
+    router.push('/home');
+  };
 
   const prev = async () => {
     if (currentImageIndex === 0) {
@@ -50,8 +72,6 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
-
-  const date = userStoriesGroup.stories[currentImageIndex]?.createdAt;
 
   return (
     <div
@@ -93,19 +113,19 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
               <Image fill alt="" src={profilePicture} objectFit="cover" />
             </div>
             <h1 className="text-white">{username}</h1>
-            <div className="text-white"> {date ? formatDistanceToNow(new Date(date), { addSuffix: true }) : 'Just now'}</div>
+            <div className="text-white"> {formatDistanceToNow(new Date(userStoriesGroup.stories[currentImageIndex]?.createdAt), { addSuffix: true })}</div>
           </div>
         </div>
-        <div className="absolute z-10 top-12 right-12">
+        <div className={`${user._id === userId ? 'absolute z-10 top-12 right-12' : 'hidden'} `}>
           <AlertDialog>
             <Popover>
               <PopoverTrigger>
-                {' '}
-                <IoIosMore className="text-white" />
+                <IoIosMore className="text-white" data-testid="deleteTrigger" />
               </PopoverTrigger>
-
               <AlertDialogTrigger>
-                <PopoverContent className="text-red-500 w-30 h-10 flex items-center mr-20 text-[14px] cursor-pointer">Delete story </PopoverContent>{' '}
+                <PopoverContent className="text-red-500 w-30 h-10 flex items-center mr-20 text-[14px] cursor-pointer" data-testid="deleteStory">
+                  Delete story{' '}
+                </PopoverContent>{' '}
               </AlertDialogTrigger>
               <AlertDialogContent className="w-[350px]">
                 <AlertDialogHeader>
@@ -116,7 +136,9 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction className="text-red-500 bg-white">Delete</AlertDialogAction>
+                  <AlertDialogAction className="text-red-500 bg-white" data-testid="deleteButton" onClick={handleDeleteStory}>
+                    Delete
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </Popover>
