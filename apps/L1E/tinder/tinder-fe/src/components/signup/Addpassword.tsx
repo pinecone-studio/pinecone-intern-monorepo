@@ -64,7 +64,7 @@ const Addpassword: React.FC = () => {
             <img className="w-[100px] h-[24px]" src="redlogo.png" alt="Logo" />
             <div className="flex gap-2 h-[92px] w-[350px] items-center flex-col">
               <div className="font-semibold text-2xl">Create password</div>
-              <div className="font-normal text-center text-sm text-[#71717A]">Use a minimum of 10 characters, including uppercase letters, lowercase letters, and numbers</div>
+              <div className="font-normal text-center text-sm text-[#71717A]">Use a minimum of 10 characters, including uppercase letters, lowercase letters, and numbers.</div>
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
