@@ -2,6 +2,11 @@ import { getAllStories } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
+  followersModel: {
+    find: jest.fn().mockReturnValue({
+      select: jest.fn().mockResolvedValue([{ followerId: '3' }, { followerId: '2' }]),
+    }),
+  },
   storyModel: {
     find: jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValueOnce([
@@ -50,7 +55,7 @@ describe('getAllStories resolver', () => {
   });
 
   it('should return all stories that are within the last 24 hours, sorted by date', async () => {
-    const res = await getAllStories!({}, {}, {}, {} as GraphQLResolveInfo);
+    const res = await getAllStories!({}, { followerId: '3' }, {}, {} as GraphQLResolveInfo);
 
     expect(res).toEqual([
       {
