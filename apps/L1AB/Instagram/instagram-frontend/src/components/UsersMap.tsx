@@ -49,7 +49,11 @@ export const UsersMap = () => {
               </p>
             </div>
           </div>
-          <Button data-testid={`follow-${i}`} className="text-sm p-0 text-[#2563EB] text-[14px] hover:bg-white bg-white cursor-pointer" onClick={(e) => handleFollow(e, group[0].followeeId._id)}>
+          <Button
+            data-testid={`follow-${i}`}
+            className="text-sm p-0 text-[#2563EB] text-[14px] hover:text-slate-900 hover:bg-white bg-white cursor-pointer"
+            onClick={(e) => handleFollow(e, group[0].followeeId._id)}
+          >
             Follow
           </Button>
         </Link>
