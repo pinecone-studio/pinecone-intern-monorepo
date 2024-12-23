@@ -11,17 +11,26 @@ interface HomeProps {
 }
 export const HomeButton = ({ isOpen, svgControls }: HomeProps) => {
   const pathname = usePathname();
+  console.log(isOpen, 'isopen');
   return (
-    <NavigationLink href="/home" name={isOpen ? '' : 'Home'}>
-      <House className={pathname == '/home' ? ' min-w-6 w-6 cursor-pointer focus:stroke-[2.5] ' : 'stroke-inherit stroke-[1.5] min-w-6 w-6 cursor-pointer focus:stroke-[2.5]'} data-testid="home-click">
-        <motion.path
-          transition={{
-            duration: 0.5,
-            ease: 'easeInOut',
-          }}
-          animate={svgControls}
-        />
-      </House>
-    </NavigationLink>
+    <div
+      className={
+        pathname == '/home'
+          ? 'group h-[50px] flex  rounded-md cursor-pointer  hover:stroke-neutral-500 stroke-neutral-800  hover:bg-gray-100 hover:border  hover:border-gray-300 place-items-center  gap-3 transition-colors duration-1000  text-[#09090B] font-light '
+          : 'group h-12 py-3 w-full items-center flex rounded cursor-pointer stroke-[0.75] hover:stroke-neutral-500 stroke-neutral-800  hover:bg-gray-100 place-items-center gap-3 transition-colors duration-1000 hover:border-0 text-[#09090B] font-bold'
+      }
+    >
+      <NavigationLink href="/home" name={isOpen ? '' : 'Home'}>
+        <House data-testid="home-click" className="stroke-inherit  min-w-6 min-h-6 group">
+          <motion.path
+            transition={{
+              duration: 0.5,
+              ease: 'easeInOut',
+            }}
+            animate={svgControls}
+          />
+        </House>
+      </NavigationLink>
+    </div>
   );
 };
