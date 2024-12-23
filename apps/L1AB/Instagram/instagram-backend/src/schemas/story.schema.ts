@@ -12,7 +12,7 @@ export const typeDefs = gql`
     image: String!
   }
   type Query {
-    getAllStories: [Story!]!
+    getAllStories(followerId: ID!): [Story!]!
   }
 
   input DeleteStoryInput {
