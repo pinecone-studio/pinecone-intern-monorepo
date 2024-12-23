@@ -11,7 +11,7 @@ export const Event1 = () => {
     return <EventCardSkeleton />;
   }
 
-  const filteredEvents = data?.getAllEvents?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох');
+  const filteredEvents = data?.getAllEvents?.filter((event) => event.status === 'Demo');
 
   return (
     <div className="dark:text-white root:text-black" data-testid="event">

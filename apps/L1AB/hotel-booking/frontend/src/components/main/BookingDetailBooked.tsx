@@ -28,7 +28,7 @@ export const BookingDetailBooked = () => {
           </div>
           <div className="flex flex-col">
             <div>
-              <CheckInDialog />
+              <CheckInDialog checkInDialogPhone="" />
             </div>
             <div>
               <ViewPricingDialog />

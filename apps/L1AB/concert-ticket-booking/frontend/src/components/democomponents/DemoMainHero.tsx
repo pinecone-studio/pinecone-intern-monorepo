@@ -11,7 +11,7 @@ export const DemoHeroComponent = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { data, loading } = useGetAllEventsQuery();
 
-  const SpecialFilteredData = data?.getAllEvents.filter((item) => item.status === 'Онцлох') || [];
+  const SpecialFilteredData = data?.getAllEvents.filter((item) => item.status === 'Demo') || [];
 
   const slideRight = useCallback(() => {
     setIsTransitioning(true);

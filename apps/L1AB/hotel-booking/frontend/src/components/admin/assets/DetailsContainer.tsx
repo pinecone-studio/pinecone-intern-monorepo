@@ -7,11 +7,13 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 
-export const DetailsContainer = ({ children }: PropsWithChildren) => {
+type DetailsContainerProps = {
+  name: string;
+} & PropsWithChildren;
+export const DetailsContainer = ({ children, name }: DetailsContainerProps) => {
   const pathname = usePathname();
   const { addHotelForm } = useAdmin();
   const pathnames = (pathname || '').split('/').filter((path) => path);
-  const name = addHotelForm.values.name;
   return (
     <div data-testid="DetailsContainer" className="max-w-screen-xl m-auto">
       <form onSubmit={addHotelForm.handleSubmit}>

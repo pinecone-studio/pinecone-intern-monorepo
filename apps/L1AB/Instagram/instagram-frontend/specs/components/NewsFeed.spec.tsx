@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import NewsFeed from '@/components/NewsFeed';
 import { MockedProvider } from '@apollo/client/testing';
-import { GetPostsByFollowersIdDocument } from '@/generated';
+import { DeletePostDocument, GetPostsByFollowersIdDocument } from '@/generated';
 import { PropsType } from './PostCard.spec';
 import { UserContext } from '@/components/providers';
 const mockUser = {
@@ -44,32 +44,112 @@ const getPostsByFollowersIdMock = {
           caption: 'noCap',
           createdAt: 'date',
         },
+        {
+          _id: 'post2',
+          userId: {
+            username: 'zorigoo',
+            _id: 'zorID',
+            profilePicture: 'zurag',
+          },
+          images: ['zurag'],
+          caption: 'noCap',
+          createdAt: 'date',
+        },
       ],
     },
   },
 };
-
+export const deletePostMock = {
+  request: {
+    query: DeletePostDocument,
+    variables: { id: '1' },
+  },
+  result: {
+    data: {
+      message: 'Success',
+    },
+  },
+};
+const mockPosts = [
+  {
+    _id: '1',
+    userId: { _id: '134124', profilePicture: 'profile.jpg', username: 'user1' },
+    createdAt: '2023-10-01',
+    caption: 'Test Post 1',
+    images: ['image1.jpg'],
+  },
+  {
+    _id: '2',
+    userId: { _id: 'user2', profilePicture: 'profile.jpg', username: 'user2' },
+    createdAt: '2023-10-02',
+    caption: 'Test Post 2',
+    images: ['image2.jpg'],
+  },
+];
+jest.mock('date-fns', () => ({
+  ...jest.requireActual('date-fns'),
+  formatDistanceToNow: jest.fn(),
+}));
 describe('NewsFeed', () => {
   it('should render successfully', async () => {
+    localStorage.setItem('new posts', JSON.stringify(mockPosts));
     const { getByTestId } = render(
-      <UserContext.Provider value={{ user: mockUser }}>
-        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]}>
+        <UserContext.Provider value={{ user: mockUser }}>
           <NewsFeed />
-        </MockedProvider>
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </MockedProvider>
     );
     await waitFor(() => {
-      expect(getByTestId('NewsFeedPostCard-0'));
+      expect(getByTestId('NewsFeedPostCard-post1'));
     });
+    const DeleteButton = getByTestId('deleteButton-1');
+    fireEvent.click(DeleteButton);
+
+    const Delete = getByTestId('delete-1');
+    fireEvent.click(Delete);
+
+    const DeletePost = getByTestId('deletePost-1');
+    fireEvent.click(DeletePost);
+  });
+
+  it('should render successfully', async () => {
+    const postString = JSON.stringify(null);
+    localStorage.setItem('new posts', postString);
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]} addTypename={false}>
+        <UserContext.Provider value={{ user: mockUser }}>
+          <NewsFeed />
+        </UserContext.Provider>
+      </MockedProvider>
+    );
+    await waitFor(() => {
+      expect(getByTestId('NewsFeedPostCard-post1'));
+    });
+  });
+  it('should render successfully', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]} addTypename={false}>
+        <UserContext.Provider value={{ user: mockUser }}>
+          <NewsFeed />
+        </UserContext.Provider>
+      </MockedProvider>
+    );
+    await waitFor(() => {
+      expect(getByTestId('NewsFeedPostCard-post1'));
+    });
+    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+
+    JSON.parse(localStorage.getItem('new posts') ?? '[]');
   });
 
   it('should render successfully', async () => {
     render(
-      <UserContext.Provider value={{ user: null }}>
-        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]}>
+        <UserContext.Provider value={{ user: null }}>
           <NewsFeed />
-        </MockedProvider>
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </MockedProvider>
     );
   });
 });

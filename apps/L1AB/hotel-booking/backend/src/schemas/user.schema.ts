@@ -58,6 +58,7 @@ export const typeDefs = gql`
   type Query {
     getAllUsers(pagination: PaginationInput): [User!]!
     getUserById(_id: ID!): User!
+    getMe: User!
   }
 
   type Mutation {
