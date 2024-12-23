@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon } from '@/components/icon';
+import { CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
 interface SearchDatePickerProps {
@@ -19,11 +19,17 @@ export const SearchDatePicker = ({ startDate, endDate, onChange }: SearchDatePic
     from: startDate,
     to: endDate,
   });
+
+  React.useEffect(() => {
+    setDate({ from: startDate, to: endDate });
+  }, [startDate, endDate]);
+
   React.useEffect(() => {
     if (date?.from && date?.to && (date.from !== startDate || date.to !== endDate)) {
       onChange(date.from, date.to);
     }
   }, [startDate, endDate, date?.from, date?.to, onChange]);
+
   return (
     <div data-testid="date-picker" className="grid gap-2 w-full">
       <Popover>
@@ -44,7 +50,7 @@ export const SearchDatePicker = ({ startDate, endDate, onChange }: SearchDatePic
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto -ml-5 p-0" align="start">
-          <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2} />
+          <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2} disabled={(date) => date < new Date()} />
         </PopoverContent>
       </Popover>
     </div>
