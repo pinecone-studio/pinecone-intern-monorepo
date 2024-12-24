@@ -1,5 +1,11 @@
+import { ImageUpload } from '@/components/signup/ImageUpload';
+
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div>
+      <ImageUpload />
+    </div>
+  );
 };
 
 export default page;
