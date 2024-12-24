@@ -58,10 +58,10 @@ describe('sendQrToEmail', () => {
     expect(userModel.findById).toHaveBeenCalledWith({ _id: '123' });
     expect(bookingModel.find).toHaveBeenCalledWith({ userId: '123' });
     expect(EventModel.findOne).toHaveBeenCalledWith({ _id: '456' });
-    expect(QRCode.toDataURL).toHaveBeenCalledWith('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+    expect(QRCode.toDataURL).toHaveBeenCalledWith('https://concert-ticket-frontend-pinecone-studio.vercel.app/check/undefined');
     expect(QRModel.create).toHaveBeenCalledWith({
       email: 'test@example.com',
-      link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      link: 'https://concert-ticket-frontend-pinecone-studio.vercel.app/check/undefined',
       generatedQR: mockGeneratedQR,
     });
     expect(result).toEqual({
