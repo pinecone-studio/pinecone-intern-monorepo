@@ -38,7 +38,9 @@ interface StageStyleProps {
 }
 export const StageStyle = ({ venue }: StageStyleProps) => {
   const path = usePathname();
-  const demoEvent = path?.startsWith('/bookTicket/6765104197fab04d24c9ed5b') || false; // eslint-disable-line no-secrets/no-secrets
+  const demoEvent =
+    ['/bookTicket/6765104197fab04d24c9ed5b', '/bookTicket/676a81d280d57f973f0f4f6f', '/bookTicket/676a859880d57f973f0f51ff'].some((ticketPath) => path?.startsWith(ticketPath)) || false; // eslint-disable-line no-secrets/no-secrets
+
   const sections = [
     { component: LeftBottomInside, position: 'top-[96px] left-1', text: `VIP хэсэг ${venue?.[2]?.quantity}` },
     { component: TopInside, position: 'top-[108px] left-[75px]', text: `VIP хэсэг ${venue?.[2]?.quantity}` },
