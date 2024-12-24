@@ -9,7 +9,7 @@ export const BookTicketSkeleton = () => {
         <Skeleton className="bg-transparent"></Skeleton>
       </nav>
       <div className="flex  max-md:grid max-sm:grid  max-lg:grid  max-lg:gap-12 items-center justify-center gap-96 py-40 max-sm:py-20 ">
-        <Skeleton className="w-[600px] rounded-full max-sm:w-[330px] max-sm:h-[300px] dark:bg-[#131313] bg-gray-900 h-[560px] max-sm:mx-24" />
+        <Skeleton className="w-[600px] rounded-2xl max-sm:w-[330px] max-sm:h-[300px] dark:bg-[#131313] bg-gray-900 h-[560px] max-sm:mx-24" />
         <Skeleton className="dark:bg-[#131313] w-[390px]  bg-gray-900 h-[480px]  rounded-2xl px-6 max-sm:px-3  max-md:px-3"></Skeleton>
       </div>
     </div>

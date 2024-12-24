@@ -6,7 +6,7 @@ import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GoClock, GoDotFill } from 'react-icons/go';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { RelatedEvents } from './RelatedEvents';
 import { toast } from 'react-toastify';
@@ -18,6 +18,8 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   const { data, loading } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
   const router = useRouter();
+  const path = usePathname();
+  const demoEventDetails = path.startsWith('/events/6765104197fab04d24c9ed5b'); // eslint-disable-line no-secrets/no-secrets
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }
@@ -90,13 +92,21 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           </div>
           <div className="grid gap-2 ">
             <p className="dark:text-[#FAFAFA] font-light root:text-black">Stage plan:</p>
-            <div className="h-[600px] w-full relative max-sm:h-[300px] max-2xl:h-[800px] ">
-              <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
-            </div>
+            {demoEventDetails ? (
+              <>
+                <div className="h-[600px] w-[650px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:block max-sm:h-[340px] max-sm:w-full">
+                  <Image src={`/DemoEventSeat.png`} alt="hi" priority fill />
+                </div>
+              </>
+            ) : (
+              <div className="h-[500px] w-[600px] m-auto relative max-sm:h-[300px] max-xl:w-[400px] max-xl:m-auto  ">
+                <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="w-fit max-md:px-36 max-sm:px-0 max-lg:px-44  max-xl:w-full max-2xl:w-full">
+        <div className="w-fit max-md:px-36 max-sm:px-0 max-lg:px-44  max-xl:w-full max-2xl:px-72 max-2xl:w-full">
           <div className=" rounded-2xl px-6 ">
             <div className="grid h-fit gap-2">
               {eventDetails?.venues.map((item, index) => {
