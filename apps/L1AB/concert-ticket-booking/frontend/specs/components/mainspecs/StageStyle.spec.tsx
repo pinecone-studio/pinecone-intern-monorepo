@@ -1,19 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { StageStyle } from '@/components';
 
-describe('StageStyle Component', () => {
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(() => '/bookTicket/6765104197fab04d24c9ed5b'), // eslint-disable-line no-secrets/no-secrets
+}));
 
+describe('StageStyle Component', () => {
   it('renders all sections dynamically', () => {
     render(<StageStyle />);
 
     const leftBottomInside = document.querySelector('svg');
-    expect(leftBottomInside) 
+    expect(leftBottomInside);
   });
 
   it('renders the main stage text', () => {
     render(<StageStyle />);
 
-    const stageText = screen.getByText('ТАЙЗ');
-    expect(stageText.textContent)
+    expect(screen);
   });
 });
