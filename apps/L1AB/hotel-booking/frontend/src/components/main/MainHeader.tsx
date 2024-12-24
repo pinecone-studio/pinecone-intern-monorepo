@@ -13,7 +13,9 @@ export const MainHeader = () => {
           <PediaLogo />
         </Link>
         {user ? (
-          <>{user.email}</>
+          <Link href="/profile">
+            <div>{user.email}</div>
+          </Link>
         ) : (
           <>
             <div className="flex gap-4">

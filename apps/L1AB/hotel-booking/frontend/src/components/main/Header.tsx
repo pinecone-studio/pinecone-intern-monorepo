@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Container } from './assets';
 import { useAuth } from '../providers/Auth.Provider';
+import Link from 'next/link';
 
 export const Header = () => {
   const { user } = useAuth();
@@ -15,7 +16,9 @@ export const Header = () => {
         </div>
         <div className="flex gap-4">
           <Button variant="ghost">My Booking</Button>
-          <Button variant="ghost">{user?.email}</Button>
+          <Link href="/profile">
+            <Button variant="ghost">{user?.email}</Button>
+          </Link>
         </div>
       </div>
     </Container>
