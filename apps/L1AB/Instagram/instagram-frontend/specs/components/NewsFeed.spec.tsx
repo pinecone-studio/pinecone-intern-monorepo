@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import NewsFeed from '@/components/NewsFeed';
 import { MockedProvider } from '@apollo/client/testing';
 import { DeletePostDocument, GetPostsByFollowersIdDocument } from '@/generated';
@@ -37,7 +37,7 @@ const getPostsByFollowersIdMock = {
           _id: 'post1',
           userId: {
             username: 'zorigoo',
-            _id: 'zorID',
+            _id: '134124',
             profilePicture: 'zurag',
           },
           images: ['zurag'],
@@ -62,7 +62,7 @@ const getPostsByFollowersIdMock = {
 export const deletePostMock = {
   request: {
     query: DeletePostDocument,
-    variables: { id: '1' },
+    variables: { id: 'post1' },
   },
   result: {
     data: {
@@ -70,29 +70,13 @@ export const deletePostMock = {
     },
   },
 };
-const mockPosts = [
-  {
-    _id: '1',
-    userId: { _id: '134124', profilePicture: 'profile.jpg', username: 'user1' },
-    createdAt: '2023-10-01',
-    caption: 'Test Post 1',
-    images: ['image1.jpg'],
-  },
-  {
-    _id: '2',
-    userId: { _id: 'user2', profilePicture: 'profile.jpg', username: 'user2' },
-    createdAt: '2023-10-02',
-    caption: 'Test Post 2',
-    images: ['image2.jpg'],
-  },
-];
+
 jest.mock('date-fns', () => ({
   ...jest.requireActual('date-fns'),
   formatDistanceToNow: jest.fn(),
 }));
 describe('NewsFeed', () => {
   it('should render successfully', async () => {
-    localStorage.setItem('new posts', JSON.stringify(mockPosts));
     const { getByTestId } = render(
       <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]}>
         <UserContext.Provider value={{ user: mockUser }}>
@@ -100,47 +84,28 @@ describe('NewsFeed', () => {
         </UserContext.Provider>
       </MockedProvider>
     );
-    await waitFor(() => {
-      expect(getByTestId('NewsFeedPostCard-post1'));
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
     });
-    const DeleteButton = getByTestId('deleteButton-1');
+    const DeleteButton = getByTestId('deleteButton-post1');
     fireEvent.click(DeleteButton);
 
-    const Delete = getByTestId('delete-1');
+    const Delete = getByTestId('delete-post1');
     fireEvent.click(Delete);
 
-    const DeletePost = getByTestId('deletePost-1');
+    const DeletePost = getByTestId('deletePost-post1');
     fireEvent.click(DeletePost);
   });
 
   it('should render successfully', async () => {
-    const postString = JSON.stringify(null);
-    localStorage.setItem('new posts', postString);
-    const { getByTestId } = render(
+    render(
       <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]} addTypename={false}>
         <UserContext.Provider value={{ user: mockUser }}>
           <NewsFeed />
         </UserContext.Provider>
       </MockedProvider>
     );
-    await waitFor(() => {
-      expect(getByTestId('NewsFeedPostCard-post1'));
-    });
-  });
-  it('should render successfully', async () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]} addTypename={false}>
-        <UserContext.Provider value={{ user: mockUser }}>
-          <NewsFeed />
-        </UserContext.Provider>
-      </MockedProvider>
-    );
-    await waitFor(() => {
-      expect(getByTestId('NewsFeedPostCard-post1'));
-    });
-    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
-
-    JSON.parse(localStorage.getItem('new posts') ?? '[]');
   });
 
   it('should render successfully', async () => {

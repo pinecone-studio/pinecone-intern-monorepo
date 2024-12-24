@@ -7,7 +7,7 @@ import CreatePostCancelButton from './CreatePostCancelButton';
 import { UserContext } from './providers';
 import Image from 'next/image';
 
-import { useCreatePostMutation } from '@/generated';
+import { useCreatePostMutation, useGetPostsByFollowersIdQuery } from '@/generated';
 import UploadStep from './CreatePostUpload';
 import CreatePostDescription from './CreatePostDescription';
 
@@ -25,7 +25,11 @@ export const CreatePost: React.FC<CreatePostProps> = ({ isDialogOpen, onOpenChan
   const [isUploading, setIsUploading] = useState(false);
   const [currentStep, setCurrentStep] = useState<'upload' | 'description'>('upload');
   const { user }: any = useContext(UserContext);
-
+  const { refetch } = useGetPostsByFollowersIdQuery({
+    variables: {
+      followerId: user ? user._id : '',
+    },
+  });
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -76,10 +80,7 @@ export const CreatePost: React.FC<CreatePostProps> = ({ isDialogOpen, onOpenChan
         variables: { input: { userId: user._id, images: imageUrls, caption } },
       });
       if (data) {
-        const newPost = data.createPost;
-        const existingPosts = JSON.parse(localStorage.getItem('new posts') ?? '[]');
-        existingPosts.push(newPost);
-        localStorage.setItem('new posts', JSON.stringify(existingPosts));
+        refetch();
         resetState();
         onOpenChange();
       }
