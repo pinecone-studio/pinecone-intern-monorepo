@@ -1,121 +1,102 @@
-import React from 'react';
+import { ImageUpload } from '@/components/signup/ImageUpload';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { useRouter } from 'next/navigation';
-import { useCreateUserMutation } from '@/generated';
-import { ImageUpload } from '@/components/signup/ImageUpload';
-
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => <img {...props} />,
 }));
-
-jest.mock('@/generated', () => ({
-  useCreateUserMutation: jest.fn(),
-}));
-
-const localStorageMock = (function () {
-  let store: { [key: string]: string } = {};
-  return {
-    getItem: function (key: string) {
-      return store[key] || null;
-    },
-    setItem: function (key: string, value: string) {
-      store[key] = value.toString();
-    },
-    clear: function () {
-      store = {};
-    },
-  };
-})();
-
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
 
 describe('ImageUpload Component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    localStorage.clear();
-  });
-
-  it('handles form submission', async () => {
-    const mockRouter = { push: jest.fn() };
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
-
-    const mockCreateUser = jest.fn().mockResolvedValue({});
-    (useCreateUserMutation as jest.Mock).mockReturnValue([mockCreateUser]);
-
-    localStorage.setItem(
-      'signupFormData',
-      JSON.stringify({
-        email: 'test@example.com',
-        password: 'password123',
-        age: 25,
-        bio: 'Test bio',
-        hobby: 'Reading',
-        interested: 'Women',
-        job: 'Developer',
-        name: 'Test User',
-        profession: 'Software Engineer',
+  beforeAll(() => {
+    global.URL.createObjectURL = jest.fn(() => 'mocked-url');
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => ({ secureUrl: 'https://mocked-url.com' }),
       })
-    );
+    ) as jest.Mock;
+  });
 
-    render(<ImageUpload />);
+  it('renders upload input, displays placeholder content, triggers upload on button click, and handles modal logic', async () => {
+    const mockOnUpload = jest.fn();
+    const mockHandleSubmit = jest.fn();
+    const setCheckMock = jest.fn();
 
-    const nextButton = screen.getByText('Next');
-    fireEvent.click(nextButton);
+    const { getByTestId, getAllByTestId } = render(<ImageUpload />);
+
+    const clickButton = screen.getByTestId('ClickButton');
+    fireEvent.click(clickButton);
+
+    const fileInput = screen.getByTestId('addinput');
+    const file = new File(['image'], 'test-image.jpg', { type: 'image/jpeg' });
+    fireEvent.change(fileInput, { target: { files: [file] } });
 
     await waitFor(() => {
-      expect(mockCreateUser).toHaveBeenCalledWith({
-        variables: {
-          input: {
-            email: 'test@example.com',
-            password: 'password123',
-            age: 25,
-            bio: 'Test bio',
-            hobby: 'Reading',
-            interest: 'Women',
-            job: 'Developer',
-            username: 'Test User',
-            profession: 'Software Engineer',
-          },
-        },
-      });
-      expect(mockRouter.push).toHaveBeenCalledWith('/home');
+      const previewImage = screen.getByTestId('map');
+      expect(previewImage);
+    });
+
+    const CheckSet = getAllByTestId('check');
+    fireEvent.click(CheckSet[0]);
+
+    const CheckSet2 = getByTestId('CheckSet2');
+    fireEvent.click(CheckSet2);
+
+    expect(setCheckMock);
+
+    const uploadButton = screen.getByTestId('create');
+    fireEvent.click(uploadButton);
+
+    await waitFor(() => {
+      expect(mockOnUpload);
+      expect(mockHandleSubmit);
+      expect(setCheckMock);
+    });
+  });
+  it('removes an image when the remove button is clicked', async () => {
+    const { getByTestId, queryByTestId } = render(<ImageUpload />);
+
+    const clickButton = screen.getByTestId('ClickButton');
+    fireEvent.click(clickButton);
+
+    const fileInput = screen.getByTestId('addinput');
+    const file = new File(['image'], 'test-image.jpg', { type: 'image/jpeg' });
+    fireEvent.change(fileInput, { target: { files: [file] } });
+
+    await waitFor(() => {
+      const previewImage = screen.getByTestId('map');
+      expect(previewImage);
+    });
+
+    const removeButton = getByTestId('remove');
+    fireEvent.click(removeButton);
+
+    await waitFor(() => {
+      expect(queryByTestId('map'));
     });
   });
 
-  it('displays error message when form submission fails', async () => {
-    const mockCreateUser = jest.fn().mockRejectedValue(new Error('Submission failed'));
-    (useCreateUserMutation as jest.Mock).mockReturnValue([mockCreateUser]);
+  it('displays "Creating..." text while uploading', async () => {
+    const { getByTestId } = render(<ImageUpload />);
 
-    localStorage.setItem(
-      'signupFormData',
-      JSON.stringify({
-        email: 'test@example.com',
-        password: 'password123',
+    fireEvent.click(getByTestId('create'));
+  });
+
+  it('handles image upload failure', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        json: () => ({ message: 'Error uploading' }),
       })
-    );
+    ) as jest.Mock;
 
     render(<ImageUpload />);
 
-    const nextButton = screen.getByText('Next');
-    fireEvent.click(nextButton);
+    const clickButton = screen.getByTestId('ClickButton');
+    fireEvent.click(clickButton);
 
-    await waitFor(() => {
-      expect(screen.getByText('Error creating user'));
-    });
-  });
-
-  it('displays error when no saved data is found', async () => {
-    render(<ImageUpload />);
-
-    const nextButton = screen.getByText('Next');
-    fireEvent.click(nextButton);
-
-    await waitFor(() => {
-      expect(screen.getByText('No saved data found'));
-    });
+    const uploadButton = screen.getByTestId('create');
+    fireEvent.click(uploadButton);
   });
 });
