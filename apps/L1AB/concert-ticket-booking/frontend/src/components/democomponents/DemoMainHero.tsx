@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { FiCalendar } from 'react-icons/fi';
 import { Skeleton } from '@/components/ui/skeleton';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
+// eslint-disable-next-line no-secrets/no-secrets
+// const DemoImages=["https://res-console.cloudinary.com/dgivvztkg/thumbnails/v1/image/upload/v1734927516/U2NyZWVuc2hvdF8yMDI0LTEyLTIzX2F0XzEyLjA4LjQ3X1BNX2tvZmlpZA==/drilldown",]
 export const DemoHeroComponent = () => {
   const [current, setCurrent] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
@@ -29,11 +31,9 @@ export const DemoHeroComponent = () => {
       return () => clearTimeout(timeout);
     }
   }, [autoplay, current, slideRight]);
-
   if (loading) {
     return <Skeleton className=" h-[550px] w-full bg-gray-900"></Skeleton>;
   }
-
   return (
     <div className="relative w-full overflow-hidden h-[550px] max-md:w-full" data-testid="main-hero">
       <div
