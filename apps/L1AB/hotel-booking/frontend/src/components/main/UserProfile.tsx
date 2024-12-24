@@ -4,15 +4,15 @@ import { Label } from '@/components/ui/label';
 import * as React from 'react';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useAuth } from '../providers/Auth.Provider';
 
 export const UserProfile = () => {
   const today = new Date();
   const [date, setDate] = React.useState<Date | undefined>(today);
-
+  const { signout } = useAuth();
   return (
     <Container backgroundColor="bg-white w-[672px]">
       <div className="m-auto">
@@ -54,10 +54,14 @@ export const UserProfile = () => {
             </Popover>
             <p className="text-[#71717A] text-sm font-thin mb-6">Your date of birth is used to calculate your age.</p>
           </div>
-
-          <Button variant="secondary" className="bg-[#2563EB] text-[#FAFAFA] font-medium ">
-            Update profile
-          </Button>
+          <div className="flex flex-row justify-between">
+            <Button variant="secondary" className="bg-[#2563EB] hover:bg-blue-400 text-[#FAFAFA] font-medium ">
+              Update profile
+            </Button>
+            <Button onClick={signout} className="bg-orange-400 hover:bg-orange-300">
+              Sign Out
+            </Button>
+          </div>
         </div>
       </div>
     </Container>
