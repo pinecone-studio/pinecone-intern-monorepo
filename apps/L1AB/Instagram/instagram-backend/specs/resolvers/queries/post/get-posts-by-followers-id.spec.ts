@@ -77,16 +77,6 @@ describe('getPostsbyFollowersId', () => {
     const res = await getPostsByFollowersId!({}, { followerId: '3' }, {}, {} as GraphQLResolveInfo);
     expect(res).toEqual([
       {
-        _id: '673da5414a0c0fa573e0d256',
-        userId: {
-          _id: '3',
-          username: 'zorg',
-        },
-        images: ['https://picsum.photos/900'],
-        caption: 'Hello',
-        createdAt: '2024-12-24T12:11:00Z',
-      },
-      {
         _id: '67502569e2f6ddc43a5b1891',
         userId: {
           _id: '3',
@@ -96,7 +86,16 @@ describe('getPostsbyFollowersId', () => {
         caption: 'ehend',
         createdAt: '2024-12-24T12:29:25.648Z',
       },
-
+      {
+        _id: '673da5414a0c0fa573e0d256',
+        userId: {
+          _id: '3',
+          username: 'zorg',
+        },
+        images: ['https://picsum.photos/900'],
+        caption: 'Hello',
+        createdAt: '2024-12-24T12:11:00Z',
+      },
       {
         _id: '67502569e2f6ddc43a5b1891',
         userId: {
