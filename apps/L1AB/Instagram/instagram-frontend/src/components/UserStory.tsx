@@ -75,7 +75,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
 
   return (
     <div
-      className="relative rounded-md flex "
+      className="relative rounded-md flex dark:text-white "
       style={{
         transition: '800ms',
         transform: mainUserStory === userId ? 'scale(1)' : 'scale(0.5)',

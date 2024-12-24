@@ -9,7 +9,7 @@ const ProfilePagePostsAndSaved = ({ user }: any) => {
   const type = searchParams.get('type');
   const username = searchParams.get('username');
   return (
-    <div className="flex gap-12">
+    <div className="flex gap-12 dark:w-border-red-500">
       <div
         data-testId="posts-button"
         className={type === 'posts' ? styles.selected : styles.notSelected}

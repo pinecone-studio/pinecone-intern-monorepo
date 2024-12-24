@@ -21,12 +21,7 @@ const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () 
       transition={{ duration: 0.1 }}
       animate={{ scale: 1, transition: { duration: 0.2 } }}
     >
-      <Heart
-        style={{
-          fill: isLiked ? 'red' : 'white',
-        }}
-        className={`${isLiked ? 'text-[#ff0000]' : 'text-black'}`}
-      />
+      <Heart className={`${isLiked ? 'text-[#ff0000]' : 'text-black'}  ${isLiked ? 'text-[#ff0000] dark:text-[#ff4d4d] fill-current' : ' dark:text-white'}`} />
     </motion.div>
   );
 };
@@ -44,7 +39,7 @@ const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () 
       transition={{ duration: 0.1 }}
       animate={{ scale: 1, transition: { duration: 0.2 } }}
     >
-      <Bookmark fill={`${isSaved ? 'black' : 'white'}`} />
+      <Bookmark className={`cursor-pointer   ${isSaved ? 'text-black  dark:text-white fill-current' : ' dark:text-white'}`} />
     </motion.div>
   );
 };
@@ -91,7 +86,7 @@ const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, 
         <div className="flex gap-4">
           <div className="flex gap-1">
             <LikeButton isLiked={isLiked} handleLike={handleLike} />
-            <div>{likesData?.length}</div>
+            <div className={`cursor-pointer  hover:text-[#71717A] `}>{likesData?.length}</div>
           </div>
           <motion.div whileHover={{ color: '#9CA3AF' }}>
             <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />

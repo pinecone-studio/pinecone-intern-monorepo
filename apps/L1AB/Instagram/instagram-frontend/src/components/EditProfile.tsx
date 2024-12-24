@@ -143,7 +143,7 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
             </SelectContent>
           </Select>
           <div className="flex mt-10 justify-end">
-            <Button className="bg-[#2563EB] hover:bg-[#2563EB]" onClick={handleUpdateUser}>
+            <Button className="bg-[#2563EB dark:text-white bg-[#2563EB] hover:bg-[#2563EB]" onClick={handleUpdateUser}>
               Submit
             </Button>
           </div>

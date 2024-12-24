@@ -79,7 +79,7 @@ export const LeftSideBar = () => {
   }, [searchOpen, notifOpen]);
 
   return (
-    <div data-cy="LeftSideBar" className="fixed left-0 z-50">
+    <div data-cy="LeftSideBar" className="fixed left-0 z-50 dark:bg-black dark:text-white">
       <div className="z-10">
         <SearchDrawer isOpen={searchOpen} toggleSearchDrawer={toggleSearchDrawer} visitedUsers={visitedUsers} visitedUsersHandler={visitedUsersHandler} />
         <NotificationDrawer isOpen={notifOpen} toggleNotificationDrawer={toggleNotificationDrawer} />
@@ -90,7 +90,9 @@ export const LeftSideBar = () => {
         variants={containerVariants}
         initial="close"
         animate={containerControls}
-        className={`flex flex-col gap-20 p-4 top-0 left-0 min-h-screen  z-50 bg-white ${errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200 ' : 'border'}`}
+        className={`flex flex-col gap-20 p-4 top-0 left-0 min-h-screen dark:bg-black   dark:text-white  z-50 bg-white ${
+          errorChecker(notifOpen, searchOpen) ? 'shadow shadow-neutral-200 dark:bg-black ' : 'border dark:text-white'
+        }`}
       >
         <div onClick={toggleHomeDrawer}>
           <InstagramButton isOpen={errorChecker(notifOpen, searchOpen)} />
@@ -106,7 +108,7 @@ export const LeftSideBar = () => {
             <ProfileButton svgControls={svgControls} isOpen={errorChecker(notifOpen, searchOpen)} />
           </div>
         </div>
-        <div data-testid="moreButton" className="mt-auto">
+        <div className="mt-auto">
           <MoreButton isOpen={errorChecker(notifOpen, searchOpen)} svgControls={svgControls} />
         </div>
       </motion.nav>
