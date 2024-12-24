@@ -23,7 +23,8 @@ export const typeDefs = gql`
     status: StatusType!
     checkIn: Date!
     checkOut: Date!
-    traveller: Int!
+    traveler: Int!
+    isPaid: Boolean!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -35,9 +36,10 @@ export const typeDefs = gql`
     lastName: String!
     email: String!
     phoneNumber: String!
+    isPaid: Boolean!
     checkIn: Date!
     checkOut: Date!
-    traveller: Int!
+    traveler: Int!
   }
 
   input UpdateBookingInput {

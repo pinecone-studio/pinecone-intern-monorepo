@@ -1,68 +1,85 @@
 import { Zap } from 'lucide-react';
-export const CheckingBookingRight = () => {
+import { format, differenceInDays } from 'date-fns';
+import Image from 'next/image';
+import { CheckingBookingRightType } from '../CheckoutHome';
+
+const formatDate = (date: string) => {
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate.getTime())) {
+    return 'Invalid Date';
+  }
+
+  const formattedCheckIn = format(parsedDate, 'eeee, MMMM d, h:mm a');
+  return formattedCheckIn;
+};
+
+const convertDate = (checkIn: string, checkOut: string) => {
+  const checkInDate = checkIn ? new Date(checkIn) : new Date();
+  const checkOutDate = checkOut ? new Date(checkOut) : new Date();
+
+  const nights = differenceInDays(checkOutDate, checkInDate);
+  return nights;
+};
+
+export const CheckingBookingRight = ({ roomData, formData }: CheckingBookingRightType) => {
   return (
-    <div>
-      <div className="flex justify-center p-3">
-        <div className="w-full p-3  flex flex-row gap-5 justify-center ">
-          <div className="w-[515px] h-[843px]  ">
-            <div className="border border-[#E4E4E7] rounded-2xl p-3 justify-center flex flex-col ">
-              <div className="w-full h-[200px] border bg-black text-white text-3xl rounded-xl">image!</div>
-              <h1 className="font-bold text-xl mt-2">Flower Hotel Ulaanbaatar</h1>
-              <h1 className="text-[#71717A] mt-3">Zaluuchuud Avenue, 18, Bayanzurkh, Ulaanbaatar, Ulaanbaatar, 001334</h1>
-              <div className="flex flex-row gap-2 mt-3">
-                <div className="w-[39px] h-[20px] rounded-2xl bg-blue-600 flex justify-center items-center text-white">8.6</div>
-                <h1>Excellent</h1>
-              </div>
-              <div className="w-[483px] h-[1px] border border-[#E4E4E7] mt-4"></div>
-              <div className="flex flex-col gap-4 mt-5">
-                <div>
-                  <h1 className="text-[#71717A]">Check in</h1>
-                  <h1>Monday, Jul 1, 3:00pm</h1>
-                </div>
-                <div>
-                  <h1 className="text-[#71717A]">Check out</h1>
-                  <h1>Tuesday, Jul 3, 11:00am</h1>
-                </div>
-              </div>
-              <div className="w-[483px] h-[1px] border border-[#E4E4E7] mt-5"></div>
-              <div className="mt-3">
-                <h1>Standard Room, City View</h1>
-                <div>
-                  <div className="flex flex-row gap-7 mt-3">
-                    <div className="flex items-center">
-                      <Zap className="w-[26px] h-[16px]" /> 1 Queen Bed
-                    </div>
-                    <div className="flex items-center">
-                      <Zap className="w-[26px] h-[16px]" /> Non Smoking
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex flex-row gap-7 mt-3">
-                      <div className="flex items-center">
-                        <Zap className="w-[26px] h-[16px]" /> Breakfast included
-                      </div>
-                      <div className="flex items-center">
-                        <Zap className="w-[26px] h-[16px]" /> Pet friendly
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <div className="w-[515px] text-sm">
+      <div className="border border-[#E4E4E7] rounded-xl">
+        <Image
+          src={roomData.photos && roomData.photos.length > 0 ? roomData.photos[0] : '/path/to/default-image.jpg'}
+          alt="img"
+          width={0}
+          height={0}
+          className="rounded-xl min-w-[515px] max-h-[216px] object-cover"
+        />
+        <div className="p-4">
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <p className="text-[16px] font-bold">{roomData.hotelId.name}</p>
+              <p className="text-[#71717A] ">{roomData.hotelId.address}</p>
             </div>
-            <div className=" border border-[#E4E4E7] rounded-xl mt-3 p-3">
-              <h1 className="font-bold">Price Detail</h1>
-              <h1 className="mt-3">1 room x 1 night</h1>
-              <div className="flex flex-row justify-between">
-                <h1>$78.30 per night</h1>
-                <h1>USD 81.00</h1>
-              </div>
-              <div className="w-[483px] h-[1px] border border-[#E4E4E7] mt-3"></div>
-              <div className="flex justify-between mt-3">
-                <h1 className="text-2xl">Total Price</h1>
-                <h1 className="text-2xl">USD 81.00</h1>
-              </div>
+            <div className="flex flex-row gap-2 items-center">
+              <div className="w-[39px] h-[20px] rounded-2xl bg-blue-600 flex justify-center items-center text-white">{roomData.hotelId.rating}</div>
+              <p className="font-medium">Excellent</p>
             </div>
           </div>
+          <div className="w-full h-[1px] border border-[#E4E4E7] my-4"></div>{' '}
+          <div className="flex flex-col gap-4 mt-5 ">
+            <div>
+              <p className="text-[#71717A]">Check in</p>
+              <p className="font-medium">{formatDate(formData.checkIn)}</p>
+            </div>
+            <div>
+              <p className="text-[#71717A]">Check out</p>
+              <p className="font-medium">{formatDate(formData.checkOut)}</p>
+            </div>
+          </div>
+          <div className="w-full h-[1px] border border-[#E4E4E7] my-4"></div>
+          <div className="mt-3">
+            <p>{roomData.description}, City View</p>
+            <div className="flex flex-wrap gap-10 mt-4">
+              {roomData.roomAmenities.map((el, index) => (
+                <div key={index} className="flex items-center gap-2 text-[#71717A]">
+                  <Zap className="w-[18px] h-[18px]" />
+                  <p>{el.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-4 mt-6 p-4 border border-[#E4E4E7] rounded-xl">
+        <div>
+          <p className="font-bold text-[16px]">Price Detail</p>
+          <p className="mt-3">
+            {roomData.description} x {convertDate(formData.checkIn, formData.checkOut)} night
+          </p>
+          <p className="text-[#71717A]">{roomData.price.toLocaleString()}₮ per night</p>
+        </div>
+        <div className="w-full h-[1px] border border-[#E4E4E7]"></div>
+        <div className="flex justify-between mt-3">
+          <p className="font-medium">Total Price</p>
+          <p className="text-[18px]">{(roomData.price * convertDate(formData.checkIn, formData.checkOut)).toLocaleString()}₮</p>
         </div>
       </div>
     </div>

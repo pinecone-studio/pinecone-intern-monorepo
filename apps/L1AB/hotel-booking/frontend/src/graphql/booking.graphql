@@ -46,7 +46,7 @@ query GetAllBookings {
     status
     checkIn
     checkOut
-    traveller
+    traveler
     createdAt
     updatedAt
   }
@@ -86,7 +86,7 @@ query GetBookingById($id: ID!) {
     status
     checkIn
     checkOut
-    traveller
+    traveler
     createdAt
     updatedAt
   }

@@ -11,7 +11,8 @@ export type bookingType = {
   phoneNumber: string;
   roomId: Types.ObjectId;
   status: string;
-  traveller: number;
+  isPaid: Boolean;
+  traveler: number;
   checkIn: Date;
   checkOut: Date;
   createdAt: Date;
@@ -50,6 +51,10 @@ const bookingSchema = new Schema<bookingType>(
       enum: ['booked', 'canceled', 'completed'],
       default: 'booked',
     },
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
     checkIn: {
       type: Date,
       required: true,
@@ -58,7 +63,7 @@ const bookingSchema = new Schema<bookingType>(
       type: Date,
       required: true,
     },
-    traveller: {
+    traveler: {
       type: Number,
       required: true,
     },

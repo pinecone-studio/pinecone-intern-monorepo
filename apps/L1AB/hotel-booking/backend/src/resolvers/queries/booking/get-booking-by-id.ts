@@ -2,7 +2,9 @@ import { QueryResolvers } from '../../../generated';
 import { bookingModel, bookingPopulatedType } from '../../../models';
 
 export const getBookingById: QueryResolvers['getBookingById'] = async (_: unknown, { _id }) => {
-  const booking = await bookingModel.find({ _id }).populate<bookingPopulatedType>([
+  console.log(_id);
+
+  const booking = await bookingModel.find({ roomId: _id }).populate<bookingPopulatedType>([
     {
       path: 'roomId',
       populate: {
@@ -11,5 +13,7 @@ export const getBookingById: QueryResolvers['getBookingById'] = async (_: unknow
     },
     'userId',
   ]);
+  console.log(booking);
+
   return booking.map((book) => book.toObject());
 };
