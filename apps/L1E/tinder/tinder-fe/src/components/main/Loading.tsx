@@ -1,5 +1,5 @@
-import Logo from './common/Logo';
-import Tinder from './common/Tinder';
+import Logo from '../common/Logo';
+import Tinder from '../common/Tinder';
 
 export const Loading = () => {
   return (

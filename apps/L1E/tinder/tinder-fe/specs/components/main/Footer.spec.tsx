@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Footer from '@/components/main/Footer';
 import { render, screen } from '@testing-library/react';
 
 describe('Footer', () => {

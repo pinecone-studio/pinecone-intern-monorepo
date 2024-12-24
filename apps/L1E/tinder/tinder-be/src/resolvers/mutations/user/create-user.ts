@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../generated';
 import bcrypt from 'bcrypt';
-import { userModel } from '../../../models/user.model';
+import { userModel } from '../../../models/user/user.model';
 
 export const createUser: MutationResolvers['createUser'] = async (_: unknown, { input }) => {
   const { email, password, username, age, bio, hobby, interest, job, profession } = input;
