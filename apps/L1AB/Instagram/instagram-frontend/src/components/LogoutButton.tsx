@@ -9,7 +9,7 @@ const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] font-semibold bg-white text-[#2563EB]  dark:bg-black hover:text-slate-900 hover:bg-white`}>
+        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] font-semibold bg-white text-[#2563EB] dark:text-white dark:bg-black hover:text-slate-900 hover:bg-white`}>
           Log out
         </Button>
       </AlertDialogTrigger>
@@ -21,7 +21,7 @@ const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
           <AlertDialogCancel className="border text-[#09090B]">Cancel</AlertDialogCancel>
           <AlertDialogAction
             data-testId="log-out-button"
-            className="border bg-white hover:bg-white text-[#2563EB]"
+            className="border bg-white hover:bg-white dark:text-white text-[#2563EB]"
             onClick={() => {
               localStorage.removeItem('userToken');
               location.reload();
