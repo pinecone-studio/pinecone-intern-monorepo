@@ -19,7 +19,8 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   const eventDetails = data?.getEventById;
   const router = useRouter();
   const path = usePathname();
-  const demoEventDetails = path.startsWith('/events/6765104197fab04d24c9ed5b'); // eslint-disable-line no-secrets/no-secrets
+  const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path.startsWith(eventPath));
+  // eslint-disable-line no-secrets/no-secrets
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }

@@ -37,7 +37,7 @@ export const RelatedEvents = ({ id }: RelatedEventsProps) => {
 
   const targetDate = eventById.getEventById.eventDate[0];
   const filteredEvents = filterEventsByDate(data.getAllEvents, targetDate);
-  const filteredRelatedEvent = filteredEvents?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох');
+  const filteredRelatedEvent = filteredEvents?.filter((event) => event.status === 'Regular' || event.status === 'Онцлох' || event.status === 'Demo');
 
   return (
     <div>
