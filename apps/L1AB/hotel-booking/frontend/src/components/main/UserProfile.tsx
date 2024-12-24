@@ -43,9 +43,9 @@ export const UserProfile = () => {
 
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant={'outline'} className={`w-[280px] justify-start text-left font-normal flex items-center border rounded-md`}>
+                <Button variant={'outline'} className={`w-[280px] text-left font-normal flex items-center border rounded-md justify-between`}>
                   <span>{format(date as Date, 'PPP')}</span>
-                  <CalendarIcon />
+                  <CalendarIcon className="w-[16px] h-[16px] " />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto">

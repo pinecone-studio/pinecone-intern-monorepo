@@ -4,16 +4,19 @@ import { UserProfile } from './UserProfile';
 import { UserContact } from './UserContact';
 import { useState } from 'react';
 import { UserSettings } from './UserSettings';
+import { useAuth } from '../providers/Auth.Provider';
 
 export const UserContainer = () => {
   const [selected, setSelected] = useState('profile');
+  const { user } = useAuth();
+  console.log(user);
   return (
     <>
       <Container backgroundColor="bg-white">
         <div className="flex m-auto">
           <div className="container m-auto h-fit px-5 pt-10 pb-10 flex-1">
-            <h3 className="text-2xl font-semibold text-[#09090B]">Hi, Shagai</h3>
-            <p className="text-[#71717A] text-base font-thin mb-2">n.shagai@pinecone.mn</p>
+            <h3 className="text-2xl font-semibold text-[#09090B]">Hi hi{user?.email}</h3>
+            <p className="text-[#71717A] text-base font-thin mb-2">{user?.email}</p>
             <div className="border border-x-2"></div>
           </div>
         </div>
