@@ -83,7 +83,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
         transform: mainUserStory === userId ? 'scale(1)' : 'scale(0.5)',
       }}
     >
-      <div className="overflow-hidden w-full pt-[190%] relative">
+      <div className="overflow-hidden w-full h-[80vh] relative">
         <div className="absolute top-0 left-0 h-full w-full">
           <div
             className="flex h-full"
@@ -113,9 +113,10 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
             <div className="relative w-12 h-12 rounded-full overflow-hidden">
               <Image fill alt="" src={profilePicture} objectFit="cover" />
             </div>
+
             <h1 className="text-white">{username}</h1>
             <div className="text-white"> {formatDistanceToNow(new Date(userStoriesGroup.stories[currentImageIndex]?.createdAt), { addSuffix: true })}</div>
-          </div>
+          </div>{' '}
         </div>
         <div className={`${user._id === userId ? 'absolute z-10 top-12 right-12' : 'hidden'} `}>
           <AlertDialog>
