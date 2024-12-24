@@ -37,7 +37,7 @@ export const DarkMode = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Button
-          className="flex justify-between items-center w-full p-2 dark:hover:bg-[#4a4a4e] dark:bg-black dark:text-white bg-white hover:bg-[#F4F4F5] text-black"
+          className="flex justify-between items-center w-full p-2 dark:hover:bg-[#303030] dark:bg-black dark:text-white bg-white hover:bg-[#F4F4F5] text-black"
           aria-label="Харанхуй горим солих "
         >
           <span className="pl-2">Dark mode</span>
