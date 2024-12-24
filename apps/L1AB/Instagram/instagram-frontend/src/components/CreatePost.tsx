@@ -2,11 +2,9 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { ArrowLeft } from 'lucide-react';
 import { useState, useContext } from 'react';
-
 import CreatePostCancelButton from './CreatePostCancelButton';
 import { UserContext } from './providers';
 import Image from 'next/image';
-
 import { useCreatePostMutation, useGetPostsByFollowersIdQuery } from '@/generated';
 import UploadStep from './CreatePostUpload';
 import CreatePostDescription from './CreatePostDescription';
@@ -121,22 +119,19 @@ export const CreatePost: React.FC<CreatePostProps> = ({ isDialogOpen, onOpenChan
         </DialogHeader>
         <div className="flex items-center flex-col justify-end my-4 gap-4">
           {currentStep === 'upload' ? (
-            <UploadStep onFileSelect={() => document.getElementById('fileInput')?.click()} selectedFiles={selectedFiles} onFileChange={handleFileChange} onFileRemove={handleFileRemove} />
+            <UploadStep
+              isUploading={isUploading}
+              onFileSelect={() => document.getElementById('fileInput')?.click()}
+              selectedFiles={selectedFiles}
+              onFileChange={handleFileChange}
+              onFileRemove={handleFileRemove}
+            />
           ) : (
             <div className="flex w-[780px] h-[551px] absolute top-[48px] -left-[1px]">
               <div className="w-2/3 h-full flex items-center justify-center ">
-                {selectedFiles.map((file, index) => {
-                  const fileUrl = URL.createObjectURL(file);
-                  return (
-                    <div key={index} className="w-full h-full">
-                      {file.type.startsWith('image/') ? (
-                        <Image src={fileUrl} alt={file.name} className="w-full h-full object-cover rounded-bl-lg" width={780} height={551} />
-                      ) : file.type.startsWith('video/') ? (
-                        <video src={fileUrl} controls className="w-full h-full rounded-bl-lg" />
-                      ) : null}
-                    </div>
-                  );
-                })}
+                <div className="w-full h-full">
+                  <Image src={URL.createObjectURL(selectedFiles[0])} alt={'no'} className="w-full h-full object-cover rounded-bl-lg" width={780} height={551} />
+                </div>
               </div>
               <CreatePostDescription caption={caption} setCaption={setCaption} />
               <button className="absolute bottom-4 left-4 text-blue-500" onClick={handleBack}>

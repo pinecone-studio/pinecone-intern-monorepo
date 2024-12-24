@@ -96,6 +96,9 @@ describe('NewsFeed', () => {
 
     const DeletePost = getByTestId('deletePost-post1');
     fireEvent.click(DeletePost);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
   });
 
   it('should render successfully', async () => {
