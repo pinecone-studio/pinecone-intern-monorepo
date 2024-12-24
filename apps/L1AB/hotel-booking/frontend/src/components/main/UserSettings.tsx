@@ -3,8 +3,10 @@ import { Container } from './assets';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { LucideKey, Mail } from 'lucide-react';
+import { useAuth } from '../providers/Auth.Provider';
 
 export const UserSettings = () => {
+  const { user } = useAuth();
   return (
     <Container backgroundColor="bg-white">
       <div className="flex flex-col gap-4 mb-1 w-[652px]">
@@ -19,7 +21,7 @@ export const UserSettings = () => {
             <Mail />
             <div className="flex  items-start flex-col p-4">
               <div>Email</div>
-              <div>n.shagai@pinecone.mn</div>
+              <div>{user?.email}</div>
             </div>
           </Button>
 

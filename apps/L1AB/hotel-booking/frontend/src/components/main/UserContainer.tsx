@@ -14,7 +14,7 @@ export const UserContainer = () => {
       <Container backgroundColor="bg-white">
         <div className="flex m-auto">
           <div className="container m-auto h-fit px-5 pt-10 pb-10 flex-1">
-            <h3 className="text-2xl font-semibold text-[#09090B]">Hi hi{user?.email}</h3>
+            <h3 className="text-2xl font-semibold text-[#09090B]">Hi {user?.email}</h3>
             <p className="text-[#71717A] text-base font-thin mb-2">{user?.email}</p>
             <div className="border border-x-2"></div>
           </div>
