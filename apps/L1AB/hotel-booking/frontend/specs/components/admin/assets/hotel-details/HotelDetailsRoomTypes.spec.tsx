@@ -72,7 +72,7 @@ describe('HotelDetailsRoomTypes', () => {
   it('displays a fallback message if no rooms are available', async () => {
     mockAdminProvider.hotelData = {
       getHotelById: {
-        _id: '1',
+        _id: '',
         name: 'Hotel',
         description: '5 stars Hotel',
         images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],

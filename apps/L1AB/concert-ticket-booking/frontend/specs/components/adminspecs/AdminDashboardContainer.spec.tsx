@@ -181,33 +181,4 @@ describe('AdminDashboard', () => {
     });
     expect(screen.getByText('2022-01-01'));
   });
-
-  //   const setCurrentPage = jest.fn();
-  //   const totalPages = 3;
-  //   const searchValue = '';
-  //   const selectedValues = [''];
-  //   const date = new Date('2022-01-01');
-
-  //   const handlePageChange = (page: number) => {
-  //     setCurrentPage(page >= 1 && page <= totalPages ? page : 1);
-  //   };
-  //   const onPageChange = jest.fn();
-  //   const currentPage = 1;
-
-  //   render(
-  //     <MockedProvider mocks={[mock]} addTypename={false}>
-  //       <AdminDashboard searchValue={searchValue} selectedValues={selectedValues} date={date} currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} eventStatus={''} />
-  //     </MockedProvider>
-  //   );
-
-  //   // Test a valid page change
-  //   handlePageChange(2); // Valid page (within range)
-  //   expect(setCurrentPage);
-
-  //   handlePageChange(0);
-  //   expect(setCurrentPage);
-
-  //   handlePageChange(4);
-  //   expect(setCurrentPage);
-  // });
 });

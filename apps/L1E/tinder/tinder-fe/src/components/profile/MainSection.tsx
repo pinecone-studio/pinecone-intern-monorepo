@@ -1,7 +1,16 @@
+'use client';
 import LeftSideBar from './LeftSideBar';
 import { ProfileSection } from './Profile';
+import ImagesSection from './ImagesSection';
+import { useState } from 'react';
 
 const ProfilePage = () => {
+  const [step, setStep] = useState<'profile' | 'images'>('profile');
+
+  const handleSetStep = (value: 'profile' | 'images') => {
+    setStep(value);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,11 +20,9 @@ const ProfilePage = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pt-5 border-t border-gray-200">
           <div className="col-span-1 lg:col-span-1">
-            <LeftSideBar />
+            <LeftSideBar setStep={handleSetStep} />
           </div>
-          <div className="col-span-1 lg:col-span-2">
-            <ProfileSection />
-          </div>
+          <div className="col-span-1 lg:col-span-2">{step === 'profile' ? <ProfileSection /> : <ImagesSection />}</div>
         </div>
       </div>
     </div>

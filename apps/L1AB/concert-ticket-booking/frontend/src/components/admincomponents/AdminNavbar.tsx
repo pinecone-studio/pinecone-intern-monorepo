@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use client';
 import Link from 'next/link';
 import { GoDotFill } from 'react-icons/go';
@@ -32,6 +33,7 @@ export const AdminNavbar = () => {
             Тасалбар
           </div>
         </Link>
+
         <Link href={`/admin/bookings`}>
           <div data-testid="/admin/bookings" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/bookings' ? 'border-b-black border-b-2' : ''}`}>
             Захиалгууд
@@ -46,6 +48,7 @@ export const AdminNavbar = () => {
             Цуцлах хүсэлт
           </div>
         </Link>
+
         <Link href={`/admin/artist`}>
           <div
             data-testid="/admin/artist"
@@ -53,6 +56,11 @@ export const AdminNavbar = () => {
             className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/artist' ? 'border-b-black border-b-2' : ''}`}
           >
             Артист
+          </div>
+        </Link>
+        <Link href={`/admin/demo`}>
+          <div data-testid="/admin/demo" data-cy="demo" className={`py-2 px-4 text-[14px] font-medium text-black cursor-pointer ${currentPath === '/admin/demo' ? 'border-b-black border-b-2' : ''}`}>
+            Demo
           </div>
         </Link>
       </div>

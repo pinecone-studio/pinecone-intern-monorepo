@@ -1,11 +1,7 @@
 import React from 'react';
 import { GeneralInfoDialog } from '../../dialogs';
+import { useAdmin } from '@/components/providers/AdminProvider';
 
-type RoomDetailsGeneralInfoProps = {
-  name?: string;
-  type?: string;
-  price?: number;
-};
 const roomInfo = [
   '18 sq m',
   'Free bottle water',
@@ -20,7 +16,8 @@ const roomInfo = [
   'Desk',
   'Free WiFi',
 ];
-export const RoomDetailsGeneralInfo = ({ name, price, type }: RoomDetailsGeneralInfoProps) => {
+export const RoomDetailsGeneralInfo = () => {
+  const { addRoomForm } = useAdmin();
   return (
     <>
       <div className="flex justify-between items-center">
@@ -32,15 +29,15 @@ export const RoomDetailsGeneralInfo = ({ name, price, type }: RoomDetailsGeneral
         <div className="flex justify-between">
           <div className="flex-1 space-y-1">
             <h6 className="text-muted-foreground">Name</h6>
-            <p className="font-medium">{name ? name : '-/-'}</p>
+            <p className="font-medium">{addRoomForm.values.name || '-/-'}</p>
           </div>
           <div className="flex-1 space-y-1">
             <h6 className="text-muted-foreground">Type</h6>
-            <p>{type ? type : '-/-'}</p>
+            <p>{addRoomForm.values.roomType || '-/-'}</p>
           </div>
           <div className="flex-1 space-y-1">
             <h6 className="text-muted-foreground">Price per night</h6>
-            <p>{price ? price + '₮' : '-/-'}</p>
+            <p>{addRoomForm.values.price || '-/-'}</p>
           </div>
         </div>
         <div className="space-y-2">

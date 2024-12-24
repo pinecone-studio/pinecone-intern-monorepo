@@ -35,10 +35,10 @@ const CreatePostDescription = ({ caption, setCaption }: CreatePostDescriptionPro
     const cursorPos = textarea.selectionStart;
     const newCaption = caption.slice(0, cursorPos) + emoji + caption.slice(cursorPos);
     setCaption(newCaption);
-    setShowEmojiPicker(false)
+    setShowEmojiPicker(false);
   };
 
-  const emojiList = ["😄", "😂", "🤣", "😆", "😅", "😍", "😎", "🥰", "❤️", "👍"];
+  const emojiList = ['😄', '😂', '🤣', '😆', '😅', '😍', '😎', '🥰', '❤️', '👍'];
 
   if (!user) {
     return <div>Please log in to create a post.</div>;
@@ -65,27 +65,21 @@ const CreatePostDescription = ({ caption, setCaption }: CreatePostDescriptionPro
         </div>
 
         <div className="relative">
-          <textarea 
+          <textarea
             id="captionTextarea"
             data-cy="write-description"
             className="w-full h-[140px] border rounded-xl text-sm resize-none p-2"
             placeholder="Write a caption..."
             value={caption}
             onChange={handleChange}
-            maxLength={maxLength} 
+            maxLength={maxLength}
           />
-    
-   
+
           {showEmojiPicker && (
             <div className="absolute bottom-full bg-white p-2 top-16 h-fit rounded-lg shadow-lg border">
               <div className="grid grid-cols-5 gap-2">
                 {emojiList.map((emoji, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    className="text-xl"
-                    onClick={() => handleEmojiClick(emoji)}
-                  >
+                  <button key={index} type="button" className="text-xl" onClick={() => handleEmojiClick(emoji)}>
                     {emoji}
                   </button>
                 ))}
@@ -95,18 +89,13 @@ const CreatePostDescription = ({ caption, setCaption }: CreatePostDescriptionPro
         </div>
 
         <div className="flex justify-between mb-4 text-gray-400">
-<button
-            type="button"
-            data-testid="emojiButton"
-            className=" text-xl"
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          >
+          <button type="button" data-testid="emojiButton" className=" text-xl" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
             😀
           </button>
-<p>
-  {caption.length}/{maxLength}
-</p>
-</div>
+          <p>
+            {caption.length}/{maxLength}
+          </p>
+        </div>
       </div>
     </div>
   );

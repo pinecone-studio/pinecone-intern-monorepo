@@ -5,10 +5,13 @@ export const typeDefs = gql`
     _id: ID!
     email: String!
     username: String!
-    fullname: String!
     interest: String!
     password: String!
-    profilePicture: String!
+    hobby: String
+    bio: String!
+    profession: String!
+    job: String!
+    age: String!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -23,12 +26,16 @@ export const typeDefs = gql`
   input RegisterInput {
     email: String!
     password: String!
-    fullname: String
-    username: String
+    username: String!
+    interest: String!
+    bio: String!
+    profession: String!
+    job: String!
+    age: String!
+    hobby: String!
   }
 
   input UpdateInput {
-    fullname: String!
     username: String!
     bio: String!
     interest: String!

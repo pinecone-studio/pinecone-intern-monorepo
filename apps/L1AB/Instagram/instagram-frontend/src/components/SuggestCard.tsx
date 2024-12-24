@@ -10,7 +10,6 @@ export const SuggestCard = () => {
       <div>
         <UsersMap />
       </div>
-
       <div className="text-[#71717A] text-xs flex justify-center pt-8 w-full flex-col leading-4">
         <p className="flex">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
         <p className="flex pt-4">© 2024 INSTAGRAM FROM META</p>

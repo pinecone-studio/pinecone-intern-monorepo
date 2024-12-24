@@ -19,6 +19,6 @@ describe('Admin Hotel Details Images', () => {
       },
       showError: jest.fn().mockReturnValue(false),
     });
-    render(<HotelDetailsImages />);
+    render(<HotelDetailsImages images={['https://example.com/image1.jpg', 'https://example.com/image2.jpg']} />);
   });
 });

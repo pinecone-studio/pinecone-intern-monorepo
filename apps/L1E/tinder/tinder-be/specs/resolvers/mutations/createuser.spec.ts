@@ -26,6 +26,13 @@ describe('Create user', () => {
         input: {
           email: mockUser.email,
           password: 'plainPassword',
+          age: '',
+          bio: '',
+          hobby: '',
+          interest: '',
+          job: '',
+          profession: '',
+          username: '',
         },
       },
       {

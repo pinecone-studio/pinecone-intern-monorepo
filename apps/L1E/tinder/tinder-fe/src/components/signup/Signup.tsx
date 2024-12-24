@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Addpassword from './Addpassword';
 
 const Signup: React.FC = () => {
@@ -9,7 +9,21 @@ const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    interested: '',
+    age: '',
+    image: '',
   });
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('signupFormData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('signupFormData', JSON.stringify(formData));
+  }, [formData]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -69,7 +83,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
       ) : (
-        step === 'confirm' && <Addpassword formData={formData} />
+        step === 'confirm' && <Addpassword />
       )}
     </div>
   );
