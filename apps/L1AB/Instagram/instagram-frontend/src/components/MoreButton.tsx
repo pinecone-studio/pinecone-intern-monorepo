@@ -1,10 +1,11 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Bookmark, Menu, Moon, Settings, ShieldAlert, SquareActivity } from 'lucide-react';
+import { Bookmark, Menu, Settings, ShieldAlert, SquareActivity } from 'lucide-react';
 import NavigationLink from './NavigationLink';
 import { AnimationControls, motion } from 'framer-motion';
 import LogoutDialog from './LogoutButton';
+import { DarkMode } from './DarkMode';
 
 interface MenuProps {
   isOpen: boolean;
@@ -13,11 +14,11 @@ interface MenuProps {
 
 export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
   return (
-    <>
+    <div className="dark:bg-black">
       <DropdownMenu>
-        <DropdownMenuTrigger className="focus:ring-0  outline-none w-full">
+        <DropdownMenuTrigger className="focus:ring-0  outline-none w-full dark:bg-black">
           <NavigationLink href={undefined} name={isOpen ? '' : 'More'}>
-            <Menu className="">
+            <Menu className="dark:stroke-white">
               <motion.path
                 transition={{
                   duration: 0.5,
@@ -42,8 +43,7 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
             <span>Switch appearance</span>
           </DropdownMenuItem>
           <DropdownMenuItem className=" flex gap-2 h-12">
-            <Moon size={18} />
-            <span>Switch appearance</span>
+            <DarkMode />
           </DropdownMenuItem>
           <DropdownMenuItem className=" flex gap-2 h-12">
             <ShieldAlert size={18} />
@@ -57,6 +57,6 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };

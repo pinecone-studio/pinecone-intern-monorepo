@@ -113,7 +113,7 @@ export const CreatePost: React.FC<CreatePostProps> = ({ isDialogOpen, onOpenChan
               }}
             />
             <p>Create new post</p>
-            <button onClick={handleStepChange} data-cy="next-button" className="text-blue-500 bg-white w-10 h-10 z-10 mr-2" disabled={isUploading || imageUrls.length === 0}>
+            <button onClick={handleStepChange} data-cy="next-button" className="text-blue-500 dark:bg-black bg-white w-10 h-10 z-10 mr-2" disabled={isUploading || imageUrls.length === 0}>
               {currentStep === 'upload' ? 'Next' : 'Share'}
             </button>
           </DialogTitle>

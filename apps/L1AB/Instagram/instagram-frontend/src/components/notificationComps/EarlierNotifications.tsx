@@ -18,7 +18,7 @@ const EarlierNotifications = ({ earlierNotifications }: PropsType) => {
               const createdAt = parseISO(el.createdAt);
               if (el.type !== 'follow') {
                 return (
-                  <div key={index} className="h-[44px] w-full bg-white flex gap-3">
+                  <div key={index} className="h-[44px] w-full bg-white  dark:bg-black flex gap-3">
                     <div className="h-full w-[44px] rounded-full relative">
                       <div>
                         <Image className="rounded-full" alt="no pic" src={el.userId.profilePicture} fill />
@@ -43,7 +43,7 @@ const EarlierNotifications = ({ earlierNotifications }: PropsType) => {
                 );
               } else
                 return (
-                  <div key={index} className="h-[44px] w-full bg-white flex gap-3">
+                  <div key={index} className="h-[44px] w-full bg-white dark:bg-black flex gap-3">
                     <div className="h-full w-[44px] rounded-full relative">
                       <div>
                         <Image className="rounded-full" alt="no pic" src={el.userId.profilePicture} fill />

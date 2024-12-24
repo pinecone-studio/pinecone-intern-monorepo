@@ -11,7 +11,7 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="flex">
+      <body className="flex ">
         <Suspense fallback={<PageLoading />}>
           <ApolloWrapper>{children} </ApolloWrapper>
         </Suspense>
