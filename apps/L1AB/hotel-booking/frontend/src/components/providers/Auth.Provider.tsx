@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetUserByIdQuery, useSignInMutation } from '@/generated';
+import { useGetMeQuery, useSignInMutation } from '@/generated';
 import { User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState } from 'react';
@@ -30,13 +30,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-
-  useGetUserByIdQuery({
+  useGetMeQuery({
     skip: !!user,
     onCompleted: (data) => {
-      if (data?.getUserById) {
-        setUser(data.getUserById);
-      }
+      setUser(data.getMe!);
     },
     onError: (error) => {
       console.error('Error fetching user:', error.message);
@@ -68,7 +65,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       },
     });
   };
-
+  console.log(user);
   const signout = () => {
     localStorage.removeItem('token');
     setUser(null);
