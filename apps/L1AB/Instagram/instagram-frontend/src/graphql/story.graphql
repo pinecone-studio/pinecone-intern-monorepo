@@ -1,13 +1,13 @@
-query GetAllStories {
-  getAllStories {
+query GetAllStories($followerId: ID!) {
+  getAllStories(followerId: $followerId) {
     _id
+    createdAt
+    image
     userId {
       _id
       username
       profilePicture
     }
-    image
-    createdAt
   }
 }
 mutation DeleteStory($input: DeleteStoryInput!) {
