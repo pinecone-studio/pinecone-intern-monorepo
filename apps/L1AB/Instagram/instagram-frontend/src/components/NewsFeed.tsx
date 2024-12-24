@@ -47,7 +47,7 @@ const NewsFeed = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 pl-[500px] dark:text-gray-300">
+      <div className="flex flex-col gap-2 2xl:pl-[500px] xl:pl-[300px] dark:text-gray-300">
         {newPosts?.map((post, i) => {
           return (
             <PostCard
