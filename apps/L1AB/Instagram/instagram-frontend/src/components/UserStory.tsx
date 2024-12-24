@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 type PropsType = {
   userId: string;
