@@ -2,12 +2,12 @@
 'use client';
 import { ChevronLeft, ChevronRight, EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostCardCommentSection from './PostCardCommentSection';
 import PostCardLikeSection from './PostCardLikeSection';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserContext } from './providers';
+import { useStory, useUser } from './providers';
 import { formatDistanceToNow } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -36,7 +36,12 @@ type PropsType = {
 const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt, postOwnerId, deletePost }: PropsType) => {
   const [userId, setUserId] = useState<string | null>('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { user }: any = useContext(UserContext);
+  const { user }: any = useUser();
+
+  const { groupedStories } = useStory();
+  const userStory = Object.keys(groupedStories || {}).find((item) => item === postOwnerId);
+
+  console.log(groupedStories);
 
   const prev = () => {
     setCurrentImageIndex((curr) => curr - 1);
@@ -56,14 +61,21 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
     <div data-testid={`NewsFeedPostCard-${postId}`} className="border-b">
       <div className="w-full mx-auto p-2">
         <div className="flex justify-between items-center">
-          <Link href={`/profile?type=posts&username=${userName}`} className="flex gap-2 items-center">
-            <Avatar className="w-10 h-10 flex items-center justify-center">
-              <AvatarImage src={profilePicture} alt={userName} className="object-cover" />
-              <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
-            </Avatar>
-            <div>{userName}</div>
-            <div className="text-[#71717A]"> {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</div>
-          </Link>
+          <div className="flex gap-2 items-center">
+            {' '}
+            <div className={`${userStory ? 'bg-gradient-to-tr from-[#FFDC80] via-[#fd1d1d] to-[#833ab4]' : 'bg-green'}  w-[44px] h-[44px] rounded-full flex items-center justify-center `}>
+              <Link href={userStory ? `/story?userId=${postOwnerId}` : `/profile?type=posts&username=${userName}`}>
+                <Avatar className="w-10 h-10 flex items-center justify-center border-white border-2">
+                  <AvatarImage src={profilePicture} alt={userName} className="object-cover" />
+                  <AvatarFallback className="uppercase text-[#ccc]">{userName?.slice(0, 1)}</AvatarFallback>
+                </Avatar>
+              </Link>
+            </div>
+            <Link href={`/profile?type=posts&username=${userName}`} className="flex gap-2">
+              <div>{userName}</div>
+              <div className="text-[#71717A]"> {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</div>
+            </Link>
+          </div>
           <div>
             <Popover>
               <PopoverTrigger>

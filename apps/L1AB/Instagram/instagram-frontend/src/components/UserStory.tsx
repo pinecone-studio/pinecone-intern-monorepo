@@ -38,6 +38,8 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
 
   const userStoriesGroup = groupedStories![userId];
 
+  console.log(userStoriesGroup.stories.length);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [deleteStory] = useDeleteStoryMutation();
   const { refetch } = useGetAllStoriesQuery({ variables: { followerId: user?._id } });
@@ -107,7 +109,6 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
               </div>
             ))}
           </div>
-
           <div className={`flex gap-3 mt-4 w-full ${mainUserStory === userId ? ' items-center' : 'flex-col justify-center items-center h-full'}`}>
             <div className="relative w-12 h-12 rounded-full overflow-hidden">
               <Image fill alt="" src={profilePicture} objectFit="cover" />
@@ -145,7 +146,6 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
           </AlertDialog>
         </div>
       </div>
-
       <div className={` ${mainUserStory === userStoriesGroup.userId._id ? 'absolute inset-0 flex items-center justify-between ' : 'hidden'}`}>
         <button className="p-2 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white -left-11 absolute" onClick={prev} data-testid="PrevButton">
           <ChevronLeft size={20} />

@@ -1,6 +1,6 @@
 'use client';
 import { DialogContent, DialogClose } from '@/components/ui/dialog';
-import { useCreateStoryMutation } from '@/generated';
+import { useCreateStoryMutation, useGetAllStoriesQuery } from '@/generated';
 import Image from 'next/image';
 import Media from 'public/Media';
 import { useContext, useState } from 'react';
@@ -9,6 +9,8 @@ import { UserContext } from './providers';
 export const CreateStory = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
   const { user }: any = useContext(UserContext);
+
+  const { refetch } = useGetAllStoriesQuery({ variables: { followerId: user._id } });
 
   const [createStory] = useCreateStoryMutation();
 
@@ -19,6 +21,7 @@ export const CreateStory = () => {
     };
     await createStory({ variables: { input } });
     setImagePreview('');
+    refetch();
   };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
