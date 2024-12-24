@@ -1,14 +1,10 @@
-import { log } from 'node:console';
 import { QueryResolvers } from '../../../generated';
 import { followersModel, storyModel, StoryPopulatedType } from '../../../models';
 
 export const getAllStories: QueryResolvers['getAllStories'] = async (_, { followerId }) => {
   const myStory = await storyModel.find({ userId: followerId }).populate<StoryPopulatedType>('userId');
   const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  console.log(myStory);
-
   const myFilteredStories = myStory.filter((story) => new Date(story.createdAt) > twentyFourHoursAgo);
-  // console.log(myFilteredStories);
 
   const mySortedStories = myFilteredStories.sort((a, b) => {
     const dateA = new Date(a.createdAt);
@@ -32,7 +28,6 @@ export const getAllStories: QueryResolvers['getAllStories'] = async (_, { follow
     return dateA.getTime() - dateB.getTime();
   });
   const allStories = [...mySortedStories, ...sortedByDate];
-  // console.log(allStories);
 
   return allStories;
 };
