@@ -1,4 +1,4 @@
-import LoaderSpinner from '@/components/LoaderSpinner';
+import LoaderSpinner from '@/components/main/LoaderSpinner';
 import { render, screen } from '@testing-library/react';
 
 describe('Loader', () => {

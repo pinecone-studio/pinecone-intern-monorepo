@@ -1,4 +1,4 @@
-import LoggedinHeader from '@/components/LoggedinHeader';
+import LoggedinHeader from '@/components/main/LoggedinHeader';
 import { render } from '@testing-library/react';
 
 describe('LoginHeader', () => {

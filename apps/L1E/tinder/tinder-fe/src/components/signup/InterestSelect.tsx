@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Logo from '../common/Logo';
 import Title from '../common/Title';
 import { Button } from '@/components/ui/button';
-import { SelectDemo } from '../users/Select';
+import { SelectDemo } from './Select';
 import DateOfBirth from './DateOfBirth';
 
 export const InterestSelect = () => {

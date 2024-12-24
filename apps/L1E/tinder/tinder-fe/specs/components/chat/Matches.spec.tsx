@@ -1,4 +1,4 @@
-import Matches from '@/components/Matches';
+import Matches from '@/components/chat/Matches';
 import { render } from '@testing-library/react';
 
 describe('Matches', () => {

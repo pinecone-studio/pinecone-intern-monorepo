@@ -9,7 +9,7 @@ const mockUser = {
   updatedAt: new Date(),
 };
 
-jest.mock('../../../src/models/user.model.ts', () => ({
+jest.mock('../../../src/models/user/user.model.ts', () => ({
   userModel: {
     findOne: jest.fn().mockResolvedValue(null),
     create: jest.fn().mockResolvedValue({
