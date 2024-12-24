@@ -5,6 +5,7 @@ import { useAuth } from '../providers/Auth.Provider';
 
 export const MainHeader = () => {
   const { user } = useAuth();
+
   return (
     <Container backgroundColor="bg-backBlue text-white">
       <div className="flex justify-between items-center p-[10px]">

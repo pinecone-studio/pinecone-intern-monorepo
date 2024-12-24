@@ -9,7 +9,6 @@ import { useAuth } from '../providers/Auth.Provider';
 export const UserContainer = () => {
   const [selected, setSelected] = useState('profile');
   const { user } = useAuth();
-  console.log(user);
   return (
     <>
       <Container backgroundColor="bg-white">
