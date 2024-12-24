@@ -14,7 +14,7 @@ export const sendQrToEmail: MutationResolvers['sendQrToEmail'] = async (_, __, {
   const eventId = bookingDetail.eventId;
   const eventDetails = await EventModel.findOne({ _id: eventId });
 
-  const defaultLink = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+  const defaultLink = `https://concert-ticket-frontend-pinecone-studio.vercel.app/check/${bookingDetails[0]._id}`
   const generated = await QRCode.toDataURL(defaultLink);
 
   await QRModel.create({
