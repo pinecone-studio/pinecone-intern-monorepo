@@ -40,7 +40,7 @@ export const UserStory = ({ userId, stories, username, profilePicture, prevUser,
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [deleteStory] = useDeleteStoryMutation();
-  const { refetch } = useGetAllStoriesQuery();
+  const { refetch } = useGetAllStoriesQuery({ variables: { followerId: user?._id } });
   const router = useRouter();
   const handleDeleteStory = async () => {
     const storyId = userStoriesGroup.stories[currentImageIndex]._id;
