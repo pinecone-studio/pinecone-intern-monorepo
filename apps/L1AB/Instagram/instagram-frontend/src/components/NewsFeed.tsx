@@ -12,17 +12,16 @@ const NewsFeed = () => {
       followerId: user ? user._id : '',
     },
   });
-  console.log(data);
 
   const [deletePost] = useDeletePostMutation();
   const posts = data?.getPostsByFollowersId;
+  console.log(posts);
 
-  if (loading) return <Loading size={30} />;
-
-  const handleDeletePost = (id: string) => {
-    deletePost({ variables: { id: id } });
+  const handleDeletePost = async (id: string) => {
+    await deletePost({ variables: { id: id } });
     refetch();
   };
+  if (loading) return <Loading size={30} />;
 
   return (
     <div>

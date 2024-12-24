@@ -5,9 +5,11 @@ import Image from 'next/image';
 import Media from 'public/Media';
 import { useContext, useState } from 'react';
 import { UserContext } from './providers';
+import Loading from './Loading';
 
 export const CreateStory = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
   const { user }: any = useContext(UserContext);
 
   const { refetch } = useGetAllStoriesQuery({ variables: { followerId: user._id } });
@@ -25,6 +27,7 @@ export const CreateStory = () => {
   };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true);
     const files = event.target.files;
 
     if (!files || files.length === 0) return;
@@ -42,6 +45,7 @@ export const CreateStory = () => {
     });
     const uploadedImage = await res.json();
     setImagePreview(uploadedImage.secure_url);
+    setIsUploading(false);
   };
 
   return (
@@ -52,9 +56,11 @@ export const CreateStory = () => {
           <DialogClose>Share</DialogClose>
         </div>
       </div>
-      {imagePreview ? (
+      {isUploading && !imagePreview ? (
+        <Loading size={30} />
+      ) : imagePreview ? (
         <div className="relative h-full border w-full rounded">
-          <Image objectFit="cover" className="object-cover rounded" src={imagePreview} alt="no img" fill />
+          <Image objectFit="cover" className="object-cover rounded" src={imagePreview} alt="Preview of uploaded image" fill />
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full">

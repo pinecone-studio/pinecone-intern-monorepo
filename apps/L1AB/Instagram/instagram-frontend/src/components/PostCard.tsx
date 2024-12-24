@@ -41,8 +41,6 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
   const { groupedStories } = useStory();
   const userStory = Object.keys(groupedStories || {}).find((item) => item === postOwnerId);
 
-  console.log(groupedStories);
-
   const prev = () => {
     setCurrentImageIndex((curr) => curr - 1);
   };
@@ -77,11 +75,11 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
             </Link>
           </div>
           <div>
-            <Popover>
-              <PopoverTrigger>
-                <EllipsisVertical data-testid={`deleteButton-${postId}`} className="w-4 h-4" />
-              </PopoverTrigger>
-              {userId === postOwnerId ? (
+            {userId === postOwnerId ? (
+              <Popover>
+                <PopoverTrigger>
+                  <EllipsisVertical data-testid={`deleteButton-${postId}`} className="w-4 h-4" />
+                </PopoverTrigger>
                 <PopoverContent className="w-fit py-2 px-4 cursor-pointer hover:text-red-500">
                   <AlertDialog>
                     <AlertDialogTrigger data-testid={`delete-${postId}`}>Delete</AlertDialogTrigger>
@@ -99,10 +97,10 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
                     </AlertDialogContent>
                   </AlertDialog>
                 </PopoverContent>
-              ) : (
-                <PopoverContent className="w-fit py-2 px-4 cursor-pointer hover:text-red-500">Report</PopoverContent>
-              )}
-            </Popover>
+              </Popover>
+            ) : (
+              ''
+            )}
           </div>
         </div>
         <div className="pt-3">
