@@ -1,14 +1,7 @@
-'use client';
+import React from 'react';
 
-import RequestForm from '@/components/RequestForm';
-
-const Page = () => {
-  return (
-    <div>
-      Home Page
-      <RequestForm />
-    </div>
-  );
+const page = () => {
+  return <div>page</div>;
 };
 
-export default Page;
+export default page;
