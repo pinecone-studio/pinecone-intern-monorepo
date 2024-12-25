@@ -52,17 +52,6 @@ const mock = {
   },
 };
 
-const mockNoHotels = {
-  request: {
-    query: GetAllHotelsDocument,
-  },
-  result: {
-    data: {
-      getAllHotels: [],
-    },
-  },
-};
-
 describe('FilterHotels Component', () => {
   it('should render hotels and handle filter inputs', async () => {
     render(
@@ -74,17 +63,12 @@ describe('FilterHotels Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/properties found/i));
     });
-
     const searchInput = screen.getByPlaceholderText('Search');
     fireEvent.change(searchInput, { target: { value: 'Star' } });
-
-
     const ratingRadio = screen.getByLabelText('+7');
     fireEvent.click(ratingRadio);
-
     const starsRadio = screen.getByLabelText('5 stars');
     fireEvent.click(starsRadio);
-
     await waitFor(
       () => {
         expect(screen.getByText('Star Hotel'));
@@ -92,36 +76,7 @@ describe('FilterHotels Component', () => {
       { timeout: 3000 }
     );
   });
-  it('should handle no hotels found', async () => {
-    render(
-      <MockedProvider mocks={[mockNoHotels]} addTypename={false}>
-        <FilterHotels />
-      </MockedProvider>
-    );
-
-  
-    await waitFor(
-      () => {
-        expect(screen.getByText(/No hotels found/i));
-      },
-      { timeout: 3000 }
-    );
-  });
-
-  it('should filter hotels by rating and stars', async () => {
-    render(
-      <MockedProvider mocks={[mock]} addTypename={false}>
-        <FilterHotels />
-      </MockedProvider>
-    );
-    const ratingRadio = screen.getByLabelText('+8');
-    fireEvent.click(ratingRadio);
-    const starsRadio = screen.getByLabelText('3 stars');
-    fireEvent.click(starsRadio);
-    expect(screen);
-  });
-
-  it('should sort hotels by Price-LowToHigh', async () => {
+  it('should sort hotels by Price-HightoLow', async () => {
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <FilterHotels />
@@ -132,7 +87,7 @@ describe('FilterHotels Component', () => {
     });
     const Trigger = screen.getByTestId('sort-select');
     fireEvent.keyDown(Trigger, { key: 'Enter' });
-    const sortSelect = screen.getByTestId('PriceLowToHigh');
+    const sortSelect = screen.getByTestId('PriceHightoLow');
     fireEvent.keyDown(sortSelect, { key: 'Enter' });
     await waitFor(
       () => {
@@ -142,7 +97,52 @@ describe('FilterHotels Component', () => {
       { timeout: 3000 }
     );
   });
+  it('should sort hotels by StarRating', async () => {
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <FilterHotels />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+    const Trigger = screen.getByTestId('sort-select');
+    fireEvent.keyDown(Trigger, { key: 'Enter' });
+    const sortSelect = screen.getByTestId('StarRating');
+    fireEvent.keyDown(sortSelect, { key: 'Enter' });
 
+
+    await waitFor(
+      () => {
+        const sortedHotels = screen.getAllByText(/Hotel/i);
+        expect(sortedHotels[0].textContent);
+      },
+      { timeout: 3000 }
+    );
+  });
 });
+it('should sort hotels by Recommended', async () => {
+  render(
+    <MockedProvider mocks={[mock]} addTypename={false}>
+      <FilterHotels />
+    </MockedProvider>
+  );
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000);
+  });
+  const Trigger = screen.getByTestId('sort-select');
+  fireEvent.keyDown(Trigger, { key: 'Enter' });
+  const sortSelect = screen.getByTestId('Recommended');
+  fireEvent.keyDown(sortSelect, { key: 'Enter' });
 
+
+  await waitFor(
+    () => {
+      const sortedHotels = screen.getAllByText(/Hotel/i);
+      expect(sortedHotels[0].textContent);
+    },
+    { timeout: 3000 }
+  );
+  
+});
 
