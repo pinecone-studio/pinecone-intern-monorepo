@@ -70,7 +70,7 @@ export const CreateStory = () => {
           <Media />
           <div>Drag photos and videos here</div>
           <div className="flex items-center justify-center">
-            <input data-testid="fileInput" onChange={handleUpload} type="file" id="file-input" multiple className="opacity-0 absolute top-10 w-1/2 h-1/2 cursor-pointer" />
+            <input data-testid="fileInput" onChange={handleUpload} type="file" id="file-input" multiple className="opacity-0 absolute top-10 w-full h-full cursor-pointer" />
             <label className="text-sm px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">Select from computer</label>
           </div>
         </div>

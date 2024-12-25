@@ -57,7 +57,7 @@ export const CreateButton = ({ svgControls, isOpen }: CreateProps) => {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <div onClick={handleOnClick}>
+            <div>
               <Dialog>
                 <DialogTrigger className="w-full">
                   <div className="flex gap-12 justify-between dark:hover:bg-black items-center px-2 py-1 hover:bg-gray-100 font-light rounded w-full">
@@ -68,6 +68,12 @@ export const CreateButton = ({ svgControls, isOpen }: CreateProps) => {
                 <CreateStory />
               </Dialog>
             </div>
+            <DropdownMenuItem
+              onClick={() => setIsDropDrownOpen(false)}
+              className="flex gap-12 cursor-pointer justify-between dark:hover:bg-black items-center px-2 py-1 hover:bg-gray-100 font-light rounded w-full"
+            >
+              Close
+            </DropdownMenuItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
