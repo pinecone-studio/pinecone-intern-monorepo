@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -60,7 +61,7 @@ const Addpassword: React.FC = () => {
     <div>
       {step === 'confirm' && (
         <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
-          <div className="w-[350px] flex flex-col gap-8 items-center justify-between h-[340px]">
+          <div className="w-[350px] flex flex-col gap-8 items-center justify-between h-[370px]">
             <img className="w-[100px] h-[24px]" src="redlogo.png" alt="Logo" />
             <div className="flex gap-2 h-[92px] w-[350px] items-center flex-col">
               <div className="font-semibold text-2xl">Create password</div>

@@ -1,65 +1,103 @@
 'use client';
 
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRequestOtpMutation } from '@/generated';
+import Addpassword from './Addpassword';
+import Image from 'next/image';
 
 export const Confirmsignup = () => {
   const [requestOtp] = useRequestOtpMutation();
-  const [value, setValue] = useState('');
-  const email = 'uzkhuthef@gmail.com';
-  const router = useRouter();
+  const [step, setStep] = useState<'signup' | 'confirm'>('confirm');
+  const [value, setValue] = useState<string[]>(['', '', '', '']);
+  const [email, setEmail] = useState('');
+
+  const inputRefs = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
-    const sendOtp = async () => {
-      await requestOtp({
-        variables: {
-          input: {
-            email,
-            otp: '',
-          },
-        },
-      });
-    };
-
-    sendOtp();
+    const savedEmail = localStorage.getItem('signupFormData');
+    setEmail(JSON.parse(savedEmail!).email);
   }, []);
 
   useEffect(() => {
-    if (value.length === 4) {
+    const sendOtp = async () => {
+      if (email) {
+        await requestOtp({
+          variables: {
+            input: {
+              email,
+              otp: '',
+            },
+          },
+        });
+      }
+    };
+    sendOtp();
+  }, [email]);
+
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (value.every((char) => char !== '')) {
       handleSubmit();
     }
   }, [value]);
+
+  const handleInputChange = (index: number, newValue: string) => {
+    // newValue.length > 1;
+
+    const newValues = [...value];
+    newValues[index] = newValue;
+    setValue(newValues);
+
+    if (newValue && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
 
   const handleSubmit = async () => {
     await requestOtp({
       variables: {
         input: {
           email,
-          otp: value,
+          otp: value.join(''),
         },
       },
     });
-    router.push('/');
+    setStep('signup');
   };
 
   return (
-    <div className="relative w-full h-full">
-      <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:px-3">
-        <div className="flex rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
-          <div className="flex flex-col items-center justify-center gap-6 self-stretch w-[327px] max-sm:w-full z-10">
-            <InputOTP maxLength={4} data-testid="OTPInput" onChange={(value) => setValue(value)}>
-              <InputOTPGroup className="text-black dark:text-white">
-                <InputOTPSlot className="h-14 w-14" index={0} />
-                <InputOTPSlot className="h-14 w-14" index={1} />
-                <InputOTPSlot className="h-14 w-14" index={2} />
-                <InputOTPSlot className="h-14 w-14" index={3} />
-              </InputOTPGroup>
-            </InputOTP>
+    <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
+      {step === 'confirm' ? (
+        <div className=" flex flex-col items-center justify-between h-[276px] w-[350px] ">
+          <Image width={100} height={24} src="/redlogo.png" alt="Logo" />
+          <div className="flex gap-2 h-[72px] w-[305px] items-center flex-col">
+            <div className="font-semibold text-black text-2xl">Confirm email</div>
+            <div className="font-normal text-center text-sm text-[#71717A]">{`To continue, enter the secure code we sent to ${email} Check junk mail if it’s not in your inbox.`}</div>
+          </div>
+          <div className="flex items-center justify-center w-[157px] max-sm:w-full">
+            <div className="flex gap-[2px]">
+              {value.map((char, index) => (
+                <input
+                  data-testid="Signup"
+                  key={index}
+                  ref={(el) => (inputRefs.current[index] = el!)}
+                  type="text"
+                  maxLength={1}
+                  value={char}
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  // onKeyDown={(e) => handleKeyDown(e, index)}
+                  className="h-[40px] w-[40px] text-center text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 text-black"
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        step === 'signup' && <Addpassword />
+      )}
     </div>
   );
 };

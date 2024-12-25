@@ -32,7 +32,7 @@ export const InterestSelect = () => {
   return (
     <div className="w-screen h-screen justify-between items-center flex flex-col">
       {step === 'interest' && (
-        <div className="w-screen h-screen flex justify-center mt-[80px]">
+        <div className="w-screen h-screen items-center flex justify-center">
           <div className="w-[400px] h-[244px] gap-[24px] flex flex-col justify-center items-center">
             <Logo />
             <Title text="Who are you interested in?" desc="Pick the one that feels right for you!" />

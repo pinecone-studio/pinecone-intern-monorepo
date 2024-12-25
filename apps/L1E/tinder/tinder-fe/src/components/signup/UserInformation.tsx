@@ -60,7 +60,7 @@ const UserInformation = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between items-center">
       {step === 'user' && (
-        <div className="w-screen h-screen flex justify-center mt-[80px]">
+        <div className="w-screen h-screen flex items-center justify-center">
           <div className="w-[400px] gap-[24px] flex flex-col justify-center items-center">
             <Logo />
             <Title text="Your Details" desc="Please provide the following information to help us get to know you better." />
@@ -86,7 +86,7 @@ const UserInformation = () => {
                     <FormItem>
                       <FormLabel>Bio</FormLabel>
                       <FormControl>
-                        <Input placeholder="Tell us about yourself" {...field} className="h-[80px] text-start flex items-start justify-start" />
+                        <Input placeholder="Tell us about yourself" {...field} className="h-[80px] pb-12 flex items-start justify-start" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
