@@ -20,16 +20,15 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const mockRouterPush = jest.fn();
-
-const mockBookingData = {
+const mockBookingData1 = {
   getBookingById: {
     _id: '123',
     status: 'Pending',
     amountTotal: 200000,
     venues: [
-      { name: 'Энгийн', price: 5000, quantity: 1 },
-      { name: 'Fanzone', price: 50000, quantity: 1 },
-      { name: "Vip", price: 50000, quantity: 1},
+      { name: 'Энгийн', price: undefined, quantity: 1 },
+      { name: 'Fanzone', price: 50000, quantity: undefined },
+      { name: undefined, price: 50000, quantity: 1 },
     ],
     eventId: 'event123',
   },
@@ -39,7 +38,7 @@ const mockBookingData = {
 describe('Payment Component', () => {
   beforeEach(() => {
     (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
-      data: { getBookingById: mockBookingData.getBookingById },
+      data: { getBookingById: mockBookingData1.getBookingById },
     });
     (useUpdateBookingEverythingMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false }]);
     useSendQrToEmailMutation as jest.Mock;
@@ -63,7 +62,7 @@ describe('Payment Component', () => {
   it('should display payment success message if booking is already paid', () => {
     (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
       data: {
-        getBookingById: { ...mockBookingData.getBookingById, status: 'Баталгаажсан' },
+        getBookingById: { ...mockBookingData1.getBookingById, status: 'Баталгаажсан' },
       },
     });
 
@@ -75,7 +74,7 @@ describe('Payment Component', () => {
   it('should handle missing venues gracefully', () => {
     (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
       data: {
-        getBookingById: { ...mockBookingData.getBookingById, venues: [] },
+        getBookingById: { ...mockBookingData1.getBookingById, venues: [] },
       },
     });
 
@@ -87,7 +86,7 @@ describe('Payment Component', () => {
   it('should render successfully and handle input change', async () => {
     (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
       data: {
-        getBookingById: { ...mockBookingData.getBookingById, status: 'Баталгаажсан' },
+        getBookingById: { ...mockBookingData1.getBookingById, status: 'Баталгаажсан' },
       },
     });
     const { getByTestId } = render(<Payment id="123" />);
@@ -126,7 +125,7 @@ describe('Payment Component', () => {
   it('should send QR to email successfully', async () => {
     await (useGetBookingByIdQuery as jest.Mock).mockReturnValue({
       data: {
-        getBookingById: { ...mockBookingData.getBookingById, status: 'Баталгаажсан' },
+        getBookingById: { ...mockBookingData1.getBookingById, status: 'Баталгаажсан' },
       },
     });
 
