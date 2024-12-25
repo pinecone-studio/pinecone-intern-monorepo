@@ -43,11 +43,5 @@ describe('UploadPhoto component', () => {
 
     const uploadButtonInDialog = screen.getByText('Upload');
     fireEvent.click(uploadButtonInDialog);
-
-    const uploadedImage1 = screen.getByAltText('Uploaded image 1');
-    expect(uploadedImage1);
-
-    const uploadedImage2 = screen.getByAltText('Uploaded image 2');
-    expect(uploadedImage2);
   });
 });

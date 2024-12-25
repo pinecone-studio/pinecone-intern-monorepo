@@ -12,7 +12,7 @@ export const hotelValidations = Yup.object().shape({
 });
 export const roomValidations = Yup.object().shape({
   name: Yup.string().required('Name is required'),
-  description: Yup.string().required('Description is required'),
+  description: Yup.string(),
   roomNumber: Yup.string().required('Room number is required'),
   roomType: Yup.string().required('Room type is required'),
   price: Yup.number().required('Price is required'),
