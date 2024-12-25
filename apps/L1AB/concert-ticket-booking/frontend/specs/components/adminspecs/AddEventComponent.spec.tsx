@@ -45,7 +45,7 @@ describe('AddEventComponent', () => {
       discount: 0,
       venues: [
         { firstquantity: 0, name: 'Энгийн', price: 0, quantity: 0 },
-        { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
+        { firstquantity: 0, name: 'Fanzone', price: 0, quantity: 0 },
         { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
       ],
       location: '',
@@ -64,8 +64,8 @@ describe('AddEventComponent', () => {
     fireEvent.change(getByPlaceholderText('Хямдралын хувь'), { target: { value: 20 } });
     fireEvent.change(getByTestId('RegularQuantity'), { target: { value: 100 } });
     fireEvent.change(getByTestId('RegularPrice'), { target: { value: 5000 } });
-    fireEvent.change(getByTestId('FanZoneQuantity-Fan-Zone'), { target: { value: 100 } });
-    fireEvent.change(getByTestId('FanZonePrice-Fan-Zone'), { target: { value: 5000 } });
+    fireEvent.change(getByTestId('FanZoneQuantity-Fanzone'), { target: { value: 100 } });
+    fireEvent.change(getByTestId('FanZonePrice-Fanzone'), { target: { value: 5000 } });
     fireEvent.change(getByTestId('VipQuantity-Vip'), { target: { value: 100 } });
     fireEvent.change(getByTestId('VipPrice-Vip'), { target: { value: 5000 } });
     fireEvent.change(getByTestId('datepicker'), { target: { value: '2024-10-20' } });
