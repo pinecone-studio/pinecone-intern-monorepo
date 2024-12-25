@@ -25,24 +25,12 @@ export const Payment = ({ id }: PaymentProps) => {
     }
     setLoading(true);
     try {
-      const venues = [
-        {
-          name: 'Энгийн',
-          price: bookingDetails.venues[0]?.price,
-          quantity: bookingDetails.venues[0]?.quantity,
-        },
-        {
-          name: 'Fanzone',
-          price: bookingDetails.venues[1]?.price,
-          quantity: bookingDetails.venues[1]?.quantity,
-        },
-        {
-          name: 'Vip',
-          price: bookingDetails.venues[2]?.price,
-          quantity: bookingDetails.venues[2]?.quantity,
-        },
-      ];
-
+      const venues = bookingDetails?.venues?.map((venue) => ({
+        name: venue?.name ?? 'Unknown',
+        price: venue?.price ?? 0,
+        quantity: venue?.quantity ?? 0,
+      }));
+      
       const { data } = await axios.post('https://qpaymock.onrender.com/generate-qr', {
         serviceName: 'ticket',
         venues,
