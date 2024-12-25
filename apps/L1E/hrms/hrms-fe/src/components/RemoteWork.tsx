@@ -22,7 +22,7 @@ export const RemoteWork = ({ availableDays, totalRemoteDays }: RemoteHoverCardPr
               <IoIosInformationCircleOutline className="w-4 h-4" />
             </div>
 
-            <div className="text-xl font-semibold">{availableDays} хоног</div>
+              <div className="text-xl font-semibold">{availableDays} хоног</div>
             <div className="text-muted-foreground text-xs font-normal">боломжтой байна.</div>
           </div>
         </div>
