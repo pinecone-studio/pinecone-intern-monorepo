@@ -32,7 +32,7 @@ export const Payment = ({ id }: PaymentProps) => {
           quantity: bookingDetails.venues[0]?.quantity,
         },
         {
-          name: 'Fan-Zone',
+          name: 'Fanzone',
           price: bookingDetails.venues[1]?.price,
           quantity: bookingDetails.venues[1]?.quantity,
         },
