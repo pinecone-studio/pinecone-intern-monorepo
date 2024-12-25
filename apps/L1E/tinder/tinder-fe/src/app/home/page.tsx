@@ -1,9 +1,9 @@
-import Confirmsignup from '@/components/signup/Confirmsignup';
+import Home from '@/components/home/Home';
 
 const page = () => {
   return (
     <div>
-      <Confirmsignup />
+      <Home />
     </div>
   );
 };

@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 import { AllSet } from './Allset';
-import Image from 'next/image';
 
 const CLOUDINARY_URL = process.env.NEXT_PUBLIC_CLOUDINARY_URL as string;
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
@@ -68,7 +68,7 @@ export const ImageUpload: React.FC = () => {
           <div className="grid grid-cols-3 gap-6 w-[640px] h-auto">
             {previews.map((preview, index) => (
               <div key={index} data-testid="map" className="aspect-square relative bg-gray-50 rounded-lg overflow-hidden w-[200px] h-[300px]">
-                <Image src={preview} alt={`Uploaded Image ${index}`} className="w-full h-full object-cover" />
+                <img src={preview} alt={`Uploaded Image ${index}`} className="w-full h-full object-cover" />
                 <button onClick={() => handleRemove(index)} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1" data-testid="remove">
                   ×
                 </button>
@@ -88,8 +88,8 @@ export const ImageUpload: React.FC = () => {
             <Button data-testid="CheckSet2" className="bg-white border rounded-full w-16 h-9 text-black">
               Back
             </Button>
-            <Button data-testid="create" onClick={handleUpload} className={`bg-[#E11D48E5] text-white rounded-full w-16 h-9`} disabled={uploading}>
-              {uploading ? 'Uploading...' : 'Upload'}
+            <Button data-testid="create" onClick={handleUpload} className={`bg-[#E11D48E5] text-white rounded-full w-24 h-9`} disabled={uploading}>
+              Upload
             </Button>
           </div>
         </main>
