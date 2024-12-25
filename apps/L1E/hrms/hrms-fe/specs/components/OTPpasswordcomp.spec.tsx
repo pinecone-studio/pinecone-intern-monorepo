@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 
-import OtpComp from '@/components/Login/OTPpasswordcomp';
+import OtpComp from '@/components/Login/OtPpasswordcomp';
 
 describe('OTPcomp', () => {
   it('should OTPcomp', async () => {

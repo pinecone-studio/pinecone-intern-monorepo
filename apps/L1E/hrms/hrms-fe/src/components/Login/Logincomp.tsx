@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import OTPcomp from './OTPpasswordcomp';
+import OtPpasswordcomp from './OTPpasswordcomp';
 
 const Logincomp = () => {
   const [credential, setCredential] = useState('');
@@ -69,7 +69,7 @@ const Logincomp = () => {
             </div>
           </div>
         ) : (
-          <OTPcomp />
+          <OtPpasswordcomp />
         )}
       </div>
     </div>
