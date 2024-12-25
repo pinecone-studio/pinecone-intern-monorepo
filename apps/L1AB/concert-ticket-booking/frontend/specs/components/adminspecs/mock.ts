@@ -16,7 +16,7 @@ export const createEventMock: MockedResponse = {
           discount: 20,
           venues: [
             { firstquantity: 100, name: 'Энгийн', price: 5000, quantity: 100 },
-            { firstquantity: 100, name: 'Fan-Zone', price: 5000, quantity: 100 },
+            { firstquantity: 100, name: 'Fanzone', price: 5000, quantity: 100 },
             { firstquantity: 5000, name: 'Vip', price: 100, quantity: 5000 },
           ],
         },
@@ -35,7 +35,7 @@ export const createEventMock: MockedResponse = {
           images: [''],
           venues: [
             { name: 'Энгийн', firstquantity: 100, price: 5000, quantity: 100 },
-            { name: 'Fan-Zone', firstquantity: 100, price: 5000, quantity: 100 },
+            { name: 'Fanzone', firstquantity: 100, price: 5000, quantity: 100 },
             { name: 'Vip', firstquantity: 5000, price: 100, quantity: 5000 },
           ],
           discount: 20,
@@ -61,7 +61,7 @@ export const createEventMock: MockedResponse = {
           discount: 20,
           venues: [
             { firstquantity: 100, name: 'Энгийн', price: 5000, quantity: 100 },
-            { firstquantity: 100, name: 'Fan-Zone', price: 5000, quantity: 100 },
+            { firstquantity: 100, name: 'Fanzone', price: 5000, quantity: 100 },
             { firstquantity: 5000, name: 'Vip', price: 100, quantity: 5000 },
           ],
         },

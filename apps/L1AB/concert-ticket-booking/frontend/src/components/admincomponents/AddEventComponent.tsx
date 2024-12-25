@@ -27,7 +27,7 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
     discount: 0,
     venues: [
       { firstquantity: 0, name: 'Энгийн', price: 0, quantity: 0 },
-      { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
+      { firstquantity: 0, name: 'Fanzone', price: 0, quantity: 0 },
       { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
     ],
     location: 'Төв Цэнгэлдэх',
@@ -79,7 +79,7 @@ export const AddEventComponent = ({ refetch }: { refetch: () => void }) => {
         discount: 0,
         venues: [
           { firstquantity: 0, name: 'Энгийн', price: 0, quantity: 0 },
-          { firstquantity: 0, name: 'Fan-Zone', price: 0, quantity: 0 },
+          { firstquantity: 0, name: 'Fanzone', price: 0, quantity: 0 },
           { firstquantity: 0, name: 'Vip', price: 0, quantity: 0 },
         ],
         location: '',
