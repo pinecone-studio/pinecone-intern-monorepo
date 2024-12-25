@@ -9,17 +9,9 @@ import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import requestSchema from '../../utils/RequestSchema';
+import requestSchema from '../../utils/request-schema';
 import { RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
-interface RequestsInput {
-  date: Date;
-  startTime: string;
-  endTime: string;
-  leadEmployeeId: string;
-  requestStatus: RequestStatus;
-  reason: string;
-  employeeId: string;
-}
+import { RequestsInput } from '@/utils/requests-input';
 const RequestcomTime1 = () => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
@@ -33,28 +25,16 @@ const RequestcomTime1 = () => {
       employeeId: '6763e2c6d93130a1f7a36953',
     },
   });
-
-  const [createRequest] = useCreateRequestMutation();
-
-  const onSubmit = async (data: RequestsInput) => {
-   
-    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
-
-    const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
-
-    await createRequest({ variables: { input: newdata } });
-  };
-
-
-  return (
+const [createRequest] = useCreateRequestMutation();
+const onSubmit = async (data: RequestsInput) => {
+ const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+await createRequest({ variables: { input: newdata } });
+  };return (
     <div className="space-y2 flex ">
       <Form {...form}>
         <form data-testid="form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
           <FormField
-            control={form.control}
-            name="date"
-            data-testid="date"
-            render={({ field }) => (
+            control={form.control} name="date" data-testid="date" render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel className="text-sm">Чөлөө авах өдөр*</FormLabel>
                 <div className="border rounded-md">
@@ -76,9 +56,7 @@ const RequestcomTime1 = () => {
           />
           <div className="grid grid-cols-2 gap-4">
             <FormField
-              control={form.control}
-              name="startTime"
-              render={({ field }) => (
+              control={form.control}  name="startTime" render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Эхлэх цаг*</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>

@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import requestSchemaDay from '../../utils/RequestSchemaDay';
+import requestSchemaDay from '../../utils/request-schema-day';
 
 const Requestcomremote = () => {
   const form = useForm({
