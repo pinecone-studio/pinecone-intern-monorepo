@@ -15,7 +15,6 @@ const NewsFeed = () => {
 
   const [deletePost] = useDeletePostMutation();
   const posts = data?.getPostsByFollowersId;
-  console.log(posts);
 
   const handleDeletePost = async (id: string) => {
     await deletePost({ variables: { id: id } });
@@ -25,7 +24,7 @@ const NewsFeed = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 2xl:pl-[500px] xl:pl-[300px] dark:text-gray-300">
+      <div className="flex flex-col gap-2 2xl:pl-[650px] xl:pl-[300px] dark:text-gray-300">
         {posts?.map((post, i) => {
           return (
             <PostCard

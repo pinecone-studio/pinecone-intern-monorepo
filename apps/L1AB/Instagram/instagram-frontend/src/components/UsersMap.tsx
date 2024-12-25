@@ -11,7 +11,7 @@ export const UsersMap = () => {
   const contextValue = useContext(UserContext);
   const { user } = contextValue;
   const [createFollowers] = useCreateFollowersMutation();
-  const { data } = useGetSuggestedUsersQuery({
+  const { data, refetch } = useGetSuggestedUsersQuery({
     variables: { id: user ? user._id : '' },
   });
 
@@ -28,6 +28,7 @@ export const UsersMap = () => {
   const handleFollow = async (e: React.MouseEvent, followeeId: string) => {
     e.preventDefault();
     await createFollowers({ variables: { followerId: user._id, followeeId } });
+    refetch();
   };
 
   return (

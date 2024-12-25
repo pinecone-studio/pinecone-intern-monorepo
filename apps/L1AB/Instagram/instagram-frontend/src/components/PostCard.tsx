@@ -108,7 +108,7 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
             <div className="flex transition-transform ease-in-out duration-500" style={{ transform: `translateX(-${(currentImageIndex * 100) / images.length}%)` }}>
               {images.map((image, i) => {
                 return (
-                  <div key={i} className="relative w-[528px] overflow-hidden">
+                  <div key={i + Math.random()} className="relative w-[528px] overflow-hidden">
                     <Image className="object-cover" alt={`${i}`} src={image} fill />
                   </div>
                 );
