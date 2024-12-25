@@ -1,51 +1,65 @@
 'use client';
-import { useEffect, useState } from 'react';
 
-const Confirmsignup: React.FC = () => {
-  // const [step, setStep] = useState<'forget' | 'confirm' | 'newpassword'>('confirm');
-  const [time, setTime] = useState(30);
-  const [otp, setOtp] = useState(['', '', '', '']);
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRequestOtpMutation } from '@/generated';
+
+export const Confirmsignup = () => {
+  const [requestOtp] = useRequestOtpMutation();
+  const [value, setValue] = useState('');
+  const email = 'uzkhuthef@gmail.com';
+  const router = useRouter();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prevTime - 1;
+    const sendOtp = async () => {
+      await requestOtp({
+        variables: {
+          input: {
+            email,
+            otp: '',
+          },
+        },
       });
-    }, 1000);
+    };
 
-    return () => clearInterval(timer);
+    sendOtp();
   }, []);
 
   useEffect(() => {
-    if (otp.every((digit) => digit !== '')) {
-      // setStep('newpassword');
+    if (value.length === 4) {
+      handleSubmit();
     }
-  }, [otp]);
-  const handleOtpChange = (index: number, value: string) => {
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+  }, [value]);
+
+  const handleSubmit = async () => {
+    await requestOtp({
+      variables: {
+        input: {
+          email,
+          otp: value,
+        },
+      },
+    });
+    router.push('/');
   };
-  // if (step === 'newpassword') {
-  //   return <Addpassword />;
-  // }
 
   return (
-    <div>
-      <h2>Confirm email</h2>
-      <p>To continue, enter the secure code we sent to your email</p>
-
-      <div>
-        {otp.map((digit, index) => (
-          <input key={index} type="text" value={digit} onChange={(e) => handleOtpChange(index, e.target.value)} maxLength={1} />
-        ))}
+    <div className="relative w-full h-full">
+      <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:px-3">
+        <div className="flex rounded-2xl border-slate-500 border-[1px] flex-col py-8 px-12 gap-6">
+          <div className="flex flex-col items-center justify-center gap-6 self-stretch w-[327px] max-sm:w-full z-10">
+            <InputOTP maxLength={4} data-testid="OTPInput" onChange={(value) => setValue(value)}>
+              <InputOTPGroup className="text-black dark:text-white">
+                <InputOTPSlot className="h-14 w-14" index={0} />
+                <InputOTPSlot className="h-14 w-14" index={1} />
+                <InputOTPSlot className="h-14 w-14" index={2} />
+                <InputOTPSlot className="h-14 w-14" index={3} />
+              </InputOTPGroup>
+            </InputOTP>
+          </div>
+        </div>
       </div>
-      <button>Send again</button>
-      <span>({time.toString().padStart(2, '0')})</span>
     </div>
   );
 };

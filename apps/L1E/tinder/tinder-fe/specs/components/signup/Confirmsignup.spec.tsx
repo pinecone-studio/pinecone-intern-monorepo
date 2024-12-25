@@ -1,63 +1,61 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 
+import { useRequestOtpMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
 import Confirmsignup from '@/components/signup/Confirmsignup';
 
-describe('Confirm Component', () => {
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+jest.mock('@/generated', () => ({
+  useRequestOtpMutation: jest.fn(),
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
+describe('Confirmsignup Component', () => {
+  let mockRouterPush: jest.Mock<any, any, any>;
+  let mockRequestOtp: jest.Mock<any, any, any>;
+
   beforeEach(() => {
-    jest.useFakeTimers();
-  });
+    mockRouterPush = jest.fn();
+    mockRequestOtp = jest.fn();
 
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
-  it('should render the confirm email step initially', () => {
-    render(<Confirmsignup />);
-    expect(screen.getByText('Confirm email')).toBeInTheDocument();
-    expect(screen.getByText(/To continue, enter the secure code/)).toBeInTheDocument();
-    expect(screen.getByText('Send again')).toBeInTheDocument();
-  });
-
-  it('should display the timer and update it', () => {
-    render(<Confirmsignup />);
-    expect(screen.getByText('(30)')).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(5000);
+    useRouter.mockReturnValue({
+      push: mockRouterPush,
     });
 
-    expect(screen.getByText('(25)')).toBeInTheDocument();
+    useRequestOtpMutation.mockReturnValue([mockRequestOtp]);
   });
 
-  it('should change to new password step when OTP is fully entered', async () => {
+  it('should render and handle OTP input submission', async () => {
+    const email = 'uzkhuthef@gmail.com';
+    const mockOtpResponse = { data: { requestOtp: { success: true } } };
+
+    mockRequestOtp.mockResolvedValue(mockOtpResponse);
+
     render(<Confirmsignup />);
 
-    const otpInputs = screen.getAllByRole('textbox');
-    expect(otpInputs).toHaveLength(4);
+    const otpInput = screen.getByTestId('OTPInput');
+    fireEvent.change(otpInput, { target: { value: '1234' } });
+    expect(otpInput);
 
-    fireEvent.change(otpInputs[0], { target: { value: '1' } });
-    fireEvent.change(otpInputs[1], { target: { value: '2' } });
-    fireEvent.change(otpInputs[2], { target: { value: '3' } });
-    fireEvent.change(otpInputs[3], { target: { value: '4' } });
+    await waitFor(() => {
+      expect(mockRequestOtp).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            email,
+            otp: '1234',
+          },
+        },
+      });
 
-    // expect(screen.queryByText('Confirm email')).not;
-  });
-
-  it('should stop the timer at 0', () => {
-    render(<Confirmsignup />);
-
-    act(() => {
-      jest.advanceTimersByTime(30000);
+      expect(mockRouterPush).toHaveBeenCalledWith('/');
     });
-
-    expect(screen.getByText('(00)')).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(5000);
-    });
-
-    expect(screen.getByText('(00)')).toBeInTheDocument();
   });
 });
