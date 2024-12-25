@@ -1,4 +1,4 @@
-import { fireEvent, getByTestId, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Logincomp from '@/components/Login/Logincomp';
 
@@ -18,6 +18,6 @@ describe('Logincomp', () => {
     const submitButton = getByTestId('submit');
     fireEvent.click(submitButton);
 
-    const errorMessage = getByTestId('error-message');
+    getByTestId('error-message');
   });
 });
