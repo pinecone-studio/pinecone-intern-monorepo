@@ -15,14 +15,15 @@ export const typeDefs = gql`
 
   type Request {
     _id: ID!
-    employeeId: Employee!
-    leadEmployeeId: Employee
+    employeeId: ID
+    leadEmployeeId: ID
     requestStatus: RequestStatus!
     requestType: RequestType!
+    selectedDay: String
     reason: String
     reasonRefuse: String
-    startTime: String!
-    endTime: String!
+    startTime: String
+    endTime: String
     updatedAt: String!
     createdAt: String!
   }
@@ -33,13 +34,14 @@ export const typeDefs = gql`
   }
 
   input RequestInput {
-    employeeId: ID!
+    employeeId: ID
     leadEmployeeId: ID
     requestStatus: RequestStatus!
     reason: String
+    selectedDay: String
     reasonRefuse: String
-    startTime: String!
-    endTime: String!
+    startTime: String
+    endTime: String
   }
 
   input RequestUpdateInput {
