@@ -52,6 +52,7 @@ export const typeDefs = gql`
 
   input RequestOtpInput {
     email: String!
+    otp: String!
   }
 
   input ChangePasswordInput {
