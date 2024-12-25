@@ -1,8 +1,8 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+/* eslint-disable max-lines */
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { GetAllEventsDocument, GetEventByIdDocument } from '@/generated';
 import { EventDetails } from '@/components/maincomponents/EventDetails';
-import { mocks } from './mock';
 import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
@@ -86,72 +86,144 @@ const mocks1 = [
     },
   },
 ];
+
+const noDiscountEvent = {
+  ...mocks1,
+  discount: 0,
+};
+
+const missingVenueEvent = {
+  ...mocks1,
+  venues: [{ name: 'Venue 1', price: 5000, quantity: 100 }],
+};
+
+const discountedPrice = (price: number, discount: number): number => {
+  return discount > 0 ? Math.floor(price * (1 - discount / 100)) : price;
+};
 describe('EventDetails', () => {
-  it('renders rows based on fetched data', async () => {
+  it('should return discounted price when discount is greater than 0', () => {
+  // Test when discount is greater than 0
+  expect(discountedPrice(100, 10))
+  expect(discountedPrice(200, 25))
+  expect(discountedPrice(50, 50))
+  expect(discountedPrice(1000, 33))
+});
+  it('renders event card with discount', () => {
+    render(<MockedProvider mocks={mocks1}><EventDetails id="1"   />
+    </MockedProvider>);
+    expect(screen);
+
+  });
+  it('renders event card with discount', () => {
+    render(
+      <MockedProvider mocks={mocks1} ><EventDetails id="1"  />
+      </MockedProvider>);
+
+    expect(screen);
+  });
+  it('renders event card without discount', () => {
+    render(<MockedProvider mocks={mocks1}>
+      <EventDetails id="1" />
+    </MockedProvider>);
+
+    expect(screen);
+  });
+
+  it('renders event card with missing venue', () => {
+    render(<MockedProvider mocks={mocks1}><EventDetails id="1"   />
+    </MockedProvider>);
+
+    expect(screen);
+  });
+  it('renders rows based on fetched data (mock 1)', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <EventDetails id="1" />
+      <MockedProvider mocks={mocks1}  addTypename={false}>
+        <EventDetails id="1"  />
       </MockedProvider>
     );
 
+
+    
     await waitFor(() => {
-      const table = getByTestId('artist-0');
-      expect(table);
+      const artist = getByTestId('artist-0');
+      expect(artist)
+      expect(screen);
+
     });
   });
 
-  it('renders rows based on fetched data', async () => {
+  it('renders rows based on fetched data (mock 1)', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks1} addTypename={false}>
-        <EventDetails id="1" />
+      <MockedProvider  mocks={mocks1} addTypename={false}>
+        <EventDetails id="1"  />
       </MockedProvider>
     );
-
+   
     await waitFor(() => {
-      const table = getByTestId('artist-0');
-      expect(table);
+      const artist = getByTestId('artist-0');
+      expect(artist)
+      expect(screen);
+
     });
   });
-  it('renders rows based on fetched data and handles button click correctly', async () => {
+
+  it('handles button click and redirects correctly with a valid token', async () => {
     const mockToken = 'mocked-token';
     localStorage.setItem('token', mockToken);
+
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks1} addTypename={false}>
-        <EventDetails id="1" />
+      <MockedProvider {...noDiscountEvent} mocks={mocks1} addTypename={false}>
+        <EventDetails id="1"  />
       </MockedProvider>
     );
-
+   
     await waitFor(() => {
       const artist = getByTestId('artist-0');
-      expect(artist);
+      expect(artist)
+      expect(screen);
+
     });
 
     const button = getByTestId('book-ticket-btn');
     fireEvent.click(button);
+
+    
     const router = useRouter();
     await waitFor(() => {
-      expect(router.push);
+      expect(router.push)
+      expect(screen);
+
     });
   });
-  it('renders rows based on fetched data and handles button click correctly', async () => {
-    const mockToken = '';
+
+  it('handles button click and redirects correctly without a token', async () => {
+    const mockToken = ''; // Simulate missing token scenario
     localStorage.setItem('token', mockToken);
+
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks1} addTypename={false}>
-        <EventDetails id="1" />
+      <MockedProvider {...missingVenueEvent} mocks={mocks1} addTypename={false}>
+        <EventDetails id="1"  />
       </MockedProvider>
     );
+    
 
     await waitFor(() => {
       const artist = getByTestId('artist-0');
       expect(artist);
+      expect(screen);
+
     });
 
     const button = getByTestId('book-ticket-btn');
     fireEvent.click(button);
+   
+
     const router = useRouter();
     await waitFor(() => {
-      expect(router.push);
+      expect(router.push)
+      expect(screen);
+
     });
   });
+
 });

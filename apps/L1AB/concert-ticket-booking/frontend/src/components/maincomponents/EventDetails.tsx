@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetEventByIdQuery } from '@/generated';
+import { useGetEventByIdQuery} from '@/generated';
 import Image from 'next/image';
 import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
@@ -14,10 +14,11 @@ import Link from 'next/link';
 
 interface EventDetailsProps {
   id: string | string[];
+  
 }
 // eslint-disable-next-line no-secrets/no-secrets
 const url = "https://www.google.com/maps/place/Pinecone+Academy/@47.9144636,106.9167269,910m/data=!3m1!1e3!4m6!3m5!1s0x5d969368889d5da1:0x90f77786fc5b1aa2!8m2!3d47.9142841!4d106.9165468!16s%2Fg%2F11g_zk5x0b?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
-export const EventDetails = ({ id }: EventDetailsProps) => {
+export const EventDetails = ({ id  }: EventDetailsProps) => {
   const { data, loading } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
   const router = useRouter();
@@ -36,7 +37,10 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
       router.push(`/signin`);
     }
   };
-
+const discountedPrice=(price:number,discount:number)=>{
+  const disPrice = discount > 0 ? Math.floor(price * (1-discount / 100)) : price
+  return disPrice;
+}
   return (
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
@@ -130,7 +134,9 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                           {item.name} тасалбар ({item.quantity})
                         </p>
                       </div>
-                      <p className="text-[16px] text-white">{item.price.toLocaleString()}₮</p>
+                      <p className="text-[16px] text-white">
+                        {discountedPrice(item.price, eventDetails?.discount)}
+                      </p>
                     </div>
                   </div>
                 );
