@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
 
-const OTPcomp: React.FC = () => {
+const OtPpasswordcomp: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(new Array(4).fill(''));
   const [error, setError] = useState('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -107,4 +107,4 @@ const OTPcomp: React.FC = () => {
   );
 };
 
-export default OTPcomp;
+export default OtPpasswordcomp;
