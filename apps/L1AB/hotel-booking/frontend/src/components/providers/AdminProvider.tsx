@@ -63,7 +63,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
         },
       });
       const newHotelId = newHotelData?.createHotel._id;
-      router.push(`/admin/hotel/${newHotelId}`);
+      router.push(`/admin/hotels/${newHotelId}`);
     },
   });
   const addRoomForm = useFormik<RoomFormValues>({

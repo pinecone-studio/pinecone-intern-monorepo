@@ -3,34 +3,23 @@
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table';
 import { useState } from 'react';
 import { ArrowDownUp, History } from 'lucide-react';
+import { useGetAllBookingsQuery } from '@/generated';
 
-type BookingType = {
-  _id: number;
-  guestName: string;
-  status: string;
-  date: string;
-};
-
-type DetailsUpcomingBookingsPropsType = {
-  mockBookings: BookingType[];
-};
-
-export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBookingsPropsType) => {
-  const [statusFilter, setStatusFilter] = useState<'Confirmed' | 'Pending' | 'Cancelled' | ''>(''); // Default no filter
+export const RoomDetailsUpcomingBookings = () => {
+  const [statusFilter, setStatusFilter] = useState<'confirmed' | 'pending' | 'canceled' | ''>(''); // Default no filter
   const [sortDirection, setSortDirection] = useState(true); // Sort by Date or ID
-
-  // Filter based on the selected status
-  const filteredBookings = mockBookings.filter((booking) => {
+  const { data: BookingsData } = useGetAllBookingsQuery();
+  const filteredBookings = BookingsData?.getAllBookings.filter((booking) => {
     if (statusFilter === '') return true; // Show all if no status is selected
     return booking.status === statusFilter;
   });
 
   // Sort bookings by date or ID
-  const sortedBookings = filteredBookings.sort((a, b) => {
+  const sortedBookings = filteredBookings?.sort((a, b) => {
     if (sortDirection) {
-      return a.date.localeCompare(b.date); // Sort by date
+      return a.checkIn.localeCompare(b.checkIn); // Sort by checkIn
     } else {
-      return b.date.localeCompare(a.date); // Sort by date in descending order
+      return b.checkIn.localeCompare(a.checkIn); // Sort by checkIn in descending order
     }
   });
 
@@ -40,7 +29,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
 
   // Handle status change (cycling through statuses)
   const cycleStatus = () => {
-    const statuses: ('Confirmed' | 'Pending' | 'Cancelled' | '')[] = ['', 'Confirmed', 'Pending', 'Cancelled'];
+    const statuses: ('confirmed' | 'pending' | 'canceled' | '')[] = ['', 'confirmed', 'pending', 'canceled'];
     const currentIndex = statuses.indexOf(statusFilter);
     const nextStatus = statuses[(currentIndex + 1) % statuses.length];
     setStatusFilter(nextStatus);
@@ -78,7 +67,7 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
           </TableHeader>
 
           <TableBody>
-            {sortedBookings.length === 0 ? (
+            {sortedBookings?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="text-center text-gray-500 p-3">
                   <p className="text-gray-600 h-[18px] w-[18px] mb-4 text-lg">
@@ -89,12 +78,12 @@ export const RoomDetailsUpcomingBookings = ({ mockBookings }: DetailsUpcomingBoo
                 </TableCell>
               </TableRow>
             ) : (
-              sortedBookings.map((booking) => (
+              sortedBookings?.map((booking) => (
                 <TableRow key={booking._id} className="border-b w-full">
                   <TableCell className="p-3 text-center w-[82px] border-l border-r border-b">{booking._id}</TableCell>
-                  <TableCell className="p-3 text-center w-[278px] border-r border-b">{booking.guestName}</TableCell>
+                  <TableCell className="p-3 text-center w-[278px] border-r border-b">{booking.email}</TableCell>
                   <TableCell className="p-3 text-center w-[188px] border-r border-b">{booking.status}</TableCell>
-                  <TableCell className="p-3 text-center w-[188px] border-r border-b">{booking.date}</TableCell>
+                  <TableCell className="p-3 text-center w-[188px] border-r border-b">{booking.createdAt}</TableCell>
                 </TableRow>
               ))
             )}
