@@ -1,9 +1,10 @@
-import Signup from '@/components/signup/Signup';
+// import Signup from '@/components/signup/Signup';
 
 const page = () => {
   return (
     <div>
-      <Signup />
+      {/* <Signup /> */}
+      as
     </div>
   );
 };

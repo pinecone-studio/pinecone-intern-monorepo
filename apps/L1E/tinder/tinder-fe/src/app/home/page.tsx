@@ -1,9 +1,9 @@
-import { ImageUpload } from '@/components/signup/ImageUpload';
+import Confirmsignup from '@/components/signup/Confirmsignup';
 
 const page = () => {
   return (
     <div>
-      <ImageUpload />
+      <Confirmsignup />
     </div>
   );
 };
