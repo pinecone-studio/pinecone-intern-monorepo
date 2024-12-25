@@ -5,7 +5,9 @@ const requestSchema = z.object({
   }),
   startTime: z.string().nonempty('Start time is required'),
   endTime: z.string().nonempty('End time is required'),
-  lead: z.string().nonempty('сонголт хийгээгүй байна'),
-  notes: z.string().min(5, 'хоосон байна'),
+  leadEmployeeId: z.string().nonempty('сонголт хийгээгүй байна'),
+  reason: z.string().min(5, 'хоосон байна'),
+  employeeId: z.string(),
+  requestStatus:z.string()
 });
 export default requestSchema;

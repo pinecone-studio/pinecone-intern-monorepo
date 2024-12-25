@@ -9,22 +9,47 @@ import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import requestSchema from './RequestSchema';
+import requestSchema from '../../utils/RequestSchema';
+import { RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
+interface RequestsInput {
+  date: Date;
+  startTime: string;
+  endTime: string;
+  leadEmployeeId: string;
+  requestStatus: RequestStatus;
+  reason: string;
+  employeeId: string;
+}
 const RequestcomTime1 = () => {
-  const form = useForm({
+  const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
     defaultValues: {
       date: new Date(),
       startTime: '08:00',
       endTime: '09:00',
-      lead: '',
-      notes: '',
+      leadEmployeeId: '',
+      requestStatus: RequestStatus.Free,
+      reason: '',
+      employeeId: '6763e2c6d93130a1f7a36953',
     },
   });
+
+  const [createRequest] = useCreateRequestMutation();
+
+  const onSubmit = async (data: RequestsInput) => {
+   
+    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
+
+    const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+
+    await createRequest({ variables: { input: newdata } });
+  };
+
+
   return (
     <div className="space-y2 flex ">
       <Form {...form}>
-        <form data-testid="form" className="space-y-6 w-full mx-auto pt-6">
+        <form data-testid="form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
           <FormField
             control={form.control}
             name="date"
@@ -35,12 +60,10 @@ const RequestcomTime1 = () => {
                 <div className="border rounded-md">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant={'outline'} className="w-full pl-3 text-left font-normal">
-                          {format(field.value, 'yyyy.MM.dd')}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
+                      <Button data-testid="calendar-btn" variant={'outline'} className="w-full pl-3 text-left font-normal">
+                        {format(field.value, 'yyyy.MM.dd')}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="end">
                       <Calendar data-testid="calendar-input" mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
@@ -55,19 +78,18 @@ const RequestcomTime1 = () => {
             <FormField
               control={form.control}
               name="startTime"
-              data-testid="time"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Эхлэх цаг*</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger data-testid="starttime-select">
                         <SelectValue placeholder="Select start time" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
-                        <SelectItem key={i} value={`${String(i).padStart(2, '0')}:00`}>
+                        <SelectItem data-testid={`${String(i).padStart(2, '0')}:00`} key={i} value={`${String(i).padStart(2, '0')}:00`}>
                           {`${String(i).padStart(2, '0')}:00`}
                         </SelectItem>
                       ))}
@@ -80,19 +102,18 @@ const RequestcomTime1 = () => {
             <FormField
               control={form.control}
               name="endTime"
-              data-testid="endtime"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Дуусах цаг*</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger data-testid="end-time">
                         <SelectValue placeholder="Select end time" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
-                        <SelectItem key={i} value={`${String(i).padStart(2, '0')}:00`}>
+                        <SelectItem data-testid={`${String(i).padStart(2, '0')}`} key={i} value={`${String(i).padStart(2, '0')}:00`}>
                           {`${String(i).padStart(2, '0')}:00`}
                         </SelectItem>
                       ))}
@@ -105,21 +126,28 @@ const RequestcomTime1 = () => {
           </div>
           <FormField
             control={form.control}
-            name="lead"
-            data-testid="lead-button"
+            name="leadEmployeeId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm">Хэнээр хүсэлтээ батлуулах аа сонгоно уу*</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Ажилтан сонгох" className="custom-select" />
+                    <SelectTrigger
+                      data-testid="lead-button"
+                    >
+                      <SelectValue  placeholder="Ажилтан сонгох" className="custom-select" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="option1">Option 1</SelectItem>
-                    <SelectItem value="option2">Option 2</SelectItem>
-                    <SelectItem value="option3">Option 3</SelectItem>
+                    <SelectItem data-testid="Option-1" value="6763e5e51439bd616d57745d">
+                      Option 1
+                    </SelectItem>
+                    <SelectItem data-testid="Option-2" value="option2">
+                      Option 2
+                    </SelectItem>
+                    <SelectItem data-testid="Option-3" value="option3">
+                      Option 3
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -128,12 +156,11 @@ const RequestcomTime1 = () => {
           />
           <FormField
             control={form.control}
-            name="notes"
-            data-testid="notes-input"
+            name="reason"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm">Чөлөө авах шалтгаан*</FormLabel>
-                <FormControl>
+                <FormControl data-testid="notes-input">
                   <Textarea placeholder="Шалтгаанаа тайлбарлаж бичнэ үү." className="resize-none" {...field} />
                 </FormControl>
                 <FormMessage />
