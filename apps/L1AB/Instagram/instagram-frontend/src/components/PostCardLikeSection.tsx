@@ -1,13 +1,20 @@
 'use client';
 
 import { useCreateLikeMutation, useCreateSaveMutation, useGetLikesByPostIdQuery, useGetSavedByPostIdQuery } from '@/generated';
-import { CardPropsType } from './PostCardCommentSection';
 import { Bookmark, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PostDetail from './PostDetail';
 import { motion } from 'framer-motion';
-
-const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () => void }) => {
+type PropsType = {
+  postId: string;
+  userId: string;
+  userName: string;
+  images: string[];
+  profilePicture: string;
+  caption: string;
+  createdAt: string;
+};
+export const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () => void }) => {
   const hoverEffect = !isLiked ? { color: '#9CA3AF' } : undefined;
   return (
     <motion.div
@@ -26,7 +33,7 @@ const LikeButton = ({ isLiked, handleLike }: { isLiked: boolean; handleLike: () 
   );
 };
 
-const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
+export const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () => void }) => {
   const hoverEffect = !isSaved ? { color: '#9CA3AF' } : undefined;
   return (
     <motion.div
@@ -44,7 +51,7 @@ const SaveButton = ({ isSaved, handleSave }: { isSaved: boolean; handleSave: () 
   );
 };
 
-const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, userName }: CardPropsType) => {
+const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, userName, createdAt }: PropsType) => {
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
   const { data: savedData } = useGetSavedByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId || [];
@@ -89,7 +96,7 @@ const PostCardLikeSection = ({ postId, userId, images, caption, profilePicture, 
             <div className={`cursor-pointer  hover:text-[#71717A] `}>{likesData?.length}</div>
           </div>
           <motion.div whileHover={{ color: '#9CA3AF' }}>
-            <PostDetail postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />
+            <PostDetail createdAt={createdAt} postimages={images} postcaption={caption} userProfile={profilePicture} userName={userName} postId={postId} userId={userId} />
           </motion.div>
         </div>
         <SaveButton handleSave={handleSave} isSaved={isSaved} />

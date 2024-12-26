@@ -8,17 +8,26 @@ jest.mock('next/image', () => {
   return MockImage;
 });
 
+jest.mock('date-fns', () => ({
+  ...jest.requireActual('date-fns'),
+  formatDistanceToNow: jest.fn(),
+}));
+
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
 }));
 
-import { useGetAllSavedPostsQuery, useGetCommentsByPostIdQuery, useGetLikesByPostIdQuery } from '@/generated';
+import { useGetAllSavedPostsQuery, useGetCommentsByPostIdQuery, useGetLikesByPostIdQuery, useGetSavedByPostIdQuery } from '@/generated';
 import { useSearchParams } from 'next/navigation';
 
 jest.mock('@/generated', () => ({
   useGetAllSavedPostsQuery: jest.fn(),
   useGetLikesByPostIdQuery: jest.fn(),
   useGetCommentsByPostIdQuery: jest.fn(),
+  useGetSavedByPostIdQuery: jest.fn(),
+  useCreateCommentMutation: jest.fn().mockReturnValue([jest.fn()]),
+  useCreateLikeMutation: jest.fn().mockReturnValue([jest.fn()]),
+  useCreateSaveMutation: jest.fn().mockReturnValue([jest.fn()]),
 }));
 
 describe('ProfilePostsSection', () => {
@@ -27,7 +36,22 @@ describe('ProfilePostsSection', () => {
   let mockUser: any;
 
   beforeEach(() => {
-    mockUserPosts = [{ images: ['image1.jpg'] }, { images: ['image2.jpg'] }];
+    mockUserPosts = [
+      {
+        images: ['image1.jpg'],
+        userId: {
+          profilePicture: 'zurag',
+        },
+        _id: '3',
+      },
+      {
+        images: ['image2.jpg'],
+        userId: {
+          profilePicture: 'zurag',
+        },
+        _id: '4',
+      },
+    ];
     mockProfileUser = { isPrivate: false };
     mockUser = { username: 'john_doe' };
 
@@ -37,21 +61,23 @@ describe('ProfilePostsSection', () => {
       },
       loading: false,
     });
-
+    useGetSavedByPostIdQuery.mockReturnValue({
+      data: {
+        getSavedByPostId: [{ postId: '3', userId: '11' }],
+      },
+    });
     useGetCommentsByPostIdQuery.mockReturnValue({
       data: {
-        getCommentsByPostId: [{ id: '1' }, { id: '2' }, { id: '3' }],
+        getCommentsByPostId: [{ id: '1', postId: '2' }, { id: '2' }, { id: '3' }],
         loading: false,
       },
     });
-
     useGetLikesByPostIdQuery.mockReturnValue({
       data: {
         getLikesByPostId: [{ id: '1' }, { id: '2' }],
         loading: false,
       },
     });
-
     useSearchParams.mockReturnValue({
       get: jest.fn().mockImplementation((key) => {
         if (key === 'type') return 'posts';

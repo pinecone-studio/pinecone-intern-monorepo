@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import PostDetail from '@/components/PostDetail';
 import { MockedProvider } from '@apollo/client/testing';
-import { CreateCommentDocument, CreateLikeDocument, CreateSaveDocument, GetCommentsByPostIdDocument, GetLikesByPostIdDocument } from '@/generated';
+import { CreateCommentDocument, CreateLikeDocument, CreateSaveDocument, GetCommentsByPostIdDocument, GetLikesByPostIdDocument, GetSavedByPostIdDocument } from '@/generated';
 import { InMemoryCache } from '@apollo/client';
+import MyPostDetail from '@/components/MyPostDetail';
 jest.mock('date-fns', () => ({
   ...jest.requireActual('date-fns'),
   formatDistanceToNow: jest.fn(),
@@ -67,6 +67,25 @@ const createSaveMock = {
     },
   },
 };
+const getSavedByPostIdMock = {
+  request: {
+    query: GetSavedByPostIdDocument,
+    variables: { postId: '2' },
+  },
+  result: {
+    data: {
+      getSavedByPostId: {
+        postId: {
+          _id: '2',
+        },
+        userId: {
+          _id: '11',
+        },
+      },
+    },
+  },
+};
+
 const getLikesByPostIdMock = {
   request: {
     query: GetLikesByPostIdDocument,
@@ -89,7 +108,7 @@ const getLikesByPostIdMock = {
   },
 };
 
-describe('PostDetail Component', () => {
+describe('MyPostDetail Component', () => {
   beforeEach(() => {
     const cache = new InMemoryCache();
     cache.reset();
@@ -97,12 +116,10 @@ describe('PostDetail Component', () => {
 
   it('should navigate to the next image correctly', () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCommentsMock, createCommentMock]}>
-        <PostDetail {...mockPostData} />
+      <MockedProvider mocks={[getCommentsMock, createCommentMock, getLikesByPostIdMock, getSavedByPostIdMock]}>
+        <MyPostDetail {...mockPostData} />
       </MockedProvider>
     );
-    const messageCircleIcon = getByTestId('MessageCircleIcon');
-    fireEvent.click(messageCircleIcon);
 
     const NextButton = getByTestId('NextButton');
 
@@ -110,30 +127,25 @@ describe('PostDetail Component', () => {
   });
   it('should handle multiple next and prev navigations', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCommentsMock, createCommentMock]}>
-        <PostDetail {...mockPostData} />
+      <MockedProvider mocks={[getCommentsMock, createCommentMock, getSavedByPostIdMock]}>
+        <MyPostDetail {...mockPostData} />
       </MockedProvider>
     );
-    const message = getByTestId('MessageCircleIcon');
-    fireEvent.click(message);
 
     const NextButton = getByTestId('NextButton');
     fireEvent.click(NextButton);
     const PrevButton = getByTestId('PrevButton');
-
     fireEvent.click(PrevButton);
   });
+
   it('should create new comment', async () => {
     render(
-      <MockedProvider mocks={[getCommentsMock, createCommentMock, createLikeMock, createSaveMock]} addTypename={false}>
-        <PostDetail {...mockPostData} />
+      <MockedProvider mocks={[getCommentsMock, createCommentMock, createLikeMock, createSaveMock, getSavedByPostIdMock]} addTypename={false}>
+        <MyPostDetail {...mockPostData} />
       </MockedProvider>
     );
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const message = screen.getByTestId('MessageCircleIcon');
-    fireEvent.click(message);
 
     const commentInput = screen.getByTestId('commentInput') as HTMLInputElement;
     const postButton = screen.getByTestId('handleComment');
@@ -144,13 +156,10 @@ describe('PostDetail Component', () => {
 
   it('should like and save', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCommentsMock, createCommentMock, createSaveMock, createLikeMock, getLikesByPostIdMock]} addTypename={false}>
-        <PostDetail {...mockPostData} />
+      <MockedProvider mocks={[getCommentsMock, createCommentMock, createSaveMock, createLikeMock, getLikesByPostIdMock, getSavedByPostIdMock]} addTypename={false}>
+        <MyPostDetail {...mockPostData} />
       </MockedProvider>
     );
-
-    const message = screen.getByTestId('MessageCircleIcon');
-    fireEvent.click(message);
 
     const handlelike = getByTestId('likeButton');
     fireEvent.click(handlelike);
