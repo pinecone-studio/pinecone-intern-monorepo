@@ -4,12 +4,10 @@ import { useCreateUserMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 import { AllSet } from '@/components/signup/Allset';
 
-// Mock the useCreateUserMutation hook
 jest.mock('@/generated', () => ({
   useCreateUserMutation: jest.fn(),
 }));
 
-// Mock the useRouter hook
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
@@ -19,13 +17,11 @@ describe('AllSet Component', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
-    // Reset mock functions before each test
     mockCreateUser.mockClear();
     mockPush.mockClear();
     (useCreateUserMutation as jest.Mock).mockReturnValue([mockCreateUser]);
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
-    // Mock localStorage for testing purposes
     Object.defineProperty(window, 'localStorage', {
       value: {
         getItem: jest.fn().mockReturnValue(
@@ -50,7 +46,6 @@ describe('AllSet Component', () => {
   test('should display the success message and button', () => {
     render(<AllSet />);
 
-    // Check if success message is displayed
     expect(screen.getByText("You're all set!"));
     expect(screen.getByText("Your account is all set. You're ready to explore and connect!"));
     expect(screen.getByText('Start Swiping!'));
@@ -61,11 +56,9 @@ describe('AllSet Component', () => {
 
     const startButton = screen.getByText('Start Swiping!');
 
-    // Simulate button click
     fireEvent.click(startButton);
 
     await waitFor(() => {
-      // Check if createUser was called with the correct variables
       expect(mockCreateUser).toHaveBeenCalledWith({
         variables: {
           input: {
@@ -82,13 +75,11 @@ describe('AllSet Component', () => {
         },
       });
 
-      // Check if the router.push function is called to navigate to '/home'
       expect(mockPush).toHaveBeenCalledWith('/home');
     });
   });
 
   test('should show an error if no saved data is found', async () => {
-    // Modify localStorage to simulate no saved data
     Object.defineProperty(window, 'localStorage', {
       value: {
         getItem: jest.fn().mockReturnValue(null),
@@ -101,10 +92,8 @@ describe('AllSet Component', () => {
 
     const startButton = screen.getByText('Start Swiping!');
 
-    // Simulate button click
     fireEvent.click(startButton);
 
-    // Check if error message is displayed
     expect(screen.getByText('No saved data found'));
   });
 });

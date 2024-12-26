@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -5,7 +6,7 @@ import { useRequestOtpMutation } from '@/generated';
 import Addpassword from './Addpassword';
 import Image from 'next/image';
 
-export const Confirmsignup = () => {
+export const Otp = () => {
   const [requestOtp] = useRequestOtpMutation();
   const [step, setStep] = useState<'signup' | 'confirm'>('confirm');
   const [value, setValue] = useState<string[]>(['', '', '', '']);
@@ -45,7 +46,7 @@ export const Confirmsignup = () => {
   }, [value]);
 
   const handleInputChange = (index: number, newValue: string) => {
-    // newValue.length > 1;
+    newValue.length > 1;
 
     const newValues = [...value];
     newValues[index] = newValue;
@@ -88,7 +89,6 @@ export const Confirmsignup = () => {
                   maxLength={1}
                   value={char}
                   onChange={(e) => handleInputChange(index, e.target.value)}
-                  // onKeyDown={(e) => handleKeyDown(e, index)}
                   className="h-[40px] w-[40px] text-center text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 text-black"
                 />
               ))}
@@ -102,4 +102,4 @@ export const Confirmsignup = () => {
   );
 };
 
-export default Confirmsignup;
+export default Otp;

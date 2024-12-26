@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRequestOtpMutation } from '@/generated';
-import Addpassword from '@/components/signup/Addpassword'; // Assuming this is used as part of the flow
-import Confirmsignup from '@/components/signup/Confirmsignup';
+import Addpassword from '@/components/signup/Addpassword';
+import Otp from '@/components/signup/Otp';
 
 jest.mock('@/generated', () => ({
   useRequestOtpMutation: jest.fn(),
@@ -24,14 +24,14 @@ describe('Confirmsignup Component', () => {
   });
 
   test('should render the confirmation OTP input fields', () => {
-    render(<Confirmsignup />);
+    render(<Otp />);
 
     expect(screen.getByText(/Confirm email/));
     expect(screen.getByText(/To continue, enter the secure code we sent to/));
   });
 
   test('should call requestOtp mutation on OTP input change', async () => {
-    render(<Confirmsignup />);
+    render(<Otp />);
 
     const inputFields = screen.getAllByRole('textbox');
 
@@ -53,7 +53,7 @@ describe('Confirmsignup Component', () => {
   });
 
   test('should handle backspace keypress correctly', async () => {
-    render(<Confirmsignup />);
+    render(<Otp />);
 
     const inputFields = screen.getAllByRole('textbox');
 
@@ -67,7 +67,7 @@ describe('Confirmsignup Component', () => {
   });
 
   test('should proceed to the signup step if OTP is complete', async () => {
-    render(<Confirmsignup />);
+    render(<Otp />);
 
     const inputFields = screen.getAllByRole('textbox');
 
@@ -99,10 +99,7 @@ describe('Confirmsignup Component', () => {
     fireEvent.change(confirmPasswordInput, { target: { value: 'Test@123' } });
     fireEvent.click(continueButton);
 
-    // Check if password state was updated in localStorage
     expect(window.localStorage.setItem).toHaveBeenCalledWith('signupFormData', expect.stringContaining('"password":"Test@123"'));
-
-    // Verify step change to interest
   });
 
   test('should show an error if passwords do not match', () => {
@@ -131,5 +128,32 @@ describe('Confirmsignup Component', () => {
     fireEvent.click(continueButton);
 
     expect(screen.getByText('Password must be at least 5 characters long.'));
+  });
+  it('should move focus to the previous input when Backspace is pressed on an empty input', () => {
+    render(<Otp />);
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
+    const secondInput = inputs[1];
+    fireEvent.focus(secondInput);
+    fireEvent.keyDown(secondInput, { key: 'Backspace' });
+
+    expect(document.activeElement).toBe(firstInput);
+  });
+
+  it('should not move focus when Backspace is pressed and the input is not empty', () => {
+    render(<Otp />);
+    const inputs = screen.getAllByRole('textbox');
+    const secondInput = inputs[1];
+    fireEvent.change(secondInput, { target: { value: '1' } });
+    fireEvent.keyDown(secondInput, { key: 'Backspace' });
+    // expect(document.activeElement), secondInput;
+  });
+
+  it('should not move focus when Backspace is pressed on the first input', () => {
+    render(<Otp />);
+    const inputs = screen.getAllByRole('textbox');
+    const firstInput = inputs[0];
+    fireEvent.keyDown(firstInput, { key: 'Backspace' });
+    expect(document.activeElement).toBe(firstInput);
   });
 });

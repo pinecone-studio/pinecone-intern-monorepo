@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Confirmsignup from './Confirmsignup';
+import Otp from './Otp';
 
 const Signup: React.FC = () => {
   const [step, setStep] = useState<'signup' | 'confirm'>('signup');
@@ -77,7 +77,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
       ) : (
-        step === 'confirm' && <Confirmsignup />
+        step === 'confirm' && <Otp />
       )}
     </div>
   );

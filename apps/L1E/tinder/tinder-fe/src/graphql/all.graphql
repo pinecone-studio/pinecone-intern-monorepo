@@ -29,6 +29,7 @@ mutation RequestOtp($input: RequestOtpInput!) {
   }
 }
 
+
 query GetUserById($userId: ID!) {
   getUserById(userId: $userId) {
     _id
@@ -45,3 +46,25 @@ query GetUserById($userId: ID!) {
     updatedAt
   }
 }
+
+
+mutation login($password: String!, $email: String) {
+  login(password: $password, email: $email) {
+    user {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      createdAt
+      updatedAt
+    }
+    token
+  }
+}
+
