@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetEventByIdQuery } from '@/generated';
+import { useGetEventByIdQuery} from '@/generated';
 import Image from 'next/image';
 import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
@@ -14,10 +14,11 @@ import Link from 'next/link';
 
 interface EventDetailsProps {
   id: string | string[];
+  
 }
 // eslint-disable-next-line no-secrets/no-secrets
 const url = "https://www.google.com/maps/place/Pinecone+Academy/@47.9144636,106.9167269,910m/data=!3m1!1e3!4m6!3m5!1s0x5d969368889d5da1:0x90f77786fc5b1aa2!8m2!3d47.9142841!4d106.9165468!16s%2Fg%2F11g_zk5x0b?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
-export const EventDetails = ({ id }: EventDetailsProps) => {
+export const EventDetails = ({ id  }: EventDetailsProps) => {
   const { data, loading } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
   const router = useRouter();
@@ -36,7 +37,10 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
       router.push(`/signin`);
     }
   };
-
+const discountedPrice=(price:number,discount:number)=>{
+  const disPrice = discount > 0 ? Math.floor(price * (1-discount / 100)) : price
+  return disPrice;
+}
   return (
     <div data-cy="event-details">
       <div className="relative h-[250px] w-full" data-cy="event-details">
@@ -59,7 +63,8 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
         </div>
       </div>
 
-      <div className="flex px-[212px] py-12 max-sm:grid max-sm:px-3 max-sm:gap-3 max-md:grid max-md:px-3 max-md:gap-3 max-lg:grid max-lg:px-3 max-lg:gap-3  max-xl:grid max-xl:px-3 max-xl:gap-3  max-2xl:grid max-2xl:px-3 max-2xl:gap-3">
+      <div className="flex px-[212px] py-12 max-sm:grid max-sm:px-3 max-sm:gap-3 max-md:grid max-md:px-3 max-md:gap-3 max-lg:grid max-lg:px-3 max-lg:gap-3  
+      max-xl:grid max-xl:px-3 max-xl:gap-3  max-2xl:grid max-2xl:px-3 max-2xl:gap-3">
         <div className=" flex-1 grid gap-5 ">
           <div className="flex justify-between ">
             <div className="flex items-center gap-6">
@@ -130,7 +135,9 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                           {item.name} тасалбар ({item.quantity})
                         </p>
                       </div>
-                      <p className="text-[16px] text-white">{item.price.toLocaleString()}₮</p>
+                      <p className="text-[16px] text-white">
+                        {discountedPrice(item.price, eventDetails?.discount)}
+                      </p>
                     </div>
                   </div>
                 );
