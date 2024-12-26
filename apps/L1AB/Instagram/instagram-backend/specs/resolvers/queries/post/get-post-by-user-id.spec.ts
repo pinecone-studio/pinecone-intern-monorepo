@@ -3,7 +3,10 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
   postsModel: {
-    find: jest.fn().mockResolvedValueOnce({ name: 'test' }).mockReturnValueOnce(null),
+    find: jest
+      .fn()
+      .mockReturnValueOnce({ populate: jest.fn().mockReturnValueOnce({ name: 'test' }) })
+      .mockReturnValueOnce({ populate: jest.fn().mockReturnValueOnce(null) }),
   },
 }));
 

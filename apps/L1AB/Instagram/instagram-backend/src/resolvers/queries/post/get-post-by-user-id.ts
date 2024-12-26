@@ -2,7 +2,7 @@ import { Posts, QueryResolvers } from '../../../generated';
 import { postsModel } from '../../../models';
 
 export const getPostByUserId: QueryResolvers['getPostByUserId'] = async (_, { userId }) => {
-  const posts = await postsModel.find({ userId });
+  const posts = await postsModel.find({ userId }).populate('userId');
   if (!posts) {
     throw new Error('Post not found');
   }
