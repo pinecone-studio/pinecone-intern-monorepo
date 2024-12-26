@@ -133,7 +133,7 @@ const PostCard = ({ userName, images, profilePicture, caption, postId, createdAt
             </div>
           </div>
           <div className="flex gap-2">
-            <PostCardLikeSection images={images} caption={caption} profilePicture={profilePicture} userName={userName} postId={postId} userId={userId || ''} />
+            <PostCardLikeSection createdAt={createdAt} images={images} caption={caption} profilePicture={profilePicture} userName={userName} postId={postId} userId={userId || ''} />
           </div>
         </div>
         <div className="py-2 flex flex-col gap-2">

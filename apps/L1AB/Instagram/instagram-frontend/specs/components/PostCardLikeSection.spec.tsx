@@ -3,7 +3,10 @@ import PostCardLikeSection from '@/components/PostCardLikeSection';
 import { CreateLikeDocument, CreateSaveDocument, GetLikesByPostIdDocument, GetSavedByPostIdDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
-
+jest.mock('date-fns', () => ({
+  ...jest.requireActual('date-fns'),
+  formatDistanceToNow: jest.fn(),
+}));
 export const PostCardSampleProps = {
   postId: '2',
   userId: '11',
@@ -11,6 +14,7 @@ export const PostCardSampleProps = {
   caption: 'Test Caption',
   userName: 'testuser',
   profilePicture: '/profile.jpg',
+  createdAt: '2024-11-19T08:18:14.047+00:00',
 };
 
 const PostCardSamplePropsWithoutUserId = {

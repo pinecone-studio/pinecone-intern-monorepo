@@ -21,7 +21,7 @@ const EarlierNotifications = ({ earlierNotifications }: PropsType) => {
                   <div key={index} className="h-[44px] w-full bg-white  dark:bg-black flex gap-3">
                     <div className="h-full w-[44px] rounded-full relative">
                       <div>
-                        <Image className="rounded-full" alt="no pic" src={el.userId.profilePicture} fill />
+                        <Image className="rounded-full object-cover" alt="no pic" src={el.userId.profilePicture} fill />
                       </div>
                     </div>
                     <div className="flex w-3/5 gap-1 h-full items-center">
@@ -38,7 +38,7 @@ const EarlierNotifications = ({ earlierNotifications }: PropsType) => {
                       </div>
                       <div className="text-sm text-gray-500">{timeAgoCompact(createdAt)}</div>
                     </div>
-                    <div className="w-[44px] relative">{el?.postId?.images?.[0] && <Image src={el.postId.images[0]} alt="no pic" fill className="rounded-sm" />}</div>
+                    <div className="w-[44px] relative">{el?.postId?.images?.[0] && <Image src={el.postId.images[0]} alt="no pic" fill className="rounded-sm object-cover" />}</div>
                   </div>
                 );
               } else
@@ -46,7 +46,7 @@ const EarlierNotifications = ({ earlierNotifications }: PropsType) => {
                   <div key={index} className="h-[44px] w-full bg-white dark:bg-black flex gap-3">
                     <div className="h-full w-[44px] rounded-full relative">
                       <div>
-                        <Image className="rounded-full" alt="no pic" src={el.userId.profilePicture} fill />
+                        <Image className="rounded-full object-cover" alt="no pic" src={el.userId.profilePicture} fill />
                       </div>
                     </div>
                     <div className="flex w-fit gap-1 h-full items-center">

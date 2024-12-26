@@ -7,7 +7,9 @@ import { ProfilePageNoPostYet } from './ProfilePageNoPostYet';
 import ProfilePagePrivate from './ProfilePagePrivate';
 import { useGetAllSavedPostsQuery, useGetCommentsByPostIdQuery, useGetLikesByPostIdQuery } from '@/generated';
 import { Heart, MessageCircle } from 'lucide-react';
-
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import MyPostDetail from './MyPostDetail';
+import { DialogContent } from '@mui/material';
 export const ReactionContainer = ({ postId }: { postId: string }) => {
   const { data: likedata } = useGetLikesByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId;
@@ -41,7 +43,6 @@ const ProfilePostsSection = ({ userPosts, profileUser, isFollow, user }: any) =>
   const savedPosts = data?.getAllSavedPosts;
 
   const renderPosts = () => {
-    console.log(userPosts);
     if (type === 'posts' && userPosts?.length > 0) {
       return (
         <div className={styles.postsContainer}>
@@ -49,14 +50,27 @@ const ProfilePostsSection = ({ userPosts, profileUser, isFollow, user }: any) =>
             .slice()
             .reverse()
             .map((post: any, i: any) => {
-              console.log(post.images[0]);
-
               return (
-                <div key={i} className={styles.imageContainer}>
-                  <div className={styles.opacityContainer}></div>
-                  <ReactionContainer postId={post._id} />
-                  <Image src={post.images[0]} objectFit="cover" fill alt="post" />
-                </div>
+                <Dialog key={i}>
+                  <DialogTrigger>
+                    <div className={styles.imageContainer}>
+                      <div className={styles.opacityContainer}></div>
+                      <ReactionContainer postId={post._id} />
+                      <Image src={post.images[0]} objectFit="cover" fill alt="post" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-[90vw] w-fit bg-transparent border-none p-0">
+                    <MyPostDetail
+                      postimages={post.images}
+                      postcaption={post.caption}
+                      userProfile={post.userId.profilePicture}
+                      userName={post.userId.username}
+                      postId={post._id}
+                      userId={post.userId._id}
+                      createdAt={post.createdAt}
+                    />
+                  </DialogContent>
+                </Dialog>
               );
             })}
         </div>

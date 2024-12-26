@@ -41,7 +41,9 @@ query GetPostByUserId($userId: ID!) {
     createdAt
     updatedAt
     userId {
+      username
       _id
+      profilePicture
     }
   }
 }
