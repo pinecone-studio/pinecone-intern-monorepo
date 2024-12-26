@@ -35,7 +35,7 @@ export const MoreButton = ({ isOpen, svgControls }: MenuProps) => {
           </DropdownMenuItem>
           <DropdownMenuSeparator className="text-gray-700" />
           <DropdownMenuItem>
-            <LogoutDialog buttonClassName=" !py-2 !font-light !bg-transparent !w-full !flex !justify-start !text-[14px] " />
+            <LogoutDialog buttonClassName="!py-2 !font-light !bg-transparent !w-full !flex !justify-start !text-[14px] " />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
