@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { getUserById } from '../../../src/resolvers/queries';
 
 jest.mock('../../../src/models/user/user.model.ts', () => ({
   userModel: {
