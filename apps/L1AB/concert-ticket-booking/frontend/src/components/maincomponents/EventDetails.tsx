@@ -19,8 +19,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   const eventDetails = data?.getEventById;
   const router = useRouter();
   const path = usePathname();
-  const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path.startsWith(eventPath));
-  // eslint-disable-line no-secrets/no-secrets
+  const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path?.startsWith(eventPath));
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }
@@ -100,7 +99,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 </div>
               </>
             ) : (
-              <div className="h-[500px] w-[600px] m-auto relative max-sm:h-[300px] max-xl:w-[400px] max-xl:m-auto  ">
+              <div className="h-[500px] w-[600px] m-auto relative max-sm:h-[300px] max-sm:w-full max-xl:w-[400px] max-xl:m-auto  ">
                 <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
               </div>
             )}

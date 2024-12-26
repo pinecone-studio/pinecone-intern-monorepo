@@ -9,6 +9,7 @@ export const mocks = [
     result: {
       data: {
         getEventById: {
+          __typename: 'Event',
           _id: '1',
           name: 'Rock Concert',
           artistName: ['Band A', 'Band B'],
@@ -37,6 +38,7 @@ export const mocks = [
       data: {
         getAllEvents: [
           {
+            __typename: 'Event',
             _id: '2',
             name: 'Event 1',
             eventDate: '2022-01-01',
@@ -56,6 +58,7 @@ export const mocks = [
             updatedAt: '2024-11-14T06:24:52.763Z',
           },
           {
+            __typename: 'Event',
             _id: '3',
             name: 'Event 1',
             eventDate: '2022-01-01',
@@ -75,6 +78,7 @@ export const mocks = [
           },
 
           {
+            __typename: 'Event',
             _id: '4',
             name: 'Event 1',
             eventDate: '2022-01-01',

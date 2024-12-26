@@ -58,7 +58,7 @@ const SignIn: React.FC<SignInProps> = ({ header, recoveryLinkHref, recoveryLinkT
     <Container>
       <div className="relative h-full w-full">
         <div className="absolute inset-0">
-          <Image src="/authBackground.png" alt="Background Image" layout="fill" objectFit="cover" className="transition-opacity duration-300" style={{ opacity: theme === 'dark' ? 1 : 0 }} />
+          <Image src="/authBackground.png" alt="Background Image" priority layout="fill" objectFit="cover" className="transition-opacity duration-300" style={{ opacity: theme === 'dark' ? 1 : 0 }} />
         </div>
         <div className="text-amber-50 flex items-center justify-center h-[48rem] max-sm:mx-3" data-cy="SignIn-Page">
           <form onSubmit={handleSubmit} className="rounded-2xl z-10 dark:border-slate-500 bg-[#f0efef] dark:border-[1px] dark:bg-black flex-col py-8 px-12 gap-6">

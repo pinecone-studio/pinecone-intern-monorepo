@@ -49,7 +49,6 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
     if (emailError) newErrors.email = emailError;
     const phoneError = validatePhone(formData.phone);
     if (phoneError) newErrors.phone = phoneError;
-    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   const handleUpdateBooking = async () => {
