@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 
 interface LogoutDialogProps {
   buttonClassName?: string;
+  onClick?: () => void;
 }
 
 const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
