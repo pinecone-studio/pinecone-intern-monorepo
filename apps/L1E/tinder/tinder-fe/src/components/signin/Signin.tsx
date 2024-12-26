@@ -56,7 +56,7 @@ const Signin = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex w-[350px] justify-between">
-              <div className="font-medium text-sm">Passworda</div>
+              <div className="font-medium text-sm">Password</div>
               <Link href="forgetpassword" className="font-normal text-sm text-[#2563EB]">
                 Forget password ?
               </Link>
