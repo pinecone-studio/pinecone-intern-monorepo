@@ -76,11 +76,14 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 <p className="root:text-black dark:text-white opacity-80">{eventDetails?.eventTime}</p>
               </div>
             </div>
-            <Link href={url}></Link>
-            <div className="flex gap-2 dark:text-[#A1A1AA] items-center">
-              <IoLocationOutline className="w-5 h-5" />
-              <p className="w-full dark:text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
-            </div>
+            <Link target="_blank" rel="noopener noreferrer" href={url} className='cursor-pointer'>
+              <div className="flex gap-2 dark:text-[#A1A1AA] items-center">
+                 <IoLocationOutline className="w-5 h-5" />
+                 <p className="w-full dark:text-[#FAFAFA] text-[16px] underline underline-offset-2">
+                   {eventDetails?.location}
+                 </p>
+              </div>
+            </Link>
           </div>
           <div className="h-fit grid gap-2 ">
             <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Special Artist</p>
