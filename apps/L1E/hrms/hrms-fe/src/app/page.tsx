@@ -1,4 +1,5 @@
-'use client';
+import React from 'react';
+
 
 import { DateRangePicker } from '@/components/DateRangePicker';
 import RequestForm from '@/components/RequestForm';
@@ -13,4 +14,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
