@@ -61,7 +61,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["hrms-backend"],
+          "groups": ["hrms-backend-1e"],
           "env": "dev"
         }
       }
@@ -71,7 +71,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["hrms-backend"],
+          "groups": ["hrms-backend-1e"],
           "env": "test"
         }
       }
@@ -81,7 +81,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["hrms-backend"],
+          "groups": ["hrms-backend-1e"],
           "env": "prod"
         }
       }
@@ -146,26 +146,35 @@
     },
     "deploy-testing": {
       "executor": "nx:run-commands",
+
       "options": {
         "commands": [
           "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_sfGcoqUFOK9SkwaIMHOr2ClwdN3V -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+
           "vercel build --prod --token=$VERCEL_TOKEN",
+
           "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_sfGcoqUFOK9SkwaIMHOr2ClwdN3V -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
+
         "parallel": false
       },
+
       "dependsOn": [
         {
           "target": "clean"
         },
+
         {
           "target": "get-secrets:testing"
         },
+
         {
           "target": "export-env"
         },
+
         {
           "target": "codegen",
+
           "params": "forward"
         }
       ]

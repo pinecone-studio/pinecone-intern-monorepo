@@ -8,7 +8,7 @@ export const HotelDetailsImages = ({ images }: { images: string[] }) => {
     <div data-testid="HotelDetailsImages" className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Images</h1>
-        <UploadPhoto />
+        <UploadPhoto images={images} />
       </div>
       {images.length > 0 ? (
         <ImagesCarousel images={images} />

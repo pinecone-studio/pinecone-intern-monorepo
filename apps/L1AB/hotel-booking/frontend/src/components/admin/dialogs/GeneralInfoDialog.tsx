@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -44,12 +43,17 @@ export const GeneralInfoDialog = () => {
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex flex-col gap-4 mb-5">
             <Label htmlFor="username" className="text-left">
               Price per night
             </Label>
-            <Input id="Price per night" value={addRoomForm.values.price.toLocaleString()} onChange={addRoomForm.handleChange} onBlur={addRoomForm.handleBlur} />
+            <Input id="price" value={addRoomForm.values.price.toLocaleString()} onChange={addRoomForm.handleChange} onBlur={addRoomForm.handleBlur} />
+          </div>
+          <div className="flex flex-col gap-4 mb-5">
+            <Label htmlFor="username" className="text-left">
+              Room Number
+            </Label>
+            <Input id="roomNumber" value={addRoomForm.values.roomNumber} onChange={addRoomForm.handleChange} onBlur={addRoomForm.handleBlur} />
           </div>
 
           <div className="flex flex-col gap-4 mb-5">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -21,13 +22,11 @@ const UserInformation = () => {
     },
   });
 
-  // Helper function to get saved data from localStorage
   const getSavedData = (): any => {
     const savedData = localStorage.getItem('signupFormData');
     return savedData ? JSON.parse(savedData) : {};
   };
 
-  // Prefill form fields based on saved data
   const prefillForm = (data: any) => {
     const fields: { name: 'name' | 'bio' | 'hobby' | 'profession' | 'job'; key: string }[] = [
       { name: 'name', key: 'Username' },
@@ -45,16 +44,15 @@ const UserInformation = () => {
   useEffect(() => {
     const savedData = getSavedData();
     prefillForm(savedData);
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
-  // Handle form submission: Separate into smaller functions to reduce complexity
   const saveFormDataToLocalStorage = (data: any) => {
     const savedData = getSavedData();
     const updatedData = { ...savedData, ...data };
     localStorage.setItem('signupFormData', JSON.stringify(updatedData));
   };
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: unknown) => {
     saveFormDataToLocalStorage(data);
     setStep('image');
   };
@@ -62,7 +60,7 @@ const UserInformation = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between items-center">
       {step === 'user' && (
-        <div className="w-screen h-screen flex justify-center mt-[80px]">
+        <div className="w-screen h-screen flex items-center justify-center">
           <div className="w-[400px] gap-[24px] flex flex-col justify-center items-center">
             <Logo />
             <Title text="Your Details" desc="Please provide the following information to help us get to know you better." />
@@ -88,7 +86,7 @@ const UserInformation = () => {
                     <FormItem>
                       <FormLabel>Bio</FormLabel>
                       <FormControl>
-                        <Input placeholder="Tell us about yourself" {...field} className="h-[80px] text-start flex items-start justify-start" />
+                        <Input placeholder="Tell us about yourself" {...field} className="h-[80px] pb-12 flex items-start justify-start" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

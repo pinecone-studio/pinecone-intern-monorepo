@@ -1,8 +1,8 @@
 import LoaderSpinner from '@/components/main/LoaderSpinner';
 import { render, screen } from '@testing-library/react';
 
-describe('Loader', () => {
-  it('should render nothing ', () => {
+describe('LoaderSpinner', () => {
+  it('should render return', () => {
     render(<LoaderSpinner />);
     expect(screen.getByText('Please Wait...'));
   });

@@ -4,9 +4,14 @@ import { render } from '@testing-library/react';
 import { HotelDetails } from '@/components/admin';
 import { useAdmin } from '@/components/providers/AdminProvider';
 
-// Mocking AdminProvider and other dependencies
 jest.mock('@/components/providers/AdminProvider', () => ({
   useAdmin: jest.fn(),
+}));
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
 }));
 
 describe('HotelDetails Component', () => {
@@ -19,6 +24,21 @@ describe('HotelDetails Component', () => {
         rating: 0,
         description: '',
         images: [],
+      },
+      handleChange: jest.fn(),
+      handleBlur: jest.fn(),
+      setFieldValue: jest.fn(),
+      handleSubmit: jest.fn(),
+      errors: {},
+      touched: {},
+    },
+    addRoomForm: {
+      values: {
+        name: '',
+        description: '',
+        roomNumber: '',
+        roomType: '',
+        price: 0,
       },
       handleChange: jest.fn(),
       handleBlur: jest.fn(),

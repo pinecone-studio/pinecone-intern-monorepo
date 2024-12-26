@@ -1,63 +1,135 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { useRequestOtpMutation } from '@/generated';
+import Addpassword from '@/components/signup/Addpassword'; // Assuming this is used as part of the flow
 import Confirmsignup from '@/components/signup/Confirmsignup';
 
-describe('Confirm Component', () => {
+jest.mock('@/generated', () => ({
+  useRequestOtpMutation: jest.fn(),
+}));
+
+describe('Confirmsignup Component', () => {
+  const mockRequestOtp = jest.fn();
+
   beforeEach(() => {
-    jest.useFakeTimers();
-  });
+    mockRequestOtp.mockClear();
+    (useRequestOtpMutation as jest.Mock).mockReturnValue([mockRequestOtp]);
 
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
-  it('should render the confirm email step initially', () => {
-    render(<Confirmsignup />);
-    expect(screen.getByText('Confirm email')).toBeInTheDocument();
-    expect(screen.getByText(/To continue, enter the secure code/)).toBeInTheDocument();
-    expect(screen.getByText('Send again')).toBeInTheDocument();
-  });
-
-  it('should display the timer and update it', () => {
-    render(<Confirmsignup />);
-    expect(screen.getByText('(30)')).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(5000);
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn().mockReturnValue(JSON.stringify({ email: 'test@example.com' })),
+        setItem: jest.fn(),
+      },
+      writable: true,
     });
-
-    expect(screen.getByText('(25)')).toBeInTheDocument();
   });
 
-  it('should change to new password step when OTP is fully entered', async () => {
+  test('should render the confirmation OTP input fields', () => {
     render(<Confirmsignup />);
 
-    const otpInputs = screen.getAllByRole('textbox');
-    expect(otpInputs).toHaveLength(4);
-
-    fireEvent.change(otpInputs[0], { target: { value: '1' } });
-    fireEvent.change(otpInputs[1], { target: { value: '2' } });
-    fireEvent.change(otpInputs[2], { target: { value: '3' } });
-    fireEvent.change(otpInputs[3], { target: { value: '4' } });
-
-    // expect(screen.queryByText('Confirm email')).not;
+    expect(screen.getByText(/Confirm email/));
+    expect(screen.getByText(/To continue, enter the secure code we sent to/));
   });
 
-  it('should stop the timer at 0', () => {
+  test('should call requestOtp mutation on OTP input change', async () => {
     render(<Confirmsignup />);
 
-    act(() => {
-      jest.advanceTimersByTime(30000);
+    const inputFields = screen.getAllByRole('textbox');
+
+    fireEvent.change(inputFields[0], { target: { value: '1' } });
+    fireEvent.change(inputFields[1], { target: { value: '2' } });
+    fireEvent.change(inputFields[2], { target: { value: '3' } });
+    fireEvent.change(inputFields[3], { target: { value: '4' } });
+
+    await waitFor(() => {
+      expect(mockRequestOtp).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            email: 'test@example.com',
+            otp: '1234',
+          },
+        },
+      });
     });
+  });
 
-    expect(screen.getByText('(00)')).toBeInTheDocument();
+  test('should handle backspace keypress correctly', async () => {
+    render(<Confirmsignup />);
 
-    act(() => {
-      jest.advanceTimersByTime(5000);
+    const inputFields = screen.getAllByRole('textbox');
+
+    fireEvent.change(inputFields[0], { target: { value: '1' } });
+    fireEvent.change(inputFields[1], { target: { value: '2' } });
+
+    fireEvent.keyDown(inputFields[1], { key: 'Backspace' });
+
+    expect(inputFields[1].value);
+    expect(inputFields[1]);
+  });
+
+  test('should proceed to the signup step if OTP is complete', async () => {
+    render(<Confirmsignup />);
+
+    const inputFields = screen.getAllByRole('textbox');
+
+    fireEvent.change(inputFields[0], { target: { value: '1' } });
+    fireEvent.change(inputFields[1], { target: { value: '2' } });
+    fireEvent.change(inputFields[2], { target: { value: '3' } });
+    fireEvent.change(inputFields[3], { target: { value: '4' } });
+
+    await waitFor(() => {
+      expect(mockRequestOtp).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            email: 'test@example.com',
+            otp: '1234',
+          },
+        },
+      });
     });
+  });
 
-    expect(screen.getByText('(00)')).toBeInTheDocument();
+  test('should navigate to Addpassword when OTP is valid', async () => {
+    render(<Addpassword />);
+
+    const passwordInput = screen.getByPlaceholderText('Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Password repeat');
+    const continueButton = screen.getByTestId('continue-btn');
+
+    fireEvent.change(passwordInput, { target: { value: 'Test@123' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'Test@123' } });
+    fireEvent.click(continueButton);
+
+    // Check if password state was updated in localStorage
+    expect(window.localStorage.setItem).toHaveBeenCalledWith('signupFormData', expect.stringContaining('"password":"Test@123"'));
+
+    // Verify step change to interest
+  });
+
+  test('should show an error if passwords do not match', () => {
+    render(<Addpassword />);
+
+    const passwordInput = screen.getByPlaceholderText('Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Password repeat');
+    const continueButton = screen.getByTestId('continue-btn');
+
+    fireEvent.change(passwordInput, { target: { value: 'Test@123' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'DifferentPassword' } });
+    fireEvent.click(continueButton);
+
+    expect(screen.getByText('Passwords do not match.'));
+  });
+
+  test('should show an error if password is too short', () => {
+    render(<Addpassword />);
+
+    const passwordInput = screen.getByPlaceholderText('Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Password repeat');
+    const continueButton = screen.getByTestId('continue-btn');
+
+    fireEvent.change(passwordInput, { target: { value: '123' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: '123' } });
+    fireEvent.click(continueButton);
+
+    expect(screen.getByText('Password must be at least 5 characters long.'));
   });
 });

@@ -12,11 +12,11 @@ type DetailsContainerProps = {
 } & PropsWithChildren;
 export const DetailsContainer = ({ children, name }: DetailsContainerProps) => {
   const pathname = usePathname();
-  const { addHotelForm } = useAdmin();
+  const { addHotelForm, addRoomForm } = useAdmin();
   const pathnames = (pathname || '').split('/').filter((path) => path);
   return (
     <div data-testid="DetailsContainer" className="max-w-screen-xl m-auto">
-      <form onSubmit={addHotelForm.handleSubmit}>
+      <form onSubmit={pathnames.length === 3 ? addHotelForm.handleSubmit : addRoomForm.handleSubmit}>
         <div className="py-4 flex justify-between">
           <div className="flex gap-4 items-center">
             <Link href={'/' + pathnames.slice(0, -1).join('/')}>
@@ -28,20 +28,34 @@ export const DetailsContainer = ({ children, name }: DetailsContainerProps) => {
               {name}
             </span>
           </div>
-          <div>
-            <Button
-              data-testid="save-button"
-              variant="outline"
-              type="submit"
-              className={`bg-blue-600 hover:opacity-50 text-white ${!addHotelForm.isValid ? 'opacity-50 cursor-not-allowed' : ''}`}
-              disabled={!addHotelForm.isValid || addHotelForm.isSubmitting}
-            >
-              Save
-            </Button>
-          </div>
+          <div>{saveButton(pathnames, addHotelForm, addRoomForm)}</div>
         </div>
         <div className="flex w-full gap-4 mb-4">{children}</div>
       </form>
     </div>
+  );
+};
+const saveButton = (pathnames: string[], addHotelForm: any, addRoomForm: any) => {
+  if (pathnames.length === 3) {
+    return getHotelSaveButton(addHotelForm);
+  } else if (pathnames.length === 4) {
+    return getRoomSaveButton(addRoomForm);
+  }
+  return null;
+};
+
+const getHotelSaveButton = (addHotelForm: any) => {
+  return (
+    <Button data-testid="save-button" variant="outline" type="submit" className={`bg-blue-600 hover:opacity-50 text-white`} disabled={!addHotelForm.isValid || !addHotelForm.dirty}>
+      Save
+    </Button>
+  );
+};
+
+const getRoomSaveButton = (addRoomForm: any) => {
+  return (
+    <Button data-testid="save-button" variant="outline" type="submit" className={`bg-blue-600 hover:opacity-50 text-white`} disabled={!addRoomForm.isValid || !addRoomForm.dirty}>
+      Save
+    </Button>
   );
 };

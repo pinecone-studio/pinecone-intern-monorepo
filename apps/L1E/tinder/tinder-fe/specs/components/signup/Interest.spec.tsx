@@ -16,8 +16,4 @@ describe('Interest page component', () => {
     fireEvent.keyDown(getByTestId('male'), { key: 'Enter' });
     fireEvent.click(getByTestId('interest'));
   });
-  // it('should handlenext', () => {
-  //   const { getByTestId } = render(<InterestSelect />);
-  //   fireEvent.click(getByTestId('interest'));
-  // });
 });

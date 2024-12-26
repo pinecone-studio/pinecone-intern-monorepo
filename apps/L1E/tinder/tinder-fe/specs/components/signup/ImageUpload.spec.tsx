@@ -1,10 +1,16 @@
 import { ImageUpload } from '@/components/signup/ImageUpload';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { MockedProvider } from '@apollo/client/testing';
 
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => <img {...props} />,
+}));
+
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useRouter: jest.fn(),
 }));
 
 describe('ImageUpload Component', () => {
@@ -98,5 +104,24 @@ describe('ImageUpload Component', () => {
 
     const uploadButton = screen.getByTestId('create');
     fireEvent.click(uploadButton);
+  });
+  it('navigates to the detail step when Next is clicked and age is provided', async () => {
+    render(
+      <MockedProvider mocks={[]}>
+        <ImageUpload />
+      </MockedProvider>
+    );
+
+    const input = screen.getByTestId('addinput');
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: ['1', '2'] } });
+    });
+
+    const nextButton = screen.getByText('Upload');
+
+    await act(async () => {
+      fireEvent.click(nextButton);
+    });
   });
 });

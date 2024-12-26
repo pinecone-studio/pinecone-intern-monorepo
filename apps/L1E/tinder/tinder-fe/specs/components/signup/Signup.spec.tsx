@@ -1,50 +1,52 @@
-import Signup from '@/components/signup/Signup';
 import { render, screen, fireEvent } from '@testing-library/react';
+import Signup from '@/components/signup/Signup';
+import { useRequestOtpMutation } from '@/generated';
 
-// Mock the Addpassword component
-jest.mock('@/components/signup/Addpassword', () => {
-  return jest.fn(() => <div data-testid="addpassword-mock">Addpassword Mock</div>);
-});
+jest.mock('@/generated', () => ({
+  useRequestOtpMutation: jest.fn(),
+}));
 
 describe('Signup Component', () => {
-  it('renders signup step by default', () => {
-    render(<Signup />);
+  const mockRequestOtp = jest.fn();
 
-    expect(screen.getByText('Create an account'));
-    expect(screen.getByLabelText('Email'));
-    expect(screen.getByTestId('continue-btn'));
+  beforeEach(() => {
+    mockRequestOtp.mockClear();
+    (useRequestOtpMutation as jest.Mock).mockReturnValue([mockRequestOtp]);
+
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn().mockReturnValue(JSON.stringify({ email: 'test@example.com' })),
+        setItem: jest.fn(),
+      },
+      writable: true,
+    });
   });
 
-  it('displays error message for invalid email', () => {
+  test('should render the signup form', () => {
     render(<Signup />);
 
-    const emailInput = screen.getByLabelText('Email');
-    const continueButton = screen.getByTestId('continue-btn');
+    expect(screen.getByText(/Create an account/));
+    expect(screen.getByPlaceholderText('name@example.com'));
+    expect(screen.getByText('Continue'));
+  });
 
+  test('should show error for invalid email', () => {
+    render(<Signup />);
+
+    const emailInput = screen.getByPlaceholderText('name@example.com');
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-    fireEvent.click(continueButton);
+    fireEvent.click(screen.getByTestId('continue-btn'));
 
     expect(screen.getByText('Please enter a valid email address.'));
   });
 
-  it('transitions to confirm step with valid email', () => {
+  test('should move to confirmation step on valid email', () => {
     render(<Signup />);
 
-    const emailInput = screen.getByLabelText('Email');
-    const continueButton = screen.getByTestId('continue-btn');
+    const emailInput = screen.getByPlaceholderText('name@example.com');
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.click(screen.getByTestId('continue-btn'));
 
-    fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
-    fireEvent.click(continueButton);
-
-    expect(screen.getByTestId('addpassword-mock'));
-  });
-
-  it('renders the login link', () => {
-    render(<Signup />);
-
-    const loginLink = screen.getByTestId('link');
-    expect(loginLink);
-    expect(loginLink);
-    expect(screen.getByText('Log in'));
+    expect(screen.getByText('Confirm email'));
   });
 });

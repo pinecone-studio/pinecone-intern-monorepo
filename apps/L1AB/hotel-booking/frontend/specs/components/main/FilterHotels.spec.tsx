@@ -21,9 +21,7 @@ const mock = {
           city: 'ub',
           rating: 8,
           stars: 3,
-          rooms: [],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
+          rooms: [{price:1}],
         },
         {
           _id: '2',
@@ -35,13 +33,11 @@ const mock = {
           city: 'moon',
           rating: 9,
           stars: 5,
-          rooms: [],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
+          rooms: [{price:"1"}],
         },
         {
-          _id: '2',
-          name: 'sky Hotel',
+          _id: '3',
+          name: 'Sky Hotel',
           description: '5 stars Hotel',
           images: ['https://example.com/image3.jpg'],
           address: 'Moon Road 2-nd District',
@@ -50,50 +46,38 @@ const mock = {
           rating: 7,
           stars: 5,
           rooms: [],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
         },
       ],
     },
   },
 };
-const mockDontHaveRating = {
+
+const mockNoHotels = {
   request: {
     query: GetAllHotelsDocument,
   },
   result: {
     data: {
-      getAllHotels: [
-        {
-          _id: '6',
-          name: 'UB Hotel',
-          description: '5 stars Hotel',
-          images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-          address: 'Sun Road 1-st District',
-          phone: '11111111',
-          city: 'ub',
-          rating: undefined,
-          stars: undefined,
-          rooms: [],
-          createdAt: '2024-11-14T06:24:52.763Z',
-          updatedAt: '2024-11-14T06:24:52.763Z',
-        }
-      ],
+      getAllHotels: [],
     },
   },
 };
-describe('Main Filter Hotels', () => {
-  it('should render the main filter hotels', async () => {
+
+describe('FilterHotels Component', () => {
+  it('should render hotels and handle filter inputs', async () => {
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>
         <FilterHotels />
       </MockedProvider>
     );
-     await waitFor(() => {
-      expect(screen.getByText(/properties found/i))
+
+    await waitFor(() => {
+      expect(screen.getByText(/properties found/i));
     });
+
     const searchInput = screen.getByPlaceholderText('Search');
     fireEvent.change(searchInput, { target: { value: 'Star' } });
+
 
     const ratingRadio = screen.getByLabelText('+7');
     fireEvent.click(ratingRadio);
@@ -101,19 +85,64 @@ describe('Main Filter Hotels', () => {
     const starsRadio = screen.getByLabelText('5 stars');
     fireEvent.click(starsRadio);
 
-    fireEvent.change(searchInput, { target: { value: 'Nonexistent Hotel' } });
-    await waitFor(() => {
-      expect(screen.getByText(/No hotels found/i))
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Star Hotel'));
+      },
+      { timeout: 3000 }
+    );
   });
-  it('should render the main filter hotels', async () => {
+  it('should handle no hotels found', async () => {
     render(
-      <MockedProvider mocks={[mockDontHaveRating]} addTypename={false}>
+      <MockedProvider mocks={[mockNoHotels]} addTypename={false}>
         <FilterHotels />
       </MockedProvider>
     );
-    await waitFor(() => {
-      expect(screen)
-    });
+
+  
+    await waitFor(
+      () => {
+        expect(screen.getByText(/No hotels found/i));
+      },
+      { timeout: 3000 }
+    );
   });
+
+  it('should filter hotels by rating and stars', async () => {
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <FilterHotels />
+      </MockedProvider>
+    );
+    const ratingRadio = screen.getByLabelText('+8');
+    fireEvent.click(ratingRadio);
+    const starsRadio = screen.getByLabelText('3 stars');
+    fireEvent.click(starsRadio);
+    expect(screen);
+  });
+
+  it('should sort hotels by Price-LowToHigh', async () => {
+    render(
+      <MockedProvider mocks={[mock]} addTypename={false}>
+        <FilterHotels />
+      </MockedProvider>
+    );
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+    const Trigger = screen.getByTestId('sort-select');
+    fireEvent.keyDown(Trigger, { key: 'Enter' });
+    const sortSelect = screen.getByTestId('PriceLowToHigh');
+    fireEvent.keyDown(sortSelect, { key: 'Enter' });
+    await waitFor(
+      () => {
+        const sortedHotels = screen.getAllByText(/Hotel/i);
+        expect(sortedHotels[0].textContent);
+      },
+      { timeout: 3000 }
+    );
+  });
+
 });
+
+

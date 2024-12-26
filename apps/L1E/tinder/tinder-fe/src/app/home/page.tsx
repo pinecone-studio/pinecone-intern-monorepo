@@ -1,9 +1,9 @@
-import { ImageUpload } from '@/components/signup/ImageUpload';
+import Home from '@/components/home/Home';
 
 const page = () => {
   return (
     <div>
-      <ImageUpload />
+      <Home />
     </div>
   );
 };

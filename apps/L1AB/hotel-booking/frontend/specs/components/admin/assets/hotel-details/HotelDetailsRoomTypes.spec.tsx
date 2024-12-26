@@ -7,6 +7,12 @@ jest.mock('@/components/providers/AdminProvider', () => ({
   useAdmin: jest.fn(),
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
 describe('HotelDetailsRoomTypes', () => {
   const mockAdminProvider = {
     hotelData: {
@@ -66,10 +72,14 @@ describe('HotelDetailsRoomTypes', () => {
     fireEvent.keyDown(screen.getByText('1 Bed'), { key: 'Enter' });
 
     await waitFor(() => {
-      expect(screen.queryByTestId('room-item-1'));
+      const hotel = screen.getByTestId('room-item-1');
+      expect(hotel);
+      fireEvent.click(hotel);
     });
   });
   it('displays a fallback message if no rooms are available', async () => {
+    (useAdmin as jest.Mock).mockReturnValue(mockAdminProvider);
+
     mockAdminProvider.hotelData = {
       getHotelById: {
         _id: '',

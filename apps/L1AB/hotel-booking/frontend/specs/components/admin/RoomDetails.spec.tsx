@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 import { RoomDetails } from '@/components/admin';
 import { ReactNode } from 'react';
 import { useAdmin } from '@/components/providers/AdminProvider';
+import { GetAllBookingsDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
 
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(() => ({ room: '11' })),
@@ -19,6 +21,27 @@ jest.mock('@/components/admin/assets', () => ({
   DetailsCard: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
+const mock = {
+  request: {
+    query: GetAllBookingsDocument,
+  },
+  result: {
+    data: {
+      getAllBookings: [
+        {
+          _id: '1',
+          hotelId: '1',
+          roomId: '1',
+          userId: '1',
+          checkIn: '2024-11-12',
+          checkOut: '2024-11-14',
+          createdAt: '2024-11-14T06:24:52.763Z',
+          updatedAt: '2024-11-14T06:24:52.763Z',
+        },
+      ],
+    },
+  },
+};
 describe('Admin Room Details', () => {
   const mockAdminProvider = {
     addHotelForm: {
@@ -101,6 +124,10 @@ describe('Admin Room Details', () => {
   });
 
   it('should render the admin room details', () => {
-    render(<RoomDetails />);
+    render(
+      <MockedProvider mocks={[mock]}>
+        <RoomDetails />
+      </MockedProvider>
+    );
   });
 });

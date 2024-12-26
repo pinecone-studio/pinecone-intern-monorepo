@@ -1,9 +1,9 @@
-import Main from '@/components/home/Main';
+import Home from '@/components/home/Home';
 import { render, screen } from '@testing-library/react';
 
-describe('Main', () => {
+describe('Home', () => {
   it('should render return', () => {
-    render(<Main />);
+    render(<Home />);
     expect(screen.getByText('Main'));
   });
 });

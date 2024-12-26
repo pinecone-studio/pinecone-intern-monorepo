@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useAdmin } from '../providers/AdminProvider';
 import { Plus } from 'lucide-react';
 
-export const UploadPhoto = () => {
+export const UploadPhoto = ({ images }: { images: string[] }) => {
   const { addHotelForm } = useAdmin();
   const [isOpen, setIsOpen] = useState(false);
   const handleOnSuccess = (response: any) => {
@@ -35,7 +35,7 @@ export const UploadPhoto = () => {
               <p className="text-black text-sm">Drag or Upload Photo</p>
             </div>
           </CldUploadButton>
-          {addHotelForm.values.images.map((url, index) => (
+          {images?.map((url, index) => (
             <CldImage
               key={index}
               className="object-cover mt-2 object-center min-w-1/2 max-h-[310px] rounded-lg border border-gray-200"

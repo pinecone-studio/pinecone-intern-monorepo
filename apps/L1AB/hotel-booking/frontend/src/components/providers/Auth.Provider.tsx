@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       },
     });
   };
-  console.log(user);
   const signout = () => {
     localStorage.removeItem('token');
     setUser(null);

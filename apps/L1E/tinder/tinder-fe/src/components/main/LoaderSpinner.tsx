@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 'use client';
 
 import { motion } from 'framer-motion';

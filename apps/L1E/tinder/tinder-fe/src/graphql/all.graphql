@@ -10,6 +10,21 @@ mutation CreateUser($input: RegisterInput!) {
   createUser(input: $input) {
     _id
     email
+    username
+    interest
     password
+    hobby
+    bio
+    profession
+    job
+    age
+    createdAt
+    updatedAt
+  }
+}
+
+mutation RequestOtp($input: RequestOtpInput!) {
+  requestOtp(input: $input) {
+    email
   }
 }
