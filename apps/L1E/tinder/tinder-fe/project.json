@@ -79,7 +79,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["tinder-frontend"],
+          "groups": ["tinder-frontend-1e"],
           "env": "dev"
         }
       }
@@ -89,7 +89,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["tinder-frontend"],
+          "groups": ["tinder-frontend-1e"],
           "env": "test"
         }
       }
@@ -99,7 +99,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["tinder-frontend"],
+          "groups": ["tinder-frontend-1e"],
           "env": "prod"
         }
       }
