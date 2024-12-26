@@ -32,8 +32,6 @@ const createRequestMock: MockedResponse = {
     },
   },
 };
-
-
 describe('RequestcomTime1', () => {
   beforeEach(() => {
     HTMLElement.prototype.scrollIntoView = jest.fn();
