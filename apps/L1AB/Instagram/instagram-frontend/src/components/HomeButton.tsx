@@ -12,12 +12,13 @@ interface HomeProps {
 }
 export const HomeButton = ({ isOpen, svgControls }: HomeProps) => {
   const pathname = usePathname();
+  console.log(isOpen, 'isopen');
   return (
     <div
       className={
         pathname == '/home'
           ? 'group h-[50px] flex  rounded-md cursor-pointer   hover:stroke-neutral-500 stroke-neutral-800  dark:bg-black dark:stroke-neutral-800 hover:bg-gray-100 hover:border  hover:border-gray-300 place-items-center  gap-3 transition-colors duration-1000  text-[#09090B] font-light '
-          : 'group h-12 py-3 w-full items-center flex rounded   dark:bg-black cursor-pointer stroke-[0.75] hover:stroke-neutral-500 stroke-neutral-800  hover:bg-gray-100 place-items-center gap-3 transition-colors duration-1000 hover:border-0 text-[#09090B] font-bold'
+          : 'group h-12 py-3 w-full items-center flex rounded-md  dark:stroke-black cursor-pointer stroke-[0.75] stroke-neutral-800   place-items-center gap-3 transition-colors duration-1000 hover:border-0 text-[#09090B] font-bold'
       }
     >
       <NavigationLink href="/home" name={isOpen ? '' : 'Home'}>
