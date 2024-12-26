@@ -37,8 +37,8 @@ export const typeDefs = gql`
 
   type AuthPayload {
     token: String!
+    user: User!
   }
-
   type RequestOtpResponse {
     email: String!
   }
