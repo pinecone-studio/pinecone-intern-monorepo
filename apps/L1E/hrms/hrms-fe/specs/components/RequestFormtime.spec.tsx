@@ -71,9 +71,7 @@ describe('RequestcomTime1', () => {
 
     await act(async () => {
       fireEvent.click(submitBtn);
-
       await new Promise((resolve) => setTimeout(resolve, 2000));
-       
     });
 
   });
