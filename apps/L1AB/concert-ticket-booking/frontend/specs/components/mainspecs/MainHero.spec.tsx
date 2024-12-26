@@ -11,6 +11,7 @@ const mock: MockedResponse = {
     data: {
       getAllEvents: [
         {
+          __typename: 'Event',
           _id: '1',
           name: 'Rock Concert',
           artistName: ['Band A', 'Band B'],
@@ -19,8 +20,8 @@ const mock: MockedResponse = {
           eventTime: '18:00',
           images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
           venues: [
-            { name: 'Venue A', quantity: 100, firstquantity: 150, price: 50 },
-            { name: 'Venue B', quantity: 150, firstquantity: 150, price: 70 },
+            { __typename: 'Venue', name: 'Venue A', quantity: 100, firstquantity: 150, price: 50 },
+            { __typename: 'Venue', name: 'Venue B', quantity: 150, firstquantity: 150, price: 70 },
           ],
           discount: 10,
           status: 'Онцлох',
@@ -28,6 +29,7 @@ const mock: MockedResponse = {
           updatedAt: '2024-11-14T06:24:52.763Z',
         },
         {
+          __typename: 'Event',
           _id: '2',
           name: 'Jazz Festival',
           artistName: ['Jazz Band X'],
@@ -36,8 +38,8 @@ const mock: MockedResponse = {
           eventTime: '20:00',
           images: [],
           venues: [
-            { name: 'Venue C', quantity: 200, firstquantity: 150, price: 80 },
-            { name: 'Venue D', quantity: 50, firstquantity: 150, price: 100 },
+            { __typename: 'Venue', name: 'Venue C', quantity: 200, firstquantity: 150, price: 80 },
+            { __typename: 'Venue', name: 'Venue D', quantity: 50, firstquantity: 150, price: 100 },
           ],
           discount: 15,
           status: 'Онцлох',

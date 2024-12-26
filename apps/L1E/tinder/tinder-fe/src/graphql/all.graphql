@@ -29,8 +29,9 @@ mutation RequestOtp($input: RequestOtpInput!) {
   }
 }
 
-query GetAllUsers {
-  getAllUsers {
+
+query GetUserById($userId: ID!) {
+  getUserById(userId: $userId) {
     _id
     email
     username
@@ -45,6 +46,7 @@ query GetAllUsers {
     updatedAt
   }
 }
+
 
 mutation login($password: String!, $email: String) {
   login(password: $password, email: $email) {
@@ -65,3 +67,4 @@ mutation login($password: String!, $email: String) {
     token
   }
 }
+
