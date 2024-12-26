@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
-import Addpassword from './Addpassword';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Otp from './Otp';
 
 const Signup: React.FC = () => {
   const [step, setStep] = useState<'signup' | 'confirm'>('signup');
@@ -9,7 +10,14 @@ const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    interested: '',
+    age: '',
+    image: '',
   });
+
+  useEffect(() => {
+    localStorage.setItem('signupFormData', JSON.stringify(formData));
+  }, [formData]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -24,7 +32,6 @@ const Signup: React.FC = () => {
       setError('Please enter a valid email address.');
       return;
     }
-    setError('');
     setStep('confirm');
   };
 
@@ -32,7 +39,8 @@ const Signup: React.FC = () => {
     <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
       {step === 'signup' ? (
         <div className="w-[350px] flex flex-col items-center justify-between h-[410px]">
-          <img className="w-[100px] h-[24px]" src="redlogo.png" alt="Logo" />
+          <Image width={100} height={24} src="/redlogo.png" alt="Logo" />
+
           <div className="flex gap-2 h-[72px] w-[305px] items-center flex-col">
             <div className="font-semibold text-2xl">Create an account</div>
             <div className="font-normal text-sm text-[#71717A]">Enter your email below to create your account</div>
@@ -69,7 +77,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
       ) : (
-        step === 'confirm' && <Addpassword formData={formData} />
+        step === 'confirm' && <Otp />
       )}
     </div>
   );

@@ -22,7 +22,7 @@ const mockEventData = {
     },
     venues: [
       { name: 'Энгийн', price: 100000, quantity: undefined },
-      { name: 'Fan-Zone', price: 50000, quantity: 100 },
+      { name: 'Fanzone', price: 50000, quantity: 100 },
       { name: 'Vip', price: 50000, quantity: 100 },
       { name: undefined, price: 50000, quantity: 100 },
     ],

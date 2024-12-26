@@ -21,26 +21,28 @@ export const NotificationButton = ({ isOpen, svgControls, handleOpenClose }: Not
   };
 
   return (
-    <>
+    <div className="dark:text-white">
       <NavigationLink href={undefined} name={isOpen ? '' : 'Notification'}>
-        <Heart
-          data-testid="notif-click"
-          className="stroke-inherit stroke-[1.5] min-w-6 w-6 relative"
-          onClick={() => {
-            handleOpenClose();
-            handleNewNotification();
-          }}
-        >
-          {isNotifyNew && <circle cx="80%" cy="23%" r="5" className="fill-red-600" stroke="none" />}
-          <motion.path
-            transition={{
-              duration: 0.5,
-              ease: 'easeInOut',
+        <div style={{ color: isOpen ? 'inherit' : 'red' }}>
+          <Heart
+            data-testid="notif-click"
+            className="stroke-inherit stroke-[1.5] dark:stroke-white dark:text-white min-w-6 w-6 relative"
+            onClick={() => {
+              handleOpenClose();
+              handleNewNotification();
             }}
-            animate={svgControls}
-          />
-        </Heart>
+          >
+            {isNotifyNew && <circle cx="80%" cy="23%" r="5" className="fill-red-600" stroke="none" />}
+            <motion.path
+              transition={{
+                duration: 0.5,
+                ease: 'easeInOut',
+              }}
+              animate={svgControls}
+            />
+          </Heart>
+        </div>
       </NavigationLink>
-    </>
+    </div>
   );
 };

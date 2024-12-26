@@ -1,5 +1,5 @@
-import LoggedinHeader from '../LoggedinHeader';
-import Matches from '../Matches';
+import LoggedinHeader from '../main/LoggedinHeader';
+import Matches from './Matches';
 import MainChat from './MainChat';
 
 const Main = () => {

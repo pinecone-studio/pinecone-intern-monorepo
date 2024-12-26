@@ -20,9 +20,6 @@ const InputForm = () => {
     },
   });
 
-  // const onSubmit = (data: z.infer<typeof FormSchema>) => {};
-  // onSubmit={form.handleSubmit(onSubmit)}
-
   return (
     <Form {...form}>
       <form className="w-full h-[90px]">

@@ -91,8 +91,8 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
       <div className="w-[600px] h-fit flex flex-col">
         <p className="font-semibold text-3xl text-[#0x9090B] font-sans">Edit Profile</p>
         <div className="pt-11">
-          <div className="flex items-center">
-            <Avatar>
+          <div className="flex w-full border border-[#EFEFEF] dark:border-[#262626]  dark:bg-[#262626]  bg-[#EFEFEF] p-3 rounded-3xl  items-center">
+            <Avatar className="w-14 h-14">
               {loading ? (
                 <div className="flex justify-center items-center w-12 h-12 bg-slate-50 rounded-full">
                   <CircularProgress size={24} />
@@ -105,14 +105,15 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
             </Avatar>
             <input id="fileInput" type="file" className="hidden" onChange={handleUpload} />
             <div className="flex justify-between w-full pl-3 items-center">
-              <div className="flex items-center gap-3">
-                <p className="text-base flex font-normal text-[#262626] font-sans">{user?.username}</p>
+              <div className="flex items-center  flex-col ">
+                <p className="text-base font-semibold flex  text-[#262626] dark:text-white  font-sans">{user?.username}</p>
+                <p className="text-sm flex justify-start text-[#575757] dark:text-[#838282] font-sans">{user?.fullname}</p>
               </div>
               <Select onValueChange={handleImageAction}>
-                <SelectTrigger className="w-fit hover:text-[#2563EB]">
-                  <SelectValue placeholder="Change profile photo" />
+                <SelectTrigger className="w-fit  font-semibold justify-center font-sans rounded-xl  text-white bg-[#0095F6]">
+                  <SelectValue placeholder="Change profile" />
                 </SelectTrigger>
-                <SelectContent className="text-[#2563EB]">
+                <SelectContent className="">
                   <SelectItem value="Upload New Photo">Upload New Photo</SelectItem>
                   <SelectItem value="Remove Current Photo">Remove Current Photo</SelectItem>
                   <SelectItem value="Cancel">Cancel</SelectItem>
@@ -120,18 +121,18 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
               </Select>
             </div>
           </div>
-          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Name</p>
+          <p className="text-[#262626] dark:text-[#e0dfdf] mt-5 text-base font-semibold font-sans">Name</p>
           <Input className="mt-2 font-sans text-sm" placeholder="Name" value={updateData.fullname} onChange={(e) => setUpdateData({ ...updateData, fullname: e.target.value })} />
           <div className="pt-3 text-xs text-[#8E8E8E] font-[inter]">
             <p>Help people discover your account by using the name you’re known by: either your full name, nickname, or business name.</p>
             <p className="pt-3">You can only change your name twice within 14 days.</p>
           </div>
-          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Username</p>
+          <p className="text-[#262626] mt-5 text-base dark:text-[#e0dfdf] font-semibold font-sans">Username</p>
           <Input className="mt-2 font-sans" placeholder="Username" value={updateData.username} onChange={(e) => setUpdateData({ ...updateData, username: e.target.value })} />
-          <p className="text-[#262626] mt-5 text-base font-semibold font-sans">Bio</p>
+          <p className="text-[#262626] mt-5 text-base font-semibold font-sans dark:text-[#e0dfdf]">Bio</p>
           <Textarea className="mt-2 font-sans h-28 text-sm" placeholder="Bio" value={updateData.bio} onChange={(e) => setUpdateData({ ...updateData, bio: e.target.value })} />
           <div className="flex justify-end text-[#8E8E8E] font-normal text-xs">{updateData.bio?.length || 0}/150</div>
-          <p className="text-[#262626]  mt-5 text-base font-semibold">Gender</p>
+          <p className="text-[#262626]  mt-5 text-base dark:text-[#e0dfdf] font-semibold">Gender</p>
           <Select value={updateData.gender} onValueChange={(value) => setUpdateData({ ...updateData, gender: value })}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Prefer not to say" />
@@ -143,7 +144,7 @@ export const EditProfile = ({ user }: { user: UserInfoProps }) => {
             </SelectContent>
           </Select>
           <div className="flex mt-10 justify-end">
-            <Button className="bg-[#2563EB] hover:bg-[#2563EB]" onClick={handleUpdateUser}>
+            <Button className="bg-[#2563EB dark:text-white bg-[#0095F6]  dark:bg-[#0095F6] hover:bg-[#0095F6]" onClick={handleUpdateUser}>
               Submit
             </Button>
           </div>

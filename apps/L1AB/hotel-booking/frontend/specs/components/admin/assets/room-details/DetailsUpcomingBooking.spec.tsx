@@ -1,33 +1,84 @@
+import '@testing-library/jest-dom';
 import { RoomDetailsUpcomingBookings } from '@/components/admin/assets/room-details';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
+import { GetAllBookingsDocument } from '@/generated';
+import { BookingMock } from './bookings-mock';
 
-const mockBookings = [
-  { _id: 1, guestName: 'John Doe', status: 'Confirmed', date: '2024-12-15' },
-  { _id: 2, guestName: 'Jane Smith', status: 'Pending', date: '2024-12-20' },
-  { _id: 3, guestName: 'Emily White', status: 'Confirmed', date: '2024-12-25' },
-  { _id: 4, guestName: 'Michael Brown', status: 'Cancelled', date: '2025-01-05' },
-];
-describe('DetailsUpcomingBookings Component', () => {
-  it('filters bookings by status when the status filter arrows are clicked', async () => {
-    render(<RoomDetailsUpcomingBookings mockBookings={mockBookings} />);
+const emptyMock = {
+  request: {
+    query: GetAllBookingsDocument,
+  },
+  result: {
+    data: {
+      getAllBookings: [],
+    },
+  },
+};
+
+describe('RoomDetailsUpcomingBookings Component', () => {
+  it('filters bookings by status when cycling through statuses', async () => {
+    render(
+      <MockedProvider mocks={[BookingMock]} addTypename={false}>
+        <RoomDetailsUpcomingBookings />
+      </MockedProvider>
+    );
 
     const statusSortButton = screen.getByTestId('status-sort');
-    fireEvent.click(statusSortButton);
 
-    const dateSortButton = screen.getByTestId('date-sort');
-    fireEvent.click(dateSortButton);
+    fireEvent.click(statusSortButton);
+    const confirmedBooking = await screen.findByText('test2@example.com');
+    expect(confirmedBooking);
+
+    fireEvent.click(statusSortButton);
+    const pendingBooking = await screen.findByText('test@example.com');
+    expect(pendingBooking);
+
+    fireEvent.click(statusSortButton);
+    const cancelBooking = await screen.findByText('test3@example.com');
+    expect(cancelBooking);
   });
 
-  it('sorts bookings by date when the date sorting arrows are clicked', async () => {
-    render(<RoomDetailsUpcomingBookings mockBookings={mockBookings} />);
+  it('sorts bookings by date when the date sorting arrow is clicked', async () => {
+    render(
+      <MockedProvider mocks={[BookingMock]} addTypename={false}>
+        <RoomDetailsUpcomingBookings />
+      </MockedProvider>
+    );
 
-    const statusSortButton = screen.getByTestId('status-sort');
-    fireEvent.click(statusSortButton);
-    
     const dateSortButton = screen.getByTestId('date-sort');
+
     fireEvent.click(dateSortButton);
+    await waitFor(() => expect(screen.findByText('test@example.com')));
+
+    fireEvent.click(dateSortButton);
+    await waitFor(() => expect(screen.findByText('test2@example.com')));
   });
-  it('should display a "No upcoming bookings available" message when there are no bookings', async () => {
-    render(<RoomDetailsUpcomingBookings mockBookings={[]} />);
+  it('sorts bookings by date when the date sorting arrow is clicked 2', async () => {
+    render(
+      <MockedProvider mocks={[BookingMock]} addTypename={false}>
+        <RoomDetailsUpcomingBookings />
+      </MockedProvider>
+    );
+
+    const dateSortButton = screen.getByTestId('date-sort');
+
+    fireEvent.click(dateSortButton);
+    const ascendingBooking = await screen.findByText('test@example.com');
+    expect(ascendingBooking);
+
+    fireEvent.click(dateSortButton);
+    const descendingBooking = await screen.findByText('test2@example.com');
+    expect(descendingBooking);
+  });
+  it('shows empty state when there are no bookings', async () => {
+    render(
+      <MockedProvider mocks={[emptyMock]} addTypename={false}>
+        <RoomDetailsUpcomingBookings />
+      </MockedProvider>
+    );
+
+    const emptyStateMessage = await screen.findByText('Your future bookings will appear here once confirmed.');
+    expect(emptyStateMessage);
   });
 });

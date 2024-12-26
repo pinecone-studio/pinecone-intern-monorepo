@@ -3,11 +3,10 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Check } from 'lucide-react';
 interface SuccessModalProps {
   isOpen: boolean;
-  onClose: () => void;
 }
-const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
+const SuccessModal = ({ isOpen }: SuccessModalProps) => {
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} >
       <DialogContent className="w-full max-w-[608px]">
         <DialogTitle>
           <div className="flex flex-col items-center justify-center gap-6 py-8">

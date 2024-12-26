@@ -44,7 +44,13 @@ const PostCardCommentSection = ({ postId, userId }: CardPropsType) => {
       <div className="text-[#71717A]">
         <div>View all {commentsData?.length} comments</div>
         <div className="flex justify-between pt-2 items-center">
-          <input data-testid="commentInput" value={comment} onChange={(e) => setComment(e.target.value)} className="w-3/4 focus:outline-none" placeholder="Add comment ..." />
+          <input
+            data-testid="commentInput"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="w-3/4 focus:outline-none  dark:bg-[hsl(var(--background-main))] "
+            placeholder="Add comment ..."
+          />
           <div
             onClick={() => {
               handleComment(postId);

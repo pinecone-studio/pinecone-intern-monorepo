@@ -1,22 +1,27 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-const LogoutDialog = () => {
+
+interface LogoutDialogProps {
+  buttonClassName?: string;
+}
+
+const LogoutDialog = ({ buttonClassName }: LogoutDialogProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button data-testid="btn-logout" className="p-0 text-[11px] font-semibold text-[#2563EB] bg-white hover:bg-whte">
+        <Button data-testid="btn-logout" className={`${buttonClassName} p-0 text-[11px] font-semibold bg-white text-[#2563EB] dark:text-[#4e7ad8]  dark:bg-black hover:text-slate-900 hover:bg-white`}>
           Log out
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="p-6 w-[324px] flex flex-col gap-4">
+      <AlertDialogContent className="p-6 w-[324px] dark:text-white flex flex-col gap-4">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-[18px] leading-7 font-semibold text-[#09090B]">Log out of your account?</AlertDialogTitle>
+          <AlertDialogTitle className="text-[18px] leading-7 font-semibold dark:text-white text-[#09090B]">Log out of your account?</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border text-[#09090B]">Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="border dark:text-white dark:bg-[#2c2c2c] text-[#09090B]">Cancel</AlertDialogCancel>
           <AlertDialogAction
             data-testId="log-out-button"
-            className="border bg-white hover:bg-white text-[#2563EB]"
+            className="border bg-white hover:bg-white dark:black  dark:bg-[#555555] text-[#2563EB]"
             onClick={() => {
               localStorage.removeItem('userToken');
               location.reload();

@@ -45,3 +45,6 @@ query GetPostByUserId($userId: ID!) {
     }
   }
 }
+mutation DeletePost($id: ID!) {
+  deletePost(_id: $id)
+}

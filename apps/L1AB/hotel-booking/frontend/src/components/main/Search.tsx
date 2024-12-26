@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
 import { Container, SearchDatePicker, SearchSelectGuest } from './assets';
 import { Button } from '@/components/ui/button';
 import { useFormik } from 'formik';
 import { addDays } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useMain } from '../providers/MainProvider';
 
 export const Search = () => {
+  const { setDateRange, setTraveler } = useMain();
   const router = useRouter();
+
   const searchForm = useFormik({
     initialValues: {
       startDate: new Date(),
@@ -16,10 +18,25 @@ export const Search = () => {
       guests: 1,
     },
     onSubmit: (values) => {
+      setDateRange({
+        checkIn: values.startDate,
+        checkOut: values.endDate,
+      });
+      setTraveler(values.guests);
+
+      localStorage.setItem(
+        'dateNtraveler',
+        JSON.stringify({
+          startDate: values.startDate,  
+          endDate: values.endDate,
+          traveler: values.guests,
+        })
+      );
+
       router.push('/hotels');
-      console.log(values);
     },
   });
+
   return (
     <>
       <Container backgroundColor="bg-backBlue">

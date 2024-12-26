@@ -1,14 +1,13 @@
-'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
+// Update FormSchema to validate age as a number
 const FormSchema = z.object({
-  Age: z.string().min(1, {
-    message: 'Birthday must be at least 1 number.',
+  Age: z.number().min(1, {
+    message: 'Age must be at least 1.',
   }),
 });
 
@@ -16,7 +15,7 @@ const ProfileInputForm = ({ 'data-testid': testId }: { 'data-testid'?: string })
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      Age: '',
+      Age: 0, // Default to 0 if no age is provided
     },
   });
 
@@ -28,11 +27,11 @@ const ProfileInputForm = ({ 'data-testid': testId }: { 'data-testid'?: string })
           name="Age"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Age</FormLabel>
               <FormControl className="w-[280px] h-[40px]">
-                <Input placeholder="Enter your age" {...field} />
+                <Input type="number" placeholder="Enter your age" {...field} />
               </FormControl>
-              <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
+              <FormDescription>Your age is used to determine your eligibility.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

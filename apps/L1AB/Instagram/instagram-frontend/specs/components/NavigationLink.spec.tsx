@@ -10,4 +10,9 @@ describe('NavigationLink', () => {
   it('should render successfully', async () => {
     render(<NavigationLink {...sampleProps} />);
   });
+
+  it('should render successfully', async () => {
+    const props = { ...sampleProps, href: '', onClick: jest.fn() };
+    render(<NavigationLink {...props} />);
+  });
 });

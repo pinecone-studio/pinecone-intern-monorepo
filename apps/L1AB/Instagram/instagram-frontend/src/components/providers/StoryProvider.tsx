@@ -2,6 +2,7 @@
 
 import { Story, useGetAllStoriesQuery, User } from '@/generated';
 import { createContext, PropsWithChildren, useContext } from 'react';
+import { useUser } from './UserProvider';
 
 type StoryContextType = {
   groupedStories: GroupedStories | null;
@@ -17,7 +18,8 @@ type GroupedStories = {
 const StoryContext = createContext<StoryContextType>({ groupedStories: null });
 
 export const StoryProvider = ({ children }: PropsWithChildren) => {
-  const { data } = useGetAllStoriesQuery();
+  const { user } = useUser();
+  const { data } = useGetAllStoriesQuery({ variables: { followerId: user?._id } });
   const stories = data?.getAllStories as Story[] | undefined;
 
   const groupedStories = stories?.reduce((acc, story) => {

@@ -6,7 +6,6 @@ import { useState } from 'react';
 import HeartIcon from './assets/icons/HeartIcon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-
 type PropsType = {
   postimages: string[];
   postcaption: string;
@@ -18,15 +17,12 @@ type PropsType = {
 const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, userId }: PropsType) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [comments, setComments] = useState('');
-
   const prev = () => {
     setCurrentImageIndex((curr) => (curr === 0 ? postimages.length - 1 : curr - 1));
   };
-
   const next = () => {
     setCurrentImageIndex((curr) => (curr === postimages.length - 1 ? 0 : curr + 1));
   };
-
   const { data, refetch } = useGetCommentsByPostIdQuery({ variables: { postId: postId } });
   const commentsData = data?.getCommentsByPostId;
   const [createComment] = useCreateCommentMutation();
@@ -35,11 +31,7 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
     if (!userId) return;
     await createComment({
       variables: {
-        input: {
-          comment: comments,
-          postId: postId,
-          userId: userId,
-        },
+        input: { comment: comments, postId: postId, userId: userId },
       },
     });
     await refetch();
@@ -113,7 +105,6 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
                                 </div>
                                 <div className="flex gap-3">
                                   <div className="text-xs text-[#71717A]">1d</div>
-                                  {/* <div className="text-sm text-[#71717A]">{comment.likesCount}likes</div> */}
                                   <div className="text-xs text-[#71717A]">Reply</div>
                                 </div>
                               </div>
@@ -128,17 +119,23 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
             </div>
             <div>
               <div className="flex justify-between p-4 border-t">
-                <div className="flex gap-4">
-                  <Heart />
-                  <MessageCircle />
-                  <Send />
+                <div className="flex gap-4 ">
+                  <Heart className="hover:text-[#71717A]" />
+                  <MessageCircle className="hover:text-[#71717A]" />
+                  <Send className="hover:text-[#71717A]" />
                 </div>
-                <Bookmark />
+                <Bookmark className="hover:text-[#71717A]" />
               </div>
               <p className="text-xs text-[#71717A] px-4 pb-3">1 day ago</p>
               <div className="flex justify-between p-4  items-center border-t">
-                <Smile size={24} />
-                <input data-testid="commentInput" value={comments} onChange={(e) => setComments(e.target.value)} className="w-3/4 focus:outline-none" placeholder="Add comment ..." />
+                <Smile size={24} className="hover:text-[#71717A]" />
+                <input
+                  data-testid="commentInput"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  className="w-3/4 focus:outline-none dark:bg-[hsl(var(--background-main))] "
+                  placeholder="Add comment ..."
+                />
                 <div
                   data-testid="handleComment"
                   onClick={() => {

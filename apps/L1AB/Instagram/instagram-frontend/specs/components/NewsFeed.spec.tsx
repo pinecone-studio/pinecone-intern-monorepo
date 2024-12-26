@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import NewsFeed from '@/components/NewsFeed';
 import { MockedProvider } from '@apollo/client/testing';
-import { GetPostsByFollowersIdDocument } from '@/generated';
+import { DeletePostDocument, GetPostsByFollowersIdDocument } from '@/generated';
 import { PropsType } from './PostCard.spec';
 import { UserContext } from '@/components/providers';
 const mockUser = {
@@ -37,6 +37,17 @@ const getPostsByFollowersIdMock = {
           _id: 'post1',
           userId: {
             username: 'zorigoo',
+            _id: '134124',
+            profilePicture: 'zurag',
+          },
+          images: ['zurag'],
+          caption: 'noCap',
+          createdAt: 'date',
+        },
+        {
+          _id: 'post2',
+          userId: {
+            username: 'zorigoo',
             _id: 'zorID',
             profilePicture: 'zurag',
           },
@@ -48,28 +59,65 @@ const getPostsByFollowersIdMock = {
     },
   },
 };
+export const deletePostMock = {
+  request: {
+    query: DeletePostDocument,
+    variables: { id: 'post1' },
+  },
+  result: {
+    data: {
+      message: 'Success',
+    },
+  },
+};
 
+jest.mock('date-fns', () => ({
+  ...jest.requireActual('date-fns'),
+  formatDistanceToNow: jest.fn(),
+}));
 describe('NewsFeed', () => {
   it('should render successfully', async () => {
     const { getByTestId } = render(
-      <UserContext.Provider value={{ user: mockUser }}>
-        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]}>
+        <UserContext.Provider value={{ user: mockUser }}>
           <NewsFeed />
-        </MockedProvider>
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </MockedProvider>
     );
-    await waitFor(() => {
-      expect(getByTestId('NewsFeedPostCard-0'));
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+    const DeleteButton = getByTestId('deleteButton-post1');
+    fireEvent.click(DeleteButton);
+
+    const Delete = getByTestId('delete-post1');
+    fireEvent.click(Delete);
+
+    const DeletePost = getByTestId('deletePost-post1');
+    fireEvent.click(DeletePost);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
     });
   });
 
   it('should render successfully', async () => {
     render(
-      <UserContext.Provider value={{ user: null }}>
-        <MockedProvider mocks={[getPostsByFollowersIdMock]}>
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]} addTypename={false}>
+        <UserContext.Provider value={{ user: mockUser }}>
           <NewsFeed />
-        </MockedProvider>
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </MockedProvider>
+    );
+  });
+
+  it('should render successfully', async () => {
+    render(
+      <MockedProvider mocks={[getPostsByFollowersIdMock, deletePostMock]}>
+        <UserContext.Provider value={{ user: null }}>
+          <NewsFeed />
+        </UserContext.Provider>
+      </MockedProvider>
     );
   });
 });

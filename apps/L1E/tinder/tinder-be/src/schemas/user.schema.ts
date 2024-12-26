@@ -5,30 +5,30 @@ export const typeDefs = gql`
     _id: ID!
     email: String!
     username: String!
-    fullname: String!
     interest: String!
     password: String!
-    profilePicture: String!
+    hobby: String
+    bio: String!
+    profession: String!
+    job: String!
+    age: String!
     createdAt: Date!
     updatedAt: Date!
-  }
-
-  type Query {
-    getAllUsers: [User!]!
-    getUserById(_id: ID!): User!
-    getUserByUsername(username: String!): User!
-    getUserBySearch(searchInput: String!): [User!]
   }
 
   input RegisterInput {
     email: String!
     password: String!
-    fullname: String
-    username: String
+    username: String!
+    interest: String!
+    bio: String!
+    profession: String!
+    job: String!
+    age: String!
+    hobby: String!
   }
 
   input UpdateInput {
-    fullname: String!
     username: String!
     bio: String!
     interest: String!
@@ -37,14 +37,15 @@ export const typeDefs = gql`
 
   type AuthPayload {
     token: String!
+    user: User!
   }
-
   type RequestOtpResponse {
     email: String!
   }
 
   input RequestOtpInput {
     email: String!
+    otp: String!
   }
 
   input ChangePasswordInput {
@@ -56,6 +57,13 @@ export const typeDefs = gql`
   type ChangePasswordResponse {
     success: Boolean!
     message: String!
+  }
+
+  type Query {
+    getAllUsers: [User!]!
+    getUserById(userId: ID!): User!
+    getUserByUsername(username: String!): User!
+    getUserBySearch(searchInput: String!): [User!]
   }
 
   type Mutation {

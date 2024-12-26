@@ -1,12 +1,12 @@
 'use client';
 
-import { Loading } from '@/components/Loading';
+import { MainHeader } from '@/components/main/MainHeader';
 import { CarouselUser } from '@/components/match/Carousel';
 const MatchPage = () => {
   return (
     <>
+      <MainHeader />
       <CarouselUser />
-      <Loading />
     </>
   );
 };

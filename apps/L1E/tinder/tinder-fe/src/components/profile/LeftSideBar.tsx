@@ -7,13 +7,14 @@ interface LeftSideBarProps {
   setStep: (_step: 'profile' | 'images') => void;
 }
 
-const LeftSideBar: React.FC<LeftSideBarProps> = ({ setStep }) => {
+const LeftSideBar: React.FC<LeftSideBarProps> = ({ setStep: _setStep }) => {
   return (
     <div>
       <div className="lg:space-y-1">
         {/* Mobile version */}
+
         <div className="block lg:hidden w-[250px] h-[36px]">
-          <Select onValueChange={setStep}>
+          <Select onValueChange={_setStep}>
             <SelectTrigger data-testid="select-btn">
               <SelectValue placeholder="Select section" />
             </SelectTrigger>
@@ -30,10 +31,10 @@ const LeftSideBar: React.FC<LeftSideBarProps> = ({ setStep }) => {
 
         {/* Desktop version */}
         <div className="hidden lg:block space-y-1">
-          <Button className="w-full justify-start font-normal bg-white hover:bg-[#F4F4F5] text-black" onClick={() => setStep('profile')}>
+          <Button data-testid="profile-btn" className="w-full justify-start font-normal bg-white hover:bg-[#F4F4F5] text-black" onClick={() => _setStep('profile')}>
             Profile
           </Button>
-          <Button className="w-full justify-start font-normal bg-white hover:bg-[#F4F4F5] text-black" onClick={() => setStep('images')}>
+          <Button data-testid="images-btn" className="w-full justify-start font-normal bg-white hover:bg-[#F4F4F5] text-black" onClick={() => _setStep('images')}>
             Images
           </Button>
         </div>

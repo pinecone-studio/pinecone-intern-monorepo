@@ -9,6 +9,14 @@ export const typeDefs = gql`
     updatedAt: Date!
   }
 
+  type AmenityForRoom {
+    _id: ID!
+    name: String
+    icon: String
+    createdAt: Date
+    updatedAt: Date
+  }
+
   input CreateAmenityInput {
     name: String!
     icon: String!

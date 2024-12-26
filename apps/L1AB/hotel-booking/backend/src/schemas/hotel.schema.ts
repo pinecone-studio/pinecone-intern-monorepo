@@ -17,6 +17,20 @@ export const typeDefs = gql`
     updatedAt: Date!
   }
 
+  type HotelForRoom {
+    _id: ID!
+    name: String!
+    description: String!
+    images: [String!]!
+    address: String!
+    phone: String!
+    city: String!
+    rating: Float!
+    stars: Float!
+    createdAt: Date
+    updatedAt: Date
+  }
+
   input CreateHotelInput {
     name: String!
     description: String

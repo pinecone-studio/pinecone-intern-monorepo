@@ -18,7 +18,7 @@ const StoryCard = ({ username, profilePicture, userId }: PropsType) => {
             </div>
           </div>
         </Link>
-        <div className="text-[12px] text-[#09090B]">{username}</div>
+        <div className="text-[12px] text-[#09090B] dark:text-white">{username}</div>
       </div>
     </div>
   );

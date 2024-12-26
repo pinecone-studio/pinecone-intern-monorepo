@@ -7,6 +7,12 @@ query GetRoomById($id: ID!) {
     description
     photos
     roomType
+    maxCapacity
+    roomAmenities {
+      _id
+      name
+      icon
+    }
     createdAt
     updatedAt
   }
@@ -18,6 +24,43 @@ query GetAllRooms {
     name
     roomNumber
     price
+    description
+    photos
+    roomType
+    maxCapacity
+    roomAmenities {
+      _id
+      name
+      icon
+    }
+    createdAt
+    updatedAt
+  }
+}
+
+query GetAvailableRooms($dateRange: DateRangeInput!, $traveler: Int!) {
+  getAvailableRooms(dateRange: $dateRange, traveler: $traveler) {
+    _id
+    name
+    roomNumber
+    hotelId {
+      _id
+      name
+      description
+      images
+      address
+      phone
+      city
+      rating
+      stars
+    }
+    price
+    maxCapacity
+    roomAmenities {
+      _id
+      name
+      icon
+    }
     description
     photos
     roomType

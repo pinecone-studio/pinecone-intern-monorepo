@@ -8,10 +8,12 @@ import { DoorClosed } from 'lucide-react';
 
 import { useAdmin } from '@/components/providers/AdminProvider';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const HotelDetailsRoomTypes = () => {
   const [activeTab, setActiveTab] = useState('ALL');
   const { hotelData, hotelLoading } = useAdmin();
+  const router = useRouter();
 
   const hotelRooms = hotelData?.getHotelById.rooms;
   const filteredRooms = activeTab === 'ALL' ? hotelRooms : hotelRooms?.filter((room) => room.roomType === activeTab);
@@ -50,7 +52,7 @@ export const HotelDetailsRoomTypes = () => {
           <TableBody>
             {filteredRooms?.length ? (
               filteredRooms.map((room, _index) => (
-                <TableRow data-testid={`room-item-${room._id}`} key={room._id}>
+                <TableRow data-testid={`room-item-${room._id}`} onClick={() => router.push(`/admin/hotels/${hotelData?.getHotelById._id}/${room._id}`)} key={room._id}>
                   <TableCell className="border-r">{room._id}</TableCell>
                   <TableCell className="flex items-center gap-3">
                     <div className="relative w-12 h-12 rounded-md overflow-hidden bg-gray-200">

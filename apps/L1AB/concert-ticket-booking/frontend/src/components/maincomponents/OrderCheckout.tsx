@@ -49,7 +49,6 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
     if (emailError) newErrors.email = emailError;
     const phoneError = validatePhone(formData.phone);
     if (phoneError) newErrors.phone = phoneError;
-    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   const handleUpdateBooking = async () => {
@@ -74,7 +73,7 @@ export const OrderCheckout = ({ id }: OrderCheckoutProps) => {
   };
   const getColorForVenue = (name: string | undefined): string => {
     if (name === 'Энгийн') return '#D7D7F8';
-    if (name === 'Fan-Zone') return '#C772C4';
+    if (name === 'Fanzone') return '#C772C4';
     if (name === 'Vip') return '#4651C9';
     return '#D7D7F8';
   };

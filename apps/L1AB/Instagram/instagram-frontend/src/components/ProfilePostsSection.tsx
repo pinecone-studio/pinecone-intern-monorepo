@@ -45,17 +45,20 @@ const ProfilePostsSection = ({ userPosts, profileUser, isFollow, user }: any) =>
     if (type === 'posts' && userPosts?.length > 0) {
       return (
         <div className={styles.postsContainer}>
-          {userPosts.map((post: any, i: any) => {
-            console.log(post.images[0]);
+          {userPosts
+            .slice()
+            .reverse()
+            .map((post: any, i: any) => {
+              console.log(post.images[0]);
 
-            return (
-              <div key={i} className={styles.imageContainer}>
-                <div className={styles.opacityContainer}></div>
-                <ReactionContainer postId={post._id} />
-                <Image src={post.images[0]} objectFit="cover" fill alt="post" />
-              </div>
-            );
-          })}
+              return (
+                <div key={i} className={styles.imageContainer}>
+                  <div className={styles.opacityContainer}></div>
+                  <ReactionContainer postId={post._id} />
+                  <Image src={post.images[0]} objectFit="cover" fill alt="post" />
+                </div>
+              );
+            })}
         </div>
       );
     }
@@ -63,13 +66,16 @@ const ProfilePostsSection = ({ userPosts, profileUser, isFollow, user }: any) =>
     if (type === 'saved') {
       return (
         <div className={styles.postsContainer}>
-          {savedPosts?.map((post: any, i: any) => (
-            <div key={i} className={styles.imageContainer}>
-              <div className={styles.opacityContainer}></div>
-              <ReactionContainer postId={post.postId._id} />
-              <Image src={post.postId.images[0]} objectFit="cover" fill alt="post" />
-            </div>
-          ))}
+          {savedPosts
+            ?.slice()
+            .reverse()
+            .map((post: any, i: any) => (
+              <div key={i} className={styles.imageContainer}>
+                <div className={styles.opacityContainer}></div>
+                <ReactionContainer postId={post.postId._id} />
+                <Image src={post.postId.images[0]} objectFit="cover" fill alt="post" />
+              </div>
+            ))}
         </div>
       );
     }

@@ -6,14 +6,14 @@ import { FollowersDialogRemove } from './FollowersDialogRemove';
 import { useDeleteFollowerMutation } from '@/generated';
 
 const style = {
-  triggerContainer: 'text-[#262626] flex gap-1',
+  triggerContainer: 'text-[#262626]  flex gap-1 dark:text-white',
   dialogContent: 'p-0 w-[387px]',
   dialogContentSubContainer: 'flex items-center border-b py-2 px-4',
   header: 'text-center w-full font-bold leading-6 text-[#09090B]',
   dialogCancel: 'outline-none border-none hover:bg-white p-0 size-4',
   bottomContainer: 'px-1 flex flex-col gap-4',
   inputContainer: 'flex items-center px-3 gap-[10px] h-11',
-  followersContainer: 'flex flex-col gap-3 overflow-auto h-[300px]',
+  followersContainer: 'flex flex-col gap-3  overflow-auto h-[300px]   ',
   input: 'border-0 outline-none p-0 ',
 };
 

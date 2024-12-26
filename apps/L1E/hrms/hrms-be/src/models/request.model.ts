@@ -13,10 +13,11 @@ export enum RequestType {
 /* eslint-enable no-unused-vars */
 export type Request = {
   _id: string;
-  employeeId: string;
-  leadEmployeeId: string;
+  employeeId: Schema.Types.ObjectId;
+  leadEmployeeId: Schema.Types.ObjectId;
   requestStatus: RequestStatus;
-  requestType: RequestType;
+  selectedDay: string;
+  requestType: RequestType; 
   reason: string;
   reasonRefuse: string;
   startTime: string;
@@ -27,10 +28,14 @@ export type Request = {
 const RequestSchema = new Schema<Request>(
   {
     employeeId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'Employee',
+      required: true,
     },
     leadEmployeeId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'Employee',
+      required: true,
     },
     requestStatus: {
       type: String,
@@ -49,13 +54,16 @@ const RequestSchema = new Schema<Request>(
       type: String,
       default: '',
     },
+    selectedDay: {
+      type: String,
+    },
     startTime: {
       type: String,
-      required: true,
+      required: false,
     },
     endTime: {
       type: String,
-      required: true,
+      required: false,
     },
     updatedAt: {
       type: String,

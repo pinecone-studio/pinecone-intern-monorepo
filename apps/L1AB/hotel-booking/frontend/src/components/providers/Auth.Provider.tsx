@@ -1,8 +1,9 @@
 'use client';
 
-import { useSignInMutation } from '@/generated';
+import { useGetMeQuery, useSignInMutation } from '@/generated';
+import { User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 type SignInForm = {
@@ -26,15 +27,27 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-
+  useGetMeQuery({
+    skip: !!user,
+    onCompleted: (data) => {
+      setUser(data.getMe!);
+    },
+    onError: (error) => {
+      console.error('Error fetching user:', error.message);
+    },
+  });
   const [signinMutation, { loading: signInLoading }] = useSignInMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.signIn.token);
       setUser(data.signIn.user);
-      router.push('/');
+      if (data.signIn.user.isAdmin === true) {
+        router.push('/admin/hotels');
+      } else {
+        router.push('/');
+      }
       toast.success('Sign-in successful!');
     },
     onError: (error) => {
@@ -52,7 +65,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       },
     });
   };
-
   const signout = () => {
     localStorage.removeItem('token');
     setUser(null);

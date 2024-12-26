@@ -5,6 +5,7 @@ import { ApolloWrapper } from '@/components/providers';
 import { AuthProvider } from '@/components/providers/Auth.Provider';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MainProvider } from '@/components/providers/MainProvider';
 
 export const metadata = {
   title: 'Hotel Booking',
@@ -16,8 +17,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>
-          {' '}
-          <AuthProvider>{children} </AuthProvider>
+          <AuthProvider>
+            <MainProvider>{children}</MainProvider>{' '}
+          </AuthProvider>
         </ApolloWrapper>
         <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       </body>

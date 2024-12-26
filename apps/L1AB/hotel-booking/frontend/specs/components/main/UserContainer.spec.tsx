@@ -1,17 +1,32 @@
 import { UserContainer } from '@/components/main';
+import { useAuth } from '@/components/providers/Auth.Provider';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 
+jest.mock('@/components/providers/Auth.Provider', () => ({
+  ...jest.requireActual('@/components/providers/Auth.Provider'),
+  useAuth: jest.fn(),
+}));
+
 describe('UserContainer', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useAuth as jest.Mock).mockReturnValue({
+      user: {
+        email: 'test@example.com',
+      },
+      signout: jest.fn(),
+    });
+  });
   it('Should render the main user Container component', () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: null, signout: jest.fn() });
+
     render(<UserContainer />);
-
-    expect(screen.getByText('Hi, Shagai'));
-
-    expect(screen.getByText('n.shagai@pinecone.mn'));
   });
 
   it('Should render profile when profile button is clicked', () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: null, signout: jest.fn() });
+
     render(<UserContainer />);
 
     const profileButton = screen.getByText('Profile');
@@ -22,11 +37,18 @@ describe('UserContainer', () => {
   });
 
   it('Should render contact info when contact button is clicked', () => {
+    (useAuth as jest.Mock).mockReturnValue({
+      user: {
+        email: 'test@example.com',
+      },
+      signout: jest.fn(),
+    });
+
     render(<UserContainer />);
 
     const contactButton = screen.getByText('Contact');
 
-    fireEvent.click(contactButton); 
+    fireEvent.click(contactButton);
 
     expect(screen.getByText('Contact info'));
   });

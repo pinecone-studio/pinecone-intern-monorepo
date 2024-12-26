@@ -23,6 +23,9 @@ const mock: MockedResponse = {
     },
   },
 };
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
 
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
@@ -39,6 +42,14 @@ describe('MainNavbar', () => {
       setTheme: mockSetTheme,
     }));
   });
+    it('should apply "border-b-red-400 border-b-2" class when pathname is "/demo"', () => {
+      usePathname.mockReturnValue('/demo');
+  
+      const { getByTestId } = render(<MainNavbar />);
+      const demoLink = getByTestId('/demo');
+  
+      expect(demoLink).toHaveClass('border-b-red-400 border-b-2');
+    });
   it('should render successfully', async () => {
     render(
       <MockedProvider mocks={[mock]} addTypename={false}>

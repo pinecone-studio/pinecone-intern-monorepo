@@ -9,7 +9,7 @@ jest.mock('../../../../src/models', () => ({
 
 describe('getMe', () => {
   it('should get user by id', async () => {
-    const user = { userId: '123' };
+    const user = { user: '123' };
     const result = await getMe!({}, {}, { user }, {} as GraphQLResolveInfo);
     expect(result).toEqual({ _id: '1', email: 'test@gmail.com' });
   });
@@ -24,7 +24,7 @@ describe('getMe', () => {
   });
 
   it('should throw an error when user is not found', async () => {
-    const user = { userId: '999' };
+    const user = { user: '999' };
     try {
       await getMe!({}, {}, { user }, {} as GraphQLResolveInfo);
     } catch (error) {

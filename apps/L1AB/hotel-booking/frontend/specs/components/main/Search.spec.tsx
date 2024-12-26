@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Search } from '@/components/main';
+import { useMain } from '@/components/providers/MainProvider';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
@@ -27,8 +28,24 @@ jest.mock('@/components/ui/button', () => ({
   Button: ({ children, ...props }) => <button {...props}>{children}</button>,
 }));
 
+jest.mock('@/components/providers/MainProvider', () => ({
+  useMain: jest.fn(() => ({
+    setDateRange: jest.fn(),
+    setTraveler: jest.fn(),
+  })),
+}));
+
 describe('Search Component', () => {
-  console.log = jest.fn();
+  const mockSetDateRange = jest.fn();
+  const mockSetTraveler = jest.fn();
+
+  beforeEach(() => {
+    (useMain as jest.Mock).mockReturnValue({
+      setDateRange: mockSetDateRange,
+      setTraveler: mockSetTraveler,
+    });
+  });
+
   it('renders the form correctly', () => {
     render(<Search />);
     expect(screen.getByTestId('search')).toBeInTheDocument();
@@ -41,12 +58,17 @@ describe('Search Component', () => {
     await act(async () => {
       fireEvent.click(datePicker);
     });
-    expect(screen.getByTestId('date-picker'));
+
+    expect(mockSetDateRange).toHaveBeenCalledWith({
+      checkIn: new Date('2023-01-01'),
+      checkOut: new Date('2023-01-07'),
+    });
 
     const guestSelect = screen.getByTestId('guest-select').querySelector('button');
     await act(async () => {
       fireEvent.click(guestSelect);
     });
-    expect(screen.getByText('Add Guest'));
+
+    expect(mockSetTraveler).toHaveBeenCalledWith(2);
   });
 });

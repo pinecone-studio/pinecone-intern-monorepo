@@ -27,13 +27,14 @@ const mockBookingData = {
     status: 'Pending',
     amountTotal: 200000,
     venues: [
-      { name: 'Энгийн', price: 100000, quantity: 1 },
-      { name: 'Fan-Zone', price: 50000, quantity: 2 },
-      { name: 'Vip', price: 50000, quantity: 0 },
+      { name: 'Энгийн', price: 5000, quantity: 1 },
+      { name: 'Fanzone', price: 50000, quantity: 1 },
+      { name: "Vip", price: 50000, quantity: 1},
     ],
     eventId: 'event123',
   },
 };
+
 
 describe('Payment Component', () => {
   beforeEach(() => {

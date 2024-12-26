@@ -15,6 +15,7 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
+  usePathname: jest.fn(() => '/bookTicket/6765104197fab04d24c9ed5b'), // eslint-disable-line no-secrets/no-secrets
 }));
 
 const mockEventData = {

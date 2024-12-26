@@ -29,13 +29,21 @@ export const MainNavbar = () => {
 
   return (
     <Container>
-      <div className="py-6 px-12 flex justify-between border-b dark:border-[#27272A] border-[#c6c6c6] items-center" data-cy="Navbar-DarkMode">
+      <div className="py-6 px-4 flex justify-between border-b dark:border-[#27272A] border-[#c6c6c6] items-center" data-cy="Navbar-DarkMode">
+        <div className='flex gap-5 max-sm:gap-2 items-center'>
         <Link href={`/`}>
           <div className="flex items-center ">
             <GoDotFill className="w-10 h-10 text-[#00B7F4] max-sm:w-5 max-sm:h-5" />
-            <h1 className="font-semibold text-[24px] max-sm:text-sm text-black dark:text-white leading-[32px] tracking-[-0.6px]">TICKET BOOKING</h1>
+            <h1 className={`font-semibold text-[24px] max-sm:text-sm text-black dark:text-white leading-[32px] tracking-[-0.6px]`}>TICKET BOOKING</h1>
           </div>
         </Link>
+        <Link href={`/demo`}>
+          <div className="flex items-center">
+            <h1 data-testid="/demo" className={`font-semibold text-[24px] max-sm:text-sm text-black dark:text-white leading-[32px] tracking-[-0.6px] ${pathname === '/demo' ? 'border-b-red-400 border-b-2' : ''}`}>Demo</h1>
+          </div>
+        </Link>
+        </div>
+        
 
         <div className="text-sm font-medium flex gap-4 items-center">
           <Link className="flex relative items-center text-sm " href={`/events`}>
