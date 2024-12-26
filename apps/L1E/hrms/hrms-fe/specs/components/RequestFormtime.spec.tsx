@@ -8,7 +8,7 @@ const createRequestMock: MockedResponse = {
     query: CreateRequestDocument,
     variables: {
       input: {
-        selectedDay: 'Sun Dec 29 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+        selectedDay: '24/12/29',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '6763e5e51439bd616d57745d',
@@ -21,7 +21,7 @@ const createRequestMock: MockedResponse = {
   result: {
     data: {
       createRequest: {
-        selectedDay: 'Sun Dec 29 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+        selectedDay: '24/12/29',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '6763e5e51439bd616d57745d',

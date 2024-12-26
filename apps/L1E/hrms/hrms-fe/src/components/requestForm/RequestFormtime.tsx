@@ -21,7 +21,7 @@ const RequestcomTime1 = () => {
     const [ isOpen,setIsOpen]=useState(false)
     const [createRequest] = useCreateRequestMutation();
     const onSubmit = async (data: RequestsInput) => {
-    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: format(date, 'yy/MM/dd'), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
     await createRequest({ variables: { input: newdata } });
     setIsOpen(true)
     setTimeout(() => {  form.reset();
