@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import RequestcomTime1 from '@/components/requestForm/RequestFormtime';
 import { CreateRequestDocument } from '@/generated';
@@ -33,7 +33,12 @@ const createRequestMock: MockedResponse = {
   },
 };
 
+
 describe('RequestcomTime1', () => {
+  beforeEach(() => {
+    HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   it('submits data and calls createRequest mutation', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[createRequestMock]} addTypename={false}>
@@ -44,7 +49,7 @@ describe('RequestcomTime1', () => {
     fireEvent.click(calendarBtn);
     const day28 = await screen.findByText('28');
     fireEvent.click(day28);
-    
+
     const startTimeSelectTrigger = getByTestId('starttime-select');
     fireEvent.keyDown(startTimeSelectTrigger, { key: 'ArrowDown' });
     const startTimeOption = screen.getByTestId('09:00');
@@ -53,17 +58,23 @@ describe('RequestcomTime1', () => {
     const endtime = getByTestId('end-time');
     fireEvent.keyDown(endtime, { key: 'ArrowDown' });
     const endtimeOption = await screen.getByTestId('10');
-    fireEvent.click(endtimeOption); 
+    fireEvent.click(endtimeOption);
 
     const leadBtn = getByTestId('lead-button');
     fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
     const selectlead = getByTestId('Option-1');
-    fireEvent.keyDown(selectlead,{key:"Enter"});
+    fireEvent.keyDown(selectlead, { key: 'Enter' });
 
     fireEvent.change(getByTestId('notes-input'), { target: { value: 'Annual leave' } });
 
     const submitBtn = getByTestId('submit-button');
 
-    fireEvent.click(submitBtn);
+    await act(async () => {
+      fireEvent.click(submitBtn);
+
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+       
+    });
+
   });
 });
