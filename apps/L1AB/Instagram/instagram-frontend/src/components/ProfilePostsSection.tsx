@@ -9,7 +9,6 @@ import { useGetAllSavedPostsQuery, useGetCommentsByPostIdQuery, useGetLikesByPos
 import { Heart, MessageCircle } from 'lucide-react';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import MyPostDetail from './MyPostDetail';
-import { DialogContent } from '@mui/material';
 export const ReactionContainer = ({ postId }: { postId: string }) => {
   const { data: likedata } = useGetLikesByPostIdQuery({ variables: { postId } });
   const likesData = likedata?.getLikesByPostId;
@@ -59,17 +58,15 @@ const ProfilePostsSection = ({ userPosts, profileUser, isFollow, user }: any) =>
                       <Image src={post.images[0]} objectFit="cover" fill alt="post" />
                     </div>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[90vw] w-fit bg-transparent border-none p-0">
-                    <MyPostDetail
-                      postimages={post.images}
-                      postcaption={post.caption}
-                      userProfile={post.userId.profilePicture}
-                      userName={post.userId.username}
-                      postId={post._id}
-                      userId={post.userId._id}
-                      createdAt={post.createdAt}
-                    />
-                  </DialogContent>
+                  <MyPostDetail
+                    postimages={post.images}
+                    postcaption={post.caption}
+                    userProfile={post.userId.profilePicture}
+                    userName={post.userId.username}
+                    postId={post._id}
+                    userId={post.userId._id}
+                    createdAt={post.createdAt}
+                  />
                 </Dialog>
               );
             })}

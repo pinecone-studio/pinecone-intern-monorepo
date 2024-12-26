@@ -12,7 +12,6 @@ interface HomeProps {
 }
 export const HomeButton = ({ isOpen, svgControls }: HomeProps) => {
   const pathname = usePathname();
-  console.log(isOpen, 'isopen');
   return (
     <div
       className={

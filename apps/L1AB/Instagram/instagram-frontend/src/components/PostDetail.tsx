@@ -106,8 +106,8 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
                 <MoreVertical className="w-4 h-4 items-end" />
               </div>
               <div className="flex flex-col gap-4 border-t p-4">
-                <div className="flex gap-2 items-center w-[336px] h-[40px]">
-                  <div className="w-10 h-10 rounded-full border overflow-hidden relative">
+                <div className="flex gap-2 items-center w-full h-[40px]">
+                  <div className="w-10 h-10 px-4 rounded-full border overflow-hidden relative">
                     <Image className="" alt="no picture" src={userProfile} fill objectFit="cover" />
                   </div>
                   <div>
@@ -117,7 +117,7 @@ const PostDetail = ({ postimages, postcaption, userProfile, userName, postId, us
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-6 mt-2 h-[200px] overflow-auto">
+                <div className="flex flex-col gap-6 mt-2 h-fit py-2 overflow-auto">
                   {commentsData &&
                     commentsData.map((comment, i) => {
                       return (

@@ -8,7 +8,7 @@ const Page = () => {
   const { user }: any = useContext(UserContext);
 
   return (
-    <div className="2xl:pl-[600px] xl:pl-[400px]">
+    <div className="2xl:pl-[600px] xl:pl-[350px]">
       <EditProfile user={user} />
     </div>
   );
