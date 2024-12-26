@@ -74,14 +74,14 @@ export const StageStyle = ({ venue }: StageStyleProps) => {
     <>
       {demoEvent ? (
         <>
-          <div className="h-[600px] w-[650px] relative max-xl:h-[540px] max-xl:w-[540px]   max-md:block max-md:h-[340px] max-md:w-[540px] max-sm:block max-sm:h-[340px] max-sm:w-full">
+          <div className="h-[500px] w-[550px] relative max-xl:h-[540px] max-xl:w-[540px]   max-md:block max-md:h-[340px] max-md:w-[540px] max-sm:block max-sm:h-[300px] max-sm:w-full">
             <Image src={`/DemoEventSeat.png`} alt="hi" priority fill />
           </div>
         </>
       ) : (
         <>
           <>
-            <div className="h-[600px] w-full relative hidden max-xl:hidden max-md:block max-md:h-[340px] max-sm:block max-sm:h-[340px]">
+            <div className="h-[500px] w-full relative hidden max-xl:hidden max-md:block max-md:h-[340px] max-sm:block max-sm:h-[300px]">
               <Image src={`/Stage.png`} alt="hi" fill priority />
             </div>
             <div className="h-[684px] w-[723px] max-sm:hidden max-md:hidden mt-40">

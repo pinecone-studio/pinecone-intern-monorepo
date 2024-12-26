@@ -6,7 +6,7 @@ import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GoClock, GoDotFill } from 'react-icons/go';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { RelatedEvents } from './RelatedEvents';
 import { toast } from 'react-toastify';
@@ -21,8 +21,8 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
   const { data, loading } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
   const router = useRouter();
-  // const path = usePathname();
-  // const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path?.startsWith(eventPath));
+  const path = usePathname();
+  const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path?.startsWith(eventPath));
   
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
@@ -76,12 +76,11 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 <p className="root:text-black dark:text-white opacity-80">{eventDetails?.eventTime}</p>
               </div>
             </div>
-            <Link href={url}>
+            <Link href={url}></Link>
             <div className="flex gap-2 dark:text-[#A1A1AA] items-center">
               <IoLocationOutline className="w-5 h-5" />
               <p className="w-full dark:text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
             </div>
-            </Link>
           </div>
           <div className="h-fit grid gap-2 ">
             <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Special Artist</p>
@@ -98,17 +97,17 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
           </div>
           <div className="grid gap-2 ">
             <p className="dark:text-[#FAFAFA] font-light root:text-black">Stage plan:</p>
-            {/* {demoEventDetails ? (
+            {demoEventDetails ? (
               <>
-                <div className="h-[600px] w-[650px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:block max-sm:h-[340px] max-sm:w-full">
+                <div className="h-[500px] w-[550px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:block max-sm:h-[300px] max-sm:w-full">
                   <Image src={`/DemoEventSeat.png`} alt="hi" priority fill />
                 </div>
-              </> */}
-            {/* // ) : ( */}
+              </> 
+            ) : (
               <div className="h-[500px] w-[600px] m-auto relative max-sm:h-[300px] max-sm:w-full max-xl:w-[400px] max-xl:m-auto  ">
                 <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
               </div>
-            {/* )} */}
+             )} 
           </div>
         </div>
 
