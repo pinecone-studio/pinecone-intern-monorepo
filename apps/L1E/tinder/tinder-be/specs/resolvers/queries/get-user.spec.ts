@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import getUserById from '../../../src/resolvers/queries/profileUser/get-user';
 
-jest.mock('../../../src/models/user.model.ts', () => ({
+jest.mock('../../../src/models/user/user.model.ts', () => ({
   userModel: {
     findById: jest.fn().mockResolvedValueOnce({ id: '123', name: 'Test User' }).mockResolvedValueOnce(null),
   },
