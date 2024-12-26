@@ -63,7 +63,8 @@ const discountedPrice=(price:number,discount:number)=>{
         </div>
       </div>
 
-      <div className="flex px-[212px] py-12 max-sm:grid max-sm:px-3 max-sm:gap-3 max-md:grid max-md:px-3 max-md:gap-3 max-lg:grid max-lg:px-3 max-lg:gap-3  max-xl:grid max-xl:px-3 max-xl:gap-3  max-2xl:grid max-2xl:px-3 max-2xl:gap-3">
+      <div className="flex px-[212px] py-12 max-sm:grid max-sm:px-3 max-sm:gap-3 max-md:grid max-md:px-3 max-md:gap-3 max-lg:grid max-lg:px-3 max-lg:gap-3  
+      max-xl:grid max-xl:px-3 max-xl:gap-3  max-2xl:grid max-2xl:px-3 max-2xl:gap-3">
         <div className=" flex-1 grid gap-5 ">
           <div className="flex justify-between ">
             <div className="flex items-center gap-6">
