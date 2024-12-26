@@ -6,20 +6,24 @@ import { EventDetailsSkeleton } from './Skeletons/EventDetailsSkeleton';
 import { LuCalendar } from 'react-icons/lu';
 import { IoLocationOutline } from 'react-icons/io5';
 import { GoClock, GoDotFill } from 'react-icons/go';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { RelatedEvents } from './RelatedEvents';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 interface EventDetailsProps {
   id: string | string[];
 }
+// eslint-disable-next-line no-secrets/no-secrets
+const url = "https://www.google.com/maps/place/Pinecone+Academy/@47.9144636,106.9167269,910m/data=!3m1!1e3!4m6!3m5!1s0x5d969368889d5da1:0x90f77786fc5b1aa2!8m2!3d47.9142841!4d106.9165468!16s%2Fg%2F11g_zk5x0b?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
 export const EventDetails = ({ id }: EventDetailsProps) => {
   const { data, loading } = useGetEventByIdQuery({ variables: { id: id as string } });
   const eventDetails = data?.getEventById;
   const router = useRouter();
-  const path = usePathname();
-  const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path?.startsWith(eventPath));
+  // const path = usePathname();
+  // const demoEventDetails = ['/events/6765104197fab04d24c9ed5b', '/events/676a81d280d57f973f0f4f6f', '/events/676a859880d57f973f0f51ff'].some((eventPath) => path?.startsWith(eventPath));
+  
   if (loading) {
     return <EventDetailsSkeleton data-testid="event-details-skeleton" />;
   }
@@ -72,10 +76,12 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
                 <p className="root:text-black dark:text-white opacity-80">{eventDetails?.eventTime}</p>
               </div>
             </div>
+            <Link href={url}>
             <div className="flex gap-2 dark:text-[#A1A1AA] items-center">
               <IoLocationOutline className="w-5 h-5" />
               <p className="w-full dark:text-[#FAFAFA] text-[16px] underline underline-offset-2">{eventDetails?.location}</p>
             </div>
+            </Link>
           </div>
           <div className="h-fit grid gap-2 ">
             <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Special Artist</p>
@@ -87,22 +93,22 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
               ))}
             </div>
             <p className="dark:text-[#FAFAFA] root:text-black font-extralight">Тоглолтийн цагийн хуваарь:</p>
-            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Door open: 4pm</li>
-            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Music start: {eventDetails?.eventTime}pm</li>
+            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Door open: 10am</li>
+            <li className="font-semibold dark:text-[#FFFFFF] px-3 root:text-black">Event start: {eventDetails?.eventTime}pm</li>
           </div>
           <div className="grid gap-2 ">
             <p className="dark:text-[#FAFAFA] font-light root:text-black">Stage plan:</p>
-            {demoEventDetails ? (
+            {/* {demoEventDetails ? (
               <>
                 <div className="h-[600px] w-[650px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:block max-sm:h-[340px] max-sm:w-full">
                   <Image src={`/DemoEventSeat.png`} alt="hi" priority fill />
                 </div>
-              </>
-            ) : (
+              </> */}
+            {/* // ) : ( */}
               <div className="h-[500px] w-[600px] m-auto relative max-sm:h-[300px] max-sm:w-full max-xl:w-[400px] max-xl:m-auto  ">
                 <Image src={`/Concert hall plan.png`} alt="hi" fill priority />
               </div>
-            )}
+            {/* )} */}
           </div>
         </div>
 
