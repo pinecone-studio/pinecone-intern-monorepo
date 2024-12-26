@@ -8,7 +8,7 @@ const createRequestMock: MockedResponse = {
     query: CreateRequestDocument,
     variables: {
       input: {
-        selectedDay: 'Sat Dec 28 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+        selectedDay: 'Sun Dec 29 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '6763e5e51439bd616d57745d',
@@ -21,7 +21,7 @@ const createRequestMock: MockedResponse = {
   result: {
     data: {
       createRequest: {
-        selectedDay: 'Sat Dec 28 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+        selectedDay: 'Sun Dec 29 2024 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '6763e5e51439bd616d57745d',
@@ -45,8 +45,8 @@ describe('RequestcomTime1', () => {
     );
     const calendarBtn = getByTestId('calendar-btn');
     fireEvent.click(calendarBtn);
-    const day28 = await screen.findByText('28');
-    fireEvent.click(day28);
+    const day29 = await screen.findByText('29');
+    fireEvent.click(day29);
 
     const startTimeSelectTrigger = getByTestId('starttime-select');
     fireEvent.keyDown(startTimeSelectTrigger, { key: 'ArrowDown' });
