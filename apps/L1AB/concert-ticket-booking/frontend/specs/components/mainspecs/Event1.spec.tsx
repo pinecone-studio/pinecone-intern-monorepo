@@ -17,6 +17,7 @@ const mock = {
     data: {
       getAllEvents: [
         {
+          __typename: 'Event',
           _id: '1',
           name: 'Event 1',
           eventDate: '2022-01-01',
@@ -38,6 +39,7 @@ const mock = {
     },
   },
 };
+
 const mock1 = {
   request: {
     query: GetAllEventsDocument,
@@ -46,6 +48,7 @@ const mock1 = {
     data: {
       getAllEvents: [
         {
+          __typename: 'Event',
           _id: '1',
           name: 'Event 1',
           eventDate: '2022-01-01',

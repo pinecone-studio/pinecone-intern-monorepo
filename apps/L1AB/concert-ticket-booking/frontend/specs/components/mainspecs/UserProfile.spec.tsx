@@ -24,6 +24,7 @@ const updateUserMock: MockedResponse = {
   result: {
     data: {
       updateUser: {
+        _id: '1',
         phone: '11111111',
         email: 'test@gmail.com',
       },
