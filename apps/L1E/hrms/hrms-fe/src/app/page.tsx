@@ -1,5 +1,6 @@
 'use client';
 
+import { DateRangePicker } from '@/components/DateRangePicker';
 import RequestForm from '@/components/RequestForm';
 
 const Page = () => {
@@ -7,6 +8,7 @@ const Page = () => {
     <div>
       Home Page
       <RequestForm />
+      <DateRangePicker />
     </div>
   );
 };
