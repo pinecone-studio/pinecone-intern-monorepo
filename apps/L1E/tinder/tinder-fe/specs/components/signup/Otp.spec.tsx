@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRequestOtpMutation } from '@/generated';
 import Addpassword from '@/components/signup/Addpassword';
-import Otp from '@/components/signup/OTP';
+import Otp from '@/components/signup/Otp';
 
 jest.mock('@/generated', () => ({
   useRequestOtpMutation: jest.fn(),

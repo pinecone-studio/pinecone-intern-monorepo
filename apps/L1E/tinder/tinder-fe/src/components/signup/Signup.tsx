@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Otp from './OTP';
+import Otp from './Otp';
 
 const Signup: React.FC = () => {
   const [step, setStep] = useState<'signup' | 'confirm'>('signup');
