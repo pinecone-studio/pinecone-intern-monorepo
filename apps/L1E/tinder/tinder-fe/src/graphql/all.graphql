@@ -28,3 +28,40 @@ mutation RequestOtp($input: RequestOtpInput!) {
     email
   }
 }
+
+query GetAllUsers {
+  getAllUsers {
+    _id
+    email
+    username
+    interest
+    password
+    hobby
+    bio
+    profession
+    job
+    age
+    createdAt
+    updatedAt
+  }
+}
+
+mutation login($password: String!, $email: String) {
+  login(password: $password, email: $email) {
+    user {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      createdAt
+      updatedAt
+    }
+    token
+  }
+}

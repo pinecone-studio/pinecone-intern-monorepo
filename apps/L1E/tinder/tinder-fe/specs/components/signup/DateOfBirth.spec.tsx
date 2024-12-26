@@ -56,8 +56,5 @@ describe('DateOfBirth Component', () => {
     render(<DateOfBirth />);
 
     Storage.prototype.getItem = jest.fn(() => null);
-
-    // fireEvent.change(screen.getByLabelText('Password'), { target: { value: '12345' } });
-    // fireEvent.change(screen.getByLabelText('Confirm password'), { target: { value: '12345' } });
   });
 });

@@ -14,6 +14,7 @@ jest.mock('@/generated', () => ({
 
 describe('Addpassword Component', () => {
   const mockCreateUser = jest.fn();
+
   const mockPush = jest.fn();
 
   beforeEach(() => {
