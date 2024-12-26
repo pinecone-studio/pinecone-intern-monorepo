@@ -6,8 +6,9 @@ import Link from 'next/link';
 const Page = () => {
   return (
     <div className="relative h-screen w-screen">
-      <div className="absolute inset-0 bg-black opacity-70"></div>
-      <img className="absolute inset-0 h-full w-full object-cover" src="backround.png" alt="" />
+      <div className="absolute inset-0 bg-black opacity"></div>
+
+      <img className="absolute inset-0 h-full w-full object-cover opacity-40" src="backround.png" alt="" />
       <Header />
       <Footer />
       <div className="absolute inset-0 flex flex-col items-center justify-center">

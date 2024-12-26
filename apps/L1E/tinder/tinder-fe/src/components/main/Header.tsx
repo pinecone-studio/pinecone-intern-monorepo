@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="absolute w-screen flex justify-center items-center  pt-4 bg-transparent">
+    <div className="absolute w-screen z-10 flex justify-center items-center  pt-4 bg-transparent">
       <div className="max-w-[1180px] w-screen flex justify-between">
         <div className="flex items-center">
           <img className="w-[100px] h-[24px]" src="hl.png" alt="" />
