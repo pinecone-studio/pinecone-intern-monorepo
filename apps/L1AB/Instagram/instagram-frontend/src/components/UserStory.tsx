@@ -33,13 +33,7 @@ type PropsType = {
 export const UserStory = ({ userId, stories, username, profilePicture, prevUser, nextUser, mainUserStory }: PropsType) => {
   const { groupedStories } = useStory();
   const { user } = useUser();
-  console.log(userId);
-  console.log(user);
-
   const userStoriesGroup = groupedStories![userId];
-
-  console.log(userStoriesGroup.stories.length);
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [deleteStory] = useDeleteStoryMutation();
   const { refetch } = useGetAllStoriesQuery({ variables: { followerId: user?._id } });
