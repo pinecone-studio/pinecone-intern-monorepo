@@ -65,7 +65,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen:dev",
+          "target": "codegen:testing",
           "params": "forward"
         }
       ]
@@ -75,7 +75,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["hrms-frontend"],
+          "groups": ["hrms-frontend-1e"],
           "env": "dev"
         }
       }
@@ -85,7 +85,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["hrms-frontend"],
+          "groups": ["hrms-frontend-1e"],
           "env": "test"
         }
       }
@@ -95,7 +95,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["hrms-frontend"],
+          "groups": ["hrms-frontend-1e"],
           "env": "prod"
         }
       }
