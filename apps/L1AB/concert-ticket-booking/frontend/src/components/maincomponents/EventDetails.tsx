@@ -99,7 +99,7 @@ export const EventDetails = ({ id }: EventDetailsProps) => {
             <p className="dark:text-[#FAFAFA] font-light root:text-black">Stage plan:</p>
             {demoEventDetails ? (
               <>
-                <div className="h-[500px] w-[550px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:block max-sm:h-[300px] max-sm:w-full">
+                <div className="h-[500px] w-[550px] relative max-xl:h-[640px] max-xl:m-auto max-xl:w-[740px] max-2xl:m-auto  max-md:block max-md:h-[340px] max-md:w-[440px] max-sm:hidden max-sm:w-full">
                   <Image src={`/DemoEventSeat.png`} alt="hi" priority fill />
                 </div>
               </> 
