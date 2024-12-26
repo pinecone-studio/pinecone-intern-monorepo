@@ -18,14 +18,14 @@ const RequestcomTime1 = () => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
     defaultValues: { date: new Date(), startTime: '08:00', endTime: '09:00', leadEmployeeId: '', requestStatus: RequestStatus.Free,reason: '', employeeId: '6763e2c6d93130a1f7a36953', },});
-  const [ isOpen,setIsOpen]=useState(false)
-const [createRequest] = useCreateRequestMutation();
-const onSubmit = async (data: RequestsInput) => {
- const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
-await createRequest({ variables: { input: newdata } });
-setIsOpen(true)
-setTimeout(() => {  form.reset();
-setIsOpen(false);}, 1500);
+    const [ isOpen,setIsOpen]=useState(false)
+    const [createRequest] = useCreateRequestMutation();
+    const onSubmit = async (data: RequestsInput) => {
+    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString(), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+    await createRequest({ variables: { input: newdata } });
+    setIsOpen(true)
+    setTimeout(() => {  form.reset();
+    setIsOpen(false);}, 1500);
   };return (
     <div className="space-y2 flex ">
       <Form {...form}>
