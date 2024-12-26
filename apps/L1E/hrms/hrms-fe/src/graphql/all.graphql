@@ -1,7 +1,17 @@
-query Query {
-  sampleQuery
-}
 
-mutation Mutation {
-  sampleMutation
+mutation CreateRequest($input: RequestInput!) {
+  createRequest(input: $input) {
+    _id
+    employeeId
+    leadEmployeeId
+    requestStatus
+    requestType
+    selectedDay
+    reason
+    reasonRefuse
+    startTime
+    endTime
+    updatedAt
+    createdAt
+  }
 }
