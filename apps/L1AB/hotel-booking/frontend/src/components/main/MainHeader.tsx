@@ -2,9 +2,10 @@ import React from 'react';
 import { Container } from './assets';
 import Link from 'next/link';
 import { useAuth } from '../providers/Auth.Provider';
+import { IoIosLogOut } from 'react-icons/io';
 
 export const MainHeader = () => {
-  const { user } = useAuth();
+  const { user, signout } = useAuth();
 
   return (
     <Container backgroundColor="bg-backBlue text-white">
@@ -13,9 +14,12 @@ export const MainHeader = () => {
           <PediaLogo />
         </Link>
         {user ? (
-          <Link href="/profile">
-            <div>{user.email}</div>
-          </Link>
+          <div className="flex gap-6 items-center">
+            <Link href="/profile">
+              <div>{user.email}</div>
+            </Link>
+            <IoIosLogOut onClick={signout} className="w-6 h-6 cursor-pointer" />
+          </div>
         ) : (
           <>
             <div className="flex gap-4">
