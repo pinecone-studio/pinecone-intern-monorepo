@@ -36,6 +36,11 @@ export const typeDefs = gql`
     bio: String!
     interest: String!
     images: [String!]!
+    email: String!
+    age: String!
+    hobby: String!
+    job: String!
+    profession: String!
   }
 
   type AuthPayload {
