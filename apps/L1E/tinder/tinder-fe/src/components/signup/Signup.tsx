@@ -12,7 +12,6 @@ const Signup: React.FC = () => {
     password: '',
     interested: '',
     age: '',
-    image: '',
   });
 
   useEffect(() => {

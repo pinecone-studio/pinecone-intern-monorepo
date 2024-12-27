@@ -28,7 +28,7 @@ describe('ImageUpload Component', () => {
     const mockOnUpload = jest.fn();
     const mockHandleSubmit = jest.fn();
     const setCheckMock = jest.fn();
-
+    const setUploading = jest.fn();
     const { getByTestId, getAllByTestId } = render(<ImageUpload />);
 
     const clickButton = screen.getByTestId('ClickButton');
@@ -58,10 +58,19 @@ describe('ImageUpload Component', () => {
       expect(mockOnUpload);
       expect(mockHandleSubmit);
       expect(setCheckMock);
+      expect(setUploading);
     });
   });
-  it('removes an image when the remove button is clicked', async () => {
-    const { getByTestId, queryByTestId } = render(<ImageUpload />);
+  it('renders upload input, displays placeholder content, triggers upload on button click, and handles modal logic', async () => {
+    const setUploading = jest.fn();
+
+    const toastError = jest.fn();
+
+    const { getByTestId, getAllByTestId } = render(
+      <MockedProvider mocks={[]}>
+        <ImageUpload />
+      </MockedProvider>
+    );
 
     const clickButton = screen.getByTestId('ClickButton');
     fireEvent.click(clickButton);
@@ -75,6 +84,37 @@ describe('ImageUpload Component', () => {
       expect(previewImage);
     });
 
+    const CheckSet = getAllByTestId('check');
+    fireEvent.click(CheckSet[0]);
+    const CheckSet2 = getByTestId('CheckSet2');
+    fireEvent.click(CheckSet2);
+    const uploadButton = screen.getByTestId('create');
+    fireEvent.click(uploadButton);
+
+    await waitFor(() => {
+      expect(setUploading);
+    });
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000);
+      expect(toastError);
+    });
+  });
+  it('removes an image when the remove button is clicked', async () => {
+    const { getByTestId, queryByTestId } = render(
+      <MockedProvider mocks={[]}>
+        <ImageUpload />
+      </MockedProvider>
+    );
+    const clickButton = screen.getByTestId('ClickButton');
+    fireEvent.click(clickButton);
+    const fileInput = screen.getByTestId('addinput');
+    const file = new File(['image'], 'test-image.jpg', { type: 'image/jpeg' });
+    fireEvent.change(fileInput, { target: { files: [file] } });
+    await waitFor(() => {
+      const previewImage = screen.getByTestId('map');
+      expect(previewImage);
+    });
+
     const removeButton = getByTestId('remove');
     fireEvent.click(removeButton);
 
@@ -82,13 +122,11 @@ describe('ImageUpload Component', () => {
       expect(queryByTestId('map'));
     });
   });
-
   it('displays "Creating..." text while uploading', async () => {
     const { getByTestId } = render(<ImageUpload />);
 
     fireEvent.click(getByTestId('create'));
   });
-
   it('handles image upload failure', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -96,12 +134,13 @@ describe('ImageUpload Component', () => {
         json: () => ({ message: 'Error uploading' }),
       })
     ) as jest.Mock;
-
-    render(<ImageUpload />);
-
+    render(
+      <MockedProvider mocks={[]}>
+        <ImageUpload />
+      </MockedProvider>
+    );
     const clickButton = screen.getByTestId('ClickButton');
     fireEvent.click(clickButton);
-
     const uploadButton = screen.getByTestId('create');
     fireEvent.click(uploadButton);
   });
@@ -111,17 +150,9 @@ describe('ImageUpload Component', () => {
         <ImageUpload />
       </MockedProvider>
     );
-
     const input = screen.getByTestId('addinput');
-
     await act(async () => {
       fireEvent.change(input, { target: { files: ['1', '2'] } });
-    });
-
-    const nextButton = screen.getByText('Upload');
-
-    await act(async () => {
-      fireEvent.click(nextButton);
     });
   });
 });

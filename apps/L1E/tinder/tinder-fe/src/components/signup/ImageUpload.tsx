@@ -34,6 +34,7 @@ export const ImageUpload: React.FC = () => {
     });
 
     const data = await response.json();
+
     return data.secure_url;
   };
 
@@ -42,17 +43,20 @@ export const ImageUpload: React.FC = () => {
 
     setUploading(true);
 
-    try {
-      await Promise.all(images.map(uploadImage));
-      setUploading(false);
-      setPreviews([]);
-      setImages([]);
-      toast.success('Image saved');
-      setStep('user'); // Move to the next step after upload
-    } catch (error) {
-      // setUploading(false);
-      // toast.error('Failed to upload images');
-    }
+    const uploadedImages = await Promise.all(images.map(uploadImage));
+    const savedData = localStorage.getItem('signupFormData');
+    const parsedData = savedData ? JSON.parse(savedData) : {};
+    parsedData.images = uploadedImages;
+    localStorage.setItem('signupFormData', JSON.stringify(parsedData));
+
+    setUploading(false);
+    setPreviews([]);
+    setImages([]);
+    toast.success('Images saved successfully!');
+    setStep('user');
+
+    // setUploading(false);
+    // toast.error('Failed to upload images');
   };
 
   const handleRemove = (index: number) => {
@@ -89,7 +93,7 @@ export const ImageUpload: React.FC = () => {
               Back
             </Button>
             <Button data-testid="create" onClick={handleUpload} className={`bg-[#E11D48E5] text-white rounded-full w-24 h-9`} disabled={uploading}>
-              Upload
+              Next
             </Button>
           </div>
         </main>
