@@ -8,26 +8,26 @@ const createRequestMock: MockedResponse = {
     query: CreateRequestDocument,
     variables: {
       input: {
-        selectedDay: '24/12/29',
+        selectedDay: 'Sun Dec 29 2024',
         startTime: '08:00',
         endTime: '09:00',
-        leadEmployeeId: '6763e5e51439bd616d57745d',
+        leadEmployeeId: '676e4d0d33fccb9fd4362ef2',
         requestStatus: 'FREE',
         reason: 'Annual leave',
-        employeeId: '6763e2c6d93130a1f7a36953',
+        employeeId: '676e4cd433fccb9fd4362ef0',
       },
     },
   },
   result: {
     data: {
       createRequest: {
-        selectedDay: '24/12/29',
+        selectedDay: 'Sun Dec 29 2024',
         startTime: '08:00',
         endTime: '09:00',
-        leadEmployeeId: '6763e5e51439bd616d57745d',
+        leadEmployeeId: '676e4d0d33fccb9fd4362ef2',
         requestStatus: 'FREE',
         reason: 'Annual leave',
-        employeeId: '6763e2c6d93130a1f7a36953',
+        employeeId: '676e4cd433fccb9fd4362ef0',
       },
     },
   },
@@ -60,6 +60,7 @@ describe('RequestcomTime1', () => {
 
     const leadBtn = getByTestId('lead-button');
     fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
+    
     const selectlead = getByTestId('Option-1');
     fireEvent.keyDown(selectlead, { key: 'Enter' });
 

@@ -17,11 +17,12 @@ import { useState } from 'react';
 const RequestcomTime1 = () => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '08:00', endTime: '09:00', leadEmployeeId: '', requestStatus: RequestStatus.Free,reason: '', employeeId: '6763e2c6d93130a1f7a36953', },});
+    defaultValues: { date: new Date(), startTime: '08:00', endTime: '09:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: '676e4cd433fccb9fd4362ef0' },
+  });
     const [ isOpen,setIsOpen]=useState(false)
     const [createRequest] = useCreateRequestMutation();
     const onSubmit = async (data: RequestsInput) => {
-    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: format(date, 'yy/MM/dd'), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
     await createRequest({ variables: { input: newdata } });
     setIsOpen(true)
     setTimeout(() => {  form.reset();
@@ -31,7 +32,10 @@ const RequestcomTime1 = () => {
       <Form {...form}>
         <form data-testid="form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full mx-auto pt-6">
           <FormField
-            control={form.control} name="date" data-testid="date" render={({ field }) => (
+            control={form.control}
+            name="date"
+            data-testid="date"
+            render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel className="text-sm">Чөлөө авах өдөр*</FormLabel>
                 <div className="border rounded-md">
@@ -43,7 +47,7 @@ const RequestcomTime1 = () => {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="end">
-                      <Calendar data-testid="calendar-input" mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                      <Calendar data-testid="calendar-input" mode="single" disabled={(date) => date < new Date()} selected={field.value} onSelect={field.onChange} initialFocus />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -53,7 +57,9 @@ const RequestcomTime1 = () => {
           />
           <div className="grid grid-cols-2 gap-4">
             <FormField
-              control={form.control}  name="startTime" render={({ field }) => (
+              control={form.control}
+              name="startTime"
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Эхлэх цаг*</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -107,14 +113,12 @@ const RequestcomTime1 = () => {
                 <FormLabel className="text-sm">Хэнээр хүсэлтээ батлуулах аа сонгоно уу*</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger
-                      data-testid="lead-button"
-                    >
-                      <SelectValue  placeholder="Ажилтан сонгох" className="custom-select" />
+                    <SelectTrigger data-testid="lead-button">
+                      <SelectValue placeholder="Ажилтан сонгох" className="custom-select" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem data-testid="Option-1" value="6763e5e51439bd616d57745d">
+                    <SelectItem data-testid="Option-1" value="676e4d0d33fccb9fd4362ef2">
                       Option 1
                     </SelectItem>
                     <SelectItem data-testid="Option-2" value="option2">

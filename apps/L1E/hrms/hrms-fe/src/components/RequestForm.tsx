@@ -2,8 +2,16 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import Requestcom from './requestForm/RequestFormcom';
+import { useState } from 'react';
+import RequestcomPaid from './requestForm/RequestFormPaid';
+import Requestcomremote from './requestForm/RequestFormRemote';
 
 const RequestForm = () => {
+  const [item,setItem]=useState("")
+   const handleSelectChange = (value:string) => {
+    setItem(value); 
+  };
   return (
     <Card className="w-[608px] border-[#E4E4E7] mx-auto">
       <CardContent className="p-8">
@@ -15,14 +23,14 @@ const RequestForm = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label className="font-medium text-sm">Ангилал*</Label>
-              <Select>
-                <SelectTrigger>
+              <Select onValueChange={handleSelectChange}>
+                <SelectTrigger data-testid="select-input">
                   <SelectValue placeholder="Сонгоно уу" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Чөлөө">Чөлөө</SelectItem>
-                  <SelectItem value="Цалинтай чөлөө">Цалинтай чөлөө</SelectItem>
-                  <SelectItem value="Зайнаас ажиллах">Зайнаас ажиллах</SelectItem>
+                  <SelectItem data-testid="item1" value="Чөлөө">Чөлөө</SelectItem>
+                  <SelectItem data-testid="item2" value="Цалинтай чөлөө">Цалинтай чөлөө</SelectItem>
+                  <SelectItem data-testid="item3" value="Зайнаас ажиллах">Зайнаас ажиллах</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -34,6 +42,9 @@ const RequestForm = () => {
             </div>
           </div>
         </div>
+        {item == 'Чөлөө' ? <Requestcom /> : ''}
+        {item == 'Цалинтай чөлөө' ? <RequestcomPaid /> : ''}
+        {item == 'Зайнаас ажиллах' ? <Requestcomremote /> : ''}
       </CardContent>
     </Card>
   );
