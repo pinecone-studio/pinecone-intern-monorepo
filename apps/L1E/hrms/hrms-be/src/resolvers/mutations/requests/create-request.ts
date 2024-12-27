@@ -7,8 +7,6 @@ export const createRequest: MutationResolvers['createRequest'] = async (_: unkno
   const employee = await EmployeeModel.findById({_id:employeeId});
   const leadEmployee = await EmployeeModel.findById({ _id:leadEmployeeId });
   const newDate= new Date(selectedDay as string)
-  console.log(employee);
-  console.log(leadEmployee);
   
   const ResponseRequest = await RequestModel.create({
     employeeId: employee._id,
