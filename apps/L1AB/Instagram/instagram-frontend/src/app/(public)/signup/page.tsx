@@ -44,7 +44,7 @@ const Page = () => {
                   Mobile Number or Email
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Sign-Up-mobileNumberorEmail-Input"
                   placeholder="Email"
                   name="mobileNumberorEmail"
@@ -52,7 +52,7 @@ const Page = () => {
                   style={{ border: '1px solid #ccc', padding: '8px 12px', margin: '5px 0' }}
                 />
                 {errors.mobileNumberorEmail && (
-                  <div className="text-red-600 text-xs mt-1" data-cy="Sign-Up-mobileNumberorEmail-Input-Error-Message">
+                  <div className="text-red-600 text-xs mt-1" data-cy="Sign-Up-mobileNumberorEmail-Input-Error-Message ">
                     {errors.mobileNumberorEmail}
                   </div>
                 )}
@@ -62,7 +62,7 @@ const Page = () => {
                   Password
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Sign-Up-Password-Input"
                   placeholder="Password"
                   name="password"
@@ -80,7 +80,7 @@ const Page = () => {
                   Full Name
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Sign-Up-fullname-Input"
                   placeholder="Full Name"
                   name="fullname"
@@ -98,7 +98,7 @@ const Page = () => {
                   Username
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Sign-Up-username-Input"
                   placeholder="Username"
                   name="username"
@@ -142,7 +142,7 @@ const Page = () => {
         </Formik>
       </div>
       <div className="w-[364px] min-h-[72px] bg-white rounded-lg flex items-center justify-center">
-        <p className="text-sm text-center w-[10.4rem] flex justify-between">
+        <p className="text-sm text-center w-[10.4rem] flex justify-between dark:text-black">
           Have an account?
           <Link href="/login" className="text-blue-500">
             {' '}
