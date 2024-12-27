@@ -48,7 +48,7 @@ export const HotelsTable = () => {
                   </TableCell>
                   <TableCell className="border space-x-2">
                     {hotel.rooms?.map((room, index) => {
-                      if (index <= 2)
+                      if (index <= 1)
                         return (
                           <span key={index} className="px-4 py-1 text-sm font-medium text-black bg-gray-100 rounded-full shadow">
                             {room.name}

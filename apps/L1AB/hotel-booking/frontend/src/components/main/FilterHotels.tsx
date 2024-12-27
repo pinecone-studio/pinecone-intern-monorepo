@@ -11,7 +11,6 @@ import { HotelSorter } from './assets/HotelSorting';
 export const FilterHotels = () => {
   const { data } = useGetAllHotelsQuery();
   const hotels = data?.getAllHotels || [];
-  console.log(hotels);
   
   const [query, setQuery] = useState('');
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
