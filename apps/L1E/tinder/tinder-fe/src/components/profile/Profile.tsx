@@ -26,7 +26,7 @@ type User = {
 export const ProfileSection = () => {
   const [userData, setUserData] = useState<User | null>(null);
   const { data } = useGetUserByIdQuery({
-    variables: { userId: '676cdda92f063a9d38b20a65' },
+    variables: { userId: '676e56bf1fd44463e5e2c322' },
   });
 
   useEffect(() => {
