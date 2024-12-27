@@ -37,7 +37,7 @@ const Page = () => {
                   Username or Email
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Login-usernameOrEmail-Input"
                   placeholder="Username or Email"
                   name="usernameOrEmail"
@@ -50,7 +50,7 @@ const Page = () => {
                   Password
                 </label>
                 <Field
-                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full"
+                  className="rounded-lg placeholder-gray-500 placeholder-opacity-70 text-sm w-full dark:bg-white"
                   data-cy="Login-Password-Input"
                   placeholder="Password"
                   name="password"
@@ -71,7 +71,7 @@ const Page = () => {
         </Formik>
       </div>
       <div className="w-[364px] min-h-[72px] bg-white rounded-lg flex items-center justify-center">
-        <p className="text-sm text-center w-full py-4 px-[62px] flex gap-4">
+        <p className="text-sm text-center w-full py-4 px-[62px] flex gap-4 dark:text-black">
           Don’t have an account?
           <Link href="/signup" data-cy="sign-up-button" className="text-blue-500 font-bold">
             Sign Up
