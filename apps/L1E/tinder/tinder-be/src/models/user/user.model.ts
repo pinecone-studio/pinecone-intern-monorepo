@@ -7,7 +7,7 @@ export type UserType = {
   age: string;
   email: string;
   password: string;
-  profilePicture: string[];
+  images: string[];
   createdAt: Date;
   updatedAt: Date;
   bio: string;
@@ -61,7 +61,7 @@ const UserSchema = new Schema<UserType>({
     type: String,
     required: true,
   },
-  profilePicture: [
+  images: [
     {
       type: String,
       required: true,

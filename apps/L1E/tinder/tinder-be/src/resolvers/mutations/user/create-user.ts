@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt';
 import { userModel } from '../../../models/user/user.model';
 
 export const createUser: MutationResolvers['createUser'] = async (_: unknown, { input }) => {
-  const { email, password, username, age, bio, hobby, interest, job, profession } = input;
+  const { email, password, username, age, bio, hobby, interest, job, profession, images } = input;
+  console.log(images);
 
   // const check = await userModel.findOne({ email });
 
@@ -16,6 +17,7 @@ export const createUser: MutationResolvers['createUser'] = async (_: unknown, { 
     email,
     password: hashedPassword,
     username,
+    images,
     age,
     bio,
     hobby,

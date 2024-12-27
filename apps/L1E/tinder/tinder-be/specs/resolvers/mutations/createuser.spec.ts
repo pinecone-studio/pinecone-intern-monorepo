@@ -33,6 +33,7 @@ describe('Create user', () => {
           job: '',
           profession: '',
           username: '',
+          images: [],
         },
       },
       {
