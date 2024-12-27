@@ -21,7 +21,6 @@ const roomSchema = new Schema<roomType>(
   {
     maxCapacity: {
       type: Number,
-      required: true,
     },
     name: {
       type: String,
@@ -62,7 +61,6 @@ const roomSchema = new Schema<roomType>(
       {
         type: Schema.Types.ObjectId,
         ref: 'amenity',
-        required: true,
       },
     ],
   },
