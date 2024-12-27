@@ -12,6 +12,7 @@ export const typeDefs = gql`
     profession: String!
     job: String!
     age: String!
+    images: [String!]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -21,6 +22,8 @@ export const typeDefs = gql`
     password: String!
     username: String!
     interest: String!
+    images: [String!]!
+
     bio: String!
     profession: String!
     job: String!
@@ -32,7 +35,7 @@ export const typeDefs = gql`
     username: String!
     bio: String!
     interest: String!
-    profilePicture: String!
+    images: [String!]!
   }
 
   type AuthPayload {
