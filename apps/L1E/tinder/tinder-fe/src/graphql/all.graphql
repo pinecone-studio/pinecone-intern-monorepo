@@ -18,6 +18,7 @@ mutation CreateUser($input: RegisterInput!) {
     profession
     job
     age
+    images
     createdAt
     updatedAt
   }
@@ -28,7 +29,6 @@ mutation RequestOtp($input: RequestOtpInput!) {
     email
   }
 }
-
 
 query GetUserById($userId: ID!) {
   getUserById(userId: $userId) {
@@ -46,7 +46,6 @@ query GetUserById($userId: ID!) {
     updatedAt
   }
 }
-
 
 mutation login($password: String!, $email: String) {
   login(password: $password, email: $email) {
@@ -67,4 +66,3 @@ mutation login($password: String!, $email: String) {
     token
   }
 }
-

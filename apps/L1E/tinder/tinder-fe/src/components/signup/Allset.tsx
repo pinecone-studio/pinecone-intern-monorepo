@@ -24,7 +24,7 @@ export const AllSet = () => {
     }
 
     const parsedData = JSON.parse(savedData);
-    const { email, password, age, bio, hobby, job, name, profession, interested } = parsedData;
+    const { email, password, age, bio, hobby, job, name, images, profession, interested } = parsedData;
 
     await createUser({
       variables: {
@@ -38,6 +38,7 @@ export const AllSet = () => {
           job,
           username: name,
           profession,
+          images,
         },
       },
     });
