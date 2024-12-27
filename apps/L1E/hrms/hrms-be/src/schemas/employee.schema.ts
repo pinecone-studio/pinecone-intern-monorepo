@@ -37,7 +37,7 @@ export const typeDefs = gql`
 
   type Query {
     getEmployeeById(id: ID!): Employee
-    getEmployees(page: Int, limit: Int): [Employee]
+    getEmployees(input: String): [Employee]
   }
 
   type Mutation {
