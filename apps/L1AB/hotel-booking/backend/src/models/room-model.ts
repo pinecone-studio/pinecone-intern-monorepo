@@ -39,7 +39,6 @@ const roomSchema = new Schema<roomType>(
     },
     price: {
       type: Number,
-      required: true,
     },
     photos: [
       {
