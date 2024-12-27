@@ -13,6 +13,8 @@ const nextConfig = {
   env: {
     BACKEND_URI: process.env.BACKEND_URI,
     LOCAL_BACKEND_URI: process.env.LOCAL_BACKEND_URI,
+    NEXT_PUBLIC_CLOUDINARY_URL: process.env.NEXT_PUBLIC_CLOUDINARY_URL,
+    NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
   },
   images: {
     remotePatterns: [
