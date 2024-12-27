@@ -1,6 +1,6 @@
 'use client';
 
-import { GetHotelByIdQuery, GetRoomByIdQuery, useCreateHotelMutation, useGetHotelByIdQuery, useGetRoomByIdQuery } from '@/generated';
+import { GetHotelByIdQuery, GetRoomByIdQuery, RoomType, useCreateHotelMutation, useCreateRoomMutationMutation, useGetHotelByIdQuery, useGetRoomByIdQuery } from '@/generated';
 import { FormikErrors, FormikProps, FormikTouched, useFormik } from 'formik';
 import { useParams, useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
@@ -20,7 +20,7 @@ type RoomFormValues = {
   name: string;
   description: string;
   roomNumber: string;
-  roomType: string;
+  roomType: RoomType;
   price: number;
   photos?: string[] | null;
 };
@@ -42,6 +42,7 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
   const { data: hotelData, loading: hotelLoading } = useGetHotelByIdQuery({ variables: { id: hotel as string } });
   const { data: roomData, loading: roomLoading } = useGetRoomByIdQuery({ variables: { id: room as string } });
   const [createHotel] = useCreateHotelMutation();
+  const [createRoom] = useCreateRoomMutationMutation();
 
   const addHotelForm = useFormik<HotelFormValues>({
     enableReinitialize: true,
@@ -72,13 +73,19 @@ export const AdminProvider = ({ children }: PropsWithChildren) => {
       name: '',
       description: '',
       roomNumber: '',
-      roomType: '',
+      roomType: 'ONE' as RoomType,
       price: 0,
       photos: [],
     },
     validationSchema: roomValidations,
     onSubmit: async (values) => {
-      console.log(values);
+      const { data: newRoomData } = await createRoom({
+        variables: {
+          input: { hotelId: hotel as string, ...values },
+        },
+      });
+      const newHotelId = newRoomData?.createRoom._id;
+      router.push(`/admin/hotels/${hotel}/${newHotelId}`);
     },
   });
   useEffect(() => {

@@ -68,3 +68,18 @@ query GetAvailableRooms($dateRange: DateRangeInput!, $traveler: Int!) {
     updatedAt
   }
 }
+
+mutation createRoomMutation($input: RoomInput!) {
+  createRoom(input: $input) {
+    _id
+    maxCapacity
+    name
+    roomNumber
+    price
+    description
+    photos
+    roomType
+    createdAt
+    updatedAt
+  }
+}
