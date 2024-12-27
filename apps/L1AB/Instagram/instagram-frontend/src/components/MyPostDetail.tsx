@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { LikeButton, SaveButton } from './PostCardLikeSection';
 import { DialogContent } from '@/components/ui/dialog';
+import { useUser } from './providers';
 type PropsType = {
   postimages: string[];
   postcaption: string;
@@ -20,6 +21,7 @@ type PropsType = {
 };
 
 const MyPostDetail = ({ postimages, postcaption, userProfile, userName, postId, userId, createdAt }: PropsType) => {
+  const { user } = useUser();
   const { data: likedata, refetch: likesRefetch } = useGetLikesByPostIdQuery({ variables: { postId } });
   const { data: savedData } = useGetSavedByPostIdQuery({ variables: { postId } });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -46,7 +48,7 @@ const MyPostDetail = ({ postimages, postcaption, userProfile, userName, postId, 
   const handleComment = async (postId: string) => {
     await createComment({
       variables: {
-        input: { comment: comments, postId: postId, userId: userId },
+        input: { comment: comments, postId: postId, userId: user._id },
       },
     });
     await refetch();
