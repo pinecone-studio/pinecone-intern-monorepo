@@ -26,7 +26,7 @@ export const typeDefs = gql`
     maxCapacity: Int
     hotelId: ID!
     roomNumber: String!
-    price: Int!
+    price: Int
     description: String
     photos: [String!]
     roomType: RoomType!
