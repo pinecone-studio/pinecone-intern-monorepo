@@ -11,23 +11,29 @@ import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SuccessModal from './Successmodal';
 import { RequestsInput } from '@/utils/requests-input';
-import { RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
+import { Employee, RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
 import { useState } from 'react';
 import requestSchema from '@/utils/request-schema';
-const RequestcomDay1 = () => {
-   const form = useForm<RequestsInput>({
-     resolver: zodResolver(requestSchema),
-     defaultValues: { date: new Date(), startTime: '08:00', endTime: '17:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: '676e4cd433fccb9fd4362ef0' },
-   });
-  const [ isOpen,setIsOpen]=useState(false)
+interface RequestcomPaidProps {
+  leads: Employee[];
+}
+const RequestcomDay1 = ({ leads }: RequestcomPaidProps) => {
+  const form = useForm<RequestsInput>({
+    resolver: zodResolver(requestSchema),
+    defaultValues: { date: new Date(), startTime: '08:00', endTime: '17:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
+  });
+  const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();
   const onSubmit = async (data: RequestsInput) => {
-      const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
-      await createRequest({ variables: { input: newdata } });
-      setIsOpen(true)
-      setTimeout(() => {  form.reset();
-      setIsOpen(false);}, 1500);
-    }
+    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
+    const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
+    await createRequest({ variables: { input: newdata } });
+    setIsOpen(true);
+    setTimeout(() => {
+      form.reset();
+      setIsOpen(false);
+    }, 1500);
+  };
   return (
     <div className="space-y2 flex flex-col items-end">
       <Form {...form}>
@@ -70,15 +76,11 @@ const RequestcomDay1 = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem data-testid="Option-1" value="676e4d0d33fccb9fd4362ef2">
-                      Option 1
-                    </SelectItem>
-                    <SelectItem data-testid="Option-2" value="option2">
-                      Option 2
-                    </SelectItem>
-                    <SelectItem data-testid="Option-3" value="option3">
-                      Option 3
-                    </SelectItem>
+                    {leads?.map((e, index) => (
+                      <SelectItem key={index} data-testid={`Option-${index + 1}`} value={e._id}>
+                        {e.username}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

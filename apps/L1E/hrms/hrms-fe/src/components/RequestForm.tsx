@@ -3,15 +3,21 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import Requestcom from './requestForm/RequestFormcom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RequestcomPaid from './requestForm/RequestFormPaid';
 import Requestcomremote from './requestForm/RequestFormRemote';
+import { Employee, useGetEmployeesQuery } from '@/generated';
 
 const RequestForm = () => {
   const [item,setItem]=useState("")
    const handleSelectChange = (value:string) => {
     setItem(value); 
   };
+    const [leads, setLeads] = useState<Employee[]>([]);
+    const { data} = useGetEmployeesQuery({ variables: { input: 'Lead' } });
+    useEffect(() => {
+      setLeads(data?.getEmployees as Employee[]);
+    }, [data]);
   return (
     <Card className="w-[608px] border-[#E4E4E7] mx-auto">
       <CardContent className="p-8">
@@ -28,9 +34,15 @@ const RequestForm = () => {
                   <SelectValue placeholder="Сонгоно уу" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem data-testid="item1" value="Чөлөө">Чөлөө</SelectItem>
-                  <SelectItem data-testid="item2" value="Цалинтай чөлөө">Цалинтай чөлөө</SelectItem>
-                  <SelectItem data-testid="item3" value="Зайнаас ажиллах">Зайнаас ажиллах</SelectItem>
+                  <SelectItem data-testid="item1" value="Чөлөө">
+                    Чөлөө
+                  </SelectItem>
+                  <SelectItem data-testid="item2" value="Цалинтай чөлөө">
+                    Цалинтай чөлөө
+                  </SelectItem>
+                  <SelectItem data-testid="item3" value="Зайнаас ажиллах">
+                    Зайнаас ажиллах
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -42,9 +54,9 @@ const RequestForm = () => {
             </div>
           </div>
         </div>
-        {item == 'Чөлөө' ? <Requestcom /> : ''}
-        {item == 'Цалинтай чөлөө' ? <RequestcomPaid /> : ''}
-        {item == 'Зайнаас ажиллах' ? <Requestcomremote /> : ''}
+        {item == 'Чөлөө' ? <Requestcom leads={leads} /> : ''}
+        {item == 'Цалинтай чөлөө' ? <RequestcomPaid leads={leads} /> : ''}
+        {item == 'Зайнаас ажиллах' ? <Requestcomremote leads={leads} /> : ''}
       </CardContent>
     </Card>
   );
