@@ -17,11 +17,12 @@ import { useState } from 'react';
 import SuccessModal from './Successmodal';
 interface RequestcomPaidProps {
   leads: Employee[];
+  employee: Employee;
 }
-const RequestcomPaid = ({ leads }: RequestcomPaidProps) => {
+const RequestcomPaid = ({ leads, employee }: RequestcomPaidProps) => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.PaidLeave, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
+    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.PaidLeave, reason: '', employeeId: employee._id },
   });
   const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();

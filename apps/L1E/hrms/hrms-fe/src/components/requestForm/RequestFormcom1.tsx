@@ -16,11 +16,12 @@ import { useState } from 'react';
 import requestSchema from '@/utils/request-schema';
 interface RequestcomPaidProps {
   leads: Employee[];
+  employee: Employee;
 }
-const RequestcomDay1 = ({ leads }: RequestcomPaidProps) => {
+const RequestcomDay1 = ({ leads, employee }: RequestcomPaidProps) => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '08:00', endTime: '17:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
+    defaultValues: { date: new Date(), startTime: '08:00', endTime: '17:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: employee._id },
   });
   const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();

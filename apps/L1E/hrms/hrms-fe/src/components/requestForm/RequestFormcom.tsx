@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { Employee } from '@/generated';
 interface RequestcomPaidProps {
   leads: Employee[];
+  employee: Employee;
 }
-const Requestcom = ({ leads }: RequestcomPaidProps) => {
+const Requestcom = ({ leads, employee }: RequestcomPaidProps) => {
   const [day, setDay] = useState(false);
   return (
     <div className="space-y2">
@@ -47,7 +48,7 @@ const Requestcom = ({ leads }: RequestcomPaidProps) => {
           </div>
         </div>
       </RadioGroup>
-      {day ? <RequestcomDay1 leads={leads} /> : <RequestcomTime1 leads={leads}/>}
+      {day ? <RequestcomDay1 leads={leads} employee={employee} /> : <RequestcomTime1 leads={leads} employee={employee} />}
     </div>
   );
 };

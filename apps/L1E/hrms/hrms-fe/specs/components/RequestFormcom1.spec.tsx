@@ -30,6 +30,19 @@ const mockLeads: Employee[] = [
     updatedAt: '2023-07-12',
   },
 ];
+const mockEmployee: Employee = {
+  _id: '676e6e4007d5ae05a35cda9e',
+  email: 'shagai@gmail.com',
+  jobTitle: 'junior',
+  username: 'shagai',
+  adminStatus: false,
+  remoteLimit: 5,
+  paidLeaveLimit: 5,
+  freeLimit: 5,
+  employeeStatus: EmployeeStatus.Employee,
+  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+};
 const createRequestMock: MockedResponse = {
   request: {
     query: CreateRequestDocument,
@@ -67,7 +80,7 @@ describe('RequestcomDay1', () => {
   it('submits data and calls createRequest mutation', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[createRequestMock]} addTypename={false}>
-        <RequestcomDay1 leads={mockLeads} />
+        <RequestcomDay1 leads={mockLeads} employee={mockEmployee} />
       </MockedProvider>
     );
     const calendarBtn = getByTestId('calendar-btn');
