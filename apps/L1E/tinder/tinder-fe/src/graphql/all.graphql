@@ -85,3 +85,9 @@ mutation UpdateUser($id: ID!, $input: UpdateInput!) {
     updatedAt
   }
 }
+
+mutation changePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    message
+  }
+}

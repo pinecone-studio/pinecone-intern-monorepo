@@ -1,14 +1,32 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Confirm from './Confirm';
 
 const Forgetpassword = () => {
   const [step, setStep] = useState<'forget' | 'confirm' | 'newpassword'>('forget');
 
-  const toggle = (step: 'forget' | 'confirm') => {
-    setStep(step);
+  const [formData, setFormData] = useState({
+    email: '',
+    otp: '',
+  });
+
+  useEffect(() => {
+    localStorage.setItem('forgetpassword', JSON.stringify(formData));
+  }, [formData]);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      email: e.target.value,
+    }));
   };
 
+  const handleSubmit = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(formData.email)) {
+      return;
+    }
+    setStep('confirm');
+  };
   return (
     <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
       {step === 'forget' ? (
@@ -21,9 +39,18 @@ const Forgetpassword = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <div className="font-medium text-sm">Email</div>
-              <input placeholder="name@example.com" className="w-[350px] h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]" type="text" />
+              <input
+                name="email"
+                data-testid="email"
+                value={formData.email}
+                onChange={handleEmailChange}
+                placeholder="name@example.com"
+                className="w-[350px] h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
+                type="email"
+                id="email"
+              />{' '}
             </div>
-            <button className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48E5]" onClick={() => toggle('confirm')}>
+            <button data-testid="confirm" className="flex w-[350px] h-[36px] font-medium text-sm justify-center items-center rounded-full text-white bg-[#E11D48E5]" onClick={handleSubmit}>
               Confirm Email
             </button>
           </div>
