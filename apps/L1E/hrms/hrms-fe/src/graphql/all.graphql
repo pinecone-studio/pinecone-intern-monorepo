@@ -15,3 +15,19 @@ mutation CreateRequest($input: RequestInput!) {
     createdAt
   }
 }
+
+query GetEmployees($input: String) {
+  getEmployees(input: $input) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    updatedAt
+    createdAt
+  }
+}

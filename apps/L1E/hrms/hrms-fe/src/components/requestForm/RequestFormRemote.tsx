@@ -13,13 +13,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RequestsInput } from '@/utils/requests-input';
 import requestSchema from '@/utils/request-schema';
 import { useState } from 'react';
-import { RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
+import { Employee, RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
 import SuccessModal from './Successmodal';
-
-const Requestcomremote = () => {
+interface RequestcomPaidProps {
+  leads: Employee[];
+}
+const Requestcomremote = ({ leads }: RequestcomPaidProps) => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: '676e4cd433fccb9fd4362ef0' },
+    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
   });
   const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();
@@ -27,15 +29,12 @@ const Requestcomremote = () => {
     const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
     await createRequest({ variables: { input: newdata } });
-    console.log(newdata);
-
     setIsOpen(true);
     setTimeout(() => {
       form.reset();
       setIsOpen(false);
     }, 1500);
   };
-
   return (
     <div className="space-y2">
       <Label className="text-sm">Төрөл*</Label>
@@ -79,15 +78,11 @@ const Requestcomremote = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem data-testid="Option-1" value="676e4d0d33fccb9fd4362ef2">
-                      Option 1
-                    </SelectItem>
-                    <SelectItem data-testid="Option-2" value="option2">
-                      Option 2
-                    </SelectItem>
-                    <SelectItem data-testid="Option-3" value="option3">
-                      Option 3
-                    </SelectItem>
+                    {leads?.map((e, index) => (
+                      <SelectItem key={index} data-testid={`Option-${index + 1}`} value={e._id}>
+                        {e.username}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
