@@ -63,7 +63,6 @@ export const typeDefs = gql`
   }
 
   type ChangePasswordResponse {
-    success: Boolean!
     message: String!
   }
 
