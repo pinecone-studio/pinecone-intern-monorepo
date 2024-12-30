@@ -23,6 +23,7 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI,
+    SECRET: process.env.SECRET,
   },
   nx: {
     svgr: false,
