@@ -6,9 +6,23 @@ import Requestcom from './requestForm/RequestFormcom';
 import { useEffect, useState } from 'react';
 import RequestcomPaid from './requestForm/RequestFormPaid';
 import Requestcomremote from './requestForm/RequestFormRemote';
-import { Employee, useGetEmployeesQuery } from '@/generated';
+import { Employee, EmployeeStatus, useGetEmployeesQuery } from '@/generated';
 
 const RequestForm = () => {
+  const employee:Employee = {
+    _id: '676e6e4007d5ae05a35cda9e',
+    email: 'shagai@gmail.com',
+    jobTitle: 'junior',
+    username: 'shagai',
+    adminStatus: false,
+    remoteLimit: 5,
+    paidLeaveLimit: 5,
+    freeLimit: 5,
+    employeeStatus: EmployeeStatus.Employee,
+    createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+    updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+   
+  };
   const [item,setItem]=useState("")
    const handleSelectChange = (value:string) => {
     setItem(value); 
@@ -18,6 +32,16 @@ const RequestForm = () => {
     useEffect(() => {
       setLeads(data?.getEmployees as Employee[]);
     }, [data]);
+    const componentMap: { [key: string]: JSX.Element | null } = {
+      Чөлөө: <Requestcom leads={leads} employee={employee} />,
+      'Цалинтай чөлөө': <RequestcomPaid leads={leads} employee={employee} />,
+      'Зайнаас ажиллах': <Requestcomremote leads={leads} employee={employee} />,
+    };
+    const limits: { [key: string]: number | null } = {
+    'Чөлөө': employee.freeLimit,
+    'Цалинтай чөлөө': employee.paidLeaveLimit,
+    'Зайнаас ажиллах': employee.remoteLimit,
+  };
   return (
     <Card className="w-[608px] border-[#E4E4E7] mx-auto">
       <CardContent className="p-8">
@@ -49,14 +73,12 @@ const RequestForm = () => {
             <div className="pt-4">
               <div className="flex justify-end items-center text-sm">
                 <span className="text-muted-foreground text-xs font-normal">Боломжит хугацаа: </span>
-                <span className="text-xs"> - хоног</span>
+                <span className="text-xs"> {limits[item]} хоног</span>
               </div>
             </div>
           </div>
         </div>
-        {item == 'Чөлөө' ? <Requestcom leads={leads} /> : ''}
-        {item == 'Цалинтай чөлөө' ? <RequestcomPaid leads={leads} /> : ''}
-        {item == 'Зайнаас ажиллах' ? <Requestcomremote leads={leads} /> : ''}
+        {componentMap[item]}
       </CardContent>
     </Card>
   );

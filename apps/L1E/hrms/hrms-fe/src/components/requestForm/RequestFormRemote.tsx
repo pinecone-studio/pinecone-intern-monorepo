@@ -17,11 +17,12 @@ import { Employee, RequestInput, RequestStatus, useCreateRequestMutation } from 
 import SuccessModal from './Successmodal';
 interface RequestcomPaidProps {
   leads: Employee[];
+  employee: Employee;
 }
-const Requestcomremote = ({ leads }: RequestcomPaidProps) => {
+const Requestcomremote = ({ leads, employee }: RequestcomPaidProps) => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
+    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: employee._id },
   });
   const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();

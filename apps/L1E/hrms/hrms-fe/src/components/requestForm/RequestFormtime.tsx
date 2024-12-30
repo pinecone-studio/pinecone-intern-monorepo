@@ -16,11 +16,11 @@ import SuccessModal from './Successmodal';
 import { useState } from 'react';
 interface RequestcomPaidProps {
   leads: Employee[];
+  employee: Employee;
 }
-const RequestcomTime1 = ({ leads }: RequestcomPaidProps) => {
-  const form = useForm<RequestsInput>({
-    resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '08:00', endTime: '09:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: '676e6e4007d5ae05a35cda9e' },
+const RequestcomTime1 = ({ leads, employee }: RequestcomPaidProps) => {
+  const form = useForm<RequestsInput>({  resolver: zodResolver(requestSchema),
+    defaultValues: { date: new Date(), startTime: '08:00', endTime: '09:00', leadEmployeeId: '', requestStatus: RequestStatus.Free, reason: '', employeeId: employee._id },
   });
   const [isOpen, setIsOpen] = useState(false);
   const [createRequest] = useCreateRequestMutation();
@@ -29,7 +29,7 @@ const RequestcomTime1 = ({ leads }: RequestcomPaidProps) => {
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
     await createRequest({ variables: { input: newdata } });
     setIsOpen(true);
-    setTimeout(() => { form.reset();setIsOpen(false); }, 1500);
+    setTimeout(() => { form.reset(); setIsOpen(false); }, 1500);
   };
   return (
     <div className="space-y2 flex ">
