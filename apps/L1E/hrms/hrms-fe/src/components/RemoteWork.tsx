@@ -18,7 +18,7 @@ export const RemoteWork = ({ availableDays, totalRemoteDays }: RemoteHoverCardPr
         <div>
           <div className="w-[214.67px] h-[112px] bg-[#FFFFFF] flex flex-col border border-[#E4E4E7] rounded-xl pt-[18px] pl-6 pb-4">
             <div className="flex flex-row gap-[30px]">
-              <div className="text-sm font-medium text-foreground">Зайнаас ажиллах</div>
+              <div className=" text-sm font-medium text-foreground">Зайнаас ажиллах</div>
               <IoIosInformationCircleOutline className="w-4 h-4" />
             </div>
 
