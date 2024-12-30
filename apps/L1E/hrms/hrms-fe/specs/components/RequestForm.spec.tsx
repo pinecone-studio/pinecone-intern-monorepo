@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import RequestForm from '@/components/RequestForm';
 import { MockedProvider } from '@apollo/client/testing';
-import gql from 'graphql-tag';
+import { GetEmployeesDocument } from '@/generated';
 
 jest.mock('../../src/components/requestForm/RequestFormcom', () => ({
   __esModule: true,
@@ -17,27 +17,12 @@ jest.mock('../../src/components/requestForm/RequestFormRemote', () => ({
   __esModule: true,
   default: jest.fn(() => <div>Time Component</div>),
 }));
-const GET_EMPLOYEES_QUERY = gql`
-  query GetEmployees {
-    getEmployees {
-      _id
-      email
-      jobTitle
-      username
-      adminStatus
-      remoteLimit
-      paidLeaveLimit
-      freeLimit
-      employeeStatus
-      createdAt
-      updatedAt
-    }
-  }
-`;
+
+
 
 const mockGetEmployees = {
   request: {
-    query: GET_EMPLOYEES_QUERY,
+    query: GetEmployeesDocument,
   },
   result: {
     data: {
