@@ -1,54 +1,38 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Setnewpassword from './Setnewpassword';
+import Image from 'next/image';
 
 const Confirm: React.FC = () => {
-  const [step, setStep] = useState<'confirm' | 'newpassword'>('confirm');
-  const [time, setTime] = useState(30);
-  const [otp, setOtp] = useState(['', '', '', '']);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    if (otp.every((digit) => digit !== '')) {
-      setStep('newpassword');
-    }
-  }, [otp]);
-
-  const handleOtpChange = (index: number, value: string) => {
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-  };
-
-  if (step === 'newpassword') {
-    return <Setnewpassword />;
-  }
+  const [step, _setStep] = useState<'confirm' | 'newpassword'>('confirm');
+  const [_time, _setTime] = useState(30);
 
   return (
-    <div>
-      <h2>Confirm email</h2>
-      <p>To continue, enter the secure code we sent to your email</p>
-      <div>
-        {otp.map((digit, index) => (
-          <input key={index} type="text" value={digit} onChange={(e) => handleOtpChange(index, e.target.value)} maxLength={1} data-testid="set-new-password" />
-        ))}
+    <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
+      {/* {step === 'confirm' ? ( */}
+      <div className=" flex flex-col items-center justify-between h-[276px] w-[350px] ">
+        <Image width={100} height={24} src="/redlogo.png" alt="Logo" />
+        <div className="flex gap-2 h-[72px] w-[305px] items-center flex-col">
+          <div className="font-semibold text-black text-2xl">Confirm email</div>
+          <div className="font-normal text-center text-sm text-[#71717A]">{`To continue, enter the secure code we sent to  Check junk mail if it’s not in your inbox.`}</div>
+        </div>
+        <div className="flex items-center justify-center w-[157px] max-sm:w-full">
+          <div className="flex gap-[2px]">
+            <input
+              data-testid="Signup"
+              type="text"
+              maxLength={1}
+              className="h-[40px] w-[40px] text-center text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 text-black"
+            />
+          </div>
+        </div>
       </div>
-      <button>Send again</button>
-      <span>({time.toString().padStart(2, '0')})</span>
+      {/* ) : ( */}
+      {/* step === 'newpassword' && <Setnewpassword /> */}
+      {/* )} */}
     </div>
   );
 };
