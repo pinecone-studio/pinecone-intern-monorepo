@@ -1,6 +1,30 @@
+/* eslint-disable no-unused-vars */
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Loading } from '@/components/main/Loading';
 import Signin from '@/components/signin/Signin';
 
-const page = () => {
+const SigninPage = () => {
+  const [_hasToken, setHasToken] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setHasToken(true);
+      router.push('/main');
+    } else {
+      setHasToken(false);
+    }
+    setLoading(false);
+  }, [router]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <Signin />
@@ -8,4 +32,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SigninPage;
