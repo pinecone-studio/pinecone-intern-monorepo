@@ -61,6 +61,7 @@ mutation login($password: String!, $email: String) {
       profession
       job
       age
+      images
       createdAt
       updatedAt
     }
