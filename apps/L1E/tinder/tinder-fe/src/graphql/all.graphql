@@ -6,7 +6,7 @@ mutation Mutation {
   sampleMutation
 }
 
-mutation CreateUser($input: RegisterInput!) {
+mutation createUser($input: RegisterInput!) {
   createUser(input: $input) {
     _id
     email
@@ -19,6 +19,7 @@ mutation CreateUser($input: RegisterInput!) {
     job
     age
     images
+    match
     createdAt
     updatedAt
   }

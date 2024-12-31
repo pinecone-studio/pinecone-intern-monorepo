@@ -39,10 +39,11 @@ export const AllSet = () => {
           username: name,
           profession,
           images,
+          match: '',
         },
       },
     });
-    router.push('/home');
+    router.push('/main');
   };
 
   return (
