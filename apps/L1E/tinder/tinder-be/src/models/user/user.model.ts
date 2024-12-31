@@ -14,6 +14,7 @@ export type UserType = {
   profession: string;
   job: string;
   hobby: string;
+  match: string;
 };
 
 const UserSchema = new Schema<UserType>({
@@ -60,6 +61,11 @@ const UserSchema = new Schema<UserType>({
   password: {
     type: String,
     required: true,
+  },
+  match: {
+    type: String,
+    required: false,
+    default: '',
   },
   images: [
     {
