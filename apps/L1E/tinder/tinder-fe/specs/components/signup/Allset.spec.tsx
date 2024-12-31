@@ -71,11 +71,12 @@ describe('AllSet Component', () => {
             job: 'Developer',
             username: 'Test User',
             profession: 'Software Engineer',
+            match: '',
           },
         },
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/home');
+      expect(mockPush).toHaveBeenCalledWith('/main');
     });
   });
 
