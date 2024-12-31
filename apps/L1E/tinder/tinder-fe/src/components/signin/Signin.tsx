@@ -15,7 +15,7 @@ const Signin = () => {
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
       toast.success('Signin successful!', { autoClose: 2000 });
-      router.push('/home');
+      router.push('/main');
     },
   });
 
