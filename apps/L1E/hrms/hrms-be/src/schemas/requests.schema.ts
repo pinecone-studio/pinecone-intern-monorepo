@@ -30,7 +30,6 @@ export const typeDefs = gql`
 
   type RequestList {
     requests: [Request]
-    totalCount: Int
   }
 
   input RequestInput {
@@ -52,8 +51,8 @@ export const typeDefs = gql`
 
   type Query {
     getRequestById(id: ID!): Request
-    getRequestsByEmployee(employee_id: ID!, page: Int, limit: Int): RequestList!
     getAllRequests(limit: Int): [Request]
+    getRequestsByEmployee(employeeId: ID!): [Request]
   }
 
   type Mutation {
