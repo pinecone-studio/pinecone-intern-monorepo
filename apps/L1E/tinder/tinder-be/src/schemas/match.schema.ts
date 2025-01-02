@@ -14,7 +14,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    getMatchedUserById(_id: ID!): Match!
+    getMatchedUsers(authId: String!): [Match!]!
   }
 
   input MatchUsersCreateInput {
