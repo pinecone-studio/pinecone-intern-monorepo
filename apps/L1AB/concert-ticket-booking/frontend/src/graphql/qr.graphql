@@ -1,6 +1,0 @@
-mutation SendQrToEmail {
-  sendQrToEmail {
-    success
-    message
-  }
-}
