@@ -10,7 +10,7 @@ const Page = () => {
       Home Page
       <RequestForm />
       <DateRangePicker />
-      <Header/>
+      <Header />
     </div>
   );
 };
