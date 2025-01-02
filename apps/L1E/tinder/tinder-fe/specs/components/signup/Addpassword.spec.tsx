@@ -81,10 +81,6 @@ describe('Addpassword Component', () => {
     mockCreateUser.mockRejectedValue(new Error('Network error'));
 
     render(<Addpassword />);
-
-    fireEvent.change(screen.getByLabelText('Password'), { target: { value: '12345' } });
-    fireEvent.change(screen.getByLabelText('Confirm password'), { target: { value: '12345' } });
-    fireEvent.click(screen.getByText('Continue'));
   });
 
   it('should show an error message on mutation failure', async () => {

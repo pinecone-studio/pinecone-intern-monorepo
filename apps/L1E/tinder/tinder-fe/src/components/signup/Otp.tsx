@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -16,7 +15,9 @@ export const Otp = () => {
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('signupFormData');
-    setEmail(JSON.parse(savedEmail!).email);
+    if (savedEmail) {
+      setEmail(JSON.parse(savedEmail).email);
+    }
   }, []);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export const Otp = () => {
   }, [value]);
 
   const handleInputChange = (index: number, newValue: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     newValue.length > 1;
 
     const newValues = [...value];

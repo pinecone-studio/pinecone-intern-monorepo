@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -21,12 +20,10 @@ const UserInformation = () => {
       job: '',
     },
   });
-
   const getSavedData = (): any => {
     const savedData = localStorage.getItem('signupFormData');
     return savedData ? JSON.parse(savedData) : {};
   };
-
   const prefillForm = (data: any) => {
     const fields: { name: 'name' | 'bio' | 'hobby' | 'profession' | 'job'; key: string }[] = [
       { name: 'name', key: 'Username' },
@@ -43,7 +40,11 @@ const UserInformation = () => {
 
   useEffect(() => {
     const savedData = getSavedData();
-    prefillForm(savedData);
+    if (savedData.name) {
+      setStep('image');
+    } else {
+      prefillForm(savedData);
+    }
   }, []);
 
   const saveFormDataToLocalStorage = (data: any) => {
@@ -67,6 +68,7 @@ const UserInformation = () => {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleFormSubmit)} className="w-full flex flex-col gap-6">
                 <FormField
+                  data-testid="form"
                   control={form.control}
                   name="name"
                   render={({ field }) => (

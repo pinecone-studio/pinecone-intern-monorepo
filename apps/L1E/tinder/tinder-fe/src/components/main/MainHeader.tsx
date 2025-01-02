@@ -18,7 +18,6 @@ export const MainHeader = ({ user }: any) => {
     setDropdownOpen((prev) => !prev);
   };
 
-  // Use fallback image if images are not provided
   const userImage = user?.images?.[0] || 'redlogo.png'; // Set a fallback image if not available
 
   return (

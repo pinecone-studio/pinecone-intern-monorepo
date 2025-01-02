@@ -3,23 +3,31 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Otp from './Otp';
+import Addpassword from './Addpassword';
 
 const Signup: React.FC = () => {
-  const [step, setStep] = useState<'signup' | 'confirm'>('signup');
+  const [step, setStep] = useState<'signup' | 'confirm' | 'addPassword'>('signup');
   const [error, setError] = useState('');
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    interested: '',
-    age: '',
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('signupFormData');
+    return savedData ? JSON.parse(savedData) : { email: '', password: '', interested: '', age: '' };
   });
 
   useEffect(() => {
-    localStorage.setItem('signupFormData', JSON.stringify(formData));
+    const savedData = localStorage.getItem('signupFormData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      setFormData(parsedData);
+      setStep('addPassword');
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('signupFormData', JSON.stringify(formData)); // Store entire form data
   }, [formData]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       email: e.target.value,
     }));
@@ -31,6 +39,7 @@ const Signup: React.FC = () => {
       setError('Please enter a valid email address.');
       return;
     }
+    localStorage.setItem('signupFormData', JSON.stringify({ ...formData, email: formData.email }));
     setStep('confirm');
   };
 
@@ -75,8 +84,10 @@ const Signup: React.FC = () => {
             </Link>
           </div>
         </div>
+      ) : step === 'confirm' ? (
+        <Otp />
       ) : (
-        step === 'confirm' && <Otp />
+        step === 'addPassword' && <Addpassword />
       )}
     </div>
   );

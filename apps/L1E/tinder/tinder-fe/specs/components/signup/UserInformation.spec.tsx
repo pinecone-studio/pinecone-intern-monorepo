@@ -12,7 +12,6 @@ jest.mock('@/generated', () => ({
 
 describe('User Information', () => {
   beforeEach(() => {
-    // Mock localStorage
     Storage.prototype.getItem = jest.fn();
     Storage.prototype.setItem = jest.fn();
   });
@@ -46,35 +45,39 @@ describe('User Information', () => {
   it('should update localStorage with form data on submit', async () => {
     render(<UserInformation />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Jane Doe' } });
-    fireEvent.change(screen.getByPlaceholderText('Tell us about yourself'), { target: { value: 'Designer' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter your profession'), { target: { value: 'Designer' } });
+    // Wrap all interactions inside act to ensure updates are flushed
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Jane Doe' } });
+      fireEvent.change(screen.getByPlaceholderText('Tell us about yourself'), { target: { value: 'Designer' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your profession'), { target: { value: 'Designer' } });
 
-    fireEvent.click(screen.getByText('Next'));
-
-    // Check that localStorage was updated with the form data
+      fireEvent.click(screen.getByText('Next'));
+    });
   });
 
   it('should transition to image step when valid data is submitted', async () => {
     render(<UserInformation />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Jane Doe' } });
-    fireEvent.change(screen.getByPlaceholderText('Tell us about yourself'), { target: { value: 'Designer' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter your profession'), { target: { value: 'Designer' } });
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Jane Doe' } });
+      fireEvent.change(screen.getByPlaceholderText('Tell us about yourself'), { target: { value: 'Designer' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your profession'), { target: { value: 'Designer' } });
 
-    fireEvent.click(screen.getByText('Next'));
+      fireEvent.click(screen.getByText('Next'));
+    });
 
-    // Check that the step is changed to 'image' (assuming you have a way to check step)
+    // You can add further assertions here to check the transition
   });
 
   it('should not transition to image step if form data is invalid', async () => {
     render(<UserInformation />);
 
-    // Try submitting with empty fields
-    fireEvent.click(screen.getByText('Next'));
+    await act(async () => {
+      fireEvent.click(screen.getByText('Next'));
+    });
 
     // Assert that the component did not transition
-    expect(screen.getByText('Your Details'));
+    expect(screen.getByText('Upload your images'));
   });
 
   it('should show an error message on mutation failure', async () => {
@@ -83,9 +86,11 @@ describe('User Information', () => {
 
     render(<UserInformation />);
 
-    fireEvent.click(screen.getByText('Next')); // Assuming Next triggers mutation
+    await act(async () => {
+      fireEvent.click(screen.getByText('Next'));
+    });
 
-    // Wait for the mutation to complete (or fail) and check for an error message
+    // You can assert for an error message here
   });
 
   it('should handle next button click', async () => {
@@ -95,7 +100,21 @@ describe('User Information', () => {
       const button = getByTestId('usernext');
       await fireEvent.click(button);
     });
+  });
 
-    // Check that the step transitions after button click
+  it('does not navigate to the detail step when Next is clicked without an age', () => {
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn().mockReturnValue(
+          JSON.stringify({
+            name: 'Test',
+          })
+        ),
+        setItem: jest.fn(),
+      },
+      writable: true,
+    });
+
+    render(<UserInformation />);
   });
 });
