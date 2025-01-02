@@ -51,7 +51,6 @@ describe('Confirmsignup Component', () => {
       });
     });
   });
-
   test('should handle backspace keypress correctly', async () => {
     render(<Otp />);
 
@@ -65,7 +64,6 @@ describe('Confirmsignup Component', () => {
     expect(inputFields[1].value);
     expect(inputFields[1]);
   });
-
   test('should proceed to the signup step if OTP is complete', async () => {
     render(<Otp />);
 
@@ -146,7 +144,6 @@ describe('Confirmsignup Component', () => {
     const secondInput = inputs[1];
     fireEvent.change(secondInput, { target: { value: '1' } });
     fireEvent.keyDown(secondInput, { key: 'Backspace' });
-    // expect(document.activeElement), secondInput;
   });
 
   it('should not move focus when Backspace is pressed on the first input', () => {

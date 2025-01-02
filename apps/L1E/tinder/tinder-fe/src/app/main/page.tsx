@@ -40,7 +40,7 @@ const Page: React.FC = () => {
 
   return (
     <div>
-      <MainHeader user={{ images: ['redlogo.png'] }} />
+      <MainHeader user={user} />
       <CarouselUser />
       <UnMatch />
     </div>

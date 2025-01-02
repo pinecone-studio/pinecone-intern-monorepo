@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -9,7 +8,7 @@ const Addpassword: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [step, setStep] = useState('confirm');
+  const [step, setStep] = useState<'confirm' | 'interest'>('confirm');
 
   useEffect(() => {
     const savedData = localStorage.getItem('signupFormData');
@@ -17,18 +16,10 @@ const Addpassword: React.FC = () => {
       const parsedData = JSON.parse(savedData);
       if (parsedData.password) {
         setPassword(parsedData.password);
+        setStep('interest');
       }
     }
   }, []);
-
-  useEffect(() => {
-    const savedData = localStorage.getItem('signupFormData');
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      parsedData.password = password;
-      localStorage.setItem('signupFormData', JSON.stringify(parsedData));
-    }
-  }, [password]);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -52,7 +43,7 @@ const Addpassword: React.FC = () => {
     const savedData = localStorage.getItem('signupFormData') || '{}';
     const parsedData = JSON.parse(savedData);
     parsedData.password = password;
-    localStorage.setItem('signupFormData', JSON.stringify(parsedData));
+    localStorage.setItem('signupFormData', JSON.stringify(parsedData)); // Persist password to localStorage
 
     setStep('interest');
   };

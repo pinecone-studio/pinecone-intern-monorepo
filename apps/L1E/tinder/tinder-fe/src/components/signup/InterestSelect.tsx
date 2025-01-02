@@ -15,18 +15,25 @@ export const InterestSelect = () => {
     const savedData = localStorage.getItem('signupFormData');
     if (!savedData) return;
     const parsedData = JSON.parse(savedData);
-    setSelectedInterest(parsedData.interested);
+    if (parsedData.interested) {
+      setSelectedInterest(parsedData.interested);
+      setStep('age');
+    }
   }, []);
 
   useEffect(() => {
-    const savedData = localStorage.getItem('signupFormData');
-    const parsedData = savedData ? JSON.parse(savedData) : {};
-    parsedData.interested = selectedInterest;
-    localStorage.setItem('signupFormData', JSON.stringify(parsedData));
+    if (selectedInterest) {
+      const savedData = localStorage.getItem('signupFormData') || '{}';
+      const parsedData = JSON.parse(savedData);
+      parsedData.interested = selectedInterest;
+      localStorage.setItem('signupFormData', JSON.stringify(parsedData));
+    }
   }, [selectedInterest]);
 
   const handleNext = () => {
-    setStep('age');
+    if (selectedInterest) {
+      setStep('age');
+    }
   };
 
   return (
