@@ -51,10 +51,8 @@ export const typeDefs = gql`
 
   type Query {
     getRequestById(id: ID!): Request
-    getRequestsByEmployee(employee_id: ID!, page: Int, limit: Int): RequestList!
     getAllRequests(limit: Int): [Request]
     getRequestsByEmployee(employeeId: ID!): [Request]
-    getAllRequests(limit: Int): RequestList!
   }
 
   type Mutation {
