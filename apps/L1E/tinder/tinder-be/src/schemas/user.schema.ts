@@ -13,6 +13,7 @@ export const typeDefs = gql`
     job: String!
     age: String!
     images: [String!]!
+    match: String!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -23,7 +24,7 @@ export const typeDefs = gql`
     username: String!
     interest: String!
     images: [String!]!
-
+    match: String!
     bio: String!
     profession: String!
     job: String!

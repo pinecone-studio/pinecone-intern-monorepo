@@ -6,7 +6,7 @@ mutation Mutation {
   sampleMutation
 }
 
-mutation CreateUser($input: RegisterInput!) {
+mutation createUser($input: RegisterInput!) {
   createUser(input: $input) {
     _id
     email
@@ -19,6 +19,7 @@ mutation CreateUser($input: RegisterInput!) {
     job
     age
     images
+    match
     createdAt
     updatedAt
   }
@@ -61,6 +62,7 @@ mutation login($password: String!, $email: String) {
       profession
       job
       age
+      images
       createdAt
       updatedAt
     }
@@ -83,5 +85,11 @@ mutation UpdateUser($id: ID!, $input: UpdateInput!) {
     images
     createdAt
     updatedAt
+  }
+}
+
+mutation changePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    message
   }
 }

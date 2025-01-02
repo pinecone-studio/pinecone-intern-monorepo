@@ -14,8 +14,10 @@ const Signin = () => {
   const [LoginMutation] = useLoginMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
+      localStorage.setItem('user', JSON.stringify(data.login.user));
+
       toast.success('Signin successful!', { autoClose: 2000 });
-      router.push('/home');
+      router.push('/main');
     },
   });
 
@@ -39,7 +41,6 @@ const Signin = () => {
         <img className="w-[100px] h-[24px]" src="redlogo.png" alt="" />
         <div className="flex gap-2 h-[72px] items-center flex-col">
           <div className="font-semibold text-2xl">Sign in</div>
-
           <div className="font-normal text-sm text-[#71717A]">Enter your email below to sign in</div>
         </div>
         <div className="flex flex-col gap-4">
