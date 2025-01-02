@@ -50,7 +50,7 @@ export const requestOtp: MutationResolvers['requestOtp'] = async (_, { input }) 
     throw new Error('Invalid OTP');
   }
 
-  await otpModel.deleteMany({ email });
+  // await otpModel.deleteMany({ email });
 
   return {
     success: true,
