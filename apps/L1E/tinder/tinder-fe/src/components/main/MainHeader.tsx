@@ -21,7 +21,7 @@ export const MainHeader = ({ user }: any) => {
   const userImage = user?.images?.[0] || 'redlogo.png'; // Set a fallback image if not available
 
   return (
-    <div className="absolute w-screen z-10 flex justify-center items-center pt-4 bg-transparent">
+    <div className="absolute w-screen flex flex-col z-10  justify-center items-center pt-4 bg-transparent">
       <div className="max-w-[1180px] w-screen flex justify-between">
         <img data-testid="profile-image" src="redlogo.png" className="w-[100px] cursor-pointer h-[24px]" alt="" />
         <div className="flex w-[180px] relative justify-between items-center">
@@ -50,6 +50,7 @@ export const MainHeader = ({ user }: any) => {
           )}
         </div>
       </div>
+      <div className="border-[1px] mt-4 border-[#e4e4e7] w-full"></div>
     </div>
   );
 };

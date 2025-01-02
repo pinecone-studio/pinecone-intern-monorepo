@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MainHeader } from '@/components/main/MainHeader';
 import { CarouselUser } from '@/components/match/Carousel';
-import { UnMatch } from '@/components/match/UnMatch';
 import { Loading } from '@/components/main/Loading';
 
 const Page: React.FC = () => {
@@ -42,7 +41,6 @@ const Page: React.FC = () => {
     <div>
       <MainHeader user={user} />
       <CarouselUser />
-      <UnMatch />
     </div>
   );
 };
