@@ -92,7 +92,6 @@ const Confirm: React.FC = () => {
             <div className="flex gap-[2px]">
               {value.map((char, index) => (
                 <input
-                  placeholder="Enter email"
                   data-testid="Signup"
                   key={index}
                   ref={(el) => (inputRefs.current[index] = el!)}
