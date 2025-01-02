@@ -4,6 +4,7 @@ export type OtpType = {
   email: string;
   otp: string;
   createdAt: Date;
+  ttl: Date;
 };
 
 const OTPSchema = new Schema<OtpType>({
