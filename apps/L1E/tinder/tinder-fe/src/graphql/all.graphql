@@ -93,3 +93,13 @@ mutation changePassword($input: ChangePasswordInput!) {
     message
   }
 }
+
+query GetMatchedUsers($authId: String!) {
+  getMatchedUsers(authId: $authId) {
+    _id
+    userId
+    targetUserId
+    stillmatch
+    createdAt
+  }
+}

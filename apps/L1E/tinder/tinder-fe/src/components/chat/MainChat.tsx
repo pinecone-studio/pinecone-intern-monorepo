@@ -23,7 +23,7 @@ const MainChat = () => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <div className="flex flex-col h-screen max-h-[580px] justify-between ">
+        <div className="flex flex-col h-screen max-h-[540px] justify-between ">
           <div className="flex max-w-[960px] justify-between w-screen">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
