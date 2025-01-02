@@ -7,7 +7,7 @@ const mockLeads: Employee[] = [
     _id: '676e6dd407d5ae05a35cda84',
     adminStatus: true,
     email: 'lead1@example.com',
-    employeeStatus: EmployeeStatus.Lead, 
+    employeeStatus: EmployeeStatus.Lead,
     freeLimit: 10,
     jobTitle: 'Lead Developer',
     paidLeaveLimit: 20,

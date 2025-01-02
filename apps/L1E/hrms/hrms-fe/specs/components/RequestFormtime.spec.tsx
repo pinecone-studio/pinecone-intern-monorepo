@@ -7,7 +7,7 @@ const mockLeads: Employee[] = [
     _id: '676e6dd407d5ae05a35cda84',
     adminStatus: true,
     email: 'lead1@example.com',
-    employeeStatus: EmployeeStatus.Lead, 
+    employeeStatus: EmployeeStatus.Lead,
     freeLimit: 10,
     jobTitle: 'Lead Developer',
     paidLeaveLimit: 20,
@@ -100,7 +100,7 @@ describe('RequestcomTime1', () => {
 
     const leadBtn = getByTestId('lead-button');
     fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
-    
+
     const selectlead = getByTestId('Option-1');
     fireEvent.keyDown(selectlead, { key: 'Enter' });
 
@@ -112,6 +112,5 @@ describe('RequestcomTime1', () => {
       fireEvent.click(submitBtn);
       await new Promise((resolve) => setTimeout(resolve, 2000));
     });
-
   });
 });
