@@ -7,7 +7,7 @@ const mockLeads: Employee[] = [
     _id: '676e6dd407d5ae05a35cda84',
     adminStatus: true,
     email: 'lead1@example.com',
-    employeeStatus: EmployeeStatus.Lead, 
+    employeeStatus: EmployeeStatus.Lead,
     freeLimit: 10,
     jobTitle: 'Lead Developer',
     paidLeaveLimit: 20,
@@ -35,7 +35,7 @@ const createRequestMock: MockedResponse = {
     query: CreateRequestDocument,
     variables: {
       input: {
-        selectedDay: 'Tue Dec 31 2024',
+        selectedDay: 'Tue Jan 28 2025',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '676e6dd407d5ae05a35cda84',
@@ -48,7 +48,7 @@ const createRequestMock: MockedResponse = {
   result: {
     data: {
       createRequest: {
-        selectedDay: 'Tue Dec 31 2024',
+        selectedDay: 'Tue Jan 28 2025',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '676e6dd407d5ae05a35cda84',
@@ -85,7 +85,7 @@ describe('RequestcomTime1', () => {
     );
     const calendarBtn = getByTestId('calendar-btn');
     fireEvent.click(calendarBtn);
-    const day31 = await screen.findByText('31');
+    const day31 = await screen.findByText('28');
     fireEvent.click(day31);
 
     const startTimeSelectTrigger = getByTestId('starttime-select');
@@ -100,7 +100,7 @@ describe('RequestcomTime1', () => {
 
     const leadBtn = getByTestId('lead-button');
     fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
-    
+
     const selectlead = getByTestId('Option-1');
     fireEvent.keyDown(selectlead, { key: 'Enter' });
 
@@ -112,6 +112,5 @@ describe('RequestcomTime1', () => {
       fireEvent.click(submitBtn);
       await new Promise((resolve) => setTimeout(resolve, 2000));
     });
-
   });
 });

@@ -31,3 +31,20 @@ query GetEmployees($input: String) {
     createdAt
   }
 }
+
+query GetAllRequests($limit: Int) {
+  getAllRequests(limit: $limit) {
+    _id
+    employeeId
+    leadEmployeeId
+    requestStatus
+    requestType
+    selectedDay
+    reason
+    reasonRefuse
+    startTime
+    endTime
+    updatedAt
+    createdAt
+  }
+}
