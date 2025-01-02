@@ -1,19 +1,19 @@
 import { QueryResolvers } from '../../../generated';
 import { matchModel } from '../../../models/user/match.model';
 
-export const getMatchedUserById: QueryResolvers['getMatchedUserById'] = async (_, { _id }) => {
+export const getMatchedUsers: QueryResolvers['getMatchedUsers'] = async (_, { authId }) => {
   try {
-    const match = await matchModel.findById({ _id });
-
-    if (!match) {
-      throw new Error(`User with ID ${_id} not found`);
+    if (!authId) {
+      throw new Error('User is not authenticated');
     }
 
-    return {
+    const matches = await matchModel.find({ userId: authId });
+
+    return matches.map((match) => ({
       ...match.toObject(),
       _id: match._id.toString(),
-    };
+    }));
   } catch (error) {
-    throw new Error('Failed to fetch user data. Please try again.');
+    throw new Error('Failed to get matches for the logged-in user');
   }
 };
