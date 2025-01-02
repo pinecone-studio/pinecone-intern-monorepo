@@ -35,7 +35,7 @@ const createRequestMock: MockedResponse = {
     query: CreateRequestDocument,
     variables: {
       input: {
-        selectedDay: 'Tue Dec 31 2024',
+        selectedDay: 'Tue Jan 28 2025',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '676e6dd407d5ae05a35cda84',
@@ -48,7 +48,7 @@ const createRequestMock: MockedResponse = {
   result: {
     data: {
       createRequest: {
-        selectedDay: 'Tue Dec 31 2024',
+        selectedDay: 'Tue Jan 28 2025',
         startTime: '08:00',
         endTime: '09:00',
         leadEmployeeId: '676e6dd407d5ae05a35cda84',
@@ -69,8 +69,8 @@ const mockEmployee: Employee = {
   paidLeaveLimit: 5,
   freeLimit: 5,
   employeeStatus: EmployeeStatus.Employee,
-  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+  createdAt: 'Tue Jan 28 2025 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+  updatedAt: 'Tue Jan 28 2025 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
 };
 describe('RequestcomTime1', () => {
   beforeEach(() => {
@@ -85,7 +85,7 @@ describe('RequestcomTime1', () => {
     );
     const calendarBtn = getByTestId('calendar-btn');
     fireEvent.click(calendarBtn);
-    const day31 = await screen.findByText('31');
+    const day31 = await screen.findByText('28');
     fireEvent.click(day31);
 
     const startTimeSelectTrigger = getByTestId('starttime-select');
