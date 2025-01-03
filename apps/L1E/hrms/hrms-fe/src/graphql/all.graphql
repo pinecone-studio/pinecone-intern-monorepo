@@ -1,4 +1,3 @@
-
 mutation CreateRequest($input: RequestInput!) {
   createRequest(input: $input) {
     _id
@@ -44,6 +43,39 @@ query GetAllRequests($limit: Int) {
     reasonRefuse
     startTime
     endTime
+    updatedAt
+    createdAt
+  }
+}
+
+query GetRequestsByEmployee($employeeId: ID!) {
+  getRequestsByEmployee(employeeId: $employeeId) {
+    _id
+    employeeId
+    leadEmployeeId
+    requestStatus
+    requestType
+    selectedDay
+    reason
+    reasonRefuse
+    startTime
+    endTime
+    updatedAt
+    createdAt
+  }
+}
+
+query GetEmployeeById($getEmployeeByIdId: ID!) {
+  getEmployeeById(id: $getEmployeeByIdId) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
     updatedAt
     createdAt
   }

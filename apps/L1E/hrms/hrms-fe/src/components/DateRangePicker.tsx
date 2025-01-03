@@ -6,12 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { DateRange } from 'react-day-picker';
-/* eslint-disable no-unused-vars */
+
 interface DateRangePickerProps {
-  setDate: (date: DateRange | undefined) => void;
+  setDate: (_date: DateRange | undefined) => void;
   date: DateRange | undefined;
 }
-/* eslint-enable no-unused-vars */
 
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({ setDate, date }) => {
   return (

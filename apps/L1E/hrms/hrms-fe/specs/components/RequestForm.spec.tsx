@@ -18,11 +18,10 @@ jest.mock('../../src/components/requestForm/RequestFormRemote', () => ({
   default: jest.fn(() => <div>Time Component</div>),
 }));
 
-
-
 const mockGetEmployees = {
   request: {
     query: GetEmployeesDocument,
+    variables: { input: 'Lead' },
   },
   result: {
     data: {
@@ -59,43 +58,41 @@ const mockGetEmployees = {
 };
 describe('RequestForm', () => {
   it('should RequestForm', async () => {
-  const { getByTestId } = render(
-    <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
-      <RequestForm />
-    </MockedProvider>
-  );
-
-  const select = getByTestId('select-input');
-  fireEvent.keyDown(select, { key: 'ArrowDown' });
-
-  const input1 = getByTestId('item1');
-  fireEvent.keyDown(input1, { key: 'Enter'});
-  });
-it('should RequestForm', async () => {
-  const { getByTestId } = render(
-    <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
-      <RequestForm />
-    </MockedProvider>
-  );
-  const select = getByTestId('select-input');
-  fireEvent.keyDown(select, { key: 'ArrowDown' })
-
-  const input2 = getByTestId('item2');
-  fireEvent.keyDown(input2, { key: 'Enter' });
-});
-
-it('should RequestForm', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
         <RequestForm />
       </MockedProvider>
     );
-  const select = getByTestId('select-input');
-  fireEvent.keyDown(select, { key: 'ArrowDown' });
 
-  const input2 = getByTestId('item3');
-  fireEvent.keyDown(input2, { key: 'Enter' });
-});
+    const select = getByTestId('select-input');
+    fireEvent.keyDown(select, { key: 'ArrowDown' });
 
+    const input1 = getByTestId('item1');
+    fireEvent.keyDown(input1, { key: 'Enter' });
+  });
+  it('should RequestForm', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
+        <RequestForm />
+      </MockedProvider>
+    );
+    const select = getByTestId('select-input');
+    fireEvent.keyDown(select, { key: 'ArrowDown' });
 
+    const input2 = getByTestId('item2');
+    fireEvent.keyDown(input2, { key: 'Enter' });
+  });
+
+  it('should RequestForm', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
+        <RequestForm />
+      </MockedProvider>
+    );
+    const select = getByTestId('select-input');
+    fireEvent.keyDown(select, { key: 'ArrowDown' });
+
+    const input2 = getByTestId('item3');
+    fireEvent.keyDown(input2, { key: 'Enter' });
+  });
 });

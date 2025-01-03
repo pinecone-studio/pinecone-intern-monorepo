@@ -9,7 +9,7 @@ import Requestcomremote from './requestForm/RequestFormRemote';
 import { Employee, EmployeeStatus, useGetEmployeesQuery } from '@/generated';
 
 const RequestForm = () => {
-  const employee:Employee = {
+  const employee: Employee = {
     _id: '676e6e4007d5ae05a35cda9e',
     email: 'shagai@gmail.com',
     jobTitle: 'junior',
@@ -21,24 +21,23 @@ const RequestForm = () => {
     employeeStatus: EmployeeStatus.Employee,
     createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
     updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-   
   };
-  const [item,setItem]=useState("")
-   const handleSelectChange = (value:string) => {
-    setItem(value); 
+  const [item, setItem] = useState('');
+  const handleSelectChange = (value: string) => {
+    setItem(value);
   };
-    const [leads, setLeads] = useState<Employee[]>([]);
-    const { data} = useGetEmployeesQuery({ variables: { input: 'Lead' } });
-    useEffect(() => {
-      setLeads(data?.getEmployees as Employee[]);
-    }, [data]);
-    const componentMap: { [key: string]: JSX.Element | null } = {
-      Чөлөө: <Requestcom leads={leads} employee={employee} />,
-      'Цалинтай чөлөө': <RequestcomPaid leads={leads} employee={employee} />,
-      'Зайнаас ажиллах': <Requestcomremote leads={leads} employee={employee} />,
-    };
-    const limits: { [key: string]: number | null } = {
-    'Чөлөө': employee.freeLimit,
+  const [leads, setLeads] = useState<Employee[]>([]);
+  const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
+  useEffect(() => {
+    setLeads(data?.getEmployees as Employee[]);
+  }, [data]);
+  const componentMap: { [key: string]: JSX.Element | null } = {
+    Чөлөө: <Requestcom leads={leads} employee={employee} />,
+    'Цалинтай чөлөө': <RequestcomPaid leads={leads} employee={employee} />,
+    'Зайнаас ажиллах': <Requestcomremote leads={leads} employee={employee} />,
+  };
+  const limits: { [key: string]: number | null } = {
+    Чөлөө: employee.freeLimit,
     'Цалинтай чөлөө': employee.paidLeaveLimit,
     'Зайнаас ажиллах': employee.remoteLimit,
   };
