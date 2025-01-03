@@ -46,7 +46,6 @@
           "target": "codegen:dev",
           "params": "forward"
         }
-
       ]
     },
     "export": {
