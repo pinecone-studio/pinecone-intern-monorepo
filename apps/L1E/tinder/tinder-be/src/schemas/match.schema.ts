@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type Match {
     _id: ID!
-    userId: String!
-    targetUserId: String!
+    userId: User!
+    targetUserId: User!
     stillmatch: Boolean!
     createdAt: String!
   }
