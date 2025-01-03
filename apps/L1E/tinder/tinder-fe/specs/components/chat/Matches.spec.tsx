@@ -48,16 +48,11 @@ describe('Matches', () => {
       render(<Matches />);
     });
 
-    // await waitFor(() => {
-    //   expect(screen.queryByText('Loading...')).not;
-    // });
-
     expect(screen.queryAllByText('User One'));
     expect(screen.queryAllByText(', 25'));
     expect(screen.queryAllByText('Engineer'));
     expect(screen.queryAllByText('img'));
 
-    // Simulate updating user details for the second match
     const updatedUserDetails = {
       _id: 'user2',
       username: 'User Two',
@@ -67,7 +62,6 @@ describe('Matches', () => {
     };
 
     await act(async () => {
-      getUserByIdCallback({ variables: { userId: 'user2' } });
       (generatedHooks.useGetUserByIdQuery as jest.Mock).mockReturnValue({
         data: { getUserById: updatedUserDetails },
       });
@@ -83,12 +77,6 @@ describe('Matches', () => {
     });
 
     render(<Matches />);
-
-    // await waitFor(() => {
-    //   expect(screen.queryByText('Loading...')).not;
-    // });
-
-    // expect(screen.queryByRole('img')).not;
   });
 
   it('should show loading state', async () => {
@@ -112,11 +100,5 @@ describe('Matches', () => {
     });
 
     render(<Matches />);
-
-    // await waitFor(() => {
-    //   expect(screen.queryByText('Loading...')).not;
-    // });
-
-    // expect(screen.queryByRole('img')).not;
   });
 });

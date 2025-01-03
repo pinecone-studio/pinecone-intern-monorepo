@@ -1,37 +1,14 @@
-import { useGetMatchedUsersQuery, useGetUserByIdQuery } from '@/generated';
-import { useEffect, useState } from 'react';
+import { useGetMatchedUsersQuery } from '@/generated';
 
 const Matches = () => {
-  const [matches, setMatches] = useState<Array<{ _id: string; targetUserId: string; targetUserDetails?: any }>>([]);
-  const [loading, setLoading] = useState(true);
-
   const authId = JSON.parse(localStorage.getItem('user') || '{}')._id || '';
 
-  const { data } = useGetMatchedUsersQuery({
+  const { data, loading } = useGetMatchedUsersQuery({
     variables: { authId },
     skip: !authId,
   });
 
-  useEffect(() => {
-    if (data?.getMatchedUsers) {
-      setMatches(data.getMatchedUsers);
-      setLoading(false);
-    }
-  }, [data]);
-
-  const { data: userDetailsData } = useGetUserByIdQuery({
-    variables: { userId: matches[0]?.targetUserId },
-    skip: matches.length === 0,
-  });
-
-  useEffect(() => {
-    setMatches((prevMatches) =>
-      prevMatches.map((match) => ({
-        ...match,
-        targetUserDetails: userDetailsData?.getUserById,
-      }))
-    );
-  }, [userDetailsData]);
+  const matches = data?.getMatchedUsers;
 
   return (
     <div className="w-screen flex flex-col justify-center items-center pt-14 bg-transparent">
@@ -42,18 +19,16 @@ const Matches = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              matches.map((match) => (
+              matches?.map((match) => (
                 <div key={match._id}>
-                  {match.targetUserDetails && (
-                    <div className="flex flex-col pt-2 items-center justify-center gap-1">
-                      {match.targetUserDetails.images && match.targetUserDetails.images[0] && <img src={match.targetUserDetails.images[0]} alt="User Image" className="w-10 h-10 rounded-full" />}
-                      <div className="text-sm flex">
-                        <div>{match.targetUserDetails.username}</div>
-                        <div>, {match.targetUserDetails.age}</div>
-                      </div>
-                      <div>{match.targetUserDetails.profession}</div>
+                  <div className="flex flex-col pt-2 items-center justify-center gap-1">
+                    {/* <img src={match.targetUserId.images[0]} alt="User Image" className="w-10 h-10 rounded-full" /> */}
+                    <div className="text-sm flex">
+                      <div>{match.targetUserId.username}</div>
+                      <div>, {match.targetUserId.age}</div>
                     </div>
-                  )}
+                    <div>{match.targetUserId.profession}</div>
+                  </div>
                 </div>
               ))
             )}
