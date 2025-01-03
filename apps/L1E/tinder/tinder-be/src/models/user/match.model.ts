@@ -10,8 +10,8 @@ export type MatchType = {
 
 const MatchSchema = new Schema<MatchType>(
   {
-    userId: { type: String, required: true, ref: 'Users' },
-    targetUserId: { type: String, required: true, ref: 'Users' },
+    userId: { type: String, required: true, ref: 'User' },
+    targetUserId: { type: String, required: true, ref: 'User' },
     stillmatch: { type: Boolean, required: true },
   },
   {
