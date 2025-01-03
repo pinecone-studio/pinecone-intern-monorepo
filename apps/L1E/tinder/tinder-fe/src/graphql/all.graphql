@@ -97,8 +97,38 @@ mutation changePassword($input: ChangePasswordInput!) {
 query GetMatchedUsers($authId: String!) {
   getMatchedUsers(authId: $authId) {
     _id
-    userId
-    targetUserId
+    userId {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      images
+      match
+      createdAt
+      updatedAt
+    }
+    targetUserId {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      images
+      match
+      createdAt
+      updatedAt
+    }
     stillmatch
     createdAt
   }
