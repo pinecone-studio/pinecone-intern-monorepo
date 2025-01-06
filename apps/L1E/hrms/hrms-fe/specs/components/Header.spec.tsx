@@ -2,6 +2,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Header } from '@/components/Header';
 import { GetEmployeesDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
+import { useRouter } from 'next/navigation';
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
 const mockGetEmployees = {
   request: {
@@ -42,20 +47,11 @@ const mockGetEmployees = {
 };
 
 describe('Header', () => {
-  it('renders the header correctly', () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
-        <Header />
-      </MockedProvider>
-    );
+  let push: jest.Mock;
 
-    // Simulate button clicks for different components
-    fireEvent.click(getByTestId('MyRequest-btn'));
-    fireEvent.click(getByTestId('RequestForm-btn'));
-    fireEvent.click(getByTestId('LeaveCalendar-btn'));
-    fireEvent.click(getByTestId('PendingRequest-btn'));
-    fireEvent.click(getByTestId('EmployeeList-btn'));
-    fireEvent.click(getByTestId('Leave-btn'));
+  beforeEach(() => {
+    push = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push });
   });
 
   it('should toggle dark mode on checkbox change', async () => {
@@ -79,5 +75,23 @@ describe('Header', () => {
     expect(localStorage.getItem('theme'));
 
     fireEvent.click(themeToggleCheckbox);
+  });
+
+  it('renders the header correctly', () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
+        <Header />
+      </MockedProvider>
+    );
+
+    // Simulate button clicks for different components
+    fireEvent.click(getByTestId('MyRequest-btn'));
+    expect(push).toHaveBeenCalledWith('/my-requests');
+    fireEvent.click(getByTestId('RequestForm-btn'));
+    expect(push).toHaveBeenCalledWith('/my-requests');
+    fireEvent.click(getByTestId('LeaveCalendar-btn'));
+    expect(push).toHaveBeenCalledWith('/my-requests');
+    fireEvent.click(getByTestId('PendingRequest-btn'));
+    expect(push).toHaveBeenCalledWith('/my-requests');
   });
 });

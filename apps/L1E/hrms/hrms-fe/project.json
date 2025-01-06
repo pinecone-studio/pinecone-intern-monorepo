@@ -46,7 +46,6 @@
           "target": "codegen:dev",
           "params": "forward"
         }
-
       ]
     },
     "export": {
@@ -223,6 +222,32 @@
       "dependsOn": [
         {
           "target": "get-secrets:testing"
+        }
+      ]
+    },
+    "deploy-testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_JcjV1Dn0cxiZvLTPVVBQebG4PlKj -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_JcjV1Dn0cxiZvLTPVVBQebG4PlKj -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen:testing",
+          "params": "forward"
         }
       ]
     },

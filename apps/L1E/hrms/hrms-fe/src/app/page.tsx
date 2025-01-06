@@ -1,13 +1,7 @@
 'use client';
 
-import { Header } from '@/components/Header';
-
 const Page = () => {
-  return (
-    <div>
-      <Header />
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default Page;
