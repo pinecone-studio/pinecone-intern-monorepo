@@ -57,9 +57,12 @@ afterAll(() => {
 });
 describe('LeaveCalendar', () => {
   it('renders the component', async () => {
+    const handleChange = () => {
+      console.log('component');
+    };
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <LeaveCalendar />
+        <LeaveCalendar handlechange={handleChange} />
       </MockedProvider>
     );
 
@@ -67,9 +70,12 @@ describe('LeaveCalendar', () => {
   });
 
   it('renders the component', async () => {
+    const handleChange = () => {
+      console.log('component');
+    };
     const { getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <LeaveCalendar />
+        <LeaveCalendar handlechange={handleChange} />
       </MockedProvider>
     );
     const btn = getByTestId('btn');

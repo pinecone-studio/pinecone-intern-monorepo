@@ -51,12 +51,8 @@ describe('Header', () => {
 
     // Simulate button clicks for different components
     fireEvent.click(getByTestId('MyRequest-btn'));
-    fireEvent.click(getByTestId('MyRequest-btn-2'));
     fireEvent.click(getByTestId('RequestForm-btn'));
-    fireEvent.click(getByTestId('RequestForm-btn-2'));
     fireEvent.click(getByTestId('LeaveCalendar-btn'));
-    fireEvent.click(getByTestId('LeaveCalendar-btn-2'));
-    fireEvent.click(getByTestId('LeaveCalendar-btn-3'));
     fireEvent.click(getByTestId('PendingRequest-btn'));
     fireEvent.click(getByTestId('EmployeeList-btn'));
     fireEvent.click(getByTestId('Leave-btn'));
