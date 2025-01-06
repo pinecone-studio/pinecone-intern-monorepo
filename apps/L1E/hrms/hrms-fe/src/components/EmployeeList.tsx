@@ -1,10 +1,11 @@
 'use client';
 
+import AdminHome from './admindashboard/AdminHome';
 
 export const EmployeeList = () => {
   return (
-    <div >
-     odoohon
+    <div>
+      <AdminHome />
     </div>
   );
 };

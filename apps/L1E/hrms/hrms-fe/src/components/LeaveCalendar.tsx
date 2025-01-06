@@ -27,7 +27,7 @@ export const LeaveCalendar = () => {
     REMOTE: 'Зайнаас ажиллах',
   };
   return (
-    <div className="flex flex-col ml-[756px] mt-[48px] gap-2 ">
+    <div className="flex flex-col ml-[350px] mt-[48px] gap-2 ">
       <div className="text-xl font-semibold">Чөлөө авсан:</div>
       <div className="flex flex-row w-[608px] gap-[186px]">
         <DateRangePicker setDate={setDate} date={date} />
