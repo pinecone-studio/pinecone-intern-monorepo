@@ -38,6 +38,7 @@ export const typeDefs = gql`
   type Query {
     getEmployeeById(id: ID!): Employee
     getEmployees(input: String): [Employee]
+    getAllEmployees: [Employee]
   }
 
   type Mutation {
