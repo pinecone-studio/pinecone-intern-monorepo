@@ -7,13 +7,13 @@ import { connectToDb } from './utils/connect-to-db';
 
 connectToDb();
 
-const server = new ApolloServer<Context>({
+const server = new ApolloServer({
   resolvers,
   typeDefs,
   introspection: true,
 });
 
-export const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
+export const handler = startServerAndCreateNextHandler<NextRequest>(server, {
   context: async (req) => {
     return { req };
   },
