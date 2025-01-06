@@ -21,8 +21,20 @@ describe('Matches', () => {
     mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'authId' }));
 
     const mockMatchedUsers = [
-      { _id: 'match1', targetUserId: 'user1' },
-      { _id: 'match2', targetUserId: 'user2' },
+      {
+        _id: 'match1',
+        targetUserId: {
+          username: 'user1',
+          images: ['https://example.com/image1.jpg'],
+        },
+      },
+      {
+        _id: 'match2',
+        targetUserId: {
+          username: 'user2',
+          images: ['https://example.com/image1.jpg'],
+        },
+      },
     ];
 
     const mockUserDetails = {

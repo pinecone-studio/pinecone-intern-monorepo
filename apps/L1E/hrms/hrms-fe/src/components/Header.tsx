@@ -15,7 +15,8 @@ type ComponentName = 'MyRequest' | 'RequestForm' | 'LeaveCalendar' | 'PendingReq
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeComponent, setActiveComponent] = useState<ComponentName | null>();
+  const [activeComponent, setActiveComponent] = useState<ComponentName | null>(null);
+
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -50,7 +51,7 @@ export const Header = () => {
     LeaveCalendar: <LeaveCalendar handlechange={handleComponentChange} />,
     PendingRequest: <PendingRequest />,
     EmployeeList: <EmployeeList />,
-    Leave: <Leave />,
+    Leave: <Leave totalFreeTime={10} />,
   };
 
   const clickButton = (componentName: ComponentName) => {
@@ -60,7 +61,9 @@ export const Header = () => {
 
   return (
     <div>
+
       <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px]  border-b-[1px]">
+
         <div>
           <img src="Logo.png" alt="Logo" />
           <div className="flex gap-[20px] pt-[30px]">
@@ -78,6 +81,7 @@ export const Header = () => {
             <button data-testid="PendingRequest-btn" onClick={() => handleComponentChange('PendingRequest')} className={` ${clickButton('PendingRequest')}`}>
               Pending Requests
             </button>
+
             <button data-testid="EmployeeList-btn" onClick={() => handleComponentChange('EmployeeList')} className={` ${clickButton('EmployeeList')}`}>
               Employee List
             </button>
@@ -86,6 +90,7 @@ export const Header = () => {
             </button>
           </div>
         </div>
+
         <div className="flex">
           <div>
             <label className="swap swap-rotate">
@@ -101,11 +106,14 @@ export const Header = () => {
             </Avatar>
           </div>
         </div>
+
       </div>
 
       <div className="w-full h-max absolute pt-10 bg-neutral-100">
         <div>{componentMap[activeComponent ?? 'RequestForm']}</div>
+
       </div>
+   
     </div>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import MainChat from '@/components/chat/MainChat';
+// import MainChat from '@/components/chat/MainChat';
 import Matches from '@/components/chat/Matches';
 import { Loading } from '@/components/main/Loading';
 import { MainHeader } from '@/components/main/MainHeader';
@@ -43,7 +43,7 @@ const Main: React.FC = () => {
     <div>
       <MainHeader user={user} />
       <Matches />
-      <MainChat />
+      {/* <MainChat /> */}
     </div>
   );
 };
