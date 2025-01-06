@@ -12,21 +12,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { EmployeeList } from './EmployeeList';
 
 type ComponentName = 'MyRequest' | 'RequestForm' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
-const componentMap: Record<ComponentName, JSX.Element> = {
-  MyRequest: <MyRequest />,
-  RequestForm: <RequestForm />,
-  LeaveCalendar: <LeaveCalendar />,
-  PendingRequest: <PendingRequest />,
-  EmployeeList: <EmployeeList />,
-  Leave: <Leave totalFreeTime={10} />,
-};
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeComponent, setActiveComponent] = useState<ComponentName | null>(null);
 
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
+    setActiveComponent('MyRequest');
     if (savedTheme) {
       setIsDarkMode(savedTheme === 'dark');
     }
@@ -51,14 +45,25 @@ export const Header = () => {
   const handleComponentChange = (componentName: ComponentName) => {
     setActiveComponent(componentName);
   };
+  const componentMap: Record<ComponentName, JSX.Element> = {
+    MyRequest: <MyRequest />,
+    RequestForm: <RequestForm />,
+    LeaveCalendar: <LeaveCalendar handlechange={handleComponentChange} />,
+    PendingRequest: <PendingRequest />,
+    EmployeeList: <EmployeeList />,
+    Leave: <Leave totalFreeTime={10} />,
+  };
 
   const clickButton = (componentName: ComponentName) => {
     return activeComponent === componentName ? 'border-b-2 border-black pb-[11px]' : 'border-b-0';
   };
+  console.log(activeComponent);
 
   return (
     <div>
-      <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px] mb-[100px] border-b-[1px]">
+
+      <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px]  border-b-[1px]">
+
         <div>
           <img src="Logo.png" alt="Logo" />
           <div className="flex gap-[20px] pt-[30px]">
@@ -76,21 +81,9 @@ export const Header = () => {
             <button data-testid="PendingRequest-btn" onClick={() => handleComponentChange('PendingRequest')} className={` ${clickButton('PendingRequest')}`}>
               Pending Requests
             </button>
-            <button data-testid="LeaveCalendar-btn-2" onClick={() => handleComponentChange('LeaveCalendar')} className={` ${clickButton('LeaveCalendar')}`}>
-              Leave Calendar
-            </button>
-            <button data-testid="MyRequest-btn-2" onClick={() => handleComponentChange('MyRequest')} className={` ${clickButton('MyRequest')}`}>
-              My requests
-            </button>
-            <button data-testid="RequestForm-btn-2" onClick={() => handleComponentChange('RequestForm')} className={` ${clickButton('RequestForm')}`}>
-              Request Form
-            </button>
-            {/* admin */}
+
             <button data-testid="EmployeeList-btn" onClick={() => handleComponentChange('EmployeeList')} className={` ${clickButton('EmployeeList')}`}>
               Employee List
-            </button>
-            <button data-testid="LeaveCalendar-btn-3" onClick={() => handleComponentChange('LeaveCalendar')} className={` ${clickButton('LeaveCalendar')}`}>
-              Leave Calendar
             </button>
             <button data-testid="Leave-btn" onClick={() => handleComponentChange('Leave')} className={` ${clickButton('Leave')}`}>
               Leave Requests
@@ -113,8 +106,15 @@ export const Header = () => {
             </Avatar>
           </div>
         </div>
+
       </div>
-      <div>{componentMap[activeComponent ?? 'MyRequest']}</div>
+
+      <div className="w-full h-max absolute pt-10 bg-neutral-100">
+        <div>{componentMap[activeComponent ?? 'RequestForm']}</div>
+
+      </div>
+   
     </div>
   );
 };
+// aaa

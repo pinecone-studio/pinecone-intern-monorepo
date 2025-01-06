@@ -9,7 +9,13 @@ import { DateRangePicker } from './DateRangePicker';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { addDays, format, eachDayOfInterval } from 'date-fns';
-export const LeaveCalendar = () => {
+/* eslint-enable no-unused-vars */
+type ComponentName = 'MyRequest' | 'RequestForm' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
+interface LeaveCalendarProps {
+  handlechange: (_componentName: ComponentName) => void;
+}
+/* eslint-enable no-unused-vars */
+export const LeaveCalendar = ({ handlechange }: LeaveCalendarProps) => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
 
   const [date, setDate] = useState<DateRange | undefined>({
@@ -26,19 +32,25 @@ export const LeaveCalendar = () => {
     PAID_LEAVE: 'Цалинтай чөлөө',
     REMOTE: 'Зайнаас ажиллах',
   };
+  const handleClick = (date: undefined, componentName: ComponentName) => {
+    handlechange(componentName);
+    setDate(date);
+  };
   return (
     <div className="flex flex-col ml-[756px] mt-[48px] gap-2 ">
       <div className="text-xl font-semibold">Чөлөө авсан:</div>
       <div className="flex flex-row w-[608px] gap-[186px]">
         <DateRangePicker setDate={setDate} date={date} />
 
-        <Button>+ Чөлөө хүсэх</Button>
-        <div
+        <Button
           data-testid="btn"
           onClick={() => {
-            setDate(undefined);
+            handleClick(undefined, 'RequestForm');
           }}
-        ></div>
+        >
+          + Чөлөө хүсэх
+        </Button>
+        <div></div>
       </div>
       {daysArray.reverse().map((element, index) => {
         const matchedRequest = data?.getAllRequests?.filter((el) => {

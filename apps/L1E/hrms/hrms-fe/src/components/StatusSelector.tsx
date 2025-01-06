@@ -29,23 +29,23 @@ const StatusSelector = () => {
 
   return (
     <div className="w-full max-w-md p-4  ">
-      <div className="flex flex-wrap gap-2  ">
-        <Button variant="ghost" className="text-md w-[98px] h-[40px] border rounded-lg " onClick={() => setIsOpen((prev) => !prev)}>
+      <div className="flex gap-2  ">
+        <Button variant="ghost" className="text-md w-[98px] bg-white h-[40px] border rounded-lg " onClick={() => setIsOpen((prev) => !prev)}>
           <span className="w-5 h-5 border rounded-full flex justify-center items-center text-sm pb-[2px]">+</span>
           <span className="ml-2">Төлөв</span>
         </Button>
 
         {selectedStatuses.map((status) => (
-          <Button data-testid={status.name} key={status.id} variant="secondary" className="text-lg">
+          <Button data-testid={status.name} key={status.id} variant="secondary" className="text-base bg-white h-[40px]">
             {status.name}
           </Button>
         ))}
       </div>
 
-      <Card className={`${isOpen ? 'p-2' : 'hidden'}`}>
+      <Card className={`${isOpen ? 'p-2 absolute' : 'hidden'}`}>
         <div className="space-y-2">
           {statuses.map((status) => (
-            <button key={status.id} onClick={() => handleStatusClick(status.id)} className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-secondary">
+            <button key={status.id} onClick={() => handleStatusClick(status.id)} className="w-full flex items-center bg-white justify-between p-2 rounded-lg hover:bg-secondary">
               <div className="flex items-center gap-3">
                 <div className={`w-6 h-6 rounded-md flex items-center justify-center ${status.selected ? 'bg-primary' : 'border border-input'}`}>
                   {status.selected && <Check className="w-4 h-4 text-primary-foreground" />}
