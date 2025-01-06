@@ -36,12 +36,16 @@ export const typeDefs = gql`
     username: String!
     bio: String!
     interest: String!
-    images: [String!]!
     email: String!
     age: String!
     hobby: String!
+    images: [String!]!
     job: String!
     profession: String!
+  }
+
+  input DeleteInput {
+    image: String!
   }
 
   type AuthPayload {
@@ -76,6 +80,7 @@ export const typeDefs = gql`
 
   type Mutation {
     deleteUser(_id: ID): User!
+    deleteImage(input: DeleteInput!, _id: ID): User!
     createUser(input: RegisterInput!): User!
     updateUser(input: UpdateInput!, _id: ID!): User!
     login(username: String, email: String, password: String!): AuthPayload!
