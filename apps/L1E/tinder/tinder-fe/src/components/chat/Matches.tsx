@@ -22,7 +22,7 @@ const Matches = () => {
               matches?.map((match) => (
                 <div key={match._id}>
                   <div className="flex flex-col pt-2 items-center justify-center gap-1">
-                    {/* <img src={match.targetUserId.images[0]} alt="User Image" className="w-10 h-10 rounded-full" /> */}
+                    <img src={match.targetUserId.images[0]} alt="User Image" className="w-10 h-10 rounded-full" />
                     <div className="text-sm flex">
                       <div>{match.targetUserId.username}</div>
                       <div>, {match.targetUserId.age}</div>
