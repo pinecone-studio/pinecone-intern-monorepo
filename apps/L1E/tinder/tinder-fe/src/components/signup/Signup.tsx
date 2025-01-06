@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Otp from './Otp';
-import Addpassword from './Addpassword';
+// import Addpassword from './Addpassword';
 
 const Signup: React.FC = () => {
   const [step, setStep] = useState<'signup' | 'confirm' | 'addPassword'>('signup');
@@ -13,14 +13,14 @@ const Signup: React.FC = () => {
     return savedData ? JSON.parse(savedData) : { email: '', password: '', interested: '', age: '' };
   });
 
-  useEffect(() => {
-    const savedData = localStorage.getItem('signupFormData');
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      setFormData(parsedData);
-      setStep('addPassword');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedData = localStorage.getItem('signupFormData');
+  //   if (savedData) {
+  //     const parsedData = JSON.parse(savedData);
+  //     setFormData(parsedData);
+  //     setStep('addPassword');
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem('signupFormData', JSON.stringify(formData)); // Store entire form data
@@ -45,7 +45,7 @@ const Signup: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
-      {step === 'signup' ? (
+      {step === 'signup' && (
         <div className="w-[350px] flex flex-col items-center justify-between h-[410px]">
           <Image width={100} height={24} src="/redlogo.png" alt="Logo" />
 
@@ -84,11 +84,8 @@ const Signup: React.FC = () => {
             </Link>
           </div>
         </div>
-      ) : step === 'confirm' ? (
-        <Otp />
-      ) : (
-        step === 'addPassword' && <Addpassword />
       )}
+      {step === 'confirm' && <Otp />}
     </div>
   );
 };
