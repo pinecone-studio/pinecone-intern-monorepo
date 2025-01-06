@@ -1,5 +1,5 @@
 {
-  "extends": "<%= parentDirs %>/tsconfig.base.json",
+  "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "preserve",
@@ -17,13 +17,20 @@
         "name": "next"
       }
     ],
-      "paths": {
-      "@/components/ui/*": ["<%= parentDirs %>/libs/shadcn/src/lib/ui/*"],
-      "@/*": ["src/*"],
-      
+    "paths": {
+      "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
+      "@/*": ["src/*"]
     },
     "types": ["jest", "node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "<%= parentDirs %>/<%= directory %>/.next/types/**/*.ts", "<%= parentDirs %>/dist/<%= directory %>/.next/types/**/*.ts", "next-env.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../../../apps/L1FG/real-state/frontend/.next/types/**/*.ts",
+    "../../../../dist/aapps/L1FG/real-state/frontend/.next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }
