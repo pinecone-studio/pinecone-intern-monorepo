@@ -28,7 +28,7 @@ export const PendingRequest = () => {
 
   const allRequests = data.getAllRequests as GetAllRequestsQuery['getAllRequests'];
 
-  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId === employee._id);
+  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id);
 
   return (
     <div className="flex flex-col h-screen gap-5 w-[1030px] mx-auto mt-10 ">

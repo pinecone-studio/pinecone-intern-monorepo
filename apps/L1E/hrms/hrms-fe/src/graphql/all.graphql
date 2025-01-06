@@ -1,8 +1,32 @@
 mutation CreateRequest($input: RequestInput!) {
   createRequest(input: $input) {
     _id
-    employeeId
-    leadEmployeeId
+    employeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
+    leadEmployeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
     requestStatus
     requestType
     selectedDay
@@ -34,8 +58,32 @@ query GetEmployees($input: String) {
 query GetAllRequests($limit: Int) {
   getAllRequests(limit: $limit) {
     _id
-    employeeId
-    leadEmployeeId
+    employeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
+    leadEmployeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
     requestStatus
     requestType
     selectedDay
@@ -51,8 +99,32 @@ query GetAllRequests($limit: Int) {
 query GetRequestsByEmployee($employeeId: ID!) {
   getRequestsByEmployee(employeeId: $employeeId) {
     _id
-    employeeId
-    leadEmployeeId
+    employeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
+    leadEmployeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
     requestStatus
     requestType
     selectedDay
