@@ -12,11 +12,23 @@ export const typeDefs = gql`
     APPROVED
     REJECTED
   }
-
+  type Employee {
+    _id: ID!
+    email: String!
+    jobTitle: String!
+    username: String!
+    adminStatus: Boolean!
+    remoteLimit: Int!
+    paidLeaveLimit: Int!
+    freeLimit: Int!
+    employeeStatus: EmployeeStatus!
+    updatedAt: String
+    createdAt: String
+  }
   type Request {
     _id: ID!
-    employeeId: ID
-    leadEmployeeId: ID
+    employeeId: Employee
+    leadEmployeeId: Employee
     requestStatus: RequestStatus!
     requestType: RequestType!
     selectedDay: String
