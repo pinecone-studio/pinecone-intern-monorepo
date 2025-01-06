@@ -7,22 +7,15 @@ terraform {
   }
 }
 
-resource "vercel_project" "restaurant-backend" {
-  name             = "restaurant-backend"
+resource "vercel_project" "restaurant-backend-prod" {
+  name             = "intern-1fg-restaurant-backend-prod"
   build_command    = "nx build --skip-nx-cache restaurant-backend"
   output_directory = "./dist/apps/L1FG/restaurant/backend/.next"
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "restaurant-backend" {
-  name             = "restaurant-backend"
-  build_command    = "nx build --skip-nx-cache restaurant-backend"
-  output_directory = "./dist/apps/L1FG/restaurant/backend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "restaurant-backend" {
-  name             = "restaurant-backend"
+resource "vercel_project" "restaurant-backend-testing" {
+  name             = "intern-1fg-restaurant-backend-testing"
   build_command    = "nx build --skip-nx-cache restaurant-backend"
   output_directory = "./dist/apps/L1FG/restaurant/backend/.next"
   framework        = "nextjs"

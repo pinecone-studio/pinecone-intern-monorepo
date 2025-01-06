@@ -7,22 +7,15 @@ terraform {
   }
 }
 
-resource "vercel_project" "hotel-booking-frontend" {
-  name             = "hotel-booking-frontend"
+resource "vercel_project" "hotel-booking-frontend-prod" {
+  name             = "intern-1fg-hotel-booking-frontend-prod"
   build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
   output_directory = "./dist/apps/L1FG/hotel-booking/frontend/.next"
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "hotel-booking-frontend" {
-  name             = "hotel-booking-frontend"
-  build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
-  output_directory = "./dist/apps/L1FG/hotel-booking/frontend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "hotel-booking-frontend" {
-  name             = "hotel-booking-frontend"
+resource "vercel_project" "hotel-booking-frontend-testing" {
+  name             = "intern-1fg-hotel-booking-frontend-testing"
   build_command    = "nx build --skip-nx-cache hotel-booking-frontend"
   output_directory = "./dist/apps/L1FG/hotel-booking/frontend/.next"
   framework        = "nextjs"

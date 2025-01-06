@@ -7,22 +7,15 @@ terraform {
   }
 }
 
-resource "vercel_project" "real-state-backend" {
-  name             = "real-state-backend"
+resource "vercel_project" "real-state-backend-prod" {
+  name             = "intern-1fg-real-state-backend-prod"
   build_command    = "nx build --skip-nx-cache real-state-backend"
   output_directory = "./dist/apps/L1FG/real-state/backend/.next"
   framework        = "nextjs"
   team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
 }
-resource "vercel_project" "real-state-backend" {
-  name             = "real-state-backend"
-  build_command    = "nx build --skip-nx-cache real-state-backend"
-  output_directory = "./dist/apps/L1FG/real-state/backend/.next"
-  framework        = "nextjs"
-  team_id          = "team_0ASDilhqwPl5fll9OnzqDM30"
-}
-resource "vercel_project" "real-state-backend" {
-  name             = "real-state-backend"
+resource "vercel_project" "real-state-backend-testing" {
+  name             = "intern-1fg-real-state-backend-testing"
   build_command    = "nx build --skip-nx-cache real-state-backend"
   output_directory = "./dist/apps/L1FG/real-state/backend/.next"
   framework        = "nextjs"
