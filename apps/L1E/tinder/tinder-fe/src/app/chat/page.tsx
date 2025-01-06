@@ -1,16 +1,44 @@
 'use client';
 
-// import MainChat from '@/components/chat/MainChat';
 import Matches from '@/components/chat/Matches';
 import { Loading } from '@/components/main/Loading';
 import { MainHeader } from '@/components/main/MainHeader';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Match, useGetMatchedUsersQuery } from '@/generated';
 
 const Main: React.FC = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [recentChats, setRecentChats] = useState<string[]>([]);
+
+  const authId = (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user') || '{}')._id) || '';
+
+  const { data } = useGetMatchedUsersQuery({
+    variables: { authId },
+    skip: !authId,
+  });
+
+  const matches = data?.getMatchedUsers;
+
+  const handleAddToRecentChats = async (targetUserId: string) => {
+    try {
+      const match = matches?.find((m) => m.targetUserId._id === targetUserId);
+
+      const username = match?.targetUserId.username;
+
+      if (username && !recentChats.includes(username)) {
+        setRecentChats((prevChats) => [username, ...prevChats]);
+      }
+
+      if (username) {
+        router.replace(`/chat?username=${username}`);
+      }
+    } catch (error) {
+      console.error('Error adding to recent chats:', error);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,14 +63,10 @@ const Main: React.FC = () => {
     );
   }
 
-  if (!user) {
-    return <div>Error: No user found</div>;
-  }
-
   return (
-    <div>
+    <div className="flex flex-col items-center justify-between h-screen ">
       <MainHeader user={user} />
-      <Matches />
+      <Matches matches={matches as Match[]} handleAddToRecentChats={handleAddToRecentChats} />
       {/* <MainChat /> */}
     </div>
   );
