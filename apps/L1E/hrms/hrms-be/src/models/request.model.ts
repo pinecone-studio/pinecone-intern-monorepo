@@ -17,7 +17,7 @@ export type Request = {
   leadEmployeeId: Schema.Types.ObjectId;
   requestStatus: RequestStatus;
   selectedDay: string;
-  requestType: RequestType; 
+  requestType: RequestType;
   reason: string;
   reasonRefuse: string;
   startTime: string;
