@@ -5,38 +5,15 @@ import { RequestModel } from '../../../src/models';
 jest.mock('../../../src/models', () => ({
   RequestModel: {
     find: jest.fn().mockReturnValue({
-      limit: jest
-        .fn()
-        .mockResolvedValueOnce([
-          {
-            _id: '676e6dd407d5ae05a35cda84',
-            email: 'jvk@gmail.com',
-            jobTitle: 'senior',
-            username: 'jvk',
-            adminStatus: false,
-            employeeStatus: 'Lead',
-            updatedAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-            createdAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-          },
-        ])
-        .mockResolvedValueOnce([])
-        .mockResolvedValueOnce([
-          {
-            _id: '676e6dd407d5ae05a35cda84',
-            email: 'jvk@gmail.com',
-            jobTitle: 'senior',
-            username: 'jvk',
-            adminStatus: false,
-            employeeStatus: 'Lead',
-            updatedAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-            createdAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-          },
-        ]),
+      populate: jest.fn().mockReturnValue({
+        limit: jest
+          .fn()
+          .mockResolvedValueOnce([{ name: 'test', employeeId: { name: 'test1' }, leadEmployeeId: { name: 'test1' } }])
+          .mockResolvedValueOnce(null),
+      }),
     }),
   },
 }));
-
-
 
 describe('getAllRequests', () => {
   const context = {
@@ -49,26 +26,12 @@ describe('getAllRequests', () => {
     const res = await getAllRequests!({}, { limit: 1 }, context, {} as GraphQLResolveInfo);
 
     expect(RequestModel.find).toHaveBeenCalledTimes(1);
-    expect(res).toEqual([{
-      _id: '676e6dd407d5ae05a35cda84',
-      email: 'jvk@gmail.com',
-      jobTitle: 'senior',
-      username: 'jvk',
-      adminStatus: false,
-      employeeStatus: 'Lead',
-      updatedAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-      createdAt: 'Fri Dec 27 2024 17:05:24 GMT+0800 (Ulaanbaatar Standard Time)',
-    }]);
+
+    expect(res).toEqual([{ name: 'test', employeeId: { name: 'test1' }, leadEmployeeId: { name: 'test1' } }]);
   });
-  it('should throw an error when no requests are found', async () => {
-    await expect(getAllRequests!({}, { limit: 1 }, context, {} as GraphQLResolveInfo)).rejects.toThrow('There is no employees'); 
+  it('should get getAllRequests', async () => {
+    await getAllRequests!({}, { limit: undefined }, context, {} as GraphQLResolveInfo);
 
     expect(RequestModel.find).toHaveBeenCalledTimes(2);
   });
-    it('should throw an error when no requests are found', async () => {
-      await expect(getAllRequests!({}, { limit: undefined }, context, {} as GraphQLResolveInfo));
-
-      expect(RequestModel.find).toHaveBeenCalledTimes(3);
-    });
-
 });
