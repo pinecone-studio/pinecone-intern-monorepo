@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MainHeader } from '@/components/main/MainHeader';
-import { CarouselUser } from '@/components/match/Carousel';
 import { Loading } from '@/components/main/Loading';
+import { SwipeCards } from '@/components/mkae/SwipeCards';
+import Tinder from '@/components/common/Tinder';
 
 const Page: React.FC = () => {
   const router = useRouter();
@@ -38,9 +39,10 @@ const Page: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col h-screen w-screen items-center justify-between">
       <MainHeader user={user} />
-      <CarouselUser />
+      <SwipeCards />
+      <Tinder />
     </div>
   );
 };
