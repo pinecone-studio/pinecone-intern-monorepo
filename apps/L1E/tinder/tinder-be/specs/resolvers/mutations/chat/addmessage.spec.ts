@@ -1,76 +1,79 @@
 import { addMessage } from 'apps/L1E/tinder/tinder-be/src/resolvers/mutations';
-import FolderModel from 'apps/L1E/tinder/tinder-be/src/models/chat/folder.model';
+
 import { MessageModel } from 'apps/L1E/tinder/tinder-be/src/models/chat/message.model';
 import { userModel } from 'apps/L1E/tinder/tinder-be/src/models/user/user.model';
+import ConversationModel from 'apps/L1E/tinder/tinder-be/src/models/chat/conversation.model';
 
 jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/message.model');
 jest.mock('apps/L1E/tinder/tinder-be/src/models/user/user.model');
-jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/folder.model');
+jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/conversation.model');
 
-// Define the type for the addMessage function
-// eslint-disable-next-line no-unused-vars
-type AddMessageFunction = (parent: object, args: { content: string; userId: string; chosenUserId: string }, context: { req: any }, info: unknown) => Promise<unknown>;
+describe('addMessage Mutation Resolver', () => {
+  const mockUserId = 'user123';
+  const mockChosenUserId = 'user456';
+  const mockContent = 'Hello, world!';
+  const mockSender = { _id: mockUserId, username: 'testUser' };
+  const mockConversation = { _id: 'conv123' };
+  const mockMessage = {
+    _id: 'msg123',
+    content: mockContent,
+    senderId: mockUserId,
+    conversationId: 'conv123',
+    timeStamp: new Date(),
+    isRead: false,
+  };
 
-const typedAddMessage = addMessage as AddMessageFunction;
-
-describe('addMessage', () => {
-  it('should throw an error if sender is not found', async () => {
-    // Mock the models' methods to simulate no sender found
-    (userModel.findById as jest.Mock).mockResolvedValue(null); // Simulate no sender found
-
-    const content = 'Hello';
-    const userId = 'senderId';
-    const chosenUserId = 'receiverId';
-
-    const context = { req: {} };
-    const info = {};
-
-    // Call the function and check for the error
-    await expect(typedAddMessage({}, { content, userId, chosenUserId }, context, info)).rejects.toThrow('Sender not found'); // Expect the error to be thrown
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should successfully add a message and return the sender', async () => {
-    // Mock data for sender, conversation, and message
-    const mockSender = { _id: 'senderId', username: 'testSender' };
-    const mockNewConversation = { _id: 'newConversationId' };
-    const mockMessage = { _id: 'messageId', content: 'Hello', senderId: 'senderId' };
-
-    // Mock the models' methods
-    (userModel.findById as jest.Mock).mockResolvedValue(mockSender); // Simulate finding a sender
-    (FolderModel.findOne as jest.Mock).mockResolvedValue(null); // Simulate no existing conversation
-    (FolderModel.create as jest.Mock).mockResolvedValue(mockNewConversation); // Simulate creating a new conversation
+  it('should add a message to an existing conversation', async () => {
+    // Mock implementations
+    (userModel.findById as jest.Mock).mockResolvedValue(mockSender);
+    (ConversationModel.findOne as jest.Mock).mockResolvedValue(mockConversation);
     (MessageModel.create as jest.Mock).mockResolvedValue(mockMessage);
 
-    const content = 'Hello';
-    const userId = 'senderId';
-    const chosenUserId = 'receiverId';
+    const result = await addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any);
 
-    const context = { req: {} };
-    const info = {};
-
-    // Call the function and check results
-    const result = await typedAddMessage({}, { content, userId, chosenUserId }, context, info);
-
-    // Assertions
-    expect(userModel.findById).toHaveBeenCalledWith({ _id: userId });
-    expect(FolderModel.findOne).toHaveBeenCalledWith({
-      $or: [
-        { userOne: mockSender._id, userTwo: chosenUserId },
-        { userOne: chosenUserId, userTwo: mockSender._id },
-      ],
+    expect(userModel.findById).toHaveBeenCalledWith({ _id: mockUserId });
+    expect(ConversationModel.findOne).toHaveBeenCalled();
+    expect(MessageModel.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        senderId: mockUserId,
+        content: mockContent,
+        conversationId: mockConversation._id,
+      })
+    );
+    expect(result).toEqual({
+      sender: mockSender.username,
+      id: mockMessage._id,
+      text: mockMessage.content,
     });
-    expect(FolderModel.create).toHaveBeenCalledWith({
-      userOne: mockSender._id,
-      userTwo: chosenUserId,
-    });
-    expect(MessageModel.create).toHaveBeenCalledWith({
-      senderId: mockSender._id,
-      content,
-      conversationId: mockNewConversation._id,
-      timeStamp: expect.any(Date),
-      isRead: false,
-    });
+  });
 
-    expect(result).toEqual(mockSender);
+  it('should create a new conversation if one does not exist', async () => {
+    // Mock implementations
+    (userModel.findById as jest.Mock).mockResolvedValue(mockSender);
+    (ConversationModel.findOne as jest.Mock).mockResolvedValue(null);
+    (ConversationModel.create as jest.Mock).mockResolvedValue(mockConversation);
+    (MessageModel.create as jest.Mock).mockResolvedValue(mockMessage);
+
+    await addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any);
+
+    expect(ConversationModel.create).toHaveBeenCalledWith({
+      userOne: mockUserId,
+      userTwo: mockChosenUserId,
+    });
+    expect(MessageModel.create).toHaveBeenCalled();
+  });
+
+  it('should throw an error if sender is not found', async () => {
+    // Mock implementation
+    (userModel.findById as jest.Mock).mockResolvedValue(null);
+
+    await expect(addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any)).rejects.toThrow('Sender not found');
+
+    expect(ConversationModel.findOne).not.toHaveBeenCalled();
+    expect(MessageModel.create).not.toHaveBeenCalled();
   });
 });
