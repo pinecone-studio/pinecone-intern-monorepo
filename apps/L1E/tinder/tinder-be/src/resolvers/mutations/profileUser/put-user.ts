@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../generated';
+import { MutationResolvers, User } from '../../../generated';
 import { userModel } from '../../../models/user/user.model';
 
 export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { _id, input }) => {
@@ -28,5 +28,5 @@ export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { 
     { new: true }
   );
 
-  return user;
+  return user as User;
 };

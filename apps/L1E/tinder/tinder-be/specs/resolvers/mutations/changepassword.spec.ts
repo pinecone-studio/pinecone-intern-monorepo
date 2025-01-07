@@ -5,7 +5,7 @@ import { changePassword } from '../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../src/models/user/otpmodel.ts');
-jest.mock('../../../src/models/user/user.model');
+jest.mock('../../../src/models/user/user.model.ts');
 jest.mock('bcrypt');
 
 describe('changePassword Resolver', () => {

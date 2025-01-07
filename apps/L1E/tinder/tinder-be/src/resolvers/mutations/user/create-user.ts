@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../generated';
+import { MutationResolvers, User } from '../../../generated';
 import bcrypt from 'bcrypt';
 import { userModel } from '../../../models/user/user.model';
 
@@ -26,6 +26,5 @@ export const createUser: MutationResolvers['createUser'] = async (_: unknown, { 
     profession,
   });
 
-  return user;
+  return user as User;
 };
-// };
