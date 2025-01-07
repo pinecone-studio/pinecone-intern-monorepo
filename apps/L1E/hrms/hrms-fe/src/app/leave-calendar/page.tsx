@@ -12,11 +12,8 @@ import { DateRange } from 'react-day-picker';
 import { addDays, format, eachDayOfInterval } from 'date-fns';
 /* eslint-enable no-unused-vars */
 type ComponentName = 'MyRequest' | 'RequestForm' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
-interface LeaveCalendarProps {
-  handlechange: (_componentName: ComponentName) => void;
-}
-/* eslint-enable no-unused-vars */
-export const page = () => {
+
+const Page = () => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
 
   const [date, setDate] = useState<DateRange | undefined>({
@@ -105,4 +102,10 @@ export const page = () => {
   );
 };
 
-export default page
+export default Page
+
+
+function handlechange(_componentName: string) {
+  throw new Error('Function not implemented.');
+}
+
