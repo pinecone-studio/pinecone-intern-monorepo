@@ -3,7 +3,7 @@ import { userModel } from '../../../models/user/user.model';
 
 export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { _id, input }) => {
   const { email, username, age, bio, hobby, interest, job, profession, images } = input;
-  console.log({ email });
+  console.log({ images });
 
   const User = await userModel.findById(_id);
   console.log(User);
