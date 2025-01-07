@@ -4,23 +4,19 @@ import { userModel } from '../../../models/user/user.model';
 export const addImages: MutationResolvers['addImages'] = async (_: unknown, { _id, input }) => {
   const { images } = input;
 
-  const User = await userModel.findById(_id);
+  const user = await userModel.findById(_id);
 
-  if (!User) {
+  if (!user) {
     throw new Error('User not found');
   }
 
-  const user = await userModel.findByIdAndUpdate(
-    {
-      _id: _id,
-    },
-    {
-      images,
-    },
-    { new: true }
-  );
+  const totalImages = user.images.length + images.length;
 
-  // user.images.push(...images);
-  // await user.save();
+  if (totalImages > 6) {
+    throw new Error('You can only upload up to 6 images');
+  }
+
+  await userModel.findByIdAndUpdate(_id, { images: [...images, ...user.images] });
+
   return user;
 };
