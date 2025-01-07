@@ -3,14 +3,18 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import RequestcomDay1 from './RequestFormcom1';
 import RequestcomTime1 from './RequestFormtime';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Employee } from '@/generated';
+import { RequestsInput } from '@/utils/requests-input';
 interface RequestcomPaidProps {
   leads: Employee[];
+  setDay: Dispatch<SetStateAction<boolean>>;
+  day: boolean;
   employee: Employee;
+  isOpen: boolean;
+  onSubmit: (_data: RequestsInput) => Promise<void>;
 }
-const Requestcom = ({ leads, employee }: RequestcomPaidProps) => {
-  const [day, setDay] = useState(false);
+const Requestcom = ({ leads, setDay, day, employee, isOpen, onSubmit }: RequestcomPaidProps) => {
   return (
     <div className="space-y2">
       <div className="gap-2">
@@ -48,7 +52,7 @@ const Requestcom = ({ leads, employee }: RequestcomPaidProps) => {
           </div>
         </div>
       </RadioGroup>
-      {day ? <RequestcomDay1 leads={leads} employee={employee} /> : <RequestcomTime1 leads={leads} employee={employee} />}
+      {day ? <RequestcomDay1 leads={leads} employee={employee} isOpen={isOpen} onSubmit={onSubmit} /> : <RequestcomTime1 leads={leads} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />}
     </div>
   );
 };

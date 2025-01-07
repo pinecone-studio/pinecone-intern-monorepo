@@ -6,18 +6,25 @@ import { IoMdMoon } from 'react-icons/io';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 
-type ComponentName = 'my-requests' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
+type ComponentName = '/' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeComponent, setActiveComponent] = useState<ComponentName | null>(null);
-
+  const router = useRouter();
+  const handleComponentChange = (componentName: ComponentName) => {
+    setActiveComponent(componentName);
+    router.push(`/${componentName}`);
+  };
+  const clickButton = (componentName: ComponentName) => {
+    return activeComponent === componentName ? 'border-b-2 border-black pb-[11px]' : 'border-b-0';
+  };
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
-    setActiveComponent('my-requests');
     {
       savedTheme && setIsDarkMode(savedTheme === 'dark');
     }
+    setActiveComponent('/');
   }, []);
 
   const toggleTheme = () => {
@@ -35,14 +42,6 @@ export const Header = () => {
       document.body.classList.remove('dark');
     }
   }, [isDarkMode]);
-  const router = useRouter();
-  const handleComponentChange = (componentName: ComponentName) => {
-    setActiveComponent(componentName);
-    router.push(`/${activeComponent}`);
-  };
-  const clickButton = (componentName: ComponentName) => {
-    return activeComponent === componentName ? 'border-b-2 border-black pb-[11px]' : 'border-b-0';
-  };
 
   return (
     <div>
@@ -51,7 +50,7 @@ export const Header = () => {
           <img src="Logo.png" alt="Logo" />
           <div className="flex gap-[20px] pt-[30px]">
             {/* user */}
-            <button data-testid="MyRequest-btn" onClick={() => handleComponentChange('my-requests')} className={`${clickButton('my-requests')}`}>
+            <button data-testid="MyRequest-btn" onClick={() => handleComponentChange('/')} className={`${clickButton('/')}`}>
               My requests
             </button>
             <button data-testid="RequestForm-btn" onClick={() => handleComponentChange('request-form')} className={` ${clickButton('request-form')}`}>

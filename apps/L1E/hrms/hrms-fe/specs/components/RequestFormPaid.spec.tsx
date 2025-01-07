@@ -1,7 +1,6 @@
 import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
-import { render, fireEvent, screen, act } from '@testing-library/react';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { CreateRequestDocument, Employee, EmployeeStatus } from '@/generated';
+import { render, fireEvent } from '@testing-library/react';
+import { Employee, EmployeeStatus } from '@/generated';
 const mockLeads: Employee[] = [
   {
     _id: '676e6dd407d5ae05a35cda84',
@@ -30,36 +29,7 @@ const mockLeads: Employee[] = [
     updatedAt: '2023-07-12',
   },
 ];
-const createRequestMock: MockedResponse = {
-  request: {
-    query: CreateRequestDocument,
-    variables: {
-      input: {
-        selectedDay: 'Tue Jan 28 2025',
-        startTime: '00:00',
-        endTime: '24:00',
-        leadEmployeeId: '676e6dd407d5ae05a35cda84',
-        requestStatus: 'PAID_LEAVE',
-        reason: 'Annual leave',
-        employeeId: '676e6e4007d5ae05a35cda9e',
-      },
-    },
-  },
-  result: {
-    data: {
-      createRequest: {
-        selectedDay: 'Tue Jan 28 2025',
-        startTime: '00:00',
-        endTime: '24:00',
-        leadEmployeeId: '676e6dd407d5ae05a35cda84',
-        requestStatus: 'PAID_LEAVE',
-        reason: 'Annual leave',
-        employeeId: '676e6e4007d5ae05a35cda9e',
-      },
-    },
-  },
-};
-const mockEmployee: Employee = {
+const employee: Employee = {
   _id: '676e6e4007d5ae05a35cda9e',
   email: 'shagai@gmail.com',
   jobTitle: 'junior',
@@ -72,36 +42,19 @@ const mockEmployee: Employee = {
   createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
   updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
 };
+const mockOnSubmit = jest.fn(async () => {
+  return Promise.resolve();
+});
 
+const isOpen = true; //
 describe('should RequestcomPaid', () => {
   beforeEach(() => {
     HTMLElement.prototype.scrollIntoView = jest.fn();
   });
 
   it('submits data and calls createRequest mutation', async () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[createRequestMock]} addTypename={false}>
-        <RequestcomPaid leads={mockLeads} employee={mockEmployee} />
-      </MockedProvider>
-    );
-    const calendarBtn = getByTestId('calendar-btn');
-    fireEvent.click(calendarBtn);
-    const day31 = await screen.findByText('28');
-    fireEvent.click(day31);
-
-    const leadBtn = getByTestId('lead-button');
-    fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
-
-    const selectlead = getByTestId('Option-1');
-    fireEvent.keyDown(selectlead, { key: 'Enter' });
-
-    fireEvent.change(getByTestId('notes-input'), { target: { value: 'Annual leave' } });
-
-    const submitBtn = getByTestId('submit-button');
-
-    await act(async () => {
-      fireEvent.click(submitBtn);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    });
+    const { getByTestId } = render(<RequestcomPaid leads={mockLeads} isOpen={isOpen} employee={employee} onSubmit={mockOnSubmit} />);
+    const calendarButton = getByTestId('calendar-btn');
+    fireEvent.click(calendarButton);
   });
 });

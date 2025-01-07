@@ -2,45 +2,65 @@ import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { RequestList } from '@/components/RequestList';
 import { Request } from '@/generated';
-const mockRequest = [
+const mockRequests = [
   {
-    _id: '677249a6197305d06f1db185',
-    employeeId: '676e6de507d5ae05a35cda88',
-    leadEmployeeId: '676e6dec07d5ae05a35cda8a',
-    requestStatus: '',
-    requestType: 'PENDING',
-    reason: 'remote test',
+    _id: '1',
+    createdAt: '2024-12-01T10:00:00Z',
+    updatedAt: '2024-12-01T12:00:00Z',
+    employeeId: {
+      _id: '123',
+      username: 'employee1',
+      email: 'employee1@example.com',
+      jobTitle: 'Software Engineer',
+    },
+    endTime: '18:00',
+    startTime: '09:00',
+    leadEmployeeId: {
+      _id: '456',
+      username: 'leadEmployee',
+      email: 'lead@example.com',
+      jobTitle: 'Team Lead',
+    },
+    requestStatus: 'PENDING', // or 'APPROVED', 'REJECTED'
+    requestType: 'REMOTE', // or 'PAID_LEAVE', 'FREE'
+    selectedDay: '2024-12-01',
+    reason: 'Working from home',
     reasonRefuse: '',
-    selectedDay: '2024-12-30T16:00:00.000Z',
-    startTime: '00:00',
-    endTime: '24:00',
-    updatedAt: 'Mon Dec 30 2024 15:20:06 GMT+0800 (Ulaanbaatar Standard Time)',
-    createdAt: 'Mon Dec 30 2024 15:20:06 GMT+0800 (Ulaanbaatar Standard Time)',
   },
   {
-    _id: '6772551fa009a9bf378d99eb',
-    employeeId: '676e6de507d5ae05a35cda88',
-    leadEmployeeId: '676e6de507d5ae05a35cda88',
-    requestStatus: 'FREE',
-    requestType: 'PENDING',
-    reason: 'dfgadgsdfg',
+    _id: '2',
+    createdAt: '2024-12-02T10:00:00Z',
+    updatedAt: '2024-12-02T12:00:00Z',
+    employeeId: {
+      _id: '789',
+      username: 'employee2',
+      email: 'employee2@example.com',
+      jobTitle: 'Frontend Developer',
+    },
+    endTime: '17:00',
+    startTime: '08:00',
+    leadEmployeeId: {
+      _id: '456',
+      username: 'leadEmployee',
+      email: 'lead@example.com',
+      jobTitle: 'Team Lead',
+    },
+    requestStatus: 'APPROVED',
+    requestType: 'PAID_LEAVE',
+    selectedDay: '2024-12-02',
+    reason: 'Vacation',
     reasonRefuse: '',
-    selectedDay: new Date(2024, 11, 29),
-    startTime: '09:00',
-    endTime: '10:00',
-    updatedAt: 'Mon Dec 30 2024 16:09:03 GMT+0800 (Ulaanbaatar Standard Time)',
-    createdAt: 'Mon Dec 30 2024 16:09:03 GMT+0800 (Ulaanbaatar Standard Time)',
   },
 ];
-
 describe('RequestList', () => {
   it('renders the component', async () => {
-    const handleChange = () => {
+    const handleClick = () => {
       console.log('component');
     };
-    const { getByTestId } = render(<RequestList setSelectId={handleChange} filteredRequest={mockRequest as Request[]} />);
+    const activeIndex = '1';
+    const { getByTestId } = render(<RequestList filteredRequest={mockRequests as Request[]} handleClick={handleClick} activeIndex={activeIndex} />);
 
-    const button = getByTestId('677249a6197305d06f1db185');
+    const button = getByTestId('1');
     fireEvent.click(button);
   });
 });
