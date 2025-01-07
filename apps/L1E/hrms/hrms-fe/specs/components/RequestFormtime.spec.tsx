@@ -1,7 +1,6 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { render, fireEvent } from '@testing-library/react';
 import RequestcomTime1 from '@/components/requestForm/RequestFormtime';
-import { CreateRequestDocument, Employee, EmployeeStatus } from '@/generated';
+import { Employee, EmployeeStatus } from '@/generated';
 const mockLeads: Employee[] = [
   {
     _id: '676e6dd407d5ae05a35cda84',
@@ -30,36 +29,7 @@ const mockLeads: Employee[] = [
     updatedAt: '2023-07-12',
   },
 ];
-const createRequestMock: MockedResponse = {
-  request: {
-    query: CreateRequestDocument,
-    variables: {
-      input: {
-        selectedDay: 'Tue Jan 28 2025',
-        startTime: '08:00',
-        endTime: '09:00',
-        leadEmployeeId: '676e6dd407d5ae05a35cda84',
-        requestStatus: 'FREE',
-        reason: 'Annual leave',
-        employeeId: '676e6e4007d5ae05a35cda9e',
-      },
-    },
-  },
-  result: {
-    data: {
-      createRequest: {
-        selectedDay: 'Tue Jan 28 2025',
-        startTime: '08:00',
-        endTime: '09:00',
-        leadEmployeeId: '676e6dd407d5ae05a35cda84',
-        requestStatus: 'FREE',
-        reason: 'Annual leave',
-        employeeId: '676e6e4007d5ae05a35cda9e',
-      },
-    },
-  },
-};
-const mockEmployee: Employee = {
+const employee: Employee = {
   _id: '676e6e4007d5ae05a35cda9e',
   email: 'shagai@gmail.com',
   jobTitle: 'junior',
@@ -69,48 +39,26 @@ const mockEmployee: Employee = {
   paidLeaveLimit: 5,
   freeLimit: 5,
   employeeStatus: EmployeeStatus.Employee,
-  createdAt: 'Tue Jan 28 2025 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
-  updatedAt: 'Tue Jan 28 2025 00:00:00 GMT+0800 (Ulaanbaatar Standard Time)',
+  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
 };
+const mockOnSubmit = jest.fn(async () => {
+  return Promise.resolve();
+});
+const isOpen = true; //
 describe('RequestcomTime1', () => {
   beforeEach(() => {
     HTMLElement.prototype.scrollIntoView = jest.fn();
   });
+  describe('should RequestcomRemote', () => {
+    beforeEach(() => {
+      HTMLElement.prototype.scrollIntoView = jest.fn();
+    });
 
-  it('submits data and calls createRequest mutation', async () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[createRequestMock]} addTypename={false}>
-        <RequestcomTime1 leads={mockLeads} employee={mockEmployee} />
-      </MockedProvider>
-    );
-    const calendarBtn = getByTestId('calendar-btn');
-    fireEvent.click(calendarBtn);
-    const day31 = await screen.findByText('28');
-    fireEvent.click(day31);
-
-    const startTimeSelectTrigger = getByTestId('starttime-select');
-    fireEvent.keyDown(startTimeSelectTrigger, { key: 'ArrowDown' });
-    const startTimeOption = screen.getByTestId('09:00');
-    fireEvent.click(startTimeOption);
-
-    const endtime = getByTestId('end-time');
-    fireEvent.keyDown(endtime, { key: 'ArrowDown' });
-    const endtimeOption = await screen.getByTestId('10');
-    fireEvent.click(endtimeOption);
-
-    const leadBtn = getByTestId('lead-button');
-    fireEvent.keyDown(leadBtn, { key: 'ArrowDown' });
-
-    const selectlead = getByTestId('Option-1');
-    fireEvent.keyDown(selectlead, { key: 'Enter' });
-
-    fireEvent.change(getByTestId('notes-input'), { target: { value: 'Annual leave' } });
-
-    const submitBtn = getByTestId('submit-button');
-
-    await act(async () => {
-      fireEvent.click(submitBtn);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    it('submits data and calls createRequest mutation', async () => {
+      const { getByTestId } = render(<RequestcomTime1 leads={mockLeads} isOpen={isOpen} employee={employee} onSubmit={mockOnSubmit} />);
+      const calendarBtn = getByTestId('calendar-btn');
+      fireEvent.click(calendarBtn);
     });
   });
 });

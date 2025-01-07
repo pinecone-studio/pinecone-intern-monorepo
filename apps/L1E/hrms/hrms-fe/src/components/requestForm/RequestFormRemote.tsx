@@ -9,33 +9,22 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { RequestsInput } from '@/utils/requests-input';
-import requestSchema from '@/utils/request-schema';
-import { useState } from 'react';
-import { Employee, RequestInput, RequestStatus, useCreateRequestMutation } from '@/generated';
+import { Employee, RequestStatus } from '@/generated';
 import SuccessModal from './Successmodal';
+import { zodResolver } from '@hookform/resolvers/zod';
+import requestSchema from '@/utils/request-schema';
 interface RequestcomPaidProps {
-  leads: Employee[];
   employee: Employee;
+  leads: Employee[];
+  isOpen: boolean;
+  onSubmit: (_data: RequestsInput) => Promise<void>;
 }
-const Requestcomremote = ({ leads, employee }: RequestcomPaidProps) => {
+const Requestcomremote = ({ leads, isOpen, employee, onSubmit }: RequestcomPaidProps) => {
   const form = useForm<RequestsInput>({
     resolver: zodResolver(requestSchema),
-    defaultValues: { date: new Date(), startTime: '00:00', endTime: '24:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: employee._id },
+    defaultValues: { date: new Date(), startTime: '09:00', endTime: '17:00', leadEmployeeId: '', requestStatus: RequestStatus.Remote, reason: '', employeeId: employee._id },
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const [createRequest] = useCreateRequestMutation();
-  const onSubmit = async (data: RequestsInput) => {
-    const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
-    const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
-    await createRequest({ variables: { input: newdata } });
-    setIsOpen(true);
-    setTimeout(() => {
-      form.reset();
-      setIsOpen(false);
-    }, 1500);
-  };
   return (
     <div className="space-y2">
       <Label className="text-sm">Төрөл*</Label>

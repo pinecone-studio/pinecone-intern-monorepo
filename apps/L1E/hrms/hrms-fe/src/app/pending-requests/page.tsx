@@ -1,8 +1,77 @@
 'use client';
+import { Input } from '@/components/ui/input';
+import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, useGetAllRequestsQuery } from '@/generated';
+import { useState } from 'react';
+import StatusSelector from '@/components/StatusSelector';
+import { RequestList } from '@/components/RequestList';
+import { RequestApproved } from '@/components/RequestApproved';
+const employee: Employee = {
+  _id: '676e6dd407d5ae05a35cda84',
+  email: 'jvk@gmail.com',
+  jobTitle: 'senior',
+  username: 'jvkaa',
+  adminStatus: false,
+  remoteLimit: 5,
+  paidLeaveLimit: 5,
+  freeLimit: 5,
+  employeeStatus: EmployeeStatus.Lead,
+  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
+};
+interface StatusSelectorProp {
+  id: string;
+  name: string;
+  count: number;
+  selected: boolean;
+}
+
 const Page = () => {
+  const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
+  const [selectId, setSelectId] = useState<string>();
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<string | undefined>(undefined);
+  const [statuses, setStatuses] = useState<StatusSelectorProp[]>([
+    { id: 'PENDING', name: 'Баталгаажсан', count: 21, selected: true },
+    { id: 'APPROVED', name: 'Хүлээгдэж байна', count: 21, selected: true },
+    { id: 'REJECTED', name: 'Татгалзсан', count: 20, selected: false },
+  ]);
+
+  if (!data) return <div>Loading</div>;
+  console.log(statuses);
+
+  const allRequests = data.getAllRequests as GetAllRequestsQuery['getAllRequests'];
+  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id);
+
+  const handleClick = (id: string) => {
+    setActiveIndex(id);
+    setSelectId(id);
+  };
+
+  const handleStatusClick = (id: string) => {
+    setStatuses((prevStatuses) => prevStatuses.map((status) => (status.id === id ? { ...status, selected: !status.selected } : status)));
+  };
+
+  const selectedStatuses = statuses.filter((status) => status.selected);
+
   return (
-    <div>
-      <div></div>
+    <div className="flex flex-col h-screen gap-5 w-screen pt-10 items-center  mx-auto bg-neutral-100 ">
+      <div className="w-[1030px] flex flex-col ">
+        <div className="text-xl font-semibold">Хүсэлтүүд</div>
+        <div className="flex flex-row gap-[220px]">
+          <div className="flex flex-col ">
+            <div className="flex gap-4 mt-4">
+              <Input type="search" placeholder="Хайлт" className="w-[236px] h-[40px] flex absolute pl-9 " />
+            </div>
+          </div>
+          <StatusSelector handleStatusClick={handleStatusClick} selectedStatuses={selectedStatuses} statuses={statuses} isOpen={isOpen} setIsOpen={setIsOpen} />
+        </div>
+        <div className="flex flex-row gap-2">
+          <RequestList filteredRequest={filteredRequest as Request[]} handleClick={handleClick} activeIndex={activeIndex} />
+          <div className={`${!activeIndex && 'hidden'}`}>
+            <RequestApproved selectId={selectId} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
