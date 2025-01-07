@@ -1,10 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { addImages } from '../../../src/resolvers/mutations';
-import { userModel } from '../../../src/models/user/user.model';
 
-// Мок хэрэглэгчийг тодорхойлж байгаагаа эхлээд зааж өгнө
-
-// Мок хийх
 jest.mock('../../../src/models/user/user.model.ts', () => ({
   userModel: {
     findById: jest
