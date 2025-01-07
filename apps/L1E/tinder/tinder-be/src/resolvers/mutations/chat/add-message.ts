@@ -1,11 +1,16 @@
-import { MessageModel } from '../../../models/chat/message.model';
-import { MutationResolvers } from '../../../generated';
-import { userModel } from '../../../models/user/user.model';
+import { Message, MutationResolvers } from '../../../generated';
 import FolderModel from '../../../models/chat/folder.model';
+import { MessageModel } from '../../../models/chat/message.model';
+import { userModel } from '../../../models/user/user.model';
 
 // eslint-disable-next-line no-unused-vars
 export const addMessage: MutationResolvers['addMessage'] = async (_, { content, userId, chosenUserId }, context, info) => {
-  const sender = await userModel.findOne({ _id: userId });
+  const sender = await userModel.findById({ _id: userId });
+
+  // Check if sender is null
+  if (!sender) {
+    throw new Error('Sender not found');
+  }
 
   let conversation = await FolderModel.findOne({
     $or: [
@@ -29,5 +34,5 @@ export const addMessage: MutationResolvers['addMessage'] = async (_, { content, 
     isRead: false,
   });
 
-  return sender;
+  return sender as unknown as Message;
 };
