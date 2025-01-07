@@ -32,6 +32,10 @@ export const typeDefs = gql`
     hobby: String!
   }
 
+  input AddImagesInput {
+    images: [String!]!
+  }
+
   input UpdateInput {
     username: String!
     bio: String!
@@ -79,6 +83,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    addImages(input: AddImagesInput!, _id: ID): User!
     deleteUser(_id: ID): User!
     deleteImage(input: DeleteInput!, _id: ID): User!
     createUser(input: RegisterInput!): User!

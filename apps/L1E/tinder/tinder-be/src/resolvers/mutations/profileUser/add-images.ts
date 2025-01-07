@@ -1,11 +1,10 @@
 import { MutationResolvers } from '../../../generated';
 import { userModel } from '../../../models/user/user.model';
 
-export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { _id, input }) => {
-  const { email, username, age, bio, hobby, interest, job, profession } = input;
+export const addImages: MutationResolvers['addImages'] = async (_: unknown, { _id, input }) => {
+  const { images } = input;
 
   const User = await userModel.findById(_id);
-  console.log(User);
 
   if (!User) {
     throw new Error('User not found');
@@ -16,17 +15,12 @@ export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { 
       _id: _id,
     },
     {
-      email,
-      username,
-      age,
-      bio,
-      hobby,
-      interest,
-      job,
-      profession,
+      images,
     },
     { new: true }
   );
 
+  // user.images.push(...images);
+  // await user.save();
   return user;
 };
