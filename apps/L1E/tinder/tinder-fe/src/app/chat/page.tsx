@@ -64,7 +64,7 @@ const Main: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between h-screen ">
+    <div className="flex flex-col relative items-center justify-between h-screen ">
       <MainHeader user={user} />
       <Matches matches={matches as Match[]} handleAddToRecentChats={handleAddToRecentChats} />
       {/* <MainChat /> */}

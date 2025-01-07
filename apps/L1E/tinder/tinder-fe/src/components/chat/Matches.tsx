@@ -17,7 +17,7 @@ const Matches: React.FC<MatchesProps> = ({ handleAddToRecentChats, matches }) =>
   const username = searchParams.get('username');
 
   return (
-    <div className="w-screen flex justify-center h-screen  pt-4 bg-transparent">
+    <div className="w-screen flex justify-center h-screen  pt-12 bg-transparent">
       <div className="max-w-[1180px] flex-col w-screen  pt-6 h-full flex gap-2">
         <div className="items-start">
           <h2>Matches</h2>
