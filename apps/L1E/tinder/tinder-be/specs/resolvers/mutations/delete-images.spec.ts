@@ -19,8 +19,24 @@ describe('deleteImage mutation', () => {
 
     const result = await deleteImage({}, { _id: 'user123', input });
 
-    expect(result.images).toEqual([]);
+    expect(result.images).toEqual(['image2.jpg', 'image3.jpg']);
     expect(mockUser.save).toHaveBeenCalled();
+  });
+
+  it('should throw an error if the image is not found in the user profile', async () => {
+    const mockUser = {
+      _id: 'user123',
+      images: ['image2.jpg', 'image3.jpg'],
+      save: jest.fn(),
+    };
+
+    (userModel.findById as jest.Mock).mockResolvedValue(mockUser);
+
+    const input = {
+      image: 'image1.jpg',
+    };
+
+    await expect(deleteImage({}, { _id: 'user123', input })).rejects.toThrow('Image not found in user profile');
   });
 
   it('should throw an error if user is not found', async () => {
