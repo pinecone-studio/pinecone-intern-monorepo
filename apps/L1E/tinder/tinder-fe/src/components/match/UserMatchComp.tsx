@@ -15,7 +15,7 @@ type MatchDialogProps = {
 
 export const UserMatchComp = ({ userImage, matchImage, matchName, isOpen, onClose }: MatchDialogProps) => {
   return (
-    <Dialog open={isOpen} onOpenChange={onClose} >
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[440px] p-0 gap-0">
         <div className="p-6 relative bg-white rounded-lg">
           <button onClick={onClose} data-testid="CloseBtn" className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100">
