@@ -1,5 +1,5 @@
 {
-  "name": "instagram-frontend",
+  "name": "Instagram-frontend",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/L1FG/instagram/frontend",
   "projectType": "application",
@@ -27,17 +27,17 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "instagram-frontend:build",
+        "buildTarget": "Instagram-frontend:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "instagram-frontend:build:development",
+          "buildTarget": "Instagram-frontend:build:development",
           "dev": true,
           "port": 4201
         },
         "production": {
-          "buildTarget": "instagram-frontend:build:production",
+          "buildTarget": "Instagram-frontend:build:production",
           "dev": false
         }
       },
@@ -55,7 +55,7 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "instagram-frontend:build:production"
+        "buildTarget": "Instagram-frontend:build:production"
       }
     },
     "test": {
@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "dev"
         }
       }
@@ -88,7 +88,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "test"
         }
       }
@@ -98,7 +98,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "prod"
         }
       }
@@ -127,7 +127,7 @@
     "e2e:open": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress instagram-frontend --watch"],
+        "commands": ["npx nx cypress Instagram-frontend --watch"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]
@@ -150,7 +150,7 @@
         "cypressConfig": "apps/L1FG/instagram/frontend/cypress.config.ts",
         "testingType": "e2e",
         "reporter": "mochawesome",
-        "devServerTarget": "instagram-frontend:serve:development",
+        "devServerTarget": "Instagram-frontend:serve:development",
         "browser": "chrome"
       },
       "dependsOn": [
