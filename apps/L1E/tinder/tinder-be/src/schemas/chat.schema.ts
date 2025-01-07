@@ -2,11 +2,9 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type Message {
-    _id: ID!
-    content: String!
-    sender: User!
-    receiver: User!
-    createdAt: Date!
+    id: ID!
+    text: String!
+    sender: String!
   }
 
   input AddMessageInput {
@@ -15,7 +13,18 @@ export const typeDefs = gql`
     receiverId: ID!
   }
 
+  type Conversation {
+    id: ID!
+    userOne: String!
+    userTwo: String!
+    messages: [Message!]!
+  }
+
+  type Query {
+    getConversation(userOne: String!, userTwo: String!): Conversation
+  }
+
   type Mutation {
-    addMessage(userId: String!, content: String!, chosenUserId: String): Message
+    addMessage(userId: String!, content: String!, chosenUserId: String!): Message!
   }
 `;

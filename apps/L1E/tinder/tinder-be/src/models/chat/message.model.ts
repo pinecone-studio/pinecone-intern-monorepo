@@ -1,33 +1,46 @@
-import { model, Model, models, Schema } from 'mongoose';
+import { model, Model, models, Schema, Document } from 'mongoose';
 
+// Define AttachmentType
 export type AttachmentType = {
   type: string;
   url: string;
 };
 
-export type MessageModelType = {
-  _id: Schema.Types.ObjectId;
-  senderId: Schema.Types.ObjectId;
-  content: {
-    type: string;
-    required: true;
-  };
+// Define the MessageModelType interface, extending Document to have _id as part of the schema
+export interface IMessage extends Document {
+  senderId: Schema.Types.ObjectId; // This will now refer to a User model
+  content: string;
   timeStamp: Date;
   conversationId: Schema.Types.ObjectId;
   isRead: boolean;
   attachments?: AttachmentType[];
-};
+}
 
-const MessageSchema = new Schema<MessageModelType>({
-  senderId: { type: Schema.Types.ObjectId, required: true, ref: 'Users' },
+// Define the Message schema with proper types
+const MessageSchema = new Schema<IMessage>({
+  senderId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Users', // Referencing the 'Users' collection, ensure you have the correct model name
+  },
   conversationId: {
     type: Schema.Types.ObjectId,
     required: false,
-    ref: 'Folder',
+    ref: 'Folder', // Reference to the Folder model, update if needed
   },
-  content: { type: String, required: true },
-  timeStamp: { type: Date, default: Date.now, required: true },
-  isRead: { type: Boolean, default: false },
+  content: {
+    type: String,
+    required: true,
+  },
+  timeStamp: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
   attachments: [
     {
       type: { type: String, required: false },
@@ -36,4 +49,5 @@ const MessageSchema = new Schema<MessageModelType>({
   ],
 });
 
-export const MessageModel: Model<MessageModelType> = models['Message'] || model<MessageModelType>('Message', MessageSchema);
+// Create the MessageModel, using the schema and interface
+export const MessageModel: Model<IMessage> = models['Message'] || model<IMessage>('Message', MessageSchema);
