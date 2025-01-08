@@ -6,7 +6,7 @@ interface SuccessModalProps {
 }
 const SuccessModal = ({ isOpen }: SuccessModalProps) => {
   return (
-    <Dialog open={isOpen}>
+    <Dialog data-cy="successmodal" open={isOpen}>
       <DialogContent className="w-full max-w-[608px]">
         <DialogTitle>
           <div className="flex flex-col items-center justify-center gap-6 py-8">
