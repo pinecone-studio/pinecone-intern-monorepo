@@ -5,6 +5,7 @@ import { IoSunnyOutline } from 'react-icons/io5';
 import { IoMdMoon } from 'react-icons/io';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 type ComponentName = '/' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
 
@@ -47,7 +48,7 @@ export const Header = () => {
     <div>
       <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px]  border-b-[1px]">
         <div>
-          <img src="Logo.png" alt="Logo" />
+          <Image src="/Logo.png" alt="Logo" width={32} height={28} />
           <div className="flex gap-[20px] pt-[30px]">
             {/* user */}
             <button data-testid="MyRequest-btn" onClick={() => handleComponentChange('/')} className={`${clickButton('/')}`}>

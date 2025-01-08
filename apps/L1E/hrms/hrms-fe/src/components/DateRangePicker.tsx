@@ -14,10 +14,10 @@ interface DateRangePickerProps {
 
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({ setDate, date }) => {
   return (
-    <div className={`grid gap-2`}>
+    <div className={`grid gap-2`} data-testid="date-range-picker">
       <Popover>
         <PopoverTrigger asChild>
-          <Button id="date" variant="outline" data-testid="calendar-btn" className={`w-[300px] justify-start text-left font-normal `}>
+          <Button id="date" variant="outline" data-testid="calendar-btn" data-cy={'date-picker'} className={`w-[300px] justify-start text-left font-normal `}>
             <CalendarIcon />
             {date?.from ? (
               date.to ? (
@@ -33,7 +33,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({ setDate, date 
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <Calendar initialFocus data-testid="calendar" mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2} />
+          <Calendar data-cy={'calendar-content'} initialFocus data-testid="calendar" mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2} />
         </PopoverContent>
       </Popover>
     </div>
