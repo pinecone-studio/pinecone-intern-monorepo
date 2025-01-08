@@ -31,7 +31,11 @@ const Page = () => {
     setItem(value);
   };
   const [createRequest] = useCreateRequestMutation();
+  const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
 
+  useEffect(() => {
+    setLeads(data?.getEmployees as Employee[]);
+  }, [data]);
   const onSubmit = async (data: RequestsInput) => {
     const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
@@ -41,12 +45,6 @@ const Page = () => {
     toast.success('Амжилттай илгээгдлээ');
   };
   const [leads, setLeads] = useState<Employee[]>([]);
-
-  const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
-
-  useEffect(() => {
-    setLeads(data?.getEmployees as Employee[]);
-  }, [data]);
 
   const componentMap: { [key: string]: JSX.Element | null } = {
     Чөлөө: <Requestcom leads={leads} setDay={setDay} day={day} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />,
