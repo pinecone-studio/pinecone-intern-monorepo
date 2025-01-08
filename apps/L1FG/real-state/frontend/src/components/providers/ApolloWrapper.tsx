@@ -5,7 +5,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { PropsWithChildren } from 'react';
 import { setContext } from '@apollo/client/link/context';
 
-const uri = process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql';
+const uri = 'https://intern-1fg-real-state-backend-prod-pinecone-studio.vercel.app/api/graphql';
 
 const makeClient = () => {
   const httpLink = new HttpLink({
