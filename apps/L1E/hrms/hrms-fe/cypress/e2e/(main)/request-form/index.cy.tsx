@@ -17,5 +17,3 @@ describe('requestform page', () => {
     cy.contains('Амжилттай илгээгдлээ').should('not.be.visible');
   });
 });
-
-new Date();
