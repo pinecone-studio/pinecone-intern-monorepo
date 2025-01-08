@@ -16,6 +16,11 @@ const statusMessages = {
   APPROVED: 'Баталгаажсан',
   REJECTED: 'Татгалзсан',
 };
+const statusColor = {
+  PENDING: 'bg-[#F9731633]',
+  APPROVED: 'bg-[#18BA5133]',
+  REJECTED: 'bg-[#E11D4833]',
+};
 const requestStatus = {
   FREE: 'Чөлөө',
   PAID_LEAVE: 'Цалинтай чөлөө',
@@ -53,7 +58,12 @@ export const RequestList = ({ filteredRequest, handleClick, activeIndex }: Reque
               </div>
             </div>
           </div>
-          <div className="w-[122px] h-5 border rounded-xl text-xs font-medium text-center bg-[#F9731633]">{el.requestType && statusMessages[el.requestType]}</div>
+          <div
+            className={`w-[122px] h-5 border rounded-xl text-xs font-medium text-center ${statusColor[el.requestType]}
+        `}
+          >
+            {el.requestType && statusMessages[el.requestType]}
+          </div>
         </div>
       ))}
     </div>

@@ -1,6 +1,6 @@
 'use client';
 import { Input } from '@/components/ui/input';
-import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, useGetAllRequestsQuery } from '@/generated';
+import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, RequestType, useGetAllRequestsQuery, useUpdateRequestMutation } from '@/generated';
 import { useState } from 'react';
 import StatusSelector from '@/components/StatusSelector';
 import { RequestList } from '@/components/RequestList';
@@ -27,31 +27,54 @@ interface StatusSelectorProp {
 
 const Page = () => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
+  const [refuseValue, setRefuseValue] = useState<string>();
+  const [updateRequest] = useUpdateRequestMutation();
   const [selectId, setSelectId] = useState<string>();
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState<boolean>(false);
+  const [isOpenModalRefuse, setIsOpenModalRefuse] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<string | undefined>(undefined);
   const [statuses, setStatuses] = useState<StatusSelectorProp[]>([
-    { id: 'PENDING', name: 'Баталгаажсан', count: 21, selected: true },
-    { id: 'APPROVED', name: 'Хүлээгдэж байна', count: 21, selected: true },
+    { id: 'APPROVED', name: 'Баталгаажсан', count: 21, selected: true },
+    { id: 'PENDING', name: 'Хүлээгдэж байна', count: 21, selected: true },
     { id: 'REJECTED', name: 'Татгалзсан', count: 20, selected: false },
   ]);
 
-  if (!data) return <div>Loading</div>;
-  console.log(statuses);
-
-  const allRequests = data.getAllRequests as GetAllRequestsQuery['getAllRequests'];
-  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id);
+  const allRequests = data?.getAllRequests as GetAllRequestsQuery['getAllRequests'];
+  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id && statuses.some((status) => status.selected && status.id === e.requestType));
 
   const handleClick = (id: string) => {
     setActiveIndex(id);
     setSelectId(id);
   };
+  if (!data) return <div>Loading</div>;
 
   const handleStatusClick = (id: string) => {
     setStatuses((prevStatuses) => prevStatuses.map((status) => (status.id === id ? { ...status, selected: !status.selected } : status)));
   };
 
   const selectedStatuses = statuses.filter((status) => status.selected);
+  const buttonReject = () => {
+    setIsOpenModalRefuse(true);
+  };
+  const buttonApprove = () => {
+    setIsOpenModalConfirm(true);
+  };
+
+  const onConfirm = async () => {
+    const update = new Date();
+    if (selectId) {
+      const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: '', requestType: RequestType.Approved } } });
+      console.log(response);
+    }
+  };
+  const onRefuse = async () => {
+    const update = new Date();
+    if (selectId) {
+      const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Approved } } });
+      console.log(response);
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen gap-5 w-screen pt-10 items-center  mx-auto bg-neutral-100 ">
@@ -68,7 +91,21 @@ const Page = () => {
         <div className="flex flex-row gap-2">
           <RequestList filteredRequest={filteredRequest as Request[]} handleClick={handleClick} activeIndex={activeIndex} />
           <div className={`${!activeIndex && 'hidden'}`}>
-            <RequestApproved selectId={selectId} />
+            <RequestApproved
+              selectId={selectId}
+              buttonApprove={buttonApprove}
+              buttonReject={buttonReject}
+              isOpenModalConfirm={isOpenModalConfirm}
+              onCloseConfirm={() => setIsOpenModalConfirm(false)}
+              onConfirm={onConfirm}
+              isOpenModalRefuse={isOpenModalRefuse}
+              onCloseRefuse={() => {
+                setIsOpenModalRefuse(false);
+              }}
+              setRefuseValue={setRefuseValue}
+              onRefuse={onRefuse}
+              filteredRequest={filteredRequest as Request[]}
+            />
           </div>
         </div>
       </div>

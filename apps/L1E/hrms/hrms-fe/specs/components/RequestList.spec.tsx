@@ -21,8 +21,8 @@ const mockRequests = [
       email: 'lead@example.com',
       jobTitle: 'Team Lead',
     },
-    requestStatus: 'PENDING', // or 'APPROVED', 'REJECTED'
-    requestType: 'REMOTE', // or 'PAID_LEAVE', 'FREE'
+    requestStatus: 'PENDING',
+    requestType: 'REMOTE',
     selectedDay: '2024-12-01',
     reason: 'Working from home',
     reasonRefuse: '',
