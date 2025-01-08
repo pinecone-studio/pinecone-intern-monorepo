@@ -38,6 +38,46 @@ mutation CreateRequest($input: RequestInput!) {
     createdAt
   }
 }
+mutation updateRequest($updateRequestId: ID!, $input: RequestUpdateInput!) {
+  updateRequest(id: $updateRequestId, input: $input) {
+    _id
+    employeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
+    leadEmployeeId {
+      _id
+      email
+      jobTitle
+      username
+      adminStatus
+      remoteLimit
+      paidLeaveLimit
+      freeLimit
+      employeeStatus
+      updatedAt
+      createdAt
+    }
+    requestStatus
+    requestType
+    selectedDay
+    reason
+    reasonRefuse
+    startTime
+    endTime
+    updatedAt
+    createdAt
+  }
+}
 
 query GetEmployees($input: String) {
   getEmployees(input: $input) {
