@@ -1,5 +1,5 @@
 {
-  "name": "Instagram-frontend",
+  "name": "instagram-frontend",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/L1FG/instagram/frontend",
   "projectType": "application",
@@ -27,17 +27,17 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "Instagram-frontend:build",
+        "buildTarget": "instagram-frontend:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "Instagram-frontend:build:development",
+          "buildTarget": "instagram-frontend:build:development",
           "dev": true,
           "port": 4201
         },
         "production": {
-          "buildTarget": "Instagram-frontend:build:production",
+          "buildTarget": "instagram-frontend:build:production",
           "dev": false
         }
       },
@@ -55,7 +55,7 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "Instagram-frontend:build:production"
+        "buildTarget": "instagram-frontend:build:production"
       }
     },
     "test": {
@@ -127,7 +127,7 @@
     "e2e:open": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress Instagram-frontend --watch"],
+        "commands": ["npx nx cypress instagram-frontend --watch"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]
@@ -150,7 +150,7 @@
         "cypressConfig": "apps/L1FG/instagram/frontend/cypress.config.ts",
         "testingType": "e2e",
         "reporter": "mochawesome",
-        "devServerTarget": "Instagram-frontend:serve:development",
+        "devServerTarget": "instagram-frontend:serve:development",
         "browser": "chrome"
       },
       "dependsOn": [
