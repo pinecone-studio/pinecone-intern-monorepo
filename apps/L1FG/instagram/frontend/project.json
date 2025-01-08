@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "dev"
         }
       }
@@ -88,7 +88,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "test"
         }
       }
@@ -98,7 +98,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["instagram-frontend"],
+          "groups": ["Instagram-frontend"],
           "env": "prod"
         }
       }
@@ -119,7 +119,7 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress example-frontend"],
+        "commands": ["npx nx cypress instagram-frontend"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]
