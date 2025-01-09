@@ -22,6 +22,7 @@ const StatusSelector = ({ handleStatusClick, isOpen, setIsOpen, selectedStatuses
     <div className="w-full max-w-md p-4  ">
       <div className="flex gap-2  ">
         <Button
+          data-cy="status-button"
           variant="ghost"
           data-testid="btn"
           className="text-md w-[98px] bg-white h-[40px] border rounded-lg "
@@ -43,6 +44,7 @@ const StatusSelector = ({ handleStatusClick, isOpen, setIsOpen, selectedStatuses
         <div className="space-y-2">
           {statuses.map((status, index) => (
             <button
+              data-cy={`status${index}`}
               key={status.id}
               data-testid={`${index}`}
               onClick={() => handleStatusClick(status.id)}

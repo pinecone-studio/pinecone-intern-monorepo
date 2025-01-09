@@ -16,8 +16,10 @@ export const ApproveModal = ({ isOpenModal, onClose, onConfirm }: ConfirmationMo
           <AlertDialogDescription>Чөлөөний хүсэлтийг зөвшөөрснөөр тухайн ажилтан руу хүсэлт нь баталгаажсан гэсэн мессеж Teams Chat -аар очно.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Буцах</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Зөвшөөрөх</AlertDialogAction>
+          <AlertDialogCancel data-cy="reject-modal">Буцах</AlertDialogCancel>
+          <AlertDialogAction data-cy="approve-modal" onClick={onConfirm}>
+            Зөвшөөрөх
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
