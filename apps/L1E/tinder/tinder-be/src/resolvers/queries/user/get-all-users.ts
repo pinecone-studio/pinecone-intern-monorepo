@@ -1,7 +1,6 @@
-import { QueryResolvers } from '../../../generated';
 import { userModel } from '../../../models/user/user.model';
 
-export const getAllUsers: QueryResolvers['getAllUsers'] = async () => {
+export const getAllUsers = async () => {
   try {
     const user = await userModel.find();
     return user;

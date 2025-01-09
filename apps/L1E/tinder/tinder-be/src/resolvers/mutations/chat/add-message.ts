@@ -5,8 +5,6 @@ import { userModel } from '../../../models/user/user.model';
 
 // eslint-disable-next-line no-unused-vars
 export const addMessage: MutationResolvers['addMessage'] = async (_, { content, userId, chosenUserId }) => {
-  console.log(content, userId, chosenUserId);
-
   const sender = await userModel.findById({ _id: userId });
 
   if (!sender) {
@@ -34,7 +32,6 @@ export const addMessage: MutationResolvers['addMessage'] = async (_, { content, 
     timeStamp: new Date(),
     isRead: false,
   });
-  console.log(message);
 
   const result = {
     sender: sender.username, // Only return sender's username (or _id if preferred)

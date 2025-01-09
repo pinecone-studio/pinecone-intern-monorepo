@@ -1,32 +1,32 @@
-import { model, Model, models, Schema, Document } from 'mongoose';
+import { model, Model, models, Schema, Document, Types } from 'mongoose';
 
 // Define AttachmentType
-export type AttachmentType = {
+export interface AttachmentType {
   type: string;
   url: string;
-};
+}
 
-// Define the MessageModelType interface, extending Document to have _id as part of the schema
+// Define the IMessage interface, extending Document
 export interface IMessage extends Document {
-  senderId: Schema.Types.ObjectId; // This will now refer to a User model
+  senderId: Types.ObjectId;
   content: string;
   timeStamp: Date;
-  conversationId: Schema.Types.ObjectId;
+  conversationId: Types.ObjectId;
   isRead: boolean;
   attachments?: AttachmentType[];
 }
 
-// Define the Message schema with proper types
+// Define the Message schema
 const MessageSchema = new Schema<IMessage>({
   senderId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Users', // Referencing the 'Users' collection, ensure you have the correct model name
+    ref: 'User', // Changed to singular 'User' to match conventional naming
   },
   conversationId: {
     type: Schema.Types.ObjectId,
-    required: false,
-    ref: 'Folder', // Reference to the Folder model, update if needed
+    required: true, // Changed to true as it seems essential
+    ref: 'Conversation',
   },
   content: {
     type: String,
@@ -35,7 +35,6 @@ const MessageSchema = new Schema<IMessage>({
   timeStamp: {
     type: Date,
     default: Date.now,
-    required: true,
   },
   isRead: {
     type: Boolean,
@@ -43,11 +42,20 @@ const MessageSchema = new Schema<IMessage>({
   },
   attachments: [
     {
-      type: { type: String, required: false },
-      url: { type: String, required: false },
+      type: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });
 
-// Create the MessageModel, using the schema and interface
-export const MessageModel: Model<IMessage> = models['Message'] || model<IMessage>('Message', MessageSchema);
+// Create and export the MessageModel
+export const MessageModel: Model<IMessage> = models.Message || model<IMessage>('Message', MessageSchema);
+
+// Export default for consistency with other models
+export default MessageModel;

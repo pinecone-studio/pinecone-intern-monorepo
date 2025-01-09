@@ -1,8 +1,8 @@
-import { Schema, model, Document, models } from 'mongoose';
+import { Schema, model, Document, models, Types } from 'mongoose';
 
-interface IConversation extends Document {
-  userOne: Schema.Types.ObjectId; // Reference to a user
-  userTwo: Schema.Types.ObjectId; // Reference to a user
+export interface IConversation extends Document {
+  userOne: Types.ObjectId;
+  userTwo: Types.ObjectId;
   createdAt: Date;
 }
 

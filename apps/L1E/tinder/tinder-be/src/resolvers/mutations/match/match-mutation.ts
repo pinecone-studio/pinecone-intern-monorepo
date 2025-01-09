@@ -1,21 +1,15 @@
-import { MutationResolvers } from '../../../generated';
 import { matchModel } from '../../../models/user/match.model';
 
-export const matchUsersCreate: MutationResolvers['matchUsersCreate'] = async (_: unknown, { input }) => {
+export const matchUsersCreate = async (_: unknown, { input }: any) => {
   const { userId, targetUserId, stillmatch } = input;
 
-  try {
-    const matchedUsers = await matchModel.create({
-      userId,
-      targetUserId,
-      stillmatch,
-    });
+  const matchedUsers = await matchModel.create({ userId, targetUserId, stillmatch });
+  const populatedMatch = await matchedUsers.populate('userId targetUserId');
 
-    return {
-      ...matchedUsers.toObject(),
-      _id: matchedUsers._id.toString(),
-    };
-  } catch (error) {
-    throw new Error('Already matched or failed to create match');
-  }
+  const matchObject = populatedMatch.toObject ? populatedMatch.toObject() : populatedMatch;
+
+  return {
+    ...matchObject,
+    _id: matchObject._id.toString(),
+  };
 };

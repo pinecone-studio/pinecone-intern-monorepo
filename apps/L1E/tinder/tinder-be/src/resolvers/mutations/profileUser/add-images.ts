@@ -1,7 +1,6 @@
-import { MutationResolvers } from '../../../generated';
 import { userModel } from '../../../models/user/user.model';
 
-export const addImages: MutationResolvers['addImages'] = async (_: unknown, { _id, input }) => {
+export const addImages = async (_: unknown, { _id, input }: any) => {
   const { images } = input;
 
   const user = await userModel.findById(_id);

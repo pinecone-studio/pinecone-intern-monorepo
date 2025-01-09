@@ -1,10 +1,8 @@
-import { MutationResolvers } from '../../../generated';
-
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { userModel } from '../../../models/user/user.model';
 
-export const login: MutationResolvers['login'] = async (_, { email, password }) => {
+export const login = async (_: unknown, { email, password }: any) => {
   const user = await userModel.findOne({ email });
 
   if (!user) throw new Error('бүртгэлгүй байна!');

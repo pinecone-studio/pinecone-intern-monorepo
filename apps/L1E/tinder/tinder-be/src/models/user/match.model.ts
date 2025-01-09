@@ -1,4 +1,4 @@
-import { Model, Schema, models, model } from 'mongoose';
+import mongoose, { Model, Schema, models, model } from 'mongoose';
 
 export type MatchType = {
   _id: Schema.Types.ObjectId;
@@ -8,17 +8,13 @@ export type MatchType = {
   createdAt: Date;
 };
 
-const MatchSchema = new Schema<MatchType>(
-  {
-    userId: { type: String, required: true, ref: 'Users' },
-    targetUserId: { type: String, required: true, ref: 'Users' },
-    stillmatch: { type: Boolean, required: true },
-  },
-  {
-    timestamps: { createdAt: true, updatedAt: false },
-  }
-);
+const matchSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  targetUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  stillmatch: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now },
+});
 
-MatchSchema.index({ userId: 1, targetUserId: 1 }, { unique: true });
+matchSchema.index({ userId: 1, targetUserId: 1 }, { unique: true });
 
-export const matchModel: Model<MatchType> = models['Match'] || model<MatchType>('Match', MatchSchema);
+export const matchModel: Model<MatchType> = models['Match'] || model<MatchType>('Match', matchSchema);

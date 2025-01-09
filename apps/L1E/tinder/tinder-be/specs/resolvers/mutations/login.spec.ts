@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { login } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models/user/user.model.ts', () => ({
@@ -21,14 +20,7 @@ jest.mock('bcrypt', () => ({
 
 describe('Login Mutation', () => {
   it('should log in a user with valid credentials', async () => {
-    const response = await login!(
-      {},
-      { email: 'test@example.com', password: 'password123' },
-      {
-        req: undefined,
-      },
-      {} as GraphQLResolveInfo
-    );
+    const response = await login!({}, { email: 'test@example.com', password: 'password123' });
 
     expect(response).toEqual({
       user: { _id: '1', email: 'test@example.com', password: 'hashedPassword' },
@@ -38,14 +30,7 @@ describe('Login Mutation', () => {
 
   it('should throw error if password is incorrect', async () => {
     try {
-      await login!(
-        {},
-        { email: 'test@example.com', password: 'wrongpassword' },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      );
+      await login!({}, { email: 'test@example.com', password: 'wrongpassword' });
     } catch (error) {
       expect(error).toEqual(new Error('Email or Password incorrect'));
     }
@@ -53,14 +38,7 @@ describe('Login Mutation', () => {
 
   it('should throw error if user is not found', async () => {
     try {
-      await login!(
-        {},
-        { email: 'nonexistent@example.com', password: 'password123' },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      );
+      await login!({}, { email: 'nonexistent@example.com', password: 'password123' });
     } catch (error) {
       expect(error).toEqual(new Error('бүртгэлгүй байна!'));
     }

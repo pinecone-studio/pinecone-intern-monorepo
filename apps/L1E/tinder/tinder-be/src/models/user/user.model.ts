@@ -86,4 +86,4 @@ const UserSchema = new Schema<UserType>({
   },
 });
 
-export const userModel: Model<UserType> = models['Users'] || model<UserType>('User', UserSchema);
+export const userModel: Model<UserType> = models['User'] || model<UserType>('User', UserSchema);
