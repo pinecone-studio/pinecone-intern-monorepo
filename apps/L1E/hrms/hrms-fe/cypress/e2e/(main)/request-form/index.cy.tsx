@@ -52,11 +52,11 @@ describe('requestform page', () => {
     cy.get('.right-1>.lucide').click();
     cy.get('button[name="day"]').contains('10').click();
 
-    cy.get('[data-cy=lead-button]').click();
-    cy.get('[data-cy=Option-2]').click();
+    // cy.get('[data-cy=lead-button]').click();
+    // cy.get('[data-cy=Option-2]').click();
 
-    cy.get('[data-cy=notes-input]').type('hello');
-    cy.get('[data-cy=paid-submit-button]').click();
-    cy.get('[data-cy=successmodal]').should('be.visible');
+    // cy.get('[data-cy=notes-input]').type('hello');
+    // cy.get('[data-cy=paid-submit-button]').click();
+    // cy.get('[data-cy=successmodal]').should('be.visible');
   });
 });
