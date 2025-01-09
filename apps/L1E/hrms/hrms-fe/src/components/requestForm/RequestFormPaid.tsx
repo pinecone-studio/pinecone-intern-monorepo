@@ -77,7 +77,7 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent data-cy="lead-input">
-                    {leads?.map((e, index) => (
+                    {leads.map((e, index) => (
                       <SelectItem key={index} data-cy={`Option-${index + 1}`} data-testid={`Option-${index + 1}`} value={e._id}>
                         {e.username}
                       </SelectItem>

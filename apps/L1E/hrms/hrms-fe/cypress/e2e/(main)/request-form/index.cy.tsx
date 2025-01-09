@@ -12,10 +12,10 @@ describe('requestform page', () => {
         data: {
           getEmployees: [
             {
-              _id: '676e6e4007d5ae05a35cda9e',
+              _id: '676e6dfb07d5ae05a35cda8e',
               email: 'test',
               jobTitle: 'junior',
-              username: 'shagai',
+              username: 'Cypress',
               adminStatus: false,
               remoteLimit: 5,
               paidLeaveLimit: 5,
@@ -25,7 +25,7 @@ describe('requestform page', () => {
               updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
             },
             {
-              _id: '676e6e4007d5ae05a35cda91',
+              _id: '676e6dd407d5ae05a35cda84',
               email: 'test1',
               jobTitle: 'junior',
               username: 'shagai',
@@ -53,11 +53,10 @@ describe('requestform page', () => {
     cy.get('button[name="day"]').contains('10').click();
 
     cy.get('[data-cy=lead-button]').click();
-    cy.get('[data-cy=Option-1]').should('be.visible');
-    cy.get('[data-cy=Option-1]').click();
+    cy.get('[data-cy=Option-2]').click();
 
     cy.get('[data-cy=notes-input]').type('hello');
     cy.get('[data-cy=paid-submit-button]').click();
-    cy.contains('Амжилттай илгээгдлээ').should('not.be.visible');
+    cy.get('[data-cy=successmodal]').should('be.visible');
   });
 });

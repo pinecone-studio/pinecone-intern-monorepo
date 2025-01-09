@@ -8,7 +8,6 @@ import Requestcom from '@/components/requestForm/RequestFormcom';
 import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
 import Requestcomremote from '@/components/requestForm/RequestFormRemote';
 import { RequestsInput } from '@/utils/requests-input';
-import { toast } from 'react-toastify';
 
 const employee: Employee = {
   _id: '676e6e4007d5ae05a35cda9e',
@@ -39,9 +38,7 @@ const Page = () => {
     const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
     await createRequest({ variables: { input: newdata } });
-
     setIsOpen(true);
-    toast.success('Амжилттай илгээгдлээ');
   };
 
   const componentMap: { [key: string]: JSX.Element | null } = {
