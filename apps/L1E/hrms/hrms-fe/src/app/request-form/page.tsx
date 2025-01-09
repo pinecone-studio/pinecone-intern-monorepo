@@ -2,8 +2,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useEffect, useState } from 'react';
-import { Employee, EmployeeStatus, RequestInput, useCreateRequestMutation, useGetEmployeesQuery } from '@/generated';
+import { useState } from 'react';
+import { Employee, EmployeeStatus, GetEmployeesQuery, RequestInput, useCreateRequestMutation, useGetEmployeesQuery } from '@/generated';
 import Requestcom from '@/components/requestForm/RequestFormcom';
 import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
 import Requestcomremote from '@/components/requestForm/RequestFormRemote';
@@ -33,9 +33,8 @@ const Page = () => {
   const [createRequest] = useCreateRequestMutation();
   const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
 
-  useEffect(() => {
-    setLeads(data?.getEmployees as Employee[]);
-  }, [data]);
+  const leads = data?.getEmployees as GetEmployeesQuery['getEmployees'];
+
   const onSubmit = async (data: RequestsInput) => {
     const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
@@ -44,12 +43,11 @@ const Page = () => {
     setIsOpen(true);
     toast.success('Амжилттай илгээгдлээ');
   };
-  const [leads, setLeads] = useState<Employee[]>([]);
 
   const componentMap: { [key: string]: JSX.Element | null } = {
-    Чөлөө: <Requestcom leads={leads} setDay={setDay} day={day} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />,
-    'Цалинтай чөлөө': <RequestcomPaid leads={leads} isOpen={isOpen} employee={employee} onSubmit={onSubmit} />,
-    'Зайнаас ажиллах': <Requestcomremote leads={leads} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />,
+    Чөлөө: <Requestcom leads={leads as Employee[]} setDay={setDay} day={day} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />,
+    'Цалинтай чөлөө': <RequestcomPaid leads={leads as Employee[]} isOpen={isOpen} employee={employee} onSubmit={onSubmit} />,
+    'Зайнаас ажиллах': <Requestcomremote leads={leads as Employee[]} employee={employee} isOpen={isOpen} onSubmit={onSubmit} />,
   };
 
   const limits: { [key: string]: number | null } = {
