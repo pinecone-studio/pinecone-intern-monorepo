@@ -79,3 +79,4 @@ generated.tsx
 **/cypress/results
 .cy
 **/cypress/downloads
+yarn.lock
