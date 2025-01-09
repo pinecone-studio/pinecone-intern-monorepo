@@ -1,90 +1,124 @@
-import { render, screen, act, fireEvent } from '@testing-library/react';
-import Matches from '@/components/chat/Matches';
-import * as generatedHooks from '@/generated';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
+import { Match, useAddMessageMutation, useGetAllConversationsQuery, useGetConversationQuery, useUnMatchMutation } from '@/generated';
 import { useSearchParams } from 'next/navigation';
+import Matches from '@/components/chat/Matches';
 
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
 }));
+
 jest.mock('@/generated', () => ({
-  useGetMatchedUsersQuery: jest.fn(),
-  useGetUserByIdQuery: jest.fn(),
+  useGetAllConversationsQuery: jest.fn(),
+  useAddMessageMutation: jest.fn(),
+  useUnMatchMutation: jest.fn(),
+  useGetConversationQuery: jest.fn(),
 }));
 
-const mockLocalStorage = {
-  getItem: jest.fn(),
-};
-Object.defineProperty(window, 'localStorage', { value: mockLocalStorage });
-
-describe('Matches', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should render matches and update with user details', async () => {
-    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'authId' }));
-
-    const mockMatchedUsers = [
-      { _id: 'match1', targetUserId: { username: 'user1', images: ['image1.jpg'] } },
-      { _id: 'match2', targetUserId: { username: 'user2', images: ['image1.jpg'] } },
-    ];
-
-    const mockUserDetails = {
-      _id: 'user1',
-      username: 'User One',
-      age: 25,
-      profession: 'Engineer',
-      images: ['image1.jpg'],
-    };
-
-    (useSearchParams as jest.Mock).mockReturnValue({ get: jest.fn().mockReturnValue('user1') });
-    (generatedHooks.useGetMatchedUsersQuery as jest.Mock).mockReturnValue({ data: { getMatchedUsers: mockMatchedUsers }, loading: false });
-    (generatedHooks.useGetUserByIdQuery as jest.Mock).mockReturnValue({ data: { getUserById: mockUserDetails } });
-
-    await act(async () => {
-      render(<Matches handleAddToRecentChats={jest.fn()} matches={[]} />);
-    });
-
-    expect(screen.queryByText('User One'));
-    expect(screen.queryByText('25'));
-    expect(screen.queryByText('Engineer'));
-  });
-
-  it('should handle no authId', async () => {
-    mockLocalStorage.getItem.mockReturnValue(null);
-
-    (generatedHooks.useGetMatchedUsersQuery as jest.Mock).mockReturnValue({ loading: false, data: null });
-
-    render(<Matches handleAddToRecentChats={jest.fn()} matches={[]} />);
-  });
-
-  it('should handle no matches', async () => {
-    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'authId' }));
-
-    (generatedHooks.useGetMatchedUsersQuery as jest.Mock).mockReturnValue({ data: { getMatchedUsers: [] }, loading: false });
-
-    render(<Matches handleAddToRecentChats={jest.fn()} matches={[]} />);
-  });
-
-  it('should handle button click and call handleAddToRecentChats', async () => {
-    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'authId' }));
-
-    const mockMatchedUsers = [
-      { _id: 'match1', targetUserId: { _id: 'user1', username: 'user1', images: ['image1.jpg'] }, createdAt: '2025-01-06T00:00:00Z', stillmatch: true, userIdts: 'user1' },
-      { _id: 'match2', targetUserId: { _id: 'user2', username: 'user2', images: ['image1.jpg'] }, createdAt: '2025-01-06T00:00:00Z', stillmatch: true, userIdts: 'user2' },
-    ];
-
-    (generatedHooks.useGetMatchedUsersQuery as jest.Mock).mockReturnValue({ data: { getMatchedUsers: mockMatchedUsers }, loading: false });
-
+describe('Matches component', () => {
+  it('should render matches and conversations correctly', () => {
     const handleAddToRecentChats = jest.fn();
+    const matches = [
+      { targetUserId: { _id: '1', images: ['image1.jpg'], username: 'User1', age: 25, profession: 'Engineer' } },
+      { targetUserId: { _id: '2', images: ['image2.jpg'], username: 'User2', age: 28, profession: 'Designer' } },
+    ];
 
-    await act(async () => {
-      render(<Matches handleAddToRecentChats={handleAddToRecentChats} matches={mockMatchedUsers} />);
+    useSearchParams.mockReturnValue({ get: jest.fn().mockReturnValue('User1') });
+    useGetAllConversationsQuery.mockReturnValue({
+      data: {
+        getAllConversations: [
+          { userTwo: { _id: '1', username: 'User1', age: 25, images: ['image1.jpg'], profession: 'Engineer' } },
+          { userTwo: { _id: '2', username: 'User2', age: 28, images: ['image2.jpg'], profession: 'Designer' } },
+        ],
+      },
     });
 
-    const buttons = screen.getAllByRole('button');
-    fireEvent.click(buttons[0]);
+    useAddMessageMutation.mockReturnValue([jest.fn(), { loading: false, error: null }]);
 
-    expect(handleAddToRecentChats).toHaveBeenCalledWith('user1');
+    useUnMatchMutation.mockReturnValue([jest.fn(), { loading: false, error: null }]);
+
+    useGetConversationQuery.mockReturnValue({
+      data: {
+        getConversation: {
+          id: '123',
+          messages: [
+            { sender: 'User1', content: 'Hello' },
+            { sender: 'User2', content: 'Hi' },
+          ],
+        },
+      },
+    });
+
+    const { getAllByTestId } = render(
+      <MockedProvider>
+        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
+      </MockedProvider>
+    );
+
+    expect(screen.getByText('User1'));
+    expect(screen.getByText('User2'));
+
+    const buttons = getAllByTestId('button');
+    const user1Button = buttons[0];
+    fireEvent.click(user1Button);
+
+    expect(handleAddToRecentChats).toHaveBeenCalledWith('1');
+  });
+
+  it('should handle loading and error states', () => {
+    const handleAddToRecentChats = jest.fn();
+    const matches = [
+      { targetUserId: { _id: '', images: ['image1.jpg'], username: 'User1', age: 25, profession: 'Engineer' } },
+      { targetUserId: { _id: '2', images: ['image2.jpg'], username: 'User2', age: 28, profession: 'Designer' } },
+    ];
+
+    const { getAllByTestId } = render(
+      <MockedProvider>
+        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
+      </MockedProvider>
+    );
+
+    expect(screen.getByText('User1'));
+    expect(screen.getByText('User2'));
+
+    const buttons = getAllByTestId('button');
+    const user1Button = buttons[0];
+    fireEvent.click(user1Button);
+
+    expect(handleAddToRecentChats);
+  });
+  it('should handle loading and error states', () => {
+    const handleAddToRecentChats = jest.fn();
+    const matches: Match[] = [];
+
+    useGetAllConversationsQuery.mockReturnValue({
+      data: null,
+      error: null,
+      isLoading: true,
+    });
+
+    render(
+      <MockedProvider>
+        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
+      </MockedProvider>
+    );
+  });
+
+  it('should handle errors during loading', () => {
+    const handleAddToRecentChats = jest.fn();
+    const matches: Match[] = [];
+
+    // Mock error state
+    useGetAllConversationsQuery.mockReturnValue({
+      data: null,
+      error: new Error('Error fetching conversations'),
+      isLoading: false,
+    });
+
+    render(
+      <MockedProvider>
+        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
+      </MockedProvider>
+    );
   });
 });

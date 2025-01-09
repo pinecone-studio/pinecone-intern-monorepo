@@ -134,7 +134,26 @@ query GetMatchedUsers($authId: String!) {
   }
 }
 
-query getAllUsers {
+mutation addMessage($userId: String!, $content: String!, $chosenUserId: String!) {
+  addMessage(userId: $userId, content: $content, chosenUserId: $chosenUserId) {
+    id
+    text
+    sender
+  }
+}
+query GetConversation($userOne: String!, $userTwo: String!) {
+  getConversation(userOne: $userOne, userTwo: $userTwo) {
+    id
+    userOne
+    userTwo
+    messages {
+      id
+      text
+      sender
+    }
+  }
+}
+query GetAllUsers {
   getAllUsers {
     _id
     email
@@ -150,5 +169,53 @@ query getAllUsers {
     match
     createdAt
     updatedAt
+  }
+}
+
+query GetAllConversations {
+  getAllConversations {
+    id
+    userOne {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      images
+      match
+      createdAt
+      updatedAt
+      id
+    }
+    userTwo {
+      _id
+      email
+      username
+      interest
+      password
+      hobby
+      bio
+      profession
+      job
+      age
+      images
+      match
+      createdAt
+      updatedAt
+      id
+    }
+  }
+}
+
+mutation UnMatch($authId: String!) {
+  unMatch(authId: $authId) {
+    _id
+    stillmatch
+    createdAt
   }
 }
