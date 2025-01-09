@@ -22,7 +22,9 @@ const SuccessModal = ({ isOpen }: SuccessModalProps) => {
         </DialogTitle>
         <div className="flex flex-col items-center justify-center gap-6 py-8">
           <div className="text-center space-y-2">
-            <h2 className="text-xl font-semibold">Амжилттай илгээгдлээ</h2>
+            <h2 data-cy="successmodal" className="text-xl font-semibold">
+              Амжилттай илгээгдлээ
+            </h2>
             <p className="text-sm text-muted-foreground">Таны хүсэлттэй ахлах ажилтан танилцсаны дараа хариуг танд Teams Chat-аар мэдэгдэх болно.</p>
           </div>
         </div>
