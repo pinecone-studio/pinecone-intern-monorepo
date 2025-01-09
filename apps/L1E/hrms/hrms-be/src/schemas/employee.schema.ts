@@ -39,6 +39,7 @@ export const typeDefs = gql`
     getEmployeeById(id: ID!): Employee
     getEmployees(input: String): [Employee]
     getAllEmployees: [Employee]
+    getEmployeeByEmail(email: String): Employee
   }
 
   type Mutation {
