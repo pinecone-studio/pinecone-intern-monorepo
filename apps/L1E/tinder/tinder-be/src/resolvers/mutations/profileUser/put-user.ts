@@ -5,7 +5,6 @@ export const updateUser: MutationResolvers['updateUser'] = async (_: unknown, { 
   const { email, username, age, bio, hobby, interest, job, profession } = input;
 
   const User = await userModel.findById(_id);
-  console.log(User);
 
   if (!User) {
     throw new Error('User not found');

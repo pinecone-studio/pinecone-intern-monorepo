@@ -1,15 +1,12 @@
 import { QueryResolvers, Conversation } from '../../../generated';
 import ConversationModel from '../../../models/chat/conversation.model';
 import { MessageModel } from '../../../models/chat/message.model';
+import { Types } from 'mongoose';
 
 export const getConversation: QueryResolvers['getConversation'] = async (_, { userOne, userTwo }): Promise<Conversation> => {
   const conversation = await ConversationModel.findOne({
-    $and: [{ userOne }, { userTwo }],
+    $and: [{ userOne: new Types.ObjectId(userOne) }, { userTwo: new Types.ObjectId(userTwo) }],
   });
-
-  if (!conversation) {
-    throw new Error('Conversation not found');
-  }
 
   const messages = await MessageModel.find({ conversationId: conversation._id });
 

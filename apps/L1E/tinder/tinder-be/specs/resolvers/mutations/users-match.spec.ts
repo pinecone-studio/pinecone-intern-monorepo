@@ -1,10 +1,9 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { matchModel } from '../../../src/models/user/match.model';
 import { matchUsersCreate } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models/user/match.model', () => ({
   matchModel: {
-    create: jest.fn().mockResolvedValue({}),
+    create: jest.fn(),
   },
 }));
 
@@ -22,28 +21,30 @@ describe('matchUsersCreate', () => {
       stillmatch: true,
     };
 
+    const mockPopulatedMatch = {
+      _id: 'match1',
+      userId: { _id: 'user1', username: 'User 1' },
+      targetUserId: { _id: 'user2', username: 'User 2' },
+      stillmatch: true,
+      toObject: jest.fn().mockReturnValue({
+        _id: 'match1',
+        userId: { _id: 'user1', username: 'User 1' },
+        targetUserId: { _id: 'user2', username: 'User 2' },
+        stillmatch: true,
+      }),
+    };
+
     const mockMatch = {
       _id: 'match1',
       userId: 'user1',
       targetUserId: 'user2',
       stillmatch: true,
-      toObject: jest.fn().mockReturnValue({
-        userId: 'user1',
-        targetUserId: 'user2',
-        stillmatch: true,
-      }),
+      populate: jest.fn().mockResolvedValue(mockPopulatedMatch),
     };
 
     mockMatchModelCreate.mockResolvedValue(mockMatch);
 
-    const result = await matchUsersCreate!(
-      {},
-      { input },
-      {
-        req: undefined,
-      },
-      {} as GraphQLResolveInfo
-    );
+    const result = await matchUsersCreate!({}, { input });
 
     expect(mockMatchModelCreate).toHaveBeenCalledWith({
       userId: 'user1',
@@ -51,10 +52,12 @@ describe('matchUsersCreate', () => {
       stillmatch: true,
     });
 
+    expect(mockMatch.populate).toHaveBeenCalledWith('userId targetUserId');
+
     expect(result).toEqual({
       _id: 'match1',
-      userId: 'user1',
-      targetUserId: 'user2',
+      userId: { _id: 'user1', username: 'User 1' },
+      targetUserId: { _id: 'user2', username: 'User 2' },
       stillmatch: true,
     });
   });
@@ -65,16 +68,7 @@ describe('matchUsersCreate', () => {
       targetUserId: 'user2',
       stillmatch: true,
     };
-    mockMatchModelCreate.mockRejectedValue(new Error('Failed to create match'));
-    await expect(
-      matchUsersCreate!(
-        {},
-        { input },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      )
-    ).rejects.toThrow('Already matched or failed to create match');
+    mockMatchModelCreate.mockRejectedValue(new Error('Already matched or failed to create match'));
+    await expect(matchUsersCreate!({}, { input })).rejects.toThrow('Already matched or failed to create match');
   });
 });

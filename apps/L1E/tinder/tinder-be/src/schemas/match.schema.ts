@@ -3,14 +3,15 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   type Match {
     _id: ID!
-    userId: User!
-    targetUserId: User!
-    stillmatch: Boolean!
-    createdAt: String!
+    userId: User
+    targetUserId: User
+    stillmatch: Boolean
+    createdAt: String
   }
 
   type Mutation {
     matchUsersCreate(input: MatchUsersCreateInput!): Match!
+    unMatch(authId: String!): [Match!]!
   }
 
   type Query {

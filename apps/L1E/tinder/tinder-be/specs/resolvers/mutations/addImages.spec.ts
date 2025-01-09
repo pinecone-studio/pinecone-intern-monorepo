@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { addImages } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models/user/user.model.ts', () => ({
@@ -21,14 +20,7 @@ jest.mock('../../../src/models/user/user.model.ts', () => ({
 describe('addImages mutation', () => {
   it('should return error when user not found', async () => {
     try {
-      await addImages!(
-        {},
-        { _id: '1', input: { images: ['image2.jpg', 'image3.jpg'] } },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      );
+      await addImages!({}, { _id: '1', input: { images: ['image2.jpg', 'image3.jpg'] } });
     } catch (error) {
       expect(error).toEqual(new Error('User not found'));
     }
@@ -36,14 +28,7 @@ describe('addImages mutation', () => {
 
   it('should return error when user not found', async () => {
     try {
-      await addImages!(
-        {},
-        { _id: '1', input: { images: ['image2.jpg', 'image3.jpg'] } },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      );
+      await addImages!({}, { _id: '1', input: { images: ['image2.jpg', 'image3.jpg'] } });
     } catch (error) {
       expect(error).toEqual(new Error('You can only upload up to 6 images'));
     }
@@ -51,14 +36,7 @@ describe('addImages mutation', () => {
 
   it('should return error when user not found', async () => {
     try {
-      await addImages!(
-        {},
-        { _id: '1', input: { images: ['image2.jpg', 'image3.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg'] } },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
-      );
+      await addImages!({}, { _id: '1', input: { images: ['image2.jpg', 'image3.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg', 'image1.jpg'] } });
     } catch (error) {
       expect(error).toEqual(new Error('You can only upload up to 6 images'));
     }

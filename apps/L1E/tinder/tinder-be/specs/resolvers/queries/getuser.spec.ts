@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { getUserById } from '../../../src/resolvers/queries';
 
 jest.mock('../../../src/models/user/user.model.ts', () => ({
@@ -9,14 +8,7 @@ jest.mock('../../../src/models/user/user.model.ts', () => ({
 
 describe('getUserById', () => {
   it('should get user by id', async () => {
-    const result = await getUserById!(
-      {},
-      { userId: '123' },
-      {
-        req: undefined,
-      },
-      {} as GraphQLResolveInfo
-    );
+    const result = await getUserById!({}, { userId: '123' });
     expect(result).toEqual({ id: '123', name: 'Test User' });
   });
 
@@ -26,11 +18,7 @@ describe('getUserById', () => {
         {},
         {
           userId: '123',
-        },
-        {
-          req: undefined,
-        },
-        {} as GraphQLResolveInfo
+        }
       );
     } catch (error) {
       expect(error);
@@ -39,7 +27,7 @@ describe('getUserById', () => {
 
   it('should throw an error when user is not found', async () => {
     try {
-      await getUserById!({}, { userId: '999' }, { req: undefined }, {} as GraphQLResolveInfo);
+      await getUserById!({}, { userId: '999' });
     } catch (error) {
       expect(error);
     }
