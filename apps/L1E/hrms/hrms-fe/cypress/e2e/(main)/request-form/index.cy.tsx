@@ -50,7 +50,7 @@ describe('requestform page', () => {
 
     cy.get('[data-cy=paid-calendar-btn]').click();
     cy.get('.right-1>.lucide').click();
-    cy.get(':nth-child(3) > :nth-child(7) > .rdp-button_reset').click();
+    cy.get('button[name="day"]').contains('10').click();
 
     cy.get('[data-cy=lead-button]').click();
     cy.get('[data-cy=Option-1]').should('be.visible');
