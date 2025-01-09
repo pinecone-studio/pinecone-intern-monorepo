@@ -1,5 +1,6 @@
 describe('Home Page', () => {
-  it(`Should render home page`, () => {
+  it(`Should `, () => {
     cy.visit('/');
+    cy.get("[data-cy='hello']").contains("Hello")
   });
 });
