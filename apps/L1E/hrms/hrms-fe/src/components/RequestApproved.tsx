@@ -93,6 +93,7 @@ export const RequestApproved = ({
       <div className="text-md text-[#09090B] mt-2">{request?.reason}</div>
       <div className={`${request?.requestType == RequestType.Pending ? 'flex' : 'hidden'} flex-row mt-8 gap-2 justify-end`}>
         <Button
+          data-cy="buttonReject"
           data-testid="buttonReject"
           onClick={() => {
             buttonReject();
@@ -103,6 +104,7 @@ export const RequestApproved = ({
           <p>Татгалзах</p>
         </Button>
         <Button
+          data-cy="buttonApprove"
           data-testid="buttonApprove"
           onClick={() => {
             buttonApprove();

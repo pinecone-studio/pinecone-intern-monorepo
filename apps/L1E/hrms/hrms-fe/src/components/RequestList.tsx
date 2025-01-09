@@ -29,8 +29,9 @@ const requestStatus = {
 export const RequestList = ({ filteredRequest, handleClick, activeIndex }: RequestListProps) => {
   return (
     <div className="flex flex-col gap-1">
-      {filteredRequest.map((el) => (
+      {filteredRequest.map((el, index) => (
         <div
+          data-cy={`employee-${index}`}
           data-testid={el._id}
           key={el._id}
           onClick={() => {
