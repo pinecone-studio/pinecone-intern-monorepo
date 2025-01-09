@@ -13,6 +13,7 @@ const GetChat: React.FC<ChatProps> = ({ sender, chosenUserId }) => {
       userOne: sender,
       userTwo: chosenUserId,
     },
+    pollInterval: 1000,
   });
 
   if (!data || !data.getConversation) {
