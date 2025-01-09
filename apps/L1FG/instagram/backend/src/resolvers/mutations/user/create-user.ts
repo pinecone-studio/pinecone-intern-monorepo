@@ -1,5 +1,5 @@
-import { MutationResolvers } from "../../generated";
-import { UserModel } from "../../models/user.model";
+import { MutationResolvers } from "../../../generated";
+import { UserModel } from "../../../models";
 
 export const createUser: MutationResolvers['createUser']=async(_, {input}) =>{
 const {userName, fullName, bio, profileImage, gender, hasStory, isPrivate, password
