@@ -1,7 +1,7 @@
-'use client';
+import SignInPage from '@/components/auth/SignInPage';
 
 const Page = () => {
-  return <div>sign-in</div>;
+  return <SignInPage />;
 };
 
 export default Page;

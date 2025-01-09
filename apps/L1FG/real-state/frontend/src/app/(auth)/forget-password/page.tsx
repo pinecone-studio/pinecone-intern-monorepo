@@ -1,7 +1,9 @@
 'use client';
 
+import ForgetPasswordPage from '@/components/auth/ForgotPasswordPage';
+
 const Page = () => {
-  return <div>forget password</div>;
+  return <ForgetPasswordPage />;
 };
 
 export default Page;
