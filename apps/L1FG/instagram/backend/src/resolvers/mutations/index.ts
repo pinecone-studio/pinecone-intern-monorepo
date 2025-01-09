@@ -1,2 +1,3 @@
 export * from './sample-mutation';
-export * from './create-user'
+export *from './post'
+export * from './user'
