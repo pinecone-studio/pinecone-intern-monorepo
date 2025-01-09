@@ -4,14 +4,14 @@ export const PostTypeDefs = gql`
 
 type Post {
 _id:ID
-postImage:[String]!
+postImage:[String!]!
 caption:String
 userId:ID
 carouselMediaCount: Int
 }
 
 input PostInput{
-postImage:[String]!
+postImage:[String!]!
 caption:String
 userId:ID!
 carouselMediaCount:Int

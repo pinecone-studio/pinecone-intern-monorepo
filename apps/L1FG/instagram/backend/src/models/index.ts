@@ -1,2 +1,5 @@
 export * from './post.model'
 export * from './user.model'
+export * from './post-like.model'
+export * from './comment-like.model'
+export * from './request.model'
