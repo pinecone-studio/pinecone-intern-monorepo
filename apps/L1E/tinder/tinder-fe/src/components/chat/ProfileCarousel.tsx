@@ -31,29 +31,37 @@ export const ProfileCarouselUser: React.FC<MatchesProps> = ({ matches }) => {
         <Carousel className="w-full mt-8 max-w-[350px]">
           <CarouselContent>
             {matches
-              .filter((el) => el.targetUserId.username === username)
+              .filter((el) => el.targetUserId?.username === username)
               .map((el, index) => (
                 <CarouselItem key={index}>
                   <Card className="overflow-hidden">
                     <CardContent className="p-0">
                       <div className="relative">
                         <div className="relative w-[350px] h-[450px]">
-                          <img src={el.targetUserId.images[activeIndex]} alt={`${el.targetUserId.username}-${activeIndex}`} className="w-full h-full object-cover" />
+                          <img src={el.targetUserId?.images[activeIndex]} alt={`${el.targetUserId?.username}-${activeIndex}`} className="w-full h-full object-cover" />
                           <div className="absolute top-[200px] left-0 right-0 flex justify-between px-4">
-                            <button data-testid="prev" onClick={() => handlePrevious(el.targetUserId.images.length)} className="w-10 h-10 rounded-md border flex justify-center items-center bg-white">
+                            <button
+                              data-testid="prev"
+                              onClick={() => el.targetUserId?.images.length && handlePrevious(el.targetUserId.images.length)}
+                              className="w-10 h-10 rounded-md border flex justify-center items-center bg-white"
+                            >
                               <ChevronLeft />
                             </button>
-                            <button data-testid="next" onClick={() => handleNext(el.targetUserId.images.length)} className="w-10 h-10 flex justify-center items-center rounded-md border bg-white">
+                            <button
+                              data-testid="next"
+                              onClick={() => el.targetUserId?.images.length && handleNext(el.targetUserId.images.length)}
+                              className="w-10 h-10 flex justify-center items-center rounded-md border bg-white"
+                            >
                               <ChevronRight />
                             </button>
                           </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white">
                           <div className="flex items-center gap-2">
-                            <h2 className="text-[18px] font-semibold">{el.targetUserId.username},</h2>
-                            <p className="text-[18px] font-semibold">{el.targetUserId.age}</p>
+                            <h2 className="text-[18px] font-semibold">{el.targetUserId?.username},</h2>
+                            <p className="text-[18px] font-semibold">{el.targetUserId?.age}</p>
                           </div>
-                          <p className="text-sm">{el.targetUserId.profession}</p>
+                          <p className="text-sm">{el.targetUserId?.profession}</p>
                         </div>
                       </div>
                     </CardContent>

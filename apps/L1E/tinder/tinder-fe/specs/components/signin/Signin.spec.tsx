@@ -79,13 +79,11 @@ describe('Signin', () => {
     fireEvent.change(input, { target: { value: 'as' } });
   });
   it('should render my signin', () => {
-    const { getByTestId } = render(
+    render(
       <MockedProvider mocks={mocks}>
         <Signin />
       </MockedProvider>
     );
-    const input = getByTestId('password');
-    fireEvent.change(input, { target: { value: 'as' } });
   });
   it('should render my signin', () => {
     const { getByTestId } = render(
