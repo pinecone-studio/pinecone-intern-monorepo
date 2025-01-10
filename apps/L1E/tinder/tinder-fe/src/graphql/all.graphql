@@ -144,8 +144,12 @@ mutation addMessage($userId: String!, $content: String!, $chosenUserId: String!)
 query GetConversation($userOne: String!, $userTwo: String!) {
   getConversation(userOne: $userOne, userTwo: $userTwo) {
     id
-    userOne
-    userTwo
+    userOne {
+      images
+    }
+    userTwo {
+      images
+    }
     messages {
       id
       text
@@ -153,6 +157,7 @@ query GetConversation($userOne: String!, $userTwo: String!) {
     }
   }
 }
+
 query GetAllUsers {
   getAllUsers {
     _id

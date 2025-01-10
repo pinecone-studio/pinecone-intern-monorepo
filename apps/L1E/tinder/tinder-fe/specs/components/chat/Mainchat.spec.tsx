@@ -3,7 +3,6 @@ import { AddMessageDocument, GetConversationDocument, Match, UnMatchDocument } f
 import ChatInterface from '@/components/chat/MainChat';
 import { useSearchParams } from 'next/navigation';
 import { MockedProvider } from '@apollo/client/testing';
-
 jest.mock('@/components/chat/ProfileCarousel', () => ({
   ProfileCarouselUser: () => <div>Mocked Profile Carousel</div>,
 }));
@@ -28,19 +27,11 @@ const elsemocks = [
 ];
 const mockMatches: Match[] = [
   {
-    targetUserId: {
-      username: 'john_doe',
-      age: '25',
-      images: ['https://via.placeholder.com/150'],
-      _id: 'user_id_123',
-    },
+    targetUserId: { username: 'john_doe', age: '25', images: ['https://via.placeholder.com/150'], _id: 'user_id_123' },
     _id: '',
     createdAt: '',
     stillmatch: false,
-    userId: {
-      _id: 'user_id_123',
-      images: [],
-    },
+    userId: { _id: 'user_id_123', images: [] },
   },
 ];
 const elsemockMatches: Match[] = [
@@ -143,13 +134,18 @@ describe('ChatInterface', () => {
     fireEvent.keyDown(document, { key: 'Escape' });
     await waitFor(() => expect(modal).not);
   });
-  it('calls send message button when clicked', () => {
+  it('calls send message button when clicked', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <ChatInterface matches={mockMatches} username={mockUsername} />
       </MockedProvider>
     );
-    const sendButton = screen.getByText(/john_doe/i);
+    const input = screen.getByTestId('input');
+    fireEvent.change(input, { target: { value: 'as' } });
+    const sendButton = screen.getByTestId('send');
     fireEvent.click(sendButton);
+    await waitFor(() => {
+      expect(mocks[2].result?.data.addMessage).toBeTruthy();
+    });
   });
 });

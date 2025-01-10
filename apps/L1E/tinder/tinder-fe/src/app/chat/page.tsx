@@ -37,7 +37,7 @@ const Main: React.FC = () => {
   const matches = data?.getMatchedUsers;
 
   const getMatchByUserId = (targetUserId: string) => {
-    return matches?.find((m) => m.targetUserId?._id === targetUserId);
+    return matches?.find((m) => (m.userId?._id === targetUserId || m.targetUserId?._id === targetUserId) && (m.userId?._id === authId || m.targetUserId?._id === authId));
   };
 
   const addToRecentChats = (username: string) => {
@@ -54,7 +54,8 @@ const Main: React.FC = () => {
     try {
       if (!matches) return;
       const match = getMatchByUserId(targetUserId);
-      const username = match?.targetUserId?.username;
+      const username = match?.userId?._id === authId ? match?.targetUserId?.username : match?.userId?.username;
+
       if (username) {
         addToRecentChats(username);
         redirectToChat(username);
@@ -83,9 +84,9 @@ const Main: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col relative items-center justify-between h-screen ">
+    <div className="flex flex-col relative items-center justify-between h-screen">
       <MainHeader user={user} />
-      <Matches matches={matches as Match[]} handleAddToRecentChats={handleAddToRecentChats} />
+      <Matches matches={matches as Match[]} user={user} handleAddToRecentChats={handleAddToRecentChats} />
       {/* <MainChat /> */}
     </div>
   );
