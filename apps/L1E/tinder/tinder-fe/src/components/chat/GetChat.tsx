@@ -12,7 +12,7 @@ const GetChat: React.FC<ChatProps> = ({ sender, chosenUserId }) => {
       userOne: sender,
       userTwo: chosenUserId,
     },
-    pollInterval: 1000,
+    // pollInterval: 1000,
   });
 
   console.log(data);
