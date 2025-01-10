@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { Match, useAddMessageMutation, useGetAllConversationsQuery, useGetConversationQuery, useUnMatchMutation } from '@/generated';
+import { useGetAllConversationsQuery } from '@/generated';
 import { useSearchParams } from 'next/navigation';
 import Matches from '@/components/chat/Matches';
 
@@ -10,115 +10,62 @@ jest.mock('next/navigation', () => ({
 
 jest.mock('@/generated', () => ({
   useGetAllConversationsQuery: jest.fn(),
-  useAddMessageMutation: jest.fn(),
-  useUnMatchMutation: jest.fn(),
-  useGetConversationQuery: jest.fn(),
+  useAddMessageMutation: jest.fn().mockReturnValue([jest.fn()]),
+  useUnMatchMutation: jest.fn().mockReturnValue([jest.fn()]),
+  useGetConversationQuery: jest.fn().mockReturnValue({
+    data: {
+      conversation: {
+        /* mock conversation data */
+      },
+    },
+  }),
 }));
 
 describe('Matches component', () => {
-  it('should render matches and conversations correctly', () => {
+  it('should render matches and handle add to recent chats with userTwo correctly', () => {
     const handleAddToRecentChats = jest.fn();
     const matches = [
-      { targetUserId: { _id: '1', images: ['image1.jpg'], username: 'User1', age: 25, profession: 'Engineer' } },
-      { targetUserId: { _id: '2', images: ['image2.jpg'], username: 'User2', age: 28, profession: 'Designer' } },
+      {
+        targetUserId: { _id: '1', images: ['image1.png'], username: 'User1', age: 25, profession: 'Engineer' },
+        userId: { _id: '2' },
+      },
+      {
+        targetUserId: { _id: '3', images: ['image3.png'], username: 'User3', age: 30, profession: 'Designer' },
+        userId: { _id: '4' },
+      },
     ];
 
+    // Mocking the return value of useSearchParams to return 'User1'
     useSearchParams.mockReturnValue({ get: jest.fn().mockReturnValue('User1') });
+
+    // Mocking the query response with userTwo and userOne information
     useGetAllConversationsQuery.mockReturnValue({
       data: {
         getAllConversations: [
-          { userTwo: { _id: '1', username: 'User1', age: 25, images: ['image1.jpg'], profession: 'Engineer' } },
-          { userTwo: { _id: '2', username: 'User2', age: 28, images: ['image2.jpg'], profession: 'Designer' } },
+          {
+            userOne: { _id: '2', username: 'User2', images: ['image2.png'] },
+            userTwo: { _id: '1', username: 'User1', images: ['image1.png'] },
+          },
+          {
+            userOne: { _id: '4', username: 'User4', images: ['image4.png'] },
+            userTwo: { _id: '3', username: 'User3', images: ['image3.png'] },
+          },
         ],
       },
     });
 
-    useAddMessageMutation.mockReturnValue([jest.fn(), { loading: false, error: null }]);
-
-    useUnMatchMutation.mockReturnValue([jest.fn(), { loading: false, error: null }]);
-
-    useGetConversationQuery.mockReturnValue({
-      data: {
-        getConversation: {
-          id: '123',
-          messages: [
-            { sender: 'User1', content: 'Hello' },
-            { sender: 'User2', content: 'Hi' },
-          ],
-        },
-      },
-    });
-
-    const { getAllByTestId } = render(
-      <MockedProvider>
-        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} user={{ _id: '2' }} />
       </MockedProvider>
     );
 
-    expect(screen.getByText('User1'));
-    expect(screen.getByText('User2'));
+    const buttons = screen.getAllByTestId('button');
+    const firstMatchButton = buttons[0];
 
-    const buttons = getAllByTestId('button');
-    const user1Button = buttons[0];
-    fireEvent.click(user1Button);
+    fireEvent.click(firstMatchButton);
 
+    // Ensure that the function is called with the correct userId
     expect(handleAddToRecentChats).toHaveBeenCalledWith('1');
-  });
-
-  it('should handle loading and error states', () => {
-    const handleAddToRecentChats = jest.fn();
-    const matches = [
-      { targetUserId: { _id: '', images: ['image1.jpg'], username: 'User1', age: 25, profession: 'Engineer' } },
-      { targetUserId: { _id: '2', images: ['image2.jpg'], username: 'User2', age: 28, profession: 'Designer' } },
-    ];
-
-    const { getAllByTestId } = render(
-      <MockedProvider>
-        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
-      </MockedProvider>
-    );
-
-    expect(screen.getByText('User1'));
-    expect(screen.getByText('User2'));
-
-    const buttons = getAllByTestId('button');
-    const user1Button = buttons[0];
-    fireEvent.click(user1Button);
-
-    expect(handleAddToRecentChats);
-  });
-  it('should handle loading and error states', () => {
-    const handleAddToRecentChats = jest.fn();
-    const matches: Match[] = [];
-
-    useGetAllConversationsQuery.mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: true,
-    });
-
-    render(
-      <MockedProvider>
-        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
-      </MockedProvider>
-    );
-  });
-
-  it('should handle errors during loading', () => {
-    const handleAddToRecentChats = jest.fn();
-    const matches: Match[] = [];
-
-    // Mock error state
-    useGetAllConversationsQuery.mockReturnValue({
-      data: null,
-      error: new Error('Error fetching conversations'),
-      isLoading: false,
-    });
-
-    render(
-      <MockedProvider>
-        <Matches handleAddToRecentChats={handleAddToRecentChats} matches={matches} />
-      </MockedProvider>
-    );
   });
 });

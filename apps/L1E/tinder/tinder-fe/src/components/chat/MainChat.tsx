@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { useState, useRef } from 'react';
 import { Match, useAddMessageMutation, useUnMatchMutation } from '@/generated';
 import { Send } from 'lucide-react';
@@ -7,7 +8,7 @@ import GetChat from './GetChat';
 
 type MatchesProps = {
   matches: Match[];
-  username: string | null;
+  username: any;
 };
 
 const ChatInterface: React.FC<MatchesProps> = ({ matches, username }) => {
@@ -16,7 +17,10 @@ const ChatInterface: React.FC<MatchesProps> = ({ matches, username }) => {
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
-  const currentMatch = matches?.find((match) => match?.targetUserId?.username === username);
+  const currentMatch = matches?.find((match) => match?.targetUserId?.username === username || match?.userId?.username === username);
+
+  const targetUser = currentMatch?.targetUserId?.username === username ? currentMatch?.targetUserId : currentMatch?.userId;
+  const userone = currentMatch?.targetUserId?.username != username ? currentMatch?.targetUserId : currentMatch?.userId;
 
   const [AddMessageMutation] = useAddMessageMutation();
 
@@ -52,8 +56,8 @@ const ChatInterface: React.FC<MatchesProps> = ({ matches, username }) => {
   const handleSendMessage = async () => {
     await AddMessageMutation({
       variables: {
-        userId: currentMatch?.userId?._id || '',
-        chosenUserId: currentMatch?.targetUserId?._id || '',
+        userId: userone?._id || '',
+        chosenUserId: targetUser?._id || '',
         content: message,
       },
     });
@@ -73,13 +77,13 @@ const ChatInterface: React.FC<MatchesProps> = ({ matches, username }) => {
     <div className="flex flex-col h-full border-l-[1px] border-[#4e4e7] justify-between">
       <div className="flex max-w-[960px] justify-between items-center border-b-[1px] p-4 border-[#4e4e7] w-screen">
         <div className="flex gap-4">
-          <img src={currentMatch?.targetUserId?.images[0]} alt={`${currentMatch?.targetUserId?.username}'s profile`} className="w-[50px] h-[50px] rounded-full object-cover border-2 border-gray-300" />
+          <img src={targetUser?.images[0]} alt={`${targetUser?.username}'s profile`} className="w-[50px] h-[50px] rounded-full object-cover border-2 border-gray-300" />
           <div className="flex flex-col">
             <div className="flex gap-2">
-              <h2 className="text-lg font-semibold">{currentMatch?.targetUserId?.username},</h2>
-              <div className="text-lg font-semibold">{currentMatch?.targetUserId?.age}</div>
+              <h2 className="text-lg font-semibold">{targetUser?.username},</h2>
+              <div className="text-lg font-semibold">{targetUser?.age}</div>
             </div>
-            <div className="text-sm text-gray-500">{currentMatch?.targetUserId?.profession}</div>
+            <div className="text-sm text-gray-500">{targetUser?.profession}</div>
           </div>
         </div>
         <div className="flex w-[217px] gap-3 h-[40px]">
