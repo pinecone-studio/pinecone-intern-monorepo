@@ -37,19 +37,14 @@ describe('requestOtp resolver', () => {
 
     const response = await requestOtp!({}, { input: { email: mockOtp.email, otp: '' } }, { req: undefined }, {} as GraphQLResolveInfo);
 
-    // Assert that findOne was called with the correct email
     expect(otpModel.findOne).toHaveBeenCalledWith({ email: mockOtp.email });
 
-    // Assert that create was called with the expected arguments
     expect(otpModel.create);
 
-    // Assert that nodemailer createTransport was called
     expect(nodemailer.createTransport).toHaveBeenCalled();
 
-    // Assert that sendMail was called with the correct options
     expect(nodemailer.createTransport().sendMail);
 
-    // Assert that the response matches the expected format
     expect(response).toEqual({
       success: false,
       message: 'A new OTP has been generated and sent to your email.',
@@ -81,7 +76,6 @@ describe('requestOtp resolver', () => {
 
     const response = await requestOtp!({}, { input: { email: mockOtp.email, otp: mockOtp.otp } }, { req: undefined }, {} as GraphQLResolveInfo);
 
-    // expect(otpModel.deleteMany).toHaveBeenCalledWith({ email: mockOtp.email });
     expect(response).toEqual({
       success: true,
       email: mockOtp.email,
