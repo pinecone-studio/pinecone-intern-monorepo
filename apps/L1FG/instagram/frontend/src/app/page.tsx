@@ -1,7 +1,11 @@
 'use client';
 
+import { Signup } from "@/components/Signup";
+
 const Page = () => {
-  return <div data-cy="hello">Hello</div>;
+  return (
+    <Signup/>
+  )
 };
 
 export default Page;

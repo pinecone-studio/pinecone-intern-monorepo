@@ -28,7 +28,7 @@ email:String!
 
 
 type Mutation {
-createUser(input: UserInput!):User!
+createUser(input: UserInput!):User
 }
 
 `
