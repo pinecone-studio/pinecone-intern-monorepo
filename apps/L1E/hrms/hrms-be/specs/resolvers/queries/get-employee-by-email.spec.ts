@@ -3,7 +3,7 @@ import { getEmployeeByEmail } from '../../../src/resolvers/queries';
 
 jest.mock('../../../src/models', () => ({
   EmployeeModel: {
-    findOne: jest
+    findOneAndUpdate: jest
       .fn()
       .mockResolvedValueOnce({
         _id: '676e6dd407d5ae05a35cda84',

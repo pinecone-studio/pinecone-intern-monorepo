@@ -17,6 +17,8 @@ export type Employee = {
   employeeStatus: EmployeeStatus;
   updatedAt: string;
   createdAt: string;
+  otpToken: string;
+  otpUpdatedAt: string;
 };
 
 const EmployeeSchema = new Schema<Employee>(
@@ -51,6 +53,12 @@ const EmployeeSchema = new Schema<Employee>(
       type: String,
       enum: Object.values(EmployeeStatus),
       required: true,
+    },
+    otpToken: {
+      type: String,
+    },
+    otpUpdatedAt: {
+      type: String,
     },
     updatedAt: {
       type: String,
