@@ -7,6 +7,9 @@ module.exports = {
   darkMode: 'class',
   content: [join(__dirname, 'src/**/*.{ts,tsx}'), '../../../../libs/shadcn/src/lib/ui/*.{ts,tsx}', ...createGlobPatternsForDependencies(__dirname)],
   theme: {
+    fontFamily: {
+      Inter: ['Inter', 'sans-serif'],
+    },
     extend: {
       colors: {
         border: 'hsl(var(--border))',

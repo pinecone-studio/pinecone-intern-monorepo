@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
 import './global.css';
+import { PropsWithChildren } from 'react';
 import { ApolloWrapper } from '@/components/providers';
 
 export const metadata = {
