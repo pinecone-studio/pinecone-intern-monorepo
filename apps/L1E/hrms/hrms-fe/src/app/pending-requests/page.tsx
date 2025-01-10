@@ -1,6 +1,6 @@
 'use client';
 import { Input } from '@/components/ui/input';
-import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, RequestType, useGetAllRequestsQuery, useUpdateRequestMutation } from '@/generated';
+import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, RequestType, useGetAllRequestsQuery, useMutationMutation } from '@/generated';
 import { useState } from 'react';
 import StatusSelector from '@/components/StatusSelector';
 import { RequestList } from '@/components/RequestList';
@@ -28,7 +28,7 @@ interface StatusSelectorProp {
 const Page = () => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
   const [refuseValue, setRefuseValue] = useState<string>();
-  const [updateRequest] = useUpdateRequestMutation();
+  const [updateRequest] = useMutationMutation();
   const [selectId, setSelectId] = useState<string>('1');
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState<boolean>(false);
   const [isOpenModalRefuse, setIsOpenModalRefuse] = useState<boolean>(false);
@@ -70,7 +70,7 @@ const Page = () => {
   const onRefuse = async () => {
     const update = new Date();
 
-    const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Approved } } });
+    const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Rejected } } });
     console.log(response);
   };
 
