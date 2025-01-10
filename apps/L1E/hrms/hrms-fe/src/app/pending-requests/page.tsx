@@ -64,14 +64,12 @@ const Page = () => {
   const onConfirm = async () => {
     const update = new Date();
 
-    const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: '', requestType: RequestType.Approved } } });
-    console.log(response);
+    await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: '', requestType: RequestType.Approved } } });
   };
   const onRefuse = async () => {
     const update = new Date();
 
-    const response = await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Rejected } } });
-    console.log(response);
+    await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Rejected } } });
   };
 
   return (
