@@ -1,7 +1,7 @@
+import { createComment } from "apps/L1FG/instagram/backend/src/resolvers/mutations";
 import { GraphQLResolveInfo } from "graphql"
-import { createComment } from "../../../src/resolvers/mutations"
 
-jest.mock('../../../src/models/comment.model', ()=>({
+jest.mock('apps/L1FG/instagram/backend/src/models/comment.model', ()=>({
     CommentModel: {
         create: jest.fn().mockReturnValue({
             input:{
