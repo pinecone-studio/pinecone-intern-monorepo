@@ -32,7 +32,6 @@ describe('Create user', () => {
       {},
       {} as GraphQLResolveInfo
     );
- console.log('result is:',result)
     expect(result).toEqual({
       userName:"jordan",
       fullName:"jordan mike",
