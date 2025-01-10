@@ -30,7 +30,7 @@ export const RefuseModal = ({ isOpenModal, onClose, onConfirm, setRefuseValue }:
         <AlertDialogFooter>
           <AlertDialogCancel data-cy="refuse-modal-button-back">Буцах</AlertDialogCancel>
           <AlertDialogAction data-cy="refuse-modal-button" onClick={onConfirm}>
-            Зөвшөөрөх
+            Татгалзах
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

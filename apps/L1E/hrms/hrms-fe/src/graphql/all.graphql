@@ -38,7 +38,7 @@ mutation CreateRequest($input: RequestInput!) {
     createdAt
   }
 }
-mutation updateRequest($updateRequestId: ID!, $input: RequestUpdateInput!) {
+mutation Mutation($updateRequestId: ID!, $input: RequestUpdateInput!) {
   updateRequest(id: $updateRequestId, input: $input) {
     _id
     employeeId {
