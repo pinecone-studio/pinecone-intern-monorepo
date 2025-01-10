@@ -10,11 +10,13 @@ export const createEmployee: MutationResolvers['createEmployee'] = async (_, { i
     email,
     jobTitle,
     username,
-    adminStatus:false,
+    adminStatus: false,
     employeeStatus,
-    paidLeaveLimit:5,
-    remoteLimit:5,
-    freeLimit:5,
+    paidLeaveLimit: 5,
+    remoteLimit: 5,
+    freeLimit: 5,
+    otpToken: '',
+    otpUpdatedAt: new Date(),
     createdAt,
   });
 
