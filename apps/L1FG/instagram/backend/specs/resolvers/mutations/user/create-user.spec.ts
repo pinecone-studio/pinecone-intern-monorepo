@@ -1,19 +1,18 @@
 import { createUser } from "apps/L1FG/instagram/backend/src/resolvers/mutations/user";
 import { GraphQLResolveInfo } from "graphql"
 
-jest.mock('../../../../src/models/user.model', () => ({
+jest.mock('../../../../src/models', () => ({
   UserModel: {
     create: jest.fn().mockReturnValue({
-      input: {
-        bio: "",
-        fullName: "Tuul",
-        gender: "not_know",
-        hasStory: false,
-        isPrivate: false,
-        password: "1234",
-        profileImage: "",
-        userName: "Enkhtuul",
-      }
+     userName:"jordan",
+     fullName:"jordan mike",
+     email:"jordan@gmail.com",
+     bio:"",
+     password:"jordan1234",
+     isPrivate:false,
+     hasStory:false,
+     profileImage:'http://image',
+     gender:'not_know'
     })
   }
 }));
@@ -21,15 +20,11 @@ jest.mock('../../../../src/models/user.model', () => ({
 describe('Create user', () => {
   it('should create a user', async () => {
     const input = {
-      bio: "",
-      fullName: "",
-      gender: "",
-      hasStory: false,
-      isPrivate: false,
-      password: "",
-      profileImage: "",
-      userName: "",
-    };
+      fullName: "jordan mike",
+      password: "1234",
+      userName: "jordan",
+      email:"jordan@gmail.com"
+    }
 
     const result = await createUser!(
       {}, 
@@ -37,19 +32,18 @@ describe('Create user', () => {
       {},
       {} as GraphQLResolveInfo
     );
-
+ console.log('result is:',result)
     expect(result).toEqual({
-      input: {
-        bio: "",
-        fullName: "Tuul",
-        gender: "not_know",
-        hasStory: false,
-        isPrivate: false,
-        password: "1234",
-        profileImage: "",
-        userName: "Enkhtuul",
-      }
-    });
+      userName:"jordan",
+      fullName:"jordan mike",
+      email:"jordan@gmail.com",
+      bio:"",
+      password:"jordan1234",
+      isPrivate:false,
+      hasStory:false,
+      profileImage:'http://image',
+      gender:'not_know'
+     });
 
   });
 });
