@@ -15,13 +15,14 @@ import { addDays, format, eachDayOfInterval } from 'date-fns';
 type ComponentName = 'MyRequest' | '/request-form' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
 
 const Page = () => {
-  const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
+  const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } })
   const router=useRouter()
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(), -3),
     to: new Date(),
   });
+
 
   const daysArray = eachDayOfInterval({
     start: date?.from || new Date(),
@@ -32,6 +33,7 @@ const Page = () => {
     PAID_LEAVE: 'Цалинтай чөлөө',
     REMOTE: 'Зайнаас ажиллах',
   };
+  
   const handleClick = (date: undefined, componentName: ComponentName) => {
     router.push(componentName)
     setDate(date);
@@ -57,8 +59,11 @@ const Page = () => {
       </div>
       {daysArray.reverse().map((element, index) => {
         const matchedRequest = data?.getAllRequests?.filter((el) => {
-          return element.toString() == el?.selectedDay;
+            const selectdate =el?.selectedDay as string
+            return format(element,'MM/dd/yy').toString() == format(selectdate,'MM/dd/yy').toString();
+          
         });
+        
         return (
           <div key={index} data-cy={`data-${index}`} className="flex flex-col gap-2">
             <div className="flex flex-col gap-2 ">

@@ -17,7 +17,7 @@ interface LeaveCalendarProps {
 /* eslint-enable no-unused-vars */
 export const LeaveCalendar = ({ handlechange }: LeaveCalendarProps) => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
-
+  
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(), -3),
     to: new Date(),
@@ -32,6 +32,8 @@ export const LeaveCalendar = ({ handlechange }: LeaveCalendarProps) => {
     PAID_LEAVE: 'Цалинтай чөлөө',
     REMOTE: 'Зайнаас ажиллах',
   };
+  
+  
   const handleClick = (date: undefined, componentName: ComponentName) => {
     handlechange(componentName);
     setDate(date);
@@ -54,6 +56,8 @@ export const LeaveCalendar = ({ handlechange }: LeaveCalendarProps) => {
       </div>
       {daysArray.reverse().map((element, index) => {
         const matchedRequest = data?.getAllRequests?.filter((el) => {
+          
+          
           return element.toString() == el?.selectedDay;
         });
         return (
