@@ -21,8 +21,8 @@ export const typeDefs = gql`
 
   type Conversation {
     id: ID!
-    userOne: String!
-    userTwo: String!
+    userOne: User
+    userTwo: User
     messages: [Message!]!
   }
 

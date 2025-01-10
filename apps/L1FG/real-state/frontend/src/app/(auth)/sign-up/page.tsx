@@ -1,7 +1,9 @@
 'use client';
 
+import SignUpPage from '@/components/auth/SignUpPage';
+
 const Page = () => {
-  return <div>sign up</div>;
+  return <SignUpPage />;
 };
 
 export default Page;
