@@ -34,9 +34,9 @@ export const addMessage: MutationResolvers['addMessage'] = async (_, { content, 
   });
 
   const result = {
-    sender: sender.username, // Only return sender's username (or _id if preferred)
+    sender: sender.username,
     id: message._id,
-    text: message.content, // Ensure that message content is used for the text field
+    text: message.content,
   };
 
   return result as unknown as Message;

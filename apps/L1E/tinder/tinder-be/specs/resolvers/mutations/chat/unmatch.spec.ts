@@ -30,10 +30,4 @@ describe('unMatch resolver', () => {
 
     expect(result).toEqual([mockMatch]);
   });
-
-  // it('should handle errors gracefully', async () => {
-  //   (matchModel.findOneAndDelete as jest.Mock).mockRejectedValue(new Error('Database error'));
-
-  //   await expect(unMatch(null, { authId: 'test-auth-id' })).rejects.toThrow('Failed to unmatch the user.');
-  // });
 });

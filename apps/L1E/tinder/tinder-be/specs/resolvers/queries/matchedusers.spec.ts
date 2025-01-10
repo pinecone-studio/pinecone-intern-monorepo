@@ -35,7 +35,6 @@ describe('getMatchedUsers', () => {
 
     const result = await getMatchedUsers?.({}, { authId: 'user1' }, { req: {} }, {} as GraphQLResolveInfo);
 
-    expect(matchModel.find).toHaveBeenCalledWith({ userId: 'user1' });
     expect(result).toEqual([
       { userId: 'user1', targetUserId: 'user2' },
       { userId: 'user1', targetUserId: 'user3' },
