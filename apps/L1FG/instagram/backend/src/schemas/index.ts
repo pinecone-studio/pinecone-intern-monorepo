@@ -7,5 +7,18 @@ import { CommentTypeDefs } from './comment.schema';
 import { CommentLikeTyoeDefs } from './comment-like.schema';
 import { RequestTypeDefs } from './request.schema';
 import { FollowerTypeDefs } from './followers.schema';
+import { StoryNodeTypeDefs } from './story-node.schema';
+import { StoryTypeDefs } from './story.schema';
 
-export const typeDefs = mergeTypeDefs([CommonTypeDefs, UserTypeDefs, PostTypeDefs, PostLikeTypeDefs,CommentTypeDefs, CommentLikeTyoeDefs, RequestTypeDefs, FollowerTypeDefs ]);
+export const typeDefs = mergeTypeDefs([
+  CommonTypeDefs,
+  UserTypeDefs,
+  PostTypeDefs,
+  PostLikeTypeDefs,
+  CommentTypeDefs,
+  CommentLikeTyoeDefs,
+  RequestTypeDefs,
+  FollowerTypeDefs,
+  StoryNodeTypeDefs,
+  StoryTypeDefs,
+]);
