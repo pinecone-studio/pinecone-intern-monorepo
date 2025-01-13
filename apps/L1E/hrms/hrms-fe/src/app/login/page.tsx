@@ -1,44 +1,42 @@
 'use client';
 
+import { Login } from '@/components/Login';
+import { OtpGenerate } from '@/components/OtpGenerate';
+import { useGetEmployeeByEmailLazyQuery } from '@/generated';
 import React, { useState } from 'react';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
-import { Card } from '@/components/ui/card';
-import Image from 'next/image';
 
-const Page: React.FC = () => {
-  const [loginStage, setLoginStage] = useState<'email' | 'otp'>('email');
+const Page = () => {
+  const [loginStage, setLoginStage] = useState<string>('email');
+  const [getEmployeeByEmail] = useGetEmployeeByEmailLazyQuery();
+  const [email, setEmail] = useState<string>();
+  const [error, setError] = useState<string>('');
+
+  const emailHnalder = (e: string) => {
+    setEmail(e);
+  };
+  const emailSubmit = async (e: string) => {
+    const { data } = await getEmployeeByEmail({ variables: { email: email } });
+    if (!email) {
+      setError('И-мэйл хаягаа оруулна уу ');
+    } else {
+      if (data) {
+        handleChange(e);
+        setError('');
+      } else {
+        setError('Ийм и-мэйл байхгүй байна');
+      }
+    }
+  };
+
+  const handleChange = (e: string) => {
+    setLoginStage(e);
+  };
+  const handlesubmit = () => {
+    console.log();
+  };
   return (
-    <div className="w-screen h-screen flex items-center justify-center " data-cy="login-page">
-      {loginStage == 'otp' ? (
-        <Card className="flex flex-col justify-center items-center gap-9 w-[364px] h-[364px] rounded-xl border " data-cy="login-otp-stage">
-          <h2>Нэвтрэх</h2>
-          <Image src="/Logo.png" alt="Logo" width={32} height={28} />
-          <p>Имэйлээ шалгаад код оо оруулна уу.</p>
-          <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-            </InputOTPGroup>
-          </InputOTP>
-        </Card>
-      ) : (
-        <div className="flex flex-col gap-4">
-          <div>
-            <input
-              aria-label="Email"
-              className="h-10 w-full rounded-md border bg-background px-3 py-2 text-sm placeholder: focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              id="credential"
-              placeholder="Имэйл хаяг"
-            />
-          </div>
-          <button data-cy="login-submit" onClick={() => setLoginStage('otp')} className="h-10 w-full rounded-md bg-primary text-primary-foreground hover:bg-primary/90" type="submit">
-            Үргэлжлүүлэх
-          </button>
-        </div>
-      )}
+    <div className="w-screen h-screen flex items-center justify-center" data-cy="login-page">
+      {loginStage === 'email' ? <Login emailSubmit={emailSubmit} emailHnalder={emailHnalder} error={error} /> : <OtpGenerate handlesubmit={handlesubmit} handleChange={handleChange} />}
     </div>
   );
 };

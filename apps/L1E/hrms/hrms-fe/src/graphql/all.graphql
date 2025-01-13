@@ -240,3 +240,20 @@ query GetEmployeeById($getEmployeeByIdId: ID!) {
     createdAt
   }
 }
+query GetEmployeeByEmail($email: String) {
+  getEmployeeByEmail(email: $email) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    otpToken
+    otpUpdatedAt
+    updatedAt
+    createdAt
+  }
+}
