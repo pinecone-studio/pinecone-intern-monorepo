@@ -25,7 +25,7 @@ export const LeadApprovedModal = ({ isOpen, employeeName, onClose, onSubmit, tex
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel data-cy="reject-modal">Буцах</AlertDialogCancel>
-          <AlertDialogAction data-cy="approve-modal" data-testid="approve-btn" onClick={onSubmit}>
+          <AlertDialogAction data-cy="approve-lead-modal" data-testid="approve-btn" onClick={onSubmit}>
             Зөвшөөрөх
           </AlertDialogAction>
         </AlertDialogFooter>
