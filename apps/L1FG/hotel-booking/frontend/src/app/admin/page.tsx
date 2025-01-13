@@ -1,5 +1,7 @@
+import { HomePage } from '@/components/admin/pages/home-page';
+
 const Admin = () => {
-  return <div>ss</div>;
+  return <HomePage />;
 };
 
 export default Admin;
