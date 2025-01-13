@@ -7,7 +7,7 @@ jest.mock('../../../src/models', () => ({
       .fn()
       .mockResolvedValueOnce({
         _id: '676e6dd407d5ae05a35cda84',
-        email: 'jvk@gmail.com',
+        email: 'dash.altanshagai48@gmail.com',
         jobTitle: 'senior',
         username: 'jvk',
         adminStatus: false,
@@ -26,11 +26,11 @@ describe('getEmployeeByEmail', () => {
     },
   };
   it('should get employees', async () => {
-    const res = await getEmployeeByEmail!({}, { email: 'jvk@gmail.com' }, context, {} as GraphQLResolveInfo);
+    const res = await getEmployeeByEmail!({}, { email: 'dash.altanshagai48@gmail.com' }, context, {} as GraphQLResolveInfo);
 
     expect(res).toEqual({
       _id: '676e6dd407d5ae05a35cda84',
-      email: 'jvk@gmail.com',
+      email: 'dash.altanshagai48@gmail.com',
       jobTitle: 'senior',
       username: 'jvk',
       adminStatus: false,
