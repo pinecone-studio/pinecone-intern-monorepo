@@ -32,11 +32,11 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
 
   return (
     <Dialog open={openCreate} onOpenChange={setOpenCreate}>
-      <DialogContent className="sm:max-w-[550px]">
+      <DialogContent data-cy="create-employee-modal" className="sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             Шинэ ажилтан бүртгэх
-            <Button variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={setOpenCreate}>
+            <Button data-cy="addEmployee-back-button" variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={setOpenCreate}>
               <X className="h-4 w-4" />
             </Button>
           </DialogTitle>
@@ -51,7 +51,7 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
                 <FormItem>
                   <FormLabel>Нэр, Овог</FormLabel>
                   <FormControl>
-                    <Input placeholder="Энд бичих.." {...field} />
+                    <Input data-cy="username-input" placeholder="Энд бичих.." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -64,7 +64,7 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
                 <FormItem>
                   <FormLabel>Албан тушаал</FormLabel>
                   <FormControl>
-                    <Input placeholder="Энд бичих.." {...field} />
+                    <Input data-cy="jobtitle-input" placeholder="Энд бичих.." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -77,7 +77,7 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
                 <FormItem>
                   <FormLabel>Имэйл</FormLabel>
                   <FormControl>
-                    <Input placeholder="Энд бичих.." type="email" {...field} />
+                    <Input data-cy="email-input" placeholder="Энд бичих.." type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,13 +114,17 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
                   <FormLabel>Эрхийн тохируулах</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger data-cy="lead-approve-trigger">
                         <SelectValue placeholder="Сонгох" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Lead">Ахлах ажилтан болгох</SelectItem>
-                      <SelectItem value="Employee">Ажилтан болгох</SelectItem>
+                      <SelectItem data-cy="option-lead" value="Lead">
+                        Ахлах ажилтан болгох
+                      </SelectItem>
+                      <SelectItem data-cy="option-employee" value="Employee">
+                        Ажилтан болгох
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -128,7 +132,9 @@ export const EmployeeFormModal = ({ openCreate, setOpenCreate, createEmployee }:
               )}
             />
             <div className="flex justify-end gap-4 pt-4">
-              <Button type="submit">Нэмэх</Button>
+              <Button data-cy="submit-employee-button" type="submit">
+                Нэмэх
+              </Button>
             </div>
           </form>
         </Form>
