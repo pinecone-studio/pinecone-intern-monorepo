@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
   PropertyOwnerId: { type: mongoose.Schema.Types.ObjectId, required: true },

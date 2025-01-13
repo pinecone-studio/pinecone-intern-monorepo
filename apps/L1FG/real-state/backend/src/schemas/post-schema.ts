@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const post = gql`
+export const Post = gql`
 
-scolar JSON
+scalar JSON
 
   enum Status {
     PENDING
