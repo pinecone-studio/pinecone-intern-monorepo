@@ -257,3 +257,21 @@ query GetEmployeeByEmail($email: String) {
     createdAt
   }
 }
+
+query GetEmployeeByOtp($email: String, $otpToken: String) {
+  getEmployeeByOtp(email: $email, otpToken: $otpToken) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    otpToken
+    otpUpdatedAt
+    updatedAt
+    createdAt
+  }
+}
