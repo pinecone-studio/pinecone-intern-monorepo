@@ -1,4 +1,4 @@
-{
+s{
   "name": "instagram-backend",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/L1FG/instagram/backend",

@@ -5,14 +5,18 @@ export const StoryViewTypeDefs = gql`
     _id: ID
     userId: ID
     storyNodeId: ID
-    latestStory: Date
+    latestStory: ID
     seen: Date
   }
 
-  input StoryNodeInput {
+  input StoryViewInput {
     userId: ID
     storyNodeId: ID
-    latestStory: Date
+    latestStory: ID
     seen: Date
+  }
+
+  type Mutation {
+    createStoryView(input: StoryViewInput!): StoryView!
   }
 `;
