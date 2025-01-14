@@ -5,6 +5,7 @@ import { useState } from 'react';
 import StatusSelector from '@/components/StatusSelector';
 import { RequestList } from '@/components/RequestList';
 import { RequestApproved } from '@/components/RequestApproved';
+
 const employee: Employee = {
   _id: '676e6dd407d5ae05a35cda84',
   email: 'jvk@gmail.com',
@@ -39,6 +40,17 @@ const Page = () => {
     { id: 'PENDING', name: 'Хүлээгдэж байна', count: 21, selected: true },
     { id: 'REJECTED', name: 'Татгалзсан', count: 20, selected: false },
   ]);
+
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+
+  //   // If no token found in localStorage, redirect to login page
+  //   if (!token) {
+  //     router.push('/login');
+  //   }
+  // }, [router]);
 
   const allRequests = data?.getAllRequests as GetAllRequestsQuery['getAllRequests'];
   const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id && statuses.some((status) => status.selected && status.id === e.requestType));

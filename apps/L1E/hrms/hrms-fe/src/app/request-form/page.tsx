@@ -29,16 +29,31 @@ const Page = () => {
   const handleSelectChange = (value: string) => {
     setItem(value);
   };
+
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+
+  //   if (!token) {
+  //     router.push('/login');
+  //   }
+  // }, [router]);
+
   const [createRequest] = useCreateRequestMutation();
   const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
 
   const leads = data?.getEmployees as Employee[];
 
   const onSubmit = async (data: RequestsInput) => {
+    setIsOpen(true);
     const { date, startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId } = data;
     const newdata: RequestInput = { selectedDay: date.toString().slice(0, 15), startTime, endTime, leadEmployeeId, requestStatus, reason, employeeId };
-    await createRequest({ variables: { input: newdata } });
-    setIsOpen(true);
+    const response = await createRequest({ variables: { input: newdata } });
+
+    if (response) {
+      setIsOpen(false);
+    }
   };
 
   const componentMap: { [key: string]: JSX.Element | null } = {
@@ -52,6 +67,7 @@ const Page = () => {
     'Цалинтай чөлөө': employee.paidLeaveLimit,
     'Зайнаас ажиллах': employee.remoteLimit,
   };
+
   return (
     <div data-cy="request-form-page" className="h-screen w-screen bg-neutral-100 pt-10">
       <Card className="w-[608px] border-[#E4E4E7] mx-auto">

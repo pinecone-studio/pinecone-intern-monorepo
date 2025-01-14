@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-type ComponentName = '/' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
+type ComponentName = 'my-requests' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -20,12 +20,16 @@ export const Header = () => {
   const clickButton = (componentName: ComponentName) => {
     return activeComponent === componentName ? 'border-b-2 border-black pb-[11px]' : 'border-b-0';
   };
+
   useEffect(() => {
+    const pathname = window.location.pathname;
+    const path = pathname.slice(1, pathname.length) as ComponentName;
+
     const savedTheme = localStorage.getItem('theme');
     {
       savedTheme && setIsDarkMode(savedTheme === 'dark');
     }
-    setActiveComponent('/');
+    setActiveComponent(path);
   }, []);
 
   const toggleTheme = () => {
@@ -51,7 +55,14 @@ export const Header = () => {
           <Image src="/Logo.png" alt="Logo" width={32} height={28} />
           <div className="flex gap-[20px] pt-[30px]">
             {/* user */}
-            <button data-testid="MyRequest-btn" onClick={() => handleComponentChange('/')} className={`${clickButton('/')}`}>
+            <button data-testid="employee-list-btn" onClick={() => handleComponentChange('employee-list')} className={`${clickButton('employee-list')}`}>
+              Employee list
+            </button>
+            <button
+              data-testid="MyRequest-btn"
+              onClick={() => handleComponentChange('my-requests')}
+              className={`${clickButton('my-requests')} ${!activeComponent && 'border-b-2 border-black pb-[11px]'}`}
+            >
               My requests
             </button>
             <button data-testid="RequestForm-btn" onClick={() => handleComponentChange('request-form')} className={` ${clickButton('request-form')}`}>
