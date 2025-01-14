@@ -5,10 +5,12 @@ export const StoryNodeTypeDefs = gql`
     _id: ID
     userId: ID!
     stories: [ID]
+    latestAt: Date
   }
 
   input StoryNodeInput {
     userId: ID
     stories: [ID]
+    latestAt: Date
   }
 `;

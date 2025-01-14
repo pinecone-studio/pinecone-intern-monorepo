@@ -6,14 +6,14 @@ export const StoryTypeDefs = gql`
     storyImage: String
     userId: ID
     expiringAt: Date
-    duration: String
+    duration: Int
   }
 
   input StoryInput {
     storyImage: String
     userId: ID
     expiringAt: Date
-    duration: String
+    duration: Int
   }
 
   type Mutation {
