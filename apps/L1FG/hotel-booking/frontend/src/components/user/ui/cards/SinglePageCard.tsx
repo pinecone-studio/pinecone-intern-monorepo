@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import WifiIcon from '../ui/svg/WifiIcon';
-import FlowerIcon from '../ui/svg/FlowerIcon';
-import ParkingCircleIcon from '../ui/svg/ParkingCircleIcon';
-import UtensilsIcon from '../ui/svg/UtensilsIcon';
-import DumbBellIcon from '../ui/svg/DumbBellIcon';
-import BusIcon from '../ui/svg/BusIcon';
-import DoorClosedIcon from '../ui/svg/DoorClosedIcon';
-import ChevronRightIcon from '../ui/svg/ChevronRightIcon';
+import WifiIcon from '../svg/WifiIcon';
+import FlowerIcon from '../svg/FlowerIcon';
+import ParkingCircleIcon from '../svg/ParkingCircleIcon';
+import UtensilsIcon from '../svg/UtensilsIcon';
+import DumbBellIcon from '../svg/DumbBellIcon';
+import BusIcon from '../svg/BusIcon';
+import DoorClosedIcon from '../svg/DoorClosedIcon';
+import ChevronRightIcon from '../svg/ChevronRightIcon';
 
 export const SinglePageCard = () => {
   return (
