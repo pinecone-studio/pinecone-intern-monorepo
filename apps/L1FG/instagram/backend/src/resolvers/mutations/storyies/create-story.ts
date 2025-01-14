@@ -1,0 +1,30 @@
+import { MutationResolvers } from '../../../generated';
+import { StoryModel, StoryNodeModel } from '../../../models';
+
+export const createStory: MutationResolvers['createStory'] = async (_, { input }) => {
+  const { userId, storyImage, expiringAt, duration } = input;
+
+  const story = await StoryModel.create({
+    userId,
+    storyImage,
+    expiringAt,
+    duration,
+  });
+
+  const { _id } = story;
+
+  const existNode = await StoryNodeModel.findOne({ userId });
+
+  if (!existNode) {
+    const createNode = await StoryNodeModel.create({
+      userId,
+      stories: _id,
+      latestAt: _id,
+    });
+    return createNode;
+  }
+
+  const updateNode = await StoryNodeModel.findOneAndUpdate({ userId: userId }, { $push: { stories: _id }, latestAt: _id }, { new: true });
+
+  return updateNode;
+};
