@@ -1,9 +1,13 @@
 import { ParkingIcon, SpaIcon, StarIcon, WifiIcon } from '@/components/icons';
+import Image from 'next/image'
+
 
 export const HomePageCard = () => {
   return (
     <div className="card bg-base-100 w-[308px] shadow-xl rounded-md">
-      <div className="w-full h-[216px] bg-slate-400"></div>
+      <div className="w-full h-[216px] bg-slate-400">
+        <Image src="/Toyoko.png" alt=""  width={308} height={216} />
+      </div>
       <div className="card-body p-3">
         <h2 className="card-title text-base leading-7 font-bold">Toyoko Inn Ulaanbaatar</h2>
         <div className="flex">
