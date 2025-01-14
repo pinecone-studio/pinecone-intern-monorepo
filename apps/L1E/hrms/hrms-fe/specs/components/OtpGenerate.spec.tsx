@@ -23,9 +23,31 @@ describe('OtpGenerate', () => {
         handlesubmit={() => {
           console.log('a');
         }}
+        resent={() => console.log('1')}
+        errorotp=""
       />
     );
     const button = getByTestId('button');
     fireEvent.click(button);
+    const input1 = getByTestId('enter-input');
+    fireEvent.change(input1, { target: { value: '1111' } });
+  });
+  it('renders the component', async () => {
+    const { getByTestId } = render(
+      <OtpGenerate
+        handleChange={(e) => {
+          console.log(e);
+        }}
+        handlesubmit={() => {
+          console.log('a');
+        }}
+        resent={() => console.log('1')}
+        errorotp="invaled otp"
+      />
+    );
+    const button = getByTestId('button');
+    fireEvent.click(button);
+    const input1 = getByTestId('enter-input');
+    fireEvent.change(input1, { target: { value: '1111' } });
   });
 });
