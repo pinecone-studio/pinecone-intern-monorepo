@@ -11,9 +11,8 @@ const userSchema = new Schema({
     password: {type: String,required:true},
     isPrivate: {type: Boolean,default:false},
     hasStory: {type: Boolean,default:false},
-    profileImage: {type: String},
+    profileImage: {type: String,default:""},
     gender: {type: String, enum:["female", "male", "not_know"], default:"not_know"}
 })
-
  export const UserModel = models["User"] || model("User", userSchema)
  
