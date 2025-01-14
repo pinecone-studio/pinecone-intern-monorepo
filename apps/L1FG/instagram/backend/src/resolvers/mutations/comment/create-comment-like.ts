@@ -6,7 +6,8 @@ export const createCommentLike:MutationResolvers['createCommentLike']=async(_, {
 
     const commentLike = await CommentLikeModel.create({
         userId, commentId
-    })
+    }, 
+   )
 
     return commentLike
 }
