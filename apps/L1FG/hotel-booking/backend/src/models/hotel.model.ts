@@ -9,10 +9,13 @@ const HotelSchema = new Schema<HotelType>({
   description: { type: String, required: true },
   images: { type: [String], required: true },
   rooms: { type: [Schema.Types.ObjectId], ref: 'rooms', default: [] },
-  faqs: { type: [Map], of: String },
-  policies: { type: [Map], of: String },
-  about: { type: [Map], of: String },
-  location: { type: { type: String, enum: ['Point'], required: true }, coordinates: { type: [Number], required: true } },
+  faqs: { type: [String], default: [] },
+  policies: { type: [String], default: [] },
+  about: { type: [String], default: [] },
+  location: {
+    type: { type: String, enum: ['Point'], required: true },
+    coordinates: { type: [Number], required: true },
+  },
   locationName: { type: String },
 });
 
