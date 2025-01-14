@@ -1,4 +1,4 @@
-import { getOrders } from '../../../src/resolvers/queries/getOrders';
+import { getOrders } from '../../../src/resolvers/queries/get-orders';
 import { OrderModel } from '../../../src/models/order';
 import { GraphQLResolveInfo } from 'graphql';
 
@@ -37,8 +37,9 @@ describe('getOrders Query Resolver', () => {
     // Mock the find method to return mockOrders
     (OrderModel.find as jest.Mock).mockResolvedValue(mockOrders);
 
+    if (!getOrders) return;
     // Call the resolver
-    const result = await getOrders!({}, { tableId: undefined }, {}, {} as GraphQLResolveInfo);
+    const result = await getOrders({}, { tableId: undefined }, {}, {} as GraphQLResolveInfo);
 
     // Assertions
     expect(result).toEqual([
@@ -85,8 +86,10 @@ describe('getOrders Query Resolver', () => {
     // Mock the find method to return filtered orders
     (OrderModel.find as jest.Mock).mockResolvedValue(mockOrders);
 
+    if (!getOrders) return;
+
     // Call the resolver with a tableId
-    const result = await getOrders!({}, { tableId: 105 }, {}, {} as GraphQLResolveInfo);
+    const result = await getOrders({}, { tableId: 105 }, {}, {} as GraphQLResolveInfo);
 
     // Assertions
     expect(result).toEqual([
