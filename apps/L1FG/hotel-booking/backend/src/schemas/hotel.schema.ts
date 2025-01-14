@@ -56,4 +56,7 @@ export const typeDefs = gql`
   type Mutation {
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
   }
+  type Query {
+    getHotels: [Hotel!]!
+  }
 `;
