@@ -7,7 +7,7 @@ export const DialogDemo = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-4 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ml-2 p-2" variant="outline">
+        <Button className="flex gap-4 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ml-2 p-2" variant="outline">
           <PlusSVG />
           Create post
         </Button>

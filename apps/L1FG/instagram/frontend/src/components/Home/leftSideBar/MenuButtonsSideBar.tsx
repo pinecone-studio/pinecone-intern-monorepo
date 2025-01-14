@@ -10,7 +10,7 @@ import { DialogDemo } from '@/components/create-post/CreatePostDialog';
 
 export const MenuButtons = () => {
   return (
-    <div className="w-auto h-[1000px] flex flex-col ml-6 mt-14 justify-between">
+    <div className="w-[260px] h-[100vh] flex flex-col ml-6 py-14 justify-between border-r">
       <div className="flex flex-col gap-5">
         <div className="mb-8">
           <InstaSVG />
