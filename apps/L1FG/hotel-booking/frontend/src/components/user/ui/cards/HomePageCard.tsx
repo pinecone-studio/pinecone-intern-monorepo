@@ -1,27 +1,32 @@
-import { ParkingIcon, SpaIcon, StarIcon, WifiIcon } from '@/components/icons';
+import { StarIcon } from '../svg';
+import FlowerIcon from '../svg/FlowerIcon';
+import ParkingCircleIcon from '../svg/ParkingCircleIcon';
+import WifiIcon from '../svg/WifiIcon';
 
 export const HomePageCard = () => {
   return (
-    <div className="card bg-base-100 w-[308px] shadow-xl rounded-md">
-      <div className="w-full h-[216px] bg-slate-400"></div>
-      <div className="card-body p-3">
-        <h2 className="card-title text-base leading-7 font-bold">Toyoko Inn Ulaanbaatar</h2>
-        <div className="flex">
-          <StarIcon />
-          <StarIcon />
-          <StarIcon />
+    <div className="card bg-base-100 w-[308px] rounded-md border border-[#E4E4E7]">
+      <div className="w-full h-[216px] bg-slate-400 rounded-t-md"></div>
+      <div className="flex flex-col gap-4 p-4">
+        <div className="">
+          <h2 className="card-title text-base leading-7 font-bold">Toyoko In Ulaanbaatar</h2>
+          <div className="flex">
+            <StarIcon />
+            <StarIcon />
+            <StarIcon />
+          </div>
         </div>
-        <div className="flex flex-col gap-3 mt-4">
+        <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 ">
             <WifiIcon />
             <p className="text-sm font-Inter font-normal leading-5 text-[#09090B]">Free WiFi</p>
           </div>
           <div className="flex items-center gap-2">
-            <SpaIcon />
+            <FlowerIcon />
             <p className="text-sm font-Inter font-normal leading-5 text-[#09090B]">Spa access</p>
           </div>
           <div className="flex items-center gap-2">
-            <ParkingIcon />
+            <ParkingCircleIcon />
             <p className="text-sm font-Inter font-normal leading-5 text-[#09090B]">Free self parking</p>
           </div>
           <div className="flex gap-2">
