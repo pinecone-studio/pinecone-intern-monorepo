@@ -1,3 +1,4 @@
+import { Footer } from '../search-result/Footer';
 import { MainResultSearch } from '../search-result/MainSearchResult';
 import HomePage from './home-page';
 
@@ -6,6 +7,7 @@ export const SearchResultPage = () => {
     <div>
       <HomePage />
       <MainResultSearch />
+      <Footer />
     </div>
   );
 };
