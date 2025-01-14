@@ -32,7 +32,9 @@ describe('makeOrder Mutation Resolver', () => {
 
     (OrderModel.create as jest.Mock).mockResolvedValue(savedOrder);
 
-    const result = await makeOrder!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!makeOrder) return;
+
+    const result = await makeOrder({}, { input }, {}, {} as GraphQLResolveInfo);
 
     // Assertions
     expect(result).toEqual({

@@ -41,6 +41,6 @@ export const typeDefs = gql`
 
   type Mutation {
     sampleMutation: String!
-    makeOrder(input: InputType!): OrderType
+    makeOrder(input: InputType!): OrderType!
   }
 `;

@@ -1,2 +1,2 @@
 export * from './sample-query';
-export * from './getOrders';
+export * from './get-orders';
