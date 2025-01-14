@@ -1,11 +1,11 @@
 'use client';
 
-import HomePage from '@/components/user/pages/home-page';
+import { SearchResultPage } from '@/components/user/pages/searchresult-page';
 
 const Page = () => {
   return (
     <div>
-      <HomePage />
+      <SearchResultPage />
     </div>
   );
 };
