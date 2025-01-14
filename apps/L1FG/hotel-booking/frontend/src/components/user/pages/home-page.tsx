@@ -1,12 +1,13 @@
 import { Hero } from '../features/Hero';
-import { NavigationBlue, SinglePageCard } from '../Navigations';
+import { NavigationBlue } from '../Navigations';
+import { HomePageCard } from '../ui/cards';
 
 const HomePage = () => {
   return (
     <main>
       <NavigationBlue />
       <Hero />
-      <SinglePageCard />
+      <HomePageCard />
     </main>
   );
 };
