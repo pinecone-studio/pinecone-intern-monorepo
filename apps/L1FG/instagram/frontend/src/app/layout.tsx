@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
+import { MenuButtons } from '@/components/Home/leftSideBar/MenuButtonsSideBar';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -11,7 +12,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <div className="flex">
+          <MenuButtons />
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </div>
       </body>
     </html>
   );
