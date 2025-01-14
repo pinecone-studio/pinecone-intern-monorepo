@@ -86,12 +86,14 @@ describe('Header', () => {
 
     // Simulate button clicks for different components
     fireEvent.click(getByTestId('MyRequest-btn'));
-    expect(push).toHaveBeenCalledWith('//');
+    expect(push).toHaveBeenCalledWith('/my-requests');
     fireEvent.click(getByTestId('RequestForm-btn'));
-    expect(push).toHaveBeenCalledWith('//');
+    expect(push).toHaveBeenCalledWith('/my-requests');
     fireEvent.click(getByTestId('LeaveCalendar-btn'));
-    expect(push).toHaveBeenCalledWith('//');
+    expect(push).toHaveBeenCalledWith('/my-requests');
     fireEvent.click(getByTestId('PendingRequest-btn'));
-    expect(push).toHaveBeenCalledWith('//');
+    expect(push).toHaveBeenCalledWith('/my-requests');
+    fireEvent.click(getByTestId('employee-list-btn'));
+    expect(push).toHaveBeenCalledWith('/my-requests');
   });
 });

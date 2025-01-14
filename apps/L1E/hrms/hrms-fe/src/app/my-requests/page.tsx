@@ -15,6 +15,16 @@ const Page = () => {
   const availablePaidDays = employeeData?.getEmployeeById?.paidLeaveLimit;
   const timeleave = employeeData?.getEmployeeById?.freeLimit;
 
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+
+  //   if (!token) {
+  //     router.push('/login');
+  //   }
+  // }, [router]);
+
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(), -3),
     to: new Date(),
