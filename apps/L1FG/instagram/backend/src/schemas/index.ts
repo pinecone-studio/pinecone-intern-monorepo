@@ -9,6 +9,7 @@ import { RequestTypeDefs } from './request.schema';
 import { FollowerTypeDefs } from './followers.schema';
 import { StoryNodeTypeDefs } from './story-node.schema';
 import { StoryTypeDefs } from './story.schema';
+import { StoryLikeTypeDefs } from './story-like.schema';
 
 export const typeDefs = mergeTypeDefs([
   CommonTypeDefs,
@@ -21,4 +22,5 @@ export const typeDefs = mergeTypeDefs([
   FollowerTypeDefs,
   StoryNodeTypeDefs,
   StoryTypeDefs,
+  StoryLikeTypeDefs,
 ]);
