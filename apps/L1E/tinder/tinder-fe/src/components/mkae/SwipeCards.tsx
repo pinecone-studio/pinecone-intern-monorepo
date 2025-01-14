@@ -58,7 +58,7 @@ export const SwipeCards = () => {
     );
   }
   return (
-    <div className="grid h-screen w-screen place-items-center bg-neutral-100">
+    <div className="grid h-screen w-screen place-items-center bg-neutral-200">
       <SwipeCard key={currentCard._id} user={currentCard} onSwipe={handleSwipe} />
       <UserMatchComp isOpen={isMatchOpen} onClose={() => setIsMatchOpen(false)} userImage={currentCard.images[0]} matchImage={currentCard.images[0]} matchName={currentCard.username} />
     </div>
