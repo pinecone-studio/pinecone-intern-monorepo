@@ -1,6 +1,6 @@
 'use client';
 
-import UserProfile from "./userprofile/UserProfile";
+import UserProfile from "../components/user-profile/UserProfile";
 
 const Page = () => {
   return <div><UserProfile/></div>;
