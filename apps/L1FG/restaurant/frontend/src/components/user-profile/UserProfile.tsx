@@ -11,6 +11,7 @@ const UserProfile  = () => {
         gmail:"ganjaa@gmail.com",
         password: 11111
     }
+    
   return (
     <div className="max-h-[500px] bg-white text-center flex flex-col items-center p-4">
   
