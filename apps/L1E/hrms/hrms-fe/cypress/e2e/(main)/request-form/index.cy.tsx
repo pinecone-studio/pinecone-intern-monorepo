@@ -1,10 +1,33 @@
 import { interceptGraphql } from 'cypress/utils/intercept-graphql';
 
 describe('requestform page', () => {
-  //   after(() => {
-  //     deleteTestForm('cypress - test');
-  //   });
   it('Should render requestform page', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
+    interceptGraphql({
+      state: 'success',
+      operationName: 'GetEmployeeById',
+      data: {
+        data: {
+          getEmployeeById: {
+            _id: '677b83734fba809002930cc5',
+            email: 'dash.altanshagai48@gmail.com',
+            jobTitle: 'software',
+            username: 'shagai12345',
+            adminStatus: false,
+            remoteLimit: 5,
+            paidLeaveLimit: 5,
+            freeLimit: 5,
+            employeeStatus: 'Employee',
+            updatedAt: 'Tue Jan 14 2025 15:29:44 GMT+0800 (Ulaanbaatar Standard Time)',
+            createdAt: '2010',
+            __typename: 'Employee',
+          },
+        },
+      },
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'GetEmployees',
