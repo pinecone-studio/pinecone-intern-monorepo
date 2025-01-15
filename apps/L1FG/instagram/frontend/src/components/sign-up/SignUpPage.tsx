@@ -1,3 +1,5 @@
+'use client';
+
 import { InstaLogo } from '../svg/InstaLogo';
 
 export const SignUpPage = () => {

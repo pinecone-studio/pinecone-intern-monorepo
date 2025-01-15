@@ -1,3 +1,4 @@
+'use client';
 import { SignUpPage } from '@/components/sign-up/SignUpPage';
 
 const SignUp = () => {
