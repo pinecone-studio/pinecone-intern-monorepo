@@ -7,7 +7,7 @@ import { LeftArrow } from '../svg';
 export const GuestInfo = () => {
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar hotels="" guests="active" />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
         <div className="w-full h-full flex justify-center bg-[#F4F4F5]">

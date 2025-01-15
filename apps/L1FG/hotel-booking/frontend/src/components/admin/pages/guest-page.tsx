@@ -4,7 +4,7 @@ import { Sidebar } from '../main/Sidebar';
 export const GuestsPage = () => {
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar hotels="" guests="active" />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
         <div className="w-full h-full bg-[#F4F4F5] p-4 flex flex-col gap-4">
