@@ -1,6 +1,11 @@
 import { IoSettingsOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import { MenuButtons } from './Home/leftSideBar/MenuButtonsSideBar';
+const items = [
+  { name: 'post ', number: 11 },
+  { name: 'followers ', number: 17 },
+  { name: 'following ', number: 14 },
+];
 
 const Profile = () => {
   return (
@@ -23,19 +28,14 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="flex w-full justify-between">
-              <div className="flex">
-                <p className="text-base font-semibold">11 </p>
-                <p className="text-base font-normal"> posts</p>
-              </div>
-
-              <div className="flex">
-                <p className="text-base font-semibold">17 </p>
-                <p className="text-base font-normal"> followers</p>
-              </div>
-              <div className="flex">
-                <p className="text-base font-semibold">14 </p>
-                <p className="text-base font-normal"> followin</p>
+            <div>
+              <div className="flex w-full justify-between">
+                {items.map((items, index) => (
+                  <div className="flex" key={index}>
+                    <p className="text-base font-semibold">{items.number} </p>
+                    <p className="text-base font-normal">{items.name}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
