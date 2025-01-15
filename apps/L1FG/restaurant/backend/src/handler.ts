@@ -5,8 +5,9 @@ import { resolvers } from './resolvers';
 import { connectToDb } from './utils/connect-to-db';
 import { typeDefs } from './schemas';
 import { foodTypeDefs } from './schemas/food.schema';
+import { categoryTypeDefs } from './schemas/category.schema';
 
-const mergedTypeDefs = [typeDefs, foodTypeDefs];
+const mergedTypeDefs = [typeDefs, foodTypeDefs, categoryTypeDefs];
 
 connectToDb();
 
