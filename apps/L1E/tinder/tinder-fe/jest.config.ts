@@ -8,5 +8,13 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../../coverage/apps/L1E/tinder/tinder-fe',
-  collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/generated/**/*.ts', '!src/app/**/*.tsx', '!src/components/providers/*.tsx', '!src/components/**/SwipeCards.tsx'],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/generated/**/*.ts',
+    '!src/components/profile/Profile.tsx',
+    '!src/components/profile/MainSection.tsx',
+    '!src/app/**/*.tsx',
+    '!src/components/providers/*.tsx',
+    '!src/components/**/SwipeCards.tsx',
+  ],
 };

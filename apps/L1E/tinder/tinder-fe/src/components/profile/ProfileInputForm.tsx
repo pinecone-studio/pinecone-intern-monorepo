@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-// Update FormSchema to validate age as a number
 const FormSchema = z.object({
   Age: z.number().min(1, {
     message: 'Age must be at least 1.',
@@ -15,7 +14,7 @@ const ProfileInputForm = ({ 'data-testid': testId }: { 'data-testid'?: string })
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      Age: 0, // Default to 0 if no age is provided
+      Age: 0,
     },
   });
 
