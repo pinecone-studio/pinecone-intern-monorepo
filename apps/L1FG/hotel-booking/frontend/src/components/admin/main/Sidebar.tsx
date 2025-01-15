@@ -1,4 +1,4 @@
-import { WhiteCircle, Zap, Zap2 } from '../svg';
+import { WhiteCircle } from '../svg';
 
 export const Sidebar = () => {
   return (
@@ -14,16 +14,16 @@ export const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className="p-2 w-full">
-        <div className="py-1.5 px-2 flex items-center gap-2 rounded-sm bg-[#F4F4F5]">
-          <Zap />
-          <p className="text-[#09090B] font-Inter text-sm font-normal">Hotels</p>
-        </div>
-        <div className="py-1.5 px-2 flex items-center gap-2 rounded-sm">
-          <Zap2 />
-          <p className="text-[#71717A] font-Inter text-sm font-normal">Guests</p>
-        </div>
-      </div>
+      {/* <div className="p-2 w-full">
+        <Link href="/admin" className={`py-1.5 px-2 flex items-center gap-2 rounded-sm ${props.hotels ? 'bg-[#F4F4F5]' : 'bg-white'}`}>
+          {props.hotels ? <ActiveZap /> : <Zap />}
+          <p className={`font-Inter text-sm font-normal ${props.hotels ? 'text-[#09090B]' : 'text-[#71717A]'}`}>Hotels</p>
+        </Link>
+        <Link href="/admin/guests" className={`py-1.5 px-2 flex items-center gap-2 rounded-sm ${props.guests ? 'bg-[#F4F4F5]' : 'bg-white'}`}>
+          {props.guests ? <ActiveZap /> : <Zap />}
+          <p className={`font-Inter text-sm font-normal ${props.guests ? 'text-[#09090B]' : 'text-[#71717A]'}`}>Guests</p>
+        </Link>
+      </div> */}
     </div>
   );
 };
