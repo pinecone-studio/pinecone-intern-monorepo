@@ -35,7 +35,7 @@ const Profile = () => {
               </div>
               <div className="flex">
                 <p className="text-base font-semibold">14 </p>
-                <p className="text-base font-normal"> following </p>
+                <p className="text-base font-normal"> followin</p>
               </div>
             </div>
 
