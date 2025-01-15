@@ -244,6 +244,8 @@
     },
     "codegen:dev": {
       "executor": "nx:run-commands",
+
+      
       "options": {
         "commands": ["graphql-codegen --config ./apps/L1FG/instagram/frontend/codegen.ts"]
       },
