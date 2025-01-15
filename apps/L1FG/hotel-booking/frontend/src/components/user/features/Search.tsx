@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/compon
 export const Search = () => {
   return (
     <main>
-      <div className="fixed w-full h-12 bg-[#013B94]"></div>
+      <div className="absolute w-full h-12 bg-[#013B94]"></div>
       <div className="relative container mx-auto px-[60px]">
         <div className="flex justify-between gap-4 w-full h-full bg-white border-[3px] border-[#FFB700] rounded-[8px] p-4">
           <div className="flex flex-col gap-2 max-w-[500px] w-full">
