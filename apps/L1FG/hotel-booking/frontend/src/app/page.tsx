@@ -1,11 +1,13 @@
 'use client';
 
-import { SearchResultPage } from '@/components/user/pages/searchresult-page';
+import { HotelDetailPage } from '@/components/user/pages/hoteldetail-page';
 
 const Page = () => {
   return (
     <div>
-      <SearchResultPage />
+      <HotelDetailPage />
+
+      {/* <SearchResultPage /> */}
     </div>
   );
 };

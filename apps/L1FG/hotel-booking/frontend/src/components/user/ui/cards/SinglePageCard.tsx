@@ -7,12 +7,13 @@ import DumbBellIcon from '../svg/DumbBellIcon';
 import BusIcon from '../svg/BusIcon';
 import DoorClosedIcon from '../svg/DoorClosedIcon';
 import ChevronRightIcon from '../svg/ChevronRightIcon';
+import { PriceDetail } from '../../hotel-detail/PriceDetail';
 
 export const SinglePageCard = () => {
   return (
     <div className="w-[349px] h-[689px] text-foreground border-border border rounded-[6px]">
       <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px]" />
-      <div className="p-4 flex flex-col gap-4">
+      <div className="h-[473px] p-4 flex flex-col gap-4">
         <div className="text-base font-bold leading-7">Economy Single Room</div>
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
@@ -58,10 +59,11 @@ export const SinglePageCard = () => {
                 <p>112,500₮</p>
                 <p>Price per night</p>
               </div>
-              <button className="text-sm font-medium leading-5 text-[#2563EB] flex gap-2 items-center py-2">
-                <div>Price detail</div>
-                <ChevronRightIcon />
-              </button>
+              <div className="text-sm font-medium leading-5 text-[#2563EB] flex gap-2 items-center py-2">
+                <PriceDetail />
+                {/* <div>Price detail</div> */}
+                {/* <ChevronRightIcon /> */}
+              </div>
             </div>
             <div className="flex items-end">
               <button className="bg-[#2563EB] py-2 px-4 flex justify-center items-center rounded-md text-[#FAFAFA]">Reserve</button>
