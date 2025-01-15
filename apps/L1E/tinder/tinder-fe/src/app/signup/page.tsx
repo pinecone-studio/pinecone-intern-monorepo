@@ -26,7 +26,7 @@ const SignupPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex h-screen w-screen">
       <Signup />
     </div>
   );
