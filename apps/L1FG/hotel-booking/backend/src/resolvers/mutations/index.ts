@@ -1,2 +1,3 @@
 export * from './sample-mutation';
-export * from './hotel/create-hotel';
+export * from './hotel';
+export * from './room';

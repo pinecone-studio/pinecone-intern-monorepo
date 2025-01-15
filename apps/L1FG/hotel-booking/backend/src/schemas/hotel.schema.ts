@@ -19,7 +19,18 @@ export const typeDefs = gql`
     location: LocationInput!
     locationName: String
   }
-
+  input CreateRoomInput {
+    hotelId: ID!
+    name: String
+    roomNumber: Int
+    price: Float
+    bed: Int
+    images: [String!]!
+    roomInfo: [String]
+    type: String
+    roomServices: [String]
+    tax: Float
+  }
   input LocationInput {
     type: String!
     coordinates: [Float!]!
@@ -40,6 +51,19 @@ export const typeDefs = gql`
     location: Location
     locationName: String
   }
+  type Room {
+    id: ID!
+    name: String
+    hotelId: ID!
+    roomNumber: Int
+    price: Float
+    bed: Int
+    images: [String!]!
+    roomInfo: [String]
+    type: String
+    roomServices: [String]
+    tax: Float
+  }
 
   type Location {
     type: String!
@@ -53,10 +77,19 @@ export const typeDefs = gql`
     hotel: Hotel
   }
 
+  type CreateRoomResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    room: Room
+  }
+
   type Mutation {
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
+    createRoom(input: CreateRoomInput!): CreateRoomResponse!
   }
   type Query {
     getHotels: [Hotel!]!
+    getHotelById(id: ID!): Hotel
   }
 `;

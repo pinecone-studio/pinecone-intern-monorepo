@@ -10,7 +10,7 @@ import { DateRangePicker } from '@/components/DateRangePicker';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { addDays, format, eachDayOfInterval } from 'date-fns';
-/* eslint-enable no-unused-vars */
+
 type ComponentName = 'MyRequest' | '/request-form' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
 
 const Page = () => {

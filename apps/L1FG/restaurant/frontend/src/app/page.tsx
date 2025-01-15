@@ -1,7 +1,9 @@
 'use client';
 
+import UserProfile from "../components/user-profile/UserProfile";
+
 const Page = () => {
-  return <div>Home Page</div>;
+  return <div><UserProfile/></div>;
 };
 
 export default Page;
