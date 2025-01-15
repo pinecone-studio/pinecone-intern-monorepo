@@ -137,11 +137,12 @@ query GetMatchedUsers($authId: String!) {
   }
 }
 
-mutation addMessage($userId: String!, $content: String!, $chosenUserId: String!) {
-  addMessage(userId: $userId, content: $content, chosenUserId: $chosenUserId) {
+mutation AddMessage($input: AddMessageInput!) {
+  addMessage(input: $input) {
     id
     text
     sender
+    images
   }
 }
 query GetConversation($userOne: String!, $userTwo: String!) {
@@ -157,6 +158,8 @@ query GetConversation($userOne: String!, $userTwo: String!) {
       id
       text
       sender
+      images
+      timeStamp
     }
   }
 }
@@ -222,8 +225,8 @@ query GetAllConversations {
 
 mutation UnMatch($authId: String!) {
   unMatch(authId: $authId) {
-    _id
-    stillmatch
-    createdAt
+    targetUserId {
+      _id
+    }
   }
 }

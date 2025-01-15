@@ -64,9 +64,9 @@ export const ImageUpload: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between p-6">
+    <div className="flex flex-col w-screen h-screen items-center justify-between p-6">
       {step === 'image' && (
-        <main className="w-full max-w-2xl mx-auto flex flex-col justify-center items-center mt-[80px] gap-6">
+        <main className="w-full max-w-2xl h-screen mx-auto flex flex-col justify-center items-center gap-6">
           <h2 className="text-2xl font-semibold text-center">Upload your images</h2>
           <div className="grid grid-cols-3 gap-6 w-[640px] h-auto">
             {previews.map((preview, index) => (
