@@ -1,15 +1,18 @@
+import ConversationModel from '../../../models/chat/conversation.model';
 import { matchModel } from '../../../models/user/match.model';
 
 export const unMatch = async (_: unknown, { authId }: { authId: string }) => {
-  const match = await matchModel.findOneAndDelete({ targetUserId: authId });
+  const match = await matchModel.findOneAndDelete({
+    $or: [{ targetUserId: authId }, { userId: authId }],
+  });
 
-  if (!match) {
-    return [];
+  if (!match || !match._id) {
+    throw new Error('Invalid match object, missing _id');
   }
 
-  if (!match._id) {
-    throw new Error('Match object does not include required _id field.');
-  }
+  await ConversationModel.findOneAndDelete({
+    userOne: authId,
+  });
 
   return [match];
 };

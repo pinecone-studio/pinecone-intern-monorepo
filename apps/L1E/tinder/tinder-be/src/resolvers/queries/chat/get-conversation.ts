@@ -32,6 +32,8 @@ export const getConversation: QueryResolvers['getConversation'] = async (_, { us
     id: message._id.toString(),
     text: message.content,
     sender: message.senderId.toString(),
+    timeStamp: message.timeStamp,
+    images: message.images,
   }));
 
   return {

@@ -11,7 +11,7 @@ export interface IMessage extends Document {
   timeStamp: Date;
   conversationId: Types.ObjectId;
   isRead: boolean;
-  attachments?: AttachmentType[];
+  images: string[];
 }
 
 const MessageSchema = new Schema<IMessage>({
@@ -27,7 +27,7 @@ const MessageSchema = new Schema<IMessage>({
   },
   content: {
     type: String,
-    required: true,
+    required: false,
   },
   timeStamp: {
     type: Date,
@@ -37,16 +37,11 @@ const MessageSchema = new Schema<IMessage>({
     type: Boolean,
     default: false,
   },
-  attachments: [
+  images: [
     {
-      type: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
+      default: '',
     },
   ],
 });

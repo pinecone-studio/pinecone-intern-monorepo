@@ -22,6 +22,7 @@ export const getAllConversations: QueryResolvers['getAllConversations'] = async 
         ...userOneDoc.toObject(),
         id: userOneDoc._id.toString(),
       };
+
       const userTwo: User = {
         ...userTwoDoc.toObject(),
         id: userTwoDoc._id.toString(),
