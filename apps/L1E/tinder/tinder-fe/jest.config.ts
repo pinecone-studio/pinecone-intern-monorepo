@@ -16,5 +16,9 @@ export default {
     '!src/app/**/*.tsx',
     '!src/components/providers/*.tsx',
     '!src/components/**/SwipeCards.tsx',
+    '!src/components/chat/GetChat.tsx',
+    '!src/components/chat/MainChat.tsx',
+    '!src/components/chat/Matches.tsx',
+    '!src/components/chat/ProfileCarousel.tsx',
   ],
 };

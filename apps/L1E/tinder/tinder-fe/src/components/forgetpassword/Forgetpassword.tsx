@@ -28,7 +28,7 @@ const Forgetpassword = () => {
     setStep('confirm');
   };
   return (
-    <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
+    <div className="flex flex-col items-center w-full h-screen justify-center">
       {step === 'forget' ? (
         <div className="w-[350px] flex flex-col items-center justify-between h-[240px]">
           <img className="w-[100px] h-[24px]" src="redlogo.png" alt="Logo" />

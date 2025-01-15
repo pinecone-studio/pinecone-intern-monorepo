@@ -36,7 +36,7 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
+    <div className="flex flex-col items-center w-full h-screen justify-center">
       <div className="w-[350px] flex flex-col items-center justify-between h-[460px]">
         <img className="w-[100px] h-[24px]" src="redlogo.png" alt="" />
         <div className="flex gap-2 h-[72px] items-center flex-col">

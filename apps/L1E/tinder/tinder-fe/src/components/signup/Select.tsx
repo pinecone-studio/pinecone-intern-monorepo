@@ -21,7 +21,7 @@ export const SelectDemo: React.FC<SelectDemoProps> = ({ selectedInterest, setSel
             Male
           </SelectItem>
           <SelectItem value="female">Female</SelectItem>
-          <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
+          <SelectItem value="prefer not to say">Prefer not to say</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
