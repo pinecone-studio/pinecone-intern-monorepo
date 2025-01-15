@@ -1,15 +1,18 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { typeDefs } from './schemas';
 import { NextRequest } from 'next/server';
 import { resolvers } from './resolvers';
 import { connectToDb } from './utils/connect-to-db';
+import { typeDefs } from './schemas';
+import { foodTypeDefs } from './schemas/food.schema';
+
+const mergedTypeDefs = [typeDefs, foodTypeDefs];
 
 connectToDb();
 
 const server = new ApolloServer({
   resolvers,
-  typeDefs,
+  typeDefs: mergedTypeDefs,
   introspection: true,
 });
 
