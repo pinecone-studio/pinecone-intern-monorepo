@@ -1,6 +1,6 @@
-import Settings from '@/components/settings/Settings';
+import { Settings } from '@/components/settings/Settings';
 import { render } from '@testing-library/react';
-describe('Settings', () => {
+describe('CreatePost Dialog', () => {
   it('Should render', () => {
     render(<Settings />);
   });
