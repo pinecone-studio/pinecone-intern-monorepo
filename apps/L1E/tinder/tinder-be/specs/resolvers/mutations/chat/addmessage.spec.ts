@@ -12,6 +12,7 @@ describe('addMessage Mutation Resolver', () => {
   const mockUserId = 'user123';
   const mockChosenUserId = 'user456';
   const mockContent = 'Hello, world!';
+  const mockImages = ['image1.png', 'image2.png']; // Example images
   const mockSender = { _id: mockUserId, username: 'testUser' };
   const mockConversation = { _id: 'conv123' };
   const mockMessage = {
@@ -28,12 +29,12 @@ describe('addMessage Mutation Resolver', () => {
   });
 
   it('should add a message to an existing conversation', async () => {
-    // Mock implementations
     (userModel.findById as jest.Mock).mockResolvedValue(mockSender);
     (ConversationModel.findOne as jest.Mock).mockResolvedValue(mockConversation);
     (MessageModel.create as jest.Mock).mockResolvedValue(mockMessage);
 
-    const result = await addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any);
+    // Wrap the input in an object as per the mutation
+    const result = await addMessage!({}, { input: { content: mockContent, senderId: mockUserId, receiverId: mockChosenUserId, images: mockImages } }, {} as any, {} as any);
 
     expect(userModel.findById).toHaveBeenCalledWith({ _id: mockUserId });
     expect(ConversationModel.findOne).toHaveBeenCalled();
@@ -42,12 +43,14 @@ describe('addMessage Mutation Resolver', () => {
         senderId: mockUserId,
         content: mockContent,
         conversationId: mockConversation._id,
+        images: mockImages, // Ensure images are passed
       })
     );
     expect(result).toEqual({
       sender: mockSender.username,
       id: mockMessage._id,
       text: mockMessage.content,
+      images: mockImages, // Ensure images are included in the result
     });
   });
 
@@ -58,7 +61,8 @@ describe('addMessage Mutation Resolver', () => {
     (ConversationModel.create as jest.Mock).mockResolvedValue(mockConversation);
     (MessageModel.create as jest.Mock).mockResolvedValue(mockMessage);
 
-    await addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any);
+    // Wrap the input in an object as per the mutation
+    await addMessage!({}, { input: { content: mockContent, senderId: mockUserId, receiverId: mockChosenUserId, images: mockImages } }, {} as any, {} as any);
 
     expect(ConversationModel.create).toHaveBeenCalledWith({
       userOne: mockUserId,
@@ -71,7 +75,10 @@ describe('addMessage Mutation Resolver', () => {
     // Mock implementation
     (userModel.findById as jest.Mock).mockResolvedValue(null);
 
-    await expect(addMessage!({}, { content: mockContent, userId: mockUserId, chosenUserId: mockChosenUserId }, {} as any, {} as any)).rejects.toThrow('Sender not found');
+    // Wrap the input in an object as per the mutation
+    await expect(addMessage!({}, { input: { content: mockContent, senderId: mockUserId, receiverId: mockChosenUserId, images: mockImages } }, {} as any, {} as any)).rejects.toThrow(
+      'Sender not found'
+    );
 
     expect(ConversationModel.findOne).not.toHaveBeenCalled();
     expect(MessageModel.create).not.toHaveBeenCalled();
