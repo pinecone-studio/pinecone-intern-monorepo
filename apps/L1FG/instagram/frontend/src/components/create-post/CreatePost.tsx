@@ -12,10 +12,10 @@ const CreatePost = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!postImage || !caption || !userId) {
-      alert('All fields are required!');
-      return;
-    }
+    // if (!postImage || !caption || !userId) {
+    //   alert('All fields are required!');
+    //   return;
+    // }
 
     // try {
     await createPost({
@@ -28,7 +28,7 @@ const CreatePost = () => {
       },
     });
 
-    alert('Post created successfully!');
+    // alert('Post created successfully!');
     // } catch (err) {
     //   console.error('Error creating post:', err);
     //   alert('Failed to create post. Please try again.');
