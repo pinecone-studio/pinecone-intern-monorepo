@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 
-const Settings = () => {
+export const Settings = () => {
   const [text, setText] = useState('');
   const maxLength = 150;
 
@@ -19,8 +19,8 @@ const Settings = () => {
             <p>name</p>
           </div>
           <div>
-            <select id="profile-photo" name="profile-photo" className="w-[197px] h-[36px] bg-[#F4F4F5] py-2 px-2 rounded-lg">
-              <option disabled selected className="text-[#18181B] font-inter text-[14px] font-medium leading-[20px]">
+            <select defaultValue="" id="profile-photo" name="profile-photo" className="w-[197px] h-[36px] bg-[#F4F4F5] py-2 px-2 rounded-lg">
+              <option disabled className="text-[#18181B] font-inter text-[14px] font-medium leading-[20px]">
                 Change profile photo
               </option>
               <option value="upload">Upload New Photo</option>
@@ -29,7 +29,7 @@ const Settings = () => {
             </select>
           </div>
         </div>
-        <div className='flex gap-2 flex-col'>
+        <div className="flex gap-2 flex-col">
           <p className="font-roboto text-[16px] font-semibold leading-[18px] text-customBlack">Name</p>
           <div className="flex flex-col gap-3">
             <input type="text" className="w-[600px] h-[40px] border border-[#E4E4E7] rounded-md px-3" />
@@ -46,20 +46,15 @@ const Settings = () => {
         <div className="flex flex-col gap-2">
           <p className="font-roboto text-[16px] font-semibold leading-[18px] text-customBlack">Bio</p>
           <div>
-            <textarea
-              value={text}
-              onChange={handleChange}
-
-              className="w-[600px] h-[132px] border border-[#E4E4E7] rounded-md p-3"
-            />
-            <div className="text-sm text-gray-500 mt-2 flex justify-end">
+            <textarea value={text} onChange={handleChange} data-testid="textarea" className="w-[600px] h-[132px] border border-[#E4E4E7] rounded-md p-3" />
+            <div data-testid="character-count" className="text-sm text-gray-500 mt-2 flex justify-end">
               {text.length}/{maxLength} үсэг
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-2">
           <p className="font-roboto text-[16px] font-semibold leading-[18px] text-customBlack">Gender</p>
-          <select id="options" name="options" className="w-[600px] h-[36px] px-3 border border-[#E4E4E7] rounded-md">
+          <select defaultValue="" id="options" name="options" className="w-[600px] h-[36px] px-3 border border-[#E4E4E7] rounded-md">
             <option value="option1">Female</option>
             <option value="option2">Male</option>
             <option value="option3">Prefer not to say</option>
@@ -70,5 +65,3 @@ const Settings = () => {
     </div>
   );
 };
-
-export default Settings;
