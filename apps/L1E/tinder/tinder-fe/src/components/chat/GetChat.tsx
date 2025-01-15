@@ -60,14 +60,15 @@ const GetChat: React.FC<ChatProps> = ({ sender, data1 }) => {
     </div>
   );
 
-  const renderSenderMessage = (message: Message, _timestamp: string) => (
-    <div className="flex pr-4 items-center gap-2">
-      <div className="flex bg-[#E11D48E5] p-3 rounded-xl text-white">{message.text}</div>
-      <img src={data1.getConversation?.userTwo?.images[0]} alt="User Profile" className="rounded-full w-8 h-8" />
-      <div className="flex w-[40px] h-[40px]">{message.images[0]}</div>
+  const renderSenderMessage = (message: Message, timestamp: string) => (
+    <div className="flex flex-col items-start bg-[#E11D48E5] text-white px-4 py-2 font-medium rounded-md gap-2">
+      <div className="flex items-center gap-8">
+        {message.images && message.images[0] && <img src={message.images[0]} alt="Message Image" className="object-cover w-[50px] h-[50px] rounded-md" />}
+        {message.text}
+      </div>
+      <div className="text-sm flex items-start text-white ">{timestamp}</div>
     </div>
   );
-
   return (
     <div className="flex flex-col overflow-hidden h-full w-full max-w-screen-lg mx-auto bg-white border rounded-lg">
       <div className="flex-1 overflow-y-auto p-4">

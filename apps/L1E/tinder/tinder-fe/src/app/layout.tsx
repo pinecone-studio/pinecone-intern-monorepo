@@ -14,7 +14,6 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>{children}</ApolloWrapper>
-
         <ToastContainer />
       </body>
     </html>

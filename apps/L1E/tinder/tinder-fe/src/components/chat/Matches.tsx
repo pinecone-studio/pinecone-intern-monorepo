@@ -37,7 +37,7 @@ const Matches: React.FC<MatchesProps> = ({ handleAddToRecentChats, matches, user
               const targetUser = isCurrentUser ? match.targetUserId : match.userId;
               return (
                 <div key={targetUser?._id}>
-                  <button data-testid="button" onClick={() => handleAddToRecentChats(targetUser?._id || '')} className={`flex flex-col pt-4 items-center '} justify-center gap-1`}>
+                  <button data-testid="button" onClick={() => handleAddToRecentChats(targetUser?._id || '')} className={`flex flex-col pt-4 items-center '} justify-center gap-2`}>
                     <img src={targetUser?.images?.[0] || 'default-image.png'} alt="User Image" className="w-10 h-10 rounded-full" />
                     <div className="text-sm flex">
                       <div>{targetUser?.username}</div>
@@ -60,7 +60,7 @@ const Matches: React.FC<MatchesProps> = ({ handleAddToRecentChats, matches, user
 
                 return (
                   <div key={index}>
-                    <div className="flex py-2 border-b-[1px] gap-4">
+                    <div className="flex pb-5 pt-3 border-b-[1px] gap-4">
                       <img src={otherUser?.images?.[0]} alt="User Image" className="w-[50px] h-[50px] rounded-full object-cover border-2 border-gray-300" />
                       <div className="flex flex-col">
                         <div className="flex gap-2">
