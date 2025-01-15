@@ -58,5 +58,6 @@ export const typeDefs = gql`
   }
   type Query {
     getHotels: [Hotel!]!
+    getHotelById(id: ID!): Hotel
   }
 `;
