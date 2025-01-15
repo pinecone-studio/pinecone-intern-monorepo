@@ -38,7 +38,7 @@ describe('login', () => {
       },
     });
   });
-  it('3. should not login', async () => {
+  it('3. should throw not login', async () => {
     try {
       await login!({}, { input: { email: '', password: '' } }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
