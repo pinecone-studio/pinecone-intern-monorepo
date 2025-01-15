@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 
-const Settings = () => {
+export const Settings = () => {
   const [text, setText] = useState('');
   const maxLength = 150;
 
@@ -29,7 +29,7 @@ const Settings = () => {
             </select>
           </div>
         </div>
-        <div className='flex gap-2 flex-col'>
+        <div className="flex gap-2 flex-col">
           <p className="font-roboto text-[16px] font-semibold leading-[18px] text-customBlack">Name</p>
           <div className="flex flex-col gap-3">
             <input type="text" className="w-[600px] h-[40px] border border-[#E4E4E7] rounded-md px-3" />
@@ -46,12 +46,7 @@ const Settings = () => {
         <div className="flex flex-col gap-2">
           <p className="font-roboto text-[16px] font-semibold leading-[18px] text-customBlack">Bio</p>
           <div>
-            <textarea
-              value={text}
-              onChange={handleChange}
-
-              className="w-[600px] h-[132px] border border-[#E4E4E7] rounded-md p-3"
-            />
+            <textarea value={text} onChange={handleChange} className="w-[600px] h-[132px] border border-[#E4E4E7] rounded-md p-3" />
             <div className="text-sm text-gray-500 mt-2 flex justify-end">
               {text.length}/{maxLength} үсэг
             </div>
@@ -70,5 +65,3 @@ const Settings = () => {
     </div>
   );
 };
-
-export default Settings;
