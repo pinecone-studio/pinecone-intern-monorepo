@@ -1,13 +1,12 @@
 'use client';
 
-import { HeaderPart } from "@/components/header/Header";
-
-
+import { HeaderPart } from '@/components/header/Header';
 
 const HomePage = () => {
   return (
     <div>
       <HeaderPart />
+      <div>asdbnasd</div>
     </div>
   );
 };
