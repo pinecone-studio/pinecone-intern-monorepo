@@ -44,7 +44,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-screen max-h-[1000px] justify-center">
+    <div className="flex flex-col items-center w-full h-screen justify-center">
       {step === 'signup' && (
         <div className="w-[350px] flex flex-col items-center justify-between h-[410px]">
           <Image width={100} height={24} src="/redlogo.png" alt="Logo" />

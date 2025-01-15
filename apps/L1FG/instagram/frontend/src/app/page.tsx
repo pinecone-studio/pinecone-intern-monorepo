@@ -1,7 +1,7 @@
 'use client';
 
 const Page = () => {
-  return <div data-cy="hello">Hello</div>;
+  return <div></div>;
 };
 
 export default Page;
