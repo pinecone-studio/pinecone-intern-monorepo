@@ -51,7 +51,7 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
         }
 
         return (
-          <div key={day.toISOString()} className="mt-4 ">
+          <div data-cy="request-story" key={day.toISOString()} className="mt-4 ">
             {matchedRequests.map((request) => (
               <div key={request?._id} className="mb-4">
                 <div className="flex flex-row gap-2">
