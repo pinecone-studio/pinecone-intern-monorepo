@@ -82,15 +82,18 @@ mutation UpdateUser($id: ID!, $input: UpdateInput!) {
     profession
     job
     age
-    images
-    createdAt
-    updatedAt
   }
 }
 
 mutation changePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
     message
+  }
+}
+
+mutation deleteImage($input: DeleteInput!, $id: ID) {
+  deleteImage(input: $input, _id: $id) {
+    images
   }
 }
 
