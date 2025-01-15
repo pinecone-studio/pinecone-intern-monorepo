@@ -1,8 +1,7 @@
-import { Content } from '@radix-ui/react-popover';
 import { DatePickerWithRange } from './DatePickerWithRange';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import { ChevronDown } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const Search = () => {
   return (
@@ -43,7 +42,6 @@ export const Search = () => {
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
-            {/* <div className="max-w-[500px] w-full h-10 rounded-[6px] justify-between text-left text-sm font-normal px-4 py-2 border border-[#E4E4E7]">wergeg</div> */}
           </div>
           <div className="flex items-end">
             <div className="bg-[#2563EB] px-6 py-2 flex items-center justify-center rounded-md h-10">
