@@ -5,7 +5,7 @@ import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/expe
 import { PropsWithChildren } from 'react';
 import { setContext } from '@apollo/client/link/context';
 
-const uri = 'https://intern-1fg-restaurant-backend-testing-pinecone-studio.vercel.app/api/graphql';
+const uri = 'http://localhost:4200/api/graphql';
 
 const makeClient = () => {
   const httpLink = new HttpLink({
