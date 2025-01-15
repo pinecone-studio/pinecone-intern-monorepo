@@ -28,9 +28,9 @@ const Page = () => {
   const [getEmployeeById] = useGetEmployeeByIdLazyQuery();
 
   const fetchData = async (token: string) => {
-    console.log(token);
-
     const { data } = await getEmployeeById({ variables: { getEmployeeByIdId: token } });
+    console.log(data);
+
     if (data) {
       setEmployee(data?.getEmployeeById as Employee);
     }
