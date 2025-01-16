@@ -6,15 +6,18 @@ import { useGetConcertsQuery } from '@/generated';
 import { useState } from 'react';
 
 const Page = () => {
-  const { data, loading, error } = useGetConcertsQuery();
+  const { data, loading } = useGetConcertsQuery();
   const [date, setDate] = useState<Date>();
   const [, setSearchArtist] = useState('');
   const handlechange = (value: string) => {
     setSearchArtist(value);
   };
-  if (loading) return <div className="text-white">loading</div>;
-  if (error) return <div>error({`${error}`})</div>;
-
+  if (loading)
+    return (
+      <div data-cy="search-page-get-data-loading" className="text-white">
+        loading
+      </div>
+    );
   return (
     <div
       data-cy="search-page"
