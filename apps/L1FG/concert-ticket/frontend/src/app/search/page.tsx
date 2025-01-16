@@ -2,24 +2,19 @@
 
 import { SearchConcert } from '@/components/searchSection/Search';
 import { Cards } from '@/components/ticketCard/Cards';
+import { useGetConcertsQuery } from '@/generated';
 import { useState } from 'react';
-const cards = [
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-  { title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' },
-];
+
 const Page = () => {
+  const { data, loading, error } = useGetConcertsQuery();
   const [date, setDate] = useState<Date>();
   const [, setSearchArtist] = useState('');
   const handlechange = (value: string) => {
     setSearchArtist(value);
   };
+  if (loading) return <div className="text-white">loading</div>;
+  if (error) return <div>error({`${error}`})</div>;
+
   return (
     <div
       data-cy="search-page"
@@ -27,7 +22,7 @@ const Page = () => {
     m-auto"
     >
       <SearchConcert data-cy="search-page-search-section" selected={date} onSelect={setDate} onChange={handlechange} />
-      <Cards cards={cards} data-cy="search-page-search-section" />
+      <Cards cards={data?.getConcerts} data-cy="search-page-search-section" />
     </div>
   );
 };
