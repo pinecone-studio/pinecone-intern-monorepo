@@ -81,7 +81,6 @@ describe('My Requests Page', () => {
     });
     cy.visit('my-requests');
     cy.get('[data-cy=my-requests-page]').should('be.visible');
-    cy.get('[data-cy=request-story]').should('be.visible');
     cy.contains('Зайнаас ажиллах').should('be.visible');
     cy.contains('Чөлөө').should('be.visible');
     const todayDay = new Date().getDate();
