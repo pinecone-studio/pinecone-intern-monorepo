@@ -2,6 +2,10 @@ import { interceptGraphql } from 'cypress/utils/intercept-graphql';
 /* eslint-disable max-lines */
 describe('pending page', () => {
   it('Should render requestform page', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'GetAllRequests',
@@ -113,6 +117,10 @@ describe('pending page', () => {
     cy.get('[data-cy=approve-modal]').click();
   });
   it('Should render requestform page', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'GetAllRequests',
@@ -224,6 +232,10 @@ describe('pending page', () => {
     cy.get('[data-cy=reject-modal]').click();
   });
   it('Should render requestform page', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'GetAllRequests',
@@ -336,6 +348,10 @@ describe('pending page', () => {
     cy.get('[data-cy=refuse-modal-button]').click();
   });
   it('Should render requestform page', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'GetAllRequests',
