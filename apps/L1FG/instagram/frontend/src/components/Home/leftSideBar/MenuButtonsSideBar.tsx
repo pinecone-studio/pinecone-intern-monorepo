@@ -36,7 +36,7 @@ export const MenuButtons = () => {
         </Link>
         {/* <DialogDemo /> */}
         <Greate />
-        <Link href="/home">
+        <Link href="/profile">
           <button className="flex items-center gap-4 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ml-2 p-2 relative">
             <Image className="w-6 h-6 rounded" src="/images/profilePic.png" alt="imgProfile" width={16} height={16} />
             <p>Profile</p>
