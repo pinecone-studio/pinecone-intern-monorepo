@@ -1,7 +1,22 @@
 import { Cards } from '@/components/ticketCard/Cards';
 import { render } from '@testing-library/react';
 
-const cards = [{ title: 'Music of the Spheres', artist: 'coldplay', price: '200’000$', discount: '160’000', concertDay: '10.31', location: 'UG ARENA', src: '/coldplay.png' }];
+const cards = [
+  {
+    __typename: 'Concert',
+    _id: 1,
+    concertName: 'mm',
+    concertPlan: 'dv',
+    artistName: ['dfsvsdv'],
+    concertDay: 436,
+    concertTime: 'fdg',
+    concertPhoto: 'fsg',
+    vipTicket: { price: 34, quantity: 234 },
+    regularTicket: { price: 34, quantity: 234 },
+    standingAreaTicket: { price: 34, quantity: 234 },
+  },
+];
+
 describe('Cards', () => {
   it('should render successfully', async () => {
     render(<Cards cards={cards} />);
