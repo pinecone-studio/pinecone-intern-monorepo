@@ -3,12 +3,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useEffect, useState } from 'react';
-import { Employee, RequestInput, useCreateRequestMutation, useGetEmployeeByIdLazyQuery, useGetEmployeesQuery } from '@/generated';
+import { Employee, RequestInput, useCreateRequestMutation, useGetEmployeesQuery } from '@/generated';
 import Requestcom from '@/components/requestForm/RequestFormcom';
 import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
 import Requestcomremote from '@/components/requestForm/RequestFormRemote';
 import { RequestsInput } from '@/utils/requests-input';
-import { useRouter } from 'next/navigation';
+import { useUser } from '@/provider/UserProvider';
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,32 +23,13 @@ const Page = () => {
   const leads = data?.getEmployees as Employee[];
   const [employee, setEmployee] = useState<Employee>();
 
-  const router = useRouter();
-
-  const [getEmployeeById] = useGetEmployeeByIdLazyQuery();
-
-  const fetchData = async (token: string) => {
-    const { data } = await getEmployeeById({ variables: { getEmployeeByIdId: token } });
-    console.log(data);
-
-    if (data) {
-      setEmployee(data?.getEmployeeById as Employee);
-    }
-  };
+  const { user } = useUser();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token') as string;
-
-    const parsedToken = JSON.parse(storedToken);
-
-    if (parsedToken) {
-      fetchData(parsedToken);
-    } else {
-      router.push('/login');
+    if (user) {
+      setEmployee(user);
     }
-  }, [router]);
-
-  console.log(employee);
+  }, [user]);
 
   if (!employee) {
     return <div>loading</div>;

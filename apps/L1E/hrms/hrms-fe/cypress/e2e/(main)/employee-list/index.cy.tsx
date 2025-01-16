@@ -3,6 +3,10 @@ import { interceptGraphql } from 'cypress/utils/intercept-graphql';
 
 describe('employee-list page', () => {
   it('should render employee list page (employee lead approved)', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     cy.visit('employee-list');
 
     // Ensure the employee list page is visible
@@ -28,6 +32,10 @@ describe('employee-list page', () => {
     });
   });
   it('should render employee list page (employee lead approved)', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     cy.visit('employee-list');
 
     // Ensure the employee list page is visible
@@ -53,6 +61,10 @@ describe('employee-list page', () => {
     });
   });
   it('shouldrender employeelist page (employee lead rejected)', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     cy.visit('employee-list');
     cy.get('[data-cy=employee-list-page]').should('be.visible');
 
@@ -61,6 +73,10 @@ describe('employee-list page', () => {
     cy.get('[data-cy=employees-table]').should('be.visible');
   });
   it('shouldrender employeelist page (create amployee)', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     interceptGraphql({
       state: 'success',
       operationName: 'CreateEmployee',
@@ -96,6 +112,10 @@ describe('employee-list page', () => {
     cy.get('[data-cy=submit-employee-button]').click();
   });
   it('shouldrender employeelist page (create amployee)', () => {
+    const token = '677b83734fba809002930cc5';
+    cy.window().then((window) => {
+      window.localStorage.setItem('token', JSON.stringify(token));
+    });
     cy.visit('employee-list');
     cy.get('[data-cy=employee-list-page]').should('be.visible');
 
