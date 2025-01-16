@@ -22,13 +22,7 @@ const slides = [
 const Page = () => {
   return (
     <div>
-<<<<<<< HEAD
       <Carousel slides={slides} />
-=======
-      <Link href={'/Detail'}>
-        <div>Home Page</div>
-      </Link>
->>>>>>> 8427e6298 (feat(concert-ticket-frontend-detail-page): detail page zagwarin daguu hiij guitsetgew)
     </div>
   );
 };
