@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const HomePageProfile = () => {
   return (
-    <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10 ">
+    <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10 ml-[72px]">
       <div className="flex items-center justify-between w-full ">
         <div className="flex items-center gap-2">
           <Link href="/mystories">

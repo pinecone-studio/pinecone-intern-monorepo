@@ -10,7 +10,7 @@ const RoomSchema = new Schema<RoomType>({
   images: { type: [String], required: true },
   roomInfo: { type: [String], required: true },
   type: { type: String, required: true },
-  roomServices: { type: [Map], of: String },
+  roomServices: { type: [String] },
   tax: { type: Number },
 });
 
