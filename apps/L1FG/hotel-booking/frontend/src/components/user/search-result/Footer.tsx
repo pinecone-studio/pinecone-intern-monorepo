@@ -1,80 +1,81 @@
-import { PhoneIcon } from 'lucide-react';
+import { Headphones, MailIcon, PhoneIcon } from 'lucide-react';
 import { JcbCardIcon } from '../svg/JcbIcon';
 import { LogoIcon } from '../svg/LogoIcon';
 import { MasterCardIcon } from '../svg/MasterCardIcon';
-import { MessegaIcon } from '../svg/MessegaIcon';
-
-import { HeadPhoneIcon } from '../svg/HeadPhoneIcon';
 import { VisaCardIcon } from '../svg/VisaIcon';
 
 export const Footer = () => {
   return (
-    <div className="w-full flex justify-center my-[40px]">
-      <div className="w-[1280px] flex gap-[120px] h-[200px]">
-        <div className="flex flex-col justify-between">
-          <div className="w-[313px] flex flex-col gap-3">
-            <LogoIcon />
-            <p className="text-[14px] leading-[20px] font-[400]">© 2024 Booking Mongolia. All Rights Reserved.</p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2">
-              <JcbCardIcon />
-              <VisaCardIcon />
-              <MasterCardIcon />
-              <JcbCardIcon />
+    <main>
+      <div className="container mx-auto w-full py-10">
+        <div className="flex gap-[120px]">
+          <div className="flex flex-col justify-between">
+            <div className="w-[313px] flex flex-col gap-3">
+              <LogoIcon />
+              <p className="font-Inter font-normal not-italic text-sm">© 2024 Booking Mongolia. All Rights Reserved.</p>
             </div>
-            <p className="text-[14px] leading-[20px] font-[400]">Accepted Payment Methods</p>
-          </div>
-        </div>
-        <div className="w-[847px] flex justify-between h-full">
-          <div className="w-[158px]  flex flex-col gap-3">
-            <p className="text-[14px] leading-[20px] font-[400] text-[#09090B]">Contact information</p>
-            <div className="flex flex-col gap-[24px]">
-              <div className="flex gap-3 items-center">
-                <MessegaIcon />
-                <div className="flex flex-col">
-                  <p className="text-[14px] leading-[20px] font-[500]">Email:</p>
-                  <p className="text-[14px] leading-[20px] font-[400]">support@pedia.mn</p>
-                </div>
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-2">
+                <JcbCardIcon />
+                <VisaCardIcon />
+                <MasterCardIcon />
+                <JcbCardIcon />
               </div>
-              <div className="flex gap-3 items-center">
-                <PhoneIcon />
-                <div className="flex flex-col">
-                  <p className="text-[14px] leading-[20px] font-[500]">Phone:</p>
-                  <p className="text-[14px] leading-[20px] font-[400]">+976(11)123-4567</p>
-                </div>
-              </div>
-              <div className="flex gap-3 items-center">
-                <HeadPhoneIcon />
-                <div className="flex flex-col">
-                  <p className="text-[14px] leading-[20px] font-[500]">Customer Support:</p>
-                  <p className="text-[14px] leading-[20px] font-[400]">Available 24/7</p>
-                </div>
-              </div>
+              <p className="font-Inter font-normal not-italic text-sm">Accepted Payment Methods</p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 text-[14px] leading-[20px] font-[400] w-[68px]">
-            <p>Follow us</p>
-            <p>Facebook</p>
-            <p>Instagram</p>
-            <p>Twitter</p>
-            <p>Youtube</p>
-          </div>
-          <div className="flex flex-col gap-3 text-[14px] leading-[20px] font-[400] w-[131px]">
-            <p>Policies</p>
-            <p>Terms & Conditions</p>
-            <p>Privacy</p>
-            <p>Cookies</p>
-            <p>Cancellation Policy</p>
-          </div>
-          <div className="flex flex-col gap-3 text-[14px] leading-[20px] font-[400] w-[90px]">
-            <p>Other</p>
-            <p>About us</p>
-            <p>Careers</p>
-            <p>Travel guides</p>
+          <div className="w-full flex items-start justify-between">
+            <div className="w-[158px]  flex flex-col gap-3">
+              <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">Contact information</p>
+              <div className="flex flex-col gap-[24px]">
+                <div className="flex gap-3 items-center">
+                  <MailIcon size={16} />
+                  <div className="flex flex-col">
+                    <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Email:</p>
+                    <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">support@pedia.mn</p>
+                  </div>
+                </div>
+                <div className="flex gap-3 items-center">
+                  <PhoneIcon size={16} />
+                  <div className="flex flex-col">
+                    <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Phone:</p>
+                    <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">
+                      +976 <span>(11)</span> 123-4567
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-3 items-center">
+                  <Headphones size={16} />
+                  <div className="flex flex-col">
+                    <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Customer Support:</p>
+                    <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">Available 24/7</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 font-Inter font-normal not-italic text-sm text-[#09090B] w-[68px]">
+              <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">Follow us</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Facebook</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Instagram</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Twitter</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Youtube</p>
+            </div>
+            <div className="flex flex-col gap-3 font-Inter font-normal not-italic text-sm text-[#09090B] w-[131px]">
+              <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">Policies</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Terms & Conditions</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Privacy</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Cookies</p>
+              <p className="">Cancellation Policy</p>
+            </div>
+            <div className="flex flex-col gap-3 font-Inter font-normal not-italic text-sm text-[#09090B] w-[90px]">
+              <p className="font-Inter font-normal not-italic text-sm text-[#09090B]">Other</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">About us</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Careers</p>
+              <p className="font-Inter font-medium not-italic text-sm text-[#09090B]">Travel guides</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
