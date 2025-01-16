@@ -2,7 +2,7 @@
 import HeroComponent from '@/components/providers/Detail/HeroComponent';
 import InfoContainer from '@/components/providers/Detail/InfoContainer';
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div className="Container mx-auto w-[1400px] ">
@@ -26,4 +26,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

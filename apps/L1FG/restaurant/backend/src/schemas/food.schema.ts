@@ -26,13 +26,24 @@ export const foodTypeDefs = gql`
     createdAt: Date!
   }
 
+  input UpdateFoodType {
+    foodId: ID!
+    categoryId: ID!
+  }
+
   type Query {
     sampleQuery: String!
     getFoods: [FoodType!]!
   }
 
+  type UpdatedFoodType {
+    foodId: ID!
+    categoryId: ID!
+  }
+
   type Mutation {
     sampleMutation: String!
+    updateFoodCategory(input: UpdateFoodType!): UpdatedFoodType!
     createFood(input: FoodInputType!): FoodType!
   }
 `;
