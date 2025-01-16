@@ -26,4 +26,8 @@ const Page = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Page;
+=======
+export default page;
+>>>>>>> 8427e6298 (feat(concert-ticket-frontend-detail-page): detail page zagwarin daguu hiij guitsetgew)
