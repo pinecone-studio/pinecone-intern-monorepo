@@ -1,3 +1,5 @@
+import { CheckoutDialog } from './CheckoutDialog';
+
 export const GuestInfoLeft = () => {
   return (
     <div className="border border-[#E4E4E7] rounded-[8px] bg-white p-6 flex flex-col gap-4">
@@ -67,7 +69,8 @@ export const GuestInfoLeft = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <div className="px-8 py-2 rounded-[6px] bg-[#2563EB] text-[#FAFAFA] font-Inter text-sm font-medium">Checkout</div>
+        {/* <div className="px-8 py-2 rounded-[6px] bg-[#2563EB] text-[#FAFAFA] font-Inter text-sm font-medium">Checkout</div> */}
+        <CheckoutDialog />
       </div>
     </div>
   );
