@@ -1,5 +1,6 @@
-const FoodCard = (props: { title: string; price: number; img: string }) => {
-  const { title, price, img } = props;
+export type FoodCardPropsType = { price: number; title: string; img: string };
+
+const FoodCard = ({ title, price, img }: FoodCardPropsType) => {
   return (
     <div>
       <div
