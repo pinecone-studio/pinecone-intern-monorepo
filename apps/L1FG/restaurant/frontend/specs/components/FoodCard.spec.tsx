@@ -1,4 +1,4 @@
-import FoodCard from '@/components/FoodCard';
+import FoodCard from '@/components/common/FoodCard';
 import { render } from '@testing-library/react';
 const foodItems = { price: 15.6, title: 'Taco', img: './Taco.png' };
 

@@ -1,8 +1,8 @@
+import Header from '@/components/common/Header';
 import { render } from '@testing-library/react';
-import Header from '../../src/components/common/Header';
 
 describe('Header', () => {
-  it('Header renders successfully', async () => {
+  it('should render page', () => {
     render(<Header />);
   });
 });
