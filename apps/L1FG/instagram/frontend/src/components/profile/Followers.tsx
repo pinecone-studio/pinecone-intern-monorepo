@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export function Followers({ children }: { children: React.ReactNode }) {
+const Followers = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -31,4 +31,5 @@ export function Followers({ children }: { children: React.ReactNode }) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+export default Followers;

@@ -1,13 +1,7 @@
 import { IoSettingsOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import Post from './Post';
-import { Followers } from './Followers';
-
-const items = [
-  { name: 'post ', number: 11 },
-  { name: 'followers ', number: 17 },
-  { name: 'following ', number: 14 },
-];
+import Followers from './Followers';
 
 const Profile = () => {
   return (
@@ -27,12 +21,6 @@ const Profile = () => {
 
           <div>
             <div className="flex w-full justify-between">
-              {/* {items.map((items, index) => (
-                <div className="flex" >
-                  <p className="text-base font-semibold"> </p>
-                  <p className="text-base font-normal">{items.name}</p>
-                </div>
-              ))} */}
               <div className="flex">
                 <p className="text-base font-semibold"> 11</p>
                 <p className="text-base font-normal">posts</p>
