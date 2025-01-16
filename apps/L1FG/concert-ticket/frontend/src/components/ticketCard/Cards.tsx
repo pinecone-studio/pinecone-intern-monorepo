@@ -12,4 +12,4 @@ export const Cards = ({ cards }: CardProps) => {
       })}
     </div>
   );
-};
+}; 
