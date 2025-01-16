@@ -15,28 +15,24 @@ describe('changePassword Resolver', () => {
   const hashedPassword = 'hashedpassword';
 
   beforeEach(() => {
-    jest.clearAllMocks(); // Clear mocks to avoid residual data between tests
+    jest.clearAllMocks();
   });
 
   it('should successfully change the password when OTP is valid', async () => {
-    // Mock OTP lookup
     (otpModel.findOne as jest.Mock).mockResolvedValue({
       email: mockEmail,
       otp: mockOtp,
     });
 
-    // Mock bcrypt operations
     (bcrypt.genSalt as jest.Mock).mockResolvedValue('salt');
     (bcrypt.hash as jest.Mock).mockResolvedValue(hashedPassword);
 
-    // Mock user password update
     (userModel.updateOne as jest.Mock).mockResolvedValue({ acknowledged: true });
 
     const input = { email: mockEmail, password: mockPassword, otp: mockOtp };
 
-    // Check that changePassword is defined before invoking it
     if (changePassword) {
-      const result = await changePassword({}, { input }, { req: undefined }, {} as GraphQLResolveInfo); // Passing 4 arguments
+      const result = await changePassword({}, { input }, { req: undefined }, {} as GraphQLResolveInfo);
       expect(otpModel.findOne).toHaveBeenCalledWith({ email: mockEmail });
       expect(bcrypt.genSalt).toHaveBeenCalledWith(10);
       expect(bcrypt.hash).toHaveBeenCalledWith(mockPassword, 'salt');
@@ -51,7 +47,6 @@ describe('changePassword Resolver', () => {
   });
 
   it('should throw an error if OTP is expired', async () => {
-    // Mock OTP lookup returning null
     (otpModel.findOne as jest.Mock).mockResolvedValue(null);
 
     const input = { email: mockEmail, password: mockPassword, otp: mockOtp };
@@ -64,7 +59,6 @@ describe('changePassword Resolver', () => {
   });
 
   it('should throw an error if OTP is invalid', async () => {
-    // Mock OTP lookup with incorrect OTP
     (otpModel.findOne as jest.Mock).mockResolvedValue({
       email: mockEmail,
       otp: 'wrongOtp',

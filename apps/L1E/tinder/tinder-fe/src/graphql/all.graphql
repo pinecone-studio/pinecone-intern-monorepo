@@ -82,15 +82,18 @@ mutation UpdateUser($id: ID!, $input: UpdateInput!) {
     profession
     job
     age
-    images
-    createdAt
-    updatedAt
   }
 }
 
 mutation changePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
     message
+  }
+}
+
+mutation deleteImage($input: DeleteInput!, $id: ID) {
+  deleteImage(input: $input, _id: $id) {
+    images
   }
 }
 
@@ -134,25 +137,33 @@ query GetMatchedUsers($authId: String!) {
   }
 }
 
-mutation addMessage($userId: String!, $content: String!, $chosenUserId: String!) {
-  addMessage(userId: $userId, content: $content, chosenUserId: $chosenUserId) {
+mutation AddMessage($input: AddMessageInput!) {
+  addMessage(input: $input) {
     id
     text
     sender
+    images
   }
 }
 query GetConversation($userOne: String!, $userTwo: String!) {
   getConversation(userOne: $userOne, userTwo: $userTwo) {
     id
-    userOne
-    userTwo
+    userOne {
+      images
+    }
+    userTwo {
+      images
+    }
     messages {
       id
       text
       sender
+      images
+      timeStamp
     }
   }
 }
+
 query GetAllUsers {
   getAllUsers {
     _id
@@ -214,8 +225,8 @@ query GetAllConversations {
 
 mutation UnMatch($authId: String!) {
   unMatch(authId: $authId) {
-    _id
-    stillmatch
-    createdAt
+    targetUserId {
+      _id
+    }
   }
 }

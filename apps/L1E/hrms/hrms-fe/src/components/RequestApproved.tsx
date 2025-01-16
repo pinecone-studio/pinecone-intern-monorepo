@@ -59,7 +59,7 @@ export const RequestApproved = ({
         </div>
         <div className="flex flex-col ">
           <div className="text-sm font-medium text-[#71717A]">Хүсэлт явуулсан огноо:</div>
-          <div className="text-sm font-medium ">{format(request?.createdAt, 'yyyy/MM/dd')}</div>
+          <div className="text-sm font-medium ">{request && format(request?.createdAt, 'yyyy/MM/dd')}</div>
         </div>
       </div>
       <div className="flex flex-row space-x-24 mt-8 text-xs font-medium text-[#71717A]">
@@ -81,7 +81,7 @@ export const RequestApproved = ({
         </div>
       </div>
       <div className="flex flex-row mt-2 text-xs font-medium text-[#09090B] ">
-        <div className="w-[80px] h-8">{requestStatus[request.requestStatus]}</div>
+        <div className="w-[80px] h-8">{request && requestStatus[request.requestStatus]}</div>
         <div className="ml-[88px] w-[80px]">{request?.selectedDay && format(request?.selectedDay, 'yyyy/MM/dd')}</div>
         <div className="ml-[73px] w-[80px]">
           {request?.startTime}-{request?.endTime}{' '}
@@ -93,6 +93,7 @@ export const RequestApproved = ({
       <div className="text-md text-[#09090B] mt-2">{request?.reason}</div>
       <div className={`${request?.requestType == RequestType.Pending ? 'flex' : 'hidden'} flex-row mt-8 gap-2 justify-end`}>
         <Button
+          data-cy="buttonReject"
           data-testid="buttonReject"
           onClick={() => {
             buttonReject();
@@ -103,6 +104,7 @@ export const RequestApproved = ({
           <p>Татгалзах</p>
         </Button>
         <Button
+          data-cy="buttonApprove"
           data-testid="buttonApprove"
           onClick={() => {
             buttonApprove();

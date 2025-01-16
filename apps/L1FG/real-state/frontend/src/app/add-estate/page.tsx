@@ -1,7 +1,9 @@
 'use client';
 
+import AddEstate from '@/components/addEstate/AddEstate';
+
 const Page = () => {
-  return <div>add estate</div>;
+  return <AddEstate />;
 };
 
 export default Page;

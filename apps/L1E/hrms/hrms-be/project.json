@@ -30,6 +30,7 @@
         "buildTarget": "hrms-be:build",
         "dev": true
       },
+      "dependsOn": [{ "target": "codegen" }],
       "configurations": {
         "development": {
           "buildTarget": "hrms-be:build:development",

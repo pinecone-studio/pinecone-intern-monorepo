@@ -18,6 +18,7 @@ export const RefuseModal = ({ isOpenModal, onClose, onConfirm, setRefuseValue }:
           <AlertDialogTitle>Татгалзсан шалтгаан</AlertDialogTitle>
           <AlertDialogDescription>Тухайн ажилтанд яагаад татгалзаж байгаагаа тайлбарлан бичнэ үү.</AlertDialogDescription>
           <Textarea
+            data-cy="areaButton"
             data-testid="areaButton"
             onChange={(e) => {
               setRefuseValue(e.target.value);
@@ -27,8 +28,10 @@ export const RefuseModal = ({ isOpenModal, onClose, onConfirm, setRefuseValue }:
           />
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Буцах</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Зөвшөөрөх</AlertDialogAction>
+          <AlertDialogCancel data-cy="refuse-modal-button-back">Буцах</AlertDialogCancel>
+          <AlertDialogAction data-cy="refuse-modal-button" onClick={onConfirm}>
+            Татгалзах
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

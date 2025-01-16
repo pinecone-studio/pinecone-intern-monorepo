@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["hotel-booking-frontend"],
+          "groups": ["hotel-booking-frontend-1fg"],
           "env": "dev"
         }
       }
@@ -88,7 +88,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["hotel-booking-frontend"],
+          "groups": ["hotel-booking-frontend-1fg"],
           "env": "test"
         }
       }
@@ -98,7 +98,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["hotel-booking-frontend"],
+          "groups": ["hotel-booking-frontend-1fg"],
           "env": "prod"
         }
       }
@@ -119,7 +119,7 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress example-frontend"],
+        "commands": ["npx nx cypress hotel-booking-frontend"],
         "parallel": false
       },
       "dependsOn": [{ "target": "cypress:clean" }]

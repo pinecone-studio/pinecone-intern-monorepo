@@ -38,7 +38,40 @@ mutation CreateRequest($input: RequestInput!) {
     createdAt
   }
 }
-mutation updateRequest($updateRequestId: ID!, $input: RequestUpdateInput!) {
+
+mutation CreateEmployee($input: EmployeeInput!) {
+  createEmployee(input: $input) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    updatedAt
+    createdAt
+  }
+}
+
+query Query {
+  getAllEmployees {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    updatedAt
+    createdAt
+  }
+}
+
+mutation Mutation($updateRequestId: ID!, $input: RequestUpdateInput!) {
   updateRequest(id: $updateRequestId, input: $input) {
     _id
     employeeId {
@@ -176,6 +209,21 @@ query GetRequestsByEmployee($employeeId: ID!) {
     createdAt
   }
 }
+mutation UpdateEmployee($updateEmployeeId: ID!, $input: EmployeeUpdateInput!) {
+  updateEmployee(id: $updateEmployeeId, input: $input) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    updatedAt
+    createdAt
+  }
+}
 
 query GetEmployeeById($getEmployeeByIdId: ID!) {
   getEmployeeById(id: $getEmployeeByIdId) {
@@ -188,6 +236,41 @@ query GetEmployeeById($getEmployeeByIdId: ID!) {
     paidLeaveLimit
     freeLimit
     employeeStatus
+    updatedAt
+    createdAt
+  }
+}
+query GetEmployeeByEmail($email: String) {
+  getEmployeeByEmail(email: $email) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    otpToken
+    otpUpdatedAt
+    updatedAt
+    createdAt
+  }
+}
+
+query GetEmployeeByOtp($email: String, $otpToken: String) {
+  getEmployeeByOtp(email: $email, otpToken: $otpToken) {
+    _id
+    email
+    jobTitle
+    username
+    adminStatus
+    remoteLimit
+    paidLeaveLimit
+    freeLimit
+    employeeStatus
+    otpToken
+    otpUpdatedAt
     updatedAt
     createdAt
   }

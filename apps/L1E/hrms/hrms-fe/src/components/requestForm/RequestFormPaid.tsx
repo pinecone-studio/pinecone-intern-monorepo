@@ -41,14 +41,22 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
-                        <Button data-testid="calendar-btn" variant={'outline'} className="w-full pl-3 text-left font-normal">
+                        <Button data-testid="calendar-btn" data-cy="paid-calendar-btn" variant={'outline'} className="w-full pl-3 text-left font-normal">
                           {format(field.value, 'yyyy.MM.dd')}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="end">
-                      <Calendar data-testid="calendar-input" mode="single" disabled={(date) => date < new Date()} selected={field.value} onSelect={field.onChange} initialFocus />
+                      <Calendar
+                        data-cy="paid-calendar-input"
+                        data-testid="calendar-input"
+                        mode="single"
+                        disabled={(date) => date < new Date()}
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        initialFocus
+                      />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -64,13 +72,13 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
                 <FormLabel className="text-sm">Хэнээр хүсэлтээ батлуулах аа сонгоно уу*</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger data-testid="lead-button">
+                    <SelectTrigger data-cy="lead-button" data-testid="lead-button">
                       <SelectValue placeholder="Ажилтан сонгох" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    {leads?.map((e, index) => (
-                      <SelectItem key={index} data-testid={`Option-${index + 1}`} value={e._id}>
+                  <SelectContent data-cy="lead-input">
+                    {leads.map((e, index) => (
+                      <SelectItem key={index} data-cy={`Option-${index + 1}`} data-testid={`Option-${index + 1}`} value={e._id}>
                         {e.username}
                       </SelectItem>
                     ))}
@@ -86,7 +94,7 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm">Цалинтай чөлөө авах шалтгаан*</FormLabel>
-                <FormControl data-testid="notes-input">
+                <FormControl data-cy="notes-input" data-testid="notes-input">
                   <Textarea placeholder="Шалтгаанаа тайлбарлаж бичнэ үү." className="resize-none" {...field} />
                 </FormControl>
                 <FormMessage />
@@ -94,7 +102,7 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
             )}
           />
           <div className="flex justify-end">
-            <Button data-testid="submit-button" type="submit" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
+            <Button data-cy="paid-submit-button" data-testid="submit-button" type="submit" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
               Хүсэлт илгээх
             </Button>
           </div>

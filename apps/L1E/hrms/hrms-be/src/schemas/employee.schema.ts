@@ -16,6 +16,8 @@ export const typeDefs = gql`
     paidLeaveLimit: Int!
     freeLimit: Int!
     employeeStatus: EmployeeStatus!
+    otpToken: String
+    otpUpdatedAt: String
     updatedAt: String
     createdAt: String
   }
@@ -39,6 +41,8 @@ export const typeDefs = gql`
     getEmployeeById(id: ID!): Employee
     getEmployees(input: String): [Employee]
     getAllEmployees: [Employee]
+    getEmployeeByEmail(email: String): Employee
+    getEmployeeByOtp(email: String, otpToken: String): Employee
   }
 
   type Mutation {
