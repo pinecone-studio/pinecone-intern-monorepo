@@ -1,7 +1,5 @@
 import Image from 'next/image';
-import { Shop } from '../../../public/svg';
-import { Notification } from '../../../public/svg';
-import { Menu } from '../../../public/svg';
+import { Shop, Notification, Menu } from '../../../public/svg';
 
 const Header = () => {
   return (
