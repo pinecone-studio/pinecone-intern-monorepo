@@ -6,8 +6,6 @@ const Page = () => {
   return (
     <div>
       <HotelDetailPage />
-
-      {/* <SearchResultPage /> */}
     </div>
   );
 };

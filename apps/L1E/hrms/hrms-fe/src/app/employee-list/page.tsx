@@ -23,16 +23,6 @@ const Page = () => {
     header: 'Ахлах ажилтныг болиулах',
     description: '-ийг ахлах ажилтанаас цуцлах гэж байна.',
   };
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   // If no token found in localStorage, redirect to login page
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [employeeName, setEmployeeName] = useState<string>();
