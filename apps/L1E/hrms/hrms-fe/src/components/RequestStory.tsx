@@ -63,7 +63,7 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
                     </div>
                   </div>
                   <div className="flex flex-row gap-2 items-center">
-                    <CiCalendar className="w-4 h-4" />
+                    <CiCalendar data-cy="calendar-content" className="w-4 h-4" />
                     <div>{request?.createdAt && format(new Date(request.createdAt), 'yyyy/MM/dd')}</div>
                   </div>
                 </div>
