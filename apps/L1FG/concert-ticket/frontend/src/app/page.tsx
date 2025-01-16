@@ -1,15 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-
 const Page = () => {
-  return (
-    <div>
-      <Link href={'/Detail'}>
-        <div>Home Page</div>
-      </Link>
-    </div>
-  );
+  return <div>Home Page</div>;
 };
 
 export default Page;
