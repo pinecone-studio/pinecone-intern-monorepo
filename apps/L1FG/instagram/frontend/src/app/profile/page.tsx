@@ -1,8 +1,8 @@
-import Profile from '@/components/Profile';
+import Profile from '@/components/profile/Profile';
 
 const Page = () => {
   return (
-    <div>
+    <div className="flex flex-grow justify-center">
       <Profile />
     </div>
   );
