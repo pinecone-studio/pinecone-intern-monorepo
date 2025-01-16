@@ -17,14 +17,6 @@ const Page = () => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
-
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(), -3),
     to: new Date(),

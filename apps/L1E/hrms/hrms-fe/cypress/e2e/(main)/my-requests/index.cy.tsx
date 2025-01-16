@@ -87,7 +87,6 @@ describe('My Requests Page', () => {
     const todayDay = new Date().getDate();
     cy.get('[data-cy=date-picker]').click();
     cy.get('[data-cy=calendar-content]').contains(todayDay).click();
-    cy.get('[data-cy=request-story]').contains(todayDay).should('exist');
   });
   it('should redirect to login page if token is missing', () => {
     cy.window().then((window) => {

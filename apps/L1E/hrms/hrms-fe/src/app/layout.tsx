@@ -5,7 +5,7 @@ import { ApolloWrapper } from '@/components/providers';
 import { Header } from '@/components/Header';
 
 import { usePathname } from 'next/navigation';
-import { UserProvider } from '@/provider/UserProvider';
+import { UserProvider } from '../provider/UserProvider';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
