@@ -24,6 +24,8 @@ const nextConfig = {
   env: {
     MONGO_URI: process.env.MONGO_URI,
     LOCAL_BACKEND_URI: process.env.LOCAL_BACKEND_URI,
+    EMAIL_PASS: process.env.EMAIL_PASS,
+    EMAIL_USER: process.env.EMAIL_USER,
   },
   nx: {
     svgr: false,
