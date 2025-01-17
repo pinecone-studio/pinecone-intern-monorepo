@@ -1,10 +1,13 @@
-import Header from '@/components/common/Header';
+'use client';
+
+import OrderPageComponent from '@/components/order/OrderPageComponent';
+
 import React from 'react';
 
 const OrderPage = () => {
   return (
-    <div>
-      <Header />
+    <div className="max-w-full">
+      <OrderPageComponent />
     </div>
   );
 };
