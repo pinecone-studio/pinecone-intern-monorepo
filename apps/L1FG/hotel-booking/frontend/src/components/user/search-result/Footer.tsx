@@ -10,7 +10,7 @@ import { VisaCardIcon } from '../svg/VisaIcon';
 export const Footer = () => {
   return (
     <div className="w-full flex justify-center my-[40px]">
-      <div className="w-[1280px] flex gap-[120px] h-[200px]">
+      <div className="container max-w-[1280px] flex gap-[120px] h-[200px]">
         <div className="flex flex-col justify-between">
           <div className="w-[313px] flex flex-col gap-3">
             <LogoIcon />
