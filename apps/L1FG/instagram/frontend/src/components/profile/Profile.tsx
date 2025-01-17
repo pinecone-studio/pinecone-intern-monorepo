@@ -13,7 +13,7 @@ const Profile = () => {
 
         <div className="flex flex-col gap-4">
           <div className="flex gap-3 itemst-center justify-center">
-            <p className="text-[20px] font-semibold">upvox_</p>
+            <p className="text-[20px] font-semibold">upavox_</p>
             <button className="border px-4 py-2 bg-[#F4F4F5]  rounded-md text-sm  font-medium">Edit profile </button>
             <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md  text-sm  font-medium">Ad tools </button>
             <div className="flex justify-center items-center">
