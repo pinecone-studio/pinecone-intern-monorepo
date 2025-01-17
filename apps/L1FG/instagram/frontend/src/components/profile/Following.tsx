@@ -10,7 +10,7 @@ const Followers = ({ children }: { children: React.ReactNode }) => {
         <DialogHeader>
           <div className="flex justify-between items-center">
             <div></div>
-            <h3 className="flex justify-center">Following</h3>
+            <h3 className="flex justify-center">Followers</h3>
             <div className="flex justify-end">
               <DialogTrigger asChild>
                 <button aria-label="Close dialog">
