@@ -35,18 +35,3 @@ export const ChooseRoom = () => {
     </div>
   );
 };
-
-//       <h1 className="text-[24px] leading-[32px] font-[600]">Choose your room</h1>
-//       <div className="w-[223px] bg-[#F4F4F5] rounded-lg">
-//         <button className=" bg-white  py-[4px] px-[12px]">All room</button>
-//         <button className=" py-[4px] px-[12px]">1 bed</button>
-//         <button className=" py-[4px] px-[12px]">2 bed</button>
-//       </div>
-//       <div className="grid grid-rows-2 grid-cols-3 gap-[16px]">
-//         <SinglePageCard />
-//         <SinglePageCard />
-//         <SinglePageCard />
-//         <SinglePageCard />
-//         <SinglePageCard />
-//       </div>
-//     </div>

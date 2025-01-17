@@ -1,7 +1,6 @@
-import { Search } from '../features/Search';
+import { SearchBar } from '../features/SearchBar';
 import { HotelDetailMain } from '../hotel-detail/HotelDetailMain';
 import { NavigationBlue } from '../Navigations';
-import { Footer } from '../search-result/Footer';
 import { BlueDital } from '../ui/microui';
 
 export const HotelDetailPage = () => {
@@ -9,9 +8,8 @@ export const HotelDetailPage = () => {
     <div>
       <NavigationBlue />
       <BlueDital />
-      <Search />
+      <SearchBar />
       <HotelDetailMain />
-      <Footer />
     </div>
   );
 };
