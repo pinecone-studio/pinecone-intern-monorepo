@@ -6,7 +6,6 @@ const HomePage = () => {
   return (
     <div>
       <HeaderPart />
-      <div>asdbnasd</div>
     </div>
   );
 };
