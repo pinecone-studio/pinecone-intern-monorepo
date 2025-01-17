@@ -7,7 +7,7 @@ export const LeftNavbar = () => {
         <p className="text-[14px] leading-[20px] font-[500]">Search by property name</p>
         <input className="w-full h-[40px] px-3 py-2 rounded-md border border-[#E4E4E7]" type="text" placeholder="Search" />
       </div>
-      <div className="w-full border border-[#E4E4E7] mt-4 mb-4"></div>
+      <div className="w-full border-[0.5px] border-[#E4E4E7] mt-4 mb-4"></div>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-[20px]">
           <p className="text-[14px] leading-[14px] font-[500]">Rating</p>
