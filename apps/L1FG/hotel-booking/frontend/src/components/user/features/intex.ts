@@ -1,4 +1,4 @@
 export * from './Hero';
-export * from './Search';
+export * from './SearchBar';
 export * from './DatePickerWithRange';
 export * from './Loading';

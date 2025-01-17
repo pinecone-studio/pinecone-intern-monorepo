@@ -1,5 +1,6 @@
 import { Hero } from '../features/Hero';
-import { Search } from '../features/Search';
+import { SearchBar } from '../features/SearchBar';
+
 import { HomeHotelList } from '../home-page';
 import { NavigationBlue } from '../Navigations';
 
@@ -8,7 +9,7 @@ const HomePage = () => {
     <main>
       <NavigationBlue />
       <Hero />
-      <Search />
+      <SearchBar />
       <HomeHotelList />
     </main>
   );
