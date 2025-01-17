@@ -1,6 +1,5 @@
-'use client';
-
 import Carousel from '@/components/carousel/Carousel';
+import React from 'react';
 
 const slides = [
   {
@@ -19,7 +18,7 @@ const slides = [
   },
 ];
 
-const Page = () => {
+const App = () => {
   return (
     <div>
       <Carousel slides={slides} />
@@ -27,4 +26,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default App;
