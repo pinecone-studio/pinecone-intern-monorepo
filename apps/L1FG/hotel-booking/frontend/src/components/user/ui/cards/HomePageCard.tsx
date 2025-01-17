@@ -1,12 +1,13 @@
 import { StarIcon } from '../svg';
 import FlowerIcon from '../svg/FlowerIcon';
 import ParkingCircleIcon from '../svg/ParkingCircleIcon';
+import Image from 'next/image';
 import WifiIcon from '../svg/WifiIcon';
 
 export const HomePageCard = () => {
   return (
-    <div className="card bg-base-100 w-[308px] rounded-md border border-[#E4E4E7]">
-      <div className="w-full h-[216px] bg-slate-400 rounded-t-md"></div>
+    <div className="card bg-base-100 w-full rounded-md border border-[#E4E4E7]">
+      <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={308} className="rounded-t-[6px] w-full" layout="responsive" />
       <div className="flex flex-col gap-4 p-4">
         <div className="">
           <h2 className="card-title text-base leading-7 font-bold">Toyoko In Ulaanbaatar</h2>

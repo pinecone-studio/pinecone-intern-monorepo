@@ -1,10 +1,10 @@
-import Story from '@/components/story/Story';
+import { StoriesMock } from '@/components/story/MockStory';
 import React from 'react';
 
 const page = () => {
   return (
     <div>
-      <Story />
+      <StoriesMock />
     </div>
   );
 };
