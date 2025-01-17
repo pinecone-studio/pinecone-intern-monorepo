@@ -5,18 +5,20 @@ describe('Home Page', () => {
   it(`Should render signup page`, () => {
     cy.get('[data-cy=signup-form]').should('be.visible');
   });
-  it('Should successfully signup', () => {
-    cy.get('[type="email"]').type('cypress1@gmail.com');
-    cy.get('[type="password"]').type('1234');
-    cy.get('[placeholder="Full Name"]').type('hi hi');
-    cy.get('[placeholder="Username"]').type('hi_');
+  it.only('Should successfully signup', () => {
+    cy.get('[data-cy=signup-email-input]').type(`${Date.now()}@gmail.com`);
+    cy.get('[data-cy=signup-password-input]').type('1234');
+    cy.get('[data-cy=signup-fullName-input]').type('ankhaa');
+    cy.get('[data-cy=signup-userName-input]').type('hi_');
     cy.get('[data-cy=sign-up-button]').click();
+    cy.contains('Хэрэглэгч амжилттай бүртгэгдлээ').should('be.visible');
   });
   it('Should throw duplicate email error', () => {
-    cy.get('[type="email"]').type('cypress@gmail.com');
-    cy.get('[type="password"]').type('1234');
-    cy.get('[placeholder="Full Name"]').type('hi hi');
-    cy.get('[placeholder="Username"]').type('hi_');
+    cy.get('[data-cy=signup-email-input]').type('cypress@gmail.com');
+    cy.get('[data-cy=signup-password-input]').type('1234');
+    cy.get('[data-cy=signup-fullName-input]').type('hi hi');
+    cy.get('[data-cy=signup-userName-input]').type('hi_');
     cy.get('[data-cy=sign-up-button]').click();
+    cy.contains('Бүртгэл амжилтгүй').should('be.visible');
   });
 });

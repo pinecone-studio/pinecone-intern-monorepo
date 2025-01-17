@@ -11,12 +11,28 @@ export const UserTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String!
+    profileImage: String
     password: String!
     hasStory: Boolean
     gender: Gender
     isPrivate: Boolean
     email: String!
+  }
+  type UserWithoutPassword {
+    _id: String!
+    userName: String!
+    fullName: String!
+    bio: String!
+    profileImage: String!
+    hasStory: Boolean
+    gender: Gender
+    isPrivate: Boolean
+    email: String!
+  }
+  type SignInType {
+    token: ID!
+    exp: Int!
+    user: User!
   }
 
   input UserInput {
@@ -25,8 +41,26 @@ export const UserTypeDefs = gql`
     password: String!
     email: String!
   }
-
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+  type Query {
+    getUser: UserWithoutPassword
+  }
   type Mutation {
     createUser(input: UserInput!): User!
+    login(input: SignInInput!): SignInType!
   }
 `;
+
+// type GetMeUserType
+// {
+//   me: User
+//   posts:
+//   followers:
+//   following:
+// }
+// type Query{
+//   getMe():GetMeUserType
+// }

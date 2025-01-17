@@ -1,1 +1,1 @@
-type Context = unknown;
+export type Context = { userId: string | null };

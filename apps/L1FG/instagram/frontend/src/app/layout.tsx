@@ -1,10 +1,12 @@
 'use client';
 import { PropsWithChildren } from 'react';
 import './global.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { ApolloWrapper } from '@/components/providers';
 import { MenuButtons } from '@/components/Home/leftSideBar/MenuButtonsSideBar';
 import { usePathname } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 
 // export const metadata = {
 //   title: 'Welcome to example-frontend',
@@ -19,20 +21,22 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        {Signup || Login ? (
-          <ApolloWrapper>
-            {children}
-            <ToastContainer position="top-right" />
-          </ApolloWrapper>
-        ) : (
-          <div className="flex">
-            <MenuButtons />
-            <ApolloWrapper>
-              {children}
-              <ToastContainer position="top-right" />
-            </ApolloWrapper>
-          </div>
-        )}
+        <ApolloWrapper>
+          <AuthProvider>
+            {Signup || Login ? (
+              <>
+                {children}
+                <ToastContainer position="top-right" />
+              </>
+            ) : (
+              <div className="flex">
+                <MenuButtons />
+                {children}
+                <ToastContainer position="top-right" />
+              </div>
+            )}
+          </AuthProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );
