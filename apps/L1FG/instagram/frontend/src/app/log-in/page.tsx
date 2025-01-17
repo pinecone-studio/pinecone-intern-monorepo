@@ -1,10 +1,5 @@
-'use client';
-import { LogInPage } from '@/components/log-in/LogInPage';
+import LogInForm from '@/components/log-in/LogInForm';
 const LogIn = () => {
-  return (
-    <div>
-      <LogInPage />
-    </div>
-  );
+  return <LogInForm />;
 };
 export default LogIn;

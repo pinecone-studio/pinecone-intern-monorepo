@@ -13,7 +13,7 @@ export const PostTypeDefs = gql`
   input PostInput {
     postImage: [String!]!
     caption: String
-    userId: ID!
+    carouselMediaCount: Int!
   }
 
   type Mutation {
