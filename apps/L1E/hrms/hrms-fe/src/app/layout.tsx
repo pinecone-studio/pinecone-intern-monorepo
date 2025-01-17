@@ -5,6 +5,7 @@ import { ApolloWrapper } from '@/components/providers';
 import { Header } from '@/components/Header';
 
 import { usePathname } from 'next/navigation';
+import { UserProvider } from '../provider/UserProvider';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
@@ -12,14 +13,18 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        {pathname === '/login' ? (
-          <ApolloWrapper>{children}</ApolloWrapper>
-        ) : (
-          <div>
-            <Header />
-            <ApolloWrapper>{children}</ApolloWrapper>
-          </div>
-        )}
+        <ApolloWrapper>
+          <UserProvider>
+            {pathname === '/login' ? (
+              <> {children}</>
+            ) : (
+              <div>
+                <Header />
+                {children}
+              </div>
+            )}
+          </UserProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );

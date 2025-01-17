@@ -1,24 +1,12 @@
 'use client';
 import { Input } from '@/components/ui/input';
-import { Employee, EmployeeStatus, GetAllRequestsQuery, Request, RequestType, useGetAllRequestsQuery, useMutationMutation } from '@/generated';
+import { GetAllRequestsQuery, Request, RequestType, useGetAllRequestsQuery, useMutationMutation } from '@/generated';
 import { ChangeEvent, useState } from 'react';
 import StatusSelector from '@/components/StatusSelector';
 import { RequestList } from '@/components/RequestList';
 import { RequestApproved } from '@/components/RequestApproved';
+import { useUser } from '@/provider/UserProvider';
 
-const employee: Employee = {
-  _id: '676e6dd407d5ae05a35cda84',
-  email: 'jvk@gmail.com',
-  jobTitle: 'senior',
-  username: 'jvkaa',
-  adminStatus: false,
-  remoteLimit: 5,
-  paidLeaveLimit: 5,
-  freeLimit: 5,
-  employeeStatus: EmployeeStatus.Lead,
-  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-};
 interface StatusSelectorProp {
   id: string;
   name: string;
@@ -27,7 +15,10 @@ interface StatusSelectorProp {
 }
 
 const Page = () => {
-  const { data,loading } = useGetAllRequestsQuery({ variables: { limit: 100 } });
+  const { user } = useUser();
+  const employee = user;
+
+  const { data, loading } = useGetAllRequestsQuery({ variables: { limit: 100 } });
   const [refuseValue, setRefuseValue] = useState<string>();
   const [updateRequest] = useMutationMutation();
   const [selectId, setSelectId] = useState<string>('1');
@@ -40,22 +31,10 @@ const Page = () => {
     { id: 'PENDING', name: 'Хүлээгдэж байна', count: 21, selected: true },
     { id: 'REJECTED', name: 'Татгалзсан', count: 20, selected: false },
   ]);
-  const [datafilter,setDatafilter]=useState<Request[]>()
-
-
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   // If no token found in localStorage, redirect to login page
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
+  const [datafilter, setDatafilter] = useState<Request[]>();
 
   const allRequests = data?.getAllRequests as GetAllRequestsQuery['getAllRequests'];
-  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee._id && statuses.some((status) => status.selected && status.id === e.requestType));
+  const filteredRequest = allRequests?.filter((e) => e?.leadEmployeeId?._id === employee?._id && statuses.some((status) => status.selected && status.id === e?.requestType));
 
   const handleClick = (id: string) => {
     setActiveIndex(id);
@@ -68,7 +47,7 @@ const Page = () => {
   };
 
   const selectedStatuses = statuses.filter((status) => status.selected);
-  
+
   const buttonReject = () => {
     setIsOpenModalRefuse(true);
   };
@@ -86,13 +65,19 @@ const Page = () => {
     const update = new Date();
 
     await updateRequest({ variables: { updateRequestId: selectId, input: { updatedAt: update.toString(), reasonRefuse: refuseValue, requestType: RequestType.Rejected } } });
-  };  
-
-  const handlechange = (value:string) => {
-   const  filtereddata  = filteredRequest?.filter((e) => e?.employeeId?.username.includes(value)) as Request[]
-   setDatafilter(filtereddata)
   };
-  
+
+  const handlechange = (value: string) => {
+    const filtereddata = filteredRequest?.filter((e) => e?.employeeId?.username.includes(value)) as Request[];
+
+    if (filtereddata.length == 0) {
+      setActiveIndex(undefined);
+      setDatafilter([]);
+    } else {
+      setDatafilter(filtereddata);
+    }
+  };
+
   return (
     <div data-cy="pending-page" className="flex flex-col h-screen gap-5 w-screen pt-10 items-center  mx-auto bg-neutral-100 ">
       <div className="w-[1030px] flex flex-col ">
@@ -100,14 +85,21 @@ const Page = () => {
         <div className="flex flex-row gap-[220px]">
           <div className="flex flex-col ">
             <div className="flex gap-4 mt-4">
-              <Input data-cy="handlechange" data-testid="handlechange" type="search" placeholder="Хайлт" onChange={(e:ChangeEvent<HTMLInputElement>)=>handlechange(e.target.value)} className="w-[236px] h-[40px] flex absolute pl-9 " />
+              <Input
+                data-cy="handlechange"
+                data-testid="handlechange"
+                type="search"
+                placeholder="Хайлт"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handlechange(e.target.value)}
+                className="w-[236px] h-[40px] flex absolute pl-9 "
+              />
             </div>
           </div>
           <StatusSelector handleStatusClick={handleStatusClick} selectedStatuses={selectedStatuses} statuses={statuses} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <div className="flex flex-row gap-2">
-          <RequestList filteredRequest={datafilter ? datafilter : filteredRequest as Request[]} handleClick={handleClick} activeIndex={activeIndex} />
-          <div className={`${!activeIndex && 'hidden'}`}>
+          <RequestList filteredRequest={datafilter ? datafilter : (filteredRequest as Request[])} handleClick={handleClick} activeIndex={activeIndex} />
+          <div data-testid="modal" className={`${!activeIndex && 'hidden'}`}>
             <RequestApproved
               selectId={selectId}
               buttonApprove={buttonApprove}
@@ -121,7 +113,7 @@ const Page = () => {
               }}
               setRefuseValue={setRefuseValue}
               onRefuse={onRefuse}
-              filteredRequest={datafilter ? datafilter : filteredRequest as Request[]}
+              filteredRequest={datafilter ? datafilter : (filteredRequest as Request[])}
             />
           </div>
         </div>

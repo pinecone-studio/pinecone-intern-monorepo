@@ -1,11 +1,3 @@
-query Query {
-  sampleQuery
-}
-
-mutation Mutation {
-  sampleMutation
-}
-
 query GetConcerts {
   getConcerts {
     _id
