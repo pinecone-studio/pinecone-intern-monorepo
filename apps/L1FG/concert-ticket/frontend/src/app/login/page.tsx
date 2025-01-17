@@ -1,6 +1,6 @@
 const Page = () => {
   return (
-    <div className="Container w-[1334px] ">
+    <div className="Container w-[1334px] mx-auto ">
       <div className="w-[446px] mx-auto h-[420px] mt-[400px] bg-[#09090B] border-2 border-[#27272A] rounded-md">
         <p className="text-white mx-auto my-[20px] text-[24px] font-semibold w-[89px] h-[48px]">Нэвтэрч</p>
         <div className="mx-auto w-[350px] h-[220px]">
