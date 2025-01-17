@@ -3,7 +3,7 @@ import { DatePickerWithRange } from './DatePickerWithRange';
 import { ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
-export const Search = () => {
+export const SearchBar = () => {
   return (
     <main>
       <div className="absolute w-full h-12 bg-[#013B94]"></div>
