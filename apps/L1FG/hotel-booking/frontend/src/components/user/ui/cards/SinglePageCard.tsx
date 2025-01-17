@@ -11,8 +11,8 @@ import { PriceDetail } from '../../hotel-detail';
 
 export const SinglePageCard = () => {
   return (
-    <div className="max-w-[349px] w-full text-foreground border rounded-[6px]">
-      <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px]" />
+    <div className="w-full text-foreground border rounded-[6px]">
+      <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px] w-full" layout="responsive" />
       <div className="p-4">
         <div className="flex flex-col gap-4">
           <div className="font-Inter text-base font-bold leading-7">Economy Single Room</div>
