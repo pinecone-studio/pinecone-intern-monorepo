@@ -39,9 +39,11 @@ const Page: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen w-screen items-center justify-between">
+    <div className="flex flex-col h-[100vh] w-screen items-center justify-between overflow-hidden">
       <MainHeader user={user} />
-      <SwipeCards />
+      <div className="flex-1 flex items-center justify-center w-full">
+        <SwipeCards />
+      </div>
       <Tinder />
     </div>
   );

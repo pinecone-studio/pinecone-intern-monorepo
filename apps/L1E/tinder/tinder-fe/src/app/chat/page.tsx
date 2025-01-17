@@ -77,7 +77,7 @@ const Main: React.FC = () => {
 
   if (loading || !authId || !data) {
     return (
-      <div className="flex items-center justify-center h-screen bg-white">
+      <div className="flex items-center justify-center md:h-screen h-[90%] bg-white">
         <Loading />
       </div>
     );
