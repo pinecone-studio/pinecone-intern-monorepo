@@ -2,11 +2,12 @@ import { Edit } from '@/components/svg/Edit';
 import { Menu } from '@/components/svg/Menu';
 import { Notification } from '@/components/svg/Notification';
 import { Shop } from '@/components/svg/Shop';
+import Image from 'next/image';
 import React from 'react';
 
 const UserProfile  = () => {
     const user = {
-        img:null,
+        Image:null,
         phone: 91919191,
         gmail:"ganjaa@gmail.com",
         password: 11111
@@ -16,10 +17,10 @@ const UserProfile  = () => {
     <div className="max-h-[500px] bg-white text-center flex flex-col items-center p-4">
   
       <header className="w-full flex items-center justify-between mb-6">
-        <div className="w-12 h-12">
-          <img
+        <div>
+          <Image
             src="/Logo.png"
-            alt="Logo"
+            alt=""
             className="w-full h-full object-contain"
           />
         </div>
@@ -41,7 +42,7 @@ const UserProfile  = () => {
      
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-            <span className="text-4xl text-gray-600 material-icons">{user.img}</span>
+            <span className="text-4xl text-gray-600 material-icons">{user.Image}</span>
           </div>
           <button
             className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-sm"
