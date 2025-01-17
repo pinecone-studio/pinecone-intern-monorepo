@@ -10,20 +10,12 @@ import { DateRangePicker } from '@/components/DateRangePicker';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { addDays, format, eachDayOfInterval } from 'date-fns';
-/* eslint-enable no-unused-vars */
+
 type ComponentName = 'MyRequest' | '/request-form' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
 
 const Page = () => {
   const { data } = useGetAllRequestsQuery({ variables: { limit: 100 } });
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(), -3),

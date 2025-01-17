@@ -7,13 +7,13 @@ export const emailSender = async (sendEmail: string, subject: string, html: stri
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: 'dash.altanshagai48@gmail.com',
+      pass: 'silrfrwgqbzvcyyf',
     },
   });
 
   const options = {
-    from: process.env.EMAIL_USER,
+    from: 'dash.altanshagai48@gmail.com',
     to: sendEmail,
     subject: subject,
     html: html,

@@ -1,4 +1,5 @@
 import { Hero } from '../features/Hero';
+import { Search } from '../features/Search';
 import { NavigationBlue } from '../Navigations';
 import { Footer } from '../search-result/Footer';
 import { HomePageCard } from '../ui/cards';
@@ -8,8 +9,10 @@ const HomePage = () => {
     <main>
       <NavigationBlue />
       <Hero />
+
       <HomePageCard/>
       <Footer />
+
     </main>
   );
 };

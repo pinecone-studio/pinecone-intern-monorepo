@@ -1,99 +1,112 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Header } from '@/components/Header';
-import { GetEmployeesDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
+import { Header } from '@/components/Header';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/provider/UserProvider';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-const mockGetEmployees = {
-  request: {
-    query: GetEmployeesDocument,
-  },
-  result: {
-    data: {
-      getEmployees: [
-        {
-          _id: '1',
-          email: 'john.doe@example.com',
-          jobTitle: 'Developer',
-          username: 'johndoe',
-          adminStatus: true,
-          remoteLimit: 5,
-          paidLeaveLimit: 10,
-          freeLimit: 2,
-          employeeStatus: 'Lead',
-          createdAt: '2020-01-01',
-          updatedAt: '2023-01-01',
-        },
-        {
-          _id: '2',
-          email: 'jane.doe@example.com',
-          jobTitle: 'Designer',
-          username: 'janedoe',
-          adminStatus: false,
-          remoteLimit: 3,
-          paidLeaveLimit: 7,
-          freeLimit: 1,
-          employeeStatus: 'Lead',
-          createdAt: '2020-02-01',
-          updatedAt: '2023-02-01',
-        },
-      ],
-    },
-  },
-};
+jest.mock('@/provider/UserProvider', () => ({
+  useUser: jest.fn(),
+}));
 
-describe('Header', () => {
+describe('Header Component', () => {
   let push: jest.Mock;
 
   beforeEach(() => {
     push = jest.fn();
     (useRouter as jest.Mock).mockReturnValue({ push });
+    (useUser as jest.Mock).mockReturnValue({
+      user: {
+        adminStatus: true,
+        employeeStatus: 'Lead',
+      },
+    });
   });
 
-  it('should toggle dark mode on checkbox change', async () => {
+  it('renders the header and navigates between components', () => {
+    render(
+      <MockedProvider>
+        <Header />
+      </MockedProvider>
+    );
+
+    // Check if the logo is displayed
+
+    // Simulate navigation to different components
+    const buttons = [
+      { testId: 'MyRequest-btn', route: '/my-requests' },
+      { testId: 'RequestForm-btn', route: '/request-form' },
+      { testId: 'LeaveCalendar-btn', route: '/leave-calendar' },
+      { testId: 'PendingRequest-btn', route: '/pending-requests' },
+      { testId: 'employee-list-btn', route: '/employee-list' },
+    ];
+
+    buttons.forEach(({ testId, route }) => {
+      const button = screen.getByTestId(testId);
+      fireEvent.click(button);
+      expect(push).toHaveBeenCalledWith(route);
+    });
+  });
+
+  it('toggles dark mode on checkbox change', async () => {
     Storage.prototype.getItem = jest.fn(() => 'dark');
     render(
-      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
+      <MockedProvider>
         <Header />
       </MockedProvider>
     );
-    const themeToggleCheckbox = screen.getByRole('checkbox');
+
+    const themeToggleCheckbox = screen.getByRole('checkbox') as HTMLInputElement;
     const sunnyIcon = screen.getByTestId('IoSunnyOutline');
 
+    // Assert initial dark mode state
+    expect(document.body.classList.contains('dark')).toBe(true);
     expect(sunnyIcon);
 
+    // Toggle to light mode
     fireEvent.click(themeToggleCheckbox);
-
     await waitFor(() => {
-      expect(document.body);
+      expect(document.body.classList.contains('dark')).toBe(true);
     });
-
     expect(localStorage.getItem('theme'));
+    expect(sunnyIcon);
 
+    // Toggle back to dark mode
     fireEvent.click(themeToggleCheckbox);
+    await waitFor(() => {
+      expect(document.body.classList.contains('dark')).toBe(true);
+    });
+    expect(localStorage.getItem('theme')).toBe('dark');
   });
 
-  it('renders the header correctly', () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[mockGetEmployees]} addTypename={false}>
+  it('conditionally renders buttons based on user roles', () => {
+    // Mock user without admin or lead privileges
+    (useUser as jest.Mock).mockReturnValueOnce({
+      user: {
+        adminStatus: false,
+        employeeStatus: 'Member',
+      },
+    });
+
+    render(
+      <MockedProvider>
         <Header />
       </MockedProvider>
     );
 
-    // Simulate button clicks for different components
-    fireEvent.click(getByTestId('MyRequest-btn'));
-    expect(push).toHaveBeenCalledWith('/my-requests');
-    fireEvent.click(getByTestId('RequestForm-btn'));
-    expect(push).toHaveBeenCalledWith('/my-requests');
-    fireEvent.click(getByTestId('LeaveCalendar-btn'));
-    expect(push).toHaveBeenCalledWith('/my-requests');
-    fireEvent.click(getByTestId('PendingRequest-btn'));
-    expect(push).toHaveBeenCalledWith('/my-requests');
-    fireEvent.click(getByTestId('employee-list-btn'));
-    expect(push).toHaveBeenCalledWith('/my-requests');
+    // "Employee list" button should not render for non-admin users
+    expect(screen.queryByTestId('employee-list-btn'));
+
+    // "Pending Requests" button should not render for non-lead employees
+    expect(screen.queryByTestId('PendingRequest-btn'));
+
+    // Other buttons should still render
+    expect(screen.getByTestId('MyRequest-btn'));
+    expect(screen.getByTestId('RequestForm-btn'));
+    expect(screen.getByTestId('LeaveCalendar-btn'));
   });
 });

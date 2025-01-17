@@ -3,11 +3,12 @@
 import { PiTagThin } from 'react-icons/pi';
 import { CiCalendar } from 'react-icons/ci';
 import { Button } from '@/components/ui/button';
-import { GetRequestsByEmployeeQuery } from '@/generated';
+import { Request } from '@/generated';
 import { format, isEqual } from 'date-fns';
 import { DateRangePicker } from './DateRangePicker';
 import { DateRange } from 'react-day-picker';
 import { Dispatch, SetStateAction } from 'react';
+import Link from 'next/link';
 
 const statusMapping: Record<string, string> = {
   FREE: 'Чөлөө',
@@ -25,7 +26,7 @@ interface RequestStoryProps {
   date: DateRange | undefined;
   setDate: Dispatch<SetStateAction<DateRange | undefined>>;
   daysArray: Date[];
-  requestsData: GetRequestsByEmployeeQuery | undefined;
+  requestsData: Request[] | undefined;
 }
 
 const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryProps) => {
@@ -37,18 +38,20 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
 
       <div className="flex flex-row mt-4">
         <DateRangePicker setDate={setDate} date={date} />
-        <Button className="ml-auto">+ Чөлөө хүсэх</Button>
+        <Link className="ml-auto" href={'/request-form'}>
+          <Button>+ Чөлөө хүсэх</Button>
+        </Link>
       </div>
 
       {reversedDays.map((day) => {
-        const matchedRequests = requestsData?.getRequestsByEmployee?.filter((request) => request?.selectedDay && isEqual(new Date(request.selectedDay), day));
+        const matchedRequests = requestsData?.filter((request) => request?.selectedDay && isEqual(new Date(request.selectedDay), day));
 
         if (!matchedRequests || matchedRequests.length === 0) {
           return null;
         }
 
         return (
-          <div key={day.toISOString()} className="mt-4 ">
+          <div data-cy="request-story" key={day.toISOString()} className="mt-4 ">
             {matchedRequests.map((request) => (
               <div key={request?._id} className="mb-4">
                 <div className="flex flex-row gap-2">
@@ -63,7 +66,7 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
                     </div>
                   </div>
                   <div className="flex flex-row gap-2 items-center">
-                    <CiCalendar className="w-4 h-4" />
+                    <CiCalendar data-cy="calendar-content" className="w-4 h-4" />
                     <div>{request?.createdAt && format(new Date(request.createdAt), 'yyyy/MM/dd')}</div>
                   </div>
                 </div>
