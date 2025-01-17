@@ -2,6 +2,8 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import Post from './Post';
 import Followers from './Followers';
+import Following from './Following';
+import Settings from './Settings';
 
 const Profile = () => {
   return (
@@ -11,11 +13,13 @@ const Profile = () => {
 
         <div className="flex flex-col gap-4">
           <div className="flex gap-3 itemst-center justify-center">
-            <p className="text-[20px] font-semibold">upvox_</p>
+            <p className="text-[20px] font-semibold">upavox_</p>
             <button className="border px-4 py-2 bg-[#F4F4F5]  rounded-md text-sm  font-medium">Edit profile </button>
             <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md  text-sm  font-medium">Ad tools </button>
             <div className="flex justify-center items-center">
-              <IoSettingsOutline />
+              <Settings>
+                <IoSettingsOutline />
+              </Settings>
             </div>
           </div>
 
@@ -31,12 +35,12 @@ const Profile = () => {
                   <p className="text-base font-normal">followers</p>
                 </div>
               </Followers>
-              <Followers>
+              <Following>
                 <div className="flex">
                   <p className="text-base font-semibold"> 14</p>
                   <p className="text-base font-normal">following</p>
                 </div>
-              </Followers>
+              </Following>
             </div>
           </div>
 
