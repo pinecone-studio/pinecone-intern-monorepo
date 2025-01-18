@@ -13,15 +13,12 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 
 describe('Follow', () => {
   it('Should create a follower', async () => {
-    if (!createFollower) {
-      return;
-    }
     const input = {
       followerId: '',
       targetId: '',
     };
 
-    const result = await createFollower({}, { input }, { userId: '123' }, {} as GraphQLResolveInfo);
+    const result = await createFollower!({}, { input }, { userId: '123' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: 'hi',
@@ -30,13 +27,10 @@ describe('Follow', () => {
     });
   });
   it('Should throw an unauthorized error', async () => {
-    if (!createFollower) {
-      return;
-    }
     const input = {
       followerId: '',
       targetId: '',
     };
-    await expect(createFollower({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    await expect(createFollower!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
 });

@@ -30,9 +30,6 @@ jest.mock('../../../../src/models', () => ({
 
 describe('Create user', () => {
   it('should create a user', async () => {
-    if (!createUser) {
-      return;
-    }
     const input = {
       fullName: 'jordan mike',
       password: '1234',
@@ -40,7 +37,7 @@ describe('Create user', () => {
       email: 'jordan@gmail.com',
     };
 
-    const result = await createUser({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
+    const result = await createUser!({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       userName: 'jordan',
       fullName: 'jordan mike',
@@ -54,15 +51,12 @@ describe('Create user', () => {
     });
   });
   it('should throw an error when email is duplicate', async () => {
-    if (!createUser) {
-      return;
-    }
     const input = {
       fullName: 'jordan mike',
       password: '1234',
       userName: 'jordan',
       email: 'jordan@gmail.com',
     };
-    await expect(createUser({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('User exits');
+    await expect(createUser!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('User exits');
   });
 });

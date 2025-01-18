@@ -16,9 +16,6 @@ jest.mock('../../../../src/models', () => ({
 
 describe('create post', () => {
   it('shoud be a post', async () => {
-    if (!createPost) {
-      return;
-    }
     const input = {
       postImage: [''],
       userId: '',
@@ -26,7 +23,7 @@ describe('create post', () => {
       carouselMediaCount: 1,
     };
 
-    const result = await createPost({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo);
+    const result = await createPost!({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
@@ -38,27 +35,21 @@ describe('create post', () => {
     });
   });
   it('Should throw an authorization error', async () => {
-    if (!createPost) {
-      return;
-    }
     const input = {
       postImage: [''],
       userId: '',
       caption: '',
       carouselMediaCount: 0,
     };
-    await expect(createPost({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    await expect(createPost!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
   it('Should throw an carouselMediaCount error', async () => {
-    if (!createPost) {
-      return;
-    }
     const input = {
       postImage: [''],
       userId: '',
       caption: '',
       carouselMediaCount: 11,
     };
-    await expect(createPost({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('10 аас дээш зураг авч болохгүй');
+    await expect(createPost!({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('10 аас дээш зураг авч болохгүй');
   });
 });

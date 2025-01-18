@@ -13,14 +13,11 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 
 describe('Post like', () => {
   it('shoud create a post like', async () => {
-    if (!createPostLike) {
-      return;
-    }
     const input = {
       postId: '1',
     };
 
-    const result = await createPostLike({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo);
+    const result = await createPostLike!({}, { input }, { userId: '12' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '12',
@@ -29,12 +26,9 @@ describe('Post like', () => {
     });
   });
   it('Should throw an authorization error', async () => {
-    if (!createPostLike) {
-      return;
-    }
     const input = {
       postId: '1',
     };
-    await expect(createPostLike({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    await expect(createPostLike!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
 });
