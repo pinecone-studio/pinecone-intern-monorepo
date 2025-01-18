@@ -35,13 +35,23 @@ describe('Login', () => {
     password: 'jordan1234',
   };
   it('Should throw error when user not found', async () => {
-    await expect(login!({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Бүртгэлгүй байна');
+    if (!login) {
+      return;
+    }
+    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Бүртгэлгүй байна');
   });
   it('Should email or password incorrect', async () => {
-    await expect(login!({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Password is incorrect');
+    if (!login) {
+      return;
+    }
+    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Password is incorrect');
   });
   it('Should user login', async () => {
-    await expect(login!({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).resolves.toEqual({
+    process.env.SESSION_SECRET = '123';
+    if (!login) {
+      return;
+    }
+    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).resolves.toEqual({
       token: 'token',
       exp: 1,
       user: {
@@ -57,5 +67,12 @@ describe('Login', () => {
         gender: 'not_know',
       },
     });
+  });
+  it('Sould throw session secret undefined', async () => {
+    process.env.SESSION_SECRET = '';
+    if (!login) {
+      return;
+    }
+    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Session secret is not defined');
   });
 });

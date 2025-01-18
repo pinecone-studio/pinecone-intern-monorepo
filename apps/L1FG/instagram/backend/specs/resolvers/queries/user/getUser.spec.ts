@@ -18,10 +18,16 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 }));
 describe('getUser', () => {
   it('Should throw unauthorized error', async () => {
-    await expect(getUser!({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    if (!getUser) {
+      return;
+    }
+    await expect(getUser({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
   it('Should give user', async () => {
-    await expect(getUser!({}, {}, { userId: '12' }, {} as GraphQLResolveInfo)).resolves.toEqual({
+    if (!getUser) {
+      return;
+    }
+    await expect(getUser({}, {}, { userId: '12' }, {} as GraphQLResolveInfo)).resolves.toEqual({
       _id: '1',
       userName: 'jordan',
       fullName: 'jordan mike',

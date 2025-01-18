@@ -13,12 +13,15 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
     throw new Error('Password is incorrect');
   }
   const exp = tokenExpireCal('minute', 30);
+  if (!process.env.SESSION_SECRET) {
+    throw new Error('Session secret is not defined');
+  }
   const token = jwt.sign(
     {
       userId: user._id,
       exp: exp,
     },
-    process.env.SESSION_SECRET!
+    process.env.SESSION_SECRET
   );
   return {
     token,
