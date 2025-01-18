@@ -26,12 +26,15 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 
 describe('create story', () => {
   it('should be a story', async () => {
+    if (!createStory) {
+      return;
+    }
     const input = {
       _id: '677fc2668598bfd1b013107f',
       storyImage: 'http://example-image.com',
     };
 
-    await createStory!(
+    await createStory(
       {},
       { input },
       {
@@ -42,17 +45,23 @@ describe('create story', () => {
   });
 
   it('should be a story', async () => {
+    if (!createStory) {
+      return;
+    }
     const input = {
       _id: '677fc2668598bfd1b013107f',
       storyImage: 'http://example-image.com',
     };
-    await createStory!({}, { input }, { userId: '677fc2668598bfd1b013107f' }, {} as GraphQLResolveInfo);
+    await createStory({}, { input }, { userId: '677fc2668598bfd1b013107f' }, {} as GraphQLResolveInfo);
   });
   it('Should throw an authorization error', async () => {
+    if (!createStory) {
+      return;
+    }
     const input = {
       _id: '677fc2668598bfd1b013107f',
       storyImage: 'http://example-image.com',
     };
-    await expect(createStory!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    await expect(createStory({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
 });

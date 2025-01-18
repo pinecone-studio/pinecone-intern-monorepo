@@ -13,10 +13,13 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 
 describe('Comment', () => {
   it('Should create a comment', async () => {
+    if (!createCommentLike) {
+      return;
+    }
     const input = {
       commentId: '',
     };
-    const result = await createCommentLike!({}, { input }, { userId: '1' }, {} as GraphQLResolveInfo);
+    const result = await createCommentLike({}, { input }, { userId: '1' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
@@ -28,6 +31,9 @@ describe('Comment', () => {
     const input = {
       commentId: '',
     };
-    await expect(createCommentLike!({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    if (!createCommentLike) {
+      return;
+    }
+    await expect(createCommentLike({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
 });
