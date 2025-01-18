@@ -1,4 +1,7 @@
 import { Hero } from '../features/Hero';
+import { SearchBar } from '../features/SearchBar';
+
+import { HomeHotelList } from '../home-page';
 import { NavigationBlue } from '../Navigations';
 
 const HomePage = () => {
@@ -6,6 +9,8 @@ const HomePage = () => {
     <main>
       <NavigationBlue />
       <Hero />
+      <SearchBar />
+      <HomeHotelList />
     </main>
   );
 };

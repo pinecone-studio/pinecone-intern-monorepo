@@ -2,26 +2,14 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import { Employee, EmployeeStatus, RequestInput, useCreateRequestMutation, useGetEmployeesQuery } from '@/generated';
+import { useEffect, useState } from 'react';
+import { Employee, RequestInput, useCreateRequestMutation, useGetEmployeesQuery } from '@/generated';
 import Requestcom from '@/components/requestForm/RequestFormcom';
 import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
 import Requestcomremote from '@/components/requestForm/RequestFormRemote';
 import { RequestsInput } from '@/utils/requests-input';
+import { useUser } from '@/provider/UserProvider';
 
-const employee: Employee = {
-  _id: '676e6e4007d5ae05a35cda9e',
-  email: 'shagai@gmail.com',
-  jobTitle: 'junior',
-  username: 'shagai',
-  adminStatus: false,
-  remoteLimit: 5,
-  paidLeaveLimit: 5,
-  freeLimit: 5,
-  employeeStatus: EmployeeStatus.Employee,
-  createdAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-  updatedAt: 'Fri Dec 27 2024 17:07:12 GMT+0800 (Ulaanbaatar Standard Time)',
-};
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [day, setDay] = useState(false);
@@ -29,21 +17,23 @@ const Page = () => {
   const handleSelectChange = (value: string) => {
     setItem(value);
   };
-
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
-  // }, [router]);
-
   const [createRequest] = useCreateRequestMutation();
   const { data } = useGetEmployeesQuery({ variables: { input: 'Lead' } });
 
   const leads = data?.getEmployees as Employee[];
+  const [employee, setEmployee] = useState<Employee>();
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      setEmployee(user);
+    }
+  }, [user]);
+
+  if (!employee) {
+    return <div>loading</div>;
+  }
 
   const onSubmit = async (data: RequestsInput) => {
     setIsOpen(true);

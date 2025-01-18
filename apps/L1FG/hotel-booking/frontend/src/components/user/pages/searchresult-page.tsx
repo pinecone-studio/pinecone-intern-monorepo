@@ -1,13 +1,15 @@
-import { Footer } from '../search-result/Footer';
+import { SearchBar } from '../features/SearchBar';
+import { NavigationBlue } from '../Navigations';
 import { MainResultSearch } from '../search-result/MainSearchResult';
-import HomePage from './home-page';
+import { BlueDital } from '../ui/microui';
 
 export const SearchResultPage = () => {
   return (
     <div>
-      <HomePage />
+      <NavigationBlue />
+      <BlueDital />
+      <SearchBar />
       <MainResultSearch />
-      <Footer />
     </div>
   );
 };
