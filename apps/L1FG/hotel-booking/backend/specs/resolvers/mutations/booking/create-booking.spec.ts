@@ -5,12 +5,12 @@ import { BookingModel } from '../../../../src/models';
 
 const booking: CreateBookingInput = {
   userId: 'user123',
-  hotelId: 'hotel123',
   roomId: 'room123',
+  hotelId: 'hotel123',
   startDate: '2025-01-01',
   endDate: '2025-01-07',
   phoneNumber: '123-456-7890',
-  guestRequest: ' Nothing',
+  guestRequest: 'Nothing',
   email: 'test@example.com',
   status: 'pending',
   cardName: 'John Doe',
@@ -66,13 +66,7 @@ describe('createBooking', () => {
     expect(response.success).toBe(true);
     expect(response.message).toBe('Booking created successfully');
     expect(response.booking?.userId).toBe('user123');
-    expect(response.booking?.guestRequest).toEqual([
-      { key: 'Special Request', value: 'Extra towels' },
-      { key: 'Late Check-In', value: 'After 10 PM' },
-    ]);
-    expect(response.booking?.status).toEqual([
-      { key: 'Payment Status', value: 'Paid' },
-      { key: 'Reservation Status', value: 'Confirmed' },
-    ]);
+    expect(response.booking?.guestRequest).toBe('Nothing');
+    expect(response.booking?.status).toBe('pending');
   });
 });
