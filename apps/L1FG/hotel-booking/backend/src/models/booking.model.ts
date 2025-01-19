@@ -11,6 +11,11 @@ const BookingSchema = new Schema<BookingType>({
   guestRequest: { type: String, default: '' },
   email: { type: String },
   status: { type: String },
+  cardName: { type: String },
+  cardNumber: { type: String },
+  expirationDate: { type: Date },
+  securityCode: { type: Number },
+  country: { type: String },
 });
 
 export const BookingModel = models['bookings'] || model<BookingType>('bookings', BookingSchema);

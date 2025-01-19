@@ -11,9 +11,9 @@ const hotel: CreateHotelInput = {
   description: 'A beautiful hotel.',
   images: ['image1.jpg', 'image2.jpg'],
   rooms: [],
-  faqs: ['Is breakfast included?'],
-  policies: ['No smoking.'],
-  about: ['Located in downtown.'],
+  faqs: [{ key: 'Is breakfast included?', value: 'Yes' }],
+  policies: [{ key: 'No smoking.', value: 'Enforced' }],
+  about: [{ key: 'Location', value: 'Located in downtown.' }],
   location: {
     type: 'Point',
     coordinates: [40.7128, -74.006],
@@ -52,9 +52,9 @@ describe('createHotel', () => {
       description: 'A beautiful hotel.',
       images: ['image1.jpg', 'image2.jpg'],
       rooms: [],
-      faqs: ['Is breakfast included?'],
-      policies: ['No smoking.'],
-      about: ['Located in downtown.'],
+      faqs: [{ key: 'Is breakfast included?', value: 'Yes' }],
+      policies: [{ key: 'No smoking.', value: 'Enforced' }],
+      about: [{ key: 'Location', value: 'Located in downtown.' }],
       location: {
         type: 'Point',
         coordinates: [40.7128, -74.006],
@@ -68,5 +68,8 @@ describe('createHotel', () => {
     expect(response.success).toBe(true);
     expect(response.message).toBe('Hotel created successfully');
     expect(response.hotel?.name).toBe('Hotel Example');
+    expect(response.hotel?.faqs).toEqual([{ key: 'Is breakfast included?', value: 'Yes' }]);
+    expect(response.hotel?.policies).toEqual([{ key: 'No smoking.', value: 'Enforced' }]);
+    expect(response.hotel?.about).toEqual([{ key: 'Location', value: 'Located in downtown.' }]);
   });
 });
