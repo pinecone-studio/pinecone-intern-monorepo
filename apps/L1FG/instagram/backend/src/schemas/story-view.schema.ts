@@ -10,7 +10,6 @@ export const StoryViewTypeDefs = gql`
   }
 
   input StoryViewInput {
-    userId: ID
     storyNodeId: ID
     latestStory: ID
     seen: Date

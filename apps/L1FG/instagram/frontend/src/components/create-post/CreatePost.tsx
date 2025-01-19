@@ -23,7 +23,6 @@ const CreatePost = () => {
         input: {
           postImage: [postImage],
           caption,
-          userId,
         },
       },
     });

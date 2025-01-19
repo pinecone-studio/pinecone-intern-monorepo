@@ -23,6 +23,8 @@ const nextConfig = {
   },
   env: {
     MONGO_URL: process.env.MONGO_URL,
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+    SESSION_SECRET: process.env.SESSION_SECRET,
   },
   nx: {
     svgr: false,
