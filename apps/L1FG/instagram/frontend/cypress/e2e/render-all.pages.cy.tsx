@@ -4,7 +4,7 @@ describe('render all pages', () => {
   it(`Should render all page`, () => {
     cy.log(JSON.stringify(allPages));
     allPages.forEach((page) => {
-      cy.visit(page.split('/apps/L1FG/instagram/frontend')[1]);
+      cy.visit(page);
     });
   });
 });
