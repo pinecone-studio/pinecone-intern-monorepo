@@ -1,8 +1,5 @@
 import { ObjectId } from 'mongoose';
 
-export type Dictionary = {
-  [key: string]: string;
-};
 export type LocationType = {
   type: 'Point';
   coordinates: [number, number];
@@ -17,11 +14,12 @@ export type HotelType = {
   description: string;
   images: string[];
   rooms: ObjectId[];
-  faqs: Dictionary[];
-  policies: Dictionary[];
-  about: Dictionary[];
+  faqs: { key: string; value: string }[];
+  policies: { key: string; value: string }[];
+  about: { key: string; value: string }[];
   location: LocationType;
   locationName: string;
+  amenities: string[];
 };
 
 export type RoomType = {
@@ -34,7 +32,7 @@ export type RoomType = {
   images: string[];
   roomInfo: string[];
   type: string;
-  roomServices: Dictionary[];
+  roomServices: { key: string; value: string }[];
   tax: number;
 };
 
