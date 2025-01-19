@@ -11,7 +11,7 @@ describe('Home Page', () => {
     cy.get('[data-cy=signup-fullName-input]').type('ankhaa');
     cy.get('[data-cy=signup-userName-input]').type('hi_');
     cy.get('[data-cy=sign-up-button]').click();
-    cy.contains('Хэрэглэгч амжилттай бүртгэгдлээ').should('be.visible');
+    cy.contains('Амжилттай бүртгэгдлээ').should('be.visible');
   });
   it('Should throw duplicate email error', () => {
     cy.get('[data-cy=signup-email-input]').type('cypress@gmail.com');
