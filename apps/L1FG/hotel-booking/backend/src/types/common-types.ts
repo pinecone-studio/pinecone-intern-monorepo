@@ -60,4 +60,5 @@ export type UserType = {
   phoneNumber: string;
   emergencyContact: string[];
   status: 'Admin' | 'User';
+  password: string;
 };
