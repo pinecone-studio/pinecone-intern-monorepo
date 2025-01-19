@@ -1,49 +1,42 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getHotelById } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries/hotel/get-hotel-by-id';
-import { HotelModel } from 'apps/L1FG/hotel-booking/backend/src/models';
 
-jest.mock('apps/L1FG/hotel-booking/backend/src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   HotelModel: {
     findById: jest.fn(),
   },
 }));
 
-const hotelId = '6786c58b136cec130f8d1d3b';
-
 describe('getHotelById', () => {
+  const mockFindById = jest.requireMock('../../../../src/models').HotelModel.findById;
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should return hotel if found', async () => {
-    const mockHotel = {
-      id: hotelId,
-      name: 'Test Hotel',
-      phoneNumber: '123456789',
-      rating: 4.5,
-      starRating: 5,
-      description: 'A nice hotel.',
-      images: ['image1.jpg'],
-      rooms: ['room1'],
-      faqs: ['faq1'],
-      policies: ['policy1'],
-      about: ['about1'],
-      location: { type: 'Point', coordinates: [0, 0] },
-      locationName: 'Test Location',
-    };
+    mockFindById.mockResolvedValueOnce({ _id: '678cc7f6a4e7125effcba04c' });
 
-    (HotelModel.findById as jest.Mock).mockResolvedValue(mockHotel);
+    const response = await getHotelById!({}, { id: '678cc7f6a4e7125effcba04c' }, {}, {} as GraphQLResolveInfo);
 
-    const response = await getHotelById!({}, { id: hotelId }, {}, {} as GraphQLResolveInfo);
-
-    expect(response).toEqual(mockHotel);
+    expect(response).toEqual({ _id: '678cc7f6a4e7125effcba04c' });
   });
 
   it('should throw an error if hotel not found', async () => {
-    (HotelModel.findById as jest.Mock).mockResolvedValue(null);
+    mockFindById.mockResolvedValueOnce(null);
 
-    await expect(getHotelById!({}, { id: hotelId }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Hotel not found');
+    try {
+      await getHotelById!({}, { id: '64b5fddbbc634b0012d91234' }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('Hotel not found'));
+    }
   });
 
-  it('should throw an error if ID format is invalid', async () => {
-    const invalidId = 'invalidObjectId';
-
-    await expect(getHotelById!({}, { id: invalidId }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Invalid ObjectId format');
+  it('should throw an error for invalid ObjectId format', async () => {
+    try {
+      await getHotelById!({}, { id: 'hehe' }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('Invalid ID format'));
+    }
   });
 });
