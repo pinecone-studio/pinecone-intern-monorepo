@@ -11,7 +11,6 @@ export const StoryTypeDefs = gql`
 
   input StoryInput {
     storyImage: String
-    userId: ID
     expiringAt: Date
     duration: Int
   }

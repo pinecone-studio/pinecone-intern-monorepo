@@ -9,7 +9,6 @@ export const StoryLikeTypeDefs = gql`
   }
 
   input StoryLikeInput {
-    userId: ID!
     storyId: ID!
   }
 
