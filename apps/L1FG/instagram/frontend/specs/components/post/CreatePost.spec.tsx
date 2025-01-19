@@ -41,7 +41,6 @@ describe('CreatePost Component', () => {
         input: {
           postImage: ['mocked-image'],
           caption: 'mocked-caption',
-          userId: 'mocked-userId',
         },
       },
     });

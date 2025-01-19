@@ -1,8 +1,9 @@
 import { MutationResolvers } from '../../../generated';
 import { StoryModel, StoryNodeModel } from '../../../models';
 
-export const createStory: MutationResolvers['createStory'] = async (_, { input }) => {
-  const { userId, storyImage, expiringAt, duration } = input;
+export const createStory: MutationResolvers['createStory'] = async (_, { input }, { userId }) => {
+  if (!userId) throw new Error('Unauthorized');
+  const { storyImage, expiringAt, duration } = input;
 
   const story = await StoryModel.create({
     userId,
