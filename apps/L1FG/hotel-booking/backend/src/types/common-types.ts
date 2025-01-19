@@ -47,6 +47,11 @@ export type BookingType = {
   guestRequest: string;
   email: string;
   status: string;
+  cardName: string;
+  cardNumber: string;
+  expirationDate: Date;
+  securityCode: number;
+  country: string;
 };
 
 export type UserType = {

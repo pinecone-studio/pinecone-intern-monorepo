@@ -3,6 +3,7 @@ import { HotelModel } from '../../../models';
 
 export const createHotel: MutationResolvers['createHotel'] = async (_, { input }) => {
   const { name, phoneNumber, rating, starRating, description, images, rooms, faqs, policies, about, location, locationName } = input;
+  console.log(input);
   try {
     const newHotel = await HotelModel.create({
       name,
@@ -25,6 +26,7 @@ export const createHotel: MutationResolvers['createHotel'] = async (_, { input }
       hotel: newHotel,
     };
   } catch (error) {
+    console.log(error);
     return {
       code: 500,
       success: false,

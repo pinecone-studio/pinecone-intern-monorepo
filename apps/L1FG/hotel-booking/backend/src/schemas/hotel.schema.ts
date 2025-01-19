@@ -5,6 +5,16 @@ export const typeDefs = gql`
 
   scalar Date
 
+  input KeyValueInput {
+    key: String!
+    value: String!
+  }
+
+  type KeyValue {
+    key: String!
+    value: String!
+  }
+
   input CreateHotelInput {
     name: String!
     phoneNumber: String!
@@ -13,9 +23,9 @@ export const typeDefs = gql`
     description: String!
     images: [String!]!
     rooms: [ID]
-    faqs: [String]
-    policies: [String]
-    about: [String]
+    faqs: [KeyValueInput]
+    policies: [KeyValueInput]
+    about: [KeyValueInput]
     location: LocationInput!
     locationName: String
   }
@@ -34,9 +44,9 @@ export const typeDefs = gql`
     description: String!
     images: [String!]!
     rooms: [ID]
-    faqs: [String]
-    policies: [String]
-    about: [String]
+    faqs: [KeyValue]
+    policies: [KeyValue]
+    about: [KeyValue]
     location: Location
     locationName: String
   }
