@@ -13,7 +13,7 @@ export const foodTypeDefs = gql`
     imageUrl: String!
     price: Float!
     status: String!
-    category_id: ID
+    categoryId: ID
   }
 
   type FoodType {
@@ -22,7 +22,7 @@ export const foodTypeDefs = gql`
     imageUrl: String!
     price: Float!
     status: String!
-    category_id: ID
+    categoryId: ID
     createdAt: Date!
   }
 
