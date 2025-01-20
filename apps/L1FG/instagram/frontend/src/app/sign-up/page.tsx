@@ -1,11 +1,5 @@
-'use client';
-import { SignUpPage } from '@/components/sign-up/SignUpPage';
-
-const SignUp = () => {
-  return (
-    <div>
-      <SignUpPage />
-    </div>
-  );
+import SignUpForm from '@/components/sign-up/SignUpForm';
+const SignUpPage = () => {
+  return <SignUpForm />;
 };
-export default SignUp;
+export default SignUpPage;

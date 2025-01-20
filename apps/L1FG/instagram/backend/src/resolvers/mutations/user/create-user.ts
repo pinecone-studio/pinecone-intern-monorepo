@@ -1,10 +1,19 @@
-import { MutationResolvers } from "../../../generated";
-import { UserModel } from "../../../models";
+import { MutationResolvers } from '../../../generated';
+import { UserModel } from '../../../models';
+import bcrypt from 'bcrypt';
+export const createUser: MutationResolvers['createUser'] = async (_, { input }) => {
+  const { userName, fullName, password, email } = input;
+  const foundUser = await UserModel.findOne({ email });
+  if (foundUser) {
+    throw new Error('User exits');
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-export const createUser: MutationResolvers['createUser']=async(_, {input}) =>{
-const {userName,fullName,password,email}= input
- const user = await UserModel.create({
-    userName, fullName, password,email
- })   
-return user 
-}
+  const user = await UserModel.create({
+    userName,
+    fullName,
+    password: hashedPassword,
+    email,
+  });
+  return user;
+};
