@@ -7,7 +7,7 @@ const config: CodegenConfig = {
     'apps/L1FG/instagram/backend/src/generated/index.ts': {
       plugins: ['typescript', 'typescript-resolvers'],
       config: {
-        contextType: 'Context',
+        contextType: '../types#Context',
         makeResolverTypeCallable: true,
         maybeValue: 'T',
       },

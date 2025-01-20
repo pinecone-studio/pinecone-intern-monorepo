@@ -1,9 +1,10 @@
 'use client';
 
-import UserProfile from "../components/user-profile/UserProfile";
+import OrderHistory from "@/components/order-history/OrderHistory";
+
 
 const Page = () => {
-  return <div><UserProfile/></div>;
+  return <div><OrderHistory/></div>;
 };
 
 export default Page;

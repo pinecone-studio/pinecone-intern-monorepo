@@ -5,6 +5,16 @@ export const typeDefs = gql`
 
   scalar Date
 
+  input KeyValueInput {
+    key: String!
+    value: String!
+  }
+
+  type KeyValue {
+    key: String!
+    value: String!
+  }
+
   type Room {
     id: ID!
     name: String
@@ -15,7 +25,7 @@ export const typeDefs = gql`
     images: [String!]!
     roomInfo: [String]
     type: String
-    roomServices: [String]
+    roomServices: [KeyValue]
     tax: Float
   }
   input CreateRoomInput {
@@ -27,7 +37,7 @@ export const typeDefs = gql`
     images: [String!]!
     roomInfo: [String]
     type: String
-    roomServices: [String]
+    roomServices: [KeyValueInput]
     tax: Float
   }
 
@@ -44,5 +54,6 @@ export const typeDefs = gql`
 
   type Query {
     getRooms: [Room!]!
+    getRoomsByHotelId(hotelId: ID!): [Room]
   }
 `;
