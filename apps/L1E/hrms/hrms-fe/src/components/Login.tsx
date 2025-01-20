@@ -5,8 +5,9 @@ interface LoginProps {
   emailSubmit: (_e: string) => void;
   emailHnalder: (_e: string) => void;
   error: string | null;
+  loader: boolean;
 }
-export const Login = ({ emailSubmit, emailHnalder, error }: LoginProps) => {
+export const Login = ({ emailSubmit, emailHnalder, error, loader }: LoginProps) => {
   return (
     <div className="flex flex-col justify-center items-center gap-9 w-[364px] h-[364px] rounded-xl border">
       <h2>Нэвтрэх</h2>
@@ -31,13 +32,14 @@ export const Login = ({ emailSubmit, emailHnalder, error }: LoginProps) => {
         {/* Display error */}
       </div>
       <button
+        disabled={loader}
         data-cy="login-submit"
         data-testid="button"
         onClick={() => emailSubmit('otp')}
         className="h-10 w-[316px] text-sm font-medium rounded-md bg-primary text-[#FAFAFA] hover:bg-primary/90"
         type="submit"
       >
-        Нэвтрэх
+        {loader ? 'Уншиж байна...' : 'Нэвтрэх'}
       </button>
     </div>
   );

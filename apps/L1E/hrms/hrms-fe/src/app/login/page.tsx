@@ -15,16 +15,17 @@ const Page = () => {
   const [error, setError] = useState<string>('');
   const [errorotp, setErrorotp] = useState<string>('');
   const router = useRouter();
+  const [loader, setLoader] = useState(false);
 
   const emailHnalder = (e: string) => {
     setEmail(e);
   };
   const emailSubmit = async (e: string) => {
-    const { data } = await getEmployeeByEmail({ variables: { email: email } });
-
+    setLoader(true);
     if (!email) {
       setError('И-мэйл хаягаа оруулна уу ');
     } else {
+      const { data } = await getEmployeeByEmail({ variables: { email: email } });
       if (data) {
         handleChange(e);
         setError('');
@@ -32,31 +33,39 @@ const Page = () => {
         setError('Ийм и-мэйл байхгүй байна');
       }
     }
+
+    setLoader(false);
   };
 
   const resent = async () => {
+    setErrorotp('OTP дахин илгээж байна...');
     const { refetch } = await getEmployeeByEmail({ variables: { email: email } });
     refetch();
-    setErrorotp('otp dahin ilgeelee');
   };
 
   const handleChange = (e: string) => {
     setLoginStage(e);
+    if (e == 'email') {
+      setEmail('');
+    }
+    setErrorotp('');
   };
   const handlesubmit = async (e: string) => {
+    setErrorotp('Уншиж байна...');
     const { data } = await getEmployeeByOtp({ variables: { email: email, otpToken: e } });
+    console.log(data);
 
     if (data) {
       localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?._id));
-      router.push('/');
+      router.push('/my-requests');
     } else {
-      setErrorotp('invalid otp');
+      setErrorotp('otp таарахгүй байна.');
     }
   };
   return (
     <div className="w-screen h-screen flex items-center justify-center" data-cy="login-page">
       {loginStage === 'email' ? (
-        <Login emailSubmit={emailSubmit} emailHnalder={emailHnalder} error={error} />
+        <Login emailSubmit={emailSubmit} emailHnalder={emailHnalder} error={error} loader={loader} />
       ) : (
         <OtpGenerate handlesubmit={handlesubmit} handleChange={handleChange} errorotp={errorotp} resent={resent} />
       )}
