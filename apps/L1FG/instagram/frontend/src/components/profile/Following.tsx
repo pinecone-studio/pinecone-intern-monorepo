@@ -13,9 +13,11 @@ const Followers = ({ children }: { children: React.ReactNode }) => {
             <h3 className="flex justify-center">Followers</h3>
             <div className="flex justify-end">
               <DialogTrigger asChild>
-                <button aria-label="Close dialog">
-                  <X className="cursor-pointer" />
-                </button>
+                <div className="relative">
+                  <button aria-label="Close dialog absolute">
+                    <X className="cursor-pointer" />
+                  </button>
+                </div>
               </DialogTrigger>
             </div>
           </div>
@@ -23,7 +25,7 @@ const Followers = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full border"></div>
         <div className="flex justify-center">
           <div className="items-center justify-center w-full relative">
-            <Search className="absolute top-2 left-2 text-gray-500" />
+            <Search className="absolute top-1 left-2 text-gray-500" />
             <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8" />
           </div>
         </div>
