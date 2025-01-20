@@ -3,7 +3,7 @@ export const AmericanExpressCard = () => {
     <svg xmlns="http://www.w3.org/2000/svg" width="52" height="32" viewBox="0 0 52 32" fill="none">
       <path d="M42.3602 0.0117188V31.9983H10.0781V0.0117188H42.3602Z" fill="url(#paint0_radial_334_25486)" />
       <path d="M10.0645 31.9866V0H42.3869V31.9866H10.0645Z" fill="url(#paint1_radial_334_25486)" />
-      <mask id="mask0_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask0_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask0_334_25486)">
@@ -12,31 +12,31 @@ export const AmericanExpressCard = () => {
           fill="white"
         />
       </g>
-      <mask id="mask1_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask1_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask1_334_25486)">
         <path d="M26.1705 19.5332H24.9883V20.4602H26.157C26.5466 20.4602 26.681 20.2318 26.681 19.9765C26.6944 19.7885 26.5735 19.5332 26.1705 19.5332Z" fill="white" />
       </g>
-      <mask id="mask2_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask2_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask2_334_25486)">
         <path d="M30.2271 19.5332H29.0449V20.4064H30.2137C30.6033 20.4064 30.7376 20.2318 30.7376 19.9765C30.751 19.7885 30.6301 19.5332 30.2271 19.5332Z" fill="white" />
       </g>
-      <mask id="mask3_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask3_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask3_334_25486)">
         <path d="M20.3538 20.9841H18.2715V21.7498H20.4478L21.4957 20.5811L20.5687 19.5332H18.2715V20.2586H20.3538V20.9841Z" fill="white" />
       </g>
-      <mask id="mask4_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask4_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask4_334_25486)">
         <path d="M22.6914 20.5806L24.0617 22.1926L24.0483 19.0625L22.6914 20.5806Z" fill="white" />
       </g>
-      <mask id="mask5_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask5_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask5_334_25486)">
@@ -45,19 +45,19 @@ export const AmericanExpressCard = () => {
           fill="white"
         />
       </g>
-      <mask id="mask6_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask6_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask6_334_25486)">
         <path d="M33.291 14.2533H34.4463L33.8552 12.8965L33.291 14.2533Z" fill="white" />
       </g>
-      <mask id="mask7_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask7_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask7_334_25486)">
         <path d="M26.4527 12.9102H25.2705V13.7834H26.4527C26.8423 13.7834 26.9766 13.6087 26.9766 13.3535C26.9766 13.1654 26.8557 12.9102 26.4527 12.9102Z" fill="white" />
       </g>
-      <mask id="mask8_334_25486" mask-type="luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
+      <mask id="mask8_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
         <path d="M10.0625 0H42.3849V31.9866H10.0625V0Z" fill="white" />
       </mask>
       <g mask="url(#mask8_334_25486)">
@@ -65,20 +65,20 @@ export const AmericanExpressCard = () => {
       </g>
       <defs>
         <radialGradient id="paint0_radial_334_25486" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(26.2199 16.005) scale(16.0725 16.0725)">
-          <stop stop-color="#1AB9EC" />
-          <stop offset="0.19" stop-color="#1AB9EC" />
-          <stop offset="0.3139" stop-color="#1DADDD" />
-          <stop offset="0.5481" stop-color="#1B93C0" />
-          <stop offset="0.865" stop-color="#156F99" />
-          <stop offset="1" stop-color="#0F618B" />
+          <stop stopColor="#1AB9EC" />
+          <stop offset="0.19" stopColor="#1AB9EC" />
+          <stop offset="0.3139" stopColor="#1DADDD" />
+          <stop offset="0.5481" stopColor="#1B93C0" />
+          <stop offset="0.865" stopColor="#156F99" />
+          <stop offset="1" stopColor="#0F618B" />
         </radialGradient>
         <radialGradient id="paint1_radial_334_25486" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(17.8931 5.83648) scale(32.5072 32.5072)">
-          <stop stop-color="#26B8EB" />
-          <stop offset="0.19" stop-color="#26B8EB" />
-          <stop offset="0.3162" stop-color="#27ACDC" />
-          <stop offset="0.5545" stop-color="#2192BE" />
-          <stop offset="0.8773" stop-color="#166E98" />
-          <stop offset="1" stop-color="#0F618B" />
+          <stop stopColor="#26B8EB" />
+          <stop offset="0.19" stopColor="#26B8EB" />
+          <stop offset="0.3162" stopColor="#27ACDC" />
+          <stop offset="0.5545" stopColor="#2192BE" />
+          <stop offset="0.8773" stopColor="#166E98" />
+          <stop offset="1" stopColor="#0F618B" />
         </radialGradient>
       </defs>
     </svg>

@@ -1,6 +1,6 @@
 'use client';
 
-import { addDays, format } from 'date-fns';
+import { addDays } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
@@ -20,8 +20,8 @@ export const DatePickerWithRange = ({ className }: HTMLAttributes<HTMLDivElement
     <div className={cn('grid gap-2', className)}>
       <Popover>
         <PopoverTrigger asChild>
-          <Button id="date" variant={'outline'} className={cn('w-full rounded-[6px] justify-between h-10 text-left font-normal px-4 py-2 border border-[#E4E4E7]', !date && 'text-muted-foreground')}>
-            {date?.from ? (
+          <Button id="date" variant={'outline'} className={cn('w-full rounded-[6px] justify-between h-10 text-left font-normal px-4 py-2 border border-[#E4E4E7]')}>
+            {/* {date?.from ? (
               date.to ? (
                 <>
                   {format(date.from, 'LLL dd, y')} - {format(date.to, 'LLL dd, y')}
@@ -31,7 +31,7 @@ export const DatePickerWithRange = ({ className }: HTMLAttributes<HTMLDivElement
               )
             ) : (
               <span>Pick a date</span>
-            )}
+            )} */}
             <CalendarIcon size={16} />
           </Button>
         </PopoverTrigger>
