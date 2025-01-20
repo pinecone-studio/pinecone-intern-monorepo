@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import { Footer } from '../main/Footer';
 import { Header } from '../main/Header';
-
 import { Sidebar } from '../main/Sidebar';
 import { LeftArrow } from '../svg';
-import { UpcomingBooking } from '../ui/add-hotel/UpcomingBooking';
+import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '../ui/add-hotel';
 
 export const AddHotelPage = () => {
   return (
@@ -26,8 +25,18 @@ export const AddHotelPage = () => {
             <div className="flex gap-4">
               <div className="max-w-[784px] w-full flex flex-col gap-4">
                 <UpcomingBooking />
+                <RoomTypes />
+                <GeneralInfo />
+                <Amenities />
+                <AboutThisProperty />
+                <Policies />
+                <PoliciesExtra />
+                <Questions />
               </div>
-              {/* <GuestInfoRight /> */}
+              <div className="max-w-[400px] w-full flex flex-col gap-4">
+                <Location />
+                <Images />
+              </div>
             </div>
           </div>
         </div>
