@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-
+import '@testing-library/jest-dom';
 import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
 import OrderPageComponent from '@/components/order/OrderPageComponent';
 
