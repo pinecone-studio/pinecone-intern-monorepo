@@ -54,5 +54,6 @@ export const typeDefs = gql`
 
   type Query {
     getRooms: [Room!]!
+    getRoomsByHotelId(hotelId: ID!): [Room]
   }
 `;
