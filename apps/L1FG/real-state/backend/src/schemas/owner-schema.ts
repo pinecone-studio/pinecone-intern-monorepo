@@ -44,8 +44,8 @@ export const OwnerTypeDefs = gql`
   }
 
   type Query {
-    getOwner(_id: ID!): Owner!
-    getOwners: [Owner!]!
+    getOwnerById(_id: ID!): Owner
+    getOwners(input: String): [Owner]
   }
 
   type Mutation {
