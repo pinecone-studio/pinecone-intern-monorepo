@@ -23,7 +23,7 @@ export const UserTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String!
+    profileImage: String
     hasStory: Boolean
     gender: Gender
     isPrivate: Boolean
