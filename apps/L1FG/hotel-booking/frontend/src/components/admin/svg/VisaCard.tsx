@@ -1,7 +1,7 @@
 export const VisaCard = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="59" height="32" viewBox="0 0 59 32" fill="none">
-      <g clip-path="url(#clip0_334_25471)">
+      <g clipPath="url(#clip0_334_25471)">
         <path d="M54.6378 0H4.25879V32H54.6378V0Z" fill="white" />
         <path d="M53.7974 26.7988H5.09766V31.1603H53.7974V26.7988Z" fill="#F7B600" />
         <path d="M53.7974 0.839844H5.09766V5.20136H53.7974V0.839844Z" fill="#1A1F71" />

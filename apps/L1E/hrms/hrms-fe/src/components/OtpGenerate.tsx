@@ -33,7 +33,7 @@ export const OtpGenerate = ({ handleChange, handlesubmit, resent, errorotp }: Ot
         <div data-cy="error-otp">{errorotp ? errorotp : ''}</div>
 
         <div className="flex flex-row gap-[240px]">
-          <button data-testid="button" type="submit" onClick={() => handleChange('email')}>
+          <button data-testid="button" type="submit" data-cy="back-button" onClick={() => handleChange('email')}>
             <IoIosArrowRoundBack className="w-4 h-4" />
           </button>
           <button data-cy="resent-otp" onClick={resent}>
