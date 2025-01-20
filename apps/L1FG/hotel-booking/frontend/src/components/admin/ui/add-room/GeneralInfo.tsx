@@ -1,7 +1,7 @@
 export const GeneralInfo = () => {
   return (
     <div className="w-full border border-spacing-3 p-8 rounded-lg bg-white">
-      {/* <div className="w-[736px] flex items-center justify-between ">
+      <div className="w-[736px] flex items-center justify-between ">
         <div className=" font-Inter text-[#020617] text-lg font-semibold">General Info</div>
         <div className=" text-[#2563EB] text-base font-semibold ">Edit</div>
       </div>
@@ -28,7 +28,7 @@ export const GeneralInfo = () => {
           <p> Room Information</p>
           <p>-/-</p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
