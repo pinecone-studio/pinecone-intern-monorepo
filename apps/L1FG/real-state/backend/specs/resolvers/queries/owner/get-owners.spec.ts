@@ -8,10 +8,10 @@ jest.mock('apps/L1FG/real-state/backend/src/models/owner-model', () => ({
       .fn()
       .mockResolvedValueOnce({
         _id: '67729b7868800928a433e430',
-        propertyOwnerId: '2',
+        propertyOwnerId: '67729b7868800928a433e430',
         title: 'test',
         price: 30000,
-        propertyDetail: '1',
+        propertyDetail: '67729b7868800928a433e430',
         status: 'DECLINED',
         updatedAt: new Date('2024-09-01').toISOString(),
         createdAt: new Date('2024-09-01').toISOString(),
@@ -27,15 +27,15 @@ describe('getOwnerById', () => {
     },
   };
   it('should get owners ', async () => {
-    const res = await getOwners!({}, { input: 'PENDING' }, context, {} as GraphQLResolveInfo);
+    const res = await getOwners!({}, {}, context, {} as GraphQLResolveInfo);
 
     expect(Owner.find);
     expect(res).toEqual({
       _id: '67729b7868800928a433e430',
-      propertyOwnerId: '2',
+      propertyOwnerId: '67729b7868800928a433e430',
       title: 'test',
       price: 30000,
-      propertyDetail: '1',
+      propertyDetail: '67729b7868800928a433e430',
       status: 'DECLINED',
       updatedAt: new Date('2024-09-01').toISOString(),
       createdAt: new Date('2024-09-01').toISOString(),
@@ -43,7 +43,7 @@ describe('getOwnerById', () => {
   });
 
   it('should throw an error when no owner is found', async () => {
-    await expect(getOwners!({}, { input: 'PENDING' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('there is no owners post');
+    await expect(getOwners!({}, {}, context, {} as GraphQLResolveInfo)).rejects.toThrow('there is no owners post');
     expect(Owner.find);
   });
 });
