@@ -1,5 +1,7 @@
+import { AddEstateButton } from '../ui/AddEstateButton';
+
 const AddEstate = () => {
-  return <>Add Estate</>;
+  return <div>add estate</div>;
 };
 
 export default AddEstate;

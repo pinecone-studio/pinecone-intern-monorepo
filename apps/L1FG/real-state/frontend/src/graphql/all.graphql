@@ -5,3 +5,31 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+mutation AddProperty($input: PropertyInput!) {
+  addProperty(input: $input) {
+    uploadedAt
+    totalRooms
+    size
+    restrooms
+    location {
+      district
+      city
+      address
+    }
+    images
+    houseType
+    garage
+    details {
+      windowsCount
+      windowType
+      totalFloors
+      lift
+      floorNumber
+      floorMaterial
+      completionDate
+      balcony
+    }
+    createdAt
+    _id
+  }
+}

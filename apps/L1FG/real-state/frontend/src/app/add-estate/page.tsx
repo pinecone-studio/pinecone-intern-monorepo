@@ -3,7 +3,11 @@
 import AddEstate from '@/components/addEstate/AddEstate';
 
 const Page = () => {
-  return <AddEstate />;
+  return (
+    <>
+      <AddEstate />
+    </>
+  );
 };
 
 export default Page;
