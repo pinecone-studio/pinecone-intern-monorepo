@@ -9,15 +9,23 @@ export const RightNavbar = () => {
 
         <div className="flex flex-col space-y-8 w-72">
           <div className="space-y-2">
-            <Select onValueChange={(value) => console.log('Selected value:', value)}>
-              <SelectTrigger>
+            <Select>
+              <SelectTrigger data-testid="select-trigger">
                 <SelectValue placeholder="Recommended" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="recommended">Recommended</SelectItem>
-                <SelectItem value="lowtohigh">Price: Low to High</SelectItem>
-                <SelectItem value="hightolow">Price: High to Low</SelectItem>
-                <SelectItem value="star">Star Rating</SelectItem>
+              <SelectContent data-testid="select-content">
+                <SelectItem value="recommended" data-testid="select-item-recommended">
+                  Recommended
+                </SelectItem>
+                <SelectItem value="lowtohigh" data-testid="select-item-lowtohigh">
+                  Price: Low to High
+                </SelectItem>
+                <SelectItem value="hightolow" data-testid="select-item-hightolow">
+                  Price: High to Low
+                </SelectItem>
+                <SelectItem value="star" data-testid="select-item-star">
+                  Star Rating
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
