@@ -1,6 +1,5 @@
-import { Search } from '../features/Search';
+import { SearchBar } from '../features/SearchBar';
 import { NavigationBlue } from '../Navigations';
-import { Footer } from '../search-result/Footer';
 import { MainResultSearch } from '../search-result/MainSearchResult';
 import { BlueDital } from '../ui/microui';
 
@@ -9,9 +8,8 @@ export const SearchResultPage = () => {
     <div>
       <NavigationBlue />
       <BlueDital />
-      <Search />
+      <SearchBar />
       <MainResultSearch />
-      <Footer />
     </div>
   );
 };

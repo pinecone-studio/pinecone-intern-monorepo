@@ -5,7 +5,7 @@ export const GeneralInformation = () => {
   return (
     <div className="flex flex-col gap-[56px] px-[40px]">
       <div className="w-full flex gap-[48px] ">
-        <div className="max-w-[552px] w-full flex flex-col">
+        <div className="w-full flex flex-col">
           <div className="flex flex-col gap-2">
             <p className="text-[30px] leading-[36px] font-[600]">Flower Hotel Ulaanbaatar</p>
             <div className="flex gap-1">
@@ -68,7 +68,7 @@ export const GeneralInformation = () => {
             </div>
           </div>
         </div>
-        <div className="w-[480px] flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2">
           <p className="text-[16px] leading-[28px] font-[700]">Location</p>
           <div className=" flex flex-col px-[16px] pt-[16px] pb-[4px] border border-[#E4E4E7] rounded-md gap-1  ">
             <p className="text-[16px] leading-[24px] font-[400]">Damdinbazar street-52, Bayangol district, Bayangol, 212513 Ulaanbaatar, Mongolia</p>

@@ -1,35 +1,36 @@
-import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Search, X } from 'lucide-react';
 
 const Followers = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] h-[425px]">
         <DialogHeader>
-          <h3 className="flex justify-center">Following</h3>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+          <div className="flex justify-between items-center">
+            <div></div>
+            <h3 className="flex justify-center">Following</h3>
+            <div className="flex justify-end">
+              <DialogTrigger asChild>
+                <button aria-label="Close dialog">
+                  <X className="cursor-pointer" />
+                </button>
+              </DialogTrigger>
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+        </DialogHeader>
+        <div className="w-full border"></div>
+        <div className="flex justify-center">
+          <div className="items-center justify-center w-full relative">
+            <Search className="absolute top-2 left-2 text-gray-500" />
+            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8" />
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );
 };
+
 export default Followers;
