@@ -1,0 +1,10 @@
+query GetHotels {
+  getHotels {
+    id
+    name
+    starRating
+    rating
+    images
+    amenities
+  }
+}
