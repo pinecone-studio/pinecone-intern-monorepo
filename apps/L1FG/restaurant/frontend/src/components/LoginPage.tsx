@@ -1,20 +1,21 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
 import Image from 'next/image';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+    loading: false,
+    errorMessage: '',
+  });
   const handleSignIn = async () => {
-    if (!email || !password) {
-      toast.error('Бүх талбарыг бөглөнө үү.');
+    if (!formState.email || !formState.password) {
+      setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
-    setLoading(true);
+    setFormState({ ...formState, loading: !formState.loading });
   };
 
   return (
@@ -29,22 +30,28 @@ const LoginPage = () => {
             <input
               data-testid="email"
               placeholder="Имэйл хаяг"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formState.email}
+              onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="email"
             />
             <input
               data-testid="password"
               placeholder="Нууц үг"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formState.password}
+              onChange={(e) => setFormState({ ...formState, password: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="password"
             />
           </div>
-          <button data-testid="Нэвтрэх" onClick={handleSignIn} className="flex w-full h-[36px] font-medium text-sm justify-center items-center rounded-md text-white bg-[#441500]" disabled={loading}>
-            {loading ? 'Уншиж байна...' : 'Нэвтрэх'}
+          <p className={`text-red-600 text-sm w-4/5 justify-center items-center px-2 mx-auto ${formState.errorMessage === '' ? 'hidden' : 'flex'}`}>{formState.errorMessage}</p>
+          <button
+            data-testid="Нэвтрэх"
+            onClick={handleSignIn}
+            className="flex w-full h-[36px] font-medium text-sm justify-center items-center rounded-md text-white bg-[#441500]"
+            disabled={formState.loading}
+          >
+            {formState.loading ? 'Уншиж байна...' : 'Нэвтрэх'}
           </button>
           <div className="flex w-full h-[36px] font-medium text-sm justify-center items-center">Нууц үг мартсан?</div>
           <div className="flex justify-between items-center gap-4">
