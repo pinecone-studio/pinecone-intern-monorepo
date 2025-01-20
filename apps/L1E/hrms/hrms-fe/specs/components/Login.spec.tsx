@@ -13,6 +13,25 @@ describe('Login', () => {
           console.log(e);
         }}
         error="Invalid email"
+        loader={false}
+      />
+    );
+    const button = getByTestId('button');
+    fireEvent.click(button);
+    const input = getByTestId('input');
+    fireEvent.change(input, { target: { value: 'test' } });
+  });
+  it('renders the component', async () => {
+    const { getByTestId } = render(
+      <Login
+        emailSubmit={(e) => {
+          console.log(e);
+        }}
+        emailHnalder={(e) => {
+          console.log(e);
+        }}
+        error="Invalid email"
+        loader={true}
       />
     );
     const button = getByTestId('button');

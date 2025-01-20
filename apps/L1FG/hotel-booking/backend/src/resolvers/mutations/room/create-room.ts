@@ -23,7 +23,6 @@ export const createRoom: MutationResolvers['createRoom'] = async (_, { input }) 
       room: newRoom,
     };
   } catch (error) {
-    console.log(error);
     return {
       code: 500,
       success: false,
