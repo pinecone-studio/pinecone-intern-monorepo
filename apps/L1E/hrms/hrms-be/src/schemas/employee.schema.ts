@@ -6,6 +6,11 @@ export const typeDefs = gql`
     Employee
   }
 
+  type Token {
+    token: String
+    employee: Employee
+  }
+
   type Employee {
     _id: ID!
     email: String!
@@ -42,7 +47,7 @@ export const typeDefs = gql`
     getEmployees(input: String): [Employee]
     getAllEmployees: [Employee]
     getEmployeeByEmail(email: String): Employee
-    getEmployeeByOtp(email: String, otpToken: String): Employee
+    getEmployeeByOtp(email: String, otpToken: String): Token
   }
 
   type Mutation {
