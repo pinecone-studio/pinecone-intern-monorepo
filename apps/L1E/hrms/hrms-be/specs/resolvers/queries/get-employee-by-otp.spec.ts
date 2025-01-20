@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getEmployeeByOtp } from '../../../src/resolvers/queries';
-
+import jwt from 'jsonwebtoken';
 jest.mock('../../../src/models', () => ({
   EmployeeModel: {
     findOne: jest
@@ -22,6 +22,10 @@ jest.mock('../../../src/models', () => ({
       }),
   },
 }));
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn().mockReturnValue('mockedToken'),
+  verify: jest.fn(),
+}));
 describe('getEmployeeByOtp', () => {
   const context = {
     req: {
@@ -30,6 +34,7 @@ describe('getEmployeeByOtp', () => {
   };
   it('should get employees', async () => {
     await getEmployeeByOtp!({}, { email: 'tsaganaa1@gmail.com', otpToken: '6797' }, context, {} as GraphQLResolveInfo);
+    jwt.sign({ id: '12' }, 'mock-secret', { expiresIn: '1h' });
   });
   it('should throw an error when no employee found with the provided email and otpToken', async () => {
     await expect(getEmployeeByOtp!({}, { email: 'tsaganaa1@gmail.com', otpToken: '6797' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Invalid OTP token');

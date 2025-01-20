@@ -1,6 +1,6 @@
+import jwt from 'jsonwebtoken';
 import { QueryResolvers } from '../../generated';
 import { EmployeeModel } from '../../models';
-import jwt from 'jsonwebtoken';
 
 export const getEmployeeByOtp: QueryResolvers['getEmployeeByOtp'] = async (_: unknown, { email, otpToken }) => {
   const employee = await EmployeeModel.findOne({ email });
@@ -9,9 +9,9 @@ export const getEmployeeByOtp: QueryResolvers['getEmployeeByOtp'] = async (_: un
       {
         id: employee.id,
       },
-      process.env.SECRET!
+      process.env.SECRET!,
+      { expiresIn: '1h' }
     );
-
     return { employee, token };
   }
   throw new Error('Invalid OTP token');
