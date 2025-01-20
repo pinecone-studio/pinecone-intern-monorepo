@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 describe('UserProfile', () => {
   it('user successfull', async () => {
-    render(<UserProfile  />);
+    render(<UserProfile/>);
   });
 });
 
