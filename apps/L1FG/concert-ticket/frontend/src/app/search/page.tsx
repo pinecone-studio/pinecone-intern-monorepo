@@ -39,7 +39,7 @@ const Page = () => {
     m-auto"
     >
       <SearchConcert data-cy="search-page-search-section" selected={date} onSelect={setDate} onChange={handlechange} />
-      {resultSearch?.length !== 0 ? <Cards cards={resultSearch} data-cy="search-page-cards" /> : <div className="text-white"> concerts not found</div>}
+      {resultSearch?.length !== 0 ? <Cards cards={resultSearch} data-cy="search-page-cards" /> : <div className="text-white"> Concerts not found</div>}
     </div>
   );
 };
