@@ -13,13 +13,19 @@ jest.mock('react-toastify', () => ({
 }));
 
 describe('RegisterPage', () => {
-  it('should show an error if email is empty and user clicks register', () => {
-    const { getByTestId, queryByText } = render(<RegisterPage />);
+  it('should show an error if fields empty and user clicks register', () => {
+    const { getByTestId } = render(<RegisterPage />);
+    const userNameInput = getByTestId('userName');
+    const emailInput = getByTestId('email');
+    const passwordInput = getByTestId('password');
+    const rePasswordInput = getByTestId('rePassword');
     const registerButton = getByTestId('Бүртгүүлэх');
 
+    fireEvent.change(userNameInput, { target: { value: '' } });
+    fireEvent.change(emailInput, { target: { value: '' } });
+    fireEvent.change(passwordInput, { target: { value: '' } });
+    fireEvent.change(rePasswordInput, { target: { value: '' } });
     fireEvent.click(registerButton);
-
-    expect(queryByText('Бүх талбарыг бөглөнө үү.'));
   });
 
   it('should handle registration successfully', async () => {
@@ -37,7 +43,7 @@ describe('RegisterPage', () => {
 
     await act(async () => {
       fireEvent.click(registerButton);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate async action
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     });
   });
 });

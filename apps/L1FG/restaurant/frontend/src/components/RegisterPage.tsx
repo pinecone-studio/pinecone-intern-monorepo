@@ -2,8 +2,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+interface User {
+  userName: string;
+  email: string;
+  password: string;
+  rePassword: string;
+  loading: boolean;
+  errorMessage: string;
+}
+
 const RegisterPage = () => {
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<User>({
     userName: '',
     email: '',
     password: '',
@@ -12,20 +21,12 @@ const RegisterPage = () => {
     errorMessage: '',
   });
 
-  const validateForm = (formState: { userName?: string; email: any; password: any; rePassword: any; loading?: boolean; errorMessage?: string }) => {
-    if (!formState.email || !formState.password) {
-      return 'Бүх талбарыг бөглөнө үү.';
-    }
-    return '';
-  };
-
   const handleRegister = async () => {
-    const errorMessage = validateForm(formState);
-    if (errorMessage) {
-      setFormState({ ...formState, errorMessage });
+    if (!formState.email || !formState.password || !formState.userName || !formState.rePassword) {
+      setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
-    setFormState({ ...formState, loading: !formState.loading, errorMessage: '' });
+    setFormState({ ...formState, loading: !formState.loading });
   };
 
   return (
