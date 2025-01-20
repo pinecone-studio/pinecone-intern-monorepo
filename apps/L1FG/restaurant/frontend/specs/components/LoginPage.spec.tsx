@@ -5,13 +5,6 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('react-toastify', () => ({
-  toast: {
-    error: jest.fn(),
-    success: jest.fn(),
-  },
-}));
-
 describe('Signin', () => {
   it('should show an error if fields empty and user clicks sign in', () => {
     const { getByTestId } = render(<LoginPage />);
