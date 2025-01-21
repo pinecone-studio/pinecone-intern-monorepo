@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         autoClose: 2000,
       });
     },
-    onError: () => {
-      toast.error(`Нэвтрэлт амжилтгүй`, {
+    onError: (error) => {
+      toast.error(`${error.message}`, {
         autoClose: 2000,
       });
     },
