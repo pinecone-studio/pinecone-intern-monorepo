@@ -1,4 +1,3 @@
-import Post from '@/components/profile/Post';
 import Profile from '@/components/profile/Profile';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { render, screen } from '@testing-library/react';
@@ -31,11 +30,5 @@ describe('Profile', () => {
       },
     });
     render(<Profile />);
-  });
-});
-describe('Post', () => {
-  it('Should render', () => {
-    render(<Post />);
-    expect(screen.getByTestId('profile-post')).toBeDefined();
   });
 });

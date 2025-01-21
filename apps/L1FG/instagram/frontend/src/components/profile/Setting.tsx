@@ -2,10 +2,12 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 const items = ['Apps and websites', 'QR code', 'Notifications', 'Settings and privacy', 'Meta verified', 'Supervision', 'Login activity', 'Log out', 'Cancel'];
 
-const Settings = ({ children }: { children: React.ReactNode }) => {
+const Setting = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild className="cursor-pointer">
+        {children}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <div className="flex flex-col justify-center">
           {items.map((item, index) => (
@@ -20,4 +22,4 @@ const Settings = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Settings;
+export default Setting;
