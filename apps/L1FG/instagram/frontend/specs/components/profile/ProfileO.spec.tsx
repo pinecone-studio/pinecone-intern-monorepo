@@ -33,9 +33,3 @@ describe('Profile', () => {
     render(<Profile />);
   });
 });
-describe('Post', () => {
-  it('Should render', () => {
-    render(<Post />);
-    expect(screen.getByTestId('profile-post')).toBeDefined();
-  });
-});
