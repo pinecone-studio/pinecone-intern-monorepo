@@ -32,6 +32,10 @@ jest.mock('../../../src/models', () => ({
 }));
 describe('FreindshipStatus', () => {
   it('Should give friend statuses true', async () => {
+    if(!friendshipStatus)
+      {
+        return
+      }
     const parent = {
       _id: '3',
       bio: '',
@@ -39,7 +43,7 @@ describe('FreindshipStatus', () => {
       fullName: '',
       userName: '',
     };
-    const result = await friendshipStatus!(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
+    const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       following: true,
       incomingRequest: true,
@@ -47,6 +51,10 @@ describe('FreindshipStatus', () => {
     });
   });
   it('Should give friend statuses false', async () => {
+    if(!friendshipStatus)
+    {
+      return
+    }
     const parent = {
       _id: '3',
       bio: '',
@@ -54,11 +62,32 @@ describe('FreindshipStatus', () => {
       fullName: '',
       userName: '',
     };
-    const result = await friendshipStatus!(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
+    const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       following: false,
       incomingRequest: false,
       outgoingRequest: false,
     });
   });
+  it('Should give manual promise if userId equal to _id',async()=>{
+    if(!friendshipStatus)
+      {
+        return
+      }
+      const parent = {
+        _id: '2',
+        bio: '',
+        email: '',
+        fullName: '',
+        userName: '',
+      };
+      const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
+      expect(result).toEqual({
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+      });
+  })
+
+
 });
