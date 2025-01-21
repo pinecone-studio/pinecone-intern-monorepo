@@ -49,4 +49,10 @@ export const typeDefs = gql`
   type Mutation {
     createBooking(input: CreateBookingInput!): CreateBookingResponse!
   }
+
+  type Query {
+    getBookings: [Booking]
+    getBookingsByUserId(userId: ID!): [Booking]
+    getBookingsByHotelId(hotelId: ID!): [Booking]
+  }
 `;
