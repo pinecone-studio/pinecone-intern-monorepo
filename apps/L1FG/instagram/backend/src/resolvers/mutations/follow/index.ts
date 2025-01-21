@@ -1,1 +1,1 @@
-export * from './create-follower'
+export * from './create-follower';
