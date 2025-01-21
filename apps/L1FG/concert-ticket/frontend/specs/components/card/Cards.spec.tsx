@@ -3,8 +3,7 @@ import { render } from '@testing-library/react';
 
 const cards = [
   {
-    __typename: 'Concert',
-    _id: 1,
+    _id: 'jgw87',
     concertName: 'mm',
     concertPlan: 'dv',
     artistName: ['dfsvsdv'],
