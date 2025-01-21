@@ -1,12 +1,13 @@
 import { Card } from '@/components/ticketCard/Card';
 import { render } from '@testing-library/react';
+
+const formatDate = '2025-1-31';
 const card = {
-  __typename: 'Concert',
-  _id: 1,
-  concertName: 'mm',
-  concertPlan: 'dv',
+  _id: 'jdwhfg37',
+  concertName: 'Coldplay live',
+  concertPlan: 'Coldplay',
   artistName: ['dfsvsdv'],
-  concertDay: 436,
+  concertDay: formatDate,
   concertTime: 'fdg',
   concertPhoto: 'fsg',
   vipTicket: { price: 34, quantity: 234 },
@@ -14,7 +15,9 @@ const card = {
   standingAreaTicket: { price: 34, quantity: 234 },
 };
 describe('card', () => {
-  it('card render successfully', async () => {
-    render(<Card card={card} />);
+  it('change concertday', async () => {
+    const { getByTestId } = render(<Card card={card}></Card>);
+    const dateText = getByTestId('card-format-date');
+    expect(dateText).toBeDefined();
   });
 });
