@@ -1,2 +1,3 @@
 export * from './property/add-property-mutation';
-export * from './user/index';
+export * from './user';
+export * from './owner';
