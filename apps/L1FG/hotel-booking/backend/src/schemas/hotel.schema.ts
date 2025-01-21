@@ -17,10 +17,10 @@ export const typeDefs = gql`
 
   input CreateHotelInput {
     name: String!
-    phoneNumber: String
+    phoneNumber: String!
     rating: Float
     starRating: Float
-    description: String
+    description: String!
     images: [String!]!
     rooms: [ID]
     faqs: [KeyValueInput]
@@ -28,7 +28,6 @@ export const typeDefs = gql`
     about: [KeyValueInput]
     location: LocationInput!
     locationName: String
-    amenities: [String]
   }
 
   input LocationInput {
@@ -39,10 +38,10 @@ export const typeDefs = gql`
   type Hotel {
     id: ID!
     name: String!
-    phoneNumber: String
+    phoneNumber: String!
     rating: Float
     starRating: Float
-    description: String
+    description: String!
     images: [String!]!
     rooms: [ID]
     faqs: [KeyValue]
@@ -50,7 +49,6 @@ export const typeDefs = gql`
     about: [KeyValue]
     location: Location
     locationName: String
-    amenities: [String]
   }
 
   type Location {

@@ -1,13 +1,7 @@
 import Link from 'next/link';
 import { HomePageCard } from '../ui/cards';
-import { Hotel } from '@/generated';
-import { FC } from 'react';
 
-interface HomeHotelListProps {
-  data: Array<Hotel>;
-}
-
-export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
+export const HomeHotelList = () => {
   return (
     <main>
       <div className="container mx-auto w-full pt-8 pb-14">
@@ -22,9 +16,14 @@ export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
               </Link>
             </div>
             <div className="grid grid-cols-4 gap-4">
-              {data?.map((singleHotel) => (
-                <HomePageCard key={singleHotel?.id} data={singleHotel} />
-              ))}
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
             </div>
           </div>
           <div className="flex flex-col gap-4">
@@ -37,9 +36,10 @@ export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
               </Link>
             </div>
             <div className="grid grid-cols-4 gap-4">
-              {data?.map((singleHotel) => (
-                <HomePageCard key={singleHotel?.id} data={singleHotel} />
-              ))}
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
+              <HomePageCard />
             </div>
           </div>
         </div>
