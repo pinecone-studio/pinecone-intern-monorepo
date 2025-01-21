@@ -6,7 +6,7 @@ import { HomeSVG } from './Svg/HomeSvg';
 import { SearchSVG } from './Svg/SearchSvg';
 import { HeartSVG } from './Svg/HeartSvg';
 import { HumSVG } from './Svg/HumSvg';
-import Greate from './Greate';
+import { Create } from './Greate';
 // import { DialogDemo } from '@/components/create-post/CreatePostDialog';
 
 export const MenuButtons = () => {
@@ -35,8 +35,8 @@ export const MenuButtons = () => {
           </button>
         </Link>
         {/* <DialogDemo /> */}
-        <Greate />
-        <Link href="/profile">
+        <Create />
+        <Link href="/home">
           <button className="flex items-center gap-4 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ml-2 p-2 relative">
             <Image className="w-6 h-6 rounded" src="/images/profilePic.png" alt="imgProfile" width={16} height={16} />
             <p>Profile</p>

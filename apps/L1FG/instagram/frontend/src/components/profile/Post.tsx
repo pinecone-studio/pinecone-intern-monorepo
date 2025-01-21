@@ -16,7 +16,7 @@ const items = [
 
 const Post = () => {
   return (
-    <div className="flex flex-col gap-5  ">
+    <div className="flex flex-col gap-5  " data-testid="profile-post">
       <div>
         <p className="w-full border"></p>
       </div>

@@ -1,7 +1,6 @@
-import { DatePickerWithRange } from './DatePickerWithRange';
-
 import { ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DatePickerWithRange } from './DatePickerWithRange';
 
 export const SearchBar = () => {
   return (
