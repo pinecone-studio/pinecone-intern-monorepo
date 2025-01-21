@@ -8,6 +8,7 @@ export const login = async (_: unknown, { email, password }: any) => {
   if (!user) throw new Error('бүртгэлгүй байна!');
 
   const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) throw new Error('Email or Password incorrect');
 
   const token = jwt.sign(

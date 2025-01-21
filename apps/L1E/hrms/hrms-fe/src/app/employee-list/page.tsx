@@ -78,7 +78,7 @@ const Page = () => {
     const { username, jobTitle, email, employeeStatus, createdAt } = data;
 
     await CreateEmployee({ variables: { input: { username, jobTitle, email, employeeStatus: employeeStatus as EmployeeStatus, createdAt: createdAt.toString() } } });
-
+    refetch();
     setOpenCreate(false);
   };
 
@@ -87,7 +87,7 @@ const Page = () => {
   };
 
   return (
-    <div data-cy="employee-list-page" className="w-full p-12 bg-neutral-100">
+    <div data-cy="employee-list-page" className="w-full p-12 min-h-screen bg-neutral-100">
       <div className="flex items-center justify-between pb-4">
         <h2 className="text-lg font-medium">Нийт ажилчид</h2>
         <div className="flex items-center gap-4">

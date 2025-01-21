@@ -1,19 +1,19 @@
 'use client';
-import { useState } from 'react';
+
+import React from 'react';
 import { useCreatePostMutation } from '@/generated';
+import { CreatePostProps } from '../types';
+import Header from './lastCreatePost/Header';
+import ImagePreview from './lastCreatePost/ImagePreview';
+import CaptionInput from './lastCreatePost/CaptionInput';
 
-const CreatePost = () => {
-  const [postImage, setPostImage] = useState('');
-  const [caption, setCaption] = useState('');
-  const [userId, setUserId] = useState('');
+export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
+  const [caption, setCaption] = React.useState('');
+  const [createPost, { loading: loadingPost }] = useCreatePostMutation();
 
-  const [createPost, { loading }] = useCreatePostMutation();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // if (!postImage || !caption || !userId) {
-    //   alert('All fields are required!');
+  const handleCreatePost = async () => {
+    // if (!caption || !images.length) {
+    //   alert('Please add a caption and an image.');
     //   return;
     // }
 
@@ -21,44 +21,40 @@ const CreatePost = () => {
     await createPost({
       variables: {
         input: {
-          postImage: [postImage],
+          postImage: images,
           caption,
         },
       },
     });
 
     // alert('Post created successfully!');
-    // } catch (err) {
-    //   console.error('Error creating post:', err);
-    //   alert('Failed to create post. Please try again.');
+    setStep(false);
+    // } catch (error) {
+    //   console.error('Error creating post:');
+    //   alert('Failed to create post.');
+    // } finally {
+    //   setLoading(false);
     // }
   };
 
+  // const handleBack = () => {
+  //   setStep(true);
+  // };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label data-testid="create-post-postimage">Post Image:</label>
-        <input type="text" value={postImage} onChange={(e) => setPostImage(e.target.value)} placeholder="Enter post image URL" required />
+    <div className="bg-white rounded-lg w-full max-w-4xl h-[679px] flex flex-col border shadow-lg z-[100]" data-testid="create-post-modal">
+      <Header /*handleBack={handleBack}*/ handleCreatePost={handleCreatePost} loadingPost={loadingPost} />
+
+      {/* Content */}
+      <div className="flex flex-1">
+        <ImagePreview images={images} loadingPost={loadingPost} />
+
+        {/* Caption & User Input */}
+        <div className="w-[343px] p-4 flex flex-col gap-4">
+          <CaptionInput caption={caption} setCaption={setCaption} />
+        </div>
       </div>
-
-      <div>
-        <label data-testid="create-post-caption">Caption:</label>
-        <input type="text" value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Enter caption" required />
-      </div>
-
-      <div>
-        <label data-testid="create-post-user">User ID:</label>
-        <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="Enter user ID" required />
-      </div>
-
-      <button type="submit" disabled={loading} data-testid="create-post-submit-button">
-        {/* {loading ? 'Creating Post...' : 'Create Post'} */}
-        Create Post
-      </button>
-
-      {/* {error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
-      {data && <p style={{ color: 'green' }}>Post created successfully!</p>} */}
-    </form>
+    </div>
   );
 };
 
