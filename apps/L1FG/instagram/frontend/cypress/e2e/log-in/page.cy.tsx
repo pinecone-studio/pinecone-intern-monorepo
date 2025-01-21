@@ -22,6 +22,6 @@ describe('Login', () => {
     cy.get('[data-cy=login-email-input]').type(`${Date.now()}@gmail.com`);
     cy.get('[data-cy=login-password-input]').type('12345');
     cy.get('[data-cy=login-submit-button]').click();
-    cy.contains('Пассворд буруу байна').should('be.visible');
+    cy.contains('Бүртгэлгүй байна').should('be.visible');
   })
 });
