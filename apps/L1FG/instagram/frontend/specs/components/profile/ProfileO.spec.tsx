@@ -1,4 +1,3 @@
-import Post from '@/components/profile/Post';
 import Profile from '@/components/profile/Profile';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { render, screen } from '@testing-library/react';
