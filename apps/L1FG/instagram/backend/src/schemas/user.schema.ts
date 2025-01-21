@@ -57,6 +57,7 @@ export const UserTypeDefs = gql`
   }
   type Mutation {
     createUser(input: UserInput!): User!
+    updateName(name: String!): String
     login(input: SignInInput!): SignInType!
   }
 `;
