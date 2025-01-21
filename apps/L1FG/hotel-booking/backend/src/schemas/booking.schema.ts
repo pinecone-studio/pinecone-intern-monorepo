@@ -52,5 +52,6 @@ export const typeDefs = gql`
 
   type Query {
     getBookings: [Booking]
+    getBookingsByUserId(userId: ID!): [Booking]
   }
 `;
