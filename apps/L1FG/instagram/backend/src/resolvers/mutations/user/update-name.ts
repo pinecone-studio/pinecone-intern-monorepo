@@ -6,7 +6,6 @@ export const updateName: MutationResolvers['updateName'] = async (_, { name }, {
     throw new Error('Unauthorized');
   }
   const UpdatedUserName = await UserModel.findByIdAndUpdate(userId, { userName: name }, { new: true, runValidations: true });
-  console.log('UpdatedUserName', UpdatedUserName);
-  console.log('userId', userId);
+
   return UpdatedUserName.userName;
 };
