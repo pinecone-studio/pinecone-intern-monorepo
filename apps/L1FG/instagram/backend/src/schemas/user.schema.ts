@@ -30,17 +30,17 @@ export const UserTypeDefs = gql`
     gender: Gender
     isPrivate: Boolean
     email: String!
-    followerCount:Int!
-    followingCount:Int!
-    postCount:Int!
+    followerCount: Int!
+    followingCount: Int!
+    postCount: Int!
   }
 
- 
   type SignInType {
     token: ID!
     exp: Int!
     user: User!
   }
+
   input UserInput {
     userName: String!
     fullName: String!
@@ -53,14 +53,13 @@ export const UserTypeDefs = gql`
   }
   type Query {
     getUser: UserWithoutPassword
+    getUsers: [UserWithoutPassword]
   }
   type Mutation {
     createUser(input: UserInput!): User!
     login(input: SignInInput!): SignInType!
   }
-  
 `;
-
 
 // type UserTogetherViewerType
 // {
@@ -79,8 +78,8 @@ export const UserTypeDefs = gql`
 //   gender: Gender
 //   isPrivate: Boolean
 //   email: String!
-// }  
+// }
 // type UserTogetherType {
 //   user :UserTogetherUserType
-// } 
+// }
 // getUserTogether(searchingUserId:String!):UserTogetherType!
