@@ -1,10 +1,15 @@
 'use client';
 
-import OrderHistory from "@/components/order-history/OrderHistory";
+
+
+
+
+
+
 
 
 const Page = () => {
-  return <div><OrderHistory/></div>;
+  return <div>homepage</div>;
 };
 
 export default Page;
