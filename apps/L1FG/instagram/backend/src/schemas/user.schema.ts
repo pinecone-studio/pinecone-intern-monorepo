@@ -34,7 +34,42 @@ export const UserTypeDefs = gql`
     followingCount: Int!
     postCount: Int!
   }
-
+  type FriendshipStatusType {
+    followedBy: Boolean
+    following: Boolean
+    incomingRequest: Boolean
+    outgoingRequest: Boolean
+  }
+  type UserTogetherViewerType {
+    _id: String!
+    userName: String!
+    fullName: String!
+    bio: String!
+    profileImage: String
+    hasStory: Boolean
+    gender: Gender
+    isPrivate: Boolean
+    email: String!
+  }
+  type UserTogetherUserType {
+    _id: String!
+    userName: String!
+    fullName: String!
+    bio: String!
+    profileImage: String
+    hasStory: Boolean
+    gender: Gender
+    isPrivate: Boolean
+    email: String!
+    followingCount: Int!
+    followerCount: Int!
+    postCount: Int!
+    friendshipStatus: FriendshipStatusType
+  }
+  type UserTogetherType {
+    user: UserTogetherUserType
+    viewer: UserTogetherViewerType
+  }
   type SignInType {
     token: ID!
     exp: Int!
@@ -54,6 +89,7 @@ export const UserTypeDefs = gql`
   type Query {
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
+    getUserTogether(searchingUserId: String!): UserTogetherType!
   }
   type Mutation {
     createUser(input: UserInput!): User!
@@ -62,26 +98,3 @@ export const UserTypeDefs = gql`
     login(input: SignInInput!): SignInType!
   }
 `;
-
-// type UserTogetherViewerType
-// {
-
-// }
-// viewer:UserTogetherViewerType
-
-// type UserTogetherUserType
-// {
-//      _id: String!
-//   userName: String!
-//   fullName: String!
-//   bio: String!
-//   profileImage: String
-//   hasStory: Boolean
-//   gender: Gender
-//   isPrivate: Boolean
-//   email: String!
-// }
-// type UserTogetherType {
-//   user :UserTogetherUserType
-// }
-// getUserTogether(searchingUserId:String!):UserTogetherType!
