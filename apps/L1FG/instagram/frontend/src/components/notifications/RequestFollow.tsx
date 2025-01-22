@@ -10,7 +10,7 @@ export const RequestFollow = () => {
       </Avatar>
       <div className="ml-2">
         <p className="text-sm font-bold">name</p>
-        <p className="text-sm">started following you.</p> : <p className="text-sm h-[32px]">has requested to follow you.</p>
+        <p className="text-sm h-[32px]">has requested to follow you.</p>
       </div>
       <div className="flex gap-2">
         <button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Confirm</button>

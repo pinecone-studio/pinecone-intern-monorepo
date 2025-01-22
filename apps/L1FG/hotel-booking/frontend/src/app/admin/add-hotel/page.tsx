@@ -1,4 +1,4 @@
-import { AddHotelPage } from '@/components/admin/pages/add-hotel';
+import { AddHotelPage } from '@/features/admin/AddHotel';
 
 const AddHotel = () => {
   return <AddHotelPage />;

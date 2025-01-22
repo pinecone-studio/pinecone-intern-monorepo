@@ -1,12 +1,12 @@
 'use client';
 
-import { HotelDetailPage } from '@/components/user/pages/hoteldetail-page';
+import { HotelDetailPage } from '@/features/user/HoteldetailPage';
 
 const HotelDetail = () => {
   return (
-    <div>
+    <main>
       <HotelDetailPage />
-    </div>
+    </main>
   );
 };
 
