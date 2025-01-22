@@ -21,7 +21,7 @@ const Post = () => {
         <p className="w-full border"></p>
       </div>
 
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-6">
         <div className="flex justify-center items-center gap-1 ">
           <Posts />
           <p className="text-xs font-medium tex-[#09090B]">POSTS</p>
