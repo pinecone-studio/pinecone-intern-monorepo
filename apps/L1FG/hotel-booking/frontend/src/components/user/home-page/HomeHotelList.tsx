@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { HomePageCard } from '../ui/cards';
 import { Hotel } from '@/generated';
-import { FC } from 'react';
 
 interface HomeHotelListProps {
   data: Array<Hotel>;
 }
 
-export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
+export const HomeHotelList = ({ data }: HomeHotelListProps) => {
   return (
     <div>
       <div className="container mx-auto w-full pt-8 pb-14">
