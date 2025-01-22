@@ -7,16 +7,21 @@ import { SquarePlus, ImagePlay, BookOpenCheck } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
 
-export const Create = () => {
+type Props = {
+  searchOpen: boolean;
+  isOpen: boolean;
+};
+
+export const Create = ({ searchOpen, isOpen }: Props) => {
   const [openCreatePostModal, setOpenCreatePostModal] = React.useState(false);
 
   return (
-    <div className="p-1 h-9 flex items-center">
+    <div className="">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-4 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ml-2 p-2">
-            <SquarePlus className="h-4 w-4" />
-            <span>Create</span>
+          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px] w-full`}>
+            <SquarePlus className="h-6 w-6" />
+            <span className={`${isOpen || searchOpen ? 'hidden' : 'block'}`}>Create</span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-80">
