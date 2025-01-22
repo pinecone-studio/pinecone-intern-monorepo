@@ -25,8 +25,22 @@ describe('MenuButtons component functionality', () => {
     expect(menuButton).toHaveClass('w-[80px]');
 
     // Click to close
-    fireEvent.click(notificationButton);
+  });
+
+  it('toggles the notification sheet open and closed for search', () => {
+    render(<MenuButtons />);
+
+    const searchSheetButton = screen.getByTestId('search-button');
+    const menuButton = screen.getByTestId('menu-button-open-sheet');
+
+    // Initially closed
     expect(menuButton).toHaveClass('w-[300px]');
+
+    // Click to open
+    fireEvent.click(searchSheetButton);
+    expect(menuButton).toHaveClass('w-[80px]');
+
+    // Click to close
   });
 
   it('navigates to /home when the Instagram icon div is clicked', () => {
