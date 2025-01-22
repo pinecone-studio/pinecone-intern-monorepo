@@ -42,7 +42,7 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base">Хуучин нууц үг:</FormLabel>
                 <FormControl>
-                  <Input data-testid="old-password" className="bg-black w-[777px] text-white" placeholder="********" {...field} />
+                  <Input data-testid="old-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -55,7 +55,7 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base ">Шинэ нууц үг:</FormLabel>
                 <FormControl>
-                  <Input data-testid="new-password" className="bg-black w-[777px] text-white" placeholder="********" {...field} />
+                  <Input data-testid="new-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +68,7 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base">Шинэ нууц үг давтах:</FormLabel>
                 <FormControl>
-                  <Input data-testid="repeat-password" className="bg-black w-[777px] text-white" placeholder="********" {...field} />
+                  <Input data-testid="repeat-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

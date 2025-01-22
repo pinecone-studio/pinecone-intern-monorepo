@@ -5,7 +5,7 @@ describe('orderHistory', () => {
   it('delete-button daraagvi baih vy', async () => {
     render(<OrderHistory></OrderHistory>);
   });
-  it('delete button darah vy', async () => {
+  it('delete button darah vyiig shalgana', async () => {
     const { getByTestId } = render(<OrderHistory></OrderHistory>);
 
     await act(async () => {
@@ -15,9 +15,6 @@ describe('orderHistory', () => {
     await act(async () => {
       fireEvent.click(getByTestId('delete-button'));
     });
-
-    const sendRequest = getByTestId('send-delete-request');
-
-    expect(sendRequest).toBeDefined();
+    expect(getByTestId('send-delete-request')).toBeDefined();
   });
 });

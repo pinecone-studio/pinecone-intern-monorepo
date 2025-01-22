@@ -15,7 +15,7 @@ export const Modal = ({ orderData }: { orderData: string }) => {
             <Label htmlFor="email" className="text-white w-[777px] font-thin text-base mb-2">
               Утасны дугаар:
             </Label>
-            <Input className="bg-black w-[777px] border-stone-600 text-white" type="email" id="email" placeholder="Email" />
+            <Input className="bg-[#131313]  w-[777px] border-stone-600 text-white" type="email" id="email" placeholder="Email" />
           </div>
           <div className="grid w-full max-w-sm items-center gap-2">
             <Label htmlFor="email" className=" text-white font-thin text-base mb-2">
@@ -24,7 +24,7 @@ export const Modal = ({ orderData }: { orderData: string }) => {
             <Input type="email" id="email" placeholder="Email" className="w-[777px] bg-[#09090B] border-stone-600  text-white" />
           </div>
           <div className="text-end">
-            <Button className="w-fit bg-[#00B7F4] text-black">Хадгалаggх</Button>
+            <Button className="w-fit bg-[#00B7F4] text-black">Хадгалах</Button>
           </div>
         </div>
       )}
