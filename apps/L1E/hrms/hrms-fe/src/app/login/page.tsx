@@ -53,10 +53,10 @@ const Page = () => {
   const handlesubmit = async (e: string) => {
     setErrorotp('Уншиж байна...');
     const { data } = await getEmployeeByOtp({ variables: { email: email, otpToken: e } });
-    console.log(data);
 
     if (data) {
-      localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?._id));
+      localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?.employee?._id));
+
       router.push('/my-requests');
     } else {
       setErrorotp('otp таарахгүй байна.');
