@@ -3,7 +3,6 @@ import { Hero } from '@/components/user/main/Hero';
 import { NavigationBlue } from '@/components/user/main/NavigationBlue';
 import { SearchBar } from '@/components/user/main/SearchBar';
 import { useGetHotelsQuery } from '@/generated';
-// import { useGetHotelsQuery } from '@/generated';
 
 export const HomePage = () => {
   const { loading, error, data } = useGetHotelsQuery();
