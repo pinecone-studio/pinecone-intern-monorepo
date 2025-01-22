@@ -1,4 +1,4 @@
-import { HomePage } from '@/components/admin/pages/home-page';
+import { HomePage } from '@/features/admin/HomePage';
 
 const Admin = () => {
   return <HomePage />;

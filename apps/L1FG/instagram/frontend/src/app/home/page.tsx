@@ -7,7 +7,7 @@ import HomePageProfile from '@/components/Home/rightBar/HomeProfile';
 
 const HomePage = () => {
   return (
-    <div className="flex mx-auto  mt-4 px-4">
+    <div className="flex ml-auto mr-20 w-[1200px]  mt-4 px-4">
       <div className="flex flex-col gap-14">
         <MainPageStory />
         <MainPagePost />
