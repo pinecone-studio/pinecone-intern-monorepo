@@ -1,4 +1,4 @@
-import { OrderHistory } from '@/components/UserProfile/OrderHistory';
+import { OrderHistory } from '@/components/userProfile/OrderHistory';
 import { act, fireEvent, render } from '@testing-library/react';
 
 describe('orderHistory', () => {

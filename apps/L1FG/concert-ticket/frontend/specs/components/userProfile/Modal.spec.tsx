@@ -1,4 +1,4 @@
-import { Modal } from '@/components/UserProfile/Modal';
+import { Modal } from '@/components/userProfile/Modal';
 import { render } from '@testing-library/react';
 
 describe('Modal', () => {

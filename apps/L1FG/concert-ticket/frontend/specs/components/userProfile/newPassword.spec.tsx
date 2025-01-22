@@ -1,4 +1,4 @@
-import { UserPassword } from '@/components/UserProfile/NewPassword';
+import { UserPassword } from '@/components/userProfile/NewPassword';
 import { act, fireEvent, render } from '@testing-library/react';
 describe('newPassword component', () => {
   it('renders the newPassword componentgg', async () => {

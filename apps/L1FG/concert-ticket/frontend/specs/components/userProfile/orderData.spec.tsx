@@ -1,4 +1,4 @@
-import { Order } from '@/components/UserProfile/OrderData';
+import { Order } from '@/components/userProfile/OrderData';
 import { act, fireEvent, render } from '@testing-library/react';
 
 describe('orderData commponent', () => {
