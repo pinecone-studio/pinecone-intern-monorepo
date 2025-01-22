@@ -1,7 +1,8 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { friendshipStatus } from '../../../src/resolvers/follower-user-type';
+
 import { RequestModel } from '../../../src/models/request.model';
 import { FollowerModel } from '../../../src/models/followers.modul';
+import { friendshipStatus } from '../../../src/resolvers/user-together-user-type';
 jest.mock('../../../src/models/followers.modul');
 jest.mock('../../../src/models/request.model');
 describe('FreindshipStatus', () => {
@@ -29,6 +30,9 @@ describe('FreindshipStatus', () => {
       email: '',
       fullName: '',
       userName: '',
+      followingCount: 0,
+      followerCount: 0,
+      postCount: 0,
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -50,6 +54,9 @@ describe('FreindshipStatus', () => {
       email: '',
       fullName: '',
       userName: '',
+      followingCount: 0,
+      followerCount: 0,
+      postCount: 0,
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -80,13 +87,16 @@ describe('FreindshipStatus', () => {
       email: '',
       fullName: '',
       userName: '',
+      followingCount: 0,
+      followerCount: 0,
+      postCount: 0,
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
-      following: true,
+      following: false,
       incomingRequest: false,
-      outgoingRequest: true,
-      followedBy: true,
+      outgoingRequest: false,
+      followedBy: false,
     });
   });
 });

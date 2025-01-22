@@ -1,0 +1,35 @@
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    _id
+    name
+    email
+    phone
+    isAdmin
+    createdAt
+    updatedAt
+  }
+}
+
+mutation Register($input: RegisterInput!) {
+  register(input: $input) {
+    user {
+      _id
+      name
+      email
+      phone
+      isAdmin
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+mutation RequestChangePasswordInput($input: RequestChangePasswordInput!) {
+  requestChangePassword(input: $input) {
+    email
+  }
+}
+
+mutation ChangePasswordInput($input: ChangePasswordInput!) {
+  changePassword(input: $input)
+}

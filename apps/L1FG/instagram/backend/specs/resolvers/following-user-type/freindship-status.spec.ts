@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { friendshipStatus } from '../../../src/resolvers/follower-user-type';
+import { friendshipStatus } from '../../../src/resolvers/following-user-type';
 import { RequestModel } from '../../../src/models/request.model';
 import { FollowerModel } from '../../../src/models/followers.modul';
 jest.mock('../../../src/models/followers.modul');
@@ -84,8 +84,8 @@ describe('FreindshipStatus', () => {
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       following: true,
-      incomingRequest: false,
-      outgoingRequest: true,
+      incomingRequest: true,
+      outgoingRequest: false,
       followedBy: true,
     });
   });
