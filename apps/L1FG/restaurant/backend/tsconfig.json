@@ -16,7 +16,10 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -26,7 +29,13 @@
     "../../../../apps/L1FG/restaurant/backend/.next/types/**/*.ts",
     "../../../../dist/apps/L1FG/restaurant/backend/.next/types/**/*.ts",
     "next-env.d.ts",
-    "../../../../dist/apps/L1FG/restaurant/backend/.next/types/**/*.ts"
+    "../../../../dist/apps/L1FG/restaurant/backend/.next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
