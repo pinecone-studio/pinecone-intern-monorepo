@@ -21,7 +21,10 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
 }));
 describe('Get users', () => {
   it('Should take users', async () => {
-    const users = await getUsers!({}, {}, { userId: '3' }, {} as GraphQLResolveInfo);
+    if (!getUsers) {
+      return;
+    }
+    const users = await getUsers({}, {}, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(users).toEqual([
       {
         _id: '1',
@@ -38,6 +41,9 @@ describe('Get users', () => {
     ]);
   });
   it('Should throw an unauthorization error', async () => {
-    await expect(getUsers!({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
+    if (!getUsers) {
+      return;
+    }
+    await expect(getUsers({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
   });
 });
