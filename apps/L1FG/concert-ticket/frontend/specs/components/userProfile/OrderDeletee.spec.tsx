@@ -1,4 +1,4 @@
-import { DeleteButton } from '@/components/userProfile/OrderDelete';
+import { DeleteButton } from '@/components/userProfile/OrderDeletee';
 import { render } from '@testing-library/react';
 
 const setSendRequest = jest.fn();

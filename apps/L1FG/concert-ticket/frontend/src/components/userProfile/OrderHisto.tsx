@@ -1,5 +1,5 @@
 import { Clock } from 'lucide-react';
-import { DeleteButton } from './OrderDelete';
+import { DeleteButton } from './OrderDeletee';
 import { useState } from 'react';
 
 export const OrderHistory = () => {

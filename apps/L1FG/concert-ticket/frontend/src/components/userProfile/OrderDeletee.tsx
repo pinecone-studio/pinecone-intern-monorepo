@@ -44,7 +44,6 @@ export const DeleteButton = ({ onclick }: ButtonProps) => {
                     <SelectItem value="Голомт банк">Голомт банк</SelectItem>
                     <SelectItem value="Төрийн банк">Төрийн банк</SelectItem>
                     <SelectItem value="Хас банк">Хас банк</SelectItem>
-                    <SelectItem value="Ариг банк">Ариг банк</SelectItem>
                     <SelectItem value="М банк">М банк</SelectItem>
                   </SelectGroup>
                 </SelectContent>

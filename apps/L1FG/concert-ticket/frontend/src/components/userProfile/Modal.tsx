@@ -2,8 +2,8 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { OrderHistory } from './OrderHistory';
-import { UserPassword } from './NewPassword';
+import { UserPassword } from './Password';
+import { OrderHistory } from './OrderHisto';
 
 export const Modal = ({ orderData }: { orderData: string }) => {
   return (

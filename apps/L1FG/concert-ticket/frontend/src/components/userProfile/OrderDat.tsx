@@ -5,6 +5,7 @@ import { Modal } from './Modal';
 
 export const Order = () => {
   const [orderData, setOrderData] = useState('order');
+
   return (
     <div data-cy="order-page" className="w-fit mx-auto flex flex-row gap-10 py-12 px-[117px]">
       <div className="flex flex-col gap-4">
@@ -13,7 +14,7 @@ export const Order = () => {
           onClick={() => setOrderData('order')}
           className={`text-white rounded-sm px-3 py-1 ${orderData === 'order' ? 'bg-neutral-900' : 'bg-black'} w-[211px] text-sm font-thin`}
         >
-          Хэрэглэгчийн мэдээtлэл
+          Хэрэглэгчийн мэдээлэл
         </div>
         <div
           data-testid="order-history"
@@ -30,8 +31,8 @@ export const Order = () => {
           Нууц үг сэргээх
         </div>
       </div>
-      <div className="flex flex-col gap-6">
-        <div className="text-xl font-semibold text-white">Захиалагчийн мэдээлэл</div>
+      <div className="flex flex-col gap-7">
+        <div className="text-2xl font-semibold text-white">Захиалагчийн мэдээлэл</div>
         <Modal orderData={orderData}></Modal>
       </div>
     </div>
