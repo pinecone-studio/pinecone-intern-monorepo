@@ -13,7 +13,7 @@ export const Order = () => {
           onClick={() => setOrderData('order')}
           className={`text-white rounded-sm px-3 py-1 ${orderData === 'order' ? 'bg-neutral-900' : 'bg-black'} w-[211px] text-sm font-thin`}
         >
-          Хэрэглэгчийн мэдээлэл
+          Хэрэглэгчийн мэдээtлэл
         </div>
         <div
           data-testid="order-history"

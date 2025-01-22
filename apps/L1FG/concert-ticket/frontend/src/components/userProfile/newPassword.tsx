@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 const FormSchema = z.object({
   oldPassword: z.string().min(4, {
-    message: 'Хуучин нууц үгээ хийнэ үү.',
+    message: 'Хуучин нууц үгээ хийнэ үү',
   }),
   newPassword: z.string().min(4, {
     message: 'Шинэ нууц үг дөрвөөс дээш тэмдэгт байх ёстой.',

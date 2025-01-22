@@ -49,7 +49,7 @@ export const OrderHistory = () => {
       <div className="text-white flex flex-row justify-between border-[1px] border-dashed border-neutral-800 rounded-lg py-4 px-6">
         <div className="flex flex-row gap-2 items-center">
           <div className="rounded-full bg-[#4651C9] w-3 h-3"></div>
-          <a className="text-[#4651C9]">VIP тасалбар</a>
+          <a className="text-[#4651C9]">Vip тасалбар</a>
         </div>
         <div className="flex flex-row gap-2 items-center">
           <p className="text-neutral-500 font-thin">

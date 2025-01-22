@@ -24,7 +24,7 @@ export const Modal = ({ orderData }: { orderData: string }) => {
             <Input type="email" id="email" placeholder="Email" className="w-[777px] bg-[#09090B] border-stone-600  text-white" />
           </div>
           <div className="text-end">
-            <Button className="w-fit bg-[#00B7F4] text-black">Хадгалах</Button>
+            <Button className="w-fit bg-[#00B7F4] text-black">Хадгалаggх</Button>
           </div>
         </div>
       )}
