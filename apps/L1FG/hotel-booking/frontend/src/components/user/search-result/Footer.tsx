@@ -6,7 +6,7 @@ import { VisaCardIcon } from '../svg/VisaIcon';
 
 export const Footer = () => {
   return (
-    <main>
+    <>
       <div className="container mx-auto w-full py-10">
         <div className="flex gap-[120px]">
           <div className="flex flex-col justify-between">
@@ -76,6 +76,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 };

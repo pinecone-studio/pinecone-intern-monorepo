@@ -9,7 +9,7 @@ interface HomeHotelListProps {
 
 export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
   return (
-    <main>
+    <div>
       <div className="container mx-auto w-full pt-8 pb-14">
         <div className="w-full flex flex-col gap-16">
           <div className="flex flex-col gap-4">
@@ -44,6 +44,6 @@ export const HomeHotelList: FC<HomeHotelListProps> = ({ data }) => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
