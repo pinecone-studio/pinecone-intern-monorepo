@@ -98,3 +98,8 @@ export const UserTypeDefs = gql`
     login(input: SignInInput!): SignInType!
   }
 `;
+
+
+// reel_media_seen_timestamp: 1737434339
+// mutual_followers_count: 23
+// reel_media_seen_timestamp: 1737434339
