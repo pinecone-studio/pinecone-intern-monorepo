@@ -1,7 +1,7 @@
 import { UserPassword } from '@/components/UserProfile/NewPassword';
 import { act, fireEvent, render } from '@testing-library/react';
 describe('newPassword component', () => {
-  it('renders the newPassword component', async () => {
+  it('renders the newPassword componentgg', async () => {
     const { getByTestId } = render(<UserPassword></UserPassword>);
     const oldPasswordInput = getByTestId('old-password');
     await act(async () => {
