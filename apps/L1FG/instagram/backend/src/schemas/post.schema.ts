@@ -29,6 +29,7 @@ input PostInput {
   }
  type Query {
     getPosts(searchingUserId:ID!):[UserPostType]
+    getAllPosts:[UserPostType]
  }
   type Mutation {
     createPost(input: PostInput!): Post!
