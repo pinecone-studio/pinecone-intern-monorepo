@@ -57,7 +57,7 @@ const Page = () => {
 
     if (data) {
       localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?.employee?._id));
-
+      setEmail('');
       router.push('/my-requests');
     } else {
       setErrorotp('otp таарахгүй байна.');
