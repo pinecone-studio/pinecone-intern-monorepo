@@ -21,7 +21,7 @@ export const Header = () => {
     router.push(`/${componentName}`);
   };
   const clickButton = (componentName: ComponentName) => {
-    return activeComponent === componentName ? 'border-b-2 border-black pb-[11px]' : 'border-b-0';
+    return activeComponent === componentName ? '  border-b-[1px]  border-black ' : '';
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const Header = () => {
 
   return (
     <div>
-      <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px]  border-b-[1px]">
+      <div className="w-full flex justify-between h-[120px] pl-[50px] pr-[50px] pt-[20px]   border-b-[1px]">
         <div>
           <Image src="/Logo.png" alt="Logo" width={32} height={28} />
           <div className="flex gap-[20px] pt-[30px]">

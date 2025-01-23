@@ -86,7 +86,7 @@ const Page = () => {
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col gap-2">
-                          <div> M.Khulan</div>
+                          <div> {el?.employeeId?.username}</div>
                           <div className="flex flex-row gap-4">
                             <IoMdTime className="w-5 h-5" />
 
