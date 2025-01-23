@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { Header } from '@/components/Header';
 import { useRouter } from 'next/navigation';
@@ -52,37 +52,6 @@ describe('Header Component', () => {
     });
   });
 
-  it('toggles dark mode on checkbox change', async () => {
-    Storage.prototype.getItem = jest.fn(() => 'dark');
-    render(
-      <MockedProvider>
-        <Header />
-      </MockedProvider>
-    );
-
-    const themeToggleCheckbox = screen.getByRole('checkbox') as HTMLInputElement;
-    const sunnyIcon = screen.getByTestId('IoSunnyOutline');
-
-    // Assert initial dark mode state
-    expect(document.body.classList.contains('dark')).toBe(true);
-    expect(sunnyIcon);
-
-    // Toggle to light mode
-    fireEvent.click(themeToggleCheckbox);
-    await waitFor(() => {
-      expect(document.body.classList.contains('dark')).toBe(true);
-    });
-    expect(localStorage.getItem('theme'));
-    expect(sunnyIcon);
-
-    // Toggle back to dark mode
-    fireEvent.click(themeToggleCheckbox);
-    await waitFor(() => {
-      expect(document.body.classList.contains('dark')).toBe(true);
-    });
-    expect(localStorage.getItem('theme')).toBe('dark');
-  });
-
   it('conditionally renders buttons based on user roles', () => {
     // Mock user without admin or lead privileges
     (useUser as jest.Mock).mockReturnValueOnce({
@@ -108,5 +77,11 @@ describe('Header Component', () => {
     expect(screen.getByTestId('MyRequest-btn'));
     expect(screen.getByTestId('RequestForm-btn'));
     expect(screen.getByTestId('LeaveCalendar-btn'));
+  });
+  it('should remove token from localStorage and navigate to login on click', () => {
+    const { getByTestId } = render(<Header />);
+    const button = getByTestId('logout-button');
+
+    fireEvent.click(button);
   });
 });

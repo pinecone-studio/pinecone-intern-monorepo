@@ -1,16 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { IoSunnyOutline } from 'react-icons/io5';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useUser } from '@/provider/UserProvider';
+import { Button } from '@/components/ui/button';
 
 type ComponentName = 'my-requests' | 'request-form' | 'leave-calendar' | 'pending-requests' | 'employee-list';
 
 export const Header = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeComponent, setActiveComponent] = useState<ComponentName | null>(null);
 
   const { user } = useUser();
@@ -29,20 +28,13 @@ export const Header = () => {
     const pathname = window.location.pathname;
     const path = pathname.slice(1, pathname.length) as ComponentName;
 
-    const savedTheme = localStorage.getItem('theme');
-    {
-      savedTheme && setIsDarkMode(savedTheme === 'dark');
-    }
     setActiveComponent(path);
   }, []);
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/login');
+  };
 
   return (
     <div>
@@ -78,19 +70,31 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="flex">
-          <div>
-            <label className="swap swap-rotate">
-              <input data-testid="input" type="checkbox" checked={isDarkMode} className="theme-controller absolute opacity-0 w-0 h-0" />
-              <IoSunnyOutline data-testid="IoSunnyOutline" className={`h-[40px] w-[40px] border-slate-400 border-[1px] rounded-3xl p-[10px] fill-current ${isDarkMode ? 'hidden' : 'block'}`} />
-            </label>
-          </div>
-          <div>
-            <Avatar className="ml-[10px]">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
+        <div className="flex items-start">
+          <Button data-testid="logout-button" variant="outline" onClick={handleLogout} className="inline-flex items-center space-x-2">
+            <svg
+              className="h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" x2="9" y1="12" y2="12" />
+            </svg>
+            <span>Logout</span>
+          </Button>
+
+          <Avatar className="ml-[10px]">
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </div>
       </div>
     </div>
