@@ -115,6 +115,6 @@ export const getEmployeeByEmail: QueryResolvers['getEmployeeByEmail'] = async (_
 </body>
 </html>
   `;
-  emailSender((email = employee.email), subject, htmlContent);
+  await emailSender((email = employee.email), subject, htmlContent);
   return employee;
 };
