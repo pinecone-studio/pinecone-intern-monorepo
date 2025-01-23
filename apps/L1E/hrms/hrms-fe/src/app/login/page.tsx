@@ -3,6 +3,7 @@
 import { Login } from '@/components/Login';
 import { OtpGenerate } from '@/components/OtpGenerate';
 import { useGetEmployeeByEmailLazyQuery, useGetEmployeeByOtpLazyQuery } from '@/generated';
+
 import { useRouter } from 'next/navigation';
 
 import React, { useState } from 'react';
