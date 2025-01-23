@@ -1,5 +1,6 @@
 import { MutationResolvers, Response } from '../../../generated';
 import { UserModel } from '../../../models';
+import bcrypt from 'bcrypt';
 
 export const changePassword: MutationResolvers['changePassword'] = async (_, { input }) => {
   const { email, password, otp } = input;
@@ -13,10 +14,12 @@ export const changePassword: MutationResolvers['changePassword'] = async (_, { i
   if (user.otp !== otp) {
     throw new Error('Invalid OTP');
   }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
   await UserModel.updateOne(
     { email },
     {
-      password,
+      password: hashedPassword,
       otp: '',
     }
   );

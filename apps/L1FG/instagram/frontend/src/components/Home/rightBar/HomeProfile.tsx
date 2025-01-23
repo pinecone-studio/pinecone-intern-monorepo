@@ -1,7 +1,9 @@
+import { useAuth } from '@/components/providers/AuthProvider';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const HomePageProfile = () => {
+  const { user } = useAuth();
   return (
     <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10 ml-[72px]">
       <div className="flex items-center justify-between w-full ">
@@ -17,8 +19,8 @@ const HomePageProfile = () => {
           </Link>
 
           <div>
-            <h1 className="text-sm font-bold ">username</h1>
-            <p className="text-[12px] text-gray-500 ">fullname</p>
+            <h1 className="text-sm font-bold ">{user?.userName}</h1>
+            <p className="text-[12px] text-gray-500 ">{user?.fullName}</p>
           </div>
         </div>
 

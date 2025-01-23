@@ -93,7 +93,7 @@ const Requestcomremote = ({ leads, isOpen, employee, onSubmit }: RequestcomPaidP
             )}
           />
           <div className="flex justify-end">
-            <Button type="submit" data-testid="submit-button" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
+            <Button type="submit" disabled={employee.remoteLimit == 0} data-testid="submit-button" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
               Хүсэлт илгээх
             </Button>
           </div>
