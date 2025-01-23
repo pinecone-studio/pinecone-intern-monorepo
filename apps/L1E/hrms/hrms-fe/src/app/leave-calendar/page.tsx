@@ -10,6 +10,7 @@ import { DateRangePicker } from '@/components/DateRangePicker';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { addDays, format, eachDayOfInterval } from 'date-fns';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type ComponentName = 'MyRequest' | '/request-form' | 'LeaveCalendar' | 'PendingRequest' | 'EmployeeList' | 'Leave';
 
@@ -21,6 +22,14 @@ const Page = () => {
     from: addDays(new Date(), -3),
     to: new Date(),
   });
+
+  if (!data) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   const daysArray = eachDayOfInterval({
     start: date?.from || new Date(),
@@ -77,7 +86,7 @@ const Page = () => {
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col gap-2">
-                          <div> M.Khulan</div>
+                          <div> {el?.employeeId?.username}</div>
                           <div className="flex flex-row gap-4">
                             <IoMdTime className="w-5 h-5" />
 

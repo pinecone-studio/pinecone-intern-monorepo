@@ -32,9 +32,7 @@ describe('updatedOwner Resolver', () => {
       createdAt: new Date('2024-09-01').toISOString(),
     };
     const context = {
-      req: {
-        user: { id: '67729b7868800928a433e430' },
-      },
+      userId: '67729b7868800928a433e430',
     };
     const result = await updatedOwner!({}, { input: mockinput, _id: '67729b7868800928a433e430' }, context, {} as GraphQLResolveInfo);
 

@@ -6,6 +6,7 @@ import StatusSelector from '@/components/StatusSelector';
 import { RequestList } from '@/components/RequestList';
 import { RequestApproved } from '@/components/RequestApproved';
 import { useUser } from '@/provider/UserProvider';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 interface StatusSelectorProp {
   id: string;
@@ -40,7 +41,12 @@ const Page = () => {
     setActiveIndex(id);
     setSelectId(id);
   };
-  if (loading) return <div>Loading</div>;
+  if (loading)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
 
   const handleStatusClick = (id: string) => {
     setStatuses((prevStatuses) => prevStatuses.map((status) => (status.id === id ? { ...status, selected: !status.selected } : status)));

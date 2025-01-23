@@ -3,6 +3,7 @@
 import { Login } from '@/components/Login';
 import { OtpGenerate } from '@/components/OtpGenerate';
 import { useGetEmployeeByEmailLazyQuery, useGetEmployeeByOtpLazyQuery } from '@/generated';
+
 import { useRouter } from 'next/navigation';
 
 import React, { useState } from 'react';
@@ -53,10 +54,10 @@ const Page = () => {
   const handlesubmit = async (e: string) => {
     setErrorotp('Уншиж байна...');
     const { data } = await getEmployeeByOtp({ variables: { email: email, otpToken: e } });
-    console.log(data);
 
     if (data) {
-      localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?._id));
+      localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?.employee?._id));
+
       router.push('/my-requests');
     } else {
       setErrorotp('otp таарахгүй байна.');
