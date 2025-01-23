@@ -85,15 +85,21 @@ describe('login Page', () => {
     cy.get('[data-cy=email-input]').type('jvk@gmail.com');
     cy.get('[data-cy=login-submit]').click();
     cy.get('[data-cy=enter-input]').type('1234');
-    cy.get('[data-cy=error-otp]').should('be.visible');
+    cy.get('[data-cy=error-otp]').should('be.visible').and('contain', 'otp таарахгүй байна.');
+  });
+  it('5. should back email-input', () => {
+    cy.visit('/login');
+    cy.get('[data-cy=email-input]').type('jvk@gmail.com');
+    cy.get('[data-cy=login-submit]').click();
+    cy.get('[data-cy=back-button]').click();
   });
 
-  it('5.should resend the OTP when the resend button is clicked', () => {
+  it('6.should resend the OTP when the resend button is clicked', () => {
     cy.visit('/login');
 
     cy.get('[data-cy=email-input]').type('jvk@gmail.com');
     cy.get('[data-cy=login-submit]').click();
     cy.get('[data-cy=resent-otp]').click();
-    cy.get('[data-cy=error-otp]').should('be.visible').and('contain', 'otp dahin ilgeelee');
+    cy.get('[data-cy=error-otp]').should('be.visible').and('contain', 'OTP дахин илгээж байна...');
   });
 });

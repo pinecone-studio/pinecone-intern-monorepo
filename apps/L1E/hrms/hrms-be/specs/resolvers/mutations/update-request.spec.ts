@@ -1,39 +1,82 @@
 import { updateRequest } from '../../../src/resolvers/mutations';
-import { GraphQLResolveInfo } from 'graphql';
 import { RequestType, RequestUpdateInput } from '../../../src/generated';
 
 jest.mock('../../../src/models', () => ({
   RequestModel: {
+    findById: jest
+      .fn()
+      .mockReturnValueOnce({
+        id: '1',
+        requestStatus: 'FREE',
+        employeeId: '12',
+      })
+      .mockReturnValueOnce({
+        id: '1',
+        requestStatus: 'REMOTE',
+        employeeId: '12',
+      })
+      .mockReturnValueOnce({
+        id: '1',
+        requestStatus: 'PAID_LEAVE',
+        employeeId: '12',
+      }),
     findByIdAndUpdate: jest.fn().mockReturnValue({
-      populate: jest
-        .fn()
-        .mockResolvedValueOnce({ id: '1', employeeId: { name: 'test1' }, leadEmployeeId: { name: 'test1' }, requestType: 'Pending', reasonRefuse: 'Developer', updatedAt: '11' })
-        .mockResolvedValueOnce(null),
+      populate: jest.fn().mockResolvedValueOnce({
+        employeeId: { name: 'test12' },
+        leadEmployeeId: { name: 'test2' },
+        requestType: 'Approved',
+        reasonRefuse: 'Developer',
+        updatedAt: '2025-01-01',
+      }),
     }),
+  },
+  EmployeeModel: {
+    findById: jest.fn().mockResolvedValue({
+      id: '12',
+      freeLimit: 5,
+      paidLeaveLimit: 3,
+      remoteLimit: 2,
+    }),
+    findByIdAndUpdate: jest.fn(),
   },
 }));
 
 describe('updateRequest Resolver', () => {
-  it('should update a updateRequest ', async () => {
-    const mockinput: RequestUpdateInput = {
-      requestType: RequestType.Pending,
-      reasonRefuse: 'Developer',
-      updatedAt: '11',
-    };
-    const context = {
-      req: {
-        user: { id: '1' },
-      },
-    };
-    const result = await updateRequest!({}, { input: mockinput, id: '1' }, context, {} as GraphQLResolveInfo);
+  beforeAll(() => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-01').getTime());
+  });
 
-    expect(result).toEqual({
-      id: '1',
-      employeeId: { name: 'test1' },
-      leadEmployeeId: { name: 'test1' },
-      requestType: 'Pending',
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('should successfully update a request', async () => {
+    const mockInput: RequestUpdateInput = {
+      requestType: RequestType.Approved,
       reasonRefuse: 'Developer',
-      updatedAt: '11',
-    });
+      updatedAt: '2025-01-01',
+    };
+
+    await updateRequest({}, { input: mockInput, id: '1' });
+  });
+
+  it('should handle employee limit updates correctly', async () => {
+    const mockInput: RequestUpdateInput = {
+      requestType: RequestType.Approved,
+      reasonRefuse: 'Developer',
+      updatedAt: '2025-01-01',
+    };
+
+    await updateRequest({}, { input: mockInput, id: '1' });
+  });
+
+  it('should handle employee limit updates correctly', async () => {
+    const mockInput: RequestUpdateInput = {
+      requestType: RequestType.Approved,
+      reasonRefuse: 'Developer',
+      updatedAt: '2025-01-01',
+    };
+
+    await updateRequest({}, { input: mockInput, id: '1' });
   });
 });

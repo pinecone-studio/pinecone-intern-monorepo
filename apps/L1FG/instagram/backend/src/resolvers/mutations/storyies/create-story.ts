@@ -3,13 +3,11 @@ import { StoryModel, StoryNodeModel } from '../../../models';
 
 export const createStory: MutationResolvers['createStory'] = async (_, { input }, { userId }) => {
   if (!userId) throw new Error('Unauthorized');
-  const { storyImage, expiringAt, duration } = input;
+  const { storyImage } = input;
 
   const story = await StoryModel.create({
     userId,
     storyImage,
-    expiringAt,
-    duration,
   });
 
   const { _id } = story;

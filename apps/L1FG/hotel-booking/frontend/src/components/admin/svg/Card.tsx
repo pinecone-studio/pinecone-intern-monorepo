@@ -15,16 +15,16 @@ export const Card = () => {
       />
       <defs>
         <linearGradient id="paint0_linear_334_25467" x1="33.5098" y1="16.0019" x2="46.6652" y2="16.0019" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#007B40" />
-          <stop offset="1" stop-color="#55B330" />
+          <stop stopColor="#007B40" />
+          <stop offset="1" stopColor="#55B330" />
         </linearGradient>
         <linearGradient id="paint1_linear_334_25467" x1="4.00157" y1="16.0016" x2="17.156" y2="16.0016" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#1D2970" />
-          <stop offset="1" stop-color="#006DBA" />
+          <stop stopColor="#1D2970" />
+          <stop offset="1" stopColor="#006DBA" />
         </linearGradient>
         <linearGradient id="paint2_linear_334_25467" x1="18.7564" y1="16.0016" x2="31.9112" y2="16.0016" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#6E2B2F" />
-          <stop offset="1" stop-color="#E30138" />
+          <stop stopColor="#6E2B2F" />
+          <stop offset="1" stopColor="#E30138" />
         </linearGradient>
       </defs>
     </svg>

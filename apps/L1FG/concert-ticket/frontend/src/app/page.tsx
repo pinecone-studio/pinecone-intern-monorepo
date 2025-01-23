@@ -1,6 +1,8 @@
 'use client';
 
 import Carousel from '@/components/carousel/Carousel';
+import { HeaderPart } from '@/components/header/Header';
+import { Footerr } from './footer/Footer';
 
 const slides = [
   {
@@ -22,7 +24,9 @@ const slides = [
 const Page = () => {
   return (
     <div>
+      <HeaderPart />
       <Carousel slides={slides} />
+      <Footerr />
     </div>
   );
 };
