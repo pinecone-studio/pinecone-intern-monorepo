@@ -15,9 +15,7 @@ jest.mock('apps/L1FG/real-state/backend/src/models/owner-model', () => ({
 describe(' Delete owner post', () => {
   it('should delete owner post', async () => {
     const context = {
-      req: {
-        owner: { _id: '67729b7868800928a433e430' },
-      },
+      userId: '67729b7868800928a433e430',
     };
     const result = await deleteOwner!({}, { _id: '67729b7868800928a433e430' }, context, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -26,9 +24,7 @@ describe(' Delete owner post', () => {
   });
   it('should throw an error if the owner post does not exist', async () => {
     const context = {
-      req: {
-        owner: { _id: '67729b7868800928a433e430' },
-      },
+      userId: '67729b7868800928a433e430',
     };
     try {
       await deleteOwner!({}, { _id: '67729b7868800928a433e430' }, context, {} as GraphQLResolveInfo);

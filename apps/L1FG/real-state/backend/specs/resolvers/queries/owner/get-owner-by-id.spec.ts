@@ -15,9 +15,7 @@ jest.mock('apps/L1FG/real-state/backend/src/models/owner-model', () => ({
 
 describe('getOwner', () => {
   const context = {
-    req: {
-      owner: { _id: '67729b7868800928a433e430' },
-    },
+    userId: '67729b7868800928a433e430',
   };
 
   it('should get owner post', async () => {
