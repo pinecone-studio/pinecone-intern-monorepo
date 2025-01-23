@@ -46,11 +46,11 @@ export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
       <Header /*handleBack={handleBack}*/ handleCreatePost={handleCreatePost} loadingPost={loadingPost} />
 
       {/* Content */}
-      <div className="flex flex-1">
+      <div className="flex w-[423px] h-[626px] flex-1">
         <ImagePreview images={images} loadingPost={loadingPost} />
 
         {/* Caption & User Input */}
-        <div className="w-[343px] p-4 flex flex-col gap-4">
+        <div className="w-[423px] p-4 flex flex-col gap-4">
           <CaptionInput caption={caption} setCaption={setCaption} />
         </div>
       </div>
