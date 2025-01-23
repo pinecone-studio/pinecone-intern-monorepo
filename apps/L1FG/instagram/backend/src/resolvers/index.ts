@@ -5,6 +5,7 @@ import * as UserWithoutPassword from './user-without-password';
 import * as FollowerUserType from './follower-user-type';
 import * as FollowingUserType from './following-user-type';
 import * as UserTogetherUserType from './user-together-user-type';
+import * as UserPostType from './user-post-type';
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -36,4 +37,5 @@ export const resolvers = {
   FollowerUserType,
   FollowingUserType,
   UserTogetherUserType,
+  UserPostType
 };

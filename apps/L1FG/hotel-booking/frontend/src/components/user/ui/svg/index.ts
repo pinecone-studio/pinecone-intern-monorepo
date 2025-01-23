@@ -6,4 +6,3 @@ export * from './DumbBellIcon';
 export * from './BusIcon';
 export * from './DoorClosedIcon';
 export * from './ChevronRightIcon';
-export * from './StarIcon';

@@ -1,4 +1,3 @@
-// import { StarIcon } from '../svg';
 import FlowerIcon from '../svg/FlowerIcon';
 import ParkingCircleIcon from '../svg/ParkingCircleIcon';
 import Image from 'next/image';
@@ -18,9 +17,6 @@ export const HomePageCard = ({ data }: { data: Hotel }) => {
             {stars?.map((_, index) => (
               <Star key={index} size={16} className="fill-[#F97316] text-[#F97316]" />
             ))}
-            {/* <StarIcon />
-            <StarIcon />
-            <StarIcon /> */}
           </div>
         </div>
         <div className="flex flex-col gap-3">

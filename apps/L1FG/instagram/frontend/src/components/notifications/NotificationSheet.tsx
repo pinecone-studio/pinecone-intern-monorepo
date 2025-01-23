@@ -14,7 +14,7 @@ export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
   return (
     <>
       <div
-        className={`fixed top-0 left-[80px] w-[396px] h-full bg-white border-l shadow-lg transform transition-transform duration-500 ease-in-out z-40 ${
+        className={`fixed top-0 left-[80px] w-[396px] h-full bg-white border-l shadow-xl transform transition-transform duration-500 ease-in-out z-40 rounded-r-xl border-r ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         data-testid="notification-sheet"

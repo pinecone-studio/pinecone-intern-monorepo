@@ -1,7 +1,7 @@
-import { GuestsPage } from '@/components/admin/pages/guest-page';
+import { GuestInfo } from '@/features/admin/GuestInfo';
 
 const Guests = () => {
-  return <GuestsPage />;
+  return <GuestInfo />;
 };
 
 export default Guests;

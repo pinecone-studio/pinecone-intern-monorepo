@@ -1,4 +1,4 @@
-import { GuestInfo } from '@/components/admin/pages/guest-info';
+import { GuestInfo } from '@/features/admin/GuestInfo';
 
 const Info = () => {
   return <GuestInfo />;
