@@ -43,7 +43,7 @@ const Page = () => {
   };
   if (loading)
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen  bg-neutral-100 h-screen flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -85,7 +85,7 @@ const Page = () => {
   };
 
   return (
-    <div data-cy="pending-page" className="flex flex-col h-screen gap-5 w-screen pt-10 items-center  mx-auto bg-neutral-100 ">
+    <div data-cy="pending-page" className="flex flex-col h-screen gap-5 w-screen pt-[200px] items-center  mx-auto bg-neutral-100 ">
       <div className="w-[1030px] flex flex-col ">
         <div className="text-xl font-semibold">Хүсэлтүүд</div>
         <div className="flex flex-row gap-[220px]">

@@ -102,7 +102,13 @@ const RequestcomPaid = ({ leads, isOpen, onSubmit, employee }: RequestcomPaidPro
             )}
           />
           <div className="flex justify-end">
-            <Button data-cy="paid-submit-button" data-testid="submit-button" type="submit" className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black">
+            <Button
+              data-cy="paid-submit-button"
+              disabled={employee.paidLeaveLimit == 0}
+              data-testid="submit-button"
+              type="submit"
+              className="w-[154px] mt-8 gap-2 bg-slate-900 text-white text-sm font-medium hover:bg-black"
+            >
               Хүсэлт илгээх
             </Button>
           </div>
