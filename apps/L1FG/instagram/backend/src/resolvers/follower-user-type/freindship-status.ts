@@ -4,7 +4,6 @@ import { statusBooleanConverter, StatusType } from './status-boolean-converter';
 
 export const friendshipStatus: FollowerUserTypeResolvers['friendshipStatus'] = async ({ _id }, _, { userId }) => {
   const followingPromise = FollowerModel.findOne({ followerId: userId, targetId: _id });
-
   const incomingRequestPromise =
     userId == _id
       ? new Promise((resolve) => {
