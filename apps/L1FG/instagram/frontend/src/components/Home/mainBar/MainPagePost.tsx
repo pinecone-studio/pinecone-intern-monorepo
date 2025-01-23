@@ -28,6 +28,18 @@ const MainPagePost: React.FC = () => {
 
         return (
           <div key={post._id} className="md:border-b-[1px] md:pb-5" data-testid="post-item">
+            {/* Post user */}
+            <div className="flex gap-2">
+              <div className="rounded-full mb-3 w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[3px] mt-2">
+                <div className="rounded-full bg-white w-8 h-8 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full overflow-hidden relative">
+                    <Image src="/images/profilePic.png" alt="zurag orno" fill className="object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="pr-1 font-semibold text-sm text-black flex items-center ">{post.user?.userName}</div>
+            </div>
             {/* Post Images Carousel */}
             <div className="w-full max-w-[645px] h-[585px] rounded overflow-hidden relative" data-testid="post-carousel">
               <Swiper
