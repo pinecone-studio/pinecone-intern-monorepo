@@ -25,7 +25,7 @@ const Page = () => {
 
   if (!data) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen h-screen  bg-neutral-100 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -46,12 +46,11 @@ const Page = () => {
     setDate(date);
   };
   return (
-    <div data-cy="leave-calendar-page" className="w-full h-full flex justify-center items-center mt-[40px]">
+    <div data-cy="leave-calendar-page" className="w-full h-screen flex justify-center items-center bg-neutral-100 ">
       <div className="flex flex-col gap-2 ">
         <div className="text-xl font-semibold">Чөлөө авсан:</div>
         <div className="flex flex-row w-[608px] gap-[186px]">
           <DateRangePicker setDate={setDate} date={date} />
-
           <Button
             data-cy="request-button"
             data-testid="btn"
