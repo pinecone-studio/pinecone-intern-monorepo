@@ -6,7 +6,6 @@ export const UserTypeDefs = gql`
     male
     not_know
   }
-
   type User {
     _id: String!
     userName: String!
@@ -19,7 +18,6 @@ export const UserTypeDefs = gql`
     isPrivate: Boolean
     email: String!
   }
-
   type UserWithoutPassword {
     _id: String!
     userName: String!
@@ -64,6 +62,7 @@ export const UserTypeDefs = gql`
     followingCount: Int!
     followerCount: Int!
     postCount: Int!
+    latestStoryTimestamp:Date!
     friendshipStatus: FriendshipStatusType
   }
   type UserTogetherType {
@@ -86,6 +85,21 @@ export const UserTypeDefs = gql`
     email: String!
     password: String!
   }
+
+  input ProfileInfoInput {
+    userName: String!
+    fullName: String!
+    bio: String!
+    gender: Gender!
+  }
+
+  type ProfileInfoType {
+    userName: String!
+    fullName: String!
+    bio: String!
+    gender: Gender!
+  }
+
   type Query {
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
@@ -93,13 +107,15 @@ export const UserTypeDefs = gql`
   }
   type Mutation {
     createUser(input: UserInput!): User!
-    updateName(name: String!): String
-    updateFullName(name: String!): String
+    updateInfo(input: ProfileInfoInput!): ProfileInfoType
     login(input: SignInInput!): SignInType!
   }
 `;
 
 
-// reel_media_seen_timestamp: 1737434339
+
+// latest_reel_media: 1737434339
+
+
 // mutual_followers_count: 23
 // reel_media_seen_timestamp: 1737434339

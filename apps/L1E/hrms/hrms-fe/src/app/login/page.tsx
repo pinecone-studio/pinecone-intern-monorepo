@@ -3,6 +3,7 @@
 import { Login } from '@/components/Login';
 import { OtpGenerate } from '@/components/OtpGenerate';
 import { useGetEmployeeByEmailLazyQuery, useGetEmployeeByOtpLazyQuery } from '@/generated';
+
 import { useRouter } from 'next/navigation';
 
 import React, { useState } from 'react';
@@ -56,7 +57,7 @@ const Page = () => {
 
     if (data) {
       localStorage.setItem('token', JSON.stringify(data.getEmployeeByOtp?.employee?._id));
-
+      setEmail('');
       router.push('/my-requests');
     } else {
       setErrorotp('otp таарахгүй байна.');
