@@ -5,6 +5,5 @@ export * from './comment-like.model';
 export * from './request.model';
 export * from './followers.modul';
 export * from './story.model';
-export * from './story-node.model';
 export * from './story-view.model';
 export * from './story-like.model';

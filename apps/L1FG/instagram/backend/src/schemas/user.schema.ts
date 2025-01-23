@@ -6,7 +6,6 @@ export const UserTypeDefs = gql`
     male
     not_know
   }
-
   type User {
     _id: String!
     userName: String!
@@ -19,7 +18,6 @@ export const UserTypeDefs = gql`
     isPrivate: Boolean
     email: String!
   }
-
   type UserWithoutPassword {
     _id: String!
     userName: String!
@@ -64,6 +62,7 @@ export const UserTypeDefs = gql`
     followingCount: Int!
     followerCount: Int!
     postCount: Int!
+    latestStoryTimestamp:Date!
     friendshipStatus: FriendshipStatusType
   }
   type UserTogetherType {
@@ -113,6 +112,10 @@ export const UserTypeDefs = gql`
   }
 `;
 
-// reel_media_seen_timestamp: 1737434339
+
+
+// latest_reel_media: 1737434339
+
+
 // mutual_followers_count: 23
 // reel_media_seen_timestamp: 1737434339
