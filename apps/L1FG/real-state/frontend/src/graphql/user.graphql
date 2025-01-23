@@ -1,12 +1,27 @@
-mutation Login($input: LoginInput!) {
-  login(input: $input) {
+query getMe {
+  getMe {
     _id
     name
-    email
     phone
+    email
     isAdmin
     createdAt
     updatedAt
+  }
+}
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    user {
+      _id
+      updatedAt
+      phone
+      name
+      isAdmin
+      email
+      createdAt
+    }
+    token
   }
 }
 
@@ -15,12 +30,13 @@ mutation Register($input: RegisterInput!) {
     user {
       _id
       name
-      email
       phone
+      email
       isAdmin
       createdAt
       updatedAt
     }
+    token
   }
 }
 

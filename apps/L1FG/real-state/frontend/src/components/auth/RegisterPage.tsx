@@ -10,18 +10,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const FormSchema = z
   .object({
     name: z.string().min(8, {
-      message: 'Username must be at least 8 characters.',
+      message: 'Хэрэглэгчийн нэр 8-с дээш байх шаардлагатай.',
     }),
-    email: z.string().min(4, { message: 'email must be at least 2 characters' }),
-    phone: z.string().min(8, { message: 'phone must be at 8 characters' }),
-    password: z.string().min(8, { message: 'password must be at least 8 characters' }),
-    confirmPassword: z.string().min(8, { message: 'password must be save' }),
+    email: z.string().min(8, { message: 'Э-майл 8-с дээш байх шаардлагатай жүү' }),
+    phone: z.string().min(8, { message: 'Утасны дугаар 8 оронтой байх шаардлагатай жүү' }),
+    password: z.string().min(8, { message: 'Нууц үг 8-аас дээш байх шаардлагатай жүү' }),
+    confirmPassword: z.string().min(8, { message: 'Баталгаажуулах нууц нь 8-аас дээш байх шаардлагатай жүү' }),
   })
   .refine(
     (values) => {
       return values.password === values.confirmPassword;
     },
-    { message: ' should be match', path: ['comfirmPassword'] }
+    { message: 'Баталгаажуулах нууц үг нь нууц үгтэй таарах ёстой жүү', path: ['comfirmPassword'] }
   );
 
 type RegisterPageProps = {
@@ -50,11 +50,11 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Хэрэглэгчийн нэр</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Name-Input" data-testid="Register-Page-Name-Input" placeholder="Name" {...field} />
+                    <Input data-cy="Register-Page-Name-Input" data-testid="Register-Page-Name-Input" placeholder="Хэрэглэгчийн нэрээ оруулаарай" {...field} />
                   </FormControl>
-                  <FormDescription>This is your public display name.</FormDescription>
+                  <FormDescription>Таны энэ хэрэглэгчийн нэр шүү бусдаас содон нэр сонгоорой хөөрхөнөө.</FormDescription>
                   <FormMessage data-cy="Register-Page-Name-Error-Message" />
                 </FormItem>
               )}
@@ -65,9 +65,9 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Э-мэйл</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Email-Input" data-testid="Register-Page-Email-Input" placeholder="Please enter email" {...field} />
+                    <Input data-cy="Register-Page-Email-Input" data-testid="Register-Page-Email-Input" placeholder="Өөрийнхөө э-мэйлийг оруулаарай" {...field} />
                   </FormControl>
                   <FormMessage data-cy="Register-Page-Email-Error-Message" />
                 </FormItem>
@@ -79,9 +79,9 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone number</FormLabel>
+                  <FormLabel>Утасны дугаар</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Phone-Input" data-testid="Register-Page-Phone-Input" placeholder="Please enter a phonenumber" {...field} />
+                    <Input data-cy="Register-Page-Phone-Input" data-testid="Register-Page-Phone-Input" placeholder="Өөрийнхөө утасны дугаарыг оруулаарай" {...field} />
                   </FormControl>
                   <FormMessage data-cy="Register-Page-Phone-Error-Message" />
                 </FormItem>
@@ -93,11 +93,11 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Нууц үг</FormLabel>
                   <FormControl>
                     <Input data-cy="Register-Page-Password-Input" data-testid="Register-Page-Password-Input" placeholder="password" {...field} />
                   </FormControl>
-                  <FormDescription>Please enter a password. It will be your password</FormDescription>
+                  <FormDescription>Мартахгүй 8 оронтой тоо оруулаарай нууц үг чинь болно шүү</FormDescription>
                   <FormMessage data-cy="Register-Page-Password-Error-Message" />
                 </FormItem>
               )}
@@ -108,11 +108,10 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel>Баталгаажуулах нууц үг</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Confirm-Password-Input" data-testid="Register-Page-Confirm-Password-Input" placeholder="Confirm password" {...field} />
+                    <Input data-cy="Register-Page-Confirm-Password-Input" data-testid="Register-Page-Confirm-Password-Input" placeholder="Нууц үгээ давтаад л хийчхээ хө" {...field} />
                   </FormControl>
-                  <FormDescription>Please enter same to password</FormDescription>
                   <FormMessage data-cy="Register-Page-Confirm-Password-Error-Message" />
                 </FormItem>
               )}
