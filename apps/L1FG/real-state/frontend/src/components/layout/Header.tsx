@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="h-16 border-b border-[#E4E4E7] w-screen bg-white px-8 flex items-center ">
-      <div className="max-w-[1280px] w-screen h-10 flex items-center justify-between mx-auto text-sm font-medium">
+    <div className="w-full h-16 border-b border-[#E4E4E7]  bg-white px-8 flex items-center ">
+      <div className="w-full h-10 flex items-center justify-between mx-auto text-sm font-medium">
         <Link href={'/'}>
           <HomeLogo />
         </Link>
@@ -20,7 +20,7 @@ const Header = () => {
           <Link href={'/my-estates'}>
             <p>Миний Зарууд</p>
           </Link>
-          <Link href={'/sign-in'}>
+          <Link href={'/login'}>
             <p>Нэвтрэх</p>
           </Link>
         </div>
