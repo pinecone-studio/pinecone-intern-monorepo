@@ -12,7 +12,7 @@ const MainPageStory = () => {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 w-[630px]">
       {mockStoryData.map((user: StoryUser) => (
         <Link href="/story" key={user.id}>
           <div className="flex flex-col gap-2 mt-[40px] w-fit">
