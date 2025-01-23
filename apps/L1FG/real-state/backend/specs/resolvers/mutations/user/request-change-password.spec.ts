@@ -3,7 +3,8 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
   UserModel: {
-    updateOne: jest.fn().mockResolvedValueOnce({}),
+    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValue({ email: '' }),
+    findByIdAndUpdate: jest.fn().mockResolvedValue({ email: '' }),
   },
 }));
 
@@ -12,10 +13,11 @@ jest.mock('../../../../src/library/nodemailer', () => ({
 }));
 
 describe('Change password', () => {
-  it('should change', async () => {
-    const response = await requestChangePassword!({}, { input: { email: '' } }, {}, {} as GraphQLResolveInfo);
-    expect(response).toEqual({
-      email: '',
-    });
+  it('it should be error', async () => {
+    await expect(requestChangePassword!({}, { input: { email: 'aa' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toEqual(new Error('Бүртгэлтэй хаяг олдсонгүй шалгаад дахин оруулна уу !'));
+  });
+
+  it('2.should change', async () => {
+    await expect(requestChangePassword!({}, { input: { email: '' } }, { userId: null }, {} as GraphQLResolveInfo)).resolves.toEqual({ email: '' });
   });
 });

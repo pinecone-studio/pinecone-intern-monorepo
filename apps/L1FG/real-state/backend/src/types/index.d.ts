@@ -1,1 +1,3 @@
-type Context = unknown;
+type Context = {
+  userId: string | null;
+};
