@@ -10,6 +10,10 @@ const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
   serialize(value) {
+    if(value==0)
+    {
+      return 0
+    }
     if (value instanceof Date) {
       return value.getTime();
     }
