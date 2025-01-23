@@ -44,7 +44,7 @@ export const CreateStoryLast: React.FC<CreateStoryProps> = ({ images, setStep })
       <HeaderStory /*handleBack={handleBack}*/ handleCreatePost={handleCreatePost} loadingPost={loadingPost} />
 
       {/* Content */}
-      <div className="flex flex-1">
+      <div className="flex flex-1 w-[423px] h-[626px]">
         <ImagePreviewStory images={images} loadingPost={loadingPost} />
 
         {/* Caption & User Input */}

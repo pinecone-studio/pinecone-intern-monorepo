@@ -85,8 +85,8 @@ export const CreateStoryStep1: React.FC<CreateStoryStep1Props> = ({ openCreateSt
   if (!openCreateStoryModal) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" data-testid="create-post-modal-story">
-      <div className="bg-white rounded-xl max-w-xl w-full overflow-hidden" data-testid="create-post-modal-content-story">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 " data-testid="create-post-modal-story">
+      <div className="bg-white rounded-xl w-[423px]  overflow-hidden" data-testid="create-post-modal-content-story">
         {/* Header */}
         <ModalHeader />
 
