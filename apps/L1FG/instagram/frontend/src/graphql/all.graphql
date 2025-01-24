@@ -41,33 +41,35 @@ query GetUserTogether($searchingUserId: String!) {
 query GetAllPosts {
   getAllPosts {
     _id
-    commentCount
-    createdAt
-    hasLiked
-    likeCount
     postImage
+    caption
+    userId
+    carouselMediaCount
+    createdAt
+    commentCount
+    likeCount
+    hasLiked
     user {
-      profileImage
-      userName
       _id
-      friendshipStatus {
-        following
-        followedBy
-        incomingRequest
-        outgoingRequest
-      }
+      userName
       fullName
       bio
+      profileImage
       hasStory
       gender
       isPrivate
       email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
     }
-    followingCount
-    followerCount
-    postCount
   }
-  userId
-  caption
-  carouselMediaCount
 }
