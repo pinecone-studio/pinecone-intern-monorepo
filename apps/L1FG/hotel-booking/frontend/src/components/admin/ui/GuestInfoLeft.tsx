@@ -1,4 +1,4 @@
-import { CheckoutDialog } from './CheckoutDialog';
+import { CheckoutDialog } from './dialog/CheckoutDialog';
 
 export const GuestInfoLeft = () => {
   return (

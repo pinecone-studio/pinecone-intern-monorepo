@@ -15,7 +15,7 @@ export const CheckoutDialog = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="px-8 py-2 rounded-[6px] bg-[#2563EB] text-[#FAFAFA] font-Inter text-sm font-medium hover:bg-[#2550eb]">Checkout</Button>
+        <Button className="px-8 py-2 rounded-[6px] bg-[#2563EB] text-[#FAFAFA] font-Inter text-sm font-medium hover:bg-[#256eeb]">Checkout</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -26,7 +26,7 @@ export const CheckoutDialog = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="px-4 py-2 bg-white rounded-[6px]  border border-[#E4E4E7] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#2550eb]">Continue</AlertDialogAction>
+          <AlertDialogAction className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
