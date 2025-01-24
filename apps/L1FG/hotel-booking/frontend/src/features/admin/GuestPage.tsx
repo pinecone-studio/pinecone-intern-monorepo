@@ -1,6 +1,6 @@
 import { Header } from '@/components/admin/main';
 import { Sidebar } from './main/Sidebar';
-import { SelectStatus } from '@/components/admin/ui';
+import { GuestDataTable, SelectStatus } from '@/components/admin/ui';
 
 export const GuestsPage = () => {
   return (
@@ -15,6 +15,7 @@ export const GuestsPage = () => {
               <input type="text" className="px-3 py-2 w-full outline-none border border-[#E4E4E7] rounded-[6px] text-[#09090B] font-Inter text-sm font-normal h-10" placeholder="Search" />
               <SelectStatus />
             </div>
+            <GuestDataTable />
           </div>
         </div>
       </div>
