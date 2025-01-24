@@ -15,7 +15,7 @@ const PostEmpty = () => {
   return (
     <div className="flex flex-col gap-4" data-testid="post-empty">
       <div>
-        <p className="w-[935px] border"></p>
+        <p className="w-full border"></p>
       </div>
       <div className="flex justify-center gap-4">
         <div className="flex justify-center items-center gap-1">
