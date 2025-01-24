@@ -32,8 +32,7 @@ describe('addOwner Mutation', () => {
       createdAt: new Date('2024-09-01').toISOString(),
     };
 
-    const result = await addOwner!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
-    console.log(result);
+    const result = await addOwner!({}, { input: mockInput }, { userId: null }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '67729b7868800928a433e430',

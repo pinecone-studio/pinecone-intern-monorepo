@@ -27,8 +27,8 @@ const LoginPage = ({ onSubmit }: LoginPageProps) => {
     },
   });
   return (
-    <div data-cy="Login-Page" className="h-screen w-screen flex flex-col justify-center items-center">
-      <div className="w-[500px]">
+    <div data-cy="Login-Page" className="flex flex-col justify-center items-center">
+      <div className="min-w-[448px] flex flex-col items-center justify-center">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
             <h1 className="text-2xl font-semibold text-center">Нэвтрэх</h1>

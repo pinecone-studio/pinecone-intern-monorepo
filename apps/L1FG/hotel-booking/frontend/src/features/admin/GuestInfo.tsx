@@ -2,8 +2,9 @@ import { Footer } from '@/components/admin/main/Footer';
 import { Header } from '@/components/admin/main/Header';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { LeftArrow } from '@/components/admin/svg';
-import { GuestInfoLeft, GuestInfoRight } from '@/components/admin/ui';
 import Link from 'next/link';
+import { GuestInfoLeft } from '@/components/admin/ui/GuestInfoLeft';
+import { GuestInfoRight } from '@/components/admin/ui/GuestInfoRight';
 
 export const GuestInfo = () => {
   return (

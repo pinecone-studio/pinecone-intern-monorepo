@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { GuestInfoRight } from '@/components/admin/ui';
+import { GuestInfoRight } from '@/components/admin/ui/GuestInfoRight';
 
-describe('GuestInfoRight', () => {
-  it('renders GuestInfoRight successfully', () => {
+describe('CheckoutDialog', () => {
+  it('renders CheckoutDialog successfully', () => {
     render(<GuestInfoRight />);
   });
 });

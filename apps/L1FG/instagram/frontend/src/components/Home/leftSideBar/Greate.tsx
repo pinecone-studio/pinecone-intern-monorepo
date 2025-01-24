@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { SquarePlus, ImagePlay, BookOpenCheck } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
+import { CreateStoryStep1 } from '@/components/story/createStory/CreateStoryStep1';
 
 type Props = {
   searchOpen: boolean;
@@ -14,6 +15,7 @@ type Props = {
 
 export const Create = ({ searchOpen, isOpen }: Props) => {
   const [openCreatePostModal, setOpenCreatePostModal] = React.useState(false);
+  const [openCreateStoryModal, setOpenCreateStoryModal] = React.useState(false);
 
   return (
     <div className="">
@@ -33,19 +35,19 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
                   <ImagePlay className="w-4 h-4 text-gray-600" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="w-[423px] border-none">
                 <CreatePostStep1 openCreatePostModal={openCreatePostModal} setOpenCreatePostModal={setOpenCreatePostModal} />
               </DialogContent>
             </Dialog>
-            <Dialog>
+            <Dialog open={openCreateStoryModal} onOpenChange={setOpenCreateStoryModal}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="flex items-center justify-between p-2 border rounded hover:bg-gray-100">
                   <span className="text-sm font-normal">Story</span>
                   <BookOpenCheck className="w-4 h-4 text-gray-600" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <div className="grid gap-4 py-4">Story content here</div>
+              <DialogContent className="w-[423px] border-none ">
+                <CreateStoryStep1 openCreateStoryModal={openCreateStoryModal} setOpenCreateStoryModal={setOpenCreateStoryModal} />
               </DialogContent>
             </Dialog>
           </div>

@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import { LeadApprovedModal } from '@/components/LeadApprovedModal';
 import { EmployeeFormModal } from '@/components/EmployeeFormModal';
 import { EmployeeFormValues } from '@/utils/employee-schema';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type TextType = {
   header: string;
@@ -31,7 +32,7 @@ const Page = () => {
 
   const [text, setText] = useState<TextType>({ header: '', description: '' });
 
-  const { data, refetch } = useQueryQuery();
+  const { data, refetch, loading } = useQueryQuery();
 
   const employees = data?.getAllEmployees as Employee[];
 
@@ -86,8 +87,15 @@ const Page = () => {
     setOpenCreate(false);
   };
 
+  if (loading)
+    return (
+      <div className="w-screen  bg-neutral-100 h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+
   return (
-    <div data-cy="employee-list-page" className="w-full p-12 min-h-screen bg-neutral-100">
+    <div data-cy="employee-list-page" className="w-full p-12 min-h-screen pt-[188px] bg-neutral-100">
       <div className="flex items-center justify-between pb-4">
         <h2 className="text-lg font-medium">Нийт ажилчид</h2>
         <div className="flex items-center gap-4">

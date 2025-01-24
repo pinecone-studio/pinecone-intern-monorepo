@@ -64,7 +64,7 @@ describe('addProperty Mutation', () => {
       createdAt: new Date(1999).toISOString(),
     };
 
-    const result = await addProperty!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    const result = await addProperty!({}, { input: mockInput }, { userId: null }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
@@ -122,7 +122,7 @@ describe('addProperty Mutation', () => {
     };
 
     try {
-      await addProperty!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+      await addProperty!({}, { input: mockInput }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual('Invalid house type');
     }
