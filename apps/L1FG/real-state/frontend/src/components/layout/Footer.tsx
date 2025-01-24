@@ -9,8 +9,8 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div className="w-screen flex h-[181px] py-10 mt-20">
-      <div className="max-w-[1280px] w-screen h-[101px] flex justify-between mx-auto">
+    <div className="w-full flex h-[181px] py-10 mt-20">
+      <div className="w-full h-[101px] flex justify-between mx-auto">
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-3">
             <Link href={'/'}>
