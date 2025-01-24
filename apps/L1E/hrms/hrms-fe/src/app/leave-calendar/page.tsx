@@ -47,7 +47,7 @@ const Page = () => {
   };
 
   return (
-    <div data-cy="leave-calendar-page" className="w-full h-screen flex justify-center pt-[200px] bg-neutral-100 ">
+    <div data-cy="leave-calendar-page" className="w-full min-h-screen flex justify-center pt-[200px] bg-neutral-100 ">
       <div className="flex flex-col gap-2 ">
         <div className="text-xl font-semibold">Чөлөө авсан:</div>
         <div className="flex flex-row w-[608px] gap-[186px]">

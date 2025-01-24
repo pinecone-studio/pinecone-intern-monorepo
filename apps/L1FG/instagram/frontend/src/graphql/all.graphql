@@ -6,26 +6,14 @@ mutation Mutation {
   sampleMutation
 }
 
-query GetAllPosts {
-  getAllPosts {
-    _id
-    commentCount
-    createdAt
-    hasLiked
-    likeCount
-    postImage
+query GetUserTogether($searchingUserId: String!) {
+  getUserTogether(searchingUserId: $searchingUserId) {
     user {
-      profileImage
-      userName
       _id
-      friendshipStatus {
-        following
-        followedBy
-        incomingRequest
-        outgoingRequest
-      }
+      userName
       fullName
       bio
+      profileImage
       hasStory
       gender
       isPrivate
@@ -33,9 +21,55 @@ query GetAllPosts {
       followingCount
       followerCount
       postCount
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
     }
-    userId
+    viewer {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+    }
+  }
+}
+
+query GetAllPosts {
+  getAllPosts {
+    _id
+    postImage
     caption
+    userId
     carouselMediaCount
+    createdAt
+    commentCount
+    likeCount
+    hasLiked
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
   }
 }

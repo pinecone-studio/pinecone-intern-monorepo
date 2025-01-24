@@ -31,9 +31,9 @@ export const MenuButtons = () => {
 
   const SidebarContent = () => (
     <div className="flex flex-col gap-2 ml-2 mb-auto">
-      <Link className="text-[18px] w-[200px] font-bold " href={'/home'}>
+      <p className="text-[18px] w-[200px] font-bold ">
         <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
-      </Link>
+      </p>
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
