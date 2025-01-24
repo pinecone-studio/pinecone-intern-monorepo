@@ -4,6 +4,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 jest.mock('../../../src/components/providers/AuthProvider.tsx', () => ({
   useAuth: jest.fn(),
 }));
+const mockPush = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
 
 describe('LogInPage', () => {
   it('Should render', () => {
@@ -29,6 +36,7 @@ describe('LogInPage', () => {
       },
     });
     fireEvent.submit(screen.getByTestId('login-submit-button'));
+
     expect(mockSignin).toHaveBeenCalledWith({
       email: 'hi',
       password: 'hi',
