@@ -1,16 +1,17 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useGetFollowingQuery } from '@/generated';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 
-const items = [
-  { image: '/images/profilePic.png', username: 'odshgdflk', lastname: 'dshgk' },
-  { image: '/images/profilePic.png', username: 'odshgdflk', lastname: 'dshgk' },
-];
-const Followers = ({ children }: { children: React.ReactNode }) => {
+const Following = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
+  const { data } = useGetFollowingQuery({
+    variables: { searchingUserId: userId },
+  });
+
   return (
     <Dialog>
-      <DialogTrigger asChild className="cursor-pointer">
+      <DialogTrigger asChild className="cursor-pointer" data-testid="following">
         {children}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] h-[425px]">
@@ -37,13 +38,13 @@ const Followers = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <div className="flex flex-col gap-3 overflow-y-scroll">
-          {items.map((item, index) => (
+          {data?.getFollowing?.map((item, index) => (
             <div key={index} className="flex justify-between ">
               <div className=" flex gap-4">
-                <Image src={item.image} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
+                <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
-                  <p className="text-sm font-medium">{item.lastname}</p>
-                  <p className="text-xs font-normal text-[#71717A]">{item.username}</p>
+                  <p className="text-sm font-medium">{item?.targetId?.fullName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.targetId?.userName}</p>
                 </div>
               </div>
               <button className=" px-4 bg-slate-200 rounded-lg text-sm font-medium ">Remove</button>
@@ -57,4 +58,4 @@ const Followers = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Followers;
+export default Following;

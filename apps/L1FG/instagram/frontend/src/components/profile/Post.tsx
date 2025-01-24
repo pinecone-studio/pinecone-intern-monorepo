@@ -1,28 +1,20 @@
 import Image from 'next/image';
 import Posts from '../svg/Posts';
 import Saved from '../svg/Saved';
+import { useGetPostsQuery } from '@/generated';
 
-const items = [
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-];
-
-const Post = () => {
+const Post = (userId: any) => {
+  const { data } = useGetPostsQuery({
+    variables: { searchingUserId: userId },
+  });
   return (
-    <div className="flex flex-col gap-5  " data-testid="profile-post">
+    <div className="flex flex-col gap-5" data-testid="profile-posts">
       <div>
         <p className="w-full border"></p>
       </div>
 
       <div className="flex justify-center gap-6">
-        <div className="flex justify-center items-center gap-1 ">
+        <div className="flex justify-center items-center gap-2 ">
           <Posts />
           <p className="text-xs font-medium tex-[#09090B]">POSTS</p>
         </div>
@@ -34,9 +26,9 @@ const Post = () => {
 
       <div>
         <div className="grid grid-cols-3 gap-1 overflow-y-scroll ">
-          {items.map((item, index) => (
+          {data?.getPosts?.map((item, index) => (
             <div key={index} className="flex items-center justify-center border p-2">
-              <Image src={item.image} alt={'profile'} className="bg-slate-500" width={309} height={309} />
+              <Image src={`${item?.postImage}`} alt={'profile'} className="bg-slate-500" width={309} height={309} />
             </div>
           ))}
         </div>
