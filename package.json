@@ -126,6 +126,7 @@
     "react-paginate": "8.2.0",
     "react-quill": "2.0.0",
     "react-resizable-panels": "2.0.19",
+    "react-table": "^7.8.0",
     "react-toastify": "10.0.5",
     "shadcn": "^2.1.8",
     "sonner": "1.5.0",
