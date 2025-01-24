@@ -17,7 +17,7 @@ export const Profile = () => {
 
   return (
     <div className="flex gap-4 flex-col py-10" date-testid="profile">
-      <div className="flex gap-20 ml-[72px]">
+      <div className="flex gap-20">
         <Image src="/images/profilePic.png" alt="zurag" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
 
         <div className="flex flex-col gap-4">
@@ -64,7 +64,7 @@ export const Profile = () => {
         </div>
       </div>
 
-      <Post />
+      <Post userId={userId as string} />
     </div>
   );
 };
