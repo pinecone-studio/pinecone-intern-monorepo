@@ -22,7 +22,9 @@ export const HomeHotelList = ({ data }: HomeHotelListProps) => {
             </div>
             <div className="grid grid-cols-4 gap-4">
               {data?.map((singleHotel) => (
-                <HomePageCard key={singleHotel?.id} data={singleHotel} />
+                <Link key={singleHotel?.id} href={`/hotel-detail/${singleHotel?.id}`}>
+                  <HomePageCard data={singleHotel} />
+                </Link>
               ))}
             </div>
           </div>
