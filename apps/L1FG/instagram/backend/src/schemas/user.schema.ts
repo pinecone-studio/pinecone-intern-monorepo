@@ -66,6 +66,7 @@ export const UserTypeDefs = gql`
     seenStoryTime: Date
     friendshipStatus: FriendshipStatusType
   }
+
   type UserTogetherType {
     user: UserTogetherUserType
     viewer: UserTogetherViewerType
@@ -105,6 +106,7 @@ export const UserTypeDefs = gql`
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
+    getUserByName(userName: String!): [UserTogetherUserType]!
   }
   type Mutation {
     createUser(input: UserInput!): User!
