@@ -9,27 +9,13 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
       storyImage: 'http://example-image.com',
     }),
   },
-  StoryNodeModel: {
-    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ userId: '677fc2668598bfd1b013107f', stories: [], latestAt: '677fc2668598bfd1b013107f' }),
-    create: jest.fn().mockReturnValue({
-      stories: ['677fc2668598bfd1b013107f'],
-      userId: '677fc2668598bfd1b013107f',
-      latestAt: '677fc2668598bfd1b013107f',
-    }),
-    findOneAndUpdate: jest.fn().mockReturnValue({
-      stories: ['677fc2668598bfd1b013107f', '677fc2668598bfd1b013107f'],
-      userId: '677fc2668598bfd1b013107f',
-      latestAt: '677fc2668598bfd1b013107f',
-    }),
-  },
 }));
 describe('create story', () => {
-  it('should be a story', async () => {
+  it('Should  create a story', async () => {
     if (!createStory) {
       return;
     }
     const input = {
-      _id: '677fc2668598bfd1b013107f',
       storyImage: 'http://example-image.com',
     };
 
@@ -41,17 +27,6 @@ describe('create story', () => {
       },
       {} as GraphQLResolveInfo
     );
-  });
-
-  it('should be a story', async () => {
-    if (!createStory) {
-      return;
-    }
-    const input = {
-      _id: '677fc2668598bfd1b013107f',
-      storyImage: 'http://example-image.com',
-    };
-    await createStory({}, { input }, { userId: '677fc2668598bfd1b013107f' }, {} as GraphQLResolveInfo);
   });
   it('Should throw an authorization error', async () => {
     if (!createStory) {

@@ -5,3 +5,37 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+query GetAllPosts {
+  getAllPosts {
+    _id
+    commentCount
+    createdAt
+    hasLiked
+    likeCount
+    postImage
+    user {
+      profileImage
+      userName
+      _id
+      friendshipStatus {
+        following
+        followedBy
+        incomingRequest
+        outgoingRequest
+      }
+      fullName
+      bio
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+    }
+    userId
+    caption
+    carouselMediaCount
+  }
+}

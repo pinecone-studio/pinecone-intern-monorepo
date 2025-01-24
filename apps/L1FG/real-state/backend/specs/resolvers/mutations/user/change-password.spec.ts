@@ -11,13 +11,13 @@ jest.mock('../../../../src/models', () => ({
 
 describe('Change password', () => {
   it('1. change password', async () => {
-    const response = await changePassword!({}, { input: { email: '', password: '', otp: '1111' } }, {}, {} as GraphQLResolveInfo);
+    const response = await changePassword!({}, { input: { email: '', password: '', otp: '1111' } }, { userId: null }, {} as GraphQLResolveInfo);
     expect(response).toEqual(Response.Success);
   });
 
   it('2. user not found', async () => {
     try {
-      await changePassword!({}, { input: { email: '', password: '', otp: '1111' } }, {}, {} as GraphQLResolveInfo);
+      await changePassword!({}, { input: { email: '', password: '', otp: '1111' } }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
       console.log('error', error);
       expect(error).toEqual(new Error('User not Found'));
@@ -26,7 +26,7 @@ describe('Change password', () => {
 
   it('3. throw invalid otp error', async () => {
     try {
-      await changePassword!({}, { input: { email: '', password: '', otp: '' } }, {}, {} as GraphQLResolveInfo);
+      await changePassword!({}, { input: { email: '', password: '', otp: '' } }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('Invalid OTP'));
     }

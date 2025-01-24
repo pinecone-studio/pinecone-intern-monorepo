@@ -11,8 +11,6 @@ export const StoryTypeDefs = gql`
 
   input StoryInput {
     storyImage: String
-    expiringAt: Date
-    duration: Int
   }
 
   type Mutation {

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Loader } from 'lucide-react';
 import { CreatePostSvg } from '../svg/CreatePostSvg';
-
 import { CreatePostStep1Props } from '../types';
 import CreatePostStep2 from './CreatePostStep2';
 

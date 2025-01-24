@@ -1,12 +1,12 @@
 'use client';
 
-import { SearchResultPage } from '@/components/user/pages/searchresult-page';
+import { SearchResultPage } from '@/features/user/SearchresultPage';
 
 const SearchHotels = () => {
   return (
-    <div>
+    <main>
       <SearchResultPage />
-    </div>
+    </main>
   );
 };
 
