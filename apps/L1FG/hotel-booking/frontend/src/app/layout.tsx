@@ -1,7 +1,6 @@
 import './global.css';
 import { PropsWithChildren } from 'react';
 import { ApolloWrapper } from '@/components/providers';
-import { Footer } from '@/components/user/search-result/Footer';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -13,7 +12,6 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>{children}</ApolloWrapper>
-        <Footer />
       </body>
     </html>
   );
