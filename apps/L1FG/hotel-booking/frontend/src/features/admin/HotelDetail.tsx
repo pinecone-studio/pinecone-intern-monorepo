@@ -1,10 +1,10 @@
-import { Footer, Header } from '@/components/admin/main';
 import Link from 'next/link';
+import { Sidebar } from '@/features/admin/main/Sidebar';
+import { Footer, Header } from '@/components/admin/main';
 import { LeftArrow } from '@/components/admin/svg';
-import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/ui/add-hotel';
-import { Sidebar } from './main/Sidebar';
+import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/ui/hotel-detail';
 
-export const AddHotelPage = () => {
+export const HotelDetailPage = () => {
   return (
     <div className="flex">
       <Sidebar hotels="active" guests="" />
@@ -19,7 +19,7 @@ export const AddHotelPage = () => {
               >
                 <LeftArrow />
               </Link>
-              <p className="font-Inter text-[#020617] text-lg font-semibold">Hotel Name</p>
+              <p className="font-Inter text-[#020617] text-lg font-semibold">Flower Hotel Ulaanbaatar</p>
             </div>
             <div className="flex gap-4">
               <div className="max-w-[784px] w-full flex flex-col gap-4">
