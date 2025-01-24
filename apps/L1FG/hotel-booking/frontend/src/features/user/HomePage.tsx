@@ -3,6 +3,7 @@ import { Hero } from '@/components/user/main/Hero';
 import { Loading } from '@/components/user/main/Loading';
 import { NavigationBlue } from '@/components/user/main/NavigationBlue';
 import { SearchBar } from '@/components/user/main/SearchBar';
+import { Footer } from '@/components/user/search-result/Footer';
 import { useGetHotelsQuery } from '@/generated';
 
 export const HomePage = () => {
@@ -28,6 +29,7 @@ export const HomePage = () => {
       <Hero />
       <SearchBar />
       <HomeHotelList data={hotels} />
+      <Footer />
     </>
   );
 };
