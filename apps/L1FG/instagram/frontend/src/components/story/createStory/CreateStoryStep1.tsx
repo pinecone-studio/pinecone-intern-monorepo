@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import { Loader } from 'lucide-react';
 import { CreatePostSvg } from '@/components/svg/CreatePostSvg';

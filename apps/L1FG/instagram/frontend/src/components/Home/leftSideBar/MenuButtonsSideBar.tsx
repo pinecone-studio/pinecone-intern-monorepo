@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { InstaSVG } from './Svg/InstaSvg';
 import { HomeSVG } from './Svg/HomeSvg';
 import { SearchSVG } from './Svg/SearchSvg';
-import { HumSVG } from './Svg/HumSvg';
 import { NotificationSheet } from '@/components/notifications/NotificationSheet';
 import { useRouter } from 'next/navigation';
 import { TextSideBar } from '@/components/notifications/TextSideBar';
@@ -11,7 +10,11 @@ import { Create } from './Greate';
 import { UserSvg } from './Svg/UserSvg';
 import { SearchSheet } from '@/components/search/SearchSheet';
 import { HeartSVG } from './Svg/HeartSvg';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Download, ImageDown, Menu, Moon, OctagonAlert, Settings } from 'lucide-react';
 export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -28,7 +31,9 @@ export const MenuButtons = () => {
 
   const SidebarContent = () => (
     <div className="flex flex-col gap-2 ml-2 mb-auto">
-      <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
+      <Link className="text-[18px] w-[200px] font-bold " href={'/home'}>
+        <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
+      </Link>
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
@@ -66,7 +71,62 @@ export const MenuButtons = () => {
           )}
         </div>
         <SidebarContent data-testid="toggle-search" />
-        <TextSideBar icon={<HumSVG data-testid="sidebar-more" />} text="More" />
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline">
+              <div className="flex gap-3 items-center">
+                <div>
+                  <Menu />
+                </div>
+                <p>More</p>
+              </div>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[266px] h-[404px]">
+            <div className="flex flex-col">
+              <div className="">
+                <Link className=" " href={'/settings'}>
+                  <div className="flex gap-2 h-[50px] items-center">
+                    <div>
+                      <Settings />
+                    </div>
+                    <p>Settings</p>
+                  </div>
+                </Link>
+                <div className="flex gap-2 h-[50px] items-center">
+                  <div>
+                    <ImageDown />
+                  </div>
+                  <p>Your activity</p>
+                </div>
+                <div className="flex gap-2 h-[50px] items-center">
+                  <div>
+                    <Download />
+                  </div>
+                  <p>Saved</p>
+                </div>
+                <div className="flex gap-2 h-[50px] items-center">
+                  <div>
+                    <Moon />
+                  </div>
+                  <p>Switch appearance</p>
+                </div>
+                <div className="flex gap-2 h-[50px] items-center">
+                  <div>
+                    <OctagonAlert />
+                  </div>
+                  <p>Report a problem</p>
+                </div>
+              </div>
+              <div className="h-1 "></div>
+              <div className="">
+                <p className="h-[50px] items-center flex">Switch ccounts</p>
+                <p className="h-[50px] items-center flex">Log out</p>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
 
       <NotificationSheet isOpen={isOpen} setIsOpen={setIsOpen} />

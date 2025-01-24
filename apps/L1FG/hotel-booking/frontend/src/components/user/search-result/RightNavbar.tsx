@@ -1,7 +1,13 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { HotelCard } from './HotelCard';
+import { Hotel } from '@/generated';
+import Link from 'next/link';
 
-export const RightNavbar = () => {
+interface RightNavbarProps {
+  data: Array<Hotel>;
+}
+
+export const RightNavbar = ({ data }: RightNavbarProps) => {
   return (
     <div className="w-[872px] flex flex-col gap-4">
       <div className="flex justify-between">
@@ -31,11 +37,11 @@ export const RightNavbar = () => {
           </div>
         </div>
       </div>
-      <HotelCard />
-      <HotelCard />
-      <HotelCard />
-      <HotelCard />
-      <HotelCard />
+      {data?.map((hotelData) => (
+        <Link key={hotelData?.id} href={`/hotel-detail/${hotelData?.id}`}>
+          <HotelCard data={hotelData} />
+        </Link>
+      ))}
     </div>
   );
 };
