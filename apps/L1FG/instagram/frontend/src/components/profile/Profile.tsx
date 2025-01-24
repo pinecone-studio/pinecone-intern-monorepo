@@ -12,6 +12,7 @@ import Post from './Post';
 
 const Profile = () => {
   const { user } = useAuth();
+
   const userPosts = user?.bio || [];
   return (
     <div className="flex gap-4 flex-col py-10">

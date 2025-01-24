@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MenuButtons } from '@/components/Home/leftSideBar/MenuButtonsSideBar';
+import { MockedProvider } from '@apollo/client/testing';
 
 const mockPush = jest.fn();
 
@@ -12,7 +13,11 @@ jest.mock('next/navigation', () => ({
 
 describe('MenuButtons component functionality', () => {
   it('toggles the notification sheet open and closed', () => {
-    render(<MenuButtons />);
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
 
     const notificationButton = screen.getByTestId('click-open-sheet');
     const menuButton = screen.getByTestId('menu-button-open-sheet');
@@ -28,7 +33,11 @@ describe('MenuButtons component functionality', () => {
   });
 
   it('toggles the notification sheet open and closed for search', () => {
-    render(<MenuButtons />);
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
 
     const searchSheetButton = screen.getByTestId('search-button');
     const menuButton = screen.getByTestId('menu-button-open-sheet');
@@ -44,7 +53,11 @@ describe('MenuButtons component functionality', () => {
   });
 
   it('navigates to /home when the Instagram icon div is clicked', () => {
-    render(<MenuButtons />);
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
 
     const Div = screen.getByTestId('click-push-home');
 

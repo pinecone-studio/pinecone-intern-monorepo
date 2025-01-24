@@ -21,7 +21,7 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
     <div className="">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px] w-full`}>
+          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}>
             <SquarePlus className="h-6 w-6" />
             <span className={`${isOpen || searchOpen ? 'hidden' : 'block'}`}>Create</span>
           </Button>
