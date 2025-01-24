@@ -6,6 +6,38 @@ mutation Mutation {
   sampleMutation
 }
 
+query GetUserTogether($searchingUserId: String!) {
+  getUserTogether(searchingUserId: $searchingUserId) {
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+    viewer {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+    }
+  }
+}
+
 query GetAllPosts {
   getAllPosts {
     _id
@@ -30,12 +62,12 @@ query GetAllPosts {
       gender
       isPrivate
       email
-      followingCount
-      followerCount
-      postCount
     }
-    userId
-    caption
-    carouselMediaCount
+    followingCount
+    followerCount
+    postCount
   }
+  userId
+  caption
+  carouselMediaCount
 }
