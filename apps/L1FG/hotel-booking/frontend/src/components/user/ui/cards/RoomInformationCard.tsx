@@ -23,7 +23,7 @@ export const RoomInformationCard = () => {
           <ChevronRightIcon />
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[578px] max-h-[600px] p-6 rounded-[8px]">
+      <DialogContent className="sm:max-w-[578px] max-h-[800px] h-full p-6 rounded-[8px]">
         <DialogHeader>
           <DialogTitle>Room information</DialogTitle>
 
@@ -32,7 +32,7 @@ export const RoomInformationCard = () => {
             <span className="sr-only">Close</span>
           </DialogClose>
         </DialogHeader>
-        <ScrollArea className="h-[386px] ">
+        <ScrollArea className="h-full">
           <div className=" w-full flex flex-col gap-5">
             <Carousel className="relative w-full">
               <CarouselContent>
