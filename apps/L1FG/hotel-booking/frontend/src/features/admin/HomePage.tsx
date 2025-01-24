@@ -2,7 +2,7 @@ import { Header } from '@/components/admin/main/Header';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Plus } from '@/components/admin/svg';
 import Link from 'next/link';
-import { SelectLocation, SelectRoom, SelectStarRating, SelectUserRating } from '@/components/admin/ui';
+import { HotelDataTable, SelectLocation, SelectRoom, SelectStarRating, SelectUserRating } from '@/components/admin/ui';
 
 export const HomePage = () => {
   return (
@@ -26,6 +26,7 @@ export const HomePage = () => {
               <SelectStarRating />
               <SelectUserRating />
             </div>
+            <HotelDataTable />
           </div>
         </div>
       </div>
