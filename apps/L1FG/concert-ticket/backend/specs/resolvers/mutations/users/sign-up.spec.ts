@@ -1,6 +1,4 @@
-import { UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
 import { signUp } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
-import { hashSync } from 'bcrypt';
 import { GraphQLResolveInfo } from 'graphql';
 import jwt from 'jsonwebtoken';
 
