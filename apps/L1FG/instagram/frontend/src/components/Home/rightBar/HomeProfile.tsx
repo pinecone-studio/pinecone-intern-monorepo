@@ -5,13 +5,13 @@ import Link from 'next/link';
 const HomePageProfile = () => {
   const { user } = useAuth();
   return (
-    <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10 ml-[72px]">
+    <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10">
       <div className="flex items-center justify-between w-full ">
         <div className="flex items-center gap-2">
           <Link href="/mystories">
-            <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[3px]">
-              <div className="rounded-full bg-white w-[60px] h-[60px] flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full overflow-hidden relative">
+            <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[3px] mt-2">
+              <div className="rounded-full bg-white w-12 h-12 flex items-center justify-center">
+                <div className="w-11 h-11 rounded-full overflow-hidden relative">
                   <Image src="/images/profilePic.png" alt="zurag orno" fill className="object-cover" />
                 </div>
               </div>

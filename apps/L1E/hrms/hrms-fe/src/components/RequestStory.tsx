@@ -22,6 +22,12 @@ const typeMapping: Record<string, string> = {
   REJECTED: 'Татгалзсан',
 };
 
+const statusColor = {
+  PENDING: 'bg-[#F9731633]',
+  APPROVED: 'bg-[#18BA5133]',
+  REJECTED: 'bg-[#E11D4833]',
+};
+
 interface RequestStoryProps {
   date: DateRange | undefined;
   setDate: Dispatch<SetStateAction<DateRange | undefined>>;
@@ -61,7 +67,7 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
                   <div className="flex flex-row gap-2 items-center">
                     <PiTagThin className="w-4 h-4" />
                     <div>{request?.requestStatus && statusMapping[request.requestStatus]}</div>
-                    <div className="flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    <div className={`flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium text-orange-800 ${statusColor[request.requestType]}`}>
                       {request?.requestType && typeMapping[request.requestType]}
                     </div>
                   </div>
