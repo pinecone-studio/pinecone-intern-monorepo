@@ -64,7 +64,7 @@ const Page = () => {
   };
 
   return (
-    <div data-cy="request-form-page" className="h-screen w-screen bg-neutral-100 pt-[200px]">
+    <div data-cy="request-form-page" className="min-h-screen w-screen bg-neutral-100 pt-[200px]">
       <Card className="w-[608px] border-[#E4E4E7] mx-auto">
         <CardContent className="p-8">
           <div className="space-y-6">
