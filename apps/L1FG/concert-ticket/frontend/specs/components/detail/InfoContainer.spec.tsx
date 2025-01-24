@@ -1,8 +1,8 @@
-import InfoContainer from '@/components/providers/Detail/InfoContainer';
+import { InfoContainer } from '@/components/providers/Detail/InfoContainer';
 import { render } from '@testing-library/react';
 
 describe('Test', () => {
-  it('should render component', () => {
+  it('should InfoContainer component', () => {
     render(<InfoContainer />);
   });
 });

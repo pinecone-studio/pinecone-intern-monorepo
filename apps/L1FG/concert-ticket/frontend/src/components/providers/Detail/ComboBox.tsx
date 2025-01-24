@@ -45,11 +45,11 @@
 //     </Popover>
 //   );
 // }
-
+import Image from "next/image";
 const ComboBox = () => {
   return (
     <div data-testid="Combo-box">
-      <img src="/ComboBox.svg" />
+      <Image src="/ComboBox.svg" alt="ComboBox" width={500} height={500} />
     </div>
   );
 };

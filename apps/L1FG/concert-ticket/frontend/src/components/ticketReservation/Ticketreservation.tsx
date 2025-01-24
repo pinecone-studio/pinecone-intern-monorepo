@@ -1,9 +1,10 @@
+import Image from "next/image";
 const Ticketreservation = () => {
   return (
     <div className="w-[385px] mx-auto mt-[100px] h-[548px] bg-[#131313] rounded-xl p-[20px] flex-col items-center">
       <div className="">
         <p className="text-[#ababab]">Тоглолт үзэх өдрөө сонгоно уу.</p>
-        <img className="my-[15px]" src="/ComboBox.svg" />
+        <Image className="my-[15px]" src="/ComboBox.svg" alt="ComboBox" width={50} height={50} />
       </div>
       <div className="w-[345px] h-[216px] my-[5px]">
         <div className="border-dashed border-b-2 border-[#27272A] "></div>

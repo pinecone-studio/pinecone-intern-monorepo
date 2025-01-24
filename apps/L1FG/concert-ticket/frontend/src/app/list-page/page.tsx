@@ -1,11 +1,11 @@
 'use client';
 
-import { HeaderPart } from '@/components/header/Header';
+import { ListPage } from "@/components/list-page/ListPage";
 
 const Page = () => {
   return (
     <div>
-      <HeaderPart />
+      <ListPage />
     </div>
   );
 };

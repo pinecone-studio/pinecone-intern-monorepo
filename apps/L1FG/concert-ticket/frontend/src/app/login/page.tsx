@@ -1,3 +1,4 @@
+import Link from 'next/link';
 const Page = () => {
   return (
     <div className="Container w-[1334px] mx-auto ">
@@ -19,7 +20,11 @@ const Page = () => {
           <button className="w-[350px] h-[36px] bg-[#00B7F4] rounded-sm">Нэвтрэх</button>
         </div>
         <div className="text-[#A1A1AA] text-[14px] mx-auto w-[350px] mt-[15px] h-[40px] flex-col text-center ">
-          Та бүртгэлтэй хаяггүй бол <button className="bg-transparent underline">бүртгүүлэх</button> хэсгээр орно уу.
+          Та бүртгэлтэй хаяггүй бол
+          <Link href={'/sign-up'}>
+            <button className="bg-transparent underline px-[4px]">бүртгүүлэх</button>
+          </Link>
+          хэсгээр орно уу.
         </div>
       </div>
     </div>

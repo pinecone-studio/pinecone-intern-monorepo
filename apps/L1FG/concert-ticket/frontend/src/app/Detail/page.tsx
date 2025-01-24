@@ -1,6 +1,6 @@
 'use client';
 import HeroComponent from '@/components/providers/Detail/HeroComponent';
-import InfoContainer from '@/components/providers/Detail/InfoContainer';
+import { InfoContainer } from '@/components/providers/Detail/InfoContainer';
 
 const Page = () => {
   return (

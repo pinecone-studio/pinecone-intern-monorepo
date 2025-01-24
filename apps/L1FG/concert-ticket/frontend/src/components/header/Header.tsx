@@ -1,10 +1,13 @@
+import Link from 'next/link';
 export const HeaderPart = () => {
   return (
     <div className="w-full flex items-center justify-center">
       <div className="w-[1334px] h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
         <div className="flex items-center gap-[8px]">
           <div className="w-[20px] h-[20px] bg-[#00B7F4] rounded-full"></div>
-          <h1 className="text-white text-[24px] font-bold">TICKET BOOKING</h1>
+          <Link href={'/'}>
+            <h1 className="text-white text-[24px] font-bold">TICKET BOOKING</h1>
+          </Link>
         </div>
 
         <div className="flex items-center">
@@ -17,8 +20,12 @@ export const HeaderPart = () => {
         </div>
 
         <div className="flex items-center gap-[16px]">
-          <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
-          <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
+          <Link href={'/sign-up'}>
+            <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
+          </Link>
+          <Link href={'/login'}>
+            <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
+          </Link>
         </div>
       </div>
     </div>
