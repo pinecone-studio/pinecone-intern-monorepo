@@ -12,9 +12,9 @@ import { SearchSheet } from '@/components/search/SearchSheet';
 import { HeartSVG } from './Svg/HeartSvg';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Download, ImageDown, Menu, Moon, OctagonAlert, Settings } from 'lucide-react';
+
 export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);

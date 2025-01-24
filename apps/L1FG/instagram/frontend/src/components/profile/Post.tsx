@@ -1,17 +1,16 @@
-import Image from 'next/image';
 import Posts from '../svg/Posts';
 import Saved from '../svg/Saved';
+import { Separator } from '@/components/ui/separator';
 import { useGetPostsQuery } from '@/generated';
 
-const Post = (userId: any) => {
+const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
     variables: { searchingUserId: userId },
   });
+
   return (
-    <div className="flex flex-col gap-5" data-testid="profile-posts">
-      <div>
-        <p className="w-full border"></p>
-      </div>
+    <div className="flex flex-col gap-5 w-[900px]" data-testid="profile-posts">
+      <Separator />
 
       <div className="flex justify-center gap-6">
         <div className="flex justify-center items-center gap-2 ">
@@ -26,9 +25,9 @@ const Post = (userId: any) => {
 
       <div>
         <div className="grid grid-cols-3 gap-1 overflow-y-scroll ">
-          {data?.getPosts?.map((item, index) => (
-            <div key={index} className="flex items-center justify-center border p-2">
-              <Image src={`${item?.postImage}`} alt={'profile'} className="bg-slate-500" width={309} height={309} />
+          {data?.getPosts?.map((post, index) => (
+            <div key={index} className="flex flex-col items-center justify-center border p-2">
+              <img src={post?.postImage[0]} alt={'profile'} className="w-[200px] h-[300px] object-top " />
             </div>
           ))}
         </div>
