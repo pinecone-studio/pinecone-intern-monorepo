@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 const FormSchema = z.object({
   email: z.string().min(8, {
-    message: 'Хэрэглэгчийн нэр 8-с дээш байх шаардлагатай.',
+    message: 'Э-мэйл 8-с дээш байх шаардлагатай.',
   }),
   password: z.string().min(8, {
     message: 'Нууц үг 8-аас дээш байх шаардлагатай ',

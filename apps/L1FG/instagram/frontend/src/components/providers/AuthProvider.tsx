@@ -1,6 +1,7 @@
 'use client';
 
 import { useCreateUserMutation, useGetUserLazyQuery, useLoginMutation, UserWithoutPassword } from '@/generated';
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 type SignInParams = {
@@ -21,6 +22,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserWithoutPassword | null>(null);
+  const router = useRouter();
   const [getUserQuery] = useGetUserLazyQuery({
     onCompleted: (data) => {
       setUser(data.getUser as UserWithoutPassword);
@@ -37,6 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Амжилттай нэвтэрлээ', {
         autoClose: 2000,
       });
+      router.push('/home');
     },
     onError: (error) => {
       toast.error(`${error.message}`, {
@@ -47,13 +50,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [createUserMutation] = useCreateUserMutation({
     onCompleted: () => {
       toast.success('Амжилттай бүртгэгдлээ', { autoClose: 2000 });
+      router.push('/log-in');
     },
     onError: (error) => {
       toast.error(`${error.message}`, { autoClose: 2000 });
     },
   });
 
-  const signin =async ({ email, password }: SignInParams) => {
+  const signin = async ({ email, password }: SignInParams) => {
     await loginMutation({
       variables: {
         input: {
@@ -62,8 +66,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         },
       },
     });
-  }
-  const signup =  async ({ email, password, fullName, userName }: SignUpParams) => {
+  };
+  const signup = async ({ email, password, fullName, userName }: SignUpParams) => {
     await createUserMutation({
       variables: {
         input: {
@@ -74,7 +78,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         },
       },
     });
-  }
+  };
 
   useEffect(() => {
     getUserQuery();
