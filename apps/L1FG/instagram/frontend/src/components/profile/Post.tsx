@@ -14,7 +14,7 @@ const Post = (userId: any) => {
       </div>
 
       <div className="flex justify-center gap-6">
-        <div className="flex justify-center items-center gap-1 ">
+        <div className="flex justify-center items-center gap-2 ">
           <Posts />
           <p className="text-xs font-medium tex-[#09090B]">POSTS</p>
         </div>
