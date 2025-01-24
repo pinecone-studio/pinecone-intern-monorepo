@@ -89,13 +89,13 @@ const Page = () => {
 
   if (loading)
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen  bg-neutral-100 h-screen flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
 
   return (
-    <div data-cy="employee-list-page" className="w-full p-12 min-h-screen bg-neutral-100">
+    <div data-cy="employee-list-page" className="w-full p-12 min-h-screen pt-[188px] bg-neutral-100">
       <div className="flex items-center justify-between pb-4">
         <h2 className="text-lg font-medium">Нийт ажилчид</h2>
         <div className="flex items-center gap-4">

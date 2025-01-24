@@ -4,8 +4,11 @@ const storySchema = new Schema(
   {
     storyImage: { type: String },
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
-    expiringAt: { type: Date, default: new Date() },
+    expiringAt: { type: Date },
     duration: { type: String, default: 10 },
+    isVisible:{
+      type:Boolean,default:false
+    }
   },
   { timestamps: true }
 );
