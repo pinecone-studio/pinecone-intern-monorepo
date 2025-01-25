@@ -30,7 +30,7 @@ const Post = ({ userId }: { userId: string }) => {
               <img
                 src={post?.postImage[0]}
                 alt="profile"
-                className=" object-contain opacity-100 hover:opacity-30 transition-opacity duration-300 w-[200px] h-[300px]"
+                className=" object-cover opacity-100 hover:opacity-30 transition-opacity duration-300 w-[200px] h-[300px]"
                 sizes="(max-width: 309px) 100vw, 309px"
               />
             </div>
