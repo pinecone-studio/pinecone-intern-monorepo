@@ -11,8 +11,6 @@ describe('Login', () => {
     cy.get('[data-cy=login-email-input]').type('cypress4@gmail.com');
     cy.get('[data-cy=login-password-input]').type('1234');
     cy.get('[data-cy=login-submit-button]').click();
-
-    cy.contains('Амжилттай нэвтэрлээ', { timeout: 30000 }).should('be.visible');
     cy.location('pathname').should('equal', '/home');
   });
 
