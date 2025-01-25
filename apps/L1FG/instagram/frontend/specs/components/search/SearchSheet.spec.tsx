@@ -31,6 +31,13 @@ const getUserByNameMock: MockedResponse = {
   },
 };
 
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
+
 describe('SearchSheet', () => {
   const mockSetSearchOpen = jest.fn();
 
@@ -120,11 +127,14 @@ describe('SearchSheet', () => {
       </MockedProvider>
     );
     const inputElement = screen.getByPlaceholderText('Search') as HTMLInputElement;
+    const clickXButton = screen.getByTestId('click-x');
 
     expect(inputElement.value).toBe('');
 
     fireEvent.change(inputElement, { target: { value: 'Hello' } });
     expect(inputElement.value).toBe('Hello');
+    fireEvent.click(clickXButton);
+    expect(inputElement.value).tobe('');
 
     const userComponent = await screen.findByText('Search');
     expect(userComponent);
