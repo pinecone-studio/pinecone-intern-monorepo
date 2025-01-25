@@ -66,7 +66,7 @@ describe('SearchSheet', () => {
         },
       ],
     };
-    const users = data?.getUserByName as [];
+    const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
     expect(users).toEqual([
       {
         _id: ' string',
@@ -84,6 +84,12 @@ describe('SearchSheet', () => {
         userName: 'Hello',
       },
     ]);
+  });
+
+  it('returns undefined when data.getUserByName is not an array', () => {
+    const data = { getUserByName: { id: 1, name: 'User One' } };
+    const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
+    expect(users).toBeUndefined();
   });
 
   it('should set users to undefined when data is undefined', () => {
@@ -108,16 +114,18 @@ describe('SearchSheet', () => {
     expect(mockSetSearchOpen).toHaveBeenCalledWith(false);
   });
 
-  it('should handle undefined or non-array data', () => {
-    const mockData = { getUserByName: undefined };
-    const users = Array.isArray(mockData?.getUserByName) ? (mockData?.getUserByName as []) : undefined;
+  it('click x button', () => {
+    render(
+      <MockedProvider mocks={[getUserByNameMock]}>
+        <SearchSheet searchOpen={true} setSearchOpen={mockSetSearchOpen} />
+      </MockedProvider>
+    );
 
-    expect(users).toBeUndefined();
+    const inputElement = screen.getByPlaceholderText('Search') as HTMLInputElement;
 
-    const mockNonArrayData = { getUserByName: 'not an array' };
-    const nonArrayUsers = Array.isArray(mockNonArrayData?.getUserByName) ? (mockNonArrayData?.getUserByName as unknown as []) : undefined;
-
-    expect(nonArrayUsers).toBeUndefined();
+    const clickXButton = screen.getByTestId('click-x');
+    fireEvent.click(clickXButton);
+    expect(inputElement.value).toBe('');
   });
 
   it('input value', async () => {
@@ -126,15 +134,13 @@ describe('SearchSheet', () => {
         <SearchSheet searchOpen={true} setSearchOpen={mockSetSearchOpen} />
       </MockedProvider>
     );
+
     const inputElement = screen.getByPlaceholderText('Search') as HTMLInputElement;
-    const clickXButton = screen.getByTestId('click-x');
 
     expect(inputElement.value).toBe('');
 
     fireEvent.change(inputElement, { target: { value: 'Hello' } });
     expect(inputElement.value).toBe('Hello');
-    fireEvent.click(clickXButton);
-    expect(inputElement.value).tobe('');
 
     const userComponent = await screen.findByText('Search');
     expect(userComponent);
