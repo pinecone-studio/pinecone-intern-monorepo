@@ -1,4 +1,4 @@
-import LogInForm from '@/components/log-in/LogInForm';
+import LogInForm from '@/app/(public)/login/_features/Login';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { fireEvent, render, screen } from '@testing-library/react';
 jest.mock('../../../src/components/providers/AuthProvider.tsx', () => ({

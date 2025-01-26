@@ -1,5 +1,5 @@
+import SignUpForm from '@/app/(public)/signup/_features/Signup';
 import { useAuth } from '@/components/providers/AuthProvider';
-import SignUpForm from '@/components/sign-up/SignUpForm';
 import { fireEvent, render, screen } from '@testing-library/react';
 jest.mock('../../../src/components/providers/AuthProvider.tsx', () => ({
   useAuth: jest.fn(),

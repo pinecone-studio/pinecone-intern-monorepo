@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { InstaSVG } from './Svg/InstaSvg';
 import { HomeSVG } from './Svg/HomeSvg';

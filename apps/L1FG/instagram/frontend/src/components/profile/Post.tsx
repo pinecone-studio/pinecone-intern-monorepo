@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Posts from '../svg/Posts';
 import Saved from '../svg/Saved';
 import { Separator } from '@/components/ui/separator';
@@ -25,11 +26,16 @@ const Post = ({ userId }: { userId: string }) => {
 
       <div>
         <div className="grid grid-cols-3 gap-1 overflow-y-scroll ">
-          {data?.getPosts?.map((post, index) => (
-            <div key={index} className="flex flex-col items-center justify-center border p-2">
-              <img src={post?.postImage[0]} alt={'profile'} className="w-[200px] h-[300px] object-top " />
-            </div>
-          ))}
+          {data?.getPosts?.map((post) => {
+            if (!post?.postImage.length || !post?.postImage[0]) {
+              return null;
+            }
+            return (
+              <div key={post._id} className="flex flex-col items-center justify-center border p-2" data-testid={`profile-story-${post._id}`}>
+                <Image src={post?.postImage[0]} alt={'profile'} className=" object-top " width={200} height={300} />
+              </div>
+            );
+          })}
         </div>
         <div className="text-gray-500 text-wrap text-[12px] flex flex-col gap-4 mt-8 ">
           <p className="flex justify-center">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
