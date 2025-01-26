@@ -12,9 +12,9 @@ import { SearchSheet } from '@/components/search/SearchSheet';
 import { HeartSVG } from './Svg/HeartSvg';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Download, ImageDown, Menu, Moon, OctagonAlert, Settings } from 'lucide-react';
+
 export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -31,13 +31,15 @@ export const MenuButtons = () => {
 
   const SidebarContent = () => (
     <div className="flex flex-col gap-2 ml-2 mb-auto">
-      <Link className="text-[18px] w-[200px] font-bold " href={'/home'}>
+      <p className="text-[18px] w-[200px] font-bold ">
         <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
-      </Link>
+      </p>
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
-        className={`${isOpen ? 'h-12 w-12 border rounded-lg' : ''} flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+        className={`${
+          searchOpen ? 'h-12 w-12 border rounded-lg' : ''
+        } flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
       >
         <SearchSVG data-testid="heart-svg" />
         <p>Search</p>
