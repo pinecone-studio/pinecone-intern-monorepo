@@ -39,7 +39,7 @@ const RequestStory = ({ setDate, date, daysArray, requestsData }: RequestStoryPr
   const reversedDays = [...daysArray].reverse();
 
   return (
-    <div className="flex flex-col w-[684px]  gap-2 w-[608px]">
+    <div className="flex flex-col w-[684px]  gap-2 ">
       <div data-testid="btn" className="cursor-pointer" onClick={() => setDate(undefined)}></div>
 
       <div className="flex flex-row mt-4">

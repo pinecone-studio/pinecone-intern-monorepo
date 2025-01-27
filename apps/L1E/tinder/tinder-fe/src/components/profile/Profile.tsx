@@ -126,7 +126,9 @@ export const ProfileSection: React.FC = () => {
       <InputField label="Profession" value={updateData.profession} onChange={(value) => handleInputChange('profession', value)} testId="profession" />
       <InputField label="Job" value={updateData.job} onChange={(value) => handleInputChange('job', value)} testId="work" />
       {/* <InputField type="images" value={updateData.images} onChange={(value) => handleInputChange('images', value)} testId="images-input" /> */}
-      <Button className="bg-[#E11D48]" onClick={handleUpdateProfile} data-testid="Update-profile"></Button>
+      <Button className="bg-[#E11D48]" onClick={handleUpdateProfile} data-testid="Update-profile">
+        Update-profile
+      </Button>
     </div>
   );
 };
