@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { StoryModel, StoryViewModel } from '../../../src/models';
-import { seenStoryTime } from '../../../src/resolvers/user-together-user-type';
+import { seenStoryTime } from '../../../src/resolvers/user/user-together-user-type';
 jest.mock('../../../src/models');
 describe('Seen story time', () => {
   it('Should update seen if no stories there and return 0', async () => {

@@ -1,5 +1,5 @@
-import { UserTogetherUserTypeResolvers } from '../../generated';
-import { StoryModel, StoryViewModel } from '../../models';
+import { UserTogetherUserTypeResolvers } from "../../../generated";
+import { StoryModel,StoryViewModel } from "../../../models";
 
 export const seenStoryTime: UserTogetherUserTypeResolvers['seenStoryTime'] = async (parent, _, { userId }) => {
   const stories = await StoryModel.find({

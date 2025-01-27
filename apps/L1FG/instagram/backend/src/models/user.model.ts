@@ -9,6 +9,22 @@ const userSchema = new Schema({
   hasStory: { type: Boolean, default: false },
   profileImage: { type: String },
   gender: { type: String, enum: ['female', 'male', 'not_know'], default: 'not_know' },
+  followingCount:{
+    type:Number,
+    default:0,
+    min:0
+  },
+followerCount:{
+  type:Number,
+  default:0,
+  min:0
+},
+postCount:{
+  type:Number,
+  default:0,
+  min:0
+}
+
 });
 
 export const UserModel = models['User'] || model('User', userSchema);

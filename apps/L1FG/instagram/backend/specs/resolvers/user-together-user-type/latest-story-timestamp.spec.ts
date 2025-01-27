@@ -1,7 +1,7 @@
 jest.mock('../../../src/models');
 import { GraphQLResolveInfo } from 'graphql';
 import { StoryModel } from '../../../src/models';
-import { latestStoryTimestamp } from '../../../src/resolvers/user-together-user-type';
+import { latestStoryTimestamp } from '../../../src/resolvers/user/user-together-user-type';
 describe('Latest story timestamp', () => {
   it('Should get story', async () => {
     if (!latestStoryTimestamp) {

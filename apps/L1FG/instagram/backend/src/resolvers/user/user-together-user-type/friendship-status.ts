@@ -1,6 +1,6 @@
-import { UserTogetherUserTypeResolvers } from '../../generated';
-import { FollowerModel, RequestModel } from '../../models';
-import { statusBooleanConverter, StatusType } from '../follower-user-type/status-boolean-converter';
+import { UserTogetherUserTypeResolvers } from '../../../generated';
+import { FollowerModel,RequestModel } from '../../../models';
+import { statusBooleanConverter,StatusType } from '../../follow/follower-user-type/status-boolean-converter';
 
 export const friendshipStatus: UserTogetherUserTypeResolvers['friendshipStatus'] = async ({ _id }, _, { userId }) => {
   if (userId == _id) {
