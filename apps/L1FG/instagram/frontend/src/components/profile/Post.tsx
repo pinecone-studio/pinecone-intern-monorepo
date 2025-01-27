@@ -3,6 +3,7 @@ import Posts from '../svg/Posts';
 import Saved from '../svg/Saved';
 import { Separator } from '@/components/ui/separator';
 import { useGetPostsQuery } from '@/generated';
+import { Tag } from 'lucide-react';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
@@ -21,6 +22,10 @@ const Post = ({ userId }: { userId: string }) => {
         <div className="flex justify-center items-center gap-1">
           <Saved />
           <p className="text-xs font-medium text-[#09090B]">SAVED</p>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <Tag className="h-4 w-4" />
+          <p className="text-xs font-medium text-gray-900 cursor-pointer">TAGGED</p>
         </div>
       </div>
 

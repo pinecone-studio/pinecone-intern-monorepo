@@ -8,6 +8,7 @@ import Followers from './Followers';
 import Following from './Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
+import StoryHighlight from './StoryHighlight';
 
 export const Profile = () => {
   const { userId } = useParams();
@@ -40,36 +41,20 @@ export const Profile = () => {
                 <p className="text-base font-semibold">{data?.getUserTogether.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>
               </div>
-              {/* {data?.getUserTogether.user?.followerCount || 0 ? ( */}
+
               <Followers userId={userId as string}>
                 <div className="flex gap-1">
                   <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
                   <p className="text-base font-normal">followers</p>
                 </div>
               </Followers>
-              {/* ) : (
-                <FollowersEmpty>
-                  <div className="flex gap-1">
-                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
-                    <p className="text-base font-normal">followers</p>
-                  </div>
-                </FollowersEmpty>
-              )} */}
-              {/* {data?.getUserTogether.user?.followingCount || 0 ? ( */}
+
               <Following userId={userId as string}>
                 <div className="flex gap-1">
                   <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
                   <p className="text-base font-normal">following</p>
                 </div>
               </Following>
-              {/* ) : (
-                <EmptyFollowing>
-                  <div className="flex gap-1">
-                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
-                    <p className="text-base font-normal">following</p>
-                  </div>
-                </EmptyFollowing>
-              )} */}
             </div>
           </div>
 
@@ -81,6 +66,7 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <StoryHighlight />
 
       <Post userId={userId as string} />
     </div>
