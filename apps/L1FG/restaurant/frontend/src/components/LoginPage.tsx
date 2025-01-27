@@ -2,20 +2,71 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/navigation';
+
+export const LOGIN_USER = gql`
+  mutation LoginUser($input: LoginInput!) {
+    loginUser(input: $input) {
+      createdAt
+      email
+      profileImage
+      _id
+      userName
+    }
+  }
+`;
 
 const LoginPage = () => {
+  const router = useRouter();
+
   const [formState, setFormState] = useState({
     email: '',
     password: '',
     loading: false,
     errorMessage: '',
   });
+
+  const [loginUser] = useMutation(LOGIN_USER);
+
   const handleSignIn = async () => {
     if (!formState.email || !formState.password) {
       setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
-    setFormState({ ...formState, loading: !formState.loading });
+
+    try {
+      const user = await loginUser({
+        variables: {
+          input: {
+            email: formState.email,
+            password: formState.password,
+          },
+        },
+      });
+
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          _id: user.data.loginUser._id,
+          email: user.data.loginUser.email,
+          userName: user.data.loginUser.userName,
+          profileImage: user.data.loginUser.profileImage,
+          createdAt: user.data.loginUser.createdAt,
+        })
+      );
+
+      setFormState({ ...formState, loading: !formState.loading });
+
+      router.push('/order/1');
+    } catch (error) {
+      setFormState({
+        ...formState,
+        loading: false,
+        errorMessage: 'Имэйл эсвэл нууц үг буруу байна.',
+      });
+    }
   };
 
   return (
