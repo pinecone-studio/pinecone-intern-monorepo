@@ -1,14 +1,12 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Followers from '@/components/profile/Followers'; // Adjust the path if necessary
+import Followers from '@/components/profile/Followers';
 import { useGetFollowersQuery } from '@/generated';
 
-// Mock the `useGetFollowersQuery` hook
 jest.mock('@/generated', () => ({
   useGetFollowersQuery: jest.fn(),
 }));
 
-// Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
 }));
