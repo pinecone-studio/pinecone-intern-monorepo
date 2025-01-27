@@ -58,7 +58,7 @@ export const SwipeCards = () => {
     );
   }
   return (
-    <div className="grid h-screen w-screen place-items-center bg-neutral-200">
+    <div className="mt-[150px] md:mt-4  h-screen w-screen place-items-center">
       <SwipeCard key={currentCard._id} user={currentCard} onSwipe={handleSwipe} />
       <UserMatchComp isOpen={isMatchOpen} onClose={() => setIsMatchOpen(false)} userImage={currentCard.images[0]} matchImage={currentCard.images[0]} matchName={currentCard.username} />
     </div>
@@ -81,13 +81,13 @@ const SwipeCard = ({ user, onSwipe }: SwipeCardProps) => {
     }
   };
   return (
-    <div className=" flex justify-center items-center w-screen h-screen bg-white">
+    <div className=" flex justify-center items-center w-screen md:h-screen bg-white">
       <motion.div className="relative  bg-white p-4 " style={{ x, rotate, opacity }} drag="x" dragConstraints={{ left: 0, right: 0 }} onDragEnd={handleDragEnd}>
-        <Carousel className="h-[660px] w-[440px]" ref={emblaRef}>
+        <Carousel className="md:h-[660px] h-[400px] w-[282px] md:w-[440px]" ref={emblaRef}>
           <CarouselContent>
             {user.images.map((image, index) => (
               <CarouselItem key={index}>
-                <Card className="overflow-hidden h-[660px] w-[440px]">
+                <Card className="overflow-hidden  h-[400px] w-[282px] md:h-[660px] md:w-[440px]">
                   <CardContent className="p-0 h-full">
                     <div className="relative h-full">
                       <Image width={440} height={660} src={image} alt={user.username} className="w-[440px] h-[660px] object-cover" />
@@ -95,7 +95,7 @@ const SwipeCard = ({ user, onSwipe }: SwipeCardProps) => {
                         <div className="flex items-center gap-2">
                           <h2 className="text-[18px] font-semibold">{user.username}</h2> <p className="text-[18px] font-semibold">{user.age}</p>
                         </div>
-                        <p className="text-sm">{user.job}</p>
+                        <p className="text-sm">{user._id}</p>
                       </div>
                     </div>
                   </CardContent>
