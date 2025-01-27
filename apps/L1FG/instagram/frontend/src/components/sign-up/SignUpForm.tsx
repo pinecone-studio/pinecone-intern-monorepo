@@ -2,6 +2,7 @@
 import { InstaLogo } from '@/components/svg/InstaLogo';
 import { ChangeEvent, useState } from 'react';
 import { useAuth } from '../providers/AuthProvider';
+import Link from 'next/link';
 const SignUpForm = () => {
   const { signup } = useAuth();
   const [email, setEmail] = useState<string>('');
@@ -86,7 +87,10 @@ const SignUpForm = () => {
         </div>
         <div className="w-[364px] h-[72px] flex justify-center items-center gap-4 rounded-[10px] bg-white">
           <span className="">Have an account?</span>
-          <span className="text-[#2563EB] ">Log In</span>
+
+          <Link className="text-[#2563EB] " href={'/log-in'}>
+            Log In
+          </Link>
         </div>
       </div>
     </form>

@@ -21,7 +21,7 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
     <div className="">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px] w-full`}>
+          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}>
             <SquarePlus className="h-6 w-6" />
             <span className={`${isOpen || searchOpen ? 'hidden' : 'block'}`}>Create</span>
           </Button>
@@ -35,7 +35,7 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
                   <ImagePlay className="w-4 h-4 text-gray-600" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="w-[423px] border-none">
                 <CreatePostStep1 openCreatePostModal={openCreatePostModal} setOpenCreatePostModal={setOpenCreatePostModal} />
               </DialogContent>
             </Dialog>
@@ -46,10 +46,8 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
                   <BookOpenCheck className="w-4 h-4 text-gray-600" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <div className="grid gap-4 py-4 px-0">
-                  <CreateStoryStep1 openCreateStoryModal={openCreateStoryModal} setOpenCreateStoryModal={setOpenCreateStoryModal} />
-                </div>
+              <DialogContent className="w-[423px] border-none ">
+                <CreateStoryStep1 openCreateStoryModal={openCreateStoryModal} setOpenCreateStoryModal={setOpenCreateStoryModal} />
               </DialogContent>
             </Dialog>
           </div>

@@ -7,18 +7,18 @@ import RegisterPage from '@/components/auth/RegisterPage';
 const FormSchema = z
   .object({
     name: z.string().min(8, {
-      message: 'Username must be at least 8 characters.',
+      message: 'Хэрэглэгчийн нэр 8-с дээш байх шаардлагатай.',
     }),
-    email: z.string().min(4, { message: 'email must be at least 2 characters' }),
-    phone: z.string().min(8, { message: 'phone must be at 8 characters' }),
-    password: z.string().min(8, { message: 'password must be at least 8 characters' }),
-    confirmPassword: z.string().min(8, { message: 'password must be save' }),
+    email: z.string().min(8, { message: 'Э-майл 8-с дээш байх шаардлагатай жүү' }),
+    phone: z.string().min(8, { message: 'Утасны дугаар 8 оронтой байх шаардлагатай жүү' }),
+    password: z.string().min(8, { message: 'Нууц үг 8-аас дээш байх шаардлагатай жүү' }),
+    confirmPassword: z.string().min(8, { message: 'Баталгаажуулах нууц нь 8-аас дээш байх шаардлагатай жүү' }),
   })
   .refine(
     (values) => {
       return values.password === values.confirmPassword;
     },
-    { message: ' should be match', path: ['comfirmPassword'] }
+    { message: 'Баталгаажуулах нууц үг нь нууц үгтэй таарах ёстой жүү', path: ['comfirmPassword'] }
   );
 
 const Page = () => {

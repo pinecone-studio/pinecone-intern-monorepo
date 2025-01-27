@@ -1,6 +1,6 @@
 'use client';
 import { Employee, useGetEmployeeByIdLazyQuery } from '@/generated';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { createContext, useContext, ReactNode, useEffect } from 'react';
 
 interface UserContextType {
@@ -16,6 +16,7 @@ interface UserProviderProps {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [getEmployeeById, { data }] = useGetEmployeeByIdLazyQuery();
 
@@ -33,7 +34,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     } else {
       router.push('/login');
     }
-  }, [router]);
+  }, [router, pathname]);
 
   return <UserContext.Provider value={{ user: data?.getEmployeeById, logout }}>{children}</UserContext.Provider>;
 };

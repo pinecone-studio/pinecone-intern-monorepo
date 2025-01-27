@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const HeaderStory: React.FC<HeaderProps> = ({ /*handleBack*/ handleCreatePost, loadingPost }) => {
   return (
-    <div className="flex justify-between items-center px-4 py-2 border-b" data-testid="modal-header-story">
+    <div className="flex w-[423px] h-[41px]  justify-between items-center px-4 py-2 border-b" data-testid="modal-header-story">
       <button /*onClick={handleBack}*/ data-testid="back-button-story">
         <ArrowLeft className="w-4 h-4" />
       </button>
