@@ -12,11 +12,16 @@ export const userTypeDefs = gql`
     password: String!
     rePassword: String!
   }
+  input LoginInput {
+    email: String!
+    password: String!
+  }
   type UserType {
     _id: ID!
     userName: String!
     email: String!
     profileImage: String
+    createdAt: Date!
   }
   input UpdateUserNameType {
     _id: ID!
@@ -33,6 +38,8 @@ export const userTypeDefs = gql`
   type Mutation {
     sampleMutation: String!
     createUser(input: RegisterInput!): UserType!
+    loginUser(input: LoginInput!): UserType!
+
     updateUser(input: UpdateUserNameType!): UpdatedUserNameType!
   }
 `;
