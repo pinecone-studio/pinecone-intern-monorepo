@@ -1,0 +1,13 @@
+mutation MakeOrder($input: InputType!) {
+  makeOrder(input: $input) {
+    _id
+    items {
+      name
+      quantity
+      price
+    }
+    status
+    createdAt
+    tableId
+  }
+}

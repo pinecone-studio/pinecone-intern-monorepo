@@ -3,6 +3,7 @@ import Posts from '../svg/Posts';
 import Saved from '../svg/Saved';
 import { Separator } from '@/components/ui/separator';
 import { useGetPostsQuery } from '@/generated';
+import { Tag } from 'lucide-react';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
@@ -10,10 +11,10 @@ const Post = ({ userId }: { userId: string }) => {
   });
 
   return (
-    <div className="flex flex-col gap-5 w-[900px]" data-testid="profile-posts">
+    <div className="flex flex-col gap-5 w-[935px]" data-testid="profile-posts">
       <Separator />
 
-      <div className="flex justify-center gap-6">
+      <div className="flex justify-center gap-14">
         <div className="flex justify-center items-center gap-2">
           <Posts />
           <p className="text-xs font-medium text-[#09090B]">POSTS</p>
@@ -21,6 +22,10 @@ const Post = ({ userId }: { userId: string }) => {
         <div className="flex justify-center items-center gap-1">
           <Saved />
           <p className="text-xs font-medium text-[#09090B]">SAVED</p>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <Tag className="h-4 w-4" />
+          <p className="text-xs font-medium text-gray-900 cursor-pointer">TAGGED</p>
         </div>
       </div>
 
@@ -35,10 +40,10 @@ const Post = ({ userId }: { userId: string }) => {
                 <Image
                   src={post?.postImage[0]}
                   alt="profile"
-                  className=" object-cover opacity-100 hover:opacity-30 transition-opacity duration-300"
+                  className=" object-fill opacity-100  w-[309px] h-[309px] hover:opacity-30 transition-opacity duration-300  "
                   sizes="(max-width: 309px) 100vw, 309px"
-                  width={200}
-                  height={300}
+                  width={309}
+                  height={309}
                 />
               </div>
             );

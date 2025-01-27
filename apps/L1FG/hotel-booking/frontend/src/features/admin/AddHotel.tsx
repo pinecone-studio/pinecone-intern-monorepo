@@ -1,7 +1,7 @@
 import { Footer, Header } from '@/components/admin/main';
 import Link from 'next/link';
 import { LeftArrow } from '@/components/admin/svg';
-import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/ui/add-hotel';
+import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/add-hotel';
 import { Sidebar } from './main/Sidebar';
 
 export const AddHotelPage = () => {

@@ -8,6 +8,7 @@ import Followers from './Followers';
 import Following from './Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
+import StoryHighlight from './StoryHighlight';
 
 export const Profile = () => {
   const { userId } = useParams();
@@ -17,7 +18,7 @@ export const Profile = () => {
 
   return (
     <div className="flex gap-4 flex-col py-10" date-testid="profile">
-      <div className="flex gap-20">
+      <div className="flex gap-20 ml-[72px]">
         <Image src="/images/profilePic.png" alt="zurag" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
 
         <div className="flex flex-col gap-4">
@@ -40,12 +41,14 @@ export const Profile = () => {
                 <p className="text-base font-semibold">{data?.getUserTogether.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>
               </div>
+
               <Followers userId={userId as string}>
                 <div className="flex gap-1">
                   <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
                   <p className="text-base font-normal">followers</p>
                 </div>
               </Followers>
+
               <Following userId={userId as string}>
                 <div className="flex gap-1">
                   <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
@@ -63,6 +66,7 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <StoryHighlight />
 
       <Post userId={userId as string} />
     </div>
