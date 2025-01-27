@@ -1,14 +1,8 @@
 'use client';
 
-import Header from "@/components/common/Header";
-
-
-
-
-
 
 const Page = () => {
-  return <div><Header/></div>;
+  return <div>homepage</div>;
 };
 
 export default Page;
