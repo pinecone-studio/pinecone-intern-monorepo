@@ -1,8 +1,8 @@
 import { Headphones, MailIcon, PhoneIcon } from 'lucide-react';
-import { JcbCardIcon } from '../svg/JcbIcon';
-import { LogoIcon } from '../svg/LogoIcon';
-import { MasterCardIcon } from '../svg/MasterCardIcon';
-import { VisaCardIcon } from '../svg/VisaIcon';
+import { JcbCardIcon } from '../ui/svg/JcbIcon';
+import { LogoIcon } from '../ui/svg/LogoIcon';
+import { MasterCardIcon } from '../ui/svg/MasterCardIcon';
+import { VisaCardIcon } from '../ui/svg/VisaIcon';
 
 export const Footer = () => {
   return (

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Footer, Header } from '@/components/admin/main';
 import { LeftArrow } from '@/components/admin/svg';
-import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/ui/hotel-detail';
+import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/hotel-detail';
 
 export const HotelDetailPage = () => {
   return (
