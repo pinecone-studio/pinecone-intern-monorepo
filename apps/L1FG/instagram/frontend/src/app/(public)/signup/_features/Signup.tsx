@@ -1,8 +1,9 @@
 'use client';
 import { InstaLogo } from '@/components/svg/InstaLogo';
 import { ChangeEvent, useState } from 'react';
-import { useAuth } from '../providers/AuthProvider';
 import Link from 'next/link';
+import { useAuth } from '@/components/providers/AuthProvider';
+import { RegistrationInput } from '@/components/(public)/RegistrationInput';
 const SignUpForm = () => {
   const { signup } = useAuth();
   const [email, setEmail] = useState<string>('');
@@ -26,53 +27,47 @@ const SignUpForm = () => {
             <InstaLogo />
             <p className="w-[245px] h-[40px] text-center  text-sm ">Sign up to see photos and videos from your friends</p>
           </div>
-          <input
+          <RegistrationInput
             type="email"
             placeholder="Email"
-            className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
-            name="email"
-            required
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            data-cy="signup-email-input"
-            data-testid="signup-email-input"
+            dataCy="signup-email-input"
+            dataTestId="signup-email-input"
+            required
           />
-          <input
+          <RegistrationInput
             type="password"
             placeholder="Password"
-            className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
-            name="password"
             required
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            data-cy="signup-password-input"
-            data-testid="signup-password-input"
+            dataCy="signup-password-input"
+            dataTestId="signup-password-input"
           />
-          <input
-            type="text"
+
+          <RegistrationInput
+            type="test"
             placeholder="Full Name"
-            className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
-            name="fullName"
             required
             onChange={(e) => {
               setFullname(e.target.value);
             }}
-            data-cy="signup-fullName-input"
-            data-testid="signup-fullName-input"
+            dataCy="signup-fullName-input"
+            dataTestId="signup-fullName-input"
           />
-          <input
+
+          <RegistrationInput
             type="text"
             placeholder="Username"
-            className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
-            name="userName"
             required
             onChange={(e) => {
               setUsername(e.target.value);
             }}
-            data-cy="signup-userName-input"
-            data-testid="signup-userName-input"
+            dataCy="signup-userName-input"
+            dataTestId="signup-userName-input"
           />
           <div className="w-[300px] h-[60px ] text-center   text-[#71717A]">
             People who use our service may have uploaded your contact information to Instagram. <span className="text-[#2563EB]  ">Learn More</span>
@@ -88,7 +83,7 @@ const SignUpForm = () => {
         <div className="w-[364px] h-[72px] flex justify-center items-center gap-4 rounded-[10px] bg-white">
           <span className="">Have an account?</span>
 
-          <Link className="text-[#2563EB] " href={'/log-in'}>
+          <Link className="text-[#2563EB] " href={'/login'}>
             Log In
           </Link>
         </div>

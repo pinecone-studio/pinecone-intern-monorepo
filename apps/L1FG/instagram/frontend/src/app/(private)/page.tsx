@@ -1,4 +1,3 @@
-'use client';
 import MainPagePost from '@/components/Home/mainBar/MainPagePost';
 import MainPageStory from '@/components/Home/mainBar/MainPageStory';
 import HomePageProfile from '@/components/Home/rightBar/HomeProfile';

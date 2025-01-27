@@ -16,7 +16,7 @@ describe('ImagePreview Component', () => {
   };
 
   it('should render the image container', () => {
-    renderComponent(mockImages);
+    renderComponent(mockImages, false);
 
     expect(screen.getByTestId('image-container'));
   });

@@ -1,4 +1,5 @@
-import LogInForm from '@/components/log-in/LogInForm';
+import LogInForm from './_features/Login';
+
 const LogIn = () => {
   return <LogInForm />;
 };
