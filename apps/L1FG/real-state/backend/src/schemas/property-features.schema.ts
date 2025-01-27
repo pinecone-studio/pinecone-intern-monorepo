@@ -73,8 +73,16 @@ export const PropertyTypeDefs = gql`
     uploadedAt: Date
     createdAt: Date
   }
+  input QueryOptions {
+    filter: JSON
+  }
 
   type Mutation {
     addProperty(input: PropertyInput!): Property!
+  }
+
+  type Query {
+    getProperties(options: QueryOptions): [Property!]!
+    getPropertyByID(_id: ID!): Property!
   }
 `;
