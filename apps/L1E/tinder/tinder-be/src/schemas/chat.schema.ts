@@ -21,7 +21,7 @@ export const typeDefs = gql`
     content: String!
     senderId: ID!
     receiverId: ID!
-    attachments: [Upload!] # Updated to handle multiple attachments as Upload type
+    attachments: [Upload!]
     images: [String!]!
   }
 
