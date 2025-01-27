@@ -1,5 +1,5 @@
 import { MessageSquareDashed } from 'lucide-react';
-import { ReactElement, JSXElementConstructor, ReactNode, useRef, useEffect, PromiseLikeOfReactNode } from 'react';
+import { ReactElement, JSXElementConstructor, ReactNode, useRef, useEffect, PromiseLikeOfReactNode, useState } from 'react';
 
 interface Message {
   timestamp: string;
@@ -24,6 +24,8 @@ interface ChatProps {
 
 const GetChat: React.FC<ChatProps> = ({ sender, data1 }) => {
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const [showImage, setShowImage] = useState(false);
+  const [showImage1, setShowImage1] = useState(false);
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -50,32 +52,55 @@ const GetChat: React.FC<ChatProps> = ({ sender, data1 }) => {
     return !isNaN(date.getTime()) ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Invalid date';
   };
 
-  const renderReceiverMessage = (message: Message, timestamp: string) => (
-    <div className="flex flex-col items-start bg-[#f4f4f5] px-4 py-2 font-medium rounded-md gap-2">
-      <div className="flex items-center gap-8">
-        {message.text}
-        {message.images && message.images[0] && <img src={message.images[0]} alt="Message Image" className="object-cover w-[50px] h-[50px] rounded-md" />}
+  const renderReceiverMessage = (message: Message, timestamp: string) => {
+    return (
+      <div className="flex flex-col items-start bg-[#f4f4f5] px-4 py-2 font-medium rounded-md gap-2">
+        <div className="flex items-center gap-8">
+          {message.text}
+          {message.images && message.images[0] && (
+            <div className="relative">
+              <img src={message.images[0]} alt="Message Image" className={`object-cover w-[150px] h-[150px] rounded-md transition-all ${showImage1 ? 'blur-0' : 'blur-md'}`} />
+              {!showImage1 && (
+                <button onClick={() => setShowImage1(true)} className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md">
+                  This content may contain nudity. Viewer discretion is advised. Tap to view.
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="text-sm flex items-start text-[#71717a]">{timestamp}</div>
       </div>
-      <div className="text-sm flex items-start text-[#71717a]">{timestamp}</div>
-    </div>
-  );
+    );
+  };
 
-  const renderSenderMessage = (message: Message, timestamp: string) => (
-    <div className="flex flex-col items-start bg-[#E11D48E5] text-white px-4 py-2 font-medium rounded-md gap-2">
-      <div className="flex items-center gap-8">
-        {message.images && message.images[0] && <img src={message.images[0]} alt="Message Image" className="object-cover w-[50px] h-[50px] rounded-md" />}
-        {message.text}
+  const renderSenderMessage = (message: Message, timestamp: string) => {
+    return (
+      <div className="flex flex-col items-start bg-[#E11D48E5] text-white px-4 py-2 font-medium rounded-md gap-2">
+        <div className="flex items-center gap-8">
+          {message.images && message.images[0] && (
+            <div className="relative">
+              <img src={message.images[0]} alt="Message Image" className={`object-cover w-[150px] h-[150px] rounded-md transition-all ${showImage ? 'blur-0' : 'blur-md'}`} />
+              {!showImage && (
+                <button onClick={() => setShowImage(true)} className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md">
+                  This content may contain nudity. Viewer discretion is advised. Tap to view.
+                </button>
+              )}
+            </div>
+          )}
+          {message.text}
+        </div>
+        <div className="text-sm flex items-start text-white">{timestamp}</div>
       </div>
-      <div className="text-sm flex items-start text-white ">{timestamp}</div>
-    </div>
-  );
+    );
+  };
+
   return (
-    <div className="flex flex-col overflow-hidden h-full w-full max-w-screen-lg mx-auto bg-white border rounded-lg">
-      <div className="flex-1 overflow-y-auto p-4">
+    <div className="flex flex-col overflow-hidden md:h-full h-[50%] w-full max-w-screen-lg mx-auto bg-white border rounded-lg">
+      <div className="flex-1 overflow-y-auto  p-4">
         {messages.map((message, index) => {
           const timestamp = formatTimestamp(message.timestamp);
           return (
-            <div key={index} className={`flex w-full ${message.sender === sender ? 'justify-end' : 'justify-start'} mb-4`}>
+            <div key={index} className={`flex w-[50%] h-fit md:h-fit md:w-full ${message.sender === sender ? 'justify-end' : 'justify-start'} mb-4`}>
               <div className="font-medium text-base flex gap-2 flex-col max-w-[75%]">
                 <div className="flex flex-col gap-2">{message.sender !== sender ? renderReceiverMessage(message, timestamp) : renderSenderMessage(message, timestamp)}</div>
               </div>

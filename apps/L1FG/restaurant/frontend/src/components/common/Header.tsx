@@ -1,6 +1,7 @@
 import React from 'react';
-import { AlignJustify, Bell, ShoppingCart } from 'lucide-react';
+import {  Bell, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
+import { Sidemenu } from '../sidemenu/Sidemenu';
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
       <div className="flex gap-3 items-center">
         <ShoppingCart data-testid="shopping-cart-icon" width={16} />
         <Bell data-testid="bell-icon" width={16} />
-        <AlignJustify data-testid="align-justify-icon" width={16} />
+     <Sidemenu/>
       </div>
     </div>
   );

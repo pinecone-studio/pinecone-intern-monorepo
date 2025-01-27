@@ -9,6 +9,7 @@ import RequestcomPaid from '@/components/requestForm/RequestFormPaid';
 import Requestcomremote from '@/components/requestForm/RequestFormRemote';
 import { RequestsInput } from '@/utils/requests-input';
 import { useUser } from '@/provider/UserProvider';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,11 @@ const Page = () => {
   }, [user]);
 
   if (!employee) {
-    return <div>loading</div>;
+    return (
+      <div className="w-screen  bg-neutral-100 h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const onSubmit = async (data: RequestsInput) => {
@@ -59,7 +64,7 @@ const Page = () => {
   };
 
   return (
-    <div data-cy="request-form-page" className="h-screen w-screen bg-neutral-100 pt-10">
+    <div data-cy="request-form-page" className="min-h-screen w-screen bg-neutral-100 pt-[200px]">
       <Card className="w-[608px] border-[#E4E4E7] mx-auto">
         <CardContent className="p-8">
           <div className="space-y-6">

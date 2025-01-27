@@ -12,7 +12,7 @@ export const ChooseRoom = () => {
           <TabsTrigger value="twoBed">2 bed</TabsTrigger>
         </TabsList>
         <TabsContent className="mt-4" value="allRooms">
-          <div className="grid grid-rows-2 grid-cols-3 gap-[16px]">
+          <div className="grid grid-cols-3 gap-[16px]">
             <SinglePageCard />
             <SinglePageCard />
             <SinglePageCard />
@@ -21,12 +21,12 @@ export const ChooseRoom = () => {
           </div>
         </TabsContent>
         <TabsContent className="mt-4" value="oneBed">
-          <div className="grid grid-rows-2 grid-cols-3 gap-[16px]">
+          <div className="grid grid-cols-3 gap-[16px]">
             <SinglePageCard />
           </div>
         </TabsContent>
         <TabsContent className="mt-4" value="twoBed">
-          <div className="grid grid-rows-2 grid-cols-3 gap-[16px]">
+          <div className="grid grid-cols-3 gap-[16px]">
             <SinglePageCard />
             <SinglePageCard />
           </div>

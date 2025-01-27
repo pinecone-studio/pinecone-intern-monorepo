@@ -22,17 +22,19 @@ export const OwnerTypeDefs = gql`
   }
 
   input OwnerInput {
-    propertyOwnerId: ID!
+    _id: ID
     title: String!
+    propertyOwnerId: ID
+    price: Int
+    propertyDetail: ID
     description: String!
-    price: Int!
-    propertyDetail: ID!
     status: OwnerStats!
-    updatedAt: String!
-    createdAt: String!
+    updatedAt: String
+    createdAt: String
   }
 
   input OwnerUpdateInput {
+    _id: ID
     propertyOwnerId: ID
     title: String
     description: String
@@ -45,12 +47,12 @@ export const OwnerTypeDefs = gql`
 
   type Query {
     getOwnerById(_id: ID!): Owner
-    getOwners(input: String): [Owner]
+    getOwners(input: JSON): [Owner]
   }
 
   type Mutation {
-    createOwner(input: OwnerInput!): Owner!
-    updateOwner(_id: ID!, input: OwnerUpdateInput!): Owner!
+    addOwner(input: OwnerInput!): Owner!
+    updatedOwner(_id: ID!, input: OwnerUpdateInput!): Owner!
     deleteOwner(_id: ID!): Owner!
   }
 `;

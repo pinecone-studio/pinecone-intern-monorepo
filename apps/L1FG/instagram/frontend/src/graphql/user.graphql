@@ -24,14 +24,33 @@ mutation Login($input: SignInInput!) {
 
 query GetUser {
   getUser {
+    postCount
+    _id
+    bio
+    email
+    followerCount
+    followingCount
+    fullName
+    gender
+    hasStory
+    isPrivate
+    profileImage
+    userName
+  }
+}
+
+query GetUserByName($userName: String!) {
+  getUserByName(userName: $userName) {
     _id
     userName
     fullName
-    bio
     profileImage
     hasStory
-    gender
     isPrivate
-    email
+    friendshipStatus {
+      followedBy
+      following
+    }
+    followerCount
   }
 }
