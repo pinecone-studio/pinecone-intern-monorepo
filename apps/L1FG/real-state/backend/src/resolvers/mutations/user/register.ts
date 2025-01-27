@@ -2,7 +2,6 @@ import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../../../utils/connect-to-db';
 
 export const register: MutationResolvers['register'] = async (_, { input }) => {
   const { email, name, phone, password } = input;
@@ -20,7 +19,7 @@ export const register: MutationResolvers['register'] = async (_, { input }) => {
     password: hashedPassword,
   });
 
-  const token = jwt.sign({ userId: newUser._id }, JWT_SECRET);
+  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET!);
   return {
     user: newUser,
     token,

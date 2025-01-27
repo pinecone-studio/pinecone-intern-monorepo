@@ -14,6 +14,9 @@ type MatchDialogProps = {
 };
 
 export const UserMatchComp = ({ userImage, matchImage, matchName, isOpen, onClose }: MatchDialogProps) => {
+  console.log('User Image:', userImage); // Log userImage
+  console.log('Match Image:', matchImage); // Log matchImage
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[440px] p-0 gap-0">

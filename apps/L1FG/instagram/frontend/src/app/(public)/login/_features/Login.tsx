@@ -1,8 +1,9 @@
 'use client';
 import { ChangeEvent, useState } from 'react';
-import { InstaLogo } from '../svg/InstaLogo';
-import { useAuth } from '../providers/AuthProvider';
 import Link from 'next/link';
+import { useAuth } from '@/components/providers/AuthProvider';
+import { InstaLogo } from '@/components/svg/InstaLogo';
+import { RegistrationInput } from '@/components/(public)/RegistrationInput';
 const LogInForm = () => {
   const { signin } = useAuth();
   const [email, setEmail] = useState<string>('');
@@ -23,28 +24,27 @@ const LogInForm = () => {
               <InstaLogo />
             </div>
 
-            <input
+            <RegistrationInput
               type="email"
               placeholder="Email"
-              className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
-              required
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              data-cy="login-email-input"
-              data-testid="login-email-input"
+              dataCy="login-email-input"
+              dataTestId="login-email-input"
+              required
             />
-            <input
+            <RegistrationInput
               type="password"
               placeholder="Password"
-              className="w-[300px] h-[36px] border border-[#E4E4E7] rounded-[6px] px-2"
               required
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              data-cy="login-password-input"
-              data-testid="login-password-input"
+              dataCy="login-password-input"
+              dataTestId="login-password-input"
             />
+
             <div className="text-[#2563EB]">Forgot password?</div>
             <button
               className="w-[316px] h-[40px] bg-[#2563EB80] text-white rounded-[6px]
@@ -58,7 +58,7 @@ const LogInForm = () => {
           <div className="w-[364px] h-[72px] flex justify-center items-center gap-4 rounded-[10px] bg-white">
             <span>Don&apos;t have an account?</span>
 
-            <Link className="text-[#2563EB] " href={'/sign-up'}>
+            <Link className="text-[#2563EB] " href={'/signup'}>
               Sign Up
             </Link>
           </div>

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Post from '@/components/profile/Post';
 import { useGetPostsQuery } from '@/generated';
@@ -12,7 +12,11 @@ describe('Post Component', () => {
 
   test('renders correctly with posts', () => {
     const mockData = {
-      getPosts: [{ postImage: '/images/post1.jpg' }, { postImage: '/images/post2.jpg' }, { postImage: '/images/post3.jpg' }],
+      getPosts: [
+        { postImage: '/images/post1.jpg', _id: 1 },
+        { postImage: '/images/post2.jpg', _id: 2 },
+        { postImage: '/images/post3.jpg', _id: 3 },
+      ],
     };
 
     (useGetPostsQuery as jest.Mock).mockReturnValue({
@@ -44,5 +48,19 @@ describe('Post Component', () => {
       data: undefined,
       error: new Error('Error fetching posts'),
     });
+  });
+  test('Should handle image null', () => {
+    (useGetPostsQuery as jest.Mock).mockReturnValue({
+      data: {
+        getPosts: [
+          {
+            postImage: [null],
+            _id: 1,
+          },
+        ],
+      },
+    });
+    render(<Post userId={mockUserId} />);
+    expect(screen.queryByTestId('profile-story-1')).toBeNull();
   });
 });
