@@ -104,7 +104,9 @@ const LoginPage = () => {
           >
             {formState.loading ? 'Уншиж байна...' : 'Нэвтрэх'}
           </button>
-          <div className="flex w-full h-[36px] font-medium text-sm justify-center items-center">Нууц үг мартсан?</div>
+          <Link href="reset-password">
+            <button className="flex w-full h-[36px] font-medium text-sm justify-center items-center">Нууц үг мартсан?</button>
+          </Link>
           <div className="flex justify-between items-center gap-4">
             <div className="w-full h-[1px] border-[1px] border-[#E4E4E7]"></div>
             <div className="text-xs text-[#71717A]">Эсвэл </div>
