@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { InstaSVG } from './Svg/InstaSvg';
 import { HomeSVG } from './Svg/HomeSvg';
@@ -30,7 +31,7 @@ export const MenuButtons = () => {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col gap-2 ml-2 mb-auto">
+    <div className="flex flex-col gap-2 ml-2 mb-auto w-[20%]">
       <p className="text-[18px] w-[200px] font-bold ">
         <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
       </p>

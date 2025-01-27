@@ -78,14 +78,6 @@ describe('CreatePostStep1 Component', () => {
     });
   });
 
-  // it('should display loading overlay during file upload', async () => {
-  //   jest.spyOn(React, 'useState').mockImplementationOnce(() => [true, jest.fn()]);
-
-  //   renderComponent(true);
-
-  //   expect(screen.getByTestId('loading-overlay')).toBeInTheDocument();
-  // });
-
   it('should trigger file input when "Select from computer" button is clicked', () => {
     renderComponent(true);
 

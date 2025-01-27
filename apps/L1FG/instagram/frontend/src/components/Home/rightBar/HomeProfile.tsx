@@ -1,3 +1,4 @@
+'use client';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Image from 'next/image';
 import Link from 'next/link';
