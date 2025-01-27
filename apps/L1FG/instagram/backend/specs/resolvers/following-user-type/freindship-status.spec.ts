@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { friendshipStatus } from '../../../src/resolvers/following-user-type';
+import { friendshipStatus } from '../../../src/resolvers/follow/following-user-type';
 import { RequestModel } from '../../../src/models/request.model';
 import { FollowerModel } from '../../../src/models/followers.modul';
 jest.mock('../../../src/models/followers.modul');

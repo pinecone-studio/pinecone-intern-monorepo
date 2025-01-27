@@ -1,4 +1,4 @@
-import { PostLikeModal } from "../../models"
+import { PostLikeModal } from "../../../models";
 
 export const hasLiked=async({_id}:{_id:string},_:unknown,{userId}:{userId:string})=>{
 const postLikeCount=await PostLikeModal.findOne({

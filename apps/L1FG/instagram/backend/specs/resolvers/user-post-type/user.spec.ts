@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from "graphql"
 import { UserModel } from "../../../src/models"
-import { user } from "../../../src/resolvers/user-post-type"
+import { user } from "../../../src/resolvers/post/user-post-type"
 jest.mock("../../../src/models")
 describe("user",()=>{
     it('Should give an user',async()=>{
