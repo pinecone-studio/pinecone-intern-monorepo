@@ -1,11 +1,3 @@
-// import { Settings } from '@/components/settings/Settings';
-// import { render } from '@testing-library/react';
-// describe('CreatePost Dialog', () => {
-//   it('Should render', () => {
-//     render(<Settings />);
-//   });
-// });
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Settings } from '@/components/settings/Settings';

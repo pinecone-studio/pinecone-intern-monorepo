@@ -38,3 +38,19 @@ query GetUser {
     userName
   }
 }
+
+query GetUserByName($userName: String!) {
+  getUserByName(userName: $userName) {
+    _id
+    userName
+    fullName
+    profileImage
+    hasStory
+    isPrivate
+    friendshipStatus {
+      followedBy
+      following
+    }
+    followerCount
+  }
+}

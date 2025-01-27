@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { InstaSVG } from './Svg/InstaSvg';
 import { HomeSVG } from './Svg/HomeSvg';
@@ -30,14 +31,16 @@ export const MenuButtons = () => {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col gap-2 ml-2 mb-auto">
+    <div className="flex flex-col gap-2 ml-2 mb-auto w-[20%]">
       <p className="text-[18px] w-[200px] font-bold ">
         <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
       </p>
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
-        className={`${isOpen ? 'h-12 w-12 border rounded-lg' : ''} flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+        className={`${
+          searchOpen ? 'h-12 w-12 border rounded-lg' : ''
+        } flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
       >
         <SearchSVG data-testid="heart-svg" />
         <p>Search</p>
