@@ -54,22 +54,6 @@ describe('CreatePost Component', () => {
     expect(mockSetStep);
   });
 
-  //   it('should show an alert if the caption or image is missing on submit', async () => {
-  //     // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //     const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
-
-  //     // Render component with empty images to trigger the alert
-  //     render(<CreatePost images={[]} setStep={mockSetStep} setLoading={mockSetLoading} />);
-
-  //     const shareButton = screen.getByTestId('share-button');
-  //     fireEvent.click(shareButton);
-
-  //     // Ensure the alert is called with the correct message
-  //     // expect(alertMock).toHaveBeenCalledWith('Please add a caption and an image.');
-
-  //     alertMock.mockRestore();
-  //   });
-
   it('should call setLoading(true) when submitting the post', async () => {
     const createPostMock = jest.fn().mockResolvedValueOnce({ data: {} });
     useCreatePostMutation.mockReturnValue([createPostMock, { loading: false }]);
@@ -91,29 +75,6 @@ describe('CreatePost Component', () => {
     expect(shareButton).toHaveTextContent('Sharing...');
     expect(shareButton).toBeDisabled();
   });
-
-  //   it('should show an alert if there is an error creating the post', async () => {
-  //     // const createPostMock = jest.fn().mockRejectedValueOnce(new Error('Network error'));
-  //     // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //     const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
-  //     // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //     const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-  //     useCreatePostMutation.mockReturnValue([CreatePost, { loading: false }]);
-
-  //     renderComponent();
-
-  //     const shareButton = screen.getByTestId('share-button');
-  //     fireEvent.click(shareButton);
-
-  //     await waitFor(() => {
-  //       expect(consoleErrorMock);
-  //       expect(alertMock);
-  //     });
-
-  //     alertMock.mockRestore();
-  //     consoleErrorMock.mockRestore();
-  //   });
 
   it('should update the caption value when the user types', () => {
     renderComponent();

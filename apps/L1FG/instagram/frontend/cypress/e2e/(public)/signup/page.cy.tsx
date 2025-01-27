@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   beforeEach(() => {
-    cy.visit('/sign-up');
+    cy.visit('/signup');
   });
   it(`Should render signup page`, () => {
     cy.get('[data-cy=signup-form]').should('be.visible');
@@ -12,7 +12,7 @@ describe('Home Page', () => {
     cy.get('[data-cy=signup-userName-input]').type(`${Date.now()}@gmail.com`);
     cy.get('[data-cy=sign-up-button]').click();
     cy.contains('Амжилттай бүртгэгдлээ').should('be.visible');
-    cy.location('pathname').should('equal', '/log-in');
+    cy.location('pathname').should('equal', '/login');
   });
   it('Should throw duplicate email error', () => {
     cy.get('[data-cy=signup-email-input]').type('cypress@gmail.com');

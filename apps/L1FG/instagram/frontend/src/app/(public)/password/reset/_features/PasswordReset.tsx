@@ -1,6 +1,6 @@
-import { LockIcon } from '../svg/LockIcon';
+import { LockIcon } from '@/components/svg/LockIcon';
 
-export const TroubleLoggingIn = () => {
+export const PasswordReset = () => {
   return (
     <form className="w-full min-h-screen flex justify-center items-center text-sm bg-[#f4f4f5]" data-cy="trouble-logging-in">
       <div className="w-full max-w-md p-6 flex justify-center items-center">
