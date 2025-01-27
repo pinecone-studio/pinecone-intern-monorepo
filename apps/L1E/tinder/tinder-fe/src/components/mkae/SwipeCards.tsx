@@ -161,7 +161,7 @@ const SwipeCard = ({ user, onSwipe }: SwipeCardProps) => {
                           <h2 className="text-[18px] font-semibold">{user.username}</h2>
                           <p className="text-[18px] font-semibold">{user.age}</p>
                         </div>
-                        <p className="text-sm">{user._id}</p>
+                        <p className="text-sm">{user.profession}</p>
                       </div>
                     </div>
                   </CardContent>
