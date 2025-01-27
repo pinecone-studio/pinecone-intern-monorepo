@@ -39,7 +39,7 @@ export const AllSet = () => {
             username: name,
             profession,
             images,
-            match: '',
+            match: [],
           },
         },
       });
