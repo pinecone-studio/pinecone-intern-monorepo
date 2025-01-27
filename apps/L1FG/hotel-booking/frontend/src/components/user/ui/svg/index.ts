@@ -6,3 +6,8 @@ export * from './DumbBellIcon';
 export * from './BusIcon';
 export * from './DoorClosedIcon';
 export * from './ChevronRightIcon';
+export * from './BlackLogoIcon';
+export * from './JcbIcon';
+export * from './LogoIcon';
+export * from './MasterCardIcon';
+export * from './VisaIcon';
