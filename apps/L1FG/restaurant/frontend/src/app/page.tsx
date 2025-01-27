@@ -1,10 +1,12 @@
 'use client';
 
-import OrderHistory from "@/components/order-history/OrderHistory";
+import SideMenu from "@/components/side-menu/SideMenu";
 
 
 const Page = () => {
-  return <div><OrderHistory/></div>;
+  return <div>
+    <SideMenu/>
+  </div>;
 };
 
 export default Page;

@@ -10,7 +10,8 @@
     "e2e": "nx e2e",
     "prepare": "husky install",
     "pre-commit": "npx nx pre-commit scripts",
-    "commit": "cz"
+    "commit": "cz",
+    "graphql-codegen": "graphql-codegen --config ./apps/L1FG/restaurant/frontend/codegen.ts"
   },
   "private": true,
   "dependencies": {
@@ -95,7 +96,7 @@
     "env-cmd": "10.1.0",
     "express": "4.18.1",
     "formik": "2.4.6",
-    "graphql": "16.6.0",
+    "graphql": "^16.10.0",
     "graphql-tag": "2.12.6",
     "input-otp": "1.2.4",
     "jest-canvas-mock": "2.5.2",
@@ -115,6 +116,7 @@
     "nuqs": "^2.2.3",
     "otp-agent": "3.0.3",
     "otp-generator": "4.0.1",
+    "postcss-nested": "^7.0.2",
     "qrcode": "^1.5.4",
     "quill": "2.0.1",
     "react": "18.2.0",

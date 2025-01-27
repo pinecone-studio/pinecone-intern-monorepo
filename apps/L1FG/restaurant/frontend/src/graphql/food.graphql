@@ -5,7 +5,7 @@ query GetFoods {
     imageUrl
     price
     status
-    category_id
+    categoryId
     createdAt
   }
 }
