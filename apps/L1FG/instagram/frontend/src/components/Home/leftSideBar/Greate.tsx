@@ -8,12 +8,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
 import { CreateStoryStep1 } from '@/components/story/createStory/CreateStoryStep1';
 
-type Props = {
-  searchOpen: boolean;
-  isOpen: boolean;
-};
-
-export const Create = ({ searchOpen, isOpen }: Props) => {
+export const Create = () => {
   const [openCreatePostModal, setOpenCreatePostModal] = React.useState(false);
   const [openCreateStoryModal, setOpenCreateStoryModal] = React.useState(false);
 
@@ -21,9 +16,9 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
     <div className="">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}>
+          <Button variant="outline" className={` border-none flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent  my-1 p-[12px]`}>
             <SquarePlus className="h-6 w-6" />
-            <span className={`${isOpen || searchOpen ? 'hidden' : 'block'}`}>Create</span>
+            <span>Create</span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-80">
