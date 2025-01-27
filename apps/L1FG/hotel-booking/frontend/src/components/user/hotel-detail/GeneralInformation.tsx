@@ -1,5 +1,4 @@
-import { Star } from '../svg/Star';
-import { AirVent, Cat, CigaretteOff, ConciergeBell, Dumbbell, Martini, ParkingCircle, Phone, Utensils, WashingMachine } from 'lucide-react';
+import { AirVent, Cat, CigaretteOff, ConciergeBell, Dumbbell, Martini, ParkingCircle, Phone, Star, Utensils, WashingMachine } from 'lucide-react';
 
 export const GeneralInformation = () => {
   return (
@@ -9,10 +8,9 @@ export const GeneralInformation = () => {
           <div className="flex flex-col gap-2">
             <p className="text-[30px] leading-[36px] font-[600]">Flower Hotel Ulaanbaatar</p>
             <div className="flex gap-1">
-              <Star />
-              <Star />
-              <Star />
-              <Star />
+              <Star size={16} className="fill-[#F97316] text-[#F97316]" />
+              <Star size={16} className="fill-[#F97316] text-[#F97316]" />
+              <Star size={16} className="fill-[#F97316] text-[#F97316]" />
             </div>
             <p className="text-[16px] leading-[24px] font-[400]">Ulaanbaatar hotel in Downtown Ulaanbaatar with 4 restaurants and a full-service spa</p>
           </div>
