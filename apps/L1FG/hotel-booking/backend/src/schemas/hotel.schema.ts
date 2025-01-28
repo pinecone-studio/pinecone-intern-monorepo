@@ -58,6 +58,15 @@ export const typeDefs = gql`
     coordinates: [Float!]!
   }
 
+  input editGeneralInfoInput {
+    id: ID!
+    name: String
+    description: String
+    starRating: Float
+    rating: Float
+    phoneNumber: String
+  }
+
   type CreateHotelResponse {
     code: Int!
     success: Boolean!
@@ -66,6 +75,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    editGeneralInfo(input: editGeneralInfoInput!): Hotel
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
   }
   type Query {
