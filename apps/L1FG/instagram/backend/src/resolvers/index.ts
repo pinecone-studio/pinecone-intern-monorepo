@@ -1,11 +1,10 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 import * as Mutation from './mutations';
 import * as Query from './queries';
-import * as UserWithoutPassword from './user-without-password';
-import * as FollowerUserType from './follower-user-type';
-import * as FollowingUserType from './following-user-type';
-import * as UserTogetherUserType from './user-together-user-type';
-import * as UserPostType from './user-post-type';
+import * as FollowerUserType from './follow/follower-user-type';
+import * as FollowingUserType from './follow/following-user-type';
+import * as UserTogetherUserType from './user/user-together-user-type'
+import * as UserPostType from './post/user-post-type'
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -37,7 +36,6 @@ export const resolvers = {
   Date: dateScalar,
   Mutation,
   Query,
-  UserWithoutPassword,
   FollowerUserType,
   FollowingUserType,
   UserTogetherUserType,

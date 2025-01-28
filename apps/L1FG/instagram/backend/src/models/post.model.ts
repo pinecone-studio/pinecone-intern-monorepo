@@ -6,6 +6,18 @@ const postSchema = new Schema(
     caption: { type: String },
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     carouselMediaCount: { type: Number },
+    commentCount:{
+      type:Number,
+      required:true,
+      default:0,
+      min:0
+    },
+    likeCount:{
+      type:Number,
+      required:true,
+      default:0,
+      min:0
+    }
   },
   { timestamps: true }
 );

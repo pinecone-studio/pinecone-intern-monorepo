@@ -1,5 +1,5 @@
-import { FollowingUserTypeResolvers } from '../../generated';
-import { FollowerModel, RequestModel } from '../../models';
+import { FollowingUserTypeResolvers } from '../../../generated';
+import { FollowerModel, RequestModel } from '../../../models';
 import { statusBooleanConverter, StatusType } from '../follower-user-type/status-boolean-converter';
 
 export const friendshipStatus: FollowingUserTypeResolvers['friendshipStatus'] = async ({ _id }, _, { userId }) => {
