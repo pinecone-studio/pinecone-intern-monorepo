@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const signIn: MutationResolvers['signIn'] = async (_: unknown, { input }) => {
