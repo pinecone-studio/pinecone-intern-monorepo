@@ -34,7 +34,7 @@ describe('signIn resolver', () => {
   });
 
   it('throws "password not match" when password is incorrect', async () => {
-    await expect(signIn!({}, { input: { email: 'zaya@example.com', password: 'wrongPassword' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('password not match');
+    await expect(signIn!({}, { input: { email: 'zaya@example.com', password: 'wrongPassword' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Password not match');
   });
 
   it('returns user and token when email and password are correct', async () => {
