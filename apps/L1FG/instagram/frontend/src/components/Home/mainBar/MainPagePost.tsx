@@ -11,7 +11,6 @@ import { Bookmark, HeartIcon, MessageCircle } from 'lucide-react';
 
 const MainPagePost: React.FC = () => {
   const { data, loading, error } = useGetAllPostsQuery();
-
   if (loading) return <p data-testid="loading-message">Loading posts...</p>;
   if (error) return <p data-testid="error-message">Error loading posts: {error.message}</p>;
   if (!data?.getAllPosts || data.getAllPosts.length === 0) {
