@@ -1,7 +1,7 @@
 import { UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
 import { updatePassword } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({
   UserModel: {
@@ -10,7 +10,7 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({
   },
 }));
 
-jest.mock('bcrypt', () => ({
+jest.mock('bcryptjs', () => ({
   hashSync: jest.fn().mockReturnValue('newHashedPassword'),
 }));
 

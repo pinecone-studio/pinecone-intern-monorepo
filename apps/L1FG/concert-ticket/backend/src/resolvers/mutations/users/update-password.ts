@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const updatePassword: MutationResolvers['updatePassword'] = async (_: unknown, { input }) => {
   const { email, newPassword } = input;

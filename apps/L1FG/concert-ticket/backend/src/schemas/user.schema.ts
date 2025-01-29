@@ -25,7 +25,7 @@ export const UserTypeDefs = gql`
   }
 
   type Mutation {
-    signUp(input: UserInput!): AuthResponse!
+    signUp(input: UserInput!): User!
     signIn(input: UserInput!): AuthResponse!
     updatePassword(input: NewpasswordInput!): NewPassword!
   }
