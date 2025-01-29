@@ -6,7 +6,7 @@ export interface OwnerType extends Document {
   title: string;
   description: string;
   price: number;
-  propertyDetail: Types.ObjectId;
+  propertyDetail: {type: mongoose.Schema.Types.ObjectId, ref: 'Property'};
   status: 'PENDING' | 'APPROVED' | 'DECLINED';
   createdAt: Date;
   updatedAt: Date;

@@ -1,17 +1,21 @@
 mutation Login($input: LoginInput!) {
   login(input: $input) {
-    _id
-    name
-    email
-    phone
-    isAdmin
-    createdAt
-    updatedAt
+    token
+    user {
+      _id
+      name
+      email
+      phone
+      isAdmin
+      createdAt
+      updatedAt
+    }
   }
 }
 
 mutation Register($input: RegisterInput!) {
   register(input: $input) {
+    token
     user {
       _id
       name

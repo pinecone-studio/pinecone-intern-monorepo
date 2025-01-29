@@ -48,6 +48,7 @@ export const OwnerTypeDefs = gql`
   type Query {
     getOwnerById(_id: ID!): Owner
     getOwners(input: JSON): [Owner]
+    getPostsByUserId(input: ID): [Owner]
   }
 
   type Mutation {

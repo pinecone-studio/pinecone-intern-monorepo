@@ -17,12 +17,10 @@ const FormSchema = z
     password: z.string().min(8, { message: 'password must be at least 8 characters' }),
     confirmPassword: z.string().min(8, { message: 'password must be save' }),
   })
-  .refine(
-    (values) => {
-      return values.password === values.confirmPassword;
-    },
-    { message: ' should be match', path: ['comfirmPassword'] }
-  );
+ .refine(
+  (values) => values.password === values.confirmPassword,
+  { message: 'Passwords should match', path: ['confirmPassword'] }
+);
 
 type RegisterPageProps = {
   onSubmit: (_data: z.infer<typeof FormSchema>) => Promise<void>;

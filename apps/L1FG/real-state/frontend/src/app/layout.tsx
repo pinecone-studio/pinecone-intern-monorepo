@@ -9,13 +9,18 @@ export const metadata = {
   description: 'Platform by Real Estate Company',
 };
 
-const RootLayout = ({ children }: PropsWithChildren) => {
+interface RootLayoutProps extends PropsWithChildren {
+  showHeader?: boolean;
+  showFooter?: boolean;
+}
+
+const RootLayout = ({ children, showHeader = false, showFooter = false }: RootLayoutProps) => {
   return (
     <html lang="en">
       <body>
-        <Header />
+        {showHeader && <Header />}
         <ApolloWrapper>{children}</ApolloWrapper>
-        <Footer />
+        {showFooter && <Footer />}
       </body>
     </html>
   );

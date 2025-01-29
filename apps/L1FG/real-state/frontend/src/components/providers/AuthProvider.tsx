@@ -6,7 +6,7 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 type SignInParams = {
-  email?: string;
+  email: string;
   phone?: string;
   password: string;
 };
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const [signinMutation] = useLoginMutation({
     onCompleted: (data) => {
-      const log = data?.login._id;
+      const log = data?.login.user._id;
       sessionStorage.setItem('userId', log);
-      setUser(data.login);
+      setUser(data.login.user);
       router.push('/');
     },
     onError: (error) => {
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const signin = async ({ email, password }: SignInParams) => {
+  const signin = async ({ email = '', password }: SignInParams) => {
     await signinMutation({
       variables: {
         input: {
