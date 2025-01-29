@@ -51,7 +51,7 @@ const Login = () => {
           <Link href={'/sign-up'}>
             <button className="bg-transparent underline"> бүртгүүлэх </button>
           </Link>
-          <p>{}</p>хэсгээр орно уу.
+          <p></p>хэсгээр орно уу.
         </div>
       </div>
     </form>
