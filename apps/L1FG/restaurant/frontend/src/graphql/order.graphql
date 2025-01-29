@@ -11,3 +11,17 @@ mutation MakeOrder($input: InputType!) {
     tableId
   }
 }
+
+query GetOrders {
+  getOrders {
+    _id
+    items {
+      price
+      quantity
+      name
+    }
+    status
+    createdAt
+    tableId
+  }
+}
