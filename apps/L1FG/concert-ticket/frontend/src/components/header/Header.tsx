@@ -20,10 +20,10 @@ export const HeaderPart = () => {
       </div>
 
       <div className="flex items-center gap-[16px]">
-        <Link href={'/sign-up'}>
+        <Link href={'/signup'}>
           <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
         </Link>
-        <Link href={'/login'}>
+        <Link href={'/signin'}>
           {' '}
           <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
         </Link>

@@ -48,7 +48,7 @@ const Login = () => {
         </div>
         <div className="text-muted-foreground font-thin text-[14px] mx-auto w-[350px] flex-col text-center ">
           Та бүртгэлтэй хаяггүй бол {}
-          <Link href={'/sign-up'}>
+          <Link href={'/signup'}>
             <button className="bg-transparent underline"> бүртгүүлэх </button>
           </Link>
           <p></p>хэсгээр орно уу.

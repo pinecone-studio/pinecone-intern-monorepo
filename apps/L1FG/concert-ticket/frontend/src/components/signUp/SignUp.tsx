@@ -66,7 +66,7 @@ export const SignUp = () => {
         </div>
         <div className="text-muted-foreground text-[14px] text-center mt-4 font-extralight">
           Та бүртгэлтэй хаягтай бол
-          <Link href={'/login'}>
+          <Link href={'/signin'}>
             <button className="bg-transparent underline px-[4px] ">нэвтрэх</button>
           </Link>
           хэсгээр орно уу.
