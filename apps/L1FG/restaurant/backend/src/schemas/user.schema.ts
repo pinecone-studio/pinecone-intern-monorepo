@@ -21,16 +21,53 @@ export const userTypeDefs = gql`
     userName: String!
     email: String!
     profileImage: String
+    phoneNumber: String
     createdAt: Date!
   }
+
   input UpdateUserNameType {
     _id: ID!
-    userName: String!
+    newUserName: String!
   }
   type UpdatedUserNameType {
     _id: ID!
-    userName: String!
+    newUserName: String!
   }
+  input UpdateUserEmailType {
+    _id: ID!
+    newEmail: String!
+  }
+  type UpdatedUserEmailType {
+    _id: ID!
+    newEmail: String!
+  }
+  input UpdateUserNumberType {
+    _id: ID!
+    newPhoneNumber: String!
+  }
+  type UpdatedUserNumberType {
+    _id: ID!
+    newPhoneNumber: String!
+  }
+  input UpdateUserPasswordType {
+    _id: ID!
+    password: String!
+    newPassword: String!
+    newRePassword: String!
+  }
+  type UpdatedUserPasswordType {
+    _id: ID!
+    newPassword: String!
+  }
+  input UpdateUserImageType {
+    _id: ID!
+    profileImage: String!
+  }
+  type UpdatedUserImageType {
+    _id: ID!
+    profileImage: String!
+  }
+
   type Query {
     sampleQuery: String!
     getUser(_id: ID!): UserType!
@@ -40,6 +77,10 @@ export const userTypeDefs = gql`
     createUser(input: RegisterInput!): UserType!
     loginUser(input: LoginInput!): UserType!
 
-    updateUser(input: UpdateUserNameType!): UpdatedUserNameType!
+    updateNameUser(input: UpdateUserNameType!): UserType!
+    updateEmailUser(input: UpdateUserEmailType!): UserType!
+    updateNumberUser(input: UpdateUserNumberType!): UserType!
+    updatePasswordUser(input: UpdateUserPasswordType!): UserType!
+    updateUserImage(input: UpdateUserImageType!): UserType!
   }
 `;
