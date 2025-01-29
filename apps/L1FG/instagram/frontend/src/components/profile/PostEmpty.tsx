@@ -17,7 +17,7 @@ const PostEmpty = () => {
       <div>
         <p className="w-[935px] border"></p>
       </div>
-      <div className="flex justify-center gap-10">
+      <div className="flex justify-center gap-14">
         <div className="flex justify-center items-center gap-2">
           <Posts />
           <p className="text-xs font-medium text-gray-900 cursor-pointer hover:bg-black">POSTS</p>

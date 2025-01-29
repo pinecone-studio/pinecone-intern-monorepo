@@ -38,9 +38,7 @@ export const MenuButtons = () => {
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
-        className={`${
-          searchOpen ? 'h-12 w-12 border rounded-lg shadow-sm' : ''
-        } flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+        className={`${searchOpen ? 'h-12 w-12 border rounded-lg shadow-sm' : ''} flex items-center gap-6  rounded-md text-sm font-medium hover:bg-accent  my-1 p-[12px]`}
       >
         <SearchSVG data-testid="search-svg" />
         <p>Search</p>
@@ -48,9 +46,7 @@ export const MenuButtons = () => {
       <button
         data-testid="click-open-sheet"
         onClick={toggleNotifications}
-        className={`${
-          isOpen ? 'h-12 w-12 border rounded-lg shadow-sm' : ''
-        } flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+        className={`${isOpen ? 'h-12 w-12 border rounded-lg shadow-sm' : ''} flex items-center gap-6  rounded-md text-sm font-medium hover:bg-accent  my-1 p-[12px]`}
       >
         <HeartSVG isOpen={isOpen} data-testid="heart-svg" />
         <p>Notifications</p>
