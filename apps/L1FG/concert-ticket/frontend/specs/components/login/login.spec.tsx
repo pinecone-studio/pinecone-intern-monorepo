@@ -1,4 +1,4 @@
-import Login from '@/components/login/Login';
+import Login from '@/components/login/SignIn';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { act, fireEvent, render } from '@testing-library/react';
 
