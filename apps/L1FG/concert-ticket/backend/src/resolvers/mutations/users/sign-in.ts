@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const signIn: MutationResolvers['signIn'] = async (_: unknown, { input }) => {
@@ -11,7 +11,7 @@ export const signIn: MutationResolvers['signIn'] = async (_: unknown, { input })
   if (!user) throw new Error('User email not found');
 
   const matchedPassword = bcrypt.compareSync(password, user.password);
-  if (!matchedPassword) throw new Error('password not match');
+  if (!matchedPassword) throw new Error('Password not match');
 
   const token = jwt.sign(
     {
