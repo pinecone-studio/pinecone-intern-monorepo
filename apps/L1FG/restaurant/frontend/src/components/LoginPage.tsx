@@ -14,6 +14,7 @@ export const LOGIN_USER = gql`
       profileImage
       _id
       userName
+      phoneNumber
     }
   }
 `;
@@ -53,6 +54,7 @@ const LoginPage = () => {
           email: user.data.loginUser.email,
           userName: user.data.loginUser.userName,
           profileImage: user.data.loginUser.profileImage,
+          phoneNumber: user.data.loginUser.phoneNumber,
           createdAt: user.data.loginUser.createdAt,
         })
       );

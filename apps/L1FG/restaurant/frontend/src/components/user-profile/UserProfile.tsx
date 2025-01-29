@@ -1,28 +1,35 @@
-import React from 'react';
+'use client';
+import { useEffect, useState } from 'react';
 import Header from '../common/Header';
 import { Edit2 } from 'lucide-react';
+import Image from 'next/image';
 
 const UserProfile = () => {
-  const user = {
-    Image: null,
-    phone: 91919191,
-    gmail: 'ganjaa@gmail.com',
-    password: 11111,
-  };
+  interface User {
+    profileImage: string;
+    phoneNumber: string;
+    email: string;
+  }
+
+  const [user, setData] = useState<User | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const userData = storedUser ? JSON.parse(storedUser) : null;
+    setData(userData);
+  }, []);
 
   return (
-    <div className="max-h-[500px] bg-white text-center flex flex-col items-center p-4">
+    <div className="w-full bg-white text-center flex flex-col items-center p-4">
       <Header />
 
-      <div className="flex flex-col items-center bg-gray-100 min-h-[679px] rounded-xl shadow-md p-6 w-full max-w-sm">
+      <div className="flex flex-col items-center p-6 w-full max-w-sm">
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-            <span className="text-4xl text-gray-600 material-icons">{user.Image}</span>
+            <Image src={user?.profileImage || '/default-avatar.png'} alt="Profile image" width={100} height={100} className="rounded-full" />
           </div>
           <button className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-sm" aria-label="Edit avatar">
-            <span className="material-icons text-gray-500">
-              <Edit2 />
-            </span>
+            <Edit2 />
           </button>
         </div>
 
@@ -30,11 +37,9 @@ const UserProfile = () => {
           <div className="flex flex-col mb-4">
             <p className="text-gray-700 font-medium">Утас:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.phone}</p>
-              <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit phone number">
-                <span className="material-icons">
-                  <Edit2 />
-                </span>
+              <p className="text-gray-900">{user?.phoneNumber}</p>
+              <button aria-label="Edit phone number">
+                <Edit2 color="#09090B" width={16} height={16} />
               </button>
             </div>
           </div>
@@ -43,11 +48,9 @@ const UserProfile = () => {
           <div className="flex flex-col mb-4">
             <p className="text-gray-700 font-medium">Имэйл хаяг:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.gmail}</p>
-              <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit email">
-                <span className="material-icons">
-                  <Edit2 />
-                </span>
+              <p className="text-gray-900">{user?.email}</p>
+              <button aria-label="Edit email">
+                <Edit2 color="#09090B" width={16} height={16} />
               </button>
             </div>
           </div>
@@ -56,11 +59,9 @@ const UserProfile = () => {
           <div className="flex flex-col">
             <p className="text-gray-700 font-medium">Нууц үг:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.password}</p>
-              <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit password">
-                <span className="material-icons">
-                  <Edit2 />
-                </span>
+              <p className="text-gray-900">*************</p>
+              <button aria-label="Edit password">
+                <Edit2 color="#09090B" width={16} height={16} />
               </button>
             </div>
           </div>
