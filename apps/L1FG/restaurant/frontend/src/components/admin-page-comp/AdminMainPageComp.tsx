@@ -4,20 +4,8 @@ import { useGetOrdersQuery } from '@/generated';
 import { Calendar, Clock2, SlidersHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-
-type OrderType = {
-  _id?: string;
-  tableId?: number;
-  status?: string;
-  createdAt?: string;
-  items?: {
-    name?: string;
-    quantity?: number;
-    price?: number;
-  }[];
-};
 
 const AdminMainPageComp = () => {
   const { data: orderData } = useGetOrdersQuery();

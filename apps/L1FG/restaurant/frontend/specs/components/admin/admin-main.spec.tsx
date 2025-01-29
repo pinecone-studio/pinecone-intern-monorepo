@@ -1,3 +1,5 @@
+/* eslint-disable  max-lines */
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -7,7 +9,7 @@ import AdminMainPageComp from '@/components/admin-page-comp/AdminMainPageComp';
 // Mock the next/image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
+  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
     // eslint-disable-next-line @next/next/no-img-element
     return <img {...props} />;
   },
