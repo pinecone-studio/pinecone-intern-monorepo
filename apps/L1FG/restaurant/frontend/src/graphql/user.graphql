@@ -1,8 +1,0 @@
-query GetUser($_id: ID!) {
-  getUser(_id: $_id) {
-    _id
-    userName
-    email
-    profileImage
-  }
-}
