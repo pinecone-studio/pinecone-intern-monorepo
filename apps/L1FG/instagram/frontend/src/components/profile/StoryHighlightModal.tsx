@@ -6,7 +6,7 @@ const StoryHighlightModal = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] ">
         <DialogHeader>
           <DialogTitle>New highlight</DialogTitle>
         </DialogHeader>
