@@ -1,4 +1,4 @@
-import ComboBox from '@/components/providers/Detail/ComboBox';
+import ComboBox from '@/components/detail/ComboBox';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
