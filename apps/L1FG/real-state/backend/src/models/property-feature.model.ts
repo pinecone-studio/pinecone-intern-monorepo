@@ -8,16 +8,20 @@ export enum HouseTypeEnum {
 /* eslint-enable no-unused-vars */
 export type PropertyFeature = {
   _id: Schema.Types.ObjectId;
+  townName: string;
+  price: string;
   houseType: HouseTypeEnum;
   size: string;
   images: string[];
   totalRooms: number;
   garage: boolean;
+  broadExplanation: string;
   restrooms: number;
   location: {
     address: string;
     city: string;
     district: string;
+    subDistrict: string;
   };
   details: {
     completionDate: Date;
@@ -34,20 +38,25 @@ export type PropertyFeature = {
 };
 
 const PropertyFeatureSchema = new Schema<PropertyFeature>({
+  townName: { type: String },
+  price: { type: String },
   houseType: {
     type: String,
     required: true,
     enum: Object.values(HouseTypeEnum),
   },
+
   size: { type: String, required: true },
   images: { type: [String], required: true },
   totalRooms: { type: Number, required: true },
   garage: { type: Boolean, required: true },
+  broadExplanation: { type: String, required: true },
   restrooms: { type: Number, required: true },
   location: {
     address: { type: String, required: true },
     city: { type: String, required: true },
     district: { type: String, required: true },
+    subDistrict: { type: String, required: true },
   },
   details: {
     completionDate: Date,

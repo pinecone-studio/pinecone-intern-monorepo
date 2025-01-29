@@ -1,5 +1,5 @@
 'use client';
-import { Camera } from 'lucide-react';
+import { Camera, Tag } from 'lucide-react';
 import Saved from '../svg/Saved';
 import Posts from '../svg/Posts';
 import CreatePostStep1 from '../create-post/CreatePostStep1';
@@ -15,9 +15,9 @@ const PostEmpty = () => {
   return (
     <div className="flex flex-col gap-4" data-testid="post-empty">
       <div>
-        <p className="w-full border"></p>
+        <p className="w-[935px] border"></p>
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-14">
         <div className="flex justify-center items-center gap-2">
           <Posts />
           <p className="text-xs font-medium text-gray-900 cursor-pointer hover:bg-black">POSTS</p>
@@ -26,11 +26,15 @@ const PostEmpty = () => {
           <Saved />
           <p className="text-xs font-medium text-gray-900 cursor-pointer">SAVED</p>
         </div>
+        <div className="flex justify-center items-center gap-1">
+          <Tag className="h-4 w-4" />
+          <p className="text-xs font-medium text-gray-900 cursor-pointer">TAGGED</p>
+        </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-5 mt-24">
+      <div className="flex flex-col justify-center items-center gap-5 mt-20">
         <div className="flex flex-col justify-center items-center gap-3">
-          <div className="rounded-full border border-black h-24 w-24 flex justify-center items-center" aria-label="Camera Icon">
+          <div className="rounded-full border-2 border-black h-20 w-20 flex justify-center items-center" aria-label="Camera Icon">
             <Camera className="h-10 w-10" />
           </div>
           <h2 className="font-semibold text-3xl">Share Photos</h2>

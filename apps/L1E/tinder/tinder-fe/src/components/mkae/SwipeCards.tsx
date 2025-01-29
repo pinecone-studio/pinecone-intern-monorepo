@@ -48,7 +48,9 @@ export const SwipeCards = () => {
 
   useEffect(() => {
     if (data && data.getAllUsers) {
-      setCards(data.getAllUsers);
+      // Filter out the current user from the list of users
+      const filteredCards = data.getAllUsers.filter((user: User) => user._id !== currentUser._id);
+      setCards(filteredCards);
       setLoading(false);
     }
   }, [data]);
@@ -62,7 +64,6 @@ export const SwipeCards = () => {
   }
 
   const handleSwipe = async (direction: 'left' | 'right') => {
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     const currentUserId = currentUser._id;
     const currentMatchId = cards[currentIndex]._id; // The _id of the user being swiped on
 
@@ -161,7 +162,7 @@ const SwipeCard = ({ user, onSwipe }: SwipeCardProps) => {
                           <h2 className="text-[18px] font-semibold">{user.username}</h2>
                           <p className="text-[18px] font-semibold">{user.age}</p>
                         </div>
-                        <p className="text-sm">{user._id}</p>
+                        <p className="text-sm">{user.profession}</p>
                       </div>
                     </div>
                   </CardContent>

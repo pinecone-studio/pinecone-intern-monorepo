@@ -9,12 +9,15 @@ export const PropertyTypeDefs = gql`
 
   type Property {
     _id: ID!
+    townName: String!
+    price: String!
     houseType: HouseTypeEnum!
     size: String!
     images: [String!]
     totalRooms: Int!
     garage: Boolean!
     restrooms: Int!
+    broadExplanation: String!
     location: LocationType!
     details: DetailsType!
     uploadedAt: Date
@@ -25,11 +28,13 @@ export const PropertyTypeDefs = gql`
     address: String!
     city: String!
     district: String!
+    subDistrict: String!
   }
   input LocationTypeInput {
     address: String!
     city: String!
     district: String!
+    subDistrict: String!
   }
 
   type DetailsType {
@@ -54,19 +59,30 @@ export const PropertyTypeDefs = gql`
   }
 
   input PropertyInput {
+    townName: String!
+    price: String!
     houseType: HouseTypeEnum!
     size: String!
     images: [String!]
     totalRooms: Int!
     garage: Boolean!
+    broadExplanation: String!
     restrooms: Int!
     location: LocationTypeInput!
     details: DetailsInput!
     uploadedAt: Date
     createdAt: Date
   }
+  input QueryOptions {
+    filter: JSON
+  }
 
   type Mutation {
-    addProperty(input: PropertyInput!): Property
+    addProperty(input: PropertyInput!): Property!
+  }
+
+  type Query {
+    getProperties(options: QueryOptions): [Property!]!
+    getPropertyByID(_id: ID!): Property!
   }
 `;

@@ -8,6 +8,7 @@ const orderSchema = new Schema({
       price: { type: Number, required: true },
     },
   ],
+  tableId: { type: Number },
   status: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });

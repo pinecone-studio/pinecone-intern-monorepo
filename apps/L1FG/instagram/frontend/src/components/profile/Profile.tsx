@@ -1,5 +1,4 @@
 'use client';
-import { IoSettingsOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import Setting from './Setting';
 
@@ -8,16 +7,20 @@ import Followers from './Followers';
 import Following from './Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
+import StoryHighlight from './StoryHighlight';
+import FollowersEmpty from './FollowersEmpty';
+import EmptyFollowing from './EmptyFollowing';
+import PostEmpty from './PostEmpty';
+import { Settings } from 'lucide-react';
 
 export const Profile = () => {
   const { userId } = useParams();
   const { data } = useGetUserTogetherQuery({
     variables: { searchingUserId: userId as string },
   });
-
   return (
-    <div className="flex gap-4 flex-col py-10" date-testid="profile">
-      <div className="flex gap-20">
+    <div className="flex gap-4 flex-col py-10" data-testid="profile-visit-container">
+      <div className="flex gap-20 ml-[72px]">
         <Image src="/images/profilePic.png" alt="zurag" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
 
         <div className="flex flex-col gap-4">
@@ -29,29 +32,49 @@ export const Profile = () => {
             <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-medium">Ad tools</button>
             <div className="flex justify-center items-center">
               <Setting>
-                <IoSettingsOutline />
+                <Settings />
               </Setting>
             </div>
           </div>
 
           <div>
-            <div className="flex w-full justify-between">
+            <div className="flex  gap-[32px]">
               <div className="flex gap-1 ">
                 <p className="text-base font-semibold">{data?.getUserTogether.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>
               </div>
-              <Followers userId={userId as string}>
-                <div className="flex gap-1">
-                  <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
-                  <p className="text-base font-normal">followers</p>
-                </div>
-              </Followers>
-              <Following userId={userId as string}>
-                <div className="flex gap-1">
-                  <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
-                  <p className="text-base font-normal">following</p>
-                </div>
-              </Following>
+
+              {data?.getUserTogether.user?.followerCount ? (
+                <Followers userId={userId as string}>
+                  <div className="flex gap-1" data-testid="profile-followers">
+                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
+                    <p className="text-base font-normal">followers</p>
+                  </div>
+                </Followers>
+              ) : (
+                <FollowersEmpty>
+                  <div className="flex gap-1" data-testid="profile-followers-empty">
+                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followerCount}</p>
+                    <p className="text-base font-normal">followers</p>
+                  </div>
+                </FollowersEmpty>
+              )}
+
+              {data?.getUserTogether.user?.followingCount ? (
+                <Following userId={userId as string}>
+                  <div className="flex gap-1">
+                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
+                    <p className="text-base font-normal">following</p>
+                  </div>
+                </Following>
+              ) : (
+                <EmptyFollowing>
+                  <div className="flex gap-1">
+                    <p className="text-base font-semibold">{data?.getUserTogether.user?.followingCount}</p>
+                    <p className="text-base font-normal">following</p>
+                  </div>
+                </EmptyFollowing>
+              )}
             </div>
           </div>
 
@@ -63,8 +86,9 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <StoryHighlight />
 
-      <Post userId={userId as string} />
+      {data?.getUserTogether.user?.postCount ? <Post userId={userId as string} /> : <PostEmpty />}
     </div>
   );
 };
