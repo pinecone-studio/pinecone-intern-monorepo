@@ -1,4 +1,4 @@
-import { PasswordResetPage } from '@/components/password-resert/PasswordReset';
+import { PasswordResetPage } from '@/components/passwordResert/PasswordReset';
 const Page = () => {
   return (
     <div>

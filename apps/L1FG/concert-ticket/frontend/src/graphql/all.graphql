@@ -29,3 +29,22 @@ query GetConcerts {
     }
   }
 }
+
+mutation SignIn($input: UserInput!) {
+  signIn(input: $input) {
+    user {
+      _id
+      password
+      email
+    }
+    token
+  }
+}
+
+mutation SignUp($input: UserInput!) {
+  signUp(input: $input) {
+    _id
+    password
+    email
+  }
+}
