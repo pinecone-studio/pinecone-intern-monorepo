@@ -60,6 +60,6 @@ export const concertTypeDefs = gql`
   }
   type Query {
     getConcerts: [Concert!]!
-    getConcert(_id: ID): Concert!
+    getConcert(_id: String): Concert!
   }
 `;
