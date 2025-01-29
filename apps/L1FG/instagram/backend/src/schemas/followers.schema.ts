@@ -45,14 +45,17 @@ export const FollowerTypeDefs = gql`
     targetId: FollowingUserType
   }
   input FollowInput {
-    followerId: ID!
     targetId: ID!
+  }
+  type FollowedRequested {
+    isFollowed: Boolean
+    isRequested: Boolean
   }
   type Query {
     getFollowers(searchingUserId: ID): [FollowerType]
     getFollowing(searchingUserId: ID): [FollowingType]
   }
   type Mutation {
-    createFollower(input: FollowInput!): Follow!
+    createFollower(input: FollowInput!): FollowedRequested!
   }
 `;

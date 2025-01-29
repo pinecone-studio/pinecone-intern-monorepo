@@ -1,4 +1,4 @@
-import InfoContainer from '@/components/providers/Detail/InfoContainer';
+import InfoContainer from '@/components/detail/InfoContainer';
 import { render } from '@testing-library/react';
 
 describe('Test', () => {
