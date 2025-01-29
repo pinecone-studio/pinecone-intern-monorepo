@@ -1,34 +1,14 @@
 import Image from 'next/image';
-import Posts from '../svg/Posts';
-import Saved from '../svg/Saved';
-import { Separator } from '@/components/ui/separator';
 import { useGetPostsQuery } from '@/generated';
-import { Tag } from 'lucide-react';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
     variables: { searchingUserId: userId },
   });
+  console.log('POST DATA:', data);
 
   return (
     <div className="flex flex-col gap-5 w-[935px]" data-testid="profile-posts">
-      <Separator />
-
-      <div className="flex justify-center gap-14">
-        <div className="flex justify-center items-center gap-2">
-          <Posts />
-          <p className="text-xs font-medium text-[#09090B]">POSTS</p>
-        </div>
-        <div className="flex justify-center items-center gap-1">
-          <Saved />
-          <p className="text-xs font-medium text-[#09090B]">SAVED</p>
-        </div>
-        <div className="flex justify-center items-center gap-1">
-          <Tag className="h-4 w-4" />
-          <p className="text-xs font-medium text-gray-900 cursor-pointer">TAGGED</p>
-        </div>
-      </div>
-
       <div>
         <div className="grid grid-cols-3 gap-1 overflow-y-scroll">
           {data?.getPosts?.map((post) => {
