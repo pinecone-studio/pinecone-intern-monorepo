@@ -18,6 +18,9 @@ export const UserTypeDefs = gql`
     isPrivate: Boolean
     email: String!
     savedUsers: [String]
+    followerCount: Int!
+    followingCount: Int!
+    postCount: Int!
   }
   type UserWithoutPassword {
     _id: String!
@@ -112,7 +115,7 @@ export const UserTypeDefs = gql`
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
-    getUserByName(userName: String!): [UserTogetherUserType]!
+    getUserByName(userName: String!): [UserTogetherUserType]
     getSearchedUser: [UserTogetherUserType]!
   }
 

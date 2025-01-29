@@ -148,8 +148,8 @@ describe('OrderList Component', () => {
     render(<OrderList selectedItems={mockSelectedItems} updateItemQuantity={jest.fn()} removeItem={jest.fn()} tableNumber={5} />);
 
     // Open the drawer to ensure content is rendered
-    fireEvent.click(screen.getByTestId('order-button'));
-
+    const orderButton = screen.getByTestId('order-button');
+    fireEvent.click(orderButton);
     // Find all prices and validate their text content
     const prices = screen.getAllByTestId('food-price');
     expect(prices[0]).toHaveTextContent('500'); // Below 1000
