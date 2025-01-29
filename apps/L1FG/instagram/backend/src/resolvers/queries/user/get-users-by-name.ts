@@ -1,20 +1,24 @@
-// import { QueryResolvers } from '../../../generated';
+import { GraphQLError } from 'graphql';
 import { UserModel } from '../../../models';
+import { UnauthenticatedError } from '../../../utils/error';
+import { UserTogetherUserType } from '../../../generated';
 
-export const getUserByName = async (_: unknown, { userName }: any, { userId }: any) => {
-  // if (!userId) throw new Error('Unauthorized');
-  console.log(userId);
-
-  // if (!userName) {
-  //   throw new Error('userName is required');
-  // }
-
+export const getUserByName = async (_: unknown, { userName }: { userName: string }, { userId }: { userId: string | null }, __: unknown) => {
   try {
-    return await UserModel.find({
+    if (!userId) {
+      throw new UnauthenticatedError('Нэвтэрнэ үү');
+    }
+    const users: UserTogetherUserType[] = await UserModel.find({
       userName: { $regex: userName, $options: 'i' },
     });
+    return users;
   } catch (error) {
-    // console.error('Error in searchUsersByName:', error);
-    // throw new Error('Failed to fetch users');
+    if (error instanceof UnauthenticatedError) {
+      throw new GraphQLError(`${error.message}`, {
+        extensions: {
+          code: `${error.name}`,
+        },
+      });
+    }
   }
 };
