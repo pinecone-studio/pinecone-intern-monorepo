@@ -9,10 +9,10 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className="xl:max-w-[1200px]  ">
+      <DialogContent className="xl:max-w-[1200px]">
         <div className=" flex  ">
           <div className=" w-[60%] ">
-            <img src={post.postImage[0]} alt="Post" className="w-100% h-100% rounded-lg object-cover" />
+            <Image src={post.postImage[0]} alt="Post" className="w-full h-full rounded-lg object-cover" />
           </div>
           <div className="w-[40%]  flex flex-col justify-between">
             <div>
