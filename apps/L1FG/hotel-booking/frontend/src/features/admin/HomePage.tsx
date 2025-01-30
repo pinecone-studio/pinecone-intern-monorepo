@@ -1,10 +1,17 @@
+'use client';
+
 import { Header } from '@/components/admin/main/Header';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Plus } from '@/components/admin/svg';
 import Link from 'next/link';
 import { HotelDataTable, SelectLocation, SelectRoom, SelectStarRating, SelectUserRating } from '@/components/admin/ui';
+import { useGetHotelsQuery } from '@/generated';
 
 export const HomePage = () => {
+  const { data } = useGetHotelsQuery();
+
+  const hotels = data?.getHotels || [];
+
   return (
     <div className="flex">
       <Sidebar hotels="active" guests="" />
@@ -26,7 +33,7 @@ export const HomePage = () => {
               <SelectStarRating />
               <SelectUserRating />
             </div>
-            <HotelDataTable />
+            <HotelDataTable data={hotels} />
           </div>
         </div>
       </div>
