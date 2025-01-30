@@ -6,6 +6,7 @@ import { Footer } from '@/components/user/search-result/Footer';
 import { useParams } from 'next/navigation';
 import { useGetHotelByIdQuery } from '@/generated';
 import { Loading } from '@/components/user/main/Loading';
+import { AboutProperty } from '@/components/user/hotel-detail/AboutProperty';
 
 export const HotelDetailPage = () => {
   const params = useParams();
@@ -34,6 +35,7 @@ export const HotelDetailPage = () => {
       <BlueDital />
       <SearchBar />
       <HotelDetailMain data={hotelData} />
+      <AboutProperty />
       <Footer />
     </>
   );

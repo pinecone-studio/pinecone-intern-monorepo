@@ -1,6 +1,5 @@
 import { signUp } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
-import jwt from 'jsonwebtoken';
 
 jest.mock('../../../../src/models', () => ({
   UserModel: {
@@ -36,10 +35,6 @@ describe('signUp', () => {
   it('create user', async () => {
     const result = await signUp!({}, { input: { email: 'zaya', password: '0000' } }, { userId: null }, {} as GraphQLResolveInfo);
 
-    expect(result).toEqual({ user: { email: 'zaya', password: 'hashedPassword', _id: '1' }, token: 'token' });
-
-    expect(jwt.sign).toHaveBeenCalledWith({ userId: '1', email: 'zaya' }, process.env.JWT_SECRET!, {
-      expiresIn: '1h',
-    });
+    expect(result).toEqual({ email: 'zaya', password: 'hashedPassword', _id: '1' });
   });
 });

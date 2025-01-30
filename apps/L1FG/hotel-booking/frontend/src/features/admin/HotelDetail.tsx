@@ -3,8 +3,16 @@ import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Footer, Header } from '@/components/admin/main';
 import { LeftArrow } from '@/components/admin/svg';
 import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/hotel-detail';
+// import { useGetHotelByIdQuery } from '@/generated';
+// import { useParams } from 'next/navigation';
 
 export const HotelDetailPage = () => {
+  // const params = useParams();
+  // const hotelId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  // const { data } = useGetHotelByIdQuery({ variables: { getHotelByIdId: hotelId } });
+
+  // const hotelData = data?.getHotelById;
+
   return (
     <div className="flex">
       <Sidebar hotels="active" guests="" />

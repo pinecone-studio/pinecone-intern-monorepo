@@ -38,7 +38,7 @@ const OrderList: React.FC<OrderListProps> = ({ selectedItems, updateItemQuantity
 
     if (item && item.quantity + delta > 0) {
       updateItemQuantity(id, item.quantity + delta);
-    } 
+    }
   };
 
   const handleDecrease = (id: string) => updateQuantity(id, -1);
@@ -55,9 +55,10 @@ const OrderList: React.FC<OrderListProps> = ({ selectedItems, updateItemQuantity
         name: item.foodName,
         quantity: item.quantity,
         price: item.price,
+        imageUrl: item.imageUrl,
       })),
     };
-
+    
     localStorage.setItem('order', JSON.stringify(orderInput));
     router.push('/qpay');
   };
