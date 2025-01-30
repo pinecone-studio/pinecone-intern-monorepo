@@ -21,16 +21,16 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
     <div className="">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}>
+          <Button variant="outline" className={`w-full justify-start flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}>
             <SquarePlus className="h-6 w-6" />
             <span className={`${isOpen || searchOpen ? 'hidden' : 'block'}`}>Create</span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80">
-          <div className="grid gap-4">
+        <PopoverContent className=" w-[154px] p-1 ml-4">
+          <div className="grid ">
             <Dialog open={openCreatePostModal} onOpenChange={setOpenCreatePostModal}>
               <DialogTrigger asChild>
-                <Button variant="outline" className="flex items-center justify-between p-2 border rounded hover:bg-gray-100">
+                <Button variant="outline" className="border-none flex items-center justify-between p-2 border rounded hover:bg-gray-100">
                   <span className="text-sm font-normal">Post</span>
                   <ImagePlay className="w-4 h-4 text-gray-600" />
                 </Button>
@@ -41,7 +41,7 @@ export const Create = ({ searchOpen, isOpen }: Props) => {
             </Dialog>
             <Dialog open={openCreateStoryModal} onOpenChange={setOpenCreateStoryModal}>
               <DialogTrigger asChild>
-                <Button variant="outline" className="flex items-center justify-between p-2 border rounded hover:bg-gray-100">
+                <Button variant="outline" className="border-none  flex items-center justify-between p-2 border rounded hover:bg-gray-100">
                   <span className="text-sm font-normal">Story</span>
                   <BookOpenCheck className="w-4 h-4 text-gray-600" />
                 </Button>

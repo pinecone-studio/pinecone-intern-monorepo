@@ -1,65 +1,112 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { CreatePostStep2 } from '@/components/create-post/CreatePostStep2';
 import '@testing-library/jest-dom';
-import CreatePostStep2 from '@/components/create-post/CreatePostStep2';
-import { MockedProvider } from '@apollo/client/testing';
 
-describe('CreatePostStep2 Component', () => {
-  const mockSetOpenCreatePostModal = jest.fn();
+// Mock the next/image component
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img {...props} />;
+  },
+}));
+
+// Mock the CreatePost component
+jest.mock('@/components/create-post/CreatePost', () => {
+  return {
+    CreatePost: jest.fn(() => <div data-testid="create-post">Create Post Component</div>),
+  };
+});
+
+describe('CreatePostStep2', () => {
   const mockSetStep = jest.fn();
-  const mockSetLoading = jest.fn();
-
-  const renderComponent = (step: boolean, images: string[], loading: boolean) => {
-    render(
-      <MockedProvider>
-        <CreatePostStep2 step={step} setStep={mockSetStep} images={images} setOpenCreatePostModal={mockSetOpenCreatePostModal} loading={loading} setLoading={mockSetLoading} />
-      </MockedProvider>
-    );
+  const mockSetOpenCreatePostModal = jest.fn();
+  const defaultProps = {
+    step: true,
+    setStep: mockSetStep,
+    images: ['test-image.jpg'],
+    setOpenCreatePostModal: mockSetOpenCreatePostModal,
+    loading: false,
   };
 
-  it('should render modal when step and images are provided', () => {
-    renderComponent(true, ['https://example.com/image.jpg'], false);
+  let mockCreatePost: jest.Mock;
 
-    expect(screen.getByTestId('create-post-step2-modal')).toBeInTheDocument();
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Get the mock function from the mocked module
+    mockCreatePost = jest.requireMock('@/components/create-post/CreatePost').CreatePost;
   });
 
-  it('should not render modal when step is false', () => {
-    renderComponent(false, ['https://example.com/image.jpg'], false);
+  it('renders nothing when there are no images', () => {
+    render(<CreatePostStep2 {...defaultProps} images={[]} />);
 
     expect(screen.queryByTestId('create-post-step2-modal')).not.toBeInTheDocument();
   });
 
-  it('should show loading overlay when loading is true', () => {
-    renderComponent(true, ['https://example.com/image.jpg'], true);
+  it('renders nothing when step is false', () => {
+    render(<CreatePostStep2 {...defaultProps} step={false} />);
+
+    expect(screen.queryByTestId('create-post-step2-modal')).not.toBeInTheDocument();
+  });
+
+  it('renders the modal with correct content when step is true and images exist', () => {
+    render(<CreatePostStep2 {...defaultProps} />);
+
+    expect(screen.getByTestId('create-post-step2-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('modal-header')).toBeInTheDocument();
+    expect(screen.getByTestId('crop-text')).toHaveTextContent('Crop');
+    expect(screen.getByTestId('back-button')).toBeInTheDocument();
+    expect(screen.getByTestId('next-button')).toBeInTheDocument();
+    expect(screen.getByTestId('selected-image')).toHaveAttribute('src', 'test-image.jpg');
+  });
+
+  it('shows loading overlay when loading is true', () => {
+    render(<CreatePostStep2 {...defaultProps} loading={true} />);
 
     expect(screen.getByTestId('loading-overlay')).toBeInTheDocument();
     expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
-  it('should render selected image correctly', () => {
-    renderComponent(true, ['https://example.com/image.jpg'], false);
+  it('handles back button click correctly', () => {
+    render(<CreatePostStep2 {...defaultProps} />);
 
-    const image = screen.getByTestId('selected-image');
-    expect(image).toBeInTheDocument();
-    expect(image);
-  });
-
-  it('should call handleBack when back button is clicked', () => {
-    renderComponent(true, ['https://example.com/image.jpg'], false);
-
-    const backButton = screen.getByTestId('back-button');
-    fireEvent.click(backButton);
+    fireEvent.click(screen.getByTestId('back-button'));
 
     expect(mockSetOpenCreatePostModal).toHaveBeenCalledWith(false);
     expect(mockSetStep).toHaveBeenCalledWith(false);
   });
 
-  it('should call handleNext when next button is clicked', () => {
-    renderComponent(true, ['https://example.com/image.jpg'], false);
+  it('handles next button click correctly', () => {
+    render(<CreatePostStep2 {...defaultProps} />);
 
-    const nextButton = screen.getByTestId('next-button');
-    fireEvent.click(nextButton);
+    // Click next button
+    fireEvent.click(screen.getByTestId('next-button'));
 
-    expect(mockSetStep);
+    // Verify CreatePost component is rendered
+    expect(screen.getByTestId('create-post')).toBeInTheDocument();
+    expect(mockCreatePost).toHaveBeenCalledWith(
+      {
+        images: ['test-image.jpg'],
+        setStep: mockSetStep,
+      },
+      {}
+    );
+  });
+
+  it('maintains correct modal state through component lifecycle', () => {
+    const { rerender } = render(<CreatePostStep2 {...defaultProps} />);
+
+    // Initial state
+    expect(screen.getByTestId('create-post-step2-modal')).toBeInTheDocument();
+    expect(screen.queryByTestId('create-post')).not.toBeInTheDocument();
+
+    // Click next
+    fireEvent.click(screen.getByTestId('next-button'));
+    expect(screen.getByTestId('create-post')).toBeInTheDocument();
+
+    // Update props
+    rerender(<CreatePostStep2 {...defaultProps} step={false} />);
+    expect(screen.queryByTestId('create-post-step2-modal')).not.toBeInTheDocument();
   });
 });

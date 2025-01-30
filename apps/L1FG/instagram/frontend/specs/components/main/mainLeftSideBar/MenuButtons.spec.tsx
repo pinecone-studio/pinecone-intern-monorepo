@@ -67,4 +67,32 @@ describe('MenuButtons component functionality', () => {
     // Verify navigation
     expect(mockPush).toHaveBeenCalledWith('/home');
   });
+
+  it('renders the push to home', () => {
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
+
+    // Find and click the select trigger to open the dropdown
+    const selectTrigger = screen.getByTestId('sidebar-home');
+    fireEvent.click(selectTrigger);
+
+    // Use waitFor to ensure the options appear in the dropdown
+
+    expect(mockPush).toHaveBeenCalledWith('./');
+  });
+
+  it('renders the push to profile', async () => {
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
+    const profileButton = await screen.getByTestId('profile-button');
+    fireEvent.click(profileButton);
+
+    expect(mockPush).toHaveBeenCalledWith('./profile');
+  });
 });

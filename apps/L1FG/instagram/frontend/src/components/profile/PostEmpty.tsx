@@ -2,7 +2,7 @@
 import { Camera } from 'lucide-react';
 import Saved from '../svg/Saved';
 import Posts from '../svg/Posts';
-import CreatePostStep1 from '../create-post/CreatePostStep1';
+import { CreatePostStep1 } from '../create-post/CreatePostStep1';
 import React from 'react';
 
 const PostEmpty = () => {

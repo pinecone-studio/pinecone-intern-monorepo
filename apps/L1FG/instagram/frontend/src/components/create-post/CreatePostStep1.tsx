@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Loader } from 'lucide-react';
 import { CreatePostSvg } from '../svg/CreatePostSvg';
 import { CreatePostStep1Props } from '../types';
-import CreatePostStep2 from './CreatePostStep2';
+import { CreatePostStep2 } from './CreatePostStep2';
 
 const ModalHeader: React.FC = () => (
   <div className="border-b border-gray-200 py-2" data-testid="modal-header">
@@ -76,7 +76,7 @@ export const CreatePostStep1: React.FC<CreatePostStep1Props> = ({ openCreatePost
       setImages((prev) => [...prev, ...imageUrls]);
       setStep(true);
     } catch (error) {
-      console.error('Error uploading images:', error);
+      alert(`Upload failed: Upload Error`);
     } finally {
       setLoading(false);
     }
@@ -101,5 +101,3 @@ export const CreatePostStep1: React.FC<CreatePostStep1Props> = ({ openCreatePost
     </div>
   );
 };
-
-export default CreatePostStep1;

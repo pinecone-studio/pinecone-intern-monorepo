@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CreatePostStep1 from '@/components/create-post/CreatePostStep1';
+import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
 
 describe('CreatePostStep1 Component', () => {
   const mockSetOpenCreatePostModal = jest.fn();
@@ -44,8 +44,13 @@ describe('CreatePostStep1 Component', () => {
   });
 
   it('should handle successful file upload', async () => {
-    /* eslint-disable camelcase */
-    const mockResponse = { secure_url: 'https://example.com/image.jpg' };
+    const mockResponse = {
+      secureUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/07._Camel_Profile%2C_near_Silverton%2C_NSW%2C_07.07.2007.jpg/800px-07._Camel_Profile%2C_near_Silverton%2C_NSW%2C_07.07.2007.jpg',
+      width: 800,
+      height: 600,
+    };
+
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
       json: jest.fn().mockResolvedValue(mockResponse),
@@ -61,6 +66,11 @@ describe('CreatePostStep1 Component', () => {
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledTimes(1);
     });
+
+    // Ensure the image has the correct width and height properties
+    const uploadedImage = screen.getByAltText('Uploaded image');
+    expect(uploadedImage).toHaveAttribute('width', '800');
+    expect(uploadedImage).toHaveAttribute('height', '600');
   });
 
   it('should handle file upload failure', async () => {
@@ -74,7 +84,7 @@ describe('CreatePostStep1 Component', () => {
     fireEvent.change(fileInput, { target: { files: [file] } });
 
     await waitFor(() => {
-      expect(global.alert);
+      expect(global.alert).toHaveBeenCalledWith('Upload failed: Upload Error');
     });
   });
 
@@ -100,12 +110,12 @@ describe('CreatePostStep1 Component', () => {
 
     const fileInput = screen.getByTestId('file-upload-input') as HTMLInputElement;
 
-    // Файл оруулаагүй байх нөхцөл үүсгэнэ
+    // Simulate no files selected by passing null
     fireEvent.change(fileInput, {
       target: { files: null },
     });
 
-    // Файл оруулаагүй тул input дээр ямар нэг өөрчлөлт хийх ёсгүй
-    expect(fileInput.files).toBe(null);
+    // No files should be uploaded, so no fetch call should be made
+    expect(global.fetch).not.toHaveBeenCalled();
   });
 });

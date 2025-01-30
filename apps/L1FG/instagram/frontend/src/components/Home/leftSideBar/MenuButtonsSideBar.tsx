@@ -1,3 +1,4 @@
+/*eslint-disable */
 'use client';
 import { useState } from 'react';
 import { InstaSVG } from './Svg/InstaSvg';
@@ -8,18 +9,21 @@ import { useRouter } from 'next/navigation';
 import { TextSideBar } from '@/components/notifications/TextSideBar';
 import { InstagramSvg } from './Svg/InstagramSvg';
 import { Create } from './Greate';
-import { UserSvg } from './Svg/UserSvg';
+
 import { SearchSheet } from '@/components/search/SearchSheet';
 import { HeartSVG } from './Svg/HeartSvg';
-import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Download, ImageDown, Menu, Moon, OctagonAlert, Settings } from 'lucide-react';
+import { Bookmark, CircleAlert, ImageDown, Menu, Settings, Sun, User } from 'lucide-react';
+import Link from 'next/link';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const router = useRouter();
+  const { user } = useAuth();
 
   const toggleNotifications = () => {
     setIsOpen(!isOpen);
@@ -31,30 +35,51 @@ export const MenuButtons = () => {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col gap-2 ml-2 mb-auto w-[20%]">
-      <p className="text-[18px] w-[200px] font-bold ">
-        <TextSideBar icon={<HomeSVG />} text="Home" data-testid="sidebar-home" />
-      </p>
+    <div className="flex flex-col gap-2 mb-auto ">
+      <button
+        onClick={() => router.push('./')}
+        className={`flex items-center gap-6 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px] w-full`}
+        data-testid="sidebar-home"
+      >
+        <HomeSVG />
+        {!isOpen && !searchOpen && <p className="">Home</p>}
+      </button>
+
       <button
         data-testid="search-button"
         onClick={openSearchSheet}
         className={`${
-          searchOpen ? 'h-12 w-12 border rounded-lg' : ''
-        } flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+          searchOpen ? 'h-12 w-12 rounded-lg' : ''
+        } w-full justify-start flex items-center gap-6  rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
       >
         <SearchSVG data-testid="heart-svg" />
-        <p>Search</p>
+        {!isOpen && !searchOpen && <p className="">Search</p>}
       </button>
-      <button
+      <Button
         data-testid="click-open-sheet"
+        variant="outline"
         onClick={toggleNotifications}
-        className={`${isOpen ? 'h-12 w-12 border rounded-lg' : ''} flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+        className={`${isOpen ? 'h-12 w-full rounded-lg ' : ''} w-full justify-start flex items-center gap-6 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
       >
         <HeartSVG isOpen={isOpen} data-testid="heart-svg" />
-        <p>Notifications</p>
-      </button>
+        {!isOpen && !searchOpen && <p className="">Notifications</p>}
+      </Button>
+
       <Create searchOpen={searchOpen} isOpen={isOpen} />
-      <TextSideBar icon={<UserSvg />} text="Profile" searchOpen={searchOpen} />
+
+      <Link href={`/${user?._id}`}>
+        <button
+          data-testid="profile-button"
+          onClick={() => router.push('./profile')}
+          className="w-full border-none flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]"
+        >
+          <div>
+            <User />
+          </div>
+
+          {!isOpen && !searchOpen && <p>Profile</p>}
+        </button>
+      </Link>
     </div>
   );
 
@@ -77,7 +102,7 @@ export const MenuButtons = () => {
 
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline">
+            <Button className="justify-start" variant="outline">
               <div className="flex gap-3 items-center">
                 <div>
                   <Menu />
@@ -86,46 +111,37 @@ export const MenuButtons = () => {
               </div>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[266px] h-[404px]">
-            <div className="flex flex-col">
-              <div className="">
-                <Link className=" " href={'/settings'}>
-                  <div className="flex gap-2 h-[50px] items-center">
-                    <div>
-                      <Settings />
-                    </div>
-                    <p>Settings</p>
-                  </div>
-                </Link>
-                <div className="flex gap-2 h-[50px] items-center">
-                  <div>
-                    <ImageDown />
-                  </div>
-                  <p>Your activity</p>
-                </div>
-                <div className="flex gap-2 h-[50px] items-center">
-                  <div>
-                    <Download />
-                  </div>
-                  <p>Saved</p>
-                </div>
-                <div className="flex gap-2 h-[50px] items-center">
-                  <div>
-                    <Moon />
-                  </div>
-                  <p>Switch appearance</p>
-                </div>
-                <div className="flex gap-2 h-[50px] items-center">
-                  <div>
-                    <OctagonAlert />
-                  </div>
-                  <p>Report a problem</p>
-                </div>
+          <PopoverContent className="w-[266px] h-[410px] rounded-2xl border-none drop-shadow-lg p-0">
+            <div className="flex flex-col text-sm ">
+              <div className="px-4 py-2">
+                <Button variant="outline" className="h-[50px] w-full justify-start items-center flex gap-2">
+                  <Settings /> <p>Settings</p>
+                </Button>
+
+                <Button variant="outline" className="h-[50px] w-full justify-start items-center flex gap-2">
+                  <ImageDown /> <p>Your activity</p>
+                </Button>
+
+                <Button variant="outline" className="h-[50px] w-full justify-start items-center flex gap-2">
+                  <Bookmark /> <p>Saved</p>
+                </Button>
+
+                <Button variant="outline" className="h-[50px] w-full justify-start items-center flex gap-2">
+                  <Sun /> <p>Switch appearance</p>
+                </Button>
+                <Button variant="outline" className="h-[50px] w-full justify-start items-center flex gap-2">
+                  <CircleAlert /> <p>Report a problem</p>
+                </Button>
               </div>
-              <div className="h-1 "></div>
-              <div className="">
-                <p className="h-[50px] items-center flex">Switch ccounts</p>
-                <p className="h-[50px] items-center flex">Log out</p>
+              <div className="w-full bg-stone-100 h-[6px]"></div>
+              <div className="px-4 py-2 flex flex-col gap-2">
+                <Button variant="outline" className=" h-[50px] w-full justify-start items-center flex">
+                  Switch accounts
+                </Button>
+                <div className="border-b border-stone-100"></div>
+                <Button variant="outline" className=" h-[50px] w-full justify-start items-center flex  ">
+                  Log out
+                </Button>
               </div>
             </div>
           </PopoverContent>

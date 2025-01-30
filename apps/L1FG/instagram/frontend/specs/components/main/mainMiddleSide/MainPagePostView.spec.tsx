@@ -1,29 +1,17 @@
-/*eslint-disable max-lines*/
-import React from 'react';
+/*eslint-disable*/
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
+import React, { PropsWithChildren } from 'react';
+import { GetAllPostsDocument } from '@/generated';
 import MainPagePost from '@/components/Home/mainBar/MainPagePost';
 
-import { GetAllPostsDocument } from '@/generated';
-// import Image from 'next/image';
-
-// Mock Next/Image
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    return <image {...props} alt={props.alt} />;
-  },
-}));
-
-// Mock Swiper components
+jest.mock('swiper/css', () => '');
+jest.mock('swiper/css/pagination', () => '');
+jest.mock('swiper/css/navigation', () => '');
 jest.mock('swiper/react', () => ({
-  Swiper: ({ children, ...props }: { children: React.ReactElement }) => (
-    <div data-testid="swiperId" {...props}>
-      {children}
-    </div>
-  ),
-  SwiperSlide: ({ children }: { children: React.ReactElement }) => <div data-testid="swiper-slide">{children}</div>,
+  Swiper: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  SwiperSlide: ({ children }: PropsWithChildren) => <div>{children}</div>,
 }));
 
 jest.mock('swiper/modules', () => ({
@@ -31,209 +19,265 @@ jest.mock('swiper/modules', () => ({
   Pagination: jest.fn(),
 }));
 
-// Mock Swiper CSS
-/*eslint-disable*/
-jest.mock('swiper/css', () => {});
-/*eslint-disable*/
-jest.mock('swiper/css/navigation', () => {});
-/*eslint-disable*/
-jest.mock('swiper/css/pagination', () => {});
+interface MockRequest {
+  request: {
+    query: typeof GetAllPostsDocument;
+  };
+  error?: Error;
+  result?: {
+    data: {
+      getAllPosts: Post[];
+    };
+  };
+}
 
-// Mock lucide-react icons
-jest.mock('lucide-react', () => ({
-  Bookmark: () => <div data-testid="bookmark-icon">Bookmark</div>,
-  HeartIcon: () => <div data-testid="like-icon">Like</div>,
-  MessageCircle: () => <div data-testid="comment-icon">Comments</div>,
-}));
+interface Post {
+  _id: string;
+  user: {
+    userName: string;
+  };
+  caption: string;
+  likeCount: number;
+  commentCount: number;
+  postImage: string[];
+  carouselMediaCount: number;
+}
 
-const mockData = {
-  getAllPosts: [
-    {
-      _id: 'post1',
-      postImage: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-      carouselMediaCount: 2,
-      likeCount: 10,
-      commentCount: 5,
-      createdAt: '2025-01-23T12:00:00.000Z',
-      caption: 'This is a test post',
-      user: {
-        _id: 'user1',
-        profileImage: 'https://example.com/profile.jpg',
-        userName: 'testuser',
-        fullName: 'Test User',
-        bio: 'This is a test bio',
-      },
-    },
-    {
-      _id: 'post2',
-      postImage: null,
-      carouselMediaCount: 0,
-      likeCount: 0,
-      commentCount: 0,
-      createdAt: '2025-01-22T12:00:00.000Z',
-      caption: 'This post has no image',
-      user: {
-        _id: 'user2',
-        profileImage: 'https://example.com/profile2.jpg',
-        userName: 'user2',
-        fullName: 'User Two',
-        bio: 'Another test bio',
-      },
-    },
-  ],
-};
+const mockLoading: MockRequest[] = [];
 
-const mocks = [
+const mockError = [
   {
     request: {
       query: GetAllPostsDocument,
-      variables: {}, // Add any required variables
+    },
+    error: new Error('Failed to fetch'),
+  },
+];
+
+const mockNoPosts = [
+  {
+    request: {
+      query: GetAllPostsDocument,
     },
     result: {
-      data: mockData,
+      data: {
+        getAllPosts: [],
+      },
     },
   },
 ];
 
-const errorMock = [
+const mockPosts = [
   {
     request: {
       query: GetAllPostsDocument,
-      variables: {},
     },
-    error: new Error('Failed to fetch posts'),
+    result: {
+      data: {
+        getAllPosts: [
+          {
+            _id: '1',
+            user: {
+              userName: 'john_doe',
+            },
+            caption: 'Hello world!',
+            likeCount: 10,
+            commentCount: 5,
+            postImage: ['/images/post1.jpg'],
+            carouselMediaCount: 1,
+          },
+        ],
+      },
+    },
   },
 ];
 
-const emptyMock = [
+const mockPostsNoImages = [
   {
     request: {
       query: GetAllPostsDocument,
-      variables: {},
     },
     result: {
-      data: { getAllPosts: [] },
+      data: {
+        getAllPosts: [
+          {
+            _id: '2',
+            user: {
+              userName: 'no_image_user',
+            },
+            caption: 'This post has no image',
+            likeCount: 5,
+            commentCount: 2,
+            postImage: [], // No images, should use default
+            carouselMediaCount: 0,
+          },
+        ],
+      },
     },
   },
 ];
 
 describe('MainPagePost Component', () => {
-  it('renders loading state', async () => {
+  it('renders loading message while fetching posts', () => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mockLoading} addTypename={false}>
         <MainPagePost />
       </MockedProvider>
     );
 
-    expect(screen.getByTestId('loading-message')).toBeInTheDocument();
+    expect(screen.getByTestId('loading-message')).toHaveTextContent('Loading posts...');
   });
 
-  it('renders posts with correct details', async () => {
+  it('renders error message if fetching fails', async () => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <MainPagePost />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      // Check posts container
-      const postsContainer = screen.getByTestId('posts-container');
-      expect(postsContainer).toBeInTheDocument();
-
-      // Check post items
-      const postItems = screen.getAllByTestId('post-item');
-      expect(postItems).toHaveLength(2); // Two posts
-
-      // Check first post
-      const firstPostImages = screen.getAllByTestId('post-image');
-      expect(firstPostImages).toHaveLength(3); // 2 images for post 1 and 1 default image for post 2
-      expect(firstPostImages[0]).toHaveAttribute('src', 'https://example.com/image1.jpg');
-      expect(firstPostImages[1]).toHaveAttribute('src', 'https://example.com/image2.jpg');
-
-      // Check second post
-      expect(firstPostImages[2]).toHaveAttribute('src', '/images/profilePic.png');
-
-      // Check like count
-      const likeCounts = screen.getAllByTestId('like-count');
-      expect(likeCounts).toHaveLength(2);
-      expect(likeCounts[0]).toHaveTextContent('10 likes');
-      expect(likeCounts[1]).toHaveTextContent('0 likes');
-
-      // Check comments
-      const viewComments = screen.queryByTestId('view-comments');
-      expect(viewComments).toHaveTextContent('View 5 comment(s)');
-
-      const noComments = screen.getByTestId('no-comments');
-      expect(noComments).toHaveTextContent('No comments yet.');
-    });
-  });
-
-  it('renders error state', async () => {
-    render(
-      <MockedProvider mocks={errorMock} addTypename={false}>
+      <MockedProvider mocks={mockError} addTypename={false}>
         <MainPagePost />
       </MockedProvider>
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('error-message')).toBeInTheDocument();
-      expect(screen.getByText(/Failed to fetch posts/i)).toBeInTheDocument();
+      expect(screen.getByTestId('error-message')).toHaveTextContent('Error loading posts: Failed to fetch');
     });
   });
 
-  it('renders no posts message', async () => {
+  it('renders "No posts available" if there are no posts', async () => {
     render(
-      <MockedProvider mocks={emptyMock} addTypename={false}>
+      <MockedProvider mocks={mockNoPosts} addTypename={false}>
         <MainPagePost />
       </MockedProvider>
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('no-posts-message')).toBeInTheDocument();
+      expect(screen.getByTestId('no-posts-message')).toHaveTextContent('No posts available.');
     });
   });
 
-  it('handles null post in map', async () => {
-    const mockDataWithNull = {
-      getAllPosts: [
-        ...mockData.getAllPosts,
-        null as any, // Type assertion to bypass TypeScript checks
-      ],
-    };
+  it('renders posts with images correctly', async () => {
+    render(
+      <MockedProvider mocks={mockPosts} addTypename={false}>
+        <MainPagePost />
+      </MockedProvider>
+    );
 
-    const mocks = [
-      {
-        request: {
-          query: GetAllPostsDocument, // Use the actual query document
-        },
-        result: {
-          data: mockDataWithNull,
+    await waitFor(() => {
+      expect(screen.getByTestId('post-item')).toBeInTheDocument();
+      expect(screen.getByTestId('post-username')).toHaveTextContent('john_doe');
+      expect(screen.getByTestId('post-description')).toHaveTextContent('Hello world!');
+    });
+
+    // Check if the post image exists
+    const postImage = screen.getByTestId('post-image');
+    expect(postImage).toHaveAttribute('src', expect.stringMatching(/\/_next\/image\?url=%2Fimages%2Fpost1\.jpg&w=\d+&q=\d+/));
+  });
+  it('renders default image when post has no images', async () => {
+    render(
+      <MockedProvider mocks={mockPostsNoImages} addTypename={false}>
+        <MainPagePost />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('post-item')).toBeInTheDocument();
+      expect(screen.getByTestId('post-username')).toHaveTextContent('no_image_user');
+      expect(screen.getByTestId('post-description')).toHaveTextContent('This post has no image');
+    });
+
+    // Check if the default image is used
+    const defaultImage = screen.getByTestId('post-image');
+    expect(defaultImage).toHaveAttribute('src', expect.stringContaining('%2Fimages%2FprofilePic.png'));
+  });
+  it('renders like count and comment count', async () => {
+    render(
+      <MockedProvider mocks={mockPosts} addTypename={false}>
+        <MainPagePost />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('like-count')).toHaveTextContent('10 likes');
+      expect(screen.getByTestId('view-comments')).toHaveTextContent('View 5 comments');
+    });
+  });
+
+  it('renders interactive icons (like, comment, bookmark)', async () => {
+    render(
+      <MockedProvider mocks={mockPosts} addTypename={false}>
+        <MainPagePost />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('like-icon')).toBeInTheDocument();
+      expect(screen.getByTestId('comment-icon')).toBeInTheDocument();
+      expect(screen.getByTestId('bookmark-icon')).toBeInTheDocument();
+    });
+  });
+});
+
+it('does not render anything if post is null', async () => {
+  const mockPostsWithNull: MockRequest[] = [
+    {
+      request: {
+        query: GetAllPostsDocument,
+      },
+      result: {
+        data: {
+          getAllPosts: [null], // Simulate a null post
         },
       },
-    ];
+    },
+  ];
 
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <MainPagePost />
-      </MockedProvider>
-    );
+  render(
+    <MockedProvider mocks={mockPostsWithNull} addTypename={false}>
+      <MainPagePost />
+    </MockedProvider>
+  );
 
-    await waitFor(() => {
-      const postItems = screen.getAllByTestId('post-item');
-      expect(postItems).toHaveLength(2); // Original posts, null post skipped
-    });
+  await waitFor(() => {
+    // Ensure the post container exists
+    expect(screen.getByTestId('posts-container')).toBeInTheDocument();
+    // Check that no post items are rendered
+    expect(screen.queryByTestId('post-item')).not.toBeInTheDocument();
   });
+});
 
-  it('renders default image for posts with no images', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <MainPagePost />
-      </MockedProvider>
-    );
+it('renders no comments message when there are no comments', async () => {
+  const mockPostWithNoComments: MockRequest[] = [
+    {
+      request: {
+        query: GetAllPostsDocument,
+      },
+      result: {
+        data: {
+          getAllPosts: [
+            {
+              _id: '3',
+              user: {
+                userName: 'user_no_comments',
+              },
+              caption: 'This post has no comments',
+              likeCount: 2,
+              commentCount: 0, // No comments
+              postImage: ['/images/post2.jpg'],
+              carouselMediaCount: 1,
+            },
+          ],
+        },
+      },
+    },
+  ];
 
-    await waitFor(() => {
-      const defaultImage = screen.getAllByTestId('post-image').find((image) => image.getAttribute('src')?.includes('/images/profilePic.png'));
-      expect(defaultImage).toBeInTheDocument();
-    });
+  render(
+    <MockedProvider mocks={mockPostWithNoComments} addTypename={false}>
+      <MainPagePost />
+    </MockedProvider>
+  );
+
+  await waitFor(() => {
+    // Ensure the post is rendered
+    expect(screen.getByTestId('post-item')).toBeInTheDocument();
+    // Ensure the "no comments" message is rendered
+    expect(screen.getByTestId('no-comments')).toBeInTheDocument();
   });
 });

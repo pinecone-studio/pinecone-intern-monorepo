@@ -57,5 +57,3 @@ export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
     </div>
   );
 };
-
-export default CreatePost;
