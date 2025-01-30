@@ -19,6 +19,7 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     profileImage: { type: String },
     phoneNumber: { type: String },
+    otp: { type: String },
   },
   { timestamps: true }
 );

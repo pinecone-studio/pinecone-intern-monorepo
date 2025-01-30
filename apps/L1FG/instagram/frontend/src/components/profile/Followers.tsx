@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 import { useGetFollowersQuery } from '@/generated';
+import { Separator } from '@/components/ui/separator';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const { data } = useGetFollowersQuery({
@@ -30,8 +31,8 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
             </div>
           </div>
         </DialogHeader>
-        <div className="w-full border"></div>
-        <div className="flex justify-center">
+        <Separator className="w-full" />
+        <div className="flex justify-center px-3">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
             <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8  rounded-xl" />
@@ -47,9 +48,10 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                   <p className="text-xs font-normal text-[#71717A]">{item?.followerId?.userName}</p>
                 </div>
               </div>
-              <button className="py-2 px-4 bg-slate-200 rounded-lg text-sm font-medium ">Remove</button>
+              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">Remove</button>
             </div>
           ))}
+          <p className="font-semibold text-lg justify-start mt-6">Suggested for you</p>
         </div>
 
         <DialogFooter></DialogFooter>

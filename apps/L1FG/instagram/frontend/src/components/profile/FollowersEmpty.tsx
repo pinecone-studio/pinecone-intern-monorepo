@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 import { Search, UserPlus, X } from 'lucide-react';
 
@@ -25,8 +26,8 @@ const FollowersEmpty = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
         </DialogHeader>
-        <div className="w-full border"></div>
-        <div className="flex justify-center">
+        <Separator className="w-full" />
+        <div className="flex justify-center px-3">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
             <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8  rounded-xl " />
