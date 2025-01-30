@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { OtpPattern } from './OtpPattern';
-import { Back } from '../svg/Back';
-import { Refresh } from '../svg/Refresh';
+import { RefreshCw } from 'lucide-react';
+import { MoveLeft } from 'lucide-react';
 import Link from 'next/link';
 
 const AdminAuth = () => {
@@ -20,9 +20,9 @@ const AdminAuth = () => {
               <OtpPattern />
               <div className="flex justify-between">
                 <Link href={'/admin-login/admin'}>
-                  <Back />
+                  <MoveLeft />
                 </Link>
-                <Refresh />
+                <RefreshCw />
               </div>
             </div>
           </div>
