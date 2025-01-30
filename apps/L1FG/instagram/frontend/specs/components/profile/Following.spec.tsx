@@ -7,7 +7,6 @@ jest.mock('@/generated', () => ({
   useGetFollowingQuery: jest.fn(),
 }));
 
-// Mock child components
 jest.mock('next/image', () => ({
   __esModule: true,
 }));
@@ -39,8 +38,6 @@ describe('Following Component', () => {
     });
 
     render(<Following userId={mockUserId}>{mockChildren}</Following>);
-
-    // Trigger the dialog
   });
 
   test('renders correctly with no following users', () => {
@@ -50,7 +47,6 @@ describe('Following Component', () => {
 
     render(<Following userId={mockUserId}>{mockChildren}</Following>);
 
-    // Trigger the dialog
     fireEvent.click(screen.getByTestId('following-trigger'));
   });
 
@@ -59,8 +55,6 @@ describe('Following Component', () => {
       data: undefined,
       loading: true,
     });
-
-    // Trigger the dialog
   });
 
   test('handles error state', () => {
@@ -68,10 +62,6 @@ describe('Following Component', () => {
       data: undefined,
       error: new Error('Error fetching following list'),
     });
-
-    // Trigger the dialog
-
-    // Add additional checks for error UI if applicable
   });
 
   test('closes the dialog on clicking the close button', () => {

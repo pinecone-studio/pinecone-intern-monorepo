@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/admin/main';
 import { Sidebar } from './main/Sidebar';
 import { GuestDataTable, SelectStatus } from '@/components/admin/ui';

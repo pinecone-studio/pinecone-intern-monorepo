@@ -1,3 +1,3 @@
 export * from './Hero';
-export * from './SearchBar';
+export * from '../../../features/user/main/SearchBar';
 export * from './Loading';

@@ -1,7 +1,5 @@
 'use client';
-import Link from 'next/link';
 import { ReactNode } from 'react';
-import { useAuth } from '../providers/AuthProvider';
 
 type Props = {
   icon: ReactNode;
@@ -10,6 +8,7 @@ type Props = {
   searchOpen?: boolean;
   onClick?: () => void;
 };
+
 
 export const TextSideBar = ({ icon, text, isOpen, searchOpen, onClick }: Props) => {
   const { user } = useAuth();
@@ -26,5 +25,6 @@ export const TextSideBar = ({ icon, text, isOpen, searchOpen, onClick }: Props) 
         {!isOpen && !searchOpen && <p>{text}</p>}
       </button>
     </Link>
+
   );
 };

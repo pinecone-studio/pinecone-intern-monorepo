@@ -36,7 +36,7 @@ describe('PaymentSuccessComp', () => {
 
   it('renders the order details link', () => {
     const linkWrapper = screen.getByTestId('link-wrapper');
-    expect(linkWrapper).toHaveAttribute('data-href', 'order-details');
+    expect(linkWrapper).toHaveAttribute('data-href', 'order-history');
 
     const orderDetailsText = screen.getByText('Захиалгын дэлгэрэнгүй харах');
     expect(orderDetailsText).toBeInTheDocument();
