@@ -40,7 +40,9 @@ const OTP = () => {
             {otp.map((value, index) => (
               <input
                 key={index}
-                ref={(el) => (inputsRef.current[index] = el)}
+                ref={(el) => {
+                  inputsRef.current[index] = el;
+                }}
                 type="text"
                 inputMode="numeric"
                 className={`w-12 h-12 ${
