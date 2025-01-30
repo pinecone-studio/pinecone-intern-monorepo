@@ -12,7 +12,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
       <DialogContent className="xl:max-w-[1200px]">
         <div className=" flex  ">
           <div className=" w-[60%] ">
-            <Image src={post.postImage[0]} alt="Post" className="w-full h-full rounded-lg object-cover" />
+            <Image src={post.postImage[0]} alt="Post" width={1200} height={900} className="w-full h-full rounded-lg object-cover" />
           </div>
           <div className="w-[40%]  flex flex-col justify-between">
             <div>
