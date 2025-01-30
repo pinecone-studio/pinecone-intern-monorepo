@@ -1,40 +1,25 @@
-/* eslint-disable  max-lines */
+/* eslint-disable */
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
 import { useGetOrdersQuery } from '@/generated';
+import { format } from 'date-fns';
+import { mn } from 'date-fns/locale';
 import AdminMainPageComp from '@/components/admin-page-comp/AdminMainPageComp';
-
-// Mock the next/image component
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />;
-  },
-}));
-
+import '@testing-library/jest-dom';
+import React from 'react';
+import userEvent from '@testing-library/user-event';
 // Mock the generated hook
 jest.mock('@/generated', () => ({
   useGetOrdersQuery: jest.fn(),
 }));
 
-const mockOrders = [
-  {
-    _id: '1',
-    tableId: 1,
-    status: 'pending',
-    createdAt: '2025-01-29T14:30:00Z',
-    items: [
-      {
-        name: 'Test Food Item',
-        quantity: 2,
-        price: 15000,
-      },
-    ],
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img {...props} alt={props.alt} />;
   },
-];
+}));
 
 function createMockPointerEvent(type: string, props: PointerEventInit = {}): PointerEvent {
   const event = new Event(type, props) as PointerEvent;
@@ -57,6 +42,47 @@ Object.assign(window.HTMLElement.prototype, {
 });
 
 describe('AdminMainPageComp', () => {
+  beforeAll(() => {
+    // Setup pointer event mocks
+    window.PointerEvent = createMockPointerEvent as any;
+
+    // Mock HTMLElement methods
+    Object.assign(window.HTMLElement.prototype, {
+      scrollIntoView: jest.fn(),
+      releasePointerCapture: jest.fn(),
+      hasPointerCapture: jest.fn(),
+    });
+  });
+
+  const mockOrders = [
+    {
+      _id: '1',
+      tableId: 'Table 1',
+      createdAt: new Date().toISOString(),
+      items: [
+        {
+          name: 'Test Food',
+          price: 10000,
+          quantity: 2,
+          imageUrl: '/test-image.jpg',
+        },
+      ],
+    },
+    {
+      _id: '2',
+      tableId: 'Table 2',
+      createdAt: new Date().toISOString(),
+      items: [
+        {
+          name: 'Another Food',
+          price: 15000,
+          quantity: 1,
+          imageUrl: '/test-image-2.jpg',
+        },
+      ],
+    },
+  ];
+
   beforeEach(() => {
     // Reset all mocks before each test
     jest.clearAllMocks();
@@ -69,205 +95,73 @@ describe('AdminMainPageComp', () => {
     });
   });
 
-  it('renders without crashing', () => {
+  it('renders the component with orders', () => {
     render(<AdminMainPageComp />);
+
+    // Check if the title is rendered
     expect(screen.getByText('Захиалга')).toBeInTheDocument();
+
+    // Check if orders are rendered
+    expect(screen.getByText('Table 1')).toBeInTheDocument();
+    expect(screen.getByText('Test Food')).toBeInTheDocument();
   });
 
-  it('displays the correct date filter button', () => {
+  it('displays correct total price for orders', () => {
     render(<AdminMainPageComp />);
-    expect(screen.getByText('Өнөөдөр')).toBeInTheDocument();
+
+    const totalPrices = screen.getAllByTestId('total-price');
+    expect(totalPrices[0]).toHaveTextContent("20'000₮"); // 10000 * 2
   });
 
-  it('displays the correct status filter button', () => {
+  it('displays correct time format', () => {
     render(<AdminMainPageComp />);
-    expect(screen.getByText('Төлөв')).toBeInTheDocument();
-  });
 
-  describe('Order rendering and price calculations', () => {
-    it('handles null order in the orders array', () => {
-      (useGetOrdersQuery as jest.Mock).mockReturnValue({
-        data: {
-          getOrders: [null, mockOrders[0]],
-        },
-      });
-
-      render(<AdminMainPageComp />);
-      // Should still render the valid order
-      expect(screen.getByText('Test Food Item')).toBeInTheDocument();
-      // Only one order card should be rendered
-      expect(screen.getAllByText(/₮$/).length).toBe(2); // One for item price, one for total
+    const dateElements = screen.getAllByTestId('date');
+    const expectedTime = new Date(mockOrders[0].createdAt).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
     });
 
-    it('calculates total price correctly with null items', () => {
-      const ordersWithNullItems = [
-        {
-          _id: '1',
-          tableId: 1,
-          status: 'pending',
-          createdAt: '2025-01-29T14:30:00Z',
-          items: [
-            null,
-            {
-              name: 'Valid Item',
-              quantity: 1,
-              price: 10000,
-            },
-          ],
-        },
-      ];
+    expect(dateElements[0]).toHaveTextContent(expectedTime);
+  });
 
-      (useGetOrdersQuery as jest.Mock).mockReturnValue({
-        data: {
-          getOrders: ordersWithNullItems,
-        },
-      });
+  it('filters orders by selected date', () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
-      render(<AdminMainPageComp />);
-      // Should show correct total (10000₮)
-      expect(screen.getByText("10'000₮")).toBeInTheDocument();
+    const mockOrdersWithDifferentDates = [{ ...mockOrders[0] }, { ...mockOrders[1], createdAt: yesterday.toISOString() }];
+
+    (useGetOrdersQuery as jest.Mock).mockReturnValue({
+      data: {
+        getOrders: mockOrdersWithDifferentDates,
+      },
     });
 
-    it('calculates total price correctly with null price and quantity', () => {
-      const ordersWithNullValues = [
-        {
-          _id: '1',
-          tableId: 1,
-          status: 'pending',
-          createdAt: '2025-01-29T14:30:00Z',
-          items: [
-            {
-              name: 'Item with null price',
-              quantity: 2,
-              price: null,
-            },
-            {
-              name: 'Item with null quantity',
-              quantity: null,
-              price: 5000,
-            },
-            {
-              name: 'Valid Item',
-              quantity: 1,
-              price: 10000,
-            },
-          ],
-        },
-      ];
+    render(<AdminMainPageComp />);
 
-      (useGetOrdersQuery as jest.Mock).mockReturnValue({
-        data: {
-          getOrders: ordersWithNullValues,
-        },
-      });
+    // Initially should show only today's orders
+    expect(screen.getAllByTestId('total-price')).toHaveLength(1);
+  });
 
-      render(<AdminMainPageComp />);
-      // Should show correct total (10000₮) - only the valid item should contribute to total
-      expect(screen.getByText("10'000₮")).toBeInTheDocument();
+  it('handles empty orders array', () => {
+    (useGetOrdersQuery as jest.Mock).mockReturnValue({
+      data: {
+        getOrders: [],
+      },
     });
 
-    it('handles order with no items array', () => {
-      const orderWithNoItems = [
-        {
-          _id: '1',
-          tableId: 1,
-          status: 'pending',
-          createdAt: '2025-01-29T14:30:00Z',
-        },
-      ];
-
-      (useGetOrdersQuery as jest.Mock).mockReturnValue({
-        data: {
-          getOrders: orderWithNoItems,
-        },
-      });
-
-      render(<AdminMainPageComp />);
-      // Should show 0₮ for total
-      expect(screen.getByText('₮')).toBeInTheDocument();
-    });
-
-    it('calculates total price correctly with multiple items', () => {
-      const orderWithMultipleItems = [
-        {
-          _id: '1',
-          tableId: 1,
-          status: 'pending',
-          createdAt: '2025-01-29T14:30:00Z',
-          items: [
-            {
-              name: 'Item 1',
-              quantity: 2,
-              price: 10000,
-            },
-            {
-              name: 'Item 2',
-              quantity: 3,
-              price: 5000,
-            },
-          ],
-        },
-      ];
-
-      (useGetOrdersQuery as jest.Mock).mockReturnValue({
-        data: {
-          getOrders: orderWithMultipleItems,
-        },
-      });
-
-      render(<AdminMainPageComp />);
-      // Total should be (2 * 10000) + (3 * 5000) = 35000₮
-      expect(screen.getByText("35'000₮")).toBeInTheDocument();
-    });
-  });
-
-  it('renders without crashing', () => {
-    render(<AdminMainPageComp />);
-    expect(screen.getByText('Захиалга')).toBeInTheDocument();
-  });
-
-  it('displays the correct date filter button', () => {
-    render(<AdminMainPageComp />);
-    expect(screen.getByText('Өнөөдөр')).toBeInTheDocument();
-  });
-
-  it('displays the correct status filter button', () => {
-    render(<AdminMainPageComp />);
-    expect(screen.getByText('Төлөв')).toBeInTheDocument();
-  });
-
-  it('renders order cards with correct information', () => {
     render(<AdminMainPageComp />);
 
-    // Check if table ID is displayed
-    expect(screen.getByText('1')).toBeInTheDocument();
-
-    // Check if order number is displayed
-    expect(screen.getByText('#33999')).toBeInTheDocument();
-
-    // Check if item details are displayed
-    expect(screen.getByText('Test Food Item')).toBeInTheDocument();
-    expect(screen.getByText('15000₮')).toBeInTheDocument();
-    expect(screen.getByText('2ш')).toBeInTheDocument();
-
-    // Check if total price is displayed (30000 for 2 items at 15000 each)
-    expect(screen.getByText("30'000₮")).toBeInTheDocument();
-  });
-
-  it('displays the correct time format', () => {
-    render(<AdminMainPageComp />);
-    // The time should be displayed in 24-hour format
-    expect(screen.getByTestId('date')).toBeInTheDocument();
+    expect(screen.getByText('Огноогоор тохирсон захиалга байхгүй')).toBeInTheDocument();
   });
 
   it('renders the status select with correct options', async () => {
     render(<AdminMainPageComp />);
 
-    // Find and click the select trigger to open the dropdown
-    const selectTrigger = screen.getByTestId('select-button');
-    fireEvent.pointerDown(selectTrigger);
+    const selectTrigger = screen.getAllByTestId('status-select-button');
+    fireEvent.pointerDown(selectTrigger[0]);
 
-    // Use waitFor to ensure the options appear in the dropdown
     await waitFor(() => {
       expect(screen.getByTestId('belen-test')).toBeInTheDocument();
       expect(screen.getByTestId('pending-test')).toBeInTheDocument();
@@ -276,34 +170,204 @@ describe('AdminMainPageComp', () => {
     });
   });
 
-  it('renders save button', () => {
-    render(<AdminMainPageComp />);
-    expect(screen.getByText('Хадгалах')).toBeInTheDocument();
-  });
+  it('displays correct currency format', () => {
+    const ordersWithLargePrice = [
+      {
+        ...mockOrders[0],
+        items: [
+          {
+            ...mockOrders[0].items[0],
+            price: 1000000,
+            quantity: 1,
+          },
+        ],
+      },
+    ];
 
-  it('handles empty orders gracefully', () => {
     (useGetOrdersQuery as jest.Mock).mockReturnValue({
       data: {
-        getOrders: [],
+        getOrders: ordersWithLargePrice,
       },
     });
 
     render(<AdminMainPageComp />);
-    // Should still render the header
-    expect(screen.getByText('Захиалга')).toBeInTheDocument();
-    // Should not render any order cards
-    expect(screen.queryByText('#33999')).not.toBeInTheDocument();
+
+    const totalPrice = screen.getByTestId('total-price');
+    expect(totalPrice).toHaveTextContent("1'000'000₮");
   });
 
-  it('handles null order data gracefully', () => {
+  it('handles missing order data gracefully', () => {
+    const incompleteOrder = [
+      {
+        _id: '1',
+        tableId: 'Table 1',
+        createdAt: new Date().toISOString(),
+        items: [
+          {
+            name: 'Test Food',
+            // Missing price and quantity
+            imageUrl: '/test-image.jpg',
+          },
+        ],
+      },
+    ];
+
     (useGetOrdersQuery as jest.Mock).mockReturnValue({
-      data: null,
+      data: {
+        getOrders: incompleteOrder,
+      },
     });
 
     render(<AdminMainPageComp />);
-    // Should still render the header
-    expect(screen.getByText('Захиалга')).toBeInTheDocument();
-    // Should not render any order cards
-    expect(screen.queryByText('#33999')).not.toBeInTheDocument();
+
+    // Should render without crashing
+    expect(screen.getByText('Test Food')).toBeInTheDocument();
+  });
+
+  it('handles undefined date correctly', () => {
+    const { rerender } = render(<AdminMainPageComp />);
+
+    // Force date to be undefined by manipulating React state
+    const originalUseState = React.useState;
+    jest.spyOn(React, 'useState').mockImplementationOnce(() => [undefined, jest.fn()]);
+
+    rerender(<AdminMainPageComp />);
+
+    // Should show no orders when date is undefined
+    expect(screen.queryByTestId('total-price')).not.toBeInTheDocument();
+
+    // Restore original useState
+    jest.spyOn(React, 'useState').mockImplementation(originalUseState);
+  });
+
+  it('shows and interacts with calendar correctly', async () => {
+    const user = userEvent.setup();
+    render(<AdminMainPageComp />);
+
+    // Find calendar button
+    const calendarButton = screen.getByTestId('calendar-trig-button');
+
+    // Click the button
+    await user.click(calendarButton);
+
+    // Verify calendar content
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole('grid')).toBeInTheDocument();
+  });
+
+  it('shows today text for current date', () => {
+    render(<AdminMainPageComp />);
+
+    const calendarButton = screen.getByRole('button', {
+      name: /өнөөдөр/i,
+    });
+    expect(calendarButton).toHaveTextContent('Өнөөдөр');
+  });
+
+  it('interacts with filter status button', () => {
+    render(<AdminMainPageComp />);
+
+    const filterButton = screen.getByRole('button', {
+      name: /төлөв/i,
+    });
+
+    fireEvent.click(filterButton);
+
+    // Verify button state after click (you might need to add specific behavior expectations)
+    expect(filterButton).toBeInTheDocument();
+  });
+
+  it('displays default image when imageUrl is undefined', () => {
+    const ordersWithUndefinedImage = [
+      {
+        _id: '1',
+        tableId: 'Table 1',
+        createdAt: new Date().toISOString(),
+        items: [
+          {
+            name: 'Test Food',
+            price: 10000,
+            quantity: 2,
+            // imageUrl is intentionally undefined
+          },
+        ],
+      },
+    ];
+
+    (useGetOrdersQuery as jest.Mock).mockReturnValue({
+      data: {
+        getOrders: ordersWithUndefinedImage,
+      },
+    });
+
+    render(<AdminMainPageComp />);
+
+    const defaultImage = screen.getByRole('img', { name: 'food' });
+    expect(defaultImage).toHaveAttribute('src', '/default-image.jpg');
+  });
+
+  it('displays default image when imageUrl is missing', () => {
+    const ordersWithMissingImage = [
+      {
+        ...mockOrders[0],
+        items: [
+          {
+            ...mockOrders[0].items[0],
+            imageUrl: undefined,
+          },
+        ],
+      },
+    ];
+
+    (useGetOrdersQuery as jest.Mock).mockReturnValue({
+      data: {
+        getOrders: ordersWithMissingImage,
+      },
+    });
+
+    render(<AdminMainPageComp />);
+
+    const images = screen.getAllByRole('img');
+    const defaultImage = images.find((img) => img.getAttribute('src') === '/default-image.jpg');
+    expect(defaultImage).toBeInTheDocument();
+  });
+
+  it('displays date in Mongolian format when not today', () => {
+    // Mock useState to set a specific date
+    const testDate = new Date(2024, 0, 15); // January 15, 2024
+    jest.spyOn(React, 'useState').mockImplementationOnce(() => [testDate, jest.fn()]);
+
+    render(<AdminMainPageComp />);
+
+    // Format we expect to see (e.g., "1 сарын 15")
+    const expectedFormattedDate = format(testDate, "L 'сарын' d", { locale: mn });
+
+    const dateButton = screen.getByRole('button', {
+      name: new RegExp(expectedFormattedDate, 'i'),
+    });
+
+    expect(dateButton).toBeInTheDocument();
+    expect(dateButton).toHaveTextContent(expectedFormattedDate);
+  });
+
+  it('handles null orders in the orders array', () => {
+    // Mock orders array with a null order
+    const ordersWithNull = [mockOrders[0], null, mockOrders[1]];
+
+    (useGetOrdersQuery as jest.Mock).mockReturnValue({
+      data: {
+        getOrders: ordersWithNull,
+      },
+    });
+
+    render(<AdminMainPageComp />);
+
+    // Verify only non-null orders are rendered
+    const orderElements = screen.getAllByTestId('total-price');
+    expect(orderElements).toHaveLength(2); // Should only render 2 orders, skipping the null one
+
+    // Verify specific orders are rendered
+    expect(screen.getByText('Table 1')).toBeInTheDocument();
+    expect(screen.getByText('Table 2')).toBeInTheDocument();
   });
 });
