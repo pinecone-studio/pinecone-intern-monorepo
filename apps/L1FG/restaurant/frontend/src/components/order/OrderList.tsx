@@ -58,7 +58,7 @@ const OrderList: React.FC<OrderListProps> = ({ selectedItems, updateItemQuantity
         imageUrl: item.imageUrl,
       })),
     };
-
+    
     localStorage.setItem('order', JSON.stringify(orderInput));
     router.push('/qpay');
   };
