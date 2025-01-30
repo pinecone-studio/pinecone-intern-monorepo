@@ -1,5 +1,6 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 import { Search, UserPlus, X } from 'lucide-react';
 
@@ -25,24 +26,24 @@ const EmptyFollowing = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
         </DialogHeader>
-        <div className="w-full border"></div>
+        <Separator className="w-full" />
         <div className="flex justify-center">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
             <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8  rounded-xl " />
           </div>
         </div>
-        <div className="flex flex-col gap-10 overflow-y-scroll items-center justify-center ">
-          <div className="rounded-full border-2 border-black flex justify-center items-center h-28 w-28 mt-7">
+        <div className="flex flex-col gap-5 overflow-y-scroll items-center justify-center ">
+          <div className="rounded-full border-2 border-black flex justify-center items-center h-24 w-24 mt-5">
             <UserPlus className="w-14 h-14" />
           </div>
-          <div className="text-center flex flex-col gap-4">
-            <p className="text-2xl font-semibold">Followers</p>
+          <div className="text-center flex flex-col gap-2">
+            <p className="text-2xl font-semibold">Following</p>
             <p>You ll see all of the people who follow you here.</p>
           </div>
         </div>
 
-        <DialogFooter></DialogFooter>
+        <p className="font-semibold text-lg justify-start mt-6">Suggested for you</p>
       </DialogContent>
     </Dialog>
   );

@@ -2,7 +2,7 @@ import { HomeHotelList } from '@/components/user/home-page';
 import { Hero } from '@/components/user/main/Hero';
 import { Loading } from '@/components/user/main/Loading';
 import { NavigationBlue } from '@/components/user/main/NavigationBlue';
-import { SearchBar } from '@/components/user/main/SearchBar';
+import { SearchBar } from '@/features/user/main/SearchBar';
 import { Footer } from '@/components/user/search-result/Footer';
 import { useGetHotelsQuery } from '@/generated';
 

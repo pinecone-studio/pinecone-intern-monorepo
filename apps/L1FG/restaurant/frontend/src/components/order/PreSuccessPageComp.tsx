@@ -47,6 +47,7 @@ const PreSuccessPageComp = () => {
         name: item.name, // Ensure correct mapping
         quantity: item.quantity,
         price: item.price,
+        imageUrl: item.imageUrl,
       })),
     };
 

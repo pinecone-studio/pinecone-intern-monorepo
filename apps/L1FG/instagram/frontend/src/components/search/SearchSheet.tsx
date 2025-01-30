@@ -17,7 +17,6 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
     variables: { userName },
     skip: !userName,
   });
-
   const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
 
   return (
