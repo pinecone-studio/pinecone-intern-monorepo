@@ -83,12 +83,17 @@ export const typeDefs = gql`
     location: LocationInput
     locationName: String
   }
+  input editImagesInput {
+    id: ID!
+    images: [String]
+  }
 
   type Mutation {
     editGeneralInfo(input: editGeneralInfoInput!): Hotel
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
     editAmenities(input: editAmenitiesInput!): Hotel
     editLocation(input: editLocationInput!): Hotel
+    editImages(input: editImagesInput!): Hotel
   }
   type Query {
     getHotels: [Hotel!]!
