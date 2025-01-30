@@ -1,8 +1,8 @@
-/* eslint-disable max-lines */
+/* eslint-disable */
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useGetOrdersQuery } from '@/generated';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { mn } from 'date-fns/locale';
 import AdminMainPageComp from '@/components/admin-page-comp/AdminMainPageComp';
 import '@testing-library/jest-dom';
