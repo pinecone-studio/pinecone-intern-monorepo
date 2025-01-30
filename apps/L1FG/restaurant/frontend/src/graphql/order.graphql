@@ -5,6 +5,7 @@ mutation MakeOrder($input: InputType!) {
       name
       quantity
       price
+      imageUrl
     }
     status
     createdAt
@@ -19,6 +20,7 @@ query GetOrders {
       price
       quantity
       name
+      imageUrl
     }
     status
     createdAt
