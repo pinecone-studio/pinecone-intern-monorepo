@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
-import { BadUserInputError, CreationError, UnauthenticatedError, UserFoundError, UserNotFoundError } from './error';
-const errors = [UserFoundError, UserNotFoundError, CreationError, UnauthenticatedError, BadUserInputError];
+import { BadUserInputError, CreationError, FoundError, UnauthenticatedError, UserFoundError, UserNotFoundError } from './error';
+const errors = [UserFoundError, UserNotFoundError, CreationError, UnauthenticatedError, BadUserInputError, FoundError];
 export const catchError = (error: unknown): GraphQLError => {
   for (const Error of errors) {
     if (error instanceof Error) {

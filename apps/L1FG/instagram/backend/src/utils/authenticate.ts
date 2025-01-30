@@ -7,6 +7,6 @@ export const authenticate = (userId: string | null) => {
       throw new UnauthenticatedError('Та нэвтэрнэ үү');
     }
   } catch (error) {
-    catchError(error);
+    throw catchError(error);
   }
 };

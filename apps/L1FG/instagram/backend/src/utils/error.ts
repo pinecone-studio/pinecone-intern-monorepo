@@ -30,3 +30,9 @@ export class BadUserInputError extends GraphQLError {
     this.name = 'BAD_USER_INPUT';
   }
 }
+export class FoundError extends GraphQLError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'FOUND_ERROR';
+  }
+}
