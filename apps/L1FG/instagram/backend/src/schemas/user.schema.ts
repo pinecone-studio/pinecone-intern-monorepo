@@ -17,6 +17,10 @@ export const UserTypeDefs = gql`
     gender: Gender
     isPrivate: Boolean
     email: String!
+    savedUsers: [String]
+    followerCount: Int!
+    followingCount: Int!
+    postCount: Int!
   }
   type UserWithoutPassword {
     _id: String!
@@ -64,7 +68,12 @@ export const UserTypeDefs = gql`
     postCount: Int!
     latestStoryTimestamp: Date
     seenStoryTime: Date
+    savedUsers: [String]
     friendshipStatus: FriendshipStatusType
+  }
+
+  type SearchedUsersType {
+    savedUsers: [String]!
   }
 
   type UserTogetherType {
@@ -106,12 +115,15 @@ export const UserTypeDefs = gql`
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
-    getUserByName(userName: String!): [UserTogetherUserType]!
+    getUserByName(userName: String!): [UserTogetherUserType]
+    getSearchedUser: [UserTogetherUserType]!
   }
+
   type Mutation {
     createUser(input: UserInput!): User!
     updateInfo(input: ProfileInfoInput!): ProfileInfoType
     login(input: SignInInput!): SignInType!
+    savedSearchUser(searchedUserId: String!): SearchedUsersType
   }
 `;
 

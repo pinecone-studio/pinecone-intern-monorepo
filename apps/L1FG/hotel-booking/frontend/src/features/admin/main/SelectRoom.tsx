@@ -36,7 +36,7 @@ export const SelectRoom = () => {
       <PopoverTrigger asChild>
         <button
           role="combobox"
-          aria-expanded={open}
+          aria-expanded={open ? 'true' : 'false'}
           className="px-3 py-2 flex items-center justify-between bg-white border border-[#E4E4E7] rounded-[6px] max-w-[156px] w-full text-[#09090B] font-Inter text-sm font-normal"
         >
           {value ? frameworks.find((framework) => framework.value === value)?.label : 'Rooms'}
