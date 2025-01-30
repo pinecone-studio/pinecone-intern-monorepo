@@ -54,10 +54,15 @@ export const typeDefs = gql`
     message: String!
     room: Room
   }
+  input editRoomServicesInput {
+    id: ID!
+    roomServices: [KeyValueInput]
+  }
 
   type Mutation {
     createRoom(input: CreateRoomInput!): CreateRoomResponse!
     editRoomGeneralInfo(input: editRoomGeneralInfoInput!): Room
+    editRoomServices(input: editRoomServicesInput!): Room
   }
 
   type Query {
