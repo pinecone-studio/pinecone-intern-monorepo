@@ -40,6 +40,13 @@ export const typeDefs = gql`
     roomServices: [KeyValueInput]
     tax: Float
   }
+  input editRoomGeneralInfoInput {
+    id: ID!
+    name: String
+    price: Float
+    roomInfo: [String]
+    type: String
+  }
 
   type CreateRoomResponse {
     code: Int!
@@ -50,6 +57,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createRoom(input: CreateRoomInput!): CreateRoomResponse!
+    editRoomGeneralInfo(input: editRoomGeneralInfoInput!): Room
   }
 
   type Query {
