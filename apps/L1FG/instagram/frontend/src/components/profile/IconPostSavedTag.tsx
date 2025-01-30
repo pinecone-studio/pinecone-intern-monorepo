@@ -7,9 +7,6 @@ import Post from './Post';
 import Save from './Save';
 import Tagged from './Tagged';
 import { Separator } from '@/components/ui/separator';
-import { useGetUserTogetherQuery } from '@/generated';
-
-import PostEmpty from './PostEmpty';
 
 const PageEnum = {
   POSTS: 'POSTS',
@@ -20,19 +17,23 @@ const PageEnum = {
 type PageType = typeof PageEnum[keyof typeof PageEnum];
 
 const NavItem = ({ label, icon, active, onClick }: { label: string; icon: JSX.Element; active: boolean; onClick: () => void }) => (
-  <div data-testid="nav-item" className={`flex justify-center items-center pt-6 gap-2 cursor-pointer ${active ? 'border-t-[1px] border-black' : ''}`} onClick={onClick}>
-    {icon}
-    <p className="text-xs font-medium text-gray-500">{label}</p>
+  <div
+    data-testid="nav-item"
+    className={`flex justify-center items-center pt-6 gap-2 cursor-pointer ${active ? ' text-black border-t-[1px] border-black' : 'text-xs font-medium text-gray-500'}`}
+    onClick={onClick}
+  >
+    <span className={active ? 'text-black' : 'text-gray-500'}>{icon}</span>
+    <p className={`text-xs font-bold ${active ? 'text-black' : 'text-gray-500'}`}>{label}</p>
   </div>
 );
 
 export const IconPostSavedTag = ({ userId }: { userId: string }) => {
   const [page, setPage] = useState<PageType>(PageEnum.POSTS);
-  const { data } = useGetUserTogetherQuery({
-    variables: { searchingUserId: userId },
-  });
+  // const { data } = useGetUserTogetherQuery({
+  //   variables: { searchingUserId: userId },
+  // });
 
-  const PostNoposts = data?.getUserTogether.user?.postCount ? <Post userId={userId} /> : <PostEmpty />;
+  // const PostNoposts = data?.getUserTogether.user?.postCount ? <Post userId={userId} /> : <PostEmpty />;
 
   return (
     <div data-testid="IconPostSavedTag">
@@ -43,7 +44,7 @@ export const IconPostSavedTag = ({ userId }: { userId: string }) => {
         <NavItem label="TAGGED" icon={<Tag className="h-4 w-4" />} active={page === PageEnum.TAGGED} onClick={() => setPage(PageEnum.TAGGED)} />
       </div>
 
-      {page === PageEnum.POSTS && PostNoposts}
+      {page === PageEnum.POSTS && <Post userId={userId as string} />}
       {page === PageEnum.SAVED && <Save />}
       {page === PageEnum.TAGGED && <Tagged />}
     </div>

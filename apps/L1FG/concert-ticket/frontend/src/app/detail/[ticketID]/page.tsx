@@ -2,7 +2,8 @@
 import HeroComponent from '@/components/detail/HeroComponent';
 import InfoContainer from '@/components/detail/InfoContainer';
 
-const Page = () => {
+const Page = ({ params }: { params: { ticketID: string } }) => {
+  const ticketID = params.ticketID;
   return (
     <div>
       <div className="Container mx-auto w-[1400px] ">
@@ -12,11 +13,11 @@ const Page = () => {
             backgroundImage: `url("/carousel.svg")`,
           }}
         >
-          <HeroComponent />
+          <HeroComponent ticketID={ticketID} />
         </div>
       </div>
       <div className="w-[1200px] h-[831px] mx-auto">
-        <InfoContainer />
+        <InfoContainer ticketID={ticketID} />
       </div>
       <div className="mx-auto w-[1200px] h-[930px] mt-[100px]">
         <div className="border-b-2 mb-[60px] border-white w-[1200px]"></div>
