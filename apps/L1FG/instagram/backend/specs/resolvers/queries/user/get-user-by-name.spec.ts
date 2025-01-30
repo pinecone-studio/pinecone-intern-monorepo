@@ -1,4 +1,4 @@
-import { getUserByName, getUsers } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { getUserByName } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
@@ -25,7 +25,7 @@ describe('Get users', () => {
       return;
     }
 
-    const users = await getUserByName({}, { userName: 'tuul' }, { userId: '3' });
+    const users = await getUserByName({}, { userName: 'tuul' }, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(users).toEqual([
       {
         _id: '1',
@@ -42,19 +42,9 @@ describe('Get users', () => {
     ]);
   });
   it('Should throw an unauthorization error', async () => {
-    if (!getUsers) {
-      return;
-    }
-    await expect(getUsers({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Unauthorized');
-  });
-  it('Should take users', async () => {
     if (!getUserByName) {
       return;
     }
-
-    const users = await getUserByName({}, { userName: 'tuul' }, { userId: '3' });
-    if (!users) {
-      throw new Error();
-    }
+    await expect(getUserByName({}, { userName: 'hk' }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтэрнэ үү');
   });
 });

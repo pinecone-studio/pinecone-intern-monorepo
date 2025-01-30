@@ -105,6 +105,7 @@ describe('OrderList Component', () => {
           name: item.foodName,
           quantity: item.quantity,
           price: item.price,
+          imageUrl: item.imageUrl,
         })),
       })
     );
@@ -147,8 +148,8 @@ describe('OrderList Component', () => {
     render(<OrderList selectedItems={mockSelectedItems} updateItemQuantity={jest.fn()} removeItem={jest.fn()} tableNumber={5} />);
 
     // Open the drawer to ensure content is rendered
-    fireEvent.click(screen.getByTestId('order-button'));
-
+    const orderButton = screen.getByTestId('order-button');
+    fireEvent.click(orderButton);
     // Find all prices and validate their text content
     const prices = screen.getAllByTestId('food-price');
     expect(prices[0]).toHaveTextContent('500'); // Below 1000
@@ -185,34 +186,6 @@ describe('OrderList Component', () => {
     fireEvent.click(deleteButtons[0]);
 
     expect(mockRemoveItem).toHaveBeenCalledWith('1');
-  });
-
-  test('handles order submission', () => {
-    render(<OrderList selectedItems={mockSelectedItems} updateItemQuantity={mockUpdateItemQuantity} removeItem={mockRemoveItem} tableNumber={5} />);
-
-    // Open drawer
-    const orderButton = screen.getByTestId('order-button');
-    fireEvent.click(orderButton);
-
-    // Submit order
-    const submitOrderButton = screen.getByTestId('submit-order-button');
-    fireEvent.click(submitOrderButton);
-
-    // Check localStorage and router navigation
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      'order',
-      JSON.stringify({
-        tableId: 5,
-        items: mockSelectedItems.map((item) => ({
-          name: item.foodName,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-      })
-    );
-
-    // Verify router push method is called
-    expect(mockRouter.push).toHaveBeenCalledWith('/qpay');
   });
 
   test('displays empty state when no items selected', () => {
