@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Амжилттай нэвтэрлээ', { autoClose: 2000 });
       router.push('/');
     },
+
     onError: (error) => {
       toast.error(`${error.message}`);
     },
