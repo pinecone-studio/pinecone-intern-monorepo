@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import gql from 'graphql-tag';
 
 export const userTypeDefs = gql`
@@ -6,6 +7,7 @@ export const userTypeDefs = gql`
   enum Response {
     Success
   }
+
   input RegisterInput {
     userName: String!
     email: String!
@@ -24,7 +26,6 @@ export const userTypeDefs = gql`
     phoneNumber: String
     createdAt: Date!
   }
-
   input UpdateUserNameType {
     _id: ID!
     newUserName: String!
@@ -67,15 +68,41 @@ export const userTypeDefs = gql`
     _id: ID!
     profileImage: String!
   }
+  input UpdateForgetPassword {
+    email: String!
+    otp: String!
+  }
+  type UpdatedForgetPassword {
+    user: UserType!
+    token: String!
+  }
+  input RequestChangePasswordInput {
+    email: String!
+  }
+
+  type RequestChangePasswordResponse {
+    email: String!
+  }
+
+  input ChangePasswordType {
+    _id: ID!
+    newPassword: String!
+    newRePassword: String!
+  }
 
   type Query {
     sampleQuery: String!
     getUser(_id: ID!): UserType!
+    getUsers: [UserType!]
   }
   type Mutation {
     sampleMutation: String!
     createUser(input: RegisterInput!): UserType!
     loginUser(input: LoginInput!): UserType!
+
+    updateForgetPassword(input: UpdateForgetPassword!): UpdatedForgetPassword!
+    requestChangePassword(input: RequestChangePasswordInput!): RequestChangePasswordResponse!
+    changePassword(input: ChangePasswordType!): UserType!
 
     updateNameUser(input: UpdateUserNameType!): UserType!
     updateEmailUser(input: UpdateUserEmailType!): UserType!
