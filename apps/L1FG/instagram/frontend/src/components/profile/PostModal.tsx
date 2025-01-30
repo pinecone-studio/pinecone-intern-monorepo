@@ -1,10 +1,10 @@
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { UserPostType } from '@/generated';
 import { Bookmark, Ellipsis, Heart, MessageCircle, Smile } from 'lucide-react';
 import Image from 'next/image';
 
-export function PostModal({ children, post }: { children: React.ReactNode; post: UserPostType }) {
+const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -60,4 +60,5 @@ export function PostModal({ children, post }: { children: React.ReactNode; post:
       </DialogContent>
     </Dialog>
   );
-}
+};
+export default PostModal;

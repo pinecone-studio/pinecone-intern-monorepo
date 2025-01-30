@@ -10,7 +10,6 @@ import FollowersEmpty from './FollowersEmpty';
 import EmptyFollowing from './EmptyFollowing';
 import { Settings } from 'lucide-react';
 import { IconPostSavedTag } from './IconPostSavedTag';
-import { PostModal } from './PostModal';
 
 export const Profile = () => {
   const { userId } = useParams();

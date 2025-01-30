@@ -3,7 +3,7 @@ import { useGetPostsQuery } from '@/generated';
 
 import Message from '../svg/Message';
 import Heart from '../svg/Heart';
-import { PostModal } from './PostModal';
+import PostModal from './PostModal';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
@@ -19,8 +19,8 @@ const Post = ({ userId }: { userId: string }) => {
               return null;
             }
             return (
-              <PostModal post={post}>
-                <div key={post._id} className="relative flex flex-col items-center justify-center border group cursor-pointer">
+              <PostModal post={post} key={post._id}>
+                <div className="relative flex flex-col items-center justify-center border group cursor-pointer">
                   <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90   transition-opacity duration-300" width={309} height={309} />
 
                   <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-[300px] bg-black/50">
