@@ -7,7 +7,7 @@ import { useGetUserByNameQuery } from '@/generated';
 
 type Props = {
   searchOpen: boolean;
-  setSearchOpen: (_isOpen: boolean) => void;
+  setSearchOpen: (_searchOpen: boolean) => void;
 };
 
 export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
@@ -17,7 +17,6 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
     variables: { userName },
     skip: !userName,
   });
-
   const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
 
   return (
@@ -41,7 +40,11 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
             className="px-4 w-full justify-center flex items-center bg-accent border-none"
             placeholder="Search"
           />
-          <p data-testid="click-x" className="w-[16px] h-[16px] rounded-full text-white text-xs bg-gray-300 items-center justify-center flex absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer">
+          <p
+            onClick={() => setUserName('')}
+            data-testid="click-x"
+            className="w-[16px] h-[16px] rounded-full text-white text-xs bg-gray-300 items-center justify-center flex absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+          >
             x
           </p>
         </div>
@@ -50,7 +53,7 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
           <p className="font-bold">Recent</p>
           <p className="text-[#2563EB] text-xs">Clear All</p>
         </div>
-        <Users data-testid="user-component" users={users} />
+        <Users data-testid="user-component" users={users} setSearchOpen={setSearchOpen} />
 
         <div className="overflow-y-auto h-[calc(100vh-60px)]"></div>
       </div>

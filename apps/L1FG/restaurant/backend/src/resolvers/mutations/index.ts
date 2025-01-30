@@ -4,3 +4,8 @@ export * from './create-food';
 export * from './create-category';
 export * from './update-food-category';
 export * from './create-user';
+export * from './login-user';
+export * from './updateuser/update-user-password';
+export * from './updateuser/update-user-email';
+export * from './updateuser/update-user-number';
+export * from './updateuser/update-user-image';

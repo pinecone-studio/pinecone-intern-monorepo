@@ -1,17 +1,26 @@
+'use client';
 import { Pencil } from 'lucide-react';
 import { AlignJustify } from 'lucide-react';
 import { Bell } from 'lucide-react';
 import { ShoppingCart } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
-import React from 'react';
 
 const UserProfile = () => {
-  const user = {
-    Image: null,
-    phone: 91919191,
-    gmail: 'ganjaa@gmail.com',
-    password: 11111,
-  };
+    interface User {
+    profileImage: string;
+    phoneNumber: string;
+    email: string;
+  }
+
+  const [user, setData] = useState<User | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const userData = storedUser ? JSON.parse(storedUser) : null;
+    setData(userData);
+  }, []);
 
   return (
     <div className="max-h-[500px] bg-white text-center flex flex-col items-center p-4">
@@ -41,12 +50,13 @@ const UserProfile = () => {
       <div className="flex flex-col items-center bg-gray-100 min-h-[679px] rounded-xl shadow-md p-6 w-full max-w-sm">
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-            <span className="text-4xl text-gray-600 material-icons">{user.Image}</span>
+            <Image src={user?.profileImage || '/default-avatar.png'} alt="Profile image" width={100} height={100} className="rounded-full" />
           </div>
           <button className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-sm" aria-label="Edit avatar">
             <span className="material-icons text-gray-500">
               <Pencil />
             </span>
+
           </button>
         </div>
 
@@ -85,6 +95,7 @@ const UserProfile = () => {
                 <span className="material-icons">
                   <Pencil />
                 </span>
+
               </button>
             </div>
           </div>

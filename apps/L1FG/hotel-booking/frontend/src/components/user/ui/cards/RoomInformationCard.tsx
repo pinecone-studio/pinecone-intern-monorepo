@@ -50,7 +50,6 @@ export const RoomInformationCard = () => {
               <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-sm border border-input bg-white flex items-center justify-center" />
             </Carousel>
             <div className="font-Inter text-lg font-semibold leading-7 flex flex-col gap-4">Economy Single Room</div>
-
             <div className="grid grid-cols-3 gap-3">
               <div className="flex items-center gap-2">
                 <WifiIcon />
@@ -97,9 +96,7 @@ export const RoomInformationCard = () => {
                 <p className="text-sm font-Inter font-normal leading-5">Room cleaning service</p>
               </div>
             </div>
-
             <RoomDetails />
-
             <div className="w-full border p-4 rounded-[8px] flex justify-between">
               <div>
                 <div className="text-xs font-Inter font-normal leading-4 text-muted-foreground">Total</div>

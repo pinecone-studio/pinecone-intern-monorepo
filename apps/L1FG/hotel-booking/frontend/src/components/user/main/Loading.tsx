@@ -1,4 +1,4 @@
-import { BlackLogoIcon } from '../svg';
+import { BlackLogoIcon } from '../ui/svg';
 
 export const Loading = () => {
   return (

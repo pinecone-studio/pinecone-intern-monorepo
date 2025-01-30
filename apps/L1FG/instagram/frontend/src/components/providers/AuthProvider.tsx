@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Амжилттай нэвтэрлээ', {
         autoClose: 2000,
       });
-      router.push('/home');
+      router.push('/');
     },
     onError: (error) => {
       toast.error(`${error.message}`, {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [createUserMutation] = useCreateUserMutation({
     onCompleted: () => {
       toast.success('Амжилттай бүртгэгдлээ', { autoClose: 2000 });
-      router.push('/log-in');
+      router.push('/login');
     },
     onError: (error) => {
       toast.error(`${error.message}`, { autoClose: 2000 });

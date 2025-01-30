@@ -3,8 +3,8 @@ import { Header } from '@/components/admin/main/Header';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { LeftArrow } from '@/components/admin/svg';
 import Link from 'next/link';
-import { GuestInfoLeft } from '@/components/admin/ui/GuestInfoLeft';
-import { GuestInfoRight } from '@/components/admin/ui/GuestInfoRight';
+import { GuestInfoRight } from '@/components/admin/guest/GuestInfoRight';
+import { GuestInfoLeft } from '@/components/admin/guest/GuestInfoLeft';
 
 export const GuestInfo = () => {
   return (

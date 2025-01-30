@@ -34,7 +34,7 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
         <div className="flex justify-center">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
-            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8" />
+            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8  rounded-xl" />
           </div>
         </div>
         <div className="flex flex-col gap-3 overflow-y-scroll">
@@ -47,9 +47,10 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                   <p className="text-xs font-normal text-[#71717A]">{item?.followerId?.userName}</p>
                 </div>
               </div>
-              <button className="py-2 px-4 bg-slate-200 rounded-lg text-sm font-medium ">Remove</button>
+              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">Remove</button>
             </div>
           ))}
+          <p className="font-semibold text-lg justify-start mt-6">Suggested for you</p>
         </div>
 
         <DialogFooter></DialogFooter>

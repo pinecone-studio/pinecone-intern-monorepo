@@ -1,40 +1,33 @@
-import Posts from '../svg/Posts';
-import Saved from '../svg/Saved';
-import { Separator } from '@/components/ui/separator';
+import Image from 'next/image';
 import { useGetPostsQuery } from '@/generated';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
     variables: { searchingUserId: userId },
   });
+  console.log('POST DATA:', data);
 
   return (
-    <div className="flex flex-col gap-5 w-[900px]" data-testid="profile-posts">
-      <Separator />
-
-      <div className="flex justify-center gap-6">
-        <div className="flex justify-center items-center gap-2">
-          <Posts />
-          <p className="text-xs font-medium text-[#09090B]">POSTS</p>
-        </div>
-        <div className="flex justify-center items-center gap-1">
-          <Saved />
-          <p className="text-xs font-medium text-[#09090B]">SAVED</p>
-        </div>
-      </div>
-
+    <div className="flex flex-col gap-5 w-[935px]" data-testid="profile-posts">
       <div>
         <div className="grid grid-cols-3 gap-1 overflow-y-scroll">
-          {data?.getPosts?.map((post, index) => (
-            <div key={index} className="flex flex-col items-center justify-center border  ">
-              <img
-                src={post?.postImage[0]}
-                alt="profile"
-                className=" object-cover opacity-100 hover:opacity-30 transition-opacity duration-300 w-[200px] h-[300px]"
-                sizes="(max-width: 309px) 100vw, 309px"
-              />
-            </div>
-          ))}
+          {data?.getPosts?.map((post) => {
+            if (!post?.postImage.length || !post?.postImage[0]) {
+              return null;
+            }
+            return (
+              <div key={post._id} className="flex flex-col items-center justify-center border  ">
+                <Image
+                  src={post?.postImage[0]}
+                  alt="profile"
+                  className=" object-fill opacity-100  w-[309px] h-[309px] hover:opacity-30 transition-opacity duration-300  "
+                  sizes="(max-width: 309px) 100vw, 309px"
+                  width={309}
+                  height={309}
+                />
+              </div>
+            );
+          })}
         </div>
         <div className="text-gray-500 text-center text-[12px] flex flex-col gap-4 mt-8">
           <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
