@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { useGetFollowingQuery } from '@/generated';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
@@ -30,7 +31,7 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
             </div>
           </div>
         </DialogHeader>
-        <div className="w-full border"></div>
+        <Separator className="w-full" />
         <div className="flex justify-center">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
