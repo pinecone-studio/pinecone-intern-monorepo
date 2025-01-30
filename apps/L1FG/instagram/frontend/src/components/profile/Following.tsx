@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useGetFollowingQuery } from '@/generated';
@@ -32,7 +32,7 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
           </div>
         </DialogHeader>
         <Separator className="w-full" />
-        <div className="flex justify-center">
+        <div className="flex justify-center px-3">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
             <Input id="search" placeholder="Search" className=" h-8 pl-8 rounded-xl" />
@@ -49,15 +49,12 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
                 </div>
               </div>
               <div>
-                {' '}
                 <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">following</button>
               </div>
             </div>
           ))}
           <p className="font-semibold text-lg justify-start mt-6">Suggested for you</p>
         </div>
-
-        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );
