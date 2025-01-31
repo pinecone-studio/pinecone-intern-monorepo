@@ -1,10 +1,10 @@
 export const AmericanExpressBig = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="77" height="49" viewBox="0 0 77 49" fill="none">
-      <g clip-path="url(#clip0_181_15266)">
+      <g clipPath="url(#clip0_181_15266)">
         <path d="M62.5436 0.268555V48.2484H14.1204V0.268555H62.5436Z" fill="url(#paint0_radial_181_15266)" />
         <path d="M14.1002 48.2299V0.25H62.5839V48.2299H14.1002Z" fill="url(#paint1_radial_181_15266)" />
-        <mask id="mask0_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask0_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask0_181_15266)">
@@ -13,31 +13,31 @@ export const AmericanExpressBig = () => {
             fill="white"
           />
         </g>
-        <mask id="mask1_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask1_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask1_181_15266)">
           <path d="M38.2616 29.5498H36.4883V30.9402H38.2415C38.8259 30.9402 39.0274 30.5977 39.0274 30.2148C39.0475 29.9327 38.8662 29.5498 38.2616 29.5498Z" fill="white" />
         </g>
-        <mask id="mask2_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask2_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask2_181_15266)">
           <path d="M44.3471 29.5498H42.5738V30.8596H44.3269C44.9113 30.8596 45.1128 30.5977 45.1128 30.2148C45.133 29.9327 44.9516 29.5498 44.3471 29.5498Z" fill="white" />
         </g>
-        <mask id="mask3_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask3_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask3_181_15266)">
           <path d="M29.5363 31.7261H26.4129V32.8747H29.6774L31.2492 31.1216L29.8587 29.5498H26.4129V30.638H29.5363V31.7261Z" fill="white" />
         </g>
-        <mask id="mask4_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask4_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask4_181_15266)">
           <path d="M33.0425 31.1218L35.0979 33.5399L35.0778 28.8447L33.0425 31.1218Z" fill="white" />
         </g>
-        <mask id="mask5_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask5_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask5_181_15266)">
@@ -46,19 +46,19 @@ export const AmericanExpressBig = () => {
             fill="white"
           />
         </g>
-        <mask id="mask6_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask6_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask6_181_15266)">
           <path d="M48.9419 21.631H50.6749L49.7883 19.5957L48.9419 21.631Z" fill="white" />
         </g>
-        <mask id="mask7_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask7_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask7_181_15266)">
           <path d="M38.6848 19.6152H36.9115V20.9251H38.6848C39.2692 20.9251 39.4707 20.6631 39.4707 20.2802C39.4707 19.9981 39.2893 19.6152 38.6848 19.6152Z" fill="white" />
         </g>
-        <mask id="mask8_181_15266" style={{ maskType: "luminance" }}  maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
+        <mask id="mask8_181_15266" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="14" y="0" width="49" height="49">
           <path d="M14.1002 0.25H62.5839V48.2299H14.1002V0.25Z" fill="white" />
         </mask>
         <g mask="url(#mask8_181_15266)">
@@ -67,20 +67,20 @@ export const AmericanExpressBig = () => {
       </g>
       <defs>
         <radialGradient id="paint0_radial_181_15266" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(38.3331 24.2585) scale(24.1087 24.1087)">
-          <stop stop-color="#1AB9EC" />
-          <stop offset="0.19" stop-color="#1AB9EC" />
-          <stop offset="0.3139" stop-color="#1DADDD" />
-          <stop offset="0.5481" stop-color="#1B93C0" />
-          <stop offset="0.865" stop-color="#156F99" />
-          <stop offset="1" stop-color="#0F618B" />
+          <stop stopColor="#1AB9EC" />
+          <stop offset="0.19" stopColor="#1AB9EC" />
+          <stop offset="0.3139" stopColor="#1DADDD" />
+          <stop offset="0.5481" stopColor="#1B93C0" />
+          <stop offset="0.865" stopColor="#156F99" />
+          <stop offset="1" stopColor="#0F618B" />
         </radialGradient>
         <radialGradient id="paint1_radial_181_15266" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25.8432 9.00472) scale(48.7608)">
-          <stop stop-color="#26B8EB" />
-          <stop offset="0.19" stop-color="#26B8EB" />
-          <stop offset="0.3162" stop-color="#27ACDC" />
-          <stop offset="0.5545" stop-color="#2192BE" />
-          <stop offset="0.8773" stop-color="#166E98" />
-          <stop offset="1" stop-color="#0F618B" />
+          <stop stopColor="#26B8EB" />
+          <stop offset="0.19" stopColor="#26B8EB" />
+          <stop offset="0.3162" stopColor="#27ACDC" />
+          <stop offset="0.5545" stopColor="#2192BE" />
+          <stop offset="0.8773" stopColor="#166E98" />
+          <stop offset="1" stopColor="#0F618B" />
         </radialGradient>
         <clipPath id="clip0_181_15266">
           <rect width="76" height="48" fill="white" transform="translate(0.342087 0.25)" />

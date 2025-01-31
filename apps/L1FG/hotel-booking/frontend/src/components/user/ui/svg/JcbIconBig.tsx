@@ -18,15 +18,15 @@ export const JcbIconBig = () => {
       <defs>
         <linearGradient id="paint0_linear_181_15247" x1="50.2656" y1="24.2528" x2="69.9987" y2="24.2528" gradientUnits="userSpaceOnUse">
           <stop stopColor="#007B40" />
-          <stop offset="1" stop-color="#55B330" />
+          <stop offset="1" stopColor="#55B330" />
         </linearGradient>
         <linearGradient id="paint1_linear_181_15247" x1="6.00206" y1="24.2524" x2="25.7337" y2="24.2524" gradientUnits="userSpaceOnUse">
           <stop stopColor="#1D2970" />
-          <stop offset="1" stop-color="#006DBA" />
+          <stop offset="1" stopColor="#006DBA" />
         </linearGradient>
         <linearGradient id="paint2_linear_181_15247" x1="28.1342" y1="24.2524" x2="47.8665" y2="24.2524" gradientUnits="userSpaceOnUse">
           <stop stopColor="#6E2B2F" />
-          <stop offset="1" stop-color="#E30138" />
+          <stop offset="1" stopColor="#E30138" />
         </linearGradient>
         <clipPath id="clip0_181_15247">
           <rect width="76" height="48" fill="white" transform="translate(0 0.25)" />

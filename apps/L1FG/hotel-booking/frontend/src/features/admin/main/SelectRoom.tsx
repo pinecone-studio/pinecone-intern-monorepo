@@ -35,7 +35,7 @@ export const SelectRoom = () => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
-          role="combobox"
+          role="button"
           aria-expanded={open ? 'true' : 'false'}
           className="px-3 py-2 flex items-center justify-between bg-white border border-[#E4E4E7] rounded-[6px] max-w-[156px] w-full text-[#09090B] font-Inter text-sm font-normal"
         >
