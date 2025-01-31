@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { useAuth } from '../providers/AuthProvider';
 
 export const HeaderPart = () => {
+  const { user, logout } = useAuth();
+
   return (
-    <div className=" h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
+    <div className="h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
       <div className="flex items-center gap-[8px]">
         <div className="w-[20px] h-[20px] bg-[#00B7F4] rounded-full"></div>
         <Link href={'/'}>
@@ -20,13 +23,23 @@ export const HeaderPart = () => {
       </div>
 
       <div className="flex items-center gap-[16px]">
-        <Link href={'/signup'}>
-          <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
-        </Link>
-        <Link href={'/signin'}>
-          {' '}
-          <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
-        </Link>
+        {user ? (
+          <div className="flex items-center gap-[16px]">
+            <span className="text-white font-medium">{user.email}</span>
+            <button onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
+              Logout
+            </button>
+          </div>
+        ) : (
+          <>
+            <Link href={'/signup'}>
+              <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
+            </Link>
+            <Link href={'/signin'}>
+              <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
