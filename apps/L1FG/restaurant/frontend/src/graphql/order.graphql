@@ -5,6 +5,22 @@ mutation MakeOrder($input: InputType!) {
       name
       quantity
       price
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+  }
+}
+
+query GetOrders {
+  getOrders {
+    _id
+    items {
+      price
+      quantity
+      name
+      imageUrl
     }
     status
     createdAt

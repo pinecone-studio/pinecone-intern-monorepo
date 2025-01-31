@@ -5,6 +5,7 @@ describe('render all pages', () => {
     cy.log(JSON.stringify(allPages));
     allPages.forEach((page) => {
       cy.visit(page);
+      console.log('testing page', page);
     });
   });
 });

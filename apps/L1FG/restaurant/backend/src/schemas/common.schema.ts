@@ -13,12 +13,14 @@ export const typeDefs = gql`
     name: String
     quantity: Int
     price: Float
+    imageUrl: String
   }
 
   input InputItemsType {
     name: String
     quantity: Int
     price: Float
+    imageUrl: String
   }
 
   input InputType {
