@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { TicketReservation } from '@/components/ticketReservation/TicketReservation';
+import { TicketReservation } from '@/components/ticketReservation/Ticketreservation';
 
 describe('TicketReservation Component', () => {
   const getErrorMessage = () => screen.queryByTestId('standart-count');

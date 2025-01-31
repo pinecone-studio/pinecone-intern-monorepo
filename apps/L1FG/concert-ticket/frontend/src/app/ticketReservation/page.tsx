@@ -1,4 +1,4 @@
-import { TicketReservation } from '@/components/ticketReservation/TicketReservation';
+import { TicketReservation } from '@/components/ticketReservation/Ticketreservation';
 
 const Page = () => {
   return (
