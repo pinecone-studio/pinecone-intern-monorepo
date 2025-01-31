@@ -7,7 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Image from 'next/image';
 import { useGetAllPostsQuery } from '@/generated';
-import { Bookmark, HeartIcon, MessageCircle } from 'lucide-react';
+import { Bookmark, Ellipsis, HeartIcon, MessageCircle } from 'lucide-react';
 
 const MainPagePost: React.FC = () => {
   const { data, loading, error } = useGetAllPostsQuery();
@@ -40,6 +40,7 @@ const MainPagePost: React.FC = () => {
 
               <div className="pr-1 font-semibold text-sm text-black flex items-center ">{post.user?.userName}</div>
             </div>
+            <Ellipsis />
             {/* Post Images Carousel */}
             <div className="w-full max-w-[645px] h-[585px] rounded overflow-hidden relative" data-testid="post-carousel">
               <Swiper

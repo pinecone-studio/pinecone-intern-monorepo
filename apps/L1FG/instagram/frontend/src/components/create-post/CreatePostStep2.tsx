@@ -28,10 +28,10 @@ export const CreatePostStep2: React.FC<CreatePostStep2Props> = ({ step, setStep,
             <button onClick={handleBack} className="hover:opacity-70 transition-opacity" data-testid="back-button">
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <span className="font-medium" data-testid="crop-text">
+            <span className="font-bold text-sm" data-testid="crop-text">
               Crop
             </span>
-            <button className="text-[#0095F6] hover:text-[#1877F2] transition-colors font-medium" onClick={handleNext} data-testid="next-button">
+            <button className="text-[#0095F6] hover:text-[#1877F2] font-bold text-sm transition-colors" onClick={handleNext} data-testid="next-button">
               Next
             </button>
           </div>
@@ -52,5 +52,3 @@ export const CreatePostStep2: React.FC<CreatePostStep2Props> = ({ step, setStep,
     </>
   );
 };
-
-export default CreatePostStep2;
