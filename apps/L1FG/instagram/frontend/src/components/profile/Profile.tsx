@@ -85,7 +85,9 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+
       <StoryHighlight />
+
       <IconPostSavedTag userId={userId as string} />
     </div>
   );
