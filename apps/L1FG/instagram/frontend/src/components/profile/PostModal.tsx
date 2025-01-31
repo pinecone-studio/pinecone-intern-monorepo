@@ -51,7 +51,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
               <Separator />
               <div className="flex justify-between py-1 px-5 ">
                 <Smile />
-                <p className="" placeholder=" Add a comment " />
+
                 <p className="text-[#2563EB] cursor-pointer hover:text-black">Post</p>
               </div>
             </div>
