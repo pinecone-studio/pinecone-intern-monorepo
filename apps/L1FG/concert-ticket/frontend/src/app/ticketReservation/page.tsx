@@ -1,4 +1,4 @@
-import Ticketreservation from '@/components/ticketReservation/Ticketreservation';
+import { TicketReservation } from '@/components/ticketReservation/Ticketreservation';
 
 const Page = () => {
   return (
@@ -12,7 +12,7 @@ const Page = () => {
           <img className="w-[723px] h-[684px] mt-[50px]" src="/stage.svg" />
         </div>
         <div className="flex-1">
-          <Ticketreservation />
+          <TicketReservation vip={1} standart={1} rear={1} />
         </div>
       </div>
     </div>
