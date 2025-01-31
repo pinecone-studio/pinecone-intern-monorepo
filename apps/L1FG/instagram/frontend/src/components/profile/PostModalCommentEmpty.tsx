@@ -4,13 +4,13 @@ import { UserPostType } from '@/generated';
 import { Bookmark, Ellipsis, Heart, MessageCircle, Smile } from 'lucide-react';
 import Image from 'next/image';
 
-const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
+const PostModalCommentEmpty = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent className="xl:max-w-[1100px] p-0 border-none rounded-none">
-        <div className=" flex">
+        <div className=" flex" data-testid="Post-Modal">
           <div className=" w-[55%] ">
             <Image src={post.postImage[0]} alt="Post" width={1200} height={900} className="w-full h-[700px]  object-cover" />
           </div>
@@ -26,14 +26,13 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 </div>
               </div>
               <Separator />
+              <div className=" flex  px-5">
+                <Image src="/images/profilePic.png" alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover  bg-red-700" />
+                <p>{post.commentCount}</p>
+              </div>
             </div>
 
-            <div className=" flex flex-col justify-center items-center">
-              <h3 className="text-2xl font-bold"> No comments yet.</h3>
-              <p>Start the conversation.</p>
-            </div>
-
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 ">
               <Separator />
               <div className="flex justify-between pt-5 px-5 items-center ">
                 <div className="flex gap-5 justify-center items-center">
@@ -51,7 +50,6 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
               <Separator />
               <div className="flex justify-between py-1 px-5 ">
                 <Smile />
-
                 <p className="text-[#2563EB] cursor-pointer hover:text-black">Post</p>
               </div>
             </div>
@@ -61,4 +59,4 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
     </Dialog>
   );
 };
-export default PostModal;
+export default PostModalCommentEmpty;
