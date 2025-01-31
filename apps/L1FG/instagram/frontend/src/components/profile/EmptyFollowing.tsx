@@ -10,11 +10,11 @@ const EmptyFollowing = ({ children }: { children: React.ReactNode }) => {
       <DialogTrigger asChild className="cursor-pointer">
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] h-[425px]">
+      <DialogContent className="sm:max-w-[425px] h-[400px] p-0 flex flex-col gap-2">
         <DialogHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center pt-4">
             <div></div>
-            <h3 className="flex justify-center ">Following</h3>
+            <h3 className="flex justify-center font-semibold">Following</h3>
             <div className="flex justify-end">
               <DialogTrigger asChild>
                 <div className="relative">
@@ -25,12 +25,13 @@ const EmptyFollowing = ({ children }: { children: React.ReactNode }) => {
               </DialogTrigger>
             </div>
           </div>
+          <Separator className="w-full" />
         </DialogHeader>
-        <Separator className="w-full" />
-        <div className="flex justify-center">
-          <div className="items-center justify-center w-full relative">
+
+        <div className="flex justify-center px-3 ">
+          <div className="items-center justify-center w-full relative pb-2">
             <Search className="absolute top-1 left-2 text-gray-500" />
-            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8  rounded-xl " />
+            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8 bg-gray-100 rounded-xl " />
           </div>
         </div>
         <div className="flex flex-col gap-5 overflow-y-scroll items-center justify-center ">
@@ -43,7 +44,7 @@ const EmptyFollowing = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
 
-        <p className="font-semibold text-lg justify-start mt-6">Suggested for you</p>
+        <p className="font-semibold text-lg justify-start mt-6 px-3">Suggested for you</p>
       </DialogContent>
     </Dialog>
   );

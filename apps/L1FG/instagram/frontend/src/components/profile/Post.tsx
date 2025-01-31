@@ -3,6 +3,7 @@ import { useGetPostsQuery } from '@/generated';
 
 import Message from '../svg/Message';
 import Heart from '../svg/Heart';
+import PostModal from './PostModal';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
@@ -18,21 +19,23 @@ const Post = ({ userId }: { userId: string }) => {
               return null;
             }
             return (
-              <div key={post._id} className="relative flex flex-col items-center justify-center border group cursor-pointer">
-                <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90    transition-opacity duration-300" width={309} height={309} />
+              <PostModal post={post} key={post._id}>
+                <div className="relative flex flex-col items-center justify-center border group cursor-pointer">
+                  <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90   transition-opacity duration-300" width={300} height={300} />
 
-                <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-[300px] bg-black/50">
-                  <div className="flex gap-2 justify-center items-center">
-                    <Heart />
-                    <p className="text-white font-bold text-lg">3</p>
-                  </div>
+                  <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
+                    <div className="flex gap-2 justify-center items-center">
+                      <Heart />
+                      <p className="text-white font-bold text-lg">{post.likeCount}</p>
+                    </div>
 
-                  <div className="flex gap-2 justify-center items-center">
-                    <Message />
-                    <p className="text-white font-bold text-lg">3</p>
+                    <div className="flex gap-2 justify-center items-center">
+                      <Message />
+                      <p className="text-white font-bold text-lg">{post.commentCount}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </PostModal>
             );
           })}
         </div>
