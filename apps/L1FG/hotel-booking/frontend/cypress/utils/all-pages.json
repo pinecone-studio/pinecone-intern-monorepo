@@ -1,1 +1,1 @@
-["///","///admin","///admin/add-hotel","///admin/guests","///admin/guests/info","///admin/hotel-detail","///hotel-detail/[id]","///search-hotels"]
+["///","///admin","///admin/[id]","///admin/add-hotel","///admin/add-hotel/add-room","///admin/guests","///admin/guests/info","///admin/hotel-detail","///hotel-detail/[id]","///search-hotels"]

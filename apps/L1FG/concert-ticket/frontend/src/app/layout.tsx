@@ -10,9 +10,8 @@ import { AuthProvider } from '@/components/providers/AuthProvider';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathName = usePathname();
-  const signUp = pathName.startsWith('/sign-up');
-  const login = pathName.startsWith('/login');
-
+  const signUp = pathName.startsWith('/signup');
+  const login = pathName.startsWith('/signin');
   return (
     <html lang="en">
       <body className="bg-black">

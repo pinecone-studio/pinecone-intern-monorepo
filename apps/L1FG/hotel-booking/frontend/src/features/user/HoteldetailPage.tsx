@@ -1,7 +1,7 @@
 import { NavigationBlue } from '@/components/user/main/NavigationBlue';
 import { BlueDital } from '@/components/user/ui/dital';
 import { HotelDetailMain } from '@/components/user/hotel-detail/HotelDetailMain';
-import { SearchBar } from '@/components/user/main/SearchBar';
+import { SearchBar } from '@/features/user/main/SearchBar';
 import { Footer } from '@/components/user/search-result/Footer';
 import { useParams } from 'next/navigation';
 import { useGetHotelByIdQuery } from '@/generated';
