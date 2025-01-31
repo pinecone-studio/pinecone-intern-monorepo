@@ -21,9 +21,9 @@ const Post = ({ userId }: { userId: string }) => {
             return (
               <PostModal post={post} key={post._id}>
                 <div className="relative flex flex-col items-center justify-center border group cursor-pointer">
-                  <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90   transition-opacity duration-300" width={309} height={309} />
+                  <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90   transition-opacity duration-300" width={300} height={300} />
 
-                  <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-[300px] bg-black/50">
+                  <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
                     <div className="flex gap-2 justify-center items-center">
                       <Heart />
                       <p className="text-white font-bold text-lg">{post.likeCount}</p>
