@@ -10,6 +10,7 @@ const Page = () => {
   const { data, loading } = useGetConcertsQuery();
   const [date, setDate] = useState<Date>();
   const [searchArtist, setSearchArtist] = useState('');
+
   const handlechange = (value: string) => {
     setSearchArtist(value);
   };

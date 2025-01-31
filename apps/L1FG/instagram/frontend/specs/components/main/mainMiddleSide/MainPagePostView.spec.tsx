@@ -6,9 +6,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import MainPagePost from '@/components/Home/mainBar/MainPagePost';
 
 import { GetAllPostsDocument } from '@/generated';
-// import Image from 'next/image';
 
-// Mock Next/Image
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
@@ -44,6 +42,7 @@ jest.mock('lucide-react', () => ({
   Bookmark: () => <div data-testid="bookmark-icon">Bookmark</div>,
   HeartIcon: () => <div data-testid="like-icon">Like</div>,
   MessageCircle: () => <div data-testid="comment-icon">Comments</div>,
+  Ellipsis: () => <div data-testid="ellipsis-icon">Ellipsis</div>,
 }));
 
 const mockData = {
@@ -125,7 +124,7 @@ describe('MainPagePost Component', () => {
       </MockedProvider>
     );
 
-    expect(screen.getByTestId('loading-message')).toBeInTheDocument();
+    expect(await screen.findByTestId('loading-message')).toBeDefined();
   });
 
   it('renders posts with correct details', async () => {
@@ -135,9 +134,9 @@ describe('MainPagePost Component', () => {
       </MockedProvider>
     );
 
-    await waitFor(() => {
+    await waitFor(async () => {
       // Check posts container
-      const postsContainer = screen.getByTestId('posts-container');
+      const postsContainer = await screen.findByTestId('posts-container');
       expect(postsContainer).toBeInTheDocument();
 
       // Check post items

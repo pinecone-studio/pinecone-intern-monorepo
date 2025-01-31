@@ -4,6 +4,7 @@ import { Card } from './Card';
 export interface CardProps {
   cards: Concert[] | undefined;
 }
+
 export const Cards = ({ cards }: CardProps) => {
   return (
     <div className="grid grid-cols-3 gap-8">

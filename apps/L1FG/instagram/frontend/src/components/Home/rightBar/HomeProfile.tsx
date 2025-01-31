@@ -21,12 +21,12 @@ const HomePageProfile = () => {
 
           <div>
             <h1 className="text-sm font-bold ">{user?.userName}</h1>
-            <p className="text-[12px] text-gray-500 ">{user?.fullName}</p>
+            <p className="text-[12px] text-[#8E8E8E] ">{user?.fullName}</p>
           </div>
         </div>
 
         <div>
-          <button className="text-[11px] font-bold text-[#2563EB]">Log out</button>
+          <button className="text-[11px] font-bold text-[#0095F6]">Log out</button>
         </div>
       </div>
       <div className="flex justify-between text-sm">
@@ -34,7 +34,7 @@ const HomePageProfile = () => {
         <Link href="/home/suggestuser">See All</Link>
       </div>
       <p>(suggest useruud)</p>
-      <div className="text-gray-500 text-wrap text-[12px] flex flex-col gap-4 mt-8">
+      <div className="text-[#C7C7C7] text-wrap text-xs flex flex-col gap-4 mt-8">
         <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
         <p>© 2024 INSTAGRAM FROM META</p>
       </div>

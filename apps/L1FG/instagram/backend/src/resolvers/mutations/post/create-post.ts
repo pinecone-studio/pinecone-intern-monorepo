@@ -1,16 +1,12 @@
+/*eslint-disable*/
 import { MutationResolvers } from '../../../generated';
-import { PostModel } from '../../../models';
+import { authenticate } from '../../../utils/authenticate';
+import { addPostToDatabase, updatePostCreator, validatePost } from './create-post-utils';
 
 export const createPost: MutationResolvers['createPost'] = async (_, { input }, { userId }) => {
-  if (!userId) throw new Error('Unauthorized');
-  const { postImage, caption } = input;
-  const carouselMediaCount = postImage.length;
-  if (carouselMediaCount > 10) throw new Error('10 аас дээш зураг авч болохгүй');
-  const post = await PostModel.create({
-    postImage,
-    caption,
-    userId,
-    carouselMediaCount,
-  });
-  return post;
+  authenticate(userId);
+  const postCreator = await validatePost(userId, input);
+  const newPost = await addPostToDatabase(userId, input);
+  await updatePostCreator(userId, newPost, postCreator);
+  return newPost;
 };
