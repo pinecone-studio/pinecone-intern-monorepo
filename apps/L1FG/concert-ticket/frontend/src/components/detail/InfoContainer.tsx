@@ -1,12 +1,18 @@
 'use client';
-
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGetConcertQuery } from '@/generated';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 const InfoContainer = ({ ticketID }: { ticketID: string }) => {
   const { data } = useGetConcertQuery({ variables: { id: ticketID as string } });
   const formatDate = data?.getConcert.concertDay ? format(data?.getConcert.concertDay, 'yyyy-MM-dd') : '';
+  const user = localStorage.getItem('user');
+  const router = useRouter();
+  const ticketReservation = () => {
+    if (!user) return router.push('/signin');
+    return router.push(`/ticketReservation/${ticketID}`);
+  };
   return (
     <div className="flex mx-auto w-[1250px] mt-[60px]">
       <div className="flex-1 w-[566px] ">
@@ -109,7 +115,13 @@ const InfoContainer = ({ ticketID }: { ticketID: string }) => {
               </div>
             </div>
           </div>
-          <button className=" w-[345px] h-[36px] bg-[#00B7F4] items-center justify-center hover:bg-[#3279e3] text-[14px] rounded-md my-4">Тасалбар захиалах</button>
+          <button
+            data-testid="info-container-ticket-reservation"
+            onClick={ticketReservation}
+            className=" w-[345px] h-[36px] bg-[#00B7F4] items-center justify-center hover:bg-[#3279e3] text-[14px] rounded-md my-4"
+          >
+            Тасалбар захиалах
+          </button>
         </div>
       </div>
     </div>

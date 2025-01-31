@@ -16,8 +16,12 @@ const Page = () => {
   };
   if (loading)
     return (
-      <div data-cy="search-page-get-data-loading" className="text-white">
-        loading
+      <div
+        className="flex flex-col gap-8 w-fit
+    m-auto"
+      >
+        <SearchConcert data-cy="search-page-search-section" selected={date} onSelect={setDate} onChange={handlechange} />
+        <div className="test-white">Loading</div>
       </div>
     );
 
@@ -30,6 +34,7 @@ const Page = () => {
     const concertDate = parseISO(concert.concertDay);
     const formatdate = format(concertDate, 'yyyy-MM-dd');
     const formatdate2 = date ? format(date, 'yyyy-MM-dd') : '';
+    if (!formatdate2) return true;
     return formatdate.toLocaleLowerCase().includes(formatdate2?.toLocaleLowerCase());
   });
 
