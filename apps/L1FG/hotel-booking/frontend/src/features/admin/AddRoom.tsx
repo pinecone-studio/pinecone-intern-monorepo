@@ -2,7 +2,7 @@ import { Footer, Header } from '@/components/admin/main';
 import Link from 'next/link';
 import { LeftArrow } from '@/components/admin/svg';
 import { Sidebar } from './main/Sidebar';
-import { GeneralInfo, Images, UpcomingBooking } from '@/components/admin/add-room';
+import { GeneralInfo, Images, RoomServices, UpcomingBooking } from '@/components/admin/add-room';
 
 export const AddRoomPage = () => {
   return (
@@ -25,6 +25,7 @@ export const AddRoomPage = () => {
               <div className="max-w-[784px] w-full flex flex-col gap-4">
                 <GeneralInfo />
                 <UpcomingBooking />
+                <RoomServices />
               </div>
               <div className="max-w-[400px] w-full flex flex-col gap-4">
                 <Images />

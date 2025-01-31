@@ -9,15 +9,16 @@ type Props = {
   onclick?: () => void;
 };
 
-export const TextSideBar = ({ icon, text, onclick }: Props) => {
+export const TextSideBar = ({ icon, text, onclick, isOpen }: Props) => {
   return (
-    <button
+    <div
       data-testid="text-side-bar-id"
       onClick={onclick}
-      className={` border-none flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]`}
+      className={`flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground my-1 p-[12px]
+        w-full`}
     >
-      <div>{icon}</div>
-      <p>{text}</p>
-    </button>
+      {icon}
+      {isOpen && text}
+    </div>
   );
 };
