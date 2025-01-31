@@ -1,14 +1,25 @@
 'use client';
 
-import Header from "@/components/common/Header";
+import OrderPageComponent from '@/components/order/OrderPageComponent';
+import { useEffect, useState } from 'react';
 
+function Notification() {
+  const [isMounted, setIsMounted] = useState(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
+  if (!isMounted) {
+    return null;
+  }
 
-
-
-const Page = () => {
-  return <div><Header/></div>;
-};
-
-export default Page;
+  return <OrderPageComponent />;
+}
+export default function Page() {
+  return (
+    <div>
+      <OrderPageComponent />
+    </div>
+  );
+}

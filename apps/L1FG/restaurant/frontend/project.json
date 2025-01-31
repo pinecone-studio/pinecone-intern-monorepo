@@ -23,6 +23,13 @@
         }
       ]
     },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotenv -e apps/L1FG/restaurant/frontend/.env -- echo 'Environment exported!'",
+        "cwd": "apps/L1FG/restaurant/frontend"
+      }
+    },
     "serve": {
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
@@ -103,162 +110,11 @@
         }
       }
     },
-    "export-env": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["export $(cat apps/L1FG/restaurant/frontend/.env | xargs)"],
-        "parallel": false
-      }
-    },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["rm -rf dist/apps/L1FG/restaurant/frontend", "rm -rf .vercel"]
       }
-    },
-    "e2e": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["npx nx cypress restaurant-frontend"],
-        "parallel": false
-      },
-      "dependsOn": [{ "target": "cypress:clean" }]
-    },
-    "e2e:open": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["npx nx cypress restaurant-frontend --watch"],
-        "parallel": false
-      },
-      "dependsOn": [{ "target": "cypress:clean" }]
-    },
-    "cypress:clean": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "rm -rf apps/L1FG/restaurant/frontend/cypress/results",
-          "rm -rf apps/L1FG/restaurant/frontend/.nyc_output",
-          "rm -rf apps/L1FG/restaurant/frontend/.cy",
-          "rm -rf apps/L1FG/restaurant/frontend/coverage"
-        ],
-        "parallel": false
-      }
-    },
-    "cypress": {
-      "executor": "@nx/cypress:cypress",
-      "options": {
-        "cypressConfig": "apps/L1FG/restaurant/frontend/cypress.config.ts",
-        "testingType": "e2e",
-        "reporter": "mochawesome",
-        "devServerTarget": "restaurant-frontend:serve:development",
-        "browser": "chrome"
-      },
-      "dependsOn": [
-        {
-          "target": "cypress-generate-all-page-json"
-        },
-        {
-          "target": "get-secrets"
-        },
-        {
-          "target": "export-env"
-        }
-      ]
-    },
-    "cypress-generate-all-page-json": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["npx ts-node apps/L1FG/restaurant/frontend/cypress/utils/get-all-pages.ts"],
-        "parallel": false
-      }
-    },
-    "preview": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_TloNy0wREUYY0suAbzydfUS6606E -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
-          "npx env-cmd -f apps/L1FG/restaurant/frontend/.env vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_TloNy0wREUYY0suAbzydfUS6606E -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
-        ],
-        "parallel": false
-      },
-      "dependsOn": [
-        {
-          "target": "clean"
-        },
-        {
-          "target": "get-secrets:testing"
-        },
-        {
-          "target": "export-env"
-        },
-        {
-          "target": "codegen:testing",
-          "params": "forward"
-        }
-      ]
-    },
-    "deploy-testing": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_TloNy0wREUYY0suAbzydfUS6606E -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
-          "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_TloNy0wREUYY0suAbzydfUS6606E -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
-        ],
-        "parallel": false
-      },
-      "dependsOn": [
-        {
-          "target": "clean"
-        },
-        {
-          "target": "get-secrets:testing"
-        },
-        {
-          "target": "export-env"
-        },
-        {
-          "target": "codegen:testing",
-          "params": "forward"
-        }
-      ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/L1FG/restaurant/frontend/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "codegen:prod": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config ./apps/L1FG/restaurant/frontend/codegen.ts"]
-      },
-      "dependsOn": [
-        {
-          "target": "get-secrets:prod"
-        }
-      ]
-    },
-    "codegen:dev": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config ./apps/L1FG/restaurant/frontend/codegen.ts"]
-      },
-      "dependsOn": [{ "target": "get-secrets:dev" }]
-    },
-    "codegen:testing": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["graphql-codegen --config ./apps/L1FG/restaurant/frontend/codegen.ts"]
-      },
-      "dependsOn": [
-        {
-          "target": "get-secrets:testing"
-        }
-      ]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",

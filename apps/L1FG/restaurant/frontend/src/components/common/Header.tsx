@@ -1,7 +1,8 @@
 import React from 'react';
-import {  Bell, ShoppingCart } from 'lucide-react';
+import { Bell, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import { Sidemenu } from '../sidemenu/Sidemenu';
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -9,8 +10,10 @@ const Header = () => {
       <Image className="h-8" height={32} width={32} src="/Logo.png" alt="" />
       <div className="flex gap-3 items-center">
         <ShoppingCart data-testid="shopping-cart-icon" width={16} />
-        <Bell data-testid="bell-icon" width={16} />
-     <Sidemenu/>
+        <Link href={'/notfication'}>
+          <Bell data-testid="bell-icon" width={16} />
+        </Link>
+        <Sidemenu />
       </div>
     </div>
   );
