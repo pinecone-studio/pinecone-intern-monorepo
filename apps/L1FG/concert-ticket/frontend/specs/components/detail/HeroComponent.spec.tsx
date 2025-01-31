@@ -1,4 +1,4 @@
-import HeroComponent from '@/components/providers/Detail/HeroComponent';
+import HeroComponent from '@/components/detailComponent/HeroComponent';
 import { render } from '@testing-library/react';
 
 describe('Test', () => {

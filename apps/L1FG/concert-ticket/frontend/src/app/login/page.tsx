@@ -7,19 +7,19 @@ const Page = () => {
           <div className="my-[10px">
             <p className="text-[#FAFAFA]">Имэйл хаяг:</p>
             <input
-              className="bg-black text-[13px] texted-[#A1A1AA] pl-[10px] border-[#27272A] text-white w-[350px] h-[36px] my-[10px] border-2 rounded-sm "
+              className="bg-black text-[13px] texted-[#A1A1AA] pl-[10px] border-[#27272A] text-white w-[350px] h-[36px] my-[10px] border-3 rounded-sm "
               type="texted"
               placeholder="Нэр@жишээ.com"
             />
           </div>
           <div className="my-[10px]">
             <p className="text-[#FAFAFA]">Нууц үг:</p>
-            <input className="bg-black text-[13px] w-[350px] text-[white] pl-[10px] h-[36px] border-[#27272A] my-[10px] border-2 rounded-sm" type="texted" placeholder="Нууц үг" />
+            <input className="bg-black text-[13px] w-[350px] text-[white] pl-[10px] h-[36px] border-[#27272A] my-[10px] border-3 rounded-sm" type="texted" placeholder="Нууц үг" />
           </div>
-          <button className="w-[350px] h-[36px] bg-[#00B7F4] rounded-sm">Нэвтрэх</button>
+          <button className="w-[350px] h-[36px] bg-[#00B7F4] hover:bg-[#3279e3] rounded-sm">Нэвтрэх</button>
         </div>
         <div className="text-[#A1A1AA] text-[14px] mx-auto w-[350px] mt-[15px] h-[40px] flex-col text-center ">
-          Та бүртгэлтэй хаяггүй бол <button className="bg-transparent underline">бүртгүүлэх</button> хэсгээр орно уу.
+          Та бүртгэлтэй хаяггүй бол <button className="bg-transparent underline hover:text-white">бүртгүүлэх</button> хэсгээр орно уу.
         </div>
       </div>
     </div>

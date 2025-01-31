@@ -1,5 +1,4 @@
-import ComboBox from './ComboBox';
-// import HadnleComboBox from './HandleComboBox';
+import Link from 'next/link';
 
 const InfoContainer = () => {
   return (
@@ -37,18 +36,11 @@ const InfoContainer = () => {
       <div className="flex-1 w-[345px] ml-[50px]">
         <p className="text-[#878686] text-[13px] leading-5">Тоглолт үзэх өдрөө сонгоно уу.</p>
         <div>
-          <div>
-            {/* ////////////////////////////////////////////////////////////////////////////////// */}
-            {/* <Combobox /> */}
-            <ComboBox />
-            {/* <HadnleComboBox /> */}
-            {/* ////////////////////////////////////////////////////////////////////////////////// */} 3dahi sprint deer zasah
-          </div>
           <div className="w-[345px] h-[52px] flex items-center border-dashed border-2 border-[#27272A] mb-3">
             <div className="w-[7px] h-[7px] rounded-full bg-[#D9D9D9] mx-5"> </div>
             <div className="w-[277px] h-[20px] justify-between flex ">
               <p className="text-[#D9D9D9]">Арын тасалбар (123)</p>
-              <p className="text-white">89 000₮</p>
+              <p className="text-white">99 000₮</p>
             </div>
           </div>
           <div className="w-[345px] h-[52px] flex items-center border-dashed border-2 border-[#27272A] mb-3">
@@ -65,7 +57,9 @@ const InfoContainer = () => {
               <p className="text-white">159 000₮</p>
             </div>
           </div>
-          <button className=" w-[345px] h-[36px] bg-[#00B7F4] items-center justify-center hover:bg-[#3279e3] text-[14px] rounded-md my-4">Тасалбар захиалах</button>
+          <Link href={'/ticketReservation'}>
+            <button className=" w-[345px] h-[36px] bg-[#00B7F4] items-center justify-center hover:bg-[#3279e3] text-[14px] rounded-md my-4">Тасалбар захиалах</button>
+          </Link>
         </div>
       </div>
     </div>

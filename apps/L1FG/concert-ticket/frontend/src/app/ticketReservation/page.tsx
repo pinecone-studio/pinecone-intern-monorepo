@@ -1,10 +1,11 @@
-import Ticketreservation from '@/components/ticketReservation/Ticketreservation';
+import TicketReservation from '@/components/ticketReservation/TicketReservation';
+import Image from 'next/image';
 
 const Page = () => {
   return (
     <div className="Container w-[1334px] mx-auto">
       <div className="flex text-[48px] w-[1334px] h-[112px] items-center">
-        <img className="w-[40px] h-[40px] cursor-pointer" src="/chevron-back.svg" />
+        <Image className="cursor-pointer" width={40} height={40} src={'/chevron-back.svg'} alt="chevron-back" />
         <div className="text-white text-[28px] mx-auto items-center">Тасалбар захиалах</div>
       </div>
       <div className="flex">
@@ -12,7 +13,7 @@ const Page = () => {
           <img className="w-[723px] h-[684px] mt-[50px]" src="/stage.svg" />
         </div>
         <div className="flex-1">
-          <Ticketreservation />
+          <TicketReservation vip={1} standart={1} rear={1} />
         </div>
       </div>
     </div>
