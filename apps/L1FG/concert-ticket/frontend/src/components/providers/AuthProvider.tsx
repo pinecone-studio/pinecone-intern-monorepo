@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       showAlert('success', 'Амжилттай нэвтэрлээ');
       router.push('/');
     },
+
     onError: (error) => {
       showAlert('error', error.message);
     },

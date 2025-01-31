@@ -1,26 +1,20 @@
 // components/Create.tsx
 'use client';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { SquarePlus, ImagePlay, BookOpenCheck } from 'lucide-react';
+import { ImagePlay, BookOpenCheck } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
 import { CreateStoryStep1 } from '@/components/story/createStory/CreateStoryStep1';
 
-export const Create = () => {
+export const Create = ({ children }: PropsWithChildren) => {
   const [openCreatePostModal, setOpenCreatePostModal] = React.useState(false);
   const [openCreateStoryModal, setOpenCreateStoryModal] = React.useState(false);
-
   return (
     <div className="">
       <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className={` border-none flex items-center gap-6 overflow-hidden rounded-md text-sm font-medium hover:bg-accent  my-1 p-[12px]`}>
-            <SquarePlus className="h-6 w-6" />
-            <span>Create</span>
-          </Button>
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
         <PopoverContent className="w-80">
           <div className="grid gap-4">
             <Dialog open={openCreatePostModal} onOpenChange={setOpenCreatePostModal}>
