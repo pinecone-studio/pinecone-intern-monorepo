@@ -2,6 +2,7 @@ import { Hotel } from '@/generated';
 import { ChooseRoom } from './ChooseRoom';
 import { DetailHero } from './DetailHero';
 import { GeneralInformation } from './GeneralInformation';
+import { About } from './About';
 
 interface HotelDetailMainProps {
   data: Hotel | undefined | null;
@@ -13,6 +14,7 @@ export const HotelDetailMain = ({ data }: HotelDetailMainProps) => {
       <DetailHero />
       <GeneralInformation data={data} />
       <ChooseRoom />
+      <About />
     </div>
   );
 };

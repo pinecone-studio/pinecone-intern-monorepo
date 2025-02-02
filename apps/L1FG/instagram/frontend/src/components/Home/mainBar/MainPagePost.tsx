@@ -55,7 +55,7 @@ const MainPagePost: React.FC = () => {
               >
                 {postImages.map((image, index) => (
                   <SwiperSlide key={index} data-testid="swiper-slide">
-                    <Image src={image} alt={`Post Image ${index + 1}`} fill sizes="(max-width: 468px) 100vw, 468px" className="object-cover" data-testid="post-image" />
+                    <Image src={image} alt={`Post Image ${index + 1}`} fill className="object-cover" data-testid="post-image" />
                   </SwiperSlide>
                 ))}
               </Swiper>
