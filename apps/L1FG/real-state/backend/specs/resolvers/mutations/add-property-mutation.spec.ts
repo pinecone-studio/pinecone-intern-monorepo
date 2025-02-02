@@ -1,5 +1,5 @@
 import { addProperty } from '../../../src/resolvers/mutations';
-import { HouseTypeEnum, PropertyInput } from '../../../src/generated'; // Update with the correct import path if needed
+import { HouseTypeEnum, PropertyInput } from '../../../src/generated';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../src/models', () => ({
@@ -49,6 +49,7 @@ describe('addProperty Mutation', () => {
         address: '2q3rawtesy',
         city: 'asdfasdf',
         district: 'asdf',
+        subDistrict: 'asdf',
       },
       details: {
         completionDate: null,
@@ -106,6 +107,7 @@ describe('addProperty Mutation', () => {
         address: '2q3rawtesy',
         city: 'asdfasdf',
         district: 'asdf',
+        subDistrict: 'asdf',
       },
       details: {
         completionDate: null,
