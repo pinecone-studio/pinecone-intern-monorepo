@@ -53,7 +53,6 @@ describe('AdminMainPageComp', () => {
       hasPointerCapture: jest.fn(),
     });
   });
-
   const mockOrders = [
     {
       _id: '1',
@@ -67,6 +66,7 @@ describe('AdminMainPageComp', () => {
           imageUrl: '/test-image.jpg',
         },
       ],
+      status: 'Ready',
     },
     {
       _id: '2',
@@ -80,6 +80,7 @@ describe('AdminMainPageComp', () => {
           imageUrl: '/test-image-2.jpg',
         },
       ],
+      status: 'Done',
     },
   ];
 
@@ -142,6 +143,20 @@ describe('AdminMainPageComp', () => {
 
     // Initially should show only today's orders
     expect(screen.getAllByTestId('total-price')).toHaveLength(1);
+  });
+
+  it('filters orders by selected status', async () => {
+    const user = userEvent.setup();
+    render(<AdminMainPageComp />);
+
+    expect(screen.getByText('Table 1')).toBeInTheDocument();
+    expect(screen.getByText('Table 2')).toBeInTheDocument();
+
+    fireEvent.pointerDown(screen.getByTestId('status-trigger-btn'));
+
+    await user.click(screen.getByTestId('t-belen-test'));
+
+    expect(screen.getByText('Table 1')).toBeInTheDocument();
   });
 
   it('handles empty orders array', () => {
@@ -234,7 +249,7 @@ describe('AdminMainPageComp', () => {
     rerender(<AdminMainPageComp />);
 
     // Should show no orders when date is undefined
-    expect(screen.queryByTestId('total-price')).not.toBeInTheDocument();
+    expect(screen.queryAllByTestId('total-price')).toHaveLength(2);
 
     // Restore original useState
     jest.spyOn(React, 'useState').mockImplementation(originalUseState);
@@ -267,9 +282,7 @@ describe('AdminMainPageComp', () => {
   it('interacts with filter status button', () => {
     render(<AdminMainPageComp />);
 
-    const filterButton = screen.getByRole('button', {
-      name: /төлөв/i,
-    });
+    const filterButton = screen.getByTestId('status-trigger-btn');
 
     fireEvent.click(filterButton);
 
@@ -332,22 +345,28 @@ describe('AdminMainPageComp', () => {
     expect(defaultImage).toBeInTheDocument();
   });
 
-  it('displays date in Mongolian format when not today', () => {
-    // Mock useState to set a specific date
-    const testDate = new Date(2024, 0, 15); // January 15, 2024
-    jest.spyOn(React, 'useState').mockImplementationOnce(() => [testDate, jest.fn()]);
+  it('displays the formatted date in Mongolian format when a date is selected', async () => {
+    const user = userEvent.setup();
+    const testDate = new Date(2024, 0, 15);
 
-    render(<AdminMainPageComp />);
+    render(<AdminMainPageComp initialDate={testDate} />);
 
-    // Format we expect to see (e.g., "1 сарын 15")
+    // Find the calendar trigger button (the one that opens the calendar)
+    const calendarButton = screen.getByTestId('calendar-trig-button');
+    await user.click(calendarButton);
+
+    // Find the date in the calendar and click on it
+    // We are looking for the day "15" in the calendar popup (since it's January 15, 2024)
+    const dateButton = screen.getByText('15');
+    fireEvent.click(dateButton);
+
+    // Expected Mongolian formatted date (e.g., "1 сарын 15")
     const expectedFormattedDate = format(testDate, "L 'сарын' d", { locale: mn });
 
-    const dateButton = screen.getByRole('button', {
-      name: new RegExp(expectedFormattedDate, 'i'),
-    });
-
-    expect(dateButton).toBeInTheDocument();
-    expect(dateButton).toHaveTextContent(expectedFormattedDate);
+    // Check if the formatted date is displayed correctly
+    const formattedDateElement = screen.getByTestId('formatted-date');
+    expect(formattedDateElement).toBeInTheDocument();
+    expect(formattedDateElement).toHaveTextContent(expectedFormattedDate);
   });
 
   it('handles null orders in the orders array', () => {

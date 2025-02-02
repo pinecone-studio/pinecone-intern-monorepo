@@ -1,7 +1,8 @@
-"use client"
+'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { MoveLeft } from 'lucide-react';
+
 const CodeInput = () => {
   const [code, setCode] = useState(['', '', '', '']);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -48,7 +49,7 @@ const CodeInput = () => {
           ))}
         </div>
 
-        <div className="flex justify-between text-white text-sm px-2">
+        <div data-testid="icons-container" className="flex justify-between text-white text-sm px-2">
           <MoveLeft />
           <RefreshCw />
         </div>

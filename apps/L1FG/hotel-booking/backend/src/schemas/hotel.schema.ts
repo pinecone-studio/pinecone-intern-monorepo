@@ -88,6 +88,10 @@ export const typeDefs = gql`
     images: [String]
   }
 
+  input getHotelsByNameInput {
+    name: String
+  }
+
   type Mutation {
     editGeneralInfo(input: editGeneralInfoInput!): Hotel
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
@@ -98,5 +102,6 @@ export const typeDefs = gql`
   type Query {
     getHotels: [Hotel!]!
     getHotelById(id: ID!): Hotel
+    getHotelsByName(input: getHotelsByNameInput!): [Hotel]
   }
 `;
