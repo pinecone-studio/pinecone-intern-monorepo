@@ -107,5 +107,6 @@ export const typeDefs = gql`
     getHotelById(id: ID!): Hotel
     getHotelsByName(input: getHotelsByNameInput!): [Hotel]
     getHotelsByPrice(input: getHotelsByPriceInput!): [Hotel]
+    getHotelsByStarRating: [Hotel]
   }
 `;
