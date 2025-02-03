@@ -1,6 +1,6 @@
 import InfoContainer from '@/components/detail/InfoContainer';
 import { GetConcertDocument } from '@/generated';
-import { MockedProvider, MockedResponse, wait } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useRouter } from 'next/navigation';
@@ -85,25 +85,6 @@ describe('InfoContainer', () => {
       expect(mockPush).toHaveBeenCalledWith('/ticketReservation/1');
     });
   });
-  // it('should set user state to null if no user in localStorage', async () => {
-  //   // Override default mock to return null
-  //   Storage.prototype.getItem = jest.fn(() => null);
-
-  //   render(
-  //     <MockedProvider mocks={[getConcertMock]}>
-  //       <InfoContainer ticketID="1" />
-  //     </MockedProvider>
-  //   );
-
-  //   const reservationButton = await screen.findByTestId('info-container-ticket-reservation');
-  //   await act(async () => {
-  //     fireEvent.click(reservationButton);
-  //   });
-
-  //   waitFor(() => {
-  //     expect(mockPush).toHaveBeenCalledWith('/signin');
-  //   });
-  // });
 
   it('should render artist names', async () => {
     render(
