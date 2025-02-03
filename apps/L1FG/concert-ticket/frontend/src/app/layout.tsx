@@ -12,15 +12,17 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   const pathName = usePathname();
   const signUp = pathName.startsWith('/signup');
   const login = pathName.startsWith('/signin');
+  const reservation = pathName.startsWith('/ticketReservation');
+  const pages = !signUp && !login && !reservation;
   return (
     <html lang="en">
       <body className="bg-black">
         <Suspense>
           <ApolloWrapper>
             <AuthProvider>
-              {!signUp && !login && <HeaderPart />}
+              {pages && <HeaderPart />}
               {children}
-              {!signUp && !login && <Footerr />}
+              {pages && <Footerr />}
               <ToastContainer />
             </AuthProvider>
           </ApolloWrapper>
