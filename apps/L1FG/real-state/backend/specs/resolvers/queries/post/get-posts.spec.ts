@@ -1,9 +1,9 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getOwners } from 'apps/L1FG/real-state/backend/src/resolvers/queries/owner/get-owners';
-import { Owner } from 'apps/L1FG/real-state/backend/src/models/owner-model';
+import { getPosts } from 'apps/L1FG/real-state/backend/src/resolvers/queries/post/get-posts';
+import { Post } from 'apps/L1FG/real-state/backend/src/models/post-model';
 
-jest.mock('apps/L1FG/real-state/backend/src/models/owner-model', () => ({
-  Owner: {
+jest.mock('apps/L1FG/real-state/backend/src/models/post-model', () => ({
+  Post: {
     find: jest
       .fn()
       .mockResolvedValueOnce({
@@ -20,14 +20,14 @@ jest.mock('apps/L1FG/real-state/backend/src/models/owner-model', () => ({
   },
 }));
 
-describe('getOwnerById', () => {
+describe('getPostById', () => {
   const context = {
     userId: '67729b7868800928a433e430',
   };
-  it('should get owners ', async () => {
-    const res = await getOwners!({}, {}, context, {} as GraphQLResolveInfo);
+  it('should get posts ', async () => {
+    const res = await getPosts!({}, {}, context, {} as GraphQLResolveInfo);
 
-    expect(Owner.find);
+    expect(Post.find);
     expect(res).toEqual({
       _id: '67729b7868800928a433e430',
       propertyOwnerId: '67729b7868800928a433e430',
@@ -40,8 +40,11 @@ describe('getOwnerById', () => {
     });
   });
 
-  it('should throw an error when no owner is found', async () => {
-    await expect(getOwners!({}, {}, context, {} as GraphQLResolveInfo)).rejects.toThrow('there is no owners post');
-    expect(Owner.find);
+  it('should throw an error when no post is found', async () => {
+    try {
+      await getPosts!({}, {}, context, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('There are no posts'));
+    }
   });
 });
