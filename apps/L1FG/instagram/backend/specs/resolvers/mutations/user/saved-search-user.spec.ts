@@ -7,6 +7,7 @@ describe('saved users', () => {
   it('Should  ', async () => {
     (UserModel.findOne as jest.Mock).mockResolvedValue(null);
     (UserModel.findOneAndUpdate as jest.Mock).mockResolvedValue({ _id: '678df49a80d39dd699ce316f', userId: '678df49a80d39dd699ce316f', savedUsers: ['678df49a80d39dd699ce316f'] });
+
     if (!savedSearchUser) return;
 
     const result = await savedSearchUser({}, { searchedUserId: '678df49a80d39dd699ce316f' }, { userId: '678df49a80d39dd699ce316f' }, {} as GraphQLResolveInfo);
