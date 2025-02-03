@@ -124,6 +124,7 @@ export const UserTypeDefs = gql`
     updateInfo(input: ProfileInfoInput!): ProfileInfoType
     login(input: SignInInput!): SignInType!
     savedSearchUser(searchedUserId: String!): SearchedUsersType
+    deleteSearchUser(searchedUserId: String!): SearchedUsersType
   }
 `;
 
