@@ -1,5 +1,5 @@
 'use client';
-import Ticketreservation from '@/components/ticketReservation/Ticketreservation';
+import { TicketReservation } from '@/components/ticketReservation/Ticketreservation';
 import { useRouter } from 'next/navigation';
 
 const Page = ({ params }: { params: { ticketID: string } }) => {
