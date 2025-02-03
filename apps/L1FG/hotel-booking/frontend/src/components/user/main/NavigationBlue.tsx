@@ -12,9 +12,11 @@ export const NavigationBlue = () => {
           <div className="py-2 px-4">
             <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Register</p>
           </div>
-          <div className="py-2 px-4">
-            <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Sign in</p>
-          </div>
+          <Link href={'/sign-in'}>
+            <div className="py-2 px-4">
+              <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Sign in</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
