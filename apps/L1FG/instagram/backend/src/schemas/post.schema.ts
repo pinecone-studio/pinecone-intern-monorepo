@@ -24,7 +24,7 @@ export const PostTypeDefs = gql`
   }
   type PostsEdge {
     cursor: ID!
-    node: UserPostType
+    node: UserPostType!
   }
   type PageInfo {
     startCursor: ID!
@@ -32,7 +32,7 @@ export const PostTypeDefs = gql`
     hasNextPage: Boolean
   }
   type PostsConnection {
-    edges: [PostsEdge]
+    edges: [PostsEdge!]!
     pageInfo: PageInfo
   }
 
@@ -41,13 +41,13 @@ export const PostTypeDefs = gql`
     caption: String
   }
   input SmallPostsInput {
-    after: ID!
+    after: ID
     first: Int!
   }
   type Query {
     getPosts(searchingUserId: ID!): [UserPostType]
     getAllPosts: [UserPostType]
-    getSmallPosts(input: SmallPostsInput!): PostsConnection
+    getSmallPosts(input: SmallPostsInput!): PostsConnection!
   }
   type Mutation {
     createPost(input: PostInput!): Post!
