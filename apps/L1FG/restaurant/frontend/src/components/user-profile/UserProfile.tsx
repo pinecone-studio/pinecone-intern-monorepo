@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 const UserProfile = () => {
-    interface User {
+  interface User {
     profileImage: string;
     phoneNumber: string;
     email: string;
@@ -56,7 +56,6 @@ const UserProfile = () => {
             <span className="material-icons text-gray-500">
               <Pencil />
             </span>
-
           </button>
         </div>
 
@@ -64,7 +63,7 @@ const UserProfile = () => {
           <div className="flex flex-col mb-4">
             <p className="text-gray-700 font-medium">Утас:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.phone}</p>
+              {/* <p className="text-gray-900">{user.phone}</p> */}
               <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit phone number">
                 <span className="material-icons">
                   <Pencil />
@@ -77,7 +76,7 @@ const UserProfile = () => {
           <div className="flex flex-col mb-4">
             <p className="text-gray-700 font-medium">Имэйл хаяг:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.gmail}</p>
+              {/* <p className="text-gray-900">{user.gmail}</p> */}
               <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit email">
                 <span className="material-icons">
                   <Pencil />
@@ -90,12 +89,11 @@ const UserProfile = () => {
           <div className="flex flex-col">
             <p className="text-gray-700 font-medium">Нууц үг:</p>
             <div className="flex items-center justify-between">
-              <p className="text-gray-900">{user.password}</p>
+              {/* <p className="text-gray-900">{user.password}</p> */}
               <button className="ml-2 text-gray-500 hover:text-gray-700" aria-label="Edit password">
                 <span className="material-icons">
                   <Pencil />
                 </span>
-
               </button>
             </div>
           </div>
