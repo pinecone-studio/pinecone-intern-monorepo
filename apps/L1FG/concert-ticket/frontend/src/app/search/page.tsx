@@ -21,7 +21,9 @@ const Page = () => {
     m-auto"
       >
         <SearchConcert data-cy="search-page-search-section" selected={date} onSelect={setDate} onChange={handlechange} />
-        <div className="test-white">Loading</div>
+        <div data-cy="search-page-get-data-loading" className="test-white">
+          Loading
+        </div>
       </div>
     );
 
