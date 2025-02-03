@@ -7,25 +7,13 @@ import { format, parseISO } from 'date-fns';
 import { useState } from 'react';
 
 const Page = () => {
-  const { data, loading } = useGetConcertsQuery();
+  const { data } = useGetConcertsQuery();
   const [date, setDate] = useState<Date>();
   const [searchArtist, setSearchArtist] = useState('');
 
   const handlechange = (value: string) => {
     setSearchArtist(value);
   };
-  if (loading)
-    return (
-      <div
-        className="flex flex-col gap-8 w-fit
-    m-auto"
-      >
-        <SearchConcert data-cy="search-page-search-section" selected={date} onSelect={setDate} onChange={handlechange} />
-        <div data-cy="search-page-get-data-loading" className="test-white">
-          Loading
-        </div>
-      </div>
-    );
 
   const searchConcert = data?.getConcerts.filter((concert) => {
     if (!searchArtist) return true;

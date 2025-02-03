@@ -3,11 +3,17 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { useGetConcertQuery } from '@/generated';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const InfoContainer = ({ ticketID }: { ticketID: string }) => {
   const { data } = useGetConcertQuery({ variables: { id: ticketID as string } });
+  const [user, setUser] = useState<string | null>('');
   const formatDate = data?.getConcert.concertDay ? format(data?.getConcert.concertDay, 'yyyy-MM-dd') : '';
-  const user = localStorage.getItem('user');
+  useEffect(() => {
+    const getUser = localStorage.getItem('user');
+    setUser(getUser);
+  }, []);
+
   const router = useRouter();
   const ticketReservation = () => {
     if (!user) return router.push('/signin');

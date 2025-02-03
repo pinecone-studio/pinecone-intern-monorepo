@@ -3,11 +3,6 @@ describe('Concert Search Page', () => {
     cy.visit('/search');
   });
 
-  it('should display loading state while data is being fetched', () => {
-    cy.get('[data-cy="search-page-get-data-loading"]').should('be.visible');
-    cy.get('[data-cy="search-page-get-data-loading"]').should('have.text', 'loading');
-  });
-
   it('should display all concerts when no filters are applied', () => {
     cy.get('[data-cy="page-search-input"]').should('be.visible');
     cy.get('[data-cy="page-search-input"]').should('have.value', '');
