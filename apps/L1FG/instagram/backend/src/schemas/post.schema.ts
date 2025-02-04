@@ -20,7 +20,7 @@ export const PostTypeDefs = gql`
     commentCount: Int!
     likeCount: Int!
     hasLiked: Boolean
-    user: UserTogetherUserType
+    user: UserTogetherUserType!
   }
   type PostsEdge {
     cursor: ID!
