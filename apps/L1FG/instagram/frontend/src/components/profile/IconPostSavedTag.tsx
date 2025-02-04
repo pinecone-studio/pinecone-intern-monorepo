@@ -7,9 +7,8 @@ import Post from './Post';
 import Save from './Save';
 import Tagged from './Tagged';
 import { Separator } from '@/components/ui/separator';
-import { useGetUserTogetherQuery } from '@/generated';
-
 import PostEmpty from './PostEmpty';
+import { useGetUserTogetherQuery } from '@/generated';
 
 const PageEnum = {
   POSTS: 'POSTS',
@@ -19,10 +18,14 @@ const PageEnum = {
 
 type PageType = typeof PageEnum[keyof typeof PageEnum];
 
-const NavItem = ({ label, icon, active, onClick }: { label: string; icon: JSX.Element; active: boolean; onClick: () => void }) => (
-  <div data-testid="nav-item" className={`flex justify-center items-center pt-6 gap-2 cursor-pointer ${active ? 'border-t-[1px] border-black' : ''}`} onClick={onClick}>
-    {icon}
-    <p className="text-xs font-medium text-gray-500">{label}</p>
+const NavItem = ({ label, icon, active, onClick }: { label: string; icon: React.ReactNode; active: boolean; onClick: () => void }) => (
+  <div
+    data-testid="nav-item"
+    className={`flex justify-center items-center pt-6 gap-2 cursor-pointer ${active ? ' text-black border-t-[1px] border-black' : 'text-xs font-medium text-gray-500'}`}
+    onClick={onClick}
+  >
+    <span className={active ? 'text-black' : 'text-gray-500'}>{icon}</span>
+    <p className={`text-xs font-bold ${active ? 'text-black' : 'text-gray-500'}`}>{label}</p>
   </div>
 );
 
