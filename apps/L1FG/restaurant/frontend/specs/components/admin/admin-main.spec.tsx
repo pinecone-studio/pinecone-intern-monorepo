@@ -336,7 +336,13 @@ describe('AdminMainPageComp', () => {
 
   it('displays the formatted date in Mongolian format when a date is selected', async () => {
     const user = userEvent.setup();
+<<<<<<< HEAD
     const testDate = new Date(2024, 1, 15);
+=======
+    const month = new Date().getMonth();
+
+    const testDate = new Date(2024, month, 15);
+>>>>>>> 6c9aa46f7 (duuslaa)
 
     render(<AdminMainPageComp initialDate={testDate} />);
 
