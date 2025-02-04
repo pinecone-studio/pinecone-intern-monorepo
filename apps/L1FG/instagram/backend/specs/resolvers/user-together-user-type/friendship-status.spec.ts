@@ -33,7 +33,8 @@ describe('FreindshipStatus', () => {
       followingCount: 0,
       followerCount: 0,
       postCount: 0,
-      latestStoryTimestamp:0
+      latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -58,8 +59,8 @@ describe('FreindshipStatus', () => {
       followingCount: 0,
       followerCount: 0,
       postCount: 0,
-      latestStoryTimestamp:0
-
+      latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -93,7 +94,8 @@ describe('FreindshipStatus', () => {
       followingCount: 0,
       followerCount: 0,
       postCount: 0,
-      latestStoryTimestamp:0
+      latestStoryTimestamp: 0,
+      profileImage: '',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({

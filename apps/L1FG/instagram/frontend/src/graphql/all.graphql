@@ -73,3 +73,50 @@ query GetAllPosts {
     }
   }
 }
+
+query GetSmallPosts($input: SmallPostsInput!) {
+  getSmallPosts(input: $input) {
+    edges {
+      cursor
+      node {
+        _id
+        postImage
+        caption
+        userId
+        carouselMediaCount
+        createdAt
+        commentCount
+        likeCount
+        hasLiked
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+        }
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
+  }
+}
