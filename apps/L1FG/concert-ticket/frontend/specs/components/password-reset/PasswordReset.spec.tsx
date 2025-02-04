@@ -1,7 +1,7 @@
-import { PasswordResetPage } from '@/components/passwordResert/PasswordReset';
+import { PasswordReset } from '@/components/passwordReset/PasswordReset';
 import { render } from '@testing-library/react';
 describe('PasswordResetPage ', () => {
   it('PasswordResetPage  render successfully', async () => {
-    render(<PasswordResetPage />);
+    render(<PasswordReset />);
   });
 });

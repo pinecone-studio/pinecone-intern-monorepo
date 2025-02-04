@@ -2,7 +2,7 @@
 
 /* eslint-disable */
 
-import { useGetOrdersQuery } from '@/generated';
+import { OrderType, useGetOrdersQuery } from '@/generated';
 import { Clock2, SlidersHorizontal, CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { format, isSameDay, parseISO } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { mn } from 'date-fns/locale';
+import OrderStatusUpdate from './OrderStatusUpdate';
 
 const AdminMainPageComp = () => {
   const { data: orderData } = useGetOrdersQuery();
@@ -118,30 +119,7 @@ const AdminMainPageComp = () => {
                     </div>
                   </div>
 
-                  <div className="w-full flex justify-end mt-2 gap-2">
-                    <Select>
-                      <SelectTrigger data-testid="status-select-button" className="w-[180px]">
-                        <SelectValue placeholder="Хүлээгдэж буй" className="placeholder-[#09090B]" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup className="text-start">
-                          <SelectItem data-testid="belen-test" value="ready">
-                            Бэлэн
-                          </SelectItem>
-                          <SelectItem data-testid="pending-test" value="pending">
-                            Хүлээгдэж буй
-                          </SelectItem>
-                          <SelectItem data-testid="inpro-test" value="inProcess">
-                            Хийгдэж буй
-                          </SelectItem>
-                          <SelectItem data-testid="done-test" value="done">
-                            Дууссан
-                          </SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Button className="px-4 py-2">Хадгалах</Button>
-                  </div>
+                  {order && order._id && typeof order._id === 'string' && <OrderStatusUpdate order={{ ...order, _id: order._id as string, status: order.status ?? '' }} />}
                 </div>
               );
             })
