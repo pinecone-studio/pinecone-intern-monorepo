@@ -35,7 +35,7 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
         <div className="flex justify-center px-3">
           <div className="items-center justify-center w-full relative">
             <Search className="absolute top-1 left-2 text-gray-500" />
-            <Input id="search" placeholder="Search" className=" h-8 pl-8 rounded-xl bg-gray-100" />
+            <Input id="search" placeholder="Search" className=" border-input h-8 pl-8 rounded-xl bg-gray-100" />
           </div>
         </div>
         <div className="flex flex-col gap-3 overflow-y-scroll">

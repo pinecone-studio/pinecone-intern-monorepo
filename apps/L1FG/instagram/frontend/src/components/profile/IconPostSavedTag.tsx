@@ -39,7 +39,7 @@ export const IconPostSavedTag = ({ userId }: { userId: string }) => {
 
   return (
     <div data-testid="IconPostSavedTag">
-      <Separator className="w-[935px]" />
+      <Separator className="w-[900px]" />
       <div className="flex justify-center gap-14">
         <NavItem label="POSTS" icon={<Posts />} active={page === PageEnum.POSTS} onClick={() => setPage(PageEnum.POSTS)} />
         <NavItem label="SAVED" icon={<Saved />} active={page === PageEnum.SAVED} onClick={() => setPage(PageEnum.SAVED)} />
