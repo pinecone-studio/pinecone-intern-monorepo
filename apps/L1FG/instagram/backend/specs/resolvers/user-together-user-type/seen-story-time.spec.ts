@@ -25,6 +25,7 @@ describe('Seen story time', () => {
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await seenStoryTime(parent, {}, { userId: '34' }, {} as GraphQLResolveInfo);
     expect(result).toBe(0);
@@ -56,6 +57,7 @@ describe('Seen story time', () => {
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await seenStoryTime(parent, {}, { userId: '34' }, {} as GraphQLResolveInfo);
     expect(result).toBe('fa');
@@ -82,6 +84,7 @@ describe('Seen story time', () => {
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await seenStoryTime(parent, {}, { userId: '34' }, {} as GraphQLResolveInfo);
     expect(result).toBe(0);

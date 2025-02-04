@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useCreatePostMutation } from '@/generated';
-import CreatePost from '@/components/create-post/CreatePost';
+import CreatePost from '@/components/post/CreatePost';
 
 // Mocking the GraphQL mutation hook
 jest.mock('@/generated', () => ({
