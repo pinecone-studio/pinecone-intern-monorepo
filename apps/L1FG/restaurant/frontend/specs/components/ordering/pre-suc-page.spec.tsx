@@ -99,6 +99,7 @@ describe('PreSuccessPageComp', () => {
                 name: 'Pizza',
                 quantity: 2,
                 price: 10,
+                imageUrl: '/pizza.png',
               },
             ],
           },

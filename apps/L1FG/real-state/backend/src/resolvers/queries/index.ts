@@ -1,4 +1,4 @@
 export * from './sample-query';
-export * from './owner';
+export * from './post';
 export * from './user';
 export * from './property';
