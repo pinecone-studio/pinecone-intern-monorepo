@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Users } from './Users';
 import { useState } from 'react';
 import { useGetUserByNameQuery } from '@/generated';
+import { SavedUsers } from './SavedUsers';
 
 type Props = {
   searchOpen: boolean;
@@ -48,12 +49,7 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
             x
           </p>
         </div>
-        <div className="border mt-8"></div>
-        <div className="flex justify-between p-4 items-center ">
-          <p className="font-bold">Recent</p>
-          <p className="text-[#2563EB] text-xs">Clear All</p>
-        </div>
-        <Users data-testid="user-component" users={users} setSearchOpen={setSearchOpen} />
+        {userName ? <Users data-testid="user-component" users={users} setSearchOpen={setSearchOpen} setUserName={setUserName} /> : <SavedUsers />}
 
         <div className="overflow-y-auto h-[calc(100vh-60px)]"></div>
       </div>
