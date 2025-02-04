@@ -1,6 +1,6 @@
 'use client';
 import { Camera } from 'lucide-react';
-import CreatePostStep1 from '../create-post/CreatePostStep1';
+import CreatePostStep1 from '../post/CreatePostStep1';
 import React from 'react';
 
 const PostEmpty = () => {
@@ -25,7 +25,7 @@ const PostEmpty = () => {
             <p>When you share photos, they will appear</p>
             <p>on your profile.</p>
           </div>
-          <button className="font-medium text-sm text-blue-500 hover:text-black cursor-pointer" data-testid="post-empty-button" onClick={handleClick}>
+          <button className="font-medium text-sm text-blue-500 hover:text-black cursor-pointer " data-testid="post-empty-button" onClick={handleClick}>
             Share your first photo
           </button>
         </div>
