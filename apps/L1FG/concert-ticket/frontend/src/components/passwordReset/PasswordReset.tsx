@@ -1,4 +1,4 @@
-export const PasswordResetPage = () => {
+export const PasswordReset = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#09090B]">
       <div className="w-[446px] h-[300px] bg-[#09090B] border-2 border-[#27272A] rounded-md flex flex-col items-center py-6">
