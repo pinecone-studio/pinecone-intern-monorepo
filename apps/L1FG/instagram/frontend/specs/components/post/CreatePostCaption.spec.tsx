@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CaptionInput from '@/components/create-post/lastCreatePost/CaptionInput';
+import CaptionInput from '@/components/post/lastCreatePost/CaptionInput';
 
 describe('CaptionInput Component', () => {
   const mockSetCaption = jest.fn();
