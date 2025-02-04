@@ -1,4 +1,4 @@
-import MainPageStory from '@/components/Home/mainBar/MainPageStory';
+import MainPageStory from '@/components/home/main/MainPageStory';
 import { render } from '@testing-library/react';
 describe('MenuButtons', () => {
   it('Should render', () => {

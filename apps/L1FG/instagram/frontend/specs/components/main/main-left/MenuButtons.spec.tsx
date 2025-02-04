@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MenuButtons } from '@/components/Home/leftSideBar/MenuButtonsSideBar';
+import { MenuButtons } from '@/components/home/left/MenuButtonsSideBar';
 import { MockedProvider } from '@apollo/client/testing';
 
 const mockPush = jest.fn();

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import userEvent from '@testing-library/user-event';
-import { SidebarContent } from '@/components/Home/leftSideBar/SidebarContent';
+import { SidebarContent } from '@/components/home/left/SidebarContent';
 jest.mock('@/components/providers/AuthProvider', () => ({
   useAuth: jest.fn(() => ({
     user: {
