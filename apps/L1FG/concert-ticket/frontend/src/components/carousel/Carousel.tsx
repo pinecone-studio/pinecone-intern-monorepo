@@ -32,7 +32,7 @@ const Carousel: FC<CarouselProps> = ({ slides }) => {
 
   return (
     <div className="w-full flex items-center justify-center">
-      <div className="relative w-screen h-[500px] overflow-hidden bg-black">
+      <div className="relative w-screen h-[501px] overflow-hidden bg-black">
         {slides.map((slide, index) => (
           <div key={slide.id} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
             <div className="relative w-full h-full">
