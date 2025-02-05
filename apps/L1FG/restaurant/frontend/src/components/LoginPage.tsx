@@ -49,16 +49,17 @@ const LoginPage = () => {
           },
         },
       });
+      console.log(user.data.loginUser);
 
       localStorage.setItem(
         'user',
         JSON.stringify({
-          _id: user.data.loginUser._id,
-          email: user.data.loginUser.email,
-          userName: user.data.loginUser.userName,
-          profileImage: user.data.loginUser.profileImage,
-          phoneNumber: user.data.loginUser.phoneNumber,
-          createdAt: user.data.loginUser.createdAt,
+          _id: user.data.loginUser.user._id,
+          email: user.data.loginUser.user.email,
+          userName: user.data.loginUser.user.userName,
+          profileImage: user.data.loginUser.user.profileImage,
+          phoneNumber: user.data.loginUser.user.phoneNumber,
+          createdAt: user.data.loginUser.user.createdAt,
         })
       );
 
