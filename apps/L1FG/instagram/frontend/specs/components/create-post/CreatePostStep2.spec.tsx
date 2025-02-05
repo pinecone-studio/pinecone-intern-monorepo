@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { CreatePostStep2 } from '@/components/post/CreatePostStep2';
+import { CreatePostStep2 } from '@/components/create-post/CreatePostStep2';
 
 describe('CreatePostStep2 Component', () => {
   const mockSetOpenCreatePostModal = jest.fn();

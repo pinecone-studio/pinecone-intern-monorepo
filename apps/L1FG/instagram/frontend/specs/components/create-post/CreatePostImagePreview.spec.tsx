@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ImagePreview from '@/components/post/lastCreatePost/ImagePreview';
+import ImagePreview from '@/components/create-post/last-create-post/ImagePreview';
 import { JSX, ClassAttributes, ImgHTMLAttributes } from 'react';
 
 /* eslint-disable */

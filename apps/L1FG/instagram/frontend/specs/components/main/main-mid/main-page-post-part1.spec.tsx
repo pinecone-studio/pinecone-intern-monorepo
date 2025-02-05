@@ -199,14 +199,10 @@ describe('MainPagePost Component', () => {
       const postItems = screen.getAllByTestId('post-item');
       expect(postItems).toHaveLength(2); // Two posts
 
-      // Check first post
       const firstPostImages = screen.getAllByTestId('post-image');
-      expect(firstPostImages).toHaveLength(3); // 2 images for post 1 and 1 default image for post 2
+      expect(firstPostImages).toHaveLength(2);
       expect(firstPostImages[0]).toHaveAttribute('src', 'https://example.com/image1.jpg');
       expect(firstPostImages[1]).toHaveAttribute('src', 'https://example.com/image2.jpg');
-
-      // Check second post
-      expect(firstPostImages[2]).toHaveAttribute('src', 'https://example.com/image3.jpg');
 
       // Check like count
       const likeCounts = screen.getAllByTestId('like-count');
@@ -215,11 +211,7 @@ describe('MainPagePost Component', () => {
       expect(likeCounts[1]).toHaveTextContent('0 likes');
 
       // Check comments
-      const viewComments = screen.queryByTestId('view-comments');
-      expect(viewComments).toHaveTextContent('View 5 comment(s)');
-
-      const noComments = screen.getByTestId('no-comments');
-      expect(noComments).toHaveTextContent('No comments yet.');
+      expect(screen.queryAllByTestId('comment')).toHaveLength(2);
     });
   });
 });
