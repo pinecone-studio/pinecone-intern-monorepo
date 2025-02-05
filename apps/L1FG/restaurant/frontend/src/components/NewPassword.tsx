@@ -31,7 +31,6 @@ const NewPassword = () => {
     }
 
     setErrorMessage('');
-    console.log({ userId });
 
     try {
       await createNewPassword({
