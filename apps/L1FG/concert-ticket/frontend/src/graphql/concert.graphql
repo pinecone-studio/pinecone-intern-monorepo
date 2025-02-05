@@ -21,3 +21,27 @@ query GetConcerts {
     }
   }
 }
+
+query GetConcert($id: String) {
+  getConcert(_id: $id) {
+    _id
+    artistName
+    concertDay
+    concertName
+    concertPhoto
+    concertPlan
+    concertTime
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    vipTicket {
+      price
+      quantity
+    }
+  }
+}

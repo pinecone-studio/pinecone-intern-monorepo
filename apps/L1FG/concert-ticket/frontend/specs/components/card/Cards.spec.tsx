@@ -1,6 +1,11 @@
 import { Cards } from '@/components/ticketCard/Cards';
 import { render } from '@testing-library/react';
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
 const cards = [
   {
     _id: 'jgw87',

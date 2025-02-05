@@ -1,48 +1,72 @@
-import { login } from '../../../../src/resolvers/mutations/user/login';
 import { GraphQLResolveInfo } from 'graphql';
+import { login } from '../../../../src/resolvers/mutations/user/login';
 
 jest.mock('../../../../src/models/user.model.ts', () => ({
   UserModel: {
-    findOne: jest
-      .fn()
-      .mockResolvedValueOnce({
-        user: {
-          _id: '1',
-        },
-      })
-      .mockResolvedValueOnce({
-        user: {
-          _id: '1',
-        },
-      })
-      .mockResolvedValueOnce(null),
+    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValue({
+      _id: '1',
+      name: 'aa',
+      email: 'aa',
+      phone: '0000',
+      password: '0000',
+    }),
   },
 }));
 
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn().mockReturnValue('token'),
+}));
+
+jest.mock('bcrypt', () => ({
+  compare: jest.fn().mockResolvedValueOnce(false).mockResolvedValue(true),
+}));
+
 describe('login', () => {
-  it('1.email should login', async () => {
-    const response = await login!({}, { input: { email: 'aa', password: 'aa' } }, {}, {} as GraphQLResolveInfo);
+  const mockInput = { email: 'aa', password: 'aa' };
+  it('1.email should not login', async () => {
+    await expect(
+      login!(
+        {},
+        { input: mockInput },
+        {
+          userId: null,
+        },
+        {} as GraphQLResolveInfo
+      )
+    ).rejects.toThrow('Хэрэглэгч олдсонгүй');
+  });
+  it('2.should password incorrect', async () => {
+    await expect(
+      login!(
+        {},
+        { input: { email: 'aa', password: 'a' } },
+        {
+          userId: null,
+        },
+        {} as GraphQLResolveInfo
+      )
+    ).rejects.toThrow('Нууц үг алдаатай байна');
+  });
 
-    expect(response).toEqual({
+  it('3.should user login', async () => {
+    await expect(
+      login!(
+        {},
+        { input: mockInput },
+        {
+          userId: null,
+        },
+        {} as GraphQLResolveInfo
+      )
+    ).resolves.toEqual({
       user: {
         _id: '1',
+        name: 'aa',
+        email: 'aa',
+        phone: '0000',
+        password: '0000',
       },
+      token: 'token',
     });
-  });
-  it('2.phone  should login', async () => {
-    const response = await login!({}, { input: { phone: '99', password: 'aa' } }, {}, {} as GraphQLResolveInfo);
-
-    expect(response).toEqual({
-      user: {
-        _id: '1',
-      },
-    });
-  });
-  it('3. should throw not login', async () => {
-    try {
-      await login!({}, { input: { email: '', password: '' } }, {}, {} as GraphQLResolveInfo);
-    } catch (error) {
-      expect(error).toEqual(new Error('Invalid credentials'));
-    }
   });
 });

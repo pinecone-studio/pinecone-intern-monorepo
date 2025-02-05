@@ -30,7 +30,8 @@
     "**/*.jsx",
     "../../../../apps/L1FG/concert-ticket/frontend/.next/types/**/*.ts",
     "../../../../dist/apps/L1FG/concert-ticket/frontend/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "src/components/userProfile/OrderHisto.tsx"
   ],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

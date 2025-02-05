@@ -1,7 +1,6 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { typeDefs as CommonTypeDefs } from './common.schema';
 import { UserTypeDefs } from './user.schema';
-import { PostTypeDefs } from './post.schema';
 import { PostLikeTypeDefs } from './post-like.schema';
 import { CommentTypeDefs } from './comment.schema';
 import { CommentLikeTyoeDefs } from './comment-like.schema';
@@ -11,7 +10,8 @@ import { StoryNodeTypeDefs } from './story-node.schema';
 import { StoryTypeDefs } from './story.schema';
 import { StoryLikeTypeDefs } from './story-like.schema';
 import { StoryViewTypeDefs } from './story-view.schema';
-
+import { PostTypeDefs } from './post.schema';
+import { NotificationTypeDefs } from './notification.schema';
 
 export const typeDefs = mergeTypeDefs([
   CommonTypeDefs,
@@ -26,5 +26,5 @@ export const typeDefs = mergeTypeDefs([
   StoryTypeDefs,
   StoryLikeTypeDefs,
   StoryViewTypeDefs,
+  NotificationTypeDefs,
 ]);
-

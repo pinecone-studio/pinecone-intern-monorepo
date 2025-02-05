@@ -1,5 +1,5 @@
 import { addProperty } from '../../../src/resolvers/mutations';
-import { HouseTypeEnum, PropertyInput } from '../../../src/generated'; // Update with the correct import path if needed
+import { HouseTypeEnum, PropertyInput } from '../../../src/generated';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../src/models', () => ({
@@ -49,6 +49,7 @@ describe('addProperty Mutation', () => {
         address: '2q3rawtesy',
         city: 'asdfasdf',
         district: 'asdf',
+        subDistrict: 'asdf',
       },
       details: {
         completionDate: null,
@@ -64,7 +65,7 @@ describe('addProperty Mutation', () => {
       createdAt: new Date(1999).toISOString(),
     };
 
-    const result = await addProperty!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    const result = await addProperty!({}, { input: mockInput }, { userId: null }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '1',
@@ -106,6 +107,7 @@ describe('addProperty Mutation', () => {
         address: '2q3rawtesy',
         city: 'asdfasdf',
         district: 'asdf',
+        subDistrict: 'asdf',
       },
       details: {
         completionDate: null,
@@ -122,7 +124,7 @@ describe('addProperty Mutation', () => {
     };
 
     try {
-      await addProperty!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+      await addProperty!({}, { input: mockInput }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual('Invalid house type');
     }
