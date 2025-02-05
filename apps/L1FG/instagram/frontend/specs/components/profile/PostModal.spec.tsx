@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import '@testing-library/jest-dom';
-import PostModal from '@/components/profile/PostModal';
 import { GetCommentsDocument } from '@/generated';
+import PostModal from '@/components/profile/post/PostModal';
 
 const postMock = {
   _id: '123',
@@ -26,7 +26,7 @@ const mocks = [
 ];
 
 describe('PostModal Component', () => {
-  test('renders PostModal with children', () => {
+  it('renders PostModal with children', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <PostModal post={postMock}>
@@ -38,7 +38,7 @@ describe('PostModal Component', () => {
     expect(screen.getByTestId('open-modal')).toBeInTheDocument();
   });
 
-  test('renders GetComments when commentCount is truthy', async () => {
+  it('renders GetComments when commentCount is truthy', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <PostModal post={postMock} />
@@ -46,7 +46,7 @@ describe('PostModal Component', () => {
     );
   });
 
-  test("renders 'No comments yet.' when commentCount is falsy", () => {
+  it("renders 'No comments yet.' when commentCount is falsy", () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <PostModal post={{ ...postMock, commentCount: 0 }} />
@@ -54,7 +54,7 @@ describe('PostModal Component', () => {
     );
   });
 
-  test('modal opens when clicked', () => {
+  it('modal opens when clicked', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <PostModal post={postMock}>

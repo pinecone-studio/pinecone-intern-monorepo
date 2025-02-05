@@ -1,4 +1,4 @@
-import Save from '@/components/profile/Save';
+import Save from '@/components/profile/post/Save';
 import { render } from '@testing-library/react';
 
 describe('Save Component ', () => {

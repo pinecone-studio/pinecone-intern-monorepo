@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { useParams } from 'next/navigation';
-import { Profile } from '@/components/profile/Profile';
 import { GetUserTogetherDocument } from '@/generated';
+import { Profile } from '@/components/profile/profile/Profile';
 
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(),

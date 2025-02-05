@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { UserPostType } from '@/generated';
-import PostModalCommentEmpty from '@/components/profile/PostModalCommentEmpty';
+import PostModalCommentEmpty from '@/components/profile/post/PostModalCommentEmpty';
 
 const mockPost: UserPostType = {
   postImage: ['/images/test-image.jpg'],

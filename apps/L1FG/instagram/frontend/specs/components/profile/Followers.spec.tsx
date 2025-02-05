@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Followers from '@/components/profile/Followers';
+import Followers from '@/components/profile/following-followers/Followers';
 import { useGetFollowersQuery } from '@/generated';
 
 jest.mock('@/generated', () => ({

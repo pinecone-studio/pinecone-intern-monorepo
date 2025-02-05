@@ -1,4 +1,4 @@
-import PostEmpty from '@/components/profile/PostEmpty';
+import PostEmpty from '@/components/profile/post/PostEmpty';
 import { fireEvent, screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 

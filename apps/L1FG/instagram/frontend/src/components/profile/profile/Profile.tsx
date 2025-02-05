@@ -1,22 +1,23 @@
 'use client';
 import Image from 'next/image';
-import Setting from './Setting';
-import Followers from './Followers';
-import Following from './Following';
+import Setting from '../settings/Setting';
+import Followers from '../following-followers/Followers';
+import Following from '../following-followers/Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
-import StoryHighlight from './StoryHighlight';
-import FollowersEmpty from './FollowersEmpty';
-import EmptyFollowing from './EmptyFollowing';
+
+import FollowersEmpty from '../following-followers/FollowersEmpty';
+import EmptyFollowing from '../following-followers/EmptyFollowing';
 import { Settings } from 'lucide-react';
-import { IconPostSavedTag } from './IconPostSavedTag';
+import { IconPostSavedTag } from '../post/IconPostSavedTag';
+import StoryHighlight from '../story/StoryHighlight';
 
 export const Profile = () => {
   const { userId } = useParams();
   const { data } = useGetUserTogetherQuery({
     variables: { searchingUserId: userId as string },
   });
-  console.log('USER DATA', data);
+
   return (
     <div className="flex  flex-col py-10" data-testid="profile-visit-container">
       <div className="flex gap-20  ml-[72px]">
@@ -78,7 +79,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <p className="text-base font-semibold">{data?.getUserTogether.user?.userName}</p>
+            <p className="text-base font-semibold">{data?.getUserTogether.user?.fullName}</p>
             <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether.user?.bio}</p>
 
             <a className="text-sm font-medium text-[#2563EB]">{data?.getUserTogether.user?.email}</a>
