@@ -3,9 +3,9 @@
 import React from 'react';
 import { useCreatePostMutation } from '@/generated';
 import { CreatePostProps } from '../types';
-import Header from './lastCreatePost/Header';
-import ImagePreview from './lastCreatePost/ImagePreview';
-import CaptionInput from './lastCreatePost/CaptionInput';
+import Header from './last-create-post/Header';
+import ImagePreview from './last-create-post/ImagePreview';
+import CaptionInput from './last-create-post/CaptionInput';
 
 export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
   const [caption, setCaption] = React.useState('');

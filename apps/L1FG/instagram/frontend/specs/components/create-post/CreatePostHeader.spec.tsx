@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Header from '@/components/post/lastCreatePost/Header';
+import Header from '@/components/create-post/last-create-post/Header';
 
 describe('Header Component', () => {
   const mockHandleCreatePost = jest.fn();
