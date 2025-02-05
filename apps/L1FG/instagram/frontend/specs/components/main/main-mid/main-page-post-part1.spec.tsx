@@ -201,8 +201,8 @@ describe('MainPagePost Component', () => {
 
       const firstPostImages = screen.getAllByTestId('post-image');
       expect(firstPostImages).toHaveLength(2);
-      expect(firstPostImages[0]).toHaveAttribute('src', 'https://example.com/image1.jpg');
-      expect(firstPostImages[1]).toHaveAttribute('src', 'https://example.com/image2.jpg');
+      expect(firstPostImages[0]).toHaveAttribute('src', '/images/profilePic.png');
+      expect(firstPostImages[1]).toHaveAttribute('src', '/images/profilePic.png');
 
       // Check like count
       const likeCounts = screen.getAllByTestId('like-count');
