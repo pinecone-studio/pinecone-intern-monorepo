@@ -15,8 +15,11 @@ interface User {
 export const CREATE_USER = gql`
   mutation CreateUser($input: RegisterInput!) {
     createUser(input: $input) {
-      email
-      userName
+      token
+      user {
+        userName
+        email
+      }
     }
   }
 `;

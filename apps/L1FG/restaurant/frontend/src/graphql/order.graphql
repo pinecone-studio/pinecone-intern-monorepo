@@ -13,6 +13,21 @@ mutation MakeOrder($input: InputType!) {
   }
 }
 
+mutation UpdateOrderStatus($orderId: ID!, $status: String!) {
+  updateOrderStatus(orderId: $orderId, status: $status) {
+    _id
+    items {
+      name
+      quantity
+      price
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+  }
+}
+
 query GetOrders {
   getOrders {
     _id

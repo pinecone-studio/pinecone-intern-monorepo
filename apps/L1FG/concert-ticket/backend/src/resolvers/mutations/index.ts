@@ -1,3 +1,5 @@
 export * from './sample-mutation';
-export * from './concert';
+export * from './concerts';
 export * from './users';
+export * from './tickets';
+export * from './orders';

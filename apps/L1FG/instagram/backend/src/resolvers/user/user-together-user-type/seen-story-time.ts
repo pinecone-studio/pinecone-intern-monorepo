@@ -1,5 +1,5 @@
-import { UserTogetherUserTypeResolvers } from "../../../generated";
-import { StoryModel,StoryViewModel } from "../../../models";
+import { UserTogetherUserTypeResolvers } from '../../../generated';
+import { StoryModel, StoryViewModel } from '../../../models';
 
 export const seenStoryTime: UserTogetherUserTypeResolvers['seenStoryTime'] = async (parent, _, { userId }) => {
   const stories = await StoryModel.find({
@@ -7,7 +7,7 @@ export const seenStoryTime: UserTogetherUserTypeResolvers['seenStoryTime'] = asy
     expiringAt: {
       $gte: new Date(),
     },
-  }).sort({ createdAt: -1 });
+  }).sort({ _id: -1 });
   if (stories.length <= 0) {
     await StoryViewModel.findOneAndUpdate(
       {

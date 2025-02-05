@@ -1,6 +1,6 @@
-import MainPagePost from '@/components/Home/mainBar/MainPagePost';
-import MainPageStory from '@/components/Home/mainBar/MainPageStory';
-import HomePageProfile from '@/components/Home/rightBar/HomeProfile';
+import MainPagePost from '@/components/home/main/MainPagePost';
+import MainPageStory from '@/components/home/main/MainPageStory';
+import HomePageProfile from '@/components/home/right/HomeProfile';
 
 const HomePage = () => {
   return (
