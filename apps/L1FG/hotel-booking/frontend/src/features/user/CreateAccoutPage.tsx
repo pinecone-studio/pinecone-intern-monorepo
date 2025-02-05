@@ -1,9 +1,9 @@
-import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Input } from '@/components/ui/input';
+import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-const SignInPage = () => {
+export const CreateAccountPage = () => {
   return (
     <div className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
@@ -13,8 +13,8 @@ const SignInPage = () => {
             <BlackLogoIcon />
           </div>
           <div className="py-2 flex flex-col items-center gap-1 ">
-            <p className="font-Inter font-semibold text-2xl not-italic tracking-[-0.6px]">Sign in</p>
-            <p className="font-Inter font-normal text-sm text-[#71717A]">Enter your email below to sign in</p>
+            <p className="font-Inter font-semibold text-2xl not-italic tracking-[-0.6px]">Create an account</p>
+            <p className="font-Inter font-normal text-sm text-[#71717A]">Enter your email below to create your account</p>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -22,15 +22,6 @@ const SignInPage = () => {
                 <div className="flex flex-col gap-2">
                   <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Email</p>
                   <Input type="email" placeholder="name@example.com" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Password</p>
-                    <Link href="/forget-password">
-                      <p className="font-Inter font-normal text-sm leading-[14px] text-[#2563EB] hover:text-[#2563D2] not-italic cursor-pointer">Forget password?</p>
-                    </Link>
-                  </div>
-                  <Input type="email" placeholder="Password" />
                 </div>
               </div>
               <Button className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
@@ -49,8 +40,8 @@ const SignInPage = () => {
               </div>
             </div>
             <Button className="bg-white hover:bg-white border border-[#E4E4E7] shadow-[#0000000d] shadow-sm">
-              <Link href={'/create-account'}>
-                <p className="font-Inter font-medium text-sm text-[#18181B] not-italic">Create an account</p>
+              <Link href={'/sign-in'}>
+                <p className="font-Inter font-medium text-sm text-[#18181B] not-italic">Log in</p>
               </Link>
             </Button>
           </div>
@@ -63,5 +54,3 @@ const SignInPage = () => {
     </div>
   );
 };
-
-export default SignInPage;
