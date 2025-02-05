@@ -53,12 +53,12 @@ describe('Posts swiper', () => {
     render(<PostsSwiper post={mockPosts[1]} />);
     const postImages = screen.getAllByTestId('post-image');
     expect(postImages).toHaveLength(1);
-    expect(postImages[0]).toHaveAttribute('src', 'image1.jpg');
+    expect(postImages[0]).toHaveAttribute('src', '/images/profilePic.png');
   });
   it('SHould render three images', () => {
     render(<PostsSwiper post={mockPosts[2]} />);
     const postImages = screen.getAllByTestId('post-image');
     expect(postImages).toHaveLength(3);
-    expect(postImages[0]).toHaveAttribute('src', 'image1.jpg');
+    expect(postImages[0]).toHaveAttribute('src', '/images/profilePic.png');
   });
 });
