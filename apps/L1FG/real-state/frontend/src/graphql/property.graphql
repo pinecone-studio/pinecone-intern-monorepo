@@ -1,0 +1,28 @@
+mutation AddProperty($input: PropertyInput!) {
+  addProperty(input: $input) {
+    houseType
+    size
+    images
+    totalRooms
+    garage
+    restrooms
+    uploadedAt
+    createdAt
+    location {
+      subDistrict
+      district
+      city
+      address
+    }
+    details {
+      completionDate
+      windowsCount
+      windowType
+      floorMaterial
+      floorNumber
+      balcony
+      totalFloors
+      lift
+    }
+  }
+}

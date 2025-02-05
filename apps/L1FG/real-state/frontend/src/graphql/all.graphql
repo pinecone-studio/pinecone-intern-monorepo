@@ -1,7 +1,3 @@
 query Query {
   sampleQuery
 }
-
-mutation Mutation {
-  sampleMutation
-}

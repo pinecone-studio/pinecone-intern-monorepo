@@ -1,0 +1,116 @@
+mutation AddPost($input: PostInput!) {
+  addPost(input: $input) {
+    _id
+    propertyOwnerId
+    title
+    description
+    price
+    propertyDetail {
+      houseType
+      size
+      images
+      totalRooms
+      garage
+      restrooms
+      location {
+        address
+        city
+        district
+        subDistrict
+      }
+      details {
+        completionDate
+        windowsCount
+        windowType
+        floorMaterial
+        floorNumber
+        balcony
+        totalFloors
+        lift
+      }
+      uploadedAt
+      createdAt
+    }
+    status
+    updatedAt
+    createdAt
+  }
+}
+
+query GetPosts {
+  getPosts {
+    _id
+    propertyOwnerId
+    title
+    description
+    price
+    propertyDetail {
+      houseType
+      size
+      images
+      totalRooms
+      garage
+      restrooms
+      location {
+        address
+        city
+        district
+        subDistrict
+      }
+      details {
+        completionDate
+        windowsCount
+        windowType
+        floorMaterial
+        floorNumber
+        balcony
+        totalFloors
+        lift
+      }
+      uploadedAt
+      createdAt
+    }
+    status
+    updatedAt
+    createdAt
+  }
+}
+
+query GetPostById($id: ID!) {
+  getPostById(_id: $id) {
+    _id
+    propertyOwnerId
+    title
+    description
+    price
+    propertyDetail {
+      houseType
+      size
+      images
+      totalRooms
+      garage
+      restrooms
+      location {
+        address
+        city
+        district
+        subDistrict
+      }
+      details {
+        completionDate
+        windowsCount
+        windowType
+        floorMaterial
+        floorNumber
+        balcony
+        totalFloors
+        lift
+      }
+      uploadedAt
+      createdAt
+    }
+    status
+    updatedAt
+    createdAt
+  }
+}
