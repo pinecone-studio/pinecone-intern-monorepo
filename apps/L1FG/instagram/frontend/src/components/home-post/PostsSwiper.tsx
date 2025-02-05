@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { imageUrlOptimizer } from '../utils/image-url-optimizer';
 export const PostsSwiper = ({ post }: { post: PostsEdge }) => {
   if (post.node.carouselMediaCount <= 0) {
     return null;
@@ -24,7 +25,7 @@ export const PostsSwiper = ({ post }: { post: PostsEdge }) => {
       >
         {post.node?.postImage.map((image, index) => (
           <SwiperSlide key={index} data-testid="swiper-slide">
-            <Image src={image} alt={`Post Image ${index + 1}`} fill className="object-cover" data-testid="post-image" />
+            <Image src={imageUrlOptimizer(image)} alt={`Post Image ${index + 1}`} fill className="object-cover" data-testid="post-image" />
           </SwiperSlide>
         ))}
       </Swiper>
