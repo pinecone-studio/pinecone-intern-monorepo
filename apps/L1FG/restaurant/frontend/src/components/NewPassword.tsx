@@ -38,7 +38,7 @@ const NewPassword = () => {
           input: { _id: userId, newPassword: password, newRePassword: rePassword },
         },
       });
-
+      localStorage.removeItem('userId');
       router.push('/done');
     } catch (err) {
       setErrorMessage('Серверийн алдаа. Дахин оролдоно уу.');
