@@ -1,48 +1,48 @@
 import Image from 'next/image';
-import Posts from '../svg/Posts';
-import Saved from '../svg/Saved';
+import { useGetPostsQuery } from '@/generated';
 
-const items = [
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-  { image: '/images/profilePic.png' },
-];
+import Message from '../svg/Message';
+import Heart from '../svg/Heart';
+import PostModal from './PostModal';
 
-const Post = () => {
+const Post = ({ userId }: { userId: string }) => {
+  const { data } = useGetPostsQuery({
+    variables: { searchingUserId: userId },
+  });
+
   return (
-    <div className="flex flex-col gap-5  " data-testid="profile-post">
+    <div className="flex flex-col gap-5 w-[900x] mt-5" data-testid="profile-posts">
       <div>
-        <p className="w-full border"></p>
-      </div>
+        <div className="grid grid-cols-3 gap-1 overflow-y-scroll">
+          {data?.getPosts?.map((post) => {
+            if (!post?.postImage.length || !post?.postImage[0]) {
+              return null;
+            }
+            return (
+              <PostModal post={post} key={post._id}>
+                <div className="relative flex flex-col items-center justify-center group cursor-pointer">
+                  <Image src={post?.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90   transition-opacity duration-300" width={300} height={300} />
 
-      <div className="flex justify-center gap-4">
-        <div className="flex justify-center items-center gap-1 ">
-          <Posts />
-          <p className="text-xs font-medium tex-[#09090B]">POSTS</p>
-        </div>
-        <div className="flex justify-center items-center gap-1 ">
-          <Saved />
-          <p className="text-xs font-medium tex-[#09090B]">SAVED</p>
-        </div>
-      </div>
+                  <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
+                    <div className="flex gap-2 justify-center items-center">
+                      <Heart />
+                      <p className="text-white font-bold text-lg">{post.likeCount}</p>
+                    </div>
 
-      <div>
-        <div className="grid grid-cols-3 gap-1 overflow-y-scroll ">
-          {items.map((item, index) => (
-            <div key={index} className="flex items-center justify-center border p-2">
-              <Image src={item.image} alt={'profile'} className="bg-slate-500" width={309} height={309} />
-            </div>
-          ))}
+                    <div className="flex gap-2 justify-center items-center">
+                      <Message />
+                      <p className="text-white font-bold text-lg">{post.commentCount}</p>
+                    </div>
+                  </div>
+                </div>
+              </PostModal>
+            );
+          })}
         </div>
-        <div className="text-gray-500 text-wrap text-[12px] flex flex-col gap-4 mt-8 ">
-          <p className="flex justify-center">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-          <p className="flex justify-center">© 2024 INSTAGRAM FROM META</p>
+
+        <div className="text-gray-500 text-center text-[12px] flex flex-col gap-4 mt-8">
+          <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
+          <p>© 2024 INSTAGRAM FROM META</p>
         </div>
       </div>
     </div>

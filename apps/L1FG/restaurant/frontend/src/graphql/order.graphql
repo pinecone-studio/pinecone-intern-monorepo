@@ -1,0 +1,44 @@
+mutation MakeOrder($input: InputType!) {
+  makeOrder(input: $input) {
+    _id
+    items {
+      name
+      quantity
+      price
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+  }
+}
+
+mutation UpdateOrderStatus($orderId: ID!, $status: String!) {
+  updateOrderStatus(orderId: $orderId, status: $status) {
+    _id
+    items {
+      name
+      quantity
+      price
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+  }
+}
+
+query GetOrders {
+  getOrders {
+    _id
+    items {
+      price
+      quantity
+      name
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+  }
+}

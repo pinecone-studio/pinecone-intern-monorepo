@@ -1,13 +1,12 @@
 'use client';
 
 import OrderPageComponent from '@/components/order/OrderPageComponent';
-
 import React from 'react';
 
-const OrderPage = () => {
+const OrderPage = ({ params }: { params: { tableNumber: number } }) => {
   return (
     <div className="max-w-full">
-      <OrderPageComponent />
+      <OrderPageComponent tableNumber={params.tableNumber} />
     </div>
   );
 };

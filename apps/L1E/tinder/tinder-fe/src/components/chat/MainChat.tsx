@@ -105,23 +105,27 @@ const ChatInterface: React.FC<MatchesProps> = ({ matches, targetUser, userone, d
     };
   }, [isModalOpen]);
   return (
-    <div className="flex flex-col h-full border-l-[1px] border-[#4e4e7] justify-between">
-      <div className="flex max-w-[960px] justify-between items-center border-b-[1px] p-4 border-[#4e4e7] w-screen">
-        <div className="flex gap-4">
-          <img src={targetUser?.images[0]} className="w-[50px] h-[50px] rounded-full object-cover border-2 border-gray-300" />
-          <div className="flex flex-col">
+    <div className="flex flex-col md:h-full h-[100%] justify-between border-l-[1px] border-[#4e4e7]">
+      <div className="flex md:max-w-[960px] md:h-[73px] h-[20px] justify-between items-center border-b-[1px] p-4 border-[#4e4e7] w-screen">
+        <div className="flex md:w-[147px] h-[20px] w-[120px] md:h-[50px] gap-4">
+          <img src={targetUser?.images[0]} className="md:w-[50px] md:h-[50px] w-[20px] h-[20px] rounded-full object-cover border-2 border-gray-300" />
+          <div className="flex md:flex gap-2 md:flex-col">
             <div className="flex gap-2">
-              <h2 className="text-lg font-semibold">{targetUser?.username}</h2>
-              <div className="text-lg font-semibold">{targetUser?.age}</div>
+              <h2 className="md:text-lg text-sm font-semibold">{targetUser?.username}</h2>
+              <div className="md:text-lg text-sm font-semibold">{targetUser?.age}</div>
             </div>
             <div className="text-sm text-gray-500">{targetUser?.profession}</div>
           </div>
         </div>
-        <div className="flex w-[217px] gap-3 h-[40px]">
-          <button data-testid="view" className="w-[117px] py-2 border-[1px] rounded-[4px] border-gray-200" onClick={handleProfileClick}>
+        <div className="flex md:w-[217px] gap-3 h-[20px] md:h-[40px]">
+          <button onClick={handleProfileClick} data-testid="view" className="md:w-[147px] py-2 px-2 border-[1px] md:text-base text-sm items-center justify-center flex rounded-[4px] border-gray-200">
             View profile
           </button>
-          <button data-testid="unmatch" onClick={() => setIsUnmatchModalOpen(true)} className="w-[117px] py-2 px-4 border-[1px] rounded-[4px] border-gray-200">
+          <button
+            data-testid="unmatch"
+            onClick={() => setIsUnmatchModalOpen(true)}
+            className="md:w-[117px] py-2 px-4 border-[1px] md:text-base text-sm items-center justify-center flex rounded-[4px] border-gray-200"
+          >
             Unmatch
           </button>
         </div>

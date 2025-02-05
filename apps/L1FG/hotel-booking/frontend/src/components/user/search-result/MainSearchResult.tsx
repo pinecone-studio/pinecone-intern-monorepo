@@ -1,13 +1,19 @@
 import { LeftNavbar } from './LeftNavbar';
 import { RightNavbar } from './RightNavbar';
+import { Hotel } from '@/generated';
 
-export const MainResultSearch = () => {
+interface MainResultSearchProps {
+  data: Array<Hotel | null>;
+  setSearchValuePrice: (_: 'asc' | 'desc') => void;
+}
+
+export const MainResultSearch = ({ data, setSearchValuePrice }: MainResultSearchProps) => {
   return (
-    <main>
+    <div>
       <div className="container mx-auto flex gap-[48px] px-[60px] py-[32px] justify-center">
         <LeftNavbar />
-        <RightNavbar />
+        <RightNavbar data={data} setSearchValuePrice={setSearchValuePrice} />
       </div>
-    </main>
+    </div>
   );
 };

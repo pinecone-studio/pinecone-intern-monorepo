@@ -18,6 +18,7 @@ export type PropertyFeature = {
     address: string;
     city: string;
     district: string;
+    subDistrict: string;
   };
   details: {
     completionDate: Date;
@@ -39,6 +40,7 @@ const PropertyFeatureSchema = new Schema<PropertyFeature>({
     required: true,
     enum: Object.values(HouseTypeEnum),
   },
+
   size: { type: String, required: true },
   images: { type: [String], required: true },
   totalRooms: { type: Number, required: true },
@@ -48,6 +50,7 @@ const PropertyFeatureSchema = new Schema<PropertyFeature>({
     address: { type: String, required: true },
     city: { type: String, required: true },
     district: { type: String, required: true },
+    subDistrict: { type: String, required: true },
   },
   details: {
     completionDate: Date,

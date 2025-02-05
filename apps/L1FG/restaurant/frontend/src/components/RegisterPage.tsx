@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { gql, useMutation } from '@apollo/client';
+import { useRouter } from 'next/navigation';
 
 interface User {
   userName: string;
@@ -10,8 +12,20 @@ interface User {
   loading: boolean;
   errorMessage: string;
 }
-
+export const CREATE_USER = gql`
+  mutation CreateUser($input: RegisterInput!) {
+    createUser(input: $input) {
+      token
+      user {
+        userName
+        email
+      }
+    }
+  }
+`;
 const RegisterPage = () => {
+  const router = useRouter();
+
   const [formState, setFormState] = useState<User>({
     userName: '',
     email: '',
@@ -21,12 +35,41 @@ const RegisterPage = () => {
     errorMessage: '',
   });
 
+  const [createUser] = useMutation(CREATE_USER);
+
   const handleRegister = async () => {
-    if (!formState.email || !formState.password || !formState.userName || !formState.rePassword) {
-      setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
-      return;
+    if ([formState.email, formState.password, formState.userName, formState.rePassword].some((field) => !field)) {
+      return setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
     }
-    setFormState({ ...formState, loading: !formState.loading });
+    if (formState.password !== formState.rePassword) {
+      return setFormState({ ...formState, errorMessage: 'Нууц үг таарахгүй байна.' });
+    }
+    if (!/\S+@\S+\.\S+/.test(formState.email)) {
+      return setFormState({ ...formState, errorMessage: 'Зөв имэйл хаяг оруулна уу.' });
+    }
+
+    try {
+      await createUser({
+        variables: {
+          input: {
+            email: formState.email,
+            userName: formState.userName,
+            password: formState.password,
+            rePassword: formState.rePassword,
+          },
+        },
+      });
+
+      setFormState({ ...formState, loading: !formState.loading });
+
+      router.push('/login');
+    } catch (error) {
+      setFormState({
+        ...formState,
+        loading: false,
+        errorMessage: 'Бүртгэл амжилтгүй боллоо.',
+      });
+    }
   };
 
   return (
@@ -34,7 +77,7 @@ const RegisterPage = () => {
       <div className="w-full flex flex-col items-center justify-between gap-6">
         <p className="font-semibold text-2xl text-[#441500]">Бүртгүүлэх</p>
         <div className="flex flex-col gap-4 max-w-[340px] min-w-[320px]">
-          <div className="flex flex-col gap-2">
+          <form className="flex flex-col gap-2">
             <input
               data-testid="userName"
               placeholder="Хэрэглэгчийн нэр"
@@ -42,6 +85,7 @@ const RegisterPage = () => {
               onChange={(e) => setFormState({ ...formState, userName: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="text"
+              autoComplete="username"
             />
             <input
               data-testid="email"
@@ -50,6 +94,7 @@ const RegisterPage = () => {
               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="email"
+              autoComplete="username"
             />
             <input
               data-testid="password"
@@ -58,6 +103,7 @@ const RegisterPage = () => {
               onChange={(e) => setFormState({ ...formState, password: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="password"
+              autoComplete="new-password"
             />
 
             <input
@@ -67,8 +113,9 @@ const RegisterPage = () => {
               onChange={(e) => setFormState({ ...formState, rePassword: e.target.value })}
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="password"
+              autoComplete="new-password"
             />
-          </div>
+          </form>
           <p className={`text-red-600 text-sm w-4/5 justify-center items-center px-2 mx-auto ${formState.errorMessage === '' ? 'hidden' : 'flex'}`}>{formState.errorMessage}</p>
           <button
             data-testid="Бүртгүүлэх"

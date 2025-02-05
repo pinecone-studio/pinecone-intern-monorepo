@@ -1,12 +1,12 @@
 'use client';
 
-import { HomePage } from '@/components/user/pages/home-page';
+import { HomePage } from '@/features/user/HomePage';
 
 const Page = () => {
   return (
-    <div>
+    <main>
       <HomePage />
-    </div>
+    </main>
   );
 };
 

@@ -1,0 +1,51 @@
+query getMe {
+  getMe {
+    _id
+    name
+    phone
+    email
+    isAdmin
+    createdAt
+    updatedAt
+  }
+}
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    user {
+      _id
+      updatedAt
+      phone
+      name
+      isAdmin
+      email
+      createdAt
+    }
+    token
+  }
+}
+
+mutation Register($input: RegisterInput!) {
+  register(input: $input) {
+    user {
+      _id
+      name
+      phone
+      email
+      isAdmin
+      createdAt
+      updatedAt
+    }
+    token
+  }
+}
+
+mutation RequestChangePasswordInput($input: RequestChangePasswordInput!) {
+  requestChangePassword(input: $input) {
+    email
+  }
+}
+
+mutation ChangePasswordInput($input: ChangePasswordInput!) {
+  changePassword(input: $input)
+}
