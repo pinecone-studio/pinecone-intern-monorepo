@@ -34,12 +34,11 @@ const NewPassword = () => {
     console.log({ userId });
 
     try {
-      const { data } = await createNewPassword({
+      await createNewPassword({
         variables: {
           input: { _id: userId, newPassword: password, newRePassword: rePassword },
         },
       });
-      console.log(data?.changePassword);
 
       router.push('/done');
     } catch (err) {
