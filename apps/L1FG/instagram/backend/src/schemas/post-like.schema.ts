@@ -17,15 +17,13 @@ export const PostLikeTypeDefs = gql`
   }
 
   type LikeType {
-    userName: String
-    hasStory: Boolean
-    profileImage: String
     postImage: String
   }
 
   type Query {
     getPostLike: LikeType!
     getLikedPost: LikedType
+    getwhoLikedPost: LikeType
   }
 
   type Mutation {
