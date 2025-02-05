@@ -1,22 +1,39 @@
 'use client';
 
+import { useRequestChangePasswordMutation, useRestoreForgetPasswordMutation } from '@/generated';
 import { MoveLeft, RefreshCcw } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useRef, KeyboardEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useRef, KeyboardEvent, useEffect } from 'react';
 
 const OTP = () => {
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const [requestChangePassword] = useRequestChangePasswordMutation();
+  const [requestedEmail, setRequestedEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRequestedEmail(localStorage.getItem('requestedEmail'));
+  }, []);
+
+  const [restoreForgetPassword, { loading, error }] = useRestoreForgetPasswordMutation();
+  const router = useRouter();
+
+  useEffect(() => {
+    const isFilled = otp.every((digit) => digit !== '');
+
+    if (isFilled) {
+      handleSubmit();
+    }
+  }, [otp]);
 
   const handleChange = (value: string, index: number) => {
-    if (!/^\d*$/.test(value)) return; // Allow only digits
+    if (!/^\d*$/.test(value)) return;
 
     const newOtp = [...otp];
-    newOtp[index] = value.slice(-1); // Ensure only one character
+    newOtp[index] = value.slice(-1);
     setOtp(newOtp);
 
-    // Move to the next input if the value length is 1
     if (value.length === 1 && index < otp.length - 1) {
       inputsRef.current[index + 1]?.focus();
     }
@@ -28,15 +45,42 @@ const OTP = () => {
     }
   };
 
-  // const handleResend = () => {};
+  const handleResend = async () => {
+    if (requestedEmail) {
+      await requestChangePassword({
+        variables: { input: { email: requestedEmail } },
+      });
+    } else {
+      router.push('/reset-password');
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!requestedEmail) {
+      router.push('/reset-password');
+      return;
+    }
+    const { data } = await restoreForgetPassword({
+      variables: { input: { email: requestedEmail, otp: otp.join('') } },
+    });
+
+    localStorage.setItem('userId', JSON.stringify(data?.updateForgetPassword.user._id));
+    localStorage.removeItem('requestedEmail');
+    router.push('/new-password');
+  };
+
+  const back = async () => {
+    localStorage.removeItem('requestedEmail');
+    router.push('/reset-password');
+  };
 
   return (
     <div className="flex flex-col items-center w-full mx-auto px-4 gap-8 max-w-[340px]">
       <Image src="/Logo.png" alt="Logo" width={54} height={66} />
       <div className="flex flex-col gap-6 justify-center items-center">
-        <p className="text-center">Имэйл хаяг руу илгээсэн 4 оронтой кодыг оруулна уу</p>
+        <p className="text-center">Имэйл хаяг руу илгээсэн 6 оронтой кодыг оруулна уу</p>
         <div className="flex flex-col gap-6">
-          <form className="flex" aria-label="Enter the 4-digit code sent to your email">
+          <form className="flex" aria-label="Enter the 6-digit code sent to your email">
             {otp.map((value, index) => (
               <input
                 key={index}
@@ -45,26 +89,28 @@ const OTP = () => {
                 }}
                 type="text"
                 inputMode="numeric"
-                className={`w-12 h-12 ${
-                  index === 0 ? 'rounded-l-lg border-r-0' : index === otp.length - 1 ? 'rounded-r-lg border-l-0' : index === 2 ? 'border-l-0' : ''
-                } border border-[#D6D8DB] text-center`}
+                className={`w-10 h-10 border border-[#D6D8DB] text-center ${index === 0 ? 'rounded-l-lg ' : index === otp.length - 1 ? 'rounded-r-lg border-l-0' : 'border-l-0'}`}
                 aria-label={`Digit ${index + 1}`}
                 maxLength={1}
                 value={value}
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
+                disabled={loading} // Disable inputs while verifying
               />
             ))}
           </form>
+
+          {/* Loading Text */}
+          {loading && <p className="text-blue-500 text-sm">Шалгаж байна...</p>}
+
+          {/* Error Message */}
+          {error && <p className="text-red-500 text-sm">{error.message}</p>}
+
           <div className="flex justify-between items-center gap-2 w-full">
-            <Link href="/reset-password">
+            <button onClick={back} type="button" data-testid="back">
               <MoveLeft width={13} height={13} className="hover:text-gray-700" />
-            </Link>
-            <button
-              className="hover:text-gray-700"
-              aria-label="Resend OTP"
-              //  onClick={handleResend}
-            >
+            </button>
+            <button data-testid="resendOtp" className="hover:text-gray-700" aria-label="Resend OTP" onClick={handleResend} disabled={loading}>
               <RefreshCcw width={13} height={13} />
             </button>
           </div>
