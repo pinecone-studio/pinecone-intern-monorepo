@@ -8,3 +8,4 @@ export * from './story.model';
 export * from './story-view.model';
 export * from './story-like.model';
 export * from './saved-user';
+export * from './notification.model';
