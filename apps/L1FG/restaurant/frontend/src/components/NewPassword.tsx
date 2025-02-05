@@ -11,9 +11,14 @@ const NewPassword = () => {
   const [rePassword, setRePassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [userId, setUserId] = useState<string | null>('');
+
   useEffect(() => {
-    setUserId(localStorage.getItem('userId'));
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(JSON.parse(storedUserId));
+    }
   }, []);
+
   const handleSubmit = async () => {
     if (!userId) {
       router.push('/reset-password');
@@ -28,13 +33,12 @@ const NewPassword = () => {
     setErrorMessage('');
 
     try {
-      const { data } = await createNewPassword({
+      await createNewPassword({
         variables: {
           input: { _id: userId, newPassword: password, newRePassword: rePassword },
         },
       });
-      console.log(data?.changePassword);
-
+      localStorage.removeItem('userId');
       router.push('/done');
     } catch (err) {
       setErrorMessage('Серверийн алдаа. Дахин оролдоно уу.');

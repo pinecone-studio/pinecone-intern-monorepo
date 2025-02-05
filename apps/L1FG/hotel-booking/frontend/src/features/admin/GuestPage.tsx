@@ -3,8 +3,13 @@
 import { Header } from '@/components/admin/main';
 import { Sidebar } from './main/Sidebar';
 import { GuestDataTable, SelectStatus } from '@/components/admin/ui';
+import { Booking, useGetBookingsQuery } from '@/generated';
 
 export const GuestsPage = () => {
+  const { data } = useGetBookingsQuery();
+
+  const guests = (data?.getBookings || []).filter((guest): guest is Booking => guest !== null);
+
   return (
     <div className="flex">
       <Sidebar hotels="" guests="active" />
@@ -17,7 +22,7 @@ export const GuestsPage = () => {
               <input type="text" className="px-3 py-2 w-full outline-none border border-[#E4E4E7] rounded-[6px] text-[#09090B] font-Inter text-sm font-normal h-10" placeholder="Search" />
               <SelectStatus />
             </div>
-            <GuestDataTable />
+            <GuestDataTable data={guests} />
           </div>
         </div>
       </div>
