@@ -6,19 +6,21 @@ const mockData = [
     id: '1',
     name: 'Hotel 1',
     images: [],
-    // Add other properties your `Hotel` type expects
   },
   {
     id: '2',
     name: 'Hotel 2',
     images: [],
-    // Add other properties
   },
 ];
 
-test('renders hotels correctly', () => {
-  render(<RightNavbar data={mockData} />);
+describe('renders hotels correctly and changes price order', () => {
+  it('1', () => {
+    const setSearchValuePrice = jest.fn();
 
-  expect(screen.findByText('Hotel 1'));
-  expect(screen.findByText('Hotel 2'));
+    render(<RightNavbar data={mockData} setSearchValuePrice={setSearchValuePrice} />);
+
+    expect(screen.getByText('Hotel 1'));
+    expect(screen.getByText('Hotel 2'));
+  });
 });
