@@ -9,12 +9,15 @@ import { useRouter } from 'next/navigation';
 export const LOGIN_USER = gql`
   mutation LoginUser($input: LoginInput!) {
     loginUser(input: $input) {
-      createdAt
-      email
-      profileImage
-      _id
-      userName
-      phoneNumber
+      user {
+        _id
+        userName
+        email
+        profileImage
+        phoneNumber
+        createdAt
+      }
+      token
     }
   }
 `;

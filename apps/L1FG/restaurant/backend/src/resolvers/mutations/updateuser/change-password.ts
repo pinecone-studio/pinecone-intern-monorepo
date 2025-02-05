@@ -1,6 +1,5 @@
-import { MutationResolvers } from '../../../generated';
+import { MutationResolvers, Response } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
 
 export const changePassword: MutationResolvers['changePassword'] = async (_, { input }) => {
   const { _id, newPassword, newRePassword } = input;
@@ -14,10 +13,15 @@ export const changePassword: MutationResolvers['changePassword'] = async (_, { i
     throw new Error('User not found');
   }
 
-  // Hash new password before saving
-  const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-  user.password = hashedNewPassword;
+  await UserModel.updateOne(
+    {
+      _id,
+    },
+    {
+      newPassword,
+      otp: '',
+    }
+  );
 
-  await user.save();
-  return user;
+  return Response.Success;
 };

@@ -1,9 +1,9 @@
 'use client';
 
-import AdminSinglePage from '@/components/adminSinglePage/AdminSinglePage';
+// import AdminSinglePage from '@/components/adminSinglePage/[id]/page';
 
 const Page = () => {
-  return <AdminSinglePage />;
+  // return <AdminSinglePage />;
 };
 
 export default Page;
