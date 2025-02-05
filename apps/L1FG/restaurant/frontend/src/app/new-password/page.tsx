@@ -2,7 +2,7 @@ import NewPassword from '@/components/NewPassword';
 
 const NewPasswordPage = () => {
   return (
-    <div>
+    <div className="mt-[150px]">
       <NewPassword />
     </div>
   );
