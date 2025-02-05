@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { InstaSVG } from './Svg/InstaSvg';
+import { InstaSVG } from '../../svg/InstaSvg';
 import { NotificationSheet } from '@/components/notifications/NotificationSheet';
 import { useRouter } from 'next/navigation';
-import { InstagramSvg } from './Svg/InstagramSvg';
+import { InstagramSvg } from '../../svg/InstagramSvg';
 import { SearchSheet } from '@/components/search/SearchSheet';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
