@@ -1,10 +1,12 @@
-"use client"
+'use client';
 
-const AdminPage = () => {
-    return (
-        <div>
-            Admin Page
-        </div>
-    )
-} 
-export default AdminPage
+import { AdminPage } from '@/components/pages/admin-page';
+
+const Page = () => {
+  return (
+    <div>
+      <AdminPage />
+    </div>
+  );
+};
+export default Page;
