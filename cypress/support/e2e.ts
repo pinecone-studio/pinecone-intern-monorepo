@@ -14,11 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-<<<<<<< HEAD
-import './commands'
+import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-=======
-import './commands'
->>>>>>> 607c2f366 (feat(fe): fe admin page -- can get dialog input value)
