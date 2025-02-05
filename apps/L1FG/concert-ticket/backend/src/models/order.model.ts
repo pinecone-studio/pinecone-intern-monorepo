@@ -2,37 +2,63 @@ import { model, models, Schema, Types } from 'mongoose';
 
 type OrderType = {
   _id: string;
-  userId: Types.ObjectId;
-  concertId: Types.ObjectId;
+  userID: Types.ObjectId;
+  concertID: Types.ObjectId;
+  ticketID: Types.ObjectId;
   phoneNumber: number;
+  email: string;
   totalPrice: number;
-  orderNumber: string;
-  vipTicketId: Types.ObjectId;
-  regularTicketId: Types.ObjectId;
-  standingAreaTicketId: Types.ObjectId;
+  ticketNumber: string;
+  paymentType: string;
+  // vipTicketId: Types.ObjectId;
+  // regularTicketId: Types.ObjectId;
+  // standingAreaTicketId: Types.ObjectId;
+  vipTicket: { price: number; quantity: number };
+  regularTicket: { price: number; quantity: number };
+  standingAreaTicket: { price: number; quantity: number };
 };
 const orderSchema = new Schema<OrderType>(
   {
-    userId: {
+    userID: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
     },
-    concertId: {
+    concertID: {
       type: Schema.Types.ObjectId,
       ref: 'concert',
       required: true,
     },
+    ticketID: {
+      type: Schema.Types.ObjectId,
+      ref: 'ticket',
+      required: true,
+    },
     phoneNumber: {
       type: Number,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
     },
     totalPrice: {
       type: Number,
+      required: true,
     },
-    orderNumber: {
+    paymentType: {
       type: String,
+      required: true,
     },
+    ticketNumber: {
+      type: String,
+      required: true,
+    },
+    vipTicket: { price: Number, quantity: Number },
+    regularTicket: { price: Number, quantity: Number },
+    standingAreaTicket: { price: Number, quantity: Number },
   },
+
   { timestamps: true }
 );
 
