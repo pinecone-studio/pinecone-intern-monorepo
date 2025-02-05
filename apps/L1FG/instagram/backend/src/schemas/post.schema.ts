@@ -15,7 +15,7 @@ export const PostTypeDefs = gql`
     postImage: [String!]!
     caption: String
     userId: ID
-    carouselMediaCount: Int
+    carouselMediaCount: Int!
     createdAt: Date
     commentCount: Int!
     likeCount: Int!
