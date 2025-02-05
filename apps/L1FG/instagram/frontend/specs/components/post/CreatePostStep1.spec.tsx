@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CreatePostStep1 from '@/components/create-post/CreatePostStep1';
+import CreatePostStep1 from '@/components/post/CreatePostStep1';
 
 describe('CreatePostStep1 Component', () => {
   const mockSetOpenCreatePostModal = jest.fn();

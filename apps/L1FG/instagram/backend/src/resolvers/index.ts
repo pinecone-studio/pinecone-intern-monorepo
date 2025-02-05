@@ -3,15 +3,15 @@ import * as Mutation from './mutations';
 import * as Query from './queries';
 import * as FollowerUserType from './follow/follower-user-type';
 import * as FollowingUserType from './follow/following-user-type';
-import * as UserTogetherUserType from './user/user-together-user-type'
-import * as UserPostType from './post/user-post-type'
+import * as UserTogetherUserType from './user/user-together-user-type';
+import * as UserPostType from './post/user-post-type';
+import * as CommentDetailType from './comment/comment-detail-type';
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
   serialize(value) {
-    if(value==0)
-    {
-      return 0
+    if (value == 0) {
+      return 0;
     }
     if (value instanceof Date) {
       return value.getTime();
@@ -39,5 +39,6 @@ export const resolvers = {
   FollowerUserType,
   FollowingUserType,
   UserTogetherUserType,
-  UserPostType
+  UserPostType,
+  CommentDetailType,
 };

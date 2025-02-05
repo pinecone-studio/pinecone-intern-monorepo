@@ -7,7 +7,11 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   isPrivate: { type: Boolean, default: false },
   hasStory: { type: Boolean, default: false },
-  profileImage: { type: String },
+  profileImage: {
+    type: String,
+    // eslint-disable-next-line no-secrets/no-secrets
+    default: 'https://res.cloudinary.com/dqxstnqrf/image/upload/q_auto,f_auto/v1738557334/464760996_1254146839119862_3605321457742435801_n.png_fgbfnt.jpg',
+  },
   gender: { type: String, enum: ['female', 'male', 'not_know'], default: 'not_know' },
   followingCount: {
     type: Number,
