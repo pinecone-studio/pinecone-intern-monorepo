@@ -18,7 +18,7 @@ describe('NewPassword Component', () => {
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
     (useChangePasswordMutation as jest.Mock).mockReturnValue([mockChangePassword, { loading: false }]);
-    localStorage.setItem('userId', 'test-user');
+    localStorage.setItem('userId', JSON.stringify('test-user'));
   });
 
   afterEach(() => {
@@ -26,12 +26,22 @@ describe('NewPassword Component', () => {
     localStorage.clear();
   });
 
-  test('renders inputs and button', () => {
+  test('updates input fields correctly', () => {
     render(<NewPassword />);
 
-    expect(screen.getByTestId('password'));
-    expect(screen.getByTestId('rePassword'));
-    expect(screen.getByTestId('CreateNewPassword'));
+    const passwordInput = screen.getByTestId('password');
+    const rePasswordInput = screen.getByTestId('rePassword');
+
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.change(rePasswordInput, { target: { value: 'password123' } });
+  });
+
+  test('retrieves userId from localStorage', async () => {
+    render(<NewPassword />);
+
+    await waitFor(() => {
+      expect(localStorage.getItem('userId')).toBe(JSON.stringify('test-user'));
+    });
   });
 
   test('shows error if passwords do not match', async () => {
@@ -66,7 +76,7 @@ describe('NewPassword Component', () => {
     fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password123' } });
     fireEvent.click(screen.getByTestId('CreateNewPassword'));
 
-    await waitFor(() => expect(screen.getByText('Серверийн алдаа. Дахин оролдоно уу.')));
+    expect(await screen.findByText('Серверийн алдаа. Дахин оролдоно уу.'));
   });
 
   test('redirects if userId is missing', () => {
@@ -76,7 +86,8 @@ describe('NewPassword Component', () => {
 
     expect(mockRouter.push).toHaveBeenCalledWith('/reset-password');
   });
-  it('button is disabled when loading', () => {
+
+  test('button is disabled when loading', () => {
     (useChangePasswordMutation as jest.Mock).mockReturnValue([mockChangePassword, { loading: true }]);
     render(<NewPassword />);
 

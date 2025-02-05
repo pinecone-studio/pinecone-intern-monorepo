@@ -7,12 +7,16 @@ import { useState } from 'react';
 const ResetPassword = () => {
   const [email, setEmail] = useState<string>('');
   const [requestChangePassword] = useRequestChangePasswordMutation();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleContinue = async () => {
+    setLoading(!loading);
+
     const { data } = await requestChangePassword({
       variables: { input: { email } },
     });
+
     if (!data) return;
 
     localStorage.setItem('requestedEmail', data.requestChangePassword.email);
@@ -37,7 +41,7 @@ const ResetPassword = () => {
           className="flex w-full h-[36px] font-medium text-sm justify-center items-center rounded-md text-white bg-[#441500] disabled:bg-gray-400"
           onClick={handleContinue}
         >
-          Үргэлжлүүлэх
+          {loading ? 'Уншиж байна...' : 'Үргэлжлүүлэх'}
         </button>
       </form>
     </div>
