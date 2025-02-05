@@ -14,7 +14,6 @@ export const changePassword: MutationResolvers['changePassword'] = async (_, { i
     throw new Error('User not found');
   }
 
-  // Hash new password before saving
   const hashedNewPassword = await bcrypt.hash(newPassword, 10);
   user.password = hashedNewPassword;
 
