@@ -4,6 +4,13 @@ import { render } from '@testing-library/react';
 
 describe('MainResultSearch', () => {
   it('should render MainResultSearch successfully', async () => {
-    render(<MainResultSearch />);
+    render(
+      <MainResultSearch
+        data={[]}
+        setSearchValuePrice={function (_: 'asc' | 'desc') {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    );
   });
 });
