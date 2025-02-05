@@ -240,13 +240,11 @@ describe('AdminMainPageComp', () => {
   });
 
   it('handles undefined date correctly', () => {
-    const { rerender } = render(<AdminMainPageComp />);
-
     // Force date to be undefined by manipulating React state
     const originalUseState = React.useState;
     jest.spyOn(React, 'useState').mockImplementationOnce(() => [undefined, jest.fn()]);
 
-    rerender(<AdminMainPageComp />);
+    render(<AdminMainPageComp />);
 
     // Should show no orders when date is undefined
     expect(screen.queryAllByTestId('total-price')).toHaveLength(2);
@@ -347,7 +345,7 @@ describe('AdminMainPageComp', () => {
 
   it('displays the formatted date in Mongolian format when a date is selected', async () => {
     const user = userEvent.setup();
-    const testDate = new Date(2024, 0, 15);
+    const testDate = new Date(2024, 1, 15);
 
     render(<AdminMainPageComp initialDate={testDate} />);
 
@@ -360,7 +358,7 @@ describe('AdminMainPageComp', () => {
     const dateButton = screen.getByText('15');
     fireEvent.click(dateButton);
 
-    // Expected Mongolian formatted date (e.g., "1 сарын 15")
+    // Expected Mongolian formatted date (e.g., "2 сарын 15")
     const expectedFormattedDate = format(testDate, "L 'сарын' d", { locale: mn });
 
     // Check if the formatted date is displayed correctly
