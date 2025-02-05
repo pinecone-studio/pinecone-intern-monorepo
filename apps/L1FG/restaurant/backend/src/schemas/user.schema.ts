@@ -111,7 +111,7 @@ export const userTypeDefs = gql`
     updateNameUser(input: UpdateUserNameType!): UserType!
     updateEmailUser(input: UpdateUserEmailType!): UserType!
     updateNumberUser(input: UpdateUserNumberType!): UserType!
-    updatePasswordUser(input: UpdateUserPasswordType!): UserType!
+    updatePasswordUser(input: UpdateUserPasswordType!): Response!
     updateUserImage(input: UpdateUserImageType!): UserType!
   }
 `;

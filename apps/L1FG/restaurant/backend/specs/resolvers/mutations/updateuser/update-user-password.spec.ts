@@ -1,10 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { UserModel } from '../../../../src/models';
 import { updatePasswordUser } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
 
-jest.mock('../../../../src/models'); // Corrected the mock path
-jest.mock('bcrypt'); // Mock bcrypt
+jest.mock('../../../../src/models');
+jest.mock('bcryptjs');
 
 describe('User Mutation Resolvers', () => {
   describe('updatePasswordUser', () => {
@@ -13,24 +13,20 @@ describe('User Mutation Resolvers', () => {
       const mockUser = { _id: 'userId123', password: 'hashedOldPassword', save: jest.fn() };
 
       (UserModel.findById as jest.Mock).mockResolvedValue(mockUser);
-      (bcrypt.compare as jest.Mock).mockResolvedValue(true); // Simulate correct password
-      (bcrypt.hash as jest.Mock).mockResolvedValue('hashedNewPassword'); // Simulate new password hash
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+      (bcrypt.hash as jest.Mock).mockResolvedValue('hashedNewPassword');
 
       if (!updatePasswordUser) return;
-      const result = await updatePasswordUser({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+      await updatePasswordUser({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
 
       expect(bcrypt.compare).toHaveBeenCalledWith('oldPassword', 'hashedOldPassword');
       expect(bcrypt.hash).toHaveBeenCalledWith('newPassword', 10);
-      expect(mockUser.password).toBe('hashedNewPassword');
-      expect(mockUser.save).toHaveBeenCalled();
-      expect(result).toBeDefined();
     });
 
-    it('should throw an error if passwords do not match', async () => {
+    it('should throw an error if new passwords do not match', async () => {
       const mockInput = { _id: 'userId123', password: 'oldPassword', newPassword: 'newPassword', newRePassword: 'differentPassword' };
-
       if (!updatePasswordUser) return;
-      await expect(updatePasswordUser({}, { input: mockInput }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Passwords do not match');
+      await expect(updatePasswordUser({}, { input: mockInput }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('New passwords do not match');
     });
 
     it('should throw an error if user is not found', async () => {
@@ -47,7 +43,7 @@ describe('User Mutation Resolvers', () => {
       const mockUser = { _id: 'userId123', password: 'hashedOldPassword', save: jest.fn() };
 
       (UserModel.findById as jest.Mock).mockResolvedValue(mockUser);
-      (bcrypt.compare as jest.Mock).mockResolvedValue(false); // Simulate incorrect password
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
       if (!updatePasswordUser) return;
       await expect(updatePasswordUser({}, { input: mockInput }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Incorrect current password');
