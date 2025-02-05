@@ -1,12 +1,12 @@
 'use client';
 import { TextSideBar } from '@/components/notifications/TextSideBar';
-import { HomeSVG } from './Svg/HomeSvg';
+import { HomeSVG } from '../../svg/HomeSvg';
 import { useRouter } from 'next/navigation';
-import { SearchSVG } from './Svg/SearchSvg';
+import { SearchSVG } from '../../svg/SearchSvg';
 import { HeartSVG } from './Svg/HeartSvg';
 import { Create } from './Create';
 import { SquarePlus } from 'lucide-react';
-import { UserSvg } from './Svg/UserSvg';
+import { UserSvg } from '../../svg/UserSvg';
 import { useAuth } from '@/components/providers/AuthProvider';
 
 type Props = {
