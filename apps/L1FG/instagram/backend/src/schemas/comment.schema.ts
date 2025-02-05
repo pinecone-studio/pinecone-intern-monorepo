@@ -16,6 +16,7 @@ export const CommentTypeDefs = gql`
     postId: ID
     createdAt: Date
     updatedAt: Date
+    commentLiked: Boolean
     user: UserTogetherUserType
     likeCount: Int
   }
