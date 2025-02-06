@@ -1,4 +1,4 @@
-import EmptyFollowing from '@/components/profile/EmptyFollowing';
+import EmptyFollowing from '@/components/profile/follow/EmptyFollowing';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 describe('EmptyFollowing Component', () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { useGetCommentsQuery } from '@/generated';
-import GetComments from '@/components/profile/GetComments';
+import GetComments from '@/components/profile/comment/GetComments';
 
 jest.mock('@/generated', () => ({
   useGetCommentsQuery: jest.fn(),
