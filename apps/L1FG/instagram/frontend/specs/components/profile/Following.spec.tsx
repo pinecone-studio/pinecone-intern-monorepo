@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Following from '@/components/profile/Following';
+import Following from '@/components/profile/follow/Following';
 import { useGetFollowingQuery } from '@/generated';
 
 jest.mock('@/generated', () => ({

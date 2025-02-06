@@ -1,4 +1,4 @@
-import Tagged from '@/components/profile/Tagged';
+import Tagged from '@/components/profile/profilePost/Tagged';
 import { render } from '@testing-library/react';
 
 describe('Tagged Component', () => {

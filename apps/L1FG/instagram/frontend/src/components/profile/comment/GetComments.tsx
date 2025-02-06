@@ -7,7 +7,7 @@ const GetComments = ({ postId }: { postId: string }) => {
     variables: { input: { postId } },
   });
   return (
-    <div className="p-6 flex flex-col gap-6 h-[498px] overflow-y-scroll ">
+    <div className="p-6 flex flex-col gap-6 h-[488px] overflow-y-scroll ">
       {data?.getComments?.map((comment, index) => (
         <div className="flex  justify-between items-center" key={index}>
           <div className="flex  ">

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Post from '@/components/profile/Post';
 import { useGetPostsQuery } from '@/generated';
+import Post from '@/components/profile/profilePost/Post';
 
 jest.mock('@/generated', () => ({
   useGetPostsQuery: jest.fn(),

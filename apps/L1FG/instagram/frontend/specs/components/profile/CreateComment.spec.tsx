@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { CreateCommentDocument } from '@/generated';
-import CreateComment from '@/components/profile/CreateComment';
+import CreateComment from '@/components/profile/comment/CreateComment';
 
 describe('CreateComment Button', () => {
   it('disables button during loading', async () => {

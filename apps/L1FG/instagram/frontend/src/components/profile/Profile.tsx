@@ -1,15 +1,15 @@
 'use client';
 import Image from 'next/image';
-import Setting from './Setting';
-import Followers from './Followers';
-import Following from './Following';
+import Setting from './profilePost/Setting';
+import Followers from './follow/Followers';
+import Following from './follow/Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
-import StoryHighlight from './StoryHighlight';
-import FollowersEmpty from './FollowersEmpty';
-import EmptyFollowing from './EmptyFollowing';
+import StoryHighlight from './story/StoryHighlight';
+import FollowersEmpty from './follow/FollowersEmpty';
+import EmptyFollowing from './follow/EmptyFollowing';
 import { Settings } from 'lucide-react';
-import { IconPostSavedTag } from './IconPostSavedTag';
+import { IconPostSavedTag } from './profilePost/IconPostSavedTag';
 
 export const Profile = () => {
   const { userId } = useParams();
@@ -78,7 +78,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <p className="text-base font-semibold">{data?.getUserTogether.user?.userName}</p>
+            <p className="text-base font-semibold">{data?.getUserTogether.user?.fullName}</p>
             <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether.user?.bio}</p>
 
             <a className="text-sm font-medium text-[#2563EB]">{data?.getUserTogether.user?.email}</a>

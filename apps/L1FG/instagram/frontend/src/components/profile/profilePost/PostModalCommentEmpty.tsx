@@ -19,7 +19,7 @@ const PostModalCommentEmpty = ({ children, post }: { children: React.ReactNode; 
               <div className="flex justify-between py-3 px-5  items-center">
                 <div className="flex gap-5 justify-center items-center">
                   <Image src="/images/profilePic.png" alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover  bg-red-700" />
-                  <p className="font-medium text-base">{post.user?.fullName}</p>
+                  <p className="font-medium text-base">{post.user?.userName}</p>
                 </div>
                 <div>
                   <Ellipsis />
