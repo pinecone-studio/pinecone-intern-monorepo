@@ -43,7 +43,7 @@ const Addpassword: React.FC = () => {
     const savedData = localStorage.getItem('signupFormData') || '{}';
     const parsedData = JSON.parse(savedData);
     parsedData.password = password;
-    localStorage.setItem('signupFormData', JSON.stringify(parsedData)); // Persist password to localStorage
+    localStorage.setItem('signupFormData', JSON.stringify(parsedData));
 
     setStep('interest');
   };

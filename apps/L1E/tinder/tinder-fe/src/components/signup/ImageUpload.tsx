@@ -53,9 +53,6 @@ export const ImageUpload: React.FC = () => {
     setImages([]);
     toast.success('Images saved successfully!');
     setStep('user');
-
-    // setUploading(false);
-    // toast.error('Failed to upload images');
   };
 
   const handleRemove = (index: number) => {
@@ -64,11 +61,11 @@ export const ImageUpload: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-screen h-screen items-center justify-between p-6">
+    <div className="flex flex-col md:w-screen h-full items-center justify-between p-6 overflow-hidden">
       {step === 'image' && (
-        <main className="w-full max-w-2xl h-screen mx-auto flex flex-col justify-center items-center gap-6">
+        <main className="w-full max-w-2xl flex flex-col justify-center items-center gap-6 flex-1">
           <h2 className="text-2xl font-semibold text-center">Upload your images</h2>
-          <div className="grid grid-cols-3 gap-6 w-[640px] h-auto">
+          <div className="md:grid md:grid-cols-3 flex items-center justify-center gap-6 w-full h-auto">
             {previews.map((preview, index) => (
               <div key={index} data-testid="map" className="aspect-square relative bg-gray-50 rounded-lg overflow-hidden w-[200px] h-[300px]">
                 <img src={preview} alt={`Uploaded Image ${index}`} className="w-full h-full object-cover" />

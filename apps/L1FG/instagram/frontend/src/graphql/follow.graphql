@@ -1,0 +1,43 @@
+query GetFollowers($searchingUserId: ID) {
+  getFollowers(searchingUserId: $searchingUserId) {
+    followerId {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      friendshipStatus {
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+    targetId
+  }
+}
+query GetFollowing($searchingUserId: ID) {
+  getFollowing(searchingUserId: $searchingUserId) {
+    followerId
+    targetId {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+  }
+}

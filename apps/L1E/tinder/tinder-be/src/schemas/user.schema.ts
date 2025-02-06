@@ -13,7 +13,7 @@ export const typeDefs = gql`
     job: String!
     age: String!
     images: [String!]!
-    match: String!
+    match: [String!]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -24,7 +24,7 @@ export const typeDefs = gql`
     username: String!
     interest: String!
     images: [String!]!
-    match: String!
+    match: [String!]!
     bio: String!
     profession: String!
     job: String!
@@ -84,6 +84,7 @@ export const typeDefs = gql`
 
   type Mutation {
     addImages(input: AddImagesInput!, _id: ID): User!
+    updateMatch(userId: ID!, matchId: ID!): User!
     deleteUser(_id: ID): User!
     deleteImage(input: DeleteInput!, _id: ID): User!
     createUser(input: RegisterInput!): User!

@@ -2,20 +2,77 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/navigation';
+
+export const LOGIN_USER = gql`
+  mutation LoginUser($input: LoginInput!) {
+    loginUser(input: $input) {
+      user {
+        _id
+        userName
+        email
+        profileImage
+        phoneNumber
+        createdAt
+      }
+      token
+    }
+  }
+`;
 
 const LoginPage = () => {
+  const router = useRouter();
+
   const [formState, setFormState] = useState({
     email: '',
     password: '',
     loading: false,
     errorMessage: '',
   });
+
+  const [loginUser] = useMutation(LOGIN_USER);
+
   const handleSignIn = async () => {
     if (!formState.email || !formState.password) {
       setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
-    setFormState({ ...formState, loading: !formState.loading });
+
+    try {
+      const user = await loginUser({
+        variables: {
+          input: {
+            email: formState.email,
+            password: formState.password,
+          },
+        },
+      });
+      console.log(user.data.loginUser);
+
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          _id: user.data.loginUser.user._id,
+          email: user.data.loginUser.user.email,
+          userName: user.data.loginUser.user.userName,
+          profileImage: user.data.loginUser.user.profileImage,
+          phoneNumber: user.data.loginUser.user.phoneNumber,
+          createdAt: user.data.loginUser.user.createdAt,
+        })
+      );
+
+      setFormState({ ...formState, loading: !formState.loading });
+
+      router.push('/order/1');
+    } catch (error) {
+      setFormState({
+        ...formState,
+        loading: false,
+        errorMessage: 'Имэйл эсвэл нууц үг буруу байна.',
+      });
+    }
   };
 
   return (
@@ -53,7 +110,9 @@ const LoginPage = () => {
           >
             {formState.loading ? 'Уншиж байна...' : 'Нэвтрэх'}
           </button>
-          <div className="flex w-full h-[36px] font-medium text-sm justify-center items-center">Нууц үг мартсан?</div>
+          <Link href="reset-password">
+            <button className="flex w-full h-[36px] font-medium text-sm justify-center items-center">Нууц үг мартсан?</button>
+          </Link>
           <div className="flex justify-between items-center gap-4">
             <div className="w-full h-[1px] border-[1px] border-[#E4E4E7]"></div>
             <div className="text-xs text-[#71717A]">Эсвэл </div>

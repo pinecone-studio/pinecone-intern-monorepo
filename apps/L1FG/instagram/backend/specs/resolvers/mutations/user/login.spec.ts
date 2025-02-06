@@ -44,7 +44,7 @@ describe('Login', () => {
     if (!login) {
       return;
     }
-    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Password is incorrect');
+    await expect(login({}, { input: input }, { userId: '12' }, {} as GraphQLResolveInfo)).rejects.toThrow('Пассворд буруу байна');
   });
   it('Should user login', async () => {
     process.env.SESSION_SECRET = '123';

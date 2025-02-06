@@ -5,3 +5,118 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+query GetUserTogether($searchingUserId: String!) {
+  getUserTogether(searchingUserId: $searchingUserId) {
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+    viewer {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+    }
+  }
+}
+
+query GetAllPosts {
+  getAllPosts {
+    _id
+    postImage
+    caption
+    userId
+    carouselMediaCount
+    createdAt
+    commentCount
+    likeCount
+    hasLiked
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+  }
+}
+
+query GetSmallPosts($input: SmallPostsInput!) {
+  getSmallPosts(input: $input) {
+    edges {
+      cursor
+      node {
+        _id
+        postImage
+        caption
+        userId
+        carouselMediaCount
+        createdAt
+        commentCount
+        likeCount
+        hasLiked
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+        }
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
+  }
+}
