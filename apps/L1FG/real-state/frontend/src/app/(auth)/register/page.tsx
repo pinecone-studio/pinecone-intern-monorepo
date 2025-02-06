@@ -18,7 +18,7 @@ const FormSchema = z
     (values) => {
       return values.password === values.confirmPassword;
     },
-    { message: 'Баталгаажуулах нууц үг нь нууц үгтэй таарах ёстой жүү', path: ['comfirmPassword'] }
+    { message: 'Баталгаажуулах нууц үг нь нууц үгтэй таарах ёстой жүү', path: ['confirmPassword'] }
   );
 
 const Page = () => {
