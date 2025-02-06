@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useGetFollowingQuery } from '@/generated';
 import { Search, X } from 'lucide-react';
@@ -17,7 +16,7 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] h-[400px] p-0 flex flex-col gap-2">
         <DialogHeader>
-          <div className="flex justify-between items-center px-3">
+          <div className="flex justify-between items-center px-3 py-1">
             <div></div>
             <h3 className="flex justify-center font-semibold">Following</h3>
             <div className="flex justify-end">
@@ -33,12 +32,12 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
         </DialogHeader>
         <Separator className="w-full" />
         <div className="flex justify-center px-3">
-          <div className="items-center justify-center w-full relative">
-            <Search className="absolute top-1 left-2 text-gray-500" />
-            <Input id="search" placeholder="Search" className=" border-input h-8 pl-8 rounded-xl bg-gray-100" />
+          <div className="items-center justify-center w-full relative  ">
+            <Search className="absolute top-1.5 left-3 text-gray-500 h-5 w-5" />
+            <input id="search" placeholder="Search" className="  h-8 pl-9  bg-gray-100 outline-none w-full rounded-lg" />
           </div>
         </div>
-        <div className="flex flex-col gap-3 overflow-y-scroll">
+        <div className="flex flex-col gap-3 overflow-y-scroll px-3 mt-2">
           {data?.getFollowing?.map((item, index) => (
             <div key={index} className="flex justify-between ">
               <div className=" flex gap-4">

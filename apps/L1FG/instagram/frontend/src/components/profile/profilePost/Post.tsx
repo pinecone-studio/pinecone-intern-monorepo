@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import { useGetPostsQuery } from '@/generated';
-
-import Message from '../svg/Message';
-import Heart from '../svg/Heart';
 import PostModal from './PostModal';
+import Message from '@/components/svg/Message';
+import Heart from '@/components/svg/Heart';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
