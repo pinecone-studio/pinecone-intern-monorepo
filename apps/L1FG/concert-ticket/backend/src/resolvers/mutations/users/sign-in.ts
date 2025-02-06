@@ -7,7 +7,6 @@ export const signIn: MutationResolvers['signIn'] = async (_: unknown, { input })
   const { email, password } = input;
 
   const user = await UserModel.findOne({ email });
-  console.log('hi');
 
   if (!user) throw new Error('User email not found');
 

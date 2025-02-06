@@ -39,6 +39,9 @@ export const GeneralInfo = () => {
             <div className="flex items-center gap-1">
               <Star />
               <Star />
+              <Star />
+              <Star />
+              <Star />
             </div>
           </div>
         </div>

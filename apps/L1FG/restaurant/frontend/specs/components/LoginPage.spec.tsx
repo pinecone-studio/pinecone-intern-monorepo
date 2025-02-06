@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
-
 describe('LoginPage', () => {
   const mockPush = jest.fn();
   (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
@@ -25,11 +24,14 @@ describe('LoginPage', () => {
       result: {
         data: {
           loginUser: {
-            _id: '12345',
-            email: 'test@example.com',
-            userName: 'testuser',
-            profileImage: '/profile.jpg',
-            createdAt: '2023-01-01',
+            user: {
+              _id: '12345',
+              email: 'test@example.com',
+              userName: 'testuser',
+              profileImage: '/profile.jpg',
+              createdAt: '2023-01-01',
+            },
+            token: 'mockToken123',
           },
         },
       },

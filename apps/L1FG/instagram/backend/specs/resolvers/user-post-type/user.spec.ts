@@ -16,6 +16,7 @@ describe('user', () => {
       commentCount: 2,
       likeCount: 3,
       postImage: ['fad'],
+      carouselMediaCount: 3,
       user: {
         _id: '3',
         userName: 'john',

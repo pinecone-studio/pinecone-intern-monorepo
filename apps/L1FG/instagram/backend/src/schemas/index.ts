@@ -11,7 +11,7 @@ import { StoryTypeDefs } from './story.schema';
 import { StoryLikeTypeDefs } from './story-like.schema';
 import { StoryViewTypeDefs } from './story-view.schema';
 import { PostTypeDefs } from './post.schema';
-
+import { NotificationTypeDefs } from './notification.schema';
 
 export const typeDefs = mergeTypeDefs([
   CommonTypeDefs,
@@ -26,5 +26,5 @@ export const typeDefs = mergeTypeDefs([
   StoryTypeDefs,
   StoryLikeTypeDefs,
   StoryViewTypeDefs,
+  NotificationTypeDefs,
 ]);
-
