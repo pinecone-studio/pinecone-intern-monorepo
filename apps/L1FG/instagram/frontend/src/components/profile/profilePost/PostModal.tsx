@@ -55,7 +55,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                   </div>
                 </div>
                 <div className="flex gap-2 px-5">
-                  <p className="text-gray-500">Be the first to </p>
+                  <p className="text-gray-500">Be the first to ch </p>
                   <p className="hover:text-gray-400 cursor-pointer">like this</p>
                 </div>
                 <Separator />
