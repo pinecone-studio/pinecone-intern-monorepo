@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import '@testing-library/jest-dom';
-import PostModal from '@/components/profile/PostModal';
 import { GetCommentsDocument } from '@/generated';
+import PostModal from '@/components/profile/profilePost/PostModal';
 
 const postMock = {
   _id: '123',

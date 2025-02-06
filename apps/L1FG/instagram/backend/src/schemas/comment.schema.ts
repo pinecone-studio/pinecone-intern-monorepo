@@ -8,6 +8,7 @@ export const CommentTypeDefs = gql`
     postId: ID
     createdAt: Date
     updatedAt: Date
+    likeCount: Int
   }
   type CommentDetailType {
     _id: ID

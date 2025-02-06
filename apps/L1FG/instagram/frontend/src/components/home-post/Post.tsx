@@ -8,11 +8,14 @@ import { PostsSwiper } from './PostsSwiper';
 import { PostCaption } from './PostCaption';
 import { PostComment } from './PostComment';
 import { PostLike } from '../home/main/PostLike';
+import { ProfileHover } from './ProfileHover';
 const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
   return (
     <div className="md:border-b-[1px] md:pb-5" data-testid="post-item">
       <div className="flex gap-2">
-        <Avatar post={post} />
+        <ProfileHover searchingUserId={post.node.user._id}>
+          <Avatar post={post} />
+        </ProfileHover>
         <Username post={post} />
       </div>
       <PostsSwiper post={post} />
