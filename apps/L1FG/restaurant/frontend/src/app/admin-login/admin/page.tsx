@@ -1,6 +1,8 @@
+import React from 'react';
+
 import AdminPage from '@/components/admin-profile/AdminPage';
 
-const Admin = () => {
+const Page = () => {
   return (
     <div className="flex justify-center">
       <AdminPage />
@@ -8,4 +10,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Page;
