@@ -16,7 +16,7 @@ export const Profile = () => {
   const { data } = useGetUserTogetherQuery({
     variables: { searchingUserId: userId as string },
   });
-  console.log('USER DATA', data);
+
   return (
     <div className="flex  flex-col py-10" data-testid="profile-visit-container">
       <div className="flex gap-20  ml-[72px]">
