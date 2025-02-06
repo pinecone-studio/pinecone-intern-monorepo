@@ -17,8 +17,8 @@ export const PostTypeDefs = gql`
     price: String!
     propertyDetail: Property!
     status: PostStats!
-    updatedAt: String!
-    createdAt: String!
+    updatedAt: String
+    createdAt: String
   }
 
   input PostInput {
