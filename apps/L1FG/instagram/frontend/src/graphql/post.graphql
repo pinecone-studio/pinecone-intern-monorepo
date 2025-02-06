@@ -37,3 +37,17 @@ query GetPosts($searchingUserId: ID!) {
     }
   }
 }
+
+mutation CreatePostLike($input: PostLikeInput!) {
+  createPostLike(input: $input) {
+    userId
+    postId
+  }
+}
+
+mutation DeletePostLike($postId: String!) {
+  deletePostLike(postId: $postId) {
+    userId
+    postId
+  }
+}

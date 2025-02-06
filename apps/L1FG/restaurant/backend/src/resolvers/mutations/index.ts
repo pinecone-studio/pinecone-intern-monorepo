@@ -11,3 +11,5 @@ export * from './updateuser/update-user-number';
 export * from './updateuser/update-user-image';
 export * from './updateuser/restore-forget-password';
 export * from './updateuser/request-change-password';
+export * from './update-order-status';
+export * from './updateuser/change-password';

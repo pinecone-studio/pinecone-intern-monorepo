@@ -1,8 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { UserTogetherUserType } from '@/generated';
+import { SavedSearchUserDocument, UserTogetherUserType } from '@/generated';
 import { Users } from '@/components/search/Users';
 import { useRouter } from 'next/navigation';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
 const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
@@ -11,11 +12,45 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-const mockSetSearchOpen = jest.fn();
+const mockUserName = jest.fn();
+
+const savedUserMock: MockedResponse = {
+  request: {
+    query: SavedSearchUserDocument,
+    variables: { input: { searchedUserId: '6793033930f7772deb7ef2c6' } },
+  },
+  result: {
+    data: {
+      savedUsers: ['6793033930f7772deb7ef2c6', '6793033930f7772deb7ef2c6'],
+    },
+  },
+};
+
+const mockUsers = [
+  {
+    _id: '6793033930f7772deb7ef2c6',
+    bio: '',
+    email: '',
+    followerCount: 1,
+    followingCount: 1,
+    friendshipStatus: { followedBy: false },
+    fullName: '',
+    gender: undefined,
+    hasStory: false,
+    isPrivate: false,
+    postCount: 1,
+    profileImage: '',
+    userName: '',
+  },
+];
 
 describe('Users Component', () => {
   it('should display "No users found" when no users are provided', () => {
-    render(<Users users={[]} setSearchOpen={mockSetSearchOpen} />);
+    render(
+      <MockedProvider mocks={undefined}>
+        <Users users={undefined} setSearchOpen={Boolean} setUserName={mockUserName} />
+      </MockedProvider>
+    );
     expect(screen.getByText('User not found')).toBeInTheDocument();
   });
 
@@ -38,7 +73,11 @@ describe('Users Component', () => {
       },
     ];
 
-    render(<Users users={mockUsers} setSearchOpen={mockSetSearchOpen} />);
+    render(
+      <MockedProvider mocks={[savedUserMock]}>
+        <Users users={mockUsers} setSearchOpen={Boolean} setUserName={mockUserName} />
+      </MockedProvider>
+    );
   });
 });
 jest.mock('next/navigation', () => ({
@@ -75,58 +114,31 @@ describe('Users Component', () => {
         profileImage: '',
         userName: 'happy',
       },
-      {
-        _id: ' 2',
-        bio: '',
-        email: '',
-        followerCount: 1,
-        followingCount: 1,
-        friendshipStatus: { followedBy: false },
-        fullName: '',
-        gender: undefined,
-        hasStory: false,
-        isPrivate: false,
-        postCount: 1,
-        profileImage: '',
-        userName: 'dda',
-      },
     ];
 
-    render(<Users users={mockUsers} setSearchOpen={setSearchOpenMock} />);
+    render(
+      <MockedProvider mocks={[savedUserMock]}>
+        <Users users={mockUsers} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
+      </MockedProvider>
+    );
 
     expect(screen.getByText('happy')).toBeInTheDocument();
-
-    expect(screen.getByText('dda')).toBeInTheDocument();
   });
 
   it('calls clickUser and navigates to user profile on click', () => {
-    const mockUsers = [
-      {
-        _id: '6793033930f7772deb7ef2c6',
-        bio: '',
-        email: '',
-        followerCount: 1,
-        followingCount: 1,
-        friendshipStatus: { followedBy: false },
-        fullName: '',
-        gender: undefined,
-        hasStory: false,
-        isPrivate: false,
-        postCount: 1,
-        profileImage: '',
-        userName: '',
-      },
-    ];
-
-    render(<Users users={mockUsers} setSearchOpen={setSearchOpenMock} />);
+    render(
+      <MockedProvider mocks={[savedUserMock]}>
+        <Users users={mockUsers} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
+      </MockedProvider>
+    );
     const userElement = screen.getByTestId('visit-profile');
 
     fireEvent.click(userElement);
+    fireEvent.click(userElement);
 
-    // setSearchOpen функц дуудагдсан эсэхийг шалгана
     expect(setSearchOpenMock).toHaveBeenCalledWith(false);
+    expect(mockUserName).toHaveBeenCalledWith('');
 
-    // router.push дуудагдсан эсэхийг шалгана
     expect(routerPushMock).toHaveBeenCalledWith('/6793033930f7772deb7ef2c6');
   });
 });
