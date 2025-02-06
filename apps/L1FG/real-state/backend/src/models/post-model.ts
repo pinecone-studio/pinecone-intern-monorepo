@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document, Types, models } from 'mongoose';
 import { HouseTypeEnum } from './property-feature.model';
-
 export interface PostType extends Document {
   _id: string;
   propertyOwnerId: Types.ObjectId;
@@ -38,6 +37,7 @@ const PostSchema: Schema = new Schema<PostType>(
         type: String,
         required: true,
         enum: Object.values(HouseTypeEnum),
+        ref: 'PropertyFeature',
       },
 
       size: { type: String, required: true },
