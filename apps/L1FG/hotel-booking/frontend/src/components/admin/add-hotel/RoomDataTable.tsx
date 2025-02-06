@@ -1,14 +1,14 @@
 // 'use client';
 
 // import * as React from 'react';
-// import { ChevronsUpDownIcon, HistoryIcon } from 'lucide-react';
+// import { ChevronsUpDownIcon, DoorClosed } from 'lucide-react';
 // import { Booking } from '@/generated';
 
 // interface AdminDataTableProps {
 //   data: Array<Booking>;
 // }
 
-// export const HotelDataTable = ({ data }: AdminDataTableProps) => {
+// export const RoomDataTable = ({ data }: AdminDataTableProps) => {
 //   const formatDate = (dateString: string) => {
 //     const date = new Date(dateString);
 //     return date.toLocaleDateString('en-US', {
@@ -28,13 +28,13 @@
 //       <div className="rounded-[6px] border bg-white ">
 //         <div className="flex items-center bg-[#F4F4F5] rounded-t-[6px]">
 //           <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-10 flex items-center border-r border-[#E4E4E7]">ID</p>
-//           <p className="px-4 py-2 max-w-[278px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Guest</p>
-//           <div className="px-4 py-2 flex items-center justify-between max-w-[188px] w-full h-10 border-r border-[#E4E4E7]">
-//             <p className="text-[#09090B] font-Inter text-sm font-semibold">Date</p>
+//           <p className="px-4 py-2 max-w-[390px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Guest name</p>
+//           <div className="px-4 py-2 flex items-center justify-between max-w-[148px] w-full h-10  border-r border-[#E4E4E7]">
+//             <p className="text-[#09090B] font-Inter text-sm font-semibold">Status</p>
 //             <ChevronsUpDownIcon width={16} height={16} />
 //           </div>
-//           <div className="px-4 py-2 flex items-center justify-between max-w-[188px] w-full h-10">
-//             <p className="text-[#09090B] font-Inter text-sm font-semibold">Rooms</p>
+//           <div className="px-4 py-2 flex items-center justify-between max-w-[116px] w-full h-10">
+//             <p className="text-[#09090B] font-Inter text-sm font-semibold">Date</p>
 //             <ChevronsUpDownIcon width={16} height={16} />
 //           </div>
 //         </div>
@@ -43,31 +43,34 @@
 //             const formattedId = String(index + 1).padStart(4, '0');
 //             const formattedStart = formatDate(hotel.startDate);
 //             const formattedEnd = formatDate(hotel.endDate);
-//             // const nights = calculateNights(hotel.startDate, hotel.endDate);
+//             const nights = calculateNights(hotel.startDate, hotel.endDate);
 //             return (
 //               <div key={hotel?.id} className="flex items-center border-t border-[#E4E4E7] h-[72px]">
 //                 <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
-//                 <div className="px-4 py-2 max-w-[278px] w-full flex justify-center border-r h-full  border-[#E4E4E7] flex-col">
+//                 <div className="px-4 py-2 max-w-[390px] w-full flex justify-center border-r h-full  border-[#E4E4E7] flex-col">
 //                   <p className="text-[#09090B] font-Inter text-sm font-normal">{hotel?.cardName}</p>
 //                   <p className="text-[#71717A] font-Inter text-sm font-normal">({hotel?.email})</p>
 //                 </div>
-//                 <div className="px-4 py-2  flex flex-col justify-center max-w-[188px] w-full h-full border-r border-[#E4E4E7]">
+//                 <div className="px-4 py-2 flex items-center max-w-[148px] w-full h-full border-r border-[#E4E4E7]">
+//                   <p className="bg-[#2563EB] rounded-full px-[10px] py-[2px] text-[#FAFAFA] text-xs font-semibold font-Inter">{hotel?.status}</p>
+//                 </div>
+//                 <div className="px-4 py-2  flex flex-col justify-center max-w-[116px] w-full h-full ">
 //                   <p className="text-[#09090B] font-Inter text-sm font-normal">
 //                     {formattedStart} - {formattedEnd}
 //                   </p>
-//                   <p className="text-[#71717A] font-Inter text-sm font-normal">{/* ({nights} night{nights > 1 ? 's' : ''}) */}</p>
+//                   <p className="text-[#71717A] font-Inter text-sm font-normal">
+//                     ({nights} night{nights > 1 ? 's' : ''})
+//                   </p>
 //                 </div>
-//                 {/* room orj irne */}
-//                 <p className="px-4 py-2 max-w-[188px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center ">Economy Double Room, City View (301)</p>
 //               </div>
 //             );
 //           })
 //         ) : (
 //           <div className="py-8 flex flex-col gap-4 items-center border-t border-[#E4E4E7]">
-//             <HistoryIcon color="#09090B" strokeOpacity={0.5} />
+//             <DoorClosed data-testid="door-closed-icon" color="#09090B" strokeOpacity={0.5} />
 //             <div className="flex flex-col gap-1 items-center">
-//               <p className="text-[#09090B] font-Inter text-sm font-medium">No Upcoming Bookings</p>
-//               <p className="text-[#71717A] font-Inter text-sm font-normal">You currently have no upcoming stays. Your future bookings will appear here once confirmed.</p>
+//               <p className="text-[#09090B] font-Inter text-sm font-medium">Room Types Not Set Up</p>
+//               <p className="text-[#71717A] font-Inter text-sm font-normal">Define room types to help guests choose the best stay option.</p>
 //             </div>
 //           </div>
 //         )}
