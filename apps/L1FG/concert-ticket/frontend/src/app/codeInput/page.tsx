@@ -1,4 +1,4 @@
-import CodeInput from '@/components/code-input/CodeInput';
+import CodeInput from '@/components/codeInput/CodeInput';
 
 const Page = () => {
   return <CodeInput />;
