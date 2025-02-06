@@ -5,8 +5,8 @@ import { Bookmark, Ellipsis, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
-import GetComments from './GetComments';
-import CreateComment from './CreateComment';
+import GetComments from '../comment/GetComments';
+import CreateComment from '../comment/CreateComment';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (

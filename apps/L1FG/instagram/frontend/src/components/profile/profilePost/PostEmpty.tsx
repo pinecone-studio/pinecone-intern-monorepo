@@ -1,6 +1,6 @@
 'use client';
+import CreatePostStep1 from '@/components/create-post/CreatePostStep1';
 import { Camera } from 'lucide-react';
-import CreatePostStep1 from '../create-post/CreatePostStep1';
 import React from 'react';
 
 const PostEmpty = () => {

@@ -1,14 +1,12 @@
 import { render } from '@testing-library/react';
 import { UserPostType } from '@/generated';
-import PostModalCarousel from '@/components/profile/PostModalCarousel';
+import PostModalCarousel from '@/components/profile/profilePost/PostModalCarousel';
 
-// Mock next/image
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 
-// Mock Carousel components
 jest.mock('@/components/ui/carousel', () => ({
   __esModule: true,
   Carousel: ({ children }: { children: React.ReactNode }) => <div data-testid="carousel">{children}</div>,
