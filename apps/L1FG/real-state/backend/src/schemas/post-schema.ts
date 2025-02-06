@@ -11,7 +11,7 @@ export const PostTypeDefs = gql`
 
   type Post {
     _id: ID!
-    propertyOwnerId: ID!
+    propertyOwnerId: User
     title: String!
     description: String!
     price: String!
@@ -46,7 +46,7 @@ export const PostTypeDefs = gql`
 
   type Query {
     getPostById(_id: ID!): Post!
-    getPosts(input: JSON): [Post!]!
+    getPosts(input: JSON): [Post!]
   }
 
   type Mutation {

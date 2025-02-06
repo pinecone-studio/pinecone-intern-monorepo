@@ -7,7 +7,6 @@ export const SavedUsers = () => {
 
   const { data, refetch } = useGetSearchedUserQuery();
   const router = useRouter();
-  console.log('hi');
 
   const handleDEleteUser = async (searchedUserId: string) => {
     await deleteUser({

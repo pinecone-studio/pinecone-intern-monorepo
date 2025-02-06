@@ -1,14 +1,21 @@
 import { MutationResolvers } from '../../../generated';
-import { PostLikeModal } from '../../../models';
+import { NotificationModel, PostLikeModal } from '../../../models';
 
 export const createPostLike: MutationResolvers['createPostLike'] = async (_, { input }, { userId }) => {
   if (!userId) throw new Error('Unauthorized');
   const { postId, ownerUserId } = input;
+  console.log(ownerUserId);
   const postLike = await PostLikeModal.create({
     userId,
     postId,
-    ownerUserId,
-    hasLiked: true,
   });
+
+  await NotificationModel.create({
+    userId: userId,
+    ownerId: ownerUserId,
+    contentPostId: postId,
+    categoryType: 'POST_LIKE',
+  });
+
   return postLike;
 };
