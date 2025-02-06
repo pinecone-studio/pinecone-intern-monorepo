@@ -49,7 +49,9 @@ const SignInPage = () => {
               </div>
             </div>
             <Button className="bg-white hover:bg-white border border-[#E4E4E7] shadow-[#0000000d] shadow-sm">
-              <p className="font-Inter font-medium text-sm text-[#18181B] not-italic">Create an account</p>
+              <Link href={'/create-account'}>
+                <p className="font-Inter font-medium text-sm text-[#18181B] not-italic">Create an account</p>
+              </Link>
             </Button>
           </div>
           <div className="flex items-center justify-center">

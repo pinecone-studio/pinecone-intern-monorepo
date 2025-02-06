@@ -31,7 +31,7 @@ export const HotelDataTable = ({ data }: AdminDataTableProps) => {
         {data?.map((hotel, index) => {
           const formattedId = String(index + 1).padStart(4, '0');
           return (
-            <Link href={`/admin/${hotel.id}`} key={hotel?.id} className="flex items-center border-t border-[#E4E4E7] h-[64px] hover:bg-[#FAFAFA] transition-all duration-300">
+            <Link href={`/admin/${hotel.id}`} key={hotel?.id} className="flex items-center border-t border-[#E4E4E7] h-[64px] hover:bg-[#FAFAFA] transition-all duration-200">
               <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
               <div className="px-4 py-2 max-w-[892px] w-full flex items-center border-r h-full  border-[#E4E4E7] gap-2">
                 <Image src="/EconomySingleRoom.png" alt="Economy Single Room" width={48} height={48} className="rounded-md" />

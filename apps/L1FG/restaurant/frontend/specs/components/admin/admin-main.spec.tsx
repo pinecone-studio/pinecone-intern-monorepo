@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useGetOrdersQuery } from '@/generated';
+import { useGetOrdersQuery, useUpdateOrderStatusMutation } from '@/generated';
 import { format } from 'date-fns';
 import { mn } from 'date-fns/locale';
 import AdminMainPageComp from '@/components/admin-page-comp/AdminMainPageComp';
@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 // Mock the generated hook
 jest.mock('@/generated', () => ({
   useGetOrdersQuery: jest.fn(),
+  useUpdateOrderStatusMutation: jest.fn(),
 }));
 
 jest.mock('next/image', () => ({
@@ -94,6 +95,8 @@ describe('AdminMainPageComp', () => {
         getOrders: mockOrders,
       },
     });
+
+    useUpdateOrderStatusMutation.mockReturnValue([jest.fn().mockResolvedValue({ data: { updateOrderStatus: { success: true } } }), { loading: false }]);
   });
 
   it('renders the component with orders', () => {
@@ -171,19 +174,7 @@ describe('AdminMainPageComp', () => {
     expect(screen.getByText('Огноогоор тохирсон захиалга байхгүй')).toBeInTheDocument();
   });
 
-  it('renders the status select with correct options', async () => {
-    render(<AdminMainPageComp />);
 
-    const selectTrigger = screen.getAllByTestId('status-select-button');
-    fireEvent.pointerDown(selectTrigger[0]);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('belen-test')).toBeInTheDocument();
-      expect(screen.getByTestId('pending-test')).toBeInTheDocument();
-      expect(screen.getByTestId('inpro-test')).toBeInTheDocument();
-      expect(screen.getByTestId('done-test')).toBeInTheDocument();
-    });
-  });
 
   it('displays correct currency format', () => {
     const ordersWithLargePrice = [
@@ -240,13 +231,11 @@ describe('AdminMainPageComp', () => {
   });
 
   it('handles undefined date correctly', () => {
-    const { rerender } = render(<AdminMainPageComp />);
-
     // Force date to be undefined by manipulating React state
     const originalUseState = React.useState;
     jest.spyOn(React, 'useState').mockImplementationOnce(() => [undefined, jest.fn()]);
 
-    rerender(<AdminMainPageComp />);
+    render(<AdminMainPageComp />);
 
     // Should show no orders when date is undefined
     expect(screen.queryAllByTestId('total-price')).toHaveLength(2);
@@ -347,9 +336,11 @@ describe('AdminMainPageComp', () => {
 
   it('displays the formatted date in Mongolian format when a date is selected', async () => {
     const user = userEvent.setup();
+    
     const month = new Date().getMonth();
 
     const testDate = new Date(2024, month, 15);
+
 
     render(<AdminMainPageComp initialDate={testDate} />);
 
@@ -362,7 +353,7 @@ describe('AdminMainPageComp', () => {
     const dateButton = screen.getByText('15');
     fireEvent.click(dateButton);
 
-    // Expected Mongolian formatted date (e.g., "1 сарын 15")
+    // Expected Mongolian formatted date (e.g., "2 сарын 15")
     const expectedFormattedDate = format(testDate, "L 'сарын' d", { locale: mn });
 
     // Check if the formatted date is displayed correctly

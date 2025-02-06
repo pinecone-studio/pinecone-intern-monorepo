@@ -15,16 +15,16 @@ export const PostTypeDefs = gql`
     postImage: [String!]!
     caption: String
     userId: ID
-    carouselMediaCount: Int
+    carouselMediaCount: Int!
     createdAt: Date
     commentCount: Int!
     likeCount: Int!
     hasLiked: Boolean
-    user: UserTogetherUserType
+    user: UserTogetherUserType!
   }
   type PostsEdge {
     cursor: ID!
-    node: UserPostType
+    node: UserPostType!
   }
   type PageInfo {
     startCursor: ID!
@@ -32,7 +32,7 @@ export const PostTypeDefs = gql`
     hasNextPage: Boolean
   }
   type PostsConnection {
-    edges: [PostsEdge]
+    edges: [PostsEdge!]!
     pageInfo: PageInfo
   }
 
@@ -41,13 +41,13 @@ export const PostTypeDefs = gql`
     caption: String
   }
   input SmallPostsInput {
-    after: ID!
+    after: ID
     first: Int!
   }
   type Query {
     getPosts(searchingUserId: ID!): [UserPostType]
     getAllPosts: [UserPostType]
-    getSmallPosts(input: SmallPostsInput!): PostsConnection
+    getSmallPosts(input: SmallPostsInput!): PostsConnection!
   }
   type Mutation {
     createPost(input: PostInput!): Post!

@@ -1,11 +1,12 @@
 export * from './Amenities';
-export * from './DataTable';
-export * from './GeneralInfo';
-export * from './RoomTypes';
-export * from './UpcomingBooking';
 export * from './AboutThis';
 export * from './Policies';
 export * from './PoliciesExtra';
 export * from './Questions';
 export * from './Location';
 export * from './Images';
+// export * from './DataTable';
+export * from './GeneralInfo';
+// export * from './RoomDataTable';
+export * from './RoomTypes';
+export * from './UpcomingBooking';

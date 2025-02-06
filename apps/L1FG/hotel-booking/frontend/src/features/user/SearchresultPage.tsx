@@ -3,32 +3,40 @@ import { SearchBar } from '@/features/user/main/SearchBar';
 import { Loading } from '@/components/user/main/Loading';
 import { MainResultSearch } from '@/components/user/search-result/MainSearchResult';
 import { BlueDital } from '@/components/user/ui/dital';
-import { useGetHotelsQuery } from '@/generated';
+import { useGetHotelsByPriceQuery, useGetHotelsQuery } from '@/generated';
 import { Footer } from '@/components/user/search-result/Footer';
+import { useState } from 'react';
+import { useQueryState } from 'nuqs';
 
 export const SearchResultPage = () => {
-  const { loading, error, data } = useGetHotelsQuery();
+  const [searchValuePrice, setSearchValuePrice] = useState<'asc' | 'desc' | string>('');
+  const [dateFrom] = useQueryState('dateFrom');
+  const [dateTo] = useQueryState('dateTo');
+  const [adultCout] = useQueryState('bedcount');
+  console.log(dateFrom, dateTo, adultCout, 'search hiih zuils');
 
-  if (loading) {
+  const { loading: loadingHotels } = useGetHotelsQuery();
+  const { error: errorHotelsByPrice, data: dataHotelByPrice } = useGetHotelsByPriceQuery({ variables: { input: { type: searchValuePrice } } });
+
+  if (loadingHotels) {
     return <Loading />;
   }
 
-  if (error) {
+  if (errorHotelsByPrice) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red-500 text-lg font-medium">Error: {error.message}</div>
+        <div className="text-red-500 text-lg font-medium">Error: {errorHotelsByPrice.message || errorHotelsByPrice?.message}</div>
       </div>
     );
   }
 
-  const hotels = data?.getHotels || [];
-
+  const hotels = dataHotelByPrice?.getHotelsByPrice || [];
   return (
     <>
       <NavigationBlue />
       <BlueDital />
       <SearchBar />
-      <MainResultSearch data={hotels} />
+      <MainResultSearch data={hotels} setSearchValuePrice={setSearchValuePrice} />
       <Footer />
     </>
   );

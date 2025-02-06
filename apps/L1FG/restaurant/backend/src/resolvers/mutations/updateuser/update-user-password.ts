@@ -1,12 +1,12 @@
-import { MutationResolvers } from '../../../generated';
+import { MutationResolvers, Response } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const updatePasswordUser: MutationResolvers['updatePasswordUser'] = async (_, { input }) => {
   const { _id, newPassword, password, newRePassword } = input;
 
   if (newPassword !== newRePassword) {
-    throw new Error('Passwords do not match');
+    throw new Error('New passwords do not match');
   }
 
   const user = await UserModel.findById(_id);
@@ -14,16 +14,16 @@ export const updatePasswordUser: MutationResolvers['updatePasswordUser'] = async
     throw new Error('User not found');
   }
 
-  // Compare the hashed password
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  // Compare hashed password
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
     throw new Error('Incorrect current password');
   }
 
-  // Hash new password before saving
+  // Hash the new password before storing
   const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-  user.password = hashedNewPassword;
 
-  await user.save();
-  return user;
+  await UserModel.updateOne({ _id }, { password: hashedNewPassword });
+
+  return Response.Success;
 };

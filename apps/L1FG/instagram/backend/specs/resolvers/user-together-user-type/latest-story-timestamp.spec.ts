@@ -20,6 +20,7 @@ describe('Latest story timestamp', () => {
           postCount: 0,
           latestStoryTimestamp: 0,
           createdAt: '2',
+          proifleImage: 'image',
         },
       ]),
     });
@@ -33,6 +34,7 @@ describe('Latest story timestamp', () => {
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await latestStoryTimestamp(parent, {}, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(result).toEqual('2');
@@ -54,6 +56,7 @@ describe('Latest story timestamp', () => {
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
+      profileImage: 'image',
     };
     const result = await latestStoryTimestamp(parent, {}, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(result).toBe(0);

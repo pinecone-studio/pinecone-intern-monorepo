@@ -54,3 +54,28 @@ query GetUserByName($userName: String!) {
     followerCount
   }
 }
+
+mutation SavedSearchUser($searchedUserId: String!) {
+  savedSearchUser(searchedUserId: $searchedUserId) {
+    savedUsers
+  }
+}
+
+query GetSearchedUser {
+  getSearchedUser {
+    _id
+    userName
+    fullName
+    hasStory
+    friendshipStatus {
+      following
+    }
+    profileImage
+  }
+}
+
+mutation DeleteSearchUser($searchedUserId: String!) {
+  deleteSearchUser(searchedUserId: $searchedUserId) {
+    savedUsers
+  }
+}

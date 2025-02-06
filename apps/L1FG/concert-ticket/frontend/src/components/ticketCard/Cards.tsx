@@ -7,7 +7,7 @@ export interface CardProps {
 
 export const Cards = ({ cards }: CardProps) => {
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid grid-cols-3 gap-8 w-[1335px] mx-auto my-10 cursor-pointer">
       {cards?.map((card, index) => {
         return <Card card={card} key={index}></Card>;
       })}
