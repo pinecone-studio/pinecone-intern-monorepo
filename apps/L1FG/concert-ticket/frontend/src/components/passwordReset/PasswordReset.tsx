@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const PasswordReset = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#09090B]">
@@ -6,7 +8,9 @@ export const PasswordReset = () => {
         <div className="w-[350px]">
           <p className="text-[#FAFAFA] mb-2">Имэйл хаяг:</p>
           <input className="w-full h-[36px] bg-black text-[13px] text-white pl-[10px] border-2 border-[#27272A] rounded-sm mb-6" type="email" placeholder="name@example.com" />
-          <button className="w-full h-[36px] bg-[#00B7F4] text-black rounded-sm">Үргэлжлүүлэх</button>
+          <Link href={'/codeInput'}>
+            <button className="w-full h-[36px] bg-[#00B7F4] hover:bg-[#1a83ec] text-black rounded-sm">Үргэлжлүүлэх</button>
+          </Link>
         </div>
       </div>
     </div>

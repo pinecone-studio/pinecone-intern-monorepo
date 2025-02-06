@@ -36,10 +36,10 @@ export const TicketReservation = ({ vip, rear, standart }: dataProps) => {
   return (
     <div className="w-[385px] mx-auto mt-[100px] h-fit bg-[#131313] rounded-xl p-[20px] flex-col items-center">
       <div className="">
-        <p className="text-[#ababab]">Тоглоlm үзэх өдрөө сонгоно уу.</p>
+        <p className="text-[#ababab] mb-[8px]">Тоглолт үзэх өдрөө сонгоно уу.</p>
         <SelectDemo />
       </div>
-      <div className="w-[345px] h-[255px] my-[5px]">
+      <div className="w-[345px] h-fit my-[5px]">
         <div className="border-dashed border-b-2 border-[#27272A] "></div>
         <div className="w-[345px] h-[72px] flex items-center justify-between">
           <div className="flex items-center  justify-items-center">

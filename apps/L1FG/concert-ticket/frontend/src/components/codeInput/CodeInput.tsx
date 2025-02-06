@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { MoveLeft } from 'lucide-react';
+import Link from 'next/link';
 
 const CodeInput = () => {
   const [code, setCode] = useState(['', '', '', '']);
@@ -31,7 +32,6 @@ const CodeInput = () => {
     <div className="bg-black min-h-screen flex items-center justify-center">
       <div className="border border-[#27272A]  p-8 rounded-xl w-96">
         <h2 className="text-gray-200 text-center mb-6 text-sm">Имэйл хаяг руу илгээсэн 4 оронтой кодыг оруулна уу</h2>
-
         <div className="flex justify-center mb-6">
           {code.map((digit, index) => (
             <input
@@ -48,9 +48,10 @@ const CodeInput = () => {
             />
           ))}
         </div>
-
         <div data-testid="icons-container" className="flex justify-between text-white text-sm px-2">
-          <MoveLeft />
+          <Link href={'/resetPasswordPage'}>
+            <MoveLeft />
+          </Link>
           <RefreshCw />
         </div>
       </div>
