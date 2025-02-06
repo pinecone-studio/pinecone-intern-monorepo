@@ -3,7 +3,6 @@ import { Post as PostType, QueryResolvers } from '../../../generated';
 
 export const getPosts: QueryResolvers['getPosts'] = async (_, input) => {
   const posts = await Post.find<PostType>(input).populate('propertyOwnerId');
-  console.log(posts, 'posts');
 
   if (!posts) {
     throw new Error('There are no posts');
