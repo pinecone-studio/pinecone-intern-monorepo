@@ -101,6 +101,13 @@ export const typeDefs = gql`
     travellerCount: Int!
   }
 
+  input getAllQuerieInput {
+    startDate: Date!
+    endDate: Date!
+    travellerCount: Int!
+    type: String
+  }
+
   type Mutation {
     editGeneralInfo(input: editGeneralInfoInput!): Hotel
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
@@ -113,6 +120,7 @@ export const typeDefs = gql`
     getHotelById(id: ID!): Hotel
     getHotelsByName(input: getHotelsByNameInput!): [Hotel]
     getHotelsByPrice(input: getHotelsByPriceInput!): [Hotel]
+    getAllQuerie(input: getAllQuerieInput!): [Hotel]
     getHotelsByStarRating: [Hotel]
     getHotelsByDateTraveller(input: getHotelsByDateTravellerInput!): [Hotel]
   }
