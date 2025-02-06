@@ -1,7 +1,7 @@
-jest.mock('../../../src/models');
+jest.mock('apps/L1FG/instagram/backend/src/models');
+import { StoryModel } from 'apps/L1FG/instagram/backend/src/models';
+import { latestStoryTimestamp } from 'apps/L1FG/instagram/backend/src/resolvers/user/user-together-user-type';
 import { GraphQLResolveInfo } from 'graphql';
-import { StoryModel } from '../../../src/models';
-import { latestStoryTimestamp } from '../../../src/resolvers/user/user-together-user-type';
 describe('Latest story timestamp', () => {
   it('Should get story', async () => {
     if (!latestStoryTimestamp) {

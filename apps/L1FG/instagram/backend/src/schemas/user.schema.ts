@@ -110,13 +110,19 @@ export const UserTypeDefs = gql`
     bio: String!
     gender: Gender!
   }
-
+  type ProfilePreviewType {
+    searchingUserId: ID
+    user: UserTogetherUserType
+    viewer: UserTogetherViewerType
+    firstThreePosts: [PostsEdge!]!
+  }
   type Query {
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
     getUserByName(userName: String!): [UserTogetherUserType]
     getSearchedUser: [UserTogetherUserType]!
+    getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
   }
 
   type Mutation {
