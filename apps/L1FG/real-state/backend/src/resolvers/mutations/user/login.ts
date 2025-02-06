@@ -1,25 +1,25 @@
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models/user.model';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 export const login: MutationResolvers['login'] = async (_, { input }) => {
-  const { email, password, phone } = input;
-  let user = null;
+  const { email, password } = input;
 
-  if (email) {
-    user = await UserModel.findOne({
-      email,
-      password,
-    });
-  }
+  const user = await UserModel.findOne({ email });
 
-  if (phone) {
-    user = await UserModel.findOne({
-      phone,
-      password,
-    });
-  }
+  if (!user) throw new Error('Хэрэглэгч олдсонгүй');
 
-  if (!user) throw new Error('Invalid credentials');
+  const isMatch = await bcrypt.compare(password, user.password);
 
-  return user;
+  if (!isMatch) throw new Error('Нууц үг алдаатай байна');
+
+  const token = jwt.sign(
+    {
+      userId: user._id,
+    },
+    process.env.JWT_SECRET!
+  );
+
+  return { user, token };
 };

@@ -9,6 +9,7 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
     }),
   },
 }));
+//true false  truthy falsy    
 describe('create comment', () => {
   it('shoud be a comment', async () => {
     if (!createStoryLike) {

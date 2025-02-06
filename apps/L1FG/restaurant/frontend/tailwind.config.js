@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        gip: ['GIP', 'sans-serif'], // Add GIP to your Tailwind configuration
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',

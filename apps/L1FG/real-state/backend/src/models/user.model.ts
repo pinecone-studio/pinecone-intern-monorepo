@@ -9,7 +9,7 @@ export type UserType = {
   password: string;
   createdAt: Date;
   updatedAt: Date;
-  opt?: string;
+  otp?: string;
 };
 
 const userSchema = new Schema<UserType>({
@@ -33,6 +33,9 @@ const userSchema = new Schema<UserType>({
     type: String,
     required: true,
   },
+  otp: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -40,9 +43,6 @@ const userSchema = new Schema<UserType>({
   updatedAt: {
     type: Date,
     default: Date.now,
-  },
-  opt: {
-    type: String,
   },
 });
 

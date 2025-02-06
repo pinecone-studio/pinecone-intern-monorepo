@@ -10,6 +10,7 @@ const config: CodegenConfig = {
         contextType: '../types#Context',
         makeResolverTypeCallable: true,
         maybeValue: 'T',
+        skipTypename: true
       },
     },
   },

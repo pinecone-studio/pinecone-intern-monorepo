@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CalendarRange, MapPin } from 'lucide-react';
 import { Concert } from '@/generated';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface CardProps {
   card: Concert;
@@ -9,9 +10,9 @@ interface CardProps {
 
 export const Card = ({ card }: CardProps) => {
   const formatDate = format(new Date(card.concertDay), 'yyyy-M-d');
-
+  const router = useRouter();
   return (
-    <div className="w-fit h-fit bg-stone-900 rounded-lg " data-testid="card-container" data-cy="card-item">
+    <div onClick={() => router.push(`/detail/${card._id}`)} className="w-fit h-fit bg-stone-900 rounded-lg " data-testid="card-container" data-cy="card-item">
       <Image alt="coldplay" width={345} src={'/coldplay.png'} height={181} className="rounded-lg"></Image>
       <div className=" px-6 py-8 flex flex-col gap-6">
         <div className="flex flex-col text-white">

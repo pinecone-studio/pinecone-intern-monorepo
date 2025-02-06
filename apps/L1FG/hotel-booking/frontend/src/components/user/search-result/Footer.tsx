@@ -1,12 +1,12 @@
 import { Headphones, MailIcon, PhoneIcon } from 'lucide-react';
-import { JcbCardIcon } from '../svg/JcbIcon';
-import { LogoIcon } from '../svg/LogoIcon';
-import { MasterCardIcon } from '../svg/MasterCardIcon';
-import { VisaCardIcon } from '../svg/VisaIcon';
+import { JcbCardIcon } from '../ui/svg/JcbIcon';
+import { LogoIcon } from '../ui/svg/LogoIcon';
+import { MasterCardIcon } from '../ui/svg/MasterCardIcon';
+import { VisaCardIcon } from '../ui/svg/VisaIcon';
 
 export const Footer = () => {
   return (
-    <main>
+    <>
       <div className="container mx-auto w-full py-10">
         <div className="flex gap-[120px]">
           <div className="flex flex-col justify-between">
@@ -76,6 +76,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 };

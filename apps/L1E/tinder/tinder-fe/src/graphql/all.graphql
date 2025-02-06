@@ -230,3 +230,10 @@ mutation UnMatch($authId: String!) {
     }
   }
 }
+
+mutation UpdateMatch($userId: ID!, $matchId: ID!) {
+  updateMatch(userId: $userId, matchId: $matchId) {
+    _id
+    match
+  }
+}
