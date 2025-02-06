@@ -13,6 +13,9 @@ export const SearchResultPage = () => {
   const [dateFrom] = useQueryState('dateFrom');
   const [dateTo] = useQueryState('dateTo');
   const [adultCout] = useQueryState('bedcount');
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedStar, setSelectedStar] = useState<number | null>(null);
+  const [selectedAmenities, setSelectedAmenities] = useState<Array<string>>([]);
   console.log(dateFrom, dateTo, adultCout, 'search hiih zuils');
 
   const { loading: loadingHotels } = useGetHotelsQuery();
@@ -36,7 +39,16 @@ export const SearchResultPage = () => {
       <NavigationBlue />
       <BlueDital />
       <SearchBar />
-      <MainResultSearch data={hotels} setSearchValuePrice={setSearchValuePrice} />
+      <MainResultSearch
+        data={hotels}
+        setSearchValuePrice={setSearchValuePrice}
+        setSelectedRating={setSelectedRating}
+        setSelectedStar={setSelectedStar}
+        setSelectedAmenities={setSelectedAmenities}
+        selectedRating={selectedRating}
+        selectedStar={selectedStar}
+        selectedAmenities={selectedAmenities}
+      />
       <Footer />
     </>
   );
