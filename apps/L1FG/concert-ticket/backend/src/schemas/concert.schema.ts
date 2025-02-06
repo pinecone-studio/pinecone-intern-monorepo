@@ -17,7 +17,7 @@ export const concertTypeDefs = gql`
   }
 
   type Concert {
-    _id: ID!
+    _id: String!
     concertName: String!
     concertPlan: String!
     artistName: [String]!
