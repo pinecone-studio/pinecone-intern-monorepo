@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <form className="flex h-screen justify-center items-center" data-testid="login-form-onSubmit-button" onSubmit={login}>
       <div className="flex flex-col items-center gap-6 px-12 py-8  bg-[#09090B] border border-[#27272A] rounded-xl">
-        <p className="text-white   text-[24px] font-thin">Нэвтэрх</p>
+        <p className="text-white   text-[24px] font-thin">Нэвтрэх</p>
         <div className="flex flex-col items-center gap-6">
           <div className="flex flex-col">
             <label className="text-[#FAFAFA] font-thin text-base">Имэйл хаяг:</label>
@@ -41,6 +41,9 @@ const Login = () => {
               type="texted"
               placeholder="Нууц үг"
             />
+            <Link href={'/resetPasswordPage'}>
+              <button className="bg-transparent text-[12px] text-white w-fit h-[15px] hover:border-b ">Нууц үг сэргээх</button>
+            </Link>
           </div>
           <button data-testid="login-button" type="submit" className="w-[350px] text-base h-[36px] bg-[#00B7F4] rounded-lg font-thin">
             Нэвтрэх
