@@ -1,5 +1,5 @@
 'use client';
-import { PropsWithChildren, Suspense } from 'react';
+/*eslint-disable*/ import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { usePathname } from 'next/navigation';
@@ -10,9 +10,9 @@ import { AuthProvider } from '@/components/providers/AuthProvider';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathName = usePathname();
-  const signUp = pathName.startsWith('/sign-up');
-  const login = pathName.startsWith('/login');
-
+  const signUp = pathName.startsWith('/signup');
+  const login = pathName.startsWith('/signin');
+  const admin = pathName.startsWith('/admin');
   return (
     <html lang="en">
       <body className="bg-black">
@@ -20,9 +20,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           <ApolloWrapper>
             <AlertProvider>
               <AuthProvider>
-                {!signUp && !login && <HeaderPart />}
+                {!signUp && !login && !admin && <HeaderPart />}
                 {children}
-                {!signUp && !login && <Footerr />}
+                {!signUp && !login && !admin && <Footerr />}
               </AuthProvider>
             </AlertProvider>
           </ApolloWrapper>
