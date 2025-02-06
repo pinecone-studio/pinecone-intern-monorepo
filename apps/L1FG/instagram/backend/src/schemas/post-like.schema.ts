@@ -9,8 +9,6 @@ export const PostLikeTypeDefs = gql`
     postId: ID!
     ownerUserId: ID
   }
-<<<<<<< HEAD
-=======
 
   type LikedType {
     hasLiked: Boolean
@@ -26,7 +24,6 @@ export const PostLikeTypeDefs = gql`
     getwhoLikedPost: LikeType
   }
 
->>>>>>> 3414164b8 (feat(insta): notification be)
   type Mutation {
     createPostLike(input: PostLikeInput!): PostLike!
     deletePostLike(postId: String!): PostLike
