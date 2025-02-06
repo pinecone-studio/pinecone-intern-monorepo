@@ -78,7 +78,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <p className="text-base font-semibold">{data?.getUserTogether.user?.userName}</p>
+            <p className="text-base font-semibold">{data?.getUserTogether.user?.fullName}</p>
             <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether.user?.bio}</p>
 
             <a className="text-sm font-medium text-[#2563EB]">{data?.getUserTogether.user?.email}</a>

@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
 import { Search, UserPlus, X } from 'lucide-react';
@@ -29,9 +28,9 @@ const EmptyFollowing = ({ children }: { children: React.ReactNode }) => {
         </DialogHeader>
 
         <div className="flex justify-center px-3 ">
-          <div className="items-center justify-center w-full relative pb-2">
-            <Search className="absolute top-1 left-2 text-gray-500" />
-            <Input id="search" placeholder="Search" className="col-span-3 h-8 pl-8 bg-gray-100 rounded-xl " />
+          <div className="items-center justify-center w-full relative  ">
+            <Search className="absolute top-1.5 left-3 text-gray-500 h-5 w-5" />
+            <input id="search" placeholder="Search" className="  h-8 pl-9  bg-gray-100 outline-none w-full rounded-lg" />
           </div>
         </div>
         <div className="flex flex-col gap-5 overflow-y-scroll items-center justify-center ">

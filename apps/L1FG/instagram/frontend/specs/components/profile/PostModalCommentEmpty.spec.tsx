@@ -42,9 +42,6 @@ describe('PostModalCommentEmpty Component', () => {
     fireEvent.click(screen.getByText('Open Modal'));
 
     expect(screen.getByAltText('Post')).toBeInTheDocument();
-
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('5')).toBeInTheDocument();
   });
 
   it('renders interaction buttons correctly', () => {

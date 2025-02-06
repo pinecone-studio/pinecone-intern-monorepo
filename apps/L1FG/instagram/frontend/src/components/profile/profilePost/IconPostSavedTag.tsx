@@ -1,5 +1,4 @@
 'use client';
-import { Save, Tag } from 'lucide-react';
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { useGetUserTogetherQuery } from '@/generated';
@@ -8,6 +7,8 @@ import PostEmpty from './PostEmpty';
 import Posts from '@/components/svg/Posts';
 import Saved from '@/components/svg/Saved';
 import Tagged from './Tagged';
+import { Tag } from 'lucide-react';
+import Save from './Save';
 
 const PageEnum = {
   POSTS: 'POSTS',

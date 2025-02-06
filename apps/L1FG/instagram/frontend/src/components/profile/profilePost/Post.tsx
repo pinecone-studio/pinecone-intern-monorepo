@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useGetPostsQuery } from '@/generated';
 import PostModal from './PostModal';
-import { Heart } from 'lucide-react';
 import Message from '@/components/svg/Message';
+import Heart from '@/components/svg/Heart';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data } = useGetPostsQuery({
