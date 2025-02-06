@@ -2,7 +2,7 @@ import ResetPassword from '@/components/ResetPassword';
 
 const ResetPasswordPage = () => {
   return (
-    <div>
+    <div className="mt-[150px]">
       <ResetPassword />
     </div>
   );
