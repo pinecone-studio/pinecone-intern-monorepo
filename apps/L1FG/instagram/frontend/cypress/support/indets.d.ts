@@ -19,5 +19,7 @@ declare namespace Cypress {
 
   interface Chainable<Subject> {
     interceptGraphql(props: InterceptGraphqlType): void;
+    getByData(dataTestAttribute: string): Chainable<JQuery<HTMLElement>>;
+    login(email: string, password: string): void;
   }
 }

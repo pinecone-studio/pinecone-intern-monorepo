@@ -1,8 +1,8 @@
 'use client';
 
 import Carousel from '@/components/carousel/Carousel';
-import { HeaderPart } from '@/components/header/Header';
-import { Footerr } from './footer/Footer';
+import { Cards } from '@/components/ticketCard/Cards';
+import { useGetConcertsQuery } from '@/generated';
 
 const slides = [
   {
@@ -22,11 +22,11 @@ const slides = [
 ];
 
 const Page = () => {
+  const { data } = useGetConcertsQuery();
   return (
     <div>
-      <HeaderPart />
       <Carousel slides={slides} />
-      <Footerr />
+      <Cards cards={data?.getConcerts} />
     </div>
   );
 };

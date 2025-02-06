@@ -4,3 +4,50 @@ mutation CreatePost($input: PostInput!) {
     postImage
   }
 }
+query GetPosts($searchingUserId: ID!) {
+  getPosts(searchingUserId: $searchingUserId) {
+    _id
+    postImage
+    caption
+    userId
+    carouselMediaCount
+    createdAt
+    commentCount
+    likeCount
+    hasLiked
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+    }
+  }
+}
+
+mutation CreatePostLike($input: PostLikeInput!) {
+  createPostLike(input: $input) {
+    userId
+    postId
+  }
+}
+
+mutation DeletePostLike($postId: String!) {
+  deletePostLike(postId: $postId) {
+    userId
+    postId
+  }
+}

@@ -9,6 +9,14 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
       postId: '12',
     }),
   },
+  NotificationModel: {
+    create: jest.fn().mockReturnValue({
+      userId: '12',
+      ownerId: '21',
+      contentPostId: '11',
+      categoryTyoe: 'POST_LIKE',
+    }),
+  },
 }));
 
 describe('Post like', () => {

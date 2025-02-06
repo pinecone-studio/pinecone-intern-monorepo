@@ -8,39 +8,40 @@ export const PropertyTypeDefs = gql`
   }
 
   type Property {
-    _id: ID!
     houseType: HouseTypeEnum!
     size: String!
     images: [String!]
     totalRooms: Int!
     garage: Boolean!
     restrooms: Int!
-    location: LocationType!
-    details: DetailsType!
+    location: LocationType
+    details: DetailsType
     uploadedAt: Date
     createdAt: Date
   }
 
   type LocationType {
-    address: String!
-    city: String!
-    district: String!
+    address: String
+    city: String
+    district: String
+    subDistrict: String
   }
   input LocationTypeInput {
     address: String!
     city: String!
     district: String!
+    subDistrict: String!
   }
 
   type DetailsType {
     completionDate: Date
-    windowsCount: Int!
-    windowType: String!
-    floorMaterial: String!
-    floorNumber: Int!
-    balcony: Boolean!
-    totalFloors: Int!
-    lift: Boolean!
+    windowsCount: Int
+    windowType: String
+    floorMaterial: String
+    floorNumber: Int
+    balcony: Boolean
+    totalFloors: Int
+    lift: Boolean
   }
   input DetailsInput {
     completionDate: Date
@@ -65,8 +66,16 @@ export const PropertyTypeDefs = gql`
     uploadedAt: Date
     createdAt: Date
   }
+  input QueryOptions {
+    filter: JSON
+  }
 
   type Mutation {
-    addProperty(input: PropertyInput!): Property
+    addProperty(input: PropertyInput!): Property!
+  }
+
+  type Query {
+    getProperties(options: QueryOptions): [Property!]!
+    getPropertyByID(_id: ID!): Property!
   }
 `;

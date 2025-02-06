@@ -55,10 +55,27 @@ export const concertTypeDefs = gql`
     regularTicket: RegularTicketInput!
     standingAreaTicket: StandingAreaTicketInput!
   }
+
+  input UpdateTicketInput {
+    concertID: String!
+    vipTicketQuantity: Int
+    standartTicketQuantity: Int
+    standingAreaTicketQuantity: Int
+    ticketNumber: Int
+  }
+  type Ticket {
+    _id: ID
+    concertID: String!
+    vipTicketQuantity: Int
+    standartTicketQuantity: Int
+    standingAreaTicketQuantity: Int
+  }
   type Mutation {
     createConcert(input: ConcertInput!): Concert!
+    updateConcertTicket(input: UpdateTicketInput!): Concert!
   }
   type Query {
     getConcerts: [Concert!]!
+    getConcert(_id: String!): Concert!
   }
 `;

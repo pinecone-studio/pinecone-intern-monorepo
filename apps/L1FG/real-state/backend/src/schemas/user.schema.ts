@@ -16,11 +16,11 @@ export const UserTypeDefs = gql`
 
   type AuthResponse {
     user: User!
+    token: String!
   }
 
   input LoginInput {
-    email: String
-    phone: String
+    email: String!
     password: String!
   }
 
@@ -51,7 +51,7 @@ export const UserTypeDefs = gql`
   }
 
   type Mutation {
-    login(input: LoginInput!): User!
+    login(input: LoginInput!): AuthResponse!
     register(input: RegisterInput!): AuthResponse!
     requestChangePassword(input: RequestChangePasswordInput!): RequestChangePasswordResponse!
     changePassword(input: ChangePasswordInput!): Response!

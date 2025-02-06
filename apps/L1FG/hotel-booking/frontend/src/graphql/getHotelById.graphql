@@ -1,0 +1,10 @@
+query getHotelById($getHotelByIdId: ID!) {
+  getHotelById(id: $getHotelByIdId) {
+    id
+    name
+    starRating
+    rating
+    images
+    amenities
+  }
+}
