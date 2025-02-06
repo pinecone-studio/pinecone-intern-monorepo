@@ -10,6 +10,7 @@ import FollowersEmpty from './follow/FollowersEmpty';
 import EmptyFollowing from './follow/EmptyFollowing';
 import { Settings } from 'lucide-react';
 import { IconPostSavedTag } from './profilePost/IconPostSavedTag';
+import { useRouter } from 'next/navigation';
 
 export const Profile = () => {
   const { userId } = useParams();
@@ -17,8 +18,9 @@ export const Profile = () => {
     variables: { searchingUserId: userId as string },
   });
 
+  const router = useRouter();
   return (
-    <div className="flex  flex-col py-10" data-testid="profile-visit-container">
+    <div className="flex flex-col py-10" data-testid="profile-visit-container">
       <div className="flex gap-20  ml-[72px]">
         <Image src="/images/profilePic.png" alt="zurag" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
 
@@ -26,7 +28,9 @@ export const Profile = () => {
           <div className="flex gap-3 items-center justify-center">
             <p className="text-[20px] font-semibold ">{data?.getUserTogether.user?.userName}</p>
 
-            <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold">Edit profile</button>
+            <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold" onClick={() => router.push('/settings')}>
+              Edit profile
+            </button>
 
             <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold">Ad tools</button>
             <div className="flex justify-center items-center">
