@@ -7,10 +7,9 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
   const { email, password } = input;
   const user: User | null = await UserModel.findOne({ email });
   if (!user) throw new Error('Бүртгэлгүй байна');
-  console.log('SESSION SECRET IS:', process.env.SESSION_SECRET);
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error('Password is incorrect');
+    throw new Error('Пассворд буруу байна');
   }
   const exp = tokenExpireCal('minute', 30);
   if (!process.env.SESSION_SECRET) {

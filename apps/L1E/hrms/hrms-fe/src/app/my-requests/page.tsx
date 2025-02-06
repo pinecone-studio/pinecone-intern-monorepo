@@ -40,7 +40,7 @@ const Page = () => {
     }
   }, [date]);
   return (
-    <div data-cy="my-requests-page" className="flex flex-col h-screen items-center w-screen mt-[200px]" data-testid="page-container">
+    <div data-cy="my-requests-page" className="flex flex-col min-h-screen items-center w-screen pt-[200px] bg-neutral-100 " data-testid="page-container">
       <MyRequest availableDays={availableDays} availablePaidDays={availablePaidDays} timeleave={timeleave} />
       <RequestStory daysArray={daysArray} date={date} setDate={setDate} requestsData={requests} />
     </div>

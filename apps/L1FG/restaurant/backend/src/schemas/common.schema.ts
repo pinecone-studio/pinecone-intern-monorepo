@@ -2,7 +2,6 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar JSON
-
   scalar Date
 
   enum Response {
@@ -13,12 +12,14 @@ export const typeDefs = gql`
     name: String
     quantity: Int
     price: Float
+    imageUrl: String
   }
 
   input InputItemsType {
     name: String
     quantity: Int
     price: Float
+    imageUrl: String
   }
 
   input InputType {
@@ -42,5 +43,6 @@ export const typeDefs = gql`
   type Mutation {
     sampleMutation: String!
     makeOrder(input: InputType!): OrderType!
+    updateOrderStatus(orderId: ID!, status: String!): OrderType!
   }
 `;

@@ -1,9 +1,26 @@
 import { RightNavbar } from '@/components/user/search-result/RightNavbar';
-import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
-describe('RightNavbar', () => {
-  it('should render successfully', async () => {
-    render(<RightNavbar />);
+const mockData = [
+  {
+    id: '1',
+    name: 'Hotel 1',
+    images: [],
+  },
+  {
+    id: '2',
+    name: 'Hotel 2',
+    images: [],
+  },
+];
+
+describe('renders hotels correctly and changes price order', () => {
+  it('1', () => {
+    const setSearchValuePrice = jest.fn();
+
+    render(<RightNavbar data={mockData} setSearchValuePrice={setSearchValuePrice} />);
+
+    expect(screen.getByText('Hotel 1'));
+    expect(screen.getByText('Hotel 2'));
   });
 });

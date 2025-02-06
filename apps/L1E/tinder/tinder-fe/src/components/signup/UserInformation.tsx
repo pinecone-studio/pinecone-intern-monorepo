@@ -59,9 +59,9 @@ const UserInformation = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-between items-center">
+    <div className="w-screen h-screen flex flex-col  justify-between items-center">
       {step === 'user' && (
-        <div className="w-screen h-screen flex items-center justify-center">
+        <div className="md:w-screen mt-[100px] md:h-screen flex h-[50%] w-[50%] items-center justify-center">
           <div className="w-[400px] gap-[24px] flex flex-col justify-center items-center">
             <Logo />
             <Title text="Your Details" desc="Please provide the following information to help us get to know you better." />

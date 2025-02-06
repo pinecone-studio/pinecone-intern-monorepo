@@ -1,7 +1,8 @@
 'use client';
 
 import { useCreateUserMutation, useGetUserLazyQuery, useLoginMutation, UserWithoutPassword } from '@/generated';
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 type SignInParams = {
   email: string;
@@ -21,6 +22,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserWithoutPassword | null>(null);
+  const router = useRouter();
   const [getUserQuery] = useGetUserLazyQuery({
     onCompleted: (data) => {
       setUser(data.getUser as UserWithoutPassword);
@@ -37,63 +39,51 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Амжилттай нэвтэрлээ', {
         autoClose: 2000,
       });
+      router.push('/');
     },
-    onError: () => {
-      toast.error(`Нэвтрэлт амжилтгүй`, {
+    onError: (error) => {
+      toast.error(`${error.message}`, {
         autoClose: 2000,
       });
     },
   });
   const [createUserMutation] = useCreateUserMutation({
-    onCompleted: (_) => {
+    onCompleted: () => {
       toast.success('Амжилттай бүртгэгдлээ', { autoClose: 2000 });
+      router.push('/login');
     },
-    onError: () => {
-      toast.error(`Бүртгэл амжилтгүй`, { autoClose: 2000 });
+    onError: (error) => {
+      toast.error(`${error.message}`, { autoClose: 2000 });
     },
   });
 
-  const signin = useCallback(
-    async ({ email, password }: SignInParams) => {
-      try {
-        await loginMutation({
-          variables: {
-            input: {
-              email,
-              password,
-            },
-          },
-        });
-      } catch (error) {
-        toast.error(`Нэвтрэл амжилтгүй . Try catch -ийн алдаа :${error}`, {
-          autoClose: 2000,
-        });
-      }
-    },
-    [loginMutation]
-  );
-  const signup = useCallback(
-    async ({ email, password, fullName, userName }: SignUpParams) => {
-      try {
-        await createUserMutation({
-          variables: {
-            input: {
-              email: email,
-              password: password,
-              fullName: fullName,
-              userName: userName,
-            },
-          },
-        });
-      } catch (error) {
-        toast.error(`Aлдаа ${error}`, { autoClose: 2000 });
-      }
-    },
-    [createUserMutation]
-  );
+  const signin = async ({ email, password }: SignInParams) => {
+    await loginMutation({
+      variables: {
+        input: {
+          email,
+          password,
+        },
+      },
+    });
+  };
+  const signup = async ({ email, password, fullName, userName }: SignUpParams) => {
+    await createUserMutation({
+      variables: {
+        input: {
+          email: email,
+          password: password,
+          fullName: fullName,
+          userName: userName,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     getUserQuery();
   }, [getUserQuery]);
+
   return <AuthContext.Provider value={{ signin, signup, user }}>{children}</AuthContext.Provider>;
 };
 export const useAuth = () => {

@@ -14,7 +14,17 @@ jest.mock('../../../../src/models', () => ({
       profileImage: 'http://image',
       gender: 'not_know',
     }),
-    findOne: jest.fn().mockReturnValueOnce(null).mockReturnValueOnce({
+    findOne: jest.fn().mockReturnValueOnce(null).mockReturnValueOnce(null).mockReturnValueOnce({
+      userName: 'jordan',
+      fullName: 'jordan mike',
+      email: 'jordan@gmail.com',
+      bio: '',
+      password: 'jordan1234',
+      isPrivate: false,
+      hasStory: false,
+      profileImage: 'http://image',
+      gender: 'not_know',
+    }).mockReturnValueOnce(null).mockReturnValueOnce({
       userName: 'jordan',
       fullName: 'jordan mike',
       email: 'jordan@gmail.com',
@@ -63,6 +73,18 @@ describe('Create user', () => {
       userName: 'jordan',
       email: 'jordan@gmail.com',
     };
-    await expect(createUser({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('User exits');
+    await expect(createUser({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Имэйл хэрэглэгдсэн байна !');
   });
+  it('Should throw an username duplicate error',async()=>{
+    if (!createUser) {
+      return;
+    }
+    const input = {
+      fullName: 'jordan mike',
+      password: '1234',
+      userName: 'jordan',
+      email: 'jordan@gmail.com',
+    };
+    await expect(createUser({}, { input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Нэр хэрэглэгдсэн байна !');
+  })
 });

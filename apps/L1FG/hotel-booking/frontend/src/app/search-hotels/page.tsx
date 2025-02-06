@@ -1,12 +1,15 @@
 'use client';
 
-import { SearchResultPage } from '@/components/user/pages/searchresult-page';
+import { SearchResultPage } from '@/features/user/SearchresultPage';
+import { Suspense } from 'react';
 
 const SearchHotels = () => {
   return (
-    <div>
-      <SearchResultPage />
-    </div>
+    <main>
+      <Suspense>
+        <SearchResultPage />
+      </Suspense>
+    </main>
   );
 };
 

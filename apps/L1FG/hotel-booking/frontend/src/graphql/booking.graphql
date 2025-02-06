@@ -1,0 +1,19 @@
+query getBookings {
+  getBookings {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}

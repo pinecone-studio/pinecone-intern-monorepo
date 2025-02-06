@@ -14,3 +14,5 @@ export * from './MasterCard';
 export * from './AmericanExpressCard';
 export * from './NoImageIcon';
 export * from './Card';
+export * from './OrangeStar';
+export * from './DownArrow';

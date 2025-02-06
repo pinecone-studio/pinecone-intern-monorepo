@@ -9,7 +9,7 @@ export const getEmployeeByOtp: QueryResolvers['getEmployeeByOtp'] = async (_: un
       {
         id: employee.id,
       },
-      process.env.SECRET!,
+      'clippers',
       { expiresIn: '1h' }
     );
     return { employee, token };
