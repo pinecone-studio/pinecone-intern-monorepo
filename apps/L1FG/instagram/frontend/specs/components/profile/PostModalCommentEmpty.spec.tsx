@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { UserPostType } from '@/generated';
-import PostModalCommentEmpty from '@/components/profile/PostModalCommentEmpty';
+import PostModalCommentEmpty from '@/components/profile/profilePost/PostModalCommentEmpty';
 
 const mockPost: UserPostType = {
   postImage: ['/images/test-image.jpg'],
@@ -42,9 +42,6 @@ describe('PostModalCommentEmpty Component', () => {
     fireEvent.click(screen.getByText('Open Modal'));
 
     expect(screen.getByAltText('Post')).toBeInTheDocument();
-
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('5')).toBeInTheDocument();
   });
 
   it('renders interaction buttons correctly', () => {

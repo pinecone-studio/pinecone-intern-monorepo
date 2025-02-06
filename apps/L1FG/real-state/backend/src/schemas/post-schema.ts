@@ -11,7 +11,7 @@ export const PostTypeDefs = gql`
 
   type Post {
     _id: ID!
-    propertyOwnerId: ID!
+    propertyOwnerId: User!
     title: String!
     description: String!
     price: String!
@@ -33,7 +33,7 @@ export const PostTypeDefs = gql`
   }
 
   input PostUpdateInput {
-    _id: ID
+    _id: ID!
     propertyOwnerId: ID
     title: String
     description: String

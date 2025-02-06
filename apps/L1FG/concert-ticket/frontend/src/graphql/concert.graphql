@@ -22,7 +22,7 @@ query GetConcerts {
   }
 }
 
-query GetConcert($id: String) {
+query GetConcert($id: String!) {
   getConcert(_id: $id) {
     _id
     artistName
