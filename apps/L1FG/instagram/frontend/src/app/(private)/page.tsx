@@ -1,4 +1,4 @@
-import MainPagePost from '@/components/home/main/MainPagePost';
+import MainPagePost from '@/features/home-post/MainPagePost';
 import MainPageStory from '@/components/home/main/MainPageStory';
 import HomePageProfile from '@/components/home/right/HomeProfile';
 

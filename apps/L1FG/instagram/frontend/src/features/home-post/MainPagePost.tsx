@@ -12,6 +12,7 @@ const MainPagePost: React.FC = () => {
       },
     },
   });
+
   useEffect(() => {
     const handleScroll = () => {
       if (!data?.getSmallPosts?.pageInfo?.hasNextPage) {
@@ -50,9 +51,8 @@ const MainPagePost: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [data?.getSmallPosts?.pageInfo?.endCursor, data?.getSmallPosts?.pageInfo?.hasNextPage, fetchMore]);
-
-  if (loading) return <p data-testid="post-loading">Loading posts...</p>;
-  if (error) return <p data-testid="post-error">Error loading posts: {error.message}</p>;
+  if (loading) return <p data-testid="post-loading"></p>;
+  if (error) return <p data-testid="post-error"> {error.message}</p>;
   if (!data?.getSmallPosts?.edges || !data.getSmallPosts?.edges.length) {
     return <p data-testid="no-posts-message">No posts available</p>;
   }
