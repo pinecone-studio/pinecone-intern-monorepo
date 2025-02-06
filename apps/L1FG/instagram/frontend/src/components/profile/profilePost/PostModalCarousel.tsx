@@ -5,7 +5,12 @@ import { UserPostType } from '@/generated';
 const PostModalCarousel = ({ post }: { post: UserPostType }) => {
   return (
     <div className="relative">
-      <Carousel>
+      <Carousel
+        opts={{
+          align: 'start',
+        }}
+        className="w-full max-w-sm"
+      >
         <CarouselContent>
           {post.postImage?.map((image: string, index: number) => (
             <CarouselItem key={index}>
@@ -13,7 +18,6 @@ const PostModalCarousel = ({ post }: { post: UserPostType }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-
         <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2" />
         <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2" />
       </Carousel>
