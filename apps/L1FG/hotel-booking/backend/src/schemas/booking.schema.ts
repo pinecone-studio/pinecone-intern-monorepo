@@ -46,7 +46,7 @@ export const typeDefs = gql`
     booking: Booking
   }
 
-  type EditBookingStatusInput {
+  input EditBookingStatusInput {
     id: ID!
     status: String!
   }
