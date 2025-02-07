@@ -41,3 +41,10 @@ query GetFollowing($searchingUserId: ID) {
     }
   }
 }
+
+mutation CreateFollower($input: FollowInput!) {
+  createFollower(input: $input) {
+    isFollowed
+    isRequested
+  }
+}
