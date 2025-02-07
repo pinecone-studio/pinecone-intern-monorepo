@@ -49,7 +49,6 @@ const LoginPage = () => {
           },
         },
       });
-      console.log(user.data.loginUser);
 
       localStorage.setItem(
         'user',
