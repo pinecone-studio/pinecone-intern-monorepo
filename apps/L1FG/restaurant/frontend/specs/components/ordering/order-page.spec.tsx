@@ -104,7 +104,6 @@ describe('OrderPageComponent', () => {
     expect(orderList).toHaveTextContent('Quantity: 1');
   });
 
-
   it('selects and deselects a food item', () => {
     render(<OrderPageComponent tableNumber={5} />);
 

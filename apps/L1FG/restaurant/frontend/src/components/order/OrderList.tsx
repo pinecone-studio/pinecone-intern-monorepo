@@ -58,14 +58,14 @@ const OrderList: React.FC<OrderListProps> = ({ selectedItems, updateItemQuantity
         imageUrl: item.imageUrl,
       })),
     };
-    
+
     localStorage.setItem('order', JSON.stringify(orderInput));
     router.push('/qpay');
   };
 
   return (
     <Drawer>
-      <div className="px-4 py-6 bg-white bg-opacity-80 backdrop-blur-sm">
+      <div className="px-4 py-6 bg-white bg-opacity-80 backdrop-blur-sm ">
         <DrawerTrigger asChild>
           <Button data-testid="order-button" className="w-full flex h-[36px] p-[8px_16px] justify-center items-center gap-[8px] self-stretch rounded-md bg-[#441500] shadow-sm">
             Захиалах
@@ -79,12 +79,12 @@ const OrderList: React.FC<OrderListProps> = ({ selectedItems, updateItemQuantity
               Таны захиалга
             </DrawerTitle>
           </DrawerHeader>
-          <div data-testid="order-items">
+          <div data-testid="order-items" className="overflow-scroll max-h-56">
             {selectedItems && selectedItems.length > 0 ? (
               selectedItems.map((item) => (
                 <div key={item.id} className="border-b py-2 px-4 flex justify-between" data-testid="order-item">
                   <div>
-                    <Image data-testid="food-image" width={87} height={87} src={item.imageUrl} alt="food image" className="object-cover w-[22vw] h-[22vw] rounded-md " />
+                    <Image data-testid="food-image" width={87} height={87} src={item.imageUrl} alt="food image" className="object-cover w-[87px] h-[87px] rounded-md " />
                   </div>
                   <div className="flex flex-col w-[52%] gap-1">
                     <div>
