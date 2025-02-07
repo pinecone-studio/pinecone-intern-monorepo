@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import LoginPage, { LOGIN_USER } from '@/components/LoginPage';
 import { useRouter } from 'next/navigation';
@@ -38,15 +38,17 @@ describe('LoginPage', () => {
     },
   ];
 
-  it('should show error message when fields are empty', () => {
+  it('should show error message when fields are empty', async () => {
     const { getByTestId, queryByText } = render(
       <MockedProvider>
         <LoginPage />
       </MockedProvider>
     );
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+    await act(async () => {
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     expect(queryByText('Бүх талбарыг бөглөнө үү.'));
   });
@@ -73,11 +75,13 @@ describe('LoginPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'wrongpassword' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'wrongpassword' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     await waitFor(() => expect(queryByText('Имэйл эсвэл нууц үг буруу байна.')));
   });
@@ -89,11 +93,13 @@ describe('LoginPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
   });
@@ -105,11 +111,13 @@ describe('LoginPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
   });

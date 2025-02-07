@@ -5,7 +5,7 @@ import React from 'react';
 
 const OrderPage = ({ params }: { params: { tableNumber: number } }) => {
   return (
-    <div className="max-w-full">
+    <div className="flex max-w-full justify-center">
       <OrderPageComponent tableNumber={params.tableNumber} />
     </div>
   );

@@ -3,7 +3,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import 'jest';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, render, fireEvent, screen, waitFor } from '@testing-library/react';
 import ResetPassword from '@/components/ResetPassword';
 import { useRequestChangePasswordMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
@@ -65,11 +65,12 @@ describe('ResetPassword Component - handleContinue', () => {
     const continueButton = screen.getByTestId('continue');
 
     // Simulate user typing in the email field
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
 
-    // Simulate user clicking the continue button
-    fireEvent.click(continueButton);
-
+      // Simulate user clicking the continue button
+      fireEvent.click(continueButton);
+    });
     // Wait for mutation to be triggered
     await waitFor(() => expect(mockRequestChangePassword).toHaveBeenCalledTimes(1));
 
@@ -89,8 +90,10 @@ describe('ResetPassword Component - handleContinue', () => {
     const emailInput = screen.getByTestId('email');
     const continueButton = screen.getByTestId('continue');
 
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.click(continueButton);
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+      fireEvent.click(continueButton);
+    });
 
     await waitFor(() => expect(mockRequestChangePassword).toHaveBeenCalledTimes(1));
   });
@@ -102,8 +105,10 @@ describe('ResetPassword Component - handleContinue', () => {
     const continueButton = screen.getByTestId('continue');
 
     // Simulate empty email submission
-    fireEvent.change(emailInput, { target: { value: '' } });
-    fireEvent.click(continueButton);
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: '' } });
+      fireEvent.click(continueButton);
+    });
   });
 
   it('should not submit with an invalid email', async () => {
@@ -113,7 +118,9 @@ describe('ResetPassword Component - handleContinue', () => {
     const continueButton = screen.getByTestId('continue');
 
     // Simulate invalid email submission
-    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-    fireEvent.click(continueButton);
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+      fireEvent.click(continueButton);
+    });
   });
 });

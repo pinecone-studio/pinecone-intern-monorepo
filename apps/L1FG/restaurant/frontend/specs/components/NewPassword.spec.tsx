@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
 import NewPassword from '@/components/NewPassword';
 import { useChangePasswordMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
@@ -26,14 +26,15 @@ describe('NewPassword Component', () => {
     localStorage.clear();
   });
 
-  test('updates input fields correctly', () => {
+  test('updates input fields correctly', async () => {
     render(<NewPassword />);
 
     const passwordInput = screen.getByTestId('password');
     const rePasswordInput = screen.getByTestId('rePassword');
-
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.change(rePasswordInput, { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(passwordInput, { target: { value: 'password123' } });
+      fireEvent.change(rePasswordInput, { target: { value: 'password123' } });
+    });
   });
 
   test('retrieves userId from localStorage', async () => {
@@ -47,9 +48,11 @@ describe('NewPassword Component', () => {
   test('shows error if passwords do not match', async () => {
     render(<NewPassword />);
 
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password321' } });
-    fireEvent.click(screen.getByTestId('CreateNewPassword'));
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password321' } });
+      fireEvent.click(screen.getByTestId('CreateNewPassword'));
+    });
 
     expect(await screen.findByText('Нууц үг таарахгүй байна.'));
   });
@@ -59,23 +62,25 @@ describe('NewPassword Component', () => {
 
     render(<NewPassword />);
 
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password123' } });
-    fireEvent.click(screen.getByTestId('CreateNewPassword'));
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password123' } });
+      fireEvent.click(screen.getByTestId('CreateNewPassword'));
+    });
 
     await waitFor(() => expect(mockChangePassword).toHaveBeenCalled());
     expect(mockRouter.push).toHaveBeenCalledWith('/done');
   });
 
   test('shows server error message on failure', async () => {
-    mockChangePassword.mockRejectedValue(new Error('Server error'));
+    mockChangePassword.mockRejectedValue(new Error('Серверийн алдаа. Дахин оролдоно уу.'));
 
     render(<NewPassword />);
-
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password123' } });
-    fireEvent.click(screen.getByTestId('CreateNewPassword'));
-
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(screen.getByTestId('rePassword'), { target: { value: 'password123' } });
+      fireEvent.click(screen.getByTestId('CreateNewPassword'));
+    });
     expect(await screen.findByText('Серверийн алдаа. Дахин оролдоно уу.'));
   });
 

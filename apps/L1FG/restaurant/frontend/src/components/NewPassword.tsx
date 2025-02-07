@@ -42,7 +42,6 @@ const NewPassword = () => {
       router.push('/done');
     } catch (err) {
       setErrorMessage('Серверийн алдаа. Дахин оролдоно уу.');
-      console.log(err);
     }
   };
 
