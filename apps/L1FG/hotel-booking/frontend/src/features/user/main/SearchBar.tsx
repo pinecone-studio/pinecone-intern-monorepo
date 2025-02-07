@@ -27,9 +27,6 @@ export const SearchBar = () => {
     setAdultCount(adult.toString());
   }, [adult, setAdultCount]);
 
-  console.log(dateFrom, 'dateFrom');
-  console.log(dateTo, 'dateFrom');
-
   const handleDone = () => setIsOpen(false);
   return (
     <div>
