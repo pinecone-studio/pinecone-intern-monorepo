@@ -69,7 +69,7 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
-    friendshipStatus: FriendshipStatusType
+    friendshipStatus: FriendshipStatusType!
   }
 
   type SearchedUsersType {
@@ -111,9 +111,9 @@ export const UserTypeDefs = gql`
     gender: Gender!
   }
   type ProfilePreviewType {
-    searchingUserId: ID
-    user: UserTogetherUserType
-    viewer: UserTogetherViewerType
+    searchingUserId: ID!
+    user: UserTogetherUserType!
+    viewer: UserTogetherViewerType!
     firstThreePosts: [PostsEdge!]!
   }
   type Query {
