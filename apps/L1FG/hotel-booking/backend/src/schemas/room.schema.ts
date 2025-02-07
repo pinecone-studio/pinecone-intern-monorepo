@@ -46,6 +46,8 @@ export const typeDefs = gql`
     price: Float
     roomInfo: [String]
     type: String
+    bed: Int
+    roomNumber: Int
   }
 
   type CreateRoomResponse {
