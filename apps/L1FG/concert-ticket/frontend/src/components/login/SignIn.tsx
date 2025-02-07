@@ -41,8 +41,8 @@ const Login = () => {
               type="texted"
               placeholder="Нууц үг"
             />
-            <Link href={'/'}>
-              <button className="bg-transparent text-[12px] text-white w-fit h-[15px] hover:border-b ">Нууц үг сэргээх</button>
+            <Link href={'/resetPasswordPage'}>
+              <button className="bg-transparent text-[12px] text-white w-fit h-[15px] hover:border-b ">Нууц үг сэргээх!</button>
             </Link>
           </div>
           <button data-testid="login-button" type="submit" className="w-[350px] text-base h-[36px] bg-[#00B7F4] rounded-lg font-thin">
