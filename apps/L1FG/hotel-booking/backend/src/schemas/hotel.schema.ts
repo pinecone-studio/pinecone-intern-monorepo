@@ -106,6 +106,7 @@ export const typeDefs = gql`
     endDate: Date!
     travellerCount: Int!
     type: String
+    sortByRating: Boolean
   }
 
   type Mutation {
@@ -121,7 +122,7 @@ export const typeDefs = gql`
     getHotelsByName(input: getHotelsByNameInput!): [Hotel]
     getHotelsByPrice(input: getHotelsByPriceInput!): [Hotel]
     getAllQuerie(input: getAllQuerieInput!): [Hotel]
-    getHotelsByStarRating: [Hotel]
+    getHotelsByStarRating(sortByRating: Boolean): [Hotel]
     getHotelsByDateTraveller(input: getHotelsByDateTravellerInput!): [Hotel]
   }
 `;

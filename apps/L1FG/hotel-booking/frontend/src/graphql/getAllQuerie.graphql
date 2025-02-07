@@ -1,0 +1,30 @@
+query getAllQuerie($input: getAllQuerieInput!) {
+  getAllQuerie(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    rooms
+    faqs {
+      key
+      value
+    }
+    policies {
+      key
+      value
+    }
+    about {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    locationName
+    amenities
+  }
+}
