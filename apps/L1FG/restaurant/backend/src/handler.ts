@@ -7,6 +7,9 @@ import { typeDefs } from './schemas';
 import { foodTypeDefs } from './schemas/food.schema';
 import { categoryTypeDefs } from './schemas/category.schema';
 import { userTypeDefs } from './schemas/user.schema';
+import dotEnv from 'dotenv';
+
+dotEnv.config();
 
 const mergedTypeDefs = [typeDefs, foodTypeDefs, categoryTypeDefs, userTypeDefs];
 
