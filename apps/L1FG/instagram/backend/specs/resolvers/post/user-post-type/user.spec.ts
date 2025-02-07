@@ -27,6 +27,12 @@ describe('user', () => {
         followingCount: 3,
         followerCount: 3,
         postCount: 3,
+        friendshipStatus: {
+          following: false,
+          incomingRequest: false,
+          outgoingRequest: false,
+          followedBy: false,
+        },
       },
     };
     const result = await user(parent, {}, { userId: 'er' }, {} as GraphQLResolveInfo);

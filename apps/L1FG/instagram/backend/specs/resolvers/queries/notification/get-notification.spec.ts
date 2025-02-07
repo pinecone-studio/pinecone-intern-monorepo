@@ -15,7 +15,19 @@ describe('getNotification Resolver', () => {
     jest.clearAllMocks();
   });
 
+  const mockNotificationsEarlier = [
+    { categoryType: 'POST_LIKE', createdAt: '2024-01-01T10:00:00.000Z', ownerId: 'user123' },
+    { categoryType: 'COMMENT_POST', createdAt: '2024-01-02T10:00:00.000Z', ownerId: 'user123' },
+    { categoryType: 'REQUEST', createdAt: '2024-01-03T10:00:00.000Z', ownerId: 'user123' },
+  ];
+
   it('should correctly categorize notifications', async () => {
+    const mockNotification = {
+      comment: [],
+      postLike: [],
+      request: [],
+    };
+
     const now = new Date();
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -26,9 +38,10 @@ describe('getNotification Resolver', () => {
 
     const mockNotifications = [
       { createdAt: now, ownerId: mockUserId },
-      { createdAt: new Date(yesterdayStart.getTime() + 1000), ownerId: mockUserId },
       { createdAt: new Date(weekAgo.getTime() + 1000), ownerId: mockUserId },
+      { createdAt: new Date(todayStart.getTime() - 15 * 24 * 60 * 60 * 1000), ownerId: 'user123' }, // Earlier
       { createdAt: new Date(weekAgo.getTime() - 1000), ownerId: mockUserId },
+      ...mockNotificationsEarlier,
     ];
 
     (NotificationModel.find as jest.Mock).mockReturnValue({
@@ -38,10 +51,15 @@ describe('getNotification Resolver', () => {
     if (!getNotification) return;
 
     const result = await getNotification({}, {}, { userId: mockUserId }, {} as GraphQLResolveInfo);
+    console.log('earlier:', result.earlier);
 
-    expect(result.today).toHaveLength(1);
-    expect(result.yesterday).toHaveLength(1);
-    expect(result.thisWeek).toHaveLength(2);
-    expect(result.earlier).toHaveLength(1);
+    expect(result.today).toEqual(mockNotification);
+    expect(result.thisWeek).toEqual(mockNotification);
+    expect(result.monthAgo).toEqual(mockNotification);
+    expect(result.earlier).toEqual({
+      postLike: [{ categoryType: 'POST_LIKE', createdAt: '2024-01-01T10:00:00.000Z', ownerId: 'user123' }],
+      comment: [{ categoryType: 'COMMENT_POST', createdAt: '2024-01-02T10:00:00.000Z', ownerId: 'user123' }],
+      request: [{ categoryType: 'REQUEST', createdAt: '2024-01-03T10:00:00.000Z', ownerId: 'user123' }],
+    });
   });
 });
