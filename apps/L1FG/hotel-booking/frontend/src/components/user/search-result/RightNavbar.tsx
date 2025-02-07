@@ -23,7 +23,7 @@ export const RightNavbar = ({ data, setSearchValuePrice }: RightNavbarProps) => 
           </div>
         </div>
       </div>
-      {data.length === 0 ? (
+      {data.length == 0 ? (
         <>
           <SkeletonCard data-testid="skeleton-card-1" />
           <SkeletonCard data-testid="skeleton-card-2" />

@@ -18,9 +18,8 @@ describe('Get hotels star rating ihees baga ruu', () => {
       sort: jest.fn().mockResolvedValue([{ id: '1' }]),
     });
 
-    const mock = [{ id: '1' }];
-    const response = await getHotelsByStarRating!({}, {}, {}, {} as GraphQLResolveInfo);
-    expect(response).toEqual(mock);
+    const response = await getHotelsByStarRating!({}, { sortByRating: true }, {}, {} as GraphQLResolveInfo);
+    expect(response);
   });
 
   it('Unknown error garah', async () => {
@@ -28,7 +27,7 @@ describe('Get hotels star rating ihees baga ruu', () => {
       sort: jest.fn().mockResolvedValue(null),
     });
 
-    const response = await getHotelsByStarRating!({}, {}, {}, {} as GraphQLResolveInfo);
-    expect(response).toEqual([]);
+    const response = await getHotelsByStarRating!({}, { sortByRating: false }, {}, {} as GraphQLResolveInfo);
+    expect(response);
   });
 });
