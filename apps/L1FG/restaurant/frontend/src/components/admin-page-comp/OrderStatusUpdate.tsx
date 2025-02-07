@@ -30,7 +30,7 @@ const OrderStatusUpdate: React.FC<OrderStatusProps> = ({ order }) => {
       await updateOrderStatus({ variables: { orderId, status: selectedStatus } });
       alert('Захиалга амжилттай шинэчлэгдлээ!');
     } catch (error) {
-      console.error('Error updating order status:', error);
+      alert(error);
     }
   };
 
