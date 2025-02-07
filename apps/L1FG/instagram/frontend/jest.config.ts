@@ -17,5 +17,6 @@ export default {
     '!src/components/svg/**/*.{ts,tsx,js,jsx}',
     '!src/components/home/main/PostLike.tsx',
     '!src/components/home-post/Post.tsx',
+    '!src/features/**/*.{ts,tsx,js,jsx}',
   ],
 };

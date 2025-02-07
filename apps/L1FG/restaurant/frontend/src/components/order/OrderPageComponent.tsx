@@ -51,7 +51,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
 
   return (
     <div className="max-w-full" data-testid="order-page">
-      <div className="fixed top-0 left-0 right-0" data-testid="order-list">
+      <div className="fixed top-0 left-0 right-0 z-10" data-testid="order-list">
         <Header />
       </div>
       <div className="flex flex-col px-4 pb-24 pt-20">

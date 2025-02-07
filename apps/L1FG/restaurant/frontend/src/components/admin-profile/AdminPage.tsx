@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const AdminPage = () => {
   return (
@@ -12,13 +13,15 @@ const AdminPage = () => {
       </div>
       <div>
         <div className="flex flex-col items-center pb-6">
-          <p>Нэвтрэх нэр</p>
+          <p>Нэвтрэх</p>
         </div>
-        <div className="gap-2 flex flex-col">
-          <Input disabled type="email" placeholder="Имэйл хаяг" />
-          <Input disabled type="" placeholder="Нууц үг" />
+        <div className="gap-2 flex flex-col w-[337px]">
+          <Input type="email" placeholder="Имэйл хаяг" />
+          <Input type="" placeholder="Нууц үг" />
           <Button>Нэвтрэх</Button>
-          <p className="flex justify-center ">Нууц үгээ мартсан?</p>
+          <Link href={'./admin/reset-pass'}>
+            <p className="flex justify-center ">Нууц үгээ мартсан?</p>
+          </Link>
         </div>
       </div>
     </div>

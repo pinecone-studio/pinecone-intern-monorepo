@@ -4,6 +4,7 @@ import { ApolloWrapper, AuthProvider, Container } from '@/components/providers';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Flip, ToastContainer } from 'react-toastify';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
@@ -19,22 +20,24 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           <ApolloWrapper>
             <AuthProvider>
               <Container>
-                <Header />
-                {children}
-                <Footer />
-                <ToastContainer
-                  position="top-right"
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="dark"
-                  transition={Flip}
-                />
+                <NuqsAdapter>
+                  <Header />
+                  {children}
+                  <Footer />
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                    transition={Flip}
+                  />
+                </NuqsAdapter>
               </Container>
             </AuthProvider>
           </ApolloWrapper>

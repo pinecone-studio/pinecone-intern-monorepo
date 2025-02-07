@@ -12,7 +12,7 @@ const AdminAuth = () => {
       <div className="w-[327px] h-[274px] flex justify-center">
         <div className="flex flex-col items-center">
           <div className="pb-[32px]">
-            <Image className="h-[70px]" height={66} width={54} src="/Logo.png" alt="" />
+            <Image className="h-[70px]" height={54} width={66} src="/Logo.png" alt="" />
           </div>
           <div className="flex flex-col items-center gap-6 text-center">
             <p>Имэйл хаяг руу илгээсээн 4 оронтой кодыг оруулна уу</p>

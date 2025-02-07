@@ -1,8 +1,10 @@
-import MainPagePost from '@/components/home/main/MainPagePost';
+import MainPagePost from '@/features/home-post/MainPagePost';
 import MainPageStory from '@/components/home/main/MainPageStory';
 import HomePageProfile from '@/components/home/right/HomeProfile';
+import { authenticate } from '@/features/utils/authenticate';
 
-const HomePage = () => {
+const HomePage = async () => {
+  await authenticate();
   return (
     <div className=" w-screen">
       <div className="flex justify-center gap-[72px] w-full">

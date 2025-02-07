@@ -10,11 +10,11 @@ export const PropertyTypeDefs = gql`
   type Property {
     houseType: HouseTypeEnum!
     size: String!
-    images: [String!]
+    images: [String!]!
     totalRooms: Int!
     garage: Boolean!
     restrooms: Int!
-    location: LocationType
+    location: LocationType!
     details: DetailsType
     uploadedAt: Date
     createdAt: Date

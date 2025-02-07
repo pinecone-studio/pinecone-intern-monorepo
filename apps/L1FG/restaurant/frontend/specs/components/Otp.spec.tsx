@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRequestChangePasswordMutation, useRestoreForgetPasswordMutation } from '@/generated';
 import OTP from '@/components/Otp';
 import { useRouter } from 'next/navigation';
@@ -44,8 +44,10 @@ describe('OTP Component', () => {
     const email = localStorage.getItem('requestedEmail');
     const inputs = screen.getAllByRole('textbox');
 
-    inputs.forEach((input, index) => {
-      fireEvent.change(input, { target: { value: `${index + 1}` } });
+    await act(async () => {
+      inputs.forEach((input, index) => {
+        fireEvent.change(input, { target: { value: `${index + 1}` } });
+      });
     });
     await waitFor(() => {
       expect(mockRestoreForgetPassword).toHaveBeenCalledWith({
@@ -58,8 +60,10 @@ describe('OTP Component', () => {
     localStorage.removeItem('requestedEmail');
     render(<OTP />);
     const inputs = screen.getAllByRole('textbox');
-    inputs.forEach((input, index) => {
-      fireEvent.change(input, { target: { value: `${index + 1}` } });
+    await act(async () => {
+      inputs.forEach((input, index) => {
+        fireEvent.change(input, { target: { value: `${index + 1}` } });
+      });
     });
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
@@ -68,7 +72,9 @@ describe('OTP Component', () => {
   it('calls requestChangePassword when resend button is clicked', async () => {
     render(<OTP />);
     const resendButton = screen.getByTestId('resendOtp');
-    fireEvent.click(resendButton);
+    await act(async () => {
+      fireEvent.click(resendButton);
+    });
     await waitFor(() => {
       expect(mockRequestChangePassword).toHaveBeenCalledWith({
         variables: { input: { email: 'test@example.com' } },
@@ -79,7 +85,9 @@ describe('OTP Component', () => {
     localStorage.removeItem('requestedEmail');
     render(<OTP />);
     const backButton = screen.getByTestId('back');
-    fireEvent.click(backButton);
+    await act(async () => {
+      fireEvent.click(backButton);
+    });
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
     });
@@ -100,31 +108,39 @@ describe('OTP Component', () => {
     localStorage.removeItem('requestedEmail');
     render(<OTP />);
     const resendButton = screen.getByTestId('resendOtp');
-    fireEvent.click(resendButton);
+    await act(async () => {
+      fireEvent.click(resendButton);
+    });
 
     await waitFor(() => {
       expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
     });
   });
-  it('focuses on the previous input when Backspace is pressed on an empty input', () => {
+  it('focuses on the previous input when Backspace is pressed on an empty input', async () => {
     render(<OTP />);
     const inputs = screen.getAllByRole('textbox');
-    fireEvent.change(inputs[0], { target: { value: '1' } });
-    fireEvent.change(inputs[1], { target: { value: '2' } });
-    fireEvent.change(inputs[2], { target: { value: '' } });
-    fireEvent.keyDown(inputs[2], { key: 'Backspace' });
+    await act(async () => {
+      fireEvent.change(inputs[0], { target: { value: '1' } });
+      fireEvent.change(inputs[1], { target: { value: '2' } });
+      fireEvent.change(inputs[2], { target: { value: '' } });
+      fireEvent.keyDown(inputs[2], { key: 'Backspace' });
+    });
   });
-  it('input when Backspace is pressed on an empty input', () => {
+  it('input when Backspace is pressed on an empty input', async () => {
     render(<OTP />);
     const inputs = screen.getAllByRole('textbox');
-    fireEvent.change(inputs[0], { target: { value: '' } });
-    fireEvent.keyDown(inputs[0], { key: 'Backspace' });
+    await act(async () => {
+      fireEvent.change(inputs[0], { target: { value: '' } });
+      fireEvent.keyDown(inputs[0], { key: 'Backspace' });
+    });
   });
-  it('allows only numeric input in OTP fields', () => {
+  it('allows only numeric input in OTP fields', async () => {
     render(<OTP />);
     const input = screen.getAllByRole('textbox')[0];
-    fireEvent.change(input, { target: { value: 'a' } });
-    fireEvent.change(input, { target: { value: '1' } });
-    expect(input);
+    await act(async () => {
+      fireEvent.change(input, { target: { value: 'a' } });
+      fireEvent.change(input, { target: { value: '1' } });
+      expect(input);
+    });
   });
 });
