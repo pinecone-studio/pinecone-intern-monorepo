@@ -47,7 +47,7 @@ const Page = () => {
 
             <div className="text-[#2563EB]">Forgot password?</div>
             <button
-              className="w-[316px] h-[40px] bg-[#2563EB80] text-white rounded-[6px]
+              className="w-[316px] h-[40px] bg-[#2563EB] text-white rounded-[6px]
             flex justify-center items-center"
               data-cy="login-submit-button"
               data-testid="login-submit-button"
