@@ -2,9 +2,9 @@ import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export const NewPasswordPage = () => {
+const CreateAccountPassword = () => {
   return (
-    <div className="container mx-auto h-screen">
+    <main className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">
@@ -12,7 +12,7 @@ export const NewPasswordPage = () => {
             <BlackLogoIcon />
           </div>
           <div className="py-2 flex flex-col items-center gap-1 ">
-            <p className="font-Inter font-semibold text-2xl not-italic tracking-[-0.6px]">Set new password</p>
+            <p className="font-Inter font-semibold text-2xl not-italic tracking-[-0.6px]">Create password</p>
             <p className="font-Inter font-normal text-sm text-[#71717A] text-center">Use a minimum of 10 characters, including uppercase letters, lowercase letters, and numbers</p>
           </div>
           <div className="flex flex-col gap-4">
@@ -37,6 +37,8 @@ export const NewPasswordPage = () => {
         </div>
         <p className="font-Inter font-normal text-sm not-italic">©2024 Pedia is an Pedia Group company.</p>
       </div>
-    </div>
+    </main>
   );
 };
+
+export default CreateAccountPassword;

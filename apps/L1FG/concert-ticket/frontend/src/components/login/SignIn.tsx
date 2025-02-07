@@ -41,7 +41,7 @@ const Login = () => {
               type="texted"
               placeholder="Нууц үг"
             />
-            <Link href={'/resetPasswordPage'}>
+            <Link href={'/'}>
               <button className="bg-transparent text-[12px] text-white w-fit h-[15px] hover:border-b ">Нууц үг сэргээх</button>
             </Link>
           </div>

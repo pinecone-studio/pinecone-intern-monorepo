@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-const SignInPage = () => {
+const SignUpPage = () => {
   return (
     <div className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
@@ -64,4 +64,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;

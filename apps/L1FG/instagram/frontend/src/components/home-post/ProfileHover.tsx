@@ -4,8 +4,9 @@ import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
 import { Avatar } from './Avatar';
 import Image from 'next/image';
 import { imageUrlOptimizer } from '../utils/image-url-optimizer';
+import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
-  const [getProfilePreview, { data }] = useGetProfilePreviewLazyQuery();
+  const [getProfilePreview, { data, refetch }] = useGetProfilePreviewLazyQuery();
   return (
     <HoverCard>
       <HoverCardTrigger
@@ -26,22 +27,21 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
             <div className="flex gap-4 h-fit w-fit">
               <Avatar post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
-                <p>{data.getProfilePreview.user?.userName}</p>
+                <p className="font-bold">{data.getProfilePreview.user?.userName}</p>
                 <p>{data.getProfilePreview.user?.fullName}</p>
-                <p>{data.getProfilePreview.user?.bio}</p>
               </div>
             </div>
             <div className="flex justify-around">
-              <div className="flex flex-col">
-                <p>{data.getProfilePreview.user?.postCount}</p>
+              <div className="flex flex-col items-center">
+                <p className="font-bold">{data.getProfilePreview.user?.postCount}</p>
                 <p>posts</p>
               </div>
-              <div>
-                <p>{data.getProfilePreview.user?.followerCount}</p>
+              <div className="flex flex-col items-center">
+                <p className="font-bold">{data.getProfilePreview.user?.followerCount}</p>
                 <p>followers</p>
               </div>
-              <div>
-                <p>{data.getProfilePreview.user?.followingCount}</p>
+              <div className="flex flex-col items-center">
+                <p className="font-bold">{data.getProfilePreview.user?.followingCount}</p>
                 <p>following</p>
               </div>
             </div>
@@ -54,7 +54,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 );
               })}
             </div>
-            <div>{data.getProfilePreview.user?.friendshipStatus?.following && <p>Following</p>}</div>
+            <FriendshipStatus status={data.getProfilePreview.user.friendshipStatus} targetId={data.getProfilePreview.user._id} profilePreviewRefetch={refetch} />
           </div>
         )}
       </HoverCardContent>
