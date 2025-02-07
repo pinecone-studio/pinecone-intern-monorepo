@@ -16,7 +16,11 @@ const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
         <ProfileHover searchingUserId={post.node.user._id}>
           <Avatar post={post} />
         </ProfileHover>
-        <Username post={post} />
+        <ProfileHover searchingUserId={post.node.user._id}>
+          <div className="flex flex-col justify-center h-full">
+            <Username post={post} />
+          </div>
+        </ProfileHover>
       </div>
       <PostsSwiper post={post} />
       <div className="flex items-center justify-between px-1 py-3 text-xl" data-testid="post-actions">
