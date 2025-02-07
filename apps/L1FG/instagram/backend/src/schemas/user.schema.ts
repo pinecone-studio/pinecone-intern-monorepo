@@ -111,9 +111,9 @@ export const UserTypeDefs = gql`
     gender: Gender!
   }
   type ProfilePreviewType {
-    searchingUserId: ID
-    user: UserTogetherUserType
-    viewer: UserTogetherViewerType
+    searchingUserId: ID!
+    user: UserTogetherUserType!
+    viewer: UserTogetherViewerType!
     firstThreePosts: [PostsEdge!]!
   }
   type Query {
