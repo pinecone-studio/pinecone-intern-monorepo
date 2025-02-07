@@ -21,6 +21,12 @@ describe('Latest story timestamp', () => {
           latestStoryTimestamp: 0,
           createdAt: '2',
           proifleImage: 'image',
+          friendshipStatus: {
+            following: false,
+            incomingRequest: false,
+            outgoingRequest: false,
+            followedBy: false,
+          },
         },
       ]),
     });
@@ -35,6 +41,12 @@ describe('Latest story timestamp', () => {
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: 'image',
+      friendshipStatus: {
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+        followedBy: false,
+      },
     };
     const result = await latestStoryTimestamp(parent, {}, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(result).toEqual('2');
@@ -57,6 +69,12 @@ describe('Latest story timestamp', () => {
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: 'image',
+      friendshipStatus: {
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+        followedBy: false,
+      },
     };
     const result = await latestStoryTimestamp(parent, {}, { userId: '3' }, {} as GraphQLResolveInfo);
     expect(result).toBe(0);
