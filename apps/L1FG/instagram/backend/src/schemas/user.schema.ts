@@ -69,7 +69,7 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
-    friendshipStatus: FriendshipStatusType
+    friendshipStatus: FriendshipStatusType!
   }
 
   type SearchedUsersType {
