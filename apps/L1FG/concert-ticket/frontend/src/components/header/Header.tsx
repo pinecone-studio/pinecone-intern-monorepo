@@ -13,23 +13,22 @@ export const HeaderPart = () => {
         </Link>
       </div>
 
-      <div className="flex items-center">
-        <input type="search" placeholder="Хайлт" className="w-[360px] h-[40px] px-[16px] text-white bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-[#00B7F4]" />
-        <button className="ml-[8px] p-[8px] text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
-          </svg>
-        </button>
-      </div>
-
       <div className="flex items-center gap-[16px]">
+        <Link href={'/search'}>
+          <button className="p-[8px] text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+            </svg>
+          </button>
+        </Link>
+
         {user ? (
-          <div className="flex items-center gap-[16px]">
+          <>
             <span className="text-white font-medium">{user.email}</span>
             <button onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
               Logout
             </button>
-          </div>
+          </>
         ) : (
           <>
             <Link href={'/signup'}>
