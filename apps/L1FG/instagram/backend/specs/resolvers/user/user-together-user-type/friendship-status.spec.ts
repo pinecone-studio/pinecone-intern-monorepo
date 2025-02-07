@@ -27,11 +27,18 @@ describe('FreindshipStatus', () => {
       email: '',
       fullName: '',
       userName: '',
+      searchingUserId: '1',
       followingCount: 0,
       followerCount: 0,
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: 'image',
+      friendshipStatus: {
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+        followedBy: false,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -58,6 +65,12 @@ describe('FreindshipStatus', () => {
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: 'image',
+      friendshipStatus: {
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+        followedBy: false,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -93,6 +106,12 @@ describe('FreindshipStatus', () => {
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: '',
+      friendshipStatus: {
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+        followedBy: false,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
