@@ -1,33 +1,50 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
+import '@testing-library/jest-dom';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
 
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      description: '',
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
+
 describe('DescriptionSection', () => {
-  it('should render successfully', () => {
-    const mockFormData = {
-      description: 'Initial description',
-    };
+  it('renders with required elements', () => {
+    render(
+      <FormProviderWrapper>
+        <DescriptionSection />
+      </FormProviderWrapper>
+    );
 
-    const mockHandleChange = jest.fn();
-
-    render(<DescriptionSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    const textarea = screen.getByLabelText('Тайлбар:');
-    expect(textarea).not.toBeNull();
-    expect(textarea.value).toBe('Initial description');
+    expect(screen.getByText('Тайлбар')).toBeInTheDocument();
+    expect(screen.getByText(/Та үл хөдлөх хөрөнгийн дэлгэрэнгүй тайлбарыг оруулна уу/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Дэлгэрэнгүй тайлбар:/)).toBeInTheDocument();
   });
 
-  it('should call handleChange on textarea change', () => {
-    const mockFormData = {
-      description: '',
-    };
+  it('handles text input', () => {
+    render(
+      <FormProviderWrapper>
+        <DescriptionSection />
+      </FormProviderWrapper>
+    );
 
-    const mockHandleChange = jest.fn();
+    const textarea = screen.getByLabelText(/Дэлгэрэнгүй тайлбар:/);
+    fireEvent.change(textarea, { target: { value: 'Test description' } });
+    expect(textarea).toHaveValue('Test description');
+  });
 
-    render(<DescriptionSection formData={mockFormData} handleChange={mockHandleChange} />);
+  it('shows placeholder text', () => {
+    render(
+      <FormProviderWrapper>
+        <DescriptionSection />
+      </FormProviderWrapper>
+    );
 
-    const textarea = screen.getByLabelText('Тайлбар:');
-    fireEvent.change(textarea, { target: { value: 'Updated description' } });
-    expect(mockHandleChange).toHaveBeenCalled();
+    expect(screen.getByPlaceholderText('Тайлбар оруулна уу')).toBeInTheDocument();
   });
 });

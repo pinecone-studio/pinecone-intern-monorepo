@@ -1,41 +1,86 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
 
+jest.mock('@/components/ui/select', () => {
+  const actual = jest.requireActual('@/components/ui/select');
+  return {
+    ...actual,
+    SelectContent: ({ children }: { children: React.ReactNode }) => (
+      <div role="listbox" data-testid="select-content">
+        {children}
+      </div>
+    ),
+    SelectItem: ({ children, value }: { children: React.ReactNode; value: string }) => (
+      <div role="option" data-value={value}>
+        {children}
+      </div>
+    ),
+  };
+});
+
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      floorNumber: 0,
+      totalFloors: 0,
+      floorMaterial: undefined,
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
+
 describe('FloorDetailsSection', () => {
-  it('should render successfully', () => {
-    const mockFormData = {
-      floorMaterial: 'Wood',
-      floorNumber: 3,
-    };
-
-    const mockHandleChange = jest.fn();
-
-    render(<FloorDetailsSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Шалны материал:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Шалны материал:')).toHaveValue('Wood');
-    expect(screen.getByLabelText('Давхар:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Давхар:')).toHaveValue(3);
+  it('renders section correctly', () => {
+    render(
+      <FormProviderWrapper>
+        <FloorDetailsSection />
+      </FormProviderWrapper>
+    );
+    expect(screen.getByText('Давхрын мэдээлэл')).toBeInTheDocument();
   });
 
-  it('should call handleChange on input change', () => {
-    const mockFormData = {
-      floorMaterial: '',
-      floorNumber: 0,
-    };
+  it('renders form fields', () => {
+    render(
+      <FormProviderWrapper>
+        <FloorDetailsSection />
+      </FormProviderWrapper>
+    );
+    expect(screen.getByLabelText('Хэддүгээр давхар:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Нийт давхар:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Шалны материал:')).toBeInTheDocument();
+  });
 
-    const mockHandleChange = jest.fn();
+  it('handles number inputs', () => {
+    render(
+      <FormProviderWrapper>
+        <FloorDetailsSection />
+      </FormProviderWrapper>
+    );
 
-    render(<FloorDetailsSection formData={mockFormData} handleChange={mockHandleChange} />);
+    const floorNumberInput = screen.getByLabelText('Хэддүгээр давхар:');
+    fireEvent.change(floorNumberInput, { target: { value: '5' } });
+    expect(floorNumberInput).toHaveValue(5);
 
-    const floorMaterialInput = screen.getByLabelText('Шалны материал:');
-    fireEvent.change(floorMaterialInput, { target: { value: 'Tile' } });
-    expect(mockHandleChange).toHaveBeenCalled();
+    const totalFloorsInput = screen.getByLabelText('Нийт давхар:');
+    fireEvent.change(totalFloorsInput, { target: { value: '10' } });
+    expect(totalFloorsInput).toHaveValue(10);
+  });
 
-    const floorNumberInput = screen.getByLabelText('Давхар:');
-    fireEvent.change(floorNumberInput, { target: { value: 5 } });
-    expect(mockHandleChange).toHaveBeenCalled();
+  it('handles floor material selection', () => {
+    render(
+      <FormProviderWrapper>
+        <FloorDetailsSection />
+      </FormProviderWrapper>
+    );
+
+    const materialSelect = screen.getByRole('combobox');
+    fireEvent.click(materialSelect);
+
+    expect(screen.getByTestId('select-content')).toBeInTheDocument();
+    expect(screen.getByText('Мод')).toBeInTheDocument();
+    expect(screen.getByText('Ламинат')).toBeInTheDocument();
   });
 });

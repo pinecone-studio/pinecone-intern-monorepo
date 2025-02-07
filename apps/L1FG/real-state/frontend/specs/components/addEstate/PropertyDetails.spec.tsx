@@ -1,121 +1,63 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
-import { HouseTypeEnum } from '@/generated';
 
-describe('PropertyDetails Component', () => {
-  const mockHandleChange = jest.fn();
-  const initialFormData = {
-    houseType: null,
-    title: '',
-    price: 0,
-    size: '',
-    totalRooms: 0,
-    garage: '',
-  };
-
-  beforeEach(() => {
-    mockHandleChange.mockClear();
-  });
-
-  it('renders all input fields correctly', () => {
-    const { getByLabelText } = render(<PropertyDetails formData={initialFormData} handleChange={mockHandleChange} />);
-
-    expect(getByLabelText(/Байшингийн төрөл:/i)).toBeInTheDocument();
-    expect(getByLabelText(/Нэр:/i)).toBeInTheDocument();
-    expect(getByLabelText(/Үнэ:/i)).toBeInTheDocument();
-    expect(getByLabelText(/Хэмжээ:/i)).toBeInTheDocument();
-    expect(getByLabelText(/Нийт өрөө:/i)).toBeInTheDocument();
-    expect(getByLabelText(/Гараж:/i)).toBeInTheDocument();
-  });
-
-  it('calls handleChange when house type is selected', async () => {
-    const { getByLabelText } = render(<PropertyDetails formData={initialFormData} handleChange={mockHandleChange} />);
-
-    const houseTypeSelect = getByLabelText(/Байшингийн төрөл:/i);
-    await userEvent.selectOptions(houseTypeSelect, HouseTypeEnum.Apartment);
-
-    expect(mockHandleChange).toHaveBeenCalled();
-  });
-
-  it('calls handleChange when title is entered', async () => {
-    const { getByLabelText } = render(<PropertyDetails formData={initialFormData} handleChange={mockHandleChange} />);
-
-    const titleInput = getByLabelText(/Нэр:/i);
-    await userEvent.type(titleInput, 'Test Property');
-
-    expect(mockHandleChange).toHaveBeenCalled();
-  });
-
-  it('handles numeric inputs correctly', async () => {
-    const { getByLabelText } = render(<PropertyDetails formData={initialFormData} handleChange={mockHandleChange} />);
-
-    const priceInput = getByLabelText(/Үнэ:/i);
-    const roomsInput = getByLabelText(/Нийт өрөө:/i);
-
-    await userEvent.type(priceInput, '100000');
-    await userEvent.type(roomsInput, '3');
-
-    expect(mockHandleChange).toHaveBeenCalledTimes(7);
-  });
-
-  it('renders house type options correctly', () => {
-    const { getByLabelText } = render(<PropertyDetails formData={initialFormData} handleChange={mockHandleChange} />);
-
-    const houseTypeSelect = getByLabelText(/Байшингийн төрөл:/i) as HTMLSelectElement;
-    expect(houseTypeSelect.options).toHaveLength(4);
-
-    const options = [
-      { value: '', text: 'Сонгоно уу' },
-      { value: HouseTypeEnum.Apartment, text: 'Орон сууц' },
-      { value: HouseTypeEnum.House, text: 'Хувийн сууц' },
-      { value: HouseTypeEnum.Office, text: 'Оффис' },
-    ];
-
-    options.forEach((option, index) => {
-      expect(houseTypeSelect.options[index].value).toBe(option.value);
-      expect(houseTypeSelect.options[index].text).toBe(option.text);
-    });
-  });
-
-  it('handles undefined values in select inputs', () => {
-    const undefinedFormData = {
-      ...initialFormData,
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      title: '',
+      price: 0,
       houseType: undefined,
-      garage: undefined,
-    };
+      size: 0,
+      totalRooms: 0,
+      garage: false,
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
-    const { getByLabelText } = render(<PropertyDetails formData={undefinedFormData} handleChange={mockHandleChange} />);
+describe('PropertyDetails', () => {
+  it('renders all form fields', () => {
+    render(
+      <FormProviderWrapper>
+        <PropertyDetails />
+      </FormProviderWrapper>
+    );
 
-    expect(getByLabelText(/Байшингийн төрөл:/i)).toHaveValue('');
-    expect(getByLabelText(/Гараж:/i)).toHaveValue('');
+    expect(screen.getByText('Ерөнхий мэдээлэл')).toBeInTheDocument();
+    expect(screen.getByLabelText('Гарчиг:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Үнэ:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Байшингийн төрөл:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Талбайн хэмжээ (м²):')).toBeInTheDocument();
+    expect(screen.getByLabelText('Гараж:')).toBeInTheDocument();
   });
 
-  it('handles null values in select inputs', () => {
-    const nullFormData = {
-      ...initialFormData,
-      houseType: null,
-      garage: null,
-    };
+  it('handles input changes', () => {
+    render(
+      <FormProviderWrapper>
+        <PropertyDetails />
+      </FormProviderWrapper>
+    );
 
-    const { getByLabelText } = render(<PropertyDetails formData={nullFormData} handleChange={mockHandleChange} />);
+    const titleInput = screen.getByLabelText('Гарчиг:');
+    fireEvent.change(titleInput, { target: { value: 'Test Title' } });
+    expect(titleInput).toHaveValue('Test Title');
 
-    expect(getByLabelText(/Байшингийн төрөл:/i)).toHaveValue('');
-    expect(getByLabelText(/Гараж:/i)).toHaveValue('');
+    const priceInput = screen.getByLabelText('Үнэ:');
+    fireEvent.change(priceInput, { target: { value: '1000' } });
+    expect(priceInput).toHaveValue(1000);
   });
 
-  it('handles empty string values in select inputs', () => {
-    const emptyStringFormData = {
-      ...initialFormData,
-      houseType: '',
-      garage: '',
-    };
+  it('shows select trigger buttons', () => {
+    render(
+      <FormProviderWrapper>
+        <PropertyDetails />
+      </FormProviderWrapper>
+    );
 
-    const { getByLabelText } = render(<PropertyDetails formData={emptyStringFormData} handleChange={mockHandleChange} />);
-
-    expect(getByLabelText(/Байшингийн төрөл:/i)).toHaveValue('');
-    expect(getByLabelText(/Гараж:/i)).toHaveValue('');
+    expect(screen.getByRole('combobox', { name: /Байшингийн төрөл/i })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: /Гараж/i })).toBeInTheDocument();
   });
 });

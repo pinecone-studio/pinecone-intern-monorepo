@@ -1,57 +1,75 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import TownDetails from '@/components/addEstate/TownDetails';
 
+jest.mock('@/components/ui/select', () => ({
+  ...jest.requireActual('@/components/ui/select'),
+  SelectContent: ({ children }: { children: React.ReactNode }) => (
+    <div role="listbox" data-testid="select-content">
+      {children}
+    </div>
+  ),
+  SelectItem: ({ children, value }: { children: React.ReactNode; value: string }) => (
+    <div role="option" data-value={value}>
+      {children}
+    </div>
+  ),
+}));
+
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      city: undefined,
+      district: undefined,
+      subDistrict: undefined,
+      address: '',
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
+
 describe('TownDetails', () => {
-  it('should render successfully', () => {
-    const mockFormData = {
-      subDistrict: 'Sample SubDistrict',
-      district: 'Sample District',
-      city: 'Sample City',
-      address: 'Sample Address',
-    };
-
-    const mockHandleChange = jest.fn();
-
-    render(<TownDetails formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Дүүрэг:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Дүүрэг:')).toHaveValue('Sample SubDistrict');
-    expect(screen.getByLabelText('Хороо:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Хороо:')).toHaveValue('Sample District');
-    expect(screen.getByLabelText('Хот:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Хот:')).toHaveValue('Sample City');
-    expect(screen.getByLabelText('Хаяг:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Хаяг:')).toHaveValue('Sample Address');
+  it('renders section correctly', () => {
+    render(
+      <FormProviderWrapper>
+        <TownDetails />
+      </FormProviderWrapper>
+    );
+    expect(screen.getByText('Байршил')).toBeInTheDocument();
   });
 
-  it('should call handleChange on input change', () => {
-    const mockFormData = {
-      subDistrict: '',
-      district: '',
-      city: '',
-      address: '',
-    };
+  it('renders form fields', () => {
+    render(
+      <FormProviderWrapper>
+        <TownDetails />
+      </FormProviderWrapper>
+    );
+    expect(screen.getByLabelText('Хот:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Дүүрэг:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Хороо:')).toBeInTheDocument();
+  });
 
-    const mockHandleChange = jest.fn();
+  it('handles selections', () => {
+    render(
+      <FormProviderWrapper>
+        <TownDetails />
+      </FormProviderWrapper>
+    );
+    const citySelect = screen.getAllByRole('combobox')[0];
+    fireEvent.click(citySelect);
+    expect(screen.getAllByTestId('select-content')[0]).toBeInTheDocument();
+  });
 
-    render(<TownDetails formData={mockFormData} handleChange={mockHandleChange} />);
-
-    const subDistrictInput = screen.getByLabelText('Дүүрэг:');
-    fireEvent.change(subDistrictInput, { target: { value: 'New SubDistrict' } });
-    expect(mockHandleChange).toHaveBeenCalled();
-
-    const districtInput = screen.getByLabelText('Хороо:');
-    fireEvent.change(districtInput, { target: { value: 'New District' } });
-    expect(mockHandleChange).toHaveBeenCalled();
-
-    const cityInput = screen.getByLabelText('Хот:');
-    fireEvent.change(cityInput, { target: { value: 'New City' } });
-    expect(mockHandleChange).toHaveBeenCalled();
-
-    const addressInput = screen.getByLabelText('Хаяг:');
-    fireEvent.change(addressInput, { target: { value: 'New Address' } });
-    expect(mockHandleChange).toHaveBeenCalled();
+  it('handles address input', () => {
+    render(
+      <FormProviderWrapper>
+        <TownDetails />
+      </FormProviderWrapper>
+    );
+    const input = screen.getByPlaceholderText('Дэлгэрэнгүй хаяг');
+    fireEvent.change(input, { target: { value: 'Test Address' } });
+    expect(input).toHaveValue('Test Address');
   });
 });

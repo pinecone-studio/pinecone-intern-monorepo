@@ -1,85 +1,138 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import ImagesSection from '@/components/addEstate/ImagesSection';
 
-// Mock URL.createObjectURL
 global.URL.createObjectURL = jest.fn(() => 'mocked-url');
 
-describe('ImagesSection', () => {
-  const mockHandleChange = jest.fn();
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      images: [],
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
+describe('ImagesSection', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render successfully', () => {
-    render(<ImagesSection handleChange={mockHandleChange} />);
-    expect(screen.getByText('Зураг')).toBeInTheDocument();
+  it('renders upload section', () => {
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
+
+    expect(screen.getByText('Энд дарж зураг сонгоно уу')).toBeInTheDocument();
+    const input = screen.getByTestId('upload-image');
+    expect(input).toHaveAttribute('type', 'file');
   });
 
-  it('should handle file upload', () => {
-    render(<ImagesSection handleChange={mockHandleChange} />);
-    const file = new File(['dummy content'], 'test.jpg', { type: 'image/jpeg' });
-    const input = screen.getByLabelText('+ Зураг оруулах');
+  it('handles file upload', async () => {
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
+
+    const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+
+    const input = screen.getByTestId('upload-image') as HTMLInputElement;
 
     fireEvent.change(input, { target: { files: [file] } });
 
-    expect(URL.createObjectURL).toHaveBeenCalledWith(file);
-    expect(mockHandleChange).toHaveBeenCalledWith({
-      target: {
-        name: 'images',
-        value: ['mocked-url'],
-      },
+    await waitFor(() => {
+      expect(screen.getByAltText('Preview 1')).toBeInTheDocument();
     });
   });
 
-  it('should remove image when X button is clicked', async () => {
-    render(<ImagesSection handleChange={mockHandleChange} />);
+  it('removes uploaded image', async () => {
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
 
-    // Upload an image first
-    const file = new File(['dummy content'], 'test.jpg', { type: 'image/jpeg' });
-    const input = screen.getByLabelText('+ Зураг оруулах');
+    const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+
+    const input = screen.getByTestId('upload-image') as HTMLInputElement;
+
     fireEvent.change(input, { target: { files: [file] } });
 
-    // Find and click remove button
+    await waitFor(() => {
+      expect(screen.getByAltText('Preview 1')).toBeInTheDocument();
+    });
+
     const removeButton = screen.getByText('X');
     fireEvent.click(removeButton);
 
-    expect(mockHandleChange).toHaveBeenLastCalledWith({
-      target: {
-        name: 'images',
-        value: [],
-      },
+    await waitFor(() => {
+      expect(screen.queryByAltText('Preview 1')).not.toBeInTheDocument();
     });
   });
-  it('should handle null files', () => {
-    render(<ImagesSection handleChange={mockHandleChange} />);
-    const input = screen.getByLabelText('+ Зураг оруулах');
 
-    fireEvent.change(input, { target: { files: null } });
+  it('handles empty file list', async () => {
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
 
-    expect(mockHandleChange).toHaveBeenCalledWith({
-      target: {
-        name: 'images',
-        value: [],
-      },
+    const input = screen.getByTestId('upload-image') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { files: [] } });
+
+    await waitFor(() => {
+      expect(screen.queryByAltText('Preview 1')).not.toBeInTheDocument();
     });
   });
-  it('should handle multiple image uploads', () => {
-    render(<ImagesSection handleChange={mockHandleChange} />);
 
-    const files = [new File(['dummy1'], 'test1.jpg', { type: 'image/jpeg' }), new File(['dummy2'], 'test2.jpg', { type: 'image/jpeg' })];
-    const input = screen.getByLabelText('+ Зураг оруулах');
+  it('handles error during file upload', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    fireEvent.change(input, { target: { files } });
+    const mockSetValue = jest.fn().mockImplementation(() => {
+      throw new Error('Mocked error');
+    });
 
-    expect(URL.createObjectURL).toHaveBeenCalledTimes(2);
-    expect(mockHandleChange).toHaveBeenCalledWith({
-      target: {
-        name: 'images',
-        value: ['mocked-url', 'mocked-url'],
-      },
+    jest.spyOn(require('react-hook-form'), 'useFormContext').mockImplementation(() => ({
+      control: {},
+      watch: () => [],
+      setValue: mockSetValue,
+    }));
+
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
+
+    const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+
+    const input = screen.getByTestId('upload-image') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => {
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error handling images:', expect.any(Error));
+    });
+
+    consoleErrorSpy.mockRestore();
+    jest.restoreAllMocks();
+  });
+
+  it('handles empty watchedImages', async () => {
+    render(
+      <FormProviderWrapper>
+        <ImagesSection />
+      </FormProviderWrapper>
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByAltText('Preview 1')).not.toBeInTheDocument();
     });
   });
 });

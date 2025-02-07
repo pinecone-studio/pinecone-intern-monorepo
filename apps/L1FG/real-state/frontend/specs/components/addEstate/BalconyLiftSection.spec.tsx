@@ -1,47 +1,75 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
 
-describe('BalconyLiftSection', () => {
-  // ...existing code...
+jest.mock('@/components/ui/select', () => {
+  const actual = jest.requireActual('@/components/ui/select');
+  return {
+    ...actual,
+    SelectContent: ({ children }: { children: React.ReactNode }) => (
+      <div role="listbox" data-testid="select-content">
+        {children}
+      </div>
+    ),
+    SelectItem: ({ children, value }: { children: React.ReactNode; value: string }) => (
+      <div role="option" data-value={value}>
+        {children}
+      </div>
+    ),
+  };
+});
 
-  it('should handle undefined values', () => {
-    const mockFormData = {
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
       balcony: undefined,
       lift: undefined,
-    };
-    const mockHandleChange = jest.fn();
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
-    render(<BalconyLiftSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Тагт:')).toHaveValue('');
-    expect(screen.getByLabelText('Лифт:')).toHaveValue('');
+describe('BalconyLiftSection', () => {
+  it('renders section correctly', () => {
+    render(
+      <FormProviderWrapper>
+        <BalconyLiftSection />
+      </FormProviderWrapper>
+    );
+    expect(screen.getByText('Тагт ба лифт')).toBeInTheDocument();
   });
 
-  it('should handle null values', () => {
-    const mockFormData = {
-      balcony: null,
-      lift: null,
-    };
-    const mockHandleChange = jest.fn();
-
-    render(<BalconyLiftSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Тагт:')).toHaveValue('');
-    expect(screen.getByLabelText('Лифт:')).toHaveValue('');
+  it('renders select fields with placeholders', () => {
+    render(
+      <FormProviderWrapper>
+        <BalconyLiftSection />
+      </FormProviderWrapper>
+    );
+    const triggers = screen.getAllByText('Сонгоно уу');
+    expect(triggers).toHaveLength(2);
   });
 
-  it('should handle empty string values', () => {
-    const mockFormData = {
-      balcony: '',
-      lift: '',
-    };
-    const mockHandleChange = jest.fn();
+  it('handles balcony selection', () => {
+    render(
+      <FormProviderWrapper>
+        <BalconyLiftSection />
+      </FormProviderWrapper>
+    );
+    const balconyTrigger = screen.getAllByRole('combobox')[0];
+    fireEvent.click(balconyTrigger);
+    expect(screen.getAllByTestId('select-content')[0]).toBeInTheDocument();
+  });
 
-    render(<BalconyLiftSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Тагт:')).toHaveValue('');
-    expect(screen.getByLabelText('Лифт:')).toHaveValue('');
+  it('handles lift selection', () => {
+    render(
+      <FormProviderWrapper>
+        <BalconyLiftSection />
+      </FormProviderWrapper>
+    );
+    const liftTrigger = screen.getAllByRole('combobox')[1];
+    fireEvent.click(liftTrigger);
+    expect(screen.getAllByTestId('select-content')[1]).toBeInTheDocument();
   });
 });

@@ -1,33 +1,51 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import RestroomsSection from '@/components/addEstate/RestroomsSection';
 
+const FormProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const methods = useForm({
+    defaultValues: {
+      restrooms: 0,
+    },
+  });
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
+
 describe('RestroomsSection', () => {
-  it('should render successfully', () => {
-    const mockFormData = {
-      restrooms: 2,
-    };
+  it('renders with required elements', () => {
+    render(
+      <FormProviderWrapper>
+        <RestroomsSection />
+      </FormProviderWrapper>
+    );
 
-    const mockHandleChange = jest.fn();
-
-    render(<RestroomsSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Ариун цэврийн өрөө:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Ариун цэврийн өрөө:')).toHaveValue(2);
+    expect(screen.getByText('Ариун цэврийн өрөө')).toBeInTheDocument();
+    expect(screen.getByText('Та ариун цэврийн өрөөний тоог оруулна уу.')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Ариун цэврийн өрөөний тоо:/i)).toBeInTheDocument();
   });
 
-  it('should call handleChange on input change', () => {
-    const mockFormData = {
-      restrooms: 0,
-    };
+  it('handles number input correctly', () => {
+    render(
+      <FormProviderWrapper>
+        <RestroomsSection />
+      </FormProviderWrapper>
+    );
 
-    const mockHandleChange = jest.fn();
+    const input = screen.getByLabelText(/Ариун цэврийн өрөөний тоо:/i);
+    fireEvent.change(input, { target: { value: '2' } });
+    expect(input).toHaveValue(2);
+  });
 
-    render(<RestroomsSection formData={mockFormData} handleChange={mockHandleChange} />);
+  it('prevents negative values', () => {
+    render(
+      <FormProviderWrapper>
+        <RestroomsSection />
+      </FormProviderWrapper>
+    );
 
-    const restroomsInput = screen.getByLabelText('Ариун цэврийн өрөө:');
-    fireEvent.change(restroomsInput, { target: { value: 3 } });
-    expect(mockHandleChange).toHaveBeenCalled();
+    const input = screen.getByLabelText(/Ариун цэврийн өрөөний тоо:/i);
+    expect(input).toHaveAttribute('min', '0');
   });
 });

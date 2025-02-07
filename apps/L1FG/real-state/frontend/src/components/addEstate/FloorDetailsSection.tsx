@@ -1,28 +1,84 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-const FloorDetailsSection: React.FC<{ formData: any; handleChange: any }> = ({ formData, handleChange }) => {
+const FloorDetailsSection = () => {
+  const { control } = useFormContext();
+
   return (
-    <div className="mb-4" data-cy="floor-details-section">
-      <label htmlFor="floorMaterial" className="block text-gray-700 font-bold mb-2">
-        Шалны материал:
-      </label>
-      <input
-        id="floorMaterial"
-        type="text"
-        name="floorMaterial"
-        value={formData.floorMaterial}
-        onChange={handleChange}
-        className="w-full p-2 border border-gray-300 rounded mb-4"
-        data-cy="floorMaterial"
-      />
-      <label htmlFor="totalFloors" className="block text-gray-700 font-bold mb-2">
-        Нийт давхар:
-      </label>
-      <input id="totalFloors" type="number" name="totalFloors" value={formData.totalFloors} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded mb-4" data-cy="totalFloors" />
-      <label htmlFor="floorNumber" className="block text-gray-700 font-bold mb-2">
-        Давхар:
-      </label>
-      <input id="floorNumber" type="number" name="floorNumber" value={formData.floorNumber} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded mb-4" data-cy="floorNumber" />
+    <div className="p-6 mb-6 bg-white rounded-lg shadow-sm border border-gray-200" data-cy="floor-details-section">
+      <div className="mb-6">
+        <h2 className="text-xl font-bold mb-2">Давхрын мэдээлэл</h2>
+        <p className="text-gray-600">Та давхрын мэдээллийг оруулна уу.</p>
+      </div>
+
+      <div className="space-y-6">
+        <FormField
+          control={control}
+          name="floorNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium text-gray-700">Хэддүгээр давхар:</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  min="0"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage className="text-sm text-red-500" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="totalFloors"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium text-gray-700">Нийт давхар:</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  min="0"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage className="text-sm text-red-500" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="floorMaterial"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium text-gray-700">Шалны материал:</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                    <SelectValue placeholder="Сонгоно уу" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="wood">Мод</SelectItem>
+                  <SelectItem value="laminate">Ламинат</SelectItem>
+                  <SelectItem value="carpet">Хивс</SelectItem>
+                  <SelectItem value="tile">Плитка</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage className="text-sm text-red-500" />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   );
 };

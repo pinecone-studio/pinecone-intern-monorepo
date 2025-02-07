@@ -1,142 +1,113 @@
 'use client';
-
 import React from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useAddPostMutation } from '@/generated';
-import TownDetails from '@/components/addEstate/TownDetails';
+import { estateSchema, EstateFormData } from '@/utils/property-zod-schema';
+import { uploadImages } from '@/utils/cloudinary';
+import { createInput } from '@/components/utils/create-input';
+
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
 import ImagesSection from '@/components/addEstate/ImagesSection';
+import DescriptionSection from '@/components/addEstate/DescriptionSection';
 import RestroomsSection from '@/components/addEstate/RestroomsSection';
+import TownDetails from '@/components/addEstate/TownDetails';
 import WindowsSection from '@/components/addEstate/WindowsSection';
 import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
 import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
-import PreviewSection from '@/components/addEstate/PreviewSection';
 import { useAuth } from '@/components/providers';
-import { createInput } from '@/components/utils/create-input';
-import DescriptionSection from '@/components/addEstate/DescriptionSection';
-import { toast } from 'react-toastify';
-import { useFormState } from '../../components/utils/use-form-state';
+import { Button } from '@/components/ui/button';
 
-const AddEstate: React.FC = () => {
-  const { formData, setFormData } = useFormState();
-  const { user } = useAuth();
-
+const AddEstate = () => {
+  const router = useRouter();
   const [addPost] = useAddPostMutation();
+  const userId = useAuth().user?._id;
 
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: checked,
-    }));
-  };
+  const form = useForm<EstateFormData>({
+    resolver: zodResolver(estateSchema),
+    defaultValues: {
+      title: '',
+      price: 0,
+      houseType: undefined,
+      size: 0,
+      images: undefined,
+      totalRooms: 0,
+      garage: false,
+      restrooms: 0,
+      subDistrict: '',
+      district: '',
+      city: '',
+      address: '',
+      completionDate: '',
+      windowsCount: 0,
+      windowType: '',
+      floorMaterial: '',
+      floorNumber: 0,
+      balcony: '',
+      totalFloors: 0,
+      lift: '',
+      description: '',
+    },
+    mode: 'onChange',
+  });
 
-  const handleFileChange = (name: string, files: FileList | null) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: files ? Array.from(files) : [],
-    }));
-  };
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) router.push('/login');
+  }, [router]);
 
-  const handleInputChange = (name: string, value: string, type: string) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: type === 'number' ? parseInt(value) || 0 : value,
-    }));
-  };
+  const onSubmit = async (data: EstateFormData) => {
+    console.log('onSubmit called');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement;
-    const checked = (e.target as HTMLInputElement).checked;
-    const files = (e.target as HTMLInputElement).files;
-
-    if (type === 'checkbox') {
-      handleCheckboxChange(name, checked);
-    } else if (type === 'file') {
-      handleFileChange(name, files);
-    } else {
-      handleInputChange(name, value, type);
-    }
-  };
-
-  const uploadImage = async (file: File) => {
-    const uploadData = new FormData();
-    uploadData.append('file', file);
-    uploadData.append('upload_preset', 'REAL_ESTATE_PRESET');
-    uploadData.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_NAME || '');
-    uploadData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY || '');
-
-    try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`, {
-        method: 'POST',
-        body: uploadData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Хуулахад алдаа гарлаа: ${response.status} ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      return result.secure_url;
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      toast.error(`Файл хуулахад алдаа гарлаа: ${error}`);
-      return null;
-    }
-  };
-
-  const uploadImages = async (files: FileList) => {
-    const uploadedImages = [];
-    for (const file of Array.from(files)) {
-      const imageUrl = await uploadImage(file);
-      if (imageUrl) {
-        uploadedImages.push(imageUrl);
-      }
-    }
-    return uploadedImages;
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const formElement = event.currentTarget;
-    const fileInput = formElement.querySelector<HTMLInputElement>('input[type="file"]');
-    const files = fileInput?.files;
-
-    if (!files || files.length === 0) {
-      toast.error('Зураг оруулна уу');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Нэвтрээгүй байна');
+      router.push('/login');
       return;
     }
 
-    const uploadedImages = await uploadImages(files);
-
-    const input = createInput(formData, user, uploadedImages);
-
     try {
+      const uploadedImages = await uploadImages(data.images);
+      if (!userId) {
+        throw new Error('User ID is required');
+      }
+      const input = createInput(data, userId, uploadedImages);
       await addPost({ variables: { input } });
-      toast.success('Зар нэмэгдлээ!');
+      console.log('addPost success');
+      toast.success('Зар амжилттай нэмэгдлээ!');
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
     } catch (error) {
-      console.error('Зар нэмэхэд алдаа гарлаа', error);
-      toast.error(`Зар нэмэхэд алдаа гарлаа`, {
-        autoClose: 2000,
-      });
+      console.error('addPost error', error);
+      toast.error(error instanceof Error ? error.message : 'Зар нэмэхэд алдаа гарлаа');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex gap-8">
-        <div className="w-[728px]">
-          <PropertyDetails formData={formData} handleChange={handleChange} />
-          <ImagesSection handleChange={handleChange} />
-          <DescriptionSection formData={formData} handleChange={handleChange} />
-          <RestroomsSection formData={formData} handleChange={handleChange} />
-          <TownDetails formData={formData} handleChange={handleChange} />
-          <WindowsSection formData={formData} handleChange={handleChange} />
-          <FloorDetailsSection formData={formData} handleChange={handleChange} />
-          <BalconyLiftSection formData={formData} handleChange={handleChange} />
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
+        <div className="flex gap-8">
+          <div className="w-[728px]">
+            <PropertyDetails />
+            <ImagesSection />
+            <DescriptionSection />
+            <RestroomsSection />
+            <TownDetails />
+            <WindowsSection />
+            <FloorDetailsSection />
+            <BalconyLiftSection />
+          </div>
         </div>
-        <PreviewSection formData={formData} />
-      </div>
-    </form>
+        <Button type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Submit
+        </Button>
+      </form>
+    </FormProvider>
   );
 };
 
