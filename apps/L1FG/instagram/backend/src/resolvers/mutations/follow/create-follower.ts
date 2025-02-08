@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import { MutationResolvers } from '../../../generated';
 import { authenticate } from '../../../utils/authenticate';
 import { makeFollow } from './create-follower-utils/make-follow';
