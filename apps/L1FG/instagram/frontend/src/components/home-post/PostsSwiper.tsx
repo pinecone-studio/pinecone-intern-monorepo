@@ -8,7 +8,6 @@ export const PostsSwiper = ({ post }: { post: PostsEdge }) => {
     return null;
   }
   const isMultipleImages = post.node?.carouselMediaCount > 1;
-  console.log('post:', post);
   return (
     <Carousel data-testid="post-carousel">
       <CarouselContent className="w-full max-w-[645px] h-[585px]  ">
