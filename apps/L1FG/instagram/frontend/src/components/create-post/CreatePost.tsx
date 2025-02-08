@@ -26,20 +26,8 @@ export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
         },
       },
     });
-
-    // alert('Post created successfully!');
     setStep(false);
-    // } catch (error) {
-    //   console.error('Error creating post:');
-    //   alert('Failed to create post.');
-    // } finally {
-    //   setLoading(false);
-    // }
   };
-
-  // const handleBack = () => {
-  //   setStep(true);
-  // };
 
   return (
     <div className="bg-white rounded-lg w-full max-w-4xl h-[679px] flex flex-col border shadow-lg z-[100]" data-testid="create-post-modal">
