@@ -1,9 +1,9 @@
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 
-export const ConfirmEmailPage = () => {
+const ForgetPasswordOtp = () => {
   return (
-    <div className="container mx-auto h-screen">
+    <main className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">
@@ -32,6 +32,8 @@ export const ConfirmEmailPage = () => {
         </div>
         <p className="font-Inter font-normal text-sm not-italic">©2024 Pedia is an Pedia Group company.</p>
       </div>
-    </div>
+    </main>
   );
 };
+
+export default ForgetPasswordOtp;

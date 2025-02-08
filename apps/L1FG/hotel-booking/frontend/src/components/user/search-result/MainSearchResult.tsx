@@ -6,19 +6,31 @@ import { Hotel } from '@/generated';
 interface MainResultSearchProps {
   data: Array<Hotel | null>;
   setSearchValuePrice: (_: 'asc' | 'desc') => void;
-  setSelectedRating: (_: number | null) => void;
-  setSelectedStar: (_: number | null) => void;
+  setSelectedRating: (_: number) => void;
+  setSelectedStar: (_: number) => void;
+  setSelectedName: (_: string) => void;
   setSelectedAmenities: Dispatch<SetStateAction<Array<string>>>;
-  selectedRating: number | null;
+  selectedRating: number;
   selectedStar: number | null;
   selectedAmenities: string[];
 }
 
-export const MainResultSearch = ({ data, setSearchValuePrice, setSelectedRating, setSelectedStar, setSelectedAmenities, selectedRating, selectedStar, selectedAmenities }: MainResultSearchProps) => {
+export const MainResultSearch = ({
+  data,
+  setSearchValuePrice,
+  setSelectedRating,
+  setSelectedStar,
+  setSelectedAmenities,
+  setSelectedName,
+  selectedRating,
+  selectedStar,
+  selectedAmenities,
+}: MainResultSearchProps) => {
   return (
     <div>
       <div className="container mx-auto flex gap-[48px] px-[60px] py-[32px] justify-center">
         <LeftNavbar
+          setSelectedName={setSelectedName}
           setSelectedRating={setSelectedRating}
           setSelectedStar={setSelectedStar}
           setSelectedAmenities={setSelectedAmenities}
