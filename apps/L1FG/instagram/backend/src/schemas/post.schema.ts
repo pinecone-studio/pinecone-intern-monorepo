@@ -29,11 +29,11 @@ export const PostTypeDefs = gql`
   type PageInfo {
     startCursor: ID!
     endCursor: ID!
-    hasNextPage: Boolean
+    hasNextPage: Boolean!
   }
   type PostsConnection {
     edges: [PostsEdge!]!
-    pageInfo: PageInfo
+    pageInfo: PageInfo!
   }
 
   input PostInput {
