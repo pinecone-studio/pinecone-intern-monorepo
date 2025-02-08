@@ -25,7 +25,7 @@ const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
       <PostsSwiper post={post} />
       <div className="flex items-center justify-between px-1 py-3 text-xl" data-testid="post-actions">
         <div className="flex gap-3">
-          {post.node.userId && post.node._id && <PostLike ownerUserId={post.node.userId} postId={post.node._id} />}
+          <PostLike ownerUserId={post.node.userId} postId={post.node._id} />
           <MessageCircle data-testid="comment-icon" className="cursor-pointer" />
         </div>
         <Bookmark data-testid="bookmark-icon" className="cursor-pointer" />

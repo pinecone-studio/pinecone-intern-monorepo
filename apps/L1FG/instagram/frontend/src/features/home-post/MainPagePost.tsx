@@ -2,6 +2,7 @@
 import { useGetSmallPostsQuery } from '@/generated';
 import { useEffect } from 'react';
 import HomeSinglePost from '@/components/home-post/Post';
+import { PostsLoading } from '@/components/home-post/PostsLoading';
 
 const MainPagePost: React.FC = () => {
   const { data, loading, error, fetchMore } = useGetSmallPostsQuery({
@@ -12,7 +13,6 @@ const MainPagePost: React.FC = () => {
       },
     },
   });
-
   useEffect(() => {
     const handleScroll = () => {
       if (!data?.getSmallPosts?.pageInfo?.hasNextPage) {
@@ -61,6 +61,7 @@ const MainPagePost: React.FC = () => {
       {data?.getSmallPosts?.edges.map((post) => {
         return <HomeSinglePost key={post.cursor} post={post} />;
       })}
+      <PostsLoading hasNextPage={data.getSmallPosts.pageInfo?.hasNextPage} />
     </div>
   );
 };
