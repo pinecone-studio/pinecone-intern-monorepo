@@ -2,12 +2,15 @@ import { Bookmark, MessageCircle } from 'lucide-react';
 import { PostLike } from '../../components/home/main/PostLike';
 import { PostsEdge, useCreatePostLikeMutation, useDeletePostLikeMutation } from '@/generated';
 import { useState } from 'react';
+import { quantityConverter } from '@/components/utils/quantity-converter';
+import { useCache } from '@/components/providers/CacheProvider';
 
 export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
   const [createPostLike] = useCreatePostLikeMutation();
   const [deleteLike] = useDeletePostLikeMutation();
   const [liked, setLiked] = useState(post.node.hasLiked);
   const [likeCount, setLikeCount] = useState(post.node.likeCount);
+  const { cacheLikePost, cacheUnlikePost } = useCache();
   const handleClickLike = async () => {
     setLiked((prev) => !prev);
     try {
@@ -18,6 +21,7 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
             postId: post.node._id,
           },
         });
+        cacheUnlikePost({ postId: post.node._id, likeCount: post.node.likeCount - 1, hasLiked: false });
       } else {
         setLikeCount((pre) => pre + 1);
         await createPostLike({
@@ -28,9 +32,11 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
             },
           },
         });
+        cacheLikePost({ postId: post.node._id, likeCount: post.node.likeCount + 1, hasLiked: true });
       }
     } catch (error) {
-      console.error('error', error);
+      setLiked(liked);
+      setLikeCount(likeCount);
     }
   };
   return (
@@ -43,7 +49,7 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
         <Bookmark data-testid="bookmark-icon" className="cursor-pointer" />
       </div>
       <div>
-        <p data-testid="like-count">{likeCount} likes</p>
+        <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
       </div>
     </>
   );

@@ -29,7 +29,7 @@ describe('Post comment', () => {
     const { getByTestId } = render(<PostComment post={mockPosts[2]} />);
     const commentElement = screen.getByTestId('comment');
     expect(commentElement).toBeDefined();
-    expect(commentElement).toHaveTextContent('View 34 comments');
+    expect(commentElement).toHaveTextContent('34 comments');
     expect(getByTestId('add-comment')).toBeDefined();
   });
 });
