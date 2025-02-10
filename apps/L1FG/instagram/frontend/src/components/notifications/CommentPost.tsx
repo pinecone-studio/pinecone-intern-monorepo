@@ -1,13 +1,14 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { NotificationType } from '@/generated';
+import Link from 'next/link';
 
 type Props = {
-  likeNotification: NotificationType[];
+  commentNotification: NotificationType[];
 };
 
-export const LikedPost = ({ likeNotification }: Props) => {
-  const groupedPostLikes = likeNotification?.reduce((acc, notification) => {
+export const CommentPost = ({ commentNotification }: Props) => {
+  const groupedPostLikes = commentNotification?.reduce((acc, notification) => {
     const postId = notification.contentPostId;
     if (!postId) return acc;
 
@@ -27,9 +28,8 @@ export const LikedPost = ({ likeNotification }: Props) => {
     return {
       postId,
       userNames: latestLikes.map((like) => like.user?.userName),
-      postImage: likes[0]?.contentPost,
-      userImage: latestLikes[latestLikes.length - 2]?.user?.profileImage,
-      userId: latestLikes.map((like) => like.user?._id),
+      postImage: likes[0]?.contentPost ?? '',
+      userImage: latestLikes[latestLikes.length - 1]?.user?.profileImage,
     };
   });
 
@@ -38,22 +38,13 @@ export const LikedPost = ({ likeNotification }: Props) => {
       {groupedNotifications.map((n) => (
         <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-6 mb-2">
           <div className="flex">
-            <div className="relative w-[54px] h-[32px]">
-              <Avatar className="absolute left-0 top-0 bottom-2 w-8 h-8 border-2 border-white">
-                <AvatarImage src={n.userImage} alt="@shadcn" />
-              </Avatar>
-              <Avatar className="absolute left-4 top-2 w-8 h-8 border-2 border-white">
-                <AvatarImage src={n.userImage} alt="@user2" />
-              </Avatar>
-            </div>
+            <Avatar>
+              <AvatarImage src={n?.userImage} alt="User Avatar" />
+            </Avatar>
             <div className="w-[194px] ml-2 items-center flex text-sm">
-              <a className="font-bold mr-2 text-sm" href={`${n.userId[0]}`}>
-                {n.userNames[0]}
-              </a>
-              <a className="font-bold mr-2 text-sm" href={`${n.userId[1]}`}>
-                , {n.userNames[1]}
-              </a>
-              <p className="text-sm"> liked your post</p>
+              <Link className="font-bold mr-2 text-base" href={'/'}>
+                {n.userNames[0]}, {n.userNames[1]} comment your post
+              </Link>
             </div>
           </div>
           <div
