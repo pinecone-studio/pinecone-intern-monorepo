@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import { MutationResolvers } from '../../../generated';
 import { authenticate } from '../../../utils/authenticate';
 import { addPostToDatabase, updatePostCreator, validatePost } from './create-post-utils';

@@ -9,7 +9,14 @@ export const HomePageCard = ({ data }: { data: Hotel }) => {
   const stars = data?.starRating ? [...Array(data?.starRating)] : [];
   return (
     <div className="card bg-base-100 w-full rounded-md border border-[#E4E4E7]">
-      <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={308} className="rounded-t-[6px] w-full" layout="responsive" />
+      <div className="relative min-h-[216px] min-w-[308px]">
+        <Image
+          alt={data.name}
+          src={data?.images[0] || 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/b0/b9/d0/cheap-hotels.jpg?w=1200&h=-1&s=1'}
+          className="rounded-t-[6px] w-full h-full object-cover"
+          layout="fill"
+        />
+      </div>
       <div className="flex flex-col gap-4 p-4">
         <div className="">
           <h2 className="card-title text-base leading-7 font-bold">{data?.name}</h2>

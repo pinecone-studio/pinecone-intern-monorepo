@@ -17,6 +17,9 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
       categoryTyoe: 'POST_LIKE',
     }),
   },
+  PostModel: {
+    findByIdAndUpdate: jest.fn().mockResolvedValue({}),
+  },
 }));
 
 describe('Post like', () => {

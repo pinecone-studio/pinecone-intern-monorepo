@@ -24,7 +24,7 @@ export const HotelCard = ({ data }: { data: Hotel | null }) => {
             </div>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="w-[39px] h-[20px] text-center py-[2px] text-white bg-[#2563EB] rounded-full text-[12px] leading-[16px] font-600">8.6</p>
+            <p className="w-[39px] h-[20px] text-center py-[2px] text-white bg-[#2563EB] rounded-full text-[12px] leading-[16px] font-600">{data?.rating}</p>
             <p className="text-[14px] leading-[20px] font-[500]">Excellent</p>
           </div>
         </div>

@@ -61,6 +61,7 @@ export const getAllQuerie: QueryResolvers['getAllQuerie'] = async (_, { input })
         location: 1,
         locationName: 1,
         averagePrice: 1,
+        amenities: 1,
       },
     },
   ]);
