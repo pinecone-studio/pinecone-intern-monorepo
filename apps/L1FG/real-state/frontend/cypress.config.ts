@@ -39,7 +39,7 @@ const config: Cypress.ConfigOptions<unknown> = {
       },
     },
     env: {
-      env: {},
+      AUTH_TOKEN: process.env.AUTH_TOKEN,
     },
   },
 };
