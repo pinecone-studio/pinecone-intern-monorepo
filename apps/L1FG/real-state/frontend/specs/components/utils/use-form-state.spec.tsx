@@ -8,7 +8,7 @@ describe('useFormState', () => {
     expect(result.current.formData).toEqual({
       title: '',
       description: '',
-      price: 0,
+      price: '',
       houseType: null,
       size: '',
       images: [],

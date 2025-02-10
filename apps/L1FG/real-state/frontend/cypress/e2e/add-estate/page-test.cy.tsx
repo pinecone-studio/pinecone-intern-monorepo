@@ -20,11 +20,6 @@ describe('Property Details Form', () => {
         throw new Error('File upload failed, no files found.');
       }
     });
-
-    // Checkboxes
-    cy.get('input[type="checkbox"]').first().check().should('be.checked');
-    cy.get('input[type="checkbox"]').first().uncheck().should('not.be.checked');
-
     // File upload
     const filePaths = 'cypress/fixtures/sample-image.jpg';
     cy.get('input[type="file"]').selectFile(filePaths, { force: true });

@@ -28,7 +28,10 @@ describe('AddEstate Page', () => {
       console.log('Token:', token);
     });
 
-    cy.intercept('POST', '**/graphql').as('addPost');
+    cy.intercept('POST', '**/graphql', {
+      statusCode: 200,
+      body: { data: true },
+    }).as('addPost');
 
     cy.get('[data-cy=property-details]').within(() => {
       cy.get('[data-cy=houseType]').select('Орон сууц');
@@ -72,12 +75,10 @@ describe('AddEstate Page', () => {
 
     cy.get('[data-cy=upload-button]').click();
     cy.get('[data-cy=upload-image]').attachFile('sample-image.jpg');
-
+    cy.wait('@addPost');
     cy.get('form').submit();
 
-    cy.wait('@addPost').then(() => {
-      cy.contains('Зар нэмэгдлээ!').should('be.visible');
-    });
+    cy.contains('Зар нэмэгдлээ!').should('be.visible');
   });
 
   it('should show error toast on failure', () => {

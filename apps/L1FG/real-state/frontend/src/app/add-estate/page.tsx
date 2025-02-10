@@ -22,13 +22,6 @@ const AddEstate: React.FC = () => {
 
   const [addPost] = useAddPostMutation();
 
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: checked,
-    }));
-  };
-
   const handleFileChange = (name: string, files: FileList | null) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -39,18 +32,14 @@ const AddEstate: React.FC = () => {
   const handleInputChange = (name: string, value: string, type: string) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: type === 'number' ? parseInt(value) || 0 : value,
+      [name]: type === 'number' ? (value.startsWith('0') ? parseInt(value.slice(1)) : parseInt(value)) : value,
     }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement;
-    const checked = (e.target as HTMLInputElement).checked;
     const files = (e.target as HTMLInputElement).files;
-
-    if (type === 'checkbox') {
-      handleCheckboxChange(name, checked);
-    } else if (type === 'file') {
+    if (type == undefined) {
       handleFileChange(name, files);
     } else {
       handleInputChange(name, value, type);

@@ -4,7 +4,7 @@ export const useFormState = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    price: 0,
+    price: '',
     houseType: null,
     size: '',
     images: [],
