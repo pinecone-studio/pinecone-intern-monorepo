@@ -1,7 +1,9 @@
 mutation AddPost($input: PostInput!) {
   addPost(input: $input) {
     _id
-    propertyOwnerId
+    propertyOwnerId {
+      _id
+    }
     title
     description
     price
@@ -40,7 +42,9 @@ mutation AddPost($input: PostInput!) {
 query GetPosts {
   getPosts {
     _id
-    propertyOwnerId
+    propertyOwnerId {
+      _id
+    }
     title
     description
     price
@@ -79,7 +83,9 @@ query GetPosts {
 query GetPostById($id: ID!) {
   getPostById(_id: $id) {
     _id
-    propertyOwnerId
+    propertyOwnerId {
+      _id
+    }
     title
     description
     price
