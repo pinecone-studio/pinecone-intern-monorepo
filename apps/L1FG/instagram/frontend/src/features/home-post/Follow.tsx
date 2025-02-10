@@ -1,9 +1,13 @@
+import Loading from '@/components/Loading';
 import { GetProfilePreviewQuery, useCreateFollowerMutation } from '@/generated';
 import { ApolloQueryResult } from '@apollo/client';
+import { useState } from 'react';
 
 export const Follow = ({ targetId, profilePrevieRefetch }: { targetId: string; profilePrevieRefetch: () => Promise<ApolloQueryResult<GetProfilePreviewQuery>> }) => {
   const [follow] = useCreateFollowerMutation();
+  const [loading, setLoading] = useState(false);
   const handleClick = async () => {
+    setLoading(true);
     await follow({
       variables: {
         input: {
@@ -12,6 +16,7 @@ export const Follow = ({ targetId, profilePrevieRefetch }: { targetId: string; p
       },
     });
     await profilePrevieRefetch();
+    setLoading(false);
   };
   return (
     <button
@@ -20,7 +25,7 @@ export const Follow = ({ targetId, profilePrevieRefetch }: { targetId: string; p
       data-testid="friendship-status-follow"
       onClick={handleClick}
     >
-      Follow
+      {loading ? <Loading /> : 'Follow'}
     </button>
   );
 };
