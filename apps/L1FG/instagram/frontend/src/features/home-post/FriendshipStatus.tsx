@@ -1,18 +1,12 @@
 'use client';
-import { FriendshipStatusType, GetProfilePreviewQuery } from '@/generated';
+import { GetProfilePreviewQuery } from '@/generated';
 import { Follow } from './Follow';
 import { useAuth } from '../../components/providers/AuthProvider';
 import { ApolloQueryResult } from '@apollo/client';
 
-export const FriendshipStatus = ({
-  status,
-  targetId,
-  profilePreviewRefetch,
-}: {
-  status: FriendshipStatusType;
-  targetId: string;
-  profilePreviewRefetch: () => Promise<ApolloQueryResult<GetProfilePreviewQuery>>;
-}) => {
+export const FriendshipStatus = ({ preview, profilePreviewRefetch }: { preview: GetProfilePreviewQuery; profilePreviewRefetch: () => Promise<ApolloQueryResult<GetProfilePreviewQuery>> }) => {
+  const targetId = preview.getProfilePreview.user._id;
+  const status = preview.getProfilePreview.user.friendshipStatus;
   const { user } = useAuth();
   if (user?._id == targetId) {
     return;
