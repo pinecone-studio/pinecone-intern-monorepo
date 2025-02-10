@@ -1,9 +1,9 @@
-import { NoPreviousBooking } from '@/components/user/booking-page/NoPreviousBooking';
+import { NoPrevious } from '@/components/user/booking-page';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 
-describe('Booked', () => {
+describe('Booked page NoPrevious component', () => {
   it('should render NoPreviousBooking successfully', async () => {
-    render(<NoPreviousBooking />);
+    render(<NoPrevious />);
   });
 });

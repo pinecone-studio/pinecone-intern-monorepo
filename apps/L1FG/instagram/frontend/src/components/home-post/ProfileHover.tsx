@@ -5,8 +5,9 @@ import { Avatar } from './Avatar';
 import Image from 'next/image';
 import { imageUrlOptimizer } from '../utils/image-url-optimizer';
 import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
+import { ProfilePreviewSkeleton } from '../skeleton/ProfilePreviewSkeleton';
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
-  const [getProfilePreview, { data, refetch }] = useGetProfilePreviewLazyQuery();
+  const [getProfilePreview, { data, refetch, loading }] = useGetProfilePreviewLazyQuery();
   return (
     <HoverCard>
       <HoverCardTrigger
@@ -22,6 +23,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
         {children}
       </HoverCardTrigger>
       <HoverCardContent>
+        {loading && <ProfilePreviewSkeleton />}
         {data && (
           <div className="flex flex-col w-[200px]">
             <div className="flex gap-4 h-fit w-fit">
@@ -31,6 +33,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 <p>{data.getProfilePreview.user?.fullName}</p>
               </div>
             </div>
+
             <div className="flex justify-around">
               <div className="flex flex-col items-center">
                 <p className="font-bold">{data.getProfilePreview.user?.postCount}</p>
@@ -54,7 +57,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 );
               })}
             </div>
-            <FriendshipStatus status={data.getProfilePreview.user.friendshipStatus} targetId={data.getProfilePreview.user._id} profilePreviewRefetch={refetch} />
+            <FriendshipStatus preview={data} profilePreviewRefetch={refetch} />
           </div>
         )}
       </HoverCardContent>
