@@ -23,6 +23,9 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
       $project: {
         categoryType: 1,
         createdAt: 1,
+        userId: 1,
+        contentPostId: 1,
+        isRead: 1,
         period: {
           $switch: {
             branches: [

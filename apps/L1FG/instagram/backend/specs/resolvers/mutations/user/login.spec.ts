@@ -21,7 +21,7 @@ jest.mock('jsonwebtoken', () => ({
     return 'token';
   }),
 }));
-jest.mock('bcrypt', () => ({
+jest.mock('bcryptjs', () => ({
   compare: jest.fn().mockResolvedValueOnce(false).mockResolvedValue(true),
 }));
 jest.mock('../../../../src/utils/token-expire-cal', () => ({
