@@ -46,8 +46,14 @@ export const typeDefs = gql`
     booking: Booking
   }
 
+  input EditBookingStatusInput {
+    id: ID!
+    status: String!
+  }
+
   type Mutation {
     createBooking(input: CreateBookingInput!): CreateBookingResponse!
+    editBookingStatus(input: EditBookingStatusInput!): Booking
   }
 
   type Query {

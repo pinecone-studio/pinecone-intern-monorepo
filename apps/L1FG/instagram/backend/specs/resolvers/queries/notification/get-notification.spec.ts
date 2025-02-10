@@ -4,62 +4,64 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
   NotificationModel: {
-    find: jest.fn(),
+    aggregate: jest.fn(),
   },
 }));
 
-describe('getNotification Resolver', () => {
-  const mockUserId = 'user123';
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  const mockNotificationsEarlier = [
-    { categoryType: 'POST_LIKE', createdAt: '2024-01-01T10:00:00.000Z', ownerId: 'user123' },
-    { categoryType: 'COMMENT_POST', createdAt: '2024-01-02T10:00:00.000Z', ownerId: 'user123' },
-    { categoryType: 'REQUEST', createdAt: '2024-01-03T10:00:00.000Z', ownerId: 'user123' },
-  ];
-
-  it('should correctly categorize notifications', async () => {
-    const mockNotification = {
-      comment: [],
-      postLike: [],
-      request: [],
-    };
-
-    const now = new Date();
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-
-    const mockNotifications = [
-      { createdAt: now, ownerId: mockUserId },
-      { createdAt: new Date(weekAgo.getTime() + 1000), ownerId: mockUserId },
-      { createdAt: new Date(todayStart.getTime() - 15 * 24 * 60 * 60 * 1000), ownerId: 'user123' }, // Earlier
-      { createdAt: new Date(weekAgo.getTime() - 1000), ownerId: mockUserId },
-      ...mockNotificationsEarlier,
+describe('getNotification', () => {
+  it('should return correct notification data for today', async () => {
+    const mockData = [
+      {
+        _id: 'today',
+        postLike: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
+        comment: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
+        request: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
+      },
     ];
 
-    (NotificationModel.find as jest.Mock).mockReturnValue({
-      sort: jest.fn().mockResolvedValue(mockNotifications),
-    });
+    (NotificationModel.aggregate as jest.Mock).mockResolvedValue(mockData);
+    if (!getNotification) return;
+
+    const response = await getNotification({}, {}, { userId: '678e1e9179fd42a3a41c8dfe' }, {} as GraphQLResolveInfo);
+
+    expect(response?.today?.postLike).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
+    expect(response?.today?.comment).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
+    expect(response?.today?.request).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
+  });
+
+  it('should return undefined for empty arrays', async () => {
+    const mockData = [
+      {
+        _id: 'today',
+        postLike: [],
+        comment: [],
+        request: [],
+      },
+      {
+        _id: 'thisWeek',
+        postLike: [],
+        comment: [],
+        request: [],
+      },
+    ];
+
+    (NotificationModel.aggregate as jest.Mock).mockResolvedValue(mockData);
 
     if (!getNotification) return;
 
-    const result = await getNotification({}, {}, { userId: mockUserId }, {} as GraphQLResolveInfo);
-    console.log('earlier:', result.earlier);
+    const response = await getNotification({}, {}, { userId: '678e1e9179fd42a3a41c8dfe' }, {} as GraphQLResolveInfo);
 
-    expect(result.today).toEqual(mockNotification);
-    expect(result.thisWeek).toEqual(mockNotification);
-    expect(result.monthAgo).toEqual(mockNotification);
-    expect(result.earlier).toEqual({
-      postLike: [{ categoryType: 'POST_LIKE', createdAt: '2024-01-01T10:00:00.000Z', ownerId: 'user123' }],
-      comment: [{ categoryType: 'COMMENT_POST', createdAt: '2024-01-02T10:00:00.000Z', ownerId: 'user123' }],
-      request: [{ categoryType: 'REQUEST', createdAt: '2024-01-03T10:00:00.000Z', ownerId: 'user123' }],
-    });
+    expect(response?.today?.postLike).toBeNull();
+    expect(response?.today?.comment).toBeNull();
+    expect(response?.today?.request).toBeNull();
+    expect(response?.thisWeek?.postLike).toBeNull();
+    expect(response?.thisWeek?.comment).toBeNull();
+    expect(response?.thisWeek?.request).toBeNull();
+  });
+
+  it("haven't userId", async () => {
+    if (!getNotification) return;
+
+    await expect(getNotification({}, {}, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('UnAuthorized');
   });
 });
