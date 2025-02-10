@@ -1,9 +1,11 @@
+import mongoose from 'mongoose';
 import { QueryResolvers } from '../../../generated';
 import { NotificationModel } from '../../../models';
 
 export const getNotification: QueryResolvers['getNotification'] = async (_, __, { userId }) => {
-  const notifications = await NotificationModel.find({ ownerId: userId }).sort({ createdAt: -1 });
-
+  if (!userId) {
+    throw new Error('UnAuthorized');
+  }
   const todayStart = new Date();
   todayStart.setHours(0, 0, 0, 0);
 
@@ -13,31 +15,47 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
   const monthAgo = new Date();
   monthAgo.setDate(monthAgo.getDate() - 30);
 
-  const todayTime = notifications.filter((n) => new Date(n.createdAt) >= todayStart);
-  const thisWeekTime = notifications.filter((n) => new Date(n.createdAt) >= weekAgo && new Date(n.createdAt) < todayStart);
-  const monthAgoTime = notifications.filter((n) => new Date(n.createdAt) >= monthAgo && new Date(n.createdAt) < weekAgo);
-  const earlierTime = notifications.filter((n) => new Date(n.createdAt) < monthAgo);
+  const ownerId = new mongoose.Types.ObjectId(userId);
 
-  return {
-    today: {
-      postLike: todayTime.filter((t) => t.categoryType === 'POST_LIKE'),
-      comment: todayTime.filter((t) => t.categoryType === 'COMMENT_POST'),
-      request: todayTime.filter((t) => t.categoryType === 'REQUEST'),
+  const notifications = await NotificationModel.aggregate([
+    { $match: { ownerId } },
+    {
+      $project: {
+        categoryType: 1,
+        createdAt: 1,
+        period: {
+          $switch: {
+            branches: [
+              { case: { $gte: ['$createdAt', todayStart] }, then: 'today' },
+              { case: { $gte: ['$createdAt', weekAgo] }, then: 'thisWeek' },
+              { case: { $gte: ['$createdAt', monthAgo] }, then: 'monthAgo' },
+            ],
+            default: 'earlier',
+          },
+        },
+      },
     },
-    thisWeek: {
-      postLike: thisWeekTime.filter((t) => t.categoryType === 'POST_LIKE'),
-      comment: thisWeekTime.filter((t) => t.categoryType === 'COMMENT_POST'),
-      request: thisWeekTime.filter((t) => t.categoryType === 'REQUEST'),
+    {
+      $group: {
+        _id: '$period',
+        postLike: { $push: { $cond: [{ $eq: ['$categoryType', 'POST_LIKE'] }, '$$ROOT', '$$REMOVE'] } },
+        comment: { $push: { $cond: [{ $eq: ['$categoryType', 'COMMENT_POST'] }, '$$ROOT', '$$REMOVE'] } },
+        request: { $push: { $cond: [{ $eq: ['$categoryType', 'REQUEST'] }, '$$ROOT', '$$REMOVE'] } },
+      },
     },
-    monthAgo: {
-      postLike: monthAgoTime.filter((t) => t.categoryType === 'POST_LIKE'),
-      comment: monthAgoTime.filter((t) => t.categoryType === 'COMMENT_POST'),
-      request: monthAgoTime.filter((t) => t.categoryType === 'REQUEST'),
+    {
+      $match: {
+        $or: [{ postLike: { $ne: [] } }, { comment: { $ne: [] } }, { request: { $ne: [] } }],
+      },
     },
-    earlier: {
-      postLike: earlierTime.filter((t) => t.categoryType === 'POST_LIKE'),
-      comment: earlierTime.filter((t) => t.categoryType === 'COMMENT_POST'),
-      request: earlierTime.filter((t) => t.categoryType === 'REQUEST'),
-    },
-  };
+  ]);
+
+  return notifications.reduce((acc, group) => {
+    acc[group._id] = {
+      postLike: group.postLike.length > 0 ? group.postLike : null,
+      comment: group.comment.length > 0 ? group.comment : null,
+      request: group.request.length > 0 ? group.request : null,
+    };
+    return acc;
+  }, {});
 };
