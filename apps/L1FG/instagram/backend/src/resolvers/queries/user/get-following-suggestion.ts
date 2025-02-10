@@ -5,7 +5,6 @@ export const getFollowingSuggestion: QueryResolvers['getFollowingSuggestion'] = 
   if (!userId) {
     throw new Error('Та нэвтэрнэ үү!');
   }
-  console.log('follower model find', FollowerModel.find());
   const following = await FollowerModel.find({ followerId: userId }).select('targetID');
   const followingIds = following.map((entry) => entry._id.toString());
   const suggestedUsers = await UserModel.find({
