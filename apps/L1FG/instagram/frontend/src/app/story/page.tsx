@@ -1,7 +1,7 @@
 import { StoriesMock } from '@/components/story/MockStory';
 import React from 'react';
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <StoriesMock />
@@ -9,4 +9,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

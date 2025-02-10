@@ -12,11 +12,15 @@ describe('user', () => {
       fullName: 'afd',
     });
     const parent = {
+      _id: 'hi',
       userId: 'fs',
       commentCount: 2,
       likeCount: 3,
       postImage: ['fad'],
       carouselMediaCount: 3,
+      hasLiked: false,
+      createdAt: 890,
+      caption: '',
       user: {
         _id: '3',
         userName: 'john',

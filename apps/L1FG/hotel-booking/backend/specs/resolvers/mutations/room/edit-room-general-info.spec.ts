@@ -32,6 +32,8 @@ describe('Edit Room General Info', () => {
       price: 150000,
       roomInfo: ['18m2', 'Private bathroom'],
       type: 'Single',
+      bed: 1,
+      roomNumber: 102,
     };
 
     const mockRoom = {
@@ -40,6 +42,8 @@ describe('Edit Room General Info', () => {
       price: 150000,
       roomInfo: ['18m2', 'Private bathroom'],
       type: 'Single',
+      bed: 1,
+      roomNumber: 102,
     };
     RoomModel.findById.mockResolvedValueOnce(mockRoom);
     RoomModel.findByIdAndUpdate.mockResolvedValueOnce(mockRoom);
