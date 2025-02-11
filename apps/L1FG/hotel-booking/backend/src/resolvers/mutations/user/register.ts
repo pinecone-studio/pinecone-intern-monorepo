@@ -1,27 +1,23 @@
+import jwt from 'jsonwebtoken';
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
-import jwt from 'jsonwebtoken';
 
 export const register: MutationResolvers['register'] = async (_, { input }) => {
   const { email, password } = input;
   const user = await UserModel.findOne({ email });
 
-  if (user) throw new Error('User already exists');
+  if (!user) throw new Error('User not found or OTP not verified');
 
-  const newUser = await UserModel.create({
-    email,
-    password,
-  });
+  const newUser = await UserModel.findByIdAndUpdate(user._id, { password: password }, { new: true });
 
   const token = jwt.sign(
     {
-      userId: newUser._id,
+      userId: user._id,
     },
     process.env.JWT_SECRET!
   );
 
-  return {
-    user: newUser,
-    token,
-  };
+  const Success = true;
+
+  return { success: Success, token: token, user: newUser };
 };
