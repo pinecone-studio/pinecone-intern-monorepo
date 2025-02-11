@@ -11,9 +11,9 @@ export const NotificationTypeDefs = gql`
   }
 
   type NotificationCategory {
-    postLike: [NotificationType]!
-    comment: [NotificationType]!
-    request: [NotificationType]!
+    postLike: [NotificationType]
+    comment: [NotificationType]
+    request: [NotificationType]
   }
 
   type NotificationType {
@@ -31,16 +31,16 @@ export const NotificationTypeDefs = gql`
     contentPost: String
   }
   type NotificationGroup {
-    today: [NotificationType]!
-    yesterday: [NotificationType]!
-    thisWeek: [NotificationType]!
-    earlier: [NotificationType]!
+    today: [NotificationType]
+    thisWeek: [NotificationType]
+    thisMonth: [NotificationType]
+    earlier: [NotificationType]
   }
 
   type NotificationResponseType {
     today: NotificationCategory
     thisWeek: NotificationCategory
-    monthAgo: NotificationCategory
+    thisMonth: NotificationCategory
     earlier: NotificationCategory
   }
 

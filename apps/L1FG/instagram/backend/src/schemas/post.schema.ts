@@ -2,24 +2,24 @@ import gql from 'graphql-tag';
 
 export const PostTypeDefs = gql`
   type Post {
-    _id: ID
+    _id: ID!
     postImage: [String!]!
-    caption: String
-    userId: ID
-    carouselMediaCount: Int
-    createdAt: Date
+    caption: String!
+    userId: ID!
+    carouselMediaCount: Int!
+    createdAt: Date!
   }
 
   type UserPostType {
-    _id: ID
+    _id: ID!
     postImage: [String!]!
-    caption: String
-    userId: ID
+    caption: String!
+    userId: ID!
     carouselMediaCount: Int!
-    createdAt: Date
+    createdAt: Date!
     commentCount: Int!
     likeCount: Int!
-    hasLiked: Boolean
+    hasLiked: Boolean!
     user: UserTogetherUserType!
   }
   type PostsEdge {
@@ -29,11 +29,11 @@ export const PostTypeDefs = gql`
   type PageInfo {
     startCursor: ID!
     endCursor: ID!
-    hasNextPage: Boolean
+    hasNextPage: Boolean!
   }
   type PostsConnection {
     edges: [PostsEdge!]!
-    pageInfo: PageInfo
+    pageInfo: PageInfo!
   }
 
   input PostInput {

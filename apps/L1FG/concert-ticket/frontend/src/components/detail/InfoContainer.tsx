@@ -4,8 +4,12 @@ import { useGetConcertQuery } from '@/generated';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAlert } from '../providers/AlertProvider';
 
-const InfoContainer = ({ ticketID }: { ticketID: string }) => {
+type infoProps = {
+  ticketID: string;
+};
+const InfoContainer = ({ ticketID }: infoProps) => {
   const { data } = useGetConcertQuery({ variables: { id: ticketID as string } });
   const [user, setUser] = useState<string | null>('');
   const formatDate = data?.getConcert.concertDay ? format(data?.getConcert.concertDay, 'yyyy-MM-dd') : '';
@@ -14,9 +18,10 @@ const InfoContainer = ({ ticketID }: { ticketID: string }) => {
     setUser(getUser);
   }, []);
 
+  const { showAlert } = useAlert();
   const router = useRouter();
   const ticketReservation = () => {
-    if (!user) return router.push('/signin');
+    if (!user) return showAlert('warning', 'Тасалбар захиалахын тулд мэйлээрээ нэвтэрч орно уу'), router.push('/signin');
     return router.push(`/ticketReservation/${ticketID}`);
   };
   return (
@@ -57,12 +62,11 @@ const InfoContainer = ({ ticketID }: { ticketID: string }) => {
         </div>
       </div>
       <div className="flex-1 w-[345px] ml-[50px]">
-        <p className="text-[#878686] text-[13px] leading-5">Тоглолт үзэх өдрөө сонгоно уу.</p>
         <div className="flex flex-col gap-4">
           <div>
             <Select>
               <SelectTrigger className="w-[345px] bg-neutral-800 border-none text-white">
-                <SelectValue placeholder="Өдөр сонгох" />
+                <SelectValue placeholder={`${formatDate}`} />
               </SelectTrigger>
               <SelectContent className="bg-neutral-800 text-white border-none">
                 <SelectGroup>

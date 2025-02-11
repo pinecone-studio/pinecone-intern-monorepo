@@ -1,6 +1,5 @@
 import { MutationResolvers } from '../../generated';
 import { UserModel } from '../../models';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 export const createUser: MutationResolvers['createUser'] = async (_, { input }) => {
@@ -15,13 +14,9 @@ export const createUser: MutationResolvers['createUser'] = async (_, { input }) 
 
   const newUser = await UserModel.create({
     ...input,
+    email: email.trim().toLowerCase(),
     password: hashedPassword,
   });
 
-  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string);
-
-  return {
-    user: newUser,
-    token,
-  };
+  return newUser;
 };

@@ -34,7 +34,7 @@ const NotificationSection = () => {
       <SheetTrigger asChild>
         <Button variant="ghost" className="relative" aria-label="Мэдэгдлүүд">
           <Bell width={16} className="text-gray-700 hover:text-black transition" />
-          {notifs.length > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center">{notifs.length}</span>}
+          {notifs.length > 0 && <span className="absolute top-0 left-6 bg-red-500 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center">{notifs.length}</span>}
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="px-2 w-5/6">

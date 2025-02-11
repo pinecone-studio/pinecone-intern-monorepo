@@ -13,20 +13,41 @@ export const typeDefs = gql`
     phoneNumber: String
     emergencyContact: [String]
     status: String
-    password: String!
+    password: String
+    otp: Int
   }
 
-  type RegisterUserResponse {
-    user: User!
-    token: String!
+  type RequestOtpType {
+    success: Boolean!
   }
 
-  input RegisterUserInput {
+  type VerifyOtpType {
+    success: Boolean!
+  }
+
+  type RegisterType {
+    user: User
+    token: String
+    success: Boolean!
+  }
+
+  input RequestOtpInput {
     email: String!
+  }
+
+  input VerifyOtpInput {
+    verifyOtp: Int!
+    email: String!
+  }
+
+  input RegisterInput {
     password: String!
+    email: String!
   }
 
   type Mutation {
-    register(input: RegisterUserInput!): RegisterUserResponse!
+    requestOTP(input: RequestOtpInput!): RequestOtpType!
+    verifyOTP(input: VerifyOtpInput!): VerifyOtpType!
+    register(input: RegisterInput!): RegisterType!
   }
 `;

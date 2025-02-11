@@ -1,7 +1,7 @@
-import { AddRoomPage } from '@/features/admin/AddRoom';
+import { AddHotelPage } from '@/features/admin/AddHotel';
 
-const AddRoom = () => {
-  return <AddRoomPage />;
+const AddHotel = () => {
+  return <AddHotelPage />;
 };
 
-export default AddRoom;
+export default AddHotel;

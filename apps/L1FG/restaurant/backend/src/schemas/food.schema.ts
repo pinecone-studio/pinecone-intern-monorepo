@@ -6,6 +6,7 @@ export const foodTypeDefs = gql`
 
   enum Response {
     Success
+    Failure
   }
 
   input FoodInputType {
@@ -31,9 +32,13 @@ export const foodTypeDefs = gql`
     categoryId: ID!
   }
 
-  type Query {
-    sampleQuery: String!
-    getFoods: [FoodType!]!
+  input EditFoodInput {
+    foodId: ID!
+    foodName: String
+    imageUrl: String
+    price: Float
+    status: String
+    categoryId: ID
   }
 
   type UpdatedFoodType {
@@ -41,9 +46,21 @@ export const foodTypeDefs = gql`
     categoryId: ID!
   }
 
+  type DeleteResponse {
+    status: Response!
+    message: String!
+  }
+
+  type Query {
+    sampleQuery: String!
+    getFoods: [FoodType!]!
+  }
+
   type Mutation {
     sampleMutation: String!
     updateFoodCategory(input: UpdateFoodType!): UpdatedFoodType!
     createFood(input: FoodInputType!): FoodType!
+    updateFood(input: EditFoodInput!): FoodType!
+    deleteFood(foodId: ID!): DeleteResponse!
   }
 `;

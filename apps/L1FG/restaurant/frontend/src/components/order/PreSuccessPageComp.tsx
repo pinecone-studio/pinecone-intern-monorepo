@@ -41,7 +41,6 @@ const PreSuccessPageComp = () => {
   const [makeOrder] = useMakeOrderMutation();
 
   const handleOrderSubmit = async () => {
-
     setIsSubmitting(true);
 
     const orderInput = {
@@ -56,6 +55,7 @@ const PreSuccessPageComp = () => {
 
     try {
       await makeOrder({ variables: { input: orderInput } });
+      localStorage.removeItem('order');
       router.push('/payment-successful');
     } catch (err) {
       console.error('Error making order:', err);

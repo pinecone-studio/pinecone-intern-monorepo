@@ -1,9 +1,6 @@
-import { Booked } from '@/components/user/booking-page/Booked';
-import { FooterSmall } from '@/components/user/booking-page/FooterSmall';
-import { NoPreviousBooking } from '@/components/user/booking-page/NoPreviousBooking';
+import { FooterSmall, MainContentBooking } from '@/components/user/booking-page';
 import { Loading } from '@/components/user/main/Loading';
 import { NavigationWhite } from '@/components/user/main/NavigationWhite';
-
 import { useGetHotelsQuery } from '@/generated';
 
 export const BookingPage = () => {
@@ -24,8 +21,7 @@ export const BookingPage = () => {
   return (
     <div className="flex flex-col justify-between min-h-screen">
       <NavigationWhite />
-      <Booked />
-      <NoPreviousBooking />
+      <MainContentBooking />
       <FooterSmall />
     </div>
   );

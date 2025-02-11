@@ -51,9 +51,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
 
   return (
     <div className="max-w-full" data-testid="order-page">
-      <div className="fixed top-0 left-0 right-0 z-10" data-testid="order-list">
-        <Header />
-      </div>
+      <Header />
       <div className="flex flex-col px-4 pb-24 pt-20">
         <div className="text-[#441500] pb-4 text-center font-[600] text-[20px] font-gip leading-[32px]" data-testid="menu-title">
           Хоолны цэс
