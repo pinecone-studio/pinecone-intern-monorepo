@@ -31,7 +31,7 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
             branches: [
               { case: { $gte: ['$createdAt', todayStart] }, then: 'today' },
               { case: { $gte: ['$createdAt', weekAgo] }, then: 'thisWeek' },
-              { case: { $gte: ['$createdAt', monthAgo] }, then: 'monthAgo' },
+              { case: { $gte: ['$createdAt', monthAgo] }, then: 'thisMonth' },
             ],
             default: 'earlier',
           },
