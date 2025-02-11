@@ -1,0 +1,23 @@
+mutation CreateTicket($input: TicketInput!) {
+  createTicket(input: $input) {
+    _id
+    concertID
+    ticketNumber
+    vipTicket
+    standartTicket
+    standingAreaTicket
+  }
+}
+query GetTicket($ticketNumber: Int!) {
+  getTicket(ticketNumber: $ticketNumber) {
+    _id
+    concertID
+    vipTicketQuantity
+    standartTicketQuantity
+    standingAreaTicketQuantity
+    ticketNumber
+    vipTicket
+    standartTicket
+    standingAreaTicket
+  }
+}
