@@ -25,12 +25,16 @@ query GetConcerts {
 query GetConcert($id: String!) {
   getConcert(_id: $id) {
     _id
+    concertName
+    concertPlan
     artistName
     concertDay
-    concertName
-    concertPhoto
-    concertPlan
     concertTime
+    concertPhoto
+    vipTicket {
+      price
+      quantity
+    }
     regularTicket {
       price
       quantity
@@ -39,7 +43,26 @@ query GetConcert($id: String!) {
       price
       quantity
     }
+  }
+}
+mutation UpdateConcertTicket($input: UpdateTicketInput!) {
+  updateConcertTicket(input: $input) {
+    _id
+    concertName
+    concertPlan
+    artistName
+    concertDay
+    concertTime
+    concertPhoto
     vipTicket {
+      price
+      quantity
+    }
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
       price
       quantity
     }

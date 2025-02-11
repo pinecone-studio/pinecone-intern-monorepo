@@ -16,10 +16,10 @@ const OrderHistory = () => {
   ];
 
   return (
-    <div className="min-h-[500px] w-full  text-white px-4 py-6">
+    <div className="min-h-[500px] w-full">
       <Header />
 
-      <h1 className="text-center text-xl text-black mb-6">Захиалгын түүх</h1>
+      <h1 className="text-center text-xl pt-20 text-black mb-6">Захиалгын түүх</h1>
 
       <div className="flex-1 overflow-y-scroll px-4 py-4 space-y-4">
         {orders.map((order, index) => (

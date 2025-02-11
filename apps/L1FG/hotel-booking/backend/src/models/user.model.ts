@@ -10,6 +10,7 @@ const UserSchema = new Schema<UserType>({
   emergencyContact: { type: [String] },
   status: { type: String },
   password: { type: String, requried: true },
+  otp: { type: Number },
 });
 
 export const UserModel = models['users'] || model<UserType>('users', UserSchema);
