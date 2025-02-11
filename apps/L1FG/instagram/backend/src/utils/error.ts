@@ -36,3 +36,9 @@ export class FoundError extends GraphQLError {
     this.name = 'FOUND_ERROR';
   }
 }
+export class NotFoundError extends GraphQLError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NOT_FOUND_ERROR';
+  }
+}
