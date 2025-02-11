@@ -20,10 +20,10 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="w-full bg-white text-center flex flex-col items-center p-4">
+    <div className="w-full bg-white text-center flex flex-col items-center">
       <Header />
 
-      <div className="flex flex-col items-center p-6 w-full max-w-sm">
+      <div className="flex flex-col items-center p-6 w-full max-w-sm pt-20">
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
             <Image src={user?.profileImage || '/default-avatar.png'} alt="Profile image" width={100} height={100} className="rounded-full" />
