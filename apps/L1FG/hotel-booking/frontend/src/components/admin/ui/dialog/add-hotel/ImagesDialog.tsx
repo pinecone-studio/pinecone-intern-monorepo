@@ -1,6 +1,7 @@
+import { HotelImagesProps } from '@/components/admin/add-hotel/type';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
-export const ImagesDialog = () => {
+export const ImagesDialog = ({ images, setImages, handleEditHotelImages }: HotelImagesProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -9,11 +10,17 @@ export const ImagesDialog = () => {
       <AlertDialogContent className="max-w-[1160px] w-full gap-6">
         <AlertDialogTitle className="font-Inter text-base font-semibold leading-4 tracking-[-0.4px]">Images</AlertDialogTitle>
         <div className="flex ">
-          <div></div>
+          <textarea
+            value={images?.join(', ')}
+            className="min-h-[64px] w-full resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+            onChange={(e) => setImages(e.target.value.split(',').map((item) => item.trim()))}
+          />
         </div>
         <div className="flex justify-between">
           <AlertDialogCancel className="px-4 py-2 bg-white rounded-[6px] ">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">Save</AlertDialogAction>
+          <AlertDialogAction onClick={handleEditHotelImages} className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">
+            Save
+          </AlertDialogAction>
         </div>
       </AlertDialogContent>
     </AlertDialog>

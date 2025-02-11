@@ -4,4 +4,4 @@ export * from '../../../features/admin/main/SelectStarRating';
 export * from '../../../features/admin/main/SelectUserRating';
 export * from '../../../features/admin/main/SelectStatus';
 export * from '../guest/GuestDataTable';
-export * from './HotelDataTable';
+export * from '../main/HotelDataTable';
