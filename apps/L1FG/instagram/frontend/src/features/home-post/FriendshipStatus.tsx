@@ -1,39 +1,57 @@
 'use client';
-import { GetProfilePreviewQuery } from '@/generated';
+import { GetProfilePreviewQuery, useCreateFollowerMutation } from '@/generated';
 import { Follow } from './Follow';
 import { useAuth } from '../../components/providers/AuthProvider';
-import { ApolloQueryResult } from '@apollo/client';
+import { Requested } from './Requested';
+import { Following } from './Following';
+import { useEffect, useState } from 'react';
+import { useCache } from '@/components/providers/CacheProvider';
 
-export const FriendshipStatus = ({ preview, profilePreviewRefetch }: { preview: GetProfilePreviewQuery; profilePreviewRefetch: () => Promise<ApolloQueryResult<GetProfilePreviewQuery>> }) => {
+export const FriendshipStatus = ({ preview }: { preview: GetProfilePreviewQuery }) => {
   const targetId = preview.getProfilePreview.user._id;
-  const status = preview.getProfilePreview.user.friendshipStatus;
   const { user } = useAuth();
+  const [follow, { data }] = useCreateFollowerMutation();
+  const [status, setStatus] = useState(preview.getProfilePreview.user.friendshipStatus);
+  const { cacheFollow } = useCache();
+  useEffect(() => {
+    if (data) {
+      if (data.createFollower.isFollowed) {
+        setStatus((pre) => ({ ...pre, following: true }));
+      } else {
+        setStatus((pre) => ({ ...pre, outgoingRequest: true }));
+      }
+    }
+  }, [data]);
+  const handleClick = async () => {
+    try {
+      setStatus((pre) => {
+        if (preview.getProfilePreview.user.isPrivate) {
+          return { ...pre, outgoingRequest: true };
+        }
+        return { ...pre, following: true };
+      });
+      await follow({
+        variables: {
+          input: {
+            targetId: targetId,
+          },
+        },
+      });
+      cacheFollow({ targetId: preview.getProfilePreview.user._id, followerCount: preview.getProfilePreview.user.followerCount + 1 });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (user?._id == targetId) {
     return;
   }
   if (status.following) {
-    return (
-      <button
-        className="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
-            flex justify-center items-center mt-2"
-        data-testid="friendship-status-following"
-      >
-        Following
-      </button>
-    );
+    return <Following />;
   } else {
     if (status.outgoingRequest) {
-      return (
-        <button
-          className="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
-            flex justify-center items-center mt-2"
-          data-testid="friendship-status-request"
-        >
-          Requested
-        </button>
-      );
+      return <Requested />;
     } else {
-      return <Follow targetId={targetId} profilePrevieRefetch={profilePreviewRefetch} />;
+      return <Follow handleClickLike={handleClick} />;
     }
   }
 };
