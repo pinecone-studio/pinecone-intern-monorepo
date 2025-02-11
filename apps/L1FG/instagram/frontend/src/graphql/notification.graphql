@@ -1,0 +1,145 @@
+query GetNotification {
+  getNotification {
+    today {
+      postLike {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      request {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+    thisWeek {
+      postLike {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      request {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+    earlier {
+      postLike {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          userName
+          seenStoryTime
+          latestStoryTimestamp
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          userName
+          latestStoryTimestamp
+          seenStoryTime
+          profileImage
+        }
+        contentPost
+      }
+      request {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+  }
+}
