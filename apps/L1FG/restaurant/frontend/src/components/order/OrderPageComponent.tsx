@@ -109,7 +109,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
           ))}
         </div>
       </div>
-      <div className="fixed bottom-0 left-0 right-0" data-testid="order-list">
+      <div className="fixed bottom-0 left-0 right-0 container mx-auto" data-testid="order-list">
         <OrderList tableNumber={tableNumber} selectedItems={selectedItems} updateItemQuantity={updateItemQuantity} removeItem={removeItem} />
       </div>
     </div>

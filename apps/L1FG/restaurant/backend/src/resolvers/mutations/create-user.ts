@@ -16,6 +16,8 @@ export const createUser: MutationResolvers['createUser'] = async (_, { input }) 
     ...input,
     email: email.trim().toLowerCase(),
     password: hashedPassword,
+    wallet: 0,
+    role: 'user',
   });
 
   return newUser;

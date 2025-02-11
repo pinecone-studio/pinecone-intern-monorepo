@@ -43,6 +43,8 @@ const LoginPage = () => {
           userName: user.data?.loginUser.userName,
           profileImage: user.data?.loginUser.profileImage,
           phoneNumber: user.data?.loginUser.phoneNumber,
+          // role: user.data?.loginUser.role,
+          // wallet: user.data?.loginUser.wallet,
           createdAt: user.data?.loginUser.createdAt,
         })
       );
@@ -61,7 +63,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col items-center w-full h-screen justify-center mx-auto px-4">
       <div className="w-full flex flex-col items-center justify-between gap-6">
-        <Image src="/Logo.png" alt="Logo" width={112} height={111} />
+        <Image src="/Logo.png" alt="Logo" width={112} height={112} />
         <div className="flex gap-2 items-center justify-center flex-col">
           <p className="font-semibold text-2xl">Нэвтрэх</p>
         </div>
