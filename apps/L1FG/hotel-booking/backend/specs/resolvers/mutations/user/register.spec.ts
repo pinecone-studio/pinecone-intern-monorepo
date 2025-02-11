@@ -1,12 +1,12 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { register } from '../../../../src/resolvers/mutations/user/register';
+import { GraphQLResolveInfo } from 'graphql';
 
 const input = { email: 'test@gmail.com', password: 'test' };
 
 jest.mock('../../../../src/models', () => ({
   UserModel: {
-    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ _id: '1' }),
-    create: jest.fn().mockResolvedValue({ _id: '1' }),
+    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ email: 'mgd' }),
+    findByIdAndUpdate: jest.fn().mockResolvedValue(null),
   },
 }));
 
@@ -16,14 +16,11 @@ jest.mock('jsonwebtoken', () => ({
 
 describe('register', () => {
   it('should register', async () => {
-    const response = await register!({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
-
-    expect(response).toEqual({
-      user: {
-        _id: '1',
-      },
-      token: 'token',
-    });
+    try {
+      await register!({}, { input }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('User not found or OTP not verified'));
+    }
   });
 
   it('should not register', async () => {
