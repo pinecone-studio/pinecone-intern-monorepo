@@ -17,9 +17,8 @@ describe('delete post like', () => {
       throw new Error('Та нэвтэрнэ үү');
     });
     const input = {
-      postLikeid: '1',
+      ownerUserId: '3',
       postId: '2',
-      notificationId: '4',
     };
     await expect(deletePostLike({}, { input: input }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Та нэвтэрнэ үү');
   });
@@ -33,9 +32,8 @@ describe('delete post like', () => {
     });
     (validatePostlikePostAndNotification as jest.Mock) = mockValidatePostlikePostAndNotification;
     const input = {
-      postLikeid: '1',
+      ownerUserId: '3',
       postId: '2',
-      notificationId: '4',
     };
     await expect(
       deletePostLike(
@@ -48,32 +46,7 @@ describe('delete post like', () => {
       )
     ).rejects.toThrow('пост олдсонгүй');
   });
-  it('Should throw мэдээлэл олдсонгүй', async () => {
-    if (!deletePostLike) {
-      return;
-    }
-    (authenticate as jest.Mock).mockResolvedValue(null);
-    const mockValidatePostlikePostAndNotification = jest.fn(() => {
-      throw new Error('мэдээлэл олдсонгүй');
-    });
-    (validatePostlikePostAndNotification as jest.Mock) = mockValidatePostlikePostAndNotification;
-    const input = {
-      postLikeid: '1',
-      postId: '2',
-      notificationId: '4',
-    };
-    await expect(
-      deletePostLike(
-        {},
-        {
-          input: input,
-        },
-        { userId: '12' },
-        {} as GraphQLResolveInfo
-      )
-    ).rejects.toThrow('мэдээлэл олдсонгүй');
-    expect(mockValidatePostlikePostAndNotification).toHaveBeenCalledTimes(1);
-  });
+
   it('Should throw error ', async () => {
     if (!deletePostLike) {
       return;
@@ -81,7 +54,7 @@ describe('delete post like', () => {
     (authenticate as jest.Mock) = jest.fn();
     const mockValidatePostlikePostAndNotification = jest.fn();
     (validatePostlikePostAndNotification as jest.Mock) = mockValidatePostlikePostAndNotification;
-    (PostLikeModal.findByIdAndDelete as jest.Mock).mockResolvedValueOnce({
+    (PostLikeModal.findOneAndDelete as jest.Mock).mockResolvedValueOnce({
       _id: '23',
       userId: '45',
       postId: '67',
@@ -89,12 +62,11 @@ describe('delete post like', () => {
     (PostModel.findByIdAndUpdate as jest.Mock) = jest.fn(() => {
       throw new Error('hi this error');
     });
-    (NotificationModel.findByIdAndDelete as jest.Mock) = jest.fn();
+    (NotificationModel.findOneAndDelete as jest.Mock) = jest.fn();
 
     const input = {
-      postLikeid: '1',
+      ownerUserId: '3',
       postId: '2',
-      notificationId: '4',
     };
     await expect(
       deletePostLike(
@@ -115,18 +87,17 @@ describe('delete post like', () => {
     (authenticate as jest.Mock) = jest.fn();
     const mockValidatePostlikePostAndNotification = jest.fn();
     (validatePostlikePostAndNotification as jest.Mock) = mockValidatePostlikePostAndNotification;
-    (PostLikeModal.findByIdAndDelete as jest.Mock).mockResolvedValueOnce({
+    (PostLikeModal.findOneAndDelete as jest.Mock).mockResolvedValueOnce({
       _id: '23',
       userId: '45',
       postId: '67',
     });
     (PostModel.findByIdAndUpdate as jest.Mock) = jest.fn();
-    (NotificationModel.findByIdAndDelete as jest.Mock) = jest.fn();
+    (NotificationModel.findOneAndDelete as jest.Mock) = jest.fn();
 
     const input = {
-      postLikeid: '1',
+      ownerUserId: '3',
       postId: '2',
-      notificationId: '4',
     };
     const result = await deletePostLike(
       {},
