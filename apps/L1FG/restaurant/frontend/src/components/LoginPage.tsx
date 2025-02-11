@@ -2,22 +2,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
-
-export const LOGIN_USER = gql`
-  mutation LoginUser($input: LoginInput!) {
-    loginUser(input: $input) {
-      _id
-      userName
-      email
-      profileImage
-      phoneNumber
-      createdAt
-    }
-  }
-`;
+import { useLoginUserMutation } from '@/generated';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -29,14 +15,13 @@ const LoginPage = () => {
     errorMessage: '',
   });
 
-  const [loginUser] = useMutation(LOGIN_USER);
+  const [loginUser] = useLoginUserMutation();
 
   const handleSignIn = async () => {
     if (!formState.email || !formState.password) {
       setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
-    console.log(formState);
 
     setFormState({ ...formState, loading: !formState.loading });
 
@@ -50,17 +35,15 @@ const LoginPage = () => {
         },
       });
 
-      localStorage.setItem('token', user.data.token);
-
       localStorage.setItem(
         'user',
         JSON.stringify({
-          _id: user.data.loginUser.user._id,
-          email: user.data.loginUser.user.email,
-          userName: user.data.loginUser.user.userName,
-          profileImage: user.data.loginUser.user.profileImage,
-          phoneNumber: user.data.loginUser.user.phoneNumber,
-          createdAt: user.data.loginUser.user.createdAt,
+          _id: user.data?.loginUser._id,
+          email: user.data?.loginUser.email,
+          userName: user.data?.loginUser.userName,
+          profileImage: user.data?.loginUser.profileImage,
+          phoneNumber: user.data?.loginUser.phoneNumber,
+          createdAt: user.data?.loginUser.createdAt,
         })
       );
 

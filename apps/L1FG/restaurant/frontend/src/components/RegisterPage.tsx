@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useCreateUserMutation } from '@/generated';
 
 interface User {
   userName: string;
@@ -13,17 +12,9 @@ interface User {
   loading: boolean;
   errorMessage: string;
 }
-export const CREATE_USER = gql`
-  mutation CreateUser($input: RegisterInput!) {
-    createUser(input: $input) {
-      userName
-      email
-    }
-  }
-`;
 
 const RegisterPage = () => {
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useCreateUserMutation();
   const router = useRouter();
 
   const [formState, setFormState] = useState<User>({
