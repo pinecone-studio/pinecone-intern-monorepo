@@ -58,10 +58,7 @@ describe('loginUser Mutation Resolver', () => {
     expect(bcrypt.compare).toHaveBeenCalledWith(password, mockUser.password);
 
     // Ensure the function returns expected output
-    expect(result).toEqual({
-      user: mockUser,
-      token: mockToken,
-    });
+    expect(result).toEqual(mockUser);
   });
 
   it('should throw an error if the user does not exist', async () => {

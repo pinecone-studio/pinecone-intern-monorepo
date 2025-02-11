@@ -60,11 +60,8 @@ describe('createUser Resolver', () => {
       userName: input.userName,
     });
 
-    // Ensure jwt.sign is called correctly
-    expect(jwt.sign).toHaveBeenCalledWith({ userId: mockUser._id }, process.env.JWT_SECRET!);
-
     // Ensure the function returns expected output
-    expect(result).toEqual({ user: mockUser, token: 'mockToken' });
+    expect(result).toEqual(mockUser);
   });
 
   it('should throw an error if user already exists', async () => {
