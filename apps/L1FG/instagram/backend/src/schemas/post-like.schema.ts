@@ -7,7 +7,7 @@ export const PostLikeTypeDefs = gql`
   }
   input PostLikeInput {
     postId: ID!
-    ownerUserId: ID
+    ownerUserId: ID!
   }
   type Mutation {
     createPostLike(input: PostLikeInput!): PostLike!
