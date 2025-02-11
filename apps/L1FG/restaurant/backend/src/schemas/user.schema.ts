@@ -89,12 +89,6 @@ export const userTypeDefs = gql`
     newPassword: String!
     newRePassword: String!
   }
-  # type AuthResponse {
-  #   user: UserType!
-  # }
-  # type AuthResponseRegister {
-  #   user: UserType!
-  # }
   type Query {
     sampleQuery: String!
     getUser(_id: ID!): UserType!
