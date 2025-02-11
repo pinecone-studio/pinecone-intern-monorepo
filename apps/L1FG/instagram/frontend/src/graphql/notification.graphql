@@ -3,10 +3,12 @@ query GetNotification {
     today {
       postLike {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -18,10 +20,12 @@ query GetNotification {
       }
       comment {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -30,13 +34,16 @@ query GetNotification {
           profileImage
         }
         contentPost
+        contentComment
       }
       request {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -51,10 +58,12 @@ query GetNotification {
     thisWeek {
       postLike {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -66,10 +75,12 @@ query GetNotification {
       }
       comment {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -78,13 +89,16 @@ query GetNotification {
           profileImage
         }
         contentPost
+        contentComment
       }
       request {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -145,10 +159,12 @@ query GetNotification {
     earlier {
       postLike {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           userName
@@ -160,10 +176,12 @@ query GetNotification {
       }
       comment {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           userName
@@ -172,13 +190,16 @@ query GetNotification {
           profileImage
         }
         contentPost
+        contentComment
       }
       request {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp

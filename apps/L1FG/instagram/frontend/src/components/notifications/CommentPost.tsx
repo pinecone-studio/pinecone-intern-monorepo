@@ -30,6 +30,7 @@ export const CommentPost = ({ commentNotification }: Props) => {
       userNames: latestLikes.map((like) => like.user?.userName),
       postImage: likes[0]?.contentPost ?? '',
       userImage: latestLikes[latestLikes.length - 1]?.user?.profileImage,
+      contentComment: latestLikes[latestLikes.length - 1]?.contentComment,
     };
   });
 
@@ -43,7 +44,7 @@ export const CommentPost = ({ commentNotification }: Props) => {
             </Avatar>
             <div className="w-[194px] ml-2 items-center flex text-sm">
               <Link className="font-bold mr-2 text-base" href={'/'}>
-                {n.userNames[0]}, {n.userNames[1]} comment your post
+                {n.userNames[0]}, {n.userNames[1]} commented: {n.contentComment}
               </Link>
             </div>
           </div>
