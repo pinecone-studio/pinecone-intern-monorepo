@@ -1,8 +1,6 @@
 import { verifyOTP } from '../../../../src/resolvers/mutations/user/verifyOTP';
 import { GraphQLResolveInfo } from 'graphql';
 
-const input = { email: 'test@gmail.com', verifyOtp: 1234 };
-
 jest.mock('../../../../src/models', () => ({
   UserModel: {
     findOne: jest.fn().mockResolvedValueOnce({ email: 'test@gmail.com', otp: 9999 }).mockResolvedValueOnce({ email: 'test@gmail.com', otp: 1234 }),
@@ -18,7 +16,6 @@ describe('verifyOTP', () => {
       expect(response).toBe('Invalid OTP');
     } catch (error) {}
   });
-
   it('should verify OTP ', async () => {
     const response = await verifyOTP!({}, { input: { email: 'newuser@gmail.com', verifyOtp: 1234 } }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual({ success: true });

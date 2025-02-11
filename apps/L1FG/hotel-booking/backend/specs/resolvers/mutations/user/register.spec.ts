@@ -22,7 +22,6 @@ describe('register', () => {
       expect(error).toEqual(new Error('User not found or OTP not verified'));
     }
   });
-
   it('should not register', async () => {
     try {
       await register!({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
