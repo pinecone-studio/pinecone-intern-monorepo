@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 
 interface User {
   userName: string;
@@ -15,15 +16,14 @@ interface User {
 export const CREATE_USER = gql`
   mutation CreateUser($input: RegisterInput!) {
     createUser(input: $input) {
-      token
-      user {
-        userName
-        email
-      }
+      userName
+      email
     }
   }
 `;
+
 const RegisterPage = () => {
+  const [createUser] = useMutation(CREATE_USER);
   const router = useRouter();
 
   const [formState, setFormState] = useState<User>({
@@ -34,8 +34,6 @@ const RegisterPage = () => {
     loading: false,
     errorMessage: '',
   });
-
-  const [createUser] = useMutation(CREATE_USER);
 
   const handleRegister = async () => {
     if ([formState.email, formState.password, formState.userName, formState.rePassword].some((field) => !field)) {
@@ -49,6 +47,8 @@ const RegisterPage = () => {
     }
 
     try {
+      setFormState({ ...formState, loading: !formState.loading });
+
       await createUser({
         variables: {
           input: {
@@ -60,8 +60,6 @@ const RegisterPage = () => {
         },
       });
 
-      setFormState({ ...formState, loading: !formState.loading });
-
       router.push('/login');
     } catch (error) {
       setFormState({
@@ -69,6 +67,7 @@ const RegisterPage = () => {
         loading: false,
         errorMessage: 'Бүртгэл амжилтгүй боллоо.',
       });
+      console.log(error);
     }
   };
 

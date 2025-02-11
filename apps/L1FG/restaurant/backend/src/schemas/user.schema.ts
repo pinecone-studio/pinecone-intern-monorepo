@@ -89,11 +89,12 @@ export const userTypeDefs = gql`
     newPassword: String!
     newRePassword: String!
   }
-  type AuthResponse {
-    user: UserType!
-    token: String!
-  }
-
+  # type AuthResponse {
+  #   user: UserType!
+  # }
+  # type AuthResponseRegister {
+  #   user: UserType!
+  # }
   type Query {
     sampleQuery: String!
     getUser(_id: ID!): UserType!
@@ -101,8 +102,8 @@ export const userTypeDefs = gql`
   }
   type Mutation {
     sampleMutation: String!
-    createUser(input: RegisterInput!): AuthResponse!
-    loginUser(input: LoginInput!): AuthResponse!
+    createUser(input: RegisterInput!): UserType!
+    loginUser(input: LoginInput!): UserType!
 
     updateForgetPassword(input: UpdateForgetPassword!): UpdatedForgetPassword!
     requestChangePassword(input: RequestChangePasswordInput!): RequestChangePasswordResponse!
