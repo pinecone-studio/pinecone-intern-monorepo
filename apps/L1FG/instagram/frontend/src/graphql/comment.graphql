@@ -8,7 +8,14 @@ mutation CreateComment($input: CommentInput!) {
     updatedAt
   }
 }
-query GetComments($input: GetCommentInput!) {
+mutation CreateCommentLike($input: CommentLikeInput!) {
+  createCommentLike(input: $input) {
+    _id
+    userId
+    commentId
+  }
+}
+query getComments($input: GetCommentInput!) {
   getComments(input: $input) {
     _id
     comment
@@ -16,6 +23,7 @@ query GetComments($input: GetCommentInput!) {
     postId
     createdAt
     updatedAt
+    commentLiked
     user {
       _id
       userName
