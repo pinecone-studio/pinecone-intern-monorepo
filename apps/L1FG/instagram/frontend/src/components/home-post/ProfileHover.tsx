@@ -7,7 +7,7 @@ import { imageUrlOptimizer } from '../utils/image-url-optimizer';
 import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
 import { ProfilePreviewSkeleton } from '../skeleton/ProfilePreviewSkeleton';
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
-  const [getProfilePreview, { data, refetch, loading }] = useGetProfilePreviewLazyQuery();
+  const [getProfilePreview, { data, loading }] = useGetProfilePreviewLazyQuery();
   return (
     <HoverCard>
       <HoverCardTrigger
@@ -57,7 +57,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 );
               })}
             </div>
-            <FriendshipStatus preview={data} profilePreviewRefetch={refetch} />
+            <FriendshipStatus preview={data} />
           </div>
         )}
       </HoverCardContent>
