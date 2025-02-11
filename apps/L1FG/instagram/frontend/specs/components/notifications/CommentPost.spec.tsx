@@ -1,4 +1,4 @@
-import { LikedPost } from '@/components/notifications/LikedPost';
+import { CommentPost } from '@/components/notifications/CommentPost';
 import { render } from '@testing-library/react';
 
 const commentNotificationMock = [
@@ -94,6 +94,6 @@ describe('post comment component', () => {
   });
 
   it('renders CommentPost component', () => {
-    render(<LikedPost likeNotification={commentNotificationMock as []} />);
+    render(<CommentPost commentNotification={commentNotificationMock as []} />);
   });
 });
