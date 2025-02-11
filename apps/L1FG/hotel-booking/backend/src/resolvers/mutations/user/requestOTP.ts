@@ -13,7 +13,7 @@ export const requestOTP: MutationResolvers['requestOTP'] = async (_, { input }) 
 
   await sendEmail(email, `Your OTP is ${otp}`);
 
-  const newUser = await UserModel.create({ email, otp });
+  await UserModel.create({ email, otp });
 
   const Success = true;
   return { success: Success };
