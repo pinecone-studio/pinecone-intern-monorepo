@@ -65,7 +65,7 @@ const Page = ({ params }: { params: { ticketID: string } }) => {
 
     setOrder((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: isNaN(Number(value)) ? value : Number(value),
     }));
   };
 
