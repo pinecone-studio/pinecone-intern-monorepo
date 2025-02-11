@@ -1,8 +1,8 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import RegisterPage from '@/components/RegisterPage';
 import { useRouter } from 'next/navigation';
-import { CREATE_USER } from '@/components/RegisterPage';
+import { CreateUserDocument } from '@/generated';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -15,7 +15,7 @@ describe('RegisterPage', () => {
   const mocks = [
     {
       request: {
-        query: CREATE_USER,
+        query: CreateUserDocument,
         variables: {
           input: {
             userName: 'testuser',
@@ -43,59 +43,66 @@ describe('RegisterPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
 
-    fireEvent.click(getByTestId('Бүртгүүлэх'));
+      fireEvent.click(getByTestId('Бүртгүүлэх'));
+    });
 
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/login'));
   });
 
-  it('should display error messages for empty fields', () => {
+  it('should display error messages for empty fields', async () => {
     const { getByTestId, getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <RegisterPage />
       </MockedProvider>
     );
 
-    fireEvent.click(getByTestId('Бүртгүүлэх'));
+    await act(async () => {
+      fireEvent.click(getByTestId('Бүртгүүлэх'));
+    });
 
     expect(getByText('Бүх талбарыг бөглөнө үү.'));
   });
 
-  it('should display error if passwords do not match', () => {
+  it('should display error if passwords do not match', async () => {
     const { getByTestId, getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <RegisterPage />
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(getByTestId('rePassword'), { target: { value: 'password321' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(getByTestId('rePassword'), { target: { value: 'password321' } });
 
-    fireEvent.click(getByTestId('Бүртгүүлэх'));
+      fireEvent.click(getByTestId('Бүртгүүлэх'));
+    });
 
     expect(getByText('Нууц үг таарахгүй байна.'));
   });
 
-  it('should display error for invalid email format', () => {
+  it('should display error for invalid email format', async () => {
     const { getByTestId, getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <RegisterPage />
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
-    fireEvent.change(getByTestId('email'), { target: { value: 'invalid-email' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
+      fireEvent.change(getByTestId('email'), { target: { value: 'invalid-email' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
 
-    fireEvent.click(getByTestId('Бүртгүүлэх'));
-
+      fireEvent.click(getByTestId('Бүртгүүлэх'));
+    });
     expect(getByText('Зөв имэйл хаяг оруулна уу.'));
   });
 
@@ -103,7 +110,7 @@ describe('RegisterPage', () => {
     const errorMocks = [
       {
         request: {
-          query: CREATE_USER,
+          query: CreateUserDocument,
           variables: {
             input: {
               email: 'test@example.com',
@@ -121,13 +128,14 @@ describe('RegisterPage', () => {
         <RegisterPage />
       </MockedProvider>
     );
+    await act(async () => {
+      fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+      fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
 
-    fireEvent.change(getByTestId('userName'), { target: { value: 'testuser' } });
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
-    fireEvent.change(getByTestId('rePassword'), { target: { value: 'password123' } });
-
-    fireEvent.click(getByTestId('Бүртгүүлэх'));
+      fireEvent.click(getByTestId('Бүртгүүлэх'));
+    });
 
     await waitFor(() => expect(getByText('Бүртгэл амжилтгүй боллоо.')));
   });

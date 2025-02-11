@@ -2,8 +2,6 @@ import '@testing-library/jest-dom';
 import { PostsSwiper } from '@/components/home-post/PostsSwiper';
 import { render, screen } from '@testing-library/react';
 import { mockPost } from './mock';
-import { PropsWithChildren } from 'react';
-
 const mockPostImages = [[], ['image1.jpg'], ['image1.jpg', 'image2.jpg', 'image3.jpg']];
 const mockPosts = mockPostImages.map((images) => {
   const newPost = {
@@ -18,9 +16,6 @@ type ImageProps = {
   fill: boolean;
   className: string;
 };
-jest.mock('swiper/css', () => null);
-jest.mock('swiper/css/navigation', () => null);
-jest.mock('swiper/css/pagination', () => null);
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt, fill, className, ...props }: ImageProps) => {
@@ -29,17 +24,12 @@ jest.mock('next/image', () => ({
     return <img src={src} data-testid="post-image" className={combinedClasses} {...props} />;
   },
 }));
-jest.mock('swiper/react', () => ({
-  Swiper: ({ children }: PropsWithChildren) => {
-    return <div data-testid="swiper">{children}</div>;
-  },
-  SwiperSlide: ({ children }: PropsWithChildren) => {
-    return <div data-testid="swiper-slide">{children}</div>;
-  },
-}));
-jest.mock('swiper/modules', () => () => ({
-  Navigation: jest.fn(),
-  Pagination: jest.fn(),
+jest.mock('@/components/ui/carousel', () => ({
+  Carousel: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  CarouselContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  CarouselItem: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  CarouselNext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  CarouselPrevious: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 describe('Posts swiper', () => {
   afterEach(() => {

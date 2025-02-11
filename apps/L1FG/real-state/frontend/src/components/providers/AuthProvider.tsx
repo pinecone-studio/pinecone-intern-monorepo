@@ -1,5 +1,4 @@
 'use client';
-
 import { useChangePasswordInputMutation, useGetMeLazyQuery, useLoginMutation, User, useRegisterMutation, useRequestChangePasswordInputMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
@@ -51,7 +50,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const [signinMutation] = useLoginMutation({
     onCompleted: (data) => {
-      console.log('data', data.login);
       localStorage.setItem('token', data.login.token);
       setUser(data.login.user);
       router.push('/');
@@ -75,7 +73,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [requestChangePasswordMutation] = useRequestChangePasswordInputMutation({
     onCompleted: (data) => {
       toast.success('Амжилттай илгээлээ');
-      console.log(data);
       router.push(`/change-password?email=${data.requestChangePassword.email}`);
     },
     onError: (error) => {

@@ -1,4 +1,4 @@
-import Setting from '@/components/profile/Setting';
+import Setting from '@/components/profile/profilePost/Setting';
 import { render } from '@testing-library/react';
 
 describe('Settings components', () => {

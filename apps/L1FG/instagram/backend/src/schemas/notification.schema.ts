@@ -10,31 +10,41 @@ export const NotificationTypeDefs = gql`
     STORY_LIKE
   }
 
+  type NotificationCategory {
+    postLike: [NotificationType]
+    comment: [NotificationType]
+    request: [NotificationType]
+  }
+
   type NotificationType {
-    id: ID!
+    id: ID
     categoryType: CategoryEnum
-    userId: ID!
-    ownerId: ID!
+    userId: ID
+    ownerId: ID
     contentPostId: String
     contentCommentId: String
     contentStoryId: String
-    isRead: Boolean!
-    createdAt: Date!
+    isRead: Boolean
+    createdAt: Date
     updatedAt: Date
     user: UserTogetherUserType
     contentPost: String
   }
+  type NotificationGroup {
+    today: [NotificationType]
+    yesterday: [NotificationType]
+    thisWeek: [NotificationType]
+    earlier: [NotificationType]
+  }
 
-  input NotificationInput {
-    categoryType: CategoryEnum
-    userId: ID!
-    actorId: ID!
-    contentPostId: String
-    contentCommentId: String
-    contentStoryId: String
+  type NotificationResponseType {
+    today: NotificationCategory
+    thisWeek: NotificationCategory
+    monthAgo: NotificationCategory
+    earlier: NotificationCategory
   }
 
   type Query {
-    getNotification: [NotificationType]
+    getNotification: NotificationResponseType
   }
 `;

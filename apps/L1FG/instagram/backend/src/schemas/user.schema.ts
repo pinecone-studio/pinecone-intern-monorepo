@@ -69,7 +69,7 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
-    friendshipStatus: FriendshipStatusType
+    friendshipStatus: FriendshipStatusType!
   }
 
   type SearchedUsersType {
@@ -110,13 +110,20 @@ export const UserTypeDefs = gql`
     bio: String!
     gender: Gender!
   }
-
+  type ProfilePreviewType {
+    searchingUserId: ID!
+    user: UserTogetherUserType!
+    viewer: UserTogetherViewerType!
+    firstThreePosts: [PostsEdge!]!
+  }
   type Query {
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
     getUserByName(userName: String!): [UserTogetherUserType]
     getSearchedUser: [UserTogetherUserType]!
+    getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
+    getFollowingSuggestion: [UserWithoutPassword!]
   }
 
   type Mutation {

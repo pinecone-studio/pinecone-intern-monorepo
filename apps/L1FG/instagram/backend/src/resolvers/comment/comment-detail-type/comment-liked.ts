@@ -7,6 +7,7 @@ export const commentLiked = async ({ _id }: { _id: string }, _: unknown, { userI
     userId: userId,
     commentId: _id,
   });
+
   const hasLiked = commentLiked ? true : false;
   return hasLiked;
 };

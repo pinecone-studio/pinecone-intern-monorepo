@@ -1,5 +1,5 @@
 'use client';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGetConcertQuery } from '@/generated';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
@@ -62,11 +62,10 @@ const InfoContainer = ({ ticketID }: { ticketID: string }) => {
           <div>
             <Select>
               <SelectTrigger className="w-[345px] bg-neutral-800 border-none text-white">
-                <SelectValue placeholder="Udur songoh" />
+                <SelectValue placeholder="Өдөр сонгох" />
               </SelectTrigger>
               <SelectContent className="bg-neutral-800 text-white border-none">
                 <SelectGroup>
-                  <SelectLabel>Udur songoh</SelectLabel>
                   <SelectItem className="bg-black" value={data?.getConcert.concertDay}>
                     {formatDate}
                   </SelectItem>

@@ -1,7 +1,8 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import LoginPage, { LOGIN_USER } from '@/components/LoginPage';
+import LoginPage from '@/components/LoginPage';
 import { useRouter } from 'next/navigation';
+import { LoginUserDocument } from '@/generated';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -13,7 +14,7 @@ describe('LoginPage', () => {
   const mocks = [
     {
       request: {
-        query: LOGIN_USER,
+        query: LoginUserDocument,
         variables: {
           input: {
             email: 'test@example.com',
@@ -24,29 +25,28 @@ describe('LoginPage', () => {
       result: {
         data: {
           loginUser: {
-            user: {
-              _id: '12345',
-              email: 'test@example.com',
-              userName: 'testuser',
-              profileImage: '/profile.jpg',
-              createdAt: '2023-01-01',
-            },
-            token: 'mockToken123',
+            _id: '12345',
+            email: 'test@example.com',
+            userName: 'testuser',
+            profileImage: '/profile.jpg',
+            createdAt: '2023-01-01',
           },
         },
       },
     },
   ];
 
-  it('should show error message when fields are empty', () => {
+  it('should show error message when fields are empty', async () => {
     const { getByTestId, queryByText } = render(
       <MockedProvider>
         <LoginPage />
       </MockedProvider>
     );
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+    await act(async () => {
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     expect(queryByText('Бүх талбарыг бөглөнө үү.'));
   });
@@ -55,7 +55,7 @@ describe('LoginPage', () => {
     const invalidMocks = [
       {
         request: {
-          query: LOGIN_USER,
+          query: LoginUserDocument,
           variables: {
             input: {
               email: 'test@example.com',
@@ -73,29 +73,33 @@ describe('LoginPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'wrongpassword' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'wrongpassword' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
     await waitFor(() => expect(queryByText('Имэйл эсвэл нууц үг буруу байна.')));
   });
 
-  it('should save user data to localStorage and navigate to /order/1 on successful login', async () => {
+  it('should save user data to localStorage and navigate to / on successful login', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <LoginPage />
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 
   it('should show loading state during login', async () => {
@@ -105,12 +109,14 @@ describe('LoginPage', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
+    await act(async () => {
+      fireEvent.change(getByTestId('email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(getByTestId('password'), { target: { value: 'password123' } });
 
-    const loginButton = getByTestId('Нэвтрэх');
-    fireEvent.click(loginButton);
+      const loginButton = getByTestId('Нэвтрэх');
+      fireEvent.click(loginButton);
+    });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 });
