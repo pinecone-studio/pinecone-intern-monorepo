@@ -6,14 +6,17 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
   if (!userId) {
     throw new Error('UnAuthorized');
   }
+
   const todayStart = new Date();
   todayStart.setHours(0, 0, 0, 0);
 
   const weekAgo = new Date();
   weekAgo.setDate(weekAgo.getDate() - 7);
+  weekAgo.setHours(0, 0, 0, 0);
 
   const monthAgo = new Date();
   monthAgo.setDate(monthAgo.getDate() - 30);
+  monthAgo.setHours(0, 0, 0, 0);
 
   const ownerId = new mongoose.Types.ObjectId(userId);
 
@@ -25,24 +28,45 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
         createdAt: 1,
         userId: 1,
         contentPostId: 1,
+        contentCommentId: 1,
         isRead: 1,
         period: {
+          $cond: {
+            if: { $gte: ['$createdAt', todayStart] },
+            then: 'today',
+            else: {
+              $cond: {
+                if: { $gte: ['$createdAt', weekAgo] },
+                then: 'thisWeek',
+                else: {
+                  $cond: {
+                    if: { $gte: ['$createdAt', monthAgo] },
+                    then: 'thisMonth',
+                    else: 'earlier',
+                  },
+                },
+              },
+            },
+          },
+        },
+        sortOrder: {
           $switch: {
             branches: [
-              { case: { $gte: ['$createdAt', todayStart] }, then: 'today' },
-              { case: { $gte: ['$createdAt', weekAgo] }, then: 'thisWeek' },
-              { case: { $gte: ['$createdAt', monthAgo] }, then: 'thisMonth' },
+              { case: { $eq: ['$categoryType', 'POST_COMMENT'] }, then: 1 },
+              { case: { $eq: ['$categoryType', 'POST_LIKE'] }, then: 2 },
+              { case: { $eq: ['$categoryType', 'REQUEST'] }, then: 3 },
             ],
-            default: 'earlier',
+            default: 4,
           },
         },
       },
     },
+    { $sort: { createdAt: -1 } },
     {
       $group: {
         _id: '$period',
         postLike: { $push: { $cond: [{ $eq: ['$categoryType', 'POST_LIKE'] }, '$$ROOT', '$$REMOVE'] } },
-        comment: { $push: { $cond: [{ $eq: ['$categoryType', 'COMMENT_POST'] }, '$$ROOT', '$$REMOVE'] } },
+        comment: { $push: { $cond: [{ $eq: ['$categoryType', 'POST_COMMENT'] }, '$$ROOT', '$$REMOVE'] } },
         request: { $push: { $cond: [{ $eq: ['$categoryType', 'REQUEST'] }, '$$ROOT', '$$REMOVE'] } },
       },
     },
