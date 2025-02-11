@@ -58,8 +58,7 @@ export const LikedPost = ({ likeNotification }: Props) => {
                   </a>
                 </span>
               )}
-              {n.userNames.length > 2 && <span> and {n.userNames.length - 2} others</span>}
-              <span> liked your post</span>
+              <span> and others liked your post</span>
             </div>
           </div>
           <div className="w-12 h-12 rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${n.postImage})` }}></div>
