@@ -24,6 +24,7 @@ export const CommentTypeDefs = gql`
   input CommentInput {
     comment: String!
     postId: ID!
+    ownerId: ID!
   }
   input GetCommentInput {
     postId: ID!
