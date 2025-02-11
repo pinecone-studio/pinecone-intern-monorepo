@@ -28,43 +28,40 @@ export const LikedPost = ({ likeNotification }: Props) => {
       postId,
       userNames: latestLikes.map((like) => like.user?.userName),
       postImage: likes[0]?.contentPost,
-      userImage: latestLikes[latestLikes.length - 2]?.user?.profileImage,
-      userId: latestLikes.map((like) => like.user?._id),
+      userImages: latestLikes.map((like) => like.user?.profileImage),
+      userIds: latestLikes.map((like) => like.user?._id),
     };
   });
 
   return (
     <div>
       {groupedNotifications.map((n) => (
-        <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-6 mb-2">
-          <div className="flex">
-            <div className="relative w-[54px] h-[32px]">
-              <Avatar className="absolute left-0 top-0 bottom-2 w-8 h-8 border-2 border-white">
-                <AvatarImage src={n.userImage} alt="@shadcn" />
-              </Avatar>
-              <Avatar className="absolute left-4 top-2 w-8 h-8 border-2 border-white">
-                <AvatarImage src={n.userImage} alt="@user2" />
-              </Avatar>
+        <div key={n.postId} className="flex items-center  justify-between p-3 hover:bg-gray-100 transition rounded-lg">
+          <div className="flex  items-center">
+            <div className="relative w-10 h-10">
+              {n.userImages.slice(0, 2).map((img, index) => (
+                <Avatar key={index} className={`absolute w-8 h-8 border-2 border-white ${index === 1 ? 'left-4 top-2' : ''}`}>
+                  <AvatarImage src={img} alt="User profile" />
+                </Avatar>
+              ))}
             </div>
-            <div className="w-[194px] ml-2 items-center flex text-sm">
-              <a className="font-bold mr-2 text-sm" href={`${n.userId[0]}`}>
-                {n.userNames[0]}
-              </a>
-              <a className="font-bold mr-2 text-sm" href={`${n.userId[1]}`}>
-                , {n.userNames[1]}
-              </a>
-              <p className="text-sm"> liked your post</p>
+
+            <div className="ml-6 text-sm w-[243px]">
+              <span className="font-bold">
+                <a href={`/profile/${n.userIds[0]}`}>{n.userNames[0]}</a>
+              </span>
+              {n.userNames.length > 1 && (
+                <span>
+                  ,{' '}
+                  <a className="font-bold" href={`/profile/${n.userIds[1]}`}>
+                    {n.userNames[1]}
+                  </a>
+                </span>
+              )}
+              <span> and others liked your post</span>
             </div>
           </div>
-          <div
-            style={{
-              backgroundImage: `url(${n.postImage})`,
-              width: '44px',
-              height: '44px',
-              backgroundPosition: 'center',
-            }}
-            className="rounded-sm bg-cover"
-          ></div>
+          <div className="w-12 h-12 rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${n.postImage})` }}></div>
         </div>
       ))}
     </div>
