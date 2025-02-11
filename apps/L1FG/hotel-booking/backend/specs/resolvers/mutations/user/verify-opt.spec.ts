@@ -1,4 +1,4 @@
-import { verifyOTP } from '../../../../src/resolvers/mutations/user/verifyOTP';
+import { verifyOTP } from '../../../../src/resolvers/mutations/user/verify-otp';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

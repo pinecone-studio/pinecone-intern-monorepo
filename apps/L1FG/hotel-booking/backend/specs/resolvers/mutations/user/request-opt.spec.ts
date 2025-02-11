@@ -1,4 +1,4 @@
-import { requestOTP } from '../../../../src/resolvers/mutations/user/requestOTP';
+import { requestOTP } from '../../../../src/resolvers/mutations/user/request-otp';
 import { GraphQLResolveInfo } from 'graphql';
 
 const input = { email: 'test@gmail.com' };
