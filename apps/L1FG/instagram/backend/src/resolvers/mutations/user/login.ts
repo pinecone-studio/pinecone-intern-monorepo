@@ -1,6 +1,6 @@
 import { MutationResolvers, User } from '../../../generated';
 import { UserModel } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { tokenExpireCal } from '../../../utils/token-expire-cal';
 export const login: MutationResolvers['login'] = async (_, { input }) => {

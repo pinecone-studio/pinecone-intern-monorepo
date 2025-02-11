@@ -16,6 +16,7 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
   monthAgo.setDate(monthAgo.getDate() - 30);
 
   const ownerId = new mongoose.Types.ObjectId(userId);
+  console.log(ownerId);
 
   const notifications = await NotificationModel.aggregate([
     { $match: { ownerId } },
