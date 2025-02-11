@@ -1,20 +1,22 @@
 'use client';
+import { OrderProps } from '@/app/ticketReservation/[ticketID]/page';
 import Image from 'next/image';
 import { useState } from 'react';
 
 type PayProps = {
   handleNext: () => void;
   handleChange: (_event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  value: OrderProps;
 };
 
-const Payment = ({ handleNext, handleChange }: PayProps) => {
+const Payment = ({ handleNext, handleChange, value }: PayProps) => {
   const [activePayment, setActivePayment] = useState('');
 
   return (
     <div className="w-[440px] mx-auto mt-[100px] h-[208px] bg-[#131313] rounded-xl p-[20px]">
       <div className="flex justify-between">
         <p className="text-white">Нийт төлөх дүн:</p>
-        <p className="text-white">980 00₮</p>
+        <p className="text-white">{value.totalPrice}</p>
       </div>
       <div className="flex mt-[20px] gap-6 justify-around">
         <div

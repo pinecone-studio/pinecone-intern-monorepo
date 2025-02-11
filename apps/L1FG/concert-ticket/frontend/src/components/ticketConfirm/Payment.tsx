@@ -19,14 +19,14 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
       showAlert('success', 'Захиалга амжилттай хийгдлээ');
       router.push('../');
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       showAlert('error', 'Захиалга үүсэхэд алдаа гарлаа');
     },
   });
 
   const concertId = concertData?.getConcert._id ?? '';
   const ticketId = ticketData?.getTicket._id ?? '';
+
   const userCreateOrder = async () => {
     if (value.payType.length === 0) {
       return showAlert('warning', 'Төлбөрийн нөхцөлөө сонгоно уу');
@@ -75,7 +75,7 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
         <div className="text-white text-[28px] mx-auto items-center">Төлбөр төлөх</div>
       </div>
       <div className="">
-        <Payment handleChange={handleChange} handleNext={userCreateOrder} />
+        <Payment value={value} handleChange={handleChange} handleNext={userCreateOrder} />
       </div>
     </div>
   );

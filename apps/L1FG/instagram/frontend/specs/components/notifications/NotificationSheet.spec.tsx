@@ -76,6 +76,6 @@ describe('NotificationSheet', () => {
       </MockedProvider>
     );
 
-    expect(screen.getByText('data obso'));
+    expect(screen.findByTestId('data-obso'));
   });
 });

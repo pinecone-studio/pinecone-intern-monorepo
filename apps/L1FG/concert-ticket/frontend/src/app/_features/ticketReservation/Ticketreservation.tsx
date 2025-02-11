@@ -76,14 +76,14 @@ export const TicketReservation = ({ data, handleNext, handleChange }: ConcertPro
 
   const ticketValues = () => {
     handleChange({ target: { name: 'concertday', value: concertDay } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'standartQuantity', value: standartCount.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'standartPrice', value: standartTotalPrice.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'vipQuantity', value: vipCount.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'vipPrice', value: vipTotalPrice.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'standingAreaPrice', value: standingAreaTotalPrice.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'standingAreaQuantity', value: rearCount.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'totalPrice', value: total.toString() } } as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'orderNumber', value: ticketNumber.toString() } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'standartQuantity', value: String(standartCount) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'standartPrice', value: String(standartTotalPrice) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'vipQuantity', value: String(vipCount) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'vipPrice', value: String(vipTotalPrice) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'standingAreaPrice', value: String(standingAreaTotalPrice) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'standingAreaQuantity', value: String(rearCount) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'totalPrice', value: String(total) } } as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'orderNumber', value: String(ticketNumber) } } as React.ChangeEvent<HTMLInputElement>);
     if (total === 0) {
       return showAlert('warning', 'Мэдээлэл дутуу байна');
     }
