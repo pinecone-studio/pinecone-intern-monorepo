@@ -9,15 +9,12 @@ import { useRouter } from 'next/navigation';
 export const LOGIN_USER = gql`
   mutation LoginUser($input: LoginInput!) {
     loginUser(input: $input) {
-      user {
-        _id
-        userName
-        email
-        profileImage
-        phoneNumber
-        createdAt
-      }
-      token
+      _id
+      userName
+      email
+      profileImage
+      phoneNumber
+      createdAt
     }
   }
 `;
@@ -39,6 +36,9 @@ const LoginPage = () => {
       setFormState({ ...formState, errorMessage: 'Бүх талбарыг бөглөнө үү.' });
       return;
     }
+    console.log(formState);
+
+    setFormState({ ...formState, loading: !formState.loading });
 
     try {
       const user = await loginUser({
@@ -49,6 +49,8 @@ const LoginPage = () => {
           },
         },
       });
+
+      localStorage.setItem('token', user.data.token);
 
       localStorage.setItem(
         'user',
@@ -62,27 +64,26 @@ const LoginPage = () => {
         })
       );
 
-      setFormState({ ...formState, loading: !formState.loading });
-
-      router.push('/order/1');
+      router.push('/');
     } catch (error) {
       setFormState({
         ...formState,
         loading: false,
         errorMessage: 'Имэйл эсвэл нууц үг буруу байна.',
       });
+      console.log(error);
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full h-screen justify-center mx-auto px-4">
       <div className="w-full flex flex-col items-center justify-between gap-6">
-        <Image src="/Logo.png" alt="Logo" width={112} height={112} />
+        <Image src="/Logo.png" alt="Logo" width={112} height={111} />
         <div className="flex gap-2 items-center justify-center flex-col">
           <p className="font-semibold text-2xl">Нэвтрэх</p>
         </div>
         <div className="flex flex-col gap-4 max-w-[340px] min-w-[320px]">
-          <div className="flex flex-col gap-2">
+          <form className="flex flex-col gap-2">
             <input
               data-testid="email"
               placeholder="Имэйл хаяг"
@@ -99,7 +100,7 @@ const LoginPage = () => {
               className="w-full h-[36px] px-3 py-2 border-[1px] border-[#E4E4E7] rounded-[6px]"
               type="password"
             />
-          </div>
+          </form>
           <p className={`text-red-600 text-sm w-4/5 justify-center items-center px-2 mx-auto ${formState.errorMessage === '' ? 'hidden' : 'flex'}`}>{formState.errorMessage}</p>
           <button
             data-testid="Нэвтрэх"

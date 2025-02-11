@@ -86,7 +86,7 @@ describe('LoginPage', () => {
     await waitFor(() => expect(queryByText('Имэйл эсвэл нууц үг буруу байна.')));
   });
 
-  it('should save user data to localStorage and navigate to /order/1 on successful login', async () => {
+  it('should save user data to localStorage and navigate to / on successful login', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <LoginPage />
@@ -101,7 +101,7 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 
   it('should show loading state during login', async () => {
@@ -119,6 +119,6 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 });
