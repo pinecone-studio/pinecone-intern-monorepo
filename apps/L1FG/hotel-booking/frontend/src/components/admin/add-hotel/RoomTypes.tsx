@@ -31,7 +31,7 @@ export const RoomTypes = () => {
       const response = await createRoom({ variables });
       const roomId = response?.data?.createRoom?.room?.id;
 
-      router.push(`/admin/add-hotel/add-room?id=${roomId}`);
+      router.push(`/admin/add-room/add-room?id=${roomId}`);
     } catch (error) {
       console.error('Error creating room:', error);
     }

@@ -37,7 +37,7 @@ describe('RoomTypes Component', () => {
 
     expect(createRoomMock).toHaveBeenCalled();
     await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(pushMock).toHaveBeenCalledWith('/admin/add-hotel/add-room?id=123');
+    expect(pushMock).toHaveBeenCalledWith('/admin/add-room/add-room?id=123');
   });
 
   test('handles error if createRoom mutation fails', async () => {

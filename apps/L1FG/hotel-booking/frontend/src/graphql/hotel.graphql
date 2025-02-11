@@ -1,0 +1,159 @@
+mutation createHotel($input: CreateHotelInput!) {
+  createHotel(input: $input) {
+    code
+    success
+    message
+    hotel {
+      id
+      name
+      phoneNumber
+      rating
+      starRating
+      description
+      images
+      rooms
+      faqs {
+        key
+        value
+      }
+      policies {
+        key
+        value
+      }
+      about {
+        key
+        value
+      }
+      location {
+        type
+        coordinates
+      }
+      locationName
+      amenities
+    }
+  }
+}
+
+mutation editHotelGeneralInfo($input: editGeneralInfoInput!) {
+  editGeneralInfo(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    rooms
+    faqs {
+      key
+      value
+    }
+    policies {
+      key
+      value
+    }
+    about {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    locationName
+    amenities
+  }
+}
+
+mutation editHotelAmenities($input: editAmenitiesInput!) {
+  editAmenities(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    rooms
+    faqs {
+      key
+      value
+    }
+    policies {
+      key
+      value
+    }
+    about {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    locationName
+    amenities
+  }
+}
+
+mutation editHotelLocation($input: editLocationInput!) {
+  editLocation(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    rooms
+    faqs {
+      key
+      value
+    }
+    policies {
+      key
+      value
+    }
+    about {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    locationName
+    amenities
+  }
+}
+
+mutation editHotelImages($input: editImagesInput!) {
+  editImages(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    rooms
+    faqs {
+      key
+      value
+    }
+    policies {
+      key
+      value
+    }
+    about {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    locationName
+    amenities
+  }
+}
