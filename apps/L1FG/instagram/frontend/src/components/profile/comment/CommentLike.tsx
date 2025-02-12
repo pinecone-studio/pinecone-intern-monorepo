@@ -7,5 +7,5 @@ type Props = {
 };
 
 export const CommentLike = ({ handleClickLike, liked }: Props) => {
-  return <HeartIcon onClick={handleClickLike} data-testid="like-icon" className={`${liked && 'fill-red-500 text-red-500 border-none cursor-pointer'} cursor-pointer fill-none`} />;
+  return <HeartIcon onClick={handleClickLike} data-testid="like-icon" className={`${liked && 'fill-red-500 text-red-500 border-none cursor-pointer'} cursor-pointer fill-none h-3 w-3`} />;
 };

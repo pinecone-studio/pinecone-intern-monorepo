@@ -9,7 +9,7 @@ const GetComments = ({ post }: { post: UserPostType }) => {
   return (
     <div className="flex flex-col gap-6 ">
       {data?.getComments?.map((comment, index) => (
-        <Comment comment={comment} key={index} />
+        <Comment post={post} comment={comment} key={index} />
       ))}
     </div>
   );
