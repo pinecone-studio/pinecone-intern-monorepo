@@ -6,6 +6,7 @@ import { useAuth } from '@/components/providers';
 import { useGetPostsByUserIdQuery } from '@/generated';
 import EditIcon from '@/components/myEstate/EditIcon';
 import TrashIcon from '@/components/myEstate/TrashIcon';
+import { useRouter } from 'next/navigation';
 
 const statusLabelMap: Record<string, string> = {
   PENDING: 'Хүлээгдэж буй',
@@ -20,6 +21,7 @@ const statusStyleMap: Record<string, string> = {
 };
 
 const MyEstatesPage = () => {
+  const router = useRouter();
   const { user } = useAuth();
   const { data, loading, error } = useGetPostsByUserIdQuery({
     variables: { input: { propertyOwnerId: user?._id } },
@@ -63,7 +65,7 @@ const MyEstatesPage = () => {
                 </div>
                 <div className="flex-1 text-black border-r border-zinc-200 px-4">{formatPrice(post.price)}₮</div>
                 <div className="w-24 flex items-center gap-2 px-4" data-testid="action-buttons">
-                  <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <button onClick={() => router.push('/my-estates/' + post._id)} className="p-2 hover:bg-gray-100 rounded-full">
                     <EditIcon />
                   </button>
                   <button className="p-2 hover:bg-gray-100 rounded-full">
