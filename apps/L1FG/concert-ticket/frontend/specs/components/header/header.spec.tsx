@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import { HeaderPart } from '@/components/header/Header';
 import { useAuth } from '@/components/providers/AuthProvider';
 
-// Mocking the `useAuth` hook
 jest.mock('@/components/providers/AuthProvider', () => ({
   useAuth: jest.fn(),
 }));
@@ -17,7 +16,6 @@ describe('HeaderPart', () => {
 
     render(<HeaderPart />);
 
-    // Assert login/signup buttons are present
     expect(screen.getByText('Нэвтрэх')).toBeInTheDocument();
     expect(screen.getByText('Бүртгүүлэх')).toBeInTheDocument();
   });
@@ -31,11 +29,9 @@ describe('HeaderPart', () => {
 
     render(<HeaderPart />);
 
-    // Assert that email and logout button are present
     expect(screen.getByText('test@example.com')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
 
-    // Simulate logout button click
     fireEvent.click(screen.getByText('Logout'));
     expect(mockLogout).toHaveBeenCalledTimes(1);
   });

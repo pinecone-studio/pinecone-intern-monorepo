@@ -1,9 +1,6 @@
 'use client';
 
-import { Earlier } from './Earlier';
-import { ThisWeek } from './ThisWeek';
-import { Today } from './Today';
-import { Yesterday } from './Yesterday';
+import { Days } from '@/features/notification/Days';
 
 type Props = {
   isOpen: boolean;
@@ -23,10 +20,7 @@ export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
           <h1 className="text-2xl font-bold">Notifications</h1>
         </div>
         <div className="overflow-y-auto h-[calc(100vh-60px)]">
-          <Today />
-          <Yesterday />
-          <ThisWeek />
-          <Earlier />
+          <Days />
         </div>
       </div>
 

@@ -1,11 +1,36 @@
+import { HouseTypeEnum } from '@/generated';
 import { useState } from 'react';
 
+type FormState = {
+  title: string;
+  description: string;
+  price: string;
+  houseType: HouseTypeEnum | '';
+  size: string;
+  images: string[];
+  totalRooms: number;
+  garage: string;
+  restrooms: number;
+  subDistrict: string;
+  district: string;
+  city: string;
+  address: string;
+  completionDate: string;
+  windowsCount: number;
+  windowType: string;
+  floorMaterial: string;
+  floorNumber: number;
+  balcony: string;
+  totalFloors: number;
+  lift: string;
+};
+
 export const useFormState = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormState>({
     title: '',
     description: '',
     price: '',
-    houseType: null,
+    houseType: '',
     size: '',
     images: [],
     totalRooms: 0,

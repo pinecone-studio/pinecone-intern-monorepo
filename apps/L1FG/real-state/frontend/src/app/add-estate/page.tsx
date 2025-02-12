@@ -22,14 +22,14 @@ const AddEstate: React.FC = () => {
 
   const [addPost] = useAddPostMutation();
 
-  const handleFileChange = (name: string, files: FileList | null) => {
+  const handleFileChange = (name: string, files: string[] | null) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: files ? Array.from(files) : [],
+      [name]: files ? files : [],
     }));
   };
 
-  const handleInputChange = (name: string, value: string, type: string) => {
+  const handleInputChange = (name: string, value: string, type: string | undefined) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: type === 'number' ? (value.startsWith('0') ? parseInt(value.slice(1)) : parseInt(value)) : value,
@@ -37,10 +37,10 @@ const AddEstate: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement;
-    const files = (e.target as HTMLInputElement).files;
-    if (type == undefined) {
-      handleFileChange(name, files);
+    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement | { name: string; value: string[]; type: string | undefined };
+
+    if (typeof value === 'object') {
+      handleFileChange(name, value);
     } else {
       handleInputChange(name, value, type);
     }
@@ -98,7 +98,9 @@ const AddEstate: React.FC = () => {
     const uploadedImages = await uploadImages(files);
 
     const input = createInput(formData, user, uploadedImages);
-
+    setTimeout(() => {
+      window.location.href = '/my-estates';
+    }, 3000);
     try {
       await addPost({ variables: { input } });
       toast.success('Зар нэмэгдлээ!');

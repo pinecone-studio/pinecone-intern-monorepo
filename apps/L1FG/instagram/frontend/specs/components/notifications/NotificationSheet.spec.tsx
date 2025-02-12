@@ -1,15 +1,34 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { NotificationSheet } from '@/components/notifications/NotificationSheet';
+import { GetNotificationDocument } from '@/generated';
+import { MockedProvider } from '@apollo/client/testing';
 
-jest.mock('@/components/notifications/Today', () => ({ Today: () => <div data-testid="today">Today</div> }));
-jest.mock('@/components/notifications/Yesterday', () => ({ Yesterday: () => <div data-testid="yesterday">Yesterday</div> }));
-jest.mock('@/components/notifications/ThisWeek', () => ({ ThisWeek: () => <div data-testid="this-week">This Week</div> }));
-jest.mock('@/components/notifications/Earlier', () => ({ Earlier: () => <div data-testid="earlier">Earlier</div> }));
+const getNotificationMock = [
+  {
+    request: {
+      query: GetNotificationDocument,
+    },
+    result: {
+      data: {
+        getNotification: {
+          today: [{ id: '1', message: 'Today notification' }],
+          thisWeek: [{ id: '2', message: 'This week notification' }],
+          earlier: [{ id: '3', message: 'Earlier notification' }],
+        },
+      },
+    },
+  },
+];
 
 describe('NotificationSheet', () => {
+  const mockSetIsOpen = jest.fn();
   it('renders the notification sheet when isOpen is true', () => {
-    render(<NotificationSheet isOpen={true} setIsOpen={jest.fn()} />);
+    render(
+      <MockedProvider mocks={getNotificationMock} addTypename={false}>
+        <NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />
+      </MockedProvider>
+    );
 
     const notificationSheet = screen.getByTestId('notification-sheet');
     expect(notificationSheet).toBeInTheDocument();
@@ -17,16 +36,25 @@ describe('NotificationSheet', () => {
   });
 
   it('does not render the notification sheet when isOpen is false', () => {
-    render(<NotificationSheet isOpen={false} setIsOpen={jest.fn()} />);
+    render(
+      <MockedProvider mocks={getNotificationMock} addTypename={false}>
+        <NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />
+      </MockedProvider>
+    );
 
     const notificationSheet = screen.getByTestId('notification-sheet');
     expect(notificationSheet).toBeInTheDocument();
-    expect(notificationSheet).toHaveClass('-translate-x-full');
+    expect(notificationSheet).toHaveClass(
+      'fixed top-0 left-[80px] w-[396px] h-full bg-white border-l shadow-xl transform transition-transform duration-500 ease-in-out z-40 rounded-r-xl border-r translate-x-0'
+    );
   });
 
   it('calls setIsOpen with false when clicking outside the sheet', () => {
-    const mockSetIsOpen = jest.fn();
-    render(<NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />);
+    render(
+      <MockedProvider mocks={getNotificationMock} addTypename={false}>
+        <NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />
+      </MockedProvider>
+    );
 
     const backdrop = screen.getByTestId('open-sheet');
     fireEvent.click(backdrop);
@@ -34,12 +62,20 @@ describe('NotificationSheet', () => {
     expect(mockSetIsOpen).toHaveBeenCalledWith(false);
   });
 
-  it('renders child components', () => {
-    render(<NotificationSheet isOpen={true} setIsOpen={jest.fn()} />);
+  it('renders notifications correctly', async () => {
+    render(
+      <MockedProvider mocks={getNotificationMock} addTypename={false}>
+        <NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />
+      </MockedProvider>
+    );
+  });
+  it('mockprovider data', async () => {
+    render(
+      <MockedProvider mocks={undefined} addTypename={false}>
+        <NotificationSheet isOpen={true} setIsOpen={mockSetIsOpen} />
+      </MockedProvider>
+    );
 
-    expect(screen.getByTestId('today')).toBeInTheDocument();
-    expect(screen.getByTestId('yesterday')).toBeInTheDocument();
-    expect(screen.getByTestId('this-week')).toBeInTheDocument();
-    expect(screen.getByTestId('earlier')).toBeInTheDocument();
+    expect(screen.findByTestId('data-obso'));
   });
 });

@@ -1,7 +1,8 @@
 import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import LoginPage, { LOGIN_USER } from '@/components/LoginPage';
+import LoginPage from '@/components/LoginPage';
 import { useRouter } from 'next/navigation';
+import { LoginUserDocument } from '@/generated';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -13,7 +14,7 @@ describe('LoginPage', () => {
   const mocks = [
     {
       request: {
-        query: LOGIN_USER,
+        query: LoginUserDocument,
         variables: {
           input: {
             email: 'test@example.com',
@@ -24,14 +25,11 @@ describe('LoginPage', () => {
       result: {
         data: {
           loginUser: {
-            user: {
-              _id: '12345',
-              email: 'test@example.com',
-              userName: 'testuser',
-              profileImage: '/profile.jpg',
-              createdAt: '2023-01-01',
-            },
-            token: 'mockToken123',
+            _id: '12345',
+            email: 'test@example.com',
+            userName: 'testuser',
+            profileImage: '/profile.jpg',
+            createdAt: '2023-01-01',
           },
         },
       },
@@ -57,7 +55,7 @@ describe('LoginPage', () => {
     const invalidMocks = [
       {
         request: {
-          query: LOGIN_USER,
+          query: LoginUserDocument,
           variables: {
             input: {
               email: 'test@example.com',
@@ -86,7 +84,7 @@ describe('LoginPage', () => {
     await waitFor(() => expect(queryByText('Имэйл эсвэл нууц үг буруу байна.')));
   });
 
-  it('should save user data to localStorage and navigate to /order/1 on successful login', async () => {
+  it('should save user data to localStorage and navigate to / on successful login', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <LoginPage />
@@ -101,7 +99,7 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 
   it('should show loading state during login', async () => {
@@ -119,6 +117,6 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/'));
   });
 });

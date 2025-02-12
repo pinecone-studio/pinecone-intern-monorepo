@@ -9,7 +9,7 @@ describe('useFormState', () => {
       title: '',
       description: '',
       price: '',
-      houseType: null,
+      houseType: '',
       size: '',
       images: [],
       totalRooms: 0,
@@ -38,7 +38,7 @@ describe('useFormState', () => {
         ...result.current.formData,
         title: 'Test House',
         description: 'Test Description',
-        price: 500000,
+        price: '500000',
       });
     });
 
@@ -46,7 +46,7 @@ describe('useFormState', () => {
       ...result.current.formData,
       title: 'Test House',
       description: 'Test Description',
-      price: 500000,
+      price: '500000',
     });
   });
 
@@ -67,21 +67,19 @@ describe('useFormState', () => {
   test('should handle multiple sequential updates', () => {
     const { result } = renderHook(() => useFormState());
 
-    // First update
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
         title: 'First Title',
-        price: 100000,
+        price: '100000',
       }));
     });
 
-    // Second update
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
         description: 'Added description',
-        price: 150000,
+        price: '150000',
       }));
     });
 
@@ -89,7 +87,7 @@ describe('useFormState', () => {
       ...result.current.formData,
       title: 'First Title',
       description: 'Added description',
-      price: 150000,
+      price: '150000',
     });
   });
 
@@ -99,7 +97,6 @@ describe('useFormState', () => {
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
-        price: 500000,
         totalRooms: 3,
         windowsCount: 6,
         floorNumber: 2,
@@ -107,7 +104,6 @@ describe('useFormState', () => {
       }));
     });
 
-    expect(typeof result.current.formData.price).toBe('number');
     expect(typeof result.current.formData.totalRooms).toBe('number');
     expect(typeof result.current.formData.windowsCount).toBe('number');
     expect(typeof result.current.formData.floorNumber).toBe('number');

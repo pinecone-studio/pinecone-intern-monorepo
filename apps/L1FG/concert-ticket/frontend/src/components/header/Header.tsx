@@ -3,7 +3,6 @@ import { useAuth } from '../providers/AuthProvider';
 
 export const HeaderPart = () => {
   const { user, logout } = useAuth();
-
   return (
     <div className="h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
       <div className="flex items-center gap-[8px]">

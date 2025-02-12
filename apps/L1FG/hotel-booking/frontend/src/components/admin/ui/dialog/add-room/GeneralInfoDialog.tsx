@@ -1,3 +1,5 @@
+'use client';
+
 import { GeneralInfoDialogProps } from '@/components/admin/add-room/type';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -107,7 +109,7 @@ export const GeneralInfoDialog = ({
         </div>
         <div className="flex justify-between">
           <AlertDialogCancel className="px-4 py-2 bg-white rounded-[6px] ">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]" onClick={handleEditGeneralInfo}>
+          <AlertDialogAction onClick={handleEditGeneralInfo} className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">
             Save
           </AlertDialogAction>
         </div>

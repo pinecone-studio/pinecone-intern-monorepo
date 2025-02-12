@@ -12,7 +12,7 @@ interface GuestDataTableProps {
 export const GuestDataTable = ({ data }: GuestDataTableProps) => {
   return (
     <div className="w-full">
-      <div className="rounded-[6px] border bg-white ">
+      <div className="rounded-[6px] border bg-white overflow-hidden">
         <div className="flex items-center">
           <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-10 flex items-center border-r border-[#E4E4E7]">ID</p>
           <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Name</p>

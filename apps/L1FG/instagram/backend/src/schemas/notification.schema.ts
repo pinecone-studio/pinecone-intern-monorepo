@@ -29,18 +29,20 @@ export const NotificationTypeDefs = gql`
     updatedAt: Date
     user: UserTogetherUserType
     contentPost: String
+    contentComment: String
+    request: String
   }
   type NotificationGroup {
     today: [NotificationType]
-    yesterday: [NotificationType]
     thisWeek: [NotificationType]
+    thisMonth: [NotificationType]
     earlier: [NotificationType]
   }
 
   type NotificationResponseType {
     today: NotificationCategory
     thisWeek: NotificationCategory
-    monthAgo: NotificationCategory
+    thisMonth: NotificationCategory
     earlier: NotificationCategory
   }
 

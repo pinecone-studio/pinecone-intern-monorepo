@@ -1,11 +1,9 @@
-import { GeneralInfoDialog } from '../ui/dialog';
-
 export const RoomServices = () => {
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col p-6">
       <div className="flex justify-between items-center">
         <p className="text-[#09090B] font-Inter text-lg font-semibold">Room Services</p>
-        <GeneralInfoDialog />
+        {/* dialog orj irne */}
       </div>
       <div className="py-6">
         <div className="w-full h-[1px] bg-[#E4E4E7] "></div>

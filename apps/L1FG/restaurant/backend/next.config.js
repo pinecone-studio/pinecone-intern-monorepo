@@ -23,6 +23,9 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI,
+    LOCAL_BACKEND_URI: process.env.LOCAL_BACKEND_URI,
+    BACKEND_URI: process.env.BACKEND_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
   },
   nx: {
     svgr: false,

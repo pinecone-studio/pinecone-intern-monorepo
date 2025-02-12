@@ -7,6 +7,7 @@ import * as UserTogetherUserType from './user/user-together-user-type';
 import * as UserPostType from './post/user-post-type';
 import * as CommentDetailType from './comment/comment-detail-type';
 import * as NotificationType from './notification/notification-type';
+
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
