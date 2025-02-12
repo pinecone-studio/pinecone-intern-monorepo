@@ -16,17 +16,19 @@ export const RequestFollow = ({ reqNotification }: Props) => {
             <AvatarImage src={n?.user?.profileImage} alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className=" ml-2 text-sm break-words ">
-            <Link className="font-bold mr-2 text-base " href={'/'}>
+          <div className=" ml-[14px] text-sm break-words mr-2 ">
+            <Link className="font-bold mr-1  text-base " href={'/'}>
               {'name'}
             </Link>
             requested to follow you
           </div>
-
-          <div className="flex gap-2">
-            <button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Confirm</button>
-            <button className="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md">Delete</button>
-          </div>
+          {<button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Follow</button>}
+          {n.request === 'PENDING' && (
+            <div className="flex gap-2">
+              <button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Confirm</button>
+              <button className="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md">Delete</button>
+            </div>
+          )}
         </div>
       ))}
     </div>

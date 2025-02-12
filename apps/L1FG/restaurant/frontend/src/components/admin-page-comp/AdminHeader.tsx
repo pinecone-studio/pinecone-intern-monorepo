@@ -8,7 +8,7 @@ const AdminHeader: React.FC = () => {
   return (
     <div className="w-[100vw] flex justify-center border-b border-b-[#E4E4E7]">
       <div className="flex flex-col px-6 pt-4 gap-3">
-        <div className="flex w-[1600px] px-2 justify-between items-center">
+        <div className="flex w-[70vw] px-2 justify-between items-center">
           <Image src="/Logo.png" alt="logo" width={32} height={32} />
           <Image src="/user.jpeg" alt="user" width={32} height={32} className="rounded-full" />
         </div>
