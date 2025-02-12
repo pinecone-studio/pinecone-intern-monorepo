@@ -1,3 +1,21 @@
 query Query {
   sampleQuery
 }
+query GetPostsByUserId($input: JSON) {
+  getPosts(input: $input) {
+    _id
+    title
+
+    description
+    price
+    status
+    updatedAt
+    createdAt
+    propertyOwnerId {
+      _id
+    }
+    propertyDetail {
+      images
+    }
+  }
+}
