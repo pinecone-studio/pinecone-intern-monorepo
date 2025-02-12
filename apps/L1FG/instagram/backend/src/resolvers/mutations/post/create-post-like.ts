@@ -17,9 +17,6 @@ export const createPostLike: MutationResolvers['createPostLike'] = async (_, { i
     },
   });
   await updatePostLike({ input: { postId }, postLike: postLike });
-  const notificationId = await makePostLikeNotification({ input: { postId, userId, ownerUserId }, postLike: postLike });
-  return {
-    ...postLike,
-    notificationId,
-  };
+  await makePostLikeNotification({ input: { postId, userId, ownerUserId }, postLike: postLike });
+  return postLike;
 };

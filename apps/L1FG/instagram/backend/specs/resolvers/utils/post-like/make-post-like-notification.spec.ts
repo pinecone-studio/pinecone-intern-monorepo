@@ -29,23 +29,4 @@ describe('Make post like notification', () => {
     expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
     expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
   });
-  it('Should successfully return _id of notification document', async () => {
-    const mockCreate = jest.fn().mockResolvedValue({
-      _id: '123456789',
-    });
-    (NotificationModel.create as jest.Mock) = mockCreate;
-    const result = await makePostLikeNotification({
-      input: {
-        userId: '3',
-        ownerUserId: '2',
-        postId: '1',
-      },
-      postLike: {
-        _id: '1',
-        postId: '2',
-        userId: '3',
-      },
-    });
-    expect(result).toBe('123456789');
-  });
 });

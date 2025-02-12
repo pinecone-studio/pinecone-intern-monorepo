@@ -5,14 +5,22 @@ import { catchError } from '../../../utils/catch-error';
 import { validatePostlikePostAndNotification } from './delete-post-like-utils/validate-postlike-post-and-notification';
 
 export const deletePostLike: MutationResolvers['deletePostLike'] = async (_, { input }, { userId }) => {
-  const { postLikeid, postId, notificationId } = input;
+  const { postId, ownerUserId } = input;
   authenticate(userId);
-  await validatePostlikePostAndNotification({ input: input });
+  await validatePostlikePostAndNotification({ input: { userId, postId } });
   let likedPost;
   try {
-    likedPost = await PostLikeModal.findByIdAndDelete(postLikeid);
+    likedPost = await PostLikeModal.findOneAndDelete({
+      userId: userId,
+      postId: postId,
+    });
     await PostModel.findByIdAndUpdate(postId, { $inc: { likeCount: -1 } }, { new: true });
-    await NotificationModel.findByIdAndDelete(notificationId);
+    await NotificationModel.findOneAndDelete({
+      userId: userId,
+      contentPostId: postId,
+      ownerId: ownerUserId,
+      categoryType: 'POST_LIKE',
+    });
   } catch (error) {
     throw catchError(error);
   }
