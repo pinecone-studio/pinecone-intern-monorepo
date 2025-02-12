@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem('token');
     setUser(null);
     showAlert('warning', 'Та гарлаа');
-    router.push('/signin');
+    router.push('/');
   };
 
   return <AuthContext.Provider value={{ user, signin, signup, logout }}>{children}</AuthContext.Provider>;
