@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { getComments } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
 

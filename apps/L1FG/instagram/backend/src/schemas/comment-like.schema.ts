@@ -8,8 +8,11 @@ export const CommentLikeTyoeDefs = gql`
   }
   input CommentLikeInput {
     commentId: ID!
+    postId: ID!
+    ownerUserId: ID!
   }
   type Mutation {
     createCommentLike(input: CommentLikeInput!): CommentLike!
+    deleteCommentLike(input: CommentLikeInput!): CommentLike
   }
 `;
