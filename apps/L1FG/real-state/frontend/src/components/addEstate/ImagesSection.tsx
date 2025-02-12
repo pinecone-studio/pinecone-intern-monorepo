@@ -8,6 +8,7 @@ const ImagesSection: React.FC<{ handleChange: any }> = ({ handleChange }) => {
     const files = Array.from(event.target.files || []);
     const newImages = files.map((file) => URL.createObjectURL(file));
     const updatedImages = [...images, ...newImages];
+
     setImages(updatedImages);
     handleChange({
       target: {
