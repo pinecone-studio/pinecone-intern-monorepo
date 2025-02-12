@@ -15,7 +15,7 @@ const RearTicket = ({ Decrement, Increment, rearCount, rearRealCount, rearPrice,
         <div className="flex items-center  justify-items-center">
           <div className="w-[10px] h-[10px] bg-[#D7D7F8] rounded-full mr-[10px]"></div>
           <div>
-            <p className="text-[#D7D7F8]">Арын тасалбар ({rearRealCount === -1 ? rearRealCount + 1 : rearRealCount})</p>
+            <p className="text-[#D7D7F8] font-thin">Арын тасалбар ({rearRealCount === -1 ? rearRealCount + 1 : rearRealCount})</p>
             <p datatest-id="backside-" className="text-white">
               {rearPrice}₮
             </p>

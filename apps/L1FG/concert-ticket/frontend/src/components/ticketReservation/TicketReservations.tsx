@@ -18,17 +18,20 @@ const TicketReservations = ({ handleChange, handleNext, ticketID, value }: Order
 
   const { data } = useGetConcertQuery({ variables: { id: ticketID } });
   return (
-    <div className="Container w-[1334px] mx-auto">
-      <div data-testid="concert-detail-button" onClick={() => router.push(`../detail/${ticketID}`)} className="flex text-[48px] w-[1334px] h-[112px] items-center">
-        <img className="w-[40px] h-[40px] cursor-pointer" src="/chevron-back.svg" />
-        <div className="text-white text-[28px] mx-auto items-center">Тасалбар захиалах</div>
-      </div>
-      <div className="flex">
-        <div className="flex-1">
-          <img className="w-[723px] h-[684px] mt-[50px]" src="/stage.svg" />
+    <div className=" h-screen flex flex-col items-center justify-start ">
+      <div className="w-[1334px] flex flex-col gap-14">
+        <div data-testid="concert-detail-button" onClick={() => router.push(`../detail/${ticketID}`)} className="flex text-[48px] w-[1334px] pt-20 items-center ">
+          <img className="w-[40px] h-[40px] cursor-pointer" src="/chevron-back.svg" />
+          <div className="text-white text-2xl font-bold mx-auto items-center">Тасалбар захиалах</div>
         </div>
-        <div className="flex-1">
-          <TicketReservation handleChange={handleChange} handleNext={handleNext} data={data?.getConcert} />
+        <div className="border-b border-neutral-500"></div>
+        <div className="flex justify-around">
+          <div className="flex">
+            <img className="w-[723px] h-[684px] " src="/stage.svg" />
+          </div>
+          <div className="flex justify-start items-center">
+            <TicketReservation handleChange={handleChange} handleNext={handleNext} data={data?.getConcert} />
+          </div>
         </div>
       </div>
     </div>
