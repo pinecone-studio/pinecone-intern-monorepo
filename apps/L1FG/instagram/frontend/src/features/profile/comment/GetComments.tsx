@@ -1,9 +1,9 @@
-import { useGetCommentsQuery } from '@/generated';
+import { useGetCommentsQuery, UserPostType } from '@/generated';
 import { Comment } from './Comment';
 
-const GetComments = ({ postId }: { postId: string }) => {
+const GetComments = ({ post }: { post: UserPostType }) => {
   const { data } = useGetCommentsQuery({
-    variables: { input: { postId } },
+    variables: { input: { postId: post._id } },
   });
 
   return (
