@@ -18,7 +18,10 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
         setLikeCount((pre) => pre - 1);
         await deleteLike({
           variables: {
-            postId: post.node._id,
+            input: {
+              postId: post.node._id,
+              ownerUserId: post.node.userId,
+            },
           },
         });
         cacheUnlikePost({ postId: post.node._id, likeCount: post.node.likeCount - 1, hasLiked: false });

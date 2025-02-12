@@ -40,12 +40,17 @@ export const PostTypeDefs = gql`
     postImage: [String!]!
     caption: String
   }
+  input UserPostsInput {
+    after: ID
+    first: Int!
+    searchingUserId: ID!
+  }
   input SmallPostsInput {
     after: ID
     first: Int!
   }
   type Query {
-    getPosts(searchingUserId: ID!): [UserPostType]
+    getPosts(input: UserPostsInput!): PostsConnection!
     getAllPosts: [UserPostType]
     getSmallPosts(input: SmallPostsInput!): PostsConnection!
   }

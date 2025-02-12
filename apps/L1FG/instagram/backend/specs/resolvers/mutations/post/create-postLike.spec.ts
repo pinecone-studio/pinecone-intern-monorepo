@@ -147,7 +147,7 @@ describe('Create post like', () => {
       postId: '2',
     }));
     const mockUpdatePostLike = jest.fn(() => null);
-    const mockMakePostLikeNotification = jest.fn(() => null);
+    const mockMakePostLikeNotification = jest.fn();
     (checkPostLikeExists as jest.Mock) = mockCheckPostLikeExists;
     (validateUserOwnerAndPost as jest.Mock) = mockValidateUserOwnerAndPost;
     (makePostLike as jest.Mock) = mockMakePostLike;

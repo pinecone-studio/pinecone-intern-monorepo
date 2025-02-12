@@ -29,6 +29,7 @@ export const NotificationTypeDefs = gql`
     updatedAt: Date
     user: UserTogetherUserType
     contentPost: String
+    contentComment: String
   }
   type NotificationGroup {
     today: [NotificationType]
