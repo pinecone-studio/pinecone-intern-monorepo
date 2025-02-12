@@ -11,19 +11,20 @@ export const CommentTypeDefs = gql`
     likeCount: Int
   }
   type CommentDetailType {
-    _id: ID
-    comment: String
-    userId: ID
-    postId: ID
-    createdAt: Date
-    updatedAt: Date
-    commentLiked: Boolean
-    user: UserTogetherUserType
-    likeCount: Int
+    _id: ID!
+    comment: String!
+    userId: ID!
+    postId: ID!
+    createdAt: Date!
+    updatedAt: Date!
+    commentLiked: Boolean!
+    user: UserTogetherUserType!
+    likeCount: Int!
   }
   input CommentInput {
     comment: String!
     postId: ID!
+    ownerId: ID!
   }
   input GetCommentInput {
     postId: ID!

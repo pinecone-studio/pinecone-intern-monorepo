@@ -12,6 +12,7 @@ export const makeFollow = async (userId: string | null, targetId: string): Promi
     if (!follow) {
       throw new CreationError('Failed to follow');
     }
+
     return follow;
   } catch (error) {
     throw catchError(error);

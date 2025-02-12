@@ -1,17 +1,17 @@
-import { CreateCommentDocument, GetCommentsDocument } from '@/generated';
+import { CreateCommentDocument, GetCommentsDocument, UserPostType } from '@/generated';
 import { useMutation } from '@apollo/client';
 import { Smile } from 'lucide-react';
-import React from 'react';
-
-const CreateComment = ({ postId }: { postId: string }) => {
-  const [text, setText] = React.useState('');
+import React, { useState } from 'react';
+import { TbLoaderQuarter } from 'react-icons/tb';
+const CreateComment = ({ post }: { post: UserPostType }) => {
+  const [text, setText] = useState('');
   const [createComment, { loading: loadingComment }] = useMutation(CreateCommentDocument, {
     refetchQueries: [
       {
         query: GetCommentsDocument,
         variables: {
           input: {
-            postId: postId,
+            postId: post._id,
           },
         },
       },
@@ -20,7 +20,7 @@ const CreateComment = ({ postId }: { postId: string }) => {
   });
 
   const handlePost = async () => {
-    await createComment({ variables: { input: { postId, comment: text } } });
+    await createComment({ variables: { input: { postId: post._id, comment: text, ownerId: post.user._id } } });
   };
 
   return (
@@ -29,8 +29,8 @@ const CreateComment = ({ postId }: { postId: string }) => {
         <Smile />
       </div>
       <input className="w-full outline-none px-3" placeholder="Add a comment" value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={handlePost} className="text-[#2563EB] cursor-pointer hover:text-black" disabled={loadingComment}>
-        {loadingComment ? 'Posting...' : 'Post'}
+      <button onClick={handlePost} className=" cursor-pointer hover:text-black" disabled={loadingComment}>
+        {loadingComment ? <TbLoaderQuarter className="animate-spin" /> : 'Post'}
       </button>
     </div>
   );

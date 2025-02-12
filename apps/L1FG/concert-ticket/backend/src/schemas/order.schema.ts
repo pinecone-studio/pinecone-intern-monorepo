@@ -60,5 +60,6 @@ export const orderTypeDefs = gql`
   type Query {
     getOrder(userID: String!): Order!
     getOrders: [Order!]
+    getOrderTicketNumber(ticketNumber: Int!): Order!
   }
 `;

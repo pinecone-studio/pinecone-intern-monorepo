@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const CreateAccount = () => {
   return (
-    <main className="container mx-auto h-screen">
+    <main data-cy="Create-Account-Page" className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">

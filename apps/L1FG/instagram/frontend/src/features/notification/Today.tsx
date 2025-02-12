@@ -8,14 +8,31 @@ type Props = {
 };
 
 export const Today = ({ notifications }: Props) => {
+  if (!notifications) return null;
+
+  // Бүх notification-уудыг нэг массивт нэгтгэх
+  const allNotifications = [...(notifications.comment || []), ...(notifications.postLike || []), ...(notifications.request || [])];
+
+  // `createdAt`-аар эрэмбэлэх (шинэ нь эхэнд)
+  const sortedNotifications = allNotifications?.sort((a, b) => new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime());
+  console.log('today', sortedNotifications);
+
   return (
     <div className="border-b">
       <h2 data-testid="today" className="font-bold px-6 mt-[22px] mb-[18px]">
         Today
       </h2>
-      {notifications?.postLike && <LikedPost data-testid="like-post" likeNotification={notifications.postLike as []} />}
-      {notifications?.request && <RequestFollow data-testid="request-follow" reqNotification={notifications.request as []} />}
-      {notifications?.comment && <CommentPost data-testid="comment-post" commentNotification={notifications.comment as []} />}
+
+      {sortedNotifications.map((notification) => {
+        if (notification?.categoryType === 'POST_COMMENT') {
+          return <CommentPost key={notification?.id} commentNotification={[notification]} />;
+        } else if (notification?.categoryType === 'POST_LIKE') {
+          return <LikedPost key={notification?.id} likeNotification={[notification]} />;
+        } else if (notification?.categoryType === 'REQUEST') {
+          return <RequestFollow key={notification.id} reqNotification={[notification]} />;
+        }
+        return null;
+      })}
     </div>
   );
 };

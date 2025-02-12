@@ -5,8 +5,8 @@ import { Bookmark, Ellipsis, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
-import GetComments from '../comment/GetComments';
-import CreateComment from '../comment/CreateComment';
+import GetComments from '../../../features/profile/comment/GetComments';
+import CreateComment from '../../../features/profile/comment/CreateComment';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (
@@ -34,8 +34,25 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 </div>
                 <Separator />
               </div>
-              {post.commentCount ? (
-                <GetComments postId={post._id as string} />
+
+              {post.commentCount || post.caption ? (
+                <div className="p-6 flex flex-col gap-6 h-[488px] overflow-y-scroll">
+                  <div className="flex  ">
+                    <Image src="/images/profilePic.png" width={35} height={35} alt="User profile" className="rounded-full w-[35px] h-[35px]" />
+
+                    <div className="flex flex-col gap-2">
+                      <div className=" flex">
+                        <p className="font-semibold  ml-5"> {post.user.userName}</p>
+                        <p className="ml-2 text-sm">{post.caption}</p>
+                      </div>
+                      <div className="flex ml-5 gap-4">
+                        <p className="text-xs text-gray-500">22 h</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <GetComments post={post} />
+                </div>
               ) : (
                 <div className="flex flex-col justify-center items-center">
                   <h3 className="text-2xl font-bold">No comments yet.</h3>
@@ -47,7 +64,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <Separator />
                 <div className="flex justify-between pt-5 px-5 items-center ">
                   <div className="flex gap-5 justify-center items-center">
-                    <Heart className="hover:text-gray-400 cursor-pointer" />
+                    <Heart />
                     <MessageCircle className="hover:text-gray-400 cursor-pointer" />
                   </div>
                   <div>
@@ -55,11 +72,11 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                   </div>
                 </div>
                 <div className="flex gap-2 px-5">
-                  <p className="text-gray-500">Be the first to ch </p>
-                  <p className="hover:text-gray-400 cursor-pointer">like this</p>
+                  <p className="text-gray-500">Be the first to </p>
                 </div>
                 <Separator />
-                <CreateComment postId={post._id as string} />
+
+                <CreateComment post={post} />
               </div>
             </div>
           </div>
