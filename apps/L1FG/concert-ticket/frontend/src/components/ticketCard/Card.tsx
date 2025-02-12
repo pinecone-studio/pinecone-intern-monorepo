@@ -51,7 +51,7 @@ export const Card = ({ card }: CardProps) => {
             {card?.concertName}
           </div>
           <div className="text-muted-foreground font-extralight" data-testid="card-artist-name">
-            {displayArtists}
+            {displayArtists}$
           </div>
         </div>
         <div className="flex items-center gap-4 text-white font-semibold text-2xl">
