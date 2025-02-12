@@ -7,7 +7,7 @@ import { validatePostlikePostAndNotification } from './delete-post-like-utils/va
 export const deletePostLike: MutationResolvers['deletePostLike'] = async (_, { input }, { userId }) => {
   const { postId, ownerUserId } = input;
   authenticate(userId);
-  await validatePostlikePostAndNotification({ input: input });
+  await validatePostlikePostAndNotification({ input: { userId, postId } });
   let likedPost;
   try {
     likedPost = await PostLikeModal.findOneAndDelete({
