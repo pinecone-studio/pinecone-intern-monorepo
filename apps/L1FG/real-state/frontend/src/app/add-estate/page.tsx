@@ -99,7 +99,7 @@ const AddEstate: React.FC = () => {
 
     const input = createInput(formData, user, uploadedImages);
     setTimeout(() => {
-      window.location.href = '/my-estate';
+      window.location.href = '/my-estates';
     }, 3000);
     try {
       await addPost({ variables: { input } });
