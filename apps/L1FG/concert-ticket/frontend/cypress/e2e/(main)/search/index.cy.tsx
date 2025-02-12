@@ -18,7 +18,7 @@ describe('Concert Search Page', () => {
     cy.get('[data-cy="page-open-table-btn"]').click();
     cy.get('[data-cy="selected-date"]').should('be.visible');
     cy.get('[data-cy="selected-date"]').type('2025-01-30');
-    cy.contains('Concerts not found').should('be.visible');
+    cy.contains('Илэрц олдсонгүй').should('be.visible');
   });
   it('should filter concerts by selected date', () => {
     cy.get('[data-cy="page-open-table-btn"]').click();

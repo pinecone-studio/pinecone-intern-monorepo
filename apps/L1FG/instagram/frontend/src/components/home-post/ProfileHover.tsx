@@ -22,11 +22,11 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
       >
         {children}
       </HoverCardTrigger>
-      <HoverCardContent>
+      <HoverCardContent className="w-[350px] h-[340px] p-0  ml-[300px] rounded-lg ">
         {loading && <ProfilePreviewSkeleton />}
         {data && (
-          <div className="flex flex-col w-[200px]">
-            <div className="flex gap-4 h-fit w-fit">
+          <div className="flex flex-col  ">
+            <div className="flex gap-4 h-fit w-fit justify-center items-center p-3">
               <Avatar post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
                 <p className="font-bold">{data.getProfilePreview.user?.userName}</p>
@@ -48,7 +48,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 <p>following</p>
               </div>
             </div>
-            <div className="w-full h-20 flex gap-2">
+            <div className="w-full h-[120px] flex gap-1 pt-4">
               {data.getProfilePreview.firstThreePosts.map((post) => {
                 return (
                   <div className="w-1/3 h-full relative" key={post.cursor}>
@@ -57,7 +57,9 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 );
               })}
             </div>
-            <FriendshipStatus preview={data} />
+            <div className="p-3">
+              <FriendshipStatus preview={data} />
+            </div>
           </div>
         )}
       </HoverCardContent>

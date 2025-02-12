@@ -69,13 +69,16 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
   const userID = parsedUser?._id;
 
   return (
-    <div className="Container w-[1334px] mx-auto">
-      <div className="flex text-[48px] w-[1334px] h-[112px] items-center">
-        <Image onClick={handleBack} className="cursor-pointer" width={40} height={40} src={'/chevron-back.svg'} alt="chevron-back" />
-        <div className="text-white text-[28px] mx-auto items-center">Төлбөр төлөх</div>
-      </div>
-      <div className="">
-        <Payment value={value} handleChange={handleChange} handleNext={userCreateOrder} />
+    <div className=" h-screen flex flex-col items-center justify-start ">
+      <div className="w-[1334px] flex flex-col gap-14">
+        <div className="flex text-[48px] w-[1334px] pt-20 items-center ">
+          <Image onClick={handleBack} className="cursor-pointer" width={40} height={40} src={'/chevron-back.svg'} alt="chevron-back" />
+          <div className="text-white text-[28px] mx-auto items-center">Төлбөр төлөх</div>
+        </div>
+        <div className="border-b border-neutral-500"></div>
+        <div className="">
+          <Payment value={value} handleChange={handleChange} handleNext={userCreateOrder} />
+        </div>
       </div>
     </div>
   );
