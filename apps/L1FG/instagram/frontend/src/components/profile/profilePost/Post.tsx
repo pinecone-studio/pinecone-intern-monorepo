@@ -15,7 +15,6 @@ const Post = ({ userId }: { userId: string }) => {
     },
   });
 
-  console.log('data:', data);
   return (
     <div className="flex flex-col gap-5 w-[900x] mt-5" data-testid="profile-posts">
       <div>
