@@ -13,6 +13,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   const signUp = pathName.startsWith('/signup');
   const login = pathName.startsWith('/signin');
   const admin = pathName.startsWith('/admin');
+  const reservation = pathName.startsWith('/ticketReservation/');
   return (
     <html lang="en">
       <body className="bg-black">
@@ -20,9 +21,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           <ApolloWrapper>
             <AlertProvider>
               <AuthProvider>
-                {!signUp && !login && !admin && <HeaderPart />}
+                {!signUp && !login && !admin && !reservation && <HeaderPart />}
                 {children}
-                {!signUp && !login && !admin && <Footerr />}
+                {!signUp && !login && !admin && !reservation && <Footerr />}
               </AuthProvider>
             </AlertProvider>
           </ApolloWrapper>
