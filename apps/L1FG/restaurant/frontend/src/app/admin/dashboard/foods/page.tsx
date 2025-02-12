@@ -1,7 +1,8 @@
+import AdminFoodPageComp from '@/components/admin-page-comp/AdminFoodPageComp';
 import React from 'react';
 
 const AdminFoodsPage = () => {
-  return <div>AdminFoodsPage</div>;
+  return <AdminFoodPageComp />;
 };
 
 export default AdminFoodsPage;

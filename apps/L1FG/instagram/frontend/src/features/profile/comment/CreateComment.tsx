@@ -1,9 +1,9 @@
-import { CreateCommentDocument, GetCommentsDocument } from '@/generated';
+import { CreateCommentDocument, GetCommentsDocument, UserPostType } from '@/generated';
 import { useMutation } from '@apollo/client';
 import { Smile } from 'lucide-react';
 import React, { useState } from 'react';
 import { TbLoaderQuarter } from 'react-icons/tb';
-const CreateComment = ({ postId }: { postId: string }) => {
+const CreateComment = ({ post }: { post: UserPostType }) => {
   const [text, setText] = useState('');
   const [createComment, { loading: loadingComment }] = useMutation(CreateCommentDocument, {
     refetchQueries: [
@@ -11,7 +11,7 @@ const CreateComment = ({ postId }: { postId: string }) => {
         query: GetCommentsDocument,
         variables: {
           input: {
-            postId: postId,
+            postId: post._id,
           },
         },
       },
@@ -20,7 +20,7 @@ const CreateComment = ({ postId }: { postId: string }) => {
   });
 
   const handlePost = async () => {
-    await createComment({ variables: { input: { postId, comment: text } } });
+    await createComment({ variables: { input: { postId: post._id, comment: text, ownerId: post.user._id } } });
   };
 
   return (

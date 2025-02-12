@@ -1,11 +1,12 @@
 'use client';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { LikeStyle } from '@/components/profile/comment/LikeStyle';
+import { CommentLike } from '@/components/profile/comment/CommentLike';
 
 describe('LikeStyle Component', () => {
   it('renders the HeartIcon component', () => {
-    render(<LikeStyle liked={false} />);
+    const handleClickLike = jest.fn();
+    render(<CommentLike liked={false} handleClickLike={handleClickLike} />);
 
     const heartIcon = screen.getByTestId('like-icon');
     expect(heartIcon).toBeInTheDocument();
@@ -13,7 +14,7 @@ describe('LikeStyle Component', () => {
 
   it('triggers handleClickLike when clicked', () => {
     const handleClickLike = jest.fn();
-    render(<LikeStyle handleClickLike={handleClickLike} liked={false} />);
+    render(<CommentLike liked={false} handleClickLike={handleClickLike} />);
 
     const heartIcon = screen.getByTestId('like-icon');
     fireEvent.click(heartIcon);
@@ -22,14 +23,18 @@ describe('LikeStyle Component', () => {
   });
 
   it('applies correct class when liked is true', () => {
-    render(<LikeStyle liked={true} />);
+    const handleClickLike = jest.fn();
+
+    render(<CommentLike liked={true} handleClickLike={handleClickLike} />);
 
     const heartIcon = screen.getByTestId('like-icon');
     expect(heartIcon).toHaveClass('fill-red-500 text-red-500 border-none cursor-pointer');
   });
 
   it('applies correct class when liked is false', () => {
-    render(<LikeStyle liked={false} />);
+    const handleClickLike = jest.fn();
+
+    render(<CommentLike liked={false} handleClickLike={handleClickLike} />);
 
     const heartIcon = screen.getByTestId('like-icon');
     expect(heartIcon).toHaveClass('cursor-pointer fill-none');

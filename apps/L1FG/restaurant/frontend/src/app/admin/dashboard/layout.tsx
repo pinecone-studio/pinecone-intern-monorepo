@@ -4,9 +4,8 @@ import React, { PropsWithChildren } from 'react';
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className="w-full flex flex-col items-center ">
-      <div className=" ">
-        <AdminHeader />
-      </div>
+      <AdminHeader />
+
       <div className="">{children}</div>
     </div>
   );

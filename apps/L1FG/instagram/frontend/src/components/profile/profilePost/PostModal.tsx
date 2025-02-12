@@ -5,8 +5,8 @@ import { Bookmark, Ellipsis, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
-import GetComments from '../comment/GetComments';
-import CreateComment from '../comment/CreateComment';
+import GetComments from '../../../features/profile/comment/GetComments';
+import CreateComment from '../../../features/profile/comment/CreateComment';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (
@@ -51,7 +51,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                     </div>
                   </div>
 
-                  <GetComments postId={post._id as string} />
+                  <GetComments post={post} />
                 </div>
               ) : (
                 <div className="flex flex-col justify-center items-center">
@@ -76,7 +76,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 </div>
                 <Separator />
 
-                <CreateComment postId={post._id as string} />
+                <CreateComment post={post} />
               </div>
             </div>
           </div>
