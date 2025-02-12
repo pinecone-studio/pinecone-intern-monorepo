@@ -2,7 +2,7 @@ import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import RegisterPage from '@/components/RegisterPage';
 import { useRouter } from 'next/navigation';
-import { CREATE_USER } from '@/components/RegisterPage';
+import { CreateUserDocument } from '@/generated';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -15,7 +15,7 @@ describe('RegisterPage', () => {
   const mocks = [
     {
       request: {
-        query: CREATE_USER,
+        query: CreateUserDocument,
         variables: {
           input: {
             userName: 'testuser',
@@ -110,7 +110,7 @@ describe('RegisterPage', () => {
     const errorMocks = [
       {
         request: {
-          query: CREATE_USER,
+          query: CreateUserDocument,
           variables: {
             input: {
               email: 'test@example.com',

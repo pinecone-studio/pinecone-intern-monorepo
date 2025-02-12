@@ -1,1 +1,1 @@
-["///", "///detail[ticketID]", "///passwordresert", "///signup", "///order", "///success", "///admin", "///carousel", "///header", "///signin", "///search", "///ticketReservation[ticketID]"]
+["///","///admin","///detail/[ticketID]","///order/[userid]","///resetPasswordPage","///search","///signin","///signup","///ticketReservation/[ticketID]"]

@@ -8,6 +8,8 @@ import { PostCaption } from './PostCaption';
 import { PostComment } from './PostComment';
 import { ProfileHover } from './ProfileHover';
 import { PostLikeSection } from '../../features/home-post/PostLikeSection';
+import { PostDate } from './PostDate';
+
 const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
   return (
     <div className="md:border-b-[1px] md:pb-5" data-testid="post-item">
@@ -20,6 +22,7 @@ const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
             <Username post={post} />
           </div>
         </ProfileHover>
+        <PostDate date={post.node.createdAt} />
       </div>
       <PostsSwiper post={post} />
       <PostLikeSection post={post} />

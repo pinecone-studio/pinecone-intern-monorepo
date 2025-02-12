@@ -1,7 +1,8 @@
 import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import LoginPage, { LOGIN_USER } from '@/components/LoginPage';
+import LoginPage from '@/components/LoginPage';
 import { useRouter } from 'next/navigation';
+import { LoginUserDocument } from '@/generated';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -13,7 +14,7 @@ describe('LoginPage', () => {
   const mocks = [
     {
       request: {
-        query: LOGIN_USER,
+        query: LoginUserDocument,
         variables: {
           input: {
             email: 'test@example.com',
@@ -24,14 +25,11 @@ describe('LoginPage', () => {
       result: {
         data: {
           loginUser: {
-            user: {
-              _id: '12345',
-              email: 'test@example.com',
-              userName: 'testuser',
-              profileImage: '/profile.jpg',
-              createdAt: '2023-01-01',
-            },
-            token: 'mockToken123',
+            _id: '12345',
+            email: 'test@example.com',
+            userName: 'testuser',
+            profileImage: '/profile.jpg',
+            createdAt: '2023-01-01',
           },
         },
       },
@@ -57,7 +55,7 @@ describe('LoginPage', () => {
     const invalidMocks = [
       {
         request: {
-          query: LOGIN_USER,
+          query: LoginUserDocument,
           variables: {
             input: {
               email: 'test@example.com',

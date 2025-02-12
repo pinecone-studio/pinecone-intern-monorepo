@@ -1,0 +1,51 @@
+import { NotificationModel, PostLikeModal, PostModel } from 'apps/L1FG/instagram/backend/src/models';
+import { makePostLikeNotification } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
+jest.mock('apps/L1FG/instagram/backend/src/models');
+describe('Make post like notification', () => {
+  it('Should throw error', async () => {
+    const mockCreate = jest.fn(() => {
+      throw new Error('Database error');
+    });
+    const mockFindByIdAndDelete = jest.fn().mockResolvedValue(null);
+    const mockFindByIdAndUpdate = jest.fn().mockResolvedValue(null);
+    (NotificationModel.create as jest.Mock) = mockCreate;
+    (PostLikeModal.findByIdAndDelete as jest.Mock) = mockFindByIdAndDelete;
+    (PostModel.findByIdAndUpdate as jest.Mock) = mockFindByIdAndUpdate;
+    await expect(
+      makePostLikeNotification({
+        input: {
+          userId: '3',
+          ownerUserId: '2',
+          postId: '1',
+        },
+        postLike: {
+          _id: '1',
+          postId: '2',
+          userId: '3',
+        },
+      })
+    ).rejects.toThrow('Server error');
+    expect(mockFindByIdAndDelete).toHaveBeenCalledTimes(1);
+    expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
+    expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
+  });
+  it('Should successfully return _id of notification document', async () => {
+    const mockCreate = jest.fn().mockResolvedValue({
+      _id: '123456789',
+    });
+    (NotificationModel.create as jest.Mock) = mockCreate;
+    const result = await makePostLikeNotification({
+      input: {
+        userId: '3',
+        ownerUserId: '2',
+        postId: '1',
+      },
+      postLike: {
+        _id: '1',
+        postId: '2',
+        userId: '3',
+      },
+    });
+    expect(result).toBe('123456789');
+  });
+});
