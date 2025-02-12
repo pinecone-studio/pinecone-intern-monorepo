@@ -23,3 +23,28 @@ mutation CreateOrder($input: OrderInput!) {
     _id
   }
 }
+query GetOrderTicketNumber($ticketNumber: Int!) {
+  getOrderTicketNumber(ticketNumber: $ticketNumber) {
+    userID
+    concertID
+    ticketID
+    phoneNumber
+    email
+    totalPrice
+    paymentType
+    ticketNumber
+    vipTicket {
+      price
+      quantity
+    }
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    _id
+  }
+}

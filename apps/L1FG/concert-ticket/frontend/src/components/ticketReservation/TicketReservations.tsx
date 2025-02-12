@@ -1,14 +1,22 @@
 'use client';
 import { OrderClick } from '@/app/ticketReservation/[ticketID]/page';
 import { TicketReservation } from '@/app/_features/ticketReservation/Ticketreservation';
-import { useGetConcertQuery } from '@/generated';
+import { useGetConcertQuery, useGetOrderTicketNumberQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
+import { useAlert } from '../providers/AlertProvider';
+import { useEffect } from 'react';
 
-const TicketReservations = ({ handleChange, handleNext, ticketID }: OrderClick) => {
+const TicketReservations = ({ handleChange, handleNext, ticketID, value }: OrderClick) => {
   const router = useRouter();
+  const { showAlert } = useAlert();
+  const { data: orderData, error } = useGetOrderTicketNumberQuery({ variables: { ticketNumber: value.orderNumber } });
+  useEffect(() => {
+    if (!orderData && value.orderNumber) {
+      showAlert('error', `${error} `);
+    }
+  }, [error, value.orderNumber, orderData]);
 
   const { data } = useGetConcertQuery({ variables: { id: ticketID } });
-
   return (
     <div className="Container w-[1334px] mx-auto">
       <div data-testid="concert-detail-button" onClick={() => router.push(`../detail/${ticketID}`)} className="flex text-[48px] w-[1334px] h-[112px] items-center">
