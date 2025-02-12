@@ -23,7 +23,9 @@ export const HeaderPart = () => {
 
         {user ? (
           <>
-            <span className="text-white font-medium">{user.email}</span>
+            <Link href={'/order'}>
+              <span className="text-white font-medium">{user.email}</span>
+            </Link>
             <button onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
               Logout
             </button>

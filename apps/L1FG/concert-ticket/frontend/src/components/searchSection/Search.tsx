@@ -12,7 +12,6 @@ type SearchProps = {
   onChange: (_e: string) => void;
 };
 export const SearchConcert = ({ selected, onSelect, onChange }: SearchProps) => {
-
   return (
     <div className="flex flex-row gap-4">
       <Input

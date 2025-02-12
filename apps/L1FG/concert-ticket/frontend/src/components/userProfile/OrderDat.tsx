@@ -32,7 +32,6 @@ export const Order = () => {
         </div>
       </div>
       <div className="flex flex-col gap-7">
-        <div className="text-2xl font-semibold text-white">Захиалагчийн мэдээлэл</div>
         <Modal orderData={orderData}></Modal>
       </div>
     </div>
