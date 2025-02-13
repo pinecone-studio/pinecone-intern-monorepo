@@ -1,4 +1,4 @@
-import { IconPostSavedTag } from '@/components/profile/profilePost/IconPostSavedTag';
+import { IconPostSavedTag } from '@/features/profile/comment/IconPostSavedTag';
 import { GetUserTogetherDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -13,6 +13,7 @@ describe('IconPostSavedTag Component :Post count 0 ', () => {
       query: GetUserTogetherDocument,
       variables: { searchingUserId: '1234' },
     },
+
     result: {
       data: {
         getUserTogether: {
@@ -57,10 +58,8 @@ describe('IconPostSavedTag Component :Post count 0 ', () => {
 
     const button = screen.getAllByTestId('nav-item')[0];
     const button1 = screen.getAllByTestId('nav-item')[1];
-    const button2 = screen.getAllByTestId('nav-item')[2];
 
     fireEvent.click(button);
     fireEvent.click(button1);
-    fireEvent.click(button2);
   });
 });
