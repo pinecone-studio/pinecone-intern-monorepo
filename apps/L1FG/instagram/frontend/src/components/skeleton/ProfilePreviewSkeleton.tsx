@@ -1,3 +1,5 @@
+import { Skeleton } from '@/components/ui/skeleton';
+
 export const ProfilePreviewSkeleton = () => {
   return (
     <div className="flex flex-col w-[200px] gap-2">
@@ -25,7 +27,7 @@ export const ProfilePreviewSkeleton = () => {
       </div>
       <div className="flex justify-around w-full h-fit grid-cols-3 gap-2">
         {Array.from({ length: 3 }, (_, i) => i).map((i) => (
-          <div key={i} className="flex flex-col items-center w-full h-20 bg-gray-200 rounded-sm"></div>
+          <Skeleton key={i} className="flex flex-col items-center w-full h-20 bg-gray-200 rounded-sm" />
         ))}
       </div>
     </div>
