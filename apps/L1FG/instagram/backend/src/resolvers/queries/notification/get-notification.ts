@@ -63,6 +63,7 @@ export const getNotification: QueryResolvers['getNotification'] = async (_, __, 
       },
     },
     { $sort: { createdAt: -1 } },
+    { $limit: 20 },
     {
       $group: {
         _id: '$period',
