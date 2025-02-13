@@ -1,6 +1,11 @@
-export const AmericanExpressCard = () => {
+interface AmericanExpressCardProps {
+  width?: string | number;
+  height?: string | number;
+}
+
+export const AmericanExpressCard: React.FC<AmericanExpressCardProps> = ({ width = '52', height = '32' }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="32" viewBox="0 0 52 32" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 52 32" fill="none">
       <path d="M42.3602 0.0117188V31.9983H10.0781V0.0117188H42.3602Z" fill="url(#paint0_radial_334_25486)" />
       <path d="M10.0645 31.9866V0H42.3869V31.9866H10.0645Z" fill="url(#paint1_radial_334_25486)" />
       <mask id="mask0_334_25486" maskUnits="userSpaceOnUse" x="10" y="0" width="33" height="32">
