@@ -1,0 +1,214 @@
+query GetNotification {
+  getNotification {
+    today {
+      postLike {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+        contentComment
+      }
+      request {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+
+    thisWeek {
+      postLike {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+        contentComment
+      }
+      request {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+    thisMonth {
+      postLike {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+      request {
+        id
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+    earlier {
+      postLike {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          userName
+          seenStoryTime
+          latestStoryTimestamp
+          profileImage
+        }
+        contentPost
+      }
+      comment {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          userName
+          latestStoryTimestamp
+          seenStoryTime
+          profileImage
+        }
+        contentPost
+        contentComment
+      }
+      request {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost
+      }
+    }
+  }
+}

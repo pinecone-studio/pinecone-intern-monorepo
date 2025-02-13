@@ -1,38 +1,53 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+'use client';
+
+import * as React from 'react';
+import { ChevronsUpDownIcon } from 'lucide-react';
+import { Booking } from '@/generated';
 import Link from 'next/link';
 
-const invoices = [
-  {
-    invoice: '001',
-    paymentStatus: 'Shagai Nyamdorj',
-    totalAmount: '1 Adult',
-    paymentMethod: 'Flower Hotel Ulaanbaatar',
-  },
-];
+interface GuestDataTableProps {
+  data: Array<Booking>;
+}
 
-export const GuestDataTable = () => {
+export const GuestDataTable = ({ data }: GuestDataTableProps) => {
   return (
-    <Link href="/admin/guests/info" className="border border-[#E4E4E7] rounded-[6px] bg-white">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Hotel</TableHead>
-            <TableHead className="text-right">Guests</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Link>
+    <div className="w-full">
+      <div className="rounded-[6px] border bg-white overflow-hidden">
+        <div className="flex items-center">
+          <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-10 flex items-center border-r border-[#E4E4E7]">ID</p>
+          <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Name</p>
+          <div className="px-4 py-2 flex items-center justify-between max-w-[291px] w-full h-10  border-r border-[#E4E4E7]">
+            <p className="text-[#09090B] font-Inter text-sm font-semibold">Hotel</p>
+            <ChevronsUpDownIcon width={16} height={16} />
+          </div>
+          <div className="px-4 py-2 flex items-center justify-between max-w-[291px] w-full h-10 border-r border-[#E4E4E7]">
+            <p className="text-[#09090B] font-Inter text-sm font-semibold">Rooms</p>
+            <ChevronsUpDownIcon width={16} height={16} />
+          </div>
+          <p className="px-4 py-2 max-w-[211px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Guests</p>
+          <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Date</p>
+          <div className="px-4 py-2 flex items-center justify-between max-w-[164px] w-full h-10">
+            <p className="text-[#09090B] font-Inter text-sm font-semibold">Status</p>
+            <ChevronsUpDownIcon width={16} height={16} />
+          </div>
+        </div>
+        {data?.map((guest, index) => {
+          const formattedId = String(index + 1).padStart(4, '0');
+          return (
+            <Link href={`/admin/guests/${guest?.id}`} key={guest?.id} className="flex items-center border-t border-[#E4E4E7] h-[36px] hover:bg-[#FAFAFA] transition-all duration-200">
+              <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
+              <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{guest?.cardName}</p>
+              <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
+              <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
+              <p className="px-4 py-2 max-w-[211px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
+              <p className="px-4 py-2 max-w-[291px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
+              <div className="px-4 py-2 max-w-[164px] w-full h-full flex items-center">
+                <p className="font-Inter text-xs font-semibold px-[10px] py-[2px] rounded-full bg-[#2563EB] text-[#FAFAFA]">{guest?.status}</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
   );
 };

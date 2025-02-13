@@ -16,31 +16,29 @@ export const Sidemenu = () => {
           <AlignJustify width={16} />
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="flex flex-col ">
         <SheetHeader>
-          <SheetClose asChild>
-            <Button className="absolute top-4 right-4">×</Button>
-          </SheetClose>
+          <SheetClose asChild></SheetClose>
         </SheetHeader>
-        <nav className="flex flex-col gap-11 divide-y divide-gray-200 py-4 px-4">
-          <Link href="/order/1" className="flex items-center gap-2 py-2">
+        <nav className="flex flex-col divide-y divide-gray-200">
+          <Link href="/order/1" className="flex items-center gap-2 h-[68px]">
             <Home size={20} /> <span>Нүүр хуудас</span>
           </Link>
-          <Link href="/wallet" className="flex items-center gap-2 py-2">
+          <Link href="/wallet" className="flex items-center gap-2 h-[68px]">
             <ShoppingCart size={20} /> <span>Хэтэвч</span>
           </Link>
-          <Link href="/userprofile" className="flex items-center gap-2 py-2">
+          <Link href="/userprofile" className="flex items-center gap-2 h-[68px]">
             <User size={20} /> <span>Хэрэглэгч</span>
           </Link>
-          <Link href="/order-history" className="flex items-center gap-2 py-2">
+          <Link href="/order-history" className="flex items-center gap-2 h-[68px]">
             <FileText size={20} /> <span>Захиалгын түүх</span>
           </Link>
-          <Link href="/about" className="flex items-center gap-2 py-2">
+          <Link href="/about" className="flex items-center gap-2 h-[68px]">
             <Info size={20} /> <span>Бидний тухай</span>
           </Link>
         </nav>
-        <SheetFooter className="mt-auto px-4">
-          <Button className="w-full bg-brown-500 text-black" onClick={() => logOut()}>
+        <SheetFooter className="">
+          <Button className="w-full bg-[#441500] text-white" onClick={() => logOut()}>
             Гарах
           </Button>
         </SheetFooter>

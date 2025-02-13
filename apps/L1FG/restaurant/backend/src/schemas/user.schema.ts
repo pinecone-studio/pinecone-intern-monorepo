@@ -89,7 +89,6 @@ export const userTypeDefs = gql`
     newPassword: String!
     newRePassword: String!
   }
-
   type Query {
     sampleQuery: String!
     getUser(_id: ID!): UserType!
@@ -102,12 +101,12 @@ export const userTypeDefs = gql`
 
     updateForgetPassword(input: UpdateForgetPassword!): UpdatedForgetPassword!
     requestChangePassword(input: RequestChangePasswordInput!): RequestChangePasswordResponse!
-    changePassword(input: ChangePasswordType!): UserType!
+    changePassword(input: ChangePasswordType!): Response!
 
     updateNameUser(input: UpdateUserNameType!): UserType!
     updateEmailUser(input: UpdateUserEmailType!): UserType!
     updateNumberUser(input: UpdateUserNumberType!): UserType!
-    updatePasswordUser(input: UpdateUserPasswordType!): UserType!
+    updatePasswordUser(input: UpdateUserPasswordType!): Response!
     updateUserImage(input: UpdateUserImageType!): UserType!
   }
 `;

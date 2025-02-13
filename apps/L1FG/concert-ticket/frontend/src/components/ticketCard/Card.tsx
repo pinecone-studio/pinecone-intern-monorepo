@@ -9,14 +9,14 @@ interface CardProps {
 }
 
 export const Card = ({ card }: CardProps) => {
-  const formatDate = format(new Date(card.concertDay), 'yyyy-M-d');
+  const formatDate = format(new Date(card.concertDay), 'M-d');
   const router = useRouter();
   return (
-    <div onClick={() => router.push(`/detail/${card._id}`)} className="w-fit h-fit bg-stone-900 rounded-lg " data-testid="card-container" data-cy="card-item">
-      <Image alt="coldplay" width={345} src={'/coldplay.png'} height={181} className="rounded-lg"></Image>
+    <div onClick={() => router.push(`/detail/${card._id}`)} className={`w-fit h-fit bg-zinc-900 rounded-md`} data-testid="card-container" data-cy="card-item">
+      <Image alt="coldplay" width={414} src={'/coldplay.png'} height={230} className="rounded-md"></Image>
       <div className=" px-6 py-8 flex flex-col gap-6">
-        <div className="flex flex-col text-white">
-          <div className="text-muted-foreground text-xl" data-testid="card-concert-name">
+        <div className="flex flex-col gap-1 text-white">
+          <div className="text-white text-2xl" data-testid="card-concert-name">
             {card?.concertName}
           </div>
           <div className="text-muted-foreground font-extralight" data-testid="card-artist-name">
@@ -30,13 +30,13 @@ export const Card = ({ card }: CardProps) => {
           </a>
         </div>
         <div className="flex flex-row justify-between ">
-          <div className="text-muted-foreground flex flex-row">
+          <div className="text-neutral-400 flex flex-row">
             <CalendarRange className="w-5 h-5 mr-1" />
             <div data-testid="card-format-date">{formatDate}</div>
           </div>
-          <div className="text-muted-foreground font-extralight flex flex-row ">
+          <div className="text-neutral-400 font-extralight flex flex-row ">
             <MapPin className="w-5 h-5 mr-1" />
-            UG ARENA
+            Төв цэнгэлдэх
           </div>
         </div>
       </div>

@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="w-full h-16 border-b border-[#E4E4E7]  bg-white px-8 flex items-center ">
-      <div className="w-full h-10 flex items-center justify-between mx-auto text-sm font-medium">
+    <div className="w-screen h-16 border-b border-[#E4E4E7]  bg-white px-8 flex items-center ">
+      <div className="w-full h-10 flex items-center justify-between mx-auto text-sm font-medium max-w-screen-xl">
         <Link href={'/'}>
           <HomeLogo />
         </Link>

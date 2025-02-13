@@ -12,3 +12,6 @@ export * from './updateuser/update-user-image';
 export * from './updateuser/restore-forget-password';
 export * from './updateuser/request-change-password';
 export * from './update-order-status';
+export * from './updateuser/change-password';
+export * from './foodmutation/edit-food';
+export * from './foodmutation/delete-food';

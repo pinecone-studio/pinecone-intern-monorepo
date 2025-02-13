@@ -1,103 +1,146 @@
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { useRequestChangePasswordMutation, useRestoreForgetPasswordMutation } from '@/generated';
 import OTP from '@/components/Otp';
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
+import { useRouter } from 'next/navigation';
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+jest.mock('@/generated', () => ({
+  useRequestChangePasswordMutation: jest.fn(),
+  useRestoreForgetPasswordMutation: jest.fn(),
+}));
 describe('OTP Component', () => {
-  it('should render the OTP component successfully', () => {
-    render(<OTP />);
+  let mockRequestChangePassword: jest.Mock;
+  let mockRestoreForgetPassword: jest.Mock;
+  let mockRouterPush: jest.Mock;
+  beforeEach(() => {
+    mockRequestChangePassword = jest.fn();
+    mockRestoreForgetPassword = jest.fn(() => ({ loading: false, error: null }));
+    mockRouterPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockRouterPush });
+    jest.clearAllMocks();
+    (useRequestChangePasswordMutation as jest.Mock).mockReturnValue([mockRequestChangePassword]);
+    (useRestoreForgetPasswordMutation as jest.Mock).mockReturnValue([mockRestoreForgetPassword, { loading: false, error: null }]);
+    (useRouter as jest.Mock).mockReturnValue({ push: mockRouterPush });
+    localStorage.setItem('requestedEmail', 'test@example.com');
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
   });
 
-  it('should allow numeric input and navigate between inputs', async () => {
+  it('renders the OTP component correctly', () => {
     render(<OTP />);
-    const user = userEvent.setup();
-
-    const inputs = screen.getAllByRole('textbox') as HTMLInputElement[];
-
-    await user.type(inputs[0], '1');
+    expect(screen.getByText(/Имэйл хаяг руу илгээсэн 6 оронтой кодыг оруулна уу/i));
+    expect(screen.getAllByRole('textbox')).toHaveLength(6);
   });
-  it('should not move focus if the current input is the first one (index 0)', () => {
+  it('should set requestedEmail from localStorage', () => {
     render(<OTP />);
-
+    const email = localStorage.getItem('requestedEmail');
+    expect(email).toBe('test@example.com');
+  });
+  it('triggers OTP submission when all digits are entered', async () => {
+    render(<OTP />);
+    const email = localStorage.getItem('requestedEmail');
     const inputs = screen.getAllByRole('textbox');
 
-    fireEvent.keyDown(inputs[0], { key: 'Backspace', code: 'Backspace', charCode: 8 });
-
-    expect(inputs[0]);
+    await act(async () => {
+      inputs.forEach((input, index) => {
+        fireEvent.change(input, { target: { value: `${index + 1}` } });
+      });
+    });
+    await waitFor(() => {
+      expect(mockRestoreForgetPassword).toHaveBeenCalledWith({
+        variables: { input: { email: email, otp: '123456' } },
+      });
+      expect(mockRouterPush).toHaveBeenCalledWith('/new-password');
+    });
   });
-  it('should move focus to the previous input on Backspace when the current input is empty', () => {
+  it('requestedEmail is null it will be early return', async () => {
+    localStorage.removeItem('requestedEmail');
     render(<OTP />);
-
     const inputs = screen.getAllByRole('textbox');
-
-    fireEvent.keyDown(inputs[1], { key: 'Backspace', code: 'Backspace', charCode: 8 });
-
-    expect(inputs[0]);
+    await act(async () => {
+      inputs.forEach((input, index) => {
+        fireEvent.change(input, { target: { value: `${index + 1}` } });
+      });
+    });
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
+    });
   });
-
-  it('should not move focus if the current input is not empty', () => {
+  it('calls requestChangePassword when resend button is clicked', async () => {
     render(<OTP />);
-
-    const inputs = screen.getAllByRole('textbox');
-
-    fireEvent.change(inputs[1], { target: { value: '1' } });
-
-    fireEvent.keyDown(inputs[1], { key: 'Backspace', code: 'Backspace', charCode: 8 });
-
-    expect(inputs[1]);
+    const resendButton = screen.getByTestId('resendOtp');
+    await act(async () => {
+      fireEvent.click(resendButton);
+    });
+    await waitFor(() => {
+      expect(mockRequestChangePassword).toHaveBeenCalledWith({
+        variables: { input: { email: 'test@example.com' } },
+      });
+    });
   });
-
-  it('should update OTP state when a valid numeric value is entered', () => {
+  it('if back button is clicked', async () => {
+    localStorage.removeItem('requestedEmail');
     render(<OTP />);
-
-    const inputs = screen.getAllByRole('textbox');
-
-    // Simulate entering a valid numeric value ('1') in the first input
-    fireEvent.change(inputs[0], { target: { value: '1' } });
-
-    // Check if OTP state is updated correctly
-    // Assuming OTP state should now be ['1', '', '', '']
-    expect((inputs[0] as HTMLInputElement).value);
-    expect(inputs[1]);
+    const backButton = screen.getByTestId('back');
+    await act(async () => {
+      fireEvent.click(backButton);
+    });
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
+    });
   });
+  it('displays loading message when verifying', async () => {
+    (useRestoreForgetPasswordMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: true, error: null }]);
 
-  it('should not update OTP state when a non-numeric value is entered', () => {
     render(<OTP />);
-
-    const inputs = screen.getAllByRole('textbox');
-
-    // Simulate entering a non-numeric value ('a') in the first input
-    fireEvent.change(inputs[0], { target: { value: 'a' } });
-
-    // Check if OTP state is not updated and the input remains empty
-    expect((inputs[0] as HTMLInputElement).value);
+    expect(screen.getByText('Шалгаж байна...'));
   });
+  it('displays error message if verification fails', async () => {
+    (useRestoreForgetPasswordMutation as jest.Mock).mockReturnValue([jest.fn(), { loading: false, error: { message: 'Invalid OTP' } }]);
 
-  it('should move focus to the next input when a valid numeric value is entered', () => {
     render(<OTP />);
-
-    const inputs = screen.getAllByRole('textbox');
-
-    // Simulate entering a valid numeric value ('1') in the first input
-    fireEvent.change(inputs[0], { target: { value: '1' } });
-
-    // Check if focus moves to the second input
-    expect(inputs[1]);
+    expect(screen.getByText('Invalid OTP'));
   });
-
-  it('should not move focus if the last input is filled', () => {
+  it('if localStorage email is null go back to reset-password page', async () => {
+    localStorage.removeItem('requestedEmail');
     render(<OTP />);
+    const resendButton = screen.getByTestId('resendOtp');
+    await act(async () => {
+      fireEvent.click(resendButton);
+    });
 
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith('/reset-password');
+    });
+  });
+  it('focuses on the previous input when Backspace is pressed on an empty input', async () => {
+    render(<OTP />);
     const inputs = screen.getAllByRole('textbox');
-
-    // Fill the first three inputs
-    fireEvent.change(inputs[0], { target: { value: '1' } });
-    fireEvent.change(inputs[1], { target: { value: '2' } });
-    fireEvent.change(inputs[2], { target: { value: '3' } });
-
-    // Simulate entering a value in the last input
-    fireEvent.change(inputs[3], { target: { value: '4' } });
-
-    // The focus should stay in the last input (index 3)
-    expect(inputs[3]);
+    await act(async () => {
+      fireEvent.change(inputs[0], { target: { value: '1' } });
+      fireEvent.change(inputs[1], { target: { value: '2' } });
+      fireEvent.change(inputs[2], { target: { value: '' } });
+      fireEvent.keyDown(inputs[2], { key: 'Backspace' });
+    });
+  });
+  it('input when Backspace is pressed on an empty input', async () => {
+    render(<OTP />);
+    const inputs = screen.getAllByRole('textbox');
+    await act(async () => {
+      fireEvent.change(inputs[0], { target: { value: '' } });
+      fireEvent.keyDown(inputs[0], { key: 'Backspace' });
+    });
+  });
+  it('allows only numeric input in OTP fields', async () => {
+    render(<OTP />);
+    const input = screen.getAllByRole('textbox')[0];
+    await act(async () => {
+      fireEvent.change(input, { target: { value: 'a' } });
+      fireEvent.change(input, { target: { value: '1' } });
+      expect(input);
+    });
   });
 });

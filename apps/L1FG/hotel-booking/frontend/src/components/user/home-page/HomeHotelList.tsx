@@ -3,7 +3,7 @@ import { HomePageCard } from '../ui/cards';
 import { Hotel } from '@/generated';
 
 interface HomeHotelListProps {
-  data: Array<Hotel>;
+  data: Hotel[] | undefined;
 }
 
 export const HomeHotelList = ({ data }: HomeHotelListProps) => {

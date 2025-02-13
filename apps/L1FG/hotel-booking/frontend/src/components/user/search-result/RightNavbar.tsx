@@ -1,47 +1,41 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { HotelCard } from './HotelCard';
 import { Hotel } from '@/generated';
 import Link from 'next/link';
+import { SkeletonCard } from '../ui/cards';
+import { SelectInput } from '@/features/user/search-result/SelectInput';
 
 interface RightNavbarProps {
-  data: Array<Hotel>;
+  data: Array<Hotel | null>;
+  setSearchValuePrice: (_: 'asc' | 'desc') => void;
 }
 
-export const RightNavbar = ({ data }: RightNavbarProps) => {
+export const RightNavbar = ({ data, setSearchValuePrice }: RightNavbarProps) => {
   return (
-    <div className="w-[872px] flex flex-col gap-4">
+    <div className="w-[872px] flex flex-col gap-4" data-testid="right-navbar">
       <div className="flex justify-between">
-        <p className="text-[14px] leading-[20px] font-500">51 properties</p>
+        <p className="text-[14px] leading-[20px] font-500" data-testid="property-count">
+          {data.length} properties
+        </p>
 
-        <div className="flex flex-col space-y-8 w-72">
-          <div className="space-y-2">
-            <Select>
-              <SelectTrigger data-testid="select-trigger">
-                <SelectValue placeholder="Recommended" />
-              </SelectTrigger>
-              <SelectContent data-testid="select-content">
-                <SelectItem value="recommended" data-testid="select-item-recommended">
-                  Recommended
-                </SelectItem>
-                <SelectItem value="lowtohigh" data-testid="select-item-lowtohigh">
-                  Price: Low to High
-                </SelectItem>
-                <SelectItem value="hightolow" data-testid="select-item-hightolow">
-                  Price: High to Low
-                </SelectItem>
-                <SelectItem value="star" data-testid="select-item-star">
-                  Star Rating
-                </SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="flex flex-col space-y-8 w-72" data-testid="select-container">
+          <div className="space-y-2" data-testid="select-wrapper">
+            <SelectInput setSearchValuePrice={setSearchValuePrice} />
           </div>
         </div>
       </div>
-      {data?.map((hotelData) => (
-        <Link key={hotelData?.id} href={`/hotel-detail/${hotelData?.id}`}>
-          <HotelCard data={hotelData} />
-        </Link>
-      ))}
+      {data.length == 0 ? (
+        <>
+          <SkeletonCard data-testid="skeleton-card-1" />
+          <SkeletonCard data-testid="skeleton-card-2" />
+          <SkeletonCard data-testid="skeleton-card-3" />
+        </>
+      ) : (
+        data?.map((hotelData) => (
+          <Link key={hotelData?.id} href={`/hotel-detail/${hotelData?.id}`} data-testid={`hotel-link-${hotelData?.id}`}>
+            <HotelCard data={hotelData} data-testid={`hotel-card-${hotelData?.id}`} />
+          </Link>
+        ))
+      )}
     </div>
   );
 };

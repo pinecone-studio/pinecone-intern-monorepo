@@ -1,5 +1,5 @@
 import { User } from '../../../../generated';
-import { RequestModel } from '../../../../models';
+import { NotificationModel, RequestModel } from '../../../../models';
 import { catchError } from '../../../../utils/catch-error';
 import { CreationError, FoundError } from '../../../../utils/error';
 
@@ -23,6 +23,11 @@ export const sendRequestIfPrivate = async (targetUser: User, userId: string | nu
           throw new CreationError('Failed to request');
         }
       }
+      await NotificationModel.create({
+        userId,
+        ownerId: targetId,
+        categoryType: 'REQUEST',
+      });
       return {
         isFollowed: false,
         isRequested: true,

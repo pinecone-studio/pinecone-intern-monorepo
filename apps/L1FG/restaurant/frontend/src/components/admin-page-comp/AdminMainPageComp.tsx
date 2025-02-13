@@ -13,6 +13,19 @@ import { format, isSameDay, parseISO } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { mn } from 'date-fns/locale';
 import OrderStatusUpdate from './OrderStatusUpdate';
+import DialogDetails from './AdminOrderDetDialog';
+
+interface OrderT {
+  _id: string;
+  status?: string;
+  createdAt?: any;
+  tableId?: number;
+  items?: {
+    price?: number;
+    quantity?: number;
+    name?: string;
+  }[];
+}
 
 const AdminMainPageComp = () => {
   const { data: orderData } = useGetOrdersQuery();
@@ -80,7 +93,7 @@ const AdminMainPageComp = () => {
                 ?.toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 
-              return (
+              return order?.status != 'Done' ? (
                 <div key={order?._id} className="flex flex-col p-6 bg-white rounded-[8px] gap-4 w-[600px] border border-[#E4E4E7] shadow-sm">
                   <div className="flex justify-between">
                     <div className="text-2xl font-normal flex gap-2">
@@ -120,6 +133,33 @@ const AdminMainPageComp = () => {
                   </div>
 
                   {order && order._id && typeof order._id === 'string' && <OrderStatusUpdate order={{ ...order, _id: order._id as string, status: order.status ?? '' }} />}
+                </div>
+              ) : (
+                <div key={order?._id} className="flex flex-col p-6 bg-white rounded-[8px] gap-4 w-[600px] border border-[#E4E4E7] shadow-sm">
+                  <div className="flex justify-between">
+                    <div className="text-2xl font-normal flex gap-2">
+                      <div data-testid="order-table-num" className="text-[#3F4145]">
+                        {order?.tableId}
+                      </div>
+                      <div className="text-[#1D1F24] ">#33999</div>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                      <Clock2 size={16} />
+                      <div data-testid="date" className="text-base font-medium text-[#09090B] ">
+                        {new Date(order?.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="w-full border border-[#E4E4E7]"></div>
+
+                  <div className="flex justify-between">
+                    <div className="text-[#09090B] text-base font-normal">Нийлбэр дүн:</div>
+                    <div className="text-[#09090B] text-xl font-bold" data-testid="total-price">
+                      {totalPrice}₮
+                    </div>
+                  </div>
+                  <div className="flex justify-end">{order && order._id && typeof order._id === 'string' && <DialogDetails order={order as OrderT} />}</div>
                 </div>
               );
             })

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useRouter } from 'next/navigation';
 import { useMakeOrderMutation } from '@/generated';
@@ -65,11 +65,12 @@ describe('PreSuccessPageComp', () => {
     expect(priceElements[0]).toBeInTheDocument(); // Optionally, you can check the first one or iterate over them
   });
 
-  test('handles close button click', () => {
+  test('handles close button click', async () => {
     renderComponent();
-
-    const closeButton = screen.getByTestId('close-button');
-    fireEvent.click(closeButton);
+    await act(async () => {
+      const closeButton = screen.getByTestId('close-button');
+      fireEvent.click(closeButton);
+    });
 
     expect(mockRouter.back).toHaveBeenCalled();
   });
@@ -86,8 +87,10 @@ describe('PreSuccessPageComp', () => {
     };
     mockMakeOrder.mockResolvedValueOnce(mockData);
 
-    const qpayButton = screen.getByTestId('qpay-button');
-    fireEvent.click(qpayButton);
+    await act(async () => {
+      const qpayButton = screen.getByTestId('qpay-button');
+      fireEvent.click(qpayButton);
+    });
 
     await waitFor(() => {
       expect(mockMakeOrder).toHaveBeenCalledWith({
@@ -118,9 +121,10 @@ describe('PreSuccessPageComp', () => {
     });
     mockMakeOrder.mockRejectedValueOnce(new Error('Order failed'));
 
-    const qpayButton = screen.getByTestId('qpay-button');
-    fireEvent.click(qpayButton);
-
+    await act(async () => {
+      const qpayButton = screen.getByTestId('qpay-button');
+      fireEvent.click(qpayButton);
+    });
     await waitFor(() => {
       expect(mockMakeOrder).toHaveBeenCalled();
       expect(console.error).toHaveBeenCalledWith('Error making order:', expect.any(Error));
@@ -146,9 +150,7 @@ describe('PreSuccessPageComp', () => {
       ],
       tableId: '123',
     };
-
     renderComponent(multiItemOrder);
-
     // Total price should be (10 * 2) + (15 * 3) = 20 + 45 = 65
     const priceElements = screen.getAllByText('65₮');
     expect(priceElements.length).toBeGreaterThan(0); // Ensure there is at least one element with the text "65₮"

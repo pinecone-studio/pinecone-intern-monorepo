@@ -1,5 +1,5 @@
 import { Sidemenu } from '@/components/sidemenu/Sidemenu';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 // Mocking window.location
 const mockLocation = { href: '' };
@@ -16,8 +16,9 @@ describe('Sidemenu', () => {
     // Render the Sidemenu component
     render(<Sidemenu />);
 
-    // Open the menu
-    fireEvent.click(screen.getByRole('button', { name: /open menu/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /open menu/i }));
+    });
 
     // Click the logout button
     fireEvent.click(screen.getByText('Гарах'));

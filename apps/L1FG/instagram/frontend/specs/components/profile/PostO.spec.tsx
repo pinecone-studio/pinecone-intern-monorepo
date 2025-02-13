@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Post from '@/components/profile/Post';
 import { useGetPostsQuery } from '@/generated';
+import Post from '@/components/profile/profilePost/Post';
+import { mockGetPosts } from './mock';
 
 jest.mock('@/generated', () => ({
   useGetPostsQuery: jest.fn(),
@@ -12,11 +13,7 @@ describe('Post Component', () => {
 
   test('renders correctly with posts', () => {
     const mockData = {
-      getPosts: [
-        { postImage: '/images/post1.jpg', _id: 1 },
-        { postImage: '/images/post2.jpg', _id: 2 },
-        { postImage: '/images/post3.jpg', _id: 3 },
-      ],
+      getPosts: mockGetPosts,
     };
 
     (useGetPostsQuery as jest.Mock).mockReturnValue({
@@ -28,7 +25,11 @@ describe('Post Component', () => {
 
   test('renders correctly with no posts', () => {
     (useGetPostsQuery as jest.Mock).mockReturnValue({
-      data: { getPosts: [] },
+      data: {
+        getPosts: {
+          edges: [],
+        },
+      },
     });
 
     render(<Post userId={mockUserId} />);
@@ -52,12 +53,16 @@ describe('Post Component', () => {
   test('Should handle image null', () => {
     (useGetPostsQuery as jest.Mock).mockReturnValue({
       data: {
-        getPosts: [
-          {
-            postImage: [null],
-            _id: 1,
-          },
-        ],
+        getPosts: {
+          edges: [
+            {
+              node: {
+                postImage: [null],
+                _id: 1,
+              },
+            },
+          ],
+        },
       },
     });
     render(<Post userId={mockUserId} />);

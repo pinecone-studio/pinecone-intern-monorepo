@@ -1,0 +1,26 @@
+query GetHotelsByPrice($input: getHotelsByPriceInput!) {
+  getHotelsByPrice(input: $input) {
+    id
+    name
+    phoneNumber
+    rating
+    starRating
+    description
+    images
+    locationName
+    amenities
+    faqs {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    policies {
+      key
+      value
+    }
+    rooms
+  }
+}

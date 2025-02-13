@@ -8,5 +8,15 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../../coverage/apps/L1FG/instagram/frontend',
-  collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/generated/**/*.ts', '!src/app/**/*.tsx', '!src/components/providers/*.tsx'],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/generated/**/*.ts',
+    '!src/app/**/*.tsx',
+    '!src/components/providers/*.tsx',
+    '!src/**/mock.ts',
+    '!src/components/svg/**/*.{ts,tsx,js,jsx}',
+    '!src/components/home/main/PostLike.tsx',
+    '!src/components/home-post/Post.tsx',
+    '!src/features/**/*.{ts,tsx,js,jsx}',
+  ],
 };

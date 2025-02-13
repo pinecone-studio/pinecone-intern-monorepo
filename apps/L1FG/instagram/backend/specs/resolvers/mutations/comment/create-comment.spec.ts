@@ -1,4 +1,4 @@
-import { PostModel } from 'apps/L1FG/instagram/backend/src/models';
+import { NotificationModel, PostModel } from 'apps/L1FG/instagram/backend/src/models';
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { createComment } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
 import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
@@ -22,6 +22,7 @@ describe('Create comment', () => {
           input: {
             postId: '123',
             comment: 'asdf',
+            ownerId: '321',
           },
         },
         { userId: 'adf' },
@@ -46,6 +47,7 @@ describe('Create comment', () => {
           input: {
             postId: '123',
             comment: 'asdf',
+            ownerId: '321',
           },
         },
         { userId: 'adf' },
@@ -63,12 +65,18 @@ describe('Create comment', () => {
     }
     const mockComment = { _id: 'comment123', userId: 'user123', postId: '123', comment: 'Test Comment' };
     const mockUpdatedPost = { _id: '123', commentCount: 5 };
+    // contentCommentId: comments._id,
+    // contentPostId: postId,
+    // ownerId,
+    // categoryType: 'POST_COMMENT',
+    // userId,
 
     (authenticate as jest.Mock).mockReturnValue(null);
     (CommentModel.create as jest.Mock).mockResolvedValue(mockComment);
+    (NotificationModel.create as jest.Mock).mockResolvedValue({ ownerId: '321', userId: 'user123', contentPostId: '123', contentCommentId: '11', categoryType: 'POST_COMMENT' });
     (PostModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockUpdatedPost);
 
-    const result = await createComment({}, { input: { postId: '123', comment: 'Test Comment' } }, { userId: 'user123' }, {} as GraphQLResolveInfo);
+    const result = await createComment({}, { input: { postId: '123', comment: 'Test Comment', ownerId: '321' } }, { userId: 'user123' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(mockComment);
     expect(CommentModel.create).toHaveBeenCalledTimes(2);
@@ -86,7 +94,7 @@ describe('Create comment', () => {
     (PostModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null); // Simulating update failure
     (CommentModel.findByIdAndDelete as jest.Mock).mockResolvedValue(null); // Simulating successful rollback
 
-    await expect(createComment({}, { input: { postId: 'post123', comment: 'Test Comment' } }, { userId: 'user123' }, {} as GraphQLResolveInfo)).rejects.toThrow('Failed comment');
+    await expect(createComment({}, { input: { postId: 'post123', comment: 'Test Comment', ownerId: '321' } }, { userId: 'user123' }, {} as GraphQLResolveInfo)).rejects.toThrow('Failed comment');
 
     expect(CommentModel.create).toHaveBeenCalledTimes(3);
     expect(PostModel.findByIdAndUpdate).toHaveBeenCalledTimes(2);
@@ -107,7 +115,7 @@ describe('Create comment', () => {
     (CommentModel.create as jest.Mock).mockResolvedValue(mockComment);
     (PostModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockUpdatedPost);
 
-    const result = await createComment({}, { input: { postId: '123', comment: 'Test Comment' } }, { userId: 'user123' }, {} as GraphQLResolveInfo);
+    const result = await createComment({}, { input: { postId: '123', comment: 'Test Comment', ownerId: '321' } }, { userId: 'user123' }, {} as GraphQLResolveInfo);
 
     expect(result).toEqual(mockComment);
     expect(CommentModel.create).toHaveBeenCalledTimes(4);

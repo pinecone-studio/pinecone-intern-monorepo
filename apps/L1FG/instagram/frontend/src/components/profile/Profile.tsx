@@ -1,24 +1,27 @@
 'use client';
 import Image from 'next/image';
-import Setting from './Setting';
-import Followers from './Followers';
-import Following from './Following';
+import Setting from './profilePost/Setting';
+import Followers from './follow/Followers';
+import Following from './follow/Following';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useParams } from 'next/navigation';
-import StoryHighlight from './StoryHighlight';
-import FollowersEmpty from './FollowersEmpty';
-import EmptyFollowing from './EmptyFollowing';
+import StoryHighlight from './story/StoryHighlight';
+import FollowersEmpty from './follow/FollowersEmpty';
+import EmptyFollowing from './follow/EmptyFollowing';
 import { Settings } from 'lucide-react';
-import { IconPostSavedTag } from './IconPostSavedTag';
+import { IconPostSavedTag } from './profilePost/IconPostSavedTag';
+import { useRouter } from 'next/navigation';
 
 export const Profile = () => {
   const { userId } = useParams();
   const { data } = useGetUserTogetherQuery({
     variables: { searchingUserId: userId as string },
   });
-  console.log('USER DATA', data);
+
+  const router = useRouter();
+
   return (
-    <div className="flex  flex-col py-10" data-testid="profile-visit-container">
+    <div className="flex flex-col py-10" data-testid="profile-visit-container">
       <div className="flex gap-20  ml-[72px]">
         <Image src="/images/profilePic.png" alt="zurag" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
 
@@ -26,7 +29,9 @@ export const Profile = () => {
           <div className="flex gap-3 items-center justify-center">
             <p className="text-[20px] font-semibold ">{data?.getUserTogether.user?.userName}</p>
 
-            <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold">Edit profile</button>
+            <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold" onClick={() => router.push('/settings')}>
+              Edit profile
+            </button>
 
             <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold">Ad tools</button>
             <div className="flex justify-center items-center">
@@ -78,7 +83,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <p className="text-base font-semibold">{data?.getUserTogether.user?.userName}</p>
+            <p className="text-base font-semibold">{data?.getUserTogether.user?.fullName}</p>
             <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether.user?.bio}</p>
 
             <a className="text-sm font-medium text-[#2563EB]">{data?.getUserTogether.user?.email}</a>
