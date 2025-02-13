@@ -18,11 +18,11 @@ type FormState = {
   completionDate: string | null | undefined;
   windowsCount: number | null | undefined;
   windowType: string | null | undefined;
-  floorMaterial: string;
-  floorNumber: number;
-  balcony: string;
-  totalFloors: number;
-  lift: string;
+  floorMaterial: string | null | undefined;
+  floorNumber: number | null | undefined;
+  balcony: string | null | undefined | boolean;
+  totalFloors: number | null | undefined;
+  lift: string | null | undefined | boolean;
 };
 
 export const useFormState = () => {

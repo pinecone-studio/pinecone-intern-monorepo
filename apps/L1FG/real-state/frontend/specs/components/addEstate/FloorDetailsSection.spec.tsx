@@ -4,38 +4,51 @@ import '@testing-library/jest-dom';
 import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
 
 describe('FloorDetailsSection', () => {
-  it('should render successfully', () => {
-    const mockFormData = {
-      floorMaterial: 'Wood',
-      floorNumber: 3,
-    };
+  const mockHandleChange = jest.fn();
 
-    const mockHandleChange = jest.fn();
+  it('should render with empty values', () => {
+    const mockFormData = {
+      floorMaterial: '',
+      totalFloors: 0,
+      floorNumber: 0,
+    };
 
     render(<FloorDetailsSection formData={mockFormData} handleChange={mockHandleChange} />);
 
     expect(screen.getByLabelText('Шалны материал:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Шалны материал:')).toHaveValue('Wood');
+    expect(screen.getByLabelText('Нийт давхар:')).toBeInTheDocument();
     expect(screen.getByLabelText('Давхар:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Давхар:')).toHaveValue(3);
   });
 
-  it('should call handleChange on input change', () => {
+  it('should render with provided values', () => {
     const mockFormData = {
-      floorMaterial: '',
-      floorNumber: 0,
+      floorMaterial: 'Wood',
+      totalFloors: 12,
+      floorNumber: 5,
     };
-
-    const mockHandleChange = jest.fn();
 
     render(<FloorDetailsSection formData={mockFormData} handleChange={mockHandleChange} />);
 
-    const floorMaterialInput = screen.getByLabelText('Шалны материал:');
-    fireEvent.change(floorMaterialInput, { target: { value: 'Tile' } });
+    expect(screen.getByLabelText('Шалны материал:')).toHaveValue('Wood');
+    expect(screen.getByLabelText('Нийт давхар:')).toHaveValue(12);
+    expect(screen.getByLabelText('Давхар:')).toHaveValue(5);
+  });
+
+  it('should handle input changes', () => {
+    const mockFormData = {
+      floorMaterial: '',
+      totalFloors: 0,
+      floorNumber: 0,
+    };
+
+    render(<FloorDetailsSection formData={mockFormData} handleChange={mockHandleChange} />);
+
+    const materialInput = screen.getByLabelText('Шалны материал:');
+    fireEvent.change(materialInput, { target: { value: 'Wood' } });
     expect(mockHandleChange).toHaveBeenCalled();
 
     const floorNumberInput = screen.getByLabelText('Давхар:');
-    fireEvent.change(floorNumberInput, { target: { value: 5 } });
+    fireEvent.change(floorNumberInput, { target: { value: '5' } });
     expect(mockHandleChange).toHaveBeenCalled();
   });
 });
