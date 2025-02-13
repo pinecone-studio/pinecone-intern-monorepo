@@ -3,7 +3,7 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models/order.model.ts', () => ({
   OrderModel: {
-    findOne: jest
+    find: jest
       .fn()
       .mockResolvedValueOnce({
         userID: '6787a8066ba06ccedf49495a',

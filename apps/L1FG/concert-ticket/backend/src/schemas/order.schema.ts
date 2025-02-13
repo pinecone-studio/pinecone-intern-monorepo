@@ -53,12 +53,22 @@ export const orderTypeDefs = gql`
     regularTicket: RegularTicketInput
     standingAreaTicket: StandingAreaTicketInput
   }
+  input OrderUpdateInput {
+    newPhoneNumber: String!
+    newEmail: String!
+    userId: String!
+  }
+  type UpdateEmail {
+    email: String!
+    password: String!
+  }
   type Mutation {
     createOrder(input: OrderInput!): Order!
     deleteOrder(id: String!): Order!
+    orderUpdate(input: OrderUpdateInput!): UpdateEmail!
   }
   type Query {
-    getOrder(userID: String!): Order!
+    getOrder(userID: String!): [Order!]
     getOrders: [Order!]
     getOrderTicketNumber(ticketNumber: Int!): Order!
   }
