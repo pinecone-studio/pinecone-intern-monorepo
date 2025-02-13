@@ -69,6 +69,7 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
+    createdAt: Date
     friendshipStatus: FriendshipStatusType!
   }
 

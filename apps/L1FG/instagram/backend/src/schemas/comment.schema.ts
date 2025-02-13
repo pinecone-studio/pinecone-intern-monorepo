@@ -21,16 +21,26 @@ export const CommentTypeDefs = gql`
     user: UserTogetherUserType!
     likeCount: Int!
   }
+  type CommentsEdge {
+    cursor: ID!
+    node: CommentDetailType!
+  }
+  type CommentsConnection {
+    edges: [CommentsEdge!]!
+    pageInfo: PageInfo!
+  }
   input CommentInput {
     comment: String!
     postId: ID!
     ownerId: ID!
   }
   input GetCommentInput {
+    after: ID!
+    first: Int!
     postId: ID!
   }
   type Query {
-    getComments(input: GetCommentInput!): [CommentDetailType!]
+    getComments(input: GetCommentInput!): CommentsConnection
   }
   type Mutation {
     createComment(input: CommentInput!): Comment!
