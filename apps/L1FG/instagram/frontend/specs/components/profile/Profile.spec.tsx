@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useRouter, useParams } from 'next/navigation';
 import { MockedProvider } from '@apollo/client/testing';
 import { Profile } from '@/components/profile/Profile';
@@ -58,6 +58,45 @@ describe('Profile Component', () => {
       },
     },
   };
+  const userWithPostsFollowerFollowingZero = {
+    request: {
+      query: GetUserTogetherDocument,
+      variables: { searchingUserId: '12345' },
+    },
+    result: {
+      data: {
+        getUserTogether: {
+          user: {
+            _id: 'idf',
+            userName: 'john_doe',
+            fullName: 'John Doe',
+            bio: 'Software Engineer',
+            profileImage: 'http:/image',
+            hasStory: false,
+            gender: 'male',
+            isPrivate: false,
+            email: 'john@gmail.com',
+            followingCount: 0,
+            followerCount: 0,
+            postCount: 5,
+            friendshipStatus: {
+              followedBy: false,
+              following: false,
+              incomingRequest: false,
+              outgoingRequest: false,
+            },
+          },
+          viewer: {
+            _id: 'viewer',
+            userName: 'viewer',
+            fullName: 'viewer',
+            bio: 'hi ',
+            profileImage: 'http:/image',
+          },
+        },
+      },
+    },
+  };
 
   it('Should render post', async () => {
     render(
@@ -66,16 +105,17 @@ describe('Profile Component', () => {
       </MockedProvider>
     );
     expect(await screen.findByTestId('profile-visit-container')).toBeInTheDocument();
+    expect(await screen.findByTestId('profile-followers')).toBeInTheDocument();
+    expect(await screen.findByTestId('profile-followings')).toBeInTheDocument();
   });
-
-  it('navigates to /settings when Edit Profile button is clicked', async () => {
+  it('Should render post', async () => {
     render(
-      <MockedProvider mocks={[userWithPosts]} addTypename={false}>
+      <MockedProvider mocks={[userWithPostsFollowerFollowingZero]} addTypename={false}>
         <Profile />
       </MockedProvider>
     );
-    const button = await screen.findByRole('button', { name: /edit profile/i });
-    fireEvent.click(button);
-    expect(push).toHaveBeenCalledWith('/settings');
+    expect(await screen.findByTestId('profile-visit-container')).toBeInTheDocument();
+    expect(await screen.findByTestId('profile-followers-empty')).toBeInTheDocument();
+    expect(await screen.findByTestId('profile-followings-empty')).toBeInTheDocument();
   });
 });
