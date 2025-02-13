@@ -2,13 +2,13 @@
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { useGetUserTogetherQuery } from '@/generated';
-import Post from './Post';
-import PostEmpty from './PostEmpty';
+import Post from '../../../components/profile/profilePost/Post';
+import PostEmpty from '../../../components/profile/profilePost/PostEmpty';
 import Posts from '@/components/svg/Posts';
 import Saved from '@/components/svg/Saved';
-import Tagged from './Tagged';
+import Tagged from '../../../components/profile/profilePost/Tagged';
 import { Tag } from 'lucide-react';
-import Save from './Save';
+import Save from '../../../components/profile/profilePost/Save';
 
 const PageEnum = {
   POSTS: 'POSTS',
@@ -28,27 +28,29 @@ const NavItem = ({ label, icon, active, onClick }: { label: string; icon: React.
     <p className={`text-xs font-bold ${active ? 'text-black' : 'text-gray-500'}`}>{label}</p>
   </div>
 );
-
+/*eslint-disable*/
 export const IconPostSavedTag = ({ userId }: { userId: string }) => {
   const [page, setPage] = useState<PageType>(PageEnum.POSTS);
   const { data } = useGetUserTogetherQuery({
     variables: { searchingUserId: userId },
   });
+  const isOwnerId = data?.getUserTogether?.viewer?._id === userId;
 
-  const PostNoposts = data?.getUserTogether.user?.postCount ? <Post userId={userId} /> : <PostEmpty />;
+  const PostNoposts = data?.getUserTogether.user?.postCount ? <Post userId={userId} /> : <PostEmpty userId={userId as string} />;
 
   return (
     <div data-testid="IconPostSavedTag">
       <Separator className="w-[900px]" />
       <div className="flex justify-center gap-14">
         <NavItem label="POSTS" icon={<Posts />} active={page === PageEnum.POSTS} onClick={() => setPage(PageEnum.POSTS)} />
-        <NavItem label="SAVED" icon={<Saved />} active={page === PageEnum.SAVED} onClick={() => setPage(PageEnum.SAVED)} />
+        {isOwnerId ? <NavItem label="SAVED" icon={<Saved />} active={page === PageEnum.SAVED} onClick={() => setPage(PageEnum.SAVED)} /> : null}
         <NavItem label="TAGGED" icon={<Tag className="h-4 w-4" />} active={page === PageEnum.TAGGED} onClick={() => setPage(PageEnum.TAGGED)} />
       </div>
 
       {page === PageEnum.POSTS && PostNoposts}
+
       {page === PageEnum.SAVED && <Save />}
-      {page === PageEnum.TAGGED && <Tagged />}
+      {page === PageEnum.TAGGED && <Tagged userId={userId as string} />}
     </div>
   );
 };
