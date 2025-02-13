@@ -48,3 +48,10 @@ mutation CreateFollower($input: FollowInput!) {
     isRequested
   }
 }
+
+mutation AcceptRequst($followerId: String!) {
+  acceptRequest(followerId: $followerId) {
+    isFollowed
+    isRequested
+  }
+}
