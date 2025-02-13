@@ -12,6 +12,7 @@ type Props = {
 export const RequestFollow = ({ reqNotification }: Props) => {
   const [status, setStatus] = useState(true);
   const [acceptFollow] = useAcceptRequstMutation();
+  console.log(acceptFollow);
 
   const handleFollowConfirm = async (followerId: string) => {
     setStatus(false);
