@@ -14,6 +14,7 @@ const FormSchema = z.object({
     message: 'Нууц үг 8-аас дээш байх шаардлагатай ',
   }),
 });
+
 type LoginPageProps = {
   onSubmit: (_values: z.infer<typeof FormSchema>) => void;
 };

@@ -1,0 +1,8 @@
+mutation UpdateInfo($input: ProfileInfoInput!) {
+  updateInfo(input: $input) {
+    userName
+    fullName
+    bio
+    gender
+  }
+}

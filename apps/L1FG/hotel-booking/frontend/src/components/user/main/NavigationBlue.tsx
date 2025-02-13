@@ -9,12 +9,16 @@ export const NavigationBlue = () => {
           <Image src="/LogoBlue.png" alt="Logo" width={86} height={20} />
         </Link>
         <div className="flex gap-4">
-          <div className="py-2 px-4">
-            <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Register</p>
-          </div>
-          <div className="py-2 px-4">
-            <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Sign in</p>
-          </div>
+          <Link href={'/create-account'}>
+            <div className="py-2 px-4">
+              <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Register</p>
+            </div>
+          </Link>
+          <Link href={'/sign-up'}>
+            <div className="py-2 px-4">
+              <p className="font-normal font-Inter text-sm text-[#FAFAFA]">Sign in</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

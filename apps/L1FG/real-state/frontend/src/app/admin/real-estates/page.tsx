@@ -1,7 +1,11 @@
 import AdminPage from '@/components/adminPage/AdminPage';
 
 const Page = () => {
-  return <AdminPage />;
+  return (
+    <div>
+      <AdminPage />
+    </div>
+  );
 };
 
 export default Page;

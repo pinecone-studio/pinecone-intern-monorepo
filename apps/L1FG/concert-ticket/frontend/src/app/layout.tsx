@@ -1,28 +1,31 @@
 'use client';
-import { PropsWithChildren, Suspense } from 'react';
+/*eslint-disable*/ import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { usePathname } from 'next/navigation';
 import { HeaderPart } from '@/components/header/Header';
 import { Footerr } from '../components/footer/Footer';
-import { ToastContainer } from 'react-toastify';
+import { AlertProvider } from '@/components/providers/AlertProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathName = usePathname();
   const signUp = pathName.startsWith('/signup');
   const login = pathName.startsWith('/signin');
+  const admin = pathName.startsWith('/admin');
+  const reservation = pathName.startsWith('/ticketReservation/');
   return (
     <html lang="en">
       <body className="bg-black">
         <Suspense>
           <ApolloWrapper>
-            <AuthProvider>
-              {!signUp && !login && <HeaderPart />}
-              {children}
-              {!signUp && !login && <Footerr />}
-              <ToastContainer />
-            </AuthProvider>
+            <AlertProvider>
+              <AuthProvider>
+                {!signUp && !login && !admin && !reservation && <HeaderPart />}
+                {children}
+                {!signUp && !login && !admin && !reservation && <Footerr />}
+              </AuthProvider>
+            </AlertProvider>
           </ApolloWrapper>
         </Suspense>
       </body>

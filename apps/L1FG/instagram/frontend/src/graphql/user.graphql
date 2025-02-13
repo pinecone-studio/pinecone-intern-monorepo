@@ -54,3 +54,73 @@ query GetUserByName($userName: String!) {
     followerCount
   }
 }
+
+mutation SavedSearchUser($searchedUserId: String!) {
+  savedSearchUser(searchedUserId: $searchedUserId) {
+    savedUsers
+  }
+}
+
+query GetSearchedUser {
+  getSearchedUser {
+    _id
+    userName
+    fullName
+    hasStory
+    friendshipStatus {
+      following
+    }
+    profileImage
+  }
+}
+
+mutation DeleteSearchUser($searchedUserId: String!) {
+  deleteSearchUser(searchedUserId: $searchedUserId) {
+    savedUsers
+  }
+}
+query GetProfilePreview($searchingUserId: ID!) {
+  getProfilePreview(searchingUserId: $searchingUserId) {
+    searchingUserId
+    user {
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      savedUsers
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+      _id
+    }
+    viewer {
+      _id
+      profileImage
+      isPrivate
+      email
+    }
+    firstThreePosts {
+      node {
+        postImage
+        user {
+          latestStoryTimestamp
+          seenStoryTime
+          profileImage
+        }
+      }
+      cursor
+    }
+  }
+}

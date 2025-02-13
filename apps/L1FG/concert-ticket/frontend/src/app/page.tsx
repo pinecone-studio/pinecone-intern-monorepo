@@ -1,6 +1,8 @@
 'use client';
 
 import Carousel from '@/components/carousel/Carousel';
+import { Cards } from '@/components/ticketCard/Cards';
+import { useGetConcertsQuery } from '@/generated';
 
 const slides = [
   {
@@ -20,9 +22,11 @@ const slides = [
 ];
 
 const Page = () => {
+  const { data } = useGetConcertsQuery();
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center ">
       <Carousel slides={slides} />
+      <Cards cards={data?.getConcerts} />
     </div>
   );
 };

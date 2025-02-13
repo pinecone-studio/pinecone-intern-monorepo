@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Header from './common/Header';
 
@@ -6,7 +8,7 @@ const About = () => {
     <div>
       <Header />
 
-      <div className="bg-gray-100 min-h-[500px] py-6">
+      <div className="bg-gray-100 min-h-[500px] py-6 pt-20">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-center text-brown-700 mb-6">Бидний тухай</h1>
 

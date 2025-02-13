@@ -19,6 +19,7 @@ const PreSuccessPageComp = () => {
   const [items, setItems] = useState<FoodItem[]>([]);
   const [tableId, setTableId] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false); // Track client-side rendering state
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,11 +41,12 @@ const PreSuccessPageComp = () => {
   const [makeOrder] = useMakeOrderMutation();
 
   const handleOrderSubmit = async () => {
-    // Prepare the order data with correct structure
+    setIsSubmitting(true);
+
     const orderInput = {
-      tableId: Number(tableId), // Use the tableId from localStorage and convert to number
+      tableId: Number(tableId),
       items: items.map((item) => ({
-        name: item.name, // Ensure correct mapping
+        name: item.name,
         quantity: item.quantity,
         price: item.price,
         imageUrl: item.imageUrl,
@@ -52,14 +54,13 @@ const PreSuccessPageComp = () => {
     };
 
     try {
-      // Call the mutation
-      await makeOrder({
-        variables: { input: orderInput },
-      });
-
-      router.push('/payment-successful'); // Use client-side router navigation
+      await makeOrder({ variables: { input: orderInput } });
+      localStorage.removeItem('order');
+      router.push('/payment-successful');
     } catch (err) {
       console.error('Error making order:', err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -94,8 +95,20 @@ const PreSuccessPageComp = () => {
           Төлбөрийн хэрэгслээ сонгоно уу
         </div>
         <div className="flex gap-3" data-testid="payment-options">
-          <div onClick={handleOrderSubmit} className="w-[100px] h-[100px] bg-white rounded-[8px] shadow-sm flex flex-col justify-center items-center gap-1 cursor-pointer" data-testid="qpay-button">
-            <Image src="/qpayimg.png" alt="qpayimage" width={40} height={40} data-testid="qpay-image" />
+          <div
+            onClick={!isSubmitting ? handleOrderSubmit : undefined}
+            className={`w-[100px] h-[100px] rounded-[8px] flex flex-col justify-center items-center gap-1 cursor-pointer 
+       bg-white shadow-sm`} // Disable styling
+            data-testid="qpay-button"
+          >
+            <Image
+              src="/qpayimg.png"
+              alt="qpayimage"
+              width={40}
+              height={40}
+              data-testid="qpay-image"
+              className={isSubmitting ? 'opacity-50' : ''} // Reduce opacity when disabled
+            />
             <div className="text-[#09090B] text-center font-gip text-[14px] font-medium leading-[20px]" data-testid="qpay-label">
               Qpay
             </div>

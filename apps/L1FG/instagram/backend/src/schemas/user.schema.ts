@@ -11,7 +11,7 @@ export const UserTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String
+    profileImage: String!
     password: String!
     hasStory: Boolean
     gender: Gender
@@ -58,7 +58,7 @@ export const UserTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String
+    profileImage: String!
     hasStory: Boolean
     gender: Gender
     isPrivate: Boolean
@@ -69,7 +69,8 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
-    friendshipStatus: FriendshipStatusType
+    createdAt: Date
+    friendshipStatus: FriendshipStatusType!
   }
 
   type SearchedUsersType {
@@ -110,13 +111,20 @@ export const UserTypeDefs = gql`
     bio: String!
     gender: Gender!
   }
-
+  type ProfilePreviewType {
+    searchingUserId: ID!
+    user: UserTogetherUserType!
+    viewer: UserTogetherViewerType!
+    firstThreePosts: [PostsEdge!]!
+  }
   type Query {
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
     getUserByName(userName: String!): [UserTogetherUserType]
     getSearchedUser: [UserTogetherUserType]!
+    getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
+    getFollowingSuggestion: [UserWithoutPassword!]
   }
 
   type Mutation {
@@ -124,6 +132,7 @@ export const UserTypeDefs = gql`
     updateInfo(input: ProfileInfoInput!): ProfileInfoType
     login(input: SignInInput!): SignInType!
     savedSearchUser(searchedUserId: String!): SearchedUsersType
+    deleteSearchUser(searchedUserId: String!): SearchedUsersType
   }
 `;
 

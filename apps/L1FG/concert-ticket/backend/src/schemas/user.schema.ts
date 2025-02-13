@@ -23,10 +23,15 @@ export const UserTypeDefs = gql`
     password: String!
     email: String!
   }
-
+  input orderNewPassword {
+    oldPassword: String!
+    newPassword: String!
+    userId: String!
+  }
   type Mutation {
     signUp(input: UserInput!): User!
     signIn(input: UserInput!): AuthResponse!
     updatePassword(input: NewpasswordInput!): NewPassword!
+    newPassword(input: orderNewPassword!): NewPassword!
   }
 `;

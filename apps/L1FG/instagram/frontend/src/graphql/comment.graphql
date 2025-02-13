@@ -1,0 +1,55 @@
+mutation CreateComment($input: CommentInput!) {
+  createComment(input: $input) {
+    userId
+    postId
+    comment
+    _id
+    createdAt
+    updatedAt
+  }
+}
+query GetComments($input: GetCommentInput!) {
+  getComments(input: $input) {
+    edges {
+      cursor
+      node {
+        _id
+        comment
+        userId
+        postId
+        createdAt
+        updatedAt
+        commentLiked
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+        }
+        likeCount
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
+  }
+}

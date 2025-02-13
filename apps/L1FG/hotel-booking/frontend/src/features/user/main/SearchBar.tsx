@@ -1,11 +1,17 @@
 import { ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { DatePickerWithRange } from './DatePickerWithRange';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useQueryState } from 'nuqs';
+import { useRouter } from 'next/navigation';
 
 export const SearchBar = () => {
+  const [adultCout, setAdultCount] = useQueryState('bedcount');
+  const [dateFrom] = useQueryState('dateFrom');
+  const [dateTo] = useQueryState('dateTo');
+  const [adult, setAdult] = useState<number>(Number(adultCout) || 1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [adult, setAdult] = useState<number>(1);
+  const router = useRouter();
 
   const handleAdultPlus = () => {
     setAdult(adult + 1);
@@ -16,6 +22,10 @@ export const SearchBar = () => {
       setAdult(adult - 1);
     }
   };
+
+  useEffect(() => {
+    setAdultCount(adult.toString());
+  }, [adult, setAdultCount]);
 
   const handleDone = () => setIsOpen(false);
   return (
@@ -34,7 +44,7 @@ export const SearchBar = () => {
                 data-testid="menutrigger"
                 className="flex hover:bg-[#F4F4F5] items-center w-full h-10 rounded-[6px] justify-between text-sm font-normal px-4 py-2 border border-[#E4E4E7]"
               >
-                1 traveller, 1 room
+                {adultCout} traveller, 1 room
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="md:min-w-[370px] xl:w-[500px] p-0">
@@ -71,7 +81,10 @@ export const SearchBar = () => {
             </DropdownMenu>
           </div>
           <div className="flex items-end">
-            <button className="bg-[#2563EB] px-6 py-2 flex items-center justify-center rounded-md h-10">
+            <button
+              onClick={() => router.push(dateFrom && dateTo ? `/search-hotels?bedcount=${adult}&dateFrom=${dateFrom}&dateTo=${dateTo}` : `/search-hotels?bedcount=${adult}`)}
+              className="bg-[#2563EB] px-6 py-2 flex items-center justify-center rounded-md h-10"
+            >
               <p className="text-[#FAFAFA] font-Inter text-sm font-medium">Search</p>
             </button>
           </div>

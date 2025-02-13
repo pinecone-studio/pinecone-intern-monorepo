@@ -26,7 +26,7 @@ export const getSmallPosts: QueryResolvers['getSmallPosts'] = async (_, { input 
       cursor: Buffer.from(post._id as string).toString('base64'),
       node: post,
     }));
-    return {
+    const returnData = {
       edges: edges,
       pageInfo: {
         startCursor: edges[0].cursor,
@@ -34,6 +34,7 @@ export const getSmallPosts: QueryResolvers['getSmallPosts'] = async (_, { input 
         hasNextPage,
       },
     };
+    return returnData;
   } catch (error) {
     throw catchError(error);
   }

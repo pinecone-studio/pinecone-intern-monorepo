@@ -2,52 +2,57 @@ import gql from 'graphql-tag';
 
 export const PostTypeDefs = gql`
   type Post {
-    _id: ID
+    _id: ID!
     postImage: [String!]!
-    caption: String
-    userId: ID
-    carouselMediaCount: Int
-    createdAt: Date
+    caption: String!
+    userId: ID!
+    carouselMediaCount: Int!
+    createdAt: Date!
   }
 
   type UserPostType {
-    _id: ID
+    _id: ID!
     postImage: [String!]!
-    caption: String
-    userId: ID
-    carouselMediaCount: Int
-    createdAt: Date
+    caption: String!
+    userId: ID!
+    carouselMediaCount: Int!
+    createdAt: Date!
     commentCount: Int!
     likeCount: Int!
-    hasLiked: Boolean
-    user: UserTogetherUserType
+    hasLiked: Boolean!
+    user: UserTogetherUserType!
   }
   type PostsEdge {
     cursor: ID!
-    node: UserPostType
+    node: UserPostType!
   }
   type PageInfo {
     startCursor: ID!
     endCursor: ID!
-    hasNextPage: Boolean
+    hasNextPage: Boolean!
   }
   type PostsConnection {
-    edges: [PostsEdge]
-    pageInfo: PageInfo
+    edges: [PostsEdge!]!
+    pageInfo: PageInfo!
   }
 
   input PostInput {
     postImage: [String!]!
     caption: String
   }
+  input UserPostsInput {
+    after: ID
+    first: Int!
+    searchingUserId: ID!
+  }
   input SmallPostsInput {
-    after: ID!
+    after: ID
     first: Int!
   }
   type Query {
-    getPosts(searchingUserId: ID!): [UserPostType]
+    getPosts(input: UserPostsInput!): PostsConnection!
     getAllPosts: [UserPostType]
-    getSmallPosts(input: SmallPostsInput!): PostsConnection
+    getSmallPosts(input: SmallPostsInput!): PostsConnection!
   }
   type Mutation {
     createPost(input: PostInput!): Post!

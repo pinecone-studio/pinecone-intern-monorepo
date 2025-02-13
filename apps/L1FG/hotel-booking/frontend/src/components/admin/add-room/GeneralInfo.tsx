@@ -1,34 +1,95 @@
-import { GeneralInfoDialog } from '../ui/dialog';
+'use client';
 
-export const GeneralInfo = () => {
+import { Zap } from '../svg';
+import { GeneralInfoDialog } from '../ui/dialog/add-room/GeneralInfoDialog';
+
+import { GeneralInfoDialogProps } from './type';
+
+const InfoField = ({ label, value }: { label: string; value: string }) => (
+  <div className="w-full flex flex-col gap-1">
+    <p className="text-[#71717A] font-Inter text-sm font-normal">{label}</p>
+    <p className="text-[#09090B] font-Inter text-sm font-medium">{value || '-/-'}</p>
+  </div>
+);
+
+const RoomInfoItem = ({ value }: { value: string }) => (
+  <div className="flex items-center gap-2">
+    <Zap />
+    <p className="text-[#09090B] font-Inter text-sm font-medium">{value}</p>
+  </div>
+);
+
+const RoomInformation = ({ roomInfo }: { roomInfo: string[] }) => (
+  <div className="flex flex-col gap-2">
+    <p className="text-[#71717A] font-Inter text-sm font-normal">Room Information</p>
+    <div className="grid grid-cols-3 gap-x-8 gap-y-3">
+      {roomInfo.length > 0 ? roomInfo.map((value, index) => <RoomInfoItem key={index} value={value} />) : <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>}
+    </div>
+  </div>
+);
+
+const Divider = () => (
+  <div className="py-6">
+    <div className="w-full h-[1px] bg-[#E4E4E7]"></div>
+  </div>
+);
+
+export const GeneralInfo = ({
+  tax,
+  bed,
+  name,
+  type,
+  price,
+  roomInfo,
+  roomNumber,
+  setTax,
+  setBed,
+  setName,
+  setType,
+  setPrice,
+  setRoomInfo,
+  setRoomNumber,
+  handleEditGeneralInfo,
+}: GeneralInfoDialogProps) => {
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col p-6">
       <div className="flex justify-between items-center">
         <p className="text-[#09090B] font-Inter text-lg font-semibold">General Info</p>
-        <GeneralInfoDialog />
+        <GeneralInfoDialog
+          tax={tax}
+          bed={bed}
+          name={name}
+          type={type}
+          price={price}
+          roomInfo={roomInfo}
+          roomNumber={roomNumber}
+          setTax={setTax}
+          setBed={setBed}
+          setName={setName}
+          setType={setType}
+          setPrice={setPrice}
+          setRoomInfo={setRoomInfo}
+          setRoomNumber={setRoomNumber}
+          handleEditGeneralInfo={handleEditGeneralInfo}
+        />
       </div>
-      <div className="py-6">
-        <div className="w-full h-[1px] bg-[#E4E4E7] "></div>
-      </div>
+
+      <Divider />
+
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-8">
-          <div className="w-full flex flex-col gap-1">
-            <p className="text-[#71717A] font-Inter text-sm font-normal">Name</p>
-            <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
-          </div>
-          <div className="w-full flex flex-col gap-1">
-            <p className="text-[#71717A] font-Inter text-sm font-normal">Type</p>
-            <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
-          </div>
-          <div className="w-full flex flex-col gap-1">
-            <p className="text-[#71717A] font-Inter text-sm font-normal">Price per night</p>
-            <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
-          </div>
+          <InfoField label="Name" value={name} />
+          <InfoField label="Type" value={type} />
+          <InfoField label="Price per night" value={price} />
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-[#71717A] font-Inter text-sm font-normal">Room Information</p>
-          <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
+
+        <div className="flex items-center gap-8">
+          <InfoField label="Bed" value={bed} />
+          <InfoField label="Tax" value={tax} />
+          <InfoField label="Room number" value={roomNumber} />
         </div>
+
+        <RoomInformation roomInfo={roomInfo} />
       </div>
     </div>
   );

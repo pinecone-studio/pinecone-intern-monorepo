@@ -3,9 +3,9 @@
 import React from 'react';
 import { useCreatePostMutation } from '@/generated';
 import { CreatePostProps } from '../types';
-import Header from './lastCreatePost/Header';
-import ImagePreview from './lastCreatePost/ImagePreview';
-import CaptionInput from './lastCreatePost/CaptionInput';
+import Header from './last-create-post/Header';
+import ImagePreview from './last-create-post/ImagePreview';
+import CaptionInput from './last-create-post/CaptionInput';
 
 export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
   const [caption, setCaption] = React.useState('');
@@ -26,20 +26,8 @@ export const CreatePost: React.FC<CreatePostProps> = ({ images, setStep }) => {
         },
       },
     });
-
-    // alert('Post created successfully!');
     setStep(false);
-    // } catch (error) {
-    //   console.error('Error creating post:');
-    //   alert('Failed to create post.');
-    // } finally {
-    //   setLoading(false);
-    // }
   };
-
-  // const handleBack = () => {
-  //   setStep(true);
-  // };
 
   return (
     <div className="bg-white rounded-lg w-full max-w-4xl h-[679px] flex flex-col border shadow-lg z-[100]" data-testid="create-post-modal">

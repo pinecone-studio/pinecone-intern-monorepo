@@ -11,14 +11,14 @@ export const PostTypeDefs = gql`
 
   type Post {
     _id: ID!
-    propertyOwnerId: ID!
+    propertyOwnerId: User!
     title: String!
     description: String!
     price: String!
     propertyDetail: Property!
     status: PostStats!
-    updatedAt: String!
-    createdAt: String!
+    updatedAt: String
+    createdAt: String
   }
 
   input PostInput {
@@ -33,7 +33,7 @@ export const PostTypeDefs = gql`
   }
 
   input PostUpdateInput {
-    _id: ID
+    _id: ID!
     propertyOwnerId: ID
     title: String
     description: String

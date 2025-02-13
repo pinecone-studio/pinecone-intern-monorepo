@@ -1,4 +1,4 @@
-import FollowersEmpty from '@/components/profile/FollowersEmpty';
+import FollowersEmpty from '@/components/profile/follow/FollowersEmpty';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 describe('FollowersEmpty Component - DialogTrigger', () => {

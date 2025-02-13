@@ -1,4 +1,4 @@
-import { IconPostSavedTag } from '@/components/profile/IconPostSavedTag';
+import { IconPostSavedTag } from '@/components/profile/profilePost/IconPostSavedTag';
 import { GetUserTogetherDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';

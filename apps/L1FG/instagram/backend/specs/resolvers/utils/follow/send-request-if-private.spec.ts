@@ -1,5 +1,5 @@
 import { Gender, Request, User } from 'apps/L1FG/instagram/backend/src/generated';
-import { RequestModel } from 'apps/L1FG/instagram/backend/src/models';
+import { NotificationModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
 import { sendRequestIfPrivate } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/send-request-if-private';
 jest.mock('apps/L1FG/instagram/backend/src/models');
 const targetUser: User = {
@@ -67,6 +67,7 @@ describe('Send request if private', () => {
     const mockFindOne = jest.fn().mockResolvedValueOnce(null);
     const mockCreate = jest.fn().mockResolvedValueOnce(null);
     (RequestModel.create as jest.Mock) = mockCreate;
+
     (RequestModel.findOne as jest.Mock) = mockFindOne;
     await expect(sendRequestIfPrivate(privateTargetUser, '13', '14')).rejects.toThrow('Failed to request');
     expect(mockFindOne).toHaveBeenCalledTimes(1);
@@ -80,6 +81,7 @@ describe('Send request if private', () => {
     const mockFindOne = jest.fn().mockResolvedValueOnce(null);
     const mockCreate = jest.fn().mockResolvedValueOnce(newRequest);
     (RequestModel.create as jest.Mock) = mockCreate;
+    (NotificationModel.create as jest.Mock).mockResolvedValue({ userId: '123', ownerId: '321', categoryType: 'REQUEST' });
     (RequestModel.findOne as jest.Mock) = mockFindOne;
     const result = await sendRequestIfPrivate(privateTargetUser, '13', '14');
     expect(result).toEqual(Requested);

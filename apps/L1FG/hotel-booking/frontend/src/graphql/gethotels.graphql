@@ -2,9 +2,25 @@ query GetHotels {
   getHotels {
     id
     name
-    starRating
+    phoneNumber
     rating
+    starRating
+    description
     images
+    locationName
     amenities
+    faqs {
+      key
+      value
+    }
+    location {
+      type
+      coordinates
+    }
+    policies {
+      key
+      value
+    }
+    rooms
   }
 }
