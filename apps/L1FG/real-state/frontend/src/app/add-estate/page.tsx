@@ -117,7 +117,7 @@ const AddEstate: React.FC = () => {
       <div className="flex gap-8">
         <div className="w-[728px]">
           <PropertyDetails formData={formData} handleChange={handleChange} />
-          <ImagesSection handleChange={handleChange} />
+          <ImagesSection formData={formData} handleChange={handleChange} />
           <DescriptionSection formData={formData} handleChange={handleChange} />
           <TownDetails formData={formData} handleChange={handleChange} />
           <WindowsSection formData={formData} handleChange={handleChange} />
