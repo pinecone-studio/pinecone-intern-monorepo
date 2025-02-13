@@ -16,7 +16,7 @@ const StandartTicket = ({ standartRealCount, standart, standartClick, Decrement,
         <div className="flex items-center  justify-items-center">
           <div className="w-[10px] h-[10px] bg-[#C772C4] rounded-full mr-[10px]"></div>
           <div>
-            <p className="text-[#C772C4]" data-testid="standart-ticket">
+            <p className="text-[#C772C4] font-thin " data-testid="standart-ticket">
               Энгийн тасалбар ({standartRealCount === -1 ? standartRealCount + 1 : standartRealCount})
             </p>
             <p className="text-white" data-testid="standart-ticket-price">

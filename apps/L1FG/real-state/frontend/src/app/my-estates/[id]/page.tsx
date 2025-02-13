@@ -1,0 +1,81 @@
+'use client';
+
+import { useGetPostByIdQuery } from '@/generated';
+import { useFormState } from '@/components/utils/use-form-state';
+import PropertyDetails from '@/components/addEstate/PropertyDetails';
+import DescriptionSection from '@/components/addEstate/DescriptionSection';
+import TownDetails from '@/components/addEstate/TownDetails';
+import RestroomsSection from '@/components/addEstate/RestroomsSection';
+import WindowsSection from '@/components/addEstate/WindowsSection';
+import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
+import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
+import ImagesSection from '@/components/addEstate/ImagesSection';
+import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
+
+const EditEstate = () => {
+  const { id } = useParams();
+  const { formData, setFormData } = useFormState();
+  const { data, loading } = useGetPostByIdQuery({
+    variables: { id: id as string },
+  });
+
+  useEffect(() => {
+    if (data?.getPostById) {
+      const rawDate = data.getPostById.propertyDetail.details?.completionDate;
+      const formattedDate = rawDate ? new Date(rawDate).toISOString().split('T')[0] : '';
+
+      setFormData({
+        ...formData,
+        title: data.getPostById.title,
+        description: data.getPostById.description,
+        price: data.getPostById.price,
+        houseType: data.getPostById.propertyDetail.houseType,
+        size: data.getPostById.propertyDetail.size,
+        totalRooms: data.getPostById.propertyDetail.totalRooms,
+        restrooms: data.getPostById.propertyDetail.restrooms,
+        city: data.getPostById.propertyDetail.location.city,
+        district: data.getPostById.propertyDetail.location.district,
+        subDistrict: data.getPostById.propertyDetail.location.subDistrict,
+        address: data.getPostById.propertyDetail.location.address,
+        completionDate: formattedDate,
+        windowsCount: data.getPostById.propertyDetail.details?.windowsCount,
+        windowType: data.getPostById.propertyDetail.details?.windowType,
+        floorMaterial: data.getPostById.propertyDetail.details?.floorMaterial,
+        floorNumber: data.getPostById.propertyDetail.details?.floorNumber,
+        totalFloors: data.getPostById.propertyDetail.details?.totalFloors,
+        balcony: data.getPostById.propertyDetail.details?.balcony,
+        lift: data.getPostById.propertyDetail.details?.lift,
+        images: data.getPostById.propertyDetail.images,
+      });
+    }
+  }, [data]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Үл хөдлөх засах</h1>
+        <PropertyDetails formData={formData} handleChange={handleChange} />
+        <DescriptionSection formData={formData} handleChange={handleChange} />
+        <ImagesSection formData={formData} handleChange={handleChange} />
+        <TownDetails formData={formData} handleChange={handleChange} />
+        <RestroomsSection formData={formData} handleChange={handleChange} />
+        <WindowsSection formData={formData} handleChange={handleChange} />
+        <FloorDetailsSection formData={formData} handleChange={handleChange} />
+        <BalconyLiftSection formData={formData} handleChange={handleChange} />
+      </div>
+    </main>
+  );
+};
+
+export default EditEstate;

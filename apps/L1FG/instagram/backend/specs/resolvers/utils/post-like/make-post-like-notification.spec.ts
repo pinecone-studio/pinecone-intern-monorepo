@@ -1,4 +1,4 @@
-import { NotificationModel, PostLikeModal } from 'apps/L1FG/instagram/backend/src/models';
+import { NotificationModel, PostLikeModal, PostModel } from 'apps/L1FG/instagram/backend/src/models';
 import { makePostLikeNotification } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
 jest.mock('apps/L1FG/instagram/backend/src/models');
 describe('Make post like notification', () => {
@@ -7,8 +7,10 @@ describe('Make post like notification', () => {
       throw new Error('Database error');
     });
     const mockFindByIdAndDelete = jest.fn().mockResolvedValue(null);
+    const mockFindByIdAndUpdate = jest.fn().mockResolvedValue(null);
     (NotificationModel.create as jest.Mock) = mockCreate;
     (PostLikeModal.findByIdAndDelete as jest.Mock) = mockFindByIdAndDelete;
+    (PostModel.findByIdAndUpdate as jest.Mock) = mockFindByIdAndUpdate;
     await expect(
       makePostLikeNotification({
         input: {
@@ -23,5 +25,8 @@ describe('Make post like notification', () => {
         },
       })
     ).rejects.toThrow('Server error');
+    expect(mockFindByIdAndDelete).toHaveBeenCalledTimes(1);
+    expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
+    expect(mockFindByIdAndUpdate).toHaveBeenCalledTimes(1);
   });
 });

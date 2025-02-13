@@ -15,7 +15,7 @@ const VipTicket = ({ Decrement, Increment, vip, vipClick, vipCount, vipRealCount
         <div className="flex items-center  justify-items-center">
           <div className="w-[10px] h-[10px] bg-[#4651C9] rounded-full mr-[10px]"></div>
           <div>
-            <p data-testid="have-vip-ticket" className="text-[#4651C9]">
+            <p data-testid="have-vip-ticket" className="text-[#4651C9] font-thin">
               VIP тасалбар ({vipRealCount === -1 ? vipRealCount + 1 : vipRealCount})
             </p>
             <p className="text-white">{vipPrice}₮</p>

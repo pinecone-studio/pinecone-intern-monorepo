@@ -1,7 +1,6 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { NotificationType } from '@/generated';
-import Link from 'next/link';
 
 type Props = {
   commentNotification: NotificationType[];
@@ -30,6 +29,8 @@ export const CommentPost = ({ commentNotification }: Props) => {
       userNames: latestLikes.map((like) => like.user?.userName),
       postImage: likes[0]?.contentPost ?? '',
       userImage: latestLikes[latestLikes.length - 1]?.user?.profileImage,
+      contentComment: latestLikes[latestLikes.length - 1]?.contentComment,
+      userIds: latestLikes.map((like) => like.user?._id),
     };
   });
 
@@ -37,14 +38,16 @@ export const CommentPost = ({ commentNotification }: Props) => {
     <div>
       {groupedNotifications.map((n) => (
         <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-6 mb-2">
-          <div className="flex">
+          <div className="flex items-center">
             <Avatar>
               <AvatarImage src={n?.userImage} alt="User Avatar" />
             </Avatar>
-            <div className="w-[194px] ml-2 items-center flex text-sm">
-              <Link className="font-bold mr-2 text-base" href={'/'}>
-                {n.userNames[0]}, {n.userNames[1]} comment your post
-              </Link>
+            <div className="ml-4 text-sm w-[243px] break-words  ">
+              <span className="font-bold">
+                <a href={`/${n.userIds[0]}`}>{n.userNames[0]}</a>
+              </span>
+              <span className="px-1 ">commented:</span>
+              <span> {n.contentComment}</span>
             </div>
           </div>
           <div
@@ -54,7 +57,7 @@ export const CommentPost = ({ commentNotification }: Props) => {
               height: '44px',
               backgroundPosition: 'center',
             }}
-            className="rounded-sm bg-cover"
+            className="rounded-sm bg-cover "
           ></div>
         </div>
       ))}

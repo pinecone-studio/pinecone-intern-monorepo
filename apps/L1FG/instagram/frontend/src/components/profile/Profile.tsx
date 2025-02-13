@@ -19,6 +19,7 @@ export const Profile = () => {
   });
 
   const router = useRouter();
+
   return (
     <div className="flex flex-col py-10" data-testid="profile-visit-container">
       <div className="flex gap-20  ml-[72px]">

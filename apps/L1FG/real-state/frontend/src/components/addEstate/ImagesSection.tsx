@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ImagesSection: React.FC<{ handleChange: any }> = ({ handleChange }) => {
+const ImagesSection: React.FC<{ handleChange: any; formData: any }> = ({ handleChange, formData }) => {
   const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (formData.images) {
+      setImages(formData.images);
+    }
+  }, [formData.images]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const files = Array.from(event.target.files || []);
     const newImages = files.map((file) => URL.createObjectURL(file));
     const updatedImages = [...images, ...newImages];
+
     setImages(updatedImages);
     handleChange({
       target: {
@@ -35,7 +42,7 @@ const ImagesSection: React.FC<{ handleChange: any }> = ({ handleChange }) => {
         <p className="text-gray-700">Та үл хөдлөх хөрөнгийн зарын зурагнуудыг оруулна уу. Илүү олон зураг оруулах тусам таны зар илүү сонирхол татахуйц болно.</p>
       </div>
       <label htmlFor="images" className="block text-gray-700 font-bold mb-2"></label>
-      <input id="images" type="file" multiple onChange={handleImageUpload} className="hidden" data-cy="upload-image" />
+      <input id="images" data-testid="upload-image" type="file" multiple onChange={handleImageUpload} className="hidden" data-cy="upload-image" />
       <label htmlFor="images" className="block text-gray-700 font-bold mb-2 cursor-pointer">
         <div className="w-full p-2 border border-gray-300 rounded mb-4 text-center bg-gray-200 hover:bg-gray-300" data-cy="upload-button">
           + Зураг оруулах
