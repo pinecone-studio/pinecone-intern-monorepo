@@ -15,9 +15,9 @@ type FormState = {
   district: string | null | undefined;
   city: string | null | undefined;
   address: string | null | undefined;
-  completionDate: string;
-  windowsCount: number;
-  windowType: string;
+  completionDate: string | null | undefined;
+  windowsCount: number | null | undefined;
+  windowType: string | null | undefined;
   floorMaterial: string;
   floorNumber: number;
   balcony: string;

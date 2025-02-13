@@ -5,6 +5,8 @@ import { useFormState } from '@/components/utils/use-form-state';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
 import TownDetails from '@/components/addEstate/TownDetails';
+import RestroomsSection from '@/components/addEstate/RestroomsSection';
+import WindowsSection from '@/components/addEstate/WindowsSection';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -25,10 +27,14 @@ const EditEstate = () => {
         houseType: data.getPostById.propertyDetail.houseType,
         size: data.getPostById.propertyDetail.size,
         totalRooms: data.getPostById.propertyDetail.totalRooms,
+        restrooms: data.getPostById.propertyDetail.restrooms,
         city: data.getPostById.propertyDetail.location.city,
         district: data.getPostById.propertyDetail.location.district,
         subDistrict: data.getPostById.propertyDetail.location.subDistrict,
         address: data.getPostById.propertyDetail.location.address,
+        completionDate: data.getPostById.propertyDetail.details?.completionDate,
+        windowsCount: data.getPostById.propertyDetail.details?.windowsCount,
+        windowType: data.getPostById.propertyDetail.details?.windowType,
       });
     }
   }, [data]);
@@ -50,6 +56,8 @@ const EditEstate = () => {
         <PropertyDetails formData={formData} handleChange={handleChange} />
         <DescriptionSection formData={formData} handleChange={handleChange} />
         <TownDetails formData={formData} handleChange={handleChange} />
+        <RestroomsSection formData={formData} handleChange={handleChange} />
+        <WindowsSection formData={formData} handleChange={handleChange} />
       </div>
     </main>
   );
