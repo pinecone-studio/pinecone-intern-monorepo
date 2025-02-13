@@ -92,11 +92,11 @@ export const TicketReservation = ({ data, handleNext, handleChange }: ConcertPro
     handleNext();
   };
   return (
-    <div className="w-[385px] mx-auto mt-[100px] h-fit bg-[#131313] rounded-xl p-[20px] flex-col items-center">
+    <div className="w-fit h-fit bg-[#131313] rounded-xl flex flex-col gap-4 py-5 px-8">
       <div className="">
         <SelectDemo date={data?.concertDay} time={data?.concertTime} />
       </div>
-      <div className="w-[345px] h-[255px] my-[5px]">
+      <div className="w-[345px] h-[255px] ">
         <StandartTicket
           handleChange={handleChange}
           standart={standart}
@@ -140,6 +140,12 @@ export const TicketReservation = ({ data, handleNext, handleChange }: ConcertPro
         />
       </div>
       <TotalPrice
+        standartClick={standartClick}
+        vipClick={vipClick}
+        rearClick={rearClick}
+        rear={rear}
+        vip={vip}
+        standart={standart}
         handleNext={ticketValues}
         standartCount={standartCount}
         standartPrice={standartPrice}

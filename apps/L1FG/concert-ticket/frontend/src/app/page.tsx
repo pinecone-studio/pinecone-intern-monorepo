@@ -24,7 +24,7 @@ const slides = [
 const Page = () => {
   const { data } = useGetConcertsQuery();
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center ">
       <Carousel slides={slides} />
       <Cards cards={data?.getConcerts} />
     </div>

@@ -9,6 +9,8 @@ interface CardProps {
 }
 // eslint-disable-next-line complexity
 export const Card = ({ card }: CardProps) => {
+
+
   const router = useRouter();
   const formatDate = format(new Date(card.concertDay), 'yyyy-M-d');
 
@@ -27,6 +29,7 @@ export const Card = ({ card }: CardProps) => {
   const imageSource = isValidUrl(card.concertPhoto) ? card.concertPhoto : '/default-image.jpg';
 
   return (
+
     <div
       onClick={() => router.push(`/detail/${card._id}`)}
       className="w-fit h-fit bg-stone-900 rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
@@ -48,6 +51,7 @@ export const Card = ({ card }: CardProps) => {
       <div className="px-6 py-8 flex flex-col gap-6">
         <div className="flex flex-col text-white">
           <div className="text-muted-foreground text-xl" data-testid="card-concert-name">
+
             {card?.concertName}
           </div>
           <div className="text-muted-foreground font-extralight" data-testid="card-artist-name">
@@ -62,14 +66,16 @@ export const Card = ({ card }: CardProps) => {
             </span>
           )}
         </div>
+
         <div className="flex flex-row justify-between">
           <div className="text-muted-foreground flex flex-row items-center">
             <CalendarRange className="w-5 h-5 mr-1" />
             <div data-testid="card-format-date">{formatDate}</div>
           </div>
           <div className="text-muted-foreground font-extralight flex flex-row items-center">
+
             <MapPin className="w-5 h-5 mr-1" />
-            UG ARENA
+            Төв цэнгэлдэх
           </div>
         </div>
       </div>
