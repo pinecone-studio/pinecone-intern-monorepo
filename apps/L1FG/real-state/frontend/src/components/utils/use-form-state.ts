@@ -11,18 +11,18 @@ type FormState = {
   totalRooms: number;
   garage: string;
   restrooms: number;
-  subDistrict: string;
-  district: string;
-  city: string;
-  address: string;
-  completionDate: string;
-  windowsCount: number;
-  windowType: string;
-  floorMaterial: string;
-  floorNumber: number;
-  balcony: string;
-  totalFloors: number;
-  lift: string;
+  subDistrict: string | null | undefined;
+  district: string | null | undefined;
+  city: string | null | undefined;
+  address: string | null | undefined;
+  completionDate: string | null | undefined;
+  windowsCount: number | null | undefined;
+  windowType: string | null | undefined;
+  floorMaterial: string | null | undefined;
+  floorNumber: number | null | undefined;
+  balcony: string | null | undefined | boolean;
+  totalFloors: number | null | undefined;
+  lift: string | null | undefined | boolean;
 };
 
 export const useFormState = () => {

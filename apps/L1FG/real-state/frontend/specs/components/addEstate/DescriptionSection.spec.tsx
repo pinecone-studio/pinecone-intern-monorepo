@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
 
 describe('DescriptionSection', () => {
@@ -12,9 +13,9 @@ describe('DescriptionSection', () => {
 
     render(<DescriptionSection formData={mockFormData} handleChange={mockHandleChange} />);
 
-    const textarea = screen.getByLabelText('Тайлбар:');
-    expect(textarea).not.toBeNull();
-    expect(textarea.value).toBe('Initial description');
+    const textarea = screen.getByLabelText('Дэлгэрэнгүй тайлбар:');
+    expect(textarea).toBeInTheDocument();
+    expect(textarea).toHaveValue('Initial description');
   });
 
   it('should call handleChange on textarea change', () => {
@@ -26,7 +27,7 @@ describe('DescriptionSection', () => {
 
     render(<DescriptionSection formData={mockFormData} handleChange={mockHandleChange} />);
 
-    const textarea = screen.getByLabelText('Тайлбар:');
+    const textarea = screen.getByLabelText('Дэлгэрэнгүй тайлбар:');
     fireEvent.change(textarea, { target: { value: 'Updated description' } });
     expect(mockHandleChange).toHaveBeenCalled();
   });
