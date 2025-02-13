@@ -1,0 +1,15 @@
+mutation createCommentLike($input: CommentLikeInput!) {
+  createCommentLike(input: $input) {
+    _id
+    userId
+    commentId
+  }
+}
+
+mutation deleteCommentLike($input: CommentLikeInput!) {
+  deleteCommentLike(input: $input) {
+    _id
+    userId
+    commentId
+  }
+}

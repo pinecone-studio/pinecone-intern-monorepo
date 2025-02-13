@@ -1,23 +1,50 @@
 import { PostDate } from '@/components/home-post/PostDate';
 import { ProfileHover } from '@/components/home-post/ProfileHover';
 import { CommentLike } from '@/components/profile/comment/CommentLike';
+import { useCache } from '@/components/providers/CacheProvider';
 import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
 import { quantityConverter } from '@/components/utils/quantity-converter';
-import { CommentDetailType, UserPostType } from '@/generated';
+import { CommentDetailType, useCreateCommentLikeMutation, useDeleteCommentLikeMutation, UserPostType } from '@/generated';
 import Image from 'next/image';
 import { useState } from 'react';
 
 export const Comment = ({ comment, post }: { comment: CommentDetailType; post: UserPostType }) => {
   const [liked, setLiked] = useState(comment.commentLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
-
-  const handleClickLike = () => {
+  const { cacheLikeComment, cacheUnlikeComment } = useCache();
+  const [createCommentLike] = useCreateCommentLikeMutation();
+  const [deleteCommentLike] = useDeleteCommentLikeMutation();
+  const handleClickLike = async () => {
     setLiked((prev) => !prev);
     try {
       if (liked) {
         setLikeCount((pre) => pre - 1);
+        const unlike = await deleteCommentLike({
+          variables: {
+            input: {
+              commentId: comment._id,
+              postId: post._id,
+              ownerUserId: post.user._id,
+            },
+          },
+        });
+        console.log('UNLIKE:', unlike);
+        cacheUnlikeComment({
+          commentId: comment._id,
+          likeCount: comment.likeCount - 1,
+        });
       } else {
         setLikeCount((pre) => pre + 1);
+        await createCommentLike({
+          variables: {
+            input: {
+              commentId: comment._id,
+              postId: post._id,
+              ownerUserId: post.user._id,
+            },
+          },
+        });
+        cacheLikeComment({ commentId: comment._id, likeCount: comment.likeCount + 1 });
       }
     } catch (error) {
       setLiked(liked);
