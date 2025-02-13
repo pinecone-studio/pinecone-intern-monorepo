@@ -40,7 +40,7 @@ export const CommentTypeDefs = gql`
     postId: ID!
   }
   type Query {
-    getComments(input: GetCommentInput!): CommentsConnection
+    getComments(input: GetCommentInput!): CommentsConnection!
   }
   type Mutation {
     createComment(input: CommentInput!): Comment!
