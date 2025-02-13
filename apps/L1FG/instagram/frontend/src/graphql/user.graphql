@@ -38,20 +38,22 @@ query GetUser {
     userName
   }
 }
-
+fragment UserByNameBasicInfo on UserTogetherUserType {
+  _id
+  userName
+  fullName
+  profileImage
+  hasStory
+  isPrivate
+  friendshipStatus {
+    followedBy
+    following
+  }
+  followerCount
+}
 query GetUserByName($userName: String!) {
   getUserByName(userName: $userName) {
-    _id
-    userName
-    fullName
-    profileImage
-    hasStory
-    isPrivate
-    friendshipStatus {
-      followedBy
-      following
-    }
-    followerCount
+    ...UserByNameBasicInfo
   }
 }
 
