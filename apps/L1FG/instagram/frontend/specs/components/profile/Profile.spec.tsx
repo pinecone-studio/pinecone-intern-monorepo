@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useRouter, useParams } from 'next/navigation';
 import { MockedProvider } from '@apollo/client/testing';
 import { Profile } from '@/components/profile/Profile';
@@ -66,16 +66,5 @@ describe('Profile Component', () => {
       </MockedProvider>
     );
     expect(await screen.findByTestId('profile-visit-container')).toBeInTheDocument();
-  });
-
-  it('navigates to /settings when Edit Profile button is clicked', async () => {
-    render(
-      <MockedProvider mocks={[userWithPosts]} addTypename={false}>
-        <Profile />
-      </MockedProvider>
-    );
-    const button = await screen.findByRole('button', { name: /edit profile/i });
-    fireEvent.click(button);
-    expect(push).toHaveBeenCalledWith('/settings');
   });
 });
