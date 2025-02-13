@@ -11,10 +11,10 @@ type FormState = {
   totalRooms: number;
   garage: string;
   restrooms: number;
-  subDistrict: string;
-  district: string;
-  city: string;
-  address: string;
+  subDistrict: string | null | undefined;
+  district: string | null | undefined;
+  city: string | null | undefined;
+  address: string | null | undefined;
   completionDate: string;
   windowsCount: number;
   windowType: string;

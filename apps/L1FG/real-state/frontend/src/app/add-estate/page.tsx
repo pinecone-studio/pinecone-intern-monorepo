@@ -119,9 +119,9 @@ const AddEstate: React.FC = () => {
           <PropertyDetails formData={formData} handleChange={handleChange} />
           <ImagesSection handleChange={handleChange} />
           <DescriptionSection formData={formData} handleChange={handleChange} />
-          <RestroomsSection formData={formData} handleChange={handleChange} />
           <TownDetails formData={formData} handleChange={handleChange} />
           <WindowsSection formData={formData} handleChange={handleChange} />
+          <RestroomsSection formData={formData} handleChange={handleChange} />
           <FloorDetailsSection formData={formData} handleChange={handleChange} />
           <BalconyLiftSection formData={formData} handleChange={handleChange} />
         </div>
