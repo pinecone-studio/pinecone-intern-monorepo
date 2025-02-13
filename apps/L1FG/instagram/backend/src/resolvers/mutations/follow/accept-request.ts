@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../generated';
-import { FollowerModel } from '../../../models';
+import { FollowerModel, RequestModel } from '../../../models';
 import { authenticate } from '../../../utils/authenticate';
 import { updateFollowFollowerUser } from './create-follower-utils/update-follower-user';
 import { updateFollowTargetUser } from './create-follower-utils/update-target-user';
@@ -14,7 +14,7 @@ export const acceptRequest: MutationResolvers['acceptRequest'] = async (_, { fol
     targetId: userId,
     followerId,
   });
-
+  await RequestModel.findOneAndDelete({ from: followerId, to: userId });
   await updateFollowTargetUser(follow, users.targetUser, userId as string);
   await updateFollowFollowerUser(follow, users.followerUser, followerId);
   return {

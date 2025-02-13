@@ -108,6 +108,7 @@ describe('Follow', () => {
     (validateFollowUsers as jest.Mock) = mockValidateFollowUsers;
     (sendRequestIfPrivate as jest.Mock) = mockSendRequestIfPrivate;
     (FollowerModel.create as jest.Mock) = mockMakeFollow;
+    (RequestModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
     await expect(acceptRequest({}, { followerId: '1' }, { userId: 'hi' }, {} as GraphQLResolveInfo)).rejects.toThrow('Failed to follow');
     expect(mockAuthenticate).toHaveBeenCalledTimes(1);
     expect(mockValidateFollowUsers).toHaveBeenCalledTimes(1);
