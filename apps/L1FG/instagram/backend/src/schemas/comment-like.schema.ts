@@ -13,6 +13,6 @@ export const CommentLikeTyoeDefs = gql`
   }
   type Mutation {
     createCommentLike(input: CommentLikeInput!): CommentLike!
-    deleteCommentLike(input: CommentLikeInput!): CommentLike
+    deleteCommentLike(input: CommentLikeInput!): CommentLike!
   }
 `;
