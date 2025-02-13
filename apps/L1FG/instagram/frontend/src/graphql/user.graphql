@@ -64,11 +64,16 @@ mutation SavedSearchUser($searchedUserId: String!) {
 query GetSearchedUser {
   getSearchedUser {
     _id
-    userName
+    followerCount
     fullName
-    hasStory
+    userName
+    latestStoryTimestamp
+    seenStoryTime
     friendshipStatus {
+      followedBy
       following
+      incomingRequest
+      outgoingRequest
     }
     profileImage
   }

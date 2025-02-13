@@ -1,13 +1,26 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType } from '@/generated';
+import { NotificationType, useAcceptRequstMutation, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
+import { FriendshipStatus } from '../home-post/FriendshipStatus';
+import { useState } from 'react';
 
 type Props = {
   reqNotification?: NotificationType[];
 };
 
 export const RequestFollow = ({ reqNotification }: Props) => {
+  const [status, setStatus] = useState(true);
+  const [acceptFollow] = useAcceptRequstMutation();
+
+  const handleFollowConfirm = async (followerId: string) => {
+    setStatus(false);
+    await acceptFollow({
+      variables: {
+        followerId,
+      },
+    });
+  };
   return (
     <div>
       {reqNotification?.map((n) => (
@@ -22,13 +35,7 @@ export const RequestFollow = ({ reqNotification }: Props) => {
             </Link>
             requested to follow you
           </div>
-          {<button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Follow</button>}
-          {n.request === 'PENDING' && (
-            <div className="flex gap-2">
-              <button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Confirm</button>
-              <button className="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md">Delete</button>
-            </div>
-          )}
+          <FriendshipStatus statuss={status} onclick={() => handleFollowConfirm(n?.user?._id as string)} preview={n.user as UserTogetherUserType} />
         </div>
       ))}
     </div>
