@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Users } from './Users';
 import { useState } from 'react';
-import { useGetUserByNameQuery } from '@/generated';
+import { useGetUserByNameQuery, UserByNameBasicInfoFragment } from '@/generated';
 import { SavedUsers } from './SavedUsers';
 
 type Props = {
@@ -18,8 +18,7 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
     variables: { userName },
     skip: !userName,
   });
-  const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
-
+  const users: UserByNameBasicInfoFragment[] | undefined = data?.getUserByName;
   return (
     <>
       <div

@@ -53,14 +53,14 @@ export const Profile = () => {
 
               {data?.getUserTogether?.user?.followingCount ? (
                 <Following userId={userId as string}>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1" data-testid="profile-followings">
                     <p className="text-base font-semibold">{data?.getUserTogether?.user?.followingCount}</p>
                     <p className="text-base font-normal">following</p>
                   </div>
                 </Following>
               ) : (
                 <EmptyFollowing>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1" data-testid="profile-followings-empty">
                     <p className="text-base font-semibold">0</p>
                     <p className="text-base font-normal">following</p>
                   </div>
