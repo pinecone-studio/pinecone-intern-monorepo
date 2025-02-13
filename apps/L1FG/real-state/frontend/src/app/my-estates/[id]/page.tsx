@@ -3,6 +3,8 @@
 import { useGetPostByIdQuery } from '@/generated';
 import { useFormState } from '@/components/utils/use-form-state';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
+import DescriptionSection from '@/components/addEstate/DescriptionSection';
+import TownDetails from '@/components/addEstate/TownDetails';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -18,10 +20,15 @@ const EditEstate = () => {
       setFormData({
         ...formData,
         title: data.getPostById.title,
+        description: data.getPostById.description,
         price: data.getPostById.price,
         houseType: data.getPostById.propertyDetail.houseType,
         size: data.getPostById.propertyDetail.size,
         totalRooms: data.getPostById.propertyDetail.totalRooms,
+        city: data.getPostById.propertyDetail.location.city,
+        district: data.getPostById.propertyDetail.location.district,
+        subDistrict: data.getPostById.propertyDetail.location.subDistrict,
+        address: data.getPostById.propertyDetail.location.address,
       });
     }
   }, [data]);
@@ -41,6 +48,8 @@ const EditEstate = () => {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Үл хөдлөх засах</h1>
         <PropertyDetails formData={formData} handleChange={handleChange} />
+        <DescriptionSection formData={formData} handleChange={handleChange} />
+        <TownDetails formData={formData} handleChange={handleChange} />
       </div>
     </main>
   );

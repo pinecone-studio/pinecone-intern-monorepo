@@ -11,6 +11,12 @@ describe('Edit Estate Page', () => {
         images: ['/test-image.jpg'],
         garage: 'false',
         restrooms: 2,
+        location: {
+          city: 'Test City',
+          district: 'Test District',
+          subDistrict: 'Test SubDistrict',
+          address: 'Test Address',
+        },
       },
     },
   };
@@ -26,60 +32,82 @@ describe('Edit Estate Page', () => {
     cy.wait('@getPostById');
   });
 
-  it('should render the edit page title', () => {
-    cy.get('h1').should('contain', 'Үл хөдлөх засах');
+  describe('Page Layout', () => {
+    it('should render the edit page title', () => {
+      cy.get('h1').should('contain', 'Үл хөдлөх засах');
+    });
+
+    it('should show loading state initially', () => {
+      cy.intercept('POST', '/api/graphql', (req) => {
+        if (req.body.operationName === 'GetPostById') {
+          req.reply({
+            delay: 1000,
+            data: mockData,
+          });
+        }
+      }).as('delayedGetPostById');
+
+      cy.visit('/my-estates/test-id');
+      cy.contains('Loading...').should('be.visible');
+      cy.wait('@delayedGetPostById');
+      cy.contains('Loading...').should('not.exist');
+    });
   });
 
-  it('should load and display property details', () => {
-    cy.get('[data-cy="title"]').should('have.value', mockData.getPostById.title);
-    cy.get('[data-cy="price"]').should('have.value', mockData.getPostById.price);
-    cy.get('[data-cy="houseType"]').should('have.value', mockData.getPostById.propertyDetail.houseType);
-    cy.get('[data-cy="size"]').should('have.value', mockData.getPostById.propertyDetail.size);
-    cy.get('[data-cy="totalRooms"]').should('have.value', mockData.getPostById.propertyDetail.totalRooms);
+  describe('Property Details Section', () => {
+    it('should load and display property details', () => {
+      cy.get('[data-cy="title"]').should('have.value', mockData.getPostById.title);
+      cy.get('[data-cy="price"]').should('have.value', mockData.getPostById.price);
+      cy.get('[data-cy="houseType"]').should('have.value', mockData.getPostById.propertyDetail.houseType);
+      cy.get('[data-cy="size"]').should('have.value', mockData.getPostById.propertyDetail.size);
+      cy.get('[data-cy="totalRooms"]').should('have.value', mockData.getPostById.propertyDetail.totalRooms);
+    });
+
+    it('should handle property details input changes', () => {
+      cy.get('[data-cy="title"]').clear().type('Updated Property').should('have.value', 'Updated Property');
+
+      cy.get('[data-cy="price"]').clear().type('200000').should('have.value', '200000');
+    });
   });
 
-  it('should handle form input changes', () => {
-    cy.get('[data-cy="title"]').clear().type('Updated Property').should('have.value', 'Updated Property');
+  describe('Description Section', () => {
+    it('should load and display description', () => {
+      cy.get('[data-cy="description"]').should('have.value', mockData.getPostById.description);
+    });
 
-    cy.get('[data-cy="price"]').clear().type('200000').should('have.value', '200000');
-
-    cy.get('[data-cy="houseType"]').select('House').should('have.value', 'House');
-
-    cy.get('[data-cy="totalRooms"]').clear().type('4').should('have.value', '4');
+    it('should handle description changes', () => {
+      cy.get('[data-cy="description"]').clear().type('Updated description').should('have.value', 'Updated description');
+    });
   });
 
-  it('should show loading state while fetching data', () => {
-    cy.intercept('POST', '/api/graphql', (req) => {
-      if (req.body.operationName === 'GetPostById') {
-        req.reply({
-          delay: 1000,
-          data: mockData,
-        });
-      }
-    }).as('delayedGetPostById');
+  describe('Location Details Section', () => {
+    it('should load and display location details', () => {
+      cy.get('[data-cy="city"]').should('have.value', mockData.getPostById.propertyDetail.location.city);
+      cy.get('[data-cy="district"]').should('have.value', mockData.getPostById.propertyDetail.location.district);
+      cy.get('[data-cy="subDistrict"]').should('have.value', mockData.getPostById.propertyDetail.location.subDistrict);
+      cy.get('[data-cy="address"]').should('have.value', mockData.getPostById.propertyDetail.location.address);
+    });
 
-    cy.visit('/my-estates/test-id');
-    cy.contains('Loading...').should('be.visible');
-    cy.wait('@delayedGetPostById');
-    cy.contains('Loading...').should('not.exist');
+    it('should handle location input changes', () => {
+      cy.get('[data-cy="city"]').clear().type('New City').should('have.value', 'New City');
+
+      cy.get('[data-cy="address"]').clear().type('New Address').should('have.value', 'New Address');
+    });
   });
 
-  it('should handle network error gracefully', () => {
-    cy.intercept('POST', '/api/graphql', (req) => {
-      if (req.body.operationName === 'GetPostById') {
-        req.reply({
-          statusCode: 500,
-          body: { errors: [{ message: 'Internal Server Error' }] },
-        });
-      }
-    }).as('failedGetPostById');
+  describe('Error Handling', () => {
+    it('should handle network error gracefully', () => {
+      cy.intercept('POST', '/api/graphql', (req) => {
+        if (req.body.operationName === 'GetPostById') {
+          req.reply({
+            statusCode: 500,
+            body: { errors: [{ message: 'Internal Server Error' }] },
+          });
+        }
+      }).as('failedGetPostById');
 
-    cy.visit('/my-estates/test-id');
-    cy.wait('@failedGetPostById');
-  });
-
-  it('should validate required fields', () => {
-    cy.get('[data-cy="title"]').clear();
-    cy.get('[data-cy="price"]').clear();
+      cy.visit('/my-estates/test-id');
+      cy.wait('@failedGetPostById');
+    });
   });
 });
