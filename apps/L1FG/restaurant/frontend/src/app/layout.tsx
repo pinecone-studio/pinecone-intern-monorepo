@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
-import { ApolloWrapper } from '@/components/providers';
+import { ApolloWrapper, CartProvider } from '@/components/providers';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -10,8 +10,10 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="mx-auto">
-        <ApolloWrapper>{children}</ApolloWrapper>
+      <body className="container mx-auto">
+        <ApolloWrapper>
+          <CartProvider>{children}</CartProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );

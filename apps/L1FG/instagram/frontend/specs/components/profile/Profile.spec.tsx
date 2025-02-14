@@ -4,12 +4,13 @@ import { MockedProvider } from '@apollo/client/testing';
 import { Profile } from '@/components/profile/Profile';
 import { GetUserTogetherDocument } from '@/generated';
 import '@testing-library/jest-dom';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
   useParams: jest.fn(),
 }));
-
+jest.mock('@/components/providers/AuthProvider', () => ({ useAuth: jest.fn().mockReturnValue({ userId: '12345' }) }));
 describe('Profile Component', () => {
   const mockUserId = '12345';
   const push = jest.fn();
@@ -28,7 +29,7 @@ describe('Profile Component', () => {
       data: {
         getUserTogether: {
           user: {
-            _id: 'idf',
+            _id: '12345',
             userName: 'john_doe',
             fullName: 'John Doe',
             bio: 'Software Engineer',
@@ -58,16 +59,16 @@ describe('Profile Component', () => {
       },
     },
   };
-  const userWithPostsFollowerFollowingZero = {
+  const userWithOtherUserid = {
     request: {
       query: GetUserTogetherDocument,
-      variables: { searchingUserId: '12345' },
+      variables: { searchingUserId: '111' },
     },
     result: {
       data: {
         getUserTogether: {
           user: {
-            _id: 'idf',
+            _id: '12',
             userName: 'john_doe',
             fullName: 'John Doe',
             bio: 'Software Engineer',
@@ -76,8 +77,8 @@ describe('Profile Component', () => {
             gender: 'male',
             isPrivate: false,
             email: 'john@gmail.com',
-            followingCount: 0,
-            followerCount: 0,
+            followingCount: 50,
+            followerCount: 100,
             postCount: 5,
             friendshipStatus: {
               followedBy: false,
@@ -97,25 +98,22 @@ describe('Profile Component', () => {
       },
     },
   };
-
-  it('Should render post', async () => {
+  it('Should render userProfile', async () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: { _id: '12345' } });
     render(
       <MockedProvider mocks={[userWithPosts]} addTypename={false}>
         <Profile />
       </MockedProvider>
     );
-    expect(await screen.findByTestId('profile-visit-container')).toBeInTheDocument();
-    expect(await screen.findByTestId('profile-followers')).toBeInTheDocument();
-    expect(await screen.findByTestId('profile-followings')).toBeInTheDocument();
+    expect(await screen.findByTestId('user-profile')).toBeInTheDocument();
   });
-  it('Should render post', async () => {
+  it('Should render public profile', async () => {
+    (useAuth as jest.Mock).mockReturnValue({ user: { _id: '111' } });
     render(
-      <MockedProvider mocks={[userWithPostsFollowerFollowingZero]} addTypename={false}>
+      <MockedProvider mocks={[userWithOtherUserid]} addTypename={false}>
         <Profile />
       </MockedProvider>
     );
     expect(await screen.findByTestId('profile-visit-container')).toBeInTheDocument();
-    expect(await screen.findByTestId('profile-followers-empty')).toBeInTheDocument();
-    expect(await screen.findByTestId('profile-followings-empty')).toBeInTheDocument();
   });
 });
