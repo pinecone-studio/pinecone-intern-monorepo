@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 import uploadImage from '@/components/utils/upload';
 
 describe('uploadImage', () => {
