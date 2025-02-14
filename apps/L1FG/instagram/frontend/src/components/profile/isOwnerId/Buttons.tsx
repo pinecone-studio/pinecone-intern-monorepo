@@ -1,22 +1,20 @@
-import { useGetUserTogetherQuery } from '@/generated';
+import { GetUserTogetherQuery } from '@/generated';
 import { Settings } from 'lucide-react';
 import Setting from '../profilePost/Setting';
 import { useRouter } from 'next/navigation';
 
 interface ButtonsProps {
   userId: string;
+  data: GetUserTogetherQuery;
 }
 
-export const Buttons = ({ userId }: ButtonsProps) => {
-  const { data } = useGetUserTogetherQuery({
-    variables: { searchingUserId: userId },
-  });
+export const Buttons = ({ userId, data }: ButtonsProps) => {
   const router = useRouter();
-
   const isOwnerId = data?.getUserTogether?.viewer?._id === userId;
+  console.log('data:', data);
 
   const EditProfileFollowing = isOwnerId ? (
-    <button className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold" onClick={() => router.push('/settings')}>
+    <button data-testid="edit-profile-button" className="border px-4 py-2 bg-[#F4F4F5] rounded-md text-sm font-bold" onClick={() => router.push('/settings')}>
       Edit Profile
     </button>
   ) : (
