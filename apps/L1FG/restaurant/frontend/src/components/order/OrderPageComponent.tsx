@@ -15,8 +15,12 @@ interface OrderPageComponentProps {
 const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) => {
   const { data: foodData } = useGetFoodsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
-  const { addToCart, orders, setTableId } = useCart();
-  const [orderItems, setOrderItems] = useState(orders);
+  const {
+    addToCart,
+    // orders,
+    setTableId,
+  } = useCart();
+  // const [orderItems, setOrderItems] = useState(orders);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
