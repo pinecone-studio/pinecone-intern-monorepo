@@ -7,6 +7,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import OrderList from './OrderList';
 import { useCart } from '../providers/LocalProvider';
+import ItemsQuantity from './ItemQunatity';
 
 interface OrderPageComponentProps {
   tableNumber: number;
@@ -15,12 +16,7 @@ interface OrderPageComponentProps {
 const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) => {
   const { data: foodData } = useGetFoodsQuery();
   const { data: categoryData } = useGetCategoriesQuery();
-  const {
-    addToCart,
-    // orders,
-    setTableId,
-  } = useCart();
-  // const [orderItems, setOrderItems] = useState(orders);
+  const { addToCart, orders, setTableId } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
@@ -62,7 +58,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
             return (
               <div
                 key={food.id}
-                className="flex food-item relative flex-col gap-1 rounded-md w-full"
+                className="flex food-item relative flex-col gap-1 rounded-md w-full h-full"
                 onClick={() => addToCart({ ...food, _id: food.id, quantity: 1 })}
                 data-testid={`food-item-${food.id}`}
                 role="button"
@@ -70,11 +66,9 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
                 <Image width={160} height={160} alt="food" className="w-full h-40 object-cover rounded-md" src={food.imageUrl} />
                 <div className="text-[#09090B] font-light text-sm">{food.foodName}</div>
                 <div className="text-[#09090B] text-lg font-bold cursor-pointer">{formatPrice(food.price)}</div>
-                {/* {orderItems.some((order) => order._id === food.id) && (
-                  <div className="absolute w-1/2 h-[74%] right-0 bg-[#0000007b] flex justify-center items-center rounded-r-md">
-                    <span className="text-lg font-semibold text-white">{orderItems.find((order) => order._id === food.id)?.quantity}</span>
-                  </div>
-                )} */}
+                <div className="absolute w-1/2 h-[74%] right-0">
+                  <ItemsQuantity food={food} orders={orders} />
+                </div>
               </div>
             );
           })}
