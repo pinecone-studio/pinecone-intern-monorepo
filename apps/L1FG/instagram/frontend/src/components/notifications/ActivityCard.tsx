@@ -7,7 +7,7 @@ const ActivityCard = () => {
         <Heart className="w-6 h-6" />
       </div>
       <h2 className="text-lg leading-6 font-semibold text-b mt-2">Activity On Your Posts</h2>
-      <p className="text-sm leading-5 font-normal text-gray-600 text-center">When someone likes or comments on one of your posts, you'll see it here.</p>
+      <p className="text-sm leading-5 font-normal text-gray-600 text-center">When someone likes or comments on one of your posts, you&apos;ll see it here.</p>
     </div>
   );
 };
