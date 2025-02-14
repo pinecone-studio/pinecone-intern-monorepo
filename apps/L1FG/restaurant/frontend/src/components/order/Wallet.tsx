@@ -14,7 +14,7 @@ const transactions: Transaction[] = [
   { id: 2, amount: 219, date: '24.10.19 15:25', isIncome: true },
   { id: 3, amount: 276, date: '24.10.19 15:25', isIncome: true },
   { id: 4, amount: 186, date: '24.10.19 15:25', isIncome: true },
-  { id: 5, amount: -18800, date: '24.10.19 15:25', isIncome: false },
+  { id: 5, amount: -180, date: '24.10.19 15:25', isIncome: false },
   { id: 6, amount: 324, date: '24.10.19 15:25', isIncome: true },
 ];
 
