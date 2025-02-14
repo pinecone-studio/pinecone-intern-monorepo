@@ -50,6 +50,12 @@ query GetNotification {
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
         contentPost
       }
@@ -105,6 +111,12 @@ query GetNotification {
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
         contentPost
       }
@@ -152,6 +164,12 @@ query GetNotification {
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
         contentPost
       }
@@ -206,6 +224,12 @@ query GetNotification {
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
         contentPost
       }

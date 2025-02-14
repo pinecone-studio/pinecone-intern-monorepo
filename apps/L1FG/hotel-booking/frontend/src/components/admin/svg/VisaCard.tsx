@@ -1,6 +1,11 @@
-export const VisaCard = () => {
+interface VisaCardProps {
+  width?: string | number;
+  height?: string | number;
+}
+
+export const VisaCard: React.FC<VisaCardProps> = ({ width = '59', height = '32' }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="59" height="32" viewBox="0 0 59 32" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 59 32" fill="none">
       <g clipPath="url(#clip0_334_25471)">
         <path d="M54.6378 0H4.25879V32H54.6378V0Z" fill="white" />
         <path d="M53.7974 26.7988H5.09766V31.1603H53.7974V26.7988Z" fill="#F7B600" />

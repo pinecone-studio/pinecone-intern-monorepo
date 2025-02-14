@@ -43,8 +43,9 @@ describe('SavedUsers Component', () => {
     render(<SavedUsers />);
     const deleteButton = screen.getByTestId('delete-saved-user');
     fireEvent.click(deleteButton);
+
     await waitFor(() => expect(mockDeleteUser).toHaveBeenCalledWith({ variables: { searchedUserId: '1' } }));
-    expect(mockRefetch).toHaveBeenCalled();
+    await expect(mockRefetch).toHaveBeenCalled();
   });
 
   it('navigates to user profile when user is clicked', () => {

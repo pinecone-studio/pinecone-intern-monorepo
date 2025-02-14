@@ -121,7 +121,7 @@ export const UserTypeDefs = gql`
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
-    getUserByName(userName: String!): [UserTogetherUserType]
+    getUserByName(userName: String!): [UserTogetherUserType!]!
     getSearchedUser: [UserTogetherUserType]!
     getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
     getFollowingSuggestion: [UserWithoutPassword!]
