@@ -9,3 +9,12 @@ query GetFoods {
     createdAt
   }
 }
+
+ mutation CreateFood($input: FoodInputType!) {
+   createFood(input: $input) {
+     foodName
+     imageUrl
+     price
+     status
+   }
+ }
