@@ -80,7 +80,7 @@ export const getUserByName = async (_: unknown, { userName }: { userName: string
           profileImage: 1,
           seenStoryTime: 1,
           latestStoryTimestamp: 1,
-          followerCount: 1,
+          followerCount: { $ifNull: ['$followerCount', 0] },
           mutualFollowersCount: 1,
           mutualFollowers: 1,
         },
