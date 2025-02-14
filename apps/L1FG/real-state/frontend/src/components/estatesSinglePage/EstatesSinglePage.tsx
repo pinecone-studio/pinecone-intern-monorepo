@@ -113,7 +113,6 @@ const EstateSinglePage = ({ data }: { data: Post }) => {
                 </div>
               </div>
             </div>
-            // information
             <div>
               <EstatesSinglePageInformation data={data} />
             </div>
