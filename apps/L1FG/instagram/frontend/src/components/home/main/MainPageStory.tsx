@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { StoryUser, mockStoryData } from './mock-story-data';
 
 const MainPageStory = () => {
-  // Function to truncate username
+
   const formatUsername = (username: string) => {
     if (username.length >= 10) {
       return `${username.slice(0, 9)}...`;
@@ -12,7 +12,7 @@ const MainPageStory = () => {
   };
 
   return (
-    <div className="flex gap-4 w-[630px]">
+    <div className="flex gap-4 w-[630px] ">
       {mockStoryData.map((user: StoryUser) => (
         <Link href="/story" key={user.id}>
           <div className="flex flex-col gap-2 mt-[25px] w-fit">

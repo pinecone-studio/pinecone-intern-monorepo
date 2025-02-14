@@ -31,7 +31,7 @@ export const MenuButtons = () => {
     <>
       <div
         data-testid="menu-button-open-sheet"
-        className={`${isOpen || searchOpen ? 'w-[80px] px-2' : 'w-[300px] p-4'} fixed z-50 h-[100vh] flex flex-col border-r bg-white transform transition-[width,padding] duration-500 `}
+        className={`${isOpen || searchOpen ? 'w-[80px] px-2' : 'w-[300px] p-4'} fixed z-50 h-full flex flex-col border-r bg-white transform transition-[width,padding] duration-500 `}
       >
         <div data-testid="click-push-home" onClick={() => router.push('/')} className="mb-12 pt-[25px] px-[12px]">
           {isOpen || searchOpen ? (
