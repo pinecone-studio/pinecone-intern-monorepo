@@ -12,7 +12,7 @@ import { PostDate } from './PostDate';
 
 const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
   return (
-    <div className="md:border-b-[1px] md:pb-5" data-testid="post-item">
+    <div className="md:border-b-[1px] md:pb-5 "  data-testid="post-item">
       <div className="flex gap-2">
         <ProfileHover searchingUserId={post.node.user._id}>
           <Avatar post={post} />
