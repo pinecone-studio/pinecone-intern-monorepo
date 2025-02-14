@@ -1,6 +1,8 @@
-export const IsRequest = ({ onclick }: { onclick: () => void }) => {
+import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+
+export const IsRequest = ({ onclick, requestStyle }: { onclick: () => void; requestStyle?: string }) => {
   return (
-    <div className="flex gap-2">
+    <div className={cn(``, requestStyle)}>
       <button onClick={onclick} className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">
         Confirm
       </button>
@@ -8,3 +10,4 @@ export const IsRequest = ({ onclick }: { onclick: () => void }) => {
     </div>
   );
 };
+// flex gap-2
