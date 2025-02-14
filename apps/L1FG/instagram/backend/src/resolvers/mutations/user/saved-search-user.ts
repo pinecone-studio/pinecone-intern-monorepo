@@ -9,9 +9,8 @@ export const savedSearchUser: MutationResolvers['savedSearchUser'] = async (_, {
       { _id: userId },
       {
         $push: { savedUsers: { $each: [searchedUserId], $position: 0 } },
-        $setOnInsert: { savedUsers: [] },
       },
-      { new: true, upsert: true }
+      { new: true }
     );
 
     if (updatedUser.savedUsers.length > 10) {

@@ -49,9 +49,8 @@ describe('savedSearchUser Mutation', () => {
       { _id: mockuserid },
       {
         $push: { savedUsers: { $each: [searchedUserId], $position: 0 } },
-        $setOnInsert: { savedUsers: [] },
       },
-      { new: true, upsert: true }
+      { new: true }
     );
 
     expect(UserModel.updateOne).toHaveBeenCalledWith({ _id: mockuserid }, { $pop: { savedUsers: 1 } });
@@ -72,9 +71,8 @@ describe('savedSearchUser Mutation', () => {
       { _id: mockuserid },
       {
         $push: { savedUsers: { $each: [searchedUserId], $position: 0 } },
-        $setOnInsert: { savedUsers: [] },
       },
-      { new: true, upsert: true }
+      { new: true }
     );
 
     expect(result).toEqual({
