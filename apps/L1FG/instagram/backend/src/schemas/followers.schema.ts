@@ -52,7 +52,7 @@ export const FollowerTypeDefs = gql`
     isRequested: Boolean
   }
   type Query {
-    getFollowers(searchingUserId: ID): [FollowerType]
+    getFollowers(searchingUserId: ID): [FollowerType!]!
     getFollowing(searchingUserId: ID): [FollowingType]
   }
   type Mutation {
