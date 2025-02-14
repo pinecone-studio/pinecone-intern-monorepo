@@ -22,7 +22,7 @@ export const FollowerTypeDefs = gql`
     gender: Gender
     isPrivate: Boolean
     email: String!
-    friendshipStatus: FriendshipStatusType
+    friendshipStatus: FriendshipStatusType!
   }
   type FollowingUserType {
     _id: String!
@@ -53,7 +53,7 @@ export const FollowerTypeDefs = gql`
   }
   type Query {
     getFollowers(searchingUserId: ID): [FollowerType!]!
-    getFollowing(searchingUserId: ID): [FollowingType]
+    getFollowing(searchingUserId: ID): [FollowingType!]!
   }
   type Mutation {
     createFollower(input: FollowInput!): FollowedRequested!
