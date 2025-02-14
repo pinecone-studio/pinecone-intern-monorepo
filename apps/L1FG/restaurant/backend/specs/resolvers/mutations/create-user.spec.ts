@@ -30,6 +30,8 @@ describe('createUser Resolver', () => {
     email: input.email,
     password: 'hashedPassword', // Hashed password
     userName: input.userName,
+    role: 'user',
+    wallet: 0,
   };
 
   beforeEach(() => {
@@ -58,6 +60,8 @@ describe('createUser Resolver', () => {
       password: 'hashedPassword', // Ensure it's hashed before storing
       rePassword: 'mockPassword', // Ensure it's hashed before storing
       userName: input.userName,
+      role: 'user',
+      wallet: 0,
     });
 
     // Ensure the function returns expected output

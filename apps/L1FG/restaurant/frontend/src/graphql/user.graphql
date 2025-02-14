@@ -5,6 +5,8 @@ mutation LoginUser($input: LoginInput!) {
     email
     profileImage
     phoneNumber
+    # role
+    # wallet
     createdAt
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import OrderPageComponent from '@/components/order/OrderPageComponent';
 import React from 'react';
+import OrderPageComponent from '../../../components/order/OrderPageComponent';
 
 const OrderPage = ({ params }: { params: { tableNumber: number } }) => {
   return (
