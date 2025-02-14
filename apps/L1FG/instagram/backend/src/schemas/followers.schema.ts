@@ -22,7 +22,7 @@ export const FollowerTypeDefs = gql`
     gender: Gender!
     isPrivate: Boolean!
     email: String!
-    friendshipStatus: FriendshipStatusType!
+    friendshipStatus: FriendshipStatusType
   }
   type FollowingUserType {
     _id: String!
