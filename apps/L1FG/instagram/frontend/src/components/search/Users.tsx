@@ -1,8 +1,8 @@
-import { UserTogetherUserType, useSavedSearchUserMutation } from '@/generated';
+import { UserByNameBasicInfoFragment, useSavedSearchUserMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  users?: UserTogetherUserType[] | undefined;
+  users?: UserByNameBasicInfoFragment[] | undefined;
   setSearchOpen: (_searchOpen: boolean) => void;
   setUserName: (_userName: string) => void;
 };

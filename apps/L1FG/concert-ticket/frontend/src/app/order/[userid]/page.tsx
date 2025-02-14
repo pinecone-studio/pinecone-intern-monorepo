@@ -2,7 +2,7 @@ import { Order } from '@/components/userProfile/OrderDat';
 
 const Page = () => {
   return (
-    <div>
+    <div className="">
       <Order></Order>
     </div>
   );

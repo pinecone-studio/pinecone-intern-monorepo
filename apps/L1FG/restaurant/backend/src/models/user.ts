@@ -9,6 +9,8 @@ export type UserType = {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  role: 'user' | 'admin';
+  wallet: number;
   otp?: string;
 };
 
@@ -19,6 +21,8 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     profileImage: { type: String },
     phoneNumber: { type: String },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' }, // Default value
+    wallet: { type: Number, default: 0 },
     otp: { type: String },
   },
   { timestamps: true }

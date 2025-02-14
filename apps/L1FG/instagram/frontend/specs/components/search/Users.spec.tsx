@@ -134,7 +134,6 @@ describe('Users Component', () => {
     const userElement = screen.getByTestId('visit-profile');
 
     fireEvent.click(userElement);
-    fireEvent.click(userElement);
 
     expect(setSearchOpenMock).toHaveBeenCalledWith(false);
     expect(mockUserName).toHaveBeenCalledWith('');

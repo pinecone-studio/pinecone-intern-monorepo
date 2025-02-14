@@ -1,4 +1,4 @@
-import { Follow, Request } from "../../../generated";
+import { Follow, FriendshipStatusType, Request } from '../../../generated';
 
 export type StatusType = Follow | Request | null;
 const returnNames = ['following', 'incomingRequest', 'outgoingRequest', 'followedBy'];
@@ -9,5 +9,5 @@ export const statusBooleanConverter = ({ arg }: { arg: StatusType[] }) => {
   for (let i = 0; i < arg.length; i++) {
     returnObj[returnNames[i]] = arg[i] ? true : false;
   }
-  return returnObj;
+  return returnObj as FriendshipStatusType;
 };
