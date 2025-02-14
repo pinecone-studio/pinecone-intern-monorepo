@@ -1,27 +1,107 @@
+import { useAlert } from '@/components/providers/AlertProvider';
 import { UserPassword } from '@/components/userProfile/Password';
-import { act, fireEvent, render } from '@testing-library/react';
-describe('newPassword component', () => {
-  it('renders the newPassword componentgg', async () => {
-    const { getByTestId } = render(<UserPassword></UserPassword>);
-    const oldPasswordInput = getByTestId('old-password');
-    await act(async () => {
-      fireEvent.change(oldPasswordInput, { target: { value: 'old password' } });
-    });
+import { NewPasswordDocument } from '@/generated';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-    const newPassword = getByTestId('new-password');
-    await act(async () => {
-      fireEvent.change(newPassword, { target: { value: ' new password' } });
-    });
+jest.mock('@/components/providers/AlertProvider', () => ({
+  useAlert: jest.fn(),
+}));
 
-    const repeatPassword = getByTestId('repeat-password');
-    await act(async () => {
-      fireEvent.change(repeatPassword, { target: { value: ' new password' } });
-    });
+const mockPasswordUpdateSuccess: MockedResponse = {
+  request: {
+    query: NewPasswordDocument,
+    variables: {
+      input: { newPassword: '1111', oldPassword: '2222', userId: '1' },
+    },
+  },
+  result: {
+    data: {
+      newPassword: true,
+    },
+  },
+};
 
-    await act(async () => {
-      fireEvent.click(getByTestId('save-button'));
-    });
+const mockPasswordUpdateError: MockedResponse = {
+  request: {
+    query: NewPasswordDocument,
+    variables: {
+      input: { newPassword: '1111', oldPassword: '2222', userId: '1' },
+    },
+  },
+  error: new Error('Хуучин нууц үг буруу байна'),
+};
 
-    expect(getByTestId('save-button')).toBeDefined();
+describe('UserPassword Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
+  });
+
+  const mockshowAlert = jest.fn();
+  (useAlert as jest.Mock).mockReturnValue({ showAlert: mockshowAlert });
+
+  it('shows warning when passwords do not match', async () => {
+    localStorage.setItem('user', JSON.stringify({ _id: '1' }));
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <UserPassword />
+      </MockedProvider>
+    );
+
+    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
+    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
+    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '0000' } });
+    fireEvent.click(screen.getByTestId('save-button'));
+    expect(screen.findByText('Шинэ нууц үгийг давтан хийнэ үү')).toBeDefined();
+  });
+
+  it('calls mutation and shows success on success', async () => {
+    localStorage.setItem('user', JSON.stringify({ _id: '1' }));
+    render(
+      <MockedProvider mocks={[mockPasswordUpdateSuccess]} addTypename={false}>
+        <UserPassword />
+      </MockedProvider>
+    );
+
+    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
+    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
+    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '1111' } });
+    fireEvent.click(screen.getByTestId('save-button'));
+
+    expect(screen.findByText('Нууц үг амжилттай шинэчлэгдлээ')).toBeDefined();
+  });
+
+  it('shows error when mutation fails', async () => {
+    localStorage.setItem('user', JSON.stringify({ _id: '1' }));
+
+    render(
+      <MockedProvider mocks={[mockPasswordUpdateError]} addTypename={false}>
+        <UserPassword />
+      </MockedProvider>
+    );
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
+    });
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
+    });
+    await act(async () => {
+      fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '1111' } });
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('save-button'));
+    });
+    expect(screen.findByText('Хуучин нууц үг буруу байна')).toBeDefined();
+    await waitFor(() => {
+      expect(mockshowAlert).toHaveBeenCalledWith('error', 'Хуучин нууц үг буруу байна');
+    });
+  });
+  it('localStorage setitem undifined', async () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <UserPassword />
+      </MockedProvider>
+    );
   });
 });

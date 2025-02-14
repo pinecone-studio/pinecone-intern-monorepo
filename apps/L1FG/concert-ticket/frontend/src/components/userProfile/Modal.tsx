@@ -8,7 +8,6 @@ import { OrderHistory } from './OrderHisto';
 export const Modal = ({ orderData }: { orderData: string }) => {
   return (
     <div className="flex flex-col gap-6">
-      <div className="text-xl font-semibold text-white">Захиалагчийн мэдээлэл</div>
       {orderData === 'order' && (
         <div className="bg-[#131313] p-8 flex flex-col gap-6 rounded-lg">
           <div className="grid w-full  items-center gap-2">

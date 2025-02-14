@@ -15,3 +15,9 @@ mutation SignIn($input: UserInput!) {
     token
   }
 }
+mutation NewPassword($input: orderNewPassword!) {
+  newPassword(input: $input) {
+    password
+    email
+  }
+}
