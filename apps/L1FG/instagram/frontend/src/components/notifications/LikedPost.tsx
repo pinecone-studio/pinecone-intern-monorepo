@@ -35,20 +35,20 @@ export const LikedPost = ({ likeNotification }: Props) => {
 
   return (
     <div>
-      {groupedNotifications.map((n) => (
-        <div key={n.postId} className="flex items-center  justify-between p-3 hover:bg-gray-100 transition rounded-lg">
+      {groupedNotifications?.map((n, index) => (
+        <div key={index} className="flex items-center  justify-between py-3 px-6 hover:bg-gray-100 transition rounded-lg">
           <div className="flex  items-center">
             <div className="relative w-10 h-10">
               {n.userImages.slice(0, 2).map((img, index) => (
-                <Avatar key={index} className={`absolute w-8 h-8 border-2 border-white ${index === 1 ? 'left-4 top-2' : ''}`}>
+                <Avatar key={index} className={` ${index === 1 ? 'left-4 top-4 absolute w-[36px] h-[36px] border-2 border-white' : 'w-10 h-10'}`}>
                   <AvatarImage src={img} alt="User profile" />
                 </Avatar>
               ))}
             </div>
 
-            <div className="ml-6 text-sm w-[243px]">
+            <div className="ml-4 text-sm w-[243px]">
               <span className="font-bold">
-                <a href={`/profile/${n.userIds[0]}`}>{n.userNames[0]}</a>
+                <a href={`/${n.userIds[0]}`}>{n.userNames[0]}</a>
               </span>
               {n.userNames.length > 1 && (
                 <span>
@@ -61,7 +61,7 @@ export const LikedPost = ({ likeNotification }: Props) => {
               <span> and others liked your post</span>
             </div>
           </div>
-          <div className="w-12 h-12 rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${n.postImage})` }}></div>
+          <div className="w-12 h-12 rounded-md bg-cover bg-center " style={{ backgroundImage: `url(${n.postImage})` }}></div>
         </div>
       ))}
     </div>

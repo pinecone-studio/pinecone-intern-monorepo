@@ -47,10 +47,10 @@ export const UserTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String
+    profileImage: String!
     hasStory: Boolean
-    gender: Gender
-    isPrivate: Boolean
+    gender: Gender!
+    isPrivate: Boolean!
     email: String!
   }
   type UserTogetherUserType {
@@ -69,6 +69,7 @@ export const UserTypeDefs = gql`
     latestStoryTimestamp: Date
     seenStoryTime: Date
     savedUsers: [String]
+    createdAt: Date
     friendshipStatus: FriendshipStatusType!
   }
 
@@ -77,8 +78,8 @@ export const UserTypeDefs = gql`
   }
 
   type UserTogetherType {
-    user: UserTogetherUserType
-    viewer: UserTogetherViewerType
+    user: UserTogetherUserType!
+    viewer: UserTogetherViewerType!
   }
   type SignInType {
     token: ID!
@@ -120,7 +121,7 @@ export const UserTypeDefs = gql`
     getUser: UserWithoutPassword
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
-    getUserByName(userName: String!): [UserTogetherUserType]
+    getUserByName(userName: String!): [UserTogetherUserType!]!
     getSearchedUser: [UserTogetherUserType]!
     getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
     getFollowingSuggestion: [UserWithoutPassword!]

@@ -4,38 +4,51 @@ import '@testing-library/jest-dom';
 import WindowsSection from '@/components/addEstate/WindowsSection';
 
 describe('WindowsSection', () => {
-  it('should render successfully', () => {
+  const mockHandleChange = jest.fn();
+
+  it('should render with empty values', () => {
     const mockFormData = {
-      windowsCount: 4,
-      windowType: 'Double Glazed',
-    };
-
-    const mockHandleChange = jest.fn();
-
-    render(<WindowsSection formData={mockFormData} handleChange={mockHandleChange} />);
-
-    expect(screen.getByLabelText('Цонхны тоо:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Цонхны тоо:')).toHaveValue(4);
-    expect(screen.getByLabelText('Цонхны төрөл:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Цонхны төрөл:')).toHaveValue('Double Glazed');
-  });
-
-  it('should call handleChange on input change', () => {
-    const mockFormData = {
+      completionDate: '',
       windowsCount: 0,
       windowType: '',
     };
 
-    const mockHandleChange = jest.fn();
+    render(<WindowsSection formData={mockFormData} handleChange={mockHandleChange} />);
+
+    expect(screen.getByLabelText('Ашиглалтанд орсон он:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Цонхны тоо:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Цонхны төрөл:')).toBeInTheDocument();
+  });
+
+  it('should render with provided values', () => {
+    const mockFormData = {
+      completionDate: '2024-02-13',
+      windowsCount: 4,
+      windowType: 'Double Glass',
+    };
 
     render(<WindowsSection formData={mockFormData} handleChange={mockHandleChange} />);
 
-    const windowsCountInput = screen.getByLabelText('Цонхны тоо:');
-    fireEvent.change(windowsCountInput, { target: { value: 5 } });
+    expect(screen.getByLabelText('Ашиглалтанд орсон он:')).toHaveValue('2024-02-13');
+    expect(screen.getByLabelText('Цонхны тоо:')).toHaveValue(4);
+    expect(screen.getByLabelText('Цонхны төрөл:')).toHaveValue('Double Glass');
+  });
+
+  it('should handle input changes', () => {
+    const mockFormData = {
+      completionDate: '',
+      windowsCount: 0,
+      windowType: '',
+    };
+
+    render(<WindowsSection formData={mockFormData} handleChange={mockHandleChange} />);
+
+    const dateInput = screen.getByLabelText('Ашиглалтанд орсон он:');
+    fireEvent.change(dateInput, { target: { value: '2024-02-13' } });
     expect(mockHandleChange).toHaveBeenCalled();
 
-    const windowTypeInput = screen.getByLabelText('Цонхны төрөл:');
-    fireEvent.change(windowTypeInput, { target: { value: 'Triple Glazed' } });
+    const countInput = screen.getByLabelText('Цонхны тоо:');
+    fireEvent.change(countInput, { target: { value: '4' } });
     expect(mockHandleChange).toHaveBeenCalled();
   });
 });

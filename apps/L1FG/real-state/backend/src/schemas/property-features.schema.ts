@@ -32,6 +32,12 @@ export const PropertyTypeDefs = gql`
     district: String!
     subDistrict: String!
   }
+  input LocationUpdateInput {
+    address: String
+    city: String
+    district: String
+    subDistrict: String
+  }
 
   type DetailsType {
     completionDate: Date
@@ -53,6 +59,16 @@ export const PropertyTypeDefs = gql`
     totalFloors: Int!
     lift: Boolean!
   }
+  input DetailsUpdateInput {
+    completionDate: Date
+    windowsCount: Int
+    windowType: String
+    floorMaterial: String
+    floorNumber: Int
+    balcony: Boolean
+    totalFloors: Int
+    lift: Boolean
+  }
 
   input PropertyInput {
     houseType: HouseTypeEnum!
@@ -63,6 +79,18 @@ export const PropertyTypeDefs = gql`
     restrooms: Int!
     location: LocationTypeInput!
     details: DetailsInput!
+    uploadedAt: Date
+    createdAt: Date
+  }
+  input PropertyUpdateInput {
+    houseType: HouseTypeEnum
+    size: String
+    images: [String]
+    totalRooms: Int
+    garage: Boolean
+    restrooms: Int
+    location: LocationUpdateInput
+    details: DetailsUpdateInput
     uploadedAt: Date
     createdAt: Date
   }

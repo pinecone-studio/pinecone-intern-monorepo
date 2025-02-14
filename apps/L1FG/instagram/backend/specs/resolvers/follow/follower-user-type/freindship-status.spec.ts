@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { friendshipStatus } from '../../../../src/resolvers/follow/follower-user-type';
 import { FollowerModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
+import { Gender } from 'apps/L1FG/instagram/backend/src/generated';
 jest.mock('apps/L1FG/instagram/backend/src/models');
 describe('FreindshipStatus', () => {
   beforeEach(() => {
@@ -23,10 +24,13 @@ describe('FreindshipStatus', () => {
     }
     const parent = {
       _id: '3',
-      bio: '',
-      email: '',
-      fullName: '',
       userName: '',
+      fullName: '',
+      bio: '',
+      profileImage: '',
+      gender: Gender.Male,
+      isPrivate: true,
+      email: '',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -44,10 +48,13 @@ describe('FreindshipStatus', () => {
     }
     const parent = {
       _id: '3',
-      bio: '',
-      email: '',
-      fullName: '',
       userName: '',
+      fullName: '',
+      bio: '',
+      profileImage: '',
+      gender: Gender.Male,
+      isPrivate: true,
+      email: '',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -74,10 +81,13 @@ describe('FreindshipStatus', () => {
     }
     const parent = {
       _id: '2',
-      bio: '',
-      email: '',
-      fullName: '',
       userName: '',
+      fullName: '',
+      bio: '',
+      profileImage: '',
+      gender: Gender.Male,
+      isPrivate: true,
+      email: '',
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
