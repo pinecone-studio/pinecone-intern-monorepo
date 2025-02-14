@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useNewPasswordMutation } from '@/generated';
+import { useAlert } from '../providers/AlertProvider';
 const FormSchema = z.object({
   oldPassword: z.string().min(4, {
     message: 'Хуучин нууц үгээ хийнэ үү',
@@ -26,13 +28,36 @@ export const UserPassword = () => {
       repeatPassword: '',
     },
   });
+  const [newPassword] = useNewPasswordMutation({
+    onCompleted: () => {
+      showAlert('success', 'Нууц үг амжилттай шинэчлэгдлээ');
+    },
+    onError: (error) => {
+      showAlert('error', `${error.message}`);
+    },
+  });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    return data;
+  const { showAlert } = useAlert();
+
+  const userId = localStorage.getItem('user');
+
+  if (!userId) return;
+
+  const parsedUser = JSON.parse(userId);
+
+  const userID = parsedUser?._id;
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (data.newPassword !== data.repeatPassword) return showAlert('warning', 'Шинэ нууц үгийг давтан хийнэ үү');
+    await newPassword({
+      variables: {
+        input: { newPassword: data.newPassword, oldPassword: data.oldPassword, userId: userID },
+      },
+    });
   }
 
   return (
-    <div>
+    <div className="bg-neutral-900 rounded-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} data-testid="check-button" className="w-2/3 space-y-6 p-8">
           <FormField
