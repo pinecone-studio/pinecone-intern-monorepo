@@ -58,7 +58,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
               })}
             </div>
             <div className="p-3">
-              <FriendshipStatus preview={data} />
+              <FriendshipStatus preview={data.getProfilePreview.user} />
             </div>
           </div>
         )}
