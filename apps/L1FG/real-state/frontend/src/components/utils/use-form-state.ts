@@ -1,4 +1,4 @@
-import { HouseTypeEnum } from '@/generated';
+import { HouseTypeEnum, PostStats } from '@/generated';
 import { useState } from 'react';
 
 type FormState = {
@@ -9,7 +9,7 @@ type FormState = {
   size: string;
   images: string[];
   totalRooms: number;
-  garage: string;
+  garage: boolean;
   restrooms: number;
   subDistrict: string | null | undefined;
   district: string | null | undefined;
@@ -20,9 +20,10 @@ type FormState = {
   windowType: string | null | undefined;
   floorMaterial: string | null | undefined;
   floorNumber: number | null | undefined;
-  balcony: string | null | undefined | boolean;
+  balcony: boolean | null | undefined;
   totalFloors: number | null | undefined;
-  lift: string | null | undefined | boolean;
+  lift: boolean | null | undefined;
+  status?: PostStats;
 };
 
 export const useFormState = () => {
@@ -34,7 +35,7 @@ export const useFormState = () => {
     size: '',
     images: [],
     totalRooms: 0,
-    garage: '',
+    garage: false,
     restrooms: 0,
     subDistrict: '',
     district: '',
@@ -45,9 +46,10 @@ export const useFormState = () => {
     windowType: '',
     floorMaterial: '',
     floorNumber: 0,
-    balcony: '',
+    balcony: false,
     totalFloors: 0,
-    lift: '',
+    lift: false,
+    status: PostStats.Pending,
   });
 
   return { formData, setFormData };
