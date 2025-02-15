@@ -62,10 +62,31 @@ export const orderTypeDefs = gql`
     email: String!
     password: String!
   }
+
+  input DeleteReqInput {
+    concertName: String!
+    totalPrice: Int!
+    userName: String!
+    accountNumber: Int!
+    bankName: String!
+    orderId: String!
+    reqStatus: Boolean!
+  }
+  type DeleteReq {
+    concertName: String!
+    totalPrice: Int!
+    userName: String!
+    accountNumber: Int!
+    bankName: String!
+    orderId: String!
+    reqStatus: Boolean!
+    _id: ID
+  }
   type Mutation {
     createOrder(input: OrderInput!): Order!
     deleteOrder(id: String!): Order!
     orderUpdate(input: OrderUpdateInput!): UpdateEmail!
+    createDeleteReq(input: DeleteReqInput!): DeleteReq!
   }
   type Query {
     getOrder(userID: String!): [Order!]
