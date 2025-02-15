@@ -71,6 +71,8 @@ export const UserTypeDefs = gql`
     savedUsers: [String]
     createdAt: Date
     friendshipStatus: FriendshipStatusType!
+    mutualFollowersCount: Int
+    mutualFollowers: String
   }
 
   type SearchedUsersType {

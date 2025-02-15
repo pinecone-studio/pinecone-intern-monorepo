@@ -5,6 +5,7 @@ import { useGetFoodsQuery } from '@/generated';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 import { Edit, Trash } from 'lucide-react';
+import AdminFoodDialog from './AdminFoodDialog';
 
 const AdminFoodPageComp = () => {
   const { data: foodData } = useGetFoodsQuery();
@@ -15,11 +16,10 @@ const AdminFoodPageComp = () => {
     }
     return price.toString();
   };
-
   return (
     <div className="flex flex-col items-center bg-[#F4F4F5] w-[100vw] min-h-[91.4vh]  gap-4 py-14">
       <div className="flex w-[600px] justify-between mb-5">
-        <div className="text-black font-poppins text-3xl font-semibold">Захиалга</div> <div>dialog button</div>
+        <div className="text-black font-poppins text-3xl font-semibold">Захиалга</div> <AdminFoodDialog />
       </div>
       <div className="flex flex-col gap-4 w-[600px] bg-white rounded-lg border border-[#E4E4E7] p-8 ">
         {foodData?.getFoods?.map((food, index) => (
