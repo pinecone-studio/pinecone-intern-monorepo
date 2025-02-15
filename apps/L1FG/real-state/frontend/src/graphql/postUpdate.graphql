@@ -1,0 +1,35 @@
+mutation UpdatedPost($id: ID!, $input: PostUpdateInput!) {
+  updatePost(_id: $id, input: $input) {
+    _id
+    title
+    description
+    price
+    status
+    propertyDetail {
+      houseType
+      size
+      images
+      totalRooms
+      garage
+      restrooms
+      location {
+        address
+        city
+        district
+        subDistrict
+      }
+      details {
+        completionDate
+        windowsCount
+        windowType
+        floorMaterial
+        floorNumber
+        balcony
+        totalFloors
+        lift
+      }
+    }
+    updatedAt
+    createdAt
+  }
+}
