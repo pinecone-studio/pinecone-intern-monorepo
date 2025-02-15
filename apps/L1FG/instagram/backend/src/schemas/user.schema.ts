@@ -124,7 +124,7 @@ export const UserTypeDefs = gql`
     getUserByName(userName: String!): [UserTogetherUserType!]!
     getSearchedUser: [UserTogetherUserType]!
     getProfilePreview(searchingUserId: ID!): ProfilePreviewType!
-    getFollowingSuggestion: [UserWithoutPassword!]
+    getFollowingSuggestion: [UserTogetherUserType!]!
   }
 
   type Mutation {

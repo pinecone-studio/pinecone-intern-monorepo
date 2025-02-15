@@ -1,14 +1,17 @@
+import mongoose from 'mongoose';
 import { QueryResolvers } from '../../../generated';
-import { FollowerModel, UserModel } from '../../../models';
+import { FollowerModel, RequestModel, UserModel } from '../../../models';
 
 export const getFollowingSuggestion: QueryResolvers['getFollowingSuggestion'] = async (_, __, { userId }) => {
   if (!userId) {
     throw new Error('Та нэвтэрнэ үү!');
   }
-  const following = await FollowerModel.find({ followerId: userId }).select('targetID');
-  const followingIds = following.map((entry) => entry._id.toString());
+  const followingPeople = await FollowerModel.find({ followerId: userId });
+  const requestedPeople = await RequestModel.find({ from: userId });
+  const followingIds = followingPeople.map((entry) => entry.targetId);
+  const requestedIds = requestedPeople.map((requested) => requested.to);
   const suggestedUsers = await UserModel.find({
-    _id: { $nin: [...followingIds, userId] },
+    _id: { $nin: [...followingIds, ...requestedIds, new mongoose.Types.ObjectId(userId)] },
   }).limit(6);
 
   return suggestedUsers;
