@@ -48,3 +48,9 @@ query GetOrderTicketNumber($ticketNumber: Int!) {
     _id
   }
 }
+mutation OrderUpdate($input: OrderUpdateInput!) {
+  orderUpdate(input: $input) {
+    email
+    password
+  }
+}

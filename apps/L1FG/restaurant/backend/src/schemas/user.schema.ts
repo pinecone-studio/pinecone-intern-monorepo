@@ -7,7 +7,10 @@ export const userTypeDefs = gql`
   enum Response {
     Success
   }
-
+  enum Role {
+    user
+    admin
+  }
   input RegisterInput {
     userName: String!
     email: String!
@@ -24,6 +27,8 @@ export const userTypeDefs = gql`
     email: String!
     profileImage: String
     phoneNumber: String
+    role: Role!
+    wallet: Int!
     createdAt: Date!
   }
   input UpdateUserNameType {

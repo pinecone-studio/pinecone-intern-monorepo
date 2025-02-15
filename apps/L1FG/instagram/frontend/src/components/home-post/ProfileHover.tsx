@@ -58,7 +58,15 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
               })}
             </div>
             <div className="p-3">
-              <FriendshipStatus preview={data} />
+              <FriendshipStatus
+                followStyle=" w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+            flex justify-center items-center mt-2"
+                followingStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+            flex justify-center items-center mt-2"
+                requestedStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+             flex justify-center items-center mt-2"
+                preview={data.getProfilePreview.user}
+              />
             </div>
           </div>
         )}
