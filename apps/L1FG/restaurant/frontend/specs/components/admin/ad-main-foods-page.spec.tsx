@@ -5,7 +5,13 @@ import AdminFoodPageComp from '@/components/admin-page-comp/AdminFoodPageComp';
 
 // Mock the generated hook
 jest.mock('@/generated', () => ({
-  useGetFoodsQuery: jest.fn()
+  useGetFoodsQuery: jest.fn(),
+  useCreateFoodMutation: jest.fn(),
+}));
+
+jest.mock('@/components/admin-page-comp/AdminFoodDialog', () => ({
+  __esModule: true,
+  default: () => <div data-testid="admin-food-dialog" />,
 }));
 
 // Mock next/image
@@ -106,6 +112,4 @@ describe('AdminFoodPageComp', () => {
     render(<AdminFoodPageComp />);
     expect(screen.getByText('1.5к')).toBeInTheDocument();
   });
-
-
 });

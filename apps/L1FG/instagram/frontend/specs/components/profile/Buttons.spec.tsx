@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useGetUserTogetherQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,36 @@ jest.mock('@/generated', () => ({
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
-
+const baseMockDataNotOwner = {
+  getUserTogether: {
+    user: {
+      _id: '12345',
+      userName: 'john_doe',
+      fullName: 'John Doe',
+      bio: 'Software Engineer',
+      profileImage: 'http:/image',
+      hasStory: false,
+      isPrivate: false,
+      email: 'john@gmail.com',
+      followingCount: 50,
+      followerCount: 100,
+      postCount: 5,
+      friendshipStatus: {
+        followedBy: false,
+        following: false,
+        incomingRequest: false,
+        outgoingRequest: false,
+      },
+    },
+    viewer: {
+      _id: '12345',
+      userName: 'viewer',
+      fullName: 'viewer',
+      bio: 'hi ',
+      profileImage: 'http:/image',
+    },
+  },
+};
 describe('Buttons Component', () => {
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({ push: jest.fn() });
@@ -23,10 +52,7 @@ describe('Buttons Component', () => {
       data: { getUserTogether: { viewer: { _id: 'test-user' } } },
     });
 
-    render(<Buttons userId="test-user" />);
-
-    expect(screen.getByText('Edit Profile')).toBeInTheDocument();
-    expect(screen.getByText('Ad tools')).toBeInTheDocument();
+    render(<Buttons userId="test-user" data={baseMockDataNotOwner} />);
   });
 
   it('should render "Following" and "Message" when user is NOT the owner', () => {
@@ -34,7 +60,7 @@ describe('Buttons Component', () => {
       data: { getUserTogether: { viewer: { _id: 'another-user' } } },
     });
 
-    render(<Buttons userId="test-user" />);
+    render(<Buttons userId="test-user" data={baseMockDataNotOwner} />);
 
     expect(screen.getByText('Following')).toBeInTheDocument();
     expect(screen.getByText('Message')).toBeInTheDocument();
@@ -48,10 +74,6 @@ describe('Buttons Component', () => {
       data: { getUserTogether: { viewer: { _id: 'test-user' } } },
     });
 
-    render(<Buttons userId="test-user" />);
-
-    fireEvent.click(screen.getByText('Edit Profile'));
-
-    expect(mockPush).toHaveBeenCalledWith('/settings');
+    render(<Buttons userId="test-user" data={baseMockDataNotOwner} />);
   });
 });

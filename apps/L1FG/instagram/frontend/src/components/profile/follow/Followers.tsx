@@ -47,7 +47,7 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                   <p className="text-xs font-normal text-[#71717A]">{item?.followerId?.userName}</p>
                 </div>
               </div>
-              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">Remove</button>
+              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">{item?.followerId?.friendshipStatus?.following}</button>
             </div>
           ))}
           <p className="font-semibold text-lg justify-start mt-6  p-3">Suggested for you</p>
