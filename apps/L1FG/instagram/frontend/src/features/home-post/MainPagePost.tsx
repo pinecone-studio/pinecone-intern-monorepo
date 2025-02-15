@@ -57,7 +57,7 @@ const MainPagePost: React.FC = () => {
     return <p data-testid="no-posts-message">No posts available</p>;
   }
   return (
-    <div className="space-y-8" data-testid="posts-container">
+    <div className="space-y-8 " data-testid="posts-container">
       {data?.getSmallPosts?.edges.map((post) => {
         return <HomeSinglePost key={post.cursor} post={post} />;
       })}
