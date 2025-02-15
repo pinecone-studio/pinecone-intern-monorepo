@@ -1,5 +1,7 @@
 import './global.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { PropsWithChildren } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { ApolloWrapper } from '@/components/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 export const metadata = {
@@ -12,7 +14,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>
-          <NuqsAdapter>{children}</NuqsAdapter>
+          <NuqsAdapter>
+            {children}
+            <ToastContainer position="top-right" />
+          </NuqsAdapter>
         </ApolloWrapper>
       </body>
     </html>

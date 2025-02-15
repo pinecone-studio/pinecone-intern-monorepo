@@ -34,7 +34,11 @@ describe('createRoom', () => {
   it('should return an error response if RoomModel.create fails', async () => {
     (RoomModel.create as jest.Mock).mockRejectedValueOnce(new Error('Database error'));
 
-    const response = await createRoom!({}, { input: room }, {}, {} as GraphQLResolveInfo);
+    if (!createRoom) {
+      throw new Error('createRoom is not defined');
+    }
+
+    const response = await createRoom({}, { input: room }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(500);
     expect(response.success).toBe(false);
@@ -60,7 +64,11 @@ describe('createRoom', () => {
       type: '1 bed',
     });
 
-    const response = await createRoom!({}, { input: room }, {}, {} as GraphQLResolveInfo);
+    if (!createRoom) {
+      throw new Error('createRoom is not defined');
+    }
+
+    const response = await createRoom({}, { input: room }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(200);
     expect(response.success).toBe(true);

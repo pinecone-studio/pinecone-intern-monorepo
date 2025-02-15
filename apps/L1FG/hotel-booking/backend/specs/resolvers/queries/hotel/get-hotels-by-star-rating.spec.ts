@@ -18,7 +18,11 @@ describe('Get hotels star rating ihees baga ruu', () => {
       sort: jest.fn().mockResolvedValue([{ id: '1' }]),
     });
 
-    const response = await getHotelsByStarRating!({}, { sortByRating: true }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByStarRating) {
+      throw new Error('getHotelsByStarRating is not defined');
+    }
+
+    const response = await getHotelsByStarRating({}, { sortByRating: true }, {}, {} as GraphQLResolveInfo);
     expect(response);
   });
 
@@ -26,8 +30,11 @@ describe('Get hotels star rating ihees baga ruu', () => {
     (HotelModel.find as jest.Mock).mockReturnValue({
       sort: jest.fn().mockResolvedValue(null),
     });
+    if (!getHotelsByStarRating) {
+      throw new Error('getHotelsByStarRating is not defined');
+    }
 
-    const response = await getHotelsByStarRating!({}, { sortByRating: false }, {}, {} as GraphQLResolveInfo);
+    const response = await getHotelsByStarRating({}, { sortByRating: false }, {}, {} as GraphQLResolveInfo);
     expect(response);
   });
 });

@@ -40,7 +40,10 @@ describe('getAllQuerie', () => {
   });
 
   it('should return hooson cause they were not found', async () => {
-    const response = await getAllQuerie!(
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+    const response = await getAllQuerie(
       {},
       {
         input: {
@@ -62,7 +65,11 @@ describe('getAllQuerie', () => {
     // Мок-ийн утга зөв гаргах
     (BookingModel.distinct as jest.Mock).mockResolvedValueOnce([{ roomId: '1' }]);
 
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(BookingModel.distinct).toHaveBeenCalledWith('roomId', { $or: [{ startDate: { $lt: input.endDate }, endDate: { $gt: input.startDate } }] });
     expect(response);
@@ -74,7 +81,11 @@ describe('getAllQuerie', () => {
 
     (RoomModel.find as jest.Mock).mockResolvedValueOnce(mockRooms);
 
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(RoomModel.find).toHaveBeenCalledWith({
       bed: input.travellerCount,
@@ -87,7 +98,11 @@ describe('getAllQuerie', () => {
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
 
     HotelModel.find as jest.Mock;
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(HotelModel.find);
     expect(response);
@@ -98,7 +113,12 @@ describe('getAllQuerie', () => {
     HotelModel.find as jest.Mock;
 
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response);
   });
@@ -107,7 +127,12 @@ describe('getAllQuerie', () => {
     (RoomModel.find as jest.Mock).mockResolvedValueOnce([]);
 
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response);
   });
@@ -116,7 +141,10 @@ describe('getAllQuerie', () => {
     (RoomModel.find as jest.Mock).mockResolvedValueOnce([{ hotelId: '2' }]);
     HotelModel.find as jest.Mock;
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getAllQuerie!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getAllQuerie) {
+      throw new Error('getAllQuerie is not defined');
+    }
+    const response = await getAllQuerie({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response);
   });

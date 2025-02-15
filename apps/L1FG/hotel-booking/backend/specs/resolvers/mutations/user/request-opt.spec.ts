@@ -21,14 +21,20 @@ jest.mock('apps/L1FG/restaurant/backend/src/library/nodemailer', () => ({
 describe('requestOTP', () => {
   it('should handle user already exists error', async () => {
     try {
-      const response = await requestOTP!({}, { input }, {}, {} as GraphQLResolveInfo);
+      if (!requestOTP) {
+        throw new Error('requestOTP is not defined');
+      }
+      const response = await requestOTP({}, { input }, {}, {} as GraphQLResolveInfo);
       expect(response).toBe('User already exists');
     } catch (error) {
       console.log(error);
     }
   });
   it('should request OTP and create a new user if not exists', async () => {
+    if (!requestOTP) {
+      throw new Error('requestOTP is not defined');
+    }
     const response = await requestOTP!({}, { input: { email: 'newuser@gmail.com' } }, {}, {} as GraphQLResolveInfo);
-    expect(response).toEqual({ success: true });
+    expect(response).toEqual({ success: true, email: 'newuser@gmail.com' });
   });
 });

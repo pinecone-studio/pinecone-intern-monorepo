@@ -1,5 +1,5 @@
+import { getHotelsByName } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries/hotel/get-hotels-by-name';
 import { GraphQLResolveInfo } from 'graphql';
-import { getHotelsByName } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries';
 
 jest.mock('../../../../src/models', () => ({
   HotelModel: {
@@ -15,7 +15,11 @@ describe('Ner ni oruulsan input iig aguuldag hotel uudiig butsaah', () => {
     jest.clearAllMocks();
   });
   it('Should return null because not a single hotel was found', async () => {
-    const response = await getHotelsByName!({}, { input: { name: 'ababba' } }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByName) {
+      throw new Error('getHotelsByName is not defined');
+    }
+
+    const response = await getHotelsByName({}, { input: { name: 'ababba' } }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual([]);
   });
   it('Should return hotels', async () => {
@@ -24,7 +28,12 @@ describe('Ner ni oruulsan input iig aguuldag hotel uudiig butsaah', () => {
         id: '1',
       },
     ];
-    const response = await getHotelsByName!({}, { input: { name: 'a' } }, {}, {} as GraphQLResolveInfo);
+
+    if (!getHotelsByName) {
+      throw new Error('getHotelsByName is not defined');
+    }
+
+    const response = await getHotelsByName({}, { input: { name: 'a' } }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(mockHotels);
   });
 });

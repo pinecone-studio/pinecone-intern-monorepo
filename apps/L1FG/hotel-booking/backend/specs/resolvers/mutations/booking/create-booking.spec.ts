@@ -34,7 +34,11 @@ describe('createBooking', () => {
   it('should return an error response if BookingModel.create fails', async () => {
     (BookingModel.create as jest.Mock).mockRejectedValueOnce(new Error('Database error'));
 
-    const response = await createBooking!({}, { input: booking }, {}, {} as GraphQLResolveInfo);
+    if (!createBooking) {
+      throw new Error('createBooking is not defined');
+    }
+
+    const response = await createBooking({}, { input: booking }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(500);
     expect(response.success).toBe(false);
@@ -60,7 +64,11 @@ describe('createBooking', () => {
       country: 'USA',
     });
 
-    const response = await createBooking!({}, { input: booking }, {}, {} as GraphQLResolveInfo);
+    if (!createBooking) {
+      throw new Error('createBooking is not defined');
+    }
+
+    const response = await createBooking({}, { input: booking }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(200);
     expect(response.success).toBe(true);

@@ -21,7 +21,11 @@ describe('Edit Hotel Images', () => {
     };
     HotelModel.findById.mockResolvedValueOnce(null);
 
-    const response = await editImages!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editImages) {
+      throw new Error('editImages is not defined');
+    }
+
+    const response = await editImages({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual([]);
   });
 
@@ -39,7 +43,11 @@ describe('Edit Hotel Images', () => {
     HotelModel.findById.mockResolvedValueOnce(mockHotel);
     HotelModel.findByIdAndUpdate.mockResolvedValueOnce(mockHotel);
 
-    const response = await editImages!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editImages) {
+      throw new Error('editImages is not defined');
+    }
+
+    const response = await editImages({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(mockHotel);
   });
 });

@@ -19,6 +19,7 @@ export const typeDefs = gql`
 
   type RequestOtpType {
     success: Boolean!
+    email: String!
   }
 
   type VerifyOtpType {
@@ -26,8 +27,6 @@ export const typeDefs = gql`
   }
 
   type RegisterType {
-    user: User
-    token: String
     success: Boolean!
   }
 

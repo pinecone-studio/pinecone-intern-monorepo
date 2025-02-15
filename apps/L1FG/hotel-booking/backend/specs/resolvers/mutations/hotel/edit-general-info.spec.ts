@@ -22,7 +22,11 @@ describe('Edit Hotel General Info', () => {
       id: '678cb7f6a4e7125effcba04c',
     };
 
-    const response = await editGeneralInfo!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editGeneralInfo) {
+      throw new Error('editGeneralInfo is not defined');
+    }
+
+    const response = await editGeneralInfo({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(new Error('Hotel Not Found'));
   });
 
@@ -49,7 +53,11 @@ describe('Edit Hotel General Info', () => {
     HotelModel.findById.mockResolvedValueOnce(mockHotel);
     HotelModel.findByIdAndUpdate.mockResolvedValueOnce(mockHotel);
 
-    const response = await editGeneralInfo!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editGeneralInfo) {
+      throw new Error('editGeneralInfo is not defined');
+    }
+
+    const response = await editGeneralInfo({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(mockHotel);
   });
 });

@@ -9,7 +9,10 @@ jest.mock('../../../../src/models', () => ({
 
 describe('getBookings', () => {
   it('should get bookings', async () => {
-    const response = await getBookings!({}, {}, {}, {} as GraphQLResolveInfo);
+    if (!getBookings) {
+      throw new Error('getBookings is not defined');
+    }
+    const response = await getBookings({}, {}, {}, {} as GraphQLResolveInfo);
 
     expect(response).toEqual([]);
   });

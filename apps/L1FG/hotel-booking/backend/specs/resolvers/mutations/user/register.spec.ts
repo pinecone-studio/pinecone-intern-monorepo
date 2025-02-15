@@ -17,14 +17,20 @@ jest.mock('jsonwebtoken', () => ({
 describe('register', () => {
   it('should register', async () => {
     try {
-      await register!({}, { input }, {}, {} as GraphQLResolveInfo);
+      if (!register) {
+        throw new Error('register is not defined');
+      }
+      await register({}, { input }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('User not found or OTP not verified'));
     }
   });
   it('should not register', async () => {
     try {
-      await register!({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
+      if (!register) {
+        throw new Error('register is not defined');
+      }
+      await register({}, { input }, { userId: null }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('User already exists'));
     }

@@ -23,7 +23,11 @@ describe('getHotelsByDateTraveller', () => {
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
     (BookingModel.distinct as jest.Mock).mockResolvedValueOnce([]);
 
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByDateTraveller is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(BookingModel.distinct).toHaveBeenCalledWith('roomId', { $or: [{ startDate: { $lt: input.endDate }, endDate: { $gt: input.startDate } }] });
     expect(response).toEqual([{ id: '1' }]);
@@ -35,7 +39,11 @@ describe('getHotelsByDateTraveller', () => {
 
     (RoomModel.find as jest.Mock).mockResolvedValueOnce(mockRooms);
 
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByDateTraveller is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(RoomModel.find).toHaveBeenCalledWith({
       bed: input.travellerCount,
@@ -50,7 +58,11 @@ describe('getHotelsByDateTraveller', () => {
 
     (HotelModel.find as jest.Mock).mockResolvedValueOnce(mockHotels);
 
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByPrice is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(HotelModel.find).toHaveBeenCalledWith({ _id: { $in: ['1'] } });
     expect(response).toEqual(mockHotels);
@@ -61,7 +73,12 @@ describe('getHotelsByDateTraveller', () => {
     (HotelModel.find as jest.Mock).mockResolvedValueOnce([{ id: '1' }]);
 
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByPrice is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response).toEqual([{ id: '1' }]);
   });
@@ -70,7 +87,11 @@ describe('getHotelsByDateTraveller', () => {
     (RoomModel.find as jest.Mock).mockResolvedValueOnce([]);
 
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByDateTraveller is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response).toEqual([{ id: '1' }]);
   });
@@ -80,7 +101,12 @@ describe('getHotelsByDateTraveller', () => {
     (HotelModel.find as jest.Mock).mockResolvedValueOnce([]);
 
     const input = { startDate: '2025-10-10', endDate: '2025-10-15', travellerCount: 2 };
-    const response = await getHotelsByDateTraveller!({}, { input }, {}, {} as GraphQLResolveInfo);
+
+    if (!getHotelsByDateTraveller) {
+      throw new Error('getHotelsByDateTraveller is not defined');
+    }
+
+    const response = await getHotelsByDateTraveller({}, { input }, {}, {} as GraphQLResolveInfo);
 
     expect(response).toEqual([]);
   });

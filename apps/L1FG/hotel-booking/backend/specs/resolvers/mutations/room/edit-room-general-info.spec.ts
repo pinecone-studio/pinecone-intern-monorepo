@@ -22,7 +22,11 @@ describe('Edit Room General Info', () => {
       id: '678cb7f6a4e7125effcba04c',
     };
 
-    const response = await editRoomGeneralInfo!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editRoomGeneralInfo) {
+      throw new Error('editRoomGeneralInfo is not defined');
+    }
+
+    const response = await editRoomGeneralInfo({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual([]);
   });
   it('Should return updated room', async () => {
@@ -48,7 +52,11 @@ describe('Edit Room General Info', () => {
     RoomModel.findById.mockResolvedValueOnce(mockRoom);
     RoomModel.findByIdAndUpdate.mockResolvedValueOnce(mockRoom);
 
-    const response = await editRoomGeneralInfo!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    if (!editRoomGeneralInfo) {
+      throw new Error('editRoomGeneralInfo is not defined');
+    }
+
+    const response = await editRoomGeneralInfo({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(mockRoom);
   });
 });

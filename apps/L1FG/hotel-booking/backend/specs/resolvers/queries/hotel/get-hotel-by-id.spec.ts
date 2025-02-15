@@ -17,7 +17,11 @@ describe('getHotelById', () => {
   it('should return hotel if found', async () => {
     mockFindById.mockResolvedValueOnce({ _id: '678cc7f6a4e7125effcba04c' });
 
-    const response = await getHotelById!({}, { id: '678cc7f6a4e7125effcba04c' }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelById) {
+      throw new Error('getHotelById is not defined');
+    }
+
+    const response = await getHotelById({}, { id: '678cc7f6a4e7125effcba04c' }, {}, {} as GraphQLResolveInfo);
 
     expect(response).toEqual({ _id: '678cc7f6a4e7125effcba04c' });
   });
@@ -26,7 +30,10 @@ describe('getHotelById', () => {
     mockFindById.mockResolvedValueOnce(null);
 
     try {
-      await getHotelById!({}, { id: '64b5fddbbc634b0012d91234' }, {}, {} as GraphQLResolveInfo);
+      if (!getHotelById) {
+        throw new Error('getHotelById is not defined');
+      }
+      await getHotelById({}, { id: '64b5fddbbc634b0012d91234' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('Hotel not found'));
     }
@@ -34,7 +41,10 @@ describe('getHotelById', () => {
 
   it('should throw an error for invalid ObjectId format', async () => {
     try {
-      await getHotelById!({}, { id: 'hehe' }, {}, {} as GraphQLResolveInfo);
+      if (!getHotelById) {
+        throw new Error('getHotelById is not defined');
+      }
+      await getHotelById({}, { id: 'hehe' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('Invalid ID format'));
     }

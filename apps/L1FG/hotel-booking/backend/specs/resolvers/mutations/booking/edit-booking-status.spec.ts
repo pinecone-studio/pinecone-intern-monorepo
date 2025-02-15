@@ -14,12 +14,22 @@ describe('editBookingStatus', () => {
 
   it("should return the edited booking's status", async () => {
     const mockInput = { id: '1', status: 'cancelled' };
-    const response = await editBookingStatus!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+
+    if (!editBookingStatus) {
+      throw new Error('editBookingStatus is not defined');
+    }
+
+    const response = await editBookingStatus({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual({ id: '1', status: 'cancelled' });
   });
   it('should return an empty array if the booking is not found', async () => {
     const mockInout = { id: '', status: '' };
-    const response = await editBookingStatus!({}, { input: mockInout }, {}, {} as GraphQLResolveInfo);
+
+    if (!editBookingStatus) {
+      throw new Error('editBookingStatus is not defined');
+    }
+
+    const response = await editBookingStatus({}, { input: mockInout }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual([]);
   });
 });

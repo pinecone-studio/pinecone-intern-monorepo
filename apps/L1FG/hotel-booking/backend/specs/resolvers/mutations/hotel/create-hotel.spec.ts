@@ -35,7 +35,11 @@ describe('createHotel', () => {
   it('should return an error response if HotelModel.create fails', async () => {
     (HotelModel.create as jest.Mock).mockRejectedValueOnce(new Error('Database error'));
 
-    const response = await createHotel!({}, { input: hotel }, {}, {} as GraphQLResolveInfo);
+    if (!createHotel) {
+      throw new Error('createHotel is not defined');
+    }
+
+    const response = await createHotel({}, { input: hotel }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(500);
     expect(response.success).toBe(false);
@@ -62,7 +66,11 @@ describe('createHotel', () => {
       locationName: 'New York City',
     });
 
-    const response = await createHotel!({}, { input: hotel }, {}, {} as GraphQLResolveInfo);
+    if (!createHotel) {
+      throw new Error('createHotel is not defined');
+    }
+
+    const response = await createHotel({}, { input: hotel }, {}, {} as GraphQLResolveInfo);
 
     expect(response.code).toBe(200);
     expect(response.success).toBe(true);

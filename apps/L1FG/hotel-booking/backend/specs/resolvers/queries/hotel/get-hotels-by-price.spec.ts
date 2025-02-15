@@ -16,12 +16,19 @@ describe('filter average room price', () => {
   });
   it('get hotels ascending or descending', async () => {
     const mockHotels = [{ id: '1' }];
-    const response = await getHotelsByPrice!({}, { input: { type: 'asc' } }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByPrice) {
+      throw new Error('getHotelsByPrice is not defined');
+    }
+    const response = await getHotelsByPrice({}, { input: { type: 'asc' } }, {}, {} as GraphQLResolveInfo);
+
     expect(response).toEqual(mockHotels);
   });
 
   it('should return hooson cause they were not found', async () => {
-    const response = await getHotelsByPrice!({}, { input: { type: 'haha' } }, {}, {} as GraphQLResolveInfo);
+    if (!getHotelsByPrice) {
+      throw new Error('getHotelsByPrice is not defined');
+    }
+    const response = await getHotelsByPrice({}, { input: { type: 'haha' } }, {}, {} as GraphQLResolveInfo);
     expect(response).toEqual(null);
   });
 });
