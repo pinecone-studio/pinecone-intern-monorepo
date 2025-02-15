@@ -1,23 +1,56 @@
 'use client';
 
-import { useGetPostByIdQuery } from '@/generated';
+import { useGetPostByIdQuery, useUpdatedPostMutation, PostStats, HouseTypeEnum } from '@/generated';
+import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 import { useFormState } from '@/components/utils/use-form-state';
+import { useEffect } from 'react';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
+import ImagesSection from '@/components/addEstate/ImagesSection';
 import TownDetails from '@/components/addEstate/TownDetails';
 import RestroomsSection from '@/components/addEstate/RestroomsSection';
 import WindowsSection from '@/components/addEstate/WindowsSection';
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
 import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
-import ImagesSection from '@/components/addEstate/ImagesSection';
 import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
+import PreviewSection from '@/components/addEstate/PreviewSection';
 
 const EditEstate = () => {
+  const router = useRouter();
   const { id } = useParams();
   const { formData, setFormData } = useFormState();
-  const { data, loading } = useGetPostByIdQuery({
+  const { data, loading, error } = useGetPostByIdQuery({
     variables: { id: id as string },
+  });
+  const [updatePost] = useUpdatedPostMutation();
+
+  const prepareLocationData = () => ({
+    city: formData.city || '',
+    district: formData.district || '',
+    subDistrict: formData.subDistrict || '',
+    address: formData.address || '',
+  });
+
+  const prepareDetailsData = () => ({
+    completionDate: formData.completionDate,
+    windowsCount: Number(formData.windowsCount),
+    windowType: formData.windowType || '',
+    floorMaterial: formData.floorMaterial || '',
+    floorNumber: Number(formData.floorNumber),
+    totalFloors: Number(formData.totalFloors),
+    balcony: Boolean(formData.balcony),
+    lift: Boolean(formData.lift),
+  });
+
+  const preparePropertyDetail = () => ({
+    houseType: formData.houseType as HouseTypeEnum,
+    size: formData.size,
+    totalRooms: Number(formData.totalRooms),
+    images: formData.images,
+    garage: Boolean(formData.garage),
+    restrooms: Number(formData.restrooms),
+    location: prepareLocationData(),
+    details: prepareDetailsData(),
   });
 
   useEffect(() => {
@@ -59,20 +92,51 @@ const EditEstate = () => {
     }));
   };
 
+  const handleUpdate = async () => {
+    try {
+      const response = await updatePost({
+        variables: {
+          id: id as string,
+          input: {
+            title: formData.title,
+            description: formData.description,
+            price: formData.price,
+            status: PostStats.Pending,
+            propertyDetail: preparePropertyDetail(),
+          },
+        },
+      });
+
+      if (response.data?.updatePost) {
+        toast.success('Зар амжилттай шинэчлэгдлээ');
+        router.push('/my-estates');
+      }
+    } catch (error) {
+      console.error('Error updating post:', error);
+      toast.error('Зар шинэчлэхэд алдаа гарлаа');
+    }
+  };
   if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">Алдаа гарлаа</div>;
+  if (!data?.getPostById) return <div className="text-red-500">Алдаа гарлаа</div>;
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Үл хөдлөх засах</h1>
-        <PropertyDetails formData={formData} handleChange={handleChange} />
-        <DescriptionSection formData={formData} handleChange={handleChange} />
-        <ImagesSection formData={formData} handleChange={handleChange} />
-        <TownDetails formData={formData} handleChange={handleChange} />
-        <RestroomsSection formData={formData} handleChange={handleChange} />
-        <WindowsSection formData={formData} handleChange={handleChange} />
-        <FloorDetailsSection formData={formData} handleChange={handleChange} />
-        <BalconyLiftSection formData={formData} handleChange={handleChange} />
+      <div className="flex gap-8">
+        <div className="max-w-2xl">
+          <h1 className="text-2xl font-bold mb-6">Үл хөдлөхийн мэдээлэл шинэчлэх</h1>
+          <PropertyDetails formData={formData} handleChange={handleChange} />
+          <DescriptionSection formData={formData} handleChange={handleChange} />
+          <ImagesSection formData={formData} handleChange={handleChange} />
+          <TownDetails formData={formData} handleChange={handleChange} />
+          <RestroomsSection formData={formData} handleChange={handleChange} />
+          <WindowsSection formData={formData} handleChange={handleChange} />
+          <FloorDetailsSection formData={formData} handleChange={handleChange} />
+          <BalconyLiftSection formData={formData} handleChange={handleChange} />
+        </div>
+        <div className="sticky top-0 h-screen">
+          <PreviewSection formData={formData} onSubmit={handleUpdate} isEdit={true} />
+        </div>
       </div>
     </main>
   );

@@ -7,7 +7,7 @@ const BalconyLiftSection: React.FC<{ formData: any; handleChange: any }> = ({ fo
         <label htmlFor="balcony" className="block text-gray-700 font-bold mb-2">
           Тагт:
         </label>
-        <select id="balcony" name="balcony" value={formData.balcony ?? ''} onChange={handleChange} className="mr-2 w-[728px] border border-gray-300 rounded-md p-2" data-cy="select-balcony">
+        <select  id="balcony" name="balcony" value={formData.balcony ?? ''} onChange={handleChange} className="mr-2 w-[728px] border border-gray-300 rounded-md p-2" data-cy="select-balcony">
           <option value="" disabled>
             Сонгоно уу
           </option>
