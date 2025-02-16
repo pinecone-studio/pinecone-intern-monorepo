@@ -1,6 +1,7 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType } from '@/generated';
+import { NotificationType, UserPostType } from '@/generated';
+import PostModal from '../profile/profilePost/PostModal';
 
 type Props = {
   likeNotification: NotificationType[];
@@ -9,7 +10,7 @@ type Props = {
 export const LikedPost = ({ likeNotification }: Props) => {
   const groupedPostLikes = likeNotification?.reduce((acc, notification) => {
     const postId = notification.contentPostId;
-    if (!postId) return acc;
+    if (typeof postId !== 'string') return acc;
 
     if (!acc[postId]) {
       acc[postId] = [];
@@ -27,9 +28,10 @@ export const LikedPost = ({ likeNotification }: Props) => {
     return {
       postId,
       userNames: latestLikes.map((like) => like.user?.userName),
-      postImage: likes[0]?.contentPost,
+      contentPost: likes[0].contentPost,
       userImages: latestLikes.map((like) => like.user?.profileImage),
       userIds: latestLikes.map((like) => like.user?._id),
+      comment: latestLikes[0].contentComment,
     };
   });
 
@@ -58,10 +60,12 @@ export const LikedPost = ({ likeNotification }: Props) => {
                   </a>
                 </span>
               )}
-              <span> and others liked your post</span>
+              <span> liked your post</span>
             </div>
           </div>
-          <div className="w-12 h-12 rounded-md bg-cover bg-center " style={{ backgroundImage: `url(${n.postImage})` }}></div>
+          <PostModal post={n.contentPost as UserPostType}>
+            <div className="w-12 h-12 rounded-md bg-cover bg-center bg-red-400" style={{ backgroundImage: `url(${n.contentPost?.postImage[0]})` }}></div>
+          </PostModal>
         </div>
       ))}
     </div>
