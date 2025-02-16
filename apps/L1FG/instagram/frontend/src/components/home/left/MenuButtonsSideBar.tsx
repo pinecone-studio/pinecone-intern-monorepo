@@ -15,12 +15,12 @@ export const MenuButtons = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const router = useRouter();
   const toggleNotifications = () => {
-    setIsOpen(true);
+    setIsOpen((prev) => !prev);
     setSearchOpen(false);
   };
   const openSearchSheet = () => {
     setIsOpen(false);
-    setSearchOpen(true);
+    setSearchOpen((prev) => !prev);
   };
   const closeSheets = () => {
     setIsOpen(false);

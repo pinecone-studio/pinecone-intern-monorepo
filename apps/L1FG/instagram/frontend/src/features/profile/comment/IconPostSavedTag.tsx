@@ -7,8 +7,8 @@ import PostEmpty from '../../../components/profile/profilePost/PostEmpty';
 import Posts from '@/components/svg/Posts';
 import Saved from '@/components/svg/Saved';
 import Tagged from '../../../components/profile/profilePost/Tagged';
-import { Tag } from 'lucide-react';
 import Save from '../../../components/profile/profilePost/Save';
+import { TaggedIcon } from '@/components/svg/TaggedIcon';
 
 const PageEnum = {
   POSTS: 'POSTS',
@@ -44,7 +44,7 @@ export const IconPostSavedTag = ({ userId }: { userId: string }) => {
       <div className="flex justify-center gap-14">
         <NavItem label="POSTS" icon={<Posts />} active={page === PageEnum.POSTS} onClick={() => setPage(PageEnum.POSTS)} />
         {isOwnerId ? <NavItem label="SAVED" icon={<Saved />} active={page === PageEnum.SAVED} onClick={() => setPage(PageEnum.SAVED)} /> : null}
-        <NavItem label="TAGGED" icon={<Tag className="h-4 w-4" />} active={page === PageEnum.TAGGED} onClick={() => setPage(PageEnum.TAGGED)} />
+        <NavItem label="TAGGED" icon={<TaggedIcon />} active={page === PageEnum.TAGGED} onClick={() => setPage(PageEnum.TAGGED)} />
       </div>
 
       {page === PageEnum.POSTS && PostNoposts}
