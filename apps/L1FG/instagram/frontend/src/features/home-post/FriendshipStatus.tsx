@@ -9,7 +9,23 @@ import { useCache } from '@/components/providers/CacheProvider';
 import { IsRequest } from './IsRequest';
 
 // eslint-disable-next-line complexity
-export const FriendshipStatus = ({ preview, onclick, statuss }: { preview: UserTogetherUserType; onclick?: () => void; statuss?: boolean }) => {
+export const FriendshipStatus = ({
+  followingStyle,
+  followStyle,
+  preview,
+  onclick,
+  statuss,
+  requestStyle,
+  requestedStyle,
+}: {
+  preview: UserTogetherUserType;
+  onclick?: () => void;
+  statuss?: boolean;
+  followStyle?: string;
+  followingStyle?: string;
+  requestStyle?: string;
+  requestedStyle?: string;
+}) => {
   const targetId = preview._id;
 
   const { user } = useAuth();
@@ -50,15 +66,15 @@ export const FriendshipStatus = ({ preview, onclick, statuss }: { preview: UserT
     return;
   }
   if (status.incomingRequest && statuss) {
-    return <IsRequest onclick={onclick as () => void} />;
+    return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
   }
   if (status.following) {
-    return <Following />;
+    return <Following followingStyle={followingStyle} />;
   } else {
     if (status.outgoingRequest) {
-      return <Requested />;
+      return <Requested requestedStyle={requestedStyle} />;
     } else {
-      return <Follow handleClickLike={handleClick} />;
+      return <Follow followStyle={followStyle} handleClickLike={handleClick} />;
     }
   }
 };

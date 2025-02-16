@@ -7,20 +7,20 @@ export const FollowerTypeDefs = gql`
     targetId: ID!
   }
   type FriendshipStatusType {
-    followedBy: Boolean
-    following: Boolean
-    incomingRequest: Boolean
-    outgoingRequest: Boolean
+    followedBy: Boolean!
+    following: Boolean!
+    incomingRequest: Boolean!
+    outgoingRequest: Boolean!
   }
   type FollowerUserType {
     _id: String!
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String
+    profileImage: String!
     hasStory: Boolean
-    gender: Gender
-    isPrivate: Boolean
+    gender: Gender!
+    isPrivate: Boolean!
     email: String!
     friendshipStatus: FriendshipStatusType
   }
@@ -29,20 +29,22 @@ export const FollowerTypeDefs = gql`
     userName: String!
     fullName: String!
     bio: String!
-    profileImage: String
+    profileImage: String!
     hasStory: Boolean
     gender: Gender
-    isPrivate: Boolean
+    isPrivate: Boolean!
     email: String!
     friendshipStatus: FriendshipStatusType
   }
   type FollowerType {
-    followerId: FollowerUserType
-    targetId: ID
+    followerId: ID!
+    targetId: ID!
+    user: UserTogetherUserType!
   }
   type FollowingType {
-    followerId: ID
-    targetId: FollowingUserType
+    followerId: ID!
+    targetId: ID!
+    user: UserTogetherUserType!
   }
   input FollowInput {
     targetId: ID!
@@ -52,8 +54,8 @@ export const FollowerTypeDefs = gql`
     isRequested: Boolean
   }
   type Query {
-    getFollowers(searchingUserId: ID): [FollowerType]
-    getFollowing(searchingUserId: ID): [FollowingType]
+    getFollowers(searchingUserId: ID): [FollowerType!]!
+    getFollowing(searchingUserId: ID): [FollowingType!]!
   }
   type Mutation {
     createFollower(input: FollowInput!): FollowedRequested!
