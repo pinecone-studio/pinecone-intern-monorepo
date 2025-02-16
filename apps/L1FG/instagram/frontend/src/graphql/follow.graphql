@@ -1,28 +1,8 @@
-query GetFollowers($searchingUserId: ID) {
-  getFollowers(searchingUserId: $searchingUserId) {
-    followerId {
-      _id
-      userName
-      fullName
-      bio
-      profileImage
-      hasStory
-      gender
-      isPrivate
-      email
-      friendshipStatus {
-        following
-        incomingRequest
-        outgoingRequest
-      }
-    }
-    targetId
-  }
-}
 query GetFollowing($searchingUserId: ID) {
   getFollowing(searchingUserId: $searchingUserId) {
     followerId
-    targetId {
+    targetId
+    user {
       _id
       userName
       fullName
@@ -32,25 +12,58 @@ query GetFollowing($searchingUserId: ID) {
       gender
       isPrivate
       email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      savedUsers
+      createdAt
       friendshipStatus {
         followedBy
         following
         incomingRequest
         outgoingRequest
       }
+      mutualFollowersCount
+      mutualFollowers
     }
   }
 }
-
-mutation CreateFollower($input: FollowInput!) {
-  createFollower(input: $input) {
-    isFollowed
-    isRequested
+query GetFollowers($searchingUserId: ID) {
+  getFollowers(searchingUserId: $searchingUserId) {
+    followerId
+    targetId
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      savedUsers
+      createdAt
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+      mutualFollowersCount
+      mutualFollowers
+    }
   }
 }
-
-mutation AcceptRequst($followerId: String!) {
-  acceptRequest(followerId: $followerId) {
+mutation CreateFollower($input: FollowInput!) {
+  createFollower(input: $input) {
     isFollowed
     isRequested
   }

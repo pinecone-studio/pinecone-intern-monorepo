@@ -11,7 +11,7 @@ const CreateComment = ({ post }: { post: UserPostType }) => {
       {
         query: GetCommentsDocument,
         variables: {
-          input: { postId: post._id },
+          input: { postId: post?._id },
         },
       },
     ],
@@ -23,7 +23,7 @@ const CreateComment = ({ post }: { post: UserPostType }) => {
     if (!trimmedText) return;
 
     await createComment({
-      variables: { input: { postId: post._id, comment: trimmedText, ownerId: post.user._id } },
+      variables: { input: { postId: post?._id, comment: trimmedText, ownerId: post?.user?._id } },
     });
 
     setText('');

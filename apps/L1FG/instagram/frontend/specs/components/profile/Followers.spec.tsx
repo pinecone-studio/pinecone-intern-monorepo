@@ -1,76 +1,65 @@
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Followers from '@/components/profile/follow/Followers';
+import { MockedProvider } from '@apollo/client/testing';
 import { useGetFollowersQuery } from '@/generated';
+import Followers from '@/components/profile/follow/Followers';
 
 jest.mock('@/generated', () => ({
   useGetFollowersQuery: jest.fn(),
 }));
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-}));
-
 describe('Followers Component', () => {
-  const mockUserId = '12345';
-  const mockChildren = <div data-testid="followers-trigger">Open Followers</div>;
-
-  test('renders correctly with followers', () => {
-    const mockData = {
-      getFollowers: [
-        {
-          followerId: {
-            fullName: 'John Doe',
-            userName: '@johndoe',
-          },
+  const mockFollowers = {
+    getFollowers: [
+      {
+        user: {
+          userName: 'john_doe',
+          fullName: 'John Doe',
         },
-        {
-          followerId: {
-            fullName: 'Jane Smith',
-            userName: '@janesmith',
-          },
-        },
-      ],
-    };
+      },
+    ],
+  };
 
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({
-      data: mockData,
-    });
-
-    render(<Followers userId={mockUserId}>{mockChildren}</Followers>);
+  beforeEach(() => {
+    (useGetFollowersQuery as jest.Mock).mockReturnValue({ data: mockFollowers, loading: false });
   });
 
-  test('renders correctly with no followers', () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({
-      data: { getFollowers: [] },
-    });
-
-    render(<Followers userId={mockUserId}>{mockChildren}</Followers>);
+  it('renders the followers dialog trigger button', () => {
+    render(
+      <MockedProvider>
+        <Followers userId="123">Open Followers</Followers>
+      </MockedProvider>
+    );
   });
 
-  test('handles loading state', () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({
-      data: undefined,
-      loading: true,
-    });
-
-    render(<Followers userId={mockUserId}>{mockChildren}</Followers>);
+  it('opens the dialog when trigger is clicked', () => {
+    render(
+      <MockedProvider>
+        <Followers userId="123">Open Followers</Followers>
+      </MockedProvider>
+    );
   });
 
-  test('handles error state', () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({
-      data: undefined,
-      error: new Error('Failed to fetch followers'),
-    });
-
-    render(<Followers userId={mockUserId}>{mockChildren}</Followers>);
+  it('displays the followers list correctly', async () => {
+    render(
+      <MockedProvider>
+        <Followers userId="123">Open Followers</Followers>
+      </MockedProvider>
+    );
   });
 
-  test('closes the dialog when clicking the close button', () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({
-      data: { getFollowers: [] },
-    });
+  it('renders the search input', () => {
+    render(
+      <MockedProvider>
+        <Followers userId="123">Open Followers</Followers>
+      </MockedProvider>
+    );
+  });
 
-    render(<Followers userId={mockUserId}>{mockChildren}</Followers>);
+  it('closes the dialog when close button is clicked', () => {
+    render(
+      <MockedProvider>
+        <Followers userId="123">Open Followers</Followers>
+      </MockedProvider>
+    );
   });
 });

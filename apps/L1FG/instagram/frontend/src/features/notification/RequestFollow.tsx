@@ -1,6 +1,6 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType, useAcceptRequstMutation, UserTogetherUserType } from '@/generated';
+import { NotificationType, useAcceptRequestMutation, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ type Props = {
 
 export const RequestFollow = ({ reqNotification }: Props) => {
   const [status, setStatus] = useState(true);
-  const [acceptFollow] = useAcceptRequstMutation();
+  const [acceptFollow] = useAcceptRequestMutation();
 
   const handleFollowConfirm = async (followerId: string) => {
     setStatus(false);

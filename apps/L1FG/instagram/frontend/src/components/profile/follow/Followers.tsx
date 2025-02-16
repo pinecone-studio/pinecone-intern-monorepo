@@ -1,8 +1,9 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 import { useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
+import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const { data } = useGetFollowersQuery({
@@ -11,14 +12,14 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
 
   return (
     <Dialog>
-      <DialogTrigger asChild className="cursor-pointer" data-testid="followers">
+      <DialogTrigger asChild className="cursor-pointer" data-testid="following">
         {children}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] h-[400px] p-0 flex flex-col gap-2">
         <DialogHeader>
-          <div className="flex justify-between items-center px-3">
+          <div className="flex justify-between items-center px-3 py-1">
             <div></div>
-            <h3 className="flex justify-center font-semibold ">Followers</h3>
+            <h3 className="flex justify-center font-semibold">Following</h3>
             <div className="flex justify-end">
               <DialogTrigger asChild>
                 <div className="relative">
@@ -43,17 +44,23 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
               <div className=" flex gap-4">
                 <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
-                  <p className="text-sm font-medium">{item?.followerId?.fullName}</p>
-                  <p className="text-xs font-normal text-[#71717A]">{item?.followerId?.userName}</p>
+                  <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.fullName}</p>
                 </div>
               </div>
-              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">{item?.followerId?.friendshipStatus?.following}</button>
+              {item.user && (
+                <FriendshipStatus
+                  preview={item.user}
+                  requestStyle="flex gap-2"
+                  followingStyle="bg-[#F4F4F5] h-[36px] px-5 rounded-lg font-semibold text-sm"
+                  followStyle="bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+                  requestedStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
+                />
+              )}
             </div>
           ))}
           <p className="font-semibold text-lg justify-start mt-6  p-3">Suggested for you</p>
         </div>
-
-        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );
