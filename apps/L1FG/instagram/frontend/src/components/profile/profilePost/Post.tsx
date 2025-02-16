@@ -11,7 +11,7 @@ const Post = ({ userId }: { userId: string }) => {
       input: {
         searchingUserId: userId,
         after: '',
-        first: 3,
+        first: 6,
       },
     },
   });

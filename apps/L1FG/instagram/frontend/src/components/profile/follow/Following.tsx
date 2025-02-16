@@ -41,8 +41,8 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
           </div>
         </div>
         <div className="flex flex-col gap-3 overflow-y-scroll px-3 mt-2">
-          {data?.getFollowing?.map((item, index) => (
-            <div key={index} className="flex justify-between ">
+          {data?.getFollowing?.map((item) => (
+            <div key={item.user._id} className="flex justify-between ">
               <div className=" flex gap-4">
                 <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
