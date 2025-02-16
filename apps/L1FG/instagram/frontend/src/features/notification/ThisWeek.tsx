@@ -8,10 +8,11 @@ type Props = {
   notifications?: NotificationCategory;
 };
 
+// eslint-disable-next-line complexity
 export const ThisWeek = ({ notifications }: Props) => {
   if (!notifications) return null;
 
-  const allNotifications = [...(notifications.comment || []), ...(notifications.postLike || []), ...(notifications.request || [])];
+  const allNotifications = [...(notifications.comment || []), ...(notifications.postLike || []), ...(notifications.request || []), ...(notifications.commentLike || [])];
 
   const sortedNotifications = allNotifications?.sort((a, b) => new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime());
 
