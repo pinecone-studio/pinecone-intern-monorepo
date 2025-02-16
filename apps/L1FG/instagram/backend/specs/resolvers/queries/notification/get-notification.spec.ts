@@ -16,6 +16,7 @@ describe('getNotification', () => {
         postLike: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
         comment: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
         request: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
+        commentLike: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
       },
     ];
 
@@ -27,6 +28,7 @@ describe('getNotification', () => {
     expect(response?.today?.postLike).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
     expect(response?.today?.comment).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
     expect(response?.today?.request).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
+    expect(response?.today?.commentLike).toEqual([{ categoryType: 'POST_LIKE', createdAt: '2025-02-07T12:00:00Z' }]);
   });
 
   it('should return undefined for empty arrays', async () => {
@@ -36,12 +38,14 @@ describe('getNotification', () => {
         postLike: [],
         comment: [],
         request: [],
+        commentLike: [],
       },
       {
         _id: 'thisWeek',
         postLike: [],
         comment: [],
         request: [],
+        commentLike: [],
       },
     ];
 
@@ -54,9 +58,11 @@ describe('getNotification', () => {
     expect(response?.today?.postLike).toBeNull();
     expect(response?.today?.comment).toBeNull();
     expect(response?.today?.request).toBeNull();
+    expect(response?.today?.commentLike).toBeNull();
     expect(response?.thisWeek?.postLike).toBeNull();
     expect(response?.thisWeek?.comment).toBeNull();
     expect(response?.thisWeek?.request).toBeNull();
+    expect(response?.thisWeek?.commentLike).toBeNull();
   });
 
   it("haven't userId", async () => {
