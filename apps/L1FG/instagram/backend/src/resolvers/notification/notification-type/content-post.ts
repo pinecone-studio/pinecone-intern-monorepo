@@ -12,7 +12,5 @@ export const contentPost = async ({ contentPostId }: { contentPostId: string | n
     throw new Error('not found post');
   }
 
-  const image = foundPost.postImage[0];
-
-  return image;
+  return foundPost;
 };

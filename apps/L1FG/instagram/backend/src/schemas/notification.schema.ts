@@ -14,6 +14,7 @@ export const NotificationTypeDefs = gql`
     postLike: [NotificationType]
     comment: [NotificationType]
     request: [NotificationType]
+    commentLike: [NotificationType]
   }
 
   type NotificationType {
@@ -28,7 +29,7 @@ export const NotificationTypeDefs = gql`
     createdAt: Date
     updatedAt: Date
     user: UserTogetherUserType
-    contentPost: String
+    contentPost: UserPostType
     contentComment: String
     request: String
   }
