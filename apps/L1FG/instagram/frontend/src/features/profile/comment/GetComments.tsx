@@ -4,13 +4,13 @@ import { PlusCircle } from 'lucide-react';
 
 const GetComments = ({ post }: { post: UserPostType }) => {
   const { data, fetchMore } = useGetCommentsQuery({
-    variables: { input: { postId: post._id, after: '', first: 4 } },
+    variables: { input: { postId: post?._id, after: '', first: 4 } },
   });
   const handleMoreCommments = () => {
     fetchMore({
       variables: {
         input: {
-          postId: post._id,
+          postId: post?._id,
           after: data?.getComments?.pageInfo?.endCursor,
           first: 6,
         },

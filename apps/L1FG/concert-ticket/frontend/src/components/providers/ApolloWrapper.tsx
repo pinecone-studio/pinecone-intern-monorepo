@@ -6,7 +6,6 @@ import { PropsWithChildren } from 'react';
 import { setContext } from '@apollo/client/link/context';
 
 const uri = process.env.LOCAL_BACKEND_URI ?? process.env.BACKEND_URI;
-// const uri = 'https://intern-1fg-concert-ticket-backend-prod.vercel.app/api/graphql'
 
 const makeClient = () => {
   const httpLink = new HttpLink({
