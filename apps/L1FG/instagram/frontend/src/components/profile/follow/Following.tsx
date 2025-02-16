@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
 import { useGetFollowingQuery } from '@/generated';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
@@ -45,13 +46,19 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
               <div className=" flex gap-4">
                 <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
-                  <p className="text-sm font-semibold">{item?.user?.fullName}</p>
-                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.userName}</p>
+                  <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.fullName}</p>
                 </div>
               </div>
-              <div>
-                <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">following</button>
-              </div>
+              {item.user && (
+                <FriendshipStatus
+                  preview={item.user}
+                  requestStyle="flex gap-2"
+                  followingStyle="bg-[#F4F4F5] h-[36px] px-5 rounded-lg font-semibold text-sm"
+                  followStyle="bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+                  requestedStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
+                />
+              )}
             </div>
           ))}
           <p className="font-semibold text-lg justify-start mt-6  p-3">Suggested for you</p>

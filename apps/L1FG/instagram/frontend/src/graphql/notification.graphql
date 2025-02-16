@@ -236,3 +236,9 @@ query GetNotification {
     }
   }
 }
+mutation AcceptRequest($followerId: String!) {
+  acceptRequest(followerId: $followerId) {
+    isFollowed
+    isRequested
+  }
+}
