@@ -1,5 +1,6 @@
 'use client';
 import { useAuth } from '@/components/providers/AuthProvider';
+import HomeSuggestionCard from '@/features/follower-suggestion/HomeSuggestionCard';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -29,15 +30,7 @@ const HomePageProfile = () => {
           <button className="text-[11px] font-bold text-[#0095F6]">Log out</button>
         </div>
       </div>
-      <div className="flex justify-between text-sm">
-        <p className="text-gray-500">Suggestions for you</p>
-        <Link href="/home/suggestuser">See All</Link>
-      </div>
-      <p>(suggest useruud)</p>
-      <div className="text-[#C7C7C7] text-wrap text-xs flex flex-col gap-4 mt-8">
-        <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-        <p>© 2024 INSTAGRAM FROM META</p>
-      </div>
+      <HomeSuggestionCard />
     </div>
   );
 };
