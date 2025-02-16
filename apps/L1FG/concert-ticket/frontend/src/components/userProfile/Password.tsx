@@ -57,7 +57,7 @@ export const UserPassword = () => {
   }
 
   return (
-    <div className="bg-neutral-900 rounded-lg">
+    <div className="bg-[#131313] rounded-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} data-testid="check-button" className="w-2/3 space-y-6 p-8">
           <FormField
