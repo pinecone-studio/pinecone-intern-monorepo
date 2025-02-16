@@ -7,5 +7,3 @@ export const Following = ({ followingStyle }: { followingStyle?: string }) => {
     </button>
   );
 };
-// "w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
-//             flex justify-center items-center mt-2
