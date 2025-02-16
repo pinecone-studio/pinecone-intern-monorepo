@@ -19,15 +19,34 @@ describe('Followers Component', () => {
     const mockData = {
       getFollowers: [
         {
-          followerId: {
-            fullName: 'John Doe',
-            userName: '@johndoe',
-          },
-        },
-        {
-          followerId: {
-            fullName: 'Jane Smith',
-            userName: '@janesmith',
+          followerId: '678e1e9179fd42a3a41c8dfe',
+          targetId: '678e1e9179fd42a3a41c8dfe',
+          user: {
+            _id: '678e1e9179fd42a3a41c8dfe',
+            userName: 'dev',
+            fullName: 'dev',
+            bio: 'dev',
+            // eslint-disable-next-line no-secrets/no-secrets
+            profileImage: 'https://i.natgeofe.com/n/4cebbf38-5df4-4ed0-864a-4ebeb64d33a4/NationalGeographic_1468962_3x4.jpg',
+            hasStory: false,
+            gender: 'male',
+            isPrivate: true,
+            email: 'dev@gmail.com',
+            followingCount: 28,
+            followerCount: 26,
+            postCount: 20,
+            latestStoryTimestamp: 0,
+            seenStoryTime: 0,
+            savedUsers: ['678a04ef4511a431fbfa6338', '6789fe2e6ac4e4a4329b877d', '6789b1cf63e287cd542f691f', '67ac90021cf0a3cff9d4a160'],
+            createdAt: null,
+            friendshipStatus: {
+              followedBy: false,
+              following: false,
+              incomingRequest: false,
+              outgoingRequest: false,
+            },
+            mutualFollowersCount: null,
+            mutualFollowers: null,
           },
         },
       ],
