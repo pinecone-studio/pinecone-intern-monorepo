@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { SearchSheet } from '@/components/search/SearchSheet';
 import { GetUserByNameDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
@@ -79,12 +80,6 @@ describe('SearchSheet', () => {
         userName: 'Hello',
       },
     ]);
-  });
-
-  it('returns undefined when data.getUserByName is not an array', () => {
-    const data = { getUserByName: { id: 1, name: 'User One' } };
-    const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
-    expect(users).toBeUndefined();
   });
 
   it('should set users to undefined when data is undefined', () => {

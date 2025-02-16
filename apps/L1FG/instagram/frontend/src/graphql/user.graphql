@@ -51,9 +51,18 @@ fragment UserByNameBasicInfo on UserTogetherUserType {
   }
   followerCount
 }
+
 query GetUserByName($userName: String!) {
   getUserByName(userName: $userName) {
-    ...UserByNameBasicInfo
+    _id
+    followerCount
+    fullName
+    userName
+    profileImage
+    seenStoryTime
+    latestStoryTimestamp
+    mutualFollowersCount
+    mutualFollowers
   }
 }
 
