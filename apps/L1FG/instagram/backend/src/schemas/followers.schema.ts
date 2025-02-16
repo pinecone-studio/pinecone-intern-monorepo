@@ -37,12 +37,14 @@ export const FollowerTypeDefs = gql`
     friendshipStatus: FriendshipStatusType
   }
   type FollowerType {
-    followerId: UserTogetherUserType
-    targetId: ID
+    followerId: ID!
+    targetId: ID!
+    user: UserTogetherUserType!
   }
   type FollowingType {
-    followerId: ID
-    targetId: UserTogetherUserType
+    followerId: ID!
+    targetId: ID!
+    user: UserTogetherUserType!
   }
   input FollowInput {
     targetId: ID!

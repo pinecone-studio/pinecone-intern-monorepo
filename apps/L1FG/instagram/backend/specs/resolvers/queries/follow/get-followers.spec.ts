@@ -3,13 +3,11 @@ import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({
   FollowerModel: {
-    find: jest.fn().mockReturnValue({
-      populate: jest.fn().mockResolvedValue([
-        {
-          _id: '1',
-        },
-      ]),
-    }),
+    find: jest.fn().mockResolvedValue([
+      {
+        _id: '1',
+      },
+    ]),
   },
 }));
 describe('Get followers', () => {

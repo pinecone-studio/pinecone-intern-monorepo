@@ -29,7 +29,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                       <Image src={imageUrlOptimizer(post.user.profileImage)} alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover border" />
                     </ProfileHover>
                     <ProfileHover searchingUserId={post.user._id}>
-                      <p className="font-semibold text-base">{post.user?.fullName}</p>
+                      <p className="font-semibold text-base">{post.user?.userName}</p>
                     </ProfileHover>
                   </div>
                   <div>

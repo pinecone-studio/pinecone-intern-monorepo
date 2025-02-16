@@ -4,7 +4,11 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 describe('orderData commponent', () => {
   it('render the orderData ', async () => {
-    const { getByTestId } = render(<Order></Order>);
+    const { getByTestId } = render(
+      <MockedProvider mocks={[]}>
+        <Order></Order>
+      </MockedProvider>
+    );
 
     const orderData = getByTestId('user-data');
 
@@ -13,7 +17,11 @@ describe('orderData commponent', () => {
     expect(orderData).toBeDefined();
   });
   it('render the orderHistory', async () => {
-    const { getByTestId } = render(<Order></Order>);
+    const { getByTestId } = render(
+      <MockedProvider mocks={[]}>
+        <Order></Order>
+      </MockedProvider>
+    );
 
     const orderHistory = getByTestId('order-history');
 
