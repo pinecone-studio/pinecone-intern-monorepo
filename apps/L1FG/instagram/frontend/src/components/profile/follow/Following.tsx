@@ -6,10 +6,12 @@ import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 
 const Following = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data } = useGetFollowingQuery({
+  const { data, loading } = useGetFollowingQuery({
     variables: { searchingUserId: userId },
   });
-
+  if (loading) {
+    return;
+  }
   return (
     <Dialog>
       <DialogTrigger asChild className="cursor-pointer" data-testid="following">

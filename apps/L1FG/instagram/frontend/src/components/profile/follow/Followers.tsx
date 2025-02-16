@@ -6,10 +6,12 @@ import { Separator } from '@/components/ui/separator';
 import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data } = useGetFollowersQuery({
+  const { data, loading } = useGetFollowersQuery({
     variables: { searchingUserId: userId },
   });
-
+  if (loading) {
+    return;
+  }
   return (
     <Dialog>
       <DialogTrigger asChild className="cursor-pointer" data-testid="following">

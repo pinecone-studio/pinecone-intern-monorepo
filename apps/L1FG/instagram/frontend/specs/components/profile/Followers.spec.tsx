@@ -8,12 +8,15 @@ jest.mock('@/generated', () => ({
 }));
 
 describe('Followers Component', () => {
+
   const mockFollowers = {
     getFollowers: [
       {
         user: {
           userName: 'john_doe',
           fullName: 'John Doe',
+
+
         },
       },
     ],
