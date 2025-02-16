@@ -1,0 +1,26 @@
+query GetFollowingSuggestion {
+  getFollowingSuggestion {
+    _id
+    userName
+    fullName
+    bio
+    profileImage
+    hasStory
+    gender
+    isPrivate
+    email
+    followingCount
+    followerCount
+    postCount
+    latestStoryTimestamp
+    seenStoryTime
+    savedUsers
+    createdAt
+    friendshipStatus {
+      followedBy
+      following
+      incomingRequest
+      outgoingRequest
+    }
+  }
+}
