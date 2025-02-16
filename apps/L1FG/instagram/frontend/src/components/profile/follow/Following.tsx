@@ -5,10 +5,12 @@ import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 
 const Following = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data } = useGetFollowingQuery({
+  const { data, loading } = useGetFollowingQuery({
     variables: { searchingUserId: userId },
   });
-
+  if (loading) {
+    return;
+  }
   return (
     <Dialog>
       <DialogTrigger asChild className="cursor-pointer" data-testid="following">
@@ -43,8 +45,8 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
               <div className=" flex gap-4">
                 <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
-                  <p className="text-sm font-semibold">{item?.targetId?.fullName}</p>
-                  <p className="text-xs font-normal text-[#71717A]">{item?.targetId?.userName}</p>
+                  <p className="text-sm font-semibold">{item?.user?.fullName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.userName}</p>
                 </div>
               </div>
               <div>

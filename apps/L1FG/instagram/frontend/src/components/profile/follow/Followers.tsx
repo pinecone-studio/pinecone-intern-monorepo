@@ -5,10 +5,12 @@ import { useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data } = useGetFollowersQuery({
+  const { data, loading } = useGetFollowersQuery({
     variables: { searchingUserId: userId },
   });
-
+  if (loading) {
+    return;
+  }
   return (
     <Dialog>
       <DialogTrigger asChild className="cursor-pointer" data-testid="followers">
@@ -43,11 +45,11 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
               <div className=" flex gap-4">
                 <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 <div>
-                  <p className="text-sm font-medium">{item?.followerId?.fullName}</p>
-                  <p className="text-xs font-normal text-[#71717A]">{item?.followerId?.userName}</p>
+                  <p className="text-sm font-medium">{item?.user.fullName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.userName}</p>
                 </div>
               </div>
-              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">{item?.followerId?.friendshipStatus?.following}</button>
+              <button className=" px-5 py-2 bg-slate-100 rounded-lg  font-semibold ">{item?.user?.friendshipStatus?.following}</button>
             </div>
           ))}
           <p className="font-semibold text-lg justify-start mt-6  p-3">Suggested for you</p>

@@ -19,15 +19,34 @@ describe('Following Component', () => {
     const mockData = {
       getFollowing: [
         {
-          targetId: {
-            fullName: 'John Doe',
-            userName: '@johndoe',
-          },
-        },
-        {
-          targetId: {
-            fullName: 'Jane Smith',
-            userName: '@janesmith',
+          followerId: '678e1e9179fd42a3a41c8dfe',
+          targetId: '67909b123f23799f39ee5c4c',
+          user: {
+            _id: '67909b123f23799f39ee5c4c',
+            userName: 'Yeah',
+            fullName: 'Saruul',
+            bio: '',
+            // eslint-disable-next-line no-secrets/no-secrets
+            profileImage: 'https://res.cloudinary.com/dqxstnqrf/image/upload/q_auto,f_auto/v1738557334/464760996_1254146839119862_3605321457742435801_n.png_fgbfnt.jpg',
+            hasStory: false,
+            gender: 'not_know',
+            isPrivate: false,
+            email: 'saruul@gmail.com',
+            followingCount: 0,
+            followerCount: 1,
+            postCount: 0,
+            latestStoryTimestamp: 0,
+            seenStoryTime: 0,
+            savedUsers: [],
+            createdAt: null,
+            friendshipStatus: {
+              followedBy: false,
+              following: true,
+              incomingRequest: false,
+              outgoingRequest: false,
+            },
+            mutualFollowersCount: null,
+            mutualFollowers: null,
           },
         },
       ],
