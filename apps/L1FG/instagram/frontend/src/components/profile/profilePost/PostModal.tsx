@@ -25,8 +25,8 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
               <div>
                 <div className="flex justify-between py-3 px-6 items-center">
                   <div className="flex gap-5 justify-center items-center">
-                    <ProfileHover searchingUserId={post.user._id}>
-                      <Image src={imageUrlOptimizer(post.user.profileImage)} alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover border" />
+                    <ProfileHover searchingUserId={post?.user?._id}>
+                      <Image src={imageUrlOptimizer(post.user?.profileImage)} alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover border" />
                     </ProfileHover>
                     <ProfileHover searchingUserId={post.user._id}>
                       <p className="font-semibold text-base">{post.user?.userName}</p>
