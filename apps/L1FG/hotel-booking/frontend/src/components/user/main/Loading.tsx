@@ -2,7 +2,7 @@ import { BlackLogoIcon } from '../ui/svg';
 
 export const Loading = () => {
   return (
-    <div className="min-h-screen pt-[270px]">
+    <div data-cy="loading" className="min-h-screen pt-[270px]">
       <div className="flex flex-col items-center gap-6">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-[#2563EB] rounded-full"></div>

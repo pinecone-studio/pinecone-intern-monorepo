@@ -19,6 +19,7 @@ export const typeDefs = gql`
 
   type RequestOtpType {
     success: Boolean!
+    email: String!
   }
 
   type VerifyOtpType {

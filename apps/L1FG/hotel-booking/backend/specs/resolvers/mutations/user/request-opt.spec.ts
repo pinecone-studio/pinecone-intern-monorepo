@@ -22,7 +22,7 @@ describe('requestOTP', () => {
   it('should handle user already exists error', async () => {
     try {
       const response = await requestOTP!({}, { input }, {}, {} as GraphQLResolveInfo);
-      expect(response).toBe({ success: false, email: 'test@gmail.com' });
+      expect(response).toEqual({ success: false, email: 'test@gmail.com' });
     } catch (error) {
       console.log(error);
     }
