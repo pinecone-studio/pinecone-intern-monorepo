@@ -4,13 +4,13 @@ import { PlusCircle } from 'lucide-react';
 
 const GetComments = ({ post }: { post: UserPostType }) => {
   const { data, fetchMore } = useGetCommentsQuery({
-    variables: { input: { postId: post._id, after: '', first: 4 } },
+    variables: { input: { postId: post?._id, after: '', first: 4 } },
   });
   const handleMoreCommments = () => {
     fetchMore({
       variables: {
         input: {
-          postId: post._id,
+          postId: post?._id,
           after: data?.getComments?.pageInfo?.endCursor,
           first: 6,
         },
@@ -36,8 +36,8 @@ const GetComments = ({ post }: { post: UserPostType }) => {
   };
   return (
     <div className="flex flex-col gap-6 overflow-y-scroll">
-      {data?.getComments?.edges.map((comment, index) => (
-        <Comment post={post} comment={comment.node} key={index} />
+      {data?.getComments?.edges.map((comment) => (
+        <Comment post={post} comment={comment.node} key={comment.cursor} />
       ))}
       {data?.getComments?.pageInfo.hasNextPage && (
         <div className="flex justify-center">

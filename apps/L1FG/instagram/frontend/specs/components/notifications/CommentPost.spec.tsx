@@ -1,63 +1,144 @@
+/* eslint-disable max-lines */
 import { CommentPost } from '@/components/notifications/CommentPost';
 import { render } from '@testing-library/react';
 
-const commentNotificationMock = [
+const likeNotificationMock = [
   {
-    categoryType: 'COMMENT_POST',
-    postContent: '.png',
-    contentCommentId: '1',
-    contentPostId: '123',
-    contentStoryId: '',
-    id: '12',
+    categoryType: 'POST_LIKE',
+    contentPostId: null,
+    contentComment: 'mmm',
+    createdAt: '2025-02-15',
+    contentPost: {
+      _id: '1',
+      postImage: 'post.png',
+      user: {
+        _id: '',
+        userName: 'b',
+        profileImage: 'user.png',
+      },
+    },
+    _id: '12',
     isRead: false,
     ownerId: '1',
     user: {
+      _id: '',
       userName: 'search',
-      profileImage: 'pro.png',
-      latestStoryTimestamp: '2025',
-      seenStoryTime: '2200',
-      _id: '21',
+      profileImage: 'user.png',
     },
   },
   {
-    categoryType: 'COMMENT_POST',
-    postContent: '.jpg',
-    contentCommentId: '2',
-    contentPostId: '123',
-    contentStoryId: '',
-    id: '13',
+    categoryType: 'POST_LIKE',
+    contentPostId: '1',
+    contentComment: 'mmm',
+    createdAt: '2025-02-15',
+    contentPost: {
+      _id: '1',
+      postImage: 'post.png',
+      user: {
+        _id: '',
+        userName: 'b',
+        profileImage: 'user.png',
+      },
+    },
+    _id: '12',
     isRead: false,
-    ownerId: '2',
+    ownerId: '1',
     user: {
+      _id: '',
+      userName: 'search',
+      profileImage: 'user.png',
+    },
+  },
+  {
+    categoryType: 'POST_LIKE',
+    contentPostId: '1',
+    contentComment: 'mmm',
+    createdAt: '2025-02-15',
+    contentPost: {
+      _id: '1',
+      postImage: 'post.png',
+      user: {
+        _id: '',
+        userName: 'b',
+        profileImage: 'user.png',
+      },
+    },
+    _id: '12',
+    isRead: false,
+    ownerId: '1',
+    user: {
+      _id: '',
       userName: 'john',
       profileImage: 'john.png',
-      latestStoryTimestamp: '2026',
-      seenStoryTime: '2300',
-      _id: '22',
-    },
-  },
-  {
-    categoryType: 'COMMENT_POST',
-    postContent: '.gif',
-    contentCommentId: '3',
-    contentPostId: '',
-    contentStoryId: '',
-    id: '14',
-    isRead: false,
-    ownerId: '3',
-    user: {
-      userName: 'doe',
-      profileImage: 'doe.png',
-      latestStoryTimestamp: '2027',
-      seenStoryTime: '2400',
-      _id: '23',
     },
   },
 ];
 
 describe('post comment component', () => {
+  it('should handle notifications without contentPostId', () => {
+    const mockNotifications = [
+      {
+        categoryType: 'POST_LIKE',
+        contentPostId: null, // ❌ `null` учир `return acc;` мөр ажиллах ёстой
+        contentPost: {
+          _id: '1',
+          postImage: 'post.png',
+        },
+        _id: '12',
+        isRead: false,
+        ownerId: '1',
+        user: {
+          _id: '',
+          userName: 'search',
+          profileImage: 'user.png',
+        },
+      },
+      {
+        categoryType: 'POST_LIKE',
+        contentPostId: '1', // ✅ Зөв контент ID-тай
+        contentPost: {
+          _id: '1',
+          postImage: 'post.png',
+        },
+        _id: '13',
+        isRead: false,
+        ownerId: '2',
+        user: {
+          _id: '',
+          userName: 'john',
+          profileImage: 'john.png',
+        },
+      },
+    ];
+
+    const groupedPostLikes = mockNotifications.reduce((acc, notification) => {
+      const postId = notification.contentPostId;
+      if (!postId) {
+        return acc;
+      } // ✨ `null` үед энэ мөр гүйцэтгэгдэх ёстой
+
+      acc[postId] = acc[postId] || [];
+      acc[postId].push(notification);
+      return acc;
+    }, {} as Record<string, typeof mockNotifications>);
+
+    expect(groupedPostLikes).toEqual({
+      '1': [
+        {
+          categoryType: 'POST_LIKE',
+          contentPostId: '1',
+          contentPost: { _id: '1', postImage: 'post.png' },
+          _id: '13',
+          isRead: false,
+          ownerId: '2',
+          user: { _id: '', userName: 'john', profileImage: 'john.png' },
+        },
+      ],
+    });
+  });
+
   it('filters and groups notifications correctly', async () => {
-    const groupedPostLikes = commentNotificationMock.reduce((acc, notification) => {
+    const groupedPostLikes = likeNotificationMock.reduce((acc, notification) => {
       const postId = notification.contentPostId;
       if (!postId) {
         return acc;
@@ -69,7 +150,7 @@ describe('post comment component', () => {
 
       acc[postId].push(notification);
       return acc;
-    }, {} as Record<string, typeof commentNotificationMock>);
+    }, {} as Record<string, typeof likeNotificationMock>);
 
     const groupedNotifications = Object.entries(groupedPostLikes).map(([postId, likes]) => {
       const validLikes = likes.filter((like) => like.user?.userName);
@@ -78,22 +159,35 @@ describe('post comment component', () => {
       return {
         postId,
         userNames: latestLikes.map((like) => like.user?.userName ?? 'Unknown'),
-        postImage: likes[0]?.postContent ?? '',
+        postImage: likes[0]?.contentPost,
         userImage: latestLikes[latestLikes.length - 1]?.user?.profileImage ?? '',
+        comment: likes[0].contentComment,
       };
     });
 
     expect(groupedNotifications).toEqual([
       {
-        postId: '123',
+        postId: '1',
         userNames: ['search', 'john'],
-        postImage: '.png',
+        comment: 'mmm',
+        postImage: {
+          _id: '1',
+          postImage: 'post.png',
+          user: {
+            _id: '',
+            userName: 'b',
+            profileImage: 'user.png',
+          },
+        },
         userImage: 'john.png',
       },
     ]);
   });
 
   it('renders CommentPost component', () => {
-    render(<CommentPost commentNotification={commentNotificationMock as []} />);
+    render(<CommentPost commentNotification={[]} />);
+  });
+  it('renders CommentPost component', () => {
+    render(<CommentPost commentNotification={likeNotificationMock as []} />);
   });
 });

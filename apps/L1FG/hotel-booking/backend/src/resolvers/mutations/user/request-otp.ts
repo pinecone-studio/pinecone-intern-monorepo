@@ -7,7 +7,7 @@ export const requestOTP: MutationResolvers['requestOTP'] = async (_, { input }) 
   const { email } = input;
   const user = await UserModel.findOne({ email });
 
-  if (user) throw new Error('User already exists');
+  if (user) return { success: false, email: email };
 
   const otp = generateOTP({ length: 4 });
 
@@ -15,6 +15,5 @@ export const requestOTP: MutationResolvers['requestOTP'] = async (_, { input }) 
 
   await UserModel.create({ email, otp });
 
-  const Success = true;
-  return { success: Success };
+  return { success: true, email: email };
 };

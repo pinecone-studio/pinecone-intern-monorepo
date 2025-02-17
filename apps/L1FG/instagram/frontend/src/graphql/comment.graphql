@@ -1,15 +1,21 @@
 mutation CreateComment($input: CommentInput!) {
   createComment(input: $input) {
+    _id
+    comment
     userId
     postId
-    comment
-    _id
     createdAt
     updatedAt
+    likeCount
   }
 }
 query GetComments($input: GetCommentInput!) {
   getComments(input: $input) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
     edges {
       cursor
       node {
@@ -36,20 +42,18 @@ query GetComments($input: GetCommentInput!) {
           latestStoryTimestamp
           seenStoryTime
           savedUsers
+          createdAt
           friendshipStatus {
             followedBy
             following
             incomingRequest
             outgoingRequest
           }
+          mutualFollowersCount
+          mutualFollowers
         }
         likeCount
       }
-    }
-    pageInfo {
-      startCursor
-      endCursor
-      hasNextPage
     }
   }
 }

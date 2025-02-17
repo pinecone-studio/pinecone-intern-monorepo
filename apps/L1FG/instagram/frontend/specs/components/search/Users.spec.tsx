@@ -48,7 +48,7 @@ describe('Users Component', () => {
   it('should display "No users found" when no users are provided', () => {
     render(
       <MockedProvider mocks={undefined}>
-        <Users users={undefined} setSearchOpen={Boolean} setUserName={mockUserName} />
+        <Users loading={false} users={undefined} setSearchOpen={Boolean} setUserName={mockUserName} />
       </MockedProvider>
     );
     expect(screen.getByText('User not found')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('Users Component', () => {
         email: '',
         followerCount: 1,
         followingCount: 1,
-        friendshipStatus: { followedBy: false },
+        friendshipStatus: { followedBy: false, following: false, incomingRequest: false, outgoingRequest: false },
         fullName: '',
         gender: undefined,
         hasStory: false,
@@ -70,12 +70,13 @@ describe('Users Component', () => {
         postCount: 1,
         profileImage: '',
         userName: '',
+        mutualFollowersCount: 1,
       },
     ];
 
     render(
       <MockedProvider mocks={[savedUserMock]}>
-        <Users users={mockUsers} setSearchOpen={Boolean} setUserName={mockUserName} />
+        <Users loading={false} users={mockUsers} setSearchOpen={Boolean} setUserName={mockUserName} />
       </MockedProvider>
     );
   });
@@ -95,6 +96,16 @@ describe('Users Component', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('shows SearchSkeleton while loading', async () => {
+    render(
+      <MockedProvider mocks={undefined}>
+        <Users loading={true} users={undefined} setSearchOpen={Boolean} setUserName={mockUserName} />
+      </MockedProvider>
+    );
+
+    expect(await screen.findByTestId('search-skeleton')).toBeInTheDocument();
   });
 
   it('renders users list correctly', () => {
@@ -118,7 +129,7 @@ describe('Users Component', () => {
 
     render(
       <MockedProvider mocks={[savedUserMock]}>
-        <Users users={mockUsers} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
+        <Users loading={false} users={mockUsers as []} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
       </MockedProvider>
     );
 
@@ -128,7 +139,7 @@ describe('Users Component', () => {
   it('calls clickUser and navigates to user profile on click', () => {
     render(
       <MockedProvider mocks={[savedUserMock]}>
-        <Users users={mockUsers} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
+        <Users loading={false} users={mockUsers as []} setSearchOpen={setSearchOpenMock} setUserName={mockUserName} />
       </MockedProvider>
     );
     const userElement = screen.getByTestId('visit-profile');

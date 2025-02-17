@@ -24,6 +24,7 @@ export const typeDefs = gql`
 
   input InputType {
     tableId: Int
+    userId: String
     items: [InputItemsType]
   }
 
@@ -33,11 +34,13 @@ export const typeDefs = gql`
     status: String
     createdAt: Date
     tableId: Int
+    userId: String
   }
 
   type Query {
     sampleQuery: String!
     getOrders(tableId: Int): [OrderType]
+    getOrdersForUser(userId: String!): [OrderType]
   }
 
   type Mutation {

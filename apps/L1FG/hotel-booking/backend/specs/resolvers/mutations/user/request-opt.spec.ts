@@ -22,13 +22,13 @@ describe('requestOTP', () => {
   it('should handle user already exists error', async () => {
     try {
       const response = await requestOTP!({}, { input }, {}, {} as GraphQLResolveInfo);
-      expect(response).toBe('User already exists');
+      expect(response).toEqual({ success: false, email: 'test@gmail.com' });
     } catch (error) {
       console.log(error);
     }
   });
   it('should request OTP and create a new user if not exists', async () => {
     const response = await requestOTP!({}, { input: { email: 'newuser@gmail.com' } }, {}, {} as GraphQLResolveInfo);
-    expect(response).toEqual({ success: true });
+    expect(response).toEqual({ success: true, email: 'newuser@gmail.com' });
   });
 });

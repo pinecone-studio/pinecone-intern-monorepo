@@ -1,9 +1,10 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType, useAcceptRequstMutation, UserTogetherUserType } from '@/generated';
+import { NotificationType, useAcceptRequestMutation, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
 import { useState } from 'react';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
   reqNotification?: NotificationType[];
@@ -11,7 +12,7 @@ type Props = {
 
 export const RequestFollow = ({ reqNotification }: Props) => {
   const [status, setStatus] = useState(true);
-  const [acceptFollow] = useAcceptRequstMutation();
+  const [acceptFollow] = useAcceptRequestMutation();
 
   const handleFollowConfirm = async (followerId: string) => {
     setStatus(false);
@@ -35,6 +36,24 @@ export const RequestFollow = ({ reqNotification }: Props) => {
               {n.user?.userName}
             </Link>
             {n.user?.friendshipStatus.incomingRequest && status ? <span> requested to follow you</span> : <span> started following you</span>}
+            <span className="text-gray-500">
+              {' '}
+              {n.createdAt
+                ? formatDistanceToNowStrict(n.createdAt, { addSuffix: false })
+                    .replace(' minutes', 'm')
+                    .replace(' minute', 'm')
+                    .replace(' hours', 'h')
+                    .replace(' hour', 'h')
+                    .replace(' days', 'd')
+                    .replace(' day', 'd')
+                    .replace(' weeks', 'w')
+                    .replace(' week', 'w')
+                    .replace(' months', 'mo')
+                    .replace(' month', 'mo')
+                    .replace(' years', 'y')
+                    .replace(' year', 'y')
+                : 'Unknown time'}
+            </span>
           </div>
           <div>
             <FriendshipStatus

@@ -13,7 +13,7 @@ describe('verifyOTP', () => {
   it('should verifyOTP', async () => {
     try {
       const response = await verifyOTP!({}, { input: { email: 'test@gmail.com', verifyOtp: 1234 } }, {}, {} as GraphQLResolveInfo);
-      expect(response).toBe('Invalid OTP');
+      expect(response).toEqual({ email: 'test@gmail.com', success: false });
     } catch (error) {
       console.log(error);
     }
