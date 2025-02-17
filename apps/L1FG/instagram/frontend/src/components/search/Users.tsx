@@ -43,7 +43,14 @@ export const Users = ({ users, setSearchOpen, setUserName, loading }: Props) => 
               <h3 className="font-bold">{user.userName}</h3>
               <div className="flex gap-2 items-center text-sm text-[#71717A]">
                 <p>{user.fullName}</p>
-                Followed by {user.mutualFollowers} + {user.mutualFollowersCount} more
+                {user.mutualFollowersCount && user.mutualFollowersCount >= 1 ? (
+                  <p>
+                    {' '}
+                    Followed by {user.mutualFollowers} + {user.mutualFollowersCount} more
+                  </p>
+                ) : (
+                  <p>{user.followerCount} followers</p>
+                )}
               </div>
             </div>
           </div>

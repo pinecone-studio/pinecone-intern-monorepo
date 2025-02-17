@@ -2,6 +2,7 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { NotificationType, UserPostType } from '@/generated';
 import PostModal from '../../components/profile/profilePost/PostModal';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
   commentNotification: NotificationType[];
@@ -34,6 +35,7 @@ export const CommentLike = ({ commentNotification }: Props) => {
       userImages: latestLikes.map((like) => like.user?.profileImage),
       userIds: latestLikes.map((like) => like.user?._id),
       comment: latestLikes[0].contentComment,
+      date: likes[0].createdAt,
     };
   });
 
@@ -63,6 +65,22 @@ export const CommentLike = ({ commentNotification }: Props) => {
                 </span>
               )}
               <span> liked your comment: {n.comment}</span>
+              <span className="text-gray-500">
+                {' '}
+                {formatDistanceToNowStrict(n.date, { addSuffix: false })
+                  .replace(' minutes', 'm')
+                  .replace(' minute', 'm')
+                  .replace(' hours', 'h')
+                  .replace(' hour', 'h')
+                  .replace(' days', 'd')
+                  .replace(' day', 'd')
+                  .replace(' weeks', 'w')
+                  .replace(' week', 'w')
+                  .replace(' months', 'mo')
+                  .replace(' month', 'mo')
+                  .replace(' years', 'y')
+                  .replace(' year', 'y')}
+              </span>
             </div>
           </div>
           <PostModal post={n.contentPost as UserPostType}>
