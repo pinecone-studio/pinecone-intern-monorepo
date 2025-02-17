@@ -43,4 +43,15 @@ describe('ticket subscriber', () => {
     cy.get('[data-cy="reservation-email-input"]').type('test@gmail.com');
     cy.get('[data-cy="reservation-button"]').click();
   });
+  it('email and phoneNumber value', () => {
+    // eslint-disable-next-line no-secrets/no-secrets
+    cy.visit(`/ticketReservation/6787a7e26ba06ccedf494956`);
+    cy.get('[data-cy="standart-ticket"]').click();
+    cy.get('[data-cy="ticket-buy"]').click();
+    cy.get('[data-cy="reservation-phone-input"]').should('be.visible');
+    cy.get('[data-cy="reservation-phone-input"]').should('have.value', '98778877');
+    cy.get('[data-cy="reservation-email-input"]').should('be.visible');
+    cy.get('[data-cy="reservation-email-input"]').should('have.value', 'test@gmail.com');
+    cy.get('[data-cy="reservation-button"]').click();
+  });
 });
