@@ -60,5 +60,6 @@ export const FollowerTypeDefs = gql`
   type Mutation {
     createFollower(input: FollowInput!): FollowedRequested!
     acceptRequest(followerId: String!): FollowedRequested!
+    unfollow(followerId: String!): Follow
   }
 `;
