@@ -1,6 +1,5 @@
 query GetFollowing($searchingUserId: ID) {
   getFollowing(searchingUserId: $searchingUserId) {
-
     followerId
     targetId
     user {
@@ -67,5 +66,11 @@ mutation CreateFollower($input: FollowInput!) {
   createFollower(input: $input) {
     isFollowed
     isRequested
+  }
+}
+
+mutation Unfollow($followerId: String!) {
+  unfollow(followerId: $followerId) {
+    _id
   }
 }
