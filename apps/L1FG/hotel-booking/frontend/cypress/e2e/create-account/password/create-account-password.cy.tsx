@@ -14,7 +14,7 @@ describe('CreateAccountPassword Component', () => {
 
     cy.get('button').contains('Continue').click();
 
-    cy.url().should('eq', 'http://localhost:4201/?bedcount=1');
+    cy.url().should('eq', `${window.origin}/?bedcount=1`);
     cy.contains('Successfully logged in').should('be.visible');
   });
 
