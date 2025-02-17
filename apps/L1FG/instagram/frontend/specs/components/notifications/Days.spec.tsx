@@ -69,6 +69,21 @@ const getNotificationMock: MockedResponse = {
     },
   },
 };
+const nullNotificationMock: MockedResponse = {
+  request: {
+    query: GetNotificationDocument,
+  },
+  result: {
+    data: {
+      getNotification: {
+        today: null,
+        thisWeek: null,
+        thisMonth: null,
+        earlier: null,
+      },
+    },
+  },
+};
 
 describe('get all data for notification', () => {
   it('mockprovider data', async () => {
@@ -84,11 +99,11 @@ describe('get all data for notification', () => {
 
   it('mockprovider data', async () => {
     render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[nullNotificationMock]} addTypename={false}>
         <Days />
       </MockedProvider>
     );
-    const data = screen.getByTestId('data-obso');
+    const data = screen.findByTestId('activity');
     expect(data).toBeDefined();
   });
 });
