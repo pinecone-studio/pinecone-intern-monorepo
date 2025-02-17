@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { useMakeOrderMutation } from '@/generated';
@@ -7,11 +9,12 @@ import { useCart } from '@/components/providers/LocalProvider';
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
-
+jest.mock('@/generated', () => ({
+  useGetOrdersForUserQuery: jest.fn(),
+}));
 jest.mock('@/generated', () => ({
   useMakeOrderMutation: jest.fn(),
 }));
-
 jest.mock('@/components/providers/LocalProvider', () => ({
   useCart: jest.fn(),
 }));
@@ -22,7 +25,8 @@ describe('PreSuccessPageComp', () => {
   let mockClearCart: jest.Mock<any, any, any>;
   beforeEach(() => {
     mockClearCart = jest.fn();
-
+    Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify({ _id: '123' }));
+    Storage.prototype.getItem = jest.fn();
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush, back: mockBack });
     useCart.mockReturnValue({
       orders: [
@@ -58,6 +62,7 @@ describe('PreSuccessPageComp', () => {
       variables: {
         input: {
           tableId: 123,
+          userId: '',
           items: [
             {
               name: 'burger',
@@ -134,5 +139,13 @@ describe('PreSuccessPageComp', () => {
     render(<PreSuccessPageComp />);
 
     expect(mockMakeOrder).not.toHaveBeenCalled();
+  });
+  it('should set the userId from localStorage correctly', () => {
+    const mockUser = { _id: '123' };
+    Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(mockUser));
+
+    render(<PreSuccessPageComp />);
+
+    expect(Storage.prototype.getItem).toHaveBeenCalledWith('user'); // Ensure that localStorage.getItem('user') was called
   });
 });

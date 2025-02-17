@@ -19,6 +19,7 @@ export const typeDefs = gql`
 
   type RequestOtpType {
     success: Boolean!
+    email: String!
   }
 
   type VerifyOtpType {
@@ -26,8 +27,19 @@ export const typeDefs = gql`
   }
 
   type RegisterType {
-    user: User
-    token: String
+    success: Boolean!
+  }
+
+  type ForgetRequestOtpType {
+    success: Boolean!
+    email: String!
+  }
+
+  type ForgetVerifyOtpType {
+    success: Boolean!
+  }
+
+  type ForgetPasswordType {
     success: Boolean!
   }
 
@@ -45,9 +57,26 @@ export const typeDefs = gql`
     email: String!
   }
 
+  input ForgetRequestOtpInput {
+    email: String!
+  }
+
+  input ForgetVerifyOtpInput {
+    verifyOtp: Int!
+    email: String!
+  }
+
+  input ForgetPasswordInput {
+    password: String!
+    email: String!
+  }
+
   type Mutation {
     requestOTP(input: RequestOtpInput!): RequestOtpType!
     verifyOTP(input: VerifyOtpInput!): VerifyOtpType!
     register(input: RegisterInput!): RegisterType!
+    forgetRequestOTP(input: ForgetRequestOtpInput!): ForgetRequestOtpType!
+    forgetVerifyOTP(input: ForgetVerifyOtpInput!): ForgetVerifyOtpType!
+    forgetPassword(input: ForgetPasswordInput!): ForgetPasswordType!
   }
 `;
