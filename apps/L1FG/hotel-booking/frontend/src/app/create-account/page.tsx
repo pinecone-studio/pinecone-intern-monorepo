@@ -17,7 +17,6 @@ const CreateAccount = () => {
 
   const handleSubmit = () => {
     requestOTP({ variables: { input: { email: inputValue } } });
-    console.log('ajilah');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +28,7 @@ const CreateAccount = () => {
 
     router.push('/create-account/otp');
   } else if (data?.requestOTP.success === false) {
-    toast.error(`burtgaltei bna`, {
+    toast.error(`The email ${data?.requestOTP.email} is already registered.`, {
       autoClose: 2000,
     });
   }

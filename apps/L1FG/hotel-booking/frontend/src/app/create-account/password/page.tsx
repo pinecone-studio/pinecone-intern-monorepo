@@ -43,6 +43,7 @@ const CreateAccountPassword = () => {
 
   if (data?.register.success) {
     router.push('/');
+    localStorage.removeItem('email');
     toast.success('Successfully logged in', {
       autoClose: 2000,
     });
