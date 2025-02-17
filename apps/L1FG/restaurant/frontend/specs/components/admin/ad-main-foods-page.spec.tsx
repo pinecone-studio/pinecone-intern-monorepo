@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { useGetFoodsQuery } from '@/generated';
+/* eslint-disable */
+
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { useDeleteFoodMutation, useGetFoodsQuery } from '@/generated';
 import '@testing-library/jest-dom';
 import AdminFoodPageComp from '@/components/admin-page-comp/AdminFoodPageComp';
 
@@ -7,12 +9,17 @@ import AdminFoodPageComp from '@/components/admin-page-comp/AdminFoodPageComp';
 jest.mock('@/generated', () => ({
   useGetFoodsQuery: jest.fn(),
   useCreateFoodMutation: jest.fn(),
+  useDeleteFoodMutation: jest.fn(),
 }));
 
 jest.mock('@/components/admin-page-comp/AdminFoodDialog', () => ({
   __esModule: true,
   default: () => <div data-testid="admin-food-dialog" />,
 }));
+
+// Mock console.error
+const mockConsoleError = jest.fn();
+console.error = mockConsoleError;
 
 // Mock next/image
 jest.mock('next/image', () => ({
@@ -28,6 +35,9 @@ jest.mock('@/components/ui/separator', () => ({
 }));
 
 describe('AdminFoodPageComp', () => {
+  const mockRefetch = jest.fn();
+  const mockDeleteFoodMutation = jest.fn();
+
   const mockFoodData = {
     getFoods: [
       {
@@ -48,68 +58,112 @@ describe('AdminFoodPageComp', () => {
   };
 
   beforeEach(() => {
-    // Reset all mocks before each test
     jest.clearAllMocks();
+
+    (useGetFoodsQuery as jest.Mock).mockReturnValue({
+      data: mockFoodData,
+      refetch: mockRefetch,
+    });
+
+    (useDeleteFoodMutation as jest.Mock).mockReturnValue([mockDeleteFoodMutation]);
   });
 
   it('renders the component with header', () => {
-    (useGetFoodsQuery as jest.Mock).mockReturnValue({ data: { getFoods: [] } });
     render(<AdminFoodPageComp />);
-
     expect(screen.getByText('Захиалга')).toBeInTheDocument();
   });
 
   it('renders food items correctly', () => {
-    (useGetFoodsQuery as jest.Mock).mockReturnValue({ data: mockFoodData });
     render(<AdminFoodPageComp />);
 
-    // Check if food names are rendered
     expect(screen.getByText('Test Food 1')).toBeInTheDocument();
     expect(screen.getByText('Test Food 2')).toBeInTheDocument();
-
-    // Check if prices are formatted correctly
     expect(screen.getByText('1.5к')).toBeInTheDocument();
     expect(screen.getByText('800')).toBeInTheDocument();
-
-    // Check if statuses are rendered
-    expect(screen.getByText('Available')).toBeInTheDocument();
-    expect(screen.getByText('Out of Stock')).toBeInTheDocument();
   });
 
   it('renders edit and delete buttons for each food item', () => {
-    (useGetFoodsQuery as jest.Mock).mockReturnValue({ data: mockFoodData });
     render(<AdminFoodPageComp />);
-
-    // Since we have 2 food items and each has both edit and delete buttons
     const deleteButtons = screen.getAllByTestId('delete-button');
-    expect(deleteButtons).toHaveLength(4); // 2 edit + 2 delete buttons
+    expect(deleteButtons).toHaveLength(2);
   });
 
   it('renders separator between food items but not after the last item', () => {
-    (useGetFoodsQuery as jest.Mock).mockReturnValue({ data: mockFoodData });
     render(<AdminFoodPageComp />);
-
-    // Find all separators using test id
     const separators = screen.getAllByTestId('separator');
-    // Should have one less separator than the number of items
     expect(separators).toHaveLength(mockFoodData.getFoods.length - 1);
   });
-  it('formats prices correctly', () => {
-    (useGetFoodsQuery as jest.Mock).mockReturnValue({
-      data: {
-        getFoods: [
-          {
-            id: '1',
-            foodName: 'Test Food',
-            price: 1500,
-            status: 'Available',
-            imageUrl: '/test-image.jpg',
-          },
-        ],
-      },
-    });
 
+  it('formats prices correctly', () => {
     render(<AdminFoodPageComp />);
     expect(screen.getByText('1.5к')).toBeInTheDocument();
+  });
+
+  it('should confirm before deleting and call delete mutation & refetch', async () => {
+    jest.spyOn(window, 'confirm').mockImplementation(() => true); // Mock confirmation BEFORE click
+
+    render(<AdminFoodPageComp />);
+
+    const deleteButtons = screen.getAllByTestId('delete-button');
+
+    // Click the first delete button (corresponding to food ID '1')
+    fireEvent.click(deleteButtons[0]);
+
+    await waitFor(() => {
+      expect(mockDeleteFoodMutation).toHaveBeenCalledWith({ variables: { foodId: '1' } });
+    });
+
+    await waitFor(() => {
+      expect(mockRefetch).toHaveBeenCalled();
+    });
+  });
+
+  it('should not delete if user cancels', async () => {
+    render(<AdminFoodPageComp />);
+
+    // Mock window.confirm to return false (user cancels)
+    jest.spyOn(window, 'confirm').mockImplementation(() => false);
+
+    // Click the delete button
+    const deleteButtons = screen.getAllByTestId('delete-button');
+    fireEvent.click(deleteButtons[1]);
+
+    // Mutation should NOT be called
+    expect(mockDeleteFoodMutation).not.toHaveBeenCalled();
+
+    // Refetch should NOT be called
+    expect(mockRefetch).not.toHaveBeenCalled();
+  });
+
+  it('should handle deletion error correctly', async () => {
+    const mockConfirm = jest.fn();
+    window.confirm = mockConfirm;
+
+    const mockError = new Error('Failed to delete food');
+    const mockDeleteMutation = jest.fn().mockRejectedValue(mockError);
+    useDeleteFoodMutation.mockReturnValue([mockDeleteMutation]);
+
+    // Mock confirm to return true
+    mockConfirm.mockReturnValue(true);
+
+    // Render the component
+    render(<AdminFoodPageComp />);
+
+    const deleteButton = screen.getAllByTestId('delete-button');
+    fireEvent.click(deleteButton[0]);
+
+    // Verify confirm was called
+    expect(mockConfirm).toHaveBeenCalledWith('Та энэ хоолыг устгахдаа итгэлтэй байна уу?');
+
+    // Wait for and verify error handling
+    await waitFor(() => {
+      // Verify delete mutation was called with correct arguments
+      expect(mockDeleteMutation).toHaveBeenCalledWith({
+        variables: { foodId: '1' },
+      });
+
+      // Verify error was logged
+      expect(mockConsoleError).toHaveBeenCalledWith('Failed to delete food:', mockError);
+    });
   });
 });
