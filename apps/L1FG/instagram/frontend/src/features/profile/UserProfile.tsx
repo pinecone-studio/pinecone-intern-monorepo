@@ -5,14 +5,16 @@ import Following from '@/components/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
 import StoryHighlight from '@/components/profile/story/StoryHighlight';
 import { GetUserTogetherQuery } from '@/generated';
-import Image from 'next/image';
 import { IconPostSavedTag } from './comment/IconPostSavedTag';
 
 export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <>
       <div className="flex gap-20 ml-[72px]" data-testid="user-profile">
-        <Image src="/images/profilePic.png" alt="Profile Picture" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
+        <div
+          style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
+          className=" bg-cover  w-[150px] h-[150px] object-cover rounded-full"
+        ></div>
 
         <div className="flex flex-col gap-4">
           <div className="flex gap-3 items-center justify-center">

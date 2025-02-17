@@ -13,5 +13,3 @@ export const Follow = ({ handleClickLike, className, followStyle }: { handleClic
     </button>
   );
 };
-// w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
-//             flex justify-center items-center mt-2
