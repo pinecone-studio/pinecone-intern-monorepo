@@ -30,6 +30,19 @@ export const typeDefs = gql`
     success: Boolean!
   }
 
+  type ForgetRequestOtpType {
+    success: Boolean!
+    email: String!
+  }
+
+  type ForgetVerifyOtpType {
+    success: Boolean!
+  }
+
+  type ForgetPasswordType {
+    success: Boolean!
+  }
+
   input RequestOtpInput {
     email: String!
   }
@@ -44,9 +57,26 @@ export const typeDefs = gql`
     email: String!
   }
 
+  input ForgetRequestOtpInput {
+    email: String!
+  }
+
+  input ForgetVerifyOtpInput {
+    verifyOtp: Int!
+    email: String!
+  }
+
+  input ForgetPasswordInput {
+    password: String!
+    email: String!
+  }
+
   type Mutation {
     requestOTP(input: RequestOtpInput!): RequestOtpType!
     verifyOTP(input: VerifyOtpInput!): VerifyOtpType!
     register(input: RegisterInput!): RegisterType!
+    forgetRequestOTP(input: ForgetRequestOtpInput!): ForgetRequestOtpType!
+    forgetVerifyOTP(input: ForgetVerifyOtpInput!): ForgetVerifyOtpType!
+    forgetPassword(input: ForgetPasswordInput!): ForgetPasswordType!
   }
 `;
