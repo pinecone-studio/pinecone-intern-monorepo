@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAddPostMutation } from '@/generated';
 import TownDetails from '@/components/addEstate/TownDetails';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
@@ -15,12 +15,20 @@ import { createInput } from '@/components/utils/create-input';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
 import { toast } from 'react-toastify';
 import { useFormState } from '../../components/utils/use-form-state';
+import { useRouter } from 'next/navigation';
 
 const AddEstate: React.FC = () => {
   const { formData, setFormData } = useFormState();
   const { user } = useAuth();
-
   const [addPost] = useAddPostMutation();
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.warning('Та нэвтэрч орно уу');
+      router.push('/');
+    }
+  }, []);
 
   const handleFileChange = (name: string, files: string[] | null) => {
     setFormData((prevFormData) => ({
