@@ -3,7 +3,7 @@ import { Search, X } from 'lucide-react';
 import Image from 'next/image';
 import { useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
-import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
+import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const { data, loading } = useGetFollowersQuery({
@@ -21,7 +21,7 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
         <DialogHeader>
           <div className="flex justify-between items-center px-3 py-1">
             <div></div>
-            <h3 className="flex justify-center font-semibold">Following</h3>
+            <h3 className="flex justify-center font-semibold">Followers</h3>
             <div className="flex justify-end">
               <DialogTrigger asChild>
                 <div className="relative">
@@ -51,10 +51,10 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                 </div>
               </div>
               {item.user && (
-                <FriendshipStatus
+                <FriendshipStatusUser
                   preview={item.user}
                   requestStyle="flex gap-2"
-                  followingStyle="bg-[#F4F4F5] h-[36px] px-5 rounded-lg font-semibold text-sm"
+                  removeStyle="bg-[#F4F4F5] h-[36px] px-5 rounded-lg font-semibold text-sm"
                   followStyle="bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
                   requestedStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
                 />

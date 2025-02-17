@@ -72,5 +72,13 @@ mutation CreateFollower($input: FollowInput!) {
 mutation Unfollow($followerId: String!) {
   unfollow(followerId: $followerId) {
     _id
+    followerId
+    targetId
+  }
+}
+mutation DeleteFollower($followerId: ID!) {
+  deleteFollower(followerId: $followerId) {
+    isFollowed
+    isRequested
   }
 }
