@@ -29,8 +29,7 @@
       "options": {
         "buildTarget": "concert-ticket-frontend:build",
         "dev": true
-      },
-      "configurations": {
+      },      "configurations": {
         "development": {
           "buildTarget": "concert-ticket-frontend:build:development",
           "dev": true,
