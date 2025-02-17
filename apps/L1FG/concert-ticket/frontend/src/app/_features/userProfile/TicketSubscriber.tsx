@@ -35,6 +35,8 @@ const TicketSubscriber = ({ handleChange, handleNext, value, ticketID }: SubBuyP
     handleChange({ target: { name: 'phoneNumber', value: data.phoneNumber } } as unknown as React.ChangeEvent<HTMLInputElement>);
     handleChange({ target: { name: 'email', value: data.email } } as unknown as React.ChangeEvent<HTMLInputElement>);
     handleNext();
+    handleChange({ target: { name: 'phoneNumber', value: '' } } as unknown as React.ChangeEvent<HTMLInputElement>);
+    handleChange({ target: { name: 'email', value: '' } } as unknown as React.ChangeEvent<HTMLInputElement>);
   }
   return (
     <Form {...form}>
@@ -53,7 +55,7 @@ const TicketSubscriber = ({ handleChange, handleNext, value, ticketID }: SubBuyP
                     <Input
                       data-cy="reservation-phone-input"
                       className="bg-black text-[13px] texted-[#A1A1AA] pl-[10px] border-[#27272A] text-white  w-[564px] h-[36px] my-[10px] border rounded-md"
-                      placeholder={`${!value.phoneNumber ? 'phone number' : value.phoneNumber} `}
+                      placeholder="phone number"
                       {...field}
                     />
                   </FormControl>
@@ -71,7 +73,7 @@ const TicketSubscriber = ({ handleChange, handleNext, value, ticketID }: SubBuyP
                     <Input
                       data-cy="reservation-email-input"
                       className="bg-black text-[13px] texted-[#A1A1AA] pl-[10px] border-[#27272A] text-white  w-[564px] h-[36px] my-[10px] border rounded-md"
-                      placeholder={`${!value.email ? 'Email' : value.email} `}
+                      placeholder="Email"
                       {...field}
                     />
                   </FormControl>
