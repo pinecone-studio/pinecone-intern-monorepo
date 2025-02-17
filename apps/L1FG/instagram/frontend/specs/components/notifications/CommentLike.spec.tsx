@@ -7,6 +7,7 @@ const likeNotificationMock = [
     categoryType: 'POST_LIKE',
     contentPostId: null,
     contentComment: 'mmm',
+    createdAt: '2025-02-15',
     contentPost: {
       _id: '1',
       postImage: 'post.png',
@@ -29,6 +30,7 @@ const likeNotificationMock = [
     categoryType: 'POST_LIKE',
     contentPostId: '1',
     contentComment: 'mmm',
+    createdAt: '2025-02-15',
     contentPost: {
       _id: '1',
       postImage: 'post.png',
@@ -51,6 +53,7 @@ const likeNotificationMock = [
     categoryType: 'POST_LIKE',
     contentPostId: '1',
     contentComment: 'mmm',
+    createdAt: '2025-02-15',
     contentPost: {
       _id: '1',
       postImage: 'post.png',

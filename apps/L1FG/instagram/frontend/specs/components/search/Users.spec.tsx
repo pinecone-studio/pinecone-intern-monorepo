@@ -70,6 +70,7 @@ describe('Users Component', () => {
         postCount: 1,
         profileImage: '',
         userName: '',
+        mutualFollowersCount: 1,
       },
     ];
 
