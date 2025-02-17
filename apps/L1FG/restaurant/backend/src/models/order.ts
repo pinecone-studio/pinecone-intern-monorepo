@@ -9,6 +9,7 @@ const orderSchema = new Schema({
       imageUrl: { type: String },
     },
   ],
+  userId: { type: String },
   tableId: { type: Number },
   status: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
