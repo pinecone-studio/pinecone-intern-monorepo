@@ -2,11 +2,12 @@ import { MutationResolvers } from '../../generated';
 import { OrderModel } from '../../models/order';
 
 export const makeOrder: MutationResolvers['makeOrder'] = async (_, { input }) => {
-  const { tableId, items } = input;
+  const { tableId, items, userId } = input;
 
   const savedOrder = await OrderModel.create({
     tableId,
     items,
+    userId,
     status: 'Pending',
     createdAt: new Date(),
   });
@@ -17,5 +18,6 @@ export const makeOrder: MutationResolvers['makeOrder'] = async (_, { input }) =>
     createdAt: savedOrder.createdAt,
     status: savedOrder.status,
     tableId: savedOrder.tableId,
+    userId: savedOrder.userId,
   };
 };

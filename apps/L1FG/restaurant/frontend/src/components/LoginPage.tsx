@@ -43,8 +43,8 @@ const LoginPage = () => {
           userName: user.data?.loginUser.userName,
           profileImage: user.data?.loginUser.profileImage,
           phoneNumber: user.data?.loginUser.phoneNumber,
-          // role: user.data?.loginUser.role,
-          // wallet: user.data?.loginUser.wallet,
+          role: user.data?.loginUser.role,
+          wallet: user.data?.loginUser.wallet,
           createdAt: user.data?.loginUser.createdAt,
         })
       );
