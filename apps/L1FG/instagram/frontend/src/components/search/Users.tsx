@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { SearchSkeleton } from './SkeletonSearch';
 
 type Props = {
-  users?: UserTogetherUserType[] | undefined;
+  users?: UserTogetherUserType[];
   setSearchOpen: (_searchOpen: boolean) => void;
   setUserName: (_userName: string) => void;
   loading: boolean;
