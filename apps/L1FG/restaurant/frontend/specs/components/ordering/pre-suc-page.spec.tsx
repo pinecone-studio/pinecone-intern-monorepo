@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { useMakeOrderMutation } from '@/generated';
