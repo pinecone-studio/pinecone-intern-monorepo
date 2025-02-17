@@ -135,6 +135,7 @@ export const UserTypeDefs = gql`
     login(input: SignInInput!): SignInType!
     savedSearchUser(searchedUserId: String!): SearchedUsersType
     deleteSearchUser(searchedUserId: String!): SearchedUsersType
+    deleteAllSearchUser: SearchedUsersType
     updateProfileImage(image: String!): String!
   }
 `;
