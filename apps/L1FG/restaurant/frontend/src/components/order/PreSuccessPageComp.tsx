@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import Image from 'next/image';
 import { useMakeOrderMutation } from '@/generated';
@@ -11,7 +11,16 @@ import Link from 'next/link';
 const PreSuccessPageComp = () => {
   const { orders, tableId, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userId, setUserId] = useState<string>('');
   const router = useRouter();
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setUserId(parsedUser._id);
+    }
+  }, []);
 
   const totalPrice = orders.reduce((total, item) => total + item.price * item.quantity, 0);
   const [makeOrder] = useMakeOrderMutation();
@@ -25,6 +34,7 @@ const PreSuccessPageComp = () => {
         variables: {
           input: {
             tableId: Number(tableId),
+            userId: userId,
             items: orders.map((item) => ({
               name: item.foodName,
               quantity: item.quantity,

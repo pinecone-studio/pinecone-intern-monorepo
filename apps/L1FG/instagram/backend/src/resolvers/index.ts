@@ -9,6 +9,8 @@ import * as CommentDetailType from './comment/comment-detail-type';
 import * as NotificationType from './notification/notification-type';
 import * as FollowerType from './follow/follower-type';
 import * as FollowingType from './follow/following-type';
+import * as OneUserStoriesType from './story/one-user-stories-type';
+import * as OneStoryType from './story/one-story-type';
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -47,4 +49,6 @@ export const resolvers = {
   NotificationType,
   FollowerType,
   FollowingType,
+  OneUserStoriesType,
+  OneStoryType,
 };

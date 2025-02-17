@@ -11,7 +11,7 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
   if (!isMatch) {
     throw new Error('Пассворд буруу байна');
   }
-  const exp = tokenExpireCal('minute', 30);
+  const exp = tokenExpireCal('day', 1);
   if (!process.env.SESSION_SECRET) {
     throw new Error('Session secret is not defined');
   }
