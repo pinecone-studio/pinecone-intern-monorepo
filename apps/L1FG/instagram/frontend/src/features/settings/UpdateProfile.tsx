@@ -42,7 +42,7 @@ export const UploadSection = ({ updatePhoto }: { updatePhoto: MutationFunction<U
   };
 
   return (
-    <div className="flex flex-col items-center justify-center py-20 px-4 w-[240px] h-20 mt-4 mb-4 " data-testid="modal-content">
+    <div data-cy="update-photo" className="flex flex-col items-center justify-center py-20 px-4 w-[240px] h-20 mt-4 mb-4 " data-testid="modal-content">
       <label className="flex flex-col items-center gap-4 cursor-pointer" data-testid="upload-label">
         <div className="w-24 h-20 mb-4" data-testid="upload-icon">
           <CreatePostSvg />
@@ -53,7 +53,7 @@ export const UploadSection = ({ updatePhoto }: { updatePhoto: MutationFunction<U
           data-testid="select-from-computer-button"
           onClick={() => document.getElementById('file-upload')?.click()}
         >
-          Upload Pohoto
+          Upload Photo
         </button>
         <input id="file-upload" type="file" accept="image/*,video/*" multiple className="hidden" data-testid="file-upload-input" onChange={handleUploadImages} />
       </label>
