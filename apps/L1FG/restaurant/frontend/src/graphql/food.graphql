@@ -10,11 +10,18 @@ query GetFoods {
   }
 }
 
- mutation CreateFood($input: FoodInputType!) {
-   createFood(input: $input) {
-     foodName
-     imageUrl
-     price
-     status
-   }
- }
+mutation CreateFood($input: FoodInputType!) {
+  createFood(input: $input) {
+    foodName
+    imageUrl
+    price
+    status
+  }
+}
+
+mutation DeleteFood($foodId: ID!) {
+  deleteFood(foodId: $foodId) {
+    status
+    message
+  }
+}
