@@ -1,10 +1,55 @@
+'use client';
+
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useRegisterMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Loading } from '@/components/user/main/Loading';
+import { toast } from 'react-toastify';
 
 const CreateAccountPassword = () => {
+  const [inputOneValue, setInputOneValue] = useState('');
+  const [inputTwoValue, setInputTwoValue] = useState('');
+  const [viewEmail, setViewEmail] = useState<string>('');
+  const [register, { loading, data }] = useRegisterMutation();
+  const router = useRouter();
+
+  const handleChangeInputOne = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputOneValue(e.target.value);
+  };
+
+  const handleChangeInputTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputTwoValue(e.target.value);
+  };
+
+  const onSubmitCreatePassword = () => {
+    if (inputOneValue === inputTwoValue) {
+      register({ variables: { input: { password: inputOneValue, email: viewEmail } } });
+    } else {
+      toast.error('Your password does not match', {
+        autoClose: 2000,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const localStorageValue = localStorage.getItem('email') || '';
+    setViewEmail(localStorageValue);
+  }, []);
+
+  if (loading) return <Loading />;
+
+  if (data?.register.success) {
+    router.push('/');
+    toast.success('Successfully logged in', {
+      autoClose: 2000,
+    });
+  }
+
   return (
-    <main className="container mx-auto h-screen">
+    <main data-cy="Create-Account-Password-Page" className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">
@@ -20,16 +65,16 @@ const CreateAccountPassword = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Password</p>
-                  <Input type="email" placeholder="Password" className="focus-visible:ring-0" />
+                  <Input type="password" placeholder="Password" value={inputOneValue} onChange={handleChangeInputOne} className="focus-visible:ring-0" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Confirm Password</p>
                   </div>
-                  <Input type="email" placeholder="Confirm password" />
+                  <Input type="password" placeholder="Confirm password" value={inputTwoValue} onChange={handleChangeInputTwo} />
                 </div>
               </div>
-              <Button className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
+              <Button onClick={onSubmitCreatePassword} className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
                 <p className="font-Inter font-medium text-sm not-italic text-white">Continue</p>
               </Button>
             </div>
