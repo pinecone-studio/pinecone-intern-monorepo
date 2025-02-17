@@ -17,8 +17,8 @@ const HomeSuggestionCard = () => {
       </div>
       <div className="mx-auto p-4 text-sm text-gray-500">
         <ul className="space-y-4">
-          {data?.getFollowingSuggestion.map((user, index) => (
-            <li key={index} className="flex items-center justify-between">
+          {data?.getFollowingSuggestion.map((user) => (
+            <li key={user._id} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <ProfileHover searchingUserId={user?._id}>
                   <Image width={500} height={500} src={user.profileImage} alt={user.userName} className="w-10 h-10 rounded-full" />
