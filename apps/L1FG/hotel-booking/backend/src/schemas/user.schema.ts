@@ -26,8 +26,6 @@ export const typeDefs = gql`
   }
 
   type RegisterType {
-    user: User
-    token: String
     success: Boolean!
   }
 

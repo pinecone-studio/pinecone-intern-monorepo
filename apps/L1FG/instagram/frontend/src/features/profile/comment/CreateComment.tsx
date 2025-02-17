@@ -11,7 +11,11 @@ const CreateComment = ({ post }: { post: UserPostType }) => {
       {
         query: GetCommentsDocument,
         variables: {
-          input: { postId: post?._id },
+          input: {
+            postId: post?._id,
+            after: '',
+            first: 4,
+          },
         },
       },
     ],

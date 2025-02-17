@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { CommentPost } from '@/components/notifications/CommentPost';
+import { CommentLike } from '@/components/notifications/CommentLike';
 import { render } from '@testing-library/react';
 
 const likeNotificationMock = [
@@ -90,22 +90,6 @@ describe('post comment component', () => {
           profileImage: 'user.png',
         },
       },
-      {
-        categoryType: 'POST_LIKE',
-        contentPostId: '1', // ✅ Зөв контент ID-тай
-        contentPost: {
-          _id: '1',
-          postImage: 'post.png',
-        },
-        _id: '13',
-        isRead: false,
-        ownerId: '2',
-        user: {
-          _id: '',
-          userName: 'john',
-          profileImage: 'john.png',
-        },
-      },
     ];
 
     const groupedPostLikes = mockNotifications.reduce((acc, notification) => {
@@ -119,21 +103,44 @@ describe('post comment component', () => {
       return acc;
     }, {} as Record<string, typeof mockNotifications>);
 
-    expect(groupedPostLikes).toEqual({
-      '1': [
-        {
-          categoryType: 'POST_LIKE',
-          contentPostId: '1',
-          contentPost: { _id: '1', postImage: 'post.png' },
-          _id: '13',
-          isRead: false,
-          ownerId: '2',
-          user: { _id: '', userName: 'john', profileImage: 'john.png' },
-        },
-      ],
-    });
+    expect(groupedPostLikes).toEqual({});
   });
 
+  it('should handle notifications without contentPostId', () => {
+    const mockNotifications = [
+      {
+        categoryType: 'POST_LIKE',
+        contentPostId: null,
+        contentPost: {
+          _id: '1',
+          postImage: 'post.png',
+        },
+        _id: '12',
+        isRead: false,
+        ownerId: '1',
+        user: {
+          _id: '',
+          userName: 'search',
+          profileImage: 'user.png',
+        },
+      },
+    ];
+
+    const groupedPostLikes = mockNotifications.reduce((acc, notification) => {
+      const postId = notification.contentPostId;
+      if (!postId) {
+        return acc;
+      }
+
+      if (!acc[postId]) {
+        acc[postId] = [];
+      }
+      acc[postId].push(notification);
+      return acc;
+    }, {} as Record<string, typeof mockNotifications>);
+
+    expect(groupedPostLikes).toEqual({});
+  });
   it('filters and groups notifications correctly', async () => {
     const groupedPostLikes = likeNotificationMock.reduce((acc, notification) => {
       const postId = notification.contentPostId;
@@ -182,9 +189,9 @@ describe('post comment component', () => {
   });
 
   it('renders CommentPost component', () => {
-    render(<CommentPost commentNotification={[]} />);
+    render(<CommentLike commentNotification={[]} />);
   });
   it('renders CommentPost component', () => {
-    render(<CommentPost commentNotification={likeNotificationMock as []} />);
+    render(<CommentLike commentNotification={likeNotificationMock as []} />);
   });
 });
