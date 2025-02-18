@@ -80,5 +80,6 @@ export const FollowerTypeDefs = gql`
     acceptRequest(followerId: String!): FollowedRequested!
     unfollow(followerId: String!): Follow
     deleteFollower(followerId: ID!): FollowedRequested!
+    deleteRequest(targetId: String!): FollowedRequested
   }
 `;

@@ -34,13 +34,12 @@ const GetComments = ({ post }: { post: UserPostType }) => {
           first: 6,
         },
       },
-      updateQuery: updateQueryHandler, // ✅ Type-safe function
+      updateQuery: updateQueryHandler,
     });
     setMoreCommentsLoading(false);
   };
 
   return (
-
     <div className="flex flex-col gap-6 overflow-y-scroll">
       {loading && <CommentPreviewSkeleton />}
       {data?.getComments?.edges.map((comment) => (
@@ -49,11 +48,7 @@ const GetComments = ({ post }: { post: UserPostType }) => {
 
       {data?.getComments?.pageInfo.hasNextPage && (
         <div className="flex justify-center items-center">
-          {moreCommentsLoading ? (
-            <Loader2 className="animate-spin text-gray-500" size={24} /> // Spinner while loading
-          ) : (
-            <PlusCircle className="cursor-pointer hover:text-blue-500" onClick={handleMoreComments} size={28} />
-          )}
+          {moreCommentsLoading ? <Loader2 className="animate-spin text-gray-500" size={24} /> : <PlusCircle className="cursor-pointer hover:text-blue-500" onClick={handleMoreComments} size={28} />}
         </div>
       )}
     </div>

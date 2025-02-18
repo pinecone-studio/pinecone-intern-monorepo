@@ -3,7 +3,6 @@ import Followers from '@/components/profile/follow/Followers';
 import FollowersEmpty from '@/components/profile/follow/FollowersEmpty';
 import Following from '@/components/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
-import StoryHighlight from '@/components/profile/story/StoryHighlight';
 import { GetUserTogetherQuery } from '@/generated';
 import { IconPostSavedTag } from './comment/IconPostSavedTag';
 
@@ -71,7 +70,6 @@ export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; user
           </div>
         </div>
       </div>
-      <StoryHighlight userId={userId as string} />
       <IconPostSavedTag userId={userId as string} />
     </>
   );

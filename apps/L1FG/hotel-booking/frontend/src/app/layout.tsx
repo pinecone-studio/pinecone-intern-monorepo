@@ -16,7 +16,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         <ApolloWrapper>
           <NuqsAdapter>
             {children}
-            <ToastContainer position="bottom-right" />
+            <ToastContainer position="top-right" />
           </NuqsAdapter>
         </ApolloWrapper>
       </body>

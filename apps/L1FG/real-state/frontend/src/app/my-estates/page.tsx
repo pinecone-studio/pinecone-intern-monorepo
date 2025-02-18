@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import { useAuth } from '@/components/providers';
 import { useGetPostsByUserIdQuery } from '@/generated';
@@ -13,7 +12,6 @@ const statusLabelMap: Record<string, string> = {
   APPROVED: 'Зарагдаж байгаа',
   REJECTED: 'Буцаагдсан',
 };
-
 const statusStyleMap: Record<string, string> = {
   PENDING: 'bg-[rgba(37,99,235,0.1)] text-[rgba(37,99,235,1)]',
   APPROVED: 'bg-green-100 text-green-800',
@@ -21,8 +19,9 @@ const statusStyleMap: Record<string, string> = {
 };
 
 const MyEstatesPage = () => {
-  const router = useRouter();
   const { user } = useAuth();
+  const router = useRouter();
+
   const { data, loading, error } = useGetPostsByUserIdQuery({
     variables: { input: { propertyOwnerId: user?._id } },
   });

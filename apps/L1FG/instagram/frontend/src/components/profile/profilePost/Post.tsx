@@ -3,7 +3,7 @@ import { useGetPostsQuery } from '@/generated';
 import PostModal from './PostModal';
 import Message from '@/components/svg/Message';
 import Heart from '@/components/svg/Heart';
-import SkeletonPost from './SkeletonPost';
+import SkeletonGrid from './SkeletonGrid';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data, loading } = useGetPostsQuery({
@@ -20,10 +20,8 @@ const Post = ({ userId }: { userId: string }) => {
     <div className="flex flex-col gap-5 w-[900px] mt-5" data-testid="profile-posts">
       <div>
         {loading ? (
-          <div className="grid grid-cols-3 gap-1">
-            <SkeletonPost />
-            <SkeletonPost />
-            <SkeletonPost />
+          <div>
+            <SkeletonGrid />
           </div>
         ) : (
           <div className="grid grid-cols-3 gap-1 overflow-y-scroll">

@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const CommentPreviewSkeleton = () => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {[...Array(4)].map((_, i) => (
         <div key={i} className="flex items-center gap-4">
           <Skeleton className="h-[35px] w-[35px] rounded-full" />

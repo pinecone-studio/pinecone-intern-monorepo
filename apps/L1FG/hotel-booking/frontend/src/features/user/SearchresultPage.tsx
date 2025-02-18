@@ -20,7 +20,11 @@ export const SearchResultPage = () => {
   const [selectedName, setSelectedName] = useState<string>('');
 
   const { loading: loadingHotels } = useGetHotelsQuery();
-  const { error: errorAllQuerie, data: dataAllQuerie } = useGetAllQuerieQuery({
+  const {
+    error: errorAllQuerie,
+    data: dataAllQuerie,
+    loading,
+  } = useGetAllQuerieQuery({
     variables: { input: { endDate: dateTo, startDate: dateFrom, travellerCount: adultCountNumber, type: searchValuePrice } },
   });
 
@@ -37,18 +41,22 @@ export const SearchResultPage = () => {
   }
 
   const hotels = dataAllQuerie?.getAllQuerie || [];
+
   const filteredDataByRating = hotels.filter((filterData) => {
     let checker = true;
     if (selectedRating !== null) {
       checker = filterData?.rating !== null && filterData?.rating !== undefined && filterData?.rating >= selectedRating;
     }
+
     return checker;
   });
+
   const filteredDataByStar = filteredDataByRating.filter((filterData) => {
     let checker = true;
-    if (selectedStar !== null) {
-      checker = filterData?.starRating !== null && filterData?.starRating !== undefined && filterData?.starRating >= selectedStar;
+    if (selectedStar !== 0) {
+      checker = filterData?.starRating !== null && filterData?.starRating !== undefined && filterData?.starRating == selectedStar;
     }
+
     return checker;
   });
 
@@ -57,13 +65,16 @@ export const SearchResultPage = () => {
     if (selectedAmenities.length !== 0) {
       checker = selectedAmenities.every((amenity) => filterData?.amenities?.includes(amenity));
     }
+
     return checker;
   });
+
   const filteredDataByName = filteredDateByAmenities.filter((filterData) => {
     let checker = true;
     if (selectedName !== '') {
       checker = filterData?.name !== undefined && filterData?.name.toLowerCase().includes(selectedName.toLowerCase());
     }
+
     return checker;
   });
 
@@ -82,6 +93,7 @@ export const SearchResultPage = () => {
         selectedRating={selectedRating}
         selectedStar={selectedStar}
         selectedAmenities={selectedAmenities}
+        isLoading={loading}
       />
       <Footer />
     </>

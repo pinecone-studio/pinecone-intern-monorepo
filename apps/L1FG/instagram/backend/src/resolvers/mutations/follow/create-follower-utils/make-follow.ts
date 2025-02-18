@@ -17,6 +17,7 @@ export const makeFollow = async (userId: string | null, targetId: string): Promi
       ownerId: targetId,
       categoryType: 'REQUEST',
     });
+
     return follow;
   } catch (error) {
     throw catchError(error);

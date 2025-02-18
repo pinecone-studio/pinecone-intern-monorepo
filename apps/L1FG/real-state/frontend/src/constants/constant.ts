@@ -4,14 +4,15 @@ type CategoriesType = {
 };
 
 export const Categories = <SubCategoryType[]>[
-  { id: 1, value: 'Орон сууц', title: 'apartmet', number: '79' },
-  { id: 2, value: 'Байшин', title: 'house', number: '79' },
-  { id: 3, value: 'Оффис', title: 'office', number: '79' },
+  { id: 1, value: 'Орон сууц', title: 'Apartment', number: '79' },
+  { id: 2, value: 'Байшин', title: 'House', number: '79' },
+  { id: 3, value: 'Оффис', title: 'Office', number: '79' },
 ];
 
 type ProvinceType = {
   id: number;
   value: string;
+  title?: string;
 };
 export const Provincies = <ProvinceType[]>[
   { id: 1, value: 'Улаанбаатар' },
@@ -39,23 +40,23 @@ export const Provincies = <ProvinceType[]>[
 ];
 
 export const Districts = <ProvinceType[]>[
-  { id: 1, value: 'Багануур' },
-  { id: 2, value: 'Баянзүрх' },
-  { id: 3, value: 'Баянгол' },
-  { id: 4, value: 'Налайх' },
-  { id: 5, value: 'Сонгинохайрхан' },
-  { id: 6, value: 'Сүхбаатар' },
-  { id: 7, value: 'Хан-Уул' },
-  { id: 8, value: 'Чингэлтэй' },
+  { id: 1, value: 'Багануур', title: 'Багануур' },
+  { id: 2, value: 'Баянзүрх', title: 'Баянзүрх' },
+  { id: 3, value: 'Баянгол', title: 'Баянгол' },
+  { id: 4, value: 'Налайх', title: 'Налайх' },
+  { id: 5, value: 'Сонгинохайрхан', title: 'Сонгинохайрхан' },
+  { id: 6, value: 'Сүхбаатар', title: 'Сүхбаатар' },
+  { id: 7, value: 'Хан-Уул', title: 'Хан-Уул' },
+  { id: 8, value: 'Чингэлтэй', title: 'Чингэлтэй' },
 ];
 
 export const Cost = <ProvinceType[]>[
-  { id: 1, value: '1 сая' },
-  { id: 2, value: '5 сая' },
-  { id: 3, value: '10 сая' },
-  { id: 4, value: '50 сая' },
-  { id: 5, value: '100 сая' },
-  { id: 6, value: '300 сая' },
+  { id: 1, value: '1 сая', title: '1000000' },
+  { id: 2, value: '5 сая', title: '5000000' },
+  { id: 3, value: '10 сая', title: '10000000' },
+  { id: 4, value: '50 сая', title: '50000000' },
+  { id: 5, value: '100 сая', title: '100000000' },
+  { id: 6, value: '300 сая', title: '300000000' },
 ];
 
 export const Rooms = <CategoriesType[]>[
