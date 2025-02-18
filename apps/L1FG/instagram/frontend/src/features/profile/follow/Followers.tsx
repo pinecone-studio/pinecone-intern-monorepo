@@ -1,15 +1,55 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Search, X } from 'lucide-react';
 import Image from 'next/image';
-import { useGetFollowersQuery } from '@/generated';
+import { GetFollowersQuery, useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
 import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { useState } from 'react';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data, loading } = useGetFollowersQuery({
-    variables: { searchingUserId: userId },
+  const [moreFollowersLoading, setMoreFollowersLoading] = useState(false);
+  const { data, loading, fetchMore } = useGetFollowersQuery({
+    variables: {
+      input: {
+        after: '',
+        first: 5,
+        searchingUserId: userId,
+      },
+    },
   });
+  const updateQueryHandler = (prevResult: GetFollowersQuery, { fetchMoreResult }: { fetchMoreResult?: GetFollowersQuery }): GetFollowersQuery => {
+    if (!fetchMoreResult) return prevResult;
+    if (prevResult.getFollowers?.pageInfo?.endCursor == fetchMoreResult.getFollowers?.pageInfo?.endCursor) {
+      return prevResult;
+    }
+    const prevEdges = prevResult.getFollowers?.edges ?? [];
+    const fetchResultEdges = fetchMoreResult.getFollowers?.edges ?? [];
+    return {
+      getFollowers: {
+        ...fetchMoreResult.getFollowers,
+        edges: [...prevEdges, ...fetchResultEdges],
+        pageInfo: fetchMoreResult.getFollowers?.pageInfo,
+      },
+    };
+  };
+  const handleMoreFollowers = async (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - scrollTop <= clientHeight + 50 && !moreFollowersLoading && data?.getFollowers.pageInfo.hasNextPage) {
+      setMoreFollowersLoading(true);
+      await fetchMore({
+        variables: {
+          input: {
+            searchingUserId: userId,
+            after: data?.getFollowers?.pageInfo?.endCursor,
+            first: 6,
+          },
+        },
+        updateQuery: updateQueryHandler,
+      });
+      setMoreFollowersLoading(false);
+    }
+  };
   if (loading) {
     return;
   }
@@ -41,23 +81,23 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
             <input id="search" placeholder="Search" className="  h-8 pl-9  bg-gray-100 outline-none w-full rounded-lg" />
           </div>
         </div>
-        <div className="flex flex-col gap-3 overflow-y-scroll px-3 mt-2">
-          {data?.getFollowers?.map((item) => (
-            <div key={item.user._id} className="flex justify-between ">
+        <div className="flex flex-col gap-3 overflow-y-scroll px-3 mt-2" onScroll={handleMoreFollowers}>
+          {data?.getFollowers?.edges.map((item) => (
+            <div key={item.node.user._id} className="flex justify-between ">
               <div className=" flex gap-4">
-                <ProfileHover searchingUserId={item.user._id}>
+                <ProfileHover searchingUserId={item.node.user._id}>
                   <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 </ProfileHover>
                 <div>
-                  <ProfileHover searchingUserId={item.user._id}>
-                    <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  <ProfileHover searchingUserId={item.node.user._id}>
+                    <p className="text-sm font-semibold">{item?.node.user?.userName}</p>
                   </ProfileHover>
-                  <p className="text-xs font-normal text-[#71717A]">{item?.user?.fullName}</p>
+                  <p className="text-xs font-normal text-[#71717A]">{item?.node.user?.fullName}</p>
                 </div>
               </div>
-              {item.user && (
+              {item.node.user && (
                 <FriendshipStatusUser
-                  preview={item.user}
+                  preview={item.node.user}
                   requestStyle="flex gap-2"
                   removeStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
                   followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
