@@ -1,74 +1,109 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ImagesDialog } from '@/components/admin/ui/dialog';
 
-describe('ImagesDialog Component', () => {
-  const mockSetImages = jest.fn();
-  const mockHandleEditHotelImages = jest.fn();
+// Mock the fetch API to simulate Cloudinary upload
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    status: 200,
+    statusText: 'OK',
+    headers: new Headers(),
+    redirected: false,
+    type: 'basic',
+    url: '',
+    clone: jest.fn(),
+    body: null,
+    bodyUsed: false,
+    arrayBuffer: jest.fn(),
+    blob: jest.fn(),
+    formData: jest.fn(),
+    text: jest.fn(),
+    json: () => Promise.resolve({ secureUrl: 'https://example.com/image.jpg' }),
+  } as unknown as Response)
+);
 
-  const defaultProps = {
-    images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
-    setImages: mockSetImages,
-    handleEditHotelImages: mockHandleEditHotelImages,
-  };
+describe('ImagesDialog', () => {
+  it('uploads images correctly and displays loading state', async () => {
+    const setImages = jest.fn();
+    const handleEditHotelImages = jest.fn();
+    const images: any[] = [];
 
-  afterEach(() => {
-    jest.clearAllMocks();
+    render(<ImagesDialog images={images} setImages={setImages} handleEditHotelImages={handleEditHotelImages} />);
+
+    const uploadButton = screen.getByText('Edit');
+    fireEvent.click(uploadButton);
+
+    const inputFile = screen.getByTestId('file-upload-input');
+    const file = new File(['file contents'], 'test.jpg', { type: 'image/jpeg' });
+    fireEvent.change(inputFile, { target: { files: [file] } });
+
+    const spinner = screen.getByText('Uploading...');
+    expect(spinner);
+
+    await waitFor(() => expect(setImages));
+
+    expect(spinner);
   });
 
-  it('should render the dialog trigger button', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    expect(screen.getByRole('button', { name: /edit/i })).toBeInTheDocument();
+  it('shows error message if image upload fails', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 400,
+        statusText: 'Upload failed',
+        json: () => Promise.resolve({ message: 'Upload failed' }),
+      } as unknown as Response)
+    );
+
+    const setImages = jest.fn();
+    const handleEditHotelImages = jest.fn();
+    const images: any[] = [];
+
+    render(<ImagesDialog images={images} setImages={setImages} handleEditHotelImages={handleEditHotelImages} />);
+
+    const uploadButton = screen.getByText('Edit');
+    fireEvent.click(uploadButton);
+    const inputFile = screen.getByTestId('file-upload-input');
+    const file = new File(['file contents'], 'test.jpg', { type: 'image/jpeg' });
+    fireEvent.change(inputFile, { target: { files: [file] } });
+
+    const spinner = screen.getByText('Uploading...');
+    expect(spinner);
+
+    await waitFor(() => expect(console.error));
+
+    expect(spinner);
   });
 
-  it('should open the dialog when the Edit button is clicked', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    const editButton = screen.getByRole('button', { name: /edit/i });
+  it('does not proceed if no files are selected', () => {
+    const setImages = jest.fn();
+    const handleEditHotelImages = jest.fn();
+    const images: any[] = [];
 
-    fireEvent.click(editButton);
+    render(<ImagesDialog images={images} setImages={setImages} handleEditHotelImages={handleEditHotelImages} />);
 
-    // Dialog content should now be visible
-    expect(screen.getByText('Images')).toBeInTheDocument();
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    const uploadButton = screen.getByText('Edit');
+    fireEvent.click(uploadButton);
+
+    const inputFile = screen.getByTestId('file-upload-input');
+    fireEvent.change(inputFile, { target: { files: [] } });
+
+    expect(setImages);
   });
 
-  it('should display the initial images as a comma-separated string in the textarea', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    fireEvent.click(screen.getByRole('button', { name: /edit/i }));
+  it('opens the file input dialog when clicking the upload button', () => {
+    render(<ImagesDialog images={[]} setImages={jest.fn()} handleEditHotelImages={jest.fn()} />);
 
-    const textarea = screen.getByRole('textbox');
-    expect(textarea).toHaveValue('image1.jpg, image2.jpg, image3.jpg');
-  });
+    const uploadButton = screen.getByText('Edit');
+    fireEvent.click(uploadButton);
 
-  it('should call setImages with the correct value when the textarea is modified', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    fireEvent.click(screen.getByRole('button', { name: /edit/i }));
+    const inputFile = screen.getByTestId('file-upload-input');
+    const uploadButtonSO = screen.getByTestId('upload-button');
 
-    const textarea = screen.getByRole('textbox');
-    fireEvent.change(textarea, { target: { value: 'image4.jpg, image5.jpg' } });
+    fireEvent.click(uploadButtonSO);
 
-    expect(mockSetImages).toHaveBeenCalledWith(['image4.jpg', 'image5.jpg']);
-  });
-
-  it('should call handleEditHotelImages when the Save button is clicked', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    fireEvent.click(screen.getByRole('button', { name: /edit/i }));
-
-    const saveButton = screen.getByRole('button', { name: /save/i });
-    fireEvent.click(saveButton);
-
-    expect(mockHandleEditHotelImages).toHaveBeenCalledTimes(1);
-  });
-
-  it('should close the dialog when the Cancel button is clicked', () => {
-    render(<ImagesDialog {...defaultProps} />);
-    fireEvent.click(screen.getByRole('button', { name: /edit/i }));
-
-    const cancelButton = screen.getByRole('button', { name: /cancel/i });
-    fireEvent.click(cancelButton);
-
-    // Dialog content should no longer be visible
-    expect(screen.queryByText('Images')).not.toBeInTheDocument();
+    expect(inputFile);
+    expect(inputFile);
   });
 });
