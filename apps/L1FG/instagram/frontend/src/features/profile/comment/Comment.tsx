@@ -69,11 +69,10 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
           </div>
           <div className="flex ml-5 gap-4 items-center ">
             <PostDate date={comment.createdAt} />
-            <div>
+            <div className="flex items-center font-semibold text-gray-600 text-sm">
               <LikeModal userId={comment.user._id}>
                 <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
               </LikeModal>
-         
             </div>
             <p className="text-xs font-semibold text-gray-600">Reply</p>
           </div>
