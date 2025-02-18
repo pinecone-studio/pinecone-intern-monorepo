@@ -15,4 +15,8 @@ export * from './update-order-status';
 export * from './updateuser/change-password';
 export * from './foodmutation/edit-food';
 export * from './foodmutation/delete-food';
+export * from './categorymutation/update-category';
+export * from './categorymutation/delete-category';
+export * from './foodmutation/delete-food-category';
 export * from './update-order-read';
+
