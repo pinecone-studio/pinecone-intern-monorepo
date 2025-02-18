@@ -9,6 +9,7 @@ type Item = {
 
 export const EstateSideBar = () => {
   const [queryState, setSelectedQuerys] = useQueryStates({
+    searchValue: parseAsString.withDefault(''),
     category: parseAsString.withDefault(''),
     city: parseAsString.withDefault(''),
     districts: parseAsString.withDefault(''),
@@ -21,9 +22,10 @@ export const EstateSideBar = () => {
     haveLift: parseAsBoolean.withDefault(false),
   });
 
-  const { category, city, districts, maxPrice, minPrice, rooms, toiletRooms, garage, haveTerrace, haveLift } = queryState;
+  const { searchValue, category, city, districts, maxPrice, minPrice, rooms, toiletRooms, garage, haveTerrace, haveLift } = queryState;
 
-  const handleCityChange = (value: string) => setSelectedQuerys({ city: value });
+  const handleCityChange = (value: string) => setSelectedQuerys(city === value ? { city: '' } : { city: value });
+
   const handleDistrictChange = (value: string) => setSelectedQuerys({ districts: value });
   const handleMaxPriceChange = (value: string) => setSelectedQuerys({ maxPrice: value });
   const handleMinPriceChange = (value: string) => setSelectedQuerys({ minPrice: value });
@@ -34,10 +36,10 @@ export const EstateSideBar = () => {
   };
 
   return (
-    <div className="flex flex-col gapss-4">
+    <div className="flex flex-col gap-4">
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="search">Хайлт</Label>
-        <Input type="search" id="search" placeholder="Хот, дүүрэг, эсвэл газар хайх" />
+        <Input type="search" id="search" placeholder="Хот, дүүрэг, эсвэл газар хайх" defaultValue={searchValue} onChange={(e) => setSelectedQuerys({ searchValue: e.target.value })} />
       </div>
 
       {/* Category Selection */}
@@ -50,7 +52,7 @@ export const EstateSideBar = () => {
               data-testid={`side-category-${categoryItem.id}`}
               id={categoryItem.value}
               checked={category === categoryItem.value}
-              onChange={() => setSelectedQuerys({ category: categoryItem.value })}
+              onChange={() => setSelectedQuerys({ category: category === categoryItem.value ? '' : categoryItem.value })}
             />
             <label htmlFor={categoryItem.value} className="text-sm font-medium">
               {categoryItem.value}
@@ -62,15 +64,23 @@ export const EstateSideBar = () => {
       {/* Location Selection */}
       <div className="flex flex-col gap-2">
         <p>Байршил</p>
-        <Dropdown value={city} placeholder={'Хот'} datas={Provincies} setSelectedValue={handleCityChange} />
-        <Dropdown value={districts} placeholder={'Дүүрэг'} datas={Districts} setSelectedValue={handleDistrictChange} />
+        <div>
+          <Dropdown value={city} placeholder={'Хот'} datas={Provincies} setSelectedValue={handleCityChange} />
+        </div>
+        <div>
+          <Dropdown value={districts} placeholder={'Дүүрэг'} datas={Districts} setSelectedValue={handleDistrictChange} />
+        </div>
       </div>
 
       {/* Price Selection */}
       <div className="flex flex-col gap-2">
         <p>Үнэ</p>
-        <Dropdown value={maxPrice} placeholder={'Дээд үнэ'} datas={Cost} setSelectedValue={handleMaxPriceChange} />
-        <Dropdown value={minPrice} placeholder={'Доод үнэ'} datas={Cost} setSelectedValue={handleMinPriceChange} />
+        <div>
+          <Dropdown value={maxPrice} placeholder={'Дээд үнэ'} datas={Cost} setSelectedValue={handleMaxPriceChange} />
+        </div>
+        <div>
+          <Dropdown value={minPrice} placeholder={'Доод үнэ'} datas={Cost} setSelectedValue={handleMinPriceChange} />
+        </div>
       </div>
 
       {/* Room Selection */}
