@@ -5,105 +5,75 @@ import Link from 'next/link';
 import { LeftArrow } from '@/components/admin/svg';
 import { Sidebar } from './main/Sidebar';
 import { GeneralInfo, Images, RoomServices, UpcomingBooking } from '@/components/admin/add-room';
-import { useState } from 'react';
-import { useEditRoomGeneralInfoMutation } from '@/generated';
+import { useEditRoomGeneralInfoMutation, useEditRoomImagesMutation, useEditRoomServicesMutation } from '@/generated';
 import { useSearchParams } from 'next/navigation';
+import { useRoomImages, useRoomServices, useRoomState } from '@/components/admin/add-room/States';
 
-const PageHeader = ({ name }: { name: string }) => (
-  <div className="flex items-center gap-4">
-    <Link
-      href="/admin/add-hotel"
-      className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200"
-    >
-      <LeftArrow />
-    </Link>
-    <p className="font-Inter text-[#020617] text-lg font-semibold">{name || 'Room Name'}</p>
-  </div>
-);
-
-const MainContent = ({
-  roomData,
-  setters,
-  handleEditGeneralInfo,
-}: {
-  roomData: {
-    tax: string;
-    bed: string;
-    name: string;
-    type: string;
-    price: string;
-    roomInfo: string[];
-    roomNumber: string;
-  };
-  setters: {
-    setTax: (_value: string) => void;
-    setBed: (_value: string) => void;
-    setName: (_value: string) => void;
-    setType: (_value: string) => void;
-    setPrice: (_value: string) => void;
-    setRoomInfo: (_value: string[]) => void;
-    setRoomNumber: (_value: string) => void;
-  };
-  handleEditGeneralInfo: () => Promise<void>;
-}) => (
-  <div className="flex gap-4">
-    <div className="max-w-[784px] w-full flex flex-col gap-4">
-      <GeneralInfo {...roomData} {...setters} handleEditGeneralInfo={handleEditGeneralInfo} />
-      <UpcomingBooking />
-      <RoomServices />
-    </div>
-    <div className="max-w-[400px] w-full flex flex-col gap-4">
-      <Images />
-    </div>
-  </div>
-);
-
-export const useRoomState = () => {
-  const [bed, setBed] = useState<string>('');
-  const [tax, setTax] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [type, setType] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [roomNumber, setRoomNumber] = useState<string>('');
-  const [roomInfo, setRoomInfo] = useState<string[]>([]);
-
-  return {
-    roomData: { bed, tax, name, type, price, roomNumber, roomInfo },
-    setters: { setBed, setTax, setName, setType, setPrice, setRoomNumber, setRoomInfo },
-  };
-};
-
-// Main component
 export const AddRoomPage = () => {
   const searchParams = useSearchParams();
   const roomId = searchParams.get('id');
 
   const [editRoomGeneralInfo] = useEditRoomGeneralInfoMutation();
-  const { roomData, setters } = useRoomState();
+  const [editRoomServices] = useEditRoomServicesMutation();
+  const [editRoomImages] = useEditRoomImagesMutation();
+  const { roomServices, setterServices } = useRoomServices();
+  const { roomGeneralInfo, setterGeneralInfo } = useRoomState();
+  const { roomImages, setterImages } = useRoomImages();
 
-  const handleEditGeneralInfo = async () => {
+  // Helper function to handle the async mutation with common checks
+  const handleEdit = async (mutationFn: any, variables: any) => {
     if (!roomId) {
       console.error('Room ID is missing');
       return;
     }
-
-    const { name, type, roomInfo, price } = roomData;
-
     try {
-      const variables = {
-        input: {
-          id: roomId,
-          name,
-          type,
-          roomInfo,
-          price: price ? parseFloat(price) : null,
-        },
-      };
-
-      await editRoomGeneralInfo({ variables });
+      await mutationFn({ variables });
     } catch (error) {
-      console.error('Error creating room:', error);
+      console.error('Error updating room:', error);
     }
+  };
+
+  // Create variables for editing room services
+  const createRoomServicesVariables = () => {
+    const { key, value } = roomServices;
+    return {
+      input: {
+        id: roomId,
+        roomServices: [
+          {
+            key,
+            value,
+          },
+        ],
+      },
+    };
+  };
+
+  // Create variables for editing room general info
+  const createRoomGeneralInfoVariables = () => {
+    const { name, type, roomInfo, price, bed, roomNumber } = roomGeneralInfo;
+    return {
+      input: {
+        id: roomId,
+        name,
+        type,
+        roomInfo,
+        bed: bed ? parseFloat(bed) : null,
+        price: price ? parseFloat(price) : null,
+        roomNumber: roomNumber ? parseFloat(roomNumber) : null,
+      },
+    };
+  };
+
+  // Create variables for editing room images
+  const createRoomImagesVariables = () => {
+    const { images } = roomImages;
+    return {
+      input: {
+        id: roomId,
+        images: images,
+      },
+    };
   };
 
   return (
@@ -113,8 +83,25 @@ export const AddRoomPage = () => {
         <Header />
         <div className="w-full h-full flex justify-center bg-[#F4F4F5]">
           <div className="py-4 flex flex-col gap-4 max-w-[1200px] w-full">
-            <PageHeader name={roomData.name} />
-            <MainContent roomData={roomData} setters={setters} handleEditGeneralInfo={handleEditGeneralInfo} />
+            <div className="flex items-center gap-4">
+              <Link
+                href="/admin/add-hotel"
+                className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200"
+              >
+                <LeftArrow />
+              </Link>
+              <p className="font-Inter text-[#020617] text-lg font-semibold">{roomGeneralInfo?.name || 'Room Name'}</p>
+            </div>
+            <div className="flex gap-4">
+              <div className="max-w-[784px] w-full flex flex-col gap-4">
+                <GeneralInfo {...roomGeneralInfo} {...setterGeneralInfo} handleEditGeneralInfo={() => handleEdit(editRoomGeneralInfo, createRoomGeneralInfoVariables())} />
+                <UpcomingBooking />
+                <RoomServices {...roomServices} {...setterServices} handleEditRoomServices={() => handleEdit(editRoomServices, createRoomServicesVariables())} />
+              </div>
+              <div className="max-w-[400px] w-full flex flex-col gap-4">
+                <Images {...roomImages} {...setterImages} handleEditHotelImages={() => handleEdit(editRoomImages, createRoomImagesVariables())} />
+              </div>
+            </div>
           </div>
         </div>
         <Footer />

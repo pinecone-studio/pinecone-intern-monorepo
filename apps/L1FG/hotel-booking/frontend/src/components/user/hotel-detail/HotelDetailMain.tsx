@@ -4,7 +4,7 @@ import { DetailHero } from './DetailHero';
 import { GeneralInformation } from './GeneralInformation';
 import { About } from './About';
 
-interface HotelDetailMainProps {
+export interface HotelDetailMainProps {
   data: Hotel | undefined | null;
 }
 

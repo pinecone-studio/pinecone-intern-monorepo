@@ -2,15 +2,13 @@ import { useHotelAmenities, useHotelImages, useHotelLocation, useHotelState } fr
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 
-// Update this with the actual file path
-
 describe('Custom Hooks', () => {
   describe('useHotelState', () => {
     it('should initialize and update hotel state correctly', () => {
       const { result } = renderHook(() => useHotelState());
 
       // Initial state
-      expect(result.current.hotelData).toEqual({
+      expect(result.current.hotelGeneralInfo).toEqual({
         name: '',
         description: '',
         starRating: '',
@@ -20,14 +18,14 @@ describe('Custom Hooks', () => {
 
       // Update state
       act(() => {
-        result.current.setters.setName('Hotel Name');
-        result.current.setters.setDescription('A luxury hotel');
-        result.current.setters.setStarRating('5');
-        result.current.setters.setRating('4.5');
-        result.current.setters.setPhoneNumber('123-456-7890');
+        result.current.setterGeneralInfo.setName('Hotel Name');
+        result.current.setterGeneralInfo.setDescription('A luxury hotel');
+        result.current.setterGeneralInfo.setStarRating('5');
+        result.current.setterGeneralInfo.setRating('4.5');
+        result.current.setterGeneralInfo.setPhoneNumber('123-456-7890');
       });
 
-      expect(result.current.hotelData).toEqual({
+      expect(result.current.hotelGeneralInfo).toEqual({
         name: 'Hotel Name',
         description: 'A luxury hotel',
         starRating: '5',
