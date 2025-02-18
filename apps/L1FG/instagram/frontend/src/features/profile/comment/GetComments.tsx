@@ -35,7 +35,7 @@ const GetComments = ({ post }: { post: UserPostType }) => {
     });
   };
   return (
-    <div className="flex flex-col gap-6 overflow-y-scroll">
+    <div className="flex flex-col gap-6">
       {data?.getComments?.edges.map((comment) => (
         <Comment post={post} comment={comment.node} key={comment.cursor} />
       ))}

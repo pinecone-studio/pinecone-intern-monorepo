@@ -1,3 +1,4 @@
+import LikeModal from '@/components/home-post/LikeModal';
 import { PostDate } from '@/components/home-post/PostDate';
 import { ProfileHover } from '@/components/home-post/ProfileHover';
 import { CommentLike } from '@/components/profile/comment/CommentLike';
@@ -69,7 +70,9 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
           <div className="flex ml-5 gap-4 items-center ">
             <PostDate date={comment.createdAt} />
             <div>
-              <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+              <LikeModal userId={comment.user._id}>
+                <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+              </LikeModal>
             </div>
             <p className="text-xs text-gray-500">Reply</p>
           </div>

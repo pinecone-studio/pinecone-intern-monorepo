@@ -1,5 +1,5 @@
 'use client';
-import { useCreateFollowerMutation, useDeleteFollowerMutation, UserTogetherUserType } from '@/generated';
+import { GetUserTogetherQuery, useCreateFollowerMutation, useDeleteFollowerMutation, UserTogetherUserType } from '@/generated';
 import { Follow } from './Follow';
 import { useAuth } from '../../components/providers/AuthProvider';
 import { Requested } from './Requested';
@@ -17,6 +17,7 @@ export const FriendshipStatusUser = ({
   statuss,
   requestStyle,
   requestedStyle,
+  datas,
 }: {
   preview: UserTogetherUserType;
   onclick?: () => void;
@@ -26,6 +27,7 @@ export const FriendshipStatusUser = ({
   requestStyle?: string;
   requestedStyle?: string;
   removeStyle?: string;
+  datas?: GetUserTogetherQuery;
 }) => {
   const targetId = preview._id;
 
@@ -90,7 +92,7 @@ export const FriendshipStatusUser = ({
     return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
   }
   if (status.following) {
-    return <Remove removeStyle={removeStyle} onclick={handleRemove} />;
+    return <Remove datas={datas as GetUserTogetherQuery} removeStyle={removeStyle} onclick={handleRemove} />;
   } else {
     if (status.outgoingRequest) {
       return <Requested requestedStyle={requestedStyle} />;
