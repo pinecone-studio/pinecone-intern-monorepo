@@ -2,10 +2,13 @@
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
 import Image from 'next/image';
-import { imageUrlOptimizer } from '../utils/image-url-optimizer';
-import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
-import { ProfilePreviewSkeleton } from '../skeleton/ProfilePreviewSkeleton';
-import { AvatarLink } from './AvatarLink';
+import { imageUrlOptimizer } from '../../components/utils/image-url-optimizer';
+import { FriendshipStatus } from './FriendshipStatus';
+import { ProfilePreviewSkeleton } from '../../components/skeleton/ProfilePreviewSkeleton';
+import { AvatarLink } from '../../components/home-post/AvatarLink';
+import NoPostsYet from '../../components/home-post/NoPostsYet';
+import PrivateAccPreview from '../../components/profile/privaccount/PrivateAccPreview';
+
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
   const [getProfilePreview, { data, loading }] = useGetProfilePreviewLazyQuery();
   return (
@@ -48,14 +51,18 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 <p>following</p>
               </div>
             </div>
-            <div className="w-full h-[120px] flex gap-1 pt-4">
-              {data.getProfilePreview.firstThreePosts.map((post) => {
-                return (
-                  <div className="w-1/3 h-full relative" key={post.cursor}>
-                    <Image src={imageUrlOptimizer(post.node.postImage[0])} fill alt="post image" />
-                  </div>
-                );
-              })}
+            <div>
+              {data.getProfilePreview.firstThreePosts.length > 0 ? (
+                <div className="w-full h-[120px] flex gap-1 pt-4">
+                  {data.getProfilePreview.firstThreePosts.map((post) => (
+                    <div className="w-1/3 h-full relative" key={post.cursor}>
+                      <Image src={imageUrlOptimizer(post.node.postImage[0])} fill alt="post image" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <NoPostsYet />
+              )}
             </div>
             <div className="p-3">
               <FriendshipStatus
@@ -68,6 +75,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 preview={data.getProfilePreview.user}
               />
             </div>
+            {data.getProfilePreview.user?.isPrivate && <PrivateAccPreview />}
           </div>
         )}
       </HoverCardContent>

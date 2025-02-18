@@ -1,6 +1,6 @@
 import CommentLikeModal from '@/components/home-post/CommentLikeModal';
 import { PostDate } from '@/components/home-post/PostDate';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 import { CommentLike } from '@/components/profile/comment/CommentLike';
 import { useCache } from '@/components/providers/CacheProvider';
 import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
