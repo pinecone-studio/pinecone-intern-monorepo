@@ -14,7 +14,9 @@ export const SearchBar = () => {
   const router = useRouter();
 
   const handleAdultPlus = () => {
-    setAdult(adult + 1);
+    if (adult <= 3) {
+      setAdult(adult + 1);
+    }
   };
 
   const handleAdultMinus = () => {
