@@ -60,6 +60,9 @@ export const getUserStoryInfo = async ({ userId }: { userId: string }) => {
             0,
           ],
         },
+        latestStoryId: {
+          $arrayElemAt: ['$items._id', 0],
+        },
       },
     },
     {
@@ -68,6 +71,7 @@ export const getUserStoryInfo = async ({ userId }: { userId: string }) => {
         userId: objectUserId,
         latestStoryTimestamp: 1,
         items: 1,
+        latestStoryId: 1,
       },
     },
   ]);

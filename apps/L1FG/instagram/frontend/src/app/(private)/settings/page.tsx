@@ -1,10 +1,13 @@
+/* eslint-disable complexity */
 'use client';
 import React, { useState } from 'react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Gender, useUpdateInfoMutation } from '@/generated';
+import { Gender, useUpdateInfoMutation, useUpdateProfileImageMutation } from '@/generated';
+import { UploadSection } from '@/features/settings/UpdateProfile';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 // eslint-disable-next-line react/function-component-definition
 export default function Page() {
@@ -12,9 +15,11 @@ export default function Page() {
   const [userName, setUserName] = useState('');
   const [bio, setBio] = useState('');
   const [gender, setGender] = useState('');
-  const [buttonText, setButtonText] = useState('Change profile photo');
+  const [buttonText] = useState('Change profile photo');
+  const { user } = useAuth();
+  const [updatePhoto, { data, loading }] = useUpdateProfileImageMutation();
 
-  const [updateInfo, { loading, error }] = useUpdateInfoMutation();
+  const [updateInfo, { error }] = useUpdateInfoMutation();
 
   const handleSubmit = async () => {
     try {
@@ -59,7 +64,13 @@ export default function Page() {
         <div className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
-              <div className="w-10 h-10 rounded-full bg-black"></div>
+              {data?.updateProfileImage ? (
+                <div style={{ backgroundImage: `url(${data?.updateProfileImage})`, backgroundPosition: 'center' }} className="w-10 h-10 rounded-full bg-black bg-cover">
+                  {loading && <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse">🔄</div>}
+                </div>
+              ) : (
+                <div style={{ backgroundImage: `url(${user?.profileImage})`, backgroundPosition: 'center' }} className="w-10 h-10 rounded-full bg-black bg-cover"></div>
+              )}
               <p>{fullName || 'Your Name'}</p>
             </div>
             <DropdownMenu>
@@ -69,9 +80,7 @@ export default function Page() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onSelect={() => setButtonText('Upload New Photo')}>Upload New Photo</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setButtonText('Remove Current Photo')}>Remove Current Photo</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setButtonText('Change profile photo')}>Cancel</DropdownMenuItem>
+                <UploadSection updatePhoto={updatePhoto} />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

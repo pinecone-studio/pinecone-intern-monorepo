@@ -96,7 +96,7 @@
     "cmdk": "1.0.0",
     "commitizen": "4.3.0",
     "country-data-list": "^1.4.0",
-    "cypress-file-upload": "5.0.8",
+    "cypress-file-upload": "^5.0.8",
     "cypress-wait-until": "3.0.2",
     "daisyui": "4.10.2",
     "date-fns": "3.6.0",

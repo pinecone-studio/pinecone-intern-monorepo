@@ -14,7 +14,6 @@ export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = asyn
     const currentTime = new Date();
     const viewer = await UserModel.findById(userId);
     const userStoryInfo = await getUserStoryInfo({ userId: userId });
-
     const result = await FollowerModel.aggregate([
       {
         $match: {
@@ -72,6 +71,14 @@ export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = asyn
               0,
             ],
           },
+          latestStoryId: {
+            $arrayElemAt: ['$items._id', 0],
+          },
+        },
+      },
+      {
+        $sort: {
+          latestStoryTimestamp: -1,
         },
       },
       {
@@ -80,6 +87,7 @@ export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = asyn
           userId: '$targetId',
           latestStoryTimestamp: 1,
           items: 1,
+          latestStoryId: 1,
         },
       },
     ]);
@@ -88,6 +96,7 @@ export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = asyn
       viewer: viewer,
     };
   } catch (error) {
+    console.log('error :', error);
     throw catchError(error);
   }
 };

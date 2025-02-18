@@ -5,7 +5,7 @@ export const hasOperationName = (req: any, operationName: string) => {
 describe(' order page', () => {
   beforeEach(() => {
     cy.visit('/order/test-order-id');
-    localStorage.setItem('user', JSON.stringify({ _id: 'ajksdf;asdfkj' }));
+    localStorage.setItem('user', JSON.stringify({ _id: '679847da98aa65083849ca7b' }));
   });
   it('order update successful', () => {
     cy.intercept('POST', 'http://localhost:4200/api/graphql', (req) => {
@@ -22,6 +22,7 @@ describe(' order page', () => {
     cy.get('[data-cy="order-email-input"]').should('be.visible');
     cy.get('[data-cy="order-email-input"]').type('test@gmail.com');
     cy.get('[data-cy="order-save-input"]').click();
+    cy.contains('Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдлээ').should('be.visible')
     cy.wait('@gqlUpdateOrder');
   });
 
