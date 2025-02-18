@@ -9,20 +9,20 @@ import { IconPostSavedTag } from './comment/IconPostSavedTag';
 export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <>
-      <div className="flex gap-20 pb-24 ml-[72px]" data-testid="user-profile">
+      <div className="py-3 flex px-4 gap-5 sm:gap-20 max-w-7xl justify-start md:justify-center" data-testid="user-profile">
         <div
           style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
-          className=" bg-cover  w-[150px] h-[150px] object-cover rounded-full"
+          className=" bg-cover w-[80px] h-[80px] md:w-[150px] md:h-[150px] object-cover rounded-full"
         ></div>
 
         <div className="flex flex-col gap-5">
-          <div className="flex gap-5 items-center ">
+          <div className="flex flex-col gap-4 md:flex-row ">
             <p className="text-[20px] font-medium">{data?.getUserTogether?.user?.userName}</p>
 
             <Buttons userId={userId as string} data={data} />
           </div>
 
-          <div>
+          <div className="hidden md:block">
             <div className="flex gap-11">
               <div className="flex gap-1">
                 <p className="text-base font-semibold">{data?.getUserTogether?.user?.postCount}</p>
@@ -62,11 +62,11 @@ export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; user
               )}
             </div>
           </div>
-
-          <div>
-            <p className="text-base font-semibold">{data?.getUserTogether?.user?.fullName}</p>
-            <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether?.user?.bio}</p>
-            {data?.getUserTogether?.user?.email && <a className="text-sm font-medium text-[#2563EB]">{data.getUserTogether.user.email}</a>}
+          <div className="md:block hidden">
+            <div className="flex flex-col ">
+              <p className="text-base font-semibold">{data?.getUserTogether?.user?.fullName}</p>
+              <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether?.user?.bio}</p>
+            </div>
           </div>
         </div>
       </div>

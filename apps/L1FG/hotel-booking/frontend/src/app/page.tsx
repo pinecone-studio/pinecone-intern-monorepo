@@ -7,9 +7,9 @@ import { NavigationBlue } from '@/components/user/main/NavigationBlue';
 import { SearchBar } from '@/features/user/main/SearchBar';
 import { Footer } from '@/components/user/search-result/Footer';
 import { useGetHotelsQuery } from '@/generated';
-
 const Page = () => {
   const { loading, data } = useGetHotelsQuery();
+
 
   if (loading) {
     return <Loading />;
