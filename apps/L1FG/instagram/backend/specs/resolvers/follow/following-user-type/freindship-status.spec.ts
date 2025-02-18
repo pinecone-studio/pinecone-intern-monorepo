@@ -32,6 +32,12 @@ describe('FreindshipStatus', () => {
       gender: Gender.Male,
       isPrivate: true,
       email: '',
+      friendshipStatus: {
+        following: true,
+        incomingRequest: true,
+        outgoingRequest: true,
+        followedBy: true,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -56,6 +62,12 @@ describe('FreindshipStatus', () => {
       gender: Gender.Male,
       isPrivate: true,
       email: '',
+      friendshipStatus: {
+        following: true,
+        incomingRequest: true,
+        outgoingRequest: true,
+        followedBy: true,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
@@ -89,6 +101,12 @@ describe('FreindshipStatus', () => {
       gender: Gender.Male,
       isPrivate: true,
       email: '',
+      friendshipStatus: {
+        following: true,
+        incomingRequest: true,
+        outgoingRequest: true,
+        followedBy: true,
+      },
     };
     const result = await friendshipStatus(parent, {}, { userId: '2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual({
