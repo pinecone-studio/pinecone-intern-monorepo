@@ -30,35 +30,45 @@ query GetFollowing($searchingUserId: ID) {
     }
   }
 }
-query GetFollowers($searchingUserId: ID) {
-  getFollowers(searchingUserId: $searchingUserId) {
-    followerId
-    targetId
-    user {
-      _id
-      userName
-      fullName
-      bio
-      profileImage
-      hasStory
-      gender
-      isPrivate
-      email
-      followingCount
-      followerCount
-      postCount
-      latestStoryTimestamp
-      seenStoryTime
-      savedUsers
-      createdAt
-      friendshipStatus {
-        followedBy
-        following
-        incomingRequest
-        outgoingRequest
+query GetFollowers($input: SmallFollowInput!) {
+  getFollowers(input: $input) {
+    edges {
+      cursor
+      node {
+        followerId
+        targetId
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          createdAt
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+          mutualFollowersCount
+          mutualFollowers
+        }
       }
-      mutualFollowersCount
-      mutualFollowers
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
     }
   }
 }

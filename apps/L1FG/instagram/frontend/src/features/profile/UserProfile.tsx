@@ -1,5 +1,5 @@
 import EmptyFollowing from '@/components/profile/follow/EmptyFollowing';
-import Followers from '@/components/profile/follow/Followers';
+import Followers from '@/features/profile/follow/Followers';
 import FollowersEmpty from '@/components/profile/follow/FollowersEmpty';
 import Following from '@/components/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
