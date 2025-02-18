@@ -1,11 +1,11 @@
 'use client';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
-import { Avatar } from './Avatar';
 import Image from 'next/image';
 import { imageUrlOptimizer } from '../utils/image-url-optimizer';
 import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
 import { ProfilePreviewSkeleton } from '../skeleton/ProfilePreviewSkeleton';
+import { AvatarLink } from './AvatarLink';
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
   const [getProfilePreview, { data, loading }] = useGetProfilePreviewLazyQuery();
   return (
@@ -27,7 +27,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
         {data && (
           <div className="flex flex-col  ">
             <div className="flex gap-4 h-fit w-fit justify-center items-center p-3">
-              <Avatar post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
+              <AvatarLink post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
                 <p className="font-bold">{data.getProfilePreview.user?.userName}</p>
                 <p>{data.getProfilePreview.user?.fullName}</p>

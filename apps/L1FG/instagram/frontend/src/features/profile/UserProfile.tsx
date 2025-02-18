@@ -5,24 +5,26 @@ import Following from '@/components/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
 import StoryHighlight from '@/components/profile/story/StoryHighlight';
 import { GetUserTogetherQuery } from '@/generated';
-import Image from 'next/image';
 import { IconPostSavedTag } from './comment/IconPostSavedTag';
 
 export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <>
-      <div className="flex gap-20 ml-[72px]" data-testid="user-profile">
-        <Image src="/images/profilePic.png" alt="Profile Picture" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
+      <div className="flex gap-20 pb-24 ml-[72px]" data-testid="user-profile">
+        <div
+          style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
+          className=" bg-cover  w-[150px] h-[150px] object-cover rounded-full"
+        ></div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-3 items-center justify-center">
-            <p className="text-[20px] font-semibold">{data?.getUserTogether?.user?.userName}</p>
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-5 items-center ">
+            <p className="text-[20px] font-medium">{data?.getUserTogether?.user?.userName}</p>
 
             <Buttons userId={userId as string} data={data} />
           </div>
 
           <div>
-            <div className="flex gap-[32px]">
+            <div className="flex gap-11">
               <div className="flex gap-1">
                 <p className="text-base font-semibold">{data?.getUserTogether?.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>
