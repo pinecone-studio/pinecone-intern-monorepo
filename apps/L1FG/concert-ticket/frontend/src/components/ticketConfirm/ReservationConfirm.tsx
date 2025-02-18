@@ -1,17 +1,8 @@
 import Image from 'next/image';
-import TicketSubscriberBuysection from './TicketBuySection';
-import TicketSubscriber from './TicketSubscriber';
+import TicketSubscriber from '../../app/_features/userProfile/TicketSubscriber';
 import { OrderClick } from '@/app/ticketReservation/[ticketID]/page';
-import { useAlert } from '../providers/AlertProvider';
 
 const ReservationConfirm = ({ handleChange, handleBack, handleNext, value, ticketID }: OrderClick) => {
-  const { showAlert } = useAlert();
-  const orderContinue = () => {
-    if (value.email.length === 0) {
-      return showAlert('warning', 'Захиалагчийн мэдээллийг бөглөнө үү');
-    }
-    handleNext();
-  };
   return (
     <div className="h-screen flex flex-col items-center justify-start ">
       <div className="w-[1334px] flex flex-col gap-32">
@@ -22,10 +13,7 @@ const ReservationConfirm = ({ handleChange, handleBack, handleNext, value, ticke
           </div>
           <div className="border-b border-neutral-500  w-[1334px]"></div>
         </div>
-        <div className="flex flex-row gap-20">
-          <TicketSubscriber handleChange={handleChange} />
-          <TicketSubscriberBuysection ticketID={ticketID} value={value} handleNext={orderContinue} />
-        </div>
+        <TicketSubscriber ticketID={ticketID} value={value} handleNext={handleNext} handleChange={handleChange} />
       </div>
     </div>
   );
