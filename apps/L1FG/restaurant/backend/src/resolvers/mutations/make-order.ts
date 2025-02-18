@@ -8,6 +8,7 @@ export const makeOrder: MutationResolvers['makeOrder'] = async (_, { input }) =>
     tableId,
     items,
     userId,
+    isRead: false,
     status: 'Pending',
     createdAt: new Date(),
   });
@@ -19,5 +20,6 @@ export const makeOrder: MutationResolvers['makeOrder'] = async (_, { input }) =>
     status: savedOrder.status,
     tableId: savedOrder.tableId,
     userId: savedOrder.userId,
+    isRead: savedOrder.isRead,
   };
 };
