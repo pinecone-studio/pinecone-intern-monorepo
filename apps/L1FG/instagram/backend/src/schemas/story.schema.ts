@@ -37,7 +37,7 @@ export const StoryTypeDefs = gql`
   }
   type Query {
     getPreviewAllStories: PreviewAllStoriesType!
-    getOneStory(targetUserId: ID!): [OneUserStoriesType!]!
+    getOneStory(userName: String!): [OneUserStoriesType!]!
   }
   type Mutation {
     createStory(input: StoryInput!): Story!

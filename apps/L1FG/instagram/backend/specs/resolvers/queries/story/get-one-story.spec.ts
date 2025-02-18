@@ -11,18 +11,27 @@ describe('Get one story', () => {
     (authenticate as jest.Mock) = jest.fn(() => {
       throw new Error('Та нэвтэрнэ үү');
     });
-    await expect(getOneStory({}, { targetUserId: '12' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Та нэвтэрнэ үү');
+    await expect(getOneStory({}, { userName: 'john' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Та нэвтэрнэ үү');
+  });
+  it('Should throw Хэрэглэгч олдсонгүй', async () => {
+    if (!getOneStory) return;
+    (authenticate as jest.Mock) = jest.fn();
+    (UserModel.findOne as jest.Mock) = jest.fn().mockResolvedValueOnce(null);
+    await expect(getOneStory({}, { userName: 'john' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Хэрэглэгч олдсонгүй');
   });
   it('Should successfully return result', async () => {
     if (!getOneStory) return;
     (authenticate as jest.Mock) = jest.fn();
+    (UserModel.findOne as jest.Mock) = jest.fn().mockResolvedValueOnce({
+      _id: '6788c5e84282c4b2590a14b2',
+    });
     (UserModel.aggregate as jest.Mock) = jest.fn().mockResolvedValueOnce([
       {
         _id: '6788c5e84282c4b2590a14b2',
         userName: 'john',
       },
     ]);
-    const result = await getOneStory({}, { targetUserId: '6788c5e84282c4b2590a14b2' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo);
+    const result = await getOneStory({}, { userName: 'john' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo);
     expect(result).toEqual([
       {
         _id: '6788c5e84282c4b2590a14b2',
@@ -33,9 +42,12 @@ describe('Get one story', () => {
   it('Should catch error', async () => {
     if (!getOneStory) return;
     (authenticate as jest.Mock) = jest.fn();
+    (UserModel.findOne as jest.Mock) = jest.fn().mockResolvedValueOnce({
+      _id: '6788c5e84282c4b2590a14b2',
+    });
     (UserModel.aggregate as jest.Mock) = jest.fn(() => {
       throw new Error('error');
     });
-    await expect(getOneStory({}, { targetUserId: '12' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Server error');
+    await expect(getOneStory({}, { userName: 'john' }, { userId: '6788c5e84282c4b2590a14b2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Server error');
   });
 });
