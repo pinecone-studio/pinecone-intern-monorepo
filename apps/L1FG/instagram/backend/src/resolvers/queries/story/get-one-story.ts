@@ -1,36 +1,31 @@
 import mongoose from 'mongoose';
 import { QueryResolvers } from '../../../generated';
-import { FollowerModel, UserModel } from '../../../models';
-import { getUserStoryInfo } from './get-user-story-info';
+import { authenticate } from '../../../utils/authenticate';
+import { UserModel } from '../../../models';
 import { catchError } from '../../../utils/catch-error';
-import { UnauthenticatedError } from '../../../utils/error';
 
-export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = async (_, __, { userId }) => {
-  if (!userId) {
-    throw new UnauthenticatedError('Та нэвтэрнэ үү');
-  }
+export const getOneStory: QueryResolvers['getOneStory'] = async (_, { targetUserId }, { userId }) => {
+  authenticate(userId);
   try {
-    const objectUserId = new mongoose.Types.ObjectId(userId);
+    const objectUserId = new mongoose.Types.ObjectId(targetUserId);
     const currentTime = new Date();
-    const viewer = await UserModel.findById(userId);
-    const userStoryInfo = await getUserStoryInfo({ userId: userId });
-    const result = await FollowerModel.aggregate([
+    const result = await UserModel.aggregate([
       {
         $match: {
-          followerId: objectUserId,
+          _id: objectUserId,
         },
       },
       {
         $lookup: {
           from: 'stories',
-          let: { targetId: '$targetId' },
+          let: { userId: '$_id' },
           pipeline: [
             {
               $match: {
                 $expr: {
                   $and: [
                     {
-                      $eq: ['$userId', '$$targetId'],
+                      $eq: ['$userId', '$$userId'],
                     },
                     {
                       $gt: ['$expiringAt', currentTime],
@@ -77,26 +72,17 @@ export const getPreviewAllStories: QueryResolvers['getPreviewAllStories'] = asyn
         },
       },
       {
-        $sort: {
-          latestStoryTimestamp: -1,
-        },
-      },
-      {
         $project: {
-          _id: '$targetId',
-          userId: '$targetId',
+          _id: objectUserId,
+          userId: objectUserId,
           latestStoryTimestamp: 1,
           items: 1,
           latestStoryId: 1,
         },
       },
     ]);
-    return {
-      storyTray: [...userStoryInfo, ...result],
-      viewer: viewer,
-    };
+    return result;
   } catch (error) {
-    console.log('error :', error);
     throw catchError(error);
   }
 };
