@@ -120,7 +120,7 @@ export const UserTypeDefs = gql`
     firstThreePosts: [PostsEdge!]!
   }
   type Query {
-    getUser: UserTogetherUserType
+    getUser: UserTogetherUserType!
     getUsers: [UserWithoutPassword]
     getUserTogether(searchingUserId: String!): UserTogetherType!
     getUserByName(userName: String!): [UserTogetherUserType!]!
