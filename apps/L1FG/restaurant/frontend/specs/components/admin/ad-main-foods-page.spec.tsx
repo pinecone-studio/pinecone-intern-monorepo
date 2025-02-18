@@ -17,6 +17,10 @@ jest.mock('@/components/admin-page-comp/AdminFoodDialog', () => ({
   default: () => <div data-testid="admin-food-dialog" />,
 }));
 
+jest.mock('@/components/admin-page-comp/AdminFoodUpdateDialog', () => ({
+  __esModule: true,
+  default: () => <div data-testid="admin-food-up-dialog" />,
+}));
 // Mock console.error
 const mockConsoleError = jest.fn();
 console.error = mockConsoleError;
@@ -70,7 +74,7 @@ describe('AdminFoodPageComp', () => {
 
   it('renders the component with header', () => {
     render(<AdminFoodPageComp />);
-    expect(screen.getByText('Захиалга')).toBeInTheDocument();
+    expect(screen.getByText('Хоол')).toBeInTheDocument();
   });
 
   it('renders food items correctly', () => {
