@@ -1,9 +1,43 @@
+'use client';
+
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForgetVerifyOtpMutation } from '@/generated';
+import { Loading } from '@/components/user/main/Loading';
 
 const ForgetPasswordOtp = () => {
+  const [viewEmail, setViewEmail] = useState<string>('');
+  const [otp, setOtp] = useState<string>('');
+  const router = useRouter();
+  const [forgetVerifyOTP, { loading, data }] = useForgetVerifyOtpMutation();
+
+  const forgetOtpInputSubmit = () => {
+    forgetVerifyOTP({ variables: { input: { verifyOtp: Number(otp), email: viewEmail } } });
+    setOtp('');
+  };
+
+  if (otp.length >= 4) {
+    forgetOtpInputSubmit();
+  }
+
+  useEffect(() => {
+    setViewEmail(localStorage.getItem('forgetPasswordEmail') || '');
+  }, [otp]);
+
+  const handleChangeInput = (value: string) => {
+    setOtp(value);
+  };
+
+  if (data?.forgetVerifyOTP.success === true) {
+    router.push('/forget-password/password');
+  }
+
+  if (loading) return <Loading />;
+
   return (
-    <main className="container mx-auto h-screen">
+    <main data-cy="Forget-Password-Otp-Page" className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">
@@ -16,7 +50,7 @@ const ForgetPasswordOtp = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-center">
-              <InputOTP maxLength={4}>
+              <InputOTP data-cy="Otp-Input-Forget-Password" maxLength={4} onChange={handleChangeInput}>
                 <InputOTPGroup>
                   <InputOTPSlot index={0} className="rounded-l-md" />
                   <InputOTPSlot index={1} />

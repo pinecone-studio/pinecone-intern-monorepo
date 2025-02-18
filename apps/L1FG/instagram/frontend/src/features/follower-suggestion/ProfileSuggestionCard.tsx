@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const profileSuggestions = [
   {
     id: '1',
@@ -38,7 +40,7 @@ const ProfileSuggestionCard = () => {
         <div key={profile.id} className="border rounded-lg shadow-sm p-4 flex flex-col items-center text-center w-52 relative">
           <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 p-1">×</button>
           <div className="flex flex-col items-center w-full mb-2">
-            <img src={profile.avatar} alt={profile.username} className="w-[54px] h-[54px] rounded-full" />
+            <Image src={profile.avatar} alt={profile.username} width={54} height={54} className=" rounded-full" />
           </div>
           <p className="text-sm leading-5 font-normal text-black">{profile.username}</p>
           <p className="text-sm leading-4 font-normal text-gray-500">{profile.name}</p>

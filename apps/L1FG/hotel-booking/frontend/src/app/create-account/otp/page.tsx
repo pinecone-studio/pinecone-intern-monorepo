@@ -17,15 +17,13 @@ const CreateAccountOtp = () => {
     verifyOTP({ variables: { input: { email: viewEmail, verifyOtp: Number(otp) } } });
     setOtp('');
   };
-  console.log(otp, 'otp');
 
   if (otp.length >= 4) {
     handleSubmit();
   }
 
   useEffect(() => {
-    const emailLocal = localStorage.getItem('email') || '';
-    setViewEmail(emailLocal);
+    setViewEmail(localStorage.getItem('email') || '');
   }, [otp]);
 
   const handleChange = (value: string) => {

@@ -54,3 +54,28 @@ mutation OrderUpdate($input: OrderUpdateInput!) {
     password
   }
 }
+query GetOrder($userId: String!) {
+  getOrder(userID: $userId) {
+    userID
+    concertID
+    ticketID
+    phoneNumber
+    email
+    totalPrice
+    paymentType
+    ticketNumber
+    vipTicket {
+      price
+      quantity
+    }
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    _id
+  }
+}
