@@ -7,6 +7,7 @@ export const getHotelById: QueryResolvers['getHotelById'] = async (_, { id }) =>
     throw new Error('Invalid ID format');
   }
   const hotel = await HotelModel.findById(id);
+
   if (!hotel) {
     throw new Error('Hotel not found');
   }
