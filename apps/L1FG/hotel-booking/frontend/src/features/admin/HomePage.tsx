@@ -8,7 +8,7 @@ import { useCreateHotelMutation, useGetHotelsQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 export const HomePage = () => {
-  const { data } = useGetHotelsQuery();
+  const { data, refetch } = useGetHotelsQuery();
   const [createHotel] = useCreateHotelMutation();
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export const HomePage = () => {
           rating: 0,
           starRating: 0,
           description: '-/-',
-          images: ['-/-'],
+          images: ['https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png'],
           rooms: [],
           faqs: [{ key: '-/-', value: '-/-' }],
           policies: [{ key: '-/-', value: '-/-' }],
@@ -40,7 +40,10 @@ export const HomePage = () => {
       const response = await createHotel({ variables });
       const hotelId = response?.data?.createHotel?.hotel?.id;
 
-      router.push(`/admin/add-hotel/add-hotel?id=${hotelId}`);
+      if (hotelId) {
+        await refetch();
+        router.push(`/admin/add-hotel/add-hotel?id=${hotelId}`);
+      }
     } catch (error) {
       console.error('Error creating hotel:', error);
     }

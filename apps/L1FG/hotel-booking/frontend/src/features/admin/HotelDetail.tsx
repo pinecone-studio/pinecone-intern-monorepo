@@ -1,17 +1,107 @@
+'use client';
+
 import Link from 'next/link';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Footer, Header } from '@/components/admin/main';
 import { LeftArrow } from '@/components/admin/svg';
-import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, RoomTypes, UpcomingBooking } from '@/components/admin/hotel-detail';
-// import { useGetHotelByIdQuery } from '@/generated';
-// import { useParams } from 'next/navigation';
+import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, UpcomingBooking } from '@/components/admin/hotel-detail';
+import { useEditHotelGeneralInfoMutation, useEditHotelImagesMutation, useEditHotelLocationMutation, useGetHotelByIdQuery } from '@/generated';
+import { useParams } from 'next/navigation';
+import { useHotelImages, useHotelLocation, useHotelState } from '@/components/admin/add-hotel/States';
+import { RoomTypes } from './hotel-detail/RoomTypes';
 
 export const HotelDetailPage = () => {
-  // const params = useParams();
-  // const hotelId = Array.isArray(params?.id) ? params.id[0] : params?.id;
-  // const { data } = useGetHotelByIdQuery({ variables: { getHotelByIdId: hotelId } });
+  const params = useParams();
+  const hotelId = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
-  // const hotelData = data?.getHotelById;
+  const { data } = useGetHotelByIdQuery({ variables: { getHotelByIdId: hotelId } });
+  const hotelData = data?.getHotelById;
+
+  const [editHotelGeneralInfo] = useEditHotelGeneralInfoMutation();
+  const [editHotelLocation] = useEditHotelLocationMutation();
+  const [editHotelImages] = useEditHotelImagesMutation();
+  const { hotelGeneralInfo, setterGeneralInfo } = useHotelState();
+  const { hotelLocation, setterLocation } = useHotelLocation();
+  const { hotelImages, setterImages } = useHotelImages();
+
+  const handleEditHotelImages = async () => {
+    if (!hotelId) {
+      console.error('Hotel ID is missing');
+      return;
+    }
+
+    const { images } = hotelImages;
+
+    try {
+      const variables = {
+        input: {
+          id: hotelId,
+          images: images,
+        },
+      };
+
+      await editHotelImages({ variables });
+    } catch (error) {
+      console.error('Error creating hotel:', error);
+    }
+  };
+
+  const handleEditHotelLocation = async () => {
+    if (!hotelId) {
+      console.error('Hotel ID is missing');
+      return;
+    }
+
+    const { locationName } = hotelLocation;
+
+    try {
+      const variables = {
+        input: {
+          id: hotelId,
+          locationName,
+          location: {
+            coordinates: [0],
+            type: 'Point',
+          },
+        },
+      };
+
+      await editHotelLocation({ variables });
+    } catch (error) {
+      console.error('Error creating hotel:', error);
+    }
+  };
+
+  const handleEditHotelGeneralInfo = async () => {
+    if (!hotelId) {
+      console.error('Hotel ID is missing');
+      return;
+    }
+
+    const { name, description, starRating, rating, phoneNumber } = hotelGeneralInfo;
+
+    try {
+      const variables = {
+        input: {
+          id: hotelId,
+          name,
+          description,
+          starRating: starRating ? parseFloat(starRating) : null,
+          rating: rating ? parseFloat(rating) : null,
+          phoneNumber,
+        },
+      };
+
+      await editHotelGeneralInfo({ variables });
+    } catch (error) {
+      console.error('Error creating hotel:', error);
+    }
+  };
+
+  if (!hotelId) {
+    console.error('Hotel ID is missing');
+    return;
+  }
 
   return (
     <div className="flex">
@@ -23,26 +113,26 @@ export const HotelDetailPage = () => {
             <div className="flex items-center gap-4">
               <Link
                 href="/admin"
-                className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200"
+                className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#FAFAFA] duration-200"
               >
                 <LeftArrow />
               </Link>
-              <p className="font-Inter text-[#020617] text-lg font-semibold">Flower Hotel Ulaanbaatar</p>
+              <p className="font-Inter text-[#020617] text-lg font-semibold">{hotelData?.name || hotelGeneralInfo?.name || '-/-'}</p>
             </div>
             <div className="flex gap-4">
               <div className="max-w-[784px] w-full flex flex-col gap-4">
                 <UpcomingBooking />
                 <RoomTypes />
-                <GeneralInfo />
-                <Amenities />
-                <AboutThisProperty />
-                <Policies />
+                <GeneralInfo data={hotelData} {...hotelGeneralInfo} {...setterGeneralInfo} handleEditHotelGeneralInfo={handleEditHotelGeneralInfo} />
+                <Amenities data={hotelData} />
+                <AboutThisProperty data={hotelData} />
+                <Policies data={hotelData} />
                 <PoliciesExtra />
                 <Questions />
               </div>
               <div className="max-w-[400px] w-full flex flex-col gap-4">
-                <Location />
-                <Images />
+                <Location data={hotelData} {...hotelLocation} {...setterLocation} handleEditHotelLocation={handleEditHotelLocation} />
+                <Images data={hotelData} {...hotelImages} {...setterImages} handleEditHotelImages={handleEditHotelImages} />
               </div>
             </div>
           </div>

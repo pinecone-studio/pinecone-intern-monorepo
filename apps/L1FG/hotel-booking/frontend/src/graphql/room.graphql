@@ -59,3 +59,60 @@ mutation editRoomServices($input: editRoomServicesInput!) {
     tax
   }
 }
+
+mutation editRoomImages($input: editRoomImagesInput!) {
+  editRoomImages(input: $input) {
+    id
+    name
+    hotelId
+    roomNumber
+    price
+    bed
+    images
+    roomInfo
+    type
+    roomServices {
+      key
+      value
+    }
+    tax
+  }
+}
+
+query getRoomsByHotelId($hotelId: ID!) {
+  getRoomsByHotelId(hotelId: $hotelId) {
+    id
+    name
+    hotelId
+    roomNumber
+    price
+    bed
+    images
+    roomInfo
+    type
+    roomServices {
+      key
+      value
+    }
+    tax
+  }
+}
+
+mutation editRoomServices($input: editRoomServicesInput!) {
+  editRoomServices(input: $input) {
+    id
+    name
+    hotelId
+    roomNumber
+    price
+    bed
+    images
+    roomInfo
+    type
+    roomServices {
+      key
+      value
+    }
+    tax
+  }
+}
