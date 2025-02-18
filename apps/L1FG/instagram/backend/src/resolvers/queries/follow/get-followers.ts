@@ -53,3 +53,6 @@ export const getFollowers: QueryResolvers['getFollowers'] = async (_, { input },
     throw catchError(error);
   }
 };
+
+// const following = await FollowerModel.find({ followerId: searchingUserId });
+// return following;
