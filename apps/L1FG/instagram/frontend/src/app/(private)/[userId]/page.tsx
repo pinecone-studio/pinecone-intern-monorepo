@@ -2,7 +2,7 @@ import { Profile } from '@/components/profile/Profile';
 
 const Page = () => {
   return (
-    <div className="flex w-screen justify-center ml-[309px] ">
+    <div className="flex w-full justify-center mx-auto ">
       <Profile />
     </div>
   );
