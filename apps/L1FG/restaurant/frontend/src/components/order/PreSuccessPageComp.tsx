@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useMakeOrderMutation } from '@/generated';
 import { useCart } from '../providers/LocalProvider';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const PreSuccessPageComp = () => {
   const { orders, tableId, clearCart } = useCart();
@@ -19,6 +20,9 @@ const PreSuccessPageComp = () => {
     if (user) {
       const parsedUser = JSON.parse(user);
       setUserId(parsedUser._id);
+    } else {
+      toast.error('Та захиалга хийхээс өмнө нэвтэрч орно уу!');
+      router.push('/login');
     }
   }, []);
 
@@ -45,6 +49,7 @@ const PreSuccessPageComp = () => {
         },
       });
       clearCart();
+      toast.success('Таны захиалга амжилттай үүслээ');
       router.push('/payment-successful');
     } catch (err) {
       console.error('Order submission failed:', err);

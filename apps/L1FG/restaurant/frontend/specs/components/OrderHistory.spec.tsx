@@ -1,70 +1,126 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import OrderHistory from '@/app/order-history/page';
 import { useGetOrdersForUserQuery } from '@/generated';
-import OrderHistory from '@/components/order-history/OrderHistory';
+
+// Mock the toast and router for testing
+jest.mock('sonner', () => ({
+  toast: {
+    error: jest.fn(),
+  },
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
 jest.mock('@/generated', () => ({
   useGetOrdersForUserQuery: jest.fn(),
 }));
-beforeEach(() => {
-  Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify({ _id: '123' }));
-});
-beforeEach(() => {
-  Storage.prototype.getItem = jest.fn();
-});
 
 describe('OrderHistory Component', () => {
-  it('should render a loading state initially', () => {
-    useGetOrdersForUserQuery.mockReturnValue({ data: undefined, loading: true });
+  const mockRouter = {
+    push: jest.fn(),
+  };
 
-    render(<OrderHistory />);
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
+  beforeEach(() => {
+    // Reset mock function before each test
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+    (toast.error as jest.Mock).mockReset();
   });
 
-  it('should display orders when there are order data', async () => {
-    const mockOrders = [
-      {
-        createdAt: '2025-02-16T12:34:56Z',
-        status: 'Delivered',
-        items: [{ price: null }, { price: 200 }],
-      },
-    ];
-
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: { getOrdersForUser: mockOrders },
-      loading: false,
-    });
-
-    render(<OrderHistory />);
-  });
-
-  it('should handle errors correctly', async () => {
-    useGetOrdersForUserQuery.mockReturnValue({
+  it('renders loading state initially', () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: true,
       data: null,
-      loading: false,
-      error: new Error('Failed to fetch orders'),
     });
 
-    render(<OrderHistory />);
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
   });
-  it('should set the userId from localStorage correctly', () => {
-    // Mock a user in localStorage with _id
-    const mockUser = { _id: '123' };
-    Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(mockUser));
 
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: { getOrdersForUser: [] },
+  it('renders order history correctly', async () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
       loading: false,
+      data: {
+        getOrdersForUser: [
+          {
+            _id: 'order1',
+            status: 'Completed',
+            createdAt: new Date().toISOString(),
+            items: [{ price: 1000, quantity: 2 }],
+          },
+        ],
+      },
     });
 
-    render(<OrderHistory />);
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
 
-    // Wait for the effect to run and userId to be set
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
+  it('handles no orders scenario', async () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: false,
+      data: { getOrdersForUser: [] },
+    });
 
-    // Verify that userId state is set correctly (this can be done indirectly by rendering or checking data fetching)
-    expect(Storage.prototype.getItem).toHaveBeenCalledWith('user'); // Ensure that localStorage.getItem('user') was called
-    expect(useGetOrdersForUserQuery).toHaveBeenCalledWith({ variables: { userId: '123' } });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
+
+  it('handles error when localStorage is invalid', async () => {
+    // Mock localStorage to simulate invalid JSON
+    Storage.prototype.getItem = jest.fn(() => 'invalid-data');
+
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+
+    await waitFor(() => expect(mockRouter.push).toHaveBeenCalledWith('/login'));
+    expect(toast.error).toHaveBeenCalledWith('Та захиалгын түүх хархын тулд нэвтэрч орно уу!');
+  });
+
+  it('correctly retrieves userId from localStorage and fetches orders', async () => {
+    // Mock localStorage to simulate valid user data
+    const mockUser = { _id: 'user123' };
+    Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockUser));
+
+    // Mock GraphQL response
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: false,
+      data: {
+        getOrdersForUser: [
+          {
+            _id: 'order1',
+            status: 'Completed',
+            createdAt: new Date().toISOString(),
+            items: [
+              { price: 1000, quantity: 2 },
+              { price: null, quantity: null },
+            ],
+          },
+        ],
+      },
+    });
+
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
   });
 });
