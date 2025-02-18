@@ -1,6 +1,6 @@
-export const Amenities = () => {
-  const dataAmenities = ['Airport transfer', 'Gym', 'Non-Smoking', 'Free parking', '24/7 front desk', 'Restaurant', 'Bar', 'Spa', 'Air conditioning', 'Laundry facilities', 'Free WiFi'];
+import { HotelDetailMainProps } from '@/components/user/hotel-detail/HotelDetailMain';
 
+export const Amenities = ({ data }: HotelDetailMainProps) => {
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col p-6">
       <div className="flex justify-between items-center">
@@ -10,14 +10,16 @@ export const Amenities = () => {
       <div className="py-6">
         <div className="w-full h-[1px] bg-[#E4E4E7] "></div>
       </div>
-      <div className="flex gap-2 flex-wrap">
-        {dataAmenities?.map((amenities, index) => {
-          return (
-            <p key={index} className="text-[#09090B] font-Inter text-xs font-medium bg-[#F4F4F5] rounded-full px-[10px] py-[2px]">
-              {amenities}
+      <div className="flex gap-2 flex-wrap" role="list">
+        {data?.amenities && data?.amenities.length > 0 ? (
+          data.amenities.map((value, index) => (
+            <p key={index} className="text-[#09090B] font-Inter text-xs font-semibold bg-[#F4F4F5] rounded-full px-[10px] py-[2px]" role="listitem">
+              {value}
             </p>
-          );
-        })}
+          ))
+        ) : (
+          <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
+        )}
       </div>
     </div>
   );

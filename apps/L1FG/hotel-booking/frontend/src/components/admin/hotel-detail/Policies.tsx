@@ -1,6 +1,7 @@
+import { HotelDetailMainProps } from '@/components/user/hotel-detail/HotelDetailMain';
 import { AmericanExpressCard, Card, MasterCard, VisaCard } from '../svg';
 
-export const Policies = () => {
+export const Policies = ({ data }: HotelDetailMainProps) => {
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col p-6">
       <div className="flex justify-between items-center">
@@ -14,11 +15,11 @@ export const Policies = () => {
         <div className="flex items-center">
           <div className="w-full flex flex-col gap-2">
             <p className="text-[#09090B] font-Inter text-lg font-semibold">Check-in</p>
-            <p className="text-[#09090B] font-Inter text-sm font-normal">-/-</p>
+            <p className="text-[#09090B] font-Inter text-sm font-normal">{data?.faqs?.[0]?.value ?? '-/-'}</p>
           </div>
           <div className="w-full flex flex-col gap-2">
-            <p className="text-[#09090B] font-Inter text-lg font-semibold">Check-in</p>
-            <p className="text-[#09090B] font-Inter text-sm font-normal">-/-</p>
+            <p className="text-[#09090B] font-Inter text-lg font-semibold">Check-out</p>
+            <p className="text-[#09090B] font-Inter text-sm font-normal">{data?.faqs?.[1]?.value ?? '-/-'}</p>
           </div>
         </div>
         <div className="flex flex-col gap-2">

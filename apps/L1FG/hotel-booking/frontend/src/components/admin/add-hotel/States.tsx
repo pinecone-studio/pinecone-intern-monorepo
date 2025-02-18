@@ -10,8 +10,8 @@ export const useHotelState = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
   return {
-    hotelData: { name, description, starRating, rating, phoneNumber },
-    setters: { setName, setDescription, setStarRating, setRating, setPhoneNumber },
+    hotelGeneralInfo: { name, description, starRating, rating, phoneNumber },
+    setterGeneralInfo: { setName, setDescription, setStarRating, setRating, setPhoneNumber },
   };
 };
 
