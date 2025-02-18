@@ -1,71 +1,87 @@
 'use client';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Bell } from 'lucide-react';
+import { toast } from 'sonner';
+import { useGetOrdersForUserQuery } from '@/generated';
+import NotificationItem from './NotificationItem';
 
-interface NotificationProps {
-  id: number;
-  message: string;
-  status: 'pending' | 'preparing' | 'completed' | 'delivered';
-  time: string;
+interface OrderType {
+  _id: string;
+  status: 'Pending' | 'InProcess' | 'Ready' | 'Done';
+  createdAt: Date;
 }
 
-const statusStyles = {
-  pending: 'bg-yellow-500 text-white',
-  preparing: 'bg-blue-500 text-white',
-  completed: 'bg-green-500 text-white',
-  delivered: 'bg-gray-500 text-white',
-};
-
-const notifications: NotificationProps[] = [
-  { id: 1, message: 'Захиалга баталгаажлаа', status: 'pending', time: '24.10.19 15:25' },
-  { id: 2, message: 'Захиалга бэлтгэгдэж байна', status: 'preparing', time: '24.10.19 13:27' },
-  { id: 3, message: 'Захиалга бэлтгэгдэж байна', status: 'delivered', time: '24.10.19 13:27' },
-  { id: 4, message: 'Захиалга бэлтгэгдэж байна', status: 'completed', time: '24.10.19 13:27' },
-];
-
 const NotificationSection = () => {
-  const [notifs] = useState(notifications);
+  const [notifs, setNotifs] = useState<OrderType[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [unreadOrders, setUnreadOrders] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    try {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        setUserId(parsedUser._id);
+      }
+    } catch (error) {
+      toast.error('Та нэвтэрч орно уу!');
+    }
+  }, [userId]);
+
+  const { data } = useGetOrdersForUserQuery({
+    variables: { userId: userId || '' },
+    skip: !userId,
+    pollInterval: 5000,
+  });
+
+  useEffect(() => {
+    if (data?.getOrdersForUser) {
+      const sortedOrders = data.getOrdersForUser.filter((order): order is OrderType => order !== null).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+      setNotifs(sortedOrders);
+
+      const newUnreadOrders = new Set(sortedOrders.map((order) => order._id));
+      setUnreadOrders(newUnreadOrders);
+    }
+  }, [data]);
+
+  // const markAsRead = (orderId: string) => {
+  //   setUnreadOrders((prev) => {
+  //     const updated = new Set(prev);
+  //     updated.delete(orderId);
+  //     return updated;
+  //   });
+  // };
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="relative" aria-label="Мэдэгдлүүд">
           <Bell width={16} className="text-gray-700 hover:text-black transition" />
-          {notifs.length > 0 && <span className="absolute top-0 left-6 bg-red-500 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center">{notifs.length}</span>}
+          {unreadOrders.size > 0 && <span className="absolute top-0 left-6 bg-red-500 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center">{unreadOrders.size}</span>}
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="px-2 w-5/6">
+      <SheetContent side="right" className="px-2 w-11/12 overflow-scroll">
         <SheetHeader className="flex justify-start items-center p-4">
           <h2 className="text-lg font-bold">Мэдэгдлүүд</h2>
         </SheetHeader>
 
         <div className="flex flex-col space-y-3 px-2">
-          {notifs.map((notif) => (
-            <Card key={notif.id} className="shadow-md w-full">
-              <CardContent className="flex justify-between items-center p-4 h-[93px]">
-                <div className="flex items-center space-x-3 h-full">
-                  <Bell className="w-7 h-7 text-gray-500 rounded-full bg-gray-200 p-1" aria-hidden="true" />
-                  <div className="flex flex-col gap-2 h-full justify-center">
-                    <div className="text-[13px] flex gap-2">
-                      <p className="font-medium">#{notif.id}</p>
-                      <p className="text-gray-400">{notif.message}</p>
-                    </div>
-                    <div className="flex justify-between items-center gap-4">
-                      <p className={`py-1 rounded-full text-[10px] p-2 font-semibold ${statusStyles[notif.status]}`}>
-                        {notif.status === 'pending' && 'Хүлээгдэж буй'}
-                        {notif.status === 'preparing' && 'Бэлтгэгдэж буй'}
-                        {notif.status === 'completed' && 'Дууссан'}
-                        {notif.status === 'delivered' && 'Хүргэгдсэн'}
-                      </p>
-                      <p className="text-gray-500 text-[10px]">{notif.time}</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {notifs.map((notif, index) => (
+            <NotificationItem
+              key={notif._id}
+              orderId={notif._id}
+              status={notif.status}
+              createdAt={notif.createdAt}
+              index={index}
+              totalOrders={notifs.length}
+              isUnread={unreadOrders.has(notif._id)}
+              // onClick={() => markAsRead(notif._id)}
+              data-testid={`order${index}`}
+            />
           ))}
         </div>
       </SheetContent>
