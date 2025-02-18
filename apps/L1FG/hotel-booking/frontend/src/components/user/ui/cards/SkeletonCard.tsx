@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const SkeletonCard = () => {
   return (
-    <div className="w-[872px] flex border border-[#E4E4E7] rounded-md">
+    <div data-testid="skeleton-card" className="w-[872px] flex border border-[#E4E4E7] rounded-md">
       <Skeleton className="h-[222.19px] w-[395px]" />
       <div className="w-[477px] p-5 flex">
         <div className="w-[349px] flex flex-col justify-between">

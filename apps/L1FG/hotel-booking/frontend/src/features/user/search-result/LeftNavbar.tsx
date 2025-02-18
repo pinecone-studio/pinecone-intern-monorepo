@@ -2,8 +2,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Dispatch, SetStateAction } from 'react';
 
 interface LeftNavbarProps {
-  setSelectedRating: (_: number) => void;
-  setSelectedStar: (_: number) => void;
+  setSelectedRating: (_: number | 0) => void;
+  setSelectedStar: (_: number | 0) => void;
   setSelectedName: (_: string) => void;
   setSelectedAmenities: Dispatch<SetStateAction<Array<string>>>;
   selectedRating: number | null;
@@ -15,16 +15,15 @@ export const LeftNavbar = ({ setSelectedRating, setSelectedStar, setSelectedAmen
   const handleSelectRating = (ratingValue: number) => {
     setSelectedRating(selectedRating === ratingValue ? 0 : ratingValue);
   };
-  console.log(selectedAmenities);
+
+  console.log(selectedStar, 'selectedStar');
 
   const handleSelectStar = (starValue: number) => {
     setSelectedStar(selectedStar === starValue ? 0 : starValue);
   };
 
-  const handleSelectAmenities = (amenitiesValue: string) => {
-    setSelectedAmenities((prevSelectedAmenities) =>
-      prevSelectedAmenities.includes(amenitiesValue) ? prevSelectedAmenities.filter((amenity) => amenity !== amenitiesValue) : [...prevSelectedAmenities, amenitiesValue]
-    );
+  const handleSelectAmenities = (amenitiesValue: string, checked: boolean) => {
+    setSelectedAmenities((prevSelectedAmenities) => (checked ? [...prevSelectedAmenities, amenitiesValue] : prevSelectedAmenities.filter((amenity) => amenity !== amenitiesValue)));
   };
 
   const ratingNumber = [9, 8, 7];
@@ -43,7 +42,7 @@ export const LeftNavbar = ({ setSelectedRating, setSelectedStar, setSelectedAmen
           <p className="text-[14px] leading-[14px] font-[500]">Rating</p>
           {ratingNumber.map((rating) => (
             <div key={rating + '3'} className="flex gap-4 items-center">
-              <Checkbox data-testid={`rating-${rating}`} checked={selectedRating === rating} onCheckedChange={(checked) => checked && handleSelectRating(rating)} />
+              <Checkbox data-testid={`rating-${rating}`} checked={selectedRating === rating} onCheckedChange={(checked) => handleSelectRating(checked ? rating : 0)} />
               <label className="text-[14px] leading-[14px] font-[500]">+{rating}</label>
             </div>
           ))}
@@ -52,7 +51,7 @@ export const LeftNavbar = ({ setSelectedRating, setSelectedStar, setSelectedAmen
           <p className="text-[14px] leading-[14px] font-[500]">Stars</p>
           {starNumber.map((star) => (
             <div key={star + 'e'} className="flex gap-4 items-center">
-              <Checkbox checked={selectedStar === star} onCheckedChange={(checked) => checked && handleSelectStar(star)} />
+              <Checkbox checked={selectedStar === star} onCheckedChange={(checked) => handleSelectStar(checked ? star : 0)} />
               <label className="text-[14px] leading-[14px] font-[500]">{star} stars</label>
             </div>
           ))}
@@ -61,7 +60,7 @@ export const LeftNavbar = ({ setSelectedRating, setSelectedStar, setSelectedAmen
           <p className="text-[14px] leading-[14px] font-[500]">Amenities</p>
           {amenitiesValue.map((amenities) => (
             <div key={amenities} className="flex gap-4 items-center">
-              <Checkbox id={amenities} className="rounded-sm" onCheckedChange={(checked) => checked && handleSelectAmenities(amenities)} />
+              <Checkbox id={amenities} className="rounded-sm" checked={selectedAmenities.includes(amenities)} onCheckedChange={(checked) => handleSelectAmenities(amenities, !!checked)} />
               <label htmlFor={amenities} className="text-[14px] leading-[14px] font-[500]">
                 {amenities}
               </label>
