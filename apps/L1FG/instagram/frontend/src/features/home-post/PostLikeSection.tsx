@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { quantityConverter } from '@/components/utils/quantity-converter';
 import { useCache } from '@/components/providers/CacheProvider';
 import PostModal from '@/components/profile/profilePost/PostModal';
+import LikeModal from '@/components/home-post/LikeModal';
 
 export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
   const [createPostLike] = useCreatePostLikeMutation();
@@ -55,7 +56,9 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
         <Bookmark data-testid="bookmark-icon" className="cursor-pointer" />
       </div>
       <div>
-        <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+        <LikeModal userId={post.node.user._id}>
+          <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+        </LikeModal>
       </div>
     </>
   );
