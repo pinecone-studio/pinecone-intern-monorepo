@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
+import { ProfileHover } from '@/components/home-post/ProfileHover';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const { data, loading } = useGetFollowersQuery({
@@ -44,9 +45,13 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
           {data?.getFollowers?.map((item) => (
             <div key={item.user._id} className="flex justify-between ">
               <div className=" flex gap-4">
-                <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
+                <ProfileHover searchingUserId={item.user._id}>
+                  <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
+                </ProfileHover>
                 <div>
-                  <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  <ProfileHover searchingUserId={item.user._id}>
+                    <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  </ProfileHover>
                   <p className="text-xs font-normal text-[#71717A]">{item?.user?.fullName}</p>
                 </div>
               </div>
@@ -54,9 +59,9 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                 <FriendshipStatusUser
                   preview={item.user}
                   requestStyle="flex gap-2"
-                  removeStyle="bg-[#F4F4F5] h-[36px] px-5 rounded-lg font-semibold text-sm"
-                  followStyle="bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
-                  requestedStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
+                  removeStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
+                  followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+                  requestedStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] w-[86px] rounded-md"
                 />
               )}
             </div>

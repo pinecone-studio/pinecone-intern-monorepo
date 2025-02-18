@@ -32,6 +32,7 @@ const StandartTicket = ({ standartRealCount, standart, standartClick, Decrement,
             {standartRealCount === -1 ? standartCount - 1 : standartCount}
           </div>
           <button
+            data-cy="standart-ticket"
             disabled={standartRealCount <= -1}
             data-testid="standart-increment"
             onClick={Increment}

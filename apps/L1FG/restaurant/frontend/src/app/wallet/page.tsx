@@ -1,9 +1,6 @@
-'use client';
-
 import Wallet from '@/components/order/Wallet';
-import React from 'react';
 
-const OrderPage = () => {
+const WalletPage = () => {
   return (
     <div className="max-w-full">
       <Wallet />
@@ -11,4 +8,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default WalletPage;

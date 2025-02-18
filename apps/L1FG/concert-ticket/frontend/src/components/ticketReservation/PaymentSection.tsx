@@ -20,6 +20,7 @@ const Payment = ({ handleNext, handleChange, value }: PayProps) => {
       </div>
       <div className="flex mt-[20px] gap-6 justify-around">
         <div
+          data-cy="payment-qpay"
           className={`w-[170px]  bg-[#27272A] rounded-lg p-5 cursor-pointer relative ${activePayment === 'qpay' ? 'border-[#00B7F4] border-[2px]' : 'hover:border-[#00B7F4] hover:border-[2px]'}`}
           onClick={() => {
             setActivePayment('qpay');
