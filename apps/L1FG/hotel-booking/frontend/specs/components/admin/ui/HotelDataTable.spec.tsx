@@ -65,6 +65,6 @@ describe('HotelDataTable', () => {
 
     // Check if link is present and points to the correct route
     const hotelLink = screen.getByText('Hotel 1');
-    expect(hotelLink.closest('a')).toHaveAttribute('href', '/admin/1');
+    expect(hotelLink.closest('a')).toHaveAttribute('href', '/admin/hotel-detail/1');
   });
 });

@@ -12,6 +12,15 @@ export const categoryTypeDefs = gql`
     categoryName: String!
   }
 
+  type DeleteResponse {
+    message: String!
+  }
+
+  input UpdateCategoryInputType {
+    id: ID!
+    categoryName: String!
+  }
+
   type CategoryType {
     id: ID!
     categoryName: String!
@@ -26,5 +35,7 @@ export const categoryTypeDefs = gql`
   type Mutation {
     sampleMutation: String!
     createCategory(input: CategoryInputType!): CategoryType!
+    updateCategoryName(input: UpdateCategoryInputType!): CategoryType!
+    deleteCategory(id: ID!): DeleteResponse!
   }
 `;
