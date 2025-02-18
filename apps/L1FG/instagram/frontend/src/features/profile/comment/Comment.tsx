@@ -54,24 +54,24 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
   return (
     <div className="flex  justify-between items-center">
       <div className="flex  ">
-        <ProfileHover searchingUserId={post.user._id}>
-          <Image src={imageUrlOptimizer(comment.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[35px] h-[35px]" />
+        <ProfileHover searchingUserId={comment.user._id}>
+          <Image src={imageUrlOptimizer(comment.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[35px] h-[35px] hover:cursor-pointer" />
         </ProfileHover>
 
         <div className="flex flex-col gap-2">
           <div className="flex ">
-            <ProfileHover searchingUserId={post.user._id}>
-              <p className="font-semibold  ml-5"> {comment.user?.userName}</p>
+            <ProfileHover searchingUserId={comment.user._id}>
+              <p className="font-semibold  ml-5 hover:cursor-pointer"> {comment.user?.userName}</p>
             </ProfileHover>
 
             <p className="ml-2 text-sm flex justify-center items-center">{comment.comment}</p>
           </div>
           <div className="flex ml-5 gap-4 items-center ">
             <PostDate date={comment.createdAt} />
-            <div>
+            <div className="flex items-center font-semibold text-gray-600 text-sm">
               <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
             </div>
-            <p className="text-xs text-gray-500">Reply</p>
+            <p className="text-xs font-semibold text-gray-600">Reply</p>
           </div>
         </div>
       </div>
