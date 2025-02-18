@@ -1,6 +1,6 @@
 import './global.css';
 import { PropsWithChildren } from 'react';
-import { ApolloWrapper } from '@/components/providers';
+import { ApolloWrapper ,AuthProvider } from '@/components/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,10 +14,12 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>
+          <AuthProvider>
           <NuqsAdapter>
             {children}
             <ToastContainer position="bottom-right" />
           </NuqsAdapter>
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>
