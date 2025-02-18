@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { updateOrderStatus } from '../../../src/resolvers/mutations';
 import { OrderModel } from '../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
+import { updateOrderRead } from '../../../src/resolvers/mutations';
 
 // Mock Mongoose methods
 jest.mock('../../../src/models', () => ({
@@ -24,21 +24,20 @@ describe('updateOrderStatus Resolver', () => {
     // Mock DB response
     (OrderModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockOrder);
 
-    if (!updateOrderStatus) return;
+    if (!updateOrderRead) return;
 
-    const result = await updateOrderStatus({}, { orderId: mockOrder._id, status: 'Completed' }, {}, {} as GraphQLResolveInfo);
+    const result = await updateOrderRead({}, { orderId: mockOrder._id }, {}, {} as GraphQLResolveInfo);
 
-    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { status: 'Completed', isRead: false }, { new: true });
+    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { isRead: false }, { new: true });
 
     expect(result).toEqual(mockOrder);
   });
 
   it('should throw an error if order not found', async () => {
-    // Mock DB response for non-existent order
     (OrderModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
 
-    if (!updateOrderStatus) return;
+    if (!updateOrderRead) return;
 
-    await expect(updateOrderStatus({}, { orderId: 'nonexistent-id', status: 'Cancelled' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Order not found');
+    await expect(updateOrderRead({}, { orderId: 'nonexistent-id' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Order not found');
   });
 });
