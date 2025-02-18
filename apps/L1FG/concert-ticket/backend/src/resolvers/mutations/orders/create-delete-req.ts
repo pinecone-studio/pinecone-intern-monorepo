@@ -5,7 +5,7 @@ import { DeleteOrderReqModel } from '../../../models/order-delete-req.model';
 export const createDeleteReq: MutationResolvers['createDeleteReq'] = async (_: unknown, { input }) => {
   const { concertName, totalPrice, userName, accountNumber, bankName, orderId, reqStatus, orderStatus } = input;
 
-  const order = await OrderModel.findById({ _id: orderId });
+  const order = await OrderModel.findByIdAndUpdate({ _id: orderId }, { orderStatus: 'CANCEL' });
 
   const reservationDate = new Date(order.createdAt);
 
