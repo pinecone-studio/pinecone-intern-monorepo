@@ -1,7 +1,7 @@
 import EmptyFollowing from '@/components/profile/follow/EmptyFollowing';
 import Followers from '@/features/profile/follow/Followers';
 import FollowersEmpty from '@/components/profile/follow/FollowersEmpty';
-import Following from '@/components/profile/follow/Following';
+import Following from '@/features/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
 import { GetUserTogetherQuery } from '@/generated';
 import { IconPostSavedTag } from './comment/IconPostSavedTag';
