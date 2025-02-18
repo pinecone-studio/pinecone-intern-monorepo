@@ -71,6 +71,17 @@ export const typeDefs = gql`
     email: String!
   }
 
+  input SignInInput {
+    email : String!
+    password : String!
+  }
+
+  type SignInResponse {
+    user : User
+    token : String!
+  }
+  
+
   type Mutation {
     requestOTP(input: RequestOtpInput!): RequestOtpType!
     verifyOTP(input: VerifyOtpInput!): VerifyOtpType!
@@ -78,5 +89,6 @@ export const typeDefs = gql`
     forgetRequestOTP(input: ForgetRequestOtpInput!): ForgetRequestOtpType!
     forgetVerifyOTP(input: ForgetVerifyOtpInput!): ForgetVerifyOtpType!
     forgetPassword(input: ForgetPasswordInput!): ForgetPasswordType!
+    signIn(input : SignInInput!) :SignInResponse!
   }
 `;
