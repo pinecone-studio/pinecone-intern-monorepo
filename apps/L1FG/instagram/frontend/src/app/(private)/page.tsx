@@ -1,5 +1,5 @@
 import MainPagePost from '@/features/home-post/MainPagePost';
-import MainPageStory from '@/components/home/main/MainPageStory';
+import MainPageStory from '@/features/story/MainPageStory';
 import HomePageProfile from '@/components/home/right/HomeProfile';
 import { authenticate } from '@/features/utils/authenticate';
 
