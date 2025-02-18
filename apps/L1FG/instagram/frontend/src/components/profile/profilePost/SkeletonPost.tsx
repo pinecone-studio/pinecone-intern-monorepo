@@ -1,5 +1,5 @@
 const SkeletonPost = () => {
-  return <div className="w-[300px] h-[300px] bg-gray-300 animate-pulse mx-auto"></div>;
+  return <div className="h-[400px] w-[298px] animate-pulse bg-gray-200 rounded-md aspect-square"></div>;
 };
 
 export default SkeletonPost;

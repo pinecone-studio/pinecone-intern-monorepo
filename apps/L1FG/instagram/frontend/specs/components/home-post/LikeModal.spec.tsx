@@ -1,18 +1,17 @@
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { useGetFollowersQuery } from '@/generated';
+import { useGetlikePostQuery } from '@/generated';
 import LikeModal from '@/components/home-post/LikeModal';
 
 jest.mock('@/generated', () => ({
-  useGetFollowersQuery: jest.fn(),
+  useGetlikePostQuery: jest.fn(),
 }));
 
 const mockData = {
-  getFollowers: [
+  getlikePost: [
     {
       user: {
-        _id: 'user123',
+        _id: '123',
         userName: 'testuser',
         fullName: 'Test User',
       },
@@ -21,66 +20,36 @@ const mockData = {
 };
 
 describe('LikeModal Component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('renders the LikeModal component correctly', () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
+  it('renders without crashing', () => {
+    (useGetlikePostQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
 
     render(
       <MockedProvider>
-        <LikeModal userId="user123">
-          <button>Open Modal</button>
-        </LikeModal>
+        <LikeModal postId="testPostId">Open Modal</LikeModal>
       </MockedProvider>
     );
   });
 
-  it('opens the modal when clicked', async () => {
-    (useGetFollowersQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
+  it('opens the modal when clicked and displays user info', async () => {
+    (useGetlikePostQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
 
     render(
       <MockedProvider>
-        <LikeModal userId="user123">
-          <button>Open Modal</button>
+        <LikeModal postId="testPostId">
+          <button data-testid="trigger">Open Modal</button>
         </LikeModal>
       </MockedProvider>
     );
   });
-});
+  it('does not render content when loading', () => {
+    (useGetlikePostQuery as jest.Mock).mockReturnValue({ data: null, loading: true });
 
-it('displays followers when modal is opened', async () => {
-  (useGetFollowersQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
+    const { container } = render(
+      <MockedProvider>
+        <LikeModal postId="testPostId">Open Modal</LikeModal>
+      </MockedProvider>
+    );
 
-  render(
-    <MockedProvider>
-      <LikeModal userId="user123">
-        <button>Open Modal</button>
-      </LikeModal>
-    </MockedProvider>
-  );
-});
-it('renders loading state correctly', () => {
-  (useGetFollowersQuery as jest.Mock).mockReturnValue({ loading: true });
-
-  render(
-    <MockedProvider>
-      <LikeModal userId="user123">
-        <button>Open Modal</button>
-      </LikeModal>
-    </MockedProvider>
-  );
-});
-
-it('closes the modal when close button is clicked', async () => {
-  (useGetFollowersQuery as jest.Mock).mockReturnValue({ data: mockData, loading: false });
-
-  render(
-    <MockedProvider>
-      <LikeModal userId="user123">
-        <button>Open Modal</button>
-      </LikeModal>
-    </MockedProvider>
-  );
+    expect(container.firstChild).toBeNull();
+  });
 });

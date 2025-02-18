@@ -32,7 +32,10 @@ export const Buttons = ({ userId, data }: ButtonsProps) => {
   const MessageAdtools = isOwnerId ? (
     <button className="px-4 h-[34px] bg-[#EFEFEF] hover:bg-[#C7C7C7] rounded-lg text-sm font-semibold ">View archive</button>
   ) : (
-    <button className="px-4 h-[34px] bg-[#EFEFEF] hover:bg-[#C7C7C7] rounded-lg text-sm font-semibold">Message</button>
+    <button
+      className="hidden
+  "
+    />
   );
 
   const SettingsButton = isOwnerId ? (

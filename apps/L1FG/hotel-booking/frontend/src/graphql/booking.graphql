@@ -17,3 +17,23 @@ query getBookings {
     country
   }
 }
+
+query getBookingsByHotelId($hotelId: ID!) {
+  getBookingsByHotelId(hotelId: $hotelId) {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}

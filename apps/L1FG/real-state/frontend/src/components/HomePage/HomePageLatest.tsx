@@ -3,7 +3,7 @@ import { useGetPostsQuery } from '@/generated';
 import Link from 'next/link';
 
 export const HomePageLatest = () => {
-  const { data, loading, error } = useGetPostsQuery();
+  const { data, loading, error } = useGetPostsQuery({ variables: { input: { status: 'APPROVED' } } });
 
   if (loading) {
     return (
@@ -30,7 +30,7 @@ export const HomePageLatest = () => {
       </div>
       <div className="w-full max-w-screen-xl grid grid-cols-4 gap-4">
         {data?.getPosts.slice(0, 4).map((data) => {
-          return <MainCard key={data._id} value={data} />;
+          return <MainCard key={data.title} value={data} />;
         })}
       </div>
     </div>
