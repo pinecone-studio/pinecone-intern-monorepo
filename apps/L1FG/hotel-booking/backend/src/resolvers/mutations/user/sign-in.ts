@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken"
 
 export const signIn : MutationResolvers["signIn"] = async(_ , {input}) =>{
     const {email, password} = input;
+    console.log(input)
     const user= await UserModel.findOne({email : email});
     if(!user){
         throw new Error("User Not Found");
