@@ -109,12 +109,18 @@ export const typeDefs = gql`
     sortByRating: Boolean
   }
 
+  input editFaqsInput {
+    id : ID!
+    faqs : [KeyValueInput]
+  }
+
   type Mutation {
     editGeneralInfo(input: editGeneralInfoInput!): Hotel
     createHotel(input: CreateHotelInput!): CreateHotelResponse!
     editAmenities(input: editAmenitiesInput!): Hotel
     editLocation(input: editLocationInput!): Hotel
     editImages(input: editImagesInput!): Hotel
+    editFaqs(input : editFaqsInput!) : Hotel
   }
   type Query {
     getHotels: [Hotel!]!

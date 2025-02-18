@@ -8,7 +8,7 @@ import PostModalCarousel from './PostModalCarousel';
 import GetComments from '../../../features/profile/comment/GetComments';
 import CreateComment from '../../../features/profile/comment/CreateComment';
 import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   return (
