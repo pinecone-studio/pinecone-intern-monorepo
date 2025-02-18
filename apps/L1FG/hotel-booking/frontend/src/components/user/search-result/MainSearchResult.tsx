@@ -13,6 +13,7 @@ interface MainResultSearchProps {
   selectedRating: number;
   selectedStar: number | null;
   selectedAmenities: string[];
+  isLoading: boolean;
 }
 
 export const MainResultSearch = ({
@@ -25,6 +26,7 @@ export const MainResultSearch = ({
   selectedRating,
   selectedStar,
   selectedAmenities,
+  isLoading,
 }: MainResultSearchProps) => {
   return (
     <div>
@@ -38,7 +40,7 @@ export const MainResultSearch = ({
           selectedStar={selectedStar}
           selectedAmenities={selectedAmenities}
         />
-        <RightNavbar data={data} setSearchValuePrice={setSearchValuePrice} />
+        <RightNavbar data={data} setSearchValuePrice={setSearchValuePrice} isLoading={isLoading} />
       </div>
     </div>
   );

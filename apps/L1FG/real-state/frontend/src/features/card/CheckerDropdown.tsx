@@ -3,12 +3,13 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 type Data = {
   id: number;
   value: string;
+  title?: string;
 };
 
 type DropdownProps = {
   datas: Data[];
-  /* eslint-disable */
-  setSelectedValue: (value: string) => void;
+
+  setSelectedValue: (_value: string) => void;
   placeholder: string;
   value: string | null;
 };
@@ -27,7 +28,7 @@ export const Dropdown = ({ datas, setSelectedValue, placeholder, value }: Dropdo
       <SelectContent className="w-[180px] flex justify-start p-2 border rounded-md bg-white">
         <SelectGroup>
           {datas.map((data) => (
-            <SelectItem key={`${data.id}+${data.value} `} value={data.value}>
+            <SelectItem key={`${data.id}+${data.value}`} value={data.title ? data.title : data.value}>
               {data.value}
             </SelectItem>
           ))}
