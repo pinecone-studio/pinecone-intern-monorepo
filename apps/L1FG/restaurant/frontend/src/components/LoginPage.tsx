@@ -1,12 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLoginUserMutation } from '@/generated';
+import { toast } from 'sonner';
 
 const LoginPage = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.push('/');
+      toast.error('Та аль хэдийн нэвтэрсэн байна.');
+    }
+  }, []);
 
   const [formState, setFormState] = useState({
     email: '',
@@ -48,7 +57,7 @@ const LoginPage = () => {
           createdAt: user.data?.loginUser.createdAt,
         })
       );
-
+      toast.success('Амжилттай нэвтэрлээ');
       router.push('/');
     } catch (error) {
       setFormState({
