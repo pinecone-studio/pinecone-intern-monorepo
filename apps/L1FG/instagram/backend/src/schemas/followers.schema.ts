@@ -49,12 +49,30 @@ export const FollowerTypeDefs = gql`
   input FollowInput {
     targetId: ID!
   }
+  input SmallFollowInput {
+    after: ID
+    first: Int!
+    searchingUserId: ID!
+  }
+  type PageInfo {
+    startCursor: ID!
+    endCursor: ID!
+    hasNextPage: Boolean!
+  }
   type FollowedRequested {
     isFollowed: Boolean
     isRequested: Boolean
   }
+  type FollowersEdge {
+    cursor: ID!
+    node: FollowerType!
+  }
+  type FollowersConnection {
+    edges: [FollowersEdge!]!
+    pageInfo: PageInfo!
+  }
   type Query {
-    getFollowers(searchingUserId: ID): [FollowerType!]!
+    getFollowers(input: SmallFollowInput!): FollowersConnection!
     getFollowing(searchingUserId: ID): [FollowingType!]!
   }
   type Mutation {
