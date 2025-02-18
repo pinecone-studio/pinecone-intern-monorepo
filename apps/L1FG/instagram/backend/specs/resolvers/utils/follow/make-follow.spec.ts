@@ -1,5 +1,5 @@
 import { Follow } from 'apps/L1FG/instagram/backend/src/generated';
-import { FollowerModel } from 'apps/L1FG/instagram/backend/src/models';
+import { FollowerModel, NotificationModel } from 'apps/L1FG/instagram/backend/src/models';
 import { makeFollow } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/make-follow';
 jest.mock('apps/L1FG/instagram/backend/src/models');
 const newFollow: Follow = {
@@ -17,6 +17,7 @@ describe('Make a follow', () => {
   it('SHould follow', async () => {
     const mockCreate = jest.fn().mockResolvedValueOnce(newFollow);
     (FollowerModel.create as jest.Mock) = mockCreate;
+    (NotificationModel.create as jest.Mock).mockResolvedValue({ userId: '123', ownerId: '321', categoryType: 'REQUEST' });
     const result = await makeFollow('13', '14');
     expect(result).toEqual(newFollow);
     expect(mockCreate).toHaveBeenCalledTimes(1);

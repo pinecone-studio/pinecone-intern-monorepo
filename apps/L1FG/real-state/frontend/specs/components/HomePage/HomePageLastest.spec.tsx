@@ -53,6 +53,11 @@ describe('HomePageLatest', () => {
       {
         request: {
           query: GetPostsDocument,
+          variables: {
+            input: {
+              status: 'APPROVED',
+            },
+          },
         },
         error: new Error('Test error message'),
       },
@@ -74,6 +79,11 @@ describe('HomePageLatest', () => {
       {
         request: {
           query: GetPostsDocument,
+          variables: {
+            input: {
+              status: 'APPROVED',
+            },
+          },
         },
         result: {
           data: {

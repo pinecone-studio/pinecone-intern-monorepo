@@ -131,9 +131,11 @@ query GetProfilePreview($searchingUserId: ID!) {
       node {
         postImage
         user {
+          _id
           latestStoryTimestamp
           seenStoryTime
           profileImage
+          userName
         }
       }
       cursor

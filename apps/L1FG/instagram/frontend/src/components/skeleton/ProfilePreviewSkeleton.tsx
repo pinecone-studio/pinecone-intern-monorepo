@@ -14,7 +14,7 @@ export const ProfilePreviewSkeleton = () => {
         <FollowerSectionSkeleton />
         <FollowerSectionSkeleton />
       </div>
-      <div className="flex flex-row justify-around gap-1 w-full pt-5">
+      <div className="flex flex-row justify-around gap-1 w-full pt-6">
         <PostSectionSkeletonPost />
         <PostSectionSkeletonPost />
         <PostSectionSkeletonPost />
