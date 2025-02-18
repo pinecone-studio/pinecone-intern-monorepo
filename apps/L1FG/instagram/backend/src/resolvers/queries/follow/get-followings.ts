@@ -5,7 +5,7 @@ import { authenticate } from '../../../utils/authenticate';
 import { FollowerModel } from '../../../models';
 import { catchError } from '../../../utils/catch-error';
 
-export const getFollowings: QueryResolvers['getFollowers'] = async (_, { input }, { userId }) => {
+export const getFollowings: QueryResolvers['getFollowings'] = async (_, { input }, { userId }) => {
   authenticate(userId);
   try {
     let hasNextPage = false;
