@@ -10,7 +10,7 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="container mx-auto">
+      <body className="mx-auto">
         <ApolloWrapper>
           <CartProvider>
             {children}
