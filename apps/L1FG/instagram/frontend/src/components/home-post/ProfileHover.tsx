@@ -1,11 +1,11 @@
 'use client';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
-import { Avatar } from './Avatar';
 import Image from 'next/image';
 import { imageUrlOptimizer } from '../utils/image-url-optimizer';
 import { FriendshipStatus } from '../../features/home-post/FriendshipStatus';
 import { ProfilePreviewSkeleton } from '../skeleton/ProfilePreviewSkeleton';
+import { AvatarLink } from './AvatarLink';
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
   const [getProfilePreview, { data, loading }] = useGetProfilePreviewLazyQuery();
   return (
@@ -22,12 +22,12 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
       >
         {children}
       </HoverCardTrigger>
-      <HoverCardContent>
+      <HoverCardContent className="w-[350px] h-[340px] p-0  ml-[300px] rounded-lg ">
         {loading && <ProfilePreviewSkeleton />}
         {data && (
-          <div className="flex flex-col w-[200px]">
-            <div className="flex gap-4 h-fit w-fit">
-              <Avatar post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
+          <div className="flex flex-col  ">
+            <div className="flex gap-4 h-fit w-fit justify-center items-center p-3">
+              <AvatarLink post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
                 <p className="font-bold">{data.getProfilePreview.user?.userName}</p>
                 <p>{data.getProfilePreview.user?.fullName}</p>
@@ -48,7 +48,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 <p>following</p>
               </div>
             </div>
-            <div className="w-full h-20 flex gap-2">
+            <div className="w-full h-[120px] flex gap-1 pt-4">
               {data.getProfilePreview.firstThreePosts.map((post) => {
                 return (
                   <div className="w-1/3 h-full relative" key={post.cursor}>
@@ -57,7 +57,17 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 );
               })}
             </div>
-            <FriendshipStatus preview={data} />
+            <div className="p-3">
+              <FriendshipStatus
+                followStyle=" w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+            flex justify-center items-center mt-2"
+                followingStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+            flex justify-center items-center mt-2"
+                requestedStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+             flex justify-center items-center mt-2"
+                preview={data.getProfilePreview.user}
+              />
+            </div>
           </div>
         )}
       </HoverCardContent>

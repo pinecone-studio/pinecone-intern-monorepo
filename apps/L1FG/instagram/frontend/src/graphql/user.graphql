@@ -38,20 +38,31 @@ query GetUser {
     userName
   }
 }
+fragment UserByNameBasicInfo on UserTogetherUserType {
+  _id
+  userName
+  fullName
+  profileImage
+  hasStory
+  isPrivate
+  friendshipStatus {
+    followedBy
+    following
+  }
+  followerCount
+}
 
 query GetUserByName($userName: String!) {
   getUserByName(userName: $userName) {
     _id
-    userName
-    fullName
-    profileImage
-    hasStory
-    isPrivate
-    friendshipStatus {
-      followedBy
-      following
-    }
     followerCount
+    fullName
+    userName
+    profileImage
+    seenStoryTime
+    latestStoryTimestamp
+    mutualFollowersCount
+    mutualFollowers
   }
 }
 
@@ -64,11 +75,16 @@ mutation SavedSearchUser($searchedUserId: String!) {
 query GetSearchedUser {
   getSearchedUser {
     _id
-    userName
+    followerCount
     fullName
-    hasStory
+    userName
+    latestStoryTimestamp
+    seenStoryTime
     friendshipStatus {
+      followedBy
       following
+      incomingRequest
+      outgoingRequest
     }
     profileImage
   }
@@ -115,12 +131,18 @@ query GetProfilePreview($searchingUserId: ID!) {
       node {
         postImage
         user {
+          _id
           latestStoryTimestamp
           seenStoryTime
           profileImage
+          userName
         }
       }
       cursor
     }
   }
+}
+
+mutation UpdateProfileImage($image: String!) {
+  updateProfileImage(image: $image)
 }

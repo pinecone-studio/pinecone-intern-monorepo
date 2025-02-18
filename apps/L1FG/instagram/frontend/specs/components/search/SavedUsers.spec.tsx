@@ -3,6 +3,8 @@ import { useDeleteSearchUserMutation, useGetSearchedUserQuery } from '@/generate
 import { useRouter } from 'next/navigation';
 import { SavedUsers } from '@/components/search/SavedUsers';
 
+import '@testing-library/jest-dom';
+
 jest.mock('@/generated', () => ({
   useDeleteSearchUserMutation: jest.fn(),
   useGetSearchedUserQuery: jest.fn(),
@@ -18,6 +20,8 @@ describe('SavedUsers Component', () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
+    jest.clearAllMocks();
+
     (useDeleteSearchUserMutation as jest.Mock).mockReturnValue([mockDeleteUser]);
     (useGetSearchedUserQuery as jest.Mock).mockReturnValue({
       data: {
@@ -31,6 +35,7 @@ describe('SavedUsers Component', () => {
           },
         ],
       },
+      loading: false,
       refetch: mockRefetch,
     });
 
@@ -39,18 +44,43 @@ describe('SavedUsers Component', () => {
     });
   });
 
+  it('shows SearchSkeleton while loading', async () => {
+    (useGetSearchedUserQuery as jest.Mock).mockReturnValue({
+      data: null,
+      loading: true,
+      refetch: mockRefetch,
+    });
+
+    render(<SavedUsers searchOpen={true} />);
+    expect(await screen.findByTestId('search-skeleton')).toBeInTheDocument();
+  });
+
+  it('displays "No recent searches" when there are no saved users', () => {
+    (useGetSearchedUserQuery as jest.Mock).mockReturnValue({
+      data: null,
+      loading: false,
+      refetch: mockRefetch,
+    });
+
+    render(<SavedUsers searchOpen={true} />);
+
+    expect(screen.getByText('No recent searches')).toBeInTheDocument();
+  });
+
   it('calls deleteUser and refetch when delete button is clicked', async () => {
-    render(<SavedUsers />);
+    render(<SavedUsers searchOpen={true} />);
     const deleteButton = screen.getByTestId('delete-saved-user');
     fireEvent.click(deleteButton);
+
     await waitFor(() => expect(mockDeleteUser).toHaveBeenCalledWith({ variables: { searchedUserId: '1' } }));
-    expect(mockRefetch).toHaveBeenCalled();
+    await waitFor(() => expect(mockRefetch).toHaveBeenCalled());
   });
 
   it('navigates to user profile when user is clicked', () => {
-    render(<SavedUsers />);
+    render(<SavedUsers searchOpen={true} />);
     const userProfile = screen.getByText('testuser');
     fireEvent.click(userProfile);
+
     expect(mockPush).toHaveBeenCalledWith('/1');
   });
 });

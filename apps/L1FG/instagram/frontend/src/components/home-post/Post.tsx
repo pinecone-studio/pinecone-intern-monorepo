@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { PostsEdge } from '@/generated';
-import { Avatar } from './Avatar';
+import { AvatarLink } from './AvatarLink';
 import { Username } from './Username';
 import { PostsSwiper } from './PostsSwiper';
 import { PostCaption } from './PostCaption';
@@ -9,17 +9,23 @@ import { PostComment } from './PostComment';
 import { ProfileHover } from './ProfileHover';
 import { PostLikeSection } from '../../features/home-post/PostLikeSection';
 import { PostDate } from './PostDate';
+import { ProfileOrStory } from './ProfileOrStory';
 
 const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
+  const hasStory = post?.node?.user?.latestStoryTimestamp > post?.node?.user?.seenStoryTime;
+  const urlWhenHasStory = `/stories/${post.node.user.userName}/${post.node.user._id} `;
+  const urlWhenNoStory = `/${post.node.user._id}`;
   return (
-    <div className="md:border-b-[1px] md:pb-5" data-testid="post-item">
+    <div className="md:border-b-[1px] md:pb-5 " data-testid="post-item">
       <div className="flex gap-2">
         <ProfileHover searchingUserId={post.node.user._id}>
-          <Avatar post={post} />
+          <AvatarLink post={post} />
         </ProfileHover>
         <ProfileHover searchingUserId={post.node.user._id}>
           <div className="flex flex-col justify-center h-full">
-            <Username post={post} />
+            <ProfileOrStory hasStory={hasStory} urlWhenHasStory={urlWhenHasStory} urlWhenNoStory={urlWhenNoStory}>
+              <Username post={post} />
+            </ProfileOrStory>
           </div>
         </ProfileHover>
         <PostDate date={post.node.createdAt} />

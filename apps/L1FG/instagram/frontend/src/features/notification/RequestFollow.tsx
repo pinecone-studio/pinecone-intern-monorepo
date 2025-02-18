@@ -1,31 +1,70 @@
 'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType } from '@/generated';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { NotificationType, useAcceptRequestMutation, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
+import { FriendshipStatus } from '../home-post/FriendshipStatus';
+import { useState } from 'react';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
   reqNotification?: NotificationType[];
 };
 
 export const RequestFollow = ({ reqNotification }: Props) => {
+  const [status, setStatus] = useState(true);
+  const [acceptFollow] = useAcceptRequestMutation();
+
+  const handleFollowConfirm = async (followerId: string) => {
+    setStatus(false);
+    await acceptFollow({
+      variables: {
+        followerId,
+      },
+    });
+  };
   return (
     <div>
       {reqNotification?.map((n) => (
-        <div key={n.id} className="flex items-center mt-4 h-[60px] py-2 px-6 mb-2">
-          <Avatar>
-            <AvatarImage src={n?.user?.profileImage} alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className=" ml-2 text-sm break-words ">
-            <Link className="font-bold mr-2 text-base " href={'/'}>
-              {'name'}
-            </Link>
-            requested to follow you
+        <div key={n.id} className="flex justify-between items-center mt-4 h-[60px] py-2 px-6 mb-2">
+          <div>
+            <Avatar>
+              <AvatarImage src={n?.user?.profileImage} alt="@shadcn" />
+            </Avatar>
           </div>
-
-          <div className="flex gap-2">
-            <button className="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md">Confirm</button>
-            <button className="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md">Delete</button>
+          <div className="text-sm break-words mr-2 w-[187px]">
+            <Link className="font-bold mr-1  text-base " href={'/'}>
+              {n.user?.userName}
+            </Link>
+            {n.user?.friendshipStatus.incomingRequest && status ? <span> requested to follow you</span> : <span> started following you</span>}
+            <span className="text-gray-500">
+              {' '}
+              {n.createdAt
+                ? formatDistanceToNowStrict(n.createdAt, { addSuffix: false })
+                    .replace(' minutes', 'm')
+                    .replace(' minute', 'm')
+                    .replace(' hours', 'h')
+                    .replace(' hour', 'h')
+                    .replace(' days', 'd')
+                    .replace(' day', 'd')
+                    .replace(' weeks', 'w')
+                    .replace(' week', 'w')
+                    .replace(' months', 'mo')
+                    .replace(' month', 'mo')
+                    .replace(' years', 'y')
+                    .replace(' year', 'y')
+                : 'Unknown time'}
+            </span>
+          </div>
+          <div>
+            <FriendshipStatus
+              requestStyle="flex gap-2"
+              followingStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
+              followStyle="bg-[#2563EB] h-[36px] w-[86px] text-white rounded-md"
+              requestedStyle="bg-[#F4F4F5] h-[36px] w-[86px] rounded-md"
+              statuss={status}
+              onclick={() => handleFollowConfirm(n?.user?._id as string)}
+              preview={n.user as UserTogetherUserType}
+            />
           </div>
         </div>
       ))}

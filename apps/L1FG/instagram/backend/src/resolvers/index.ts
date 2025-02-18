@@ -7,6 +7,12 @@ import * as UserTogetherUserType from './user/user-together-user-type';
 import * as UserPostType from './post/user-post-type';
 import * as CommentDetailType from './comment/comment-detail-type';
 import * as NotificationType from './notification/notification-type';
+import * as FollowerType from './follow/follower-type';
+import * as FollowingType from './follow/following-type';
+import * as OneUserStoriesType from './story/one-user-stories-type';
+import * as OneStoryType from './story/one-story-type';
+import * as CommentType from './comment/comment-type';
+import * as PostLikedPeopleType from './post/post-liked-people-type';
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -43,4 +49,10 @@ export const resolvers = {
   UserPostType,
   CommentDetailType,
   NotificationType,
+  FollowerType,
+  FollowingType,
+  OneUserStoriesType,
+  OneStoryType,
+  CommentType,
+  PostLikedPeopleType,
 };

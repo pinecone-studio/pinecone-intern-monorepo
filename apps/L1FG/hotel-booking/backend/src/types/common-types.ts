@@ -64,4 +64,5 @@ export type UserType = {
   emergencyContact: string[];
   status: 'Admin' | 'User';
   password: string;
+  otp: number;
 };

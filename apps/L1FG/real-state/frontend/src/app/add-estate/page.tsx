@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAddPostMutation } from '@/generated';
 import TownDetails from '@/components/addEstate/TownDetails';
 import PropertyDetails from '@/components/addEstate/PropertyDetails';
@@ -15,21 +15,29 @@ import { createInput } from '@/components/utils/create-input';
 import DescriptionSection from '@/components/addEstate/DescriptionSection';
 import { toast } from 'react-toastify';
 import { useFormState } from '../../components/utils/use-form-state';
+import { useRouter } from 'next/navigation';
 
 const AddEstate: React.FC = () => {
   const { formData, setFormData } = useFormState();
   const { user } = useAuth();
-
   const [addPost] = useAddPostMutation();
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.warning('Та нэвтэрч орно уу');
+      router.push('/');
+    }
+  }, []);
 
-  const handleFileChange = (name: string, files: FileList | null) => {
+  const handleFileChange = (name: string, files: string[] | null) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: files ? Array.from(files) : [],
+      [name]: files ? files : [],
     }));
   };
 
-  const handleInputChange = (name: string, value: string, type: string) => {
+  const handleInputChange = (name: string, value: string, type: string | undefined) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: type === 'number' ? (value.startsWith('0') ? parseInt(value.slice(1)) : parseInt(value)) : value,
@@ -37,10 +45,10 @@ const AddEstate: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement;
-    const files = (e.target as HTMLInputElement).files;
-    if (type == undefined) {
-      handleFileChange(name, files);
+    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement | { name: string; value: string[]; type: string | undefined };
+
+    if (typeof value === 'object') {
+      handleFileChange(name, value);
     } else {
       handleInputChange(name, value, type);
     }
@@ -66,7 +74,6 @@ const AddEstate: React.FC = () => {
       const result = await response.json();
       return result.secure_url;
     } catch (error) {
-      console.error('Error uploading file:', error);
       toast.error(`Файл хуулахад алдаа гарлаа: ${error}`);
       return null;
     }
@@ -98,12 +105,13 @@ const AddEstate: React.FC = () => {
     const uploadedImages = await uploadImages(files);
 
     const input = createInput(formData, user, uploadedImages);
-
+    setTimeout(() => {
+      window.location.href = '/my-estates';
+    }, 3000);
     try {
       await addPost({ variables: { input } });
       toast.success('Зар нэмэгдлээ!');
     } catch (error) {
-      console.error('Зар нэмэхэд алдаа гарлаа', error);
       toast.error(`Зар нэмэхэд алдаа гарлаа`, {
         autoClose: 2000,
       });
@@ -115,11 +123,11 @@ const AddEstate: React.FC = () => {
       <div className="flex gap-8">
         <div className="w-[728px]">
           <PropertyDetails formData={formData} handleChange={handleChange} />
-          <ImagesSection handleChange={handleChange} />
+          <ImagesSection formData={formData} handleChange={handleChange} />
           <DescriptionSection formData={formData} handleChange={handleChange} />
-          <RestroomsSection formData={formData} handleChange={handleChange} />
           <TownDetails formData={formData} handleChange={handleChange} />
           <WindowsSection formData={formData} handleChange={handleChange} />
+          <RestroomsSection formData={formData} handleChange={handleChange} />
           <FloorDetailsSection formData={formData} handleChange={handleChange} />
           <BalconyLiftSection formData={formData} handleChange={handleChange} />
         </div>

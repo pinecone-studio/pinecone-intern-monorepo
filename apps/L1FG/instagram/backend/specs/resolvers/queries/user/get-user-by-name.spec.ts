@@ -1,50 +1,71 @@
+import { FollowerModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { getUserByName } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
-import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
-  UserModel: {
-    find: jest.fn().mockResolvedValue([
-      {
-        _id: '1',
-        userName: 'jordan',
-        fullName: 'jordan mike',
-        email: 'jordan@gmail.com',
-        bio: '',
-        password: 'jordan1234',
-        isPrivate: false,
-        hasStory: false,
-        profileImage: 'http://image',
-        gender: 'not_know',
-      },
-    ]),
-  },
+  UserModel: { aggregate: jest.fn() },
+  FollowerModel: { distinct: jest.fn() },
 }));
-describe('Get users', () => {
-  it('Should take users', async () => {
-    if (!getUserByName) {
-      return;
-    }
 
-    const users = await getUserByName({}, { userName: 'tuul' }, { userId: '3' }, {} as GraphQLResolveInfo);
-    expect(users).toEqual([
-      {
-        _id: '1',
-        userName: 'jordan',
-        fullName: 'jordan mike',
-        email: 'jordan@gmail.com',
-        bio: '',
-        password: 'jordan1234',
-        isPrivate: false,
-        hasStory: false,
-        profileImage: 'http://image',
-        gender: 'not_know',
-      },
-    ]);
+describe('getUserByName', () => {
+  const mockUserId = 'user123';
+  const mockUserName = 'testUser';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-  it('Should throw an unauthorization error', async () => {
-    if (!getUserByName) {
-      return;
-    }
-    await expect(getUserByName({}, { userName: 'hk' }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтэрнэ үү');
+
+  it('should throw UnauthenticatedError if user is not authenticated', async () => {
+    if (!getUserByName) return;
+
+    await expect(getUserByName({}, { userName: mockUserName }, { userId: null }, {})).rejects.toThrow('Нэвтэрнэ үү');
+  });
+
+  it('should return users with mutual followers count', async () => {
+    const mockFollowings = ['userA', 'userB'];
+    const mockUsers = [
+      {
+        _id: 'user456',
+        fullName: 'John Doe',
+        userName: 'johndoe',
+        profileImage: 'profile.jpg',
+        seenStoryTime: '2025-02-14T12:00:00Z',
+        latestStoryTimestamp: '2025-02-14T11:45:00Z',
+        followerCount: 100,
+        mutualFollowersCount: 1,
+        mutualFollowers: 'userA',
+      },
+    ];
+
+    (FollowerModel.distinct as jest.Mock).mockResolvedValue(mockFollowings);
+    (UserModel.aggregate as jest.Mock).mockResolvedValue(mockUsers);
+
+    if (!getUserByName) return;
+
+    const result = await getUserByName({}, { userName: mockUserName }, { userId: mockUserId }, {});
+
+    expect(FollowerModel.distinct).toHaveBeenCalledWith('followerId', { targetId: mockUserId });
+    expect(UserModel.aggregate).toHaveBeenCalled();
+    expect(result).toEqual(mockUsers);
+  });
+
+  it('should return an empty array if no users are found', async () => {
+    (FollowerModel.distinct as jest.Mock).mockResolvedValue([]);
+    (UserModel.aggregate as jest.Mock).mockResolvedValue([]);
+
+    const result = await getUserByName({}, { userName: mockUserName }, { userId: mockUserId }, {});
+
+    expect(result).toEqual([]);
+  });
+
+  it('should throw a GraphQLError with "server error"', async () => {
+    (UserModel.aggregate as jest.Mock).mockRejectedValue('Unexpected error');
+
+    await expect(getUserByName({}, { userName: 'testUser' }, { userId: 'someUserId' }, {})).rejects.toThrow('server error');
+  });
+
+  it('should handle errors and throw GraphQLError', async () => {
+    (UserModel.aggregate as jest.Mock).mockRejectedValue(new Error('Database error'));
+
+    await expect(getUserByName({}, { userName: mockUserName }, { userId: mockUserId }, {})).rejects.toThrow('Database error');
   });
 });

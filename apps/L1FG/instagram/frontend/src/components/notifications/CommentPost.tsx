@@ -1,7 +1,8 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType } from '@/generated';
-import Link from 'next/link';
+import { NotificationType, UserPostType } from '@/generated';
+import PostModal from '../profile/profilePost/PostModal';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
   commentNotification: NotificationType[];
@@ -28,8 +29,11 @@ export const CommentPost = ({ commentNotification }: Props) => {
     return {
       postId,
       userNames: latestLikes.map((like) => like.user?.userName),
-      postImage: likes[0]?.contentPost ?? '',
+      contentPost: likes[0]?.contentPost,
       userImage: latestLikes[latestLikes.length - 1]?.user?.profileImage,
+      contentComment: latestLikes[latestLikes.length - 1]?.contentComment,
+      userIds: latestLikes.map((like) => like.user?._id),
+      date: likes[0].createdAt,
     };
   });
 
@@ -37,25 +41,36 @@ export const CommentPost = ({ commentNotification }: Props) => {
     <div>
       {groupedNotifications.map((n) => (
         <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-6 mb-2">
-          <div className="flex">
+          <div className="flex items-center">
             <Avatar>
               <AvatarImage src={n?.userImage} alt="User Avatar" />
             </Avatar>
-            <div className="w-[194px] ml-2 items-center flex text-sm">
-              <Link className="font-bold mr-2 text-base" href={'/'}>
-                {n.userNames[0]}, {n.userNames[1]} comment your post
-              </Link>
+            <div className="ml-4 text-sm w-[243px] break-words  ">
+              <span className="font-bold">
+                <a href={`/${n.userIds[0]}`}>{n.userNames[0]}</a>
+              </span>
+              <span className="px-1 ">commented:</span>
+              <span> {n.contentComment}</span>
+              <span className="text-gray-500">
+                {formatDistanceToNowStrict(n.date, { addSuffix: false })
+                  .replace(' minutes', 'm')
+                  .replace(' minute', 'm')
+                  .replace(' hours', 'h')
+                  .replace(' hour', 'h')
+                  .replace(' days', 'd')
+                  .replace(' day', 'd')
+                  .replace(' weeks', 'w')
+                  .replace(' week', 'w')
+                  .replace(' months', 'mo')
+                  .replace(' month', 'mo')
+                  .replace(' years', 'y')
+                  .replace(' year', 'y')}
+              </span>
             </div>
           </div>
-          <div
-            style={{
-              backgroundImage: `url(${n.postImage})`,
-              width: '44px',
-              height: '44px',
-              backgroundPosition: 'center',
-            }}
-            className="rounded-sm bg-cover"
-          ></div>
+          <PostModal post={n.contentPost as UserPostType}>
+            <div className="w-12 h-12 rounded-md bg-cover bg-center bg-red-400" style={{ backgroundImage: `url(${n.contentPost?.postImage[0]})` }}></div>
+          </PostModal>
         </div>
       ))}
     </div>

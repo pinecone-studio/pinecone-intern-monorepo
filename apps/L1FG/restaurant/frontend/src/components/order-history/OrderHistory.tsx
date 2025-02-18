@@ -1,40 +1,70 @@
-import React from 'react';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/common/Header';
+import { useGetOrdersForUserQuery } from '@/generated';
+import { toast } from 'sonner';
 
 const OrderHistory = () => {
-  const orders = [
-    { id: '#33998', status: 'Бэлтгэгдэж буй', date: '24.10.19 15:25', amount: "42'800₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "27'450₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "18'900₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "21'900₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "24'200₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "19'750₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "18'900₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "21'900₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "24'200₮" },
-    { id: '#33998', status: 'Дууссан', date: '24.10.19 15:25', amount: "19'750₮" },
-  ];
+  const [userId, setUserId] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        setUserId(parsedUser._id);
+      }
+    } catch (error) {
+      toast.error('Та захиалгын түүх хархын тулд нэвтэрч орно уу!');
+      router.push('/login');
+    }
+  }, []);
+
+  const { data, loading } = useGetOrdersForUserQuery({
+    variables: { userId: userId || '' },
+    skip: !userId,
+  });
 
   return (
-    <div className="min-h-[500px] w-full  text-white px-4 py-6">
+    <div className="min-h-[500px] w-full">
       <Header />
 
-      <h1 className="text-center text-xl text-black mb-6">Захиалгын түүх</h1>
+      <h1 className="text-center text-xl pt-20 text-black mb-6">Захиалгын түүх</h1>
 
       <div className="flex-1 overflow-y-scroll px-4 py-4 space-y-4">
-        {orders.map((order, index) => (
-          <div key={index} className="flex items-center justify-between bg-white text-black p-4 rounded-lg shadow-md">
-            <div>
-              <div className="flex gap-2 items-center">
-                <div className="text-sm font-bold">{order.id}</div>
-                <div className="text-xs text-gray-500">{order.status}</div>
-              </div>
+        {loading && <p className="text-center text-gray-500">Түр хүлээнэ үү...</p>}
 
-              <div className="text-xs text-gray-400">{order.date}</div>
-            </div>
-            <div className="text-xl font-bold">{order.amount}</div>
-          </div>
-        ))}
+        {data?.getOrdersForUser?.length
+          ? data.getOrdersForUser.map((order, index, arr) => {
+              const totalAmount = order?.items?.reduce((acc, item) => acc + (item?.price ?? 0) * (item?.quantity ?? 0), 0);
+              return (
+                <div key={order?._id} className="flex flex-col bg-white text-black p-4 rounded-lg border">
+                  <div className="flex gap-2 items-center">
+                    <p className="text-base font-bold text-[#441500]">#{arr.length - index}</p>
+                    <p className="text-xs text-[#18181B] font-medium border rounded-xl px-2 bg-[#F4F4F5]">{order?.status}</p>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="text-sm text-[#3F4145]">
+                      {new Date(order?.createdAt)
+                        .toLocaleString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false,
+                        })
+                        .replace(',', '')}
+                    </p>
+                    <p className="text-lg font-bold">{totalAmount}₮</p>
+                  </div>
+                </div>
+              );
+            })
+          : !loading && <p className="text-center text-gray-500">Захиалга олдсонгүй.</p>}
       </div>
     </div>
   );

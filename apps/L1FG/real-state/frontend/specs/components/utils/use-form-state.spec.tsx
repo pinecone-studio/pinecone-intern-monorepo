@@ -1,19 +1,19 @@
 import { useFormState } from '@/components/utils/use-form-state';
 import { act, renderHook } from '@testing-library/react';
+import { HouseTypeEnum, PostStats } from '@/generated';
 
-describe('useFormState', () => {
-  test('should initialize with default values', () => {
+describe('Form Initial State', () => {
+  it('initializes with default values', () => {
     const { result } = renderHook(() => useFormState());
-
     expect(result.current.formData).toEqual({
       title: '',
       description: '',
       price: '',
-      houseType: null,
+      houseType: '',
       size: '',
       images: [],
       totalRooms: 0,
-      garage: '',
+      garage: false,
       restrooms: 0,
       subDistrict: '',
       district: '',
@@ -24,117 +24,115 @@ describe('useFormState', () => {
       windowType: '',
       floorMaterial: '',
       floorNumber: 0,
-      balcony: '',
+      balcony: false,
       totalFloors: 0,
-      lift: '',
+      lift: false,
+      status: PostStats.Pending,
     });
   });
+});
 
-  test('should update form data correctly', () => {
+describe('Form Text Fields', () => {
+  it('updates text fields correctly', () => {
     const { result } = renderHook(() => useFormState());
-
     act(() => {
-      result.current.setFormData({
-        ...result.current.formData,
-        title: 'Test House',
+      result.current.setFormData((prev) => ({
+        ...prev,
+        title: 'Test Title',
         description: 'Test Description',
-        price: 500000,
-      });
-    });
-
-    expect(result.current.formData).toEqual({
-      ...result.current.formData,
-      title: 'Test House',
-      description: 'Test Description',
-      price: 500000,
-    });
-  });
-
-  test('should update nested fields individually', () => {
-    const { result } = renderHook(() => useFormState());
-
-    act(() => {
-      result.current.setFormData((prev) => ({
-        ...prev,
-        title: 'New House',
       }));
     });
-
-    expect(result.current.formData.title).toBe('New House');
-    expect(result.current.formData.description).toBe('');
+    expect(result.current.formData.title).toBe('Test Title');
+    expect(result.current.formData.description).toBe('Test Description');
   });
+});
 
-  test('should handle multiple sequential updates', () => {
+describe('Form Numeric Fields', () => {
+  it('updates numeric fields correctly', () => {
     const { result } = renderHook(() => useFormState());
-
-    // First update
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
-        title: 'First Title',
-        price: 100000,
-      }));
-    });
-
-    // Second update
-    act(() => {
-      result.current.setFormData((prev) => ({
-        ...prev,
-        description: 'Added description',
-        price: 150000,
-      }));
-    });
-
-    expect(result.current.formData).toEqual({
-      ...result.current.formData,
-      title: 'First Title',
-      description: 'Added description',
-      price: 150000,
-    });
-  });
-
-  test('should maintain type consistency', () => {
-    const { result } = renderHook(() => useFormState());
-
-    act(() => {
-      result.current.setFormData((prev) => ({
-        ...prev,
-        price: 500000,
         totalRooms: 3,
-        windowsCount: 6,
-        floorNumber: 2,
-        totalFloors: 4,
+        restrooms: 2,
+        windowsCount: 4,
       }));
     });
-
-    expect(typeof result.current.formData.price).toBe('number');
-    expect(typeof result.current.formData.totalRooms).toBe('number');
-    expect(typeof result.current.formData.windowsCount).toBe('number');
-    expect(typeof result.current.formData.floorNumber).toBe('number');
-    expect(typeof result.current.formData.totalFloors).toBe('number');
-    expect(Array.isArray(result.current.formData.images)).toBe(true);
+    expect(result.current.formData.totalRooms).toBe(3);
+    expect(result.current.formData.restrooms).toBe(2);
+    expect(result.current.formData.windowsCount).toBe(4);
   });
+});
 
-  test('should handle empty string updates', () => {
+describe('Form Boolean Fields', () => {
+  it('updates boolean fields correctly', () => {
     const { result } = renderHook(() => useFormState());
-
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
-        title: 'Test',
-        description: 'Test',
+        garage: true,
+        balcony: true,
+        lift: true,
       }));
     });
+    expect(result.current.formData.garage).toBe(true);
+    expect(result.current.formData.balcony).toBe(true);
+    expect(result.current.formData.lift).toBe(true);
+  });
+});
 
+describe('Form Image Array', () => {
+  it('updates image array correctly', () => {
+    const { result } = renderHook(() => useFormState());
+    const testImages = ['/test1.jpg', '/test2.jpg'];
     act(() => {
       result.current.setFormData((prev) => ({
         ...prev,
-        title: '',
-        description: '',
+        images: testImages,
       }));
     });
+    expect(result.current.formData.images).toEqual(testImages);
+  });
+});
 
-    expect(result.current.formData.title).toBe('');
-    expect(result.current.formData.description).toBe('');
+describe('Form Status', () => {
+  it('updates status correctly', () => {
+    const { result } = renderHook(() => useFormState());
+    act(() => {
+      result.current.setFormData((prev) => ({
+        ...prev,
+        status: PostStats.Pending,
+      }));
+    });
+    expect(result.current.formData.status).toBe(PostStats.Pending);
+  });
+});
+
+describe('Form House Type', () => {
+  it('updates house type enum correctly', () => {
+    const { result } = renderHook(() => useFormState());
+    act(() => {
+      result.current.setFormData((prev) => ({
+        ...prev,
+        houseType: HouseTypeEnum.Apartment,
+      }));
+    });
+    expect(result.current.formData.houseType).toBe(HouseTypeEnum.Apartment);
+  });
+});
+
+describe('Form Type Safety', () => {
+  it('maintains correct data types', () => {
+    const { result } = renderHook(() => useFormState());
+    const { formData } = result.current;
+    expect(typeof formData.title).toBe('string');
+    expect(typeof formData.description).toBe('string');
+    expect(typeof formData.price).toBe('string');
+    expect(typeof formData.totalRooms).toBe('number');
+    expect(typeof formData.garage).toBe('boolean');
+    expect(typeof formData.balcony).toBe('boolean');
+    expect(typeof formData.lift).toBe('boolean');
+    expect(Array.isArray(formData.images)).toBe(true);
+    expect(formData.status).toBe(PostStats.Pending);
   });
 });

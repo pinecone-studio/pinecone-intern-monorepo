@@ -1,12 +1,48 @@
+fragment postFragment on UserPostType {
+  _id
+  postImage
+  caption
+  userId
+  carouselMediaCount
+  createdAt
+  commentCount
+  likeCount
+  hasLiked
+  user {
+    _id
+    userName
+    fullName
+    bio
+    profileImage
+    hasStory
+    gender
+    isPrivate
+    email
+    followingCount
+    followerCount
+    postCount
+    latestStoryTimestamp
+    seenStoryTime
+    savedUsers
+    friendshipStatus {
+      followedBy
+      following
+      incomingRequest
+      outgoingRequest
+    }
+  }
+}
 query GetNotification {
   getNotification {
     today {
       postLike {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -14,14 +50,18 @@ query GetNotification {
           userName
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
       comment {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -29,14 +69,47 @@ query GetNotification {
           userName
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
+        contentComment
       }
       request {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
+        }
+        contentPost {
+          ...postFragment
+        }
+      }
+    }
+
+    thisWeek {
+      postLike {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
@@ -44,10 +117,57 @@ query GetNotification {
           userName
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
+      }
+      comment {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        contentPost {
+          ...postFragment
+        }
+        contentComment
+      }
+      request {
+        id
+        categoryType
+        contentPostId
+        contentCommentId
+        contentStoryId
+        isRead
+        createdAt
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
+        }
+        contentPost {
+          ...postFragment
+        }
       }
     }
-    thisWeek {
+    thisMonth {
       postLike {
         id
         contentPostId
@@ -61,7 +181,9 @@ query GetNotification {
           userName
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
       comment {
         id
@@ -76,7 +198,9 @@ query GetNotification {
           userName
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
       request {
         id
@@ -90,17 +214,27 @@ query GetNotification {
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
     }
     earlier {
       postLike {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           userName
@@ -108,14 +242,18 @@ query GetNotification {
           latestStoryTimestamp
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
       comment {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           userName
@@ -123,23 +261,43 @@ query GetNotification {
           seenStoryTime
           profileImage
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
+        contentComment
       }
       request {
         id
+        categoryType
         contentPostId
         contentCommentId
         contentStoryId
         isRead
+        createdAt
         user {
           _id
           latestStoryTimestamp
           seenStoryTime
           userName
           profileImage
+          friendshipStatus {
+            incomingRequest
+            outgoingRequest
+            followedBy
+            following
+          }
         }
-        contentPost
+        contentPost {
+          ...postFragment
+        }
       }
     }
+  }
+}
+
+mutation AcceptRequest($followerId: String!) {
+  acceptRequest(followerId: $followerId) {
+    isFollowed
+    isRequested
   }
 }

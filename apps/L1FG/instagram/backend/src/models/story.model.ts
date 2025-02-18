@@ -6,11 +6,11 @@ const storySchema = new Schema(
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     expiringAt: { type: Date },
     duration: { type: String, default: 10 },
-    isVisible:{
-      type:Boolean,default:false
-    }
+    isVisible: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
-
 export const StoryModel = models['Story'] || model('Story', storySchema);

@@ -4,6 +4,8 @@ import { PostsEdge, useCreatePostLikeMutation, useDeletePostLikeMutation } from 
 import { useState } from 'react';
 import { quantityConverter } from '@/components/utils/quantity-converter';
 import { useCache } from '@/components/providers/CacheProvider';
+import PostModal from '@/components/profile/profilePost/PostModal';
+import LikeModal from '@/components/home-post/LikeModal';
 
 export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
   const [createPostLike] = useCreatePostLikeMutation();
@@ -18,7 +20,10 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
         setLikeCount((pre) => pre - 1);
         await deleteLike({
           variables: {
-            postId: post.node._id,
+            input: {
+              postId: post.node._id,
+              ownerUserId: post.node.userId,
+            },
           },
         });
         cacheUnlikePost({ postId: post.node._id, likeCount: post.node.likeCount - 1, hasLiked: false });
@@ -44,12 +49,16 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
       <div className="flex items-center justify-between px-1 py-3 text-xl" data-testid="post-actions">
         <div className="flex gap-3">
           <PostLike liked={liked} handleClickLike={handleClickLike} />
-          <MessageCircle data-testid="comment-icon" className="cursor-pointer" />
+          <PostModal post={post.node}>
+            <MessageCircle data-testid="comment-icon" className="cursor-pointer" />
+          </PostModal>
         </div>
         <Bookmark data-testid="bookmark-icon" className="cursor-pointer" />
       </div>
       <div>
-        <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+        <LikeModal userId={post.node.user._id}>
+          <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
+        </LikeModal>
       </div>
     </>
   );

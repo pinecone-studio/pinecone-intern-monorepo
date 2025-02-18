@@ -1,23 +1,6 @@
-import { model, models, Schema, Types } from 'mongoose';
+import { model, models, Schema } from 'mongoose';
 
-type OrderType = {
-  _id: string;
-  userID: Types.ObjectId;
-  concertID: Types.ObjectId;
-  ticketID: Types.ObjectId;
-  phoneNumber: number;
-  email: string;
-  totalPrice: number;
-  ticketNumber: string;
-  paymentType: string;
-  // vipTicketId: Types.ObjectId;
-  // regularTicketId: Types.ObjectId;
-  // standingAreaTicketId: Types.ObjectId;
-  vipTicket: { price: number; quantity: number };
-  regularTicket: { price: number; quantity: number };
-  standingAreaTicket: { price: number; quantity: number };
-};
-const orderSchema = new Schema<OrderType>(
+const orderSchema = new Schema(
   {
     userID: {
       type: Schema.Types.ObjectId,
@@ -57,6 +40,7 @@ const orderSchema = new Schema<OrderType>(
     vipTicket: { price: Number, quantity: Number },
     regularTicket: { price: Number, quantity: Number },
     standingAreaTicket: { price: Number, quantity: Number },
+    orderStatus: { type: String, enum: ['CANCEL', 'DELETE', 'DONE'], default: 'DONE' },
   },
 
   { timestamps: true }

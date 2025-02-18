@@ -9,3 +9,31 @@ query GetFoods {
     createdAt
   }
 }
+
+mutation CreateFood($input: FoodInputType!) {
+  createFood(input: $input) {
+    foodName
+    imageUrl
+    price
+    status
+  }
+}
+
+mutation DeleteFood($foodId: ID!) {
+  deleteFood(foodId: $foodId) {
+    status
+    message
+  }
+}
+
+mutation UpdateFood($input: EditFoodInput!) {
+  updateFood(input: $input) {
+    id
+    foodName
+    imageUrl
+    price
+    status
+    categoryId
+    createdAt
+  }
+}

@@ -1,6 +1,6 @@
 import UserProfile from '@/components/user-profile/UserProfile';
 
-const OrderPage = () => {
+const UserProfilePage = () => {
   return (
     <div className="max-w-full">
       <UserProfile />
@@ -8,4 +8,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default UserProfilePage;

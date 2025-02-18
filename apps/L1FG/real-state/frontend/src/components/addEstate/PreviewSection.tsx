@@ -5,14 +5,18 @@ import RestroomsIcon from './assests/RestroomsIcon';
 import TitelIcon from './assests/TitleIcon';
 import Image from 'next/image';
 
-const PreviewSection: React.FC<{ formData: any }> = ({ formData }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+interface PreviewSectionProps {
+  formData: any;
+  onSubmit?: () => void;
+  isEdit?: boolean;
+  initialIndex?: number; 
+}
+
+const PreviewSection: React.FC<PreviewSectionProps> = ({ formData, onSubmit, isEdit = false, initialIndex = 0 }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
 
   useEffect(() => {
     if (currentImageIndex >= formData.images.length) {
-      setCurrentImageIndex(formData.images.length - 1);
-    }
-    if (formData.images.length > 0 && currentImageIndex === -1) {
       setCurrentImageIndex(0);
     }
   }, [formData.images.length, currentImageIndex]);
@@ -76,8 +80,8 @@ const PreviewSection: React.FC<{ formData: any }> = ({ formData }) => {
           />
         </div>
       </section>
-      <button type="submit" className="w-full px-6 py-2 mt-6 text-white bg-orange-600 rounded-md">
-        Зар оруулах хүсэлт илгээх
+      <button type="button" onClick={onSubmit} className="w-full px-6 py-2 mt-6 text-white bg-orange-600 rounded-md hover:bg-orange-700" data-cy={isEdit ? 'update-post' : 'submit-post'}>
+        {isEdit ? 'Зар шинэчлэх' : 'Зар оруулах хүсэлт илгээх'}
       </button>
     </div>
   );

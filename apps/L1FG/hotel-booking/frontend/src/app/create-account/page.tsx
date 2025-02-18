@@ -1,11 +1,42 @@
+'use client';
+
 import { Input } from '@/components/ui/input';
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Loading } from '@/components/user/main/Loading';
+import { useRequestOtpMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const CreateAccount = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [requestOTP, { loading, data }] = useRequestOtpMutation();
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    requestOTP({ variables: { input: { email: inputValue } } });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  if (data?.requestOTP.success === true && data?.requestOTP.email) {
+    localStorage.setItem('email', data?.requestOTP.email);
+
+    router.push('/create-account/otp');
+  } else if (data?.requestOTP.success === false) {
+    toast.error(`The email ${data?.requestOTP.email} is already registered.`, {
+      autoClose: 2000,
+    });
+  }
+
+  if (loading) return <Loading />;
+
   return (
-    <main className="container mx-auto h-screen">
+    <main data-cy="Create-Account-Page" className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
         <div className="w-[350px] flex flex-col gap-6">
           <div className="flex items-center justify-center gap-[8.33px]">
@@ -21,10 +52,10 @@ const CreateAccount = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Email</p>
-                  <Input type="email" placeholder="name@example.com" />
+                  <Input type="email" placeholder="name@example.com" value={inputValue} onChange={handleChange} />
                 </div>
               </div>
-              <Button className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
+              <Button onClick={handleSubmit} className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
                 <p className="font-Inter font-medium text-sm not-italic text-white">Continue</p>
               </Button>
             </div>
@@ -36,7 +67,7 @@ const CreateAccount = () => {
                 <p className="font-Inter font-normal not-italic text-xs text-center text-[#71717A]">OR</p>
               </div>
               <div className="w-full py-4 flex items-center">
-                <div className="w-full border-[1px] border-[#E4E4E7] "></div>
+                <div className="w-full border-[1px] border-[#E4E4E7]"></div>
               </div>
             </div>
             <Button className="bg-white hover:bg-white border border-[#E4E4E7] shadow-[#0000000d] shadow-sm">

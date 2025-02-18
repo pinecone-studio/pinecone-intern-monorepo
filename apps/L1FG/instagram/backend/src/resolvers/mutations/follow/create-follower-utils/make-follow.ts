@@ -1,5 +1,5 @@
 import { Follow } from '../../../../generated';
-import { FollowerModel } from '../../../../models';
+import { FollowerModel, NotificationModel } from '../../../../models';
 import { catchError } from '../../../../utils/catch-error';
 import { CreationError } from '../../../../utils/error';
 
@@ -12,6 +12,12 @@ export const makeFollow = async (userId: string | null, targetId: string): Promi
     if (!follow) {
       throw new CreationError('Failed to follow');
     }
+    await NotificationModel.create({
+      userId,
+      ownerId: targetId,
+      categoryType: 'REQUEST',
+    });
+
     return follow;
   } catch (error) {
     throw catchError(error);

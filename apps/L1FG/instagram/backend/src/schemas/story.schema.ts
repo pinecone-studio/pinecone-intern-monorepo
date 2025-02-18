@@ -12,25 +12,34 @@ export const StoryTypeDefs = gql`
   input StoryInput {
     storyImage: String
   }
-
+  type OneStoryType {
+    _id: ID!
+    storyImage: String!
+    userId: ID!
+    expiringAt: Date!
+    duration: Int!
+    user: UserTogetherUserType!
+    storyLiked: Boolean!
+    createdAt: Date!
+  }
+  type OneUserStoriesType {
+    _id: ID!
+    userId: ID!
+    latestStoryId: ID!
+    latestStoryTimestamp: Date!
+    seenStoryTime: Date!
+    items: [OneStoryType!]!
+    user: UserTogetherUserType!
+  }
+  type PreviewAllStoriesType {
+    storyTray: [OneUserStoriesType!]!
+    viewer: UserTogetherViewerType!
+  }
+  type Query {
+    getPreviewAllStories: PreviewAllStoriesType!
+    getOneStory(userName: String!): [OneUserStoriesType!]!
+  }
   type Mutation {
     createStory(input: StoryInput!): Story!
   }
 `;
-//  type OneStoryType {
-//     _id: ID
-//     storyImage: String
-//     userId: ID
-//     expiringAt: Date
-//     duration: Int
-//     user: UserTogetherUserType
-//     storyHasLiked: Boolean
-//   }
-//   type OneUserStoriesType {
-//     latestStoryTimestamp: Date
-//     seenStoryTime: Date
-//     items: [OneStoryType]
-//   }
-//   type Query {
-//     getStories: [OneUserStoriesType]
-//   }

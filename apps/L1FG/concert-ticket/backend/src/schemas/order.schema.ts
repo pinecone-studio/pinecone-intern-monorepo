@@ -27,6 +27,7 @@ export const orderTypeDefs = gql`
     regularTicket: RegularTicket
     standingAreaTicket: StandingAreaTicket
     _id: ID
+    orderStatus: String!
   }
   input VipTicketInput {
     quantity: Int
@@ -52,13 +53,49 @@ export const orderTypeDefs = gql`
     vipTicket: VipTicketInput
     regularTicket: RegularTicketInput
     standingAreaTicket: StandingAreaTicketInput
+    orderStatus: String!
+  }
+  input OrderUpdateInput {
+    newPhoneNumber: String!
+    newEmail: String!
+    userId: String!
+  }
+  type UpdateEmail {
+    email: String!
+    password: String!
+  }
+
+  input DeleteReqInput {
+    concertName: String!
+    totalPrice: Int!
+    userName: String!
+    accountNumber: Int!
+    bankName: String!
+    orderId: String!
+    reqStatus: Boolean!
+    orderStatus: String!
+  }
+  type DeleteReq {
+    orderStatus: String!
+    concertName: String!
+    totalPrice: Int!
+    userName: String!
+    accountNumber: Int!
+    bankName: String!
+    orderId: String!
+    reqStatus: Boolean!
+    _id: ID
   }
   type Mutation {
     createOrder(input: OrderInput!): Order!
     deleteOrder(id: String!): Order!
+    orderUpdate(input: OrderUpdateInput!): UpdateEmail!
+    createDeleteReq(input: DeleteReqInput!): DeleteReq!
   }
   type Query {
-    getOrder(userID: String!): Order!
+    getOrder(userID: String!): [Order!]
     getOrders: [Order!]
+    getOrderTicketNumber(ticketNumber: Int!): Order!
+    getDeleteOrderId(orderId: String!): DeleteReq!
   }
 `;

@@ -1,5 +1,5 @@
 import MainPagePost from '@/features/home-post/MainPagePost';
-import MainPageStory from '@/components/home/main/MainPageStory';
+import MainPageStory from '@/features/story/MainPageStory';
 import HomePageProfile from '@/components/home/right/HomeProfile';
 import { authenticate } from '@/features/utils/authenticate';
 
@@ -8,7 +8,7 @@ const HomePage = async () => {
   return (
     <div className=" w-screen">
       <div className="flex justify-center gap-[72px] w-full">
-        <div className="flex flex-col gap-14  w-[630px] ml-[350px]">
+        <div className="flex flex-col gap-14  w-[630px] xl:ml-[350px]">
           <div>
             <MainPageStory />
           </div>
@@ -17,7 +17,7 @@ const HomePage = async () => {
             <MainPagePost />
           </div>
         </div>
-        <div className=" w-[326px]">
+        <div className="xl:block hidden xl:w-[326px]">
           <HomePageProfile />
         </div>
       </div>

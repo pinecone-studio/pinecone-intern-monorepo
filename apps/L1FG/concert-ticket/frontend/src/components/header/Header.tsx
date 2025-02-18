@@ -1,9 +1,21 @@
 import Link from 'next/link';
 import { useAuth } from '../providers/AuthProvider';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export const HeaderPart = () => {
   const { user, logout } = useAuth();
+  const [userID, setUserID] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    const userId = localStorage.getItem('user');
+    if (!userId) return;
 
+    const parsedUser = JSON.parse(userId);
+
+    const userID = parsedUser?._id;
+    setUserID(userID);
+  }, []);
   return (
     <div className="h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
       <div className="flex items-center gap-[8px]">
@@ -24,19 +36,21 @@ export const HeaderPart = () => {
 
         {user ? (
           <>
-            <span className="text-white font-medium">{user.email}</span>
-            <button onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
+            <div data-testid="header-order-page" onClick={() => router.push(`/order/${userID}`)} className="text-white font-medium">
+              {user.email}
+            </div>
+            <button data-testid="header-logout-button" onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
               Logout
             </button>
           </>
         ) : (
           <>
-            <Link href={'/signup'}>
-              <button className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">Бүртгүүлэх</button>
-            </Link>
-            <Link href={'/signin'}>
-              <button className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">Нэвтрэх</button>
-            </Link>
+            <button data-testid="sign-up" onClick={() => router.push('/signup')} className="text-white border border-gray-600 px-[16px] py-[8px] rounded-lg hover:border-white">
+              Бүртгүүлэх
+            </button>
+            <button data-testid="sign-in" onClick={() => router.push('/signin')} className="text-black bg-[#00B7F4] px-[16px] py-[8px] rounded-lg hover:bg-[#009fd1]">
+              Нэвтрэх
+            </button>
           </>
         )}
       </div>

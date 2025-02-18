@@ -1,44 +1,59 @@
 mutation CreateComment($input: CommentInput!) {
   createComment(input: $input) {
+    _id
+    comment
     userId
     postId
-    comment
-    _id
     createdAt
     updatedAt
+    likeCount
   }
 }
 query GetComments($input: GetCommentInput!) {
   getComments(input: $input) {
-    _id
-    comment
-    userId
-    postId
-    createdAt
-    updatedAt
-    user {
-      _id
-      userName
-      fullName
-      bio
-      profileImage
-      hasStory
-      gender
-      isPrivate
-      email
-      followingCount
-      followerCount
-      postCount
-      latestStoryTimestamp
-      seenStoryTime
-      savedUsers
-      friendshipStatus {
-        followedBy
-        following
-        incomingRequest
-        outgoingRequest
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        _id
+        comment
+        userId
+        postId
+        createdAt
+        updatedAt
+        commentLiked
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          createdAt
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+          mutualFollowersCount
+          mutualFollowers
+        }
+        likeCount
       }
     }
-    likeCount
   }
 }

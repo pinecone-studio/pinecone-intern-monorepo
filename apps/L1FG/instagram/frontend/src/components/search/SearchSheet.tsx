@@ -11,14 +11,16 @@ type Props = {
   setSearchOpen: (_searchOpen: boolean) => void;
 };
 
+// eslint-disable-next-line complexity
 export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
   const [userName, setUserName] = useState('');
 
-  const { data } = useGetUserByNameQuery({
+  const { data, loading } = useGetUserByNameQuery({
     variables: { userName },
     skip: !userName,
   });
-  const users = Array.isArray(data?.getUserByName) ? (data?.getUserByName as []) : undefined;
+
+  const users = loading || data?.getUserByName;
 
   return (
     <>
@@ -41,6 +43,7 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
             className="px-4 w-full justify-center flex items-center bg-accent border-none"
             placeholder="Search"
           />
+
           <p
             onClick={() => setUserName('')}
             data-testid="click-x"
@@ -49,7 +52,7 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
             x
           </p>
         </div>
-        {userName ? <Users data-testid="user-component" users={users} setSearchOpen={setSearchOpen} setUserName={setUserName} /> : <SavedUsers />}
+        {userName ? <Users loading={loading} data-testid="user-component" users={users as []} setSearchOpen={setSearchOpen} setUserName={setUserName} /> : <SavedUsers searchOpen={searchOpen} />}
 
         <div className="overflow-y-auto h-[calc(100vh-60px)]"></div>
       </div>

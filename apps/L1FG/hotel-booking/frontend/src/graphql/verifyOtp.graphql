@@ -1,0 +1,5 @@
+mutation VerifyOTP($input: VerifyOtpInput!) {
+  verifyOTP(input: $input) {
+    success
+  }
+}

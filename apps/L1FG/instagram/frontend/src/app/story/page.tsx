@@ -1,11 +1,10 @@
-import { StoriesMock } from '@/components/story/MockStory';
-import React from 'react';
+import Story from '@/features/story/Story';
 
 const Page = () => {
   return (
-    <div>
-      <StoriesMock />
-    </div>
+    <>
+      <Story />
+    </>
   );
 };
 

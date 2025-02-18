@@ -10,6 +10,7 @@ mutation MakeOrder($input: InputType!) {
     status
     createdAt
     tableId
+    userId
   }
 }
 
@@ -40,5 +41,21 @@ query GetOrders {
     status
     createdAt
     tableId
+  }
+}
+
+query getOrdersForUser($userId: String!) {
+  getOrdersForUser(userId: $userId) {
+    _id
+    items {
+      name
+      quantity
+      price
+      imageUrl
+    }
+    status
+    createdAt
+    tableId
+    userId
   }
 }
