@@ -13,7 +13,7 @@ export const Profile = () => {
   });
   const isItself: boolean = userId === user?._id;
   return (
-    <div className="flex flex-col py-10" data-testid="profile-visit-container">
+    <div className="flex flex-col py-14" data-testid="profile-visit-container">
       {isItself ? <UserProfile userId={userId as string} data={data as GetUserTogetherQuery} /> : <PublicProfileParent userId={userId as string} data={data as GetUserTogetherQuery} />}
     </div>
   );

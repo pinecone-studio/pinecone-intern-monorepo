@@ -12,8 +12,8 @@ const Header = () => {
   const { orders } = useCart();
   const [orderLength, setOrderLength] = useState<number>(0);
 
+  const totalQuantity = orders.reduce((total, order) => total + order.quantity, 0);
   useEffect(() => {
-    const totalQuantity = orders.reduce((total, order) => total + order.quantity, 0);
     setOrderLength(totalQuantity);
   }, [orders]);
 
@@ -25,7 +25,7 @@ const Header = () => {
       <div className="flex items-center">
         <BasketFood orderLength={orderLength} />
         <NotificationSection />
-        <Sidemenu />
+        <Sidemenu data-testid="sidemenu" />
       </div>
     </div>
   );

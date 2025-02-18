@@ -7,3 +7,171 @@ mutation CreateStory($input: StoryInput!) {
     duration
   }
 }
+fragment userFragment on UserTogetherUserType {
+  _id
+  userName
+  fullName
+  bio
+  profileImage
+  gender
+  isPrivate
+  email
+  followingCount
+  followerCount
+  postCount
+  latestStoryTimestamp
+  seenStoryTime
+}
+query GetPreviewAllStories {
+  getPreviewAllStories {
+    viewer {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+    }
+    storyTray {
+      latestStoryId
+      latestStoryTimestamp
+      userId
+      _id
+      user {
+        ...userFragment
+      }
+    }
+  }
+}
+
+query GetDetailedAllStories {
+  getPreviewAllStories {
+    viewer {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+    }
+    storyTray {
+      latestStoryTimestamp
+      userId
+      _id
+      user {
+        _id
+        userName
+        fullName
+        bio
+        profileImage
+        hasStory
+        gender
+        isPrivate
+        email
+        followingCount
+        followerCount
+        postCount
+        latestStoryTimestamp
+        seenStoryTime
+        savedUsers
+        createdAt
+        friendshipStatus {
+          followedBy
+          following
+          incomingRequest
+          outgoingRequest
+        }
+        mutualFollowersCount
+        mutualFollowers
+      }
+      latestStoryId
+      seenStoryTime
+      items {
+        _id
+        storyImage
+        userId
+        expiringAt
+        duration
+        createdAt
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          createdAt
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+          mutualFollowersCount
+          mutualFollowers
+        }
+        storyLiked
+      }
+    }
+  }
+}
+
+query GetOneStory($userName: String!) {
+  getOneStory(userName: $userName) {
+    _id
+    userId
+    latestStoryId
+    latestStoryTimestamp
+    seenStoryTime
+    items {
+      _id
+      storyImage
+      userId
+      expiringAt
+      duration
+      user {
+        _id
+        userName
+        fullName
+        bio
+        profileImage
+        hasStory
+        gender
+        isPrivate
+        email
+        followingCount
+        followerCount
+        postCount
+        latestStoryTimestamp
+        seenStoryTime
+        savedUsers
+        createdAt
+        friendshipStatus {
+          followedBy
+          following
+          incomingRequest
+          outgoingRequest
+        }
+        mutualFollowersCount
+        mutualFollowers
+      }
+      storyLiked
+      createdAt
+    }
+  }
+}
