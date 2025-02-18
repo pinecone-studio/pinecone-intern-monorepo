@@ -140,3 +140,7 @@ query GetProfilePreview($searchingUserId: ID!) {
     }
   }
 }
+
+mutation UpdateProfileImage($image: String!) {
+  updateProfileImage(image: $image)
+}

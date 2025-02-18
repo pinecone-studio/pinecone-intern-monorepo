@@ -1,8 +1,15 @@
+import { useUnfollowMutation } from '@/generated';
 import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
 
-export const Following = ({ followingStyle }: { followingStyle?: string }) => {
+export const Following = ({ followingStyle, targetId }: { followingStyle?: string; targetId: string }) => {
+  const [unfollow] = useUnfollowMutation();
+
+  const handleClick = () => {
+    unfollow({ variables: { followerId: targetId } });
+  };
+
   return (
-    <button className={cn(``, followingStyle)} data-testid="friendship-status-following">
+    <button onClick={handleClick} className={cn(``, followingStyle)} data-testid="friendship-status-following">
       Following
     </button>
   );

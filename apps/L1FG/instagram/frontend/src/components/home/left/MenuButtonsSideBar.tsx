@@ -88,7 +88,7 @@ export const MenuButtons = () => {
                 </Button>
               </div>
             </div>
-          </PopoverContent>{' '}
+          </PopoverContent>
         </Popover>
       </div>
 

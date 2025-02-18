@@ -38,6 +38,7 @@ export const TotalPrice = ({ standartCount, standartPrice, rearCount, rearPrice,
         </div>
       </div>
       <button
+        data-cy="ticket-buy"
         disabled={(vip === 0 && vipClick === 1) || (standart === 0 && standartClick === 1) || (rear === 0 && rearClick === 1)}
         data-testid="ticket-buy-button"
         onClick={handleNext}
