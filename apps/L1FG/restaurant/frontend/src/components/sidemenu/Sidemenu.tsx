@@ -36,7 +36,7 @@ export const Sidemenu = () => {
           <AlignJustify width={16} />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col">
+      <SheetContent className="flex flex-col overflow-scroll">
         <SheetHeader className="flex justify-between items-center">
           <SheetClose asChild></SheetClose>
         </SheetHeader>
