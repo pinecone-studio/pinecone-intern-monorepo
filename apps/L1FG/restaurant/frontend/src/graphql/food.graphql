@@ -25,3 +25,15 @@ mutation DeleteFood($foodId: ID!) {
     message
   }
 }
+
+mutation UpdateFood($input: EditFoodInput!) {
+  updateFood(input: $input) {
+    id
+    foodName
+    imageUrl
+    price
+    status
+    categoryId
+    createdAt
+  }
+}

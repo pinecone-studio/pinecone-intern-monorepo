@@ -27,6 +27,7 @@ export const orderTypeDefs = gql`
     regularTicket: RegularTicket
     standingAreaTicket: StandingAreaTicket
     _id: ID
+    orderStatus: String!
   }
   input VipTicketInput {
     quantity: Int
@@ -52,6 +53,7 @@ export const orderTypeDefs = gql`
     vipTicket: VipTicketInput
     regularTicket: RegularTicketInput
     standingAreaTicket: StandingAreaTicketInput
+    orderStatus: String!
   }
   input OrderUpdateInput {
     newPhoneNumber: String!
@@ -71,8 +73,10 @@ export const orderTypeDefs = gql`
     bankName: String!
     orderId: String!
     reqStatus: Boolean!
+    orderStatus: String!
   }
   type DeleteReq {
+    orderStatus: String!
     concertName: String!
     totalPrice: Int!
     userName: String!
@@ -92,5 +96,6 @@ export const orderTypeDefs = gql`
     getOrder(userID: String!): [Order!]
     getOrders: [Order!]
     getOrderTicketNumber(ticketNumber: Int!): Order!
+    getDeleteOrderId(orderId: String!): DeleteReq!
   }
 `;

@@ -1,5 +1,5 @@
-query GetPosts {
-  getPosts {
+query GetPosts($input: JSON) {
+  getPosts(input: $input) {
     _id
     propertyOwnerId {
       _id

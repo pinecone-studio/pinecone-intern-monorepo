@@ -16,6 +16,7 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({
       ticketNumber: 45,
       totalPrice: 45,
       userID: 'id',
+      orderStatus: 'DONE',
     }),
   },
 }));
@@ -36,6 +37,7 @@ describe('delete order', () => {
       ticketNumber: 45,
       totalPrice: 45,
       userID: 'id',
+      orderStatus: 'DONE',
     });
   });
 });
