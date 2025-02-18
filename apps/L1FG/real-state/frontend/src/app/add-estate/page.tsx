@@ -74,7 +74,6 @@ const AddEstate: React.FC = () => {
       const result = await response.json();
       return result.secure_url;
     } catch (error) {
-      console.error('Error uploading file:', error);
       toast.error(`Файл хуулахад алдаа гарлаа: ${error}`);
       return null;
     }
@@ -113,7 +112,6 @@ const AddEstate: React.FC = () => {
       await addPost({ variables: { input } });
       toast.success('Зар нэмэгдлээ!');
     } catch (error) {
-      console.error('Зар нэмэхэд алдаа гарлаа', error);
       toast.error(`Зар нэмэхэд алдаа гарлаа`, {
         autoClose: 2000,
       });
