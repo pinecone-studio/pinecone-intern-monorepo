@@ -23,7 +23,7 @@ const CreateAccountOtp = () => {
   }
 
   useEffect(() => {
-    setViewEmail(localStorage.getItem('email') || '');
+    setViewEmail(localStorage.getItem('email')!);
   }, [otp]);
 
   const handleChange = (value: string) => {
