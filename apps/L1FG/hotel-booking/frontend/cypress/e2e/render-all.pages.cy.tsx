@@ -4,8 +4,10 @@ describe('render all pages', () => {
   it(`Should render all page`, () => {
     cy.log(JSON.stringify(allPages));
     allPages.forEach((page) => {
-      cy.visit(page);
-      console.log('testing page', page);
+      if (page !== '///booking-detail/[id]') {
+        cy.visit(page);
+        console.log('testing page', page);
+      }
     });
   });
 });

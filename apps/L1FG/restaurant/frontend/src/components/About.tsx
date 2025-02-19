@@ -5,7 +5,7 @@ import Header from './common/Header';
 
 const About = () => {
   return (
-    <div>
+    <div className="container mx-auto">
       <Header />
 
       <div className="bg-gray-100 min-h-[500px] py-6 pt-20">

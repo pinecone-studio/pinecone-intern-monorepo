@@ -1,158 +1,144 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { HouseTypeEnum, PostStats } from '@/generated';
 import EstateSinglePage from '@/components/estatesSinglePage/EstatesSinglePage';
+import { HouseTypeEnum, Post, useGetPostsQuery } from '@/generated';
+import '@testing-library/jest-dom';
+
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => <img {...props} />,
+}));
+
+jest.mock('@/generated', () => ({
+  ...jest.requireActual('@/generated'),
+  useGetPostsQuery: jest.fn(),
+}));
+
 describe('EstateSinglePage', () => {
-  beforeEach(() => {
-    render(<EstateSinglePage data={mockData} />);
-  });
   const mockData = {
-    _id: '67a9e3d650068558424872ff',
-    createdAt: '2025-02-10T11:32:38.756+00:00',
-    description: '213',
-    price: '123',
+    _id: '123',
+    title: 'Test Property',
+    description: 'Test Description',
+    price: '100000000',
     propertyDetail: {
-      details: {
-        completionDate: '2025-01-12T00:00:00.000+00:00',
-        balcony: true,
-        windowsCount: 2,
-        windowType: 'va',
-        floorMaterial: 'sav',
-        floorNumber: 2,
-        totalFloors: 2,
-        lift: true,
-      },
+      houseType: HouseTypeEnum.Apartment,
+      images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+      size: '80',
+      totalRooms: 3,
+      restrooms: 2,
       garage: true,
-      houseType: HouseTypeEnum.Office,
-      images: ['https://res.cloudinary.com/real-estate-pinecone/image/upload/v17391871', 'https://res.cloudinary.com/real-estate-pinecone/image/upload/v17391872'],
       location: {
-        address: 'qew',
+        city: 'Test City',
+        address: 'Test Address',
+        district: 'Test District',
+        subDistrict: 'Test SubDistrict',
       },
-      restrooms: 1,
-      size: '213',
-      totalRooms: 12,
     },
     propertyOwnerId: {
-      _id: '6790e86f61598146e7fd83dd',
       name: 'Test Owner',
-      email: 'test@example.com',
       phone: '99999999',
-      createdAt: '2025-02-10T11:32:38.756+00:00',
-      isAdmin: false,
-      updatedAt: '2025-02-10T11:32:38.756+00:00',
     },
-    status: PostStats.Pending,
-    title: 'qweq',
-  };
+  } as Post;
   const mockData1 = {
-    _id: '67a9e3d650068558424872ff',
-    createdAt: '2025-02-10T11:32:38.756+00:00',
-    description: '213',
-    price: '123',
+    _id: '123',
+    title: 'Test Property',
+    description: 'Test Description',
+    price: '100000000',
     propertyDetail: {
-      details: {
-        balcony: false,
-        lift: false,
-      },
+      houseType: HouseTypeEnum.Apartment,
+      images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
+      size: '80',
+      totalRooms: 3,
+      restrooms: 2,
       garage: false,
-      houseType: HouseTypeEnum.Office,
-      images: ['https://res.cloudinary.com/real-estate-pinecone/image/upload/v17391871', 'https://res.cloudinary.com/real-estate-pinecone/image/upload/v17391872'],
       location: {
-        address: 'qew',
+        city: 'Test City',
+        address: 'Test Address',
+        district: 'Test District',
+        subDistrict: 'Test SubDistrict',
       },
-      restrooms: 1,
-      size: '213',
-      totalRooms: 12,
     },
     propertyOwnerId: {
-      _id: '6790e86f61598146e7fd83dd',
       name: 'Test Owner',
-      email: 'test@example.com',
       phone: '99999999',
-      createdAt: '2025-02-10T11:32:38.756+00:00',
-      isAdmin: false,
-      updatedAt: '2025-02-10T11:32:38.756+00:00',
     },
-    status: PostStats.Pending,
-    title: 'qweq',
+  } as Post;
+
+  const mockSimilarPosts = {
+    getPosts: [
+      {
+        _id: '456',
+        propertyDetail: {
+          houseType: HouseTypeEnum.Apartment,
+          images: ['similar1.jpg'],
+        },
+      },
+      {
+        _id: '789',
+        propertyDetail: {
+          houseType: HouseTypeEnum.Apartment,
+          images: ['similar2.jpg'],
+        },
+      },
+    ],
   };
-  it('should display total floors count', () => {
-    const totalFloorsElements = screen.getAllByText('2');
-    expect(totalFloorsElements.length);
+
+  beforeEach(() => {
+    (useGetPostsQuery as jest.Mock).mockReturnValue({
+      data: mockSimilarPosts,
+      loading: false,
+    });
   });
-  it('should handle single image carousel', () => {
-    const image = screen.getByAltText('Property image 1');
-    expect(image);
-    expect(image);
+
+  it('renders property details correctly', () => {
+    render(<EstateSinglePage data={mockData} />);
+    expect(screen.getByText('Test Property'));
+    expect(screen.getByText('Test Owner'));
+    expect(screen.getByText('99999999'));
+    expect(screen.getByText('80 m²'));
+    expect(screen.getByText('3'));
+    expect(screen.getByText('2'));
+    expect(screen.getByText('Тийм'));
   });
-  it('should display correct room information', () => {
-    expect(screen.getByText('12')); // totalRooms
-    expect(screen.getByText('1')); // restrooms
-  });
-  it('should display correct property measurements', () => {
-    expect(screen.getByText('213 m²'));
-  });
-  it('should display correct location details', () => {
-    expect(screen.getByText((content) => content.includes('2025'))); // completionDate
-    expect(screen.getByText('va')); // windowType
-    expect(screen.getByText('sav')); // floorMaterial
-    expect(screen.getByText('Байгаа')); // lift status for mockData
-  });
-  it('should display correct lift status for different data', () => {
-    expect(screen.getByText('Байгаа'));
+  it('renders property details garage false', () => {
     render(<EstateSinglePage data={mockData1} />);
-    expect(screen.getByText('baihgui'));
+    expect(screen.getAllByText('Үгүй').length);
   });
-  it('should display price correctly', () => {
-    expect(screen.getByText('123'));
+
+  it('handles image carousel navigation', () => {
+    render(<EstateSinglePage data={mockData} />);
+    const nextButton = screen.getByText('→');
+    expect(screen.getByAltText('Property image 1'));
+    fireEvent.click(nextButton);
+    expect(screen.getByAltText('Property image 2'));
+    fireEvent.click(nextButton);
+    expect(screen.getByAltText('Property image 3'));
+    fireEvent.click(nextButton);
+    expect(screen.getByAltText('Property image 1'));
   });
-  it('should display description correctly', () => {
-    expect(screen.getByText('213'));
-  });
-  it('should display all floor related information', () => {
-    expect(screen.getByText(/Хэдэн давхарт/));
-    expect(screen.getByText(/Барилгын давхар/));
-    expect(screen.getByText(/Нийт давхар/));
-    const floorElements = screen.getAllByText('2');
-    expect(floorElements.length);
-  });
-  it('should display thumbnail images correctly', () => {
-    const thumbnails = screen.getAllByRole('img', { name: /Thumbnail/i });
-    expect(thumbnails);
-    expect(thumbnails[0]);
-    expect(thumbnails[1]);
-  });
-  it('should highlight selected thumbnail', () => {
-    const thumbnails = screen.getAllByRole('img', { name: /Thumbnail/i });
-    const thumbnailContainer = thumbnails[0].parentElement;
-    expect(thumbnailContainer);
-    expect(thumbnailContainer);
-  });
-  it('should handle consecutive navigation clicks', () => {
+  it('handles previous button navigation in carousel', () => {
+    render(<EstateSinglePage data={mockData} />);
     const prevButton = screen.getByText('←');
-    const nextButton = screen.getByText('→');
     expect(screen.getByAltText('Property image 1'));
-    fireEvent.click(nextButton);
-    expect(screen.getByAltText('Property image 2'));
-    fireEvent.click(nextButton);
-    expect(screen.getByAltText('Property image 1'));
+    fireEvent.click(prevButton);
+    expect(screen.getByAltText('Property image 3'));
     fireEvent.click(prevButton);
     expect(screen.getByAltText('Property image 2'));
     fireEvent.click(prevButton);
-    expect(screen.getByAltText('Property image 1'));
-  });
-  it('should cycle through images correctly', () => {
-    const nextButton = screen.getByText('→');
-    fireEvent.click(nextButton);
-    expect(screen.getByAltText('Property image 2'));
-    fireEvent.click(nextButton);
     expect(screen.getByAltText('Property image 1'));
   });
   it('should update main image when clicking thumbnails', () => {
+    render(<EstateSinglePage data={mockData} />);
     const thumbnails = screen.getAllByRole('img', { name: /Thumbnail/i });
     fireEvent.click(thumbnails[1].parentElement!);
     expect(screen.getByAltText('Property image 2'));
     fireEvent.click(thumbnails[0].parentElement!);
     expect(screen.getByAltText('Property image 1'));
+  });
+  describe('EstateSinglePage', () => {
+    it('cycles through all images in carousel', () => {
+      render(<EstateSinglePage data={mockData} />);
+      render(<EstateSinglePage data={mockData} />);
+      expect(screen.queryAllByRole('link'));
+    });
   });
 });
