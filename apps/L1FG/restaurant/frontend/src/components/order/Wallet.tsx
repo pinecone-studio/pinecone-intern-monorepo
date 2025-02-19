@@ -24,7 +24,7 @@ const Wallet = () => {
   const balance = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
 
   return (
-    <div className="min-h-screen bg-gray-100 ">
+    <div className="min-h-screen bg-gray-100 container mx-auto">
       <Header />
 
       <div className="text-center py-6 bg-gray-50 shadow pt-20">
