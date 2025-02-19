@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { QueryResolvers } from '../../../generated';
 import { PostModel } from '../../../models';
 import { authenticate } from '../../../utils/authenticate';
@@ -26,6 +27,16 @@ export const getSmallPosts: QueryResolvers['getSmallPosts'] = async (_, { input 
       cursor: Buffer.from(post._id as string).toString('base64'),
       node: post,
     }));
+    if (edges.length <= 0) {
+      return {
+        edges: edges,
+        pageInfo: {
+          startCursor: '',
+          endCursor: '',
+          hasNextPage,
+        },
+      };
+    }
     const returnData = {
       edges: edges,
       pageInfo: {
