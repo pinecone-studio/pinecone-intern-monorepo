@@ -1,14 +1,14 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { X } from 'lucide-react';
 import Image from 'next/image';
-import { useGetFollowersQuery } from '@/generated';
+import { useGetlikePostQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 
-const LikeModal = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
-  const { data, loading } = useGetFollowersQuery({
-    variables: { searchingUserId: userId },
+const LikeModal = ({ children, postId }: { children: React.ReactNode; postId: string }) => {
+  const { data, loading } = useGetlikePostQuery({
+    variables: { postId: postId },
   });
   if (loading) {
     return;
@@ -37,15 +37,15 @@ const LikeModal = ({ children, userId }: { children: React.ReactNode; userId: st
         <Separator className="w-full" />
 
         <div className="flex flex-col gap-3 overflow-y-scroll px-3 mt-2">
-          {data?.getFollowers?.map((item) => (
+          {data?.getlikePost?.map((item) => (
             <div key={item.user._id} className="flex justify-between ">
               <div className=" flex gap-4">
-                <ProfileHover searchingUserId={item.user._id}>
+                <ProfileHover searchingUserId={item?.user?._id}>
                   <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
                 </ProfileHover>
                 <div>
-                  <ProfileHover searchingUserId={item.user._id}>
-                    <p className="text-sm font-semibold">{item?.user?.userName}</p>
+                  <ProfileHover searchingUserId={item?.user?._id}>
+                    <p className="text-sm font-semibold">{item.user.userName}</p>
                   </ProfileHover>
                   <p className="text-xs font-normal text-[#71717A]">{item?.user?.fullName}</p>
                 </div>

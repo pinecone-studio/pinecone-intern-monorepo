@@ -1,5 +1,5 @@
 'use client';
-import { useCreateFollowerMutation, UserTogetherUserType } from '@/generated';
+import { FriendshipStatusType, useCreateFollowerMutation, UserTogetherUserType } from '@/generated';
 import { Follow } from './Follow';
 import { useAuth } from '../../components/providers/AuthProvider';
 import { Requested } from './Requested';
@@ -24,13 +24,13 @@ export const FriendshipStatus = ({
   followStyle?: string;
   followingStyle?: string;
   requestStyle?: string;
-  requestedStyle?: string;
+  requestedStyle: string;
 }) => {
-  const targetId = preview._id;
+  const targetId = preview?._id;
 
   const { user } = useAuth();
   const [follow, { data }] = useCreateFollowerMutation();
-  const [status, setStatus] = useState(preview.friendshipStatus);
+  const [status, setStatus] = useState<FriendshipStatusType>(preview.friendshipStatus);
   const { cacheFollow } = useCache();
 
   useEffect(() => {
@@ -44,12 +44,12 @@ export const FriendshipStatus = ({
   }, [data]);
   const handleClick = async () => {
     try {
-      setStatus((pre) => {
-        if (preview.isPrivate) {
-          return { ...pre, outgoingRequest: true };
-        }
-        return { ...pre, following: true };
-      });
+      if (preview.isPrivate) {
+        setStatus((pre) => ({ ...pre, outgoingRequest: true }));
+      } else {
+        setStatus((pre) => ({ ...pre, following: true }));
+      }
+
       await follow({
         variables: {
           input: {
@@ -69,10 +69,10 @@ export const FriendshipStatus = ({
     return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
   }
   if (status.following) {
-    return <Following targetId={targetId} followingStyle={followingStyle} />;
+    return <Following setStatus={setStatus} targetId={targetId} followingStyle={followingStyle} />;
   } else {
     if (status.outgoingRequest) {
-      return <Requested requestedStyle={requestedStyle} />;
+      return <Requested targetId={targetId as string} setStatus={setStatus} requestedStyle={requestedStyle as string} />;
     } else {
       return <Follow followStyle={followStyle} handleClickLike={handleClick} />;
     }

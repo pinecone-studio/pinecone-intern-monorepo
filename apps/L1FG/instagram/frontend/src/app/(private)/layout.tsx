@@ -8,11 +8,11 @@ const Layout = ({ children }: PropsWithChildren) => {
       <div className="hidden xl:block">
         <MenuButtons />
       </div>
-      <div className='block xl:hidden'>
+      <div className="block xl:hidden">
         <BottomLayout />
       </div>
 
-      <div className="flex-1">{children}</div>
+      <div className="grow">{children}</div>
     </div>
   );
 };

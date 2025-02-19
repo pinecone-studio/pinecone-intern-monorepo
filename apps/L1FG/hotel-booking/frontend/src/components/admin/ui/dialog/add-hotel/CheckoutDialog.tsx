@@ -11,7 +11,11 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 
-export const CheckoutDialog = () => {
+type EditBookingStatus = {
+  handleEditBookingStatus: (_newStatus: string) => Promise<void>;
+};
+
+export const CheckoutDialog = ({ handleEditBookingStatus }: EditBookingStatus) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -25,8 +29,12 @@ export const CheckoutDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="px-4 py-2 bg-white rounded-[6px]  border border-[#E4E4E7] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">Continue</AlertDialogAction>
+          <AlertDialogCancel onClick={() => handleEditBookingStatus('Cancelled')} className="px-4 py-2 bg-white rounded-[6px]  border border-[#E4E4E7] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={() => handleEditBookingStatus('Completed')} className="px-4 py-2 bg-[#2563EB] rounded-[6px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#256eeb]">
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
