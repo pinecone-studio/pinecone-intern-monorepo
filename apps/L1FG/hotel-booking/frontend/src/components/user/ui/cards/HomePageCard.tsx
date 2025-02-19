@@ -19,7 +19,7 @@ export const HomePageCard = ({ data }: { data: Hotel }) => {
       </div>
       <div className="flex flex-col gap-4 p-4">
         <div className="">
-          <h2 className="card-title text-base leading-7 font-bold">{data?.name}</h2>
+          <h2 className="card-title text-base leading-7 font-bold text-start">{data?.name}</h2>
           <div className="flex gap-1">
             {stars?.map((_, index) => (
               <Star key={index} size={16} className="fill-[#F97316] text-[#F97316]" />

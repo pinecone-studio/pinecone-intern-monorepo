@@ -33,7 +33,7 @@ export const HotelDetailPage = () => {
       <NavigationBlue />
       <BlueDital />
       <SearchBar />
-      <HotelDetailMain data={hotelData} />
+      <HotelDetailMain data={hotelData} hotelRoomData={undefined} />
       <Footer />
     </>
   );
