@@ -1,19 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import { useGetOrderQuery } from '@/generated';
-import { useAlert } from '../providers/AlertProvider';
+import { useAlert } from '../../../components/providers/AlertProvider';
+import { DeleteButton } from './OrderDeletee';
 /* eslint-disable */
+
 export const OrderHistory = () => {
-  const [sendRequest, setSendRequest] = useState(true);
   const { showAlert } = useAlert();
+
   const user = localStorage.getItem('user');
 
   let userID: string | null = null;
+
   if (user) {
     userID = JSON.parse(user)?._id;
   }
 
-  const { data, loading, error } = useGetOrderQuery({
+  const { data, loading, error, refetch } = useGetOrderQuery({
     variables: { userId: userID || '' },
     skip: !userID,
   });
@@ -33,6 +36,7 @@ export const OrderHistory = () => {
         </div>
       </div>
     );
+
   if (error) {
     console.error('GraphQL Query Error:', error);
     showAlert('error', 'Захиалгын мэдээлэл авахад алдаа гарлаа.');
@@ -40,14 +44,14 @@ export const OrderHistory = () => {
   }
 
   const orders = data?.getOrder || [];
-  console.log(orders);
+
   if (orders.length === 0) {
-    return <p className="text-white">Захиалгын түүх олдсонгүй.</p>;
+    return <p className="text-white">Одоогоор захиалга байхгүй байна.</p>;
   }
 
   return (
     <div className="flex flex-col gap-4 bg-[#131313] p-8 rounded-lg">
-      {orders.map((order: any) => (
+      {orders?.map((order: any) => (
         <div key={order._id} className="flex flex-col gap-4">
           <div className="flex justify-between items-center w-[777px]">
             <div className="flex flex-row gap-4 font-thin">
@@ -59,8 +63,12 @@ export const OrderHistory = () => {
                 <a>{new Date(order.createdAt).toLocaleDateString('mn-MN')}</a>
               </div>
             </div>
+            {order.orderStatus === 'DONE' ? (
+              <DeleteButton refetch={refetch} ticketNumber={order.ticketNumber} concertId={order.concertID} totalPrice={order.totalPrice} orderId={order._id} />
+            ) : (
+              <div className="text-white">Цуцлах хүсэлт илгээсэн</div>
+            )}
           </div>
-
           {[
             { ticket: order.vipTicket, type: 'VIP', circleColor: '#4651C9' },
             { ticket: order.regularTicket, type: 'Regular', circleColor: '#ff8da1' },

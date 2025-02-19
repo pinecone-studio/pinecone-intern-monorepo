@@ -21,6 +21,7 @@ mutation CreateOrder($input: OrderInput!) {
       quantity
     }
     _id
+    orderStatus
   }
 }
 query GetOrderTicketNumber($ticketNumber: Int!) {
@@ -46,6 +47,7 @@ query GetOrderTicketNumber($ticketNumber: Int!) {
       quantity
     }
     _id
+    orderStatus
   }
 }
 mutation OrderUpdate($input: OrderUpdateInput!) {
@@ -76,6 +78,32 @@ query GetOrder($userId: String!) {
       price
       quantity
     }
+    _id
+    orderStatus
+  }
+}
+mutation CreateDeleteReq($input: DeleteReqInput!) {
+  createDeleteReq(input: $input) {
+    concertName
+    totalPrice
+    userName
+    accountNumber
+    bankName
+    orderId
+    reqStatus
+    _id
+  }
+}
+
+query GetDeleteOrderId($orderId: String!) {
+  getDeleteOrderId(orderId: $orderId) {
+    concertName
+    totalPrice
+    userName
+    accountNumber
+    bankName
+    orderId
+    reqStatus
     _id
   }
 }
