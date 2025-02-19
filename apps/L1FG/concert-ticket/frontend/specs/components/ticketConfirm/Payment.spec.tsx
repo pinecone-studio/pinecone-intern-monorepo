@@ -56,7 +56,11 @@ const mockCreateOrder: MockedResponse = {
           price: 50,
           quantity: 1,
         },
-        orderStatus: 'PENDING',
+
+
+
+        orderStatus: 'DONE',
+
       },
     },
   },
@@ -84,6 +88,7 @@ const mockCreateOrder: MockedResponse = {
           quantity: 3,
         },
         _id: '67aac32406158cdd3a06485d',
+        orderStatus: 'DONE',
       },
     },
   },

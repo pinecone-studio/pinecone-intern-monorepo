@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const GuestInfoRight = () => {
+export const RoomInfoContainer = () => {
   return (
     <div className="max-w-[440px] w-full flex flex-col gap-2">
       <div className="w-full border border-[#E4E4E7] rounded-[8px] bg-white px-6 pt-4 pb-6 flex flex-col gap-4">

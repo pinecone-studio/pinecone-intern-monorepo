@@ -3,6 +3,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { NotificationType, UserPostType } from '@/generated';
 import PostModal from '../../components/profile/profilePost/PostModal';
 import { formatDistanceToNowStrict } from 'date-fns';
+import { Link } from 'lucide-react';
 
 type Props = {
   commentNotification: NotificationType[];
@@ -42,7 +43,7 @@ export const CommentLike = ({ commentNotification }: Props) => {
   return (
     <div>
       {groupedNotifications?.map((n, index) => (
-        <div key={index} className="flex items-center  justify-between py-3 px-6 hover:bg-gray-100 transition rounded-lg">
+        <div key={index} className="flex items-center  justify-between py-3 px-4 hover:bg-gray-100 transition rounded-lg">
           <div className="flex  items-center">
             <div className="relative w-10 h-10">
               {n.userImages.slice(0, 2).map((img, index) => (
@@ -53,34 +54,28 @@ export const CommentLike = ({ commentNotification }: Props) => {
             </div>
 
             <div className="ml-4 text-sm w-[243px]">
-              <span className="font-bold">
-                <a href={`/${n.userIds[0]}`}>{n.userNames[0]}</a>
-              </span>
-              {n.userNames.length > 1 && (
-                <span>
-                  ,{' '}
-                  <a className="font-bold" href={`/profile/${n.userIds[1]}`}>
-                    {n.userNames[1]}
-                  </a>
+              <Link href={`/${n.userIds}`}>
+                <span className="font-bold">{n.userNames[0]}</span>
+                {n.userNames.length > 1 && <span className="font-bold">{n.userNames[1]}</span>}
+                <span> liked your comment. </span>
+                <span> {n.comment} </span>
+                <span className="text-gray-500 font-normal">
+                  {formatDistanceToNowStrict(n.date, { addSuffix: false })
+                    .replace(' seconds', 's')
+                    .replace(' minutes', 'm')
+                    .replace(' minute', 'm')
+                    .replace(' hours', 'h')
+                    .replace(' hour', 'h')
+                    .replace(' days', 'd')
+                    .replace(' day', 'd')
+                    .replace(' weeks', 'w')
+                    .replace(' week', 'w')
+                    .replace(' months', 'mo')
+                    .replace(' month', 'mo')
+                    .replace(' years', 'y')
+                    .replace(' year', 'y')}
                 </span>
-              )}
-              <span> liked your comment: {n.comment}</span>
-              <span className="text-gray-500">
-                {' '}
-                {formatDistanceToNowStrict(n.date, { addSuffix: false })
-                  .replace(' minutes', 'm')
-                  .replace(' minute', 'm')
-                  .replace(' hours', 'h')
-                  .replace(' hour', 'h')
-                  .replace(' days', 'd')
-                  .replace(' day', 'd')
-                  .replace(' weeks', 'w')
-                  .replace(' week', 'w')
-                  .replace(' months', 'mo')
-                  .replace(' month', 'mo')
-                  .replace(' years', 'y')
-                  .replace(' year', 'y')}
-              </span>
+              </Link>
             </div>
           </div>
           <PostModal post={n.contentPost as UserPostType}>

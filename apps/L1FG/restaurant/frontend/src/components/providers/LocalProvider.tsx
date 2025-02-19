@@ -16,6 +16,7 @@ export type FoodItems = {
 interface Order {
   tableId: number;
   status: string;
+  isRead: boolean;
   items: FoodItems[];
 }
 
@@ -50,7 +51,7 @@ const CartContext = createContext<CartContextType>({
   minusFromCart: () => {
     return;
   },
-  getFormattedOrder: () => ({ tableId: 0, status: 'Pending', items: [] }),
+  getFormattedOrder: () => ({ tableId: 0, status: 'Pending', items: [], isRead: false }),
   cartItemsTotalPrice: 0,
   deliveryFee: 0,
 });
@@ -106,6 +107,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     tableId,
     status: 'Pending',
     items: orders,
+    isRead: false,
   });
 
   return (

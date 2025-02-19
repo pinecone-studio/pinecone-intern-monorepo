@@ -1,0 +1,16 @@
+mutation updateOrderRead($orderId: ID!) {
+  updateOrderRead(orderId: $orderId) {
+    _id
+    status
+    createdAt
+    tableId
+    userId
+    isRead
+    items {
+      name
+      quantity
+      price
+      imageUrl
+    }
+  }
+}

@@ -23,7 +23,7 @@ const ForgetPasswordOtp = () => {
   }
 
   useEffect(() => {
-    setViewEmail(localStorage.getItem('forgetPasswordEmail') || '');
+    setViewEmail(localStorage.getItem('forgetPasswordEmail')!);
   }, [otp]);
 
   const handleChangeInput = (value: string) => {

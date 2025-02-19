@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Users } from './Users';
 import { useState } from 'react';
-import { useGetUserByNameQuery } from '@/generated';
+import { useDeleteAllSearchUserMutation, useGetUserByNameQuery } from '@/generated';
 import { SavedUsers } from './SavedUsers';
 
 type Props = {
@@ -13,6 +13,10 @@ type Props = {
 
 // eslint-disable-next-line complexity
 export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
+  const [deleteAll] = useDeleteAllSearchUserMutation({
+    refetchQueries: ['GetSearchedUser'],
+  });
+
   const [userName, setUserName] = useState('');
 
   const { data, loading } = useGetUserByNameQuery({
@@ -52,7 +56,11 @@ export const SearchSheet = ({ searchOpen, setSearchOpen }: Props) => {
             x
           </p>
         </div>
-        {userName ? <Users loading={loading} data-testid="user-component" users={users as []} setSearchOpen={setSearchOpen} setUserName={setUserName} /> : <SavedUsers searchOpen={searchOpen} />}
+        {userName ? (
+          <Users loading={loading} data-testid="user-component" users={users as []} setSearchOpen={setSearchOpen} setUserName={setUserName} />
+        ) : (
+          <SavedUsers onclcik={deleteAll} setSearchOpen={setSearchOpen} searchOpen={searchOpen} />
+        )}
 
         <div className="overflow-y-auto h-[calc(100vh-60px)]"></div>
       </div>

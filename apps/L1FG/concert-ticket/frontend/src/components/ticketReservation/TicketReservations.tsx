@@ -12,7 +12,7 @@ const TicketReservations = ({ handleChange, handleNext, ticketID, value }: Order
   const { data: orderData, error } = useGetOrderTicketNumberQuery({ variables: { ticketNumber: value.orderNumber } });
   useEffect(() => {
     if (!orderData && value.orderNumber) {
-      showAlert('error', `${error} `);
+      showAlert('error', `Захиалга баталгаажуулаагүй тул тасалбарыг цуцаллаа`);
     }
   }, [error, value.orderNumber, orderData]);
 

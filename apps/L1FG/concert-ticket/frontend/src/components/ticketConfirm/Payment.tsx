@@ -31,7 +31,6 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
     if (value.payType.length === 0) {
       return showAlert('warning', 'Төлбөрийн нөхцөлөө сонгоно уу');
     }
-
     await createOrder({
       variables: {
         input: {
@@ -55,7 +54,9 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
             price: value.standingAreaPrice,
             quantity: value.standingAreaQuantity,
           },
-          orderStatus: 'PENDING',
+
+          orderStatus: 'DONE',
+
         },
       },
     });

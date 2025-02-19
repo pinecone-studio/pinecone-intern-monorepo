@@ -1,11 +1,12 @@
-import { useUnfollowMutation } from '@/generated';
+import { FriendshipStatusType, useUnfollowMutation } from '@/generated';
 import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
 
-export const Following = ({ followingStyle, targetId }: { followingStyle?: string; targetId: string }) => {
+export const Following = ({ followingStyle, targetId, setStatus }: { followingStyle?: string; targetId: string; setStatus: React.Dispatch<React.SetStateAction<FriendshipStatusType>> }) => {
   const [unfollow] = useUnfollowMutation();
 
   const handleClick = () => {
     unfollow({ variables: { followerId: targetId } });
+    setStatus((pre) => ({ ...pre, following: false, outgoingRequest: false }));
   };
 
   return (

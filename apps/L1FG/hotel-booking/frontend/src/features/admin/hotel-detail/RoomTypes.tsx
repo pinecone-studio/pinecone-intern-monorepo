@@ -20,8 +20,9 @@ export const RoomTypes = () => {
     skip: !hotelId, // Зөвхөн hotelId байх үед л Query гүйцэтгэнэ
   });
 
-  const roomData = data?.getRoomsByHotelId?.filter((room): room is Room => room !== null) ?? [];
-
+  const roomData = useMemo(() => {
+    return data?.getRoomsByHotelId?.filter((room): room is Room => room !== null) ?? [];
+  }, [data]);
   const filteredRooms = useMemo(() => {
     return roomData.filter((room) => {
       switch (filter) {
@@ -35,7 +36,7 @@ export const RoomTypes = () => {
           return true;
       }
     });
-  }, [filter, roomData]);
+  }, [filter, roomData]); // Зөвхөн эдгээр хувьсагч өөрчлөгдөх үед л дахин тооцоолол хийнэ.
 
   const handleCreateRoom = async () => {
     if (!hotelId) {
