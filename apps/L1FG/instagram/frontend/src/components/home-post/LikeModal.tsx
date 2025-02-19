@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useGetlikePostQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 
 const LikeModal = ({ children, postId }: { children: React.ReactNode; postId: string }) => {
   const { data, loading } = useGetlikePostQuery({

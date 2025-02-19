@@ -1,7 +1,7 @@
 import { useGetFollowingSuggestionQuery } from '@/generated';
 import Image from 'next/image';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 
 const FooterLinks = ['About', 'Help', 'Press', 'API', 'Jobs', 'Privacy', 'Terms', 'Locations', 'Language', 'Meta Verified'];
 

@@ -6,7 +6,7 @@ import { Username } from './Username';
 import { PostsSwiper } from './PostsSwiper';
 import { PostCaption } from './PostCaption';
 import { PostComment } from './PostComment';
-import { ProfileHover } from './ProfileHover';
+import { ProfileHover } from '../../features/home-post/ProfileHover';
 import { PostLikeSection } from '../../features/home-post/PostLikeSection';
 import { PostDate } from './PostDate';
 import { ProfileOrStory } from './ProfileOrStory';

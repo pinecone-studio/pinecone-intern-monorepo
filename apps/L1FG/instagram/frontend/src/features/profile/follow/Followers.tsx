@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { GetFollowersQuery, useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 import { useState } from 'react';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
