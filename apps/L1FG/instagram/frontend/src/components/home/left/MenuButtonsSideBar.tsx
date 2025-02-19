@@ -14,6 +14,7 @@ export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const router = useRouter();
+
   const toggleNotifications = () => {
     setIsOpen((prev) => !prev);
     setSearchOpen(false);

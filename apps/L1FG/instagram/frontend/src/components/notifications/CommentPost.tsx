@@ -3,6 +3,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { NotificationType, UserPostType } from '@/generated';
 import PostModal from '../profile/profilePost/PostModal';
 import { formatDistanceToNowStrict } from 'date-fns';
+import Link from 'next/link';
 
 type Props = {
   commentNotification: NotificationType[];
@@ -40,32 +41,32 @@ export const CommentPost = ({ commentNotification }: Props) => {
   return (
     <div>
       {groupedNotifications.map((n) => (
-        <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-6 mb-2">
+        <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-4 mb-2">
           <div className="flex items-center">
             <Avatar>
               <AvatarImage src={n?.userImage} alt="User Avatar" />
             </Avatar>
             <div className="ml-4 text-sm w-[243px] break-words  ">
-              <span className="font-bold">
-                <a href={`/${n.userIds[0]}`}>{n.userNames[0]}</a>
-              </span>
-              <span className="px-1 ">commented:</span>
-              <span> {n.contentComment}</span>
-              <span className="text-gray-500">
-                {formatDistanceToNowStrict(n.date, { addSuffix: false })
-                  .replace(' minutes', 'm')
-                  .replace(' minute', 'm')
-                  .replace(' hours', 'h')
-                  .replace(' hour', 'h')
-                  .replace(' days', 'd')
-                  .replace(' day', 'd')
-                  .replace(' weeks', 'w')
-                  .replace(' week', 'w')
-                  .replace(' months', 'mo')
-                  .replace(' month', 'mo')
-                  .replace(' years', 'y')
-                  .replace(' year', 'y')}
-              </span>
+              <Link href={`/${n.userIds}`}>
+                <span className="font-bold">{n.userNames[0]}</span>
+                <span className="px-1 ">commented: </span>
+                <span> {n.contentComment} </span>
+                <span className="text-gray-500">
+                  {formatDistanceToNowStrict(n.date, { addSuffix: false })
+                    .replace(' minutes', 'm')
+                    .replace(' minute', 'm')
+                    .replace(' hours', 'h')
+                    .replace(' hour', 'h')
+                    .replace(' days', 'd')
+                    .replace(' day', 'd')
+                    .replace(' weeks', 'w')
+                    .replace(' week', 'w')
+                    .replace(' months', 'mo')
+                    .replace(' month', 'mo')
+                    .replace(' years', 'y')
+                    .replace(' year', 'y')}
+                </span>
+              </Link>
             </div>
           </div>
           <PostModal post={n.contentPost as UserPostType}>
