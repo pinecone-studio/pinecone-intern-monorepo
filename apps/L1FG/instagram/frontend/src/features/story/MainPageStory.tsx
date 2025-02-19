@@ -14,7 +14,7 @@ const MainPageStory = () => {
   };
 
   return (
-    <div className="flex gap-4 w-[630px] ">
+    <div className="flex gap-4 w-[630px] h-[70px]">
       {data?.getPreviewAllStories.storyTray.map((node) => (
         <Link href={`/stories/${node.user.userName}/${node.latestStoryId}`} key={node._id}>
           <div className="flex flex-col gap-2 mt-[25px] w-fit">

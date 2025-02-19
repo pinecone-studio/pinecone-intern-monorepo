@@ -85,7 +85,7 @@ export const CacheProvider = ({ children }: PropsWithChildren) => {
       },
     });
     client.writeFragment({
-      id: `UserWithoutPassword:${user?._id}`,
+      id: `UserTogetherUserType:${user?._id}`,
       fragment: gql`
         fragment test on UserPostType {
           followingCount
@@ -130,7 +130,7 @@ export const CacheProvider = ({ children }: PropsWithChildren) => {
     client.writeFragment({
       id: `UserTogetherUserType:${followerId}`,
       fragment: gql`
-        fragment test on UserTogetherUserTypeB {
+        fragment test on UserTogetherUserType {
           followerCount
           friendshipStatus {
             following
@@ -145,7 +145,7 @@ export const CacheProvider = ({ children }: PropsWithChildren) => {
       },
     });
     client.writeFragment({
-      id: `UserWithoutPassword:${user?._id}`,
+      id: `UserTogetherUserType:${user?._id}`,
       fragment: gql`
         fragment test on UserPostType {
           followingCount
