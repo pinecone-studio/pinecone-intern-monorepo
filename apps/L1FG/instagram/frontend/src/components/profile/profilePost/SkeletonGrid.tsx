@@ -4,7 +4,7 @@ const SkeletonGrid = () => {
   return (
     <div className="grid grid-cols-3 gap-1">
       {' '}
-      {Array(6)
+      {Array(9)
         .fill(null)
         .map((_, i) => (
           <SkeletonPost key={i} />
