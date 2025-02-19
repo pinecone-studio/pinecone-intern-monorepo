@@ -40,6 +40,7 @@ const orderSchema = new Schema(
     vipTicket: { price: Number, quantity: Number },
     regularTicket: { price: Number, quantity: Number },
     standingAreaTicket: { price: Number, quantity: Number },
+    orderStatus: { type: String, enum: ['CANCEL', 'DELETE', 'DONE'], default: 'DONE' },
   },
 
   { timestamps: true }

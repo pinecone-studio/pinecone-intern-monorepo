@@ -15,13 +15,15 @@ export const Images = ({ images, setImages, handleEditHotelImages }: HotelImages
           <div className="relative w-full h-[264px] rounded-sm overflow-hidden">
             <Image src={images[0]} alt="Hotel Image" width={352} height={264} className="rounded-md w-full h-full object-cover" />
           </div>
-          <div className="w-full grid grid-cols-2 grid-rows-2 gap-1">
-            {images.slice(1, 5).map((img, index) => (
-              <div key={index} className="relative w-full h-[130px] rounded-sm overflow-hidden">
-                <Image src={img} alt={`Hotel Image ${index + 1}`} width={174} height={130} className="rounded-md w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
+          {images?.length > 1 && (
+            <div className="w-full grid grid-cols-2 grid-rows-2 gap-1 mt-1">
+              {images?.slice(1, 5).map((img, index) => (
+                <div key={index} className="relative w-full h-[130px] rounded-sm overflow-hidden">
+                  <Image src={img} alt={`Hotel Image ${index + 1}`} width={174} height={130} className="rounded-md w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 py-8">

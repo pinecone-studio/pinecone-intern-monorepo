@@ -3,7 +3,7 @@ import { useGetPostsQuery } from '@/generated';
 import PostModal from './PostModal';
 import Message from '@/components/svg/Message';
 import Heart from '@/components/svg/Heart';
-import SkeletonPost from './SkeletonPost';
+import SkeletonGrid from './SkeletonGrid';
 
 const Post = ({ userId }: { userId: string }) => {
   const { data, loading } = useGetPostsQuery({
@@ -17,13 +17,11 @@ const Post = ({ userId }: { userId: string }) => {
   });
 
   return (
-    <div className="flex flex-col gap-5 w-[900px] mt-5" data-testid="profile-posts">
+    <div className="flex flex-col gap-5 w-full mt-5" data-testid="profile-posts">
       <div>
         {loading ? (
-          <div className="grid grid-cols-3 gap-1">
-            <SkeletonPost />
-            <SkeletonPost />
-            <SkeletonPost />
+          <div>
+            <SkeletonGrid />
           </div>
         ) : (
           <div className="grid grid-cols-3 gap-1 overflow-y-scroll">
@@ -33,8 +31,15 @@ const Post = ({ userId }: { userId: string }) => {
               }
               return (
                 <PostModal post={edge.node} key={edge.node._id}>
-                  <div className="relative flex flex-col items-center justify-center group cursor-pointer">
-                    <Image src={edge.node.postImage[0]} alt="profile" className="object-cover w-[300px] h-[300px] group-hover:opacity-90 transition-opacity duration-300" width={300} height={300} />
+                  <div className="relative flex flex-col items-center justify-center group cursor-pointer w-full">
+                    <Image
+                      src={edge.node.postImage[0]}
+                      alt="profile"
+                      className="object-cover w-full aspect-square  group-hover:opacity-90 transition-opacity duration-300"
+                      width={300}
+                      height={300}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                    />
                     <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
                       <div className="flex gap-2 justify-center items-center">
                         <Heart />

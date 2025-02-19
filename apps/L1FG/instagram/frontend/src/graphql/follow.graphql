@@ -1,70 +1,103 @@
-query GetFollowing($searchingUserId: ID) {
-  getFollowing(searchingUserId: $searchingUserId) {
-
-    followerId
-    targetId
-    user {
-      _id
-      userName
-      fullName
-      bio
-      profileImage
-      hasStory
-      gender
-      isPrivate
-      email
-      followingCount
-      followerCount
-      postCount
-      latestStoryTimestamp
-      seenStoryTime
-      savedUsers
-      createdAt
-      friendshipStatus {
-        followedBy
-        following
-        incomingRequest
-        outgoingRequest
+query GetFollowings($input: SmallFollowInput!) {
+  getFollowings(input: $input) {
+    edges {
+      cursor
+      node {
+        followerId
+        targetId
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          createdAt
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+          mutualFollowersCount
+          mutualFollowers
+        }
       }
-      mutualFollowersCount
-      mutualFollowers
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
     }
   }
 }
-query GetFollowers($searchingUserId: ID) {
-  getFollowers(searchingUserId: $searchingUserId) {
-    followerId
-    targetId
-    user {
-      _id
-      userName
-      fullName
-      bio
-      profileImage
-      hasStory
-      gender
-      isPrivate
-      email
-      followingCount
-      followerCount
-      postCount
-      latestStoryTimestamp
-      seenStoryTime
-      savedUsers
-      createdAt
-      friendshipStatus {
-        followedBy
-        following
-        incomingRequest
-        outgoingRequest
+query GetFollowers($input: SmallFollowInput!) {
+  getFollowers(input: $input) {
+    edges {
+      cursor
+      node {
+        followerId
+        targetId
+        user {
+          _id
+          userName
+          fullName
+          bio
+          profileImage
+          hasStory
+          gender
+          isPrivate
+          email
+          followingCount
+          followerCount
+          postCount
+          latestStoryTimestamp
+          seenStoryTime
+          savedUsers
+          createdAt
+          friendshipStatus {
+            followedBy
+            following
+            incomingRequest
+            outgoingRequest
+          }
+          mutualFollowersCount
+          mutualFollowers
+        }
       }
-      mutualFollowersCount
-      mutualFollowers
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
     }
   }
 }
 mutation CreateFollower($input: FollowInput!) {
   createFollower(input: $input) {
+    isFollowed
+    isRequested
+  }
+}
+
+mutation Unfollow($followerId: String!) {
+  unfollow(followerId: $followerId) {
+    _id
+    followerId
+    targetId
+  }
+}
+mutation DeleteFollower($followerId: ID!) {
+  deleteFollower(followerId: $followerId) {
     isFollowed
     isRequested
   }

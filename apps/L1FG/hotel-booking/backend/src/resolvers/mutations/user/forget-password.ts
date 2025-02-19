@@ -1,5 +1,6 @@
 import { MutationResolvers } from './../../../generated/index';
 import { UserModel } from '../../../models';
+import bcrypt from "bcrypt";
 
 export const forgetPassword: MutationResolvers['forgetPassword'] = async (_, { input }) => {
   const { email, password } = input;
@@ -7,7 +8,8 @@ export const forgetPassword: MutationResolvers['forgetPassword'] = async (_, { i
 
   if (!user) throw new Error('User not found or OTP not verified');
 
-  await UserModel.findByIdAndUpdate(user._id, { password: password });
+  const hashedPassword = await bcrypt.hash(password, 10);
+  await UserModel.findByIdAndUpdate(user._id, { password: hashedPassword });
 
   return { success: true };
 };

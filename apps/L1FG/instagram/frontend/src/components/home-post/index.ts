@@ -1,4 +1,4 @@
-export * from './Avatar';
+export * from './AvatarLink';
 export * from './Post';
 export * from './PostCaption';
 export * from './PostComment';

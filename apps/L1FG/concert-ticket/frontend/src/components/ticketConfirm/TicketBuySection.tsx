@@ -2,12 +2,11 @@ import { OrderProps } from '@/app/ticketReservation/[ticketID]/page';
 import { useGetConcertQuery } from '@/generated';
 
 type SubBuyProps = {
-  handleNext: () => void;
   value: OrderProps;
   ticketID: string;
 };
 
-const TicketSubscriberBuysection = ({ handleNext, value, ticketID }: SubBuyProps) => {
+const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
   const { data } = useGetConcertQuery({ variables: { id: ticketID } });
 
   return (
@@ -84,7 +83,7 @@ const TicketSubscriberBuysection = ({ handleNext, value, ticketID }: SubBuyProps
           <p className="text-white text-[16px] font-thin">{value.totalPrice}</p>
         </div>
       </div>
-      <button data-testid="ticket-buy-continue" onClick={handleNext} className=" py-1 px-24  mx-auto w-full rounded-lg bg-[#00B7F4] hover:bg-[#3279e3] flex justify-center items-center">
+      <button data-cy='reservation-button' data-testid="ticket-buy-continue" className=" py-1 px-24  mx-auto w-full rounded-lg bg-[#00B7F4] hover:bg-[#3279e3] flex justify-center items-center">
         Үргэлжлүүлэх
       </button>
     </div>

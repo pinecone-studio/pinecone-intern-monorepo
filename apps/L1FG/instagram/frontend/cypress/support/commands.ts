@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /// <reference types="cypress" />
+import 'cypress-file-upload';
 
 Cypress.Commands.add('getByData', (selector) => {
   return cy.get(`[data-cy=${selector}]`);

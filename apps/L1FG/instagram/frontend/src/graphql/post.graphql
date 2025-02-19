@@ -64,3 +64,36 @@ mutation DeletePostLike($input: PostLikeInput!) {
     postId
   }
 }
+query GetlikePost($postId: ID!) {
+  getlikePost(postId: $postId) {
+    _id
+    userId
+    postId
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      savedUsers
+      createdAt
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+      mutualFollowersCount
+      mutualFollowers
+    }
+  }
+}

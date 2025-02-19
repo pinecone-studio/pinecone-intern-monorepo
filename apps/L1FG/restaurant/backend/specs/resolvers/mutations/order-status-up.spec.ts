@@ -15,6 +15,7 @@ describe('updateOrderStatus Resolver', () => {
     _id: new mongoose.Types.ObjectId().toString(),
     status: 'Completed',
     tableId: 1,
+    isRead: false,
     createdAt: new Date(),
     items: [],
   };
@@ -27,7 +28,7 @@ describe('updateOrderStatus Resolver', () => {
 
     const result = await updateOrderStatus({}, { orderId: mockOrder._id, status: 'Completed' }, {}, {} as GraphQLResolveInfo);
 
-    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { status: 'Completed' }, { new: true });
+    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { status: 'Completed', isRead: false }, { new: true });
 
     expect(result).toEqual(mockOrder);
   });

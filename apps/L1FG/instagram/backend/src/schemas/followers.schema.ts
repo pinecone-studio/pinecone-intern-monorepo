@@ -34,7 +34,7 @@ export const FollowerTypeDefs = gql`
     gender: Gender
     isPrivate: Boolean!
     email: String!
-    friendshipStatus: FriendshipStatusType
+    friendshipStatus: FriendshipStatusType!
   }
   type FollowerType {
     followerId: ID!
@@ -49,17 +49,45 @@ export const FollowerTypeDefs = gql`
   input FollowInput {
     targetId: ID!
   }
+  input SmallFollowInput {
+    after: ID
+    first: Int!
+    searchingUserId: ID!
+  }
+  type PageInfo {
+    startCursor: ID!
+    endCursor: ID!
+    hasNextPage: Boolean!
+  }
   type FollowedRequested {
     isFollowed: Boolean
     isRequested: Boolean
   }
+  type FollowersEdge {
+    cursor: ID!
+    node: FollowerType!
+  }
+  type FollowersConnection {
+    edges: [FollowersEdge!]!
+    pageInfo: PageInfo!
+  }
+  type FollowingsEdge {
+    cursor: ID!
+    node: FollowingType!
+  }
+  type FollowingsConnection {
+    edges: [FollowingsEdge!]!
+    pageInfo: PageInfo!
+  }
   type Query {
-    getFollowers(searchingUserId: ID): [FollowerType!]!
-    getFollowing(searchingUserId: ID): [FollowingType!]!
+    getFollowers(input: SmallFollowInput!): FollowersConnection!
+    getFollowings(input: SmallFollowInput!): FollowingsConnection!
   }
   type Mutation {
     createFollower(input: FollowInput!): FollowedRequested!
     acceptRequest(followerId: String!): FollowedRequested!
     unfollow(followerId: String!): Follow
+    deleteFollower(followerId: ID!): FollowedRequested!
+    deleteRequest(targetId: String!): FollowedRequested
   }
 `;

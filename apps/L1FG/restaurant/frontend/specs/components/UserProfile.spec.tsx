@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import UserProfile from '@/components/user-profile/UserProfile';
+import { MockedProvider } from '@apollo/client/testing';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -10,14 +11,22 @@ describe('UserProfile Component', () => {
     localStorage.clear();
   });
 
-  it('does not redirect if a valid user exists in localStorage', () => {
-    const mockUser = { email: 'test@example.com', phoneNumber: '123456789', profileImage: '/test-image.jpg', password: 'password' };
-    localStorage.setItem('user', JSON.stringify(mockUser));
+  it('handles localStorage get user not found, userId will be null', async () => {
+    Storage.prototype.getItem = jest.fn(() => null);
 
-    render(<UserProfile />);
+    render(
+      <MockedProvider>
+        <UserProfile />
+      </MockedProvider>
+    );
   });
-
-  it('redirects to login page if no user exists in localStorage', () => {
-    render(<UserProfile />);
+  it('correctly retrieves userId from localStorage and fetches orders', async () => {
+    const mockUser = { _id: 'user123' };
+    Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockUser));
+    render(
+      <MockedProvider>
+        <UserProfile />
+      </MockedProvider>
+    );
   });
 });

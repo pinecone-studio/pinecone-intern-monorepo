@@ -31,8 +31,8 @@ export const FriendshipStatus = ({
   const { user } = useAuth();
   const [follow, { data }] = useCreateFollowerMutation();
   const [status, setStatus] = useState(preview.friendshipStatus);
-
   const { cacheFollow } = useCache();
+
   useEffect(() => {
     if (data) {
       if (data.createFollower.isFollowed) {
@@ -69,7 +69,7 @@ export const FriendshipStatus = ({
     return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
   }
   if (status.following) {
-    return <Following followingStyle={followingStyle} />;
+    return <Following targetId={targetId} followingStyle={followingStyle} />;
   } else {
     if (status.outgoingRequest) {
       return <Requested requestedStyle={requestedStyle} />;

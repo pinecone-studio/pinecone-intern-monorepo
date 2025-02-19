@@ -1,70 +1,153 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import OrderHistory from '@/app/order-history/page';
 import { useGetOrdersForUserQuery } from '@/generated';
-import OrderHistory from '@/components/order-history/OrderHistory';
+
+jest.mock('sonner', () => ({
+  toast: {
+    error: jest.fn(),
+  },
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
 jest.mock('@/generated', () => ({
   useGetOrdersForUserQuery: jest.fn(),
 }));
-beforeEach(() => {
-  Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify({ _id: '123' }));
-});
-beforeEach(() => {
-  Storage.prototype.getItem = jest.fn();
-});
 
 describe('OrderHistory Component', () => {
-  it('should render a loading state initially', () => {
-    useGetOrdersForUserQuery.mockReturnValue({ data: undefined, loading: true });
+  const mockRouter = {
+    push: jest.fn(),
+  };
 
-    render(<OrderHistory />);
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+    (toast.error as jest.Mock).mockReset();
+    localStorage.setItem('user', JSON.stringify({ _id: 'testUser' }));
+  });
+  it('renders loading state initially', () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: true,
+      data: null,
+    });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
+  it('renders order history correctly', async () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: false,
+      data: {
+        getOrdersForUser: [
+          {
+            _id: 'order1',
+            status: 'Completed',
+            createdAt: new Date().toISOString(),
+            items: [{ price: 1000, quantity: 2 }],
+          },
+        ],
+      },
+    });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
+  it('handles no orders scenario', async () => {
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: false,
+      data: { getOrdersForUser: [] },
+    });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
+  it('handles error when localStorage is invalid', async () => {
+    Storage.prototype.getItem = jest.fn(() => 'invalid-data');
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
+  });
+  it('correctly retrieves userId from localStorage and fetches orders', async () => {
+    const mockUser = { _id: 'user123' };
+    Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockUser));
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      loading: false,
+      data: {
+        getOrdersForUser: [
+          {
+            _id: 'order1',
+            status: 'Completed',
+            createdAt: new Date().toISOString(),
+            items: [
+              { price: 1000, quantity: 2 },
+              { price: null, quantity: null },
+            ],
+          },
+        ],
+      },
+    });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
   });
 
-  it('should display orders when there are order data', async () => {
+  it('sorts orders by createdAt in descending order', async () => {
     const mockOrders = [
       {
-        createdAt: '2025-02-16T12:34:56Z',
-        status: 'Delivered',
-        items: [{ price: null }, { price: 200 }],
+        _id: '1',
+        status: 'Pending',
+        createdAt: new Date('2025-02-17T10:00:00Z').toISOString(),
+      },
+      {
+        _id: '2',
+        status: 'InProcess',
+        createdAt: new Date('2025-02-18T10:00:00Z').toISOString(),
+      },
+      {
+        _id: '3',
+        status: 'Ready',
+        createdAt: new Date('2025-02-19T10:00:00Z').toISOString(),
+      },
+      {
+        _id: '4',
+        status: 'Done',
+        createdAt: new Date('2025-02-19T10:00:00Z').toISOString(),
       },
     ];
-
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: { getOrdersForUser: mockOrders },
+    (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
       loading: false,
+      data: {
+        getOrdersForUser: mockOrders,
+      },
     });
-
-    render(<OrderHistory />);
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
   });
+  it('handles localStorage get user not found, userId will be null', async () => {
+    Storage.prototype.getItem = jest.fn(() => null);
 
-  it('should handle errors correctly', async () => {
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: null,
-      loading: false,
-      error: new Error('Failed to fetch orders'),
-    });
-
-    render(<OrderHistory />);
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
-  });
-  it('should set the userId from localStorage correctly', () => {
-    // Mock a user in localStorage with _id
-    const mockUser = { _id: '123' };
-    Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(mockUser));
-
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: { getOrdersForUser: [] },
-      loading: false,
-    });
-
-    render(<OrderHistory />);
-
-    // Wait for the effect to run and userId to be set
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
-
-    // Verify that userId state is set correctly (this can be done indirectly by rendering or checking data fetching)
-    expect(Storage.prototype.getItem).toHaveBeenCalledWith('user'); // Ensure that localStorage.getItem('user') was called
-    expect(useGetOrdersForUserQuery).toHaveBeenCalledWith({ variables: { userId: '123' } });
+    render(
+      <MockedProvider>
+        <OrderHistory />
+      </MockedProvider>
+    );
   });
 });

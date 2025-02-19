@@ -1,9 +1,30 @@
+"use client";
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
+import  { useRouter } from "next/navigation"
+import { useAuth } from '@/components/providers';
+
 
 const SignUpPage = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password , setPassword] = useState<string>("");
+  const Router = useRouter();
+  const {signin} = useAuth();
+
+  const onSubmit = async () => {
+    try {
+      await signin({  email : email, password : password } );
+      Router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  
   return (
     <div className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
@@ -21,7 +42,7 @@ const SignUpPage = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Email</p>
-                  <Input type="email" placeholder="name@example.com" />
+                  <Input onChange={(event)=> setEmail(event.target.value)} value={email} type="email" placeholder="name@example.com" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
@@ -30,10 +51,10 @@ const SignUpPage = () => {
                       <p className="font-Inter font-normal text-sm leading-[14px] text-[#2563EB] hover:text-[#2563D2] not-italic cursor-pointer">Forget password?</p>
                     </Link>
                   </div>
-                  <Input type="email" placeholder="Password" />
+                  <Input onChange={(event) => setPassword(event.target.value)} value={password} type="password" placeholder="Password" />
                 </div>
               </div>
-              <Button className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
+              <Button onClick={onSubmit} className="w-full bg-[#2563EB] hover:bg-[#2563D2]">
                 <p className="font-Inter font-medium text-sm not-italic text-white">Continue</p>
               </Button>
             </div>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCreateUserMutation } from '@/generated';
+import { toast } from 'sonner';
 
 interface User {
   userName: string;
@@ -50,7 +51,7 @@ const RegisterPage = () => {
           },
         },
       });
-
+      toast.success('Шинэ хэрэглэгчйин бүртгэл үүслээ');
       router.push('/login');
     } catch (error) {
       setFormState({
@@ -58,7 +59,7 @@ const RegisterPage = () => {
         loading: false,
         errorMessage: 'Бүртгэл амжилтгүй боллоо.',
       });
-      console.log(error);
+      toast.error('Бүртгэл амжилтгүй боллоо.');
     }
   };
 

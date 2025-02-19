@@ -1,28 +1,29 @@
 import EmptyFollowing from '@/components/profile/follow/EmptyFollowing';
-import Followers from '@/components/profile/follow/Followers';
+import Followers from '@/features/profile/follow/Followers';
 import FollowersEmpty from '@/components/profile/follow/FollowersEmpty';
-import Following from '@/components/profile/follow/Following';
+import Following from '@/features/profile/follow/Following';
 import { Buttons } from '@/components/profile/isOwnerId/Buttons';
-import StoryHighlight from '@/components/profile/story/StoryHighlight';
 import { GetUserTogetherQuery } from '@/generated';
-import Image from 'next/image';
 import { IconPostSavedTag } from './comment/IconPostSavedTag';
 
 export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <>
-      <div className="flex gap-20 ml-[72px]" data-testid="user-profile">
-        <Image src="/images/profilePic.png" alt="Profile Picture" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
+      <div className="py-3 flex px-4 gap-5 sm:gap-20 max-w-7xl justify-start md:justify-center" data-testid="user-profile">
+        <div
+          style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
+          className=" bg-cover w-[80px] h-[80px] md:w-[150px] md:h-[150px] object-cover rounded-full"
+        ></div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-3 items-center justify-center">
-            <p className="text-[20px] font-semibold">{data?.getUserTogether?.user?.userName}</p>
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 md:flex-row ">
+            <p className="text-[20px] font-medium">{data?.getUserTogether?.user?.userName}</p>
 
             <Buttons userId={userId as string} data={data} />
           </div>
 
-          <div>
-            <div className="flex gap-[32px]">
+          <div className="hidden md:block">
+            <div className="flex gap-11">
               <div className="flex gap-1">
                 <p className="text-base font-semibold">{data?.getUserTogether?.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>
@@ -61,15 +62,14 @@ export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; user
               )}
             </div>
           </div>
-
-          <div>
-            <p className="text-base font-semibold">{data?.getUserTogether?.user?.fullName}</p>
-            <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether?.user?.bio}</p>
-            {data?.getUserTogether?.user?.email && <a className="text-sm font-medium text-[#2563EB]">{data.getUserTogether.user.email}</a>}
+          <div className="md:block hidden">
+            <div className="flex flex-col ">
+              <p className="text-base font-semibold">{data?.getUserTogether?.user?.fullName}</p>
+              <p className="text-xs font-medium text-[#71717A]">{data?.getUserTogether?.user?.bio}</p>
+            </div>
           </div>
         </div>
       </div>
-      <StoryHighlight userId={userId as string} />
       <IconPostSavedTag userId={userId as string} />
     </>
   );

@@ -13,9 +13,10 @@ const Header = () => {
   const [orderLength, setOrderLength] = useState<number>(0);
 
   useEffect(() => {
-    const totalQuantity = orders.reduce((total, order) => total + order.quantity, 0);
     setOrderLength(totalQuantity);
   }, [orders]);
+
+  const totalQuantity = orders.reduce((total, order) => total + order.quantity, 0);
 
   return (
     <div className="flex justify-between border-b bg-white border-[#ECEDF0] px-4 py-3 container fixed z-20">
@@ -25,7 +26,7 @@ const Header = () => {
       <div className="flex items-center">
         <BasketFood orderLength={orderLength} />
         <NotificationSection />
-        <Sidemenu />
+        <Sidemenu data-testid="sidemenu" />
       </div>
     </div>
   );
