@@ -8,7 +8,7 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models/concert.model.ts', () => 
       .mockResolvedValueOnce({
         _id: 1,
         concertName: 'mm',
-        concertPlan: 'dv',
+        concertPlan: 'dvc',
         artistName: ['dfsvsdv'],
         concertDay: 436,
         concertTime: 'fdg',
@@ -32,7 +32,7 @@ describe('edit concert', () => {
         input: {
           id: '1',
           concertName: 'mm',
-          concertPlan: 'dv',
+          concertPlan: 'dvc',
           artists: ['dfsvsdv'],
           concertDay: '436',
           concertTime: 'fdg',
@@ -48,7 +48,7 @@ describe('edit concert', () => {
     expect(result).toEqual({
       _id: 1,
       concertName: 'mm',
-      concertPlan: 'dv',
+      concertPlan: 'dvc',
       artistName: ['dfsvsdv'],
       concertDay: 436,
       concertTime: 'fdg',
