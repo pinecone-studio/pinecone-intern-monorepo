@@ -33,7 +33,12 @@ const HomeSuggestionCard = () => {
                   <p className="text-sm text-gray-500">{user.fullName}</p>
                 </div>
               </div>
-              <FriendshipStatus requestedStyle="text-[11px] font-bold" preview={user} followStyle="text-[11px] font-bold text-[#0095F6]" followingStyle="text-[11px] font-bold text-black" />
+              <FriendshipStatus
+                requestedStyle="text-[11px] font-bold"
+                preview={user}
+                followStyle="text-[11px] font-bold text-[#0095F6] hover:text-[#1E3A8A]"
+                followingStyle="text-[11px] font-bold text-black"
+              />
             </li>
           );
         })}
