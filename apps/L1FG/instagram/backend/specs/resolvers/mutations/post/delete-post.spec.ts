@@ -1,4 +1,5 @@
-import { PostModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
+import { CommentLikeModel, NotificationModel, PostLikeModal, PostModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
+import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { deletePost } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
 // eslint-disable-next-line no-unused-vars
 import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
@@ -6,9 +7,9 @@ import { UnauthenticatedError } from 'apps/L1FG/instagram/backend/src/utils/erro
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
 jest.mock('apps/L1FG/instagram/backend/src/models');
-
+jest.mock('apps/L1FG/instagram/backend/src/models/comment.model');
 describe('should render', () => {
-  it('delete follow', async () => {
+  it('SHould throw authentication error', async () => {
     if (!deletePost) {
       return;
     }
@@ -22,17 +23,31 @@ describe('should render', () => {
       return;
     }
     (authenticate as jest.Mock) = jest.fn();
-    (PostModel.findOneAndDelete as jest.Mock).mockResolvedValueOnce(null);
+    (PostModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce(null);
     await expect(deletePost({}, { postId: '1' }, { userId: '2' }, {} as GraphQLResolveInfo)).rejects.toThrow('Server error');
   });
+
   it('Should successfully return', async () => {
     if (!deletePost) {
       return;
     }
     (authenticate as jest.Mock) = jest.fn();
-    (PostModel.findOneAndDelete as jest.Mock).mockResolvedValueOnce({});
+    (PostModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce({
+      _id: '1234',
+    });
     (UserModel.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce({});
+    (NotificationModel.deleteMany as jest.Mock).mockResolvedValue({});
+    (PostLikeModal.deleteMany as jest.Mock).mockResolvedValueOnce({});
+    (CommentModel.find as jest.Mock).mockResolvedValueOnce([
+      {
+        _id: 'qaasdf',
+      },
+    ]);
+    (CommentModel.deleteMany as jest.Mock).mockResolvedValueOnce({});
+    (CommentLikeModel.findOneAndDelete as jest.Mock).mockResolvedValue({});
     const result = await deletePost({}, { postId: '1' }, { userId: '2' }, {} as GraphQLResolveInfo);
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      _id: '1234',
+    });
   });
 });
