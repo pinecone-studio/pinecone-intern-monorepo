@@ -91,6 +91,7 @@ export const orderTypeDefs = gql`
     deleteOrder(id: String!): Order!
     orderUpdate(input: OrderUpdateInput!): UpdateEmail!
     createDeleteReq(input: DeleteReqInput!): DeleteReq!
+    deleteReqDone(orderReqId: String!): DeleteReq!
   }
   type Query {
     getOrder(userID: String!): [Order!]
