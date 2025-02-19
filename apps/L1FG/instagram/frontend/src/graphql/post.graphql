@@ -97,3 +97,13 @@ query GetlikePost($postId: ID!) {
     }
   }
 }
+mutation DeletePost($postId: ID!) {
+  deletePost(postId: $postId) {
+    _id
+    postImage
+    caption
+    userId
+    carouselMediaCount
+    createdAt
+  }
+}

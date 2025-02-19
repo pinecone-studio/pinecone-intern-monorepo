@@ -19,7 +19,7 @@ const Page = () => {
     <div>
       {data?.getPostById && (
         <div>
-          <EstateSinglePage data={data?.getPostById} />;
+          <EstateSinglePage data={data?.getPostById} />
         </div>
       )}
     </div>

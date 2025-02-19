@@ -15,7 +15,7 @@ const OrderHistory = () => {
       const user = localStorage.getItem('user');
       const parsedUser = user ? JSON.parse(user) : null;
       setUserId(parsedUser._id);
-    } catch (error) {
+    } catch {
       toast.error('Та захиалгын түүх хархын тулд нэвтэрч орно уу!');
       router.push('/login');
     }
@@ -28,7 +28,7 @@ const OrderHistory = () => {
   });
 
   return (
-    <div className="min-h-[500px] w-full">
+    <div className="min-h-[500px] w-full container mx-auto">
       <Header />
 
       <h1 className="text-center text-xl pt-20 text-black mb-6">Захиалгын түүх</h1>

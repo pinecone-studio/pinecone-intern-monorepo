@@ -1,0 +1,3 @@
+mutation updateOrderRead($orderId: ID!) {
+  updateOrderRead(orderId: $orderId)
+}
