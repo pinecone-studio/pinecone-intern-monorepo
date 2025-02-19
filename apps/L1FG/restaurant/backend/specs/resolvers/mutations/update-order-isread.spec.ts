@@ -28,7 +28,7 @@ describe('updateOrderStatus Resolver', () => {
 
     const result = await updateOrderRead({}, { orderId: mockOrder._id }, {}, {} as GraphQLResolveInfo);
 
-    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { isRead: false }, { new: true });
+    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { isRead: true }, { new: true });
 
     expect(result).toEqual(mockOrder);
   });
