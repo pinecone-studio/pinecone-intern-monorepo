@@ -28,7 +28,7 @@ const HomeSuggestionCard = () => {
                   <p>{user.fullName}</p>
                 </div>
               </div>
-              <FriendshipStatus preview={user} followStyle="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm" />
+              <FriendshipStatus requestedStyle="text-blue-500" preview={user} followStyle="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm" />
             </li>
           ))}
         </ul>

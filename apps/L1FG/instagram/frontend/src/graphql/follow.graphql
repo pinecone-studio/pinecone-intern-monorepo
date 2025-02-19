@@ -102,3 +102,10 @@ mutation DeleteFollower($followerId: ID!) {
     isRequested
   }
 }
+
+mutation DeleteRequest($targetId: String!) {
+  deleteRequest(targetId: $targetId) {
+    isFollowed
+    isRequested
+  }
+}
