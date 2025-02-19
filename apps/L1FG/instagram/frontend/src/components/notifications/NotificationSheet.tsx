@@ -1,6 +1,6 @@
-'use client';
-
+/* eslint-disable complexity */
 import { Days } from '@/features/notification/Days';
+import { NotificationResponseType, useGetNotificationQuery } from '@/generated';
 
 type Props = {
   isOpen: boolean;
@@ -8,6 +8,23 @@ type Props = {
 };
 
 export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
+  const { data, loading } = useGetNotificationQuery({
+    pollInterval: 500,
+    fetchPolicy: 'cache-and-network',
+  });
+
+  // useEffect(() => {
+  //   if (previousData && data) {
+  //     const prevCount = previousData?.getNotification?.today?.postLike?.length ?? 0;
+  //     const newCount = data?.getNotification?.today?.postLike?.length ?? 0;
+
+  //     if (newCount > prevCount) {
+  //       toast.success('Шинэ like ирлээ!');
+  //       setNotification(true);
+  //     }
+  //   }
+  // }, [data, previousData]);
+
   return (
     <>
       <div
@@ -16,11 +33,11 @@ export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
         }`}
         data-testid="notification-sheet"
       >
-        <div className="px-4 py-3">
+        <div className="px-4 py-3 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Notifications</h1>
         </div>
         <div className="overflow-y-auto h-[calc(100vh-60px)]">
-          <Days />
+          <Days data={data?.getNotification as NotificationResponseType} loading={loading} />
         </div>
       </div>
 
