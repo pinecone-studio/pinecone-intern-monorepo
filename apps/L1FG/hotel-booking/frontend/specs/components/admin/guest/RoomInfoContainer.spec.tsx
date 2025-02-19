@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { GuestInfoRight } from '@/components/admin/guest/GuestInfoRight';
+import { RoomInfoContainer } from '@/components/admin/guest/RoomInfoContainer';
 
 describe('CheckoutDialog', () => {
   it('renders CheckoutDialog successfully', () => {
-    render(<GuestInfoRight />);
+    render(<RoomInfoContainer />);
   });
 });
