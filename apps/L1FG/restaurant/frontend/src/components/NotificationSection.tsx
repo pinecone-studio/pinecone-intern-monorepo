@@ -5,8 +5,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useGetOrdersForUserQuery } from '@/generated';
-import { Card, CardContent } from '@/components/ui/card';
 import { Bell, BellRing } from 'lucide-react';
+import { useOrder } from './providers';
 
 const statusMessages = {
   Pending: 'Таны захиалсан хоол баталгаажлаа.',
@@ -30,10 +30,9 @@ interface OrderType {
 }
 
 const NotificationSection = () => {
-  // const updateOrderRead = useUpdateOrderReadMutation();
   const [notifs, setNotifs] = useState<OrderType[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-
+  const { markOrderAsRead } = useOrder();
   useEffect(() => {
     try {
       const user = localStorage.getItem('user');
@@ -57,21 +56,13 @@ const NotificationSection = () => {
     }
   }, [data]);
 
-  // const markAsRead = (orderId: string) => {
-  //   //  updateOrderRead({ variables: { orderId } }).then((response) => {
-  //   //   if (response.data?.updateOrderRead) {
-  //   //     setNotifs((prevNotifs) => prevNotifs.map((notif) => (notif._id === orderId ? { ...notif, isRead: true } : notif)));
-  //   //   }
-  //   // });
-  // };
-
   const unreadOrders = notifs.filter((notif) => !notif.isRead);
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="relative" aria-label="Мэдэгдлүүд" data-testid="notification-button">
-          <Bell width={16} className="text-gray-700 hover:text-black transition" />
+          <Bell width={16} className="text-gray-700 hover:text-black transition" data-testid="openNotification" />
           {unreadOrders.length > 0 && (
             <span className="absolute top-0 left-6 bg-red-500 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center" data-testid="unread-count">
               {unreadOrders.length}
@@ -88,13 +79,13 @@ const NotificationSection = () => {
 
         <div className="flex flex-col space-y-3 px-2" data-testid="notification-list">
           {notifs.map((notif, index) => (
-            <Card
+            <div
               key={notif._id}
-              className="w-full cursor-pointer"
-              //  onClick={() => markAsRead(notif._id)}
-              data-testid={`${notif._id}`}
+              className={`w-full cursor-pointer border rounded-xl shadow-sm ${!notif.isRead ? 'bg-gray-50 rounded-xl border-gray-400' : ''} `}
+              onClick={() => markOrderAsRead(notif._id)}
+              data-testid={`order${index}`}
             >
-              <CardContent className="flex justify-between items-center p-4 h-fit" data-testid={`order-card-${notif._id}`}>
+              <div className={`flex justify-between items-center p-4 h-fit `} data-testid={`order-card-${notif._id}`}>
                 <div className="flex gap-2 h-full">
                   {!notif.isRead ? (
                     <BellRing className="w-9 h-9 text-[#09090B] rounded-full bg-[#E4E4E7] p-[10px]" data-testid={`notification-icon-ring-${notif._id}`} />
@@ -104,7 +95,7 @@ const NotificationSection = () => {
 
                   <div className="flex flex-col gap-2 h-full w-[218px]">
                     <div className="text-xs">
-                      <span className="font-bold text-sm">#{notifs.length - index}</span>
+                      <span className="font-bold text-sm">#{notifs.length - index} </span>
                       <span className="text-[#3F4145] text-sm font-normal">{statusMessages[notif.status]}</span>
                     </div>
                     <div className="flex justify-between items-center gap-4">
@@ -126,8 +117,8 @@ const NotificationSection = () => {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </SheetContent>
