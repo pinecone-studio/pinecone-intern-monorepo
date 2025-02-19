@@ -54,7 +54,9 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
             price: value.standingAreaPrice,
             quantity: value.standingAreaQuantity,
           },
+
           orderStatus: 'DONE',
+
         },
       },
     });
