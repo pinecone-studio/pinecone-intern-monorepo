@@ -1,7 +1,16 @@
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
+import { useNightsCount } from '@/features/user/main/useNightsCount';
 import { ChevronRight } from 'lucide-react';
 
-export const PriceDetail = () => {
+interface PriceDetailProps {
+  price: number;
+}
+
+export const PriceDetail = ({ price }: PriceDetailProps) => {
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {}).format(price);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -16,15 +25,15 @@ export const PriceDetail = () => {
         <div className="flex flex-col space-x-2">
           <div className=" flex justify-between">
             <div className="w-[130px] flex flex-col gap-1">
-              <p className="text-sm font-normal not-italic font-Inter text-[#18181B]">2 night</p>
-              <p className="text-sm font-normal not-italic font-Inter text-[#71717A]">₮ 75,000 per night</p>
+              <p className="text-sm font-normal not-italic font-Inter text-[#18181B]">{useNightsCount()} night</p>
+              <p className="text-sm font-normal not-italic font-Inter text-[#71717A]">₮ {formatPrice(price)} per night</p>
             </div>
-            <p className="text-sm font-medium not-italic font-Inter text-[#18181B]">₮ 150,000</p>
+            <p className="text-sm font-medium not-italic font-Inter text-[#18181B]">₮ {formatPrice(price * useNightsCount())}</p>
           </div>
           <div className="h-[33px] mb-6  border-b border-b-[#E4E4E7]"></div>
           <div className="flex justify-between">
             <p className="text-sm font-medium not-italic font-Inter">Total price</p>
-            <p className="text-xl font-medium not-italic font-Inter">₮ 300,000</p>
+            <p className="text-xl font-medium not-italic font-Inter">₮ {formatPrice(price * useNightsCount())}</p>
           </div>
         </div>
         <DialogFooter className="sm:justify-start">

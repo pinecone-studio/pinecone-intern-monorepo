@@ -106,7 +106,7 @@ export const RoomInformationCard = () => {
                   <p>Price per night</p>
                 </div>
                 <div className="w-full flex items-center justify-between">
-                  <PriceDetail />
+                  <PriceDetail price={0} />
                 </div>
               </div>
               <div className="flex flex-col gap-2 items-center justify-end">

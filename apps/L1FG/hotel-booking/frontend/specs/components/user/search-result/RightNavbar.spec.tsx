@@ -1,6 +1,10 @@
 import { RightNavbar } from '@/components/user/search-result/RightNavbar';
 import { render, screen } from '@testing-library/react';
 
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
+}));
+
 const mockData = [
   {
     id: '1',
