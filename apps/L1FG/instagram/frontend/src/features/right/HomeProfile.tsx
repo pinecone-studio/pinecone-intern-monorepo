@@ -1,15 +1,19 @@
 'use client';
 import { useAuth } from '@/components/providers/AuthProvider';
 import HomeSuggestionCard from '@/features/follower-suggestion/HomeSuggestionCard';
+import { useApolloClient } from '@apollo/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const HomePageProfile = () => {
-  const { user } = useAuth();
+  const client = useApolloClient();
+  const { user, logout } = useAuth();
+  const router = useRouter();
   return (
     <div data-testid="user-bar" className="w-[326px] flex flex-col gap-4 pt-10">
       <div className="flex items-center justify-between w-full ">
-        <div className="flex items-center gap-2">
+        <button className="flex items-center gap-2">
           <Link href="/mystories">
             <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[3px] mt-2">
               <div className="rounded-full bg-white w-12 h-12 flex items-center justify-center">
@@ -20,14 +24,16 @@ const HomePageProfile = () => {
             </div>
           </Link>
 
-          <div>
-            <h1 className="text-sm font-bold ">{user?.userName}</h1>
-            <p className="text-[12px] text-[#8E8E8E] ">{user?.fullName}</p>
+          <div onClick={() => router.push(`${user?._id}`)}>
+            <h1 className="text-base font-bold text-gray-900">{user?.userName}</h1>
+            <p className="text-sm text-gray-500">{user?.fullName}</p>
           </div>
-        </div>
+        </button>
 
         <div>
-          <button className="text-[11px] font-bold text-[#0095F6]">Log out</button>
+          <button data-testid="logout" onClick={() => logout(client)} className="text-[11px] font-bold text-[#0095F6]">
+            Log out
+          </button>
         </div>
       </div>
       <HomeSuggestionCard />

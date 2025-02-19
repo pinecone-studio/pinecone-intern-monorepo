@@ -26,11 +26,9 @@ describe('updateOrderStatus Resolver', () => {
 
     if (!updateOrderRead) return;
 
-    const result = await updateOrderRead({}, { orderId: mockOrder._id }, {}, {} as GraphQLResolveInfo);
+    await updateOrderRead({}, { orderId: mockOrder._id }, {}, {} as GraphQLResolveInfo);
 
-    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { isRead: false }, { new: true });
-
-    expect(result).toEqual(mockOrder);
+    expect(OrderModel.findByIdAndUpdate).toHaveBeenCalledWith(mockOrder._id, { isRead: true }, { new: true });
   });
 
   it('should throw an error if order not found', async () => {

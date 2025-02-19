@@ -95,7 +95,7 @@ export const FriendshipStatusUser = ({
     return <Remove datas={datas as GetUserTogetherQuery} removeStyle={removeStyle} onclick={handleRemove} />;
   } else {
     if (status.outgoingRequest) {
-      return <Requested requestedStyle={requestedStyle} />;
+      return <Requested setStatus={setStatus} targetId={targetId} requestedStyle={requestedStyle as string} />;
     } else {
       return <Follow followStyle={followStyle} handleClickLike={handleClick} />;
     }

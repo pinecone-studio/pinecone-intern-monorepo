@@ -28,7 +28,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
       <HoverCardContent className="w-[350px] h-[340px] p-0  ml-[300px] rounded-lg ">
         {loading && <ProfilePreviewSkeleton />}
         {data && (
-          <div className="flex flex-col  ">
+          <div className="flex flex-col">
             <div className="flex gap-4 h-fit w-fit justify-center items-center p-3">
               <AvatarLink post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
