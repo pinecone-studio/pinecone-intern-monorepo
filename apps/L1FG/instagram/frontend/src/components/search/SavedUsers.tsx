@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 import { SearchSkeleton } from './SkeletonSearch';
 
 // eslint-disable-next-line complexity
-export const SavedUsers = ({ searchOpen }: { searchOpen: boolean }) => {
+export const SavedUsers = ({ searchOpen, setSearchOpen, onclcik }: { searchOpen: boolean; setSearchOpen: (_searchOpen: boolean) => void; onclcik?: () => void }) => {
   const [deleteUser] = useDeleteSearchUserMutation();
   const { data, loading, refetch } = useGetSearchedUserQuery();
   const router = useRouter();
@@ -18,6 +18,11 @@ export const SavedUsers = ({ searchOpen }: { searchOpen: boolean }) => {
       variables: { searchedUserId },
     });
     refetch();
+  };
+
+  const handleCloseSheet = (_id: string) => {
+    router.push(`/${_id}`);
+    setSearchOpen(false);
   };
 
   if (loading) {
@@ -35,12 +40,14 @@ export const SavedUsers = ({ searchOpen }: { searchOpen: boolean }) => {
       <div className="border mt-8"></div>
       <div className="flex justify-between p-4 items-center ">
         <p className="font-bold">Recent</p>
-        <button className="text-[#2563EB] text-xs">Clear All</button>
+        <button onClick={onclcik} className="text-[#2563EB] text-xs">
+          Clear All
+        </button>
       </div>
       <div className="mt-4">
         {reversedUsers.map((user) => (
           <div className="flex hover:bg-accent" key={user?._id}>
-            <div onClick={() => router.push(`/${user?._id}`)} data-testid="saved-users" className="px-4 py-2 flex gap-2 mr-auto w-[350px]">
+            <div onClick={() => handleCloseSheet(user?._id as string)} data-testid="saved-users" className="px-4 py-2 flex gap-2 mr-auto w-[350px]">
               <div style={{ backgroundImage: `url(${user?.profileImage})` }} className="w-[44px] h-[44px] bg-gray-300 rounded-full bg-cover bg-center"></div>
               <div>
                 <h3 className="font-bold">{user?.userName}</h3>

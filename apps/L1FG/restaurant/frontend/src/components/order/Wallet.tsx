@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import Header from '../common/Header';

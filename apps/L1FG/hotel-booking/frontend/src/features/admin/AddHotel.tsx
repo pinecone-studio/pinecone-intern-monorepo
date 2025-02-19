@@ -17,7 +17,7 @@ export const AddHotelPage = () => {
   const [editHotelAmenities] = useEditHotelAmenitiesMutation();
   const [editHotelLocation] = useEditHotelLocationMutation();
   const [editHotelImages] = useEditHotelImagesMutation();
-  const { hotelData, setters } = useHotelState();
+  const { hotelGeneralInfo, setterGeneralInfo } = useHotelState();
   const { hotelAmenities, setterAmenities } = useHotelAmenities();
   const { hotelLocation, setterLocation } = useHotelLocation();
   const { hotelImages, setterImages } = useHotelImages();
@@ -34,7 +34,7 @@ export const AddHotelPage = () => {
       const variables = {
         input: {
           id: hotelId,
-          images,
+          images: images,
         },
       };
 
@@ -98,7 +98,7 @@ export const AddHotelPage = () => {
       return;
     }
 
-    const { name, description, starRating, rating, phoneNumber } = hotelData;
+    const { name, description, starRating, rating, phoneNumber } = hotelGeneralInfo;
 
     try {
       const variables = {
@@ -117,6 +117,7 @@ export const AddHotelPage = () => {
       console.error('Error creating hotel:', error);
     }
   };
+
   return (
     <div className="flex">
       <Sidebar hotels="active" guests="" />
@@ -127,17 +128,17 @@ export const AddHotelPage = () => {
             <div className="flex items-center gap-4">
               <Link
                 href="/admin"
-                className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200"
+                className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#FAFAFA] duration-200"
               >
                 <LeftArrow />
               </Link>
-              <p className="font-Inter text-[#020617] text-lg font-semibold">{hotelData?.name || 'Hotel name'}</p>
+              <p className="font-Inter text-[#020617] text-lg font-semibold">{hotelGeneralInfo?.name || 'Hotel name'}</p>
             </div>
             <div className="flex gap-4">
               <div className="max-w-[784px] w-full flex flex-col gap-4">
                 <UpcomingBooking />
                 <RoomTypes />
-                <GeneralInfo {...hotelData} {...setters} handleEditHotelGeneralInfo={handleEditHotelGeneralInfo} />
+                <GeneralInfo {...hotelGeneralInfo} {...setterGeneralInfo} handleEditHotelGeneralInfo={handleEditHotelGeneralInfo} />
                 <Amenities {...hotelAmenities} {...setterAmenities} handleEditHotelAmenities={handleEditHotelAmenities} />
                 <AboutThisProperty />
                 <Policies />

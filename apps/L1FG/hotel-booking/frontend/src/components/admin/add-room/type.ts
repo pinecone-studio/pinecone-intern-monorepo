@@ -15,3 +15,11 @@ export type GeneralInfoDialogProps = {
   setRoomNumber: (_roomNumber: string) => void;
   handleEditGeneralInfo: () => Promise<void>;
 };
+
+export type RoomServicesProps = {
+  key: string;
+  value: string;
+  setKey: (_key: string) => void;
+  setValue: (_value: string) => void;
+  handleEditRoomServices: () => Promise<void>;
+};

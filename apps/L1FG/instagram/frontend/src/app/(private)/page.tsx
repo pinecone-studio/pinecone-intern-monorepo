@@ -1,6 +1,6 @@
 import MainPagePost from '@/features/home-post/MainPagePost';
+import HomePageProfile from '@/features/right/HomeProfile';
 import MainPageStory from '@/features/story/MainPageStory';
-import HomePageProfile from '@/components/home/right/HomeProfile';
 import { authenticate } from '@/features/utils/authenticate';
 
 const HomePage = async () => {

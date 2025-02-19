@@ -1,7 +1,7 @@
 import { useGetFollowingSuggestionQuery } from '@/generated';
 import Image from 'next/image';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
-import { ProfileHover } from '@/components/home-post/ProfileHover';
+import { ProfileHover } from '@/features/home-post/ProfileHover';
 
 const FooterLinks = ['About', 'Help', 'Press', 'API', 'Jobs', 'Privacy', 'Terms', 'Locations', 'Language', 'Meta Verified'];
 
@@ -28,7 +28,7 @@ const HomeSuggestionCard = () => {
                   <p>{user.fullName}</p>
                 </div>
               </div>
-              <FriendshipStatus preview={user} followStyle="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm" />
+              <FriendshipStatus requestedStyle="text-blue-500" preview={user} followStyle="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm" />
             </li>
           ))}
         </ul>
