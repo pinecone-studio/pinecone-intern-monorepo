@@ -37,3 +37,17 @@ mutation UpdateFood($input: EditFoodInput!) {
     createdAt
   }
 }
+
+mutation DeleteCategory($input: DeleteFoodCateType!) {
+  deleteFoodCategory(input: $input) {
+    message
+    status
+  }
+}
+
+mutation UpdateFoodCategory($input: UpdateFoodType!) {
+  updateFoodCategory(input: $input) {
+    categoryId
+    foodId
+  }
+}

@@ -1,7 +1,8 @@
+import AdminMenuPageComp from '@/components/admin-page-comp/AdminMenuPageComp';
 import React from 'react';
 
 const AdminMenuPage = () => {
-  return <div>AdminMenuPage</div>;
+  return <AdminMenuPageComp />;
 };
 
 export default AdminMenuPage;
