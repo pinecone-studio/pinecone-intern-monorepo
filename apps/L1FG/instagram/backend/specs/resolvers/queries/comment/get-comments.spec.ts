@@ -119,6 +119,33 @@ describe('Get small posts v1', () => {
     expect(mockQuery.sort).toHaveBeenCalledWith({ _id: -1 });
     expect(mockFind).toHaveBeenCalledTimes(1);
   });
+  it('Should return successfully when edges are empty', async () => {
+    if (!getComments) {
+      return;
+    }
+    const mockAuthenticate = jest.fn().mockResolvedValueOnce(null);
+    const mockQuery = {
+      sort: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue([]),
+    };
+    const mockFind = jest.fn().mockReturnValue(mockQuery);
+    (CommentModel.find as jest.Mock) = mockFind;
+    (authenticate as jest.Mock) = mockAuthenticate;
+    const result = await getComments({}, { input: inputAfterTrue }, { userId: '13' }, {} as GraphQLResolveInfo);
+    expect(result).toEqual({
+      edges: [],
+      pageInfo: {
+        startCursor: '',
+        endCursor: '',
+        hasNextPage: false,
+      },
+    });
+    expect(mockQuery.limit).toHaveBeenCalledTimes(1);
+    expect(mockQuery.limit).toHaveBeenCalledWith(2);
+    expect(mockQuery.sort).toHaveBeenCalledTimes(1);
+    expect(mockQuery.sort).toHaveBeenCalledWith({ _id: -1 });
+    expect(mockFind).toHaveBeenCalledTimes(1);
+  });
   it('SHould throw an error inside catch', async () => {
     if (!getComments) {
       return;
