@@ -35,7 +35,7 @@ const CreateAccountPassword = () => {
   };
 
   useEffect(() => {
-    const localStorageValue = localStorage.getItem('email') || '';
+    const localStorageValue = localStorage.getItem('email')!;
     setViewEmail(localStorageValue);
   }, []);
 
