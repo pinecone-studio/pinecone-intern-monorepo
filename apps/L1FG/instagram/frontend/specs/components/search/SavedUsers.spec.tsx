@@ -18,6 +18,7 @@ describe('SavedUsers Component', () => {
   const mockDeleteUser = jest.fn();
   const mockRefetch = jest.fn();
   const mockPush = jest.fn();
+  const mockOpen = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -51,7 +52,7 @@ describe('SavedUsers Component', () => {
       refetch: mockRefetch,
     });
 
-    render(<SavedUsers searchOpen={true} />);
+    render(<SavedUsers setSearchOpen={mockOpen} searchOpen={true} />);
     expect(await screen.findByTestId('search-skeleton')).toBeInTheDocument();
   });
 
@@ -62,13 +63,13 @@ describe('SavedUsers Component', () => {
       refetch: mockRefetch,
     });
 
-    render(<SavedUsers searchOpen={true} />);
+    render(<SavedUsers setSearchOpen={mockOpen} searchOpen={true} />);
 
     expect(screen.getByText('No recent searches')).toBeInTheDocument();
   });
 
   it('calls deleteUser and refetch when delete button is clicked', async () => {
-    render(<SavedUsers searchOpen={true} />);
+    render(<SavedUsers setSearchOpen={mockOpen} searchOpen={true} />);
     const deleteButton = screen.getByTestId('delete-saved-user');
     fireEvent.click(deleteButton);
 
@@ -77,7 +78,7 @@ describe('SavedUsers Component', () => {
   });
 
   it('navigates to user profile when user is clicked', () => {
-    render(<SavedUsers searchOpen={true} />);
+    render(<SavedUsers setSearchOpen={mockOpen} searchOpen={true} />);
     const userProfile = screen.getByText('testuser');
     fireEvent.click(userProfile);
 
