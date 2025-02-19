@@ -35,8 +35,6 @@ const TicketSubscriber = ({ handleChange, handleNext, value, ticketID }: SubBuyP
     handleChange({ target: { name: 'phoneNumber', value: data.phoneNumber } } as unknown as React.ChangeEvent<HTMLInputElement>);
     handleChange({ target: { name: 'email', value: data.email } } as unknown as React.ChangeEvent<HTMLInputElement>);
     handleNext();
-    handleChange({ target: { name: 'phoneNumber', value: '' } } as unknown as React.ChangeEvent<HTMLInputElement>);
-    handleChange({ target: { name: 'email', value: '' } } as unknown as React.ChangeEvent<HTMLInputElement>);
   }
   return (
     <Form {...form}>

@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { UserPassword } from '../../../components/userProfile/Password';
-import { OrderHistory } from '../../../components/userProfile/OrderHisto';
+import { OrderHistory } from './OrderHisto';
 import { useOrderUpdateMutation } from '@/generated';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
