@@ -3,7 +3,7 @@ import PaymentTicket from '@/components/ticketConfirm/Payment';
 import { CreateOrderDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { act, render, fireEvent } from '@testing-library/react';
-
+/* eslint-disable */
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
@@ -13,6 +13,23 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/components/providers/AlertProvider', () => ({
   useAlert: jest.fn(),
 }));
+
+const localStorageMock = (() => {
+  let store: { [key: string]: string } = {};
+  return {
+    getItem: jest.fn((key: string) => store[key] || null),
+    setItem: jest.fn((key: string, value: string) => {
+      store[key] = value.toString();
+    }),
+    clear: jest.fn(() => {
+      store = {};
+    }),
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
 
 const mockCreateOrder: MockedResponse = {
   request: {
@@ -39,6 +56,7 @@ const mockCreateOrder: MockedResponse = {
           price: 50,
           quantity: 1,
         },
+        orderStatus: 'PENDING',
       },
     },
   },
@@ -93,7 +111,7 @@ describe('PaymentTicket', () => {
   };
 
   beforeEach(() => {
-    useAlert.mockReturnValue({ showAlert: mockShowAlert });
+    (useAlert as jest.Mock).mockReturnValue({ showAlert: mockShowAlert });
   });
 
   afterEach(() => {
@@ -101,7 +119,7 @@ describe('PaymentTicket', () => {
     localStorage.clear();
   });
 
-  it(' calls createOrder when the form is submitted', async () => {
+  it('calls createOrder when the form is submitted', async () => {
     localStorage.setItem('user', JSON.stringify({ _id: '678ddd76c9cdc57819820762' }));
     const { getByTestId } = render(
       <MockedProvider mocks={[mockCreateOrder]} addTypename={false}>
@@ -111,6 +129,7 @@ describe('PaymentTicket', () => {
     await act(async () => {
       fireEvent.click(getByTestId('payment-section-button'));
     });
+    expect(mockShowAlert).not.toHaveBeenCalledWith('error', 'Захиалга үүсэхэд алдаа гарлаа');
   });
 
   it('shows a warning alert if payType is empty', async () => {
@@ -126,9 +145,10 @@ describe('PaymentTicket', () => {
     await act(async () => {
       fireEvent.click(getByTestId('payment-section-button'));
     });
+    expect(mockShowAlert).toHaveBeenCalledWith('warning', 'Төлбөрийн нөхцөлөө сонгоно уу');
   });
 
-  it('calls createOrder when the  onError', async () => {
+  it('calls createOrder when the onError', async () => {
     localStorage.setItem('user', JSON.stringify({ _id: '678ddd76c9cdc57819820762' }));
     const onErrorValue = { ...mockValue, email: '', totalPrice: 0 };
 
@@ -141,12 +161,15 @@ describe('PaymentTicket', () => {
     await act(async () => {
       fireEvent.click(getByTestId('payment-section-button'));
     });
+    expect(mockShowAlert).toHaveBeenCalledWith('error', 'Захиалга үүсэхэд алдаа гарлаа');
   });
-  it('localStorage getItem feild', async () => {
+
+  it('localStorage getItem field', async () => {
     render(
       <MockedProvider mocks={[mockCreateOrder]} addTypename={false}>
         <PaymentTicket text="" handleNext={jest.fn()} handleChange={mockHandleChange} handleBack={mockHandleBack} value={mockValue} ticketID="678ddd76c9cdc57819820767" />
       </MockedProvider>
     );
+    expect(localStorage.getItem).toHaveBeenCalledWith('user');
   });
 });
