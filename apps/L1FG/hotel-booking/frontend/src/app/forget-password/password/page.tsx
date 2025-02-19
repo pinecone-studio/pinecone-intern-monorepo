@@ -35,7 +35,7 @@ const ForgetPasswordPassword = () => {
   };
 
   useEffect(() => {
-    setViewEmail(localStorage.getItem('forgetPasswordEmail') || '');
+    setViewEmail(localStorage.getItem('forgetPasswordEmail')!);
   }, []);
 
   if (loading) return <Loading />;
