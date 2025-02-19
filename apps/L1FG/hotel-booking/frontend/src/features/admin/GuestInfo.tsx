@@ -1,12 +1,46 @@
+'use client';
+
 import { Footer } from '@/components/admin/main/Footer';
 import { Header } from '@/components/admin/main/Header';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { LeftArrow } from '@/components/admin/svg';
 import Link from 'next/link';
-import { GuestInfoRight } from '@/components/admin/guest/GuestInfoRight';
-import { GuestInfoLeft } from '@/components/admin/guest/GuestInfoLeft';
+import { useParams } from 'next/navigation';
+import { useEditBookingStatusMutation, useGetBookingByIdQuery } from '@/generated';
+import { GuestInfoContainer } from '@/components/admin/guest/GuestInfoContainer';
+import { RoomInfoContainer } from '@/components/admin/guest/RoomInfoContainer';
 
 export const GuestInfo = () => {
+  const params = useParams();
+  const bookingId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+
+  const { data, refetch } = useGetBookingByIdQuery({ variables: { getBookingByIdId: bookingId } });
+  const bookingData = data?.getBookingById;
+
+  const [editBookingStatus] = useEditBookingStatusMutation();
+
+  const handleEditBookingStatus = async (newStatus: string) => {
+    if (!bookingId) {
+      console.error('Booking ID is missing');
+      return;
+    }
+
+    try {
+      await editBookingStatus({
+        variables: {
+          input: {
+            id: bookingId,
+            status: newStatus,
+          },
+        },
+      });
+
+      refetch();
+    } catch (error) {
+      console.error('Error edit booking status:', error);
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar hotels="" guests="active" />
@@ -21,13 +55,13 @@ export const GuestInfo = () => {
               >
                 <LeftArrow />
               </Link>
-              <p className="font-Inter text-[#020617] text-lg font-semibold">Shagai Nyamdorj</p>
+              <p className="font-Inter text-[#020617] text-lg font-semibold">{bookingData?.cardName || '-/-'}</p>
             </div>
             <div className="flex gap-4">
               <div className="max-w-[744px] w-full">
-                <GuestInfoLeft />
+                <GuestInfoContainer data={bookingData} handleEditBookingStatus={(newStatus) => handleEditBookingStatus(newStatus)} />
               </div>
-              <GuestInfoRight />
+              <RoomInfoContainer />
             </div>
           </div>
         </div>

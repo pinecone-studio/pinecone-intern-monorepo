@@ -37,3 +37,43 @@ query getBookingsByHotelId($hotelId: ID!) {
     country
   }
 }
+
+query GetBookingById($getBookingByIdId: ID!) {
+  getBookingById(id: $getBookingByIdId) {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}
+
+mutation editBookingStatus($input: EditBookingStatusInput!) {
+  editBookingStatus(input: $input) {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}
