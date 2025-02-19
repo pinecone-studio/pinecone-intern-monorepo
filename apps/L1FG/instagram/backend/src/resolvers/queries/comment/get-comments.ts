@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import mongoose from 'mongoose';
 import { QueryResolvers } from '../../../generated';
 import { CommentModel } from '../../../models/comment.model';
