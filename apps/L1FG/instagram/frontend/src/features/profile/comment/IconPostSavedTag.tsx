@@ -38,7 +38,7 @@ export const IconPostSavedTag = ({ userId }: { userId: string }) => {
   const renderPosts = () => {
     if (loading) {
       return (
-        <div className="flex justify-center pt-5">
+        <div className="flex justify-center pt-12">
           <Loader className="animate-spin text-gray-500" size={36} />
         </div>
       );

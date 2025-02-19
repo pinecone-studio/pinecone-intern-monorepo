@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../generated';
+import { MutationResolvers, Response } from '../../generated';
 import { OrderModel } from '../../models';
 
 export const updateOrderRead: MutationResolvers['updateOrderRead'] = async (_, { orderId }) => {
@@ -8,5 +8,5 @@ export const updateOrderRead: MutationResolvers['updateOrderRead'] = async (_, {
     throw new Error('Order not found');
   }
 
-  return updatedOrder;
+  return Response.Success;
 };

@@ -1,7 +1,8 @@
 import { useGetFollowingSuggestionQuery } from '@/generated';
-import Image from 'next/image';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
 import { ProfileHover } from '@/features/home-post/ProfileHover';
+import { ProfileOrStory } from '@/components/home-post/ProfileOrStory';
+import { SuggestionProfile } from './SuggestionProfile';
 
 const FooterLinks = ['About', 'Help', 'Press', 'API', 'Jobs', 'Privacy', 'Terms', 'Locations', 'Language', 'Meta Verified'];
 
@@ -11,37 +12,46 @@ const HomeSuggestionCard = () => {
     return;
   }
   return (
-    <div>
-      <div className="flex justify-between text-sm gap-10">
-        <p className="text-base leading-5 font-medium text-gray-500">Suggested for you</p>
+    <div className="">
+      <div className="flex justify-between items-center text-sm mb-4">
+        <p className="text-base font-semibold text-gray-600">Suggested for you</p>
       </div>
-      <div className="mx-auto p-4 text-sm text-gray-500">
-        <ul className="space-y-4">
-          {data?.getFollowingSuggestion.map((user) => (
-            <li key={user._id} className="flex items-center justify-between">
+      <ul className="space-y-4">
+        {data?.getFollowingSuggestion.map((user) => {
+          const hasStoryToSee = user?.latestStoryTimestamp > user?.seenStoryTime;
+          const image = user?.profileImage;
+          return (
+            <li key={user._id} className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <ProfileHover searchingUserId={user?._id}>
-                  <Image width={500} height={500} src={user.profileImage} alt={user.userName} className="w-10 h-10 rounded-full" />
+                  <ProfileOrStory hasStory={hasStoryToSee} urlWhenHasStory={`/stories/${user?.userName}/${user?._id}`} urlWhenNoStory={`/${user?._id}`}>
+                    <SuggestionProfile hasStoryToSee={hasStoryToSee} image={image} />
+                  </ProfileOrStory>
                 </ProfileHover>
                 <div>
-                  <p className="font-medium text-black">{user.userName}</p>
-                  <p>{user.fullName}</p>
+                  <p className="font-bold text-base text-gray-900">{user.userName}</p>
+                  <p className="text-sm text-gray-500">{user.fullName}</p>
                 </div>
               </div>
-              <FriendshipStatus requestedStyle="text-blue-500" preview={user} followStyle="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm" />
+              <FriendshipStatus
+                requestedStyle="text-[11px] font-bold"
+                preview={user}
+                followStyle="text-[11px] font-bold text-[#0095F6] hover:text-[#1E3A8A]"
+                followingStyle="text-[11px] font-bold text-black"
+              />
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-6 text-xs text-gray-300 text-center border-t pt-4">
+        <ul className="flex flex-wrap justify-center gap-2">
+          {FooterLinks.map((link, index) => (
+            <li key={index} className="hover:underline cursor-pointer inline-block">
+              {link}
             </li>
           ))}
         </ul>
-        <div className="mt-10 text-xs leading-4 font-normal text-gray-500">
-          <ul className="flex flex-wrap gap-1 justify-start">
-            {FooterLinks.map((link, index) => (
-              <li key={index} className="hover:underline cursor-pointer">
-                {link} ·
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-xs leading-4 font-normal text-gray-500">© 2025 INSTAGRAM FROM META</p>
-        </div>
+        <p className="mt-2">© 2025 INSTAGRAM FROM META</p>
       </div>
     </div>
   );

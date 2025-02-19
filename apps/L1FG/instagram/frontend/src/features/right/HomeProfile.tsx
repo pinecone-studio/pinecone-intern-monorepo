@@ -25,8 +25,8 @@ const HomePageProfile = () => {
           </Link>
 
           <div onClick={() => router.push(`${user?._id}`)}>
-            <h1 className="text-sm font-bold ">{user?.userName}</h1>
-            <p className="text-[12px] text-[#8E8E8E] ">{user?.fullName}</p>
+            <h1 className="text-base font-bold text-gray-900">{user?.userName}</h1>
+            <p className="text-sm text-gray-500">{user?.fullName}</p>
           </div>
         </button>
 

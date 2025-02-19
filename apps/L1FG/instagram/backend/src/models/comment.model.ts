@@ -15,3 +15,10 @@ const commentSchema = new Schema(
 );
 
 export const CommentModel = models['Comment'] || model('Comment', commentSchema);
+/*
+1.like
+2.comment
+3.comment like
+4.notification
+
+*/

@@ -1,19 +1,25 @@
 import { Post } from '@/generated';
 
 export const EstatesSinglePageInformation = ({ data }: { data: Post }) => {
+  const formattedDate = new Date(data.propertyDetail.details?.completionDate).toLocaleString('mn-MN', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
   return (
     <div>
       <div>
         <div className="border-t pt-4">
           <div className=" text-gray-900 flex justify-between items-center">
-            <h3 className="text-[#71717A] text-sm">price</h3>
+            <h3 className="text-[#71717A] text-sm">Үнэ</h3>
             <h3 className="text-2xl ">{data.price}</h3>
           </div>
         </div>
         <div className="border-t pt-4">
           <div className=" text-gray-900 flex justify-between items-center">
             <h3 className="text-[#71717A] text-sm">Ашиглалтанд орсон он:</h3>
-            <h3>{data.propertyDetail.details?.completionDate}</h3>
+            <h3>{formattedDate}</h3>
           </div>
         </div>
         <div className="border-t pt-4">
