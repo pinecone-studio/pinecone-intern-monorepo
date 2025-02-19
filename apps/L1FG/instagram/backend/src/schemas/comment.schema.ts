@@ -44,5 +44,6 @@ export const CommentTypeDefs = gql`
   }
   type Mutation {
     createComment(input: CommentInput!): Comment!
+    deleteComment(commentId: ID!): Comment!
   }
 `;
