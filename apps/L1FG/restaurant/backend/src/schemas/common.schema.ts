@@ -48,6 +48,6 @@ export const typeDefs = gql`
     sampleMutation: String!
     makeOrder(input: InputType!): OrderType!
     updateOrderStatus(orderId: ID!, status: String!): OrderType!
-    updateOrderRead(orderId: ID!): OrderType!
+    updateOrderRead(orderId: ID!): Response!
   }
 `;
