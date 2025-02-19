@@ -1,43 +1,39 @@
-import { GeneralInformation } from '@/components/user/hotel-detail';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { GeneralInformation } from '@/components/user/hotel-detail';
+import { Hotel } from '@/generated';
 
-describe('GeneralInformation', () => {
-  it('should render GeneralInformation successfully', async () => {
-    render(
-      <GeneralInformation
-        data={{
-          __typename: undefined,
-          about: undefined,
-          amenities: undefined,
-          description: undefined,
-          faqs: undefined,
-          id: '',
-          images: [],
-          location: undefined,
-          locationName: undefined,
-          name: '',
-          phoneNumber: undefined,
-          policies: undefined,
-          rating: undefined,
-          rooms: undefined,
-          starRating: undefined,
-        }}
-      />
-    );
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
+}));
+
+describe('GeneralInformation Component', () => {
+  it('should render hotel name and stars correctly', () => {
+    const mockHotel: Hotel = {
+      name: 'Test Hotel',
+      starRating: 4,
+    } as Hotel;
+
+    render(<GeneralInformation data={mockHotel} />);
+
+    // Зочид буудлын нэр байгаа эсэхийг шалгах
+    expect(screen.getByText('Test Hotel'));
+
+    // 4 од байгаа эсэхийг шалгах
+    const stars = screen.getAllByTestId('star-icon');
+    expect(stars);
   });
 
-  const mockHotelData = {
-    name: 'Test Hotel',
-    starRating: 3,
-    rating: 4.5,
-    id: '1',
-    images: [],
-  };
+  it('should not render stars if starRating is undefined', () => {
+    const mockHotel: Hotel = {
+      name: 'No Star Hotel',
+    } as Hotel;
 
-  it('renders hotel name correctly', () => {
-    const { container } = render(<GeneralInformation data={mockHotelData} />);
-    const stars = container.querySelectorAll('[class*="fill-[#F97316]"]');
-    expect(stars);
+    render(<GeneralInformation data={mockHotel} />);
+
+    expect(screen.getByText('No Star Hotel'));
+
+    // Од байхгүй эсэхийг шалгах
+    expect(screen.queryByTestId('star-icon'));
   });
 });

@@ -2,6 +2,10 @@ import { HomePageCard } from '@/components/user/ui/cards';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
+}));
+
 describe('HomePageCard', () => {
   it('should render successfully with empty data', () => {
     render(
