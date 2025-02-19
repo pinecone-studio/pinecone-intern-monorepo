@@ -56,5 +56,6 @@ export const PostTypeDefs = gql`
   }
   type Mutation {
     createPost(input: PostInput!): Post!
+    deletePost(postId: ID!): Post!
   }
 `;

@@ -13,3 +13,36 @@ mutation deleteCommentLike($input: CommentLikeInput!) {
     commentId
   }
 }
+query GetCommentLikedPeople($commentId: ID!) {
+  getCommentLikedPeople(commentId: $commentId) {
+    _id
+    userId
+    commentId
+    user {
+      _id
+      userName
+      fullName
+      bio
+      profileImage
+      hasStory
+      gender
+      isPrivate
+      email
+      followingCount
+      followerCount
+      postCount
+      latestStoryTimestamp
+      seenStoryTime
+      savedUsers
+      createdAt
+      friendshipStatus {
+        followedBy
+        following
+        incomingRequest
+        outgoingRequest
+      }
+      mutualFollowersCount
+      mutualFollowers
+    }
+  }
+}

@@ -56,7 +56,7 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
         <Bookmark data-testid="bookmark-icon" className="cursor-pointer" />
       </div>
       <div>
-        <LikeModal userId={post.node.user._id}>
+        <LikeModal postId={post.node._id}>
           <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
         </LikeModal>
       </div>

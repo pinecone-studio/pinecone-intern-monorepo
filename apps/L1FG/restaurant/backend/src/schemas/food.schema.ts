@@ -51,6 +51,10 @@ export const foodTypeDefs = gql`
     message: String!
   }
 
+  input DeleteFoodCateType {
+    id: ID!
+  }
+
   type Query {
     sampleQuery: String!
     getFoods: [FoodType!]!
@@ -62,5 +66,6 @@ export const foodTypeDefs = gql`
     createFood(input: FoodInputType!): FoodType!
     updateFood(input: EditFoodInput!): FoodType!
     deleteFood(foodId: ID!): DeleteResponse!
+    deleteFoodCategory(input: DeleteFoodCateType!): DeleteResponse!
   }
 `;
