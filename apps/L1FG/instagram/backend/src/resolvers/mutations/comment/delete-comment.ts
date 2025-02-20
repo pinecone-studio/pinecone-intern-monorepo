@@ -14,7 +14,7 @@ export const deleteComment: MutationResolvers['deleteComment'] = async (_, { com
     });
 
     if (!deleteComment) {
-      throw new NotFoundError('Unfollow failed: No such follow relationship found.');
+      throw new NotFoundError('comment delete failed.');
     }
 
     await PostModel.findByIdAndUpdate(userId, { $inc: { commentCount: -1 } });
