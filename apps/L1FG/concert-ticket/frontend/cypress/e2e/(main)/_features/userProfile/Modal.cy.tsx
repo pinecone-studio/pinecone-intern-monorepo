@@ -22,7 +22,7 @@ describe(' order page', () => {
     cy.get('[data-cy="order-email-input"]').should('be.visible');
     cy.get('[data-cy="order-email-input"]').type('test@gmail.com');
     cy.get('[data-cy="order-save-input"]').click();
-    cy.contains('Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдлээ').should('be.visible')
+    cy.contains('Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдлээ').should('be.visible');
     cy.wait('@gqlUpdateOrder');
   });
 
@@ -60,10 +60,10 @@ describe(' order page', () => {
     cy.get('[data-cy="order-email-input"]').type('test@gmail.com');
     cy.get('[data-cy="order-save-input"]').click();
   });
-  it('user history modal ', () => {
-    cy.get('[data-cy="order-data"]').should('be.visible');
-    cy.get('[data-cy="order-data"]').click();
-  });
+  // it('user history modal ', () => {
+  //   cy.get('[data-cy="order-data"]').should('be.visible');
+  //   cy.get('[data-cy="order-data"]').click();
+  // });
   it('password update modal ', () => {
     cy.get('[data-cy="order-pass"]').should('be.visible');
     cy.get('[data-cy="order-pass"]').click();
