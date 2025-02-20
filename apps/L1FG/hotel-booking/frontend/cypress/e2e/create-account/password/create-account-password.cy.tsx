@@ -14,7 +14,7 @@ describe('CreateAccountPassword Component', () => {
 
     cy.get('button').contains('Continue').click();
 
-    cy.url().should('eq', `${window.origin}/`);
+    cy.url().should('eq', `${window.origin}/sign-up`);
     cy.contains('Successfully logged in').should('be.visible');
   });
 

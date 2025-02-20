@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 export const NavigationBlueDown = () => {
   const { user, signout } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger data-cy="menutrigger" className="flex items-center rounded-[6px] justify-between text-sm font-normal border border-none py-2 px-4">

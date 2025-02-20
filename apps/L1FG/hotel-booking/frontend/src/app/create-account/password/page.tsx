@@ -7,7 +7,7 @@ import { useRegisterMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Loading } from '@/components/user/main/Loading';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 const CreateAccountPassword = () => {
   const [inputOneValue, setInputOneValue] = useState('');
@@ -28,8 +28,8 @@ const CreateAccountPassword = () => {
     if (inputOneValue === inputTwoValue) {
       register({ variables: { input: { password: inputOneValue, email: viewEmail } } });
     } else {
-      toast.error('Your password does not match', {
-        autoClose: 2000,
+      toast.error(`Your password does not match`, {
+        style: { backgroundColor: 'red', color: 'white' },
       });
     }
   };
@@ -42,10 +42,10 @@ const CreateAccountPassword = () => {
   if (loading) return <Loading />;
 
   if (data?.register.success) {
-    router.push('/');
+    router.push('/sign-up');
     localStorage.removeItem('email');
     toast.success('Successfully logged in', {
-      autoClose: 2000,
+      style: { backgroundColor: 'green', color: 'white' },
     });
   }
 
