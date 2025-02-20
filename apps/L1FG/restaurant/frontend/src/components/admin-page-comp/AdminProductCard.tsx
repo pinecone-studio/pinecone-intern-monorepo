@@ -37,7 +37,7 @@ const AdminProductCard = () => {
       <CardTitle className="text-xl">Цэс</CardTitle>
 
       <div className="w-full border-b border-[#E4E4E7]">
-        <div className="flex">
+        <div className="flex overflow-x-scroll">
           {categories?.getCategories.map((cate) => (
             <Button
               variant="ghost"

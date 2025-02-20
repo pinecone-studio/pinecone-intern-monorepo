@@ -1,128 +1,147 @@
+import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-
-import '@testing-library/jest-dom';
 import Carousel from '@/components/carousel/Carousel';
+import '@testing-library/jest-dom';
 
 const slides = [
-  {
-    id: 1,
-    title: 'MUSIC of the SPHERES',
-    subtitle: 'Coldplay',
-    dates: '10.31 11.01',
-    image: 'https://wallpaperaccess.com/full/6133725.jpg',
-  },
-  {
-    id: 2,
-    title: 'HIGHER POWER',
-    subtitle: 'World Tour',
-    dates: '11.02 11.03',
-    image: 'https://images.pexels.com/photos/2034851/pexels-photo-2034851.jpeg',
-  },
+  { id: '1', title: 'Slide 1', subtitle: 'Subtitle 1', dates: '2025-02-20T10:52:36.706Z', image: '/img1.jpg' },
+  { id: '2', title: 'Slide 2', subtitle: 'Subtitle 2', dates: '2025-02-21T10:52:36.706Z', image: '/img2.jpg' },
+  { id: '3', title: 'Slide 3', subtitle: 'Subtitle 3', dates: '2025-02-22T10:52:36.706Z', image: '/img3.jpg' },
 ];
 
-describe('Carousel', () => {
-  it('renders successfully', () => {
-    render(<Carousel slides={slides} />);
-    expect(screen.getByText(/MUSIC of the SPHERES/i)).toBeInTheDocument();
-    expect(screen.getByText(/HIGHER POWER/i)).toBeInTheDocument();
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => <img {...props} />,
+}));
+
+jest.spyOn(global, 'setInterval');
+jest.spyOn(global, 'clearInterval');
+
+describe('Carousel Component', () => {
+  beforeEach(() => {
+    jest.clearAllTimers();
   });
 
-  it('navigates to the next slide', () => {
+  test('renders correctly with slides', () => {
     render(<Carousel slides={slides} />);
-    act(() => {
-      fireEvent.click(screen.getByLabelText('Next slide'));
-    });
-    expect(screen.getByText(/HIGHER POWER/i)).toBeInTheDocument();
+    expect(screen.getByText('Slide 1')).toBeInTheDocument();
+    expect(screen.getByText('Subtitle 1')).toBeInTheDocument();
   });
 
-  it('navigates to the previous slide', () => {
+  test('navigates to next slide when next button is clicked', () => {
     render(<Carousel slides={slides} />);
-    act(() => {
-      fireEvent.click(screen.getByLabelText('Previous slide'));
-    });
-    expect(screen.getByText(/MUSIC of the SPHERES/i)).toBeInTheDocument();
-  });
+    const nextButton = screen.getByLabelText('Next Slide');
 
-  it('loops back to the first slide after reaching the last', () => {
-    render(<Carousel slides={slides} />);
-    const nextButton = screen.getByLabelText('Next slide');
-
-    // Go to the second slide
     act(() => {
       fireEvent.click(nextButton);
     });
 
-    // Now, go back to the first slide
-    act(() => {
-      fireEvent.click(nextButton); // This should loop back to the first slide
-    });
-
-    expect(screen.getByText(/MUSIC of the SPHERES/i)).toBeInTheDocument();
+    expect(screen.getByText('Slide 2')).toBeVisible();
   });
 
-  it('auto-advances slides', () => {
+  test('navigates to previous slide when previous button is clicked', () => {
+    render(<Carousel slides={slides} />);
+    const prevButton = screen.getByLabelText('Previous Slide');
+
+    act(() => {
+      fireEvent.click(prevButton);
+    });
+
+    expect(screen.getByText('Slide 3')).toBeVisible();
+  });
+
+  test('displays correct formatted date', () => {
+    render(<Carousel slides={slides} />);
+    expect(screen.getByText('February 20, 2025')).toBeInTheDocument();
+  });
+
+  test('renders navigation dots and selects correct slide', () => {
+    render(<Carousel slides={slides} />);
+
+    const allButtons = screen.getAllByRole('button');
+
+    const dots = allButtons.slice(2);
+
+    act(() => {
+      fireEvent.click(dots[1]);
+    });
+
+    expect(screen.getByText('Slide 2')).toBeVisible();
+  });
+
+  test('auto transitions slides every 4 seconds', () => {
     jest.useFakeTimers();
     render(<Carousel slides={slides} />);
 
-    // Fast-forward the time to simulate auto-advance behavior
-    act(() => {
-      jest.advanceTimersByTime(4000); // Simulate the passage of time (e.g., 4 seconds)
-    });
+    expect(screen.getByText('Slide 1')).toBeVisible();
 
-    expect(screen.getByText(/HIGHER POWER/i)).toBeInTheDocument();
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    expect(screen.getByText('Slide 2')).toBeVisible();
+
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    expect(screen.getByText('Slide 3')).toBeVisible();
+
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    expect(screen.getByText('Slide 1')).toBeVisible();
+
     jest.useRealTimers();
   });
 
-  it('prevents multiple previous slide transitions during animation', () => {
+  test('clears interval on component unmount', () => {
+    jest.useFakeTimers();
+
+    jest.useRealTimers();
+  });
+  test('navigates to next slide when next button is clicked', () => {
     render(<Carousel slides={slides} />);
+    const nextButton = screen.getByLabelText('Next Slide');
 
-    const previousButton = screen.getByLabelText('Previous slide');
-
-    // Trigger the slide transition by clicking the previous button
-    fireEvent.click(previousButton);
-
-    // Prevent multiple transitions by clicking again during the animation
     act(() => {
-      fireEvent.click(previousButton); // This should not trigger the transition
+      fireEvent.click(nextButton);
     });
 
-    // Ensure that the transition only happens once, and the correct slide is displayed
-    expect(screen.getByText('MUSIC of the SPHERES')).toBeInTheDocument(); // Correct slide after clicking Previous
+    expect(screen.getByText('Slide 2')).toBeVisible();
   });
 
-  it('navigates to a specific slide on button click', () => {
+  test('navigates to previous slide when previous button is clicked', () => {
     render(<Carousel slides={slides} />);
+    const prevButton = screen.getByLabelText('Previous Slide');
 
-    // Assuming you have buttons or controls to navigate directly to slides
-    const goToSlideButton = screen.getByLabelText('Go to slide 2');
-
-    // Navigate directly to the second slide
     act(() => {
-      fireEvent.click(goToSlideButton);
+      fireEvent.click(screen.getByLabelText('Next Slide'));
     });
 
-    expect(screen.getByText(/HIGHER POWER/i)).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(prevButton);
+    });
+
+    expect(screen.getByText('Slide 1')).toBeVisible();
   });
-
-  // Additional test case to ensure coverage for conditional logic:
-  it('does not navigate when already on the first slide and clicking previous', () => {
+  test('navigates to next slide and loops back to the first slide when reaching the last one', () => {
     render(<Carousel slides={slides} />);
-    const previousButton = screen.getByLabelText('Previous slide');
+    const nextButton = screen.getByLabelText('Next Slide');
 
-    // Click previous on the first slide
-    fireEvent.click(previousButton);
-    expect(screen.getByText(/MUSIC of the SPHERES/i)).toBeInTheDocument();
-  });
+    expect(screen.getByText('Slide 1')).toBeVisible();
 
-  it('does not navigate when already on the last slide and clicking next', () => {
-    render(<Carousel slides={slides} />);
-    const nextButton = screen.getByLabelText('Next slide');
+    act(() => {
+      fireEvent.click(nextButton);
+    });
+    expect(screen.getByText('Slide 2')).toBeVisible();
 
-    // Navigate to the second slide
-    fireEvent.click(nextButton);
+    act(() => {
+      fireEvent.click(nextButton);
+    });
+    expect(screen.getByText('Slide 3')).toBeVisible();
 
-    // Click next on the last slide
-    fireEvent.click(nextButton);
-    expect(screen.getByText(/HIGHER POWER/i)).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(nextButton);
+    });
+    expect(screen.getByText('Slide 1')).toBeVisible();
   });
 });

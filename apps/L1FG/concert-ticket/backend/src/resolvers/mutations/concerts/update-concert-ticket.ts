@@ -8,22 +8,22 @@ export const updateConcertTicket: MutationResolvers['updateConcertTicket'] = asy
 
   const concert = await ConcertModel.findById({ _id: concertID });
 
-  if (!concert) throw new Error('not found concert');
+  if (!concert) throw new Error('Концерт байхгүй байна');
 
   if (concert.regularTicket.quantity === 0 && concert.standingAreaTicket.quantity === 0 && concert.vipTicket.quantity === 0) throw new Error('tasalbariin too duuussan baina');
 
   const errors: string[] = [];
 
   if (typeof vipTicketQuantity === 'number' && concert.vipTicket.quantity < vipTicketQuantity) {
-    errors.push(`vip ${vipTicketQuantity} shirheg tasalbar zahialah bolomjgvi baina, `);
+    errors.push(`VIP ${vipTicketQuantity} ширхэг тасалбар захиалах боломжгүй байна, `);
   }
 
   if (typeof standartTicketQuantity === 'number' && concert.regularTicket.quantity < standartTicketQuantity) {
-    errors.push(`standart ${standartTicketQuantity}shirheg tasalbar zahialah bolomjgvi baina,`);
+    errors.push(`Энгийн ${standartTicketQuantity} ширхэг тасалбар захиалах боломжгүй байна,`);
   }
 
   if (typeof standingAreaTicketQuantity === 'number' && concert.standingAreaTicket.quantity < standingAreaTicketQuantity) {
-    errors.push(`standing area ${standingAreaTicketQuantity} shirheg tasalbar zahialah bolomjgvi baina`);
+    errors.push(`Fanzone ${standingAreaTicketQuantity} ширхэг тасалбар захиалах боломжгүй байна`);
   }
 
   if (errors.length > 0) {

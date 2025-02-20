@@ -22,7 +22,7 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({
 }));
 describe('getconcert', () => {
   it('not found concert', async () => {
-    await expect(getConcert!({}, { _id: 'not found' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('concert not found');
+    await expect(getConcert!({}, { _id: 'not found' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Тоглолт байхгүй байна');
   });
   it('should get concert', async () => {
     const result = await getConcert!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);

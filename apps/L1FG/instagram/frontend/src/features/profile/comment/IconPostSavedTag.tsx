@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { useGetUserTogetherQuery } from '@/generated';
-import Post from '../../../components/profile/profilePost/Post';
+import Post from '../../profile-post/Post';
 import PostEmpty from '../../../components/profile/profilePost/PostEmpty';
 import Posts from '@/components/svg/Posts';
 import Saved from '@/components/svg/Saved';

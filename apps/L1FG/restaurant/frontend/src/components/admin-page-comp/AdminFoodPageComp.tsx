@@ -38,7 +38,7 @@ const AdminFoodPageComp = () => {
     <div className="flex flex-col items-center bg-[#F4F4F5] w-[100vw] min-h-[91.4vh] gap-4 py-14">
       <div className="flex w-[600px] justify-between mb-5">
         <div className="text-black font-poppins text-3xl font-semibold">Хоол</div>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={refetch} />
       </div>
       <div className="flex flex-col gap-4 w-[600px] bg-white rounded-lg border border-[#E4E4E7] p-8">
         {foodData?.getFoods?.map((food, index) => (
