@@ -98,9 +98,8 @@ const AdminMainPageComp = () => {
                   <div className="flex justify-between">
                     <div className="text-2xl font-normal flex gap-2">
                       <div data-testid="order-table-num" className="text-[#3F4145]">
-                        {order?.tableId}
+                        {order?.tableId}-р ширээ
                       </div>
-                      <div className="text-[#1D1F24] ">#33999</div>
                     </div>
                     <div className="flex gap-1 items-center">
                       <Clock2 size={16} />
@@ -139,9 +138,8 @@ const AdminMainPageComp = () => {
                   <div className="flex justify-between">
                     <div className="text-2xl font-normal flex gap-2">
                       <div data-testid="order-table-num" className="text-[#3F4145]">
-                        {order?.tableId}
+                        {order?.tableId}-р ширээ
                       </div>
-                      <div className="text-[#1D1F24] ">#33999</div>
                     </div>
                     <div className="flex gap-1 items-center">
                       <Clock2 size={16} />

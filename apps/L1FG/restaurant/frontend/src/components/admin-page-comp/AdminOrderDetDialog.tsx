@@ -34,9 +34,8 @@ const DialogDetails: React.FC<OrderStatusProps> = ({ order }) => {
       <DialogContent className="flex flex-col p-6 bg-white rounded-[8px] gap-4 w-[600px] border border-[#E4E4E7] shadow-sm">
         <div className="flex justify-between">
           <div className="text-2xl font-normal flex gap-2">
-            <div className="text-[#1D1F24] ">#33999</div>
             <div data-testid="order-table-num" className="text-[#3F4145]">
-              {order?.tableId}
+              {order?.tableId}-р ширээ
             </div>
           </div>
           <div className="flex gap-1 items-center">
