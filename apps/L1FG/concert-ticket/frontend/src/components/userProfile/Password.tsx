@@ -8,13 +8,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useNewPasswordMutation } from '@/generated';
 import { useAlert } from '../providers/AlertProvider';
 const FormSchema = z.object({
-  oldPassword: z.string().min(4, {
+  oldPassword: z.string().min(6, {
     message: 'Хуучин нууц үгээ хийнэ үү',
   }),
-  newPassword: z.string().min(4, {
+  newPassword: z.string().min(6, {
     message: 'Шинэ нууц үг дөрвөөс дээш тэмдэгт байх ёстой.',
   }),
-  repeatPassword: z.string().min(4, {
+  repeatPassword: z.string().min(6, {
     message: 'Шинэ нууц үгээ давтан хийнэ үү',
   }),
 });
