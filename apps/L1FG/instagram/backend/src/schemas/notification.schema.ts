@@ -47,6 +47,14 @@ export const NotificationTypeDefs = gql`
     earlier: NotificationCategory
   }
 
+  type UpdateType {
+    isRead: Boolean
+  }
+
+  type Mutation {
+    updateIsRead: UpdateType
+  }
+
   type Query {
     getNotification: NotificationResponseType
   }
