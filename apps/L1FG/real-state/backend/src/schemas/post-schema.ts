@@ -16,9 +16,9 @@ export const PostTypeDefs = gql`
     description: String!
     price: String!
     propertyDetail: Property!
-    status: PostStats!
-    updatedAt: String
-    createdAt: String
+    status: PostStats
+    updatedAt: String!
+    createdAt: String!
   }
 
   input PostInput {
@@ -42,14 +42,22 @@ export const PostTypeDefs = gql`
     createdAt: String
   }
 
+  input PostUpdateInput {
+    status: PostStats
+  }
+
+  type PostUpdateRespond {
+    status: PostStats
+  }
+
   type Query {
-    getPostById(_id: ID!): Post!
-    getPosts(input: JSON): [Post!]!
+    getPostById(_id: ID): Post
+    getPosts(input: JSON): [Post!]
   }
 
   type Mutation {
     addPost(input: PostInput!): Post!
-    updatePost(_id: ID!, input: PostUpdateInput!): Post!
     deletePost(_id: ID!): Post!
+    updatePost(_id: ID!, input: PostUpdateInput!): PostUpdateRespond!
   }
 `;

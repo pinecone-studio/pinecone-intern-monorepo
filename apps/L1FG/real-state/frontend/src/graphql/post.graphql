@@ -1,8 +1,28 @@
-mutation AddPost($input: PostInput!) {
-  addPost(input: $input) {
+query getAllAdminPosts {
+  getPosts {
+    _id
+    title
+    status
+    propertyOwnerId {
+      _id
+      name
+      phone
+    }
+    propertyDetail {
+      images
+    }
+  }
+}
+
+query GetPostById($id: ID!) {
+  getPostById(_id: $id) {
     _id
     propertyOwnerId {
       _id
+      name
+      email
+      phone
+      isAdmin
     }
     title
     description
@@ -30,11 +50,13 @@ mutation AddPost($input: PostInput!) {
         totalFloors
         lift
       }
-      uploadedAt
-      createdAt
     }
     status
-    updatedAt
-    createdAt
+  }
+}
+
+mutation RequestChangeStatus($id: ID!, $input: PostUpdateInput!) {
+  updatePost(_id: $id, input: $input) {
+    status
   }
 }
