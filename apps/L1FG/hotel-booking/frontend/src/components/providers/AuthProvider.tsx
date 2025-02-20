@@ -3,14 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSignInMutation , User} from '@/generated';
-
+import { useSignInMutation, User } from '@/generated';
 
 type SignInParams = {
   email: string;
   password: string;
 };
-
 
 type AuthContextType = {
   signin: (_params: SignInParams) => void;
@@ -28,7 +26,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     onCompleted: (data) => {
       if (data?.signIn?.token && data?.signIn?.user) {
         localStorage.setItem('token', data.signIn.token);
-        setUser(data.signIn.user); 
+        setUser(data.signIn.user);
         router.push('/');
       } else {
         toast.error('Amjiltgui bolloo dahin oroldono uu!');
@@ -38,7 +36,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       toast.error(error.message);
     },
   });
-  
 
   const signin = async ({ email, password }: SignInParams) => {
     await signinMutation({
@@ -51,15 +48,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  
-
   const signout = () => {
     localStorage.removeItem('token');
     setUser(null);
   };
 
-
-  return <AuthContext.Provider value={{ signin, signout ,user }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signout, user }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

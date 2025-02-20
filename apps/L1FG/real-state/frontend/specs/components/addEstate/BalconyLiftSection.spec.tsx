@@ -4,8 +4,6 @@ import '@testing-library/jest-dom';
 import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
 
 describe('BalconyLiftSection', () => {
-  // ...existing code...
-
   it('should handle undefined values', () => {
     const mockFormData = {
       balcony: undefined,

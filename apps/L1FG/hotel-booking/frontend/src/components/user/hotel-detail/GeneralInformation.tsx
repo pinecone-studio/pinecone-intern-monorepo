@@ -12,7 +12,7 @@ export const GeneralInformation = ({ data }: { data: Hotel | undefined | null })
             <p className="text-[30px] leading-[36px] font-[600]">{data?.name}</p>
             <div className="flex gap-1">
               {stars?.map((_, index) => (
-                <Star key={index} size={16} className="fill-[#F97316] text-[#F97316]" />
+                <Star data-testid="star-icon" key={index} size={16} className="fill-[#F97316] text-[#F97316]" />
               ))}
             </div>
             <p className="text-[16px] leading-[24px] font-[400]">Ulaanbaatar hotel in Downtown Ulaanbaatar with 4 restaurants and a full-service spa</p>

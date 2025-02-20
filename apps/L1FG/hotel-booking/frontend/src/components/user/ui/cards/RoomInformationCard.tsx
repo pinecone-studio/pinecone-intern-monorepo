@@ -13,8 +13,21 @@ import DoorClosedIcon from '../svg/DoorClosedIcon';
 import { PriceDetail } from '../../hotel-detail';
 import WifiIcon from '../svg/WifiIcon';
 import { RoomDetails } from './RoomDetails';
+import { Room } from '@/generated';
+import { useNightsCount } from '@/features/user/main/useNightsCount';
 
-export const RoomInformationCard = () => {
+interface RoomInformationCardProps {
+  rooms?: Room | null;
+}
+
+export const RoomInformationCard = ({ rooms }: RoomInformationCardProps) => {
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {}).format(price);
+  };
+  const priceRoom = rooms?.price || 0;
+
+  console.log(rooms, 'rooms');
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -36,15 +49,18 @@ export const RoomInformationCard = () => {
           <div className=" w-full flex flex-col gap-5">
             <Carousel className="relative w-full">
               <CarouselContent>
-                <CarouselItem className="w-full">
-                  <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px] w-full" layout="responsive" />
-                </CarouselItem>
-                <CarouselItem>
-                  <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px] w-full" layout="responsive" />
-                </CarouselItem>
-                <CarouselItem>
-                  <Image src="/EconomySingleRoom.png" alt="Economy Single Room" height={216} width={349} className="rounded-t-[6px] w-full" layout="responsive" />
-                </CarouselItem>
+                {rooms?.images.map((image, index) => (
+                  <CarouselItem key={`${index}wedr`} className="">
+                    <div className="h-[325px]">
+                      <Image
+                        src={image || 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/b0/b9/d0/cheap-hotels.jpg?w=1200&h=-1&s=1'}
+                        alt="Economy Single Room"
+                        className="rounded-t-[6px] w-full h-full object-cover"
+                        layout="fill"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
               </CarouselContent>
               <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-sm border border-input bg-white flex items-center justify-center" />
               <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-sm border border-input bg-white flex items-center justify-center" />
@@ -100,22 +116,20 @@ export const RoomInformationCard = () => {
             <div className="w-full border p-4 rounded-[8px] flex justify-between">
               <div>
                 <div className="text-xs font-Inter font-normal leading-4 text-muted-foreground">Total</div>
-                <div className="text-xl font-Inter font-medium leading-7">225,000₮</div>
+                <div className="text-xl font-Inter font-medium leading-7">{formatPrice(priceRoom * useNightsCount())}₮</div>
                 <div className="text-xs font-Inter font-normal leading-4 flex gap-1">
-                  <p className="font-Inter font-normal not-italic text-xs">112,500₮</p>
+                  <p className="font-Inter font-normal not-italic text-xs">{formatPrice(priceRoom)}₮</p>
                   <p>Price per night</p>
                 </div>
                 <div className="w-full flex items-center justify-between">
-                  <PriceDetail />
+                  <PriceDetail price={priceRoom} />
                 </div>
               </div>
               <div className="flex flex-col gap-2 items-center justify-end">
-                {' '}
-                <p className="text-xs font-medium text-[#F97316]">We have 2 left</p>
                 <DialogFooter>
                   <button type="submit" className="bg-[#2563EB] py-2 px-4 flex justify-center items-center rounded-md text-[#FAFAFA]">
                     Reserve
-                  </button>{' '}
+                  </button>
                 </DialogFooter>
               </div>
             </div>

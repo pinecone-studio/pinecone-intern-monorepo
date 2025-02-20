@@ -11,7 +11,7 @@ export const StoryProfile = ({ story }: { story: OneStoryType }) => {
           <Image src={imageUrlOptimizer(story.user.profileImage)} width={32} height={32} alt="image" className="object-cover" />
         </div>
         <p className="text-white text-[14px]">{story.user.userName}</p>
-        <p>{PostDate({ date: story.createdAt })}</p>
+        <PostDate textColor="text-white" date={story.createdAt} />
       </div>
     </div>
   );

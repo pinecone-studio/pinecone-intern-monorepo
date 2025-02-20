@@ -4,3 +4,26 @@ query GetCategories {
     categoryName
   }
 }
+
+mutation CreateCategory($input: CategoryInputType!) {
+  createCategory(input: $input) {
+    id
+    categoryName
+    createdAt
+  }
+}
+
+mutation RealDeleteCategory($deleteCategoryId: ID!) {
+  deleteCategory(id: $deleteCategoryId) {
+    status
+    message
+  }
+}
+
+mutation UpdateCategoryName($input: UpdateCategoryInputType!) {
+  updateCategoryName(input: $input) {
+    id
+    categoryName
+    createdAt
+  }
+}

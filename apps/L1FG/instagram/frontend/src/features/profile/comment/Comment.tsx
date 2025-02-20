@@ -8,10 +8,12 @@ import { quantityConverter } from '@/components/utils/quantity-converter';
 import { CommentDetailType, useCreateCommentLikeMutation, useDeleteCommentLikeMutation, UserPostType } from '@/generated';
 import Image from 'next/image';
 import { useState } from 'react';
+import DeleteComment from './DeleteComment';
 
 export const Comment = ({ comment, post }: { comment: CommentDetailType; post: UserPostType }) => {
   const [liked, setLiked] = useState(comment.commentLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
+
   const { cacheLikeComment, cacheUnlikeComment } = useCache();
   const [createCommentLike] = useCreateCommentLikeMutation();
   const [deleteCommentLike] = useDeleteCommentLikeMutation();
@@ -74,7 +76,7 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
                 <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
               </CommentLikeModal>
             </div>
-            <p className="text-xs font-semibold text-gray-600">Reply</p>
+            <DeleteComment commentId={comment._id} />
           </div>
         </div>
       </div>

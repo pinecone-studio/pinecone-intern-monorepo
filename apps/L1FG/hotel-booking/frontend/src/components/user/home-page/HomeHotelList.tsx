@@ -1,12 +1,19 @@
 import Link from 'next/link';
 import { HomePageCard } from '../ui/cards';
 import { Hotel } from '@/generated';
+import { useQueryState } from 'nuqs';
+import { useRouter } from 'next/navigation';
 
 interface HomeHotelListProps {
   data: Hotel[] | undefined;
 }
 
 export const HomeHotelList = ({ data }: HomeHotelListProps) => {
+  const [adult] = useQueryState('bedcount');
+  const [dateFrom] = useQueryState('dateFrom');
+  const [dateTo] = useQueryState('dateTo');
+  const router = useRouter();
+
   return (
     <div>
       <div className="container mx-auto w-full pt-8 pb-14">
@@ -22,9 +29,12 @@ export const HomeHotelList = ({ data }: HomeHotelListProps) => {
             </div>
             <div className="grid grid-cols-4 gap-4">
               {data?.map((singleHotel) => (
-                <Link key={singleHotel?.id} href={`/hotel-detail/${singleHotel?.id}`}>
+                <button
+                  key={singleHotel?.id}
+                  onClick={() => router.push(dateFrom && dateTo ? `/hotel-detail/${singleHotel?.id}?bedcount=${adult}&dateFrom=${dateFrom}&dateTo=${dateTo}` : `/hotel-detail/${singleHotel?.id}`)}
+                >
                   <HomePageCard data={singleHotel} />
-                </Link>
+                </button>
               ))}
             </div>
           </div>

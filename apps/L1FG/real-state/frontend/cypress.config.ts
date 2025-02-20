@@ -16,6 +16,7 @@ const config: Cypress.ConfigOptions<unknown> = {
     supportFile: './cypress/support/e2e.ts',
     fileServerFolder: './src',
     specPattern: ['./cypress/e2e/render-all-pages.cy.tsx', './cypress/e2e/**/*.cy.tsx'],
+    // specPattern: ['./cypress/e2e/render-all-pages.cy.tsx', './cypress/e2e/add-estate/*.cy.tsx'],
     screenshotsFolder: './cypress/results/assets',
     videosFolder: './cypress/results/assets',
     viewportWidth: 1536,
@@ -40,6 +41,8 @@ const config: Cypress.ConfigOptions<unknown> = {
     },
     env: {
       AUTH_TOKEN: process.env.AUTH_TOKEN,
+      NEXT_PUBLIC_CLOUDINARY_UPLOUD_PRESET: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+      NEXT_PUBLIC_CLOUDINARY_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_NAME,
     },
   },
 };

@@ -26,7 +26,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                   <Footer />
                   <ToastContainer
                     position="top-right"
-                    autoClose={2000}
+                    autoClose={process.env.NODE_ENV === 'test' ? false : 2000}
                     hideProgressBar={false}
                     newestOnTop
                     closeOnClick

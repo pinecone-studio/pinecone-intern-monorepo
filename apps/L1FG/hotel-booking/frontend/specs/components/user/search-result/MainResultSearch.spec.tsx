@@ -3,6 +3,10 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { SetStateAction } from 'react';
 
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
+}));
+
 describe('MainResultSearch', () => {
   it('should render MainResultSearch successfully', async () => {
     render(

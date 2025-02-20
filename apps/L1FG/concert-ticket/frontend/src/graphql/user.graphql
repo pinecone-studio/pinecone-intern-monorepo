@@ -21,3 +21,21 @@ mutation NewPassword($input: orderNewPassword!) {
     email
   }
 }
+
+mutation RequestChangePassword($input: RequestChanGePasswordInput!) {
+  RequestChangePassword(input: $input) {
+    email
+  }
+}
+
+mutation UpdateForgetPasswordInput($input: UpdateForgetPasswordInput!) {
+  UpdateForgetPasswordInput(input: $input) {
+    token
+    user {
+      _id
+      password
+      email
+      otp
+    }
+  }
+}

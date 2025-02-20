@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../generated';
-import { PostModel } from '../../../models';
+import { CommentLikeModel, NotificationModel, PostModel } from '../../../models';
 import { CommentModel } from '../../../models/comment.model';
 import { authenticate } from '../../../utils/authenticate';
 import { catchError } from '../../../utils/catch-error';
@@ -18,6 +18,12 @@ export const deleteComment: MutationResolvers['deleteComment'] = async (_, { com
     }
 
     await PostModel.findByIdAndUpdate(userId, { $inc: { commentCount: -1 } });
+    await NotificationModel.deleteMany({
+      contentCommentId: commentId,
+    });
+    await CommentLikeModel.deleteMany({
+      commentId: deleteComment._id,
+    });
     return deleteComment;
   } catch (error) {
     throw catchError(error);
