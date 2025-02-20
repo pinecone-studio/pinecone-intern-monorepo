@@ -34,20 +34,19 @@ const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_po
       });
 
       toast.success('Post deleted', {
-        position: 'bottom-center', // Display at the bottom center
-        autoClose: 3000, // Hide after 3 seconds
-        hideProgressBar: true, // No progress bar like Instagram
-        closeOnClick: true, // Close on click
-        pauseOnHover: false, // Don't pause on hover
-        draggable: false, // Non-draggable
-        theme: 'dark', // Dark theme for Instagram look
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'dark',
         style: {
           borderRadius: '8px',
           background: '#262626',
           color: 'white',
           padding: '12px',
           fontSize: '14px',
-          width: '1400px',
         },
       });
     } catch (err) {
