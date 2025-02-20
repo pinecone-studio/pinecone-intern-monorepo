@@ -1,5 +1,5 @@
 'use client';
-import CreatePostStep1 from '@/components/create-post/CreatePostStep1';
+import CreatePostStep1 from '@/features/create-post/create-post/CreatePostStep1';
 import { useGetUserTogetherQuery } from '@/generated';
 import { Camera } from 'lucide-react';
 import React from 'react';
