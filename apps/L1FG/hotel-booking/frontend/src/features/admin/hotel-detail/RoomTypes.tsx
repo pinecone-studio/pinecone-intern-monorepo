@@ -14,10 +14,9 @@ export const RoomTypes = () => {
   const params = useParams();
   const hotelId = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
-  // React Hook-ийг нөхцөлгүй дуудна
   const { data, refetch } = useGetRoomsByHotelIdQuery({
     variables: { hotelId: hotelId || '' },
-    skip: !hotelId, // Зөвхөн hotelId байх үед л Query гүйцэтгэнэ
+    skip: !hotelId,
   });
 
   const roomData = useMemo(() => {
@@ -55,7 +54,7 @@ export const RoomTypes = () => {
           tax: 0,
           price: 0,
           roomNumber: 0,
-          images: ['https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png'],
+          images: ['https://www.trical.co.nz/modules/custom/legrand_ecat/assets/img/no-image.png'],
           roomServices: [
             { key: '-/-', value: '-/-' },
             { key: '-/-', value: '-/-' },
