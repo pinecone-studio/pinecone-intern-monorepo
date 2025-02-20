@@ -28,3 +28,10 @@ export type HotelDetailGeneralInfoDialogProps = {
   setPhoneNumber: (_phoneNumber: string) => void;
   handleEditHotelGeneralInfo: () => Promise<void>;
 };
+
+export type HotelDetailAmenitiesDialogProps = {
+  data: Hotel | undefined | null;
+  amenities: string[];
+  setAmenities: (_amenities: string[]) => void;
+  handleEditHotelAmenities: () => Promise<void>;
+};

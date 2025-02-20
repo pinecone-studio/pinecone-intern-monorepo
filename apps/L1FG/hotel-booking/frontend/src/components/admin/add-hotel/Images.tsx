@@ -11,7 +11,7 @@ export const Images = ({ images, setImages, handleEditHotelImages }: HotelImages
         <ImagesDialog images={images} setImages={setImages} handleEditHotelImages={handleEditHotelImages} />
       </div>
       {images?.[0] ? (
-        <div className="w-full flex flex-col gap-1">
+        <div className="w-full flex flex-col">
           <div className="relative w-full h-[264px] rounded-sm overflow-hidden">
             <Image src={images[0]} alt="Hotel Image" width={352} height={264} className="rounded-md w-full h-full object-cover" />
           </div>

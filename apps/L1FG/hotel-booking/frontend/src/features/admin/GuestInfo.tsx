@@ -6,7 +6,7 @@ import { Sidebar } from '@/features/admin/main/Sidebar';
 import { LeftArrow } from '@/components/admin/svg';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useEditBookingStatusMutation, useGetBookingByIdQuery } from '@/generated';
+import { useEditBookingStatusMutation, useGetBookingByIdQuery, useGetRoomByIdQuery } from '@/generated';
 import { GuestInfoContainer } from '@/components/admin/guest/GuestInfoContainer';
 import { RoomInfoContainer } from '@/components/admin/guest/RoomInfoContainer';
 
@@ -14,8 +14,19 @@ export const GuestInfo = () => {
   const params = useParams();
   const bookingId = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
-  const { data, refetch } = useGetBookingByIdQuery({ variables: { getBookingByIdId: bookingId } });
-  const bookingData = data?.getBookingById;
+  const { data: bookingQueryData, refetch } = useGetBookingByIdQuery({
+    variables: { getBookingByIdId: bookingId },
+    skip: !bookingId,
+  });
+
+  const bookingData = bookingQueryData?.getBookingById;
+
+  const { data: roomQueryData } = useGetRoomByIdQuery({
+    variables: { getRoomByIdId: bookingData?.roomId || '' },
+    skip: !bookingData?.roomId,
+  });
+
+  const roomData = roomQueryData?.getRoomById;
 
   const [editBookingStatus] = useEditBookingStatusMutation();
 
@@ -59,9 +70,9 @@ export const GuestInfo = () => {
             </div>
             <div className="flex gap-4">
               <div className="max-w-[744px] w-full">
-                <GuestInfoContainer data={bookingData} handleEditBookingStatus={(newStatus) => handleEditBookingStatus(newStatus)} />
+                <GuestInfoContainer data={bookingData} roomData={roomData} handleEditBookingStatus={(newStatus) => handleEditBookingStatus(newStatus)} />
               </div>
-              <RoomInfoContainer />
+              <RoomInfoContainer data={bookingData} roomData={roomData} />
             </div>
           </div>
         </div>

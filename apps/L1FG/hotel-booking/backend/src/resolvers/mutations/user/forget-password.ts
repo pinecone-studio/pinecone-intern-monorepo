@@ -1,6 +1,6 @@
 import { MutationResolvers } from './../../../generated/index';
 import { UserModel } from '../../../models';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 
 export const forgetPassword: MutationResolvers['forgetPassword'] = async (_, { input }) => {
   const { email, password } = input;

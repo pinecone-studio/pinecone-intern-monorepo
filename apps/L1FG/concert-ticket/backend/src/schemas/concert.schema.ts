@@ -80,17 +80,28 @@ export const concertTypeDefs = gql`
     vipTicket: VipTicketInput!
     regularTicket: RegularTicketInput!
     standingAreaTicket: StandingAreaTicketInput!
-    concertPhoto: String!
     concertPlan: String!
+  }
+  type EditConcert {
+    _id: ID!
+    concertName: String!
+    concertPlan: String!
+    artistName: [String]!
+    concertDay: Date!
+    concertTime: String!
+    vipTicket: VipTicket
+    regularTicket: RegularTicket
+    standingAreaTicket: StandingAreaTicket
   }
   type Mutation {
     createConcert(input: ConcertInput!): Concert!
     updateConcertTicket(input: UpdateTicketInput!): Concert!
     deleteConcert(_id: String!): Concert!
-    editConcert(input: EditConcertInput!): Concert!
+    editConcert(input: EditConcertInput!): EditConcert!
   }
   type Query {
     getConcerts: [Concert!]!
     getConcert(_id: String!): Concert!
+    getSameConcerts(concertId: String!): [Concert!]
   }
 `;
