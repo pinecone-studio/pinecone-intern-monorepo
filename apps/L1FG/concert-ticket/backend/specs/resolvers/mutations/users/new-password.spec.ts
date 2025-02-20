@@ -30,7 +30,7 @@ describe('new password', () => {
   });
   it('2.user not found', async () => {
     await expect(newPassword!({}, { input: { oldPassword: '1111', newPassword: '2222', userId: '679b0d4f375c5172da567f60' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      new Error('User not found')
+      new Error('Хэрэглэгч олдсонгүй')
     );
   });
   it('3.no matched', async () => {
