@@ -68,3 +68,27 @@ mutation UpdateConcertTicket($input: UpdateTicketInput!) {
     }
   }
 }
+
+mutation createConcert($input: ConcertInput!) {
+  createConcert(input: $input) {
+    _id
+    artistName
+    concertDay
+    concertName
+    concertPhoto
+    concertPlan
+    concertTime
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    vipTicket {
+      price
+      quantity
+    }
+  }
+}
