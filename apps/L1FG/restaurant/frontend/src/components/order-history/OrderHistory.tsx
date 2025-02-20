@@ -24,9 +24,7 @@ const OrderHistory = () => {
   const { data, loading } = useGetOrdersForUserQuery({
     variables: { userId: userId || '' },
     skip: !userId,
-    pollInterval: 5000,
   });
-
   return (
     <div className="min-h-[500px] w-full container mx-auto">
       <Header />

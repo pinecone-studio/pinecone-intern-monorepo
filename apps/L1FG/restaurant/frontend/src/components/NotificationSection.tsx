@@ -43,10 +43,9 @@ const NotificationSection = () => {
     }
   }, []);
 
-  const { data } = useGetOrdersForUserQuery({
+  const { data, loading, refetch } = useGetOrdersForUserQuery({
     variables: { userId: userId || '' },
     skip: !userId,
-    pollInterval: 5000,
   });
 
   useEffect(() => {
@@ -57,6 +56,7 @@ const NotificationSection = () => {
   }, [data]);
 
   const unreadOrders = notifs.filter((notif) => !notif.isRead);
+  if (!loading) refetch();
 
   return (
     <Sheet>

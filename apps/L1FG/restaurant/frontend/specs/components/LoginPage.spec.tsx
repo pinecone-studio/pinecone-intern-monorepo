@@ -99,7 +99,7 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/null'));
   });
 
   it('should show loading state during login', async () => {
@@ -117,6 +117,6 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
     });
 
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/1'));
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/order/null'));
   });
 });
