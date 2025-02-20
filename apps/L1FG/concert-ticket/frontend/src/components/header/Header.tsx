@@ -2,22 +2,24 @@ import Link from 'next/link';
 import { useAuth } from '../providers/AuthProvider';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { User } from 'lucide-react'; // Import Lucide icon
 
 export const HeaderPart = () => {
   const { user, logout } = useAuth();
   const [userID, setUserID] = useState();
   const router = useRouter();
+
   useEffect(() => {
     const userId = localStorage.getItem('user');
     if (!userId) return;
 
     const parsedUser = JSON.parse(userId);
-
     const userID = parsedUser?._id;
     setUserID(userID);
   }, []);
+
   return (
-    <div className="w-ful flex justify-center">
+    <div className="w-full flex justify-center">
       <div className="w-[1600px]">
         <div className="h-[96px] bg-black flex justify-between items-center py-[24px] px-12">
           <div className="flex items-center gap-[8px]">
@@ -38,8 +40,9 @@ export const HeaderPart = () => {
 
             {user ? (
               <>
-                <div data-testid="header-order-page" onClick={() => router.push(`/order/${userID}`)} className="text-white font-medium">
-                  {user.email}
+                <div data-testid="header-order-page" onClick={() => router.push(`/order/${userID}`)} className="text-white font-medium flex items-center gap-2">
+                  <User className="w-6 h-6" /> {/* Display Lucide User Icon */}
+                  <span>{user.email}</span> {/* Display the user's email */}
                 </div>
                 <button data-testid="header-logout-button" onClick={logout} className="text-white bg-red-600 px-[16px] py-[8px] rounded-lg hover:bg-red-700">
                   Logout
