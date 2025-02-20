@@ -58,7 +58,7 @@ const LoginPage = () => {
         })
       );
       toast.success('Амжилттай нэвтэрлээ');
-      router.push('/');
+      router.push('/order/1');
     } catch (error) {
       setFormState({
         ...formState,

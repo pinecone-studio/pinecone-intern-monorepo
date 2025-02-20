@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
-import { Home, ShoppingCart, User, FileText, Info, AlignJustify } from 'lucide-react';
+import { Home, User, FileText, Info, AlignJustify } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
@@ -44,9 +44,9 @@ export const Sidemenu = () => {
           <Link href="/order/1" className="flex items-center gap-2 h-[68px]" role="menuitem">
             <Home size={20} /> <span>Нүүр хуудас</span>
           </Link>
-          <Link href="/wallet" className="flex items-center gap-2 h-[68px]" role="menuitem">
+          {/* <Link href="/wallet" className="flex items-center gap-2 h-[68px]" role="menuitem">
             <ShoppingCart size={20} /> <span>Хэтэвч</span>
-          </Link>
+          </Link> */}
           <div role="button" data-testid="userButton" onClick={profile} className="flex items-center gap-2 h-[68px]">
             <User size={20} /> <span>Хэрэглэгч</span>
           </div>
