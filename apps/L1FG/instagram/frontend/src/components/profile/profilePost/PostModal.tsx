@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { UserPostType } from '@/generated';
-import { Bookmark, Ellipsis, Heart, MessageCircle } from 'lucide-react';
+import { Bookmark, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
@@ -9,11 +9,15 @@ import GetComments from '../../../features/profile/comment/GetComments';
 import CreateComment from '../../../features/profile/comment/CreateComment';
 import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
 import { ProfileHover } from '@/features/home-post/ProfileHover';
+import DeletePost from '@/features/profile/DeletePost';
+import { useState } from 'react';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
+  const [postOpen, setPostOpen] = useState(false);
+
   return (
     <Carousel>
-      <Dialog>
+      <Dialog onOpenChange={setPostOpen} open={postOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
 
         <DialogContent className="xl:max-w-[1200px] p-0 border-none rounded-none">
@@ -26,14 +30,14 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <div className="flex justify-between py-3 px-6 items-center">
                   <div className="flex gap-5 justify-center items-center">
                     <ProfileHover searchingUserId={post?.user?._id}>
-                      <Image src={imageUrlOptimizer(post.user?.profileImage)} alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover border" />
+                      <Image src={imageUrlOptimizer(post.user?.profileImage)} alt="zurag" width={35} height={35} className="w-[40px] rounded-full h-[40px] object-cover border" />
                     </ProfileHover>
                     <ProfileHover searchingUserId={post.user._id}>
                       <p className="font-semibold text-base">{post.user?.userName}</p>
                     </ProfileHover>
                   </div>
                   <div>
-                    <Ellipsis />
+                    <DeletePost setPostOpen={setPostOpen} postId={post._id} />
                   </div>
                 </div>
                 <Separator />
@@ -43,7 +47,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <div className="p-6 flex flex-col gap-6 h-[488px] overflow-y-scroll">
                   <div className="flex  ">
                     <ProfileHover searchingUserId={post.user._id}>
-                      <Image src={imageUrlOptimizer(post.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[35px] h-[35px] border" />
+                      <Image src={imageUrlOptimizer(post.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[40px] h-[40px] border" />
                     </ProfileHover>
 
                     <div className="flex flex-col gap-2">

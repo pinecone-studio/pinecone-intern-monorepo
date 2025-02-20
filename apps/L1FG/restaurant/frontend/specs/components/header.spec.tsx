@@ -1,13 +1,13 @@
 import Header from '@/components/common/Header';
-import { useCart } from '@/components/providers';
-import { GetOrdersForUserDocument, UpdateOrderReadDocument } from '@/generated';
+import { useCart, useOrder } from '@/components/providers';
+import { GetOrdersForUserDocument, Response, UpdateOrderReadDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
 jest.mock('@/components/providers', () => ({
   useCart: jest.fn(),
+  useOrder: jest.fn(),
 }));
-
 const mocks = [
   {
     request: {
@@ -54,6 +54,9 @@ describe('Header Component', () => {
 
     useCart.mockReturnValue({
       orders: mockOrders,
+    });
+    useOrder.mockReturnValue({
+      Response,
     });
 
     render(

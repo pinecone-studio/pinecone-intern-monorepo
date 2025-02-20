@@ -124,9 +124,9 @@ export const HotelDetailPage = () => {
                 <UpcomingBooking />
                 <RoomTypes />
                 <GeneralInfo data={hotelData} {...hotelGeneralInfo} {...setterGeneralInfo} handleEditHotelGeneralInfo={handleEditHotelGeneralInfo} />
-                <Amenities data={hotelData} />
-                <AboutThisProperty data={hotelData} />
-                <Policies data={hotelData} />
+                <Amenities data={hotelData} hotelRoomData={undefined} />
+                <AboutThisProperty data={hotelData} hotelRoomData={undefined} />
+                <Policies data={hotelData} hotelRoomData={undefined} />
                 <PoliciesExtra />
                 <Questions />
               </div>

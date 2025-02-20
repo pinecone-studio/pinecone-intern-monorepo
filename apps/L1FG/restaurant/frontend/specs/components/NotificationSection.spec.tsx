@@ -1,148 +1,160 @@
-import { render } from '@testing-library/react';
-import NotificationSection from '@/components/NotificationSection';
-import { useGetOrdersForUserQuery } from '@/generated';
-import { toast } from 'sonner';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+import { GetOrdersForUserDocument } from '@/generated';
+import '@testing-library/jest-dom';
+import { toast } from 'sonner';
+import { OrderProvider } from '@/components/providers';
+import NotificationSection from '@/components/NotificationSection';
 
-// Mock GraphQL hooks and localStorage
-jest.mock('@/generated', () => ({
-  useGetOrdersForUserQuery: jest.fn(),
-  useUpdateOrderReadMutation: jest.fn(),
-}));
-
+// Mock dependencies
 jest.mock('sonner', () => ({
   toast: {
     error: jest.fn(),
   },
 }));
 
-// Mock localStorage
-beforeAll(() => {
-  Storage.prototype.getItem = jest.fn(() => JSON.stringify({ _id: 'user123' }));
-});
+// Mock data
+const mockOrders = [
+  {
+    _id: '1',
+    status: 'Pending',
+    isRead: false,
+    createdAt: new Date('2024-02-19T10:00:00'),
+  },
+  {
+    _id: '2',
+    status: 'InProcess',
+    isRead: true,
+    createdAt: new Date('2024-02-19T09:00:00'),
+  },
+];
 
-afterAll(() => {
-  jest.resetAllMocks();
+const mocks = [
+  {
+    request: {
+      query: GetOrdersForUserDocument,
+      variables: { userId: 'test-user-id' },
+    },
+    result: {
+      data: {
+        getOrdersForUser: mockOrders,
+      },
+    },
+  },
+];
+
+// Mock localStorage
+const mockLocalStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn(),
+};
+
+Object.defineProperty(window, 'localStorage', {
+  value: mockLocalStorage,
 });
 
 describe('NotificationSection', () => {
-  // Mock data for orders
-  const mockOrders = [
-    {
-      _id: 'order1',
-      status: 'Pending',
-      userId: 'user123',
-      isRead: false,
-      createdAt: new Date('2025-02-18T08:30:00Z').toISOString(),
-    },
-    {
-      _id: 'order2',
-      status: 'Ready',
-      isRead: true,
-      createdAt: new Date('2025-02-17T12:45:00Z').toISOString(),
-    },
-    {
-      _id: 'order3',
-      status: 'InProcess',
-      isRead: false,
-      createdAt: new Date('2025-02-19T14:20:00Z').toISOString(),
-    },
-    {
-      _id: 'order4',
-      status: 'Done',
-      isRead: true,
-      createdAt: new Date('2025-02-16T10:00:00Z').toISOString(),
-    },
-  ];
+  const mockMarkOrderAsRead = jest.fn();
 
-  // Mock response for useGetOrdersForUserQuery
-  useGetOrdersForUserQuery.mockReturnValue({
-    data: {
-      getOrdersForUser: mockOrders,
-    },
-    loading: false,
-    error: null,
-  });
-
-  // Mock response for useUpdateOrderReadMutation
-  // fireEvent.click(screen.getByTestId('order0'));
-  // useUpdateOrderReadMutation.mockReturnValue([
-  //   jest.fn().mockResolvedValue({
-  //     data: {
-  //       updateOrderRead: [
-  //         {
-  //           _id: 'order1',
-  //           status: 'Pending',
-  //           isRead: true, // Marked as read
-  //           createdAt: new Date('2025-02-18T08:30:00Z').toISOString(),
-  //         },
-  //         ...mockOrders.slice(1),
-  //       ],
-  //     },
-  //   }),
-  // ]);
-
-  // it('should render notifications and handle click event', async () => {
-  //   // Render the NotificationSection
-  //   render(<NotificationSection />);
-
-  //   screen.getByTestId('notification-button');
-
-  //   // Check the unread notification count
-  //   screen.getByTestId('unread-count');
-
-  //   // Wait for the update and check if the toast success message is called
-  //   await waitFor(() => expect(toast.success).toHaveBeenCalledWith('Notification marked as read'));
-
-  //   // Verify the state is updated (i.e., the notification is marked as read)
-  //   expect(screen.queryByTestId('unread-count')).toHaveTextContent('1'); // Now 1 unread order
-  // });
-
-  it('handles localStorage get user not found, userId will be null', async () => {
-    Storage.prototype.getItem = jest.fn(() => null);
-    render(
-      <MockedProvider>
-        <NotificationSection />
+  const renderComponent = () => {
+    return render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <OrderProvider value={{ markOrderAsRead: mockMarkOrderAsRead }}>
+          <NotificationSection />
+        </OrderProvider>
       </MockedProvider>
     );
-    expect(toast.error).toHaveBeenCalledWith('Та нэвтэрч орно уу!');
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render loading state while fetching data', () => {
-    // Mock loading state for the GraphQL query
-    useGetOrdersForUserQuery.mockReturnValue({
-      data: null,
-      loading: true,
-      error: null,
+  it('renders notification button with correct initial state', () => {
+    renderComponent();
+
+    expect(screen.getByTestId('notification-button')).toBeInTheDocument();
+    expect(screen.getByTestId('openNotification')).toBeInTheDocument();
+  });
+
+  it('shows error toast when user is not logged in', async () => {
+    mockLocalStorage.getItem.mockReturnValue(null);
+    renderComponent();
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Та нэвтэрч орно уу!');
     });
-
-    render(
-      <MockedProvider>
-        <NotificationSection />
-      </MockedProvider>
-    );
   });
-  // it('should mark a notification as read when clicked', async () => {
-  //   const mockUpdateOrderRead = jest.fn().mockResolvedValue({
-  //     data: {
-  //       updateOrderRead: {
-  //         _id: 'order1',
-  //         isRead: true,
-  //       },
-  //     },
-  //   });
 
-  //   useUpdateOrderReadMutation.mockReturnValue([mockUpdateOrderRead]);
+  it('displays correct number of unread notifications', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
 
-  //   render(<NotificationSection />);
+    await waitFor(() => {
+      const unreadCount = screen.getByTestId('unread-count');
+      expect(unreadCount).toBeInTheDocument();
+      expect(unreadCount.textContent).toBe('1');
+    });
+  });
 
-  //   // Ensure the mutation was called with the correct order ID
-  //   await waitFor(() => expect(mockUpdateOrderRead).toHaveBeenCalledWith({ variables: { orderId: 'order1' } }));
+  it('opens notification sheet when button is clicked', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
 
-  //   // Optionally, check if it updates the UI
-  //   await waitFor(() => {
-  //     expect(screen.queryByTestId('notification-icon-ring-order1')).not.toBeInTheDocument();
-  //     expect(screen.getByTestId('notification-icon-order1')).toBeInTheDocument();
-  //   });
-  // });
+    fireEvent.click(screen.getByTestId('notification-button'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('notification-sheet')).toBeInTheDocument();
+      expect(screen.getByTestId('notification-header')).toHaveTextContent('Мэдэгдлүүд');
+    });
+  });
+
+  it('displays notifications in correct order', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
+
+    fireEvent.click(screen.getByTestId('notification-button'));
+
+    await waitFor(() => {
+      const notifications = screen.getAllByTestId(/^order\d+$/);
+      expect(notifications).toHaveLength(2);
+
+      // Check order numbers
+      expect(screen.getByTestId('order0')).toHaveTextContent('#2');
+      expect(screen.getByTestId('order1')).toHaveTextContent('#1');
+    });
+  });
+  it('displays correct status messages and labels', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
+
+    fireEvent.click(screen.getByTestId('notification-button'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('status-label-1')).toHaveTextContent('Хүлээгдэж буй');
+      expect(screen.getByTestId('status-label-2')).toHaveTextContent('Бэлтгэгдэж буй');
+    });
+  });
+  it('calls markOrderAsRead when notification is clicked', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
+
+    fireEvent.click(screen.getByTestId('notification-button'));
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByTestId('order-card-1'));
+    });
+  });
+  it('displays correct notification icons based on read status', async () => {
+    mockLocalStorage.getItem.mockReturnValue(JSON.stringify({ _id: 'test-user-id' }));
+    renderComponent();
+
+    fireEvent.click(screen.getByTestId('notification-button'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('notification-icon-ring-1')).toBeInTheDocument(); // Unread notification
+      expect(screen.getByTestId('notification-icon-2')).toBeInTheDocument(); // Read notification
+    });
+  });
 });
