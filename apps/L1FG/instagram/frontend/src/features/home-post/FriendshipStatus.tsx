@@ -13,18 +13,17 @@ export const FriendshipStatus = ({
   followingStyle,
   followStyle,
   preview,
-  onclick,
-  statuss,
   requestStyle,
   requestedStyle,
+  followerId,
 }: {
   preview: UserTogetherUserType;
   onclick?: () => void;
-  statuss?: boolean;
   followStyle?: string;
   followingStyle?: string;
   requestStyle?: string;
   requestedStyle: string;
+  followerId: string;
 }) => {
   const targetId = preview?._id;
 
@@ -44,7 +43,7 @@ export const FriendshipStatus = ({
   }, [data]);
   const handleClick = async () => {
     try {
-      if (preview.isPrivate) {
+      if (preview?.isPrivate) {
         setStatus((pre) => ({ ...pre, outgoingRequest: true }));
       } else {
         setStatus((pre) => ({ ...pre, following: true }));
@@ -65,8 +64,8 @@ export const FriendshipStatus = ({
   if (user?._id == targetId) {
     return;
   }
-  if (status.incomingRequest && statuss) {
-    return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
+  if (status.incomingRequest) {
+    return <IsRequest followerId={followerId} setStatus={setStatus} requestStyle={requestStyle} />;
   }
   if (status.following) {
     return <Following setStatus={setStatus} targetId={targetId} followingStyle={followingStyle} />;
