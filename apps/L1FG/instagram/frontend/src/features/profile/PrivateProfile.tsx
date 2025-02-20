@@ -1,6 +1,6 @@
 import { GetUserTogetherQuery } from '@/generated';
 import { UserProfile } from './UserProfile';
-import { PrivateUser } from '@/components/profile/privateUser/PrivateUser';
+import { PrivateUser } from '@/features/profile/follow/PrivateUser';
 
 export const PrivateProfile = ({ userId, data }: { userId: string; data: GetUserTogetherQuery }) => {
   if (data.getUserTogether.user?.friendshipStatus.outgoingRequest || !data.getUserTogether.user?.friendshipStatus.following) {

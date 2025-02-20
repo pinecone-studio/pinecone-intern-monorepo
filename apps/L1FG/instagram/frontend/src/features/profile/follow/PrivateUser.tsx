@@ -1,23 +1,25 @@
-import Image from 'next/image';
-import { Buttons } from '../isOwnerId/Buttons';
+import { Buttons } from '../../../components/profile/isOwnerId/Buttons';
 import { GetUserTogetherQuery } from '@/generated';
-import { Private } from './Private';
+import { Private } from '../../../components/profile/privateUser/Private';
 
 export const PrivateUser = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <div data-testid="private">
-      <div className="flex gap-20 ml-[72px]">
-        <Image src="/images/profilePic.png" alt="Profile Picture" width={150} height={150} className="w-[150px] h-[150px] object-cover rounded-full bg-red-700" />
+      <div className="py-3 flex px-4 gap-5 sm:gap-20 ml-[50px] justify-start ">
+        <div
+          style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
+          className=" bg-cover w-[80px] h-[80px] md:w-[150px] md:h-[150px] object-cover rounded-full"
+        ></div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-3 items-center justify-center">
-            <p className="text-[20px] font-semibold">{data?.getUserTogether?.user?.userName}</p>
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 md:flex-row">
+            <p className="text-[20px] font-medium">{data?.getUserTogether?.user?.userName}</p>
 
             <Buttons data={data} userId={userId as string} />
           </div>
 
           <div>
-            <div className="flex gap-[32px]">
+            <div className="flex gap-11">
               <div className="flex gap-1">
                 <p className="text-base font-semibold">{data?.getUserTogether?.user?.postCount}</p>
                 <p className="text-base font-normal">posts</p>

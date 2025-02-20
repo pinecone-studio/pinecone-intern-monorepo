@@ -15,7 +15,7 @@ const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_po
           input: {
             searchingUserId: userId,
             after: '',
-            first: 6,
+            first: 9,
           },
         },
       },
