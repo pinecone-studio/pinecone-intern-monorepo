@@ -63,8 +63,6 @@ describe('AdminLogin Component', () => {
 
     await waitFor(() => {
       expect(mockLoginUser).toHaveBeenCalledWith({ variables: { input: { email: 'test@example.com', password: 'password123' } } });
-      expect(localStorage.getItem('token')).toBe('12345');
-      expect(pushMock).toHaveBeenCalledWith('/admin/dashboard');
     });
   });
 
@@ -127,5 +125,66 @@ describe('AdminLogin Component', () => {
     // Check if error message is displayed
     expect(screen.getByText('Нууц үг эсвэл Имэйл буруу')).toBeInTheDocument();
     expect(container.querySelector('.text-red-500')).toBeInTheDocument();
+  });
+
+  test('calls login mutation and redirects when user has admin role', async () => {
+    mockLoginUser.mockResolvedValue({
+      data: {
+        loginUser: {
+          _id: '12345',
+          role: 'admin',
+        },
+      },
+    });
+
+    render(<AdminLogin />);
+
+    fireEvent.change(screen.getByPlaceholderText('Имэйл хаяг'), { target: { value: 'admin@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Нууц үг'), { target: { value: 'adminpass' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Нэвтрэх' }));
+
+    await waitFor(() => {
+      expect(mockLoginUser).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            email: 'admin@example.com',
+            password: 'adminpass',
+          },
+        },
+      });
+      expect(localStorage.getItem('token')).toBe('12345');
+      expect(pushMock).toHaveBeenCalledWith('/admin/dashboard');
+    });
+  });
+
+  test('shows alert and does not redirect when user does not have admin role', async () => {
+    mockLoginUser.mockResolvedValue({
+      data: {
+        loginUser: {
+          _id: '12345',
+          role: 'user',
+        },
+      },
+    });
+
+    render(<AdminLogin />);
+
+    fireEvent.change(screen.getByPlaceholderText('Имэйл хаяг'), { target: { value: 'user@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Нууц үг'), { target: { value: 'userpass' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Нэвтрэх' }));
+
+    await waitFor(() => {
+      expect(mockLoginUser).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            email: 'user@example.com',
+            password: 'userpass',
+          },
+        },
+      });
+
+      expect(localStorage.getItem('token')).toBeNull();
+      expect(pushMock).not.toHaveBeenCalled();
+    });
   });
 });

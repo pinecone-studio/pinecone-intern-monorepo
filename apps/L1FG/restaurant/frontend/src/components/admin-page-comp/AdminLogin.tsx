@@ -23,6 +23,12 @@ const AdminLogin = () => {
 
       if (response.data?.loginUser) {
         const user = response.data.loginUser;
+
+        if (user.role !== 'admin') {
+          alert('Та админ эрхгүй байна.');
+          return;
+        }
+
         localStorage.setItem('token', user._id); // Store token (replace with real auth token)
         router.push('/admin/dashboard'); // Redirect after login
       }
