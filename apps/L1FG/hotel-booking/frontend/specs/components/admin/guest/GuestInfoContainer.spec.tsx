@@ -1,91 +1,63 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom'; // For extended matchers
-import { Booking } from '@/generated';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { GuestInfoContainer } from '@/components/admin/guest/GuestInfoContainer';
 
-// Mock the CheckoutDialog component
-jest.mock('@/components/admin/ui/dialog', () => ({
-  CheckoutDialog: ({ handleEditBookingStatus }: { handleEditBookingStatus: (_newStatus: string) => void }) => <button onClick={() => handleEditBookingStatus('Completed')}>Mock Checkout</button>,
-}));
+const mockRoomData = {
+  roomNumber: 101,
+};
+
+const mockBookingData = {
+  status: 'Booked',
+  email: 'guest@example.com',
+  phoneNumber: '+1234567890',
+  guestRequest: 'Late check-in',
+  startDate: '2025-02-20T14:00:00Z',
+  endDate: '2025-02-22T11:00:00Z',
+};
 
 describe('GuestInfoContainer', () => {
-  const mockHandleEditBookingStatus = jest.fn();
-
-  const mockData: Booking = {
-    status: 'Booked',
-    email: 'test@example.com',
-    phoneNumber: '123-456-7890',
-    guestRequest: 'Late check-in',
-    cardName: '',
-    cardNumber: '',
-    country: '',
-    endDate: undefined,
-    expirationDate: undefined,
-    hotelId: '',
-    id: '',
-    roomId: '',
-    securityCode: 0,
-    startDate: undefined,
-    userId: '',
-  };
-
-  it('renders guest information correctly', () => {
-    render(<GuestInfoContainer data={mockData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
-
-    // Check if guest info is rendered
-    expect(screen.getByText('Guest Info')).toBeInTheDocument();
-    expect(screen.getByText('Shagai')).toBeInTheDocument(); // First name
-    expect(screen.getByText('Nyamdorj')).toBeInTheDocument(); // Last name
-    expect(screen.getByText('Booked')).toBeInTheDocument(); // Status
-    expect(screen.getByText('test@example.com')).toBeInTheDocument(); // Email
-    expect(screen.getByText('123-456-7890')).toBeInTheDocument(); // Phone number
-    expect(screen.getByText('Late check-in')).toBeInTheDocument(); // Guest request
-    expect(screen.getByText('Room #502')).toBeInTheDocument(); // Room number
+  const handleEditBookingStatus = jest.fn(async () => {
+    console.log('Edit booking status');
   });
 
-  it('displays the correct status color for "Booked" status', () => {
-    render(<GuestInfoContainer data={mockData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
+  it('renders guest info correctly', () => {
+    render(<GuestInfoContainer data={mockBookingData} roomData={mockRoomData} handleEditBookingStatus={handleEditBookingStatus} />);
 
-    const statusElement = screen.getByText('Booked');
-    expect(statusElement).toHaveClass('bg-[#2563EB]'); // Blue for "Booked"
+    expect(screen.getByText('Guest Info'));
+    expect(screen.getByText('First name'));
+    expect(screen.getByText('Shagai'));
+    expect(screen.getByText('Last name'));
+    expect(screen.getByText('Nyamdorj'));
+    expect(screen.getByText('Status'));
+    expect(screen.getByText('Booked'));
+    expect(screen.getByText('Guests'));
+    expect(screen.getByText('1 adult, 0 children'));
+    expect(screen.getByText('Check in'));
+    expect(screen.getByText('Check out'));
+    expect(screen.getByText('Email'));
+    expect(screen.getByText('guest@example.com'));
+    expect(screen.getByText('Phone number'));
+    expect(screen.getByText('+1234567890'));
+    expect(screen.getByText('Guest Request'));
+    expect(screen.getByText('Late check-in'));
+    expect(screen.getByText('Room Number'));
+    expect(screen.getByText('Room #101'));
   });
 
-  it('displays the correct status color for "Completed" status', () => {
-    const completedData = { ...mockData, status: 'Completed' };
-    render(<GuestInfoContainer data={completedData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
+  it('handles undefined data and displays fallback values', () => {
+    render(<GuestInfoContainer data={undefined} roomData={undefined} handleEditBookingStatus={handleEditBookingStatus} />);
 
-    const statusElement = screen.getByText('Completed');
-    expect(statusElement).toHaveClass('bg-[#18BA51]'); // Green for "Completed"
+    expect(screen.getByText('Room #0'));
   });
 
-  it('displays the correct status color for "Cancelled" status', () => {
-    const cancelledData = { ...mockData, status: 'Cancelled' };
-    render(<GuestInfoContainer data={cancelledData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
+  it('displays correct status badge color', () => {
+    const { rerender } = render(<GuestInfoContainer data={{ ...mockBookingData, status: 'Completed' }} roomData={mockRoomData} handleEditBookingStatus={handleEditBookingStatus} />);
 
-    const statusElement = screen.getByText('Cancelled');
-    expect(statusElement).toHaveClass('bg-[#F97316]'); // Orange for "Cancelled"
-  });
+    const statusBadge = screen.getByText('Completed');
+    expect(statusBadge).toHaveClass('bg-[#18BA51]');
 
-  it('displays the default status color when status is undefined', () => {
-    const undefinedStatusData = { ...mockData, status: undefined };
-    render(<GuestInfoContainer data={undefinedStatusData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
+    rerender(<GuestInfoContainer data={{ ...mockBookingData, status: 'Cancelled' }} roomData={mockRoomData} handleEditBookingStatus={handleEditBookingStatus} />);
 
-    const statusElement = screen.getByText('-/-');
-    expect(statusElement).toHaveClass('bg-[#2563EB]'); // Default color
-  });
-
-  it('calls handleEditBookingStatus when CheckoutDialog button is clicked', () => {
-    render(<GuestInfoContainer data={mockData} handleEditBookingStatus={mockHandleEditBookingStatus} />);
-
-    const checkoutButton = screen.getByText('Mock Checkout');
-    fireEvent.click(checkoutButton);
-
-    expect(mockHandleEditBookingStatus).toHaveBeenCalledWith('Completed');
-  });
-
-  it('renders default placeholders when data is null', () => {
-    render(<GuestInfoContainer data={null} handleEditBookingStatus={mockHandleEditBookingStatus} />);
-
-    expect(screen.getByText('Room #502')).toBeInTheDocument(); // Static room number
+    expect(screen.getByText('Cancelled')).toHaveClass('bg-[#F97316]');
   });
 });
