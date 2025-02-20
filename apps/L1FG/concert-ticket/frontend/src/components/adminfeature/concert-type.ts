@@ -1,14 +1,41 @@
 export interface FormData {
-  concertname: string;
+  concertName: string;
   concertPhoto: string;
-  concertDescription: string;
   artistName: string[];
-  dates: Date[];
-  time: string;
-  vipticketquantity: string;
-  vipticketprice: string;
-  regularticketquantity: string;
-  regularticketprice: string;
-  openfieldticketquantity: string;
-  openfieldticketprice: string;
+  vipTicket: {
+    quantity: number;
+    price: number;
+  };
+  regularTicket: {
+    quantity: number;
+    price: number;
+  };
+  standingAreaTicket: {
+    quantity: number;
+    price: number;
+  };
+  concertDay: Date;
+  concertPlan: string;
+  concertTime: string;
+}
+
+export interface TicketSectionProps {
+  label: string;
+  quantityName: string;
+  priceName: string;
+  quantityValue: number;
+  priceValue: number;
+  quantityError?: string;
+  priceError?: string;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  testId: string;
+}
+export interface BasicInputFieldProps {
+  id: string;
+  name: string;
+  label: string;
+  placeholder: string;
+  value: string;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }

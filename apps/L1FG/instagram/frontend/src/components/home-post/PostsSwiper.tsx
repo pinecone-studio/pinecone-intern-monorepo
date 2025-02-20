@@ -10,7 +10,7 @@ export const PostsSwiper = ({ post }: { post: PostsEdge }) => {
   const isMultipleImages = post.node?.carouselMediaCount > 1;
   return (
     <Carousel data-testid="post-carousel">
-      <CarouselContent className="w-full h-[585px]  ">
+      <CarouselContent className="w-full h-[585px] ml-0  ">
         {post.node?.postImage.map((image, index) => (
           <CarouselItem key={index} className="basis-full relative">
             <Image src={imageUrlOptimizer(image)} alt={`Post Image ${index + 1}`} fill className="object-cover" data-testid="post-image" />

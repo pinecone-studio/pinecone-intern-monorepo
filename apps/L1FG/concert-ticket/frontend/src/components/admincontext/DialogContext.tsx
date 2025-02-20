@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { FormData } from '../adminfeature/concert-type';
+
 interface ConcertFormContextType {
   formData: FormData;
   addArtist: () => void;
@@ -12,20 +13,20 @@ interface ConcertFormContextType {
 
 const ConcertFormContext = createContext<ConcertFormContextType | undefined>(undefined);
 
-export const ConcertFormProvider: React.FC<{ children: React.ReactNode; onSubmit?: (_data: FormData) => void }> = ({ children, onSubmit }) => {
+export const ConcertFormProvider: React.FC<{
+  children: React.ReactNode;
+  onSubmit?: (_data: FormData) => void;
+}> = ({ children, onSubmit }) => {
   const [formData, setFormData] = useState<FormData>({
-    concertname: '',
+    concertName: '',
     concertPhoto: '',
-    concertDescription: '',
+    concertPlan: '',
     artistName: [''],
-    dates: [],
-    time: '',
-    vipticketquantity: '',
-    vipticketprice: '',
-    regularticketquantity: '',
-    regularticketprice: '',
-    openfieldticketquantity: '',
-    openfieldticketprice: '',
+    concertDay: new Date(),
+    concertTime: '00:00',
+    vipTicket: { quantity: 0, price: 0 },
+    regularTicket: { quantity: 0, price: 0 },
+    standingAreaTicket: { quantity: 0, price: 0 },
   });
 
   const addArtist = () => {
@@ -45,11 +46,46 @@ export const ConcertFormProvider: React.FC<{ children: React.ReactNode; onSubmit
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    const { name, value } = e.target;
+
+    const parseTicketValue = (value: string) => {
+      const parsed = parseInt(value, 10);
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
+    if (name.startsWith('vipTicket.')) {
+      const field = name.split('.')[1];
+      setFormData((prev) => ({
+        ...prev,
+        vipTicket: {
+          ...prev.vipTicket,
+          [field]: parseTicketValue(value),
+        },
+      }));
+    } else if (name.startsWith('regularTicket.')) {
+      const field = name.split('.')[1];
+      setFormData((prev) => ({
+        ...prev,
+        regularTicket: {
+          ...prev.regularTicket,
+          [field]: parseTicketValue(value),
+        },
+      }));
+    } else if (name.startsWith('standingAreaTicket.')) {
+      const field = name.split('.')[1];
+      setFormData((prev) => ({
+        ...prev,
+        standingAreaTicket: {
+          ...prev.standingAreaTicket,
+          [field]: parseTicketValue(value),
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const removeArtist = (index: number) => {
@@ -65,14 +101,29 @@ export const ConcertFormProvider: React.FC<{ children: React.ReactNode; onSubmit
   const handleDatesSelect = (dates: Date[] | undefined) => {
     setFormData((prev) => ({
       ...prev,
-      dates: dates || [],
+      date: dates || [],
     }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (onSubmit) {
-      onSubmit(formData);
+      const processedData = {
+        ...formData,
+        vipTicket: {
+          quantity: parseInt(String(formData.vipTicket.quantity), 10),
+          price: parseInt(String(formData.vipTicket.price), 10),
+        },
+        regularTicket: {
+          quantity: parseInt(String(formData.regularTicket.quantity), 10),
+          price: parseInt(String(formData.regularTicket.price), 10),
+        },
+        standingAreaTicket: {
+          quantity: parseInt(String(formData.standingAreaTicket.quantity), 10),
+          price: parseInt(String(formData.standingAreaTicket.price), 10),
+        },
+      };
+      onSubmit(processedData);
     }
   };
 

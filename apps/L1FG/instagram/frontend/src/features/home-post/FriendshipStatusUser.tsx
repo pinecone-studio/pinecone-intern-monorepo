@@ -85,6 +85,7 @@ export const FriendshipStatusUser = ({
       console.log(error);
     }
   };
+
   if (user?._id == targetId) {
     return;
   }

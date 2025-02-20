@@ -46,7 +46,7 @@ export const PostLikeSection = ({ post }: { post: PostsEdge }) => {
   };
   return (
     <>
-      <div className="flex items-center justify-between px-1 py-3 text-xl" data-testid="post-actions">
+      <div className="flex items-center justify-between  py-3 " data-testid="post-actions">
         <div className="flex gap-3">
           <PostLike liked={liked} handleClickLike={handleClickLike} />
           <PostModal post={post.node}>
