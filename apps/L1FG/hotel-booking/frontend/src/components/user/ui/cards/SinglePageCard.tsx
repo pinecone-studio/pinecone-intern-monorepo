@@ -5,10 +5,10 @@ import UtensilsIcon from '../svg/UtensilsIcon';
 import DumbBellIcon from '../svg/DumbBellIcon';
 import BusIcon from '../svg/BusIcon';
 import DoorClosedIcon from '../svg/DoorClosedIcon';
-import ChevronRightIcon from '../svg/ChevronRightIcon';
 import { Room } from '@/generated';
 import { SinglePageCardImage } from './SinglePageCardImage';
 import { SinglePageCardPrice } from './SinglePageCardPrice';
+import { RoomInformationCard } from './RoomInformationCard';
 
 interface SinglePageCardProps {
   rooms?: Room | null;
@@ -52,8 +52,7 @@ export const SinglePageCard = ({ rooms }: SinglePageCardProps) => {
               <p className="text-sm font-Inter font-normal leading-5">Room cleaning service</p>
             </div>
             <button className="text-sm font-Inter font-medium leading-5 text-[#2563EB] flex gap-2 items-center py-2">
-              <div>Show more</div>
-              <ChevronRightIcon />
+              <RoomInformationCard rooms={rooms} />
             </button>
           </div>
         </div>
