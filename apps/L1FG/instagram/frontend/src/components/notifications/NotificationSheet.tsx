@@ -9,7 +9,7 @@ type Props = {
 
 export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
   const { data, loading } = useGetNotificationQuery({
-    pollInterval: 500,
+    pollInterval: 10000,
     fetchPolicy: 'cache-and-network',
   });
 

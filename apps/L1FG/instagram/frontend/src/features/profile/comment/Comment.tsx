@@ -76,7 +76,7 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
                 <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
               </CommentLikeModal>
             </div>
-            <DeleteComment commentId={comment._id} />
+            <DeleteComment commentId={comment._id} postId={post._id} />
           </div>
         </div>
       </div>

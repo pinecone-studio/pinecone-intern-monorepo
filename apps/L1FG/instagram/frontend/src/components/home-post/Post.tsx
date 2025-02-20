@@ -10,7 +10,6 @@ import { ProfileHover } from '../../features/home-post/ProfileHover';
 import { PostLikeSection } from '../../features/home-post/PostLikeSection';
 import { PostDate } from './PostDate';
 import { ProfileOrStory } from './ProfileOrStory';
-import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
 
 const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
   const hasStory = post?.node?.user?.latestStoryTimestamp > post?.node?.user?.seenStoryTime;
@@ -30,7 +29,6 @@ const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
           </div>
         </ProfileHover>
         <PostDate date={post.node.createdAt} />
-        <FriendshipStatus preview={post.node.user} followStyle="text-[#0095F6] hover:text-black font-semibold text-sm" requestedStyle="text-[#EFEFEF] hover:text-[#C7C7C7]  font-semibold text-sm" />
       </div>
       <PostsSwiper post={post} />
       <PostLikeSection post={post} />
