@@ -97,6 +97,7 @@ const Following = ({ children, userId }: { children: React.ReactNode; userId: st
               </div>
               {item.node.user && (
                 <FriendshipStatus
+                  followerId=""
                   preview={item?.node.user}
                   requestStyle="flex gap-2"
                   followingStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"

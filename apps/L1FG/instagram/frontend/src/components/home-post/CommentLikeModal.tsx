@@ -10,7 +10,6 @@ const CommentLikeModal = ({ children, commentId }: { children: React.ReactNode; 
   const { data, loading } = useGetCommentLikedPeopleQuery({
     variables: { commentId: commentId },
   });
-  console.log('data comment like:', data);
   if (loading) {
     return;
   }

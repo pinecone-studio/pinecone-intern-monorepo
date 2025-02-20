@@ -18,6 +18,7 @@ export const Buttons = ({ userId, data }: ButtonsProps) => {
   ) : (
     data?.getUserTogether?.user && (
       <FriendshipStatus
+        followerId=""
         preview={data?.getUserTogether?.user}
         requestStyle="flex gap-2"
         followingStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px]  rounded-lg font-semibold text-sm px-5"
