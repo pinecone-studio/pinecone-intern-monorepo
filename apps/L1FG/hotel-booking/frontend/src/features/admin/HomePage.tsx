@@ -23,7 +23,7 @@ export const HomePage = () => {
           rating: 0,
           starRating: 0,
           description: '-/-',
-          images: ['https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png'],
+          images: ['https://www.trical.co.nz/modules/custom/legrand_ecat/assets/img/no-image.png'],
           rooms: [],
           faqs: [{ key: '-/-', value: '-/-' }],
           policies: [{ key: '-/-', value: '-/-' }],
