@@ -12,7 +12,7 @@ export const SinglePageCardPrice = ({ rooms }: SinglePageCardPriceProps) => {
   return (
     <div className="w-full">
       <div className="text-xs font-Inter font-normal leading-4 text-muted-foreground">Total</div>
-      <div className="text-xl font-Inter font-medium leading-7">{formatPrice(rooms * (useNightsCount() || 1))}₮</div>
+      <div className="text-xl font-Inter font-medium leading-7">{formatPrice(rooms * useNightsCount())}₮</div>
       <div className="text-xs font-Inter font-normal leading-4 flex gap-1">
         <p className="font-Inter font-normal not-italic text-xs">{formatPrice(rooms)}₮</p>
         <p>Price per night</p>

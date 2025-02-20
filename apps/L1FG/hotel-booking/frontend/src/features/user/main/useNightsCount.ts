@@ -16,7 +16,7 @@ export const useNightsCount = (): number => {
   const [dateFrom] = useQueryState('dateFrom');
   const [dateTo] = useQueryState('dateTo');
 
-  if (!dateFrom || !dateTo) return 0;
-  
+  if (!dateFrom || !dateTo) return 1;
+
   return calculateNights(dateFrom, dateTo);
 };
