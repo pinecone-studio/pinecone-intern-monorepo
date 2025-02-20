@@ -17,7 +17,8 @@ interface FoodData {
   status: 'Идэвхитэй' | 'Идэвхигүй';
   imageUrl: string;
 }
-const AdminFoodDialog = () => {
+
+const AdminFoodDialog = ({ refetch }: any) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [createFood] = useCreateFoodMutation();
@@ -68,7 +69,7 @@ const AdminFoodDialog = () => {
           },
         },
       });
-
+      refetch();
       alert('Хоол амжилттай үүсгэгдлээ!');
 
       setFormData({

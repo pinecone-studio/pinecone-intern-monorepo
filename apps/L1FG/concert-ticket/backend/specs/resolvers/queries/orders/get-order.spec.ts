@@ -60,6 +60,6 @@ describe('get order', () => {
   });
 
   it('2. not found order', async () => {
-    await expect(getOrder!({}, { userID: 'wrong' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('zahialga baihgvi baina'));
+    await expect(getOrder!({}, { userID: 'wrong' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Захиалга байхгүй байна'));
   });
 });

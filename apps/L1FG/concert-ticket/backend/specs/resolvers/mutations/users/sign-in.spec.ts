@@ -30,11 +30,11 @@ jest.mock('jsonwebtoken', () => ({
 
 describe('signIn resolver', () => {
   it('throws "User email not found" when user does not exist', async () => {
-    await expect(signIn!({}, { input: { email: 'zayahd@example.com', password: '0000' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('User email not found');
+    await expect(signIn!({}, { input: { email: 'zayahd@example.com', password: '0000' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Хэрэглэгчийн имэйл олдсонгүй');
   });
 
   it('throws "password not match" when password is incorrect', async () => {
-    await expect(signIn!({}, { input: { email: 'zaya@example.com', password: 'wrongPassword' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Password not match');
+    await expect(signIn!({}, { input: { email: 'zaya@example.com', password: 'wrongPassword' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow('Нууц үг таарахгүй байна');
   });
 
   it('returns user and token when email and password are correct', async () => {

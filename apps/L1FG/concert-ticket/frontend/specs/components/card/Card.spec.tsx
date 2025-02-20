@@ -31,8 +31,8 @@ describe('Card Component', () => {
     expect(getByTestId('card-container')).toBeInTheDocument();
     expect(getByTestId('card-concert-name')).toHaveTextContent('Coldplay live');
     expect(getByTestId('card-artist-name')).toHaveTextContent('Coldplay');
-    expect(getByTestId('card-regular-price')).toHaveTextContent('60$');
-    expect(getByTestId('card-discount')).toHaveTextContent('60$'); // Same value as regular price
+    expect(getByTestId('card-regular-price')).toHaveTextContent('60₮');
+    expect(getByTestId('card-discount')).toHaveTextContent('60₮'); // Same value as regular price
     expect(getByTestId('card-format-date')).toHaveTextContent('1-31'); // Formatted date (M-d)
     expect(getByText('Төв цэнгэлдэх')).toBeInTheDocument();
   });

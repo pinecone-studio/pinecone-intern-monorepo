@@ -21,6 +21,6 @@ describe('get ticket', () => {
     });
   });
   it('not found ticket', async () => {
-    await expect(getTicket!({}, { ticketNumber: 2 }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('ticket not found'));
+    await expect(getTicket!({}, { ticketNumber: 2 }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Тасалбар олдсонгүй'));
   });
 });
