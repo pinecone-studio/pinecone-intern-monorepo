@@ -42,7 +42,7 @@ export const PostTypeDefs = gql`
     title: String
     description: String
     price: String
-    propertyDetail: ID
+    propertyDetail: PropertyUpdateInput
     status: PostStats
     updatedAt: String
     createdAt: String
