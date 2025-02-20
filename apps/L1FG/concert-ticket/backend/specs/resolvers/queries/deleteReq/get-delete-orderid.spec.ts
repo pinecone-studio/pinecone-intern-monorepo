@@ -35,6 +35,6 @@ describe('get delete orderid delete req', () => {
     });
   });
   it('not found order delete req', async () => {
-    await expect(getDeleteOrderId!({}, { orderId: 'wrong' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('захиалга цуцлах хүсэлт байхгүй байна'));
+    await expect(getDeleteOrderId!({}, { orderId: 'wrong' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Захиалга цуцлах хүсэлт байхгүй байна'));
   });
 });

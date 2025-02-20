@@ -102,5 +102,6 @@ export const concertTypeDefs = gql`
   type Query {
     getConcerts: [Concert!]!
     getConcert(_id: String!): Concert!
+    getSameConcerts(concertId: String!): [Concert!]
   }
 `;
