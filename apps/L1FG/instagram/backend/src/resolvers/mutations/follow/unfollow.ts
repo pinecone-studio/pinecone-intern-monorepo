@@ -8,7 +8,7 @@ export const unfollow: MutationResolvers['unfollow'] = async (_, { followerId },
   await UserModel.findByIdAndUpdate({ _id: userId }, { $inc: { followingCount: -1 } }, { new: true });
   await FollowerModel.findOneAndDelete({ targetId: followerId, followerId: userId });
   await RequestModel.findOneAndDelete({ from: userId, to: followerId });
-  await NotificationModel.deleteMany({ categoryType: 'REQUEST', ownerId: followerId, userId: userId });
+  await NotificationModel.findOneAndDelete({ categoryType: 'REQUEST', ownerId: followerId, userId: userId });
 
   return follow;
 };
