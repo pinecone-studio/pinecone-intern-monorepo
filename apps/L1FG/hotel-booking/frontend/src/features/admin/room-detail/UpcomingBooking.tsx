@@ -2,24 +2,23 @@
 
 import { RoomDataTable } from '@/components/admin/add-room';
 import { Booking, useGetBookingsByRoomIdQuery } from '@/generated';
-import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useParams } from 'next/navigation';
 
 export const UpcomingBooking = () => {
-  const searchParams = useSearchParams();
-  const roomId = searchParams.get('id');
+  const params = useParams();
+  const roomId = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
   const { data } = useGetBookingsByRoomIdQuery({
-    variables: { roomId: roomId ?? '' },
+    variables: { roomId: roomId || '' },
     skip: !roomId,
   });
-
-  const bookings = useMemo(() => data?.getBookingsByRoomId?.filter((booking): booking is Booking => booking !== null) ?? [], [data]);
 
   if (!roomId) {
     console.error('Room ID is missing');
     return;
   }
+
+  const bookings = data?.getBookingsByRoomId?.filter((booking): booking is Booking => booking !== null) ?? [];
 
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col gap-4 p-6">

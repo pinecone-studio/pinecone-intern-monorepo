@@ -1,23 +1,23 @@
 import Image from 'next/image';
 import { NoImageIcon } from '../svg';
 import { ImagesDialog } from '../ui/dialog';
-import { HotelImagesProps } from './type';
+import { RoomDetailImagesProps } from '../room-detail';
 
-export const Images = ({ images, setImages, handleEditHotelImages }: HotelImagesProps) => {
+export const Images = ({ data, images, setImages, handleEditHotelImages }: RoomDetailImagesProps) => {
   return (
     <div className="border rounded-[8px] border-[#E4E4E7] bg-white flex flex-col px-6 pt-4 pb-6 gap-4">
       <div className="flex justify-between items-center">
         <p className="text-[#09090B] font-Inter text-lg font-semibold">Images</p>
         <ImagesDialog images={images} setImages={setImages} handleEditHotelImages={handleEditHotelImages} />
       </div>
-      {images?.[0] ? (
+      {data?.images?.[0] ? (
         <div className="w-full flex flex-col">
           <div className="relative w-full h-[264px] rounded-sm overflow-hidden">
-            <Image src={images[0]} alt="Hotel Image" width={352} height={264} className="rounded-md w-full h-full object-cover" />
+            <Image src={data?.images[0]} alt="Hotel Image" width={352} height={264} className="rounded-md w-full h-full object-cover" />
           </div>
-          {images?.length > 1 && (
+          {data?.images?.length > 1 && (
             <div className="w-full grid grid-cols-2 grid-rows-2 gap-1 mt-1">
-              {images?.slice(1, 5).map((img, index) => (
+              {data?.images?.slice(1, 5).map((img, index) => (
                 <div key={index} className="relative w-full h-[130px] rounded-sm overflow-hidden">
                   <Image src={img} alt={`Hotel Image ${index + 1}`} width={174} height={130} className="rounded-md w-full h-full object-cover" />
                 </div>

@@ -116,3 +116,22 @@ mutation editRoomServices($input: editRoomServicesInput!) {
     tax
   }
 }
+
+query getRoomById($getRoomByIdId: ID!) {
+  getRoomById(id: $getRoomByIdId) {
+    id
+    name
+    hotelId
+    roomNumber
+    price
+    bed
+    images
+    roomInfo
+    type
+    roomServices {
+      key
+      value
+    }
+    tax
+  }
+}
