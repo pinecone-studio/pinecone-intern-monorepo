@@ -14,7 +14,7 @@ describe('Forget Password verify Component', () => {
 
     cy.get('button').contains('Continue').click();
 
-    cy.url().should('eq', `${window.origin}/`);
+    cy.url().should('eq', `${window.origin}/sign-up`);
     cy.contains('The password has been successfully changed.').should('be.visible');
   });
 

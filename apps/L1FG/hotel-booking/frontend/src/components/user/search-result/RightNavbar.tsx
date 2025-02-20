@@ -1,9 +1,10 @@
 import { HotelCard } from './HotelCard';
 import { Hotel } from '@/generated';
-import Link from 'next/link';
 import { SelectInput } from '@/features/user/search-result/SelectInput';
 import { LucideHotel } from 'lucide-react';
 import { SkeletonCard } from '../ui/cards';
+import { useRouter } from 'next/navigation';
+import { useQueryState } from 'nuqs';
 
 interface RightNavbarProps {
   data: Array<Hotel | null>;
@@ -12,6 +13,10 @@ interface RightNavbarProps {
 }
 
 export const RightNavbar = ({ data, setSearchValuePrice, isLoading }: RightNavbarProps) => {
+  const [adult] = useQueryState('bedcount');
+  const [dateFrom] = useQueryState('dateFrom');
+  const [dateTo] = useQueryState('dateTo');
+  const router = useRouter();
   return (
     <div className="w-[872px] flex flex-col gap-4" data-testid="right-navbar">
       <div className="flex justify-between">
@@ -33,9 +38,12 @@ export const RightNavbar = ({ data, setSearchValuePrice, isLoading }: RightNavba
         </>
       ) : data && data.length > 0 ? (
         data.map((hotelData) => (
-          <Link key={hotelData?.id} href={`/hotel-detail/${hotelData?.id}`} data-testid={`hotel-link-${hotelData?.id}`}>
+          <button
+            key={hotelData?.id}
+            onClick={() => router.push(dateFrom && dateTo ? `/hotel-detail/${hotelData?.id}?bedcount=${adult}&dateFrom=${dateFrom}&dateTo=${dateTo}` : `/hotel-detail/${hotelData?.id}`)}
+          >
             <HotelCard data={hotelData} data-testid={`hotel-card-${hotelData?.id}`} />
-          </Link>
+          </button>
         ))
       ) : (
         <div className="w-full h-full flex justify-center py-16">
