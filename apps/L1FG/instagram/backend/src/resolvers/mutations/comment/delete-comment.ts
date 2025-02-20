@@ -9,15 +9,12 @@ export const deleteComment: MutationResolvers['deleteComment'] = async (_, { com
   authenticate(userId);
 
   try {
-    const deleteComment = await CommentModel.findOneAndDelete({
-      _id: commentId,
-    });
+    const deleteComment = await CommentModel.findByIdAndDelete(commentId);
 
     if (!deleteComment) {
       throw new NotFoundError('comment delete failed.');
     }
-
-    await PostModel.findByIdAndUpdate(userId, { $inc: { commentCount: -1 } });
+    await PostModel.findByIdAndUpdate(deleteComment.postId, { $inc: { commentCount: -1 } });
     await NotificationModel.deleteMany({
       contentCommentId: commentId,
     });
