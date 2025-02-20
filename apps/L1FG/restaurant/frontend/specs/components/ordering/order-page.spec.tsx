@@ -51,9 +51,9 @@ Object.assign(window.HTMLElement.prototype, {
 
 describe('OrderPageComponent', () => {
   const mockFoods = [
-    { id: '1', foodName: 'Food 1', price: 800, imageUrl: '/food1.jpg', categoryId: 'cat1' },
-    { id: '2', foodName: 'Food 2', price: 2500, imageUrl: '/food2.jpg', categoryId: 'cat1' },
-    { id: '3', foodName: 'Food 3', price: 1500, imageUrl: '/food3.jpg', categoryId: 'cat2' },
+    { id: '1', foodName: 'Food 1', price: 800, imageUrl: '/food1.jpg', categoryId: 'cat1', status: 'Идэвхитэй' },
+    { id: '2', foodName: 'Food 2', price: 2500, imageUrl: '/food2.jpg', categoryId: 'cat1', status: 'Идэвхигүй' },
+    { id: '3', foodName: 'Food 3', price: 1500, imageUrl: '/food3.jpg', categoryId: 'cat2', status: 'Идэвхитэй' },
   ];
 
   const mockCategories = [
@@ -107,12 +107,10 @@ describe('OrderPageComponent', () => {
 
     // Check if food items are rendered
     expect(screen.getByText('Food 1')).toBeInTheDocument();
-    expect(screen.getByText('Food 2')).toBeInTheDocument();
     expect(screen.getByText('Food 3')).toBeInTheDocument();
 
     // Check price formatting
     expect(screen.getByText('800')).toBeInTheDocument();
-    expect(screen.getByText('2.5к')).toBeInTheDocument();
     expect(screen.getByText('1.5к')).toBeInTheDocument();
 
     // Check if order list is rendered
@@ -131,7 +129,6 @@ describe('OrderPageComponent', () => {
 
     // Only foods from Category 1 should be visible
     expect(screen.getByText('Food 1')).toBeInTheDocument();
-    expect(screen.getByText('Food 2')).toBeInTheDocument();
     expect(screen.queryByText('Food 3')).not.toBeInTheDocument();
     fireEvent.click(screen.getByText('Category 2'));
     expect(screen.queryByText('Food 1')).not.toBeInTheDocument();
@@ -139,18 +136,16 @@ describe('OrderPageComponent', () => {
     expect(screen.getByText('Food 3')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Бүгд'));
     expect(screen.getByText('Food 1')).toBeInTheDocument();
-    expect(screen.getByText('Food 2')).toBeInTheDocument();
     expect(screen.getByText('Food 3')).toBeInTheDocument();
   });
   test('adds item to cart when food item is clicked', () => {
     render(<OrderPageComponent tableNumber={5} />);
-    fireEvent.click(screen.getByTestId('food-item-2'));
+    fireEvent.click(screen.getByTestId('food-item-1'));
   });
 
   test('formats prices correctly', () => {
     render(<OrderPageComponent tableNumber={5} />);
     expect(screen.getByText('800')).toBeInTheDocument();
-    expect(screen.getByText('2.5к')).toBeInTheDocument();
     expect(screen.getByText('1.5к')).toBeInTheDocument();
   });
 });
