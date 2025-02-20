@@ -56,6 +56,7 @@ process.env.NEXT_PUBLIC_CLOUDINARY_NAME = 'test_cloud';
 
 describe('AdminFoodDialog', () => {
   const mockCreateFood = jest.fn();
+  const mockRefetch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -78,7 +79,7 @@ describe('AdminFoodDialog', () => {
   };
 
   it('renders the dialog trigger button', () => {
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     const triggerButton = screen.getByTestId('food-d-trig');
     expect(triggerButton).toBeInTheDocument();
     expect(triggerButton).toHaveTextContent('Хоол');
@@ -86,7 +87,7 @@ describe('AdminFoodDialog', () => {
 
   it('opens dialog when trigger button is clicked', async () => {
     const user = userEvent.setup();
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     const triggerButton = screen.getByTestId('food-d-trig');
     await user.click(triggerButton);
 
@@ -95,7 +96,7 @@ describe('AdminFoodDialog', () => {
   });
 
   it('handles form input changes correctly', async () => {
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     const triggerButton = screen.getByTestId('food-d-trig');
     await userEvent.click(triggerButton);
 
@@ -110,7 +111,7 @@ describe('AdminFoodDialog', () => {
   });
 
   it('handles radio button selection correctly', async () => {
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     const triggerButton = screen.getByTestId('food-d-trig');
     await userEvent.click(triggerButton);
 
@@ -128,7 +129,7 @@ describe('AdminFoodDialog', () => {
       })
     );
 
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     const triggerButton = screen.getByTestId('food-d-trig');
     await user.click(triggerButton);
 
@@ -150,7 +151,7 @@ describe('AdminFoodDialog', () => {
       json: jest.fn().mockResolvedValue({ secure_url: 'https://example.com/image.jpg' }),
     });
 
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     openDialog();
 
     // Fill form
@@ -191,7 +192,7 @@ describe('AdminFoodDialog', () => {
     const createFoodMock = jest.fn().mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
     (useCreateFoodMutation as jest.Mock).mockReturnValue([createFoodMock, { loading: true }]);
 
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     openDialog();
 
     const submitButton = screen.getByTestId('uusgeh-btn');
@@ -220,7 +221,7 @@ describe('AdminFoodDialog', () => {
 
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
 
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
     openDialog();
 
     // Upload file first
@@ -243,7 +244,7 @@ describe('AdminFoodDialog', () => {
   it('handles empty file selection', () => {
     render(
       <MockedProvider>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={mockRefetch} />
       </MockedProvider>
     );
 
@@ -264,7 +265,7 @@ describe('AdminFoodDialog', () => {
   it('handles image file selection and preview', async () => {
     render(
       <MockedProvider>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={mockRefetch} />
       </MockedProvider>
     );
 
@@ -301,7 +302,7 @@ describe('AdminFoodDialog', () => {
   it('does not update preview when no file is selected', async () => {
     render(
       <MockedProvider>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={mockRefetch} />
       </MockedProvider>
     );
 
@@ -323,7 +324,7 @@ describe('AdminFoodDialog', () => {
   it('handles file input when no file is selected', async () => {
     render(
       <MockedProvider>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={mockRefetch} />
       </MockedProvider>
     );
 
@@ -352,7 +353,7 @@ describe('AdminFoodDialog', () => {
   it('handles file input with undefined files property', async () => {
     render(
       <MockedProvider>
-        <AdminFoodDialog />
+        <AdminFoodDialog refetch={mockRefetch} />
       </MockedProvider>
     );
 
@@ -376,7 +377,7 @@ describe('AdminFoodDialog', () => {
     global.URL.createObjectURL = jest.fn(() => mockObjectURL);
 
     // Render the component
-    render(<AdminFoodDialog />);
+    render(<AdminFoodDialog refetch={mockRefetch} />);
 
     // Simulate clicking the dialog trigger to open the dialog
     const dialogTrigger = screen.getByTestId('food-d-trig');
