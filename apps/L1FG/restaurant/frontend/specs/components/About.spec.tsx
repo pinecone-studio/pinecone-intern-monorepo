@@ -2,7 +2,9 @@ import About from '@/components/About';
 import { GetOrdersForUserDocument, UpdateOrderReadDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 const mocks = [
   {
     request: {
