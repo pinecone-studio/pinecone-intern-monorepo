@@ -12,8 +12,6 @@ interface RightNavbarProps {
 }
 
 export const RightNavbar = ({ data, setSearchValuePrice, isLoading }: RightNavbarProps) => {
-  console.log(data, 'data');
-
   return (
     <div className="w-[872px] flex flex-col gap-4" data-testid="right-navbar">
       <div className="flex justify-between">

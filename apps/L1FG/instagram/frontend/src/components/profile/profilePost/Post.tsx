@@ -35,10 +35,9 @@ const Post = ({ userId }: { userId: string }) => {
                     <Image
                       src={edge.node.postImage[0]}
                       alt="profile"
-                      className="object-cover w-full aspect-square  group-hover:opacity-90 transition-opacity duration-300"
+                      className="object-cover w-[300px] aspect-square  group-hover:opacity-90 transition-opacity duration-300 h-[400px] "
                       width={300}
                       height={300}
-                      sizes="(max-width: 768px) 100vw, 300px"
                     />
                     <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
                       <div className="flex gap-2 justify-center items-center">
