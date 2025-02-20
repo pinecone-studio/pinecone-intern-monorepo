@@ -1,12 +1,10 @@
 import { render, screen, fireEvent, renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import userEvent from '@testing-library/user-event';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { MenuButtons } from '@/components/home/left/MenuButtonsSideBar';
 
 const mockPush = jest.fn();
-const user = userEvent.setup();
 
 jest.mock('@/components/providers/AuthProvider', () => ({
   useAuth: jest.fn(),
