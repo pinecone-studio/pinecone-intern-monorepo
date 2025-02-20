@@ -1,13 +1,13 @@
 import { OneStoryType } from '@/generated';
 import { StoryProfile } from './StoryProfile';
 import { StoryProgress } from './StoryProgress';
+import { Dispatch, SetStateAction } from 'react';
 
-export const StoryTop = ({ stories }: { stories: OneStoryType[] }) => {
-  if (!stories) return;
+export const StoryTop = ({ stories, currentIndex, setCurrentIndex }: { stories: OneStoryType[]; currentIndex: number; setCurrentIndex: Dispatch<SetStateAction<number>> }) => {
   return (
-    <div className="w-full px-4 pt-5 pb-8">
-      <StoryProgress stories={stories} />
-      <StoryProfile story={stories[0]} />
+    <div className="top-0 inset-x-0 absolute w-full h-fit px-4 pt-5 pb-8  bg-gradient-to-b from-[rgba(38,38,38,0.8)] to-[rgba(38,38,38,0)]">
+      <StoryProgress stories={stories} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+      <StoryProfile story={stories[currentIndex]} />
     </div>
   );
 };
