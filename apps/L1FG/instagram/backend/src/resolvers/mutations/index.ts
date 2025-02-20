@@ -5,3 +5,4 @@ export * from './comment';
 export * from './request';
 export * from './follow';
 export * from './storyies';
+export * from './notification';

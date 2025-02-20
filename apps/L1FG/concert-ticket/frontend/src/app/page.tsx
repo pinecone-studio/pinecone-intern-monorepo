@@ -2,7 +2,6 @@
 import Carousel from '@/components/carousel/Carousel';
 import { Cards } from '@/components/ticketCard/Cards';
 import { useGetConcertsQuery } from '@/generated';
-import { Loader2 } from 'lucide-react';
 
 const slides = [
   { id: 1, title: 'MUSIC of the SPHERES', subtitle: 'Coldplay', dates: '10.31 - 11.01', image: 'https://wallpaperaccess.com/full/6133725.jpg' },
@@ -14,8 +13,8 @@ const Page = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-zinc-900">
-        <Loader2 className="animate-spin text-blue-500" size={64} />
+      <div className="w-full h-screen flex justify-center mt-[40vh] bg-black bg-opacity-50 z-50">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
       </div>
     );
   }
