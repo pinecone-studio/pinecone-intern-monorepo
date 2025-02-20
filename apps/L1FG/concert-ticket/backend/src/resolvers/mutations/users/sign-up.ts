@@ -7,7 +7,7 @@ export const signUp: MutationResolvers['signUp'] = async (_: unknown, { input })
 
   const user = await UserModel.findOne({ email });
 
-  if (user) throw new Error('User already exist');
+  if (user) throw new Error('Хэрэглэгчийн имэйл бүртгэгдсэн байна.');
 
   const hashPassword = bcrypt.hashSync(password, 10);
 

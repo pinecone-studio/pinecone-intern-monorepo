@@ -8,10 +8,10 @@ export const signIn: MutationResolvers['signIn'] = async (_: unknown, { input })
 
   const user = await UserModel.findOne({ email });
 
-  if (!user) throw new Error('User email not found');
+  if (!user) throw new Error('Хэрэглэгчийн имэйл олдсонгүй');
 
   const matchedPassword = bcrypt.compareSync(password, user.password);
-  if (!matchedPassword) throw new Error('Password not match');
+  if (!matchedPassword) throw new Error('Нууц үг таарахгүй байна');
 
   const token = jwt.sign(
     {

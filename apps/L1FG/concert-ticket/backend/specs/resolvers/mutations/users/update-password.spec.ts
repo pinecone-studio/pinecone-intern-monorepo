@@ -16,7 +16,7 @@ jest.mock('bcryptjs', () => ({
 
 describe('updatePassword', () => {
   it('email not found', async () => {
-    await expect(updatePassword!({}, { input: { email: 'zaya', newPassword: '2222' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Email not found'));
+    await expect(updatePassword!({}, { input: { email: 'zaya', newPassword: '2222' } }, { userId: null }, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Хэрэглэгчийн имэйл олдсонгүй.'));
   });
 
   it('updates the password when the user exists', async () => {
