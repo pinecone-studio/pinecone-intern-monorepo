@@ -8,8 +8,9 @@ import { foodTypeDefs } from './schemas/food.schema';
 import { categoryTypeDefs } from './schemas/category.schema';
 import { userTypeDefs } from './schemas/user.schema';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { tableTypeDefs } from './schemas/table.schema';
 
-const mergedTypeDefs = [typeDefs, foodTypeDefs, categoryTypeDefs, userTypeDefs];
+const mergedTypeDefs = [typeDefs, foodTypeDefs, categoryTypeDefs, userTypeDefs, tableTypeDefs];
 
 connectToDb();
 
