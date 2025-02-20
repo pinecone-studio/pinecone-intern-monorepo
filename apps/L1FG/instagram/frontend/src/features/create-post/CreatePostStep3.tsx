@@ -61,7 +61,7 @@ export const CreatePostStep3 = ({
       <DialogTrigger asChild>
         <p className="cursor-pointer text-[#0095F6]">Next</p>
       </DialogTrigger>
-      <DialogContent className="xl:max-w-[900px] p-0 gap-0 border-none">
+      <DialogContent className="xl:max-w-[900px] p-0 gap-0 border-none absolute">
         <div>
           <div className="flex justify-between py-2 px-4">
             <DialogClose onClick={handleBack}>
