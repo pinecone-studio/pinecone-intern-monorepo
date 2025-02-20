@@ -8,9 +8,11 @@ import { toast } from 'sonner';
 
 const LoginPage = () => {
   const router = useRouter();
+  const [tableNumber, setTableNumber] = useState<string | null>('');
 
   useEffect(() => {
     const user = localStorage.getItem('user');
+    setTableNumber(localStorage.getItem('tableNumber'));
     if (user) {
       router.push('/');
       toast.error('Та аль хэдийн нэвтэрсэн байна.');
@@ -58,7 +60,7 @@ const LoginPage = () => {
         })
       );
       toast.success('Амжилттай нэвтэрлээ');
-      router.push('/order/1');
+      router.push(`/order/${tableNumber}`);
     } catch (error) {
       setFormState({
         ...formState,

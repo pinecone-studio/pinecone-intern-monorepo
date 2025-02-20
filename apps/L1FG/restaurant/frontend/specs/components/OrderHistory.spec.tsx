@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import OrderHistory from '@/app/order-history/page';
 import { useGetOrdersForUserQuery } from '@/generated';
-
 jest.mock('sonner', () => ({
   toast: {
     error: jest.fn(),
@@ -18,6 +17,7 @@ jest.mock('@/generated', () => ({
   useGetOrdersForUserQuery: jest.fn(),
 }));
 describe('OrderHistory Component', () => {
+  const mockRefetch = jest.fn();
   const mockRouter = {
     push: jest.fn(),
   };
@@ -29,6 +29,7 @@ describe('OrderHistory Component', () => {
   it('renders loading state initially', () => {
     (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
       loading: true,
+      refetch: mockRefetch,
       data: null,
     });
     render(
@@ -39,6 +40,7 @@ describe('OrderHistory Component', () => {
   });
   it('renders order history correctly', async () => {
     (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      refetch: mockRefetch,
       loading: false,
       data: {
         getOrdersForUser: [
@@ -60,6 +62,7 @@ describe('OrderHistory Component', () => {
   });
   it('handles no orders scenario', async () => {
     (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
+      refetch: mockRefetch,
       loading: false,
       data: { getOrdersForUser: [] },
     });
@@ -81,6 +84,7 @@ describe('OrderHistory Component', () => {
     Storage.prototype.getItem = jest.fn(() => JSON.stringify({ _id: 'user123' }));
     (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
       loading: false,
+      refetch: mockRefetch,
       data: {
         getOrdersForUser: [
           {
@@ -132,6 +136,7 @@ describe('OrderHistory Component', () => {
     ];
     (useGetOrdersForUserQuery as jest.Mock).mockReturnValue({
       loading: false,
+      refetch: mockRefetch,
       data: {
         getOrdersForUser: mockOrders,
       },

@@ -11,16 +11,17 @@ import { useCart } from '../providers';
 const Header = () => {
   const { orders } = useCart();
   const [orderLength, setOrderLength] = useState<number>(0);
-
+  const [tableNumber, setTableNumber] = useState<string | null>('');
   const totalQuantity = orders.reduce((total, order) => total + order.quantity, 0);
 
   useEffect(() => {
     setOrderLength(totalQuantity);
+    setTableNumber(localStorage.getItem('tableNumber'));
   }, [totalQuantity]);
 
   return (
     <div className="flex justify-between border-b bg-white border-[#ECEDF0] px-4 py-3 container fixed z-20">
-      <Link href={'/order/1'}>
+      <Link href={`/order/${tableNumber}`}>
         <Image className="h-8" height={32} width={32} src="/Logo.png" alt="" />
       </Link>
       <div className="flex items-center">

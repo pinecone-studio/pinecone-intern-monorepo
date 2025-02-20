@@ -7,6 +7,10 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models/order.model.ts', () => ({
       .fn()
       .mockResolvedValueOnce({ userID: '1', _id: '1', createdAt: '2025-03-30T09:41:50.710+00:00' })
       .mockResolvedValueOnce({ userID: '1', _id: '1', createdAt: '2025-02-05T09:41:50.710+00:00' }),
+    findById: jest
+      .fn()
+      .mockResolvedValueOnce({ userID: '1', _id: '1', createdAt: '2025-03-30T09:41:50.710+00:00' })
+      .mockResolvedValueOnce({ userID: '1', _id: '1', createdAt: '2025-02-05T09:41:50.710+00:00' }),
   },
 }));
 
