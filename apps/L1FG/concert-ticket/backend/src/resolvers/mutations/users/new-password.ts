@@ -6,7 +6,7 @@ export const newPassword: MutationResolvers['newPassword'] = async (_: unknown, 
 
   const user = await UserModel.findById({ _id: userId });
 
-  if (!user) throw new Error('User not found');
+  if (!user) throw new Error('Хэрэглэгч олдсонгүй');
 
   const matched = bcrypt.compareSync(oldPassword, user.password);
 

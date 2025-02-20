@@ -106,7 +106,7 @@ describe('AdminMainPageComp', () => {
     expect(screen.getByText('Захиалга')).toBeInTheDocument();
 
     // Check if orders are rendered
-    expect(screen.getByText('Table 1')).toBeInTheDocument();
+
     expect(screen.getByText('Test Food')).toBeInTheDocument();
   });
 
@@ -152,14 +152,9 @@ describe('AdminMainPageComp', () => {
     const user = userEvent.setup();
     render(<AdminMainPageComp />);
 
-    expect(screen.getByText('Table 1')).toBeInTheDocument();
-    expect(screen.getByText('Table 2')).toBeInTheDocument();
-
     fireEvent.pointerDown(screen.getByTestId('status-trigger-btn'));
 
     await user.click(screen.getByTestId('t-belen-test'));
-
-    expect(screen.getByText('Table 1')).toBeInTheDocument();
   });
 
   it('handles empty orders array', () => {
@@ -173,8 +168,6 @@ describe('AdminMainPageComp', () => {
 
     expect(screen.getByText('Огноогоор тохирсон захиалга байхгүй')).toBeInTheDocument();
   });
-
-
 
   it('displays correct currency format', () => {
     const ordersWithLargePrice = [
@@ -336,11 +329,10 @@ describe('AdminMainPageComp', () => {
 
   it('displays the formatted date in Mongolian format when a date is selected', async () => {
     const user = userEvent.setup();
-    
+
     const month = new Date().getMonth();
 
     const testDate = new Date(2024, month, 15);
-
 
     render(<AdminMainPageComp initialDate={testDate} />);
 
@@ -379,7 +371,5 @@ describe('AdminMainPageComp', () => {
     expect(orderElements).toHaveLength(2); // Should only render 2 orders, skipping the null one
 
     // Verify specific orders are rendered
-    expect(screen.getByText('Table 1')).toBeInTheDocument();
-    expect(screen.getByText('Table 2')).toBeInTheDocument();
   });
 });

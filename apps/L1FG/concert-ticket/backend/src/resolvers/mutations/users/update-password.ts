@@ -7,7 +7,7 @@ export const updatePassword: MutationResolvers['updatePassword'] = async (_: unk
 
   const user = await UserModel.findOne({ email });
 
-  if (!user) throw new Error('Email not found');
+  if (!user) throw new Error('Хэрэглэгчийн имэйл олдсонгүй.');
 
   const hashedPassword = bcrypt.hashSync(newPassword, 10);
 

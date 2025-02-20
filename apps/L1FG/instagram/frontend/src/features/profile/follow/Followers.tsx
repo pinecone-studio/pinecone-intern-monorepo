@@ -106,7 +106,6 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
               )}
             </div>
           ))}
-          <p className="font-semibold text-lg justify-start mt-6  p-3">Suggested for you</p>
         </div>
       </DialogContent>
     </Dialog>
