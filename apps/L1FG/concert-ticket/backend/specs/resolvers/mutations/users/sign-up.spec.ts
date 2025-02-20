@@ -30,7 +30,7 @@ jest.mock('jsonwebtoken', () => ({
 
 describe('signUp', () => {
   it('user already exist', async () => {
-    await expect(signUp!({}, { input: { email: '', password: '' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('User already exist'));
+    await expect(signUp!({}, { input: { email: '', password: '' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Хэрэглэгчийн имэйл бүртгэгдсэн байна.'));
   });
   it('create user', async () => {
     const result = await signUp!({}, { input: { email: 'zaya', password: '0000' } }, { userId: null }, {} as GraphQLResolveInfo);
