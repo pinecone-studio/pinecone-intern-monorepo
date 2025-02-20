@@ -1,7 +1,7 @@
 'use client';
 
 import EstateSinglePage from '@/components/estatesSinglePage/EstatesSinglePage';
-import { useGetPostByIdQuery } from '@/generated';
+import { Post, useGetPostByIdQuery } from '@/generated';
 import { useParams } from 'next/navigation';
 
 const Page = () => {
@@ -19,7 +19,7 @@ const Page = () => {
     <div>
       {data?.getPostById && (
         <div>
-          <EstateSinglePage data={data?.getPostById} />
+          <EstateSinglePage data={data?.getPostById as Post} />
         </div>
       )}
     </div>
