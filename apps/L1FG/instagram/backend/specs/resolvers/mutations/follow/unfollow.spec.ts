@@ -37,7 +37,7 @@ describe('unfollow', () => {
   it('delete follow', async () => {
     (FollowerModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
     (RequestModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
-    (NotificationModel.deleteMany as jest.Mock).mockResolvedValue(null);
+    (NotificationModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
     (FollowerModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
     (UserModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(followerUser);
     (UserModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(updatedFollowerUser);
