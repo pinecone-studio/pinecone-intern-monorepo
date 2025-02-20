@@ -1,5 +1,5 @@
 import { PostStats, PostUpdateInput } from 'apps/L1FG/real-state/backend/src/generated';
-import { updatePost } from 'apps/L1FG/real-state/backend/src/resolvers/mutations';
+import { updatePostStatus } from 'apps/L1FG/real-state/backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('apps/L1FG/real-state/backend/src/models/post-model', () => ({
   Post: {
@@ -22,7 +22,7 @@ describe('updatePostStatus Resolver', () => {
       userId: '1',
     };
 
-    const result = await updatePost!({}, { input: mockinput, _id: '67a9e37050068558424872fd' }, context, {} as GraphQLResolveInfo);
+    const result = await updatePostStatus!({}, { input: mockinput, _id: '67a9e37050068558424872fd' }, context, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       _id: '67a9e37050068558424872fd',
