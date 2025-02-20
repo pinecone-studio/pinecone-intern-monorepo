@@ -1,7 +1,7 @@
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
-import CaptionInput from '../../components/create-post/last-create-post/CaptionInput';
+import CaptionInput from './create-post/last-create-post/CaptionInput';
 import { GetPostsDocument, useCreatePostMutation } from '@/generated';
 import React from 'react';
 import { useAuth } from '../../components/providers/AuthProvider';
