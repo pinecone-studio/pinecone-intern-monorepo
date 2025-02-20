@@ -5,6 +5,130 @@ import { ConcertFormProvider } from '../../../src/components/admincontext/Dialog
 import '@testing-library/jest-dom';
 import { TestComponent } from './TestComponent';
 describe('ConcertFormContext', () => {
+  const renderTicketTestComponent = () => {
+    return render(
+      <ConcertFormProvider>
+        <TestComponent />
+      </ConcertFormProvider>
+    );
+  };
+
+  test('updates vipTicket.quantity with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('vip-quantity');
+    fireEvent.change(input, { target: { value: '100' } });
+
+    expect(screen.getByTestId('vip-quantity-display')).toHaveTextContent('100');
+  });
+
+  test('updates vipTicket.quantity to 0 when input is invalid', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('vip-quantity');
+    fireEvent.change(input, { target: { value: 'abc' } });
+
+    expect(screen.getByTestId('vip-quantity-display')).toHaveTextContent('0');
+  });
+
+  test('updates vipTicket.price with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('vip-price');
+    fireEvent.change(input, { target: { value: '250' } });
+
+    expect(screen.getByTestId('vip-price-display')).toHaveTextContent('250');
+  });
+
+  test('updates regularTicket.quantity with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('regular-quantity');
+    fireEvent.change(input, { target: { value: '500' } });
+
+    expect(screen.getByTestId('regular-quantity-display')).toHaveTextContent('500');
+  });
+
+  test('updates regularTicket.quantity to 0 when input is invalid', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('regular-quantity');
+    fireEvent.change(input, { target: { value: 'invalid' } });
+
+    expect(screen.getByTestId('regular-quantity-display')).toHaveTextContent('0');
+  });
+
+  test('updates regularTicket.price with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('regular-price');
+    fireEvent.change(input, { target: { value: '150' } });
+
+    expect(screen.getByTestId('regular-price-display')).toHaveTextContent('150');
+  });
+
+  test('updates standingAreaTicket.quantity with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('standing-quantity');
+    fireEvent.change(input, { target: { value: '1000' } });
+
+    expect(screen.getByTestId('standing-quantity-display')).toHaveTextContent('1000');
+  });
+
+  test('updates standingAreaTicket.quantity to 0 when input is invalid', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('standing-quantity');
+    fireEvent.change(input, { target: { value: '!@#' } });
+
+    expect(screen.getByTestId('standing-quantity-display')).toHaveTextContent('0');
+  });
+
+  test('updates standingAreaTicket.price with valid number', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('standing-price');
+    fireEvent.change(input, { target: { value: '75' } });
+
+    expect(screen.getByTestId('standing-price-display')).toHaveTextContent('75');
+  });
+
+  test('handles empty string by converting to 0', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('vip-quantity');
+    fireEvent.change(input, { target: { value: '' } });
+
+    expect(screen.getByTestId('vip-quantity-display')).toHaveTextContent('0');
+  });
+
+  test('handles negative numbers correctly', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('regular-price');
+    fireEvent.change(input, { target: { value: '-50' } });
+
+    expect(screen.getByTestId('regular-price-display')).toHaveTextContent('-50');
+  });
+
+  test('handles floating point input by truncating to integer', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('standing-price');
+    fireEvent.change(input, { target: { value: '99.99' } });
+
+    expect(screen.getByTestId('standing-price-display')).toHaveTextContent('99');
+  });
+
+  test('handles input with leading zeros', () => {
+    renderTicketTestComponent();
+
+    const input = screen.getByTestId('vip-quantity');
+    fireEvent.change(input, { target: { value: '0050' } });
+
+    expect(screen.getByTestId('vip-quantity-display')).toHaveTextContent('50');
+  });
   it('initializes with default form data', () => {
     render(
       <ConcertFormProvider>
@@ -15,18 +139,24 @@ describe('ConcertFormContext', () => {
     const formDataText = screen.getByTestId('formData').textContent;
     const formData = formDataText ? JSON.parse(formDataText) : null;
     expect(formData).toEqual({
-      concertname: '',
+      concertName: '',
       concertPhoto: '',
-      concertDescription: '',
+      concertPlan: '',
+      concertDay: expect.any(String),
+      concertTime: '00:00',
       artistName: [''],
-      dates: [],
-      time: '',
-      vipticketquantity: '',
-      vipticketprice: '',
-      regularticketquantity: '',
-      regularticketprice: '',
-      openfieldticketquantity: '',
-      openfieldticketprice: '',
+      vipTicket: {
+        price: 0,
+        quantity: 0,
+      },
+      regularTicket: {
+        price: 0,
+        quantity: 0,
+      },
+      standingAreaTicket: {
+        price: 0,
+        quantity: 0,
+      },
     });
   });
   it('updates form data on handleChange', () => {
@@ -36,10 +166,10 @@ describe('ConcertFormContext', () => {
       </ConcertFormProvider>
     );
     const input = screen.getByPlaceholderText('Concert Name');
-    fireEvent.change(input, { target: { value: 'Test Concert' } });
+    fireEvent.change(input, { target: { id: 'concertName', value: 'Test Concert' } });
     const formDataText = screen.getByTestId('formData').textContent;
     const formData = formDataText ? JSON.parse(formDataText) : null;
-    expect(formData.concertname).toBe('Test Concert');
+    expect(formData.concertName).toBe('Test Concert');
   });
   it('adds an artist', () => {
     render(
@@ -107,24 +237,25 @@ describe('ConcertFormContext', () => {
         <TestComponent />
       </ConcertFormProvider>
     );
-    const datesButton = screen.getByText('Select Dates');
+
+    const datesButton = screen.getByTestId('button');
     act(() => {
       datesButton.click();
     });
+
     const formDataText = screen.getByTestId('formData').textContent;
     const formData = formDataText ? JSON.parse(formDataText) : null;
-    expect(formData.dates).toEqual(['2024-01-01T00:00:00.000Z', '2024-01-02T00:00:00.000Z']);
-    expect(formData).toHaveProperty('dates');
-    expect(formData.dates).toHaveLength(2);
-    expect(formData.dates[0]).toBe('2024-01-01T00:00:00.000Z');
-    expect(formData.dates[1]).toBe('2024-01-02T00:00:00.000Z');
+
+    expect(formData.date).toEqual([new Date('2024-01-01T00:00:00.000Z').toISOString()]);
   });
+
   it('handles undefined dates', () => {
     render(
       <ConcertFormProvider>
         <TestComponent />
       </ConcertFormProvider>
     );
+
     const clearButton = screen.getByText('Clear Dates');
     act(() => {
       fireEvent.click(clearButton);
@@ -133,8 +264,8 @@ describe('ConcertFormContext', () => {
     const formDataText = screen.getByTestId('formData').textContent;
     const formData = formDataText ? JSON.parse(formDataText) : null;
 
-    expect(formData).toHaveProperty('dates');
-    expect(formData.dates).toHaveLength(0);
+    expect(formData).toHaveProperty('date');
+    expect(formData.date).toEqual([]);
   });
   it('calls onSubmit with form data on submit', () => {
     const mockSubmit = jest.fn();
@@ -145,20 +276,18 @@ describe('ConcertFormContext', () => {
     );
     const submitButton = screen.getByText('Submit');
     fireEvent.click(submitButton);
-    expect(mockSubmit).toHaveBeenCalledWith({
-      concertname: '',
-      concertPhoto: '',
-      concertDescription: '',
-      artistName: [''],
-      dates: [],
-      time: '',
-      vipticketquantity: '',
-      vipticketprice: '',
-      regularticketquantity: '',
-      regularticketprice: '',
-      openfieldticketquantity: '',
-      openfieldticketprice: '',
-    });
+    expect(mockSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        concertName: '',
+        concertPhoto: '',
+        concertPlan: '',
+        concertTime: '00:00',
+        artistName: [''],
+        vipTicket: { price: 0, quantity: 0 },
+        regularTicket: { price: 0, quantity: 0 },
+        standingAreaTicket: { price: 0, quantity: 0 },
+      })
+    );
   });
   it('throws an error when used outside provider', () => {
     expect(() => {
@@ -182,15 +311,19 @@ describe('ConcertFormContext', () => {
         <TestComponent />
       </ConcertFormProvider>
     );
-    const input = screen.getByPlaceholderText('Concert Name');
-    fireEvent.change(input, { target: { id: 'concertname', value: 'Test Concert' } });
+
+    const nameInput = screen.getByPlaceholderText('Concert Name');
+    fireEvent.change(nameInput, { target: { name: 'concertName', value: 'Test Concert' } });
+
     const datesButton = screen.getByTestId('button');
     act(() => {
       datesButton.click();
     });
+
     const formDataText = screen.getByTestId('formData').textContent;
     const formData = formDataText ? JSON.parse(formDataText) : null;
-    expect(formData.dates).toEqual(['2024-01-01T00:00:00.000Z', '2024-01-02T00:00:00.000Z']);
-    expect(formData.concertname).toBe('Test Concert');
+
+    expect(formData.date).toEqual([new Date('2024-01-01T00:00:00.000Z').toISOString()]);
+    expect(formData.concertName).toBe('Test Concert');
   });
 });
