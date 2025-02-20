@@ -27,7 +27,7 @@ export const PostTypeDefs = gql`
     price: String!
     propertyDetail: PropertyInput!
     description: String!
-    status: PostStats!
+    status: PostStats
     updatedAt: String
     createdAt: String
   }
@@ -60,7 +60,7 @@ export const PostTypeDefs = gql`
   type Mutation {
     addPost(input: PostInput!): Post!
     deletePost(_id: ID!): Post!
-    updatePost(_id: ID!, input: PostUpdateInput!): Post!
-    updatePostStatus(_id: ID!, input: PostStatusUpdateInput!): PostUpdateRespond!
+    updatePost(_id: ID!, input: PostUpdateInput): Post
+    updatePostStatus(_id: ID!, input: PostStatusUpdateInput): PostUpdateRespond
   }
 `;
