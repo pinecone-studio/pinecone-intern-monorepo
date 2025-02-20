@@ -3,11 +3,11 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
 import Image from 'next/image';
 import { imageUrlOptimizer } from '../../components/utils/image-url-optimizer';
-import { FriendshipStatus } from './FriendshipStatus';
 import { ProfilePreviewSkeleton } from '../../components/skeleton/ProfilePreviewSkeleton';
 import { AvatarLink } from '../../components/home-post/AvatarLink';
 import NoPostsYet from '../../components/home-post/NoPostsYet';
 import PrivateAccPreview from '../../components/profile/privaccount/PrivateAccPreview';
+import { FriendshipStatus } from './FriendshipStatus';
 
 export const ProfileHover = ({ children, searchingUserId }: { children: React.ReactNode; searchingUserId: string }) => {
   const [getProfilePreview, { data, loading }] = useGetProfilePreviewLazyQuery();
@@ -66,7 +66,8 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
             </div>
             <div className="p-3">
               <FriendshipStatus
-                followStyle="w-full h-[30px] bg-[#22a0f7] hover:bg-[#1B78F2] text-white rounded-[6px]
+                followerId=""
+                followStyle=" w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
             flex justify-center items-center mt-2"
                 followingStyle="w-full h-[30px] bg-gray-200 hover:bg-gray-100 text-black rounded-[6px]
             flex justify-center items-center mt-2"

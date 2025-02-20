@@ -38,15 +38,17 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
         });
       } else {
         setLikeCount((pre) => pre + 1);
-        await createCommentLike({
+        const like = await createCommentLike({
           variables: {
             input: {
               commentId: comment._id,
               postId: post._id,
-              ownerUserId: post.user._id,
+              ownerUserId: comment?.user?._id,
             },
           },
         });
+        console.log('createLike', like);
+
         cacheLikeComment({ commentId: comment._id, likeCount: comment.likeCount + 1 });
       }
     } catch (error) {

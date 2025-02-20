@@ -1,9 +1,8 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType, useAcceptRequestMutation, UserTogetherUserType } from '@/generated';
+import { NotificationType, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
-import { useState } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
@@ -11,17 +10,6 @@ type Props = {
 };
 
 export const RequestFollow = ({ reqNotification }: Props) => {
-  const [status, setStatus] = useState(true);
-  const [acceptFollow] = useAcceptRequestMutation();
-
-  const handleFollowConfirm = async (followerId: string) => {
-    setStatus(false);
-    await acceptFollow({
-      variables: {
-        followerId,
-      },
-    });
-  };
   return (
     <div>
       {reqNotification?.map((n) => (
@@ -66,9 +54,8 @@ export const RequestFollow = ({ reqNotification }: Props) => {
               followingStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
               followStyle="bg-blue-600 h-[36px] w-[86px] text-white rounded-md"
               requestedStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
-              statuss={status}
-              onclick={() => handleFollowConfirm(n?.user?._id as string)}
-              preview={n.user as UserTogetherUserType}
+              preview={n?.user as UserTogetherUserType}
+              followerId={n?.user?._id as string}
             />
           </div>
         </div>

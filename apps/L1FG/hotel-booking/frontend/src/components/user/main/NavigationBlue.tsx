@@ -1,12 +1,17 @@
-import { useAuth } from '@/components/providers';
 import { NavigationBlueDown } from '@/features/user/main/NavigationBlueDown';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export const NavigationBlue = () => {
-  const { user } = useAuth();
+  const [isToken, setIsToken] = useState<string | null>(null);
 
-  if (user) {
+  useEffect(() => {
+    const token = localStorage.getItem('token')!;
+    setIsToken(token);
+  }, []);
+
+  if (isToken) {
     return (
       <div className="bg-[#013B94] h-[64px]">
         <div className="container mx-auto h-full flex items-center justify-between">

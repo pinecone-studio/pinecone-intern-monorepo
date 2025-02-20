@@ -13,14 +13,12 @@ export const FriendshipStatusUser = ({
   removeStyle,
   followStyle,
   preview,
-  onclick,
   statuss,
   requestStyle,
   requestedStyle,
   datas,
 }: {
   preview: UserTogetherUserType;
-  onclick?: () => void;
   statuss?: boolean;
   followStyle?: string;
   followingStyle?: string;
@@ -90,7 +88,7 @@ export const FriendshipStatusUser = ({
     return;
   }
   if (status.incomingRequest && statuss) {
-    return <IsRequest requestStyle={requestStyle} onclick={onclick as () => void} />;
+    return <IsRequest followerId="" requestStyle={requestStyle} setStatus={setStatus} />;
   }
   if (status.following) {
     return <Remove datas={datas as GetUserTogetherQuery} removeStyle={removeStyle} onclick={handleRemove} />;

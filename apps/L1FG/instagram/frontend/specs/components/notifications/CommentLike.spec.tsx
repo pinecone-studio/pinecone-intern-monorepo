@@ -21,7 +21,7 @@ const likeNotificationMock = [
     isRead: false,
     ownerId: '1',
     user: {
-      _id: '',
+      _id: '1',
       userName: 'search',
       profileImage: 'user.png',
     },
@@ -44,7 +44,7 @@ const likeNotificationMock = [
     isRead: false,
     ownerId: '1',
     user: {
-      _id: '',
+      _id: '3',
       userName: 'search',
       profileImage: 'user.png',
     },
@@ -67,19 +67,26 @@ const likeNotificationMock = [
     isRead: false,
     ownerId: '1',
     user: {
-      _id: '',
+      _id: '2',
       userName: 'john',
       profileImage: 'john.png',
     },
   },
 ];
 
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
+
 describe('post comment component', () => {
   it('should handle notifications without contentPostId', () => {
     const mockNotifications = [
       {
         categoryType: 'POST_LIKE',
-        contentPostId: null, // ❌ `null` учир `return acc;` мөр ажиллах ёстой
+        contentPostId: null,
         contentPost: {
           _id: '1',
           postImage: 'post.png',
@@ -122,7 +129,7 @@ describe('post comment component', () => {
         isRead: false,
         ownerId: '1',
         user: {
-          _id: '',
+          _id: '2',
           userName: 'search',
           profileImage: 'user.png',
         },
@@ -189,6 +196,10 @@ describe('post comment component', () => {
         userImage: 'john.png',
       },
     ]);
+    // const button = await screen.findByText('search');
+    // fireEvent.click(button);
+
+    // expect(mockPush).toHaveBeenCalledWith('/2');
   });
 
   it('renders CommentPost component', () => {
