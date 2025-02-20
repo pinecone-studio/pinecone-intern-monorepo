@@ -12,7 +12,7 @@ const mockPasswordUpdateSuccess: MockedResponse = {
   request: {
     query: NewPasswordDocument,
     variables: {
-      input: { newPassword: '1111', oldPassword: '2222', userId: '1' },
+      input: { newPassword: '111111', oldPassword: '222222', userId: '1' },
     },
   },
   result: {
@@ -26,7 +26,7 @@ const mockPasswordUpdateError: MockedResponse = {
   request: {
     query: NewPasswordDocument,
     variables: {
-      input: { newPassword: '1111', oldPassword: '2222', userId: '1' },
+      input: { newPassword: '111111', oldPassword: '222222', userId: '1' },
     },
   },
   error: new Error('Хуучин нууц үг буруу байна'),
@@ -49,9 +49,9 @@ describe('UserPassword Component', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
-    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
-    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '0000' } });
+    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '222222' } });
+    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '111111' } });
+    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '000000' } });
     fireEvent.click(screen.getByTestId('save-button'));
     expect(screen.findByText('Шинэ нууц үгийг давтан хийнэ үү')).toBeDefined();
   });
@@ -64,9 +64,9 @@ describe('UserPassword Component', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
-    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
-    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '1111' } });
+    fireEvent.change(screen.getByTestId('old-password'), { target: { value: '222222' } });
+    fireEvent.change(screen.getByTestId('new-password'), { target: { value: '111111' } });
+    fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '111111' } });
     fireEvent.click(screen.getByTestId('save-button'));
 
     expect(screen.findByText('Нууц үг амжилттай шинэчлэгдлээ')).toBeDefined();
@@ -81,13 +81,13 @@ describe('UserPassword Component', () => {
       </MockedProvider>
     );
     await act(async () => {
-      fireEvent.change(screen.getByTestId('old-password'), { target: { value: '2222' } });
+      fireEvent.change(screen.getByTestId('old-password'), { target: { value: '222222' } });
     });
     await act(async () => {
-      fireEvent.change(screen.getByTestId('new-password'), { target: { value: '1111' } });
+      fireEvent.change(screen.getByTestId('new-password'), { target: { value: '111111' } });
     });
     await act(async () => {
-      fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '1111' } });
+      fireEvent.change(screen.getByTestId('repeat-password'), { target: { value: '111111' } });
     });
     await act(async () => {
       fireEvent.click(screen.getByTestId('save-button'));

@@ -22,7 +22,7 @@ describe('TicketSubscriberBuysection', () => {
     };
     const { getByTestId } = render(
       <MockedProvider>
-        <TicketSubscriberBuysection handleNext={jest.fn()} value={value} ticketID="678ddd76c9cdc57819820767" />
+        <TicketSubscriberBuysection value={value} ticketID="678ddd76c9cdc57819820767" />
       </MockedProvider>
     );
     const total = getByTestId('ticket-buy-continue');

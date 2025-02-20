@@ -92,3 +92,27 @@ mutation createConcert($input: ConcertInput!) {
     }
   }
 }
+
+query GetSameConcerts($concertId: String!) {
+  getSameConcerts(concertId: $concertId) {
+    _id
+    concertName
+    concertPlan
+    artistName
+    concertDay
+    concertTime
+    concertPhoto
+    vipTicket {
+      price
+      quantity
+    }
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+  }
+}
