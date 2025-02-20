@@ -13,6 +13,7 @@ import * as OneUserStoriesType from './story/one-user-stories-type';
 import * as OneStoryType from './story/one-story-type';
 import * as CommentType from './comment/comment-type';
 import * as PostLikedPeopleType from './post/post-liked-people-type';
+
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -39,6 +40,7 @@ const dateScalar = new GraphQLScalarType({
     return null;
   },
 });
+
 export const resolvers = {
   Date: dateScalar,
   Mutation,

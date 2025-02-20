@@ -61,19 +61,19 @@ export const getOneStory: QueryResolvers['getOneStory'] = async (_, { userName }
           items: {
             $sortArray: {
               input: '$items',
-              sortBy: { expiringAt: -1 },
+              sortBy: { expiringAt: 1 },
             },
           },
           latestStoryTimestamp: {
             $ifNull: [
               {
-                $arrayElemAt: ['$items.expiringAt', 0],
+                $arrayElemAt: ['$items.expiringAt', -1],
               },
               0,
             ],
           },
           latestStoryId: {
-            $arrayElemAt: ['$items._id', 0],
+            $arrayElemAt: ['$items._id', -1],
           },
         },
       },

@@ -1,11 +1,13 @@
 'use client';
 
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/components/providers';
-import { useGetPostsByUserIdQuery } from '@/generated';
-import EditIcon from '@/components/myEstate/EditIcon';
-import TrashIcon from '@/components/myEstate/TrashIcon';
+import { useDeletePostMutation, useGetPostsByUserIdQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import EstateListItem from '@/components/addEstate/assests/EstateListItem';
+import DeleteConfirmModal from '@/components/addEstate/assests/DeleteConfirmModal';
+import LoadingErrorDisplay from '@/components/addEstate/assests/LoadingErrorDisplay';
 
 const statusLabelMap: Record<string, string> = {
   PENDING: 'Хүлээгдэж буй',
@@ -18,65 +20,88 @@ const statusStyleMap: Record<string, string> = {
   REJECTED: 'bg-red-100 text-red-800',
 };
 
-const MyEstatesPage = () => {
-  const { user } = useAuth();
-  const router = useRouter();
+const formatPrice = (price: string): string => {
+  return new Intl.NumberFormat('mn-MN').format(Number(price));
+};
 
-  const { data, loading, error } = useGetPostsByUserIdQuery({
+const TableHeader: React.FC = () => (
+  <div className="flex items-center bg-gray-50 p-4 border-b border-zinc-200">
+    <div className="w-16 text-black font-medium border-r border-zinc-200">№</div>
+    <div className="flex-[2] text-black font-medium border-r border-zinc-200 px-4">Нэр</div>
+    <div className="flex-1 text-black font-medium border-r border-zinc-200 px-4">Төлөв</div>
+    <div className="flex-1 text-black font-medium border-r border-zinc-200 px-4">Үнэ</div>
+    <div className="w-24 px-4" />
+  </div>
+);
+
+const MyEstatesPage: React.FC = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+  const [postToDelete, setPostToDelete] = useState('');
+
+  const { data, loading, error, refetch } = useGetPostsByUserIdQuery({
     variables: { input: { propertyOwnerId: user?._id } },
   });
 
-  if (loading || error) {
-    return <div>{loading ? 'Loading...' : `Error: ${error?.message || ''}`}</div>;
-  }
+  useEffect(() => {
+    refetch();
+  }, [refetch, user?._id]);
 
-  const formatPrice = (price: string) => {
-    return new Intl.NumberFormat('mn-MN').format(Number(price));
+  const [deletePost] = useDeletePostMutation({
+    onCompleted: () => {
+      toast.success('Зар амжилттай устгагдлаа');
+      refetch();
+      setShowModal(false);
+    },
+    onError: () => {
+      toast.error('Зар устгахад алдаа гарлаа');
+      setShowModal(false);
+    },
+  });
+
+  const handleDeleteClick = (id: string) => {
+    setPostToDelete(id);
+    setShowModal(true);
   };
 
-  return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Миний зарууд</h1>
-      <div className="border border-zinc-200 rounded-lg overflow-hidden">
-        <div className="flex items-center bg-gray-50 p-4 border-b border-zinc-200">
-          <div className="w-16 text-black font-medium border-r border-zinc-200">№</div>
-          <div className="flex-[2] text-black font-medium border-r border-zinc-200 px-4">Нэр</div>
-          <div className="flex-1 text-black font-medium border-r border-zinc-200 px-4">Төлөв</div>
-          <div className="flex-1 text-black font-medium border-r border-zinc-200 px-4">Үнэ</div>
-          <div className="w-24 px-4" />
-        </div>
+  const handleDelete = () => {
+    deletePost({ variables: { id: postToDelete } });
+  };
 
-        <div>
-          {data?.getPosts?.map((post, index) => (
-            <div key={post._id} className="bg-white hover:bg-gray-50 border-b border-zinc-200">
-              <div className="flex items-center p-4">
-                <div className="w-16 text-gray-500 font-medium border-r border-zinc-200">{index + 1}.</div>
-                <div className="flex-[2] font-medium flex items-center gap-4 border-r border-zinc-200 px-4">
-                  <div className="relative w-16 h-16 rounded-lg overflow-hidden">
-                    <Image src={post.propertyDetail.images[0] || '/placeholder.png'} alt={post.title} fill className="object-cover" />
-                  </div>
-                  {post.title}
-                </div>
-                <div className="flex-1 border-r border-zinc-200 px-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold inline-block ${statusStyleMap[post.status] || statusStyleMap.REJECTED}`}>
-                    {statusLabelMap[post.status] || statusLabelMap.REJECTED}
-                  </span>
-                </div>
-                <div className="flex-1 text-black border-r border-zinc-200 px-4">{formatPrice(post.price)}₮</div>
-                <div className="w-24 flex items-center gap-2 px-4" data-testid="action-buttons">
-                  <button onClick={() => router.push('/my-estates/' + post._id)} className="p-2 hover:bg-gray-100 rounded-full">
-                    <EditIcon />
-                  </button>
-                  <button className="p-2 hover:bg-gray-100 rounded-full">
-                    <TrashIcon />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+  const handleEdit = (id: string) => {
+    router.push('/my-estates/' + id);
+  };
+
+  if (loading || error) {
+    return <LoadingErrorDisplay loading={loading} error={error} />;
+  }
+
+  return (
+    <>
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-6">Миний зарууд</h1>
+        <div className="border border-zinc-200 rounded-lg overflow-hidden">
+          <TableHeader />
+          <div>
+            {data?.getPosts?.map((post, index) => (
+              <EstateListItem
+                key={post._id}
+                post={post}
+                index={index}
+                onEdit={handleEdit}
+                onDelete={handleDeleteClick}
+                statusStyleMap={statusStyleMap}
+                statusLabelMap={statusLabelMap}
+                formatPrice={formatPrice}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      {showModal && <DeleteConfirmModal onClose={() => setShowModal(false)} onConfirm={handleDelete} />}
+    </>
   );
 };
 
