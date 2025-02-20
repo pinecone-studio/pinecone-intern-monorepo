@@ -34,7 +34,7 @@ const HomePostCreateComment = ({ post }: { post: UserPostType }) => {
 
   return (
     <div className="flex justify-between ">
-      <input className="w-full outline-none px-3" placeholder="Add a comment..." value={text} onChange={(e) => setText(e.target.value.slice(0))} />
+      <input className="w-full outline-none " placeholder="Add a comment..." value={text} onChange={(e) => setText(e.target.value.slice(0))} />
       <button onClick={handlePost} className={`cursor-pointer hover:text-black ${!text.trim() || loadingComment ? 'opacity-50 ' : ''}`} disabled={!text.trim() || loadingComment}>
         {loadingComment ? <TbLoaderQuarter className="animate-spin" /> : 'Post'}
       </button>
