@@ -1,7 +1,7 @@
 import { MutationResolvers } from '../../../generated';
 import { Post } from '../../../models/post-model';
 
-export const updatePost: MutationResolvers['updatePost'] = async (_, { input, _id }) => {
+export const updatePostStatus: MutationResolvers['updatePostStatus'] = async (_, { input, _id }) => {
   const { status } = input;
   console.log(status);
 

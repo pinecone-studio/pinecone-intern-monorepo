@@ -32,18 +32,20 @@ export const PostTypeDefs = gql`
     createdAt: String
   }
 
-  input PostUpdateInput {
-    title: String
-    description: String
-    price: String
-    propertyDetail: PropertyUpdateInput
+  input PostStatusUpdateInput {
     status: PostStats
-    updatedAt: String
-    createdAt: String
   }
 
   input PostUpdateInput {
+    _id: ID
+    propertyOwnerId: ID
+    title: String
+    description: String
+    price: String
+    propertyDetail: ID
     status: PostStats
+    updatedAt: String
+    createdAt: String
   }
 
   type PostUpdateRespond {
@@ -58,6 +60,7 @@ export const PostTypeDefs = gql`
   type Mutation {
     addPost(input: PostInput!): Post!
     deletePost(_id: ID!): Post!
-    updatePost(_id: ID!, input: PostUpdateInput!): PostUpdateRespond!
+    updatePost(_id: ID!, input: PostUpdateInput!): Post!
+    updatePostStatus(_id: ID!, input: PostStatusUpdateInput!): PostUpdateRespond!
   }
 `;

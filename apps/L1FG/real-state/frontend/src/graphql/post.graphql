@@ -60,3 +60,44 @@ mutation RequestChangeStatus($id: ID!, $input: PostUpdateInput!) {
     status
   }
 }
+
+mutation AddPost($input: PostInput!) {
+  addPost(input: $input) {
+    _id
+    propertyOwnerId {
+      _id
+    }
+    title
+    description
+    price
+    propertyDetail {
+      houseType
+      size
+      images
+      totalRooms
+      garage
+      restrooms
+      location {
+        address
+        city
+        district
+        subDistrict
+      }
+      details {
+        completionDate
+        windowsCount
+        windowType
+        floorMaterial
+        floorNumber
+        balcony
+        totalFloors
+        lift
+      }
+      uploadedAt
+      createdAt
+    }
+    status
+    updatedAt
+    createdAt
+  }
+}

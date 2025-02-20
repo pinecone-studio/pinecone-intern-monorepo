@@ -64,7 +64,7 @@ describe('AdminSideInfo', () => {
         <AdminSideInfo
           property={{
             __typename: undefined,
-            _id: 'valid-id', // Ensure a valid id is passed
+            _id: 'valid-id',
             title: '',
             description: '',
             price: '',
