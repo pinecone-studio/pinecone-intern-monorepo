@@ -2,8 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MenuButtons } from '@/components/home/left/MenuButtonsSideBar';
 import { MockedProvider } from '@apollo/client/testing';
+import userEvent from '@testing-library/user-event';
 
 const mockPush = jest.fn();
+const user = userEvent.setup();
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -66,6 +68,35 @@ describe('MenuButtons component functionality', () => {
     // Verify navigation
     expect(mockPush).toHaveBeenCalledWith('/');
   });
+  it('navigates to settings when settings button is clicked', async () => {
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
+
+    const MenuButton = await screen.findByTestId('menu-button');
+    await user.click(MenuButton);
+    const settingsButton = await screen.findByTestId('buttonsettings');
+    await user.click(settingsButton);
+    expect(mockPush).toHaveBeenCalledWith('/settings');
+  });
+  it('logs out successfully and redirects to login page', async () => {
+    render(
+      <MockedProvider>
+        <MenuButtons />
+      </MockedProvider>
+    );
+
+    const MenuButton = await screen.findByTestId('menu-button');
+    await user.click(MenuButton);
+
+    const logoutButton = screen.getByTestId('buttonlogout');
+    await user.click(logoutButton);
+
+    expect(mockPush).toHaveBeenCalledWith('/login');
+  });
+
   it('Closesheets ', () => {
     render(
       <MockedProvider>
