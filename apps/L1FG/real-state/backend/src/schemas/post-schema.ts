@@ -53,8 +53,8 @@ export const PostTypeDefs = gql`
   }
 
   type Query {
-    getPostById(_id: ID): Post
-    getPosts(input: JSON): [Post!]
+    getPostById(_id: ID): Post!
+    getPosts(input: JSON): [Post!]!
   }
 
   type Mutation {
