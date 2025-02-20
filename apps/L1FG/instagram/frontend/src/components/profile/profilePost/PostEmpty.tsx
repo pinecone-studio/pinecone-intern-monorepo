@@ -3,6 +3,7 @@ import CreatePostStep1 from '@/features/create-post/create-post/CreatePostStep1'
 import { useGetUserTogetherQuery } from '@/generated';
 import { Camera } from 'lucide-react';
 import React from 'react';
+import { Footer } from '../Footer';
 
 const PostEmpty = ({ userId }: { userId: string }) => {
   const [openCreatePostModal, setOpenCreatePostModal] = React.useState(false);
@@ -39,10 +40,7 @@ const PostEmpty = ({ userId }: { userId: string }) => {
 
           {openCreatePostModal && <CreatePostStep1 openCreatePostModal={openCreatePostModal} setOpenCreatePostModal={setOpenCreatePostModal} />}
 
-          <div className="text-gray-500 text-xs flex flex-col gap-4 mt-8">
-            <p className="flex justify-center">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-            <p className="flex justify-center">© 2024 INSTAGRAM FROM META</p>
-          </div>
+          <Footer />
         </div>
       ) : (
         <div className="flex flex-col gap-4" data-testid="post-empty">
@@ -54,11 +52,8 @@ const PostEmpty = ({ userId }: { userId: string }) => {
               <h2 className="font-semibold text-3xl">No posts yet</h2>
             </div>
           </div>
-
-          <div className="text-gray-500 text-xs flex flex-col gap-4 mt-8">
-            <p className="flex justify-center">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-            <p className="flex justify-center">© 2024 INSTAGRAM FROM META</p>
-          </div>
+          <div className="p-12"></div>
+          <Footer />
         </div>
       )}
     </div>
