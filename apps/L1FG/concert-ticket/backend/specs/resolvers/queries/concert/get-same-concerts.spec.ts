@@ -61,7 +61,7 @@ describe('get same concert', () => {
     expect(ConcertModel.findById).toHaveBeenCalledWith({ _id: '1' });
 
     expect(ConcertModel.find).toHaveBeenCalledWith({
-      $or: [{ concertDay: { $gte: '2025-02-20T10:52:36.706Z' } }, { artistName: ['Drake'] }, { concertTime: '00:00' }],
+      $or: [{ concertDay: '2025-02-20T10:52:36.706Z' }, { artistName: ['Drake'] }, { concertTime: '00:00' }],
     });
 
     expect(result).toEqual([
@@ -90,6 +90,6 @@ describe('get same concert', () => {
   });
 
   it('get concerts null', async () => {
-    await expect(getSameConcerts!({}, { concertId: '1' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Холбоотой эвент болон тоглолтууд байхгүй байна.');
+    await expect(getSameConcerts!({}, { concertId: 'wrong' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Холбоотой эвент болон тоглолтууд байхгүй байна.');
   });
 });
