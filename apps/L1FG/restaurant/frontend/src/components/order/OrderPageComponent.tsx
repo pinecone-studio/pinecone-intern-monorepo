@@ -22,6 +22,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
 
   useEffect(() => {
     setTableId(tableNumber);
+    localStorage.setItem('tableNumber', tableNumber.toString());
   }, [setTableId, tableNumber]);
 
   const formatPrice = (price: number) => (price >= 1000 ? `${(price / 1000).toFixed(1)}к` : price.toString());
