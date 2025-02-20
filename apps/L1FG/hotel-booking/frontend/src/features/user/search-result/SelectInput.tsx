@@ -28,9 +28,6 @@ export const SelectInput = ({ setSearchValuePrice }: SelectInputProps) => {
         <SelectItem value="hightolow" data-testid="select-item-hightolow">
           Price: High to Low
         </SelectItem>
-        <SelectItem value="star" data-testid="select-item-star">
-          Star Rating
-        </SelectItem>
       </SelectContent>
     </Select>
   );

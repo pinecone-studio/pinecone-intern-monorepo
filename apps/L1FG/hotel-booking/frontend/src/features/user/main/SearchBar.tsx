@@ -1,11 +1,13 @@
 import { ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { DatePickerWithRange } from './DatePickerWithRange';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 export const SearchBar = () => {
+  const [isButtonHid, setIsButtonHid] = useState<boolean>(false);
   const [adultCount, setAdultCount] = useQueryState('bedcount');
   const [dateFrom] = useQueryState('dateFrom');
   const [dateTo] = useQueryState('dateTo');
@@ -29,6 +31,24 @@ export const SearchBar = () => {
     setAdultCount(adult.toString());
     setIsOpen(false);
   };
+
+  const handleClickButton = () => {
+    if (isButtonHid === true) {
+      toast.error('Pleace select adult and date.!', {
+        style: { backgroundColor: 'red', color: 'white' },
+      });
+    } else {
+      router.push(`/search-hotels?bedcount=${adult}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
+    }
+  };
+
+  useEffect(() => {
+    if (dateTo && dateFrom && adult) {
+      setIsButtonHid(false);
+    } else {
+      setIsButtonHid(true);
+    }
+  }, [dateFrom, dateTo, adult]);
 
   return (
     <div>
@@ -87,10 +107,7 @@ export const SearchBar = () => {
 
           {/* Хайх товч */}
           <div className="flex items-end">
-            <button
-              onClick={() => router.push(dateFrom && dateTo ? `/search-hotels?bedcount=${adult}&dateFrom=${dateFrom}&dateTo=${dateTo}` : `/search-hotels?bedcount=${adult}`)}
-              className="bg-[#2563EB] px-6 py-2 flex items-center justify-center rounded-md h-10"
-            >
+            <button onClick={() => handleClickButton()} className="bg-[#2563EB] px-6 py-2 flex items-center justify-center rounded-md h-10">
               <p className="text-[#FAFAFA] font-Inter text-sm font-medium">Search</p>
             </button>
           </div>

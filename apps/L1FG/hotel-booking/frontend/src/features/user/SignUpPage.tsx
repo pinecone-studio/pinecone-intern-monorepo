@@ -1,30 +1,34 @@
-"use client";
+'use client';
 import { BlackLogoIcon } from '@/components/user/ui/svg';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState } from 'react';
-import  { useRouter } from "next/navigation"
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers';
-
+import { toast } from 'sonner';
 
 const SignUpPage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password , setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const Router = useRouter();
-  const {signin} = useAuth();
+  const { signin } = useAuth();
 
   const onSubmit = async () => {
     try {
-      await signin({  email : email, password : password } );
-      Router.push("/");
+      await signin({ email: email, password: password });
+      Router.push('/');
+      toast.success('Successfully logged in', {
+        style: { backgroundColor: 'green', color: 'white' },
+      });
     } catch (error) {
       console.error(error);
+      toast.error(`${error}`, {
+        style: { backgroundColor: 'red', color: 'white' },
+      });
     }
   };
 
-
-  
   return (
     <div className="container mx-auto h-screen">
       <div className="w-full h-full pt-[140px] pb-8 flex flex-col items-center justify-between">
@@ -42,7 +46,7 @@ const SignUpPage = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <p className="font-Inter font-normal text-sm leading-[14px] not-italic">Email</p>
-                  <Input onChange={(event)=> setEmail(event.target.value)} value={email} type="email" placeholder="name@example.com" />
+                  <Input onChange={(event) => setEmail(event.target.value)} value={email} type="email" placeholder="name@example.com" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { useSignInMutation, User } from '@/generated';
 
 type SignInParams = {
@@ -33,7 +33,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(`${error.message}`, {
+        style: { backgroundColor: 'red', color: 'white' },
+      });
     },
   });
 
@@ -51,6 +53,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    toast.success('Successfully logged out', {
+      style: { backgroundColor: 'green', color: 'white' },
+    });
   };
 
   return <AuthContext.Provider value={{ signin, signout, user }}>{children}</AuthContext.Provider>;
