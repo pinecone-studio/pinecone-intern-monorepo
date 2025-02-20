@@ -3,7 +3,7 @@ import { TextSideBar } from '@/components/notifications/TextSideBar';
 import { HomeSVG } from '../../svg/HomeSvg';
 import { useRouter } from 'next/navigation';
 import { SearchSVG } from '../../svg/SearchSvg';
-import { HeartSVG } from './Svg/HeartSvg';
+import { HeartSVG } from '../../../features/HeartSvg';
 import { Create } from './Create';
 import { SquarePlus } from 'lucide-react';
 import { UserSvg } from '../../svg/UserSvg';
@@ -20,6 +20,7 @@ type Props = {
 export const SidebarContent = ({ isOpen, searchOpen, openSearchSheet, toggleNotifications, closeSheets }: Props) => {
   const router = useRouter();
   const { user } = useAuth();
+
   return (
     <div className="flex flex-col gap-2 mb-auto" data-testid="sidebar-content">
       <TextSideBar

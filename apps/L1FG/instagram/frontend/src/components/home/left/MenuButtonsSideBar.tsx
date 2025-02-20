@@ -1,25 +1,32 @@
 /* eslint-disable complexity */
 'use client';
 import { useState } from 'react';
-import { InstaSVG } from '../../svg/InstaSvg';
 import { useRouter } from 'next/navigation';
-import { InstagramSvg } from '../../svg/InstagramSvg';
 import { SearchSheet } from '@/components/search/SearchSheet';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Menu, Settings } from 'lucide-react';
 import { SidebarContent } from './SidebarContent';
 import { NotificationSheet } from '@/components/notifications/NotificationSheet';
+import { useUpdateIsReadMutation } from '@/generated';
+import { InstagramSvg } from '@/components/svg/InstagramSvg';
+import { InstaSVG } from '@/components/svg/InstaSvg';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 export const MenuButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const router = useRouter();
+  const [seenNotification] = useUpdateIsReadMutation();
+  const { setNotification } = useAuth();
 
-  const toggleNotifications = () => {
+  const toggleNotifications = async () => {
+    seenNotification();
+    setNotification(false);
     setIsOpen((prev) => !prev);
     setSearchOpen(false);
   };
+
   const openSearchSheet = () => {
     setIsOpen(false);
     setSearchOpen((prev) => !prev);
@@ -30,13 +37,13 @@ export const MenuButtons = () => {
   };
 
   // Function to handle log out and redirect to login page
-  const handleLogout = () => {
-    // Your logout logic here (e.g., clearing cookies, localStorage, etc.)
-    // Example: localStorage.removeItem('user');
+  // const handleLogout = () => {
+  //   // Your logout logic here (e.g., clearing cookies, localStorage, etc.)
+  //   // Example: localStorage.removeItem('user');
 
-    // Redirect to login page
-    router.push('/login');
-  };
+  //   // Redirect to login page
+  //   router.push('/login');
+  // };
 
   return (
     <>
@@ -75,10 +82,10 @@ export const MenuButtons = () => {
                   variant="outline"
                   className="h-[50px] w-full justify-start items-center flex  gap-2"
                   data-testid="buttonsettings"
-                  onClick={() => {
-                    router.push(`/settings`);
-                    closeSheets();
-                  }}
+                  // onClick={() => {
+                  //   router.push(`/settings`);
+                  //   closeSheets();
+                  // }}
                 >
                   <Settings /> <p>Settings</p>
                 </Button>
@@ -86,7 +93,7 @@ export const MenuButtons = () => {
 
               <div className="px-4 py-2 flex flex-col gap-2">
                 <div className="border-b border-stone-100"></div>
-                <Button data-testid="buttonlogout" variant="outline" className="h-[50px] w-full justify-start items-center flex " onClick={handleLogout}>
+                <Button data-testid="buttonlogout" variant="outline" className="h-[50px] w-full justify-start items-center flex ">
                   Log out
                 </Button>
               </div>

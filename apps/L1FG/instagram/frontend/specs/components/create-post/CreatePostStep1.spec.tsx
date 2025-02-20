@@ -100,12 +100,10 @@ describe('CreatePostStep1 Component', () => {
 
     const fileInput = screen.getByTestId('file-upload-input') as HTMLInputElement;
 
-    // Файл оруулаагүй байх нөхцөл үүсгэнэ
     fireEvent.change(fileInput, {
       target: { files: null },
     });
 
-    // Файл оруулаагүй тул input дээр ямар нэг өөрчлөлт хийх ёсгүй
     expect(fileInput.files).toBe(null);
   });
 });

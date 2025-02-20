@@ -1,20 +1,17 @@
 import { GetCommentsDocument, useDeleteCommentMutation } from '@/generated';
 import { Ellipsis } from 'lucide-react';
-import { Dialog, DialogClose, DialogContent,  DialogTrigger } from '@/components/ui/dialog';
-import { useAuth } from '@/components/providers/AuthProvider';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
-const DeleteComment = ({ commentId }: { commentId: string }) => {
-  const { user } = useAuth();
-  const userId = user?._id;
+const DeleteComment = ({ commentId, postId }: { commentId: string; postId: string }) => {
   const [deleteComment] = useDeleteCommentMutation({
     refetchQueries: [
       {
         query: GetCommentsDocument,
         variables: {
           input: {
-            postId: userId,
+            postId: postId,
             after: '',
-            first: 6,
+            first: 4,
           },
         },
       },
@@ -25,13 +22,9 @@ const DeleteComment = ({ commentId }: { commentId: string }) => {
     try {
       await deleteComment({
         variables: { commentId },
-        update: (cache) => {
-          cache.evict({ id: commentId });
-          cache.gc();
-        },
       });
-    } catch (err) {
-      console.error('Error deleting post:', err);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
     }
   };
 
@@ -49,7 +42,7 @@ const DeleteComment = ({ commentId }: { commentId: string }) => {
         </DialogClose>
         <p className="w-full border-b" />
         <DialogClose asChild>
-          <p className="flex items-center justify-center py-3  cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
+          <p className="flex items-center justify-center py-3 cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
         </DialogClose>
       </DialogContent>
     </Dialog>

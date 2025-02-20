@@ -10,8 +10,6 @@ type Props = {
 };
 
 export const LikedPost = ({ likeNotification }: Props) => {
-  console.log('like', likeNotification);
-
   const groupedPostLikes = likeNotification?.reduce((acc, notification) => {
     const postId = notification.contentPostId;
     if (typeof postId !== 'string') return acc;
