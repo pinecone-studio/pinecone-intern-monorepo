@@ -14,6 +14,7 @@ import WindowsSection from '@/components/addEstate/WindowsSection';
 import FloorDetailsSection from '@/components/addEstate/FloorDetailsSection';
 import BalconyLiftSection from '@/components/addEstate/BalconyLiftSection';
 import PreviewSection from '@/components/addEstate/PreviewSection';
+import DeleteSection from '@/components/addEstate/DeleteSection';
 
 const EditEstate = () => {
   const router = useRouter();
@@ -119,25 +120,29 @@ const EditEstate = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">Алдаа гарлаа</div>;
   if (!data?.getPostById) return <div className="text-red-500">Алдаа гарлаа</div>;
-
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="flex gap-8">
-        <div className="max-w-2xl">
-          <h1 className="text-2xl font-bold mb-6">Үл хөдлөхийн мэдээлэл шинэчлэх</h1>
-          <PropertyDetails formData={formData} handleChange={handleChange} />
-          <DescriptionSection formData={formData} handleChange={handleChange} />
-          <ImagesSection formData={formData} handleChange={handleChange} />
-          <TownDetails formData={formData} handleChange={handleChange} />
-          <RestroomsSection formData={formData} handleChange={handleChange} />
-          <WindowsSection formData={formData} handleChange={handleChange} />
-          <FloorDetailsSection formData={formData} handleChange={handleChange} />
-          <BalconyLiftSection formData={formData} handleChange={handleChange} />
+    <main className="container mx-auto px-4 py-8" data-cy="edit-estate-page">
+      <form onSubmit={handleUpdate} data-cy="edit-estate-form">
+        <div className="flex gap-8">
+          <div className="max-w-2xl" data-cy="form-content">
+            <h1 className="text-2xl font-bold mb-6" data-cy="page-title">
+              Үл хөдлөхийн мэдээлэл шинэчлэх
+            </h1>
+            <PropertyDetails formData={formData} handleChange={handleChange} />
+            <DescriptionSection formData={formData} handleChange={handleChange} />
+            <ImagesSection formData={formData} handleChange={handleChange} />
+            <TownDetails formData={formData} handleChange={handleChange} />
+            <RestroomsSection formData={formData} handleChange={handleChange} />
+            <WindowsSection formData={formData} handleChange={handleChange} />
+            <FloorDetailsSection formData={formData} handleChange={handleChange} />
+            <BalconyLiftSection formData={formData} handleChange={handleChange} />
+          </div>
+          <div className="sticky top-0 h-screen" data-cy="side-section">
+            <PreviewSection formData={formData} onSubmit={handleUpdate} isEdit={true} />
+            <DeleteSection postId={id as string} />
+          </div>
         </div>
-        <div className="sticky top-0 h-screen">
-          <PreviewSection formData={formData} onSubmit={handleUpdate} isEdit={true} />
-        </div>
-      </div>
+      </form>
     </main>
   );
 };

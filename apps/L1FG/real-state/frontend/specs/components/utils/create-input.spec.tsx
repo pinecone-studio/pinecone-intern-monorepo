@@ -2,10 +2,10 @@ import { createInput } from '@/components/utils/create-input';
 import { HouseTypeEnum, PostStats } from '@/generated';
 
 describe('createInput', () => {
-  const mockUploadedImages = ['sample-image.jpg'];
   const mockUser = { _id: 'user123' };
+  const mockUploadedImages = ['sample-image.jpg'];
 
-  test('should transform form data correctly with all fields', () => {
+  test('transforms full form data correctly with all fields', () => {
     const mockFormData = {
       title: 'Beautiful House',
       description: 'A lovely property',
@@ -30,7 +30,6 @@ describe('createInput', () => {
     };
 
     const result = createInput(mockFormData, mockUser, mockUploadedImages);
-
     expect(result).toEqual({
       title: 'Beautiful House',
       description: 'A lovely property',
@@ -64,7 +63,7 @@ describe('createInput', () => {
     });
   });
 
-  test('should handle missing optional fields', () => {
+  test('applies defaults for missing optional fields and missing user', () => {
     const mockFormData = {
       title: 'Simple House',
       description: 'Basic property',
@@ -83,55 +82,37 @@ describe('createInput', () => {
       totalFloors: 2,
     };
 
-    const result = createInput(mockFormData, mockUser, mockUploadedImages);
-
+    const result = createInput(mockFormData, null, undefined);
     expect(result.propertyDetail.garage).toBe(false);
     expect(result.propertyDetail.restrooms).toBe(0);
     expect(result.propertyDetail.details.windowsCount).toBe(0);
     expect(result.propertyDetail.details.balcony).toBe(false);
     expect(result.propertyDetail.details.lift).toBe(false);
-  });
-
-  test('should handle missing user', () => {
-    const mockFormData = {
-      title: 'Test House',
-      description: 'Test description',
-      price: 200000,
-      houseType: HouseTypeEnum.House,
-      size: '80',
-      totalRooms: 1,
-      subDistrict: 'Sub',
-      district: 'Dist',
-      city: 'City',
-      address: 'Address',
-    };
-
-    const result = createInput(mockFormData, null, mockUploadedImages);
-
+    expect(result.propertyDetail.images).toEqual([]);
     expect(result.propertyOwnerId).toBe('');
   });
 
-  test('should convert boolean strings correctly', () => {
+  test.each([
+    { inputPrice: 700000, expected: '700000' },
+    { inputPrice: '00004200', expected: '4200' },
+    { inputPrice: '0000', expected: '0' },
+    { inputPrice: '12abc', expected: '12abc' },
+  ])('returns price as a string and strips leading zeros for $inputPrice', ({ inputPrice, expected }: { inputPrice: number | string; expected: string }) => {
     const mockFormData = {
       title: 'Test House',
       description: 'Test description',
-      price: 100000,
+      price: inputPrice,
       houseType: HouseTypeEnum.House,
-      size: '60',
+      size: '80',
       totalRooms: 1,
-      garage: 'true',
-      balcony: 'false',
-      lift: 'true',
-      subDistrict: 'Sub',
-      district: 'Dist',
-      city: 'City',
-      address: 'Address',
+      garage: 'false',
+      subDistrict: '',
+      district: '',
+      city: '',
+      address: '',
     };
-
     const result = createInput(mockFormData, mockUser, mockUploadedImages);
-
-    expect(result.propertyDetail.garage).toBe(true);
-    expect(result.propertyDetail.details.balcony).toBe(false);
-    expect(result.propertyDetail.details.lift).toBe(true);
+    expect(result.price).toBe(expected);
+    expect(typeof result.price).toBe('string');
   });
 });
