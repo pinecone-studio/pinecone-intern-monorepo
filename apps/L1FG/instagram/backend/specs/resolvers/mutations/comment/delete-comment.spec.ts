@@ -37,7 +37,7 @@ describe('deleteComment Mutation', () => {
 
     (CommentModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
 
-    await expect(deleteComment({}, { commentId: mockCommentId }, mockContext, mockInfo)).rejects.toThrow('Unfollow failed: No such follow relationship found.');
+    await expect(deleteComment({}, { commentId: mockCommentId }, mockContext, mockInfo)).rejects.toThrow('comment delete failed.');
   });
 
   it('should successfully delete comment and update post comment count', async () => {
