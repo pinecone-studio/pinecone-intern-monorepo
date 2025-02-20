@@ -1,0 +1,19 @@
+query GetBookingsByUserId($userId: ID!) {
+  getBookingsByUserId(userId: $userId) {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}

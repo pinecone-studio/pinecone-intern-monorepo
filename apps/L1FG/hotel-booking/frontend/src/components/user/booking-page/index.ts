@@ -1,6 +1,6 @@
 export * from './BadgeBooked';
 export * from './MainContentBooking';
-export * from './BookingCard';
+export * from '../../../features/user/booking/BookingCard';
 export * from './FooterSmall';
 export * from './BadgeCompleted';
 export * from './BadgeCancelled';
