@@ -29,7 +29,7 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
         {loading && <ProfilePreviewSkeleton />}
         {data && (
           <div className="flex flex-col">
-            <div className="flex gap-4 h-fit w-fit justify-center items-center p-3">
+            <div className="flex gap-4 h-fit w-fit justify-center items-center p-2">
               <AvatarLink post={data.getProfilePreview.firstThreePosts[0] as PostsEdge} />
               <div className="flex flex-col">
                 <p className="font-bold">{data.getProfilePreview.user?.userName}</p>
@@ -66,9 +66,9 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
             </div>
             <div className="p-3">
               <FriendshipStatus
-                followStyle=" w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+                followStyle="w-full h-[30px] bg-[#22a0f7] hover:bg-[#1B78F2] text-white rounded-[6px]
             flex justify-center items-center mt-2"
-                followingStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
+                followingStyle="w-full h-[30px] bg-gray-200 hover:bg-gray-100 text-black rounded-[6px]
             flex justify-center items-center mt-2"
                 requestedStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
              flex justify-center items-center mt-2"

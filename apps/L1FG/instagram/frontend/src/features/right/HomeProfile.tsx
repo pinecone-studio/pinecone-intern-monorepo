@@ -26,7 +26,7 @@ const HomePageProfile = () => {
 
           <div onClick={() => router.push(`${user?._id}`)}>
             <h1 className="text-base font-bold text-gray-900">{user?.userName}</h1>
-            <p className="text-sm text-gray-500">{user?.fullName}</p>
+            <p className="text-sm text-gray-500 flex justify-start">{user?.fullName}</p>
           </div>
         </button>
 
