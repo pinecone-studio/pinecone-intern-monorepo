@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Loader } from 'lucide-react';
 import { CreatePostSvg } from '../svg/CreatePostSvg';
 import { CreatePostStep1Props } from '../types';
-import { CreatePostStep2 } from './CreatePostStep2';
+import { CreatePostStep2 } from '../../features/create-post/CreatePostStep2';
 
 const ModalHeader: React.FC = () => (
   <div className="border-b border-gray-200 py-2" data-testid="modal-header">
@@ -85,12 +85,10 @@ export const CreatePostStep1: React.FC<CreatePostStep1Props> = ({ openCreatePost
   if (!openCreatePostModal) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" data-testid="create-post-modal">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" data-testid="create-post-modal ">
       <div className="bg-white rounded-xl max-w-xl w-full overflow-hidden" data-testid="create-post-modal-content">
-        {/* Header */}
         <ModalHeader />
 
-        {/* Content */}
         <div className="relative">
           {loading && <LoadingOverlay />}
           <UploadSection handleUploadImages={handleUploadImages} />

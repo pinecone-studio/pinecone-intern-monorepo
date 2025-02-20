@@ -57,3 +57,14 @@ query GetComments($input: GetCommentInput!) {
     }
   }
 }
+mutation DeleteComment($commentId: ID!) {
+  deleteComment(commentId: $commentId) {
+    _id
+    comment
+    userId
+    postId
+    createdAt
+    updatedAt
+    likeCount
+  }
+}

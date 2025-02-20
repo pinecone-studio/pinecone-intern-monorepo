@@ -1,5 +1,5 @@
 import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { GetUserTogetherQuery } from '@/generated';
 
 export const Remove = ({ removeStyle, onclick, datas }: { onclick: () => void; removeStyle?: string; datas: GetUserTogetherQuery }) => {
@@ -21,17 +21,19 @@ export const Remove = ({ removeStyle, onclick, datas }: { onclick: () => void; r
           <div className="flex flex-col  pb-7">
             <p className="flex items-center justify-center text-2xl font-semibold">Remove follower?</p>
             <div className="flex flex-col ">
-              <p className="flex items-center justify-center px-14">Instagram won t tell {datas?.getUserTogether?.user?.userName} that they were removed </p>
-              <p className="flex items-center justify-center px-14">from your followers.</p>
+              <p className="flex items-center justify-center px-14 text-gray-500">Instagram won t tell {datas?.getUserTogether?.user?.userName} that they were removed </p>
+              <p className="flex items-center justify-center px-14 text-gray-500">from your followers.</p>
             </div>
           </div>
 
-          <p className="w-full border p-0" />
+          <p className="w-full border-b p-0 " />
           <p className="flex items-center justify-center text-red-600 cursor-pointer py-3 hover:bg-[#EFEFEF]" onClick={onclick}>
             Remove
           </p>
-          <p className="w-full border" />
-          <p className="flex items-center justify-center py-3  cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
+          <p className="w-full border-b" />
+          <DialogClose>
+            <p className="flex items-center justify-center py-3  cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>

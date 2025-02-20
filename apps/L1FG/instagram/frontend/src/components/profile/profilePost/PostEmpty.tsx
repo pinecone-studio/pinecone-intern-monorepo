@@ -17,7 +17,6 @@ const PostEmpty = ({ userId }: { userId: string }) => {
   return (
     <div>
       {isOwnerId ? (
-        
         <div className="flex flex-col gap-4" data-testid="post-empty">
           <div className="flex flex-col justify-center items-center gap-5 mt-20">
             <div className="flex flex-col justify-center items-center gap-3">
