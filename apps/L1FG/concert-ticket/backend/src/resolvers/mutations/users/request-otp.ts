@@ -1,5 +1,3 @@
-import { generateOTP } from 'otp-agent';
-
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
 import { sendEmail } from '../../../library/nodemailer';

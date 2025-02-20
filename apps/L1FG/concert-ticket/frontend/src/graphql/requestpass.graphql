@@ -1,0 +1,5 @@
+mutation RequestChangePassword($input: RequestChanGePasswordInput!) {
+  RequestChangePassword(input: $input) {
+    email
+  }
+}
