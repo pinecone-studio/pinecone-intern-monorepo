@@ -1,6 +1,5 @@
 /*eslint-disable*/
 import { Gender, User } from 'apps/L1FG/instagram/backend/src/generated';
-import { FollowerModel, RequestModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { createFollower } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
 import { makeFollow } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/make-follow';
 import { sendRequestIfPrivate } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/send-request-if-private';
