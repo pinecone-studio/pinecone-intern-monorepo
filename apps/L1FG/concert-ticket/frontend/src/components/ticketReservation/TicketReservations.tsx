@@ -30,7 +30,7 @@ const TicketReservations = ({ handleChange, handleNext, ticketID, value }: Order
             <img className="w-[723px] h-[684px] " src="/stage.svg" />
           </div>
           <div className="flex justify-start items-center">
-            <TicketReservation handleChange={handleChange} handleNext={handleNext} data={data?.getConcert} />
+            <TicketReservation handleChange={handleChange} handleNext={handleNext} data={data?.getConcert || undefined} />
           </div>
         </div>
       </div>
