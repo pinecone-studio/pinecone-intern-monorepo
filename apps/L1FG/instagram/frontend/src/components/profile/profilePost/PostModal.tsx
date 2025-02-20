@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { UserPostType } from '@/generated';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Bookmark, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
@@ -76,7 +76,6 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <Separator />
                 <div className="flex justify-between pt-5 px-5 items-center ">
                   <div className="flex gap-5 justify-center items-center">
-                    <Heart />
                     <MessageCircle className="hover:text-gray-400 cursor-pointer" />
                   </div>
                   <div>

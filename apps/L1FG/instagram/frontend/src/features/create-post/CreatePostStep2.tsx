@@ -16,7 +16,7 @@ export const CreatePostStep2: React.FC<CreatePostStep2Props> = ({ step, setStep,
   return (
     <Dialog>
       <div>
-        <DialogContent className=" xl:max-w-[600px] h-[600px] p-0 gap-0 border-none" data-testid="create-post-step2-modal">
+        <DialogContent className="  xl:max-w-[600px] h-[600px] p-0 gap-0 border-none" data-testid="create-post-step2-modal">
           <div className="flex justify-between py-2 px-4">
             <ArrowLeft onClick={handleBack} />
             <p className="text-lg font-medium">Create new post</p>
