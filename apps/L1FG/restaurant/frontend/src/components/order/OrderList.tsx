@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import Image from 'next/image';
 import { Minus, Plus, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,7 @@ const OrderList: React.FC = () => {
   const router = useRouter();
   const { orders, addToCart, minusFromCart, removeFromCart } = useCart();
 
-  const formatPrice = (price: number) => (price >= 1000 ? `${(price / 1000).toFixed(1)}K` : `${price}`);
+  const formatPrice = (price: number) => (price >= 1000 ? `${(price / 1000).toFixed(1)}k` : `${price}`);
 
   const handleDecrease = (item: FoodItems) => {
     if (item.quantity > 1) {
@@ -47,7 +47,6 @@ const OrderList: React.FC = () => {
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle className="text-[#441500] text-center font-semibold text-lg">Таны захиалга</DrawerTitle>
-            <DrawerDescription>Та өөрийн захиалгыг эндээс харж, засах боломжтой.</DrawerDescription>
           </DrawerHeader>
           <div className="overflow-y-auto max-h-56">
             {orders.length > 0 ? (

@@ -77,3 +77,23 @@ mutation editBookingStatus($input: EditBookingStatusInput!) {
     country
   }
 }
+
+query getBookingsByRoomId($roomId: ID!) {
+  getBookingsByRoomId(roomId: $roomId) {
+    id
+    userId
+    hotelId
+    roomId
+    startDate
+    endDate
+    phoneNumber
+    guestRequest
+    email
+    status
+    cardName
+    cardNumber
+    expirationDate
+    securityCode
+    country
+  }
+}

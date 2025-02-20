@@ -1,17 +1,29 @@
 'use client';
 
-import * as React from 'react';
 import { ChevronsUpDownIcon, DoorClosed } from 'lucide-react';
 
 import Image from 'next/image';
 import { Room } from '@/generated';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface AdminDataTableProps {
   data: Array<Room>;
 }
 
 export const RoomDataTable = ({ data }: AdminDataTableProps) => {
+  const [sortPrice, setSortPrice] = useState<'asc' | 'desc'>('desc');
+
+  const handleSortPrice = () => {
+    setSortPrice((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+  };
+
+  const sortedData = [...data].sort((a, b) => {
+    const priceA = a?.price != null ? a.price : 0;
+    const priceB = b?.price != null ? b.price : 0;
+    return sortPrice === 'asc' ? priceA - priceB : priceB - priceA;
+  });
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {}).format(price);
   };
@@ -22,14 +34,14 @@ export const RoomDataTable = ({ data }: AdminDataTableProps) => {
         <div className="flex items-center bg-[#F4F4F5] rounded-t-[6px]">
           <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-10 flex items-center border-r border-[#E4E4E7]">ID</p>
           <p className="px-4 py-2 max-w-[390px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Name</p>
-          <div className="px-4 py-2 flex items-center justify-between max-w-[148px] w-full h-10  border-r border-[#E4E4E7]">
+          <button onClick={handleSortPrice} className="px-4 py-2 flex items-center justify-between max-w-[148px] w-full h-10  border-r border-[#E4E4E7]">
             <p className="text-[#09090B] font-Inter text-sm font-semibold">Price</p>
             <ChevronsUpDownIcon width={16} height={16} />
-          </div>
+          </button>
           <p className="px-4 py-2 max-w-[116px] w-full h-10 text-[#09090B] font-Inter text-sm font-semibold">Bed</p>
         </div>
-        {data?.length > 0 ? (
-          data?.map((room, index) => {
+        {sortedData?.length > 0 ? (
+          sortedData?.map((room, index) => {
             const formattedId = String(index + 1).padStart(4, '0');
             return (
               <Link href={`/admin/room-detail/${room?.id}`} key={room?.id} className="flex items-center border-t border-[#E4E4E7] h-[72px] hover:bg-[#FAFAFA] transition-all duration-200">
