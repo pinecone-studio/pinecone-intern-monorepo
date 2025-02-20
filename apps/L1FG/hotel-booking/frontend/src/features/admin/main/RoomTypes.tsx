@@ -42,7 +42,7 @@ export const RoomTypes = () => {
           tax: 0,
           price: 0,
           roomNumber: 0,
-          images: ['https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png'],
+          images: ['https://www.trical.co.nz/modules/custom/legrand_ecat/assets/img/no-image.png'],
           roomServices: Array(2).fill({ key: '-/-', value: '-/-' }),
         },
       };

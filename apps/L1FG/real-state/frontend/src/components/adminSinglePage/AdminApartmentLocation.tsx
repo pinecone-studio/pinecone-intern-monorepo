@@ -1,12 +1,10 @@
-interface Property {
-  property: {
-    address: string;
-    district: string;
-    subDistrict: string;
-  };
+import { GetPostByIdQuery } from '@/generated';
+
+interface AdminSinglePageProps {
+  property: GetPostByIdQuery['getPostById'];
 }
 
-export const AdminApartmentLocation = ({ property }: Property) => {
+export const AdminApartmentLocation = ({ property }: AdminSinglePageProps) => {
   return (
     <div className="w-[736px]  p-6 rounded-lg bg-[#fbfbfc] mt-8 ">
       <div>
@@ -19,16 +17,16 @@ export const AdminApartmentLocation = ({ property }: Property) => {
         <div className="mt-8 flex gap-2">
           <div className="w-[336px]">
             <p className="text-[#71717A] text-[14px] font-normal leading-5">Дүүрэг</p>
-            <p>{property.district}</p>
+            <p>{property?.propertyDetail.location?.subDistrict}</p>
           </div>
           <div className="w-[336px]">
             <p className="text-[#71717A] text-[14px] font-normal leading-5">Хороо</p>
-            <p>{property.subDistrict}</p>
+            <p>{property?.propertyDetail.location?.district}</p>
           </div>
         </div>
         <div className="w-[336px] mt-6">
           <p className="text-[#71717A] text-[14px] font-normal leading-5">Дэлгэрэнгүй</p>
-          <p>{property.address}</p>
+          <p>{property?.propertyDetail?.location?.address}</p>
         </div>
       </div>
     </div>

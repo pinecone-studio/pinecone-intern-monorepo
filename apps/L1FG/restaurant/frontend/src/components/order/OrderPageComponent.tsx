@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import OrderList from './OrderList';
 import { useCart } from '../providers/LocalProvider';
 import ItemsQuantity from './ItemQunatity';
+import ClickedOrder from './ClickedOrder';
 
 interface OrderPageComponentProps {
   tableNumber: number;
@@ -25,7 +26,10 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
 
   const formatPrice = (price: number) => (price >= 1000 ? `${(price / 1000).toFixed(1)}к` : price.toString());
 
-  const filteredFoods = selectedCategory === null ? foodData?.getFoods : foodData?.getFoods.filter((food) => food.categoryId === selectedCategory);
+  const filteredFoods =
+    selectedCategory == null
+      ? foodData?.getFoods.filter((food) => food.status === 'Идэвхитэй')
+      : foodData?.getFoods.filter((food) => food.categoryId === selectedCategory && food.status === 'Идэвхитэй');
 
   return (
     <div className="container">
@@ -68,6 +72,7 @@ const OrderPageComponent: React.FC<OrderPageComponentProps> = ({ tableNumber }) 
                 <div className="text-[#09090B] text-lg font-bold cursor-pointer">{formatPrice(food.price)}</div>
                 <div className="absolute w-1/2 h-[74%] right-0">
                   <ItemsQuantity food={food} orders={orders} />
+                  <ClickedOrder food={food} orders={orders} />
                 </div>
               </div>
             );
