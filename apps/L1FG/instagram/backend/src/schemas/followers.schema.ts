@@ -82,6 +82,7 @@ export const FollowerTypeDefs = gql`
   type Query {
     getFollowers(input: SmallFollowInput!): FollowersConnection!
     getFollowings(input: SmallFollowInput!): FollowingsConnection!
+    searchFollowers(userName: String!): FollowersConnection!
   }
   type Mutation {
     createFollower(input: FollowInput!): FollowedRequested!
