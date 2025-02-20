@@ -18,11 +18,22 @@ export const RoomDataTable = ({ data }: AdminDataTableProps) => {
     });
   };
 
-  // const calculateNights = (startDate: string, endDate: string) => {
-  //   const start = new Date(startDate);
-  //   const end = new Date(endDate);
-  //   return Math.max(1, Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
-  // };
+  const calculateNights = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return Math.max(1, Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
+  };
+
+  const statusClass = (status: string) => {
+    const statusMap: Record<string, string> = {
+      Completed: 'bg-[#18BA51]',
+      Cancelled: 'bg-[#F97316]',
+      Booked: 'bg-[#2563EB]',
+    };
+
+    return statusMap[status] || 'bg-[#2563EB]';
+  };
+
   return (
     <div className="w-full">
       <div className="rounded-[6px] border bg-white ">
@@ -43,7 +54,7 @@ export const RoomDataTable = ({ data }: AdminDataTableProps) => {
             const formattedId = String(index + 1).padStart(4, '0');
             const formattedStart = formatDate(hotel.startDate);
             const formattedEnd = formatDate(hotel.endDate);
-            // const nights = calculateNights(hotel.startDate, hotel.endDate);
+            const nights = calculateNights(hotel.startDate, hotel.endDate);
             return (
               <div key={hotel?.id} className="flex items-center border-t border-[#E4E4E7] h-[72px]">
                 <p className="px-4 py-2 max-w-[82px] w-full text-[#09090B] font-Inter text-sm font-normal h-full flex items-center border-r border-[#E4E4E7]">{formattedId}</p>
@@ -52,13 +63,15 @@ export const RoomDataTable = ({ data }: AdminDataTableProps) => {
                   <p className="text-[#71717A] font-Inter text-sm font-normal">({hotel?.email})</p>
                 </div>
                 <div className="px-4 py-2 flex items-center max-w-[120px] w-full h-full border-r border-[#E4E4E7]">
-                  <p className="bg-[#2563EB] rounded-full px-[10px] py-[2px] text-[#FAFAFA] text-xs font-semibold font-Inter">{hotel?.status}</p>
+                  <p className={`px-[10px] py-[2px] rounded-full text-[#FAFAFA] font-Inter text-xs font-semibold transition-all duration-200 ${statusClass(hotel?.status || '')}`}>
+                    {hotel?.status || '-/-'}
+                  </p>
                 </div>
                 <div className="px-4 py-2  flex flex-col justify-center max-w-[188px] w-full h-full ">
                   <p className="text-[#09090B] font-Inter text-sm font-normal">
                     {formattedStart} - {formattedEnd}
                   </p>
-                  <p className="text-[#71717A] font-Inter text-sm font-normal">{/* ({nights} night{nights > 1 ? 's' : ''}) */}</p>
+                  <p className="text-[#71717A] font-Inter text-sm font-normal">({nights} nights)</p>
                 </div>
               </div>
             );

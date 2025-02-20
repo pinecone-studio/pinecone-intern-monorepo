@@ -1,13 +1,27 @@
+/*eslint-disable*/
 'use client';
 
 import Link from 'next/link';
 import { Sidebar } from '@/features/admin/main/Sidebar';
 import { Footer, Header } from '@/components/admin/main';
 import { LeftArrow } from '@/components/admin/svg';
-import { AboutThisProperty, Amenities, GeneralInfo, Images, Location, Policies, PoliciesExtra, Questions, UpcomingBooking } from '@/components/admin/hotel-detail';
-import { useEditHotelGeneralInfoMutation, useEditHotelImagesMutation, useEditHotelLocationMutation, useGetHotelByIdQuery } from '@/generated';
+import {
+  AboutThisProperty,
+  Amenities,
+  GeneralInfo,
+  Images,
+  Location,
+  Policies,
+  PoliciesExtra,
+  Questions,
+  UpcomingBooking,
+  useHotelDetailAmenities,
+  useHotelDetailImages,
+  useHotelDetailLocation,
+  useHotelDetailState,
+} from '@/components/admin/hotel-detail';
+import { useEditHotelAmenitiesMutation, useEditHotelGeneralInfoMutation, useEditHotelImagesMutation, useEditHotelLocationMutation, useGetHotelByIdQuery } from '@/generated';
 import { useParams } from 'next/navigation';
-import { useHotelImages, useHotelLocation, useHotelState } from '@/components/admin/add-hotel/States';
 import { RoomTypes } from './hotel-detail/RoomTypes';
 
 export const HotelDetailPage = () => {
@@ -20,9 +34,33 @@ export const HotelDetailPage = () => {
   const [editHotelGeneralInfo] = useEditHotelGeneralInfoMutation();
   const [editHotelLocation] = useEditHotelLocationMutation();
   const [editHotelImages] = useEditHotelImagesMutation();
-  const { hotelGeneralInfo, setterGeneralInfo } = useHotelState();
-  const { hotelLocation, setterLocation } = useHotelLocation();
-  const { hotelImages, setterImages } = useHotelImages();
+  const [editHotelAmenities] = useEditHotelAmenitiesMutation();
+  const { hotelGeneralInfo, setterGeneralInfo } = useHotelDetailState();
+  const { hotelLocation, setterLocation } = useHotelDetailLocation();
+  const { hotelImages, setterImages } = useHotelDetailImages();
+  const { hotelAmenities, setterAmenities } = useHotelDetailAmenities();
+
+  const handleEditHotelAmenities = async () => {
+    if (!hotelId) {
+      console.error('Hotel ID is missing');
+      return;
+    }
+
+    const { amenities } = hotelAmenities;
+
+    try {
+      const variables = {
+        input: {
+          id: hotelId,
+          amenities,
+        },
+      };
+
+      await editHotelAmenities({ variables });
+    } catch (error) {
+      console.error('Error creating hotel:', error);
+    }
+  };
 
   const handleEditHotelImages = async () => {
     if (!hotelId) {
@@ -124,7 +162,7 @@ export const HotelDetailPage = () => {
                 <UpcomingBooking />
                 <RoomTypes />
                 <GeneralInfo data={hotelData} {...hotelGeneralInfo} {...setterGeneralInfo} handleEditHotelGeneralInfo={handleEditHotelGeneralInfo} />
-                <Amenities data={hotelData} hotelRoomData={undefined} />
+                <Amenities data={hotelData} {...hotelAmenities} {...setterAmenities} handleEditHotelAmenities={handleEditHotelAmenities} />
                 <AboutThisProperty data={hotelData} hotelRoomData={undefined} />
                 <Policies data={hotelData} hotelRoomData={undefined} />
                 <PoliciesExtra />
