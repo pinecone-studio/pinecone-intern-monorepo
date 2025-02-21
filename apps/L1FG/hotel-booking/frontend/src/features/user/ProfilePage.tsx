@@ -1,4 +1,4 @@
-import { NavigationWhite } from '@/components/user/main/NavigationWhite';
+import { NavigationWhite } from '@/features/user/main/NavigationWhite';
 import { Loading } from '@/components/user/main/Loading';
 import { MainProfile } from '@/features/user/profile';
 import { useGetHotelsQuery } from '@/generated';

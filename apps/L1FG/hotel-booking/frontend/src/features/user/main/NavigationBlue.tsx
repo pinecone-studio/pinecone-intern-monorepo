@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export const NavigationBlue = () => {
-  const [isToken, setIsToken] = useState<string | null>(null);
+  const [isUser, setIsUser] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token')!;
-    setIsToken(token);
+    const token = localStorage.getItem('user')!;
+    setIsUser(token);
   }, []);
 
-  if (isToken) {
+  if (isUser) {
     return (
       <div className="bg-[#013B94] h-[64px]">
         <div className="container mx-auto h-full flex items-center justify-between">
