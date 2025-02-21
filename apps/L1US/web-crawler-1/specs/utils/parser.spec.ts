@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 import { extractLinks } from "../../src/utils/parser";
 
 describe("extractLinks", () => {
