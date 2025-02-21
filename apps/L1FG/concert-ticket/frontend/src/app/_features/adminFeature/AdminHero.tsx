@@ -3,11 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { useGetConcertsQuery } from '@/generated';
 import { ActionButtons } from './ActionButtons';
-
-interface DateFormatOptions {
-  month: '2-digit';
-  day: '2-digit';
-}
+import { Concert, DateFormatOptions } from '../../../components/adminfeature/concert-type';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -32,20 +28,6 @@ export const TableHeaders = () => (
   </TableHeader>
 );
 
-interface Concert {
-  _id: string;
-  featured?: boolean;
-  concertName: string;
-  artistName: (string | null)[];
-  concertDay?: string | null;
-  concertPlan: string;
-  concertTime: string;
-  concertPhoto: string;
-  vipTicket?: { quantity?: number | null; price?: number | null } | null;
-  regularTicket?: { quantity?: number | null; price?: number | null } | null;
-  standingAreaTicket?: { quantity?: number | null; price?: number | null } | null;
-}
-
 const calculateTotalQuantity = (concert: Concert): number => {
   return (concert.vipTicket?.quantity || 0) + (concert.regularTicket?.quantity || 0) + (concert.standingAreaTicket?.quantity || 0);
 };
@@ -57,7 +39,7 @@ const calculateTotalPrice = (concert: Concert): number => {
 export const ConcertRow = ({ concert }: { concert: Concert }) => (
   <TableRow className="border text-black hover:bg-gray-50">
     <TableCell className="font-bold">{concert.concertName}</TableCell>
-    <TableCell>{concert.artistName.join(', ')}</TableCell>
+    <TableCell>{concert.artistName.join()}</TableCell>
     <TableCell>{calculateTotalQuantity(concert)}</TableCell>
     <TableCell>{concert.vipTicket?.quantity}</TableCell>
     <TableCell>{concert.regularTicket?.quantity}</TableCell>
@@ -65,7 +47,7 @@ export const ConcertRow = ({ concert }: { concert: Concert }) => (
     <TableCell>{concert.concertDay ? formatDate(concert.concertDay) : '-'}</TableCell>
     <TableCell>{calculateTotalPrice(concert)}₮</TableCell>
     <TableCell>
-      <ActionButtons />
+      <ActionButtons concert={concert} />
     </TableCell>
   </TableRow>
 );
@@ -109,7 +91,7 @@ const AdminTable = () => {
           <TableHeaders />
           <TableBody>
             {currentConcerts.map((concert) => (
-              <ConcertRow key={concert._id} concert={concert} />
+              <ConcertRow key={concert._id} concert={{ ...concert, artistName: concert.artistName.filter((name): name is string => name !== null) }} />
             ))}
           </TableBody>
         </Table>
