@@ -51,9 +51,9 @@ export const RequestFollow = ({ reqNotification }: Props) => {
           <div>
             <FriendshipStatus
               requestStyle="flex gap-2"
-              followingStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
-              followStyle="bg-blue-600 h-[36px] w-[86px] text-white rounded-md"
-              requestedStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
+              followingStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
+              followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+              requestedStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
               preview={n?.user as UserTogetherUserType}
               followerId={n?.user?._id as string}
             />
