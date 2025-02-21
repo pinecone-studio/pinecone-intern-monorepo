@@ -66,14 +66,14 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
             </div>
             <div className="p-3">
               <FriendshipStatus
-                followerId=""
+                followerId={searchingUserId}
                 followStyle=" w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
             flex justify-center items-center mt-2"
                 followingStyle="w-full h-[30px] bg-gray-200 hover:bg-gray-100 text-black rounded-[6px]
             flex justify-center items-center mt-2"
                 requestedStyle="w-full h-[30px] bg-[#2563EB] text-white rounded-[6px]
              flex justify-center items-center mt-2"
-                preview={data.getProfilePreview.user}
+                preview={data?.getProfilePreview?.user}
               />
             </div>
             {data.getProfilePreview.user?.isPrivate && <PrivateAccPreview />}
