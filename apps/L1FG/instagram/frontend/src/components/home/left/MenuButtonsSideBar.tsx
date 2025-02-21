@@ -21,8 +21,8 @@ export const MenuButtons = () => {
   const { setNotification } = useAuth();
 
   const toggleNotifications = async () => {
-    seenNotification();
     setNotification(false);
+    seenNotification();
     setIsOpen((prev) => !prev);
     setSearchOpen(false);
   };
