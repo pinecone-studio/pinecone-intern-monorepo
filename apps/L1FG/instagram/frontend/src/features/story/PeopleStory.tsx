@@ -1,3 +1,12 @@
+'use client';
+import { useGetDetailedAllStoriesQuery } from '@/generated';
+import { PeopleStorySub } from './PeopleStorySub';
 export const PeopleStory = () => {
-  return <div>People story</div>;
+  const { data } = useGetDetailedAllStoriesQuery();
+  if (!data) {
+    return;
+  }
+  return <PeopleStorySub data={data} />;
 };
+
+export default PeopleStory;

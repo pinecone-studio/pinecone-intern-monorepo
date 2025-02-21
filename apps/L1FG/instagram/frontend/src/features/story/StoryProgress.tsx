@@ -5,14 +5,27 @@ import { StoryProgressSeen } from './StoryProgressSeen';
 import { StoryProgressUnseen } from './StoryProgressUnseen';
 import { StoryProgressLeftToSeen } from './StoryProgressLeftToSeen';
 
-export const StoryProgress = ({ stories, currentIndex, setCurrentIndex }: { stories: OneStoryType[]; currentIndex: number; setCurrentIndex: Dispatch<SetStateAction<number>> }) => {
+export const StoryProgress = ({
+  stories,
+  currentIndex,
+  setCurrentIndex,
+  handleNext,
+}: {
+  stories: OneStoryType[];
+  currentIndex: number;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
+  handleNext: () => void;
+}) => {
   const router = useRouter();
   const id = useId();
   const count = stories.length;
-  const userId = stories[0].userId;
   const onStoryComplete = () => {
     if (currentIndex + 1 >= stories.length) {
-      router.push(`/${userId}`);
+      try {
+        handleNext();
+      } catch (error) {
+        router.back();
+      }
     }
   };
   return (
