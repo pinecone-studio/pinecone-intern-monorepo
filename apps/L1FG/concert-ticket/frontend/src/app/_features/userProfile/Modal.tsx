@@ -67,7 +67,7 @@ export const Modal = ({ orderData }: { orderData: string }) => {
                 <FormItem>
                   <FormLabel className="text-white w-[777px] font-thin text-base mb-2"> Утасны дугаар:</FormLabel>
                   <FormControl>
-                    <Input data-cy="order-phone-input" data-testid="order-page-phone" className="bg-[#09090B]  w-[777px] border-stone-600 text-white" placeholder="Phone number" {...field} />
+                    <Input data-cy="order-phone-input" data-testid="order-page-phone" className="bg-[#09090B]  w-[750px] border-stone-600 text-white" placeholder="Phone number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +80,7 @@ export const Modal = ({ orderData }: { orderData: string }) => {
                 <FormItem>
                   <FormLabel className=" text-white font-thin text-base mb-2"> Имэйл хаяг:</FormLabel>
                   <FormControl>
-                    <Input data-cy="order-email-input" data-testid="order-page-email" className="w-[777px] bg-[#09090B] border-stone-600  text-white" placeholder="Email" {...field} />
+                    <Input data-cy="order-email-input" data-testid="order-page-email" className="w-[750px] bg-[#09090B] border-stone-600  text-white" placeholder="Email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
