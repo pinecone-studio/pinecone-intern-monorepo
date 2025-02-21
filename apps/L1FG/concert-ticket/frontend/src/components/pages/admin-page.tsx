@@ -2,14 +2,14 @@ import { AdminDialog } from '../adminfeature/AdminDialog';
 import { AdminHeader } from '../header/AdminHeader';
 import { ConcertFormProvider } from '../admincontext/DialogContext';
 import { FormData } from '../adminfeature/concert-type';
-import { useCreateConcertMutation } from '@/generated';
+import { useCreateConcertMutation, useGetConcertsQuery } from '@/generated';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminTable from '../adminHero/AdminHero';
+import AdminTable from '../../app/_features/adminFeature/AdminHero';
 
 export const AdminPage = () => {
   const [createConcert] = useCreateConcertMutation();
-
+  const { refetch } = useGetConcertsQuery();
   const handleFormSubmit = (concertInput: FormData) => {
     createConcert({
       variables: { input: concertInput },
@@ -18,6 +18,7 @@ export const AdminPage = () => {
           position: 'top-right',
           autoClose: 3000,
         });
+        refetch();
       },
       onError: (error) => {
         toast.error(`Алдаа гарлаа: ${error.message}`, {
