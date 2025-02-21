@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     onCompleted: (data) => {
       if (data?.signIn?.token && data?.signIn?.user) {
         localStorage.setItem('token', data.signIn.token);
+        localStorage.setItem('user', JSON.stringify(data.signIn.user));
         setUser(data.signIn.user);
         router.push('/');
       } else {
@@ -52,7 +53,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const signout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
+    router.push('/');
     toast.success('Successfully logged out', {
       style: { backgroundColor: 'green', color: 'white' },
     });
