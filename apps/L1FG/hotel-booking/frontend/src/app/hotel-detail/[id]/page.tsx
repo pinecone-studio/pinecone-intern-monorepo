@@ -1,6 +1,6 @@
 'use client';
 
-import { NavigationBlue } from '@/components/user/main/NavigationBlue';
+import { NavigationBlue } from '@/features/user/main/NavigationBlue';
 import { BlueDital } from '@/components/user/ui/dital';
 import { HotelDetailMain } from '@/components/user/hotel-detail/HotelDetailMain';
 import { SearchBar } from '@/features/user/main/SearchBar';

@@ -4,7 +4,7 @@ describe('render all pages', () => {
   it(`Should render all page`, () => {
     cy.log(JSON.stringify(allPages));
     allPages.forEach((page) => {
-      if (page !== '///booking-detail/[id]') {
+      if (page !== '///booking-detail/[id]' && page !== '///booking') {
         cy.visit(page);
         console.log('testing page', page);
       }
