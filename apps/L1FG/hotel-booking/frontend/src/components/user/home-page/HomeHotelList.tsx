@@ -55,7 +55,7 @@ export const HomeHotelList = ({ data }: HomeHotelListProps) => {
               <p className="font-Inter font-semibold not-italic text-2xl text-[#09090B] tracking-[-0.6px]">Most booked hotels in Mongolia in past month</p>
             </div>
             <div className="grid grid-cols-4 gap-4">
-              {data?.map((singleHotel) => (
+              {data?.slice(1, 5).map((singleHotel) => (
                 <HomePageCard key={singleHotel?.id} data={singleHotel} />
               ))}
             </div>
