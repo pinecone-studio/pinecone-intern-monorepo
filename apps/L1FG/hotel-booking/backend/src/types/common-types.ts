@@ -32,7 +32,12 @@ export type RoomType = {
   images: string[];
   roomInfo: string[];
   type: string;
-  roomServices: { key: string; value: string }[];
+  bathroom: [String];
+  accessibility: [String];
+  internet: [String];
+  foodAndDrink: [String];
+  bedroom: [String];
+  other: [String];
   tax: number;
 };
 

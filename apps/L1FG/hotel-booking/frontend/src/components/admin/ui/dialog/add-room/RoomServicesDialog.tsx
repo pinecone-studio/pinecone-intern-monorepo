@@ -3,7 +3,21 @@
 import { RoomServicesProps } from '@/components/admin/add-room/type';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
-export const RoomServicesDialog = ({ setKey, value, setValue, handleEditRoomServices }: RoomServicesProps) => {
+export const RoomServicesDialog = ({
+  accessibility,
+  bathroom,
+  bedroom,
+  foodAndDrink,
+  internet,
+  other,
+  setAccessibility,
+  setBathroom,
+  setBedroom,
+  setFoodAndDrink,
+  setInternet,
+  setOther,
+  handleEditRoomServices,
+}: RoomServicesProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -14,16 +28,50 @@ export const RoomServicesDialog = ({ setKey, value, setValue, handleEditRoomServ
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Bathroom</p>
-            <label htmlFor="bathroom">Bathroom</label>
-            <input
-              id="bathroom"
-              value={value}
-              type="text"
-              className="bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
-              onChange={(e) => {
-                setValue(e.target.value);
-                setKey('bathroom');
-              }}
+            <textarea
+              value={bathroom?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setBathroom(e.target.value.split(',').map((item) => item.trim()))}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Accessibility</p>
+            <textarea
+              value={accessibility?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setAccessibility(e.target.value.split(',').map((item) => item.trim()))}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Bedroom</p>
+            <textarea
+              value={bedroom?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setBedroom(e.target.value.split(',').map((item) => item.trim()))}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Internet</p>
+            <textarea
+              value={internet?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setInternet(e.target.value.split(',').map((item) => item.trim()))}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Food and dring</p>
+            <textarea
+              value={foodAndDrink?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setFoodAndDrink(e.target.value.split(',').map((item) => item.trim()))}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[#09090B] font-Inter text-sm font-medium leading-[14px]">Other</p>
+            <textarea
+              value={other?.join(', ')}
+              className="min-h-[64px] resize-none bg-white border border-[#E4E4E7] rounded-[6px] px-3 py-2 outline-none text-sm text-[#09090B] font-Inter font-normal"
+              onChange={(e) => setOther(e.target.value.split(',').map((item) => item.trim()))}
             />
           </div>
         </div>

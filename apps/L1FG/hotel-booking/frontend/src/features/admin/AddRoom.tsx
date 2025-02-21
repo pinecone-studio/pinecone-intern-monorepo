@@ -35,29 +35,30 @@ export const AddRoomPage = () => {
 
   // Create variables for editing room services
   const createRoomServicesVariables = () => {
-    const { key, value } = roomServices;
+    const { accessibility, bathroom, bedroom, foodAndDrink, internet, other } = roomServices;
     return {
       input: {
         id: roomId,
-        roomServices: [
-          {
-            key,
-            value,
-          },
-        ],
+        accessibility,
+        bathroom,
+        bedroom,
+        foodAndDrink,
+        internet,
+        other,
       },
     };
   };
 
   // Create variables for editing room general info
   const createRoomGeneralInfoVariables = () => {
-    const { name, type, roomInfo, price, bed, roomNumber } = roomGeneralInfo;
+    const { name, type, tax, roomInfo, price, bed, roomNumber } = roomGeneralInfo;
     return {
       input: {
         id: roomId,
         name,
         type,
         roomInfo,
+        tax: tax ? parseFloat(tax) : null,
         bed: bed ? parseFloat(bed) : null,
         price: price ? parseFloat(price) : null,
         roomNumber: roomNumber ? parseFloat(roomNumber) : null,

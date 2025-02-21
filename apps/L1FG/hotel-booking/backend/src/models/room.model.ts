@@ -10,15 +10,12 @@ const RoomSchema = new Schema<RoomType>({
   images: { type: [String], required: true },
   roomInfo: { type: [String], required: true },
   type: { type: String, required: true },
-  roomServices: {
-    type: [
-      {
-        key: { type: String, required: true },
-        value: { type: String, required: true },
-      },
-    ],
-    default: [],
-  },
+  accessibility: { type: [String], required: true },
+  bathroom: { type: [String], required: true },
+  internet: { type: [String], required: true },
+  foodAndDrink: { type: [String], required: true },
+  bedroom: { type: [String], required: true },
+  other: { type: [String], required: true },
   tax: { type: Number },
 });
 

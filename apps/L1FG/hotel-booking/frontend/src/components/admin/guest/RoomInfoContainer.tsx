@@ -19,7 +19,7 @@ const calculateNights = (startDate: string, endDate: string) => {
 const RoomHeader = ({ name }: { name: string | undefined | null }) => (
   <div className="flex items-center justify-between">
     <p className="text-[#09090B] font-Inter text-lg font-semibold">{name || '-/-'}</p>
-    <p className="px-4 py-2 text-[#2563EB] font-Inter text-sm font-medium">View</p>
+    <p className="px-4 py-2 font-Inter text-sm font-medium"></p>
   </div>
 );
 
