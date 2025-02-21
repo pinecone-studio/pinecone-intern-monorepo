@@ -1,7 +1,7 @@
 'use client';
 
 import { useGetOneStoryQuery } from '@/generated';
-import { StoryCarousel } from './StoryCarousel';
+import { OnePersonStoryCarousel } from './OnePersonStoryCarousel';
 
 export const OnePersonStory = ({ userName }: { userName: string }) => {
   const { data, loading } = useGetOneStoryQuery({
@@ -17,6 +17,5 @@ export const OnePersonStory = ({ userName }: { userName: string }) => {
   }
   const stories = data?.getOneStory[0].items;
   const seenStoryTime = data?.getOneStory[0].seenStoryTime;
-  console.log('stories:', stories);
-  return <StoryCarousel stories={stories} seenStoryTime={seenStoryTime} />;
+  return <OnePersonStoryCarousel stories={stories} seenStoryTime={seenStoryTime} />;
 };

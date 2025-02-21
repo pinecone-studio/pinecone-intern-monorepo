@@ -1,12 +1,44 @@
 import Link from 'next/link';
 import { LeftArrow } from '@/components/admin/svg';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useState } from 'react';
+import { useEditBookingStatusMutation } from '@/generated';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Loading } from '../../../components/user/main/Loading';
 
-export const CancelBookingContent = () => {
+interface CancelBookingContentProps {
+  idParams?: string;
+}
+
+export const CancelBookingContent = ({ idParams }: CancelBookingContentProps) => {
+  const [open, setOpen] = useState(false); // useState-ийг эхэнд байрлуулсан
+  const [cancel, { loading, data }] = useEditBookingStatusMutation();
+  const router = useRouter();
+
+  if (loading || data) return <Loading />; // useState-ийг үүнээс өмнө байрлуулсан
+
+  const cancelBooking = async () => {
+    try {
+      const response = await cancel({ variables: { input: { id: idParams || '', status: 'Cancelled' } } });
+      if (response) {
+        toast.success('Successfully canceled.', {
+          style: { backgroundColor: 'white', color: 'black' },
+        });
+        router.push('/booking');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex justify-center">
       <div className="max-w-[690px] max-h-[872px] w-full h-full flex flex-col gap-6 p-8">
-        <Link href="/" className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200">
+        <Link
+          href="/booking"
+          className="w-8 h-8 flex items-center justify-center rounded-[10px] border border-[#E4E4E7] bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:bg-[#F4F4F5] duration-200"
+        >
           <LeftArrow />
         </Link>
         <div className="w-full flex flex-col gap-4">
@@ -25,23 +57,22 @@ export const CancelBookingContent = () => {
             <div className="w-full border-[0.5px] border-[#E4E4E7]"></div>
           </div>
           <div className="w-full flex flex-col gap-3">
-            <p className="font-Inter font-semibold not-italic text-xl tracking-tighter">Standard Single Room, 1 King Bed</p>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger>
-                <button className="w-full py-2 px-3 bg-[#2563EB] rounded-md">
+                <div className="w-full py-2 px-3 bg-[#2563EB] rounded-md">
                   <p className="font-Inter font-medium not-italic text-sm text-white">Cancel Booking</p>
-                </button>
+                </div>
               </DialogTrigger>
               <DialogContent className="w-[480px]">
                 <DialogHeader>
                   <DialogTitle>Cancel Booking?</DialogTitle>
                   <div className="flex flex-col gap-6">
-                    <DialogDescription>The property won&apos;t change you.</DialogDescription>
+                    <DialogDescription>The property won&apos;t charge you.</DialogDescription>
                     <div className="flex gap-2 justify-end">
-                      <button className="py-2 px-4 border border-[#E4E4E7] rounded-md">
+                      <button onClick={() => setOpen(false)} className="py-2 px-4 border border-[#E4E4E7] rounded-md">
                         <p className="font-Inter font-medium not-italic text-sm">Keep booking</p>
                       </button>
-                      <button className="py-2 px-4 bg-[#2563EB] rounded-md">
+                      <button onClick={cancelBooking} className="py-2 px-4 bg-[#2563EB] rounded-md">
                         <p className="font-Inter font-medium not-italic text-sm text-white">Confirm cancellation</p>
                       </button>
                     </div>
