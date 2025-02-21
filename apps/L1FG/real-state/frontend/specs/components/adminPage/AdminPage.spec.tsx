@@ -1,4 +1,3 @@
-import AdminHeader from '@/components/adminPage/AdminHeader';
 import AdminPage from '@/components/adminPage/AdminPage';
 import { render } from '@testing-library/react';
 
@@ -11,7 +10,6 @@ describe('AdminPage ', () => {
     render(
       <>
         <AdminPage posts={[]} />
-        <AdminHeader />
       </>
     );
   });

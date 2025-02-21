@@ -4,9 +4,9 @@ type CategoriesType = {
 };
 
 export const Categories = <SubCategoryType[]>[
-  { id: 1, value: 'Орон сууц', title: 'Apartment', number: '79' },
-  { id: 2, value: 'Байшин', title: 'House', number: '79' },
-  { id: 3, value: 'Оффис', title: 'Office', number: '79' },
+  { id: 1, value: 'Орон сууц', title: 'Apartment', image: 'apartment.png' },
+  { id: 2, value: 'Байшин', title: 'House', image: 'house.png' },
+  { id: 3, value: 'Оффис', title: 'Office', image: 'office.jpg' },
 ];
 
 type ProvinceType = {
@@ -82,13 +82,18 @@ export const Others = <SubCategoryType[]>[
 export type SubCategoryType = {
   id?: number;
   value?: string;
-  number?: string;
+  number?: number;
   title?: string;
+  image?: string;
 };
 
 export const SubCategory = <SubCategoryType[]>[
-  { id: 1, title: 'new', value: 'Шинээр нэмэгдсэн', number: '13' },
-  { id: 2, title: 'near', value: 'Хотын төвтэй ойрхон', number: '2' },
-  { id: 3, title: 'fresh', value: 'Агаарт', number: '22' },
-  { id: 4, title: 'downtown', value: 'А зэрэглэлийн бүс', number: '21' },
+  { id: 1, title: 'new', value: 'Шинээр нэмэгдсэн', number: 13 },
+  { id: 2, title: 'near', value: 'Хотын төвтэй ойрхон', number: 2 },
+  { id: 3, title: 'fresh', value: 'Агаарт', number: 22 },
+  { id: 4, title: 'downtown', value: 'А зэрэглэлийн бүс', number: 21 },
 ];
+
+export const formatPrice = (price: string): string => {
+  return new Intl.NumberFormat('mn-MN').format(Number(price));
+};

@@ -1,10 +1,18 @@
-mutation UpdatedPost($id: ID!, $input: PostUpdateInput!) {
+mutation updatePost($id: ID!, $input: PostUpdateInput!) {
   updatePost(_id: $id, input: $input) {
     _id
+    propertyOwnerId {
+      _id
+      name
+      email
+      phone
+      isAdmin
+      createdAt
+      updatedAt
+    }
     title
     description
     price
-    status
     propertyDetail {
       houseType
       size
@@ -28,7 +36,10 @@ mutation UpdatedPost($id: ID!, $input: PostUpdateInput!) {
         totalFloors
         lift
       }
+      uploadedAt
+      createdAt
     }
+    status
     updatedAt
     createdAt
   }

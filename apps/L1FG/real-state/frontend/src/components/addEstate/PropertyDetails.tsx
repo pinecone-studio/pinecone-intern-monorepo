@@ -86,7 +86,6 @@ const renderInputs = (formData: any, handleChange: any) => (
       className="w-full p-2 border border-gray-300 rounded mb-4"
       placeholder="Өрөөнүүдийн тоог оруулна уу"
     />
-
     <GarageSelect value={formData.garage} onChange={handleChange} />
   </>
 );

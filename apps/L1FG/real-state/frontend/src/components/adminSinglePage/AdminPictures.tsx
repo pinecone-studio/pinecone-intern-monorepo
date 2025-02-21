@@ -11,7 +11,7 @@ export const AdminPictures = ({ property }: AdminSinglePageProps) => {
         <h4 className="text-[20px] font-semibold">Зураг</h4>
       </div>
       <div className="gap-4 grid grid-cols-3 mt-8">
-        {property.propertyDetail.images.map((image, index) => (
+        {property?.propertyDetail.images.map((image, index) => (
           <img key={index} src={image} className="w-[218px] h-[123px] rounded-sm " />
         ))}
       </div>

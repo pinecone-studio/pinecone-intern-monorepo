@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/components/providers';
 import { useDeletePostMutation, useGetPostsByUserIdQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import EstateListItem from '@/components/addEstate/assests/EstateListItem';
 import DeleteConfirmModal from '@/components/addEstate/assests/DeleteConfirmModal';
 import LoadingErrorDisplay from '@/components/addEstate/assests/LoadingErrorDisplay';
+import { toast } from 'react-toastify';
 
 const statusLabelMap: Record<string, string> = {
   PENDING: 'Хүлээгдэж буй',
@@ -43,6 +43,14 @@ const MyEstatesPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetPostsByUserIdQuery({
     variables: { input: { propertyOwnerId: user?._id } },
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      toast.warning('Та нэвтэрч орно уу');
+    }
+  }, []);
 
   useEffect(() => {
     refetch();

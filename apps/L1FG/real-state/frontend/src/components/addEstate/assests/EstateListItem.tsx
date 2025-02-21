@@ -10,7 +10,7 @@ interface PostPreview {
   title: string;
   description: string;
   price: string;
-  status: PostStats;
+  status?: PostStats | null | undefined;
   updatedAt?: string | null;
   createdAt?: string | null;
   propertyOwnerId: {
@@ -45,9 +45,11 @@ const EstateListItem = ({ post, index, onEdit, onDelete, statusStyleMap, statusL
         <span data-cy="estate-title">{post.title}</span>
       </div>
       <div className="flex-1 border-r border-zinc-200 px-4">
-        <span className={`px-3 py-1 rounded-full text-sm font-bold inline-block ${statusStyleMap[post.status] || statusStyleMap.REJECTED}`} data-cy="estate-status">
-          {statusLabelMap[post.status] || statusLabelMap.REJECTED}
-        </span>
+        {post.status && (
+          <span className={`px-3 py-1 rounded-full text-sm font-bold inline-block ${statusStyleMap[post.status] || statusStyleMap.REJECTED}`} data-cy="estate-status">
+            {statusLabelMap[post.status] || statusLabelMap.REJECTED}
+          </span>
+        )}
       </div>
       <div className="flex-1 text-black border-r border-zinc-200 px-4" data-cy="estate-price">
         {formatPrice(post.price)}₮

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetPostByIdQuery, useUpdatedPostMutation, PostStats, HouseTypeEnum } from '@/generated';
+import { useGetPostByIdQuery, PostStats, HouseTypeEnum, useUpdatePostMutation } from '@/generated';
 import { useRouter, useParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useFormState } from '@/components/utils/use-form-state';
@@ -18,12 +18,19 @@ import DeleteSection from '@/components/addEstate/DeleteSection';
 
 const EditEstate = () => {
   const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      toast.warning('Та нэвтэрч орно уу');
+    }
+  }, []);
   const { id } = useParams();
   const { formData, setFormData } = useFormState();
   const { data, loading, error } = useGetPostByIdQuery({
     variables: { id: id as string },
   });
-  const [updatePost] = useUpdatedPostMutation();
+  const [updatePost] = useUpdatePostMutation();
 
   const prepareLocationData = () => ({
     city: formData.city || '',
@@ -33,7 +40,7 @@ const EditEstate = () => {
   });
 
   const prepareDetailsData = () => ({
-    completionDate: formData.completionDate,
+    completionDate: formData.completionDate || '',
     windowsCount: Number(formData.windowsCount),
     windowType: formData.windowType || '',
     floorMaterial: formData.floorMaterial || '',
@@ -120,6 +127,7 @@ const EditEstate = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">Алдаа гарлаа</div>;
   if (!data?.getPostById) return <div className="text-red-500">Алдаа гарлаа</div>;
+
   return (
     <main className="container mx-auto px-4 py-8" data-cy="edit-estate-page">
       <form onSubmit={handleUpdate} data-cy="edit-estate-form">

@@ -1,8 +1,18 @@
-import { Categories } from '@/constants/constant';
 import { SubCategoryCard } from '@/features/card/SubCategorySub';
 import Link from 'next/link';
 
-export const HomePageCategorySection = () => {
+type CategoryProps = {
+  apartment: number | undefined;
+  house: number | undefined;
+  office: number | undefined;
+};
+
+export const HomePageCategorySection = ({ apartment, house, office }: CategoryProps) => {
+  const Categories = [
+    { id: 1, value: 'Орон сууц', title: 'Apartment', number: apartment, image: 'apartment.png' },
+    { id: 2, value: 'Байшин', title: 'House', number: house, image: 'house.png' },
+    { id: 3, value: 'Оффис', title: 'Office', number: office, image: 'office.jpg' },
+  ];
   return (
     <div className="w-full max-w-screen-xl flex flex-col items-center gap-4">
       <div className="flex justify-between w-full items-center">
@@ -15,7 +25,7 @@ export const HomePageCategorySection = () => {
       {/* Responsive Grid Layout */}
       <div className="w-full h-[235px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {Categories.map((data) => (
-          <SubCategoryCard key={data.id} title={data.value} number={data.number} value={data.value} />
+          <SubCategoryCard key={data.id} image={data.image} title={data.title} number={data.number} value={data.value} />
         ))}
       </div>
     </div>

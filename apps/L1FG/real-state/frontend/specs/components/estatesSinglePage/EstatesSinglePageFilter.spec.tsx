@@ -22,11 +22,18 @@ describe('EstateSinglePageFilter', () => {
       size: '80',
       totalRooms: 3,
       restrooms: 2,
+      location: {
+        city: 'Test City',
+        address: 'Test Address',
+        district: 'Test District',
+        subDistrict: 'Test SubDistrict',
+      },
     },
   } as any;
 
   it('renders property details correctly', () => {
     render(<EstateSinglePageFilter data={mockData} />);
+
     expect(screen.getByText('Test Property'));
     expect(screen.getByText('100000000'));
     expect(screen.getByText('3'));

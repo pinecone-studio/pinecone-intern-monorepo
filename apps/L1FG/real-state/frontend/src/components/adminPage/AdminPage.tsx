@@ -1,7 +1,6 @@
 'use client';
 
 import { GetAllAdminPostsQuery } from '@/generated';
-import AdminHeader from './AdminHeader';
 import { AdminOwnerPostDa } from './AdminOwnerPostDa';
 
 interface AdminGetPostsProps {
@@ -9,12 +8,7 @@ interface AdminGetPostsProps {
 }
 
 const AdminPage = ({ posts }: AdminGetPostsProps) => {
-  return (
-    <div>
-      <AdminHeader />
-      <AdminOwnerPostDa posts={posts} />
-    </div>
-  );
+  return <AdminOwnerPostDa posts={posts} />;
 };
 
 export default AdminPage;

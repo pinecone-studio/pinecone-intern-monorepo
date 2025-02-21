@@ -60,19 +60,22 @@ const LoginPage = ({ onSubmit }: LoginPageProps) => {
                   </div>
 
                   <FormControl>
-                    <Input data-cy="Login-Page-Password-Input" data-testid="Login-Page-Password-Input" placeholder="Нууц үгээ оруулна уу ?" {...field} />
+                    <Input type="password" data-cy="Login-Page-Password-Input" data-testid="Login-Page-Password-Input" placeholder="Нууц үгээ оруулна уу ?" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            <Button data-testid="Login-Page-Submit-Button" data-cy="Login-Page-Submit-Button" className="bg-[#F97316] w-full text-center flex justify-center" type="submit">
-              Нэвтрэх
-            </Button>
-            <Button data-cy="Login-Page-To-Register-Button" className="border shadow-lg w-full text-center flex justify-center">
-              <Link href={'/register'}>Бүртгүүлэх</Link>
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button data-testid="Login-Page-Submit-Button" data-cy="Login-Page-Submit-Button" className="bg-[#F97316] w-full text-center flex justify-center" type="submit">
+                Нэвтрэх
+              </Button>
+              <Link href={'/register'}>
+                <Button data-cy="Login-Page-To-Register-Button" className="border shadow-lg w-full text-center flex justify-center">
+                  Бүртгүүлэх
+                </Button>
+              </Link>
+            </div>
           </form>
         </Form>
       </div>

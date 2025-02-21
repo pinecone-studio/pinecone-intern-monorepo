@@ -1,5 +1,3 @@
-'use client';
-
 import { GetAllAdminPostsQuery } from '@/generated';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -24,7 +22,7 @@ export const AdminOwnerPostDa = ({ posts }: AdminGetPostsProps) => {
   });
 
   return (
-    <div className="container h-[767px] max-w-[1280px] mx-auto mt-8">
+    <div className="container h-[767px] w-screen max-w-[1280px] mx-auto mt-8 p-4">
       <p role="Зарууд" className="font-semibold text-xl">
         Зарууд
       </p>
@@ -71,7 +69,7 @@ export const AdminOwnerPostDa = ({ posts }: AdminGetPostsProps) => {
                     onClick={() => router.push(`/admin/real-estates/${item._id}`)}
                   >
                     <td className="px-4 py-2 border">{item.propertyOwnerId?._id.slice(0, 4)}</td>
-                    <td className="px-4 py-2 flex items-center gap-2">
+                    <td className="px-4 py-2 flex items-center border gap-2">
                       <img src={item.propertyDetail?.images?.[0]} width={48} height={58} alt="Property" />
                       <span>{item.title}</span>
                     </td>

@@ -1,3 +1,4 @@
+import { formatPrice } from '@/constants/constant';
 import { Post } from '@/generated';
 
 export const EstatesSinglePageInformation = ({ data }: { data: Post }) => {
@@ -13,7 +14,7 @@ export const EstatesSinglePageInformation = ({ data }: { data: Post }) => {
         <div className="border-t pt-4">
           <div className=" text-gray-900 flex justify-between items-center">
             <h3 className="text-[#71717A] text-sm">Үнэ</h3>
-            <h3 className="text-2xl ">{data.price}</h3>
+            <h3 className="text-2xl ">{formatPrice(data.price)}</h3>
           </div>
         </div>
         <div className="border-t pt-4">
@@ -49,12 +50,6 @@ export const EstatesSinglePageInformation = ({ data }: { data: Post }) => {
         <div className="border-t pt-4">
           <div className=" text-gray-900 flex justify-between items-center">
             <h3 className="text-[#71717A] text-sm">Хэдэн давхарт:</h3>
-            <h3>{data.propertyDetail.details?.floorNumber}</h3>
-          </div>
-        </div>
-        <div className="border-t pt-4">
-          <div className=" text-gray-900 flex justify-between items-center">
-            <h3 className="text-[#71717A] text-sm">Барилгын давхар:</h3>
             <h3>{data.propertyDetail.details?.floorNumber}</h3>
           </div>
         </div>

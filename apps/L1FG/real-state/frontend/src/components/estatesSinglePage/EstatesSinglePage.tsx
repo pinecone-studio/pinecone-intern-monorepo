@@ -62,12 +62,11 @@ const EstateSinglePage = ({ data }: { data: Post }) => {
                   <AppartmentIcon />
                   <h3 className="text-[#F97316] font-medium">{data.propertyDetail.houseType}</h3>
                 </div>
-                <h3>{data.title}</h3>
-                <div className="flex gap-2">
-                  <h3>{data.propertyDetail.location.city} , </h3>
-                  <h3>{data.propertyDetail.location.address} , </h3>
+                <h3 className="text-black text-2xl font-semibold">{data.title}</h3>
+                <div className="flex gap-2 text-[#717171] font-normal text-md">
+                  <h3>{data.propertyDetail.location.city} ,</h3>
                   <h3>
-                    {data.propertyDetail.location.subDistrict}-{data.propertyDetail.location.district}
+                    {data.propertyDetail.location.subDistrict}-{data?.propertyDetail.location.district}
                   </h3>
                 </div>
               </div>

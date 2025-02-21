@@ -8,6 +8,7 @@ import { Estates } from '@/components/estatesPage/EstatePage';
 import { parseAsBoolean, parseAsString, useQueryStates } from 'nuqs';
 import { Dropdown } from '@/features/card';
 import { useGetPostsQuery } from '@/generated';
+import { Loading } from '@/components/layout/Loading';
 
 type Item = {
   value: string;
@@ -58,7 +59,6 @@ const Page = () => {
     if (houseType && post.propertyDetail.houseType !== houseType) return false;
     if (city && post.propertyDetail.location.city !== city) return false;
     if (district && post.propertyDetail.location.district !== district) return false;
-
     const price = Number(post.price);
     if (minPrice && price < Number(minPrice)) return false;
     if (maxPrice && price > Number(maxPrice)) return false;
@@ -71,10 +71,10 @@ const Page = () => {
     return true;
   });
 
-  if (loading) return <div className="h-screen w-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return <Loading />;
 
   return (
-    <div data-cy="estates-page" className="flex justify-between p-4 gap-4 max-w-screen-xl lg:min-w-full">
+    <div data-cy="estates-page" className="flex p-4 gap-4 max-w-screen-xl lg:min-w-full">
       <div className="flex flex-col gap-4">
         <div className="grid w-full max-w-2xl items-center gap-1.5">
           <button className="border  p-2 bg-white rounded-md" data-cy="estates-page-clear-search-value" onClick={clear}>

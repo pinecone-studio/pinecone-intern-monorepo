@@ -24,7 +24,7 @@ describe('EstatesSinglePageInformation', () => {
     render(<EstatesSinglePageInformation data={mockData} />);
 
     expect(screen.getByText('Үнэ'));
-    expect(screen.getByText('250000000'));
+    expect(screen.getByText('250,000,000'));
 
     expect(screen.getByText('Ашиглалтанд орсон он:'));
     expect(screen.getByText(/2024/));
@@ -59,7 +59,7 @@ describe('EstatesSinglePageInformation', () => {
 
     render(<EstatesSinglePageInformation data={incompleteData} />);
 
-    expect(screen.getByText('250000000'));
+    expect(screen.getByText('250,000,000'));
     expect(screen.getByText('Test description'));
 
     expect(screen.getByText('Лифт'));

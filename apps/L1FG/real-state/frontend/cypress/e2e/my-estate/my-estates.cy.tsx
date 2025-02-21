@@ -1,6 +1,49 @@
-describe('MyEstates Page - Delete and Edit Actions', () => {
-  context('with successful query', () => {
-    beforeEach(() => {
+/* eslint-disable */
+describe('My Estates Page', () => {
+  beforeEach(() => {
+    cy.window().then((win) => {
+      win.localStorage.setItem('token', 'test-token');
+    });
+  });
+
+  it('displays loading state', () => {
+    cy.intercept('POST', '/api/graphql', (req) => {
+      if (req.body?.operationName === 'GetPostsByUserId') {
+        req.reply({
+          delay: 1000,
+          data: {
+            getPosts: [],
+          },
+        });
+      }
+    }).as('getPostsLoading');
+
+    cy.visit('/my-estates');
+  });
+
+  it('displays property data with all status variations', () => {
+    const statusTests = [
+      {
+        status: 'PENDING',
+        text: 'Хүлээгдэж буй',
+        bgClass: 'bg-[rgba(37,99,235,0.1)]',
+        textClass: 'text-[rgba(37,99,235,1)]',
+      },
+      {
+        status: 'APPROVED',
+        text: 'Зарагдаж байгаа',
+        bgClass: 'bg-green-100',
+        textClass: 'text-green-800',
+      },
+      {
+        status: 'REJECTED',
+        text: 'Буцаагдсан',
+        bgClass: 'bg-red-100',
+        textClass: 'text-red-800',
+      },
+    ];
+
+    statusTests.forEach(({ status, text, bgClass, textClass }) => {
       cy.intercept('POST', '/api/graphql', (req) => {
         if (req.body?.operationName === 'GetMyEstates') {
           req.reply({
@@ -119,7 +162,8 @@ describe('MyEstates Page - Delete and Edit Actions', () => {
         }).as('getPostsEmptyError');
 
         cy.visit('/my-estates');
-        cy.wait('@getPostsEmptyError');    });
+        cy.wait('@getPostsEmptyError');
+      });
     });
   });
 });

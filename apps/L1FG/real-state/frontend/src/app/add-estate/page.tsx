@@ -64,8 +64,8 @@ const AddEstate: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
+      router.push('/login');
       toast.warning('Та нэвтэрч орно уу');
-      router.push('/');
     }
   }, []);
 

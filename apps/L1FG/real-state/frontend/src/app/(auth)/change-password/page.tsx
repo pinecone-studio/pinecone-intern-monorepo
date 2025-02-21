@@ -64,7 +64,14 @@ const Page = () => {
               <FormItem>
                 <FormLabel className="text-xs">Шинэ нууц үг</FormLabel>
                 <FormControl>
-                  <Input data-cy="Change-Password-Page-Password-Input" data-testid="Change-Password-Page-Password-Input" className="p-2 rounded-sm" placeholder="Шинэ нууц үг" {...field} />
+                  <Input
+                    type="password"
+                    data-cy="Change-Password-Page-Password-Input"
+                    data-testid="Change-Password-Page-Password-Input"
+                    className="p-2 rounded-sm"
+                    placeholder="Шинэ нууц үг"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage className="text-xs text-red-500" />
               </FormItem>
@@ -79,6 +86,7 @@ const Page = () => {
                 <FormLabel className="text-xs">Шинэ нууц үгээ давтаж оруулна уу</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     data-cy="Change-Password-Page-Confirm-Password-Input"
                     data-testid="Change-Password-Page-Confirm-Password-Input"
                     className="p-2 rounded-sm"

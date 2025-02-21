@@ -38,7 +38,7 @@ describe('AddEstate Page Integration Tests', () => {
 
       // Verify that the page redirects to '/'.
       // Adjust this if your app redirects using Next.js client routing.
-      cy.location('pathname', { timeout: 10000 }).should('eq', '/');
+      cy.location('pathname', { timeout: 10000 }).should('eq', '/login');
     });
   });
   describe('uploadImage Non-OK Response', () => {

@@ -54,7 +54,7 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
                   <FormControl>
                     <Input data-cy="Register-Page-Name-Input" data-testid="Register-Page-Name-Input" placeholder="Хэрэглэгчийн нэрээ оруулаарай" {...field} />
                   </FormControl>
-                  <FormDescription>Таны энэ хэрэглэгчийн нэр шүү бусдаас содон нэр сонгоорой хөөрхөнөө.</FormDescription>
+                  <FormDescription>Таны хэрэглэгчийн нэр</FormDescription>
                   <FormMessage data-cy="Register-Page-Name-Error-Message" />
                 </FormItem>
               )}
@@ -95,9 +95,9 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
                 <FormItem>
                   <FormLabel>Нууц үг</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Password-Input" data-testid="Register-Page-Password-Input" placeholder="password" {...field} />
+                    <Input type="password" data-cy="Register-Page-Password-Input" data-testid="Register-Page-Password-Input" placeholder="password" {...field} />
                   </FormControl>
-                  <FormDescription>Мартахгүй 8 оронтой тоо оруулаарай нууц үг чинь болно шүү</FormDescription>
+                  <FormDescription>Мартахгүй 8 оронтой тоо оруулаарай нууц үг</FormDescription>
                   <FormMessage data-cy="Register-Page-Password-Error-Message" />
                 </FormItem>
               )}
@@ -110,7 +110,7 @@ const RegisterPage = ({ onSubmit }: RegisterPageProps) => {
                 <FormItem>
                   <FormLabel>Баталгаажуулах нууц үг</FormLabel>
                   <FormControl>
-                    <Input data-cy="Register-Page-Confirm-Password-Input" data-testid="Register-Page-Confirm-Password-Input" placeholder="Нууц үгээ давтаад л хийчхээ хө" {...field} />
+                    <Input type="password" data-cy="Register-Page-Confirm-Password-Input" data-testid="Register-Page-Confirm-Password-Input" placeholder="Нууц үгээ давтаад л хийчхээ хө" {...field} />
                   </FormControl>
                   <FormMessage data-cy="Register-Page-Confirm-Password-Error-Message" />
                 </FormItem>

@@ -37,8 +37,9 @@ export const MainCard = ({ value }: { value: Post | undefined }) => {
               <> өрөө</>
             </div>
           </div>
-          <div>
-            <span className="text-muted-foreground">{value?.propertyDetail.location.address}</span>
+          <div className="flex gap-2">
+            <span className="text-muted-foreground">{value?.propertyDetail.location.city}</span>
+            <span className="text-muted-foreground">{value?.propertyDetail.location.district}</span>
           </div>
         </div>
       </div>

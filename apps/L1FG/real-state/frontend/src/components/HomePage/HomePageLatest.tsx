@@ -1,25 +1,8 @@
 import { MainCard } from '@/features/card';
-import { useGetPostsQuery } from '@/generated';
+import { Post } from '@/generated';
 import Link from 'next/link';
 
-export const HomePageLatest = () => {
-  const { data, loading, error } = useGetPostsQuery({ variables: { input: { status: 'APPROVED' } } });
-
-  if (loading) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (error)
-    return (
-      <div className="flex h-screen w-screen items-center justify-center" data-testid="error-message">
-        Error loading posts: {error.message}
-      </div>
-    );
-
+export const HomePageLatest = ({ data }: { data: Post[] | undefined }) => {
   return (
     <div className="w-full max-w-screen-xl flex flex-col items-center gap-4 ">
       <div className="flex justify-between w-full items-center">
@@ -29,7 +12,7 @@ export const HomePageLatest = () => {
         </Link>
       </div>
       <div className="w-full max-w-screen-xl grid grid-cols-4 gap-4">
-        {data?.getPosts.slice(0, 4).map((data) => {
+        {data?.slice(0, 4).map((data: Post) => {
           return <MainCard key={data.title} value={data} />;
         })}
       </div>
