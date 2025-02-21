@@ -3,8 +3,9 @@
 import CodeInput from '@/app/_features/resertPassword/CodeInput';
 import { ResetPage } from '@/app/_features/resertPassword/PasswordReset';
 import { ChangeEvent, useState } from 'react';
+import { NewPassword } from '../_features/resertPassword/NewPassword';
 
-const stepper = [ResetPage, CodeInput];
+const stepper = [ResetPage, CodeInput, NewPassword];
 
 export type dataProps = {
   email: string;

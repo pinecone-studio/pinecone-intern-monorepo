@@ -16,7 +16,7 @@ const card = {
   concertName: 'Coldplay live',
   concertPlan: 'Coldplay',
   artistName: ['Coldplay'], // Changed to an array of strings
-  concertDay: '2025-01-31',
+  concertDay: '2025-03-29',
   concertTime: '20:00',
   concertPhoto: 'https://example.com/coldplay.jpg', // Changed to an absolute URL
   vipTicket: { price: 120, quantity: 50 },
@@ -33,7 +33,7 @@ describe('Card Component', () => {
     expect(getByTestId('card-artist-name')).toHaveTextContent('Coldplay');
     expect(getByTestId('card-regular-price')).toHaveTextContent('60₮');
     expect(getByTestId('card-discount')).toHaveTextContent('60₮'); // Same value as regular price
-    expect(getByTestId('card-format-date')).toHaveTextContent('1-31'); // Formatted date (M-d)
+    expect(getByTestId('card-format-date')).toHaveTextContent('3-29'); // Formatted date (M-d)
     expect(getByText('Төв цэнгэлдэх')).toBeInTheDocument();
   });
 
