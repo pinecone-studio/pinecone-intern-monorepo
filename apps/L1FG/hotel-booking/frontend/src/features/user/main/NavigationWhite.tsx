@@ -1,12 +1,17 @@
-import { useAuth } from '@/components/providers';
 import { NavigationWhiteDown } from '@/features/user/main/NavigationWhiteDown';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export const NavigationWhite = () => {
-  const { user } = useAuth();
+  const [isUser, setIsUser] = useState<string | null>(null);
 
-  if (user) {
+  useEffect(() => {
+    const token = localStorage.getItem('user')!;
+    setIsUser(token);
+  }, []);
+
+  if (isUser) {
     return (
       <div className="bg-[#FFFFFF] h-[64px]">
         <div className="container mx-auto h-full flex items-center justify-between">

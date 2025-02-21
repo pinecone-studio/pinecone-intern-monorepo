@@ -1,10 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import { BadgeBooked } from '../../../components/user/booking-page/BadgeBooked';
 import { Booking, useGetHotelInBookingQuery } from '@/generated';
 import { BadgeCompleted } from '../../../components/user/booking-page/BadgeCompleted';
 import { BadgeCancelled } from '../../../components/user/booking-page/BadgeCancelled';
-import { useRouter } from 'next/navigation';
 import { format, parseISO, differenceInDays } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface BookingCardProps {
   booked: Booking | null;
