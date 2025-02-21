@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use client';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { PostsEdge, useGetProfilePreviewLazyQuery } from '@/generated';
@@ -52,16 +53,22 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
               </div>
             </div>
             <div>
-              {data.getProfilePreview.firstThreePosts.length > 0 ? (
-                <div className="w-full h-[120px] flex gap-1 pt-4">
-                  {data.getProfilePreview.firstThreePosts.map((post) => (
-                    <div className="w-1/3 h-full relative" key={post.cursor}>
-                      <Image src={imageUrlOptimizer(post.node.postImage[0])} fill alt="post image" />
+              {!data.getProfilePreview.user?.isPrivate ? (
+                <div>
+                  {data.getProfilePreview.firstThreePosts.length > 0 ? (
+                    <div className="w-full h-[120px] flex gap-1 pt-4">
+                      {data.getProfilePreview.firstThreePosts.map((post) => (
+                        <div className="w-1/3 h-full relative" key={post.cursor}>
+                          <Image src={imageUrlOptimizer(post.node.postImage[0])} fill alt="post image" />
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  ) : (
+                    <NoPostsYet />
+                  )}
                 </div>
               ) : (
-                <NoPostsYet />
+                <PrivateAccPreview />
               )}
             </div>
             <div className="p-3">
@@ -76,7 +83,6 @@ export const ProfileHover = ({ children, searchingUserId }: { children: React.Re
                 preview={data?.getProfilePreview?.user}
               />
             </div>
-            {data.getProfilePreview.user?.isPrivate && <PrivateAccPreview />}
           </div>
         )}
       </HoverCardContent>

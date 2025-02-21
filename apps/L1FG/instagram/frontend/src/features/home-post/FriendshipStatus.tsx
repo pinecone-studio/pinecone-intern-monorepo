@@ -68,7 +68,7 @@ export const FriendshipStatus = ({
     return <IsRequest followerId={followerId} setStatus={setStatus} requestStyle={requestStyle} />;
   }
   if (status.following) {
-    return <Following setStatus={setStatus} targetId={targetId} followingStyle={followingStyle} />;
+    return <Following followerCount={preview.followerCount} setStatus={setStatus} targetId={targetId} followingStyle={followingStyle} />;
   } else {
     if (status.outgoingRequest) {
       return <Requested targetId={targetId as string} setStatus={setStatus} requestedStyle={requestedStyle as string} />;
