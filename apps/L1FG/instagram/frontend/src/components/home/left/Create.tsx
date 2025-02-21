@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ImagePlay, BookOpenCheck } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { CreatePostStep1 } from '@/components/create-post/CreatePostStep1';
+import { CreatePostStep1 } from '@/features/create-post/create-post/CreatePostStep1';
 import { CreateStoryStep1 } from '@/components/story/createStory/CreateStoryStep1';
 
 export const Create = ({ children }: PropsWithChildren) => {

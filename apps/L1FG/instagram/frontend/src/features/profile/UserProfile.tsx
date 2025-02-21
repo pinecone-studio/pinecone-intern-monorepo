@@ -9,7 +9,7 @@ import { IconPostSavedTag } from './comment/IconPostSavedTag';
 export const UserProfile = ({ data, userId }: { data: GetUserTogetherQuery; userId: string }) => {
   return (
     <>
-      <div className="py-3 flex px-4 gap-5 sm:gap-20 max-w-7xl justify-start md:justify-center" data-testid="user-profile">
+      <div className="py-3 flex px-4 gap-5 sm:gap-20 ml-[50px] justify-start " data-testid="user-profile">
         <div
           style={{ backgroundImage: `url(${data?.getUserTogether?.user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
           className=" bg-cover w-[80px] h-[80px] md:w-[150px] md:h-[150px] object-cover rounded-full"

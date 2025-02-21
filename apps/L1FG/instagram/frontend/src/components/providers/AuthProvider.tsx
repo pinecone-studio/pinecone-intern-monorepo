@@ -1,6 +1,7 @@
 'use client';
 
 import { useCreateUserMutation, useGetUserLazyQuery, useLoginMutation, UserWithoutPassword } from '@/generated';
+import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -18,11 +19,15 @@ type AuthContextType = {
   signin: (_params: SignInParams) => void;
   signup: (_params: SignUpParams) => void;
   user: UserWithoutPassword | null;
-  logout: (_client: any) => void;
+  logout: () => void;
+  notification: boolean;
+  setNotification: (_notification: boolean) => void;
 };
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const client = useApolloClient();
   const [user, setUser] = useState<UserWithoutPassword | null>(null);
+  const [notification, setNotification] = useState(false);
   const router = useRouter();
   const [getUserQuery] = useGetUserLazyQuery({
     onCompleted: (data) => {
@@ -80,9 +85,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
     });
   };
-  const logout = async (client: any) => {
+  const logout = async () => {
     router.push('/login');
-    document.cookie = `token=;expires=Thu, 01 Jan 1970 00:00:00 UTC;Samesite=Lax;Secure;`;
     localStorage.removeItem('token');
     setUser(null);
     await client.resetStore();
@@ -92,7 +96,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     getUserQuery();
   }, [getUserQuery]);
 
-  return <AuthContext.Provider value={{ signin, signup, user, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signin, signup, user, logout, notification, setNotification }}>{children}</AuthContext.Provider>;
 };
 export const useAuth = () => {
   const context = useContext(AuthContext);

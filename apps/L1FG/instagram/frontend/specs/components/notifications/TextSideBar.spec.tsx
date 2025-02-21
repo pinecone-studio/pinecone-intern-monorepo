@@ -1,4 +1,4 @@
-import { HeartSVG } from '@/components/home/left/Svg/HeartSvg';
+import { HeartSVG } from '@/features/HeartSvg';
 import { TextSideBar } from '@/components/notifications/TextSideBar';
 import { render } from '@testing-library/react';
 describe('Profile', () => {

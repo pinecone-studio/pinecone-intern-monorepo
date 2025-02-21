@@ -7,6 +7,10 @@ jest.mock('nuqs', () => ({
   useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('MainResultSearch', () => {
   it('should render MainResultSearch successfully', async () => {
     render(

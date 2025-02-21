@@ -12,7 +12,7 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models/concert.model.ts', () => 
         artistName: ['dfsvsdv'],
         concertDay: 436,
         concertTime: 'fdg',
-        concertPhoto: 'fsg',
+
         vipTicket: {},
         regularTicket: {},
         standingAreaTicket: {},
@@ -36,7 +36,7 @@ describe('edit concert', () => {
           artists: ['dfsvsdv'],
           concertDay: '436',
           concertTime: 'fdg',
-          concertPhoto: 'fsg',
+
           vipTicket: VipTicketInput,
           regularTicket: RegularTicketInput,
           standingAreaTicket: StandingAreaTicketInput,
@@ -52,7 +52,7 @@ describe('edit concert', () => {
       artistName: ['dfsvsdv'],
       concertDay: 436,
       concertTime: 'fdg',
-      concertPhoto: 'fsg',
+
       vipTicket: {},
       regularTicket: {},
       standingAreaTicket: {},

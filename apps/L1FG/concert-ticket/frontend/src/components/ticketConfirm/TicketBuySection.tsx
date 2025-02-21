@@ -6,7 +6,7 @@ type SubBuyProps = {
   ticketID: string;
 };
 
-const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
+const TicketSubscriberBuysection = ({ value, ticketID }: SubBuyProps) => {
   const { data } = useGetConcertQuery({ variables: { id: ticketID } });
 
   return (
@@ -30,7 +30,7 @@ const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
                 </div>
                 <div className="flex gap-5 ml-[100px]">
                   <p className="text-[#A1A1AA] text-[16px]">
-                    {data?.getConcert.regularTicket?.price} x {value.standartQuantity}
+                    {data?.getConcert.regularTicket?.price}$ x {value.standartQuantity}
                   </p>
                   <p className="text-white font-thin text-[16px]">{value.standartPrice}₮ </p>
                 </div>
@@ -50,7 +50,7 @@ const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
                 </div>{' '}
                 <div className="flex gap-5 ml-[100px]">
                   <p className="text-[#A1A1AA] text-[16px]">
-                    {data?.getConcert.standingAreaTicket?.price} x {value.standingAreaQuantity}
+                    {data?.getConcert.standingAreaTicket?.price}$ x {value.standingAreaQuantity}
                   </p>
                   <p className="text-white text-[16px]">{value.standingAreaPrice}₮ </p>
                 </div>
@@ -70,7 +70,7 @@ const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
                 </div>{' '}
                 <div className="flex gap-5 ml-[100px]">
                   <p className="text-[#A1A1AA] text-[16px]">
-                    {data?.getConcert.vipTicket?.price} x {value.vipQuantity}
+                    {data?.getConcert.vipTicket?.price}$ x {value.vipQuantity}
                   </p>
                   <p className="text-white text-[16px]">{value.vipPrice}₮ </p>
                 </div>
@@ -83,7 +83,7 @@ const TicketSubscriberBuysection = ({  value, ticketID }: SubBuyProps) => {
           <p className="text-white text-[16px] font-thin">{value.totalPrice}</p>
         </div>
       </div>
-      <button data-cy='reservation-button' data-testid="ticket-buy-continue" className=" py-1 px-24  mx-auto w-full rounded-lg bg-[#00B7F4] hover:bg-[#3279e3] flex justify-center items-center">
+      <button data-cy="reservation-button" data-testid="ticket-buy-continue" className=" py-1 px-24  mx-auto w-full rounded-lg bg-[#00B7F4] hover:bg-[#3279e3] flex justify-center items-center">
         Үргэлжлүүлэх
       </button>
     </div>

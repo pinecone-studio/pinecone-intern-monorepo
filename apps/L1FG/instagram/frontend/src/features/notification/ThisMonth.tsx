@@ -3,6 +3,7 @@ import { RequestFollow } from './RequestFollow';
 import { CommentPost } from '../../components/notifications/CommentPost';
 import { LikedPost } from '@/components/notifications/LikedPost';
 import { CommentLike } from '@/components/notifications/CommentLike';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 type Props = {
   notifications?: NotificationCategory;
@@ -10,11 +11,17 @@ type Props = {
 
 // eslint-disable-next-line complexity
 export const ThisMonth = ({ notifications }: Props) => {
+  const { setNotification } = useAuth();
   if (!notifications) return null;
 
   const allNotifications = [...(notifications.comment || []), ...(notifications.postLike || []), ...(notifications.request || []), ...(notifications.commentLike || [])];
 
   const sortedNotifications = allNotifications?.sort((a, b) => new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime());
+  const hasUnreadNotifications = allNotifications.some((notification) => notification?.isRead);
+
+  if (!hasUnreadNotifications) {
+    setNotification(true);
+  }
 
   return (
     <div className="border-b">

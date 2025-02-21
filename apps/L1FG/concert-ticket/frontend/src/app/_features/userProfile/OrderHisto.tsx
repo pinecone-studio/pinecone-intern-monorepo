@@ -50,7 +50,7 @@ export const OrderHistory = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 bg-[#131313] p-8 rounded-lg">
+    <div className="flex flex-col gap-4 bg-[#131313] p-8 rounded-lg max-h-[400px] overflow-y-auto">
       {orders?.map((order: any) => (
         <div key={order._id} className="flex flex-col gap-4">
           <div className="flex justify-between items-center w-[777px]">

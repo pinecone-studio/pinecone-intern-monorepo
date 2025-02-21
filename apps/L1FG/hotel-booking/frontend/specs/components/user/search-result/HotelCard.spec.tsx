@@ -2,6 +2,10 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { HotelCard } from '@/components/user/search-result/HotelCard';
 
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(() => [null, jest.fn()]), // Mock хийж байна
+}));
+
 describe('HotelCard', () => {
   it('should render successfully with empty data', () => {
     render(

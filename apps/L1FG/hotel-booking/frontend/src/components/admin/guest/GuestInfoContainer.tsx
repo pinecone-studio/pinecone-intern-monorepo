@@ -1,9 +1,27 @@
-import { Booking } from '@/generated';
+import { Booking, Room } from '@/generated';
 import { CheckoutDialog } from '../ui/dialog';
 
 export type GuestInfoMainProps = {
   data: Booking | undefined | null;
+  roomData: Room | undefined | null;
   handleEditBookingStatus: (_newStatus: string) => Promise<void>;
+};
+
+//Date format
+const formatDate = (dateString: string | undefined | null) => {
+  if (!dateString) return '-/-';
+  const date = new Date(dateString);
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short', // Oct
+    day: 'numeric', // 21
+    weekday: 'long', // Tuesday
+    hour: 'numeric', // 11
+    minute: '2-digit', // 00
+    hour12: true, // am/pm
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(date);
 };
 
 const statusClass = (status: string) => {
@@ -45,13 +63,13 @@ const GuestInfoSection = ({ data }: { data: Booking | undefined | null }) => (
       <InfoRow label="Guests" value="1 adult, 0 children" />
     </div>
     <div className="flex items-center gap-6">
-      <InfoRow label="Check in" value="Oct 20, Monday, Jul 1, 3:00pm" />
-      <InfoRow label="Check out" value="Oct 21, Tuesday, Jul 3, 11:00am" />
+      <InfoRow label="Check in" value={formatDate(data?.startDate)} />
+      <InfoRow label="Check out" value={formatDate(data?.endDate)} />
     </div>
   </div>
 );
 
-export const GuestInfoContainer = ({ data, handleEditBookingStatus }: GuestInfoMainProps) => {
+export const GuestInfoContainer = ({ data, roomData, handleEditBookingStatus }: GuestInfoMainProps) => {
   return (
     <div className="border border-[#E4E4E7] rounded-[8px] bg-white p-6 flex flex-col gap-4">
       <div className="flex flex-col">
@@ -66,7 +84,7 @@ export const GuestInfoContainer = ({ data, handleEditBookingStatus }: GuestInfoM
           </div>
           <div className="flex items-center gap-6">
             <InfoRow label="Guest Request" value={data?.guestRequest || '-/-'} />
-            <InfoRow label="Room Number" value="Room #502" />
+            <InfoRow label="Room Number" value={`Room #${roomData?.roomNumber || 0}`} />
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { GetPostsDocument, useDeletePostMutation } from '@/generated';
 import { Ellipsis } from 'lucide-react';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { toast } from 'react-toastify';
 
 const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_postOPen: boolean) => void }) => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_po
           input: {
             searchingUserId: userId,
             after: '',
-            first: 6,
+            first: 9,
           },
         },
       },
@@ -31,8 +32,31 @@ const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_po
           cache.gc();
         },
       });
+
+      toast.success('Post deleted', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'dark',
+        style: {
+          borderRadius: '8px',
+          background: '#262626',
+          color: 'white',
+          padding: '12px',
+          fontSize: '14px',
+        },
+      });
     } catch (err) {
       console.error('Error deleting post:', err);
+      toast.error('Failed to delete post', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        theme: 'dark',
+      });
     }
   };
 
@@ -43,28 +67,23 @@ const DeletePost = ({ postId, setPostOpen }: { postId: string; setPostOpen: (_po
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-0 ">
         <div className="flex flex-col ">
-          <div className="flex flex-col items-center justify-center p-6 ">
-            <div
-              style={{ backgroundImage: `url(${user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
-              className=" bg-cover  w-[80px] h-[80px] object-cover rounded-full "
-            ></div>
-          </div>
           <div className="flex flex-col  pb-7">
-            <p className="flex items-center justify-center text-2xl font-semibold">Remove follower?</p>
+            <p className="flex items-center justify-center text-2xl font-mediumf pt-7">Delete post?</p>
             <div className="flex flex-col ">
-              <p className="flex items-center justify-center px-14">Instagram won t tell that they were removed </p>
-              <p className="flex items-center justify-center px-14">from your followers.</p>
+              <p className="flex items-center justify-center px-14 text-gray-500">Are you sure you want to delete this post?</p>
             </div>
           </div>
 
-          <p className="w-full border p-0" />
+          <p className="w-full border-b" />
           <DialogClose>
             <p className="flex items-center justify-center text-red-600 cursor-pointer py-3 hover:bg-[#EFEFEF]" onClick={handleDelete}>
-              Remove
+              Delete
             </p>
           </DialogClose>
-          <p className="w-full border" />
-          <p className="flex items-center justify-center py-3  cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
+          <p className="w-full border-b" />
+          <DialogClose asChild>
+            <p className="flex items-center justify-center py-3  cursor-pointer hover:bg-[#EFEFEF]">Cancel</p>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>

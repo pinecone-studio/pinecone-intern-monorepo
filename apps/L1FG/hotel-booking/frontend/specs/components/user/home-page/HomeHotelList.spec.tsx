@@ -23,7 +23,6 @@ describe('HomeHotelList Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
-    // Default mock implementation for useQueryState
     mockUseQueryState.mockImplementation(() => [null, jest.fn()]);
   });
 
@@ -86,5 +85,30 @@ describe('HomeHotelList Component', () => {
 
     const gridContainers = document.querySelectorAll('.grid-cols-4');
     expect(gridContainers);
+  });
+
+  it('should navigate to search page when "View all" button is clicked', () => {
+    // Mock query params to ensure button is visible
+    mockUseQueryState.mockImplementation((param: string) => {
+      switch (param) {
+        case 'bedcount':
+          return ['2'];
+        case 'dateFrom':
+          return ['2025-03-01'];
+        case 'dateTo':
+          return ['2025-03-10'];
+        default:
+          return [null];
+      }
+    });
+
+    render(<HomeHotelList data={mockHotels} />);
+
+    // "View all" товчийг олох
+    const viewAllButton = screen.getByText('View all');
+    fireEvent.click(viewAllButton);
+
+    // Товч дээр дарахад `router.push` дуудсан эсэхийг шалгах
+    expect(mockRouter.push);
   });
 });

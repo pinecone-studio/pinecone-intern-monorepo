@@ -50,9 +50,9 @@ const ImagesSection: React.FC<{ handleChange: any; formData: any }> = ({ handleC
       </label>
       <div className="grid grid-cols-3 gap-4 justify-between">
         {images.map((image, index) => (
-          <div key={index} className="relative w-[216px] h-[121.5px]">
-            <img src={image} alt={`Uploaded ${index}`} className="w-full h-full object-cover rounded-md shadow-sm" />
-            <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-2 right-2 bg-gray-600 text-white text-xs px-2 py-1 rounded">
+          <div key={index} className="relative w-[216px] h-[121.5px]" data-cy="image-container">
+            <img src={image} alt={`Uploaded ${index}`} className="w-full h-full object-cover rounded-md shadow-sm" data-cy="uploaded-image" />
+            <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-2 right-2 bg-gray-600 text-white text-xs px-2 py-1 rounded" data-cy="remove-image">
               X
             </button>
           </div>

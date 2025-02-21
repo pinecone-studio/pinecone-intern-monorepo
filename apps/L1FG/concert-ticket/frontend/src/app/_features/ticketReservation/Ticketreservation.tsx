@@ -62,7 +62,7 @@ export const TicketReservation = ({ data, handleNext, handleChange }: ConcertPro
 
   const [updateConcertTicket] = useUpdateConcertTicketMutation({
     onError: (error) => {
-      showAlert('error', `${error}`);
+      showAlert('error', `${error.message}`);
     },
   });
 

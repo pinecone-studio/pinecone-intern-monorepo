@@ -54,6 +54,26 @@ query GetNotification {
           ...postFragment
         }
       }
+      commentLike {
+        categoryType
+        contentComment
+        contentCommentId
+        contentPost {
+          ...postFragment
+        }
+        contentPostId
+        createdAt
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        ownerId
+        userId
+      }
       comment {
         id
         categoryType
@@ -77,9 +97,6 @@ query GetNotification {
       request {
         id
         categoryType
-        contentPostId
-        contentCommentId
-        contentStoryId
         isRead
         createdAt
         user {
@@ -95,12 +112,8 @@ query GetNotification {
             following
           }
         }
-        contentPost {
-          ...postFragment
-        }
       }
     }
-
     thisWeek {
       postLike {
         id
@@ -121,6 +134,26 @@ query GetNotification {
           ...postFragment
         }
       }
+      commentLike {
+        categoryType
+        contentComment
+        contentCommentId
+        contentPost {
+          ...postFragment
+        }
+        contentPostId
+        createdAt
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        ownerId
+        userId
+      }
       comment {
         id
         categoryType
@@ -144,9 +177,6 @@ query GetNotification {
       request {
         id
         categoryType
-        contentPostId
-        contentCommentId
-        contentStoryId
         isRead
         createdAt
         user {
@@ -161,9 +191,6 @@ query GetNotification {
             followedBy
             following
           }
-        }
-        contentPost {
-          ...postFragment
         }
       }
     }
@@ -185,6 +212,26 @@ query GetNotification {
           ...postFragment
         }
       }
+      commentLike {
+        categoryType
+        contentComment
+        contentCommentId
+        contentPost {
+          ...postFragment
+        }
+        contentPostId
+        createdAt
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        ownerId
+        userId
+      }
       comment {
         id
         contentPostId
@@ -204,9 +251,6 @@ query GetNotification {
       }
       request {
         id
-        contentPostId
-        contentCommentId
-        contentStoryId
         isRead
         user {
           _id
@@ -220,9 +264,6 @@ query GetNotification {
             followedBy
             following
           }
-        }
-        contentPost {
-          ...postFragment
         }
       }
     }
@@ -246,6 +287,26 @@ query GetNotification {
           ...postFragment
         }
       }
+      commentLike {
+        categoryType
+        contentComment
+        contentCommentId
+        contentPost {
+          ...postFragment
+        }
+        contentPostId
+        createdAt
+        isRead
+        user {
+          _id
+          latestStoryTimestamp
+          seenStoryTime
+          userName
+          profileImage
+        }
+        ownerId
+        userId
+      }
       comment {
         id
         categoryType
@@ -269,9 +330,6 @@ query GetNotification {
       request {
         id
         categoryType
-        contentPostId
-        contentCommentId
-        contentStoryId
         isRead
         createdAt
         user {
@@ -287,9 +345,6 @@ query GetNotification {
             following
           }
         }
-        contentPost {
-          ...postFragment
-        }
       }
     }
   }
@@ -299,5 +354,11 @@ mutation AcceptRequest($followerId: String!) {
   acceptRequest(followerId: $followerId) {
     isFollowed
     isRequested
+  }
+}
+
+mutation UpdateIsRead {
+  updateIsRead {
+    isRead
   }
 }

@@ -50,6 +50,7 @@ export const getComments: QueryResolvers['getComments'] = async (_, { input }, {
     };
     return returnData;
   } catch (error) {
+    console.log('error inside get comments:', error);
     throw catchError(error);
   }
 };

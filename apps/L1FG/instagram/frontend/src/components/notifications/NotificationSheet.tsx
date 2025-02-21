@@ -9,21 +9,10 @@ type Props = {
 
 export const NotificationSheet = ({ isOpen, setIsOpen }: Props) => {
   const { data, loading } = useGetNotificationQuery({
-    pollInterval: 500,
+
+    pollInterval: 50000,
     fetchPolicy: 'cache-and-network',
   });
-
-  // useEffect(() => {
-  //   if (previousData && data) {
-  //     const prevCount = previousData?.getNotification?.today?.postLike?.length ?? 0;
-  //     const newCount = data?.getNotification?.today?.postLike?.length ?? 0;
-
-  //     if (newCount > prevCount) {
-  //       toast.success('Шинэ like ирлээ!');
-  //       setNotification(true);
-  //     }
-  //   }
-  // }, [data, previousData]);
 
   return (
     <>

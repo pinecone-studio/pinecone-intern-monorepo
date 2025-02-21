@@ -8,7 +8,7 @@ describe('update concert ticket', () => {
     (ConcertModel.findById as jest.Mock) = mockFindByIdAndUpdate;
     await expect(
       updateConcertTicket!({}, { input: { concertID: '1', vipTicketQuantity: 1, standartTicketQuantity: 1, standingAreaTicketQuantity: 1, ticketNumber: 11 } }, {}, {} as GraphQLResolveInfo)
-    ).rejects.toThrow(new Error('not found concert'));
+    ).rejects.toThrow(new Error('Концерт байхгүй байна'));
   });
 
   it('2. concert ticket sold out', async () => {
@@ -59,9 +59,7 @@ describe('update concert ticket', () => {
         {},
         {} as GraphQLResolveInfo
       )
-    ).rejects.toThrow(
-      new Error('vip 12 shirheg tasalbar zahialah bolomjgvi baina, ; standart 12shirheg tasalbar zahialah bolomjgvi baina,; standing area 12 shirheg tasalbar zahialah bolomjgvi baina')
-    );
+    ).rejects.toThrow(new Error('VIP 12 ширхэг тасалбар захиалах боломжгүй байна, ; Энгийн 12 ширхэг тасалбар захиалах боломжгүй байна,; Fanzone 12 ширхэг тасалбар захиалах боломжгүй байна'));
   });
 
   it('4. should update concert tickets and create ticket record', async () => {

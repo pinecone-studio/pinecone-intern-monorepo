@@ -1,33 +1,29 @@
-import { NavigationBlue } from '@/components/user/main/NavigationBlue';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import { useAuth } from '@/components/providers';
-
-// Мocks хийж, хэрэглэхийг шаардсан hook-ийг дуурайх
-jest.mock('@/components/providers', () => ({
-  useAuth: jest.fn(),
-}));
+import { NavigationBlue } from '@/components/user/main/NavigationBlue';
 
 describe('NavigationBlue', () => {
-  it('should render successfully when user is logged in', async () => {
-    (useAuth as jest.Mock).mockReturnValue({
-      user: { name: 'John Doe' },
-      signout: jest.fn(),
-    });
-
-    render(<NavigationBlue />);
+  beforeEach(() => {
+    jest.restoreAllMocks(); // Mock-уудыг цэвэрлэх
   });
 
-  it('should render successfully when user is not logged in', async () => {
-    (useAuth as jest.Mock).mockReturnValue({
-      user: null,
-      signout: jest.fn(),
-    });
+  it('should render successfully when user is logged in', () => {
+    // `localStorage`-ийг mock хийх
+    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('mocked-token');
 
-    const { getByText } = render(<NavigationBlue />);
+    render(<NavigationBlue />);
 
-    // Нэвтрээгүй хэрэглэгчийн хэсэг харагдах ёстой
-    expect(getByText('Register'));
-    expect(getByText('Sign in'));
+    // "My Booking" товч байгаа эсэхийг шалгах
+    expect(screen.getByText('My Booking'));
+  });
+
+  it('should render successfully when user is not logged in', () => {
+    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+
+    render(<NavigationBlue />);
+
+    // "Register" болон "Sign in" товчнууд байгаа эсэхийг шалгах
+    expect(screen.getByText('Register'));
+    expect(screen.getByText('Sign in'));
   });
 });

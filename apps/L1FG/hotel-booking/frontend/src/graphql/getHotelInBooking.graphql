@@ -1,0 +1,7 @@
+query GetHotelInBooking($getHotelByIdId: ID!) {
+  getHotelById(id: $getHotelByIdId) {
+    name
+    images
+    description
+  }
+}
