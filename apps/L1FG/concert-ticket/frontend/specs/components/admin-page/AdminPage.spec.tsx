@@ -125,7 +125,6 @@ describe('AdminPage', () => {
   it('renders all components correctly', () => {
     render(<AdminPage />);
 
-    expect(screen.getByTestId('toast-container')).toBeInTheDocument();
     expect(screen.getByTestId('admin-header')).toBeInTheDocument();
     expect(screen.getByTestId('admin-dialog')).toBeInTheDocument();
     expect(screen.getByTestId('admin-table')).toBeInTheDocument();

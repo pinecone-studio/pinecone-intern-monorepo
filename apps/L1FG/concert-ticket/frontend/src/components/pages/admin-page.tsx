@@ -3,7 +3,7 @@ import { AdminHeader } from '../header/AdminHeader';
 import { ConcertFormProvider } from '../admincontext/DialogContext';
 import { FormData } from '../adminfeature/concert-type';
 import { useCreateConcertMutation, useGetConcertsQuery } from '@/generated';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminTable from '../../app/_features/adminFeature/AdminHero';
 
@@ -31,7 +31,6 @@ export const AdminPage = () => {
 
   return (
     <div className="text-white">
-      <ToastContainer />
       <div className="pt-4 pr-6 pl-6  ">
         <AdminHeader />
       </div>

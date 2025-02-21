@@ -7,7 +7,7 @@ import { HeaderPart } from '@/components/header/Header';
 import { Footerr } from '../components/footer/Footer';
 import { AlertProvider } from '@/components/providers/AlertProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
-
+import { ToastContainer } from 'react-toastify';
 const RootLayout = ({ children }: PropsWithChildren) => {
   const pathName = usePathname();
   const signUp = pathName.startsWith('/signup');
@@ -23,7 +23,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
             <AlertProvider>
               <AuthProvider>
                 {!signUp && !login && !admin && !reservation && !resetpass && <HeaderPart />}
-                {children}
+                {children} <ToastContainer />
                 {!signUp && !login && !admin && !reservation && !resetpass && <Footerr />}
               </AuthProvider>
             </AlertProvider>
