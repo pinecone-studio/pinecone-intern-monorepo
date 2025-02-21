@@ -22,6 +22,8 @@ export const Today = ({ notifications }: Props) => {
 
   if (hasUnreadNotifications) {
     setNotification(true);
+  } else {
+    setNotification(false);
   }
 
   return (

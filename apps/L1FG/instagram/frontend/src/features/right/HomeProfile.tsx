@@ -17,7 +17,7 @@ const HomePageProfile = () => {
             <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[3px] mt-2">
               <div className="rounded-full bg-white w-12 h-12 flex items-center justify-center">
                 <div className="w-11 h-11 rounded-full overflow-hidden relative">
-                  <Image src="/images/profilePic.png" alt="zurag orno" fill className="object-cover" />
+                  <Image src={user?.profileImage as string} alt="zurag orno" fill className="object-cover" />
                 </div>
               </div>
             </div>
