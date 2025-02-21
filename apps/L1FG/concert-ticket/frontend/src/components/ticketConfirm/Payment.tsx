@@ -34,6 +34,7 @@ const PaymentTicket = ({ handleChange, handleBack, value, ticketID }: OrderClick
     await createOrder({
       variables: {
         input: {
+          // orderStatus: 'DONE',
           userID: userID,
           concertID: concertId,
           ticketID: ticketId,
