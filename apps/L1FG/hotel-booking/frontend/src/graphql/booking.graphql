@@ -95,5 +95,31 @@ query getBookingsByRoomId($roomId: ID!) {
     expirationDate
     securityCode
     country
+  }}
+mutation createBooking($input: CreateBookingInput!) {
+  createBooking(input: $input) {
+    code
+    success
+    message
+    booking {
+      id
+      userId
+      hotelId
+      roomId
+      startDate
+      endDate
+      phoneNumber
+      guestRequest
+      email
+      status
+      cardName
+      cardNumber
+      expirationDate
+      securityCode
+      country
+      firstName
+      middleName
+      lastName
+    }
   }
 }

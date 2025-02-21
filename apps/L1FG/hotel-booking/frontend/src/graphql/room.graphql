@@ -117,7 +117,7 @@ mutation editRoomServices($input: editRoomServicesInput!) {
   }
 }
 
-query getRoomById($getRoomByIdId: ID!) {
+query GetRoomById($getRoomByIdId: ID!) {
   getRoomById(id: $getRoomByIdId) {
     id
     name

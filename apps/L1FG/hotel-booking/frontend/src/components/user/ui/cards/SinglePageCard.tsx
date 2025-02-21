@@ -11,11 +11,10 @@ import { SinglePageCardPrice } from './SinglePageCardPrice';
 import { RoomInformationCard } from './RoomInformationCard';
 
 interface SinglePageCardProps {
-  rooms?: Room | null;
+  rooms?: Room | null |undefined;
 }
 
 export const SinglePageCard = ({ rooms }: SinglePageCardProps) => {
-  const priceRoom = rooms?.price || 0;
   return (
     <div data-testid="room-card" className="w-full text-foreground border rounded-[6px]">
       <SinglePageCardImage rooms={rooms} />
@@ -59,7 +58,7 @@ export const SinglePageCard = ({ rooms }: SinglePageCardProps) => {
         <div className="py-4">
           <div className="border"></div>
         </div>
-        <SinglePageCardPrice rooms={priceRoom} />
+        <SinglePageCardPrice rooms={rooms} />
       </div>
     </div>
   );

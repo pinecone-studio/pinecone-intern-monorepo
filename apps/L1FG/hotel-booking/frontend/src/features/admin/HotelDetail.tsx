@@ -31,6 +31,7 @@ export const HotelDetailPage = () => {
   const { data } = useGetHotelByIdQuery({ variables: { getHotelByIdId: hotelId } });
   const hotelData = data?.getHotelById;
 
+
   const [editHotelGeneralInfo] = useEditHotelGeneralInfoMutation();
   const [editHotelLocation] = useEditHotelLocationMutation();
   const [editHotelImages] = useEditHotelImagesMutation();
@@ -166,7 +167,7 @@ export const HotelDetailPage = () => {
                 <AboutThisProperty data={hotelData} hotelRoomData={undefined} />
                 <Policies data={hotelData} hotelRoomData={undefined} />
                 <PoliciesExtra />
-                <Questions />
+                <Questions data ={hotelData}/>
               </div>
               <div className="max-w-[400px] w-full flex flex-col gap-4">
                 <Location data={hotelData} {...hotelLocation} {...setterLocation} handleEditHotelLocation={handleEditHotelLocation} />

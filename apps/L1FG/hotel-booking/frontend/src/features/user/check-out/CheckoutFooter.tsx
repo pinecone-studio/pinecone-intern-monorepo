@@ -1,4 +1,4 @@
-import { LogoIcon } from '../ui/svg';
+import { LogoIcon } from '../../../components/user/ui/svg';
 
 export const CheckoutFooter = () => {
   return (

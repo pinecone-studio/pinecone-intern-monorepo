@@ -2,7 +2,8 @@ import { MutationResolvers } from '../../../generated';
 import { BookingModel } from '../../../models';
 
 export const createBooking: MutationResolvers['createBooking'] = async (_, { input }) => {
-  const { userId, hotelId, roomId, startDate, endDate, phoneNumber, guestRequest, email, status, cardName, cardNumber, expirationDate, securityCode, country } = input;
+  const { userId, hotelId, roomId, startDate, endDate, phoneNumber, guestRequest, email, status, cardName, cardNumber, expirationDate, securityCode, country, firstName, lastName, middleName } = input;
+  console.log(input);
   try {
     const newBooking = await BookingModel.create({
       userId,
@@ -19,6 +20,9 @@ export const createBooking: MutationResolvers['createBooking'] = async (_, { inp
       expirationDate,
       securityCode,
       country,
+      firstName,
+      lastName,
+      middleName
     });
     return {
       code: 200,

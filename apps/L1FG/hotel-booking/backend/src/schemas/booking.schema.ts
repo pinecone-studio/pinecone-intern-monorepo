@@ -21,6 +21,9 @@ export const typeDefs = gql`
     expirationDate: Date!
     securityCode: Int!
     country: String!
+    firstName : String!
+    lastName : String!
+    middleName : String!
   }
   input CreateBookingInput {
     userId: ID!
@@ -37,6 +40,9 @@ export const typeDefs = gql`
     expirationDate: Date!
     securityCode: Int!
     country: String!
+    firstName : String!
+    lastName : String!
+    middleName : String!
   }
 
   type CreateBookingResponse {

@@ -1,6 +1,6 @@
 import { Hotel, Room } from '@/generated';
 import { ChooseRoom } from './ChooseRoom';
-import { DetailHero } from './DetailHero';
+import { DetailHero } from '../../../features/DetailHero';
 import { GeneralInformation } from './GeneralInformation';
 import { About } from './About';
 
@@ -12,7 +12,7 @@ export interface HotelDetailMainProps {
 export const HotelDetailMain = ({ data, hotelRoomData }: HotelDetailMainProps) => {
   return (
     <div className="w-full container mx-auto flex flex-col items-center  gap-8 px-[60px] py-8">
-      <DetailHero />
+      <DetailHero data={data}/>
       <GeneralInformation data={data} />
       <ChooseRoom hotelRoomData={hotelRoomData} />
       <About />

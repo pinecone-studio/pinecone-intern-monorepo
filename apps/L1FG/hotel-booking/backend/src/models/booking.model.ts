@@ -16,6 +16,9 @@ const BookingSchema = new Schema<BookingType>({
   expirationDate: { type: Date },
   securityCode: { type: Number },
   country: { type: String },
+  firstName : {type : String},
+  lastName : {type : String},
+  middleName : {type : String}
 });
 
 export const BookingModel = models['bookings'] || model<BookingType>('bookings', BookingSchema);

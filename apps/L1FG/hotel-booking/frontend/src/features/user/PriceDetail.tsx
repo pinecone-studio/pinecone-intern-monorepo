@@ -1,16 +1,20 @@
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { useNightsCount } from '@/features/user/main/useNightsCount';
 import { ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Room } from '@/generated';
 
-interface PriceDetailProps {
-  price: number;
+interface SinglePageCardPriceProps {
+  rooms: Room | null | undefined;
 }
 
-export const PriceDetail = ({ price }: PriceDetailProps) => {
+export const PriceDetail = ({ rooms }: SinglePageCardPriceProps) => {
+
+  const router = useRouter();
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {}).format(price);
   };
-
+  const price = rooms?.price || 0
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,7 +42,11 @@ export const PriceDetail = ({ price }: PriceDetailProps) => {
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <button className="w-full bg-[#2563EB] px-3 py-2 rounded-md text-white text-ms font-medium not-italic" type="button">
+            <button onClick={() => {
+    if (rooms?.id) {
+      router.push(`/check-out/${rooms.id}`);
+    }
+  }}  className="w-full bg-[#2563EB] px-3 py-2 rounded-md text-white text-ms font-medium not-italic" type="button">
               Reserve
             </button>
           </DialogClose>

@@ -12,7 +12,8 @@ export const Policies = ({ data }: HotelDetailMainProps) => {
         <div className="w-full h-[1px] bg-[#E4E4E7] "></div>
       </div>
       <div className="flex flex-col gap-8">
-        <div className="flex items-center">
+        <div className="flex flex-col items-center gap-8">
+          
           <div className="w-full flex flex-col gap-2">
             <p className="text-[#09090B] font-Inter text-lg font-semibold">Check-in</p>
             <p className="text-[#09090B] font-Inter text-sm font-normal">{data?.faqs?.[0]?.value ?? '-/-'}</p>
@@ -22,30 +23,22 @@ export const Policies = ({ data }: HotelDetailMainProps) => {
             <p className="text-[#09090B] font-Inter text-sm font-normal">{data?.faqs?.[1]?.value ?? '-/-'}</p>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-[#09090B] font-Inter text-lg font-semibold">Special check-in instructions</p>
-          <p className="text-[#09090B] font-Inter text-sm font-normal">-/-</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-[#09090B] font-Inter text-lg font-semibold">Access methods</p>
-          <p className="text-[#09090B] font-Inter text-sm font-normal">Staffed front desk</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-[#09090B] font-Inter text-lg font-semibold">Pets</p>
-          <p className="text-[#09090B] font-Inter text-sm font-normal">No pets or service animals allowed</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-[#09090B] font-Inter text-lg font-semibold">Children and extra beds</p>
-          <p className="text-[#09090B] font-Inter text-sm font-medium">-/-</p>
-        </div>
+        {data?.policies?.map((policy , index) => {
+          return <div key={index} className='flex flex-col gap-2'>
+            <p className="text-[#09090B] font-Inter text-lg font-semibold">{policy?.key}</p>
+            <p className="text-[#09090B] font-Inter text-sm font-normal">{policy?.value}</p>
+          </div>
+        })}
+        
         <div className="flex flex-col gap-2">
           <p className="text-[#09090B] font-Inter text-lg font-semibold">Property payment types</p>
           <div className="flex items-center">
-            <Card />
-            <VisaCard />
-            <MasterCard />
-            <AmericanExpressCard />
-          </div>
+  <Card data-testid="card-icon" />
+  <VisaCard data-testid="visa-icon" />
+  <MasterCard data-testid="mastercard-icon" />
+  <AmericanExpressCard data-testid="american-express-icon" />
+</div>
+
         </div>
       </div>
     </div>

@@ -52,6 +52,9 @@ export type BookingType = {
   expirationDate: Date;
   securityCode: number;
   country: string;
+  firstName : string;
+  lastName : string;
+  middleName : string
 };
 
 export type UserType = {
