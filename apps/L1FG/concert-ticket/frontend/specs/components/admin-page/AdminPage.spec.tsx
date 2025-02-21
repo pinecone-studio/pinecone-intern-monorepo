@@ -3,12 +3,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expect } from '@jest/globals';
 import { AdminPage } from '@/components/pages/admin-page';
-import { useCreateConcertMutation } from '@/generated';
+import { useCreateConcertMutation, useGetConcertsQuery } from '@/generated';
 import { toast } from 'react-toastify';
 import { act } from '@testing-library/react';
 
 jest.mock('@/generated', () => ({
   useCreateConcertMutation: jest.fn(),
+  useGetConcertsQuery: jest.fn(),
 }));
 
 jest.mock('react-toastify', () => ({
@@ -37,7 +38,7 @@ jest.mock('@/components/header/AdminHeader', () => ({
   AdminHeader: () => <div data-testid="admin-header">Mock Header</div>,
 }));
 
-jest.mock('@/components/adminHero/AdminHero', () => ({
+jest.mock('../../../src/app/_features/adminFeature/AdminHero', () => ({
   __esModule: true,
   default: () => <div data-testid="admin-table">Mock Table</div>,
 }));
@@ -45,11 +46,13 @@ jest.mock('@/components/adminHero/AdminHero', () => ({
 describe('AdminPage', () => {
   const mockCreateConcert = jest.fn();
   let mockOnSubmit: jest.Mock;
+  const mockRefetch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockOnSubmit = jest.fn();
     (useCreateConcertMutation as jest.Mock).mockReturnValue([mockCreateConcert]);
+    (useGetConcertsQuery as jest.Mock).mockReturnValue({ refetch: mockRefetch });
   });
   it('should handle form submission and successful concert creation', async () => {
     render(<AdminPage />);
@@ -129,40 +132,7 @@ describe('AdminPage', () => {
     expect(screen.getByTestId('pageWrapper')).toBeInTheDocument();
     expect(screen.getByTestId('outerContainer')).toBeInTheDocument();
   });
-
-  it('should handle form submission and concert creation error', async () => {
-    render(<AdminPage />);
-
-    const mockFormData = {
-      concertName: 'Test Concert',
-      artistName: ['Test Artist'],
-    };
-
-    const mockError = new Error('Test error message');
-
-    const formProviderProps = jest.mocked(require('@/components/admincontext/DialogContext').ConcertFormProvider).mock.calls[0][0];
-
-    await act(async () => {
-      await formProviderProps.onSubmit(mockFormData);
-    });
-
-    expect(mockCreateConcert).toHaveBeenCalled();
-
-    const { onError } = mockCreateConcert.mock.calls[0][0];
-    act(() => {
-      onError(mockError);
-    });
-
-    expect(toast.error).toHaveBeenCalledWith(
-      'Алдаа гарлаа: Test error message',
-      expect.objectContaining({
-        position: 'top-right',
-        autoClose: 3000,
-      })
-    );
-  });
-
-  it('should handle form submission and successful concert creation', async () => {
+  it('should call refetch after successful concert creation', async () => {
     render(<AdminPage />);
 
     const mockFormData = {
@@ -198,6 +168,71 @@ describe('AdminPage', () => {
         autoClose: 3000,
       })
     );
+    expect(mockRefetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not call refetch on concert creation error', async () => {
+    render(<AdminPage />);
+
+    const mockError = new Error('Test error message');
+    const mockFormData = {
+      concertName: 'Test Concert',
+      artistName: ['Test Artist'],
+    };
+
+    const formProviderProps = jest.mocked(require('@/components/admincontext/DialogContext').ConcertFormProvider).mock.calls[0][0];
+
+    await act(async () => {
+      await formProviderProps.onSubmit(mockFormData);
+    });
+
+    const { onError } = mockCreateConcert.mock.calls[0][0];
+    act(() => {
+      onError(mockError);
+    });
+
+    expect(toast.error).toHaveBeenCalledWith(
+      'Алдаа гарлаа: Test error message',
+      expect.objectContaining({
+        position: 'top-right',
+        autoClose: 3000,
+      })
+    );
+    expect(mockRefetch).not.toHaveBeenCalled();
+  });
+
+  it('displays correct text content', () => {
+    render(<AdminPage />);
+
+    expect(screen.getByText('Тасалбар')).toBeInTheDocument();
+    expect(screen.getByText('Идэвхтэй зарагдаж буй тасалбарууд')).toBeInTheDocument();
+  });
+
+  it('handles concert creation with proper error handling', async () => {
+    const errorMessage = 'Test error';
+    const error = new Error(errorMessage);
+
+    mockCreateConcert.mockImplementation(({ onError }) => {
+      onError?.(error);
+      return Promise.reject(error);
+    });
+
+    render(<AdminPage />);
+
+    await mockCreateConcert({
+      variables: { input: {} },
+      onError: (error: Error) => {
+        toast.error(`Алдаа гарлаа: ${error.message}`, {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+      },
+    }).catch(() => {});
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith(`Алдаа гарлаа: ${errorMessage}`, expect.any(Object));
+      expect(mockRefetch).not.toHaveBeenCalled();
+    });
   });
 
   it('displays correct text content', () => {
