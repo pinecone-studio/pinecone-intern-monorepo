@@ -6,4 +6,4 @@ export * from './BadgeCompleted';
 export * from './BadgeCancelled';
 export * from './NoBooking';
 export * from './NoPrevious';
-export * from './CancelBookingContent';
+export * from '../../../features/user/booking/CancelBookingContent';

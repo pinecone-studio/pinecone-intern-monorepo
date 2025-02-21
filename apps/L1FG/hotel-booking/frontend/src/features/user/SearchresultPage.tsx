@@ -1,4 +1,4 @@
-import { NavigationBlue } from '@/components/user/main/NavigationBlue';
+import { NavigationBlue } from '@/features/user/main/NavigationBlue';
 import { SearchBar } from '@/features/user/main/SearchBar';
 import { Loading } from '@/components/user/main/Loading';
 import { MainResultSearch } from '@/components/user/search-result/MainSearchResult';
