@@ -1,3 +1,4 @@
+import { sendEmail } from 'apps/L1FG/concert-ticket/backend/src/library/nodemailer';
 import { createOrder } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
@@ -20,6 +21,9 @@ jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({
   },
 }));
 
+jest.mock('apps/L1FG/concert-ticket/backend/src/library/nodemailer', () => ({
+  sendEmail: jest.fn().mockResolvedValue(undefined),
+}));
 describe('createOrder', () => {
   it('should render create order', async () => {
     const regularTicket = {
@@ -69,5 +73,6 @@ describe('createOrder', () => {
       userID: 'id',
       orderStatus: 'DONE',
     });
+    expect(sendEmail).toHaveBeenCalledWith('email', 'Таны захиалсан тасалбарын код 45 тул уг кодыг уншуулж тоглолтоо үзнэ үү');
   });
 });
