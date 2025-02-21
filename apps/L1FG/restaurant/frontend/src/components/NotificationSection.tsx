@@ -46,6 +46,7 @@ const NotificationSection = () => {
   const { data, loading, refetch } = useGetOrdersForUserQuery({
     variables: { userId: userId || '' },
     skip: !userId,
+    pollInterval: 5000,
   });
 
   useEffect(() => {
