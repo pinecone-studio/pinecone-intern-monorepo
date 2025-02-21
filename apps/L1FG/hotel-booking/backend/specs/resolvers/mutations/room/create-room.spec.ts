@@ -11,11 +11,12 @@ const room: CreateRoomInput = {
   price: 150000,
   roomInfo: ['Gal uruu', 'buh ymtai'],
   roomNumber: 101,
-  roomServices: [
-    { key: 'Wi-Fi', value: 'Free' },
-    { key: 'Room Service', value: 'Available 24/7' },
-    { key: 'Mini Bar', value: 'Fully stocked' },
-  ],
+  bathroom: ['best room'],
+  accessibility: ['best room'],
+  internet: ['best room'],
+  foodAndDrink: ['best room'],
+  bedroom: ['best room'],
+  other: ['best room'],
   tax: 15000,
   type: 'aimr',
 };
@@ -51,11 +52,12 @@ describe('createRoom', () => {
       price: 150000,
       roomInfo: ['best room'],
       roomNumber: 101,
-      roomServices: [
-        { key: 'Wi-Fi', value: 'Free' },
-        { key: 'Room Service', value: 'Available 24/7' },
-        { key: 'Mini Bar', value: 'Fully stocked' },
-      ],
+      bathroom: ['best room'],
+      accessibility: ['best room'],
+      internet: ['best room'],
+      foodAndDrink: ['best room'],
+      bedroom: ['best room'],
+      other: ['best room'],
       tax: 15000,
       type: '1 bed',
     });
@@ -66,10 +68,5 @@ describe('createRoom', () => {
     expect(response.success).toBe(true);
     expect(response.message).toBe('Room created successfully');
     expect(response.room?.name).toBe('Luxury room 1');
-    expect(response.room?.roomServices).toEqual([
-      { key: 'Wi-Fi', value: 'Free' },
-      { key: 'Room Service', value: 'Available 24/7' },
-      { key: 'Mini Bar', value: 'Fully stocked' },
-    ]);
   });
 });

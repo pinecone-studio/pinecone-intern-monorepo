@@ -13,10 +13,12 @@ mutation createRoom($input: CreateRoomInput!) {
       images
       roomInfo
       type
-      roomServices {
-        key
-        value
-      }
+      bathroom
+      accessibility
+      internet
+      foodAndDrink
+      bedroom
+      other
       tax
     }
   }
@@ -33,10 +35,12 @@ mutation editRoomGeneralInfo($input: editRoomGeneralInfoInput!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }
@@ -52,10 +56,12 @@ mutation editRoomServices($input: editRoomServicesInput!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }
@@ -71,10 +77,12 @@ mutation editRoomImages($input: editRoomImagesInput!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }
@@ -90,29 +98,12 @@ query getRoomsByHotelId($hotelId: ID!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
-    tax
-  }
-}
-
-mutation editRoomServices($input: editRoomServicesInput!) {
-  editRoomServices(input: $input) {
-    id
-    name
-    hotelId
-    roomNumber
-    price
-    bed
-    images
-    roomInfo
-    type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }
@@ -128,10 +119,12 @@ query GetRoomById($getRoomByIdId: ID!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }

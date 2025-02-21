@@ -27,11 +27,15 @@ export const useRoomState = () => {
 };
 
 export const useRoomServices = () => {
-  const [key, setKey] = useState<string>('');
-  const [value, setValue] = useState<string>('');
+  const [accessibility, setAccessibility] = useState<string[]>([]);
+  const [bathroom, setBathroom] = useState<string[]>([]);
+  const [bedroom, setBedroom] = useState<string[]>([]);
+  const [foodAndDrink, setFoodAndDrink] = useState<string[]>([]);
+  const [internet, setInternet] = useState<string[]>([]);
+  const [other, setOther] = useState<string[]>([]);
 
   return {
-    roomServices: { key, value },
-    setterServices: { setKey, setValue },
+    roomServices: { accessibility, bathroom, bedroom, foodAndDrink, internet, other },
+    setterServices: { setAccessibility, setBathroom, setBedroom, setFoodAndDrink, setInternet, setOther },
   };
 };

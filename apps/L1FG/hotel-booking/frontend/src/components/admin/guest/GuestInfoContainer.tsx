@@ -7,6 +7,11 @@ export type GuestInfoMainProps = {
   handleEditBookingStatus: (_newStatus: string) => Promise<void>;
 };
 
+export type GuestInfoSectionProps = {
+  data: Booking | undefined | null;
+  roomData: Room | undefined | null;
+};
+
 //Date format
 const formatDate = (dateString: string | undefined | null) => {
   if (!dateString) return '-/-';
@@ -47,7 +52,7 @@ const InfoRow = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-const GuestInfoSection = ({ data }: { data: Booking | undefined | null }) => (
+const GuestInfoSection = ({ data, roomData }: GuestInfoSectionProps) => (
   <div className="flex flex-col gap-6">
     <div className="flex items-center gap-6">
       <InfoRow label="First name" value="Shagai" />
@@ -60,7 +65,7 @@ const GuestInfoSection = ({ data }: { data: Booking | undefined | null }) => (
           <p className={`px-[10px] py-[2px] rounded-full text-[#FAFAFA] font-Inter text-xs font-semibold transition-all duration-200 ${statusClass(data?.status || '')}`}>{data?.status || '-/-'}</p>
         </div>
       </div>
-      <InfoRow label="Guests" value="1 adult, 0 children" />
+      <InfoRow label="Guests" value={`${roomData?.bed?.toString() || '-/-'} ${roomData?.bed === 1 ? 'adult' : 'adults'}`} />
     </div>
     <div className="flex items-center gap-6">
       <InfoRow label="Check in" value={formatDate(data?.startDate)} />
@@ -75,7 +80,7 @@ export const GuestInfoContainer = ({ data, roomData, handleEditBookingStatus }: 
       <div className="flex flex-col">
         <p className="text-[#09090B] font-Inter text-lg font-semibold">Guest Info</p>
         <Divider />
-        <GuestInfoSection data={data} />
+        <GuestInfoSection data={data} roomData={roomData} />
         <Divider />
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-6">

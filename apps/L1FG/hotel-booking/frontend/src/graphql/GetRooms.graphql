@@ -9,10 +9,12 @@ query GetRooms($hotelId: ID!) {
     images
     roomInfo
     type
-    roomServices {
-      key
-      value
-    }
+    bathroom
+    accessibility
+    internet
+    foodAndDrink
+    bedroom
+    other
     tax
   }
 }

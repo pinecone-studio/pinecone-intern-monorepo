@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronsUpDownIcon, HistoryIcon } from 'lucide-react';
+import { HistoryIcon } from 'lucide-react';
 import { Booking } from '@/generated';
 
 interface AdminDataTableProps {
@@ -42,11 +42,9 @@ export const RoomDataTable = ({ data }: AdminDataTableProps) => {
           <p className="px-4 py-2 max-w-[346px] w-full text-[#09090B] font-Inter text-sm font-semibold h-10 flex items-center border-r border-[#E4E4E7]">Guest name</p>
           <div className="px-4 py-2 flex items-center justify-between max-w-[120px] w-full h-10  border-r border-[#E4E4E7]">
             <p className="text-[#09090B] font-Inter text-sm font-semibold">Status</p>
-            <ChevronsUpDownIcon width={16} height={16} />
           </div>
           <div className="px-4 py-2 flex items-center justify-between max-w-[188px] w-full h-10">
             <p className="text-[#09090B] font-Inter text-sm font-semibold">Date</p>
-            <ChevronsUpDownIcon width={16} height={16} />
           </div>
         </div>
         {data?.length > 0 ? (

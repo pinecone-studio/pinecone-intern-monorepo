@@ -19,12 +19,20 @@ export type GeneralInfoDetailDialogProps = {
   handleEditGeneralInfo: () => Promise<void>;
 };
 
-export type RoomDetailServicesProps = {
+export type RoomServicesProps = {
   data: Room | undefined | null;
-  key: string;
-  value: string;
-  setKey: (_key: string) => void;
-  setValue: (_value: string) => void;
+  accessibility: string[];
+  bathroom: string[];
+  bedroom: string[];
+  foodAndDrink: string[];
+  internet: string[];
+  other: string[];
+  setAccessibility: (_accessibility: string[]) => void;
+  setBathroom: (_bathroom: string[]) => void;
+  setBedroom: (_bedroom: string[]) => void;
+  setFoodAndDrink: (_foodAndDrink: string[]) => void;
+  setInternet: (_internet: string[]) => void;
+  setOther: (_other: string[]) => void;
   handleEditRoomServices: () => Promise<void>;
 };
 

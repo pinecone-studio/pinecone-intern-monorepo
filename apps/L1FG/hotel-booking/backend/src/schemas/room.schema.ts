@@ -25,7 +25,12 @@ export const typeDefs = gql`
     images: [String!]!
     roomInfo: [String]
     type: String
-    roomServices: [KeyValue]
+    bathroom: [String]
+    accessibility: [String]
+    internet: [String]
+    foodAndDrink: [String]
+    bedroom: [String]
+    other: [String]
     tax: Float
   }
   input CreateRoomInput {
@@ -37,7 +42,12 @@ export const typeDefs = gql`
     images: [String!]!
     roomInfo: [String]
     type: String
-    roomServices: [KeyValueInput]
+    bathroom: [String]
+    accessibility: [String]
+    internet: [String]
+    foodAndDrink: [String]
+    bedroom: [String]
+    other: [String]
     tax: Float
   }
   input editRoomGeneralInfoInput {
@@ -48,6 +58,7 @@ export const typeDefs = gql`
     type: String
     bed: Int
     roomNumber: Int
+    tax: Float
   }
 
   type CreateRoomResponse {
@@ -58,7 +69,12 @@ export const typeDefs = gql`
   }
   input editRoomServicesInput {
     id: ID!
-    roomServices: [KeyValueInput]
+    bathroom: [String]
+    accessibility: [String]
+    internet: [String]
+    foodAndDrink: [String]
+    bedroom: [String]
+    other: [String]
   }
 
   input editRoomImagesInput {
