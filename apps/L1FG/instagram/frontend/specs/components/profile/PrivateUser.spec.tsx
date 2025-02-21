@@ -1,4 +1,4 @@
-import { PrivateUser } from '@/components/profile/privateUser/PrivateUser';
+import { PrivateUser } from '@/features/profile/follow/PrivateUser';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';

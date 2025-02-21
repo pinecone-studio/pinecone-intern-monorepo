@@ -1,4 +1,5 @@
 import { Bookmark } from 'lucide-react';
+import { Footer } from '../Footer';
 
 const Save = () => {
   return (
@@ -19,10 +20,8 @@ const Save = () => {
           </div>
         </div>
       </div>
-      <div className="text-gray-500 text-xs flex flex-col gap-4 mt-8">
-        <p className="flex justify-center ">About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-        <p className="flex justify-center">© 2024 INSTAGRAM FROM META</p>
-      </div>
+      <div className="p-3"></div>
+      <Footer />
     </div>
   );
 };

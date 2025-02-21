@@ -10,10 +10,12 @@ import { ProfileHover } from '@/features/home-post/ProfileHover';
 import DeletePost from '@/features/profile/DeletePost';
 import { PostLikeModal } from '@/features/profile/PostLIkeModal';
 import { useState } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   const [postOpen, setPostOpen] = useState(false);
-
+  const { user } = useAuth();
+  const isOwner = user?._id === post.userId;
   return (
     <Carousel>
       <Dialog onOpenChange={setPostOpen} open={postOpen}>
@@ -29,15 +31,13 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <div className="flex justify-between py-3 px-6 items-center">
                   <div className="flex gap-5 justify-center items-center">
                     <ProfileHover searchingUserId={post?.user?._id}>
-                      <Image src={imageUrlOptimizer(post.user?.profileImage)} alt="zurag" width={35} height={35} className="w-[40px] rounded-full h-[40px] object-cover border" />
+                      <Image src={imageUrlOptimizer(post.user?.profileImage)} alt="zurag" width={35} height={35} className="w-[35px] rounded-full h-[35px] object-cover border" />
                     </ProfileHover>
                     <ProfileHover searchingUserId={post.user._id}>
                       <p className="font-semibold text-base">{post.user?.userName}</p>
                     </ProfileHover>
                   </div>
-                  <div>
-                    <DeletePost setPostOpen={setPostOpen} postId={post._id} />
-                  </div>
+                  <div>{isOwner ? <DeletePost setPostOpen={setPostOpen} postId={post._id} /> : ''}</div>
                 </div>
                 <Separator />
               </div>
@@ -46,7 +46,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                 <div className="p-6 flex flex-col gap-6 h-[488px] overflow-y-scroll">
                   <div className="flex  ">
                     <ProfileHover searchingUserId={post.user._id}>
-                      <Image src={imageUrlOptimizer(post.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[40px] h-[40px] border" />
+                      <Image src={imageUrlOptimizer(post.user.profileImage)} width={35} height={35} alt="User profile" className="rounded-full w-[35px] h-[35px] border" />
                     </ProfileHover>
 
                     <div className="flex flex-col gap-2">

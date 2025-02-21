@@ -9,6 +9,7 @@ import { CommentDetailType, useCreateCommentLikeMutation, useDeleteCommentLikeMu
 import Image from 'next/image';
 import { useState } from 'react';
 import DeleteComment from './DeleteComment';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 export const Comment = ({ comment, post }: { comment: CommentDetailType; post: UserPostType }) => {
   const [liked, setLiked] = useState(comment.commentLiked);
@@ -17,6 +18,8 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
   const { cacheLikeComment, cacheUnlikeComment } = useCache();
   const [createCommentLike] = useCreateCommentLikeMutation();
   const [deleteCommentLike] = useDeleteCommentLikeMutation();
+  const { user } = useAuth();
+  const isOwner = user?._id === comment.userId;
   const handleClickLike = async () => {
     setLiked((prev) => !prev);
     try {
@@ -78,7 +81,7 @@ export const Comment = ({ comment, post }: { comment: CommentDetailType; post: U
                 <p data-testid="like-count">{quantityConverter({ quantity: likeCount, text: 'like' })}</p>
               </CommentLikeModal>
             </div>
-            <DeleteComment commentId={comment._id} postId={post._id} />
+            {isOwner ? <DeleteComment commentId={comment._id} postId={post._id} /> : ''}
           </div>
         </div>
       </div>

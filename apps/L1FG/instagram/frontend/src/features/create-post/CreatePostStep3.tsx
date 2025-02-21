@@ -31,7 +31,7 @@ export const CreatePostStep3 = ({
           input: {
             searchingUserId: userId,
             after: '',
-            first: 6,
+            first: 9,
           },
         },
       },
@@ -84,7 +84,7 @@ export const CreatePostStep3 = ({
                 <div className="flex px-3 pt-3 gap-4">
                   <div
                     style={{ backgroundImage: `url(${user?.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
-                    className=" bg-cover  w-[40px] h-[40px] object-cover rounded-full "
+                    className=" bg-cover  w-[35px] h-[35px] object-cover rounded-full "
                   ></div>
                   <div>
                     <p className="text-sm font-semibold">{user?.userName}</p>
