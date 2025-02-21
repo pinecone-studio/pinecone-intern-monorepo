@@ -13,7 +13,7 @@ export const RequestFollow = ({ reqNotification }: Props) => {
   return (
     <div>
       {reqNotification?.map((n) => (
-        <div key={n.id} className="flex justify-between items-center mt-4 py-2 px-4 mb-2">
+        <div key={n.id} className="flex justify-between items-center mt-4 py-2 px-4 mb-2 hover:bg-accent">
           <div className="mr-3">
             <Avatar>
               <AvatarImage src={n?.user?.profileImage} alt={n?.user?.userName || 'User'} />

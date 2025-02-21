@@ -41,7 +41,7 @@ export const LikedPost = ({ likeNotification }: Props) => {
   return (
     <div>
       {groupedNotifications?.map((n, index) => (
-        <div key={index} className="flex items-center justify-between py-3 px-4  transition rounded-lg">
+        <div key={index} className="flex items-center justify-between py-3 px-4 hover:bg-accent  transition rounded-lg">
           <div className="flex items-center">
             <div className="relative w-10 h-10">
               {n.userImages.slice(0, 2).map((img, index) => (
