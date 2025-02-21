@@ -43,11 +43,18 @@ export const RoomTypes = () => {
           price: 0,
           roomNumber: 0,
           images: ['https://www.trical.co.nz/modules/custom/legrand_ecat/assets/img/no-image.png'],
-          roomServices: Array(2).fill({ key: '-/-', value: '-/-' }),
+          accessibility: ['-/-'],
+          bathroom: ['-/-'],
+          bedroom: ['-/-'],
+          foodAndDrink: ['-/-'],
+          internet: ['-/-'],
+          other: ['-/-'],
         },
       };
       const response = await createRoom({ variables });
       const roomId = response?.data?.createRoom?.room?.id;
+
+      console.log(response);
 
       if (roomId) {
         await refetch();

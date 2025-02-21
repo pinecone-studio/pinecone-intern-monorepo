@@ -4,11 +4,10 @@ import { Footer, Header } from '@/components/admin/main';
 import Link from 'next/link';
 import { LeftArrow } from '@/components/admin/svg';
 import { Sidebar } from './main/Sidebar';
-import { RoomServices } from '@/components/admin/add-room';
 import { useEditRoomGeneralInfoMutation, useEditRoomImagesMutation, useEditRoomServicesMutation, useGetRoomByIdQuery } from '@/generated';
 import { useParams } from 'next/navigation';
-import { useRoomServices } from '@/components/admin/add-room/States';
-import { GeneralInfo, Images, UpcomingBooking, useRoomDetailImages, useRoomDetailState } from '@/components/admin/room-detail';
+import { GeneralInfo, Images, UpcomingBooking, useRoomDetailImages, useRoomDetailServices, useRoomDetailState } from '@/components/admin/room-detail';
+import { RoomServices } from '@/components/admin/room-detail/RoomServices';
 
 export const RoomDetailPage = () => {
   const params = useParams();
@@ -20,7 +19,7 @@ export const RoomDetailPage = () => {
   const [editRoomGeneralInfo] = useEditRoomGeneralInfoMutation();
   const [editRoomServices] = useEditRoomServicesMutation();
   const [editRoomImages] = useEditRoomImagesMutation();
-  const { roomServices, setterServices } = useRoomServices();
+  const { roomServices, setterServices } = useRoomDetailServices();
   const { roomGeneralInfo, setterGeneralInfo } = useRoomDetailState();
   const { roomImages, setterImages } = useRoomDetailImages();
 
@@ -37,28 +36,29 @@ export const RoomDetailPage = () => {
   };
 
   const createRoomServicesVariables = () => {
-    const { key, value } = roomServices;
+    const { accessibility, bathroom, bedroom, foodAndDrink, internet, other } = roomServices;
     return {
       input: {
         id: roomId,
-        roomServices: [
-          {
-            key,
-            value,
-          },
-        ],
+        accessibility,
+        bathroom,
+        bedroom,
+        foodAndDrink,
+        internet,
+        other,
       },
     };
   };
 
   const createRoomGeneralInfoVariables = () => {
-    const { name, type, roomInfo, price, bed, roomNumber } = roomGeneralInfo;
+    const { name, type, tax, roomInfo, price, bed, roomNumber } = roomGeneralInfo;
     return {
       input: {
         id: roomId,
         name,
         type,
         roomInfo,
+        tax: tax ? parseFloat(tax) : null,
         bed: bed ? parseFloat(bed) : null,
         price: price ? parseFloat(price) : null,
         roomNumber: roomNumber ? parseFloat(roomNumber) : null,
@@ -96,7 +96,7 @@ export const RoomDetailPage = () => {
               <div className="max-w-[784px] w-full flex flex-col gap-4">
                 <GeneralInfo data={roomData} {...roomGeneralInfo} {...setterGeneralInfo} handleEditGeneralInfo={() => handleEdit(editRoomGeneralInfo, createRoomGeneralInfoVariables())} />
                 <UpcomingBooking />
-                <RoomServices {...roomServices} {...setterServices} handleEditRoomServices={() => handleEdit(editRoomServices, createRoomServicesVariables())} />
+                <RoomServices data={roomData} {...roomServices} {...setterServices} handleEditRoomServices={() => handleEdit(editRoomServices, createRoomServicesVariables())} />
               </div>
               <div className="max-w-[400px] w-full flex flex-col gap-4">
                 <Images data={roomData} {...roomImages} {...setterImages} handleEditHotelImages={() => handleEdit(editRoomImages, createRoomImagesVariables())} />

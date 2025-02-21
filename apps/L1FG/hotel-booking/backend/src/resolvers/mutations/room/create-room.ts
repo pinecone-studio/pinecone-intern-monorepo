@@ -2,7 +2,7 @@ import { MutationResolvers } from '../../../generated';
 import { RoomModel } from '../../../models';
 
 export const createRoom: MutationResolvers['createRoom'] = async (_, { input }) => {
-  const { hotelId, name, roomNumber, price, bed, images, roomInfo, type, roomServices, tax } = input;
+  const { hotelId, name, roomNumber, price, bed, images, roomInfo, type, bathroom, accessibility, internet, foodAndDrink, bedroom, other, tax } = input;
   try {
     const newRoom = await RoomModel.create({
       hotelId,
@@ -13,7 +13,12 @@ export const createRoom: MutationResolvers['createRoom'] = async (_, { input }) 
       images,
       roomInfo,
       type,
-      roomServices,
+      bathroom,
+      accessibility,
+      internet,
+      foodAndDrink,
+      bedroom,
+      other,
       tax,
     });
     return {

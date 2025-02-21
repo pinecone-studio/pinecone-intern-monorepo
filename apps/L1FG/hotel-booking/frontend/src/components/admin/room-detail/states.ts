@@ -68,12 +68,37 @@ export const useRoomDetailState = () => {
   };
 };
 
-export const useRoomServices = () => {
-  const [key, setKey] = useState<string>('');
-  const [value, setValue] = useState<string>('');
+export const useRoomDetailServices = () => {
+  const params = useParams();
+  const roomId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+
+  const { data } = useGetRoomByIdQuery({
+    variables: { getRoomByIdId: roomId },
+    skip: !roomId,
+  });
+
+  const roomData = data?.getRoomById;
+
+  const [accessibility, setAccessibility] = useState<string[]>([]);
+  const [bathroom, setBathroom] = useState<string[]>([]);
+  const [bedroom, setBedroom] = useState<string[]>([]);
+  const [foodAndDrink, setFoodAndDrink] = useState<string[]>([]);
+  const [internet, setInternet] = useState<string[]>([]);
+  const [other, setOther] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!roomData) return;
+
+    setAccessibility((roomData?.accessibility ?? []).filter((info): info is string => typeof info === 'string'));
+    setBathroom((roomData?.bathroom ?? []).filter((info): info is string => typeof info === 'string'));
+    setBedroom((roomData?.bedroom ?? []).filter((info): info is string => typeof info === 'string'));
+    setFoodAndDrink((roomData?.foodAndDrink ?? []).filter((info): info is string => typeof info === 'string'));
+    setInternet((roomData?.internet ?? []).filter((info): info is string => typeof info === 'string'));
+    setOther((roomData?.other ?? []).filter((info): info is string => typeof info === 'string'));
+  }, [roomData]);
 
   return {
-    roomServices: { key, value },
-    setterServices: { setKey, setValue },
+    roomServices: { accessibility, bathroom, bedroom, foodAndDrink, internet, other },
+    setterServices: { setAccessibility, setBathroom, setBedroom, setFoodAndDrink, setInternet, setOther },
   };
 };
