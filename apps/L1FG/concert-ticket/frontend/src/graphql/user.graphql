@@ -39,3 +39,6 @@ mutation UpdateForgetPasswordInput($input: UpdateForgetPasswordInput!) {
     }
   }
 }
+mutation updatePasswordUser($input: UpdateUserPasswordType!) {
+  updatePasswordUser(input: $input)
+}

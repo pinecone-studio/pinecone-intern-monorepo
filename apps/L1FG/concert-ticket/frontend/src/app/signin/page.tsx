@@ -70,7 +70,12 @@ const Login = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#FAFAFA] font-thin">Нууц үг:</FormLabel>
+                      {/* <div className="flex w-[350px] justify-between items-center"> */}
+                      <FormLabel className="text-[#FAFAFA]  font-thin">Нууц үг:</FormLabel>
+                      {/* <Link href={'/PasswordReset'}>
+                          <button className="bg-transparent underline text-white text-[14px] "> Нууц үг сэргээх </button>
+                        </Link> */}
+                      {/* </div> */}
                       <FormControl>
                         <div className="relative w-[350px]">
                           <Input
