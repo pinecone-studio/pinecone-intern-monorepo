@@ -48,12 +48,13 @@ export const OrderHistory = () => {
   if (orders.length === 0) {
     return <p className="text-white">Одоогоор захиалга байхгүй байна.</p>;
   }
+  console.log(orders);
 
   return (
-    <div className="flex flex-col gap-4 bg-[#131313] p-8 rounded-lg max-h-[400px] overflow-y-auto">
+    <div className="flex flex-col gap-4 bg-[#131313] p-8 rounded-lg max-h-[400px] overflow-y-auto ">
       {orders?.map((order: any) => (
         <div key={order._id} className="flex flex-col gap-4">
-          <div className="flex justify-between items-center w-[777px]">
+          <div className="flex justify-between items-center w-[740px]">
             <div className="flex flex-row gap-4 font-thin">
               <div className="text-neutral-400 flex flex-row gap-2">
                 Захиалгын дугаар: <p className="text-white">{order.ticketNumber}</p>

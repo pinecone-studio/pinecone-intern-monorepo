@@ -2,43 +2,56 @@
 
 import { useState } from 'react';
 import { Modal } from '../../app/_features/userProfile/Modal';
-
+/*eslint-disable*/
 export const Order = () => {
   const [orderData, setOrderData] = useState('order');
 
   return (
-    <div className="">
-      <div data-cy="order-page" className="w-fit h-[800px] mx-auto flex flex-row gap-10 items-center px-[117px]">
-        <div className="flex flex-col  gap-4">
-          <div
-            data-testid="user-data"
-            onClick={() => setOrderData('order')}
-            className={`text-white rounded-sm px-3 py-1 ${orderData === 'order' ? 'bg-neutral-900' : 'bg-black'} w-[211px] text-sm font-thin`}
-          >
-            Хэрэглэгчийн мэдээлэл
-          </div>
-          <div
-            data-cy="order-data"
-            data-testid="order-history"
-            onClick={() => setOrderData('data')}
-            className={`text-white rounded-sm px-3 py-1 ${orderData === 'data' ? 'bg-neutral-900' : 'bg-black'}  w-[211px] text-sm font-thin `}
-          >
-            Захиалгын түүх
-          </div>
-          <div
-            data-cy="order-pass"
-            data-testid="password-proceed"
-            onClick={() => setOrderData('pass')}
-            className={`text-white rounded-sm px-3 py-1 ${orderData === 'pass' ? 'bg-neutral-900' : 'bg-black'} w-[211px] text-sm font-thin`}
-          >
-            Нууц үг сэргээх
+    <div className="mt-[15vh] mb-[15vh] bg-black flex flex-col">
+      <main className="flex-1 py-8">
+        <div className="max-w-[1200px] mx-auto px-4">
+          <div data-cy="order-page" className="flex flex-row gap-12">
+            <div className="flex flex-col gap-2 w-[250px]">
+              <div
+                data-testid="user-data"
+                onClick={() => setOrderData('order')}
+                className={`text-white px-4 py-3 cursor-pointer transition-colors ${orderData === 'order' ? 'bg-[#171717] rounded-md' : 'hover:bg-[#171717] hover:rounded-md'}`}
+              >
+                <span className="text-[15px] font-light">Хэрэглэгчийн мэдээлэл</span>
+              </div>
+
+              <div
+                data-cy="order-data"
+                data-testid="order-history"
+                onClick={() => setOrderData('data')}
+                className={`text-white px-4 py-3 cursor-pointer transition-colors ${orderData === 'data' ? 'bg-[#171717] rounded-md' : 'hover:bg-[#171717] hover:rounded-md'}`}
+              >
+                <span className="text-[15px] font-light">Захиалгын түүх</span>
+              </div>
+
+              <div
+                data-cy="order-pass"
+                data-testid="password-proceed"
+                onClick={() => setOrderData('pass')}
+                className={`text-white px-4 py-3 cursor-pointer transition-colors ${orderData === 'pass' ? 'bg-[#171717] rounded-md' : 'hover:bg-[#171717] hover:rounded-md'}`}
+              >
+                <span className="text-[15px] font-light">Нууц үг сэргээх</span>
+              </div>
+            </div>
+
+            <div className="flex-1 max-w-[800px]">
+              <h1 className="text-2xl font-medium text-white mb-6">
+                {' '}
+                {orderData === 'order' && 'Захиалагчийн мэдээлэл'}
+                {orderData === 'data' && 'Захиалгын түүх'}
+                {orderData === 'pass' && 'Нууц үг сэргээх'}
+              </h1>
+
+              <Modal orderData={orderData} />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-7">
-          <div className="text-2xl font-semibold text-white">Захиалагчийн мэдээлэл</div>
-          <Modal orderData={orderData}></Modal>
-        </div>
-      </div>
+      </main>
     </div>
   );
 };
