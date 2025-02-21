@@ -3,11 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import { Concert } from '@/components/adminfeature/concert-type';
 
-import { toast } from 'react-toastify';
 import { useDeleteConcertMutation, useEditConcertMutation, useGetConcertsQuery } from '@/generated';
 import type { EditConcertInput } from '@/generated';
 import { EditFormData } from '@/components/adminfeature/concert-type';
 import EditConcertDialog from './EditDialog';
+import { toast } from '@/components/ui/use-toast';
 
 interface ActionButtonsProps {
   concert: Concert;
@@ -52,11 +52,11 @@ export const ActionButtons = ({ concert }: ActionButtonsProps) => {
       await editConcert({
         variables: { input: editConcertInput },
         onCompleted: () => {
-          toast.success('Амжилттай шинэчлэгдлээ!');
+          toast({ title: 'Амжилттай', description: 'Тасалбар амжилттай засагдлаа' });
           refetch();
         },
         onError: (error) => {
-          toast.error(`Error: ${error.message}`);
+          toast({ title: `Error: ${error.message}` });
         },
       });
     } catch (error) {
@@ -70,11 +70,13 @@ export const ActionButtons = ({ concert }: ActionButtonsProps) => {
       await deleteConcert({
         variables: { id: concert._id },
         onCompleted: () => {
-          toast.success('Амжилттай устгагдлаа!');
+          toast({ title: 'Амжилттай', description: 'Амжилттай устгагдлаа!' });
           refetch();
         },
         onError: (error) => {
-          toast.error(`Error: ${error.message}`);
+          toast({
+            title: 'Алдаа гарлаа',
+          });
         },
       });
     } catch (error) {
