@@ -14,7 +14,7 @@ export const typeDefs = gql`
   }
 
   type CrawlResponse {
-    url: String!
+    links: [String!]!
   }
 
   type Query {

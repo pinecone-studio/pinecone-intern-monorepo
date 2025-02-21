@@ -3,10 +3,10 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { typeDefs } from './schemas';
 import { NextRequest } from 'next/server';
 import { resolvers } from './resolvers';
-import { connectToDb } from './utils';
+import { connectToRedis } from './utils';
 import { Context } from './types';
 
-connectToDb();
+connectToRedis();
 
 const server = new ApolloServer<Context>({
   resolvers,
