@@ -16,7 +16,7 @@ const MainPageStory = () => {
   return (
     <div className="flex gap-4 w-[630px] h-[70px]">
       {data?.getPreviewAllStories.storyTray.map((node) => (
-        <Link href={`/stories/${node.user.userName}/${node.latestStoryId}`} key={node._id}>
+        <Link href={`/stories/${node.user.userName}/${node.latestStoryId}?lot=true`} key={node._id}>
           <div className="flex flex-col gap-2 mt-[25px] w-fit">
             <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[2px]">
               <div className="rounded-full bg-white w-[60px] h-[60px] flex items-center justify-center">
