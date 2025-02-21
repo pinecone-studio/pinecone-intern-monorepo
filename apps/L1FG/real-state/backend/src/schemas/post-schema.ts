@@ -42,7 +42,7 @@ export const PostTypeDefs = gql`
     title: String
     description: String
     price: String
-    propertyDetail: ID
+    propertyDetail: PropertyUpdateInput
     status: PostStats
     updatedAt: String
     createdAt: String
@@ -53,8 +53,8 @@ export const PostTypeDefs = gql`
   }
 
   type Query {
-    getPostById(_id: ID): Post
-    getPosts(input: JSON): [Post!]
+    getPostById(_id: ID): Post!
+    getPosts(input: JSON): [Post!]!
   }
 
   type Mutation {

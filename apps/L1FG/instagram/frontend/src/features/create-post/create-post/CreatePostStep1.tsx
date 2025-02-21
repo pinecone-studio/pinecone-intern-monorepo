@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { Loader } from 'lucide-react';
-import { CreatePostStep2 } from '../../features/create-post/CreatePostStep2';
-import { CreatePostSvg } from '@/components/svg/CreatePostSvg';
-import { CreatePostStep1Props } from '@/components/types';
+import { CreatePostSvg } from '../../../components/svg/CreatePostSvg';
+import { CreatePostStep1Props } from '../../../components/types';
+import { CreatePostStep2 } from '../CreatePostStep2';
 
 const ModalHeader: React.FC = () => (
   <div className="border-b border-gray-200 py-2" data-testid="modal-header">

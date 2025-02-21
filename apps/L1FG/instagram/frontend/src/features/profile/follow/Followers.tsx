@@ -1,11 +1,12 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Search, X } from 'lucide-react';
-import Image from 'next/image';
 import { GetFollowersQuery, useGetFollowersQuery } from '@/generated';
 import { Separator } from '@/components/ui/separator';
 import { FriendshipStatusUser } from '@/features/home-post/FriendshipStatusUser';
 import { ProfileHover } from '@/features/home-post/ProfileHover';
 import { useState } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
+import { FriendshipStatus } from '@/features/home-post/FriendshipStatus';
 
 const Followers = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const [moreFollowersLoading, setMoreFollowersLoading] = useState(false);
@@ -18,6 +19,8 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
       },
     },
   });
+  const { user } = useAuth();
+  const isOwner = user?._id === userId;
   const updateQueryHandler = (prevResult: GetFollowersQuery, { fetchMoreResult }: { fetchMoreResult?: GetFollowersQuery }): GetFollowersQuery => {
     if (!fetchMoreResult) return prevResult;
     if (prevResult.getFollowers?.pageInfo?.endCursor == fetchMoreResult.getFollowers?.pageInfo?.endCursor) {
@@ -86,7 +89,10 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
             <div key={item.node.user._id} className="flex justify-between ">
               <div className=" flex gap-4">
                 <ProfileHover searchingUserId={item.node.user._id}>
-                  <Image src={'/images/profilePic.png'} alt="zurag" width={50} height={50} className=" object-cover rounded-full bg-red-700" />
+                  <div
+                    style={{ backgroundImage: `url(${item.node.user.profileImage || './images/profilePic.png'})`, backgroundPosition: 'center' }}
+                    className=" bg-cover w-[50px] h-[50px] object-cover rounded-full"
+                  ></div>
                 </ProfileHover>
                 <div>
                   <ProfileHover searchingUserId={item.node.user._id}>
@@ -95,13 +101,22 @@ const Followers = ({ children, userId }: { children: React.ReactNode; userId: st
                   <p className="text-xs font-normal text-[#71717A]">{item?.node.user?.fullName}</p>
                 </div>
               </div>
-              {item.node.user && (
+              {isOwner ? (
                 <FriendshipStatusUser
                   preview={item.node.user}
                   requestStyle="flex gap-2"
                   removeStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
                   followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
                   requestedStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] w-[86px] rounded-md"
+                />
+              ) : (
+                <FriendshipStatus
+                  followerId=""
+                  preview={item?.node.user}
+                  requestStyle="flex gap-2"
+                  followingStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
+                  followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+                  requestedStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
                 />
               )}
             </div>

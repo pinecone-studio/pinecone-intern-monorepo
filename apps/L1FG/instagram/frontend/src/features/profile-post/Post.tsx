@@ -6,6 +6,7 @@ import Message from '@/components/svg/Message';
 import Heart from '@/components/svg/Heart';
 import SkeletonGrid from '../../components/profile/profilePost/SkeletonGrid';
 import { Loader } from 'lucide-react';
+import { Footer } from '@/components/profile/Footer';
 
 const Post = ({ userId }: { userId: string }) => {
   const [morePostsLoading, setMorePostsLoading] = useState(false);
@@ -91,9 +92,9 @@ const Post = ({ userId }: { userId: string }) => {
                     <Image
                       src={edge.node.postImage[0]}
                       alt="Post image"
-                      className="object-cover w-full aspect-square group-hover:opacity-90 transition-opacity duration-300"
+                      className="object-cover w-[300px] aspect-square group-hover:opacity-90 transition-opacity duration-300  h-[400px]"
                       width={300}
-                      height={300}
+                      height={400}
                     />
                     <div className="absolute flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full h-full bg-black/50">
                       <div className="flex gap-2 justify-center items-center">
@@ -118,10 +119,7 @@ const Post = ({ userId }: { userId: string }) => {
           </div>
         )}
 
-        <div className="text-gray-500 text-center text-xs flex flex-col gap-4 mt-8">
-          <p>About · Help · Press · API · Jobs · Privacy · Terms · Locations · Language · Meta Verified</p>
-          <p>© 2024 INSTAGRAM FROM META</p>
-        </div>
+        <Footer />
       </div>
     </div>
   );

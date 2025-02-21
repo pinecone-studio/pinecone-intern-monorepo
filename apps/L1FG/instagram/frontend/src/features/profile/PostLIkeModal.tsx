@@ -55,7 +55,7 @@ export const PostLikeModal = ({ post }: { post: UserPostType }) => {
         <div className="flex flex-col gap-2 ">
           <Separator className="border-b w-full" />
           <div className="flex justify-between p-5 items-center ">
-            <div className="flex gap-5 justify-center items-center">
+            <div className="flex gap-2 justify-center items-center">
               <PostLike liked={liked} handleClickLike={handleClickLike} />
 
               <LikeModal postId={post._id}>
