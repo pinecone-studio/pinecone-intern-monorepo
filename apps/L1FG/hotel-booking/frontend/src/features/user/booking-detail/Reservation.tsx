@@ -59,17 +59,18 @@ export const Reservation = ({ idParams, bookingByIdData }: ReservationProps) => 
           <div className="flex items-center gap-8">
             {/* Check-in */}
             <div className="flex flex-col gap-1 max-w-[282.5px] w-full">
-              <p className="text-[#71717A] font-Inter text-sm font-normal">Check in</p>
+            <p className="text-[#71717A] font-Inter text-sm font-normal">Check out</p>
               <p className="text-[#09090B] font-Inter text-base font-normal">{formatDate(booking?.startDate)}</p>
             </div>
 
-            <div className="h-full px-4 flex justify-center">
+            <div className="flex justify-center h-full px-4">
               <div className="w-[1px] bg-[#E4E4E7]"></div>
             </div>
 
             {/* Check-out */}
             <div className="flex flex-col gap-1 max-w-[282.5px] w-full">
-              <p className="text-[#71717A] font-Inter text-sm font-normal">Check out</p>
+          
+              <p className="text-[#71717A] font-Inter text-sm font-normal">Check in</p>
               <p className="text-[#09090B] font-Inter text-base font-normal">{formatDate(booking?.endDate)}</p>
             </div>
           </div>
@@ -86,7 +87,7 @@ export const Reservation = ({ idParams, bookingByIdData }: ReservationProps) => 
       </div>
 
       {/* Хуваагч */}
-      <div className="py-4 w-full">
+      <div className="w-full py-4">
         <div className="w-full h-[1px] bg-[#E4E4E7]"></div>
       </div>
 
@@ -112,7 +113,7 @@ export const Reservation = ({ idParams, bookingByIdData }: ReservationProps) => 
       </div>
 
       {/* Хуваагч */}
-      <div className="py-4 w-full">
+      <div className="w-full py-4">
         <div className="w-full h-[1px] bg-[#E4E4E7]"></div>
       </div>
 

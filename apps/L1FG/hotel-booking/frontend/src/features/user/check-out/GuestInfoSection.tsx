@@ -11,6 +11,7 @@ import { useQueryState } from 'nuqs';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { BookingLittle } from '@/features/BookingLittle';
+
 type checkOutProps = {
   room : Room | null | undefined;
 }
@@ -58,7 +59,8 @@ export const GuestInfoSection = (room : checkOutProps) => {
         const decoded = jwtDecode<TokenPayload>(token);
         return decoded;
       } catch (error) {
-        throw new Error('Failed to decode token');
+        // throw new Error('Failed to decode token'); 
+        toast("Алдаа гарлаа")
       }
     }
     const payload = decodeToken(getToken);
@@ -120,7 +122,7 @@ export const GuestInfoSection = (room : checkOutProps) => {
     <div className="flex justify-center w-screen ">
       <div className="flex gap-16">
         <div className="w-[581px]">
-          <ol className="list-decimal list-inside text-xl font-semibold leading-7 text-foreground flex flex-col gap-6">
+          <ol className="flex flex-col gap-6 text-xl font-semibold leading-7 list-decimal list-inside text-foreground">
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
                 <li>Who&#39;s checking in</li>
@@ -131,19 +133,19 @@ export const GuestInfoSection = (room : checkOutProps) => {
               </div>
               <WhosCheckingIn whosCheckingInData={whosCheckingInData}/>
             </div>
-            <div className="border-b mt-4 mb-4"></div>
+            <div className="mt-4 mb-4 border-b"></div>
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
                 <li>Contact Information</li>
               </div>
               <ContactInformation whosCheckingInData= {whosCheckingInData}/>
             </div>
-            <div className="border-b py-4"></div>
+            <div className="py-4 border-b"></div>
             <div className="flex flex-col gap-8">
               <BookingLittle/>
               <CardDetail whosCheckingInData = {whosCheckingInData}/>
             </div>
-            <div className="border-b py-4"></div>
+            <div className="py-4 border-b"></div>
           </ol>
           <div className="flex flex-col gap-8 pt-10">
             <ImportantInfo/>
