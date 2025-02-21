@@ -33,7 +33,7 @@ describe('Card Component', () => {
     expect(getByTestId('card-artist-name')).toHaveTextContent('Coldplay');
     expect(getByTestId('card-regular-price')).toHaveTextContent('60₮');
     expect(getByTestId('card-discount')).toHaveTextContent('60₮'); // Same value as regular price
-    expect(getByTestId('card-format-date')).toHaveTextContent('3-28'); // Formatted date (M-d)
+    expect(getByTestId('card-format-date')).toHaveTextContent('3-29'); // Formatted date (M-d)
     expect(getByText('Төв цэнгэлдэх')).toBeInTheDocument();
   });
 

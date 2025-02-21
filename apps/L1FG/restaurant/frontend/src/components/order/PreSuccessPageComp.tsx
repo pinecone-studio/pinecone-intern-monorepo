@@ -8,6 +8,7 @@ import { useMakeOrderMutation } from '@/generated';
 import { useCart } from '../providers/LocalProvider';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import SoonWallet from './SoonWallet';
 
 const PreSuccessPageComp = () => {
   const { orders, tableId, clearCart } = useCart();
@@ -86,10 +87,7 @@ const PreSuccessPageComp = () => {
             <Image src="/qpayimg.png" alt="qpayimage" width={40} height={40} className={isSubmitting ? 'opacity-50' : ''} />
             <div className="text-[#09090B] text-center font-gip text-[14px] font-medium leading-[20px]">Qpay</div>
           </button>
-          <button className="w-[100px] h-[100px] bg-white rounded-[8px] shadow-sm flex flex-col justify-center items-center gap-1">
-            <Image src="/Logo.png" alt="wallet-image" width={40} height={40} />
-            <div className="text-[#09090B] text-center font-gip text-[14px] font-medium leading-[20px]">Хэтэвч</div>
-          </button>
+          <SoonWallet />
         </div>
         <div>
           <div className="flex w-[326px] py-2 justify-between items-center border-b border-[#E4E4E7]">
