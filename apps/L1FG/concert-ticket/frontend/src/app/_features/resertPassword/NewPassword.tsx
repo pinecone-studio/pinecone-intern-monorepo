@@ -1,12 +1,12 @@
 'use client';
 
-import { useChangePasswordMutation } from '@/generated';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUpdatePasswordUserMutation } from '@/generated';
 
 export const NewPassword = () => {
   const router = useRouter();
-  const [createNewPassword, { loading }] = useChangePasswordMutation();
+  const [createNewPassword, { loading }] = useUpdatePasswordUserMutation();
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,11 +35,15 @@ export const NewPassword = () => {
     try {
       await createNewPassword({
         variables: {
-          input: { _id: userId, newPassword: password, newRePassword: rePassword },
+          input: {
+            newPassword: password,
+            newRePassword: rePassword,
+            _id: userId,
+          },
         },
       });
       localStorage.removeItem('userId');
-      router.push('/done');
+      router.push('/signin');
     } catch (err) {
       setErrorMessage('Серверийн алдаа. Дахин оролдоно уу.');
     }
@@ -51,7 +55,7 @@ export const NewPassword = () => {
         <div className="w-[350px]">
           <form className="flex flex-col gap-2">
             <input
-              data-testid="password"
+              data-cy="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full h-[36px] bg-black text-[13px] text-white pl-[10px] border-2 border-[#27272A] rounded-sm mb-6"
@@ -59,7 +63,7 @@ export const NewPassword = () => {
               placeholder="Шинэ нууц үг"
             />
             <input
-              data-testid="rePassword"
+              data-cy="rePassword"
               value={rePassword}
               onChange={(e) => setRePassword(e.target.value)}
               className="w-full h-[36px] bg-black text-[13px] text-white pl-[10px] border-2 border-[#27272A] rounded-sm mb-6"
@@ -68,7 +72,7 @@ export const NewPassword = () => {
             />
           </form>
           {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-          <button type="button" data-testid="CreateNewPassword" className="w-full h-[36px] bg-[#00B7F4] hover:bg-[#1a83ec] text-black rounded-sm" onClick={handleSubmit} disabled={loading}>
+          <button type="button" data-cy="CreateNewPassword" className="w-full h-[36px] bg-[#00B7F4] hover:bg-[#1a83ec] text-black rounded-sm" onClick={handleSubmit} disabled={loading}>
             {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
           </button>
         </div>

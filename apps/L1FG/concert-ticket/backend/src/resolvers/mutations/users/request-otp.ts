@@ -1,6 +1,7 @@
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
 import { sendEmail } from '../../../library/nodemailer';
+import { generateOTP } from 'otp-agent';
 
 export const RequestChangePassword: MutationResolvers['RequestChangePassword'] = async (_, { input }) => {
   const { email } = input;
