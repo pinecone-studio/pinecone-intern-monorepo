@@ -6,8 +6,10 @@ import { StoryTop } from './StoryTop';
 import { OneStoryType } from '@/generated';
 import { getStoryIndex } from '@/features/utils/get-story-index';
 import { StoryImage } from './StoryImage';
+import { useRouter } from 'next/navigation';
 
-export const StoryCarousel = ({ stories, seenStoryTime }: { stories: OneStoryType[]; seenStoryTime: number }) => {
+export const OnePersonStoryCarousel = ({ stories, seenStoryTime }: { stories: OneStoryType[]; seenStoryTime: number }) => {
+  const router = useRouter();
   const latestStoryIndex = getStoryIndex({ stories: stories, seenStoryTime: seenStoryTime });
   const [currentIndex, setCurrentIndex] = useState<number>(latestStoryIndex);
   const handleNext = () => {
@@ -20,7 +22,14 @@ export const StoryCarousel = ({ stories, seenStoryTime }: { stories: OneStoryTyp
     <div className="w-fit h-[90%] flex items-center justify-center relative  mx-auto gap-2">
       <StoryPreviousButton shouldExist={currentIndex !== 0} handlePrevious={handlePrevious} />
       <div className="w-[522px] h-full  rounded-xl relative  flex-shrink-0 overflow-hidden">
-        <StoryTop stories={stories} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+        <StoryTop
+          stories={stories}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          handleNext={() => {
+            router.back();
+          }}
+        />
         <StoryImage currentStory={stories[currentIndex]} />
       </div>
       <StoryNextButton shouldExist={currentIndex !== stories.length - 1} handleNext={handleNext} />
