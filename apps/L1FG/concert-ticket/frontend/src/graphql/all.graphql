@@ -71,3 +71,48 @@ mutation createConcert($input: ConcertInput!) {
     }
   }
 }
+mutation deleteConcert($id: String!) {
+  deleteConcert(_id: $id) {
+    _id
+    artistName
+    concertDay
+    concertName
+    concertPhoto
+    concertPlan
+    concertTime
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    vipTicket {
+      price
+      quantity
+    }
+  }
+}
+mutation editConcert($input: EditConcertInput!) {
+  editConcert(input: $input) {
+    _id
+    artistName
+    concertDay
+    concertName
+    concertPlan
+    concertTime
+    regularTicket {
+      price
+      quantity
+    }
+    standingAreaTicket {
+      price
+      quantity
+    }
+    vipTicket {
+      price
+      quantity
+    }
+  }
+}
