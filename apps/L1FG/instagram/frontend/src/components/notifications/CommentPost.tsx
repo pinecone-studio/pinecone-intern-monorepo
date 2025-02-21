@@ -41,7 +41,7 @@ export const CommentPost = ({ commentNotification }: Props) => {
   return (
     <div>
       {groupedNotifications.map((n) => (
-        <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-4 mb-2">
+        <div key={n.postId} className="justify-between flex items-center mt-4 h-[52px] py-2 px-4 mb-2 hover:bg-accent">
           <div className="flex items-center">
             <Avatar>
               <AvatarImage src={n?.userImage} alt="User Avatar" />

@@ -10,12 +10,12 @@ export const IsRequest = ({ requestStyle, setStatus, followerId }: { followerId:
         followerId,
       },
     });
-    setStatus((pre) => ({ ...pre, incomingRequest: true }));
+    setStatus((pre) => ({ ...pre, incomingRequest: false }));
   };
 
   return (
     <div className={cn(``, requestStyle)}>
-      <button onClick={() => handleFollowConfirm} className="bg-[#2563EB] py-[7px] px-4 text-white rounded-md">
+      <button onClick={handleFollowConfirm} className="bg-[#2563EB] py-[7px] px-4 text-white rounded-md">
         Confirm
       </button>
       <button className="bg-[#F4F4F5] py-[7px] px-4 rounded-md ">Delete</button>
