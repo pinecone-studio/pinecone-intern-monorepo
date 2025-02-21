@@ -35,7 +35,7 @@ describe('order update', () => {
     });
 
     expect(UserModel.findById).toHaveBeenCalledWith({ _id: '67a191128304c300a5e45497' });
-    expect(UserModel.findByIdAndUpdate).toHaveBeenCalledWith({ _id: '67a191128304c300a5e45497' }, { email: 'zaya@example.com' });
+    expect(UserModel.findByIdAndUpdate).toHaveBeenCalledWith({ _id: '67a191128304c300a5e45497' }, { email: 'zaya@example.com' }, { new: true });
     expect(OrderModel.updateMany).toHaveBeenCalledWith({ userID: '67a191128304c300a5e45497' }, { phoneNumber: '1111' });
   });
 
