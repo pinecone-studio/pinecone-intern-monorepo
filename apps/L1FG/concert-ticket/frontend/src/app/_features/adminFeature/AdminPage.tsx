@@ -1,11 +1,11 @@
-import { AdminDialog } from '../adminfeature/AdminDialog';
-import { AdminHeader } from '../header/AdminHeader';
-import { ConcertFormProvider } from '../admincontext/DialogContext';
-import { FormData } from '../adminfeature/concert-type';
+import { AdminDialog } from '../../../components/adminfeature/AdminDialog';
+import { AdminHeader } from '../../../components/header/AdminHeader';
+import { ConcertFormProvider } from '../../../components/admincontext/DialogContext';
+import { FormData } from '../../../components/adminfeature/concert-type';
 import { useCreateConcertMutation, useGetConcertsQuery } from '@/generated';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AdminTable from '../../app/_features/adminFeature/AdminHero';
+
+import AdminTable from './AdminHero';
+import { toast } from '@/components/ui/use-toast';
 
 export const AdminPage = () => {
   const [createConcert] = useCreateConcertMutation();
@@ -14,16 +14,13 @@ export const AdminPage = () => {
     createConcert({
       variables: { input: concertInput },
       onCompleted: () => {
-        toast.success('Тасалбар амжилттай үүсгэгдлээ!', {
-          position: 'top-right',
-          autoClose: 3000,
-        });
+        toast({ title: 'Амжилттай', description: 'Тасалбар амжилттай нэмэгдлээ' });
         refetch();
       },
       onError: (error) => {
-        toast.error(`Алдаа гарлаа: ${error.message}`, {
-          position: 'top-right',
-          autoClose: 3000,
+        toast({
+          title: 'Алдаа гарлаа',
+          description: error.message,
         });
       },
     });
@@ -31,7 +28,6 @@ export const AdminPage = () => {
 
   return (
     <div className="text-white">
-      <ToastContainer />
       <div className="pt-4 pr-6 pl-6  ">
         <AdminHeader />
       </div>

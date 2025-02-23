@@ -2,7 +2,7 @@ import { Mail, Phone, Headphones } from 'lucide-react';
 
 export const Footerr = () => {
   return (
-    <footer className="border-t border-[#27272A] bg-[#09090B]">
+    <footer className="border-t border-[#27272A] bg-[#09090B] ">
       <div className="flex justify-center items-start gap-12 py-24 px-12">
         <div className="w-[1334px] h-[72px] flex justify-between items-center px-12">
           <div className="flex flex-col gap-[12px]">
