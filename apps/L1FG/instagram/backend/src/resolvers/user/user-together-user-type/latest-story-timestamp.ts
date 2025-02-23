@@ -11,6 +11,6 @@ export const latestStoryTimestamp: UserTogetherUserTypeResolvers['latestStoryTim
   if (!stories.length) {
     return 0;
   }
-  const { createdAt } = stories[0];
-  return createdAt;
+  const { expiringAt } = stories[0];
+  return expiringAt;
 };
