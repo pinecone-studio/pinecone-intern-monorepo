@@ -21,6 +21,7 @@ describe('Latest story timestamp', () => {
           latestStoryTimestamp: 0,
           createdAt: '2',
           proifleImage: 'image',
+          expiringAt: 1234,
           friendshipStatus: {
             following: false,
             incomingRequest: false,
@@ -49,7 +50,7 @@ describe('Latest story timestamp', () => {
       },
     };
     const result = await latestStoryTimestamp(parent, {}, { userId: '3' }, {} as GraphQLResolveInfo);
-    expect(result).toEqual('2');
+    expect(result).toEqual(1234);
   });
   it('Should return 0', async () => {
     if (!latestStoryTimestamp) {
@@ -69,6 +70,7 @@ describe('Latest story timestamp', () => {
       postCount: 0,
       latestStoryTimestamp: 0,
       profileImage: 'image',
+      expiringAt: 1234,
       friendshipStatus: {
         following: false,
         incomingRequest: false,
