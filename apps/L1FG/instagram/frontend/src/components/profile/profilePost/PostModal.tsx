@@ -1,20 +1,21 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { UserPostType } from '@/generated';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Carousel } from '@/components/ui/carousel';
 import PostModalCarousel from './PostModalCarousel';
 import GetComments from '../../../features/profile/comment/GetComments';
-import CreateComment from '../../../features/profile/comment/CreateComment';
 import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
 import { ProfileHover } from '@/features/home-post/ProfileHover';
 import DeletePost from '@/features/profile/DeletePost';
+import { PostLikeModal } from '@/features/profile/PostLIkeModal';
 import { useState } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPostType }) => {
   const [postOpen, setPostOpen] = useState(false);
-
+  const { user } = useAuth();
+  const isOwner = user?._id === post.userId;
   return (
     <Carousel>
       <Dialog onOpenChange={setPostOpen} open={postOpen}>
@@ -36,9 +37,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                       <p className="font-semibold text-base">{post.user?.userName}</p>
                     </ProfileHover>
                   </div>
-                  <div>
-                    <DeletePost setPostOpen={setPostOpen} postId={post._id} />
-                  </div>
+                  <div>{isOwner ? <DeletePost setPostOpen={setPostOpen} postId={post._id} /> : ''}</div>
                 </div>
                 <Separator />
               </div>
@@ -71,25 +70,7 @@ const PostModal = ({ children, post }: { children: React.ReactNode; post: UserPo
                   <p>Start the conversation.</p>
                 </div>
               )}
-
-              <div className="flex flex-col gap-2">
-                <Separator />
-                <div className="flex justify-between pt-5 px-5 items-center ">
-                  <div className="flex gap-5 justify-center items-center">
-                    <Heart />
-                    <MessageCircle className="hover:text-gray-400 cursor-pointer" />
-                  </div>
-                  <div>
-                    <Bookmark className="hover:text-gray-400 cursor-pointer" />
-                  </div>
-                </div>
-                <div className="flex gap-2 px-5">
-                  <p className="text-gray-500">Be the first to </p>
-                </div>
-                <Separator />
-
-                <CreateComment post={post} />
-              </div>
+              <PostLikeModal post={post} />
             </div>
           </div>
         </DialogContent>

@@ -1,11 +1,14 @@
-import { generateOTP } from 'otp-agent';
-
 import { MutationResolvers } from '../../../generated';
 import { UserModel } from '../../../models';
 import { sendEmail } from '../../../library/nodemailer';
+import { generateOTP } from 'otp-agent';
 
 export const RequestChangePassword: MutationResolvers['RequestChangePassword'] = async (_, { input }) => {
   const { email } = input;
+
+  const findEmail = await UserModel.findOne({ email: email });
+
+  if (!findEmail) throw new Error('Таны имэйл олдсонгүй');
 
   const otp = generateOTP();
 

@@ -21,6 +21,6 @@ describe('get tikcets', () => {
     });
   });
   it('concert not found', async () => {
-    await expect(getTickets!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('ticket not found'));
+    await expect(getTickets!({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Тасалбар олдсонгүй'));
   });
 });

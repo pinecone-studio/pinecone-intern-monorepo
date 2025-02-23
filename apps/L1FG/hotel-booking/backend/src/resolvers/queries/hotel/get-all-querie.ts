@@ -35,7 +35,7 @@ export const getAllQuerie: QueryResolvers['getAllQuerie'] = async (_, { input })
       },
     },
     {
-      $addFields: {
+      $set: {
         averagePrice: {
           $cond: {
             if: { $gt: [{ $size: '$roomsData' }, 0] },
@@ -65,6 +65,7 @@ export const getAllQuerie: QueryResolvers['getAllQuerie'] = async (_, { input })
       },
     },
   ]);
+  console.log(hotels);
 
   return hotels;
 };

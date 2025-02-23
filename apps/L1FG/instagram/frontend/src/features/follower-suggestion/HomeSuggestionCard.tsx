@@ -1,8 +1,8 @@
 import { useGetFollowingSuggestionQuery } from '@/generated';
-import { FriendshipStatus } from '../home-post/FriendshipStatus';
 import { ProfileHover } from '@/features/home-post/ProfileHover';
 import { ProfileOrStory } from '@/components/home-post/ProfileOrStory';
 import { SuggestionProfile } from './SuggestionProfile';
+import { FriendshipStatus } from '../home-post/FriendshipStatus';
 
 const FooterLinks = ['About', 'Help', 'Press', 'API', 'Jobs', 'Privacy', 'Terms', 'Locations', 'Language', 'Meta Verified'];
 
@@ -16,7 +16,7 @@ const HomeSuggestionCard = () => {
       <div className="flex justify-between items-center text-sm mb-4">
         <p className="text-base font-semibold text-gray-600">Suggested for you</p>
       </div>
-      <ul className="space-y-4">
+      <ul className="space-y-2">
         {data?.getFollowingSuggestion.map((user) => {
           const hasStoryToSee = user?.latestStoryTimestamp > user?.seenStoryTime;
           const image = user?.profileImage;
@@ -29,11 +29,14 @@ const HomeSuggestionCard = () => {
                   </ProfileOrStory>
                 </ProfileHover>
                 <div>
-                  <p className="font-bold text-base text-gray-900">{user.userName}</p>
-                  <p className="text-sm text-gray-500">{user.fullName}</p>
+                  <ProfileHover searchingUserId={user?._id}>
+                    <p className="font-bold text-base text-gray-900 cursor-pointer">{user.userName}</p>
+                    <p className="text-sm text-gray-500 cursor-pointer">{user.fullName}</p>
+                  </ProfileHover>
                 </div>
               </div>
               <FriendshipStatus
+                followerId=""
                 requestedStyle="text-[11px] font-bold"
                 preview={user}
                 followStyle="text-[11px] font-bold text-[#0095F6] hover:text-[#1E3A8A]"

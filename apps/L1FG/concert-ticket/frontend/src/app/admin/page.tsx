@@ -1,6 +1,6 @@
 'use client';
 
-import { AdminPage } from '@/components/pages/admin-page';
+import { AdminPage } from '@/app/_features/adminFeature/AdminPage';
 
 const Page = () => {
   return (

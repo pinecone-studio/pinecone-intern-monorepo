@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { useForgetPasswordMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import { Loading } from '@/components/user/main/Loading';
+import { toast } from 'sonner';
 
 const ForgetPasswordPassword = () => {
   const [passwordOneValue, setPasswordOneValue] = useState<string>('');
@@ -28,8 +28,8 @@ const ForgetPasswordPassword = () => {
     if (passwordOneValue === passwordTwoValue) {
       forgetPassword({ variables: { input: { password: passwordOneValue, email: viewEmail } } });
     } else {
-      toast.error('Your password does not match', {
-        autoClose: 2000,
+      toast.error(`Your password does not match`, {
+        style: { backgroundColor: 'red', color: 'white' },
       });
     }
   };
@@ -41,10 +41,10 @@ const ForgetPasswordPassword = () => {
   if (loading) return <Loading />;
 
   if (data?.forgetPassword.success) {
-    router.push('/');
+    router.push('/sign-up');
     localStorage.removeItem('forgetPasswordEmail');
     toast.success('The password has been successfully changed.', {
-      autoClose: 2000,
+      style: { backgroundColor: 'green', color: 'white' },
     });
   }
 

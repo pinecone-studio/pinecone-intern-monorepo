@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { useSignInMutation, User } from '@/generated';
 
 type SignInParams = {
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     onCompleted: (data) => {
       if (data?.signIn?.token && data?.signIn?.user) {
         localStorage.setItem('token', data.signIn.token);
+        localStorage.setItem('user', JSON.stringify(data.signIn.user));
         setUser(data.signIn.user);
         router.push('/');
       } else {
@@ -33,7 +34,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(`${error.message}`, {
+        style: { backgroundColor: 'red', color: 'white' },
+      });
     },
   });
 
@@ -50,7 +53,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const signout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
+    router.push('/');
+    toast.success('Successfully logged out', {
+      style: { backgroundColor: 'green', color: 'white' },
+    });
   };
 
   return <AuthContext.Provider value={{ signin, signout, user }}>{children}</AuthContext.Provider>;

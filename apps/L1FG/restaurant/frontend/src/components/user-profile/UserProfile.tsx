@@ -1,8 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Header from '../common/Header';
-import { Edit2 } from 'lucide-react';
+import { User2 } from 'lucide-react';
 import Image from 'next/image';
+import UpdateNumber from '../update-user-dialogs/UpdateNumber';
+import UpdateEmail from '../update-user-dialogs/UpdateEmail';
+import UpdatePassword from '../update-user-dialogs/UpdatePassword';
+import UpdateImage from '../update-user-dialogs/UpdateImage';
 
 const UserProfile = () => {
   interface User {
@@ -25,11 +29,15 @@ const UserProfile = () => {
 
       <div className="flex flex-col items-center p-6 w-full max-w-sm pt-20">
         <div className="relative">
-          <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-            <Image src={user?.profileImage || '/default-avatar.png'} alt="Profile image" width={100} height={100} className="rounded-full" />
+          <div className="w-24 h-24 rounded-full bg-[#F4F4F5] flex items-center justify-center">
+            {user?.profileImage ? (
+              <Image src={user.profileImage} alt="Profile image" width={100} height={100} className="rounded-full bg-white" data-testid="profileImage" />
+            ) : (
+              <User2 width={40} height={44} color="#441500" data-testid="defaultUser" />
+            )}
           </div>
-          <button className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-sm" aria-label="Edit avatar">
-            <Edit2 />
+          <button className="absolute bottom-0 right-0 bg-white rounded-full w-10 h-10 justify-center items-center flex border" aria-label="Edit avatar">
+            <UpdateImage />
           </button>
         </div>
 
@@ -39,7 +47,7 @@ const UserProfile = () => {
             <div className="flex items-center justify-between">
               <p className="text-gray-900">{user?.phoneNumber}</p>
               <button aria-label="Edit phone number">
-                <Edit2 color="#09090B" width={16} height={16} />
+                <UpdateNumber />
               </button>
             </div>
           </div>
@@ -50,7 +58,7 @@ const UserProfile = () => {
             <div className="flex items-center justify-between">
               <p className="text-gray-900">{user?.email}</p>
               <button aria-label="Edit email">
-                <Edit2 color="#09090B" width={16} height={16} />
+                <UpdateEmail />
               </button>
             </div>
           </div>
@@ -61,7 +69,7 @@ const UserProfile = () => {
             <div className="flex items-center justify-between">
               <p className="text-gray-900">*************</p>
               <button aria-label="Edit password">
-                <Edit2 color="#09090B" width={16} height={16} />
+                <UpdatePassword />
               </button>
             </div>
           </div>

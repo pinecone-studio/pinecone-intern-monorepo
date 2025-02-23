@@ -29,6 +29,7 @@ const HomeSinglePost = ({ post }: { post: PostsEdge }) => {
           </div>
         </ProfileHover>
         <PostDate date={post.node.createdAt} />
+
       </div>
       <PostsSwiper post={post} />
       <PostLikeSection post={post} />

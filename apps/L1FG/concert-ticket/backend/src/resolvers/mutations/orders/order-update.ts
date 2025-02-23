@@ -6,9 +6,9 @@ export const orderUpdate: MutationResolvers['orderUpdate'] = async (_: unknown, 
 
   const user = await UserModel.findById({ _id: userId });
 
-  if (!user) throw new Error(' Хэрэглэгчийн имэйл олдсонгүй');
+  if (!user) throw new Error('Хэрэглэгчийн имэйл олдсонгүй');
 
-  const updateEmail = await UserModel.findByIdAndUpdate({ _id: userId }, { email: newEmail });
+  const updateEmail = await UserModel.findByIdAndUpdate({ _id: userId }, { email: newEmail }, { new: true });
 
   await OrderModel.updateMany({ userID: userId }, { phoneNumber: newPhoneNumber });
 

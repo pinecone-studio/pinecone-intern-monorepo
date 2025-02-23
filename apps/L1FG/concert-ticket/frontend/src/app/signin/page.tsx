@@ -70,7 +70,12 @@ const Login = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#FAFAFA] font-thin">Нууц үг:</FormLabel>
+                      {/* <div className="flex w-[350px] justify-between items-center"> */}
+                      <FormLabel className="text-[#FAFAFA]  font-thin">Нууц үг:</FormLabel>
+                      {/* <Link href={'/PasswordReset'}>
+                          <button className="bg-transparent underline text-white text-[14px] "> Нууц үг сэргээх </button>
+                        </Link> */}
+                      {/* </div> */}
                       <FormControl>
                         <div className="relative w-[350px]">
                           <Input
@@ -97,7 +102,10 @@ const Login = () => {
             </Form>
           </div>
         </div>
-        <div className="text-muted-foreground font-thin text-[14px] mx-auto w-[350px] flex-col text-center">
+        <Link href={'/resetPassword'}>
+          <div className="text-muted-foreground font-thin text-[14px] mx-auto w-[350px] flex-col text-center ">Нууц үг мартсан ?</div>
+        </Link>
+        <div className="text-muted-foreground font-thin text-[14px] mx-auto w-[350px] flex-col text-center ">
           Та бүртгэлтэй хаяггүй бол {}
           <Link href={'/signup'}>
             <button className="bg-transparent underline"> бүртгүүлэх </button>

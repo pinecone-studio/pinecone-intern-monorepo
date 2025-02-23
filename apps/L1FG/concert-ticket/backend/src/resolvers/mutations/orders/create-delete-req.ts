@@ -5,7 +5,7 @@ import { DeleteOrderReqModel } from '../../../models/order-delete-req.model';
 export const createDeleteReq: MutationResolvers['createDeleteReq'] = async (_: unknown, { input }) => {
   const { concertName, totalPrice, userName, accountNumber, bankName, orderId, reqStatus, orderStatus } = input;
 
-  const order = await OrderModel.findByIdAndUpdate({ _id: orderId }, { orderStatus: 'CANCEL' });
+  const order = await OrderModel.findById({ _id: orderId });
 
   const reservationDate = new Date(order.createdAt);
 
@@ -16,6 +16,8 @@ export const createDeleteReq: MutationResolvers['createDeleteReq'] = async (_: u
   if (tiffDate >= 86400000) {
     throw new Error('Тасалбар устгах хугацаа дууссан байна');
   }
+
+  await OrderModel.findByIdAndUpdate({ _id: orderId }, { orderStatus: 'CANCEL' });
 
   const createDeleteReq = await DeleteOrderReqModel.create({ concertName, totalPrice, userName, orderStatus, accountNumber, bankName, orderId, reqStatus });
 

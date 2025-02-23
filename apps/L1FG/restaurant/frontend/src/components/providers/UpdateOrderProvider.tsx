@@ -7,7 +7,7 @@ interface OrderContextType {
   markOrderAsRead: (_orderId: string) => Promise<void>;
 }
 
-const OrderContext = createContext<OrderContextType>({
+export const OrderContext = createContext<OrderContextType>({
   markOrderAsRead: async () => {
     return;
   },

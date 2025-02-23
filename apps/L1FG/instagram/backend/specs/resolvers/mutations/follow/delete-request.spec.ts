@@ -8,7 +8,7 @@ describe('delete request', () => {
   const mockdata = jest.fn();
   it('delete', async () => {
     (RequestModel.findOneAndDelete as jest.Mock).mockResolvedValue(mockdata);
-    (NotificationModel.deleteMany as jest.Mock).mockResolvedValue(null);
+    (NotificationModel.findOneAndDelete as jest.Mock).mockResolvedValue(null);
 
     if (!deleteRequest) return;
 

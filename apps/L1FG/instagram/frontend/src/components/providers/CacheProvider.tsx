@@ -115,7 +115,7 @@ export const CacheProvider = ({ children }: PropsWithChildren) => {
       },
     });
     client.writeFragment({
-      id: `UserWithoutPassword:${user?._id}`,
+      id: `UserTogetherUserType:${user?._id}`,
       fragment: gql`
         fragment test on UserPostType {
           followingCount

@@ -8,13 +8,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useNewPasswordMutation } from '@/generated';
 import { useAlert } from '../providers/AlertProvider';
 const FormSchema = z.object({
-  oldPassword: z.string().min(4, {
+  oldPassword: z.string().min(6, {
     message: 'Хуучин нууц үгээ хийнэ үү',
   }),
-  newPassword: z.string().min(4, {
+  newPassword: z.string().min(6, {
     message: 'Шинэ нууц үг дөрвөөс дээш тэмдэгт байх ёстой.',
   }),
-  repeatPassword: z.string().min(4, {
+  repeatPassword: z.string().min(6, {
     message: 'Шинэ нууц үгээ давтан хийнэ үү',
   }),
 });
@@ -67,7 +67,7 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base">Хуучин нууц үг:</FormLabel>
                 <FormControl>
-                  <Input data-testid="old-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
+                  <Input data-testid="old-password" className="bg-black w-[750px] text-white border-stone-600 " placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -80,7 +80,7 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base ">Шинэ нууц үг:</FormLabel>
                 <FormControl>
-                  <Input data-testid="new-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
+                  <Input data-testid="new-password" className="bg-black w-[750px] text-white border-stone-600 " placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,13 +93,13 @@ export const UserPassword = () => {
               <FormItem>
                 <FormLabel className="text-white font-thin text-base">Шинэ нууц үг давтах:</FormLabel>
                 <FormControl>
-                  <Input data-testid="repeat-password" className="bg-black w-[777px] text-white" placeholder="*******" {...field} />
+                  <Input data-testid="repeat-password" className="bg-black w-[750px] text-white border-stone-600 " placeholder="*******" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="text-end w-[777px] ">
+          <div className="text-end w-[750px] ">
             <Button data-testid="save-button" className="bg-[#00B7F4] text-black px-4 py-2" type="submit">
               Хадгалах
             </Button>

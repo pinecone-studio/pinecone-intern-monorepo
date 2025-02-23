@@ -1,11 +1,18 @@
-import AdminHeader from './AdminHeader';
-import { AdminOwnerPost } from './AdminOwnerPost';
+'use client';
 
-const AdminPage = () => {
+import { GetAllAdminPostsQuery } from '@/generated';
+import AdminHeader from './AdminHeader';
+import { AdminOwnerPostDa } from './AdminOwnerPostDa';
+
+interface AdminGetPostsProps {
+  posts: GetAllAdminPostsQuery['getPosts'];
+}
+
+const AdminPage = ({ posts }: AdminGetPostsProps) => {
   return (
     <div>
       <AdminHeader />
-      <AdminOwnerPost />
+      <AdminOwnerPostDa posts={posts} />
     </div>
   );
 };

@@ -1,9 +1,8 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { NotificationType, useAcceptRequestMutation, UserTogetherUserType } from '@/generated';
+import { NotificationType, UserTogetherUserType } from '@/generated';
 import Link from 'next/link';
 import { FriendshipStatus } from '../home-post/FriendshipStatus';
-import { useState } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns';
 
 type Props = {
@@ -11,21 +10,10 @@ type Props = {
 };
 
 export const RequestFollow = ({ reqNotification }: Props) => {
-  const [status, setStatus] = useState(true);
-  const [acceptFollow] = useAcceptRequestMutation();
-
-  const handleFollowConfirm = async (followerId: string) => {
-    setStatus(false);
-    await acceptFollow({
-      variables: {
-        followerId,
-      },
-    });
-  };
   return (
     <div>
       {reqNotification?.map((n) => (
-        <div key={n.id} className="flex justify-between items-center mt-4 py-2 px-4 mb-2">
+        <div key={n.id} className="flex justify-between items-center mt-4 py-2 px-4 mb-2 hover:bg-accent">
           <div className="mr-3">
             <Avatar>
               <AvatarImage src={n?.user?.profileImage} alt={n?.user?.userName || 'User'} />
@@ -63,12 +51,11 @@ export const RequestFollow = ({ reqNotification }: Props) => {
           <div>
             <FriendshipStatus
               requestStyle="flex gap-2"
-              followingStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
-              followStyle="bg-blue-600 h-[36px] w-[86px] text-white rounded-md"
-              requestedStyle="bg-gray-200 h-[36px] w-[86px] rounded-md"
-              statuss={status}
-              onclick={() => handleFollowConfirm(n?.user?._id as string)}
-              preview={n.user as UserTogetherUserType}
+              followingStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
+              followStyle="bg-[#0095F6] hover:bg-[#2563EB] h-[36px] px-5 text-white rounded-lg font-semibold text-sm"
+              requestedStyle="bg-[#EFEFEF] hover:bg-[#C7C7C7] h-[36px] px-5 rounded-lg font-semibold text-sm"
+              preview={n?.user as UserTogetherUserType}
+              followerId={n?.user?._id as string}
             />
           </div>
         </div>

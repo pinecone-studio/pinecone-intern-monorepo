@@ -23,7 +23,7 @@ export const DeleteButton = ({ refetch, ticketNumber, orderId, totalPrice, conce
   const [bankName, setBankName] = React.useState('');
   const [userName, setUserName] = React.useState('');
   const { data } = useGetConcertQuery({ variables: { id: concertId } });
-  const [createDeleteReq] = useCreateDeleteReqMutation({ onError: (error) => showAlert('error', `${error}`) });
+  const [createDeleteReq] = useCreateDeleteReqMutation({ onError: (error) => showAlert('error', `${error.message}`) });
   const concertName = data?.getConcert.concertName || '';
   const deleteReq = async () => {
     await createDeleteReq({

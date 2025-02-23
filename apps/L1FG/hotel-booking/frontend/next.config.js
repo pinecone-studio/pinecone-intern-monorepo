@@ -13,6 +13,11 @@ const nextConfig = {
   env: {
     LOCAL_BACKEND_URI: process.env.LOCAL_BACKEND_URI,
     BACKEND_URI: process.env.BACKEND_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    NEXT_PUBLIC_CLOUDINARY_URL: process.env.NEXT_PUBLIC_CLOUDINARY_URL,
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
   },
   images: {
     remotePatterns: [

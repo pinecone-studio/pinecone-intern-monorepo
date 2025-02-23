@@ -23,7 +23,7 @@ describe('delete ticket', () => {
   });
 
   it('2. dont delete ticket id ', async () => {
-    await expect(deleteTicket!({}, { ticketID: '20d5f9b4f1e2b1c1f8b4567a' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('not found ticket'));
+    await expect(deleteTicket!({}, { ticketID: '20d5f9b4f1e2b1c1f8b4567a' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(new Error('Концерт байхгүй байна'));
     expect(TicketModel.findByIdAndDelete).toHaveBeenCalledWith({ _id: '20d5f9b4f1e2b1c1f8b4567a' });
   });
 });
