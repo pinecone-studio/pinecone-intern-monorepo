@@ -1,8 +1,7 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useGetPreviewAllStoriesQuery } from '@/generated';
-import { imageUrlOptimizer } from '@/components/utils/image-url-optimizer';
+import { AvatarForStory } from './AvatarForStory';
 
 const MainPageStory = () => {
   const { data } = useGetPreviewAllStoriesQuery();
@@ -12,25 +11,23 @@ const MainPageStory = () => {
     }
     return username;
   };
-
+  console.log('stories:', data);
   return (
     <div className="flex gap-4 w-[630px] h-[70px]">
-      {data?.getPreviewAllStories.storyTray.map((node) => (
-        <Link href={`/stories/${node.user.userName}/${node.latestStoryId}?lot=true`} key={node._id}>
-          <div className="flex flex-col gap-2 mt-[25px] w-fit">
-            <div className="rounded-full w-fit bg-[linear-gradient(to_top_right,#f9ce34_10%,#ee2a7b_60%)] p-[2px]">
-              <div className="rounded-full bg-white w-[60px] h-[60px] flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full overflow-hidden relative">
-                  <Image src={imageUrlOptimizer(node.user.profileImage)} alt={`${node.user.userName}'s profile`} fill className="object-cover" />
-                </div>
-              </div>
+      {data?.getPreviewAllStories.storyTray.map((node) => {
+        const hasStoryToSee = node?.user?.latestStoryTimestamp > node?.user?.seenStoryTime;
+        const image = node?.user?.profileImage;
+        return (
+          <Link href={`/stories/${node.user.userName}/${node.latestStoryId}?lot=true`} key={node._id}>
+            <div className="flex flex-col gap-2 mt-[25px] w-fit">
+              <AvatarForStory hasStoryToSee={hasStoryToSee} image={image} />
+              <span className="text-xs font-normal text-[#262626] text-center" title={node.user.userName}>
+                {formatUsername(node.user.userName)}
+              </span>
             </div>
-            <span className="text-xs font-normal text-[#262626] text-center" title={node.user.userName}>
-              {formatUsername(node.user.userName)}
-            </span>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        );
+      })}
     </div>
   );
 };
