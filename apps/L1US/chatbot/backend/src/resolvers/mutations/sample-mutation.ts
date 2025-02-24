@@ -1,1 +1,1 @@
-export const sampleMutation = () => 'Hello sample mutation';
+export const sampleMutation = () => 'Sample mutation created'; 
