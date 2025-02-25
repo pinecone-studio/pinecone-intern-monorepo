@@ -5,3 +5,4 @@ export * from './get-categories';
 export * from './get-user';
 export * from './get-users';
 export * from './get-orders-for-user';
+export * from './get-table'
