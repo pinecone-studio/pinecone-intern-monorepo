@@ -20,6 +20,10 @@ type cacheRemovefollowParams = {
   followerId: string;
   followerCount: number;
 };
+type cacheStoryViewParams = {
+  targetId: string;
+  seenStoryTime: number;
+};
 type CacheContextType = {
   cacheLikePost: (_params: cacheLikePostParams) => void;
   cacheUnlikePost: (_params: cacheLikePostParams) => void;
@@ -28,6 +32,7 @@ type CacheContextType = {
   cacheLikeComment: (_params: cacheLikeCommentParams) => void;
   cacheUnlikeComment: (_params: cacheLikeCommentParams) => void;
   cacheRemovefollow: (_params: cacheRemovefollowParams) => void;
+  cacheStoryView: (_params: cacheStoryViewParams) => void;
 };
 const CachContext = createContext<CacheContextType>({} as CacheContextType);
 
@@ -186,7 +191,24 @@ export const CacheProvider = ({ children }: PropsWithChildren) => {
       },
     });
   };
-  return <CachContext.Provider value={{ cacheLikePost, cacheUnlikePost, cacheFollow, cacheUnfollow, cacheLikeComment, cacheUnlikeComment, cacheRemovefollow }}>{children}</CachContext.Provider>;
+  const cacheStoryView = ({ targetId, seenStoryTime }: { targetId: string; seenStoryTime: number }) => {
+    client.writeFragment({
+      id: `UserTogetherUserType:${targetId}`,
+      fragment: gql`
+        fragment test on UserTogetherUserType {
+          seenStoryTime
+        }
+      `,
+      data: {
+        seenStoryTime: seenStoryTime,
+      },
+    });
+  };
+  return (
+    <CachContext.Provider value={{ cacheLikePost, cacheUnlikePost, cacheFollow, cacheUnfollow, cacheLikeComment, cacheUnlikeComment, cacheRemovefollow, cacheStoryView }}>
+      {children}
+    </CachContext.Provider>
+  );
 };
 export const useCache = () => {
   const context = useContext(CachContext);

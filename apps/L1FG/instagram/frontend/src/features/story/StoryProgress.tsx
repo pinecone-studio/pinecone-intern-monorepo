@@ -1,32 +1,14 @@
 import { OneStoryType } from '@/generated';
-import { Dispatch, SetStateAction, useId } from 'react';
-import { useRouter } from 'next/navigation';
+import { useId } from 'react';
 import { StoryProgressSeen } from './StoryProgressSeen';
 import { StoryProgressUnseen } from './StoryProgressUnseen';
 import { StoryProgressLeftToSeen } from './StoryProgressLeftToSeen';
 
-export const StoryProgress = ({
-  stories,
-  currentIndex,
-  setCurrentIndex,
-  handleNext,
-}: {
-  stories: OneStoryType[];
-  currentIndex: number;
-  setCurrentIndex: Dispatch<SetStateAction<number>>;
-  handleNext: () => void;
-}) => {
-  const router = useRouter();
+export const StoryProgress = ({ stories, currentIndex, handleNext, seenStoryTime }: { stories: OneStoryType[]; currentIndex: number; handleNext: () => void; seenStoryTime: number }) => {
   const id = useId();
   const count = stories.length;
   const onStoryComplete = () => {
-    if (currentIndex + 1 >= stories.length) {
-      try {
-        handleNext();
-      } catch (error) {
-        router.back();
-      }
-    }
+    handleNext();
   };
   return (
     <div className={`w-full grid gap-[2px] grid-cols-${count} `}>
@@ -35,7 +17,7 @@ export const StoryProgress = ({
           return <StoryProgressSeen key={`${id}-${i}`} />;
         }
         if (i == currentIndex) {
-          return <StoryProgressUnseen key={`${id}-${i}`} count={count} onStoryComplete={onStoryComplete} setCurrentIndex={setCurrentIndex} />;
+          return <StoryProgressUnseen key={`${id}-${i}`} currentIndex={currentIndex} count={count} onStoryComplete={onStoryComplete} stories={stories} seenStoryTime={seenStoryTime} />;
         }
         return <StoryProgressLeftToSeen key={`${id}-${i}`} />;
       })}

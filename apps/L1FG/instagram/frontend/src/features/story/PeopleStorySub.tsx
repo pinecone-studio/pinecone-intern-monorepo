@@ -1,23 +1,34 @@
 'use client';
-
+import { useRouter } from 'next/navigation';
 import { GetDetailedAllStoriesQuery } from '@/generated';
 import { useState } from 'react';
 import { PeopleStoryCarousel } from './PeopleStoryCarousel';
 import { getStoryIndex } from '../utils/get-story-index';
 import { NeighborhoodStory } from './NeighborhoodStory';
+import { getBigIndex } from '../utils/get-big-index';
 
-export const PeopleStorySub = ({ data }: { data: GetDetailedAllStoriesQuery }) => {
-  const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
-  const [bigIndex, setBigIndex] = useState<number>(0);
+export const PeopleStorySub = ({ data, userName }: { data: GetDetailedAllStoriesQuery; userName: string }) => {
+  const router = useRouter();
+  const foundBigIndex = getBigIndex({ userName: userName, storyTray: data.getPreviewAllStories.storyTray });
+  const [bigIndex, setBigIndex] = useState<number>(foundBigIndex);
   const tray = data?.getPreviewAllStories.storyTray || [];
-
+  const [newPersonStoryStart, setNewPersonStoryStart] = useState(getStoryIndex({ stories: tray[bigIndex].items, seenStoryTime: tray[bigIndex].seenStoryTime }));
+  const seenStoryTime = tray[bigIndex].seenStoryTime;
   const handleBigNext = () => {
-    setBigIndex((prev) => Math.min(tray.length - 1, prev + 1));
-    setCurrentStoryIndex(getStoryIndex({ stories: tray[bigIndex + 1].items, seenStoryTime: tray[bigIndex + 1].seenStoryTime }));
+    if (bigIndex + 1 >= tray.length) {
+      router.back();
+    } else {
+      setBigIndex((prev) => Math.min(tray.length - 1, prev + 1));
+      setNewPersonStoryStart(getStoryIndex({ stories: tray[bigIndex].items, seenStoryTime: tray[bigIndex].seenStoryTime }));
+    }
   };
   const handleBigPrevious = () => {
-    setBigIndex((prev) => Math.max(0, prev - 1));
-    setCurrentStoryIndex(tray[bigIndex - 1].items.length - 1);
+    if (bigIndex - 1 < 0) {
+      setBigIndex((prev) => Math.max(0, prev - 1));
+    } else {
+      setBigIndex((prev) => Math.max(0, prev - 1));
+      setNewPersonStoryStart(tray[bigIndex - 1].items.length - 1);
+    }
   };
   return (
     <div className="flex items-center gap-2">
@@ -36,7 +47,8 @@ export const PeopleStorySub = ({ data }: { data: GetDetailedAllStoriesQuery }) =
               handleBigPrevious={handleBigPrevious}
               bigIndex={bigIndex}
               trayLength={tray.length}
-              latestStoryIndex={currentStoryIndex}
+              seenStoryTime={seenStoryTime}
+              newPersonStoryStart={newPersonStoryStart}
             />
           );
         }

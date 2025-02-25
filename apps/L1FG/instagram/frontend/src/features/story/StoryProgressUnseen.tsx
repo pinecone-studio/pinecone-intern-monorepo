@@ -1,9 +1,25 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useCache } from '@/components/providers/CacheProvider';
+import { OneStoryType, useUpdateStoryViewMutation } from '@/generated';
+import { useEffect, useState } from 'react';
 
-export const StoryProgressUnseen = ({ count, setCurrentIndex, onStoryComplete }: { count: number; setCurrentIndex: Dispatch<SetStateAction<number>>; onStoryComplete: () => void }) => {
+export const StoryProgressUnseen = ({
+  count,
+  currentIndex,
+  onStoryComplete,
+  stories,
+  seenStoryTime,
+}: {
+  count: number;
+  currentIndex: number;
+  onStoryComplete: () => void;
+  stories: OneStoryType[];
+  seenStoryTime: number;
+}) => {
   const [progress, setProgress] = useState(0);
+  const { cacheStoryView } = useCache();
+  const [udpateStoryView] = useUpdateStoryViewMutation();
   useEffect(() => {
     const startTime = Date.now();
     const timer = setInterval(() => {
@@ -12,12 +28,34 @@ export const StoryProgressUnseen = ({ count, setCurrentIndex, onStoryComplete }:
       setProgress(newProgress);
       if (newProgress >= 100) {
         clearInterval(timer);
-        setCurrentIndex((prev) => Math.min(count - 1, prev + 1));
         onStoryComplete();
       }
     }, 100);
     return () => clearInterval(timer);
-  }, []);
+  }, [count, onStoryComplete]);
+  useEffect(() => {
+    const makeNextStoryView = async () => {
+      try {
+        await udpateStoryView({
+          variables: {
+            input: {
+              ownerId: stories[currentIndex].user._id,
+              seen: stories[currentIndex].expiringAt,
+            },
+          },
+        });
+        cacheStoryView({
+          targetId: stories[currentIndex].user._id,
+          seenStoryTime: stories[currentIndex].expiringAt,
+        });
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    if (seenStoryTime < stories[currentIndex].expiringAt) {
+      makeNextStoryView();
+    }
+  }, [currentIndex]);
   return (
     <div className="h-[2px] bg-gray-400 rounded-full overflow-hidden">
       <div className="h-full bg-white transition-all duration-[16ms] ease-linear" style={{ width: `${progress}%` }} />
