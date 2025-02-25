@@ -30,6 +30,7 @@
         "buildTarget": "chatbot-backend:build",
         "dev": true
       },
+      "dependsOn": [{ "target": "codegen" }],
       "configurations": {
         "development": {
           "buildTarget": "chatbot-backend:build:development",
