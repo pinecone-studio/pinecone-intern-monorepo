@@ -1,8 +1,8 @@
 import { sampleMutation } from '../../../src/resolvers/mutations';
 
 describe('sampleMutation', () => {
-  it('should return "Hello sample mutation"', () => {
+  it('should return "Sample mutation created"', () => {
     const result = sampleMutation();
-    expect(result).toBe('Hello sample mutation');
+    expect(result).toBe('Sample mutation created');
   });
 });
