@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { user } from '../../../../src/resolvers/post/user-post-type';
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { UserModel } from '../../../../src/models';
+jest.mock('../../../../src/models');
 describe('user', () => {
   it('Should give an user', async () => {
     if (!user) {

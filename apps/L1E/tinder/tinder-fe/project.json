@@ -3,6 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/L1E/tinder/tinder-fe",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/next:build",
@@ -287,6 +288,5 @@
         }
       ]
     }
-  },
-  "tags": []
+  }
 }

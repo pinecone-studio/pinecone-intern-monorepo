@@ -1,8 +1,9 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { updateProfileImage } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
+import { updateProfileImage } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');
+
 describe('update profile photo', () => {
   it('equal data', async () => {
     (UserModel.findByIdAndUpdate as jest.Mock).mockResolvedValue({

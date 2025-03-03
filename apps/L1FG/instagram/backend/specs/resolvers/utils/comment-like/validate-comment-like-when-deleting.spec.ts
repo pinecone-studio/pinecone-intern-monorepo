@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { NotificationModel, PostModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { validateCommentLikeWhenDeleting } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/comment/delete-comment-like-utils/validate-comment-like-when-deleting';

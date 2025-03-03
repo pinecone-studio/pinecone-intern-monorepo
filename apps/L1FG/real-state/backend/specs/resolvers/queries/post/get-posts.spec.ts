@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getPosts } from 'apps/L1FG/real-state/backend/src/resolvers/queries/post/get-posts';
+import { getPosts } from '../../../../src/resolvers/queries/post/get-posts';
 
 jest.mock('apps/L1FG/real-state/backend/src/models/post-model', () => ({
   Post: {

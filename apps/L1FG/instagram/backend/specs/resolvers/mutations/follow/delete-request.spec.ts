@@ -1,5 +1,5 @@
-import { NotificationModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
-import { deleteRequest } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { NotificationModel, RequestModel } from '../../../../src/models';
+import { deleteRequest } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');

@@ -1,5 +1,5 @@
-import { ConcertModel, TicketModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { updateConcertTicket } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { ConcertModel, TicketModel } from '../../../../src/models';
+import { updateConcertTicket } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 describe('update concert ticket', () => {

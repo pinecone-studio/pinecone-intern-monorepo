@@ -1,4 +1,5 @@
-import { getAllQuerie } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries';
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { getAllQuerie } from '../../../../src/resolvers/queries';
 import { BookingModel, RoomModel, HotelModel } from '../../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
 

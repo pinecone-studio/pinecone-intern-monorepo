@@ -1,5 +1,5 @@
-import { RequestModel } from 'apps/L1FG/instagram/backend/src/models';
-import { request } from 'apps/L1FG/instagram/backend/src/resolvers/notification/notification-type';
+import { RequestModel } from '../../../../src/models';
+import { request } from '../../../../src/resolvers/notification/notification-type';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');
 

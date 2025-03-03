@@ -1,7 +1,9 @@
-import { Gender } from 'apps/L1FG/instagram/backend/src/generated';
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { validateFollowUsers } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/validate-follow-users';
+import { Gender } from '../../../../src/generated';
+import { UserModel } from '../../../../src/models';
+import { validateFollowUsers } from '../../../../src/resolvers/mutations/follow/create-follower-utils/validate-follow-users';
+
 jest.mock('apps/L1FG/instagram/backend/src/models');
+
 const followerUser = {
   _id: '13',
   userName: 'john',

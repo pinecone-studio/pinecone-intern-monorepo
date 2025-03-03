@@ -18,11 +18,20 @@
       }
     ],
     "paths": {
-      "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
-      "@/*": ["src/*"],
-      "@/common/*": ["src/components/common/*"]
+      "@/components/ui/*": [
+        "../../../../libs/shadcn/src/lib/ui/*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "@/common/*": [
+        "src/components/common/*"
+      ]
     },
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -33,7 +42,13 @@
     "../../../../dist/aapps/L1E/tinder/tinder-fe/.next/types/**/*.ts",
     "next-env.d.ts",
     "../../../../dist/apps/L1E/tinder/tinder-fe/.next/types/**/*.ts",
-    "specs/components/Image-upload.spec.tsx"
+    "specs/components/Image-upload.spec.tsx",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }

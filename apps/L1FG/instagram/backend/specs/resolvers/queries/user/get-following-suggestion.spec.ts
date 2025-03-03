@@ -1,7 +1,9 @@
-import { FollowerModel, RequestModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getFollowingSuggestion } from 'apps/L1FG/instagram/backend/src/resolvers/queries/user/get-following-suggestion';
+import { FollowerModel, RequestModel, UserModel } from '../../../../src/models';
+import { getFollowingSuggestion } from '../../../../src/resolvers/queries/user/get-following-suggestion';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/models');
+
 describe('Get following suggestion', () => {
   it('it should throw an authentication error', async () => {
     if (!getFollowingSuggestion) {

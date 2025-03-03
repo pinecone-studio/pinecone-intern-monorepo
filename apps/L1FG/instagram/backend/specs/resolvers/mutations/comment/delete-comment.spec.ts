@@ -1,3 +1,5 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+
 import { PostModel } from 'apps/L1FG/instagram/backend/src/models';
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { NotificationModel } from 'apps/L1FG/instagram/backend/src/models/notification.model';

@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { UserModel } from '../../../../src/models';
-import { updateEmailUser } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations/updateuser/update-user-email';
+import { updateEmailUser } from '../../../../src/resolvers/mutations/updateuser/update-user-email';
 
 jest.mock('../../../../src/models');
 

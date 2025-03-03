@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { createBooking } from '../../../../src/resolvers/mutations/booking/create-booking';
-import { CreateBookingInput } from 'apps/L1FG/hotel-booking/backend/src/generated';
+import { CreateBookingInput } from '../../../../src/generated';
 import { BookingModel } from '../../../../src/models';
 
 const booking: CreateBookingInput = {

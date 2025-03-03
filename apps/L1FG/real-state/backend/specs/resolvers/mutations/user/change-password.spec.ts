@@ -1,5 +1,5 @@
-import { Response } from 'apps/L1FG/real-state/backend/src/generated';
-import { changePassword } from 'apps/L1FG/real-state/backend/src/resolvers/mutations';
+import { Response } from '../../../../src/generated';
+import { changePassword } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

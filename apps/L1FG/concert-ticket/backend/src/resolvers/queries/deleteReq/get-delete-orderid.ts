@@ -1,4 +1,4 @@
-import { DeleteOrderReqModel } from 'apps/L1FG/concert-ticket/backend/src/models';
+import { DeleteOrderReqModel } from '../../../../src/models';
 import { QueryResolvers } from '../../../generated';
 
 export const getDeleteOrderId: QueryResolvers['getDeleteOrderId'] = async (_: unknown, { orderId }) => {

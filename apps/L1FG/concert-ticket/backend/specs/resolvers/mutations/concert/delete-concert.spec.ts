@@ -1,4 +1,4 @@
-import { deleteConcert } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { deleteConcert } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models/concert.model.ts', () => ({

@@ -1,4 +1,4 @@
-import { signIn } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { signIn } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 import jwt from 'jsonwebtoken';
 

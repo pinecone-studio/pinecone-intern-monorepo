@@ -1,4 +1,4 @@
-import { getCommentLikedPeople } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { getCommentLikedPeople } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

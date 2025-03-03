@@ -1,6 +1,7 @@
-import { NotificationModel, PostLikeModal, PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { makePostLikeNotification } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { NotificationModel, PostLikeModal, PostModel } from '../../../../src/models';
+import { makePostLikeNotification } from '../../../../src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
+jest.mock('../../../../src/models');
+
 describe('Make post like notification', () => {
   it('Should throw error', async () => {
     const mockCreate = jest.fn(() => {

@@ -1,4 +1,4 @@
-import { addPost } from 'apps/L1FG/real-state/backend/src/resolvers/mutations/post';
+import { addPost } from '../../../../src/resolvers/mutations/post';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/real-state/backend/src/models/post-model', () => {

@@ -1,8 +1,8 @@
 import { GraphQLResolveInfo } from 'graphql';
 
 import bcrypt from 'bcryptjs';
-import { changePassword } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
-import { UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
+import { changePassword } from '../../../../src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
 
 jest.mock('../../../../src/models');
 jest.mock('bcryptjs', () => ({

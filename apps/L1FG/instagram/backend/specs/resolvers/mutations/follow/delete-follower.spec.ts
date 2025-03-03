@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FollowerModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { deleteFollower } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
 // eslint-disable-next-line no-unused-vars

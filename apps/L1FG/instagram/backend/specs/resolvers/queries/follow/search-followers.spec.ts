@@ -1,7 +1,9 @@
-import { FollowerModel } from 'apps/L1FG/instagram/backend/src/models';
-import { searchFollowers } from 'apps/L1FG/instagram/backend/src/resolvers/queries/follow/search-followers';
+import { FollowerModel } from '../../../../src/models';
+import { searchFollowers } from '../../../../src/resolvers/queries/follow/search-followers';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/models');
+
 describe('Search followers', () => {
   afterEach(() => {
     jest.clearAllMocks();

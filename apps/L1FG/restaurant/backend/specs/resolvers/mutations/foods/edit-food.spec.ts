@@ -1,5 +1,5 @@
-import { FoodModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { updateFood } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { FoodModel } from '../../../../src/models';
+import { updateFood } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models/food', () => ({

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Check } from 'lucide-react';
 
-import { cn } from '../../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { DownArrow } from '../../../components/admin/svg';

@@ -1,8 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { friendshipStatus } from '../../../../src/resolvers/follow/follower-user-type';
-import { FollowerModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
-import { Gender } from 'apps/L1FG/instagram/backend/src/generated';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { FollowerModel, RequestModel } from '../../../../src/models';
+import { Gender } from '../../../../src/generated';
+
+jest.mock('../../../../src/models');
+
 describe('FreindshipStatus', () => {
   beforeEach(() => {
     jest.clearAllMocks();

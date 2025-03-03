@@ -17,5 +17,6 @@ export default {
     '!src/components/ui/icon/*.tsx',
     '!src/middleware.ts',
     '!src/features/card/*.{ts,tsx,js,jsx}',
+    '!src/utils/*.{ts,tsx,js,jsx}',
   ],
 };

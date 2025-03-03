@@ -1,8 +1,8 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { deleteSearchUser } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
+import { deleteSearchUser } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 
 describe('deleteUser', () => {
   it('update', () => {

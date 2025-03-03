@@ -1,8 +1,7 @@
-import { addMessage } from 'apps/L1E/tinder/tinder-be/src/resolvers/mutations';
-
-import { MessageModel } from 'apps/L1E/tinder/tinder-be/src/models/chat/message.model';
-import { userModel } from 'apps/L1E/tinder/tinder-be/src/models/user/user.model';
-import ConversationModel from 'apps/L1E/tinder/tinder-be/src/models/chat/conversation.model';
+import { addMessage } from '../../../../src/resolvers/mutations';
+import { MessageModel } from '../../../../src/models/chat/message.model';
+import { userModel } from '../../../../src/models/user/user.model';
+import ConversationModel from '../../../../src/models/chat/conversation.model';
 
 jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/message.model');
 jest.mock('apps/L1E/tinder/tinder-be/src/models/user/user.model');

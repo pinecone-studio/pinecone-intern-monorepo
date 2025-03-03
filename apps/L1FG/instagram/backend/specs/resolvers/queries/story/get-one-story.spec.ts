@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { getOneStory } from 'apps/L1FG/instagram/backend/src/resolvers/queries/story/get-one-story';
 /*eslint-disable*/

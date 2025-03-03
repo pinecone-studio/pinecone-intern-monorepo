@@ -1,5 +1,5 @@
 import { FriendshipStatusType, useUnfollowMutation } from '@/generated';
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 import { useCache } from '@/components/providers/CacheProvider';
 
 export const Following = ({

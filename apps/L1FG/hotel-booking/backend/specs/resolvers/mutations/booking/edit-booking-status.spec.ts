@@ -1,4 +1,4 @@
-import { editBookingStatus } from 'apps/L1FG/hotel-booking/backend/src/resolvers/mutations';
+import { editBookingStatus } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

@@ -1,4 +1,4 @@
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 
 export const Follow = ({ handleClickLike, className, followStyle }: { handleClickLike: () => Promise<void>; className?: string; followStyle?: string }) => {
   return (

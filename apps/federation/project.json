@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/federation/src",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
@@ -162,6 +163,5 @@
       },
       "dependsOn": [{ "target": "clean" }, { "target": "get-secrets" }, { "target": "export-env" }]
     }
-  },
-  "tags": []
+  }
 }

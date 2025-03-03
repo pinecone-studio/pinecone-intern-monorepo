@@ -1,9 +1,12 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { getProfilePreview } from 'apps/L1FG/instagram/backend/src/resolvers/queries/user/get-profile-preview';
 import { firstThreePosts } from 'apps/L1FG/instagram/backend/src/resolvers/user/profile-preview-type/first-three-posts';
 import { GraphQLResolveInfo } from 'graphql';
+
 jest.mock('apps/L1FG/instagram/backend/src/models');
 jest.mock('apps/L1FG/instagram/backend/src/resolvers/user/profile-preview-type/first-three-posts');
+
 describe('Get profile preview', () => {
   it('Should throw an authorization error', async () => {
     if (!getProfilePreview) return;

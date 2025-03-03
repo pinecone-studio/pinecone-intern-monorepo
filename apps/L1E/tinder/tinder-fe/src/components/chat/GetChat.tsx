@@ -1,11 +1,11 @@
 import { MessageSquareDashed } from 'lucide-react';
-import { ReactElement, JSXElementConstructor, ReactNode, useRef, useEffect, PromiseLikeOfReactNode, useState } from 'react';
+import { ReactElement, JSXElementConstructor, ReactNode, useRef, useEffect, useState } from 'react';
 
 interface Message {
   timestamp: string;
   sender: string;
   images: string[];
-  text: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | PromiseLikeOfReactNode | null | undefined;
+  text: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactNode | null | undefined;
 }
 
 interface Conversation {

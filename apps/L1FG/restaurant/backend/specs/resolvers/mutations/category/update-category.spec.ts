@@ -1,5 +1,5 @@
-import { CategoryModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { updateCategoryName } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { CategoryModel } from '../../../../src/models';
+import { updateCategoryName } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models');

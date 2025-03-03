@@ -1,5 +1,5 @@
-import { Gender } from 'apps/L1FG/instagram/backend/src/generated';
-import { updateInfo } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { Gender } from '../../../../src/generated';
+import { updateInfo } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({

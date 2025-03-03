@@ -1,5 +1,5 @@
-import { UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { UpdateForgetPasswordInput } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
+import { UpdateForgetPasswordInput } from '../../../../src/resolvers/mutations';
 
 import { GraphQLResolveInfo } from 'graphql';
 

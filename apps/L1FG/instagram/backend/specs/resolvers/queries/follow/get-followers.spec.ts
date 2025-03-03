@@ -1,11 +1,12 @@
 /*eslint-disable*/
-
-import { FollowerModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getFollowers } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
+import { FollowerModel } from '../../../../src/models';
+import { getFollowers } from '../../../../src/resolvers/queries';
+import { authenticate } from '../../../../src/utils/authenticate';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/utils/authenticate');
+jest.mock('../../../../src/models');
+
 const inputAfterTrue = {
   after: 'Njc5YjFmMDEzZGViMTkwNjQyMGZjZTMx',
   first: 1,
@@ -16,6 +17,7 @@ const inputAfterFalse = {
   first: 3,
   searchingUserId: '34',
 };
+
 describe('Get small posts v1', () => {
   it('Should throw an authorization error', async () => {
     if (!getFollowers) {

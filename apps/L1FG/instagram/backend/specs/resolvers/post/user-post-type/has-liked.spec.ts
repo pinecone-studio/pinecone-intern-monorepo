@@ -1,7 +1,7 @@
-import { PostLikeModal } from 'apps/L1FG/instagram/backend/src/models';
-import { hasLiked } from 'apps/L1FG/instagram/backend/src/resolvers/post/user-post-type';
+import { PostLikeModal } from '../../../../src/models';
+import { hasLiked } from '../../../../src/resolvers/post/user-post-type';
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 describe('Has liked', () => {
   it('Should get true', async () => {
     (PostLikeModal.findOne as jest.Mock).mockResolvedValue({

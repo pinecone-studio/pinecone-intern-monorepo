@@ -1,5 +1,5 @@
-import { sendEmail } from 'apps/L1FG/concert-ticket/backend/src/library/nodemailer';
-import { createOrder } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { sendEmail } from '../../../../src/library/nodemailer';
+import { createOrder } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models', () => ({

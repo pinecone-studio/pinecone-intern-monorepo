@@ -1,4 +1,4 @@
-import { requestChangePassword } from 'apps/L1FG/real-state/backend/src/resolvers/mutations';
+import { requestChangePassword } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

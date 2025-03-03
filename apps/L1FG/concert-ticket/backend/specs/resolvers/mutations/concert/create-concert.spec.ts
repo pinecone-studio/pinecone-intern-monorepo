@@ -1,4 +1,5 @@
-import { createConcert } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { createConcert } from '../../../../src/resolvers/mutations';
+
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

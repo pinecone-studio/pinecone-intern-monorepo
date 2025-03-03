@@ -1,7 +1,8 @@
-import { PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { addPostToDatabase } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-utils';
+import { PostModel } from '../../../../src/models';
+import { addPostToDatabase } from '../../../../src/resolvers/mutations/post/create-post-utils';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');
+
 describe('Create post', () => {
   it('Should throw failed to create a post error', async () => {
     (PostModel.create as jest.Mock).mockResolvedValue(null);

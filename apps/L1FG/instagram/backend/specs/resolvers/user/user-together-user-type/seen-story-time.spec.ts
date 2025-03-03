@@ -1,7 +1,9 @@
-import { StoryModel, StoryViewModel } from 'apps/L1FG/instagram/backend/src/models';
-import { seenStoryTime } from 'apps/L1FG/instagram/backend/src/resolvers/user/user-together-user-type';
+import { StoryModel, StoryViewModel } from '../../../../src/models';
+import { seenStoryTime } from '../../../../src/resolvers/user/user-together-user-type';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/models');
+
 describe('Seen story time', () => {
   it('Should update seen if no stories there and return 0', async () => {
     if (!seenStoryTime) {

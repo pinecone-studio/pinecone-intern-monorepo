@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { CommentLikeModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { validateCommentlikeCommentOwneruser } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/comment/create-comment-like-utils/validate-commentlike-comment-owneruser';

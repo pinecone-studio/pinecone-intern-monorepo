@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { CommentLikeModel } from 'apps/L1FG/instagram/backend/src/models';
 import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
 import { createCommentlikeAndUpdateComment } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/comment/create-comment-like-utils/create-commentlike-and-update-comment';

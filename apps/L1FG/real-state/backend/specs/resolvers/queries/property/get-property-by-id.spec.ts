@@ -1,4 +1,4 @@
-import { getPropertyByID } from 'apps/L1FG/real-state/backend/src/resolvers/queries';
+import { getPropertyByID } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

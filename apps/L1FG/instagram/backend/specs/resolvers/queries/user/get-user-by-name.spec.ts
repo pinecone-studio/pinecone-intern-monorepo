@@ -1,7 +1,7 @@
-import { FollowerModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getUserByName } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { FollowerModel, UserModel } from '../../../../src/models';
+import { getUserByName } from '../../../../src/resolvers/queries';
 
-jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   UserModel: { aggregate: jest.fn() },
   FollowerModel: { distinct: jest.fn() },
 }));

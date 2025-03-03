@@ -1,4 +1,4 @@
-import { getBookingById } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries';
+import { getBookingById } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models', () => ({

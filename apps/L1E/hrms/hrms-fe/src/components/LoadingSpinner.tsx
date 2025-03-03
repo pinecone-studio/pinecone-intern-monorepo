@@ -19,6 +19,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 40, color
       className="relative inline-block"
     >
       <motion.span
+        data-testid="loading-spinner"
         className="block w-full h-full rounded-full border-4 border-t-transparent"
         style={{
           borderColor: `${color} transparent transparent transparent`,

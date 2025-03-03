@@ -1,5 +1,5 @@
 import { FriendshipStatusType, useAcceptRequestMutation, useRemoveRequestMutation } from '@/generated';
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 
 export const IsRequest = ({ requestStyle, setStatus, followerId }: { followerId: string; requestStyle?: string; setStatus: React.Dispatch<React.SetStateAction<FriendshipStatusType>> }) => {
   const [acceptFollow] = useAcceptRequestMutation();

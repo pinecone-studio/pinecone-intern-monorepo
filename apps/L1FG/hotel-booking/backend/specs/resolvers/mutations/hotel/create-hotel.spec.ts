@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { createHotel } from '../../../../src/resolvers/mutations/hotel/create-hotel';
-import { CreateHotelInput } from 'apps/L1FG/hotel-booking/backend/src/generated';
+import { CreateHotelInput } from '../../../../src/generated';
 import { HotelModel } from '../../../../src/models';
 
 const hotel: CreateHotelInput = {

@@ -1,8 +1,8 @@
-import { NotificationModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
-import { removeRequest } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/request/remove-request';
+import { NotificationModel, RequestModel } from '../../../../src/models';
+import { removeRequest } from '../../../../src/resolvers/mutations/request/remove-request';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 
 describe('delete request', () => {
   const mockdata = jest.fn();

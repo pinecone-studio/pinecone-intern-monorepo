@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Gender, Request, User } from 'apps/L1FG/instagram/backend/src/generated';
 import { NotificationModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
 import { sendRequestIfPrivate } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/send-request-if-private';

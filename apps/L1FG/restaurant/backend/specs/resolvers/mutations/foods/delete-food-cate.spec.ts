@@ -1,6 +1,6 @@
-import { FoodModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { Response } from 'apps/L1FG/restaurant/backend/src/generated';
-import { deleteFoodCategory } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { FoodModel } from '../../../../src/models';
+import { Response } from '../../../../src/generated';
+import { deleteFoodCategory } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models'); // Mock the FoodModel

@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { UserModel } from '../../../../src/models';
-import { updateNumberUser } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { updateNumberUser } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models');
 

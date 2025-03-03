@@ -1,4 +1,4 @@
-import { signIn } from 'apps/L1FG/hotel-booking/backend/src/resolvers/mutations';
+import { signIn } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 import bcrypt from 'bcryptjs';
 

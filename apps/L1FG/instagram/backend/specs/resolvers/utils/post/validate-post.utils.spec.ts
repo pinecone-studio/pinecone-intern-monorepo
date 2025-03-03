@@ -1,6 +1,6 @@
-import { Gender } from 'apps/L1FG/instagram/backend/src/generated';
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { validatePost } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-utils';
+import { Gender } from '../../../../src/generated';
+import { UserModel } from '../../../../src/models';
+import { validatePost } from '../../../../src/resolvers/mutations/post/create-post-utils';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');
 const user = {

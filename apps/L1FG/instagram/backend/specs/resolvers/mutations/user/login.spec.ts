@@ -1,5 +1,6 @@
-import { login } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { login } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
+
 jest.mock('../../../../src/models', () => ({
   UserModel: {
     findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValue({

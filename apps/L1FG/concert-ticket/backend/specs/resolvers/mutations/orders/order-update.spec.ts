@@ -1,5 +1,5 @@
-import { OrderModel, UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { orderUpdate } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { OrderModel, UserModel } from '../../../../src/models';
+import { orderUpdate } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models/user.model.ts', () => ({
