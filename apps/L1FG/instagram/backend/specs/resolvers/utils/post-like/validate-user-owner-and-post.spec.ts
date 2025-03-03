@@ -1,5 +1,5 @@
-import { PostModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { validateUserOwnerAndPost } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/validate-user-owner-and-post';
+import { PostModel, UserModel } from '../../../../src/models';
+import { validateUserOwnerAndPost } from '../../../../src/resolvers/mutations/post/create-post-like-utils/validate-user-owner-and-post';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');
 describe('Validate user owner and post', () => {

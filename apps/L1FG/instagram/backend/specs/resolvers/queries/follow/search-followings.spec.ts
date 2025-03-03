@@ -1,5 +1,5 @@
-import { FollowerModel } from 'apps/L1FG/instagram/backend/src/models';
-import { searchFollowings } from 'apps/L1FG/instagram/backend/src/resolvers/queries/follow/search-followings';
+import { FollowerModel } from '../../../../src/models';
+import { searchFollowings } from '../../../../src/resolvers/queries/follow/search-followings';
 
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('apps/L1FG/instagram/backend/src/models');

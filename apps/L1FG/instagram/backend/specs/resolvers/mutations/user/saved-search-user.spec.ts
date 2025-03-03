@@ -1,5 +1,5 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { savedSearchUser } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
+import { savedSearchUser } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 // Mock хийх

@@ -1,6 +1,8 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getUserStoryInfo } from 'apps/L1FG/instagram/backend/src/resolvers/queries/story/get-user-story-info';
+import { UserModel } from '../../../../src/models';
+import { getUserStoryInfo } from '../../../../src/resolvers/queries/story/get-user-story-info';
+
 jest.mock('apps/L1FG/instagram/backend/src/models');
+
 describe('Get user story info', () => {
   it('Should work', async () => {
     const mockAggregate = jest.fn().mockResolvedValueOnce([]);

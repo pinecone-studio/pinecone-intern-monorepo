@@ -1,9 +1,11 @@
-import { StoryLikeModal } from 'apps/L1FG/instagram/backend/src/models';
-import { storyLiked } from 'apps/L1FG/instagram/backend/src/resolvers/story/one-story-type';
+import { StoryLikeModal } from '../../../../src/models';
+import { storyLiked } from '../../../../src/resolvers/story/one-story-type';
 /*eslint-disable*/
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
-jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { authenticate } from '../../../../src/utils/authenticate';
+
+jest.mock('../../../../src/utils/authenticate');
+jest.mock('../../../../src/models');
+
 describe('Story liked', () => {
   it('Should throw та нэвтэрнэ үү', async () => {
     const mockAuthenticate = jest.fn(() => {

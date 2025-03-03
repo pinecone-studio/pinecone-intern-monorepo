@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useUser } from '@/provider/UserProvider';
 import { Button } from '@/components/ui/button';
 import { LogoutModal } from './LogoutModal';
-import { cn } from '../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 
 const navBars = [
   {

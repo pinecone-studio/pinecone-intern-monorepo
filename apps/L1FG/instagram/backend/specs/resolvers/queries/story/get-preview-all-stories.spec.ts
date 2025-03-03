@@ -1,8 +1,9 @@
-import { FollowerModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getPreviewAllStories } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { FollowerModel, UserModel } from '../../../../src/models';
+import { getPreviewAllStories } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
-jest.mock('apps/L1FG/instagram/backend/src/resolvers/queries/story/get-user-story-info', () => ({
+
+jest.mock('../../../../src/utils/authenticate');
+jest.mock('../../../../src/resolvers/queries/story/get-user-story-info', () => ({
   getUserStoryInfo: jest.fn().mockResolvedValueOnce([
     {
       _id: '345',

@@ -72,7 +72,7 @@ export const AdminSideInfo = ({ property }: AdminSinglePageProps) => {
         </div>
         <div className="w-[435px] mt-4 p-6 rounded-lg bg-[#fbfbfc]">
           <p>Төлөв</p>
-          <select role="status" onChange={handleStatusChange} className="py-2 px-3 w-[372px] border border-[#71717A] rounded-sm mt-2" defaultValue={property?.status}>
+          <select role="status" onChange={handleStatusChange} className="py-2 px-3 w-[372px] border border-[#71717A] rounded-sm mt-2" defaultValue={property?.status as string}>
             <option value="PENDING">Хүлээгдэж буй</option>
             <option role="approved" value="APPROVED">
               Зөвшөөрөх

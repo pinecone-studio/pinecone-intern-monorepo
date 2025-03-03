@@ -1,6 +1,6 @@
-import { Response } from 'apps/L1FG/restaurant/backend/src/generated';
-import { FoodModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { deleteFood } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { Response } from '../../../../src/generated';
+import { FoodModel } from '../../../../src/models';
+import { deleteFood } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models/food', () => ({

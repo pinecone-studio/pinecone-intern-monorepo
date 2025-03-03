@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { editFaqs } from 'apps/L1FG/hotel-booking/backend/src/resolvers/mutations';
+import { editFaqs } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models', () => ({
   HotelModel: {
@@ -17,15 +17,14 @@ describe('Edit Hotel Frequently asked questions', () => {
 
   it('should throw hotel not found error', async () => {
     HotelModel.findById.mockResolvedValueOnce(null);
-        
+
     const mockInput = {
-      id: '678cb7f6a4e7125effcba04c'
+      id: '678cb7f6a4e7125effcba04c',
     };
-    try{
-        await editFaqs!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
-    }catch(error)
-    {
-        expect(error).toEqual(new Error('Hotel Not Found'));
+    try {
+      await editFaqs!({}, { input: mockInput }, {}, {} as GraphQLResolveInfo);
+    } catch (error) {
+      expect(error).toEqual(new Error('Hotel Not Found'));
     }
   });
 
@@ -37,10 +36,12 @@ describe('Edit Hotel Frequently asked questions', () => {
       starRating: 4,
       rating: 4.5,
       phoneNumber: '+976 91919191',
-      faqs : [{
-        key : "hehe",
-        value : "haha"
-      }]
+      faqs: [
+        {
+          key: 'hehe',
+          value: 'haha',
+        },
+      ],
     };
 
     const mockHotel = {
@@ -51,10 +52,12 @@ describe('Edit Hotel Frequently asked questions', () => {
       rating: 4.5,
       phoneNumber: '+976 91919191',
       amenities: ['Dajgui service tei gazar shuu'],
-      faqs : [{
-        key : "hehe",
-        value : "haha"
-      }]
+      faqs: [
+        {
+          key: 'hehe',
+          value: 'haha',
+        },
+      ],
     };
 
     HotelModel.findById.mockResolvedValueOnce(mockHotel);

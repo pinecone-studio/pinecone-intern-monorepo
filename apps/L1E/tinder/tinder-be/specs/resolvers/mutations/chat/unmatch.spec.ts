@@ -1,6 +1,6 @@
-import { matchModel } from 'apps/L1E/tinder/tinder-be/src/models/user/match.model';
-import { unMatch } from 'apps/L1E/tinder/tinder-be/src/resolvers/mutations';
-import ConversationModel from 'apps/L1E/tinder/tinder-be/src/models/chat/conversation.model';
+import { unMatch } from '../../../../src/resolvers/mutations';
+import { matchModel } from '../../../../src/models/user/match.model';
+import ConversationModel from '../../../../src/models/chat/conversation.model';
 
 jest.mock('apps/L1E/tinder/tinder-be/src/models/user/match.model', () => ({
   matchModel: {

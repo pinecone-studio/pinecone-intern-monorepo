@@ -1,7 +1,7 @@
-import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
-import { contentComment } from 'apps/L1FG/instagram/backend/src/resolvers/notification/notification-type';
+import { CommentModel } from '../../../../src/models/comment.model';
+import { contentComment } from '../../../../src/resolvers/notification/notification-type';
 
-jest.mock('apps/L1FG/instagram/backend/src/models/comment.model');
+jest.mock('../../../../src/models/comment.model');
 
 describe('notification post populate type', () => {
   it('shoud have post image', async () => {

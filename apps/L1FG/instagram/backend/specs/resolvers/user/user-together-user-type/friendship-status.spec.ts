@@ -1,7 +1,9 @@
-import { FollowerModel, RequestModel } from 'apps/L1FG/instagram/backend/src/models';
+import { FollowerModel, RequestModel } from '../../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
 import { friendshipStatus } from '../../../../src/resolvers/user/user-together-user-type';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/models');
+
 describe('FreindshipStatus', () => {
   beforeEach(() => {
     jest.clearAllMocks();

@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { UserModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { changePassword } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations/updateuser/change-password';
+import { UserModel } from '../../../../src/models';
+import { changePassword } from '../../../../src/resolvers/mutations/updateuser/change-password';
 import bcrypt from 'bcryptjs';
 
 jest.mock('../../../../src/models');

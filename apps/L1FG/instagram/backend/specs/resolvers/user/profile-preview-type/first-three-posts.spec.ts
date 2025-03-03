@@ -1,6 +1,8 @@
-import { PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { firstThreePosts } from 'apps/L1FG/instagram/backend/src/resolvers/user/profile-preview-type/first-three-posts';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { PostModel } from '../../../../src/models';
+import { firstThreePosts } from '../../../../src/resolvers/user/profile-preview-type/first-three-posts';
+
+jest.mock('../../../../src/models');
+
 describe('First three posts', () => {
   it('Should  ', async () => {
     if (!firstThreePosts) return;

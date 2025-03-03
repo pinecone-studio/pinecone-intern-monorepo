@@ -1,4 +1,4 @@
-import { getUsers } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { getUsers } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({

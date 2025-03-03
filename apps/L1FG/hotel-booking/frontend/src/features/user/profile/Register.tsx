@@ -13,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { TitleImpormation } from './TitleInformation';
-import { cn } from '../../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 
 const formSchema = z.object({
   firstName: z.string().min(2).max(16),

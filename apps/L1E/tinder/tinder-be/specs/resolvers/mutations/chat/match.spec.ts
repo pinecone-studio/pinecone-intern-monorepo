@@ -1,5 +1,5 @@
-import { matchModel } from 'apps/L1E/tinder/tinder-be/src/models/user/match.model';
-import { matchUsersCreate } from 'apps/L1E/tinder/tinder-be/src/resolvers/mutations';
+import { matchModel } from '../../../../src/models/user/match.model';
+import { matchUsersCreate } from '../../../../src/resolvers/mutations';
 
 jest.mock('apps/L1E/tinder/tinder-be/src/models/user/match.model', () => ({
   matchModel: {

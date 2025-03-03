@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { sendEmail } from 'apps/L1FG/restaurant/backend/src/library/nodemailer';
 import { generateOTP } from 'otp-agent';
 import { MutationResolvers } from '../../../generated';

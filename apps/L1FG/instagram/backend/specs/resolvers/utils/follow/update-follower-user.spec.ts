@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Follow, Gender, User } from 'apps/L1FG/instagram/backend/src/generated';
 import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
 import { updateFollowFollowerUser } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/update-follower-user';

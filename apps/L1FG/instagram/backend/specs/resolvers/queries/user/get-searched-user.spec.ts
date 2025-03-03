@@ -1,8 +1,8 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getSearchedUser } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { UserModel } from '../../../../src/models';
+import { getSearchedUser } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 
 describe('getUser', () => {
   it('shoud be', async () => {

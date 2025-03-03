@@ -1,7 +1,7 @@
-import { NotificationModel, PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
-import { createComment } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
+import { NotificationModel, PostModel } from '../../../../src/models';
+import { CommentModel } from '../../../../src/models/comment.model';
+import { createComment } from '../../../../src/resolvers/mutations';
+import { authenticate } from '../../../../src/utils/authenticate';
 
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');

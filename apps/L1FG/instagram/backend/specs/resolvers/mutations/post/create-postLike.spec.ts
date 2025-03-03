@@ -1,17 +1,19 @@
 /* eslint-disable max-lines */
-import { createPostLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { createPostLike } from '../../../../src/resolvers/mutations';
 // eslint-disable-next-line no-unused-vars
-import { checkPostLikeExists } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/check-post-like-exists';
+import { checkPostLikeExists } from '../../../../src/resolvers/mutations/post/create-post-like-utils/check-post-like-exists';
 // eslint-disable-next-line no-unused-vars
-import { makePostLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like';
+import { makePostLike } from '../../../../src/resolvers/mutations/post/create-post-like-utils/make-post-like';
 // eslint-disable-next-line no-unused-vars
-import { makePostLikeNotification } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
+import { makePostLikeNotification } from '../../../../src/resolvers/mutations/post/create-post-like-utils/make-post-like-notification';
 // eslint-disable-next-line no-unused-vars
-import { updatePostLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/update-post-like';
+import { updatePostLike } from '../../../../src/resolvers/mutations/post/create-post-like-utils/update-post-like';
 // eslint-disable-next-line no-unused-vars
-import { validateUserOwnerAndPost } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/validate-user-owner-and-post';
+import { validateUserOwnerAndPost } from '../../../../src/resolvers/mutations/post/create-post-like-utils/validate-user-owner-and-post';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/check-post-like-exists');
+
+jest.mock('../../../../src/resolvers/mutations/post/create-post-like-utils/check-post-like-exists');
+
 describe('Create post like', () => {
   it('Should throw unauthenticated error', async () => {
     if (!createPostLike) {

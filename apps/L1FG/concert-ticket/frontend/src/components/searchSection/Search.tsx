@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 import { SelectSingleEventHandler } from 'react-day-picker';
 import { CalendarSearch } from 'lucide-react';
 type SearchProps = {

@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { getHotels } from 'apps/L1FG/hotel-booking/backend/src/resolvers/queries/hotel';
+import { getHotels } from '../../../../src/resolvers/queries/hotel';
 
 jest.mock('../../../../src/models', () => ({
   HotelModel: {

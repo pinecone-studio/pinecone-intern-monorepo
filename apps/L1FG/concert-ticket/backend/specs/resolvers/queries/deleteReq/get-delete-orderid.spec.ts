@@ -1,4 +1,4 @@
-import { getDeleteOrderId } from 'apps/L1FG/concert-ticket/backend/src/resolvers/queries/deleteReq/get-delete-orderid';
+import { getDeleteOrderId } from '../../../../src/resolvers/queries/deleteReq/get-delete-orderid';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models/order-delete-req.model.ts', () => ({

@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FollowerModel } from 'apps/L1FG/instagram/backend/src/models';
 import { validateFoundFollow } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/validate-found-follow';
 jest.mock('apps/L1FG/instagram/backend/src/models');

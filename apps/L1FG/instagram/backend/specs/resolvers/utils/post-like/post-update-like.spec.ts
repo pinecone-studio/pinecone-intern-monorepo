@@ -1,6 +1,6 @@
-import { PostLikeModal, PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { updatePostLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/update-post-like';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { PostLikeModal, PostModel } from '../../../../src/models';
+import { updatePostLike } from '../../../../src/resolvers/mutations/post/create-post-like-utils/update-post-like';
+jest.mock('../../../../src/models');
 describe('Post update like', () => {
   it('Should throw an error', async () => {
     const mockFindByIdAndUpdate = jest.fn(() => {

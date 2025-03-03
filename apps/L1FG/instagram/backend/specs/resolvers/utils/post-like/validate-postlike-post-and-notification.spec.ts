@@ -1,6 +1,6 @@
-import { PostLikeModal, PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { validatePostlikePostAndNotification } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/delete-post-like-utils/validate-postlike-post-and-notification';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { PostLikeModal, PostModel } from '../../../../src/models';
+import { validatePostlikePostAndNotification } from '../../../../src/resolvers/mutations/post/delete-post-like-utils/validate-postlike-post-and-notification';
+jest.mock('../../../../src/models');
 describe('Validate postlike ,post and notification', () => {
   it('Should throw пост олдсонгүй', async () => {
     const mockFindById = jest.fn().mockResolvedValueOnce(null);

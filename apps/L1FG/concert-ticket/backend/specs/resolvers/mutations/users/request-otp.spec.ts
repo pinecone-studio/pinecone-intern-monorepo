@@ -1,6 +1,6 @@
-import { sendEmail } from 'apps/L1FG/concert-ticket/backend/src/library/nodemailer';
-import { UserModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { RequestChangePassword } from 'apps/L1FG/concert-ticket/backend/src/resolvers/mutations';
+import { sendEmail } from '../../../../src/library/nodemailer';
+import { UserModel } from '../../../../src/models';
+import { RequestChangePassword } from '../../../../src/resolvers/mutations';
 
 import { GraphQLResolveInfo } from 'graphql';
 

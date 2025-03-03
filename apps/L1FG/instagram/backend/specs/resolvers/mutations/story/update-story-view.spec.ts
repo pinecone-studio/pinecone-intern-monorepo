@@ -1,4 +1,4 @@
-import { updateStoryView } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { updateStoryView } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({

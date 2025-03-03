@@ -1,5 +1,5 @@
-import { ConcertModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { getConcerts } from 'apps/L1FG/concert-ticket/backend/src/resolvers/queries';
+import { ConcertModel } from '../../../../src/models';
+import { getConcerts } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('.../../../../src/models', () => ({

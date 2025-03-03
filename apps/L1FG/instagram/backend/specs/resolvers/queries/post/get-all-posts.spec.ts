@@ -1,5 +1,5 @@
-import { PostModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getAllPosts } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { PostModel } from '../../../../src/models';
+import { getAllPosts } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 jest.mock('apps/L1FG/instagram/backend/src/models');
 describe('Get all posts', () => {

@@ -1,6 +1,6 @@
 /* eslint-disable no-secrets/no-secrets */
-import { ConcertModel } from 'apps/L1FG/concert-ticket/backend/src/models';
-import { getSameConcerts } from 'apps/L1FG/concert-ticket/backend/src/resolvers/queries';
+import { ConcertModel } from '../../../../src/models';
+import { getSameConcerts } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/concert-ticket/backend/src/models/concert.model.ts', () => ({

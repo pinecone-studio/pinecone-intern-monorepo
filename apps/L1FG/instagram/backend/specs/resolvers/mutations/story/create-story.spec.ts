@@ -1,4 +1,4 @@
-import { createStory } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { createStory } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({

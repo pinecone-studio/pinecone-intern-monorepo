@@ -29,7 +29,8 @@
     "../../../../apps/L1E/tinder/tinder-be/.next/types/**/*.ts",
     "../../../../dist/aapps/L1E/tinder/tinder-be/.next/types/**/*.ts",
     "next-env.d.ts",
-    "../../../../dist/apps/L1E/tinder/tinder-be/.next/types/**/*.ts"
+    "../../../../dist/apps/L1E/tinder/tinder-be/.next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

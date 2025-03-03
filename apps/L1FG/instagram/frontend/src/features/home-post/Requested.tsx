@@ -1,5 +1,5 @@
 import { FriendshipStatusType, useDeleteRequestMutation } from '@/generated';
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 
 type Props = {
   requestedStyle: string;

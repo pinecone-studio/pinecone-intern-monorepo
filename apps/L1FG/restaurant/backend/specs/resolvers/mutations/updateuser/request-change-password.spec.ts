@@ -1,7 +1,7 @@
-import { sendEmail } from 'apps/L1FG/restaurant/backend/src/library/nodemailer';
+import { sendEmail } from '../../../../src/library/nodemailer';
 import { GraphQLResolveInfo } from 'graphql';
-import { requestChangePassword } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
-import { UserModel } from 'apps/L1FG/restaurant/backend/src/models';
+import { UserModel } from '../../../../src/models';
+import { requestChangePassword } from '../../../../src/resolvers/mutations';
 
 jest.mock('../../../../src/models');
 jest.mock('../../../../src/library/nodemailer');

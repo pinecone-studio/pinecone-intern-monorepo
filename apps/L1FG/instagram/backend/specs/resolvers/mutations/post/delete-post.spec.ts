@@ -1,13 +1,15 @@
-import { CommentLikeModel, NotificationModel, PostLikeModal, PostModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
-import { deletePost } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { CommentLikeModel, NotificationModel, PostLikeModal, PostModel, UserModel } from '../../../../src/models';
+import { CommentModel } from '../../../../src/models/comment.model';
+import { deletePost } from '../../../../src/resolvers/mutations';
 // eslint-disable-next-line no-unused-vars
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
-import { UnauthenticatedError } from 'apps/L1FG/instagram/backend/src/utils/error';
+import { authenticate } from '../../../../src/utils/authenticate';
+import { UnauthenticatedError } from '../../../../src/utils/error';
 import { GraphQLResolveInfo } from 'graphql';
+
 jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
 jest.mock('apps/L1FG/instagram/backend/src/models');
 jest.mock('apps/L1FG/instagram/backend/src/models/comment.model');
+
 describe('should render', () => {
   it('SHould throw authentication error', async () => {
     if (!deletePost) {

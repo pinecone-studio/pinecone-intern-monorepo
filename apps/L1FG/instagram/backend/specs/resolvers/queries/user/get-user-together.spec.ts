@@ -1,5 +1,5 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { getUserTogether } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
+import { UserModel } from '../../../../src/models';
+import { getUserTogether } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models');

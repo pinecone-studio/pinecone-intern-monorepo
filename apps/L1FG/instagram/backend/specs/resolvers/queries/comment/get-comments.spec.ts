@@ -1,11 +1,12 @@
 /*eslint-disable*/
-
-import { CommentModel } from 'apps/L1FG/instagram/backend/src/models/comment.model';
-import { getComments } from 'apps/L1FG/instagram/backend/src/resolvers/queries';
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
+import { CommentModel } from '../../../../src/models/comment.model';
+import { getComments } from '../../../../src/resolvers/queries';
+import { authenticate } from '../../../../src/utils/authenticate';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/utils/authenticate');
+jest.mock('../../../../src/models');
+
 const inputAfterTrue = {
   after: 'Njc5YjFmMDEzZGViMTkwNjQyMGZjZTMx',
   first: 1,
@@ -16,6 +17,7 @@ const inputAfterFalse = {
   first: 3,
   postId: '34',
 };
+
 describe('Get small posts v1', () => {
   it('Should throw an authorization error', async () => {
     if (!getComments) {

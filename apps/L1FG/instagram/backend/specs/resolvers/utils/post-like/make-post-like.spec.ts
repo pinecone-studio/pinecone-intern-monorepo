@@ -1,6 +1,7 @@
-import { PostLikeModal } from 'apps/L1FG/instagram/backend/src/models';
-import { makePostLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/post/create-post-like-utils/make-post-like';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { PostLikeModal } from '../../../../src/models';
+import { makePostLike } from '../../../../src/resolvers/mutations/post/create-post-like-utils/make-post-like';
+
+jest.mock('../../../../src/models');
 describe('make post like', () => {
   it('Should throw error', async () => {
     const mockCreate = jest.fn().mockResolvedValueOnce(null);

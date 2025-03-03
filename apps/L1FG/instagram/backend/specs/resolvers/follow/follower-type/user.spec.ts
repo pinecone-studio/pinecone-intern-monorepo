@@ -1,7 +1,8 @@
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { user } from 'apps/L1FG/instagram/backend/src/resolvers/follow/follower-type/user';
+import { UserModel } from '../../../../src/models';
+import { user } from '../../../../src/resolvers/follow/follower-type/user';
 import { GraphQLResolveInfo } from 'graphql';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+
+jest.mock('../../../../src/models');
 describe('Follower Type user', () => {
   it('Should return user', async () => {
     if (!user) {

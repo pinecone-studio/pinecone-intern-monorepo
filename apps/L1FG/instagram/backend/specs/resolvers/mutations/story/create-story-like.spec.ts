@@ -1,4 +1,4 @@
-import { createStoryLike } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { createStoryLike } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
@@ -9,7 +9,7 @@ jest.mock('apps/L1FG/instagram/backend/src/models', () => ({
     }),
   },
 }));
-//true false  truthy falsy    
+//true false  truthy falsy
 describe('create comment', () => {
   it('shoud be a comment', async () => {
     if (!createStoryLike) {

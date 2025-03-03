@@ -1,5 +1,5 @@
-import { UserModel } from 'apps/L1FG/restaurant/backend/src/models';
-import { updateForgetPassword } from 'apps/L1FG/restaurant/backend/src/resolvers/mutations';
+import { UserModel } from '../../../../src/models';
+import { updateForgetPassword } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 jest.mock('../../../../src/models');

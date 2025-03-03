@@ -1,4 +1,4 @@
-import { cn } from '../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { GetUserTogetherQuery } from '@/generated';
 

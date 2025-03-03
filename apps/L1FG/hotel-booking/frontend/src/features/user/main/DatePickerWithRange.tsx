@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { cn } from '../../../../../../../../libs/shadcn/src/lib/utils';
+import { cn } from '@/utils';
 import { useQueryState } from 'nuqs';
 
 export const DatePickerWithRange = ({ className }: HTMLAttributes<HTMLDivElement>) => {

@@ -1,6 +1,6 @@
-import ConversationModel from 'apps/L1E/tinder/tinder-be/src/models/chat/conversation.model';
-import { userModel } from 'apps/L1E/tinder/tinder-be/src/models/user/user.model';
-import { getAllConversations } from 'apps/L1E/tinder/tinder-be/src/resolvers/queries';
+import ConversationModel from '../../../../src/models/chat/conversation.model';
+import { userModel } from '../../../../src/models/user/user.model';
+import { getAllConversations } from '../../../../src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 
 // Mock the models

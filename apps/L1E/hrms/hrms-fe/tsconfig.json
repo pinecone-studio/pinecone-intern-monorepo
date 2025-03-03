@@ -19,7 +19,8 @@
     ],
     "paths": {
       "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/utils": ["../../../../libs/shadcn/src/lib/utils"]
     },
     "types": ["jest", "node"]
   },

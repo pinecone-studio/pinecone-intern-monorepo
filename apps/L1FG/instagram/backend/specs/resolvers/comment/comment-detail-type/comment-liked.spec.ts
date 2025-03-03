@@ -1,8 +1,8 @@
-import { CommentLikeModel } from 'apps/L1FG/instagram/backend/src/models';
-import { commentLiked } from 'apps/L1FG/instagram/backend/src/resolvers/comment/comment-detail-type';
+import { CommentLikeModel } from '../../../../src/models';
+import { commentLiked } from '../../../../src/resolvers/comment/comment-detail-type';
 // eslint-disable-next-line no-unused-vars
-import { authenticate } from 'apps/L1FG/instagram/backend/src/utils/authenticate';
-jest.mock('apps/L1FG/instagram/backend/src/utils/authenticate');
+import { authenticate } from '../../../../src/utils/authenticate';
+jest.mock('../../../../src/utils/authenticate');
 describe('Comment liked', () => {
   it('Should throw an authorization error', async () => {
     const mockAuthenticate = jest.fn(() => {

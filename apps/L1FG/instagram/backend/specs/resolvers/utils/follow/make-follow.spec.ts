@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Follow } from 'apps/L1FG/instagram/backend/src/generated';
 import { FollowerModel, NotificationModel } from 'apps/L1FG/instagram/backend/src/models';
 import { makeFollow } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/make-follow';

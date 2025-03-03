@@ -1,9 +1,9 @@
-import ConversationModel from 'apps/L1E/tinder/tinder-be/src/models/chat/conversation.model';
-import MessageModel from 'apps/L1E/tinder/tinder-be/src/models/chat/message.model';
-import { userModel } from 'apps/L1E/tinder/tinder-be/src/models/user/user.model';
-import { getConversation } from 'apps/L1E/tinder/tinder-be/src/resolvers/queries';
 import { GraphQLResolveInfo } from 'graphql';
 import { Types } from 'mongoose';
+import { getConversation } from '../../../../src/resolvers/queries';
+import ConversationModel from '../../../../src/models/chat/conversation.model';
+import MessageModel from '../../../../src/models/chat/message.model';
+import { userModel } from '../../../../src/models/user/user.model';
 
 jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/conversation.model');
 jest.mock('apps/L1E/tinder/tinder-be/src/models/chat/message.model');

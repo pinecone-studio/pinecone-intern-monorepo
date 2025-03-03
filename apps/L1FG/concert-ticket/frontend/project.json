@@ -3,6 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/L1FG/concert-ticket/frontend",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/next:build",
@@ -29,7 +30,8 @@
       "options": {
         "buildTarget": "concert-ticket-frontend:build",
         "dev": true
-      },      "configurations": {
+      },
+      "configurations": {
         "development": {
           "buildTarget": "concert-ticket-frontend:build:development",
           "dev": true,
@@ -285,6 +287,5 @@
         }
       ]
     }
-  },
-  "tags": []
+  }
 }

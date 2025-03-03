@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import DeleteConfirmModal from '@/components/addEstate/assests/DeleteConfirmModal';
+import EstateListItem from '@/components/addEstate/assests/EstateListItem';
+import LoadingErrorDisplay from '@/components/addEstate/assests/LoadingErrorDisplay';
 import { useAuth } from '@/components/providers';
 import { useDeletePostMutation, useGetPostsByUserIdQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import EstateListItem from '@/components/addEstate/assests/EstateListItem';
-import DeleteConfirmModal from '@/components/addEstate/assests/DeleteConfirmModal';
-import LoadingErrorDisplay from '@/components/addEstate/assests/LoadingErrorDisplay';
 
 const statusLabelMap: Record<string, string> = {
   PENDING: 'Хүлээгдэж буй',
@@ -84,18 +84,22 @@ const MyEstatesPage: React.FC = () => {
         <div className="border border-zinc-200 rounded-lg overflow-hidden">
           <TableHeader />
           <div>
-            {data?.getPosts?.map((post, index) => (
-              <EstateListItem
-                key={post._id}
-                post={post}
-                index={index}
-                onEdit={handleEdit}
-                onDelete={handleDeleteClick}
-                statusStyleMap={statusStyleMap}
-                statusLabelMap={statusLabelMap}
-                formatPrice={formatPrice}
-              />
-            ))}
+            {data?.getPosts?.length ? (
+              data.getPosts.map((post, index) => (
+                <EstateListItem
+                  key={post._id}
+                  post={post}
+                  index={index}
+                  onEdit={handleEdit}
+                  onDelete={handleDeleteClick}
+                  statusStyleMap={statusStyleMap}
+                  statusLabelMap={statusLabelMap}
+                  formatPrice={formatPrice}
+                />
+              ))
+            ) : (
+              <div className="p-4 text-gray-500 text-center">Одоогоор зар байхгүй байна</div>
+            )}
           </div>
         </div>
       </main>

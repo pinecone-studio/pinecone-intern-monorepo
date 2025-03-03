@@ -1,7 +1,8 @@
-import { Follow, Gender, User } from 'apps/L1FG/instagram/backend/src/generated';
-import { UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { updateFollowTargetUser } from 'apps/L1FG/instagram/backend/src/resolvers/mutations/follow/create-follower-utils/update-target-user';
-jest.mock('apps/L1FG/instagram/backend/src/models');
+import { Follow, Gender, User } from '../../../../src/generated';
+import { UserModel } from '../../../../src/models';
+import { updateFollowTargetUser } from '../../../../src/resolvers/mutations/follow/create-follower-utils/update-target-user';
+
+jest.mock('../../../../src/models');
 
 const targetUser: User = {
   _id: '14',

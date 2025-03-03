@@ -1,5 +1,5 @@
-import { NotificationModel } from 'apps/L1FG/instagram/backend/src/models';
-import { updateIsRead } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { NotificationModel } from '../../../../src/models';
+import { updateIsRead } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 const mockData = {
   _id: 'today',
@@ -9,7 +9,7 @@ const mockData = {
   commentLike: [{ createdAt: '2025-02-07T12:00:00Z', categoryType: 'POST_LIKE' }],
 };
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 
 describe('update notification', () => {
   it('find and update many notification model', async () => {

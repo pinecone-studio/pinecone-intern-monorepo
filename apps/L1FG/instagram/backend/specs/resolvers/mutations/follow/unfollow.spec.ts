@@ -1,9 +1,9 @@
-import { User } from 'apps/L1FG/instagram/backend/src/generated';
-import { FollowerModel, NotificationModel, RequestModel, UserModel } from 'apps/L1FG/instagram/backend/src/models';
-import { unfollow } from 'apps/L1FG/instagram/backend/src/resolvers/mutations';
+import { User } from '../../../../src/generated';
+import { FollowerModel, NotificationModel, RequestModel, UserModel } from '../../../../src/models';
+import { unfollow } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('apps/L1FG/instagram/backend/src/models');
+jest.mock('../../../../src/models');
 
 const followerUser: User = {
   _id: '13',
