@@ -1,0 +1,28 @@
+{
+    "properties": {
+        "filePath": {
+            "type": "string",
+            "description": "env variables file path."
+        },
+        "databaseName": {
+            "type": "string",
+            "description": "The name of the database from which to export data."
+        },
+        "collectionName": {
+            "type": "string",
+            "description": "The name of the collection from which to export data."
+        },
+        "outputPath": {
+            "type": "string",
+            "description": "File path where the CSV file will be saved."
+        }
+    },
+    "required": [
+        "filePath",
+        "databaseName",
+        "collectionName",
+        "outputPath"
+    ],
+    "type": "object",
+    "description": "Options required to export data from MongoDB to a CSV file."
+}

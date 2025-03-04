@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "vercel-build": "next build"
+  },
+  "devDependencies": {
+    "vercel": "^41.3.1"
+  }
+}

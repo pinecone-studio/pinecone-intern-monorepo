@@ -143,6 +143,7 @@
           {
             "allow": [],
             "depConstraints": [
+              // type rules
               {
                 "sourceTag": "type:app",
                 "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:util", "type:ui"]
@@ -152,8 +153,25 @@
                 "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:util", "type:ui"]
               },
               {
+                "sourceTag": "type:data-access",
+                "onlyDependOnLibsWithTags": ["type:data-access", "type:util"]
+              },
+              {
+                "sourceTag": "type:ui",
+                "onlyDependOnLibsWithTags": ["type:ui", "type:util"]
+              },
+              {
+                "sourceTag": "type:util",
+                "onlyDependOnLibsWithTags": ["type:util"]
+              },
+              // plugin rules
+              {
                 "sourceTag": "plugin:next",
                 "onlyDependOnLibsWithTags": ["plugin:next", "plugin:react", "plugin:node", "plugin:js"]
+              },
+              {
+                "sourceTag": "plugin:expo",
+                "onlyDependOnLibsWithTags": ["plugin:expo", "plugin:react", "plugin:js"]
               },
               {
                 "sourceTag": "plugin:react",
@@ -162,6 +180,15 @@
               {
                 "sourceTag": "plugin:express",
                 "onlyDependOnLibsWithTags": ["plugin:express", "plugin:js"]
+              },
+              {
+                "sourceTag": "plugin:nest",
+                "onlyDependOnLibsWithTags": ["plugin:nest", "plugin:js"]
+              },
+              // scope rules
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
               }
             ]
           }
