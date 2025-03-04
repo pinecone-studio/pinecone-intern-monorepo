@@ -1,0 +1,76 @@
+{
+  "executors": {
+    "converting-csv-to-sql": {
+      "implementation": "./src/executors/converting-csv-to-sql/executor",
+      "schema": "./src/executors/converting-csv-to-sql/schema.json",
+      "description": "Exports MongoDB data to a CSV file."
+    },
+    "export-mongo-to-csv": {
+      "implementation": "./src/executors/export-mongo-to-csv/executor",
+      "schema": "./src/executors/export-mongo-to-csv/schema.json",
+      "description": "Exports MongoDB data to a CSV file."
+    },
+    "fetch-secrets": {
+      "implementation": "./src/executors/fetch-secrets/executor",
+      "schema": "./src/executors/fetch-secrets/schema.json",
+      "description": "fetch-secrets executor"
+    },
+    "serve": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/serve/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/serve/schema.json"
+    },
+    "deploy": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/deploy/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/deploy/schema.json"
+    },
+    "build": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/wrangler-build/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/wrangler-build/schema.json"
+    },
+    "pages-deploy": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/pages-deploy/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/pages-deploy/schema.json"
+    },
+    "workers-preview": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/workers-preview/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/workers-preview/schema.json"
+    },
+    "create-toml": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/create-toml/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/create-toml/schema.json"
+    },
+    "migrate-d1": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/migrate-d1/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/migrate-d1/schema.json"
+    },
+    "migrate-d1-all": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/migrate-d1-all/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/migrate-d1-all/schema.json"
+    },
+    "put-secrets": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/put-secrets/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/put-secrets/schema.json"
+    },
+    "execute-d1-changes": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/execute-d1-changes/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/execute-d1-changes/schema.json"
+    },
+    "detect-schema-conflicts": {
+      "implementation": "./src/executors/graphql/detect-schema-conflicts/executor",
+      "schema": "./src/executors/graphql/detect-schema-conflicts/schema.json"
+    },
+    "seed-testing": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/seed-database/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/seed-database/schema.json"
+    },
+    "seed-local": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/seed-local-database/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/seed-local-database/schema.json"
+    }
+  },
+  "migrate-mongo-to-mongo-table-records": {
+    "implementation": "./src/executors/migrate-mongo-to-mongo/executor",
+    "schema": "./src/executors/migrate-mongo-to-mongo/schema.json",
+    "description": "Migrate Mongo to Mongo table records"
+  }
+}

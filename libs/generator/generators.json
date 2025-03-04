@@ -9,6 +9,11 @@
       "factory": "./src/generators/dash/generator",
       "schema": "./src/generators/dash/schema.json",
       "description": "dash generator"
+    },
+    "cloudflare-service": {
+      "factory": "./src/generators/cloudflare-service/generator",
+      "schema": "./src/generators/cloudflare-service/schema.json",
+      "description": "cloudflare-service generator"
     }
   }
 }
