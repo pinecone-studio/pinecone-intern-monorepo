@@ -1,0 +1,26 @@
+{
+  "extends": ["plugin:@nx/react-typescript", "next", "next/core-web-vitals", "<%= parentDirs %>/.eslintrc.json"],
+  "ignorePatterns": ["!**/*", ".next/**/*", ".vercel/**/*"],
+  "overrides": [
+    {
+      "files": ["*.*"],
+      "rules": {
+        "@next/next/no-html-link-for-pages": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

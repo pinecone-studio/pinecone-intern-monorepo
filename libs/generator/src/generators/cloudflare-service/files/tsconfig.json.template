@@ -1,0 +1,43 @@
+{
+  "extends": "<%= parentDirs %>/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/components/ui/*": ["<%= parentDirs %>/libs/shadcn/src/lib/ui/*"],
+      "@pinecone-intern-monorepo/auth/server": ["<%= parentDirs %>/libs/auth/src/server.ts"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "module": "esnext",
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node", "@cloudflare/workers-types"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "next-env.d.ts",
+    "<%= parentDirs %>/<%= directory %>/.next/types/**/*.ts",
+    ".next/types/**/*.ts",
+    "<%= parentDirs %>/dist/<%= directory %>/.next/types/**/*.ts",
+    "<%= parentDirs %>/<%= directory %>/.next/types/**/*.ts",
+    "<%= parentDirs %>/dist/<%= directory %>/.next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}

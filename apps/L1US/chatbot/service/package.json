@@ -1,0 +1,11 @@
+{
+  "name": "chatbot-service",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "next start"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vercel": "^41.3.1"
+  }
+}

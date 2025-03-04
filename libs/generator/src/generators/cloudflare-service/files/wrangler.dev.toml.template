@@ -1,0 +1,10 @@
+name = "<%= name %>-dev"
+compatibility_date = "2024-08-12"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sample-worker-dev"
+database_id = "d24d1213-1d4d-4220-9ae0-6456911d69e6"

@@ -1,0 +1,32 @@
+{
+  "executors": {
+    "serve": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/serve/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/serve/schema.json"
+    },
+    "deploy": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/deploy/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/deploy/schema.json"
+    },
+    "build": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/wrangler-build/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/wrangler-build/schema.json"
+    },
+    "pages-deploy": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/pages-deploy/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/pages-deploy/schema.json"
+    },
+    "workers-preview": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/workers-preview/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/workers-preview/schema.json"
+    },
+    "create-toml": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/create-toml/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/create-toml/schema.json"
+    },
+    "migrate-d1": {
+      "implementation": "./src/executors/cloudflare-wrangler-deployment/migrate-d1/executor",
+      "schema": "./src/executors/cloudflare-wrangler-deployment/migrate-d1/schema.json"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@pinecone-intern-monorepo/workspace-plugin",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "dependencies": {
+    "@nx/devkit": "17.1.3"
+  }
+}

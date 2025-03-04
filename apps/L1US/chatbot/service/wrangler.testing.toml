@@ -1,0 +1,10 @@
+name = "chatbot-service-testing"
+compatibility_date = "2024-08-12"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chatbot-service-test"
+database_id = "15c4e1ae-81d6-4b20-9633-2abc41c947fe"
