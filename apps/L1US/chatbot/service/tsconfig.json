@@ -1,0 +1,43 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
+      "@pinecone-intern-monorepo/auth/server": ["../../../../libs/auth/src/server.ts"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "module": "esnext",
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node", "@cloudflare/workers-types"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "next-env.d.ts",
+    "../../../../apps/L1US/chatbot/service/.next/types/**/*.ts",
+    ".next/types/**/*.ts",
+    "../../../../dist/apps/L1US/chatbot/service/.next/types/**/*.ts",
+    "../../../../apps/L1US/chatbot/service/.next/types/**/*.ts",
+    "../../../../dist/apps/L1US/chatbot/service/.next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}

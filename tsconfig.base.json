@@ -16,12 +16,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@pinecone-intern-monorepo/cloudflare-wrangler": ["tools/workspace-plugin/src/executors/cloudflare-wrangler-deployment/src/index.ts"],
       "@pinecone-intern-monorepo/file-management": ["libs/file-management/src/index.ts"],
       "@pinecone-intern-monorepo/generator": ["libs/generator/src/index.ts"],
       "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"],
       "@pinecone-intern-monorepo/shad": ["libs/shad/src/index.ts"],
       "@pinecone-intern-monorepo/shad/server": ["libs/shad/src/server.ts"],
-      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"]
+      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"],
+      "@pinecone-intern-monorepo/workspace-plugin": ["tools/workspace-plugin/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
