@@ -13,6 +13,15 @@ export const typeDefs = gql`
     sampleQuery: String!
   }
 
+  type ResponseType {
+    input: String
+    output: String
+  }
+
+  type Query {
+    getResponse(prompt: String!): ResponseType
+  }
+
   type Mutation {
     sampleMutation: String!
   }
