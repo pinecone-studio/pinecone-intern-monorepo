@@ -175,3 +175,11 @@ query GetOneStory($userName: String!) {
     }
   }
 }
+mutation UpdateStoryView($input: StoryViewInput!) {
+  updateStoryView(input: $input) {
+    _id
+    ownerId
+    viewerId
+    seen
+  }
+}
