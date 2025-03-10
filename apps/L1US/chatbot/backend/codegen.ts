@@ -7,7 +7,7 @@ const config: CodegenConfig = {
     'apps/L1US/chatbot/backend/src/generated/index.ts': {
       plugins: ['typescript', 'typescript-resolvers'],
       config: {
-        contextType: '../types#Context',
+        contextType: 'Context',
         makeResolverTypeCallable: true,
         maybeValue: 'T',
       },
