@@ -1,3 +1,4 @@
+import { GraphQLResolveInfo } from 'graphql';
 import { User } from '../../../src/models';
 import { registerUser } from '../../../src/resolvers/mutations';
 import { generateToken } from '../../../src/utils';
@@ -25,14 +26,14 @@ describe('registerUser', () => {
   it('should throw an error if the user already exists', async () => {
     (User.findOne as jest.Mock).mockResolvedValue({ email: input.email });
 
-    await expect(registerUser({}, { input })).rejects.toThrow('User already exists with this email or username');
+    await expect(registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('User already exists with this email or username');
   });
 
   it('should create a new user and return user with token', async () => {
     (User.findOne as jest.Mock).mockResolvedValue(null);
     (User.create as jest.Mock).mockResolvedValue({ _id: '123', ...input, password: 'hashedPassword' });
 
-    const response = await registerUser({}, { input });
+    const response = await registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo);
 
     expect(User.create).toHaveBeenCalledWith({
       username: input.username,
@@ -49,6 +50,6 @@ describe('registerUser', () => {
   it('should throw an error if an unexpected error occurs', async () => {
     (User.findOne as jest.Mock).mockRejectedValue(new Error('Database error'));
 
-    await expect(registerUser({}, { input })).rejects.toThrow('Database error');
+    await expect(registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Database error');
   });
 });
