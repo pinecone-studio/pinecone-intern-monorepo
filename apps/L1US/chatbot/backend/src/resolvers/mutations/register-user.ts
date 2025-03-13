@@ -1,11 +1,11 @@
-import { RegisterUserInput } from '../../generated';
-import { User } from '../../models';
 import bcrypt from 'bcrypt';
-import { catchError, validateRegisterUserInput, generateToken } from '../../utils';
+import { MutationResolvers } from '../../generated';
+import { User } from '../../models';
+import { catchError, generateToken, validateRegisterUserInput } from '../../utils';
 
-export const registerUser = async (_: unknown, { input }: { input: RegisterUserInput }) => {
+export const registerUser: MutationResolvers['registerUser'] = async (_, { input }) => {
   const { email, password, username } = input;
- validateRegisterUserInput(email, password);
+  validateRegisterUserInput(email, password);
 
   try {
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });

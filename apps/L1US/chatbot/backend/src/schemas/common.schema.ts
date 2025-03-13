@@ -5,10 +5,6 @@ export const typeDefs = gql`
 
   scalar Date
 
-  enum Response {
-    Success
-  }
-
   type Query {
     sampleQuery: String!
   }
