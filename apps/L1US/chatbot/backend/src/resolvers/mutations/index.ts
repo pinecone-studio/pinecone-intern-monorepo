@@ -1,4 +1,4 @@
 export * from './sample-mutation';
-export * from './register-user';
+export * from './user';
 export * from './create-conversation';
-export * from './send-message'; 
+export * from './send-message';
