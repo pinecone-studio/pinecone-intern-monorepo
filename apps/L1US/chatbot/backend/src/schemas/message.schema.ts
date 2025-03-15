@@ -16,6 +16,10 @@ export const MessageTypeDefs = gql`
     query: String!
   }
 
+  type Query {
+    getMessages(conversationId: ID!): [Message]
+  }
+
   type Mutation {
     sendMessage(input: SendMessageInput!): Message!
   }
