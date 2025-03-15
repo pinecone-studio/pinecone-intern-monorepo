@@ -4,15 +4,15 @@ import { MessageModel } from '../../models';
 import { catchError } from '../../utils';
 
 export const sendMessage: MutationResolvers['sendMessage'] = async (_, { input }) => {
-  const { chatId, query } = input;
-  if (!mongoose.Types.ObjectId.isValid(chatId)) {
-    throw new Error('Invalid chatId format');
+  const { conversationId, query } = input;
+  if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+    throw new Error('Invalid conversationId format');
   }
   const response = `Echo: ${query}`;
-  
+
   try {
     const newMessage = await MessageModel.create({
-      chatId,
+      conversationId,
       query,
       response,
     });
