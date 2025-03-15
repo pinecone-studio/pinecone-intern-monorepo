@@ -1,9 +1,9 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { User } from '../../../src/models';
-import { registerUser } from '../../../src/resolvers/mutations';
-import { generateToken } from '../../../src/utils';
+import { User } from '../../../../src/models';
+import { registerUser } from '../../../../src/resolvers/mutations';
+import { generateToken } from '../../../../src/utils';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   User: {
     findOne: jest.fn(),
     create: jest.fn(),
@@ -14,7 +14,7 @@ jest.mock('bcrypt', () => ({
   hash: jest.fn().mockResolvedValue('hashedPassword'),
 }));
 
-jest.mock('../../../src/utils', () => ({
+jest.mock('../../../../src/utils', () => ({
   catchError: jest.fn((error) => error),
   validateRegisterUserInput: jest.fn(),
   generateToken: jest.fn().mockReturnValue('mockToken'),
