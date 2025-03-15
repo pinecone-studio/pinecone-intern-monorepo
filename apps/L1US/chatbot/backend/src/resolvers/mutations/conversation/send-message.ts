@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { MutationResolvers } from '../../generated';
-import { MessageModel } from '../../models';
-import { catchError } from '../../utils';
+import { MutationResolvers } from '../../../generated';
+import { MessageModel } from '../../../models';
+import { catchError } from '../../../utils';
 
 export const sendMessage: MutationResolvers['sendMessage'] = async (_, { input }) => {
   const { chatId, query } = input;
