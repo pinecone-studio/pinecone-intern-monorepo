@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { ConversationModel } from '../../../src/models';
-import { createConversation } from '../../../src/resolvers/mutations';
+import { ConversationModel } from '../../../../src/models';
+import { createConversation } from '../../../../src/resolvers/mutations';
 import { GraphQLResolveInfo } from 'graphql';
 
 const validUserId = new mongoose.Types.ObjectId().toHexString();
@@ -14,13 +14,13 @@ const mockConversation = {
   }),
 };
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   ConversationModel: {
     create: jest.fn(),
   },
 }));
 
-jest.mock('../../../src/utils/catch-error', () => ({
+jest.mock('../../../../src/utils/catch-error', () => ({
   catchError: jest.fn((error) => error),
 }));
 

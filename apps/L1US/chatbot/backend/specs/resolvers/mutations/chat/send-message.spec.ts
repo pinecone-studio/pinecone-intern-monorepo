@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { sendMessage } from '../../../src/resolvers/mutations';
-import { MessageModel } from '../../../src/models';
+import { sendMessage } from '../../../../src/resolvers/mutations';
+import { MessageModel } from '../../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
 
 const validChatId = new mongoose.Types.ObjectId().toHexString();
@@ -17,7 +17,7 @@ const mockMessage = {
   }),
 };
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   MessageModel: {
     create: jest.fn(),
   },
