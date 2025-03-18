@@ -3,8 +3,17 @@ import gql from 'graphql-tag';
 export const MessageTypeDefs = gql`
   scalar Date
 
+  type Conversation {
+    _id: ID!
+    userId: ID!
+    name: String
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
   type Message {
-    chatId: ID!
+    _id: ID!
+    conversationId: Conversation!
     query: String!
     response: String!
     createdAt: Date!
@@ -12,8 +21,12 @@ export const MessageTypeDefs = gql`
   }
 
   input SendMessageInput {
-    chatId: ID!
+    conversationId: ID!
     query: String!
+  }
+
+  type Query {
+    getMessages(conversationId: ID!): [Message]
   }
 
   type Mutation {
