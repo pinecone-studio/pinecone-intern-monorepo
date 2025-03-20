@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { MutationResolvers } from '../../generated';
-import { ConversationModel } from '../../models';
-import { catchError } from '../../utils/catch-error';
+import { MutationResolvers } from '../../../generated';
+import { ConversationModel } from '../../../models';
+import { catchError } from '../../../utils/catch-error';
 
 export const createConversation: MutationResolvers['createConversation'] = async (_, { input }) => {
   const { userId, name } = input;
