@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { getMessages } from '../../../src/resolvers/queries';
-import { MessageModel } from '../../../src/models';
+import { getMessages } from '../../../../src/resolvers/queries';
+import { MessageModel } from '../../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
 
 const validConversationId = new mongoose.Types.ObjectId().toHexString();
@@ -14,7 +14,7 @@ const mockMessage = {
   updatedAt: new Date(),
 };
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   MessageModel: {
     find: jest.fn(),
   },

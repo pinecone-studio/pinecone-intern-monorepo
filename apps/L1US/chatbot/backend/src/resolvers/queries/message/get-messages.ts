@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { Message, QueryResolvers } from '../../generated';
-import { catchError } from '../../utils';
-import { MessageModel } from '../../models';
+import { Message, QueryResolvers } from '../../../generated';
+import { catchError } from '../../../utils';
+import { MessageModel } from '../../../models';
 
 export const getMessages: QueryResolvers['getMessages'] = async (_, { conversationId }) => {
   if (!mongoose.Types.ObjectId.isValid(conversationId)) {
