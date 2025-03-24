@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
-import { getMessages } from '../../../../src/resolvers/queries';
+
 import { MessageModel } from '../../../../src/models';
 import { GraphQLResolveInfo } from 'graphql';
+import { getMessages } from '../../../../src/resolvers/queries';
 
 const validConversationId = new mongoose.Types.ObjectId().toHexString();
 const invalidConversationId = 'invalid-id';
