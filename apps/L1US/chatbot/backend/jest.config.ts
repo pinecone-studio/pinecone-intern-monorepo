@@ -8,5 +8,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../../coverage/apps/L1US/chatbot/backend',
-  collectCoverageFrom: ['src/resolvers/**/*.ts', '!src/**/*.schema.ts', '!src/utils/**', '!src/**/index.ts', '!src/handler.ts', '!src/schemas/**'],
+  collectCoverageFrom: ['src/resolvers/**/*.ts', '!src/**/*.schema.ts', 'src/utils/**', '!src/**/index.ts', '!src/handler.ts', '!src/schemas/**'],
 };
