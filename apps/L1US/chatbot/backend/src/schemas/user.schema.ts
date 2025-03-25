@@ -37,4 +37,8 @@ export const UserTypeDefs = gql`
     registerUser(input: RegisterUserInput!): RegisterUserResponse!
     loginUser(input: LoginInput!): LoginUserResponse!
   }
+
+  type Query {
+    getUser(userId: ID!): User!
+  }
 `;
