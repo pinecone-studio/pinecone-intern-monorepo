@@ -19,4 +19,5 @@ export * from './categorymutation/update-category';
 export * from './categorymutation/delete-category';
 export * from './foodmutation/delete-food-category';
 export * from './update-order-read';
+export * from './tables'
 
