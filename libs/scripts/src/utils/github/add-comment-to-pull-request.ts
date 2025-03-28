@@ -24,7 +24,7 @@ export const getExistingComments = async ({ context, pullRequestNumber, octokit 
   }
 };
 
-export const findExistingComment = (existingComments, key: number) => {
+export const findExistingComment = (existingComments, key: number | string) => {
   const keyString = key.toString();
   return existingComments.data.find((comment) => {
     const commentText = comment.body || '';
