@@ -1,15 +1,17 @@
-import { MutationResolvers } from '../../../generated';
-import { User } from '../../../models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
+import { UserModel } from '../../../models';
 import { catchError, generateToken } from '../../../utils';
+import { MutationResolvers, User } from '../../../generated';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_, { input }) => {
   const { email, password } = input;
+
   try {
-    const user = await User.findOne({ email });
+    const user = await UserModel.findOne<User>({ email });
     if (!user) {
       throw new Error('User not found');
     }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw new Error('Incorrect password!');

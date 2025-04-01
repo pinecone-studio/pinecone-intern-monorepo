@@ -1,16 +1,16 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { loginUser } from '../../../../src/resolvers/mutations';
-import { User } from '../../../../src/models';
-import bcrypt from 'bcrypt';
-import { generateToken } from '../../../../src/utils';
+import { UserModel } from '../../../../src/models';
+import bcrypt from 'bcryptjs';
+import { catchError, generateToken } from '../../../../src/utils';
 
 jest.mock('../../../../src/models', () => ({
-  User: {
+  UserModel: {
     findOne: jest.fn(),
   },
 }));
 
-jest.mock('bcrypt', () => ({
+jest.mock('bcryptjs', () => ({
   compare: jest.fn(),
 }));
 
@@ -23,34 +23,54 @@ describe('loginUser', () => {
   const input = { email: 'test@example.com', password: 'password123' };
   const mockUser = { _id: '123', email: input.email, password: 'hashedPassword' };
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should throw an error if the user is not found', async () => {
-    (User.findOne as jest.Mock).mockResolvedValue(null);
+    (UserModel.findOne as jest.Mock).mockResolvedValue(null);
 
     await expect(loginUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('User not found');
   });
 
   it('should throw an error if the password is incorrect', async () => {
-    (User.findOne as jest.Mock).mockResolvedValue(mockUser);
+    (UserModel.findOne as jest.Mock).mockResolvedValue(mockUser);
     (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
     await expect(loginUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Incorrect password!');
   });
 
   it('should return the user and token if login is successful', async () => {
-    (User.findOne as jest.Mock).mockResolvedValue(mockUser);
+    (UserModel.findOne as jest.Mock).mockResolvedValue(mockUser);
     (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+    (generateToken as jest.Mock).mockReturnValue('mockToken');
 
     const response = await loginUser!({}, { input }, {} as any, {} as GraphQLResolveInfo);
 
-    expect(User.findOne).toHaveBeenCalledWith({ email: input.email });
+    expect(UserModel.findOne).toHaveBeenCalledWith({ email: input.email });
     expect(bcrypt.compare).toHaveBeenCalledWith(input.password, mockUser.password);
     expect(generateToken).toHaveBeenCalledWith(mockUser._id);
     expect(response).toEqual({ user: mockUser, sessionToken: 'mockToken' });
   });
 
-  it('should throw an error if an unexpected error occurs', async () => {
-    (User.findOne as jest.Mock).mockRejectedValue(new Error('Database error'));
+  it('should verify the generated session token is returned', async () => {
+    (UserModel.findOne as jest.Mock).mockResolvedValue(mockUser);
+    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+    (generateToken as jest.Mock).mockReturnValue('mockToken');
+
+    const response = await loginUser!({}, { input }, {} as any, {} as GraphQLResolveInfo);
+
+    expect(response.sessionToken).toBe('mockToken');
+  });
+
+  it('should call catchError and throw the error if an unexpected error occurs', async () => {
+    const error = new Error('Database error');
+    (UserModel.findOne as jest.Mock).mockRejectedValue(error);
+    (catchError as unknown as jest.Mock).mockImplementation((err) => {
+      throw err;
+    });
 
     await expect(loginUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Database error');
+    expect(catchError).toHaveBeenCalledWith(error);
   });
 });

@@ -1,20 +1,21 @@
-import bcrypt from 'bcrypt';
-import { MutationResolvers } from '../../../generated';
-import { User } from '../../../models';
+import bcrypt from 'bcryptjs';
+import { UserModel } from '../../../models';
 import { catchError, generateToken, validateRegisterUserInput } from '../../../utils';
+import { MutationResolvers, User } from '../../../generated';
 
 export const registerUser: MutationResolvers['registerUser'] = async (_, { input }) => {
   const { email, password, username } = input;
+
   validateRegisterUserInput(email, password);
 
   try {
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await UserModel.findOne<User>({ $or: [{ email }, { username }] });
     if (existingUser) {
-      throw new Error('User already exists with this email or username');
+      throw new Error('User already exists with this email or username!');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, email, password: hashedPassword });
+    const user = await UserModel.create({ username, email, password: hashedPassword });
 
     const token = generateToken(user._id);
 

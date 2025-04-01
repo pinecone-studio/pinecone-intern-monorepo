@@ -1,15 +1,15 @@
-import { QueryResolvers } from '../../../generated';
-import { User } from '../../../models';
-import { catchError } from '../../../utils';
 import mongoose from 'mongoose';
+import { UserModel } from '../../../models';
+import { catchError } from '../../../utils';
+import { QueryResolvers, User } from '../../../generated';
 
 export const getUser: QueryResolvers['getUser'] = async (_, { userId }) => {
-  try {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      throw new Error('Invalid user ID');
-    }
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error('Invalid user ID');
+  }
 
-    const user = await User.findById(userId);
+  try {
+    const user = await UserModel.findById<User>(userId);
     if (!user) {
       throw new Error('User not found');
     }

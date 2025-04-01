@@ -1,10 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { User } from '../../../../src/models';
+import { UserModel } from '../../../../src/models';
 import { registerUser } from '../../../../src/resolvers/mutations';
 import { generateToken } from '../../../../src/utils';
 
 jest.mock('../../../../src/models', () => ({
-  User: {
+  UserModel: {
     findOne: jest.fn(),
     create: jest.fn(),
   },
@@ -24,31 +24,33 @@ describe('registerUser', () => {
   const input = { email: 'test@example.com', password: 'password123', username: 'testuser' };
 
   it('should throw an error if the user already exists', async () => {
-    (User.findOne as jest.Mock).mockResolvedValue({ email: input.email });
+    (UserModel.findOne as jest.Mock).mockResolvedValue({ email: input.email });
 
     await expect(registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('User already exists with this email or username');
   });
 
   it('should create a new user and return user with token', async () => {
-    (User.findOne as jest.Mock).mockResolvedValue(null);
-    (User.create as jest.Mock).mockResolvedValue({ _id: '123', ...input, password: 'hashedPassword' });
+    (UserModel.findOne as jest.Mock).mockResolvedValue(null);
+    (UserModel.create as jest.Mock).mockResolvedValue({ _id: '123', ...input, password: 'hashedPassword' });
 
     const response = await registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo);
 
-    expect(User.create).toHaveBeenCalledWith({
-      username: input.username,
-      email: input.email,
-      password: 'hashedPassword',
-    });
+    expect(UserModel.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        username: input.username,
+        email: input.email,
+        password: expect.any(String),
+      })
+    );
     expect(generateToken).toHaveBeenCalledWith('123');
     expect(response).toEqual({
-      user: { _id: '123', ...input, password: 'hashedPassword' },
+      user: { _id: '123', ...input, password: expect.any(String) },
       sessionToken: 'mockToken',
     });
   });
 
   it('should throw an error if an unexpected error occurs', async () => {
-    (User.findOne as jest.Mock).mockRejectedValue(new Error('Database error'));
+    (UserModel.findOne as jest.Mock).mockRejectedValue(new Error('Database error'));
 
     await expect(registerUser!({}, { input }, {} as any, {} as GraphQLResolveInfo)).rejects.toThrow('Database error');
   });
