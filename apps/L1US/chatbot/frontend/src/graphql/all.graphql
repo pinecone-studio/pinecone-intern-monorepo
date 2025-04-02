@@ -5,3 +5,16 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+mutation RegisterUser($input: RegisterUserInput!) {
+  registerUser(input: $input) {
+    user {
+      _id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+    sessionToken
+  }
+}
