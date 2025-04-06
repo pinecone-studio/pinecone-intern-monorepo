@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { AuthProvider } from '@/components/providers/AuthProvider';
+import { ThemeProvider } from 'next-themes';
 
 export const metadata = {
   title: 'Custom AI Chat',
@@ -14,7 +15,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body>
         <ApolloWrapper>
           <AuthProvider>
-            {children}
+            <ThemeProvider attribute="class" defaultTheme="system">
+              {children}
+            </ThemeProvider>
           </AuthProvider>
         </ApolloWrapper>
       </body>
