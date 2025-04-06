@@ -64,6 +64,46 @@ const mockCodeCoverage = {
   linesCoverage: '85',
 };
 
+describe('getReportFileHtml', () => {
+  it('should combine html with base css', () => {
+    const mock = `<table class="coverage-summary">
+    <thead>
+    <tr>
+      <th data-col="file" data-fmt="html" data-html="true" class="file">File</th>
+      <th data-col="pic" data-type="number" data-fmt="html" data-html="true" class="pic"></th>
+      <th data-col="statements" data-type="number" data-fmt="pct" class="pct">Statements</th>
+      <th data-col="statements_raw" data-type="number" data-fmt="html" class="abs"></th>
+      <th data-col="branches" data-type="number" data-fmt="pct" class="pct">Branches</th>
+      <th data-col="branches_raw" data-type="number" data-fmt="html" class="abs"></th>
+      <th data-col="functions" data-type="number" data-fmt="pct" class="pct">Functions</th>
+      <th data-col="functions_raw" data-type="number" data-fmt="html" class="abs"></th>
+      <th data-col="lines" data-type="number" data-fmt="pct" class="pct">Lines</th>
+      <th data-col="lines_raw" data-type="number" data-fmt="html" class="abs"></th>
+    </tr>
+    </thead>
+    <tbody><tr>
+            <td class="file empty" data-value="app"><a href="app/index.html">app</a></td>
+            <td data-value="0" class="pic empty">
+            <div class="chart"><div class="cover-fill" style="width: 0%"></div><div class="cover-empty" style="width: 100%"></div></div>
+            </td>
+            <td data-value="0" class="pct empty">0%</td>
+            <td data-value="0" class="abs empty">0/0</td>
+            <td data-value="0" class="pct empty">0%</td>
+            <td data-value="0" class="abs empty">0/0</td>
+            <td data-value="0" class="pct empty">0%</td>
+            <td data-value="0" class="abs empty">0/0</td>
+            <td data-value="0" class="pct empty">0%</td>
+            <td data-value="0" class="abs empty">0/0</td>
+            </tr>
+    </tbody>
+  </table>`;
+
+    const result = cypressCodeCoverageUtils.getReportFileHtml('', '');
+
+    expect(result).toContain(mock);
+  });
+});
+
 describe('parseCoverageReport', () => {
   beforeEach(() => {
     jest.clearAllMocks();
