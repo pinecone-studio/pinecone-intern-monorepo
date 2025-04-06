@@ -5,3 +5,17 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+
+mutation LoginUser($input: LoginInput!) {
+  loginUser(input: $input) {
+    user {
+      _id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+    sessionToken
+  }
+}
+
