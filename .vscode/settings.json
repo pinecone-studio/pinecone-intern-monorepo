@@ -1,0 +1,6 @@
+{
+  "eslint.validate": ["json"],
+  "files.watcherExclude": {
+    "**/target": true
+  }
+}

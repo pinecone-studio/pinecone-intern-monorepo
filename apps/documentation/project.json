@@ -1,0 +1,123 @@
+{
+  "name": "documentation",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/documentation",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/documentation"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/documentation"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "documentation:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "documentation:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "documentation:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "documentation:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/documentation/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/documentation/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true
+      }
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "local": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.local graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "development": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.development graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "preview": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.preview graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        },
+        "production": {
+          "commands": ["npx env-cmd -f apps/documentation/.env.production graphql-codegen --config ./apps/documentation/graphql-codegen.yml"]
+        }
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/documentation", "rm -rf .vercel"]
+      }
+    },
+    "get-secrets": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "groups": ["cms-dashboard"],
+          "env": "prod"
+        }
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/documentation/.env | xargs)"],
+        "parallel": false
+      }
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LGvhEMiSYEfIIwN9FKaox02Q1od0 -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_0ASDilhqwPl5fll9OnzqDM30 -v VERCEL_PROJECT_ID=prj_LGvhEMiSYEfIIwN9FKaox02Q1od0 -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "export-env"
+        }
+      ]
+    }
+  },
+  "tags": []
+}

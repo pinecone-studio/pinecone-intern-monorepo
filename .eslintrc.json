@@ -1,0 +1,189 @@
+{
+  "root": true,
+  "ignorePatterns": ["!**/*", ".next/**/*"],
+
+  "plugins": ["@nx", "eslint-plugin-unicorn", "no-secrets", "promise", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["*.jsx", "*.tsx"],
+      "rules": {
+        "unicorn/prefer-module": "off",
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "pascalCase"
+          }
+        ],
+        "react/function-component-definition": [
+          "error",
+          {
+            "namedComponents": "arrow-function",
+            "unnamedComponents": "arrow-function"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.js",
+        "*.ts",
+        "**/pages/**/*.tsx",
+        "**/pages/**/*.jsx",
+        "**/app/**/page.tsx",
+        "**/app/**/layout.tsx",
+        "**/app/**/template.tsx",
+        "**/app/**/loading.tsx",
+        "**/app/**/error.tsx",
+        "**/app/**/global-error.tsx",
+        "**/app/**/not-found.tsx",
+        "mdx-components.tsx"
+      ],
+      "rules": {
+        "unicorn/prefer-module": "off",
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["use[A-Z]*.js", "use[A-Z]*.ts"],
+      "rules": {
+        "unicorn/prefer-module": "off",
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "camelCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.native.tsx"],
+      "rules": {
+        "unicorn/filename-case": [
+          "off",
+          {
+            "case": "pascalCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.cy.ts", "*.cy.tsx", "*.spec.ts", "*.spec.tsx"],
+      "rules": {
+        "unicorn/filename-case": [
+          "off",
+          {
+            "case": "kebabCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ],
+        "camelcase": [
+          "error",
+          {
+            "properties": "always"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.tsx"],
+      "rules": {
+        "complexity": ["error", { "max": 5 }]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "complexity": ["error", { "max": 4 }]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "plugins": ["spellcheck"],
+      "rules": {
+        "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "argsIgnorePattern": "^_", "ignoreRestSiblings": true }],
+        "no-magic-numbers": [
+          "off",
+          {
+            "ignore": [],
+            "ignoreArrayIndexes": true,
+            "enforceConst": true,
+            "detectObjects": false
+          }
+        ],
+        "no-secrets/no-secrets": "error",
+        "max-lines": ["error", { "max": 160 }],
+        "max-nested-callbacks": ["error", 4],
+        "max-depth": ["error", 4],
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:util", "type:ui"]
+              },
+              {
+                "sourceTag": "type:feature",
+                "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:util", "type:ui"]
+              },
+              {
+                "sourceTag": "plugin:next",
+                "onlyDependOnLibsWithTags": ["plugin:next", "plugin:react", "plugin:node", "plugin:js"]
+              },
+              {
+                "sourceTag": "plugin:react",
+                "onlyDependOnLibsWithTags": ["plugin:react", "plugin:js"]
+              },
+              {
+                "sourceTag": "plugin:express",
+                "onlyDependOnLibsWithTags": ["plugin:express", "plugin:js"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }
+  ]
+}

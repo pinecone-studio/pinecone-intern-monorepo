@@ -1,0 +1,17 @@
+node_modules
+**/generated.ts
+**/generated/index.ts
+# Ignore build artifacts
+build/
+dist/
+out/
+temp/
+tmp/
+.next/
+
+# Ignore coverage reports
+coverage/
+coverage-report/
+**/cypress/results/
+.cy/
+

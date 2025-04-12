@@ -1,0 +1,3 @@
+type Context = {
+  req: NextRequest;
+};

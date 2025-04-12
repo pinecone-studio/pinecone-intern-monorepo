@@ -1,0 +1,112 @@
+name: CD
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  actions: read
+
+jobs:
+  deploy-dev:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: yarn install
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Vercel CLI
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: yarn global add vercel
+      - name: setup canvas
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: npm rebuild canvas
+      - name: Get NX BASE and NX HEAD
+        uses: nrwl/nx-set-shas@v4
+      - name: Export NX BASE AND HEAD
+        run: |
+          export NX_BASE=${{ env.NX_BASE }}
+          export NX_HEAD=${{ env.NX_HEAD }}
+          export VERCEL_TOKEN=${{ env.VERCEL_TOKEN }}
+          export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
+          bash ./tools/scripts/export-action-env.sh
+      - name: Deploy Affected Apps to Development
+        run: yarn nx deploy-dev-action scripts
+
+  deploy-testing:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: yarn install
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Vercel CLI
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: yarn global add vercel
+      - name: setup canvas
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: npm rebuild canvas
+      - name: Get NX BASE and NX HEAD
+        uses: nrwl/nx-set-shas@v4
+      - name: Export NX BASE AND HEAD
+        run: |
+          export NX_BASE=${{ env.NX_BASE }}
+          export NX_HEAD=${{ env.NX_HEAD }}
+          export VERCEL_TOKEN=${{ env.VERCEL_TOKEN }}
+          export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
+          bash ./tools/scripts/export-action-env.sh
+      - name: Deploy Affected Apps to Development
+        run: yarn nx deploy-testing-action scripts
+
+  deploy-prod:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: yarn install
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+      - name: Install Vercel CLI
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: yarn global add vercel
+      - name: setup canvas
+        if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
+        run: npm rebuild canvas
+      - name: Get NX BASE and NX HEAD
+        uses: nrwl/nx-set-shas@v4
+      - name: Export NX BASE AND HEAD
+        run: |
+          export NX_BASE=${{ env.NX_BASE }}
+          export NX_HEAD=${{ env.NX_HEAD }}
+          export VERCEL_TOKEN=${{ env.VERCEL_TOKEN }}
+          export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
+          bash ./tools/scripts/export-action-env.sh
+      - name: Deploy Affected Apps to Development
+        run: yarn nx deploy-prod-action scripts
