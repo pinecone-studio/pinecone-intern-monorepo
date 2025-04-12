@@ -1,6 +1,0 @@
-mutation RequestOTP($input: RequestOtpInput!) {
-  requestOTP(input: $input) {
-    success
-    email
-  }
-}

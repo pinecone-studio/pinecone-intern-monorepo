@@ -1,9 +1,0 @@
-mutation DeletePost($id: ID!) {
-  deletePost(_id: $id) {
-    _id
-    title
-    status
-    updatedAt
-    createdAt
-  }
-}

@@ -1,6 +1,0 @@
-mutation ForgetRequestOTP($input: ForgetRequestOtpInput!) {
-  forgetRequestOTP(input: $input) {
-    success
-    email
-  }
-}

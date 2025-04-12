@@ -1,5 +1,0 @@
-mutation ForgetVerifyOTP($input: ForgetVerifyOtpInput!) {
-  forgetVerifyOTP(input: $input) {
-    success
-  }
-}

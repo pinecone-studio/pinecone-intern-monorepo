@@ -1,8 +1,0 @@
-mutation RemoveRequest($followerId: String) {
-  removeRequest(followerId: $followerId) {
-    _id
-    from
-    to
-    status
-  }
-}
