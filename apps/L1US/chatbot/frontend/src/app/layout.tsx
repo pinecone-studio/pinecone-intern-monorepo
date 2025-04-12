@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { AuthProvider } from '@/components/providers/AuthProvider';
+import { AuthProviderSignIn } from '@/components/providers/AuthProviderSignIn';
 
 export const metadata = {
   title: 'Custom AI Chat',
@@ -13,9 +14,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <ApolloWrapper>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <AuthProviderSignIn>{children}</AuthProviderSignIn>
         </ApolloWrapper>
       </body>
     </html>

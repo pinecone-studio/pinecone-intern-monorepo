@@ -18,3 +18,16 @@ mutation RegisterUser($input: RegisterUserInput!) {
     sessionToken
   }
 }
+
+mutation LoginUser($input: LoginInput!) {
+  loginUser(input: $input) {
+    user {
+      _id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+    sessionToken
+  }
+}
