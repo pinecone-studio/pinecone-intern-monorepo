@@ -1,6 +1,1 @@
-import { NextRequest } from "next/server";
-// ene deer contextiin type aa bicheerei
-
-type Context = {
-  req: NextRequest
-};
+export type Context = unknown;
