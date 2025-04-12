@@ -22,6 +22,7 @@ const HomePage = () => {
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
             <Button onClick={() => router.push('/sign-in')}>Sign In</Button>
             <Button onClick={() => router.push('/sign-up')}>Sign Up</Button>
+            <Button onClick={() => router.push('/chat')}>Chat Session</Button>
           </div>
         </div>
       )}

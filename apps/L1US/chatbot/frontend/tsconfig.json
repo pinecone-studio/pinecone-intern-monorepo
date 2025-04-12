@@ -21,7 +21,7 @@
       "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
       "@/*": ["src/*"]
     },
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "@testing-library/jest-dom"]
   },
   "include": [
     "**/*.ts",

@@ -10,7 +10,9 @@
     "e2e": "nx e2e",
     "prepare": "husky install",
     "pre-commit": "npx nx pre-commit scripts",
-    "commit": "cz"
+    "commit": "cz",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "shadcn": "shadcn-ui"
   },
   "private": true,
   "dependencies": {
