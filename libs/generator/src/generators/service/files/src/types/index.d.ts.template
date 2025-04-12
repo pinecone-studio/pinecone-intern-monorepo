@@ -1,1 +1,2 @@
-export type Context = unknown;
+/* eslint-disable @typescript-eslint/ban-types */
+export type Context = {};
