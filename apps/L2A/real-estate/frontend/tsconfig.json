@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
     "allowJs": true,
@@ -18,6 +18,14 @@
     ],
     "types": ["jest", "node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "../../../apps/real-estate/frontend/.next/types/**/*.ts", "../../../dist/apps/real-estate/frontend/.next/types/**/*.ts", "next-env.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../../../apps/L2A/real-estate/frontend/.next/types/**/*.ts",
+    "../../../../dist/apps/L2A/real-estate/frontend/.next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }
