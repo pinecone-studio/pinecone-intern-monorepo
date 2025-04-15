@@ -11,7 +11,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/L2A/real-estate/frontend/pages"]
+        "@next/next/no-html-link-for-pages": ["error", "/apps/L2A/real-estate/backend/pages"]
       }
     },
     {
@@ -27,10 +27,6 @@
       "env": {
         "jest": true
       }
-    },
-    {
-      "files": ["*.cy.{ts,js,tsx,jsx}", "cypress/**/*.{ts,js,tsx,jsx}"],
-      "rules": {}
     }
   ]
 }

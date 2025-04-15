@@ -10,7 +10,8 @@
     "e2e": "nx e2e",
     "prepare": "husky install",
     "pre-commit": "npx nx pre-commit scripts",
-    "commit": "cz"
+    "commit": "cz",
+    "codegen": "graphql-codegen --config ./apps/L2A/real-estate/backend/codegen.ts"
   },
   "private": true,
   "dependencies": {
@@ -163,7 +164,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "3.12.30",
     "@graphql-codegen/add": "4.0.1",
-    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/cli": "^5.0.5",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-react-apollo": "4.1.0",

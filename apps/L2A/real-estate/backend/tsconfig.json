@@ -1,7 +1,6 @@
 {
   "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
@@ -17,20 +16,25 @@
         "name": "next"
       }
     ],
-    "paths": {
-      "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
-      "@/*": ["src/*"]
-    },
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "../../../../apps/L2A/real-estate/frontend/.next/types/**/*.ts",
-    "../../../../dist/apps/L2A/real-estate/frontend/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "../../../../..//apps/L2A/real-estate/backend/.next/types/**/*.ts",
+    "../../../../../dist/a/apps/L2A/real-estate/backend/.next/types/**/*.ts",
+    "next-env.d.ts",
+    "../../../../dist/apps/L2A/real-estate/backend/.next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
