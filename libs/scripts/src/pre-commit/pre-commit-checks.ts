@@ -5,7 +5,7 @@ import { getAffectedApps } from '../utils';
 export const runCommandOnAffectedProject = (projectName: string, command: string): void => {
   console.log(blue(`\n > Running ${command} for ${projectName} ... \n`));
   const args = ['nx', command, projectName];
-  const output = spawnSync('npx', args, { stdio: 'inherit' });
+  const output = spawnSync('npx', args, { stdio: 'inherit', shell: true });
 
   if (output.status === 0) {
     console.log(green(`\n > Successfully ${command} the project ${projectName} \n`));
