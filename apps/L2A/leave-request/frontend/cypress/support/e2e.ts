@@ -16,7 +16,5 @@
 // Import commands.ts using ES2015 syntax:
 import '@cypress/code-coverage/support';
 import 'cypress-wait-until';
-// cypress/support/commands.ts
-// You can define custom Cypress commands here
-export {}
+import "./commands"
 
