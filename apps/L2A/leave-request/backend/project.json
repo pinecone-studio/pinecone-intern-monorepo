@@ -97,7 +97,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L2A/leave-request/backend/.env | xargs)"],
+        "commands": ["dotenv -e apps/L2A/leave-request/frontend/.env -- echo 'env loaded'"],
         "parallel": false
       }
     },
@@ -111,7 +111,7 @@
     "clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf dist/apps/L2A/leave-request/backend", "rm -rf .vercel"]
+        "commands": ["rimraf dist/apps/L2A/leave-request/backend .vercel"]
       }
     },
     "preview": {
