@@ -118,9 +118,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID= -v VERCEL_PROJECT_ID=prj_iuodqpA6cwEWzgKkfXNytObe0roU -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
-          "npx env-cmd -f apps/L2A/leave-request/backend/.env vercel build --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID= -v VERCEL_PROJECT_ID=prj_iuodqpA6cwEWzgKkfXNytObe0roU -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_hm4xpLsWIgJNWw9mWekgo10M -v VERCEL_PROJECT_ID=prj_iuodqpA6cwEWzgKkfXNytObe0roU -- vercel pull --yes --environment=preview --token=tvbgzdSJpC58tEVkZEwf0PCW",
+          "npx env-cmd -f apps/L2A/leave-request/backend/.env vercel build --token=tvbgzdSJpC58tEVkZEwf0PCW",
+          "npx dotenv -v VERCEL_ORG_ID=team_hm4xpLsWIgJNWw9mWekgo10M -v VERCEL_PROJECT_ID=prj_iuodqpA6cwEWzgKkfXNytObe0roU -- vercel --archive=tgz --prebuilt --token=tvbgzdSJpC58tEVkZEwf0PCW"
         ],
         "parallel": false
       },
