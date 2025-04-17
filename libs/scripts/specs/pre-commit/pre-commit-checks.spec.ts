@@ -27,7 +27,7 @@ describe('runCommandOnAffectedProject', () => {
 
     expect(consoleLogSpy).toHaveBeenCalledWith(blue(`\n > Running ${command} for ${projectName} ... \n`));
     expect(consoleLogSpy).toHaveBeenCalledWith(green(`\n > Successfully ${command} the project ${projectName} \n`));
-    expect(spawnSync).toHaveBeenCalledWith('npx', ['nx', command, projectName], { stdio: 'inherit' });
+    expect(spawnSync).toHaveBeenCalledWith('npx', ['nx', command, projectName], { stdio: 'inherit',shell:true, });
   });
 
   it('2. Should throw an error if the command fails', () => {
@@ -41,7 +41,7 @@ describe('runCommandOnAffectedProject', () => {
 
     expect(consoleLogSpy).toHaveBeenCalledWith(blue(`\n > Running ${command} for ${projectName} ... \n`));
     expect(consoleLogSpy).not.toHaveBeenCalledWith(green(`\n > Successfully ${command} the project ${projectName} \n`));
-    expect(spawnSync).toHaveBeenCalledWith('npx', ['nx', command, projectName], { stdio: 'inherit' });
+    expect(spawnSync).toHaveBeenCalledWith('npx', ['nx', command, projectName], { stdio: 'inherit',shell:true, });
   });
 });
 
