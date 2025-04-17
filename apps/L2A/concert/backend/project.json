@@ -118,6 +118,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
+          "ls -la apps/L2A/concert/backend || echo 'backend folder missing'",
+          "cat apps/L2A/concert/backend/.env || echo '.env file missing or empty'",
           "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel pull --yes --environment=preview --token=$VERCEL_TOKEN",
           "npx env-cmd -f apps/L2A/concert/backend/.env vercel build --token=$VERCEL_TOKEN",
           "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel --archive=tgz --prebuilt --token=$VERCEL_TOKEN"
