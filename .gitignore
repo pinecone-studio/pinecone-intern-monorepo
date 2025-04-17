@@ -80,3 +80,4 @@ generated.tsx
 .cy
 **/cypress/downloads
 yarn.lock
+bun.lockb
