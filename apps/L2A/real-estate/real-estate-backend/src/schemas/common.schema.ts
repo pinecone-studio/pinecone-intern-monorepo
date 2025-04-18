@@ -77,15 +77,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    sampleMutation(
-      email: String!
-      password:String!
-      isAdmin: Boolean!
-      phone: Int!
-      createdAt: String
-      updatedAt: String
-    ) : Users
-
+    sampleMutation: String!
     
   }
 `;
