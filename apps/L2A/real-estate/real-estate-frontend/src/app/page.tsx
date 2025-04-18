@@ -1,7 +1,7 @@
 'use client';
 
 const Page = () => {
-  return <div>Home Pagee</div>;
+  return <div>Home Pages</div>;
 };
 
 export default Page;
