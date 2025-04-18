@@ -1,1 +1,1 @@
-export const sampleQuery = () => 'Hello sample query';
+export const sampleQuery = () => 'Hello sample from query';
