@@ -1,0 +1,197 @@
+{
+  "name": "concert-backend",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/L2A/concert/backend",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/L2A/concert/backend"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "dist/apps/L2A/concert/backend"
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "concert-backend:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "concert-backend:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "concert-backend:build:production",
+          "dev": false
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/L2A/concert/backend/jest.config.ts",
+        "passWithNoTests": true,
+        "codeCoverage": true
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
+    "get-secrets:testing": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "testing",
+      "configurations": {
+        "testing": {
+          "groups": ["concert-backend"],
+          "env": "test"
+        }
+      }
+    },
+    "get-secrets:prod": {
+      "executor": "@pinecone-intern-monorepo/secrets:get",
+      "defaultConfiguration": "prod",
+      "configurations": {
+        "prod": {
+          "groups": ["concert-backend"],
+          "env": "prod"
+        }
+      }
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./apps/L2A/concert/backend/codegen.ts"]
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "concert-backend:build:production"
+      }
+    },
+    "export-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["export $(cat apps/L2A/concert/backend/.env | xargs)"],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/L2A/concert/backend/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist/apps/L2A/concert/backend", "rm -rf .vercel"]
+      }
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel pull --yes --environment=preview --token=dop38xpGKjYSlE3GLRAh6UAx",
+          "npx env-cmd -f apps/L2A/concert/backend/.env vercel build --token=dop38xpGKjYSlE3GLRAh6UAx",
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel --archive=tgz --prebuilt --token=dop38xpGKjYSlE3GLRAh6UAx"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
+    "deploy-testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    },
+    "deploy-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "vercel build --prod --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:prod"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
+    }
+  },
+  "tags": []
+}
