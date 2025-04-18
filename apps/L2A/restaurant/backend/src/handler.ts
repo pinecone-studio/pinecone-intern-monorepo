@@ -12,6 +12,7 @@ const server = new ApolloServer<Context>({
   resolvers,
   typeDefs,
   introspection: true,
+  csrfPrevention: false,
 });
 
 export const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
