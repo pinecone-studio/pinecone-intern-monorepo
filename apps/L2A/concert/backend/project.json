@@ -144,9 +144,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
           "vercel build --prod --token=$VERCEL_TOKEN",
-          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_chAE9OqboAWNAJOGvjhkqFXKwBLG -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
+          "npx dotenv -v VERCEL_ORG_ID=team_9hAnRZXLrMBnY0Pspe5kw7rL -v VERCEL_PROJECT_ID=prj_MBcO44wfLGMZDO9xbeXoUCN74D8l -- vercel --prebuilt --prod --token=$VERCEL_TOKEN"
         ],
         "parallel": false
       },
