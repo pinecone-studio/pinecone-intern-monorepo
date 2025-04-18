@@ -108,7 +108,7 @@ export const typeDefs = gql`
 
     cancelBooking(bookingId: ID!): Booking!
 
-    registerUser(email: String!, firstName: String!, lastName: String!, password: String!): User!
+    registerUser(email: String!, password: String!): User!
 
     sampleMutation(text: String): String!
   }
