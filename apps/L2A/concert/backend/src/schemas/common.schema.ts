@@ -65,7 +65,7 @@ export const typeDefs = gql`
     email: String!
     password: String!
     isAdmin: Boolean!
-    phone: Int!
+    phone: Int
     bookings: [Booking]!
   }
 
