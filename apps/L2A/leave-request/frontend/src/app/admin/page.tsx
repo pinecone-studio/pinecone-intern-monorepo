@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { RegisterNewEmployeeButton } from './_components/button';
+import { RegisterNewEmployeeModal } from './_components/Modal'; 
+import { RegisterNewEmployeeButton } from './_components/Button';
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
