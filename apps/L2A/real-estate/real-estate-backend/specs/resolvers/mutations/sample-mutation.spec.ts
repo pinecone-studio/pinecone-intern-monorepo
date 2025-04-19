@@ -1,5 +1,4 @@
-import { sampleMutation } from "../../../src/resolvers/mutations/sample-mutation";
-
+import { sampleMutation } from '../../../src/resolvers/mutations';
 
 describe('sampleMutation', () => {
   it('should return "Hello sample mutation"', () => {
