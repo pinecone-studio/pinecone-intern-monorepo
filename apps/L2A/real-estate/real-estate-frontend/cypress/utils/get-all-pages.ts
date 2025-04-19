@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const root = './apps/L2A/real-estate/real-estate-frontend/src/app';
+const root = './apps/L2A/leave-request/frontend/src/app';
 
 const searchDepth = (folderPath: string) => {
   let pages: string[] = [];
@@ -10,7 +10,7 @@ const searchDepth = (folderPath: string) => {
   const folders = rootFolders.filter((folder) => !folder.includes('.'));
 
   if (rootFolders.includes('page.tsx')) {
-    pages.push(`/apps/L2A/real-estate/real-estate-frontend${folderPath}`);
+    pages.push(`//${folderPath}`);
   }
 
   folders.forEach((folder) => {
@@ -30,7 +30,7 @@ export const getAllPages = () => {
       .join('/')
   );
 
-  fs.writeFileSync(path.join(...'apps/L2A/real-estate/real-estate-frontend'.split('/'), 'cypress', 'utils', 'all-pages.json'), JSON.stringify(pages));
+  fs.writeFileSync(path.join(...'apps/L2A/leave-request/frontend'.split('/'), 'cypress', 'utils', 'all-pages.json'), JSON.stringify(pages));
 
   return;
 };
