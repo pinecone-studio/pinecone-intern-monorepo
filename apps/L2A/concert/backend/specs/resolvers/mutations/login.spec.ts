@@ -1,18 +1,23 @@
 import { GraphQLResolveInfo } from 'graphql';
 import bcrypt from 'bcrypt';
 import { loginUser } from '../../../src/resolvers/mutations/login';
+
 jest.mock('../../../src/models', () => ({
   UserModel: {
     findOne: jest.fn().mockResolvedValue({ _id: '1', password: 'hashedPassword', email: 'test@gmail.com' }),
   },
 }));
+
 jest.mock('bcrypt', () => ({
   compare: jest.fn().mockResolvedValue(true),
 }));
+
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn().mockReturnValue('token'),
 }));
+
 const context = {};
+
 describe('login', () => {
   it('should login successfully', async () => {
     bcrypt.compare = jest.fn().mockResolvedValue(true);

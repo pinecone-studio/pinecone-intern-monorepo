@@ -1,9 +1,10 @@
 import { MutationResolvers } from '../../generated';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { findEmail } from '../../utils/find-email';
+import { findUserByEmail } from '../../utils/find-email';
+
 export const loginUser: MutationResolvers['loginUser'] = async (_, { email, password }) => {
-  const user = await findEmail(email);
+  const user = await findUserByEmail(email);
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new Error('Invalid email or password');

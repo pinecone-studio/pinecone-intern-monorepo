@@ -10,9 +10,11 @@ jest.mock('../../../src/models', () => ({
     }),
   },
 }));
+
 jest.mock('bcrypt', () => ({
   hash: jest.fn().mockResolvedValue('hashedPassword'),
 }));
+
 type response = {
   email?: string;
   password?: string;
@@ -23,6 +25,7 @@ const args = {
   email: 'test@gmail.com',
   password: 'testingpass',
 };
+
 describe('check user register', () => {
   it('mutation - registerUser', async () => {
     if (registerUser) {
