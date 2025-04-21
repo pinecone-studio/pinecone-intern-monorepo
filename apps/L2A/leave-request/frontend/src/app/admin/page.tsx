@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { RegisterNewEmployeeButton } from './_components/button';
-import { RegisterNewEmployeeModal } from './_components/modal';
+import { RegisterNewEmployeeButton } from './_components/Button';
+import { RegisterNewEmployeeModal } from './_components/Modal';
+
+
 
 
 const Page = () => {
