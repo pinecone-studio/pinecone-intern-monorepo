@@ -1,6 +1,8 @@
 import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
+import Header from './_components/Header';
+import Footer from './_components/Footer';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -11,7 +13,11 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <Header />
+        <ApolloWrapper>
+          <div className="min-h-screen">{children}</div>
+        </ApolloWrapper>
+        <Footer />
       </body>
     </html>
   );
