@@ -12,9 +12,7 @@ describe('Sign In Page', () => {
   
     it('should not submit empty form', () => {
       cy.contains('Continue').click();
-      // Тухайн UI дээр validation мессеж байгаа тохиолдолд:
-      // cy.contains('Email is required').should('exist');
-      // cy.contains('Password is required').should('exist');
+     
     });
   
     it('should fill form and submit (dummy test)', () => {
@@ -22,8 +20,7 @@ describe('Sign In Page', () => {
       cy.get('input[type="password"]').type('password123');
       cy.contains('Continue').click();
   
-      // Тест болгож redirect эсвэл notification хүлээж болно
-      // cy.url().should('include', '/dashboard');
+     
     });
   });
   
