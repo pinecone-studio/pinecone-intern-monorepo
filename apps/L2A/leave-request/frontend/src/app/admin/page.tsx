@@ -16,6 +16,7 @@ const Page = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+      
     </div>
     </div>
   );
