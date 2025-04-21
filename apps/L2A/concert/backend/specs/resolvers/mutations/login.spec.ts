@@ -36,7 +36,7 @@ describe('login', () => {
       compare: jest.fn().mockResolvedValue(false),
     }));
     if (loginUser) {
-      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Invalid email or password');
+      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
     }
   });
 });

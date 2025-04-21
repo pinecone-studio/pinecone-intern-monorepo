@@ -1,14 +1,15 @@
 import { MutationResolvers } from '../../generated';
 import { UserModel } from '../../models';
-import bcrypt from 'bcrypt';
 import { checkIfUserExist } from '../../utils/check-if-user-exist';
+import { hashPassword } from '../../utils/hash-password';
 
 export const registerUser: MutationResolvers['addUser'] = async (_, { email, password }) => {
-  if (!email || !password || password.length < 8) {
-    throw new Error('Мэдээллээ гүйцээнэ үү. Эсвэл Пассвордоо шалгана уу.');
+  try {
+    await checkIfUserExist(email);
+    const encryptedPassword = await hashPassword(password);
+    const user = await UserModel.create({ email, password: encryptedPassword });
+    return user;
+  } catch (err) {
+    throw new Error('Бүртгүүлж чадсангүй!');
   }
-  await checkIfUserExist(email);
-  const encryptedPassword = await bcrypt.hash(password, 15);
-  const user = await UserModel.create({ email, password: encryptedPassword });
-  return user;
 };

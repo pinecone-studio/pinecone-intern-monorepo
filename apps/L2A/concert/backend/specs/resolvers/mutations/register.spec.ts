@@ -35,9 +35,19 @@ describe('check user register', () => {
       expect(response.password).toBe('hashedPassword');
     }
   });
-  it('should throw error when provided with a short password', async () => {
+  it('should throw and error', async () => {
     if (registerUser) {
-      await expect(registerUser({}, { email: 'trsing@gmail.com', password: 'testin' }, context, info)).rejects.toThrow('Мэдээллээ гүйцээнэ үү. Эсвэл Пассвордоо шалгана уу.');
+      await expect(
+        registerUser(
+          {},
+          {
+            email: '',
+            password: '',
+          },
+          context,
+          info
+        )
+      ).rejects.toThrow('Бүртгүүлж чадсангүй!');
     }
   });
 });
