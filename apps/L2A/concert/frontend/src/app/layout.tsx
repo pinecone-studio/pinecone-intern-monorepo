@@ -13,11 +13,11 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <Header />
         <ApolloWrapper>
+        <Header />
           <div className="min-h-screen">{children}</div>
-        </ApolloWrapper>
         <Footer />
+        </ApolloWrapper>
       </body>
     </html>
   );
