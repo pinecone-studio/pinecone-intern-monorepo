@@ -248,5 +248,7 @@
   },
   "resolutions": {
     "jackspeak": "2.1.1"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/pinecone-studio/pinecone-intern-monorepo.git"
 }
