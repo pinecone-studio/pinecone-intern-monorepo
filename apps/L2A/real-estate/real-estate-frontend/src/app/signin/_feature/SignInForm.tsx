@@ -10,7 +10,7 @@ import Link from 'next/link';
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Logging in with:', email, password);
-    // TODO: auth logic here
+    
   };
 
   return (
