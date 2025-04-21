@@ -1,7 +1,7 @@
 import { MutationResolvers } from '../../generated';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { findUserByEmail } from '../../utils/find-email';
+import { findUserByEmail } from '../../utils/find-user-by-email';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_, { email, password }) => {
   const user = await findUserByEmail(email);

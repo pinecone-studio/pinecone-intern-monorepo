@@ -1,7 +1,7 @@
 import { MutationResolvers } from '../../generated';
 import { UserModel } from '../../models';
 import bcrypt from 'bcrypt';
-import { checkIfUserExist } from '../../utils/find-user';
+import { checkIfUserExist } from '../../utils/check-if-user-exist';
 
 export const registerUser: MutationResolvers['addUser'] = async (_, { email, password }) => {
   if (!email || !password || password.length < 8) {
