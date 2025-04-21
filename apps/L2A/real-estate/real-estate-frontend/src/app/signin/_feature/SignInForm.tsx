@@ -25,7 +25,7 @@ return (
      <div>
         <label className="block text-sm font-medium text-gray-700 flex justify-between">
           <span>Password</span>
-          <Link href="#" className="text-blue-500 text-sm">Forget password?</Link>
+          <Link href="/forgotpassword" className="text-blue-500 text-sm">Forget password?</Link>
         </label>
         <input
           type="password"
