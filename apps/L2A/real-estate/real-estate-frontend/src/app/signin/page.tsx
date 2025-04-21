@@ -10,8 +10,7 @@ import SignInForm from './_feature/SignInForm';
           <p className="mt-2 text-gray-600">Enter your email below to sign in</p>
         </div>
         <SignInForm />
-
-        <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-gray-500">
           OR
           <div className="mt-2">
             <a href="/signup" className="underline text-blue-600">Create an account</a>

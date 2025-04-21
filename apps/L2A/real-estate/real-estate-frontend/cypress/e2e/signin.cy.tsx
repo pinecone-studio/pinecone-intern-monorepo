@@ -12,15 +12,12 @@ describe('Sign In Page', () => {
   
     it('should not submit empty form', () => {
       cy.contains('Continue').click();
-     
-    });
+     });
   
     it('should fill form and submit (dummy test)', () => {
       cy.get('input[type="email"]').type('test@example.com');
       cy.get('input[type="password"]').type('password123');
       cy.contains('Continue').click();
-  
-     
-    });
+     });
   });
   

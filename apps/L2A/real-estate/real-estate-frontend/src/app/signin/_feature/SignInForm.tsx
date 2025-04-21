@@ -3,17 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
- const  SignInForm=()=> {
+  const  SignInForm=()=> {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Logging in with:', email, password);
-    
-  };
-
-  return (
+};
+return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -26,8 +22,7 @@ import Link from 'next/link';
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-
-      <div>
+     <div>
         <label className="block text-sm font-medium text-gray-700 flex justify-between">
           <span>Password</span>
           <Link href="#" className="text-blue-500 text-sm">Forget password?</Link>
@@ -41,7 +36,6 @@ import Link from 'next/link';
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-
       <button
         type="submit"
         className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600"
