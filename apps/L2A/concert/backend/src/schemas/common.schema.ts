@@ -67,6 +67,7 @@ export const typeDefs = gql`
     isAdmin: Boolean!
     phone: Int
     bookings: [Booking]!
+    JWT: String
   }
 
   type Booking {
@@ -97,7 +98,7 @@ export const typeDefs = gql`
 
   type Mutation {
     addUser(email: String!, password: String!): User!
-
+    loginUser(email: String!, password: String!): User!
     createConcert(title: String!, description: String, date: String!, venueId: ID!, artistName: String!, specialGuestName: String, ticketCategories: [TicketCategoryInput!]!): Concert!
 
     createVenue(name: String!, address: String!, city: String!, capacity: Int!): Venue!
