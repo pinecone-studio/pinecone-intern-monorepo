@@ -1,0 +1,81 @@
+import { createUser } from '../../../../src/resolvers/mutations/user/create-user';
+import { User } from '../../../../src/models/models';
+
+jest.mock('../../../../src/models/models');
+describe('User mutation createUser resolver', () => {
+  it('should throw an error if email must be valid', async () => {
+    const args = {
+      username: 'john',
+      email: 'john@example',
+      password: 'password',
+      profilePicture: 'url.jpg',
+    };
+    await expect(createUser({}, args)).rejects.toThrow('Email must be valid');
+  });
+  it('should throw an error if password must be at least 8 characters long', async () => {
+    const args = {
+      username: 'john',
+      email: 'john@example.com',
+      password: 'secure',
+      profilePicture: 'url.jpg',
+    };
+    await expect(createUser({}, args)).rejects.toThrow('Password must be at least 8 characters long');
+  });
+  it('should throw an error if username already exists', async () => {
+    (User.findOne as unknown as jest.Mock).mockImplementation(() => [{ _id: 'mockId' }]);
+
+    const args = {
+      username: 'john',
+      email: 'john@example.com',
+      password: 'password',
+      profilePicture: 'url.jpg',
+    };
+    await expect(createUser({}, args)).rejects.toThrow('This username already exists');
+  });
+
+  it('should throw an error if email already exists', async () => {
+    (User.findOne as unknown as jest.Mock).mockImplementation(() => []);
+    (User.findOne as unknown as jest.Mock).mockImplementation(() => [{ _id: 'mockId' }]);
+
+    const args = {
+      username: 'john',
+      email: 'john@example.com',
+      password: 'password',
+      profilePicture: 'url.jpg',
+    };
+    await expect(createUser({}, args)).rejects.toThrow('This username already exists');
+  });
+
+  it('should create and return a new user', async () => {
+    const mockSave = jest.fn().mockResolvedValue(undefined);
+
+    const mockUserInstance = {
+      username: 'john',
+      email: 'john@example.com',
+      password: 'password',
+      profilePicture: 'url.jpg',
+      save: mockSave,
+    };
+
+    (User as unknown as jest.Mock).mockImplementation(() => mockUserInstance);
+    (User.findOne as unknown as jest.Mock).mockResolvedValue(null);
+
+    const args = {
+      username: 'john',
+      email: 'john@example.com',
+      password: 'password',
+      profilePicture: 'url.jpg',
+    };
+
+    const result = await createUser({}, args);
+
+    expect(User).toHaveBeenCalledWith({
+      username: 'john',
+      email: 'john@example.com',
+      password: 'password',
+      profilePicture: 'url.jpg',
+    });
+    expect(mockSave).toHaveBeenCalled();
+    expect(result).toEqual(mockUserInstance);
+  });
+});

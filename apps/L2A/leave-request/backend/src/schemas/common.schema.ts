@@ -5,8 +5,15 @@ export const typeDefs = gql`
 
   scalar Date
 
-  enum Response {
-    Success
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    password: String!
+    profilePicture: String!
+    role: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   type Query {
@@ -15,5 +22,6 @@ export const typeDefs = gql`
 
   type Mutation {
     sampleMutation: String!
+    createUser(username: String!, email: String!, password: String!, profilePicture: String!): User!
   }
 `;

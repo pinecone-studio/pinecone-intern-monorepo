@@ -1,1 +1,1 @@
-export * from './sample-mutation';
+export * from './user/create-user';
