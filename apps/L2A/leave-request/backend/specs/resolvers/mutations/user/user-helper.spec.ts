@@ -7,6 +7,9 @@ describe('User helpers', () => {
     it('should throw an error if email is not valid', () => {
       expect(() => validateEmail('sdfdsf')).toThrow('Email must be valid');
     });
+    it('should throw an error if role is not valid', () => {
+      expect(() => validateEmail('sdff')).toThrow('Email must be valid');
+    });
   });
   describe('checkIfUserExists', () => {
     const args = {

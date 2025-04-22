@@ -1,13 +1,14 @@
 import { User } from '../../../models/models';
-import { validateEmail, checkIfUserExists } from './user-helpers';
+import { validateEmail, validateRole, checkIfUserExists } from './user-helpers';
 import type { UserInput } from '../../../generated';
 
 export async function createUser(_parent: any, args: UserInput) {
-  const { username, email, profilePicture } = args;
+  const { username, email, profilePicture, role } = args;
   validateEmail(email);
-  await checkIfUserExists({ username, email });
+  validateRole(role);
   try {
-    const newUser = new User({ username, email, profilePicture });
+    await checkIfUserExists({ username, email });
+    const newUser = new User({ username, email, profilePicture, role });
     await newUser.save();
     return newUser;
   } catch (error) {

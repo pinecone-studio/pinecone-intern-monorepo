@@ -8,8 +8,8 @@ const userSchema = new Schema(
     profilePicture: { type: String, required: true },
     role: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
+      enum: ['admin', 'manager', 'employeer'],
+      require: true,
     },
   },
   {

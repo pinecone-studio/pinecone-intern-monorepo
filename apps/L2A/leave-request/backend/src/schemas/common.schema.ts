@@ -19,6 +19,7 @@ export const typeDefs = gql`
     username: String!
     email: String!
     profilePicture: String!
+    role: String!
   }
 
   type Query {

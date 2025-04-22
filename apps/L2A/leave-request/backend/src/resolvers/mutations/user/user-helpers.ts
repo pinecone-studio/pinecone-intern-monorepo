@@ -8,6 +8,12 @@ export function validateEmail(email: string) {
   }
 }
 
+export function validateRole(role: string) {
+  if (role !== 'admin' && role !== 'manager' && role !== 'employeer') {
+    throw new Error('Role must be valid');
+  }
+}
+
 export async function checkIfUserExists({ username, email }: { username: string; email: string }) {
   const existingUsername = await User.findOne({ username });
   if (existingUsername) {

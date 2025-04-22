@@ -8,8 +8,18 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example',
       profilePicture: 'url.jpg',
+      role: 'admin',
     };
     await expect(createUser({}, args)).rejects.toThrow('Email must be valid');
+  });
+  it('should throw an error if role must be valid', async () => {
+    const args = {
+      username: 'john',
+      email: 'john@example.com',
+      profilePicture: 'url.jpg',
+      role: 'sdfdsf',
+    };
+    await expect(createUser({}, args)).rejects.toThrow('Role must be valid');
   });
   it('should throw an error if username already exists', async () => {
     (User.findOne as unknown as jest.Mock).mockImplementation(() => [{ _id: 'mockId' }]);
@@ -18,6 +28,7 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example.com',
       profilePicture: 'url.jpg',
+      role: 'admin',
     };
     await expect(createUser({}, args)).rejects.toThrow('This username already exists');
   });
@@ -30,6 +41,7 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example.com',
       profilePicture: 'url.jpg',
+      role: 'admin',
     };
     await expect(createUser({}, args)).rejects.toThrow('This username already exists');
   });
@@ -41,6 +53,7 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example.com',
       profilePicture: 'url.jpg',
+      role: 'admin',
       save: mockSave,
     };
 
@@ -51,6 +64,7 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example.com',
       profilePicture: 'url.jpg',
+      role: 'admin',
     };
 
     const result = await createUser({}, args);
@@ -59,6 +73,7 @@ describe('User mutation createUser resolver', () => {
       username: 'john',
       email: 'john@example.com',
       profilePicture: 'url.jpg',
+      role: 'admin',
     });
     expect(mockSave).toHaveBeenCalled();
     expect(result).toEqual(mockUserInstance);
@@ -68,6 +83,7 @@ describe('User mutation createUser resolver', () => {
       username: 'testuser',
       email: 'test@example.com',
       profilePicture: 'pic.jpg',
+      role: 'admin',
     };
     const mockSave = jest.fn().mockRejectedValue(new Error('DB error'));
 
@@ -83,6 +99,7 @@ describe('User mutation createUser resolver', () => {
           username: mockUserData.username,
           email: mockUserData.email,
           profilePicture: mockUserData.profilePicture,
+          role: 'admin',
         }
       )
     ).rejects.toThrow('Error creating user');
