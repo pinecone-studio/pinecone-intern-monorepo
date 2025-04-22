@@ -65,8 +65,15 @@ const requestTypeSchema = new Schema(
   }
 );
 
+const otpSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  otp: { type: Number, required: true },
+  expiresAt: { type: Date, required: true },
+});
+
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 const LeaveRequest = mongoose.models.LeaveRequest || mongoose.model('LeaveRequest', leaveRequestSchema);
 const RequestType = mongoose.models.RequestType || mongoose.model('RequestType', requestTypeSchema);
+const OTP = mongoose.models.OTP || mongoose.model('OTP',otpSchema);
 
-export { User, LeaveRequest, RequestType };
+export { User, LeaveRequest, RequestType, OTP };

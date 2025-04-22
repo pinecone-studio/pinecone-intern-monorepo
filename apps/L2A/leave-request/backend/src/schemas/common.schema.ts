@@ -27,7 +27,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    sampleMutation: String!
     createUser(userArgs: UserInput): User!
+    requestOTP(email: String!): Boolean
+    verifyOTP(email: String!, otp: String!): Boolean
   }
 `;
