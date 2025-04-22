@@ -31,19 +31,6 @@ import z from 'zod'
         setError(errorMessage || null)
         return
     }
-    const res = await fetch('api/check-email' ,{
-      method: 'POST' ,
-      headers: { 'Content-Type' : 'application/json' } ,
-      body:JSON.stringify({email})
-    })
-    const data = await res.json()
-
-    if(data.exists){
-      setError('Burtgeltei Email baina')
-    }else{
-      setError(null)
-    }
-
   };
  
 return (
