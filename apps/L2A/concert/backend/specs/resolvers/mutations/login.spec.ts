@@ -20,6 +20,7 @@ const context = {};
 describe('login', () => {
   it('should login successfully', async () => {
     (findUserByEmail as jest.Mock).mockResolvedValue({ _id: '1', password: 'hashedPassword', email: 'test@gmail.com' });
+
     if (loginUser) {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
@@ -31,6 +32,7 @@ describe('login', () => {
 
   it('test jwt token', async () => {
     (findUserByEmail as jest.Mock).mockResolvedValue({ id: '1', password: 'hashedPassword', email: 'test@gmail.com' });
+
     if (loginUser) {
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
       expect(result.id).toBe('1');
@@ -41,6 +43,7 @@ describe('login', () => {
   it('should throw an error for invalid password', async () => {
     (findUserByEmail as jest.Mock).mockResolvedValue({ id: '1', password: 'hashedPassword', email: 'test@gmail.com' });
     (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
     if (loginUser) {
       await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нууц үг буруу байна!');
     }

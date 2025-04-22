@@ -2,6 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { addUser } from '../../../src/resolvers/mutations/register';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../../src/models';
+
 jest.mock('../../../src/models', () => ({
   UserModel: {
     findOne: jest.fn().mockResolvedValue(null),
@@ -18,6 +19,7 @@ type response = {
   email?: string;
   password?: string;
 };
+
 const context = {};
 const info = {} as GraphQLResolveInfo;
 const args = {
@@ -28,6 +30,7 @@ const args = {
 describe('check user register', () => {
   it('mutation - registerUser', async () => {
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+
     if (addUser) {
       const response: response = await addUser({}, args, context, info);
       expect(response).toBeDefined();
@@ -37,6 +40,7 @@ describe('check user register', () => {
   });
   it('should throw an error when a short pass provided', async () => {
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+
     if (addUser) {
       await expect(
         addUser(
@@ -59,6 +63,7 @@ describe('check user register', () => {
     jest.mock('../../../src/utils/hash-password', () => ({
       hashPassword: jest.fn().mockResolvedValue(null),
     }));
+
     if (addUser) {
       await expect(
         addUser(
