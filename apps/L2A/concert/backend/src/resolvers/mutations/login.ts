@@ -2,6 +2,7 @@ import { MutationResolvers } from '../../generated';
 import jwt from 'jsonwebtoken';
 import { findUserByEmail } from '../../utils/find-user-by-email';
 import { checkPassword } from '../../utils/check-password';
+import { GraphQLError } from 'graphql';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_, { email, password }) => {
   try {
@@ -13,6 +14,9 @@ export const loginUser: MutationResolvers['loginUser'] = async (_, { email, pass
 
     return { ...user, JWT: token };
   } catch (err) {
-    throw new Error('Нэврэхэд алдаа гарлаа!');
+    if (err instanceof GraphQLError) {
+      throw err;
+    }
+    throw new GraphQLError('Нэврэхэд алдаа гарлаа!');
   }
 };

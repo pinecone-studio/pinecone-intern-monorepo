@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { registerUser } from '../../../src/resolvers/mutations/register';
-
+import { addUser } from '../../../src/resolvers/mutations/register';
+import bcrypt from 'bcrypt';
+import { UserModel } from '../../../src/models';
 jest.mock('../../../src/models', () => ({
   UserModel: {
     findOne: jest.fn().mockResolvedValue(null),
@@ -11,9 +12,7 @@ jest.mock('../../../src/models', () => ({
   },
 }));
 
-jest.mock('bcrypt', () => ({
-  hash: jest.fn().mockResolvedValue('hashedPassword'),
-}));
+jest.mock('bcrypt');
 
 type response = {
   email?: string;
@@ -28,21 +27,45 @@ const args = {
 
 describe('check user register', () => {
   it('mutation - registerUser', async () => {
-    if (registerUser) {
-      const response: response = await registerUser({}, args, context, info);
+    (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+    if (addUser) {
+      const response: response = await addUser({}, args, context, info);
       expect(response).toBeDefined();
       expect(response.email).toBe('test@gmail.com');
       expect(response.password).toBe('hashedPassword');
     }
   });
-  it('should throw and error', async () => {
-    if (registerUser) {
+  it('should throw an error when a short pass provided', async () => {
+    (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+    if (addUser) {
       await expect(
-        registerUser(
+        addUser(
           {},
           {
-            email: '',
-            password: '',
+            email: 'test@gmail.com',
+            password: 'asdf',
+          },
+          context,
+          info
+        )
+      ).rejects.toThrow('Нууц үг богинохон байна!');
+    }
+  });
+
+  it('should catch an error', async () => {
+    (UserModel.create as jest.Mock).mockImplementation(() => {
+      throw new Error('db burned to the ground');
+    });
+    jest.mock('../../../src/utils/hash-password', () => ({
+      hashPassword: jest.fn().mockResolvedValue(null),
+    }));
+    if (addUser) {
+      await expect(
+        addUser(
+          {},
+          {
+            email: 'test@gmail.com',
+            password: '123123123',
           },
           context,
           info
