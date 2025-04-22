@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import rawCategories from "./_components/data.json";
+import categories from "./_components/categories.json"
 
 type Food = {
     id: number;
@@ -17,7 +17,7 @@ type Food = {
     foods: Food[];
   };
 
-  const categories: Category[] = rawCategories;
+  const category: Category[] = categories;
   const renderFoodCard = (food: Food) => (
     <div key={food.id} className="flex flex-col">
       <div className="h-[160px] w-[160px] bg-gray overflow-hidden bg-cover">
@@ -41,13 +41,13 @@ const HomePage = () => {
             <main className="flex items-center flex-col w-[95%] mx-auto pt-10 ">
                 <div className="text-[#441500] text-[20px] font-extralight mb-5">Хоолны цэс</div>
                 <div className="flex gap-2 mb-4">
-        {categories.map((category) => (
+        {category.map((categor) => (
           <button
-            key={category.id}
-            className={`px-3 py-1 rounded ${selectedCategoryId === category.id ? "bg-[#F4F4F5] text-black" : "bg-white"}`}
-            onClick={() => setSelectedCategoryId(category.id)}
+            key={categor.id}
+            className={`px-3 py-1 rounded ${selectedCategoryId === categor.id ? "bg-[#F4F4F5] text-black" : "bg-white"}`}
+            onClick={() => setSelectedCategoryId(categor.id)}
           >
-            {category.name}
+            {categor.name}
           </button>
         ))}
       </div>
