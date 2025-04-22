@@ -1,4 +1,4 @@
-import { RegisterNewEmployeeModal } from '@/app/admin/_components/Modal';
+import { RegisterNewEmployeeModal } from '@/app/admin/_features/Modal';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 describe('RegisterNewEmployeeModal', () => {

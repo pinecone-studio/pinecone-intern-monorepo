@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { RegisterNewEmployeeButton } from './_components/Button';
-import { RegisterNewEmployeeModal } from './_components/Modal';
+import { RegisterNewEmployeeModal } from './_features/Modal';
 
 
 
