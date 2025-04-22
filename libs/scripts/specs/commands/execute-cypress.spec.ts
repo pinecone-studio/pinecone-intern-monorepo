@@ -2,10 +2,9 @@ import { green, red } from 'chalk';
 import { execSync, spawn } from 'child_process';
 import { executeCypressTest } from '../../src/commands/execute-cypress';
 
-
 jest.mock('../../src/actions/e2e/check-cypress-code-coverage', () => ({
-  checkCypressCodeCoverage: jest.fn()
-}))
+  checkCypressCodeCoverage: jest.fn(),
+}));
 
 jest.mock('chalk', () => ({
   green: jest.fn((text) => `green: ${text}`),
@@ -40,7 +39,9 @@ process.exit = jest.fn() as unknown as (_code?: number) => never;
 describe('executeCypressTest function', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    jest.spyOn(console, 'error').mockImplementation(() => { });
+    jest.spyOn(console, 'error').mockImplementation(() => {
+      console.log('scripts');
+    });
   });
 
   it('should execute cypress test and handle child process events', async () => {
@@ -68,8 +69,8 @@ describe('executeCypressTest function', () => {
 
     await executeCypressTest();
 
-    expect(execSync).toHaveBeenCalledWith(`bunx nx show project ${app}`);
-    expect(spawn).toHaveBeenCalledWith(`bunx nx cypress ${process.argv.slice(2).join(' ')} --parallel`, [], { shell: true });
+    expect(execSync).toHaveBeenCalledWith(`npx nx show project ${app}`);
+    expect(spawn).toHaveBeenCalledWith(`npx nx cypress ${process.argv.slice(2).join(' ')} --parallel`, [], { shell: true });
     expect(onSpy).toHaveBeenCalledWith('data', expect.any(Function));
     expect(red).toHaveBeenCalledWith('closed');
     expect(green).toHaveBeenCalledWith('Success mochawesome-merge');

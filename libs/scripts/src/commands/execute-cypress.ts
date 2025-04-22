@@ -4,10 +4,10 @@ import { checkCypressCodeCoverage } from '../actions/e2e/check-cypress-code-cove
 
 export const executeCypressTest = async () => {
   const app = process.argv.slice(2)[0];
-  const { root } = JSON.parse(execSync(`bunx nx show project ${app}`).toString().trim());
+  const { root } = JSON.parse(execSync(`npx nx show project ${app}`).toString().trim());
 
   const result = await new Promise((resolve, _reject) => {
-    const command = `bunx nx cypress ${process.argv.slice(2).join(' ')} --parallel`;
+    const command = `npx nx cypress ${process.argv.slice(2).join(' ')} --parallel`;
     const childProcess = spawn(command, [], { shell: true });
 
     childProcess.stdout.on('data', (data) => {
@@ -33,7 +33,7 @@ export const executeCypressTest = async () => {
   execSync(`npx marge ${root}/.nyc_output/out.json -o ${root}/.nyc_output -f index.html`);
   console.log(green('Success marge'));
 
-  console.log(`> bunx nx check-cypress-code-coverage scripts ${root}`);
+  console.log(`> npx nx check-cypress-code-coverage scripts ${root}`);
   checkCypressCodeCoverage(root);
 
   if (result === 'Failed') process.exit(1);
