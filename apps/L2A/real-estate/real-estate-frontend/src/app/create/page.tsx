@@ -10,11 +10,11 @@ const CreateAccount=()=> {
           <div className="flex items-center justify-center gap-3 ">
             <div>
             <Image
-      src="/logo.png"
-      alt="Logo"
-      width={40}
-      height={40}
-    />
+                 src="/logo.png"
+                 alt="Logo"
+                 width={40}
+                 height={40}
+               />
             </div>
             <h2 className="text-2xl">Home Vault</h2>
           </div>

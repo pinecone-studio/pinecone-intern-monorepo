@@ -27,7 +27,6 @@ import z from 'zod'
     const result = emailSchema.safeParse({ email })
     setTouched(true)
     if(!result.success){
-        console.log(result.error.format().email)
         const errorMessage = result.error.format().email?._errors[0]
         setError(errorMessage || null)
         return
