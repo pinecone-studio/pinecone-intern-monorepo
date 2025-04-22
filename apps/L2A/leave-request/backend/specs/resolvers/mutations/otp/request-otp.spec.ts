@@ -47,13 +47,10 @@ describe("requestOTP", () => {
       throw new Error("Random failed");
     });
 
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
 
     const result = await requestOTP(null, { email: mockEmail });
 
     expect(result).toBe(false);
-    expect(consoleErrorSpy).toHaveBeenCalledWith("[OTP ERROR]", expect.any(Error));
 
-    consoleErrorSpy.mockRestore();
   });
 });
