@@ -68,9 +68,11 @@ const AdminHeader = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <nav className="flex flex-col h-36 items-center gap-4 text-sm font-medium overflow-hidden">
-              {menuItems.map(renderMobileNavItem)}
-            </nav>
+            <>
+              <nav className="flex flex-col h-36 items-center gap-4 text-sm font-medium overflow-hidden">
+                {menuItems.map(renderMobileNavItem)}
+              </nav>
+            </>
           </motion.div>
         )}
       </AnimatePresence>
