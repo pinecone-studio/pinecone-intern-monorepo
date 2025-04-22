@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { SignupForm } from '@/components/pages/signup-form';
+import { SignupForm } from '@/components/forms/SignUpForm';
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const SignUpPage = () => {
             Sign in
           </Button>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

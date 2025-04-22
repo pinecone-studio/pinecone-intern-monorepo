@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { SigninForm } from '@/components/pages/signin-form';
+import { SigninForm } from '@/components/forms/SignInForm';
 
 const SignInPage = () => {
   const router = useRouter();

@@ -44,7 +44,7 @@ export const SignupForm = () => {
                     placeholder="Enter your email"
                     type="email"
                     {...field}
-                    className={meta.touched && meta.error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : ''}
+                    className={meta.touched && meta.error ? 'border-red-400 focus:border-transparent focus:ring-2 focus:ring-red-400' : ''}
                   />
                 )}
               </Field>
@@ -58,7 +58,7 @@ export const SignupForm = () => {
                     placeholder="Enter your username"
                     type="text"
                     {...field}
-                    className={meta.touched && meta.error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : ''}
+                    className={meta.touched && meta.error ? 'border-red-400 focus:border-transparent focus:ring-2 focus:ring-red-400' : ''}
                   />
                 )}
               </Field>
@@ -67,7 +67,7 @@ export const SignupForm = () => {
             <div className="space-y-1">
               <Field name="password">
                 {({ field, meta }: FieldProps) => (
-                  <PasswordInput label="Password" placeholder="Enter your password" {...field} className={meta.touched && meta.error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : ''} />
+                  <PasswordInput label="Password" placeholder="Enter your password" {...field} className={meta.touched && meta.error ? 'border-red-400 focus:border-transparent focus:ring-2 focus:ring-red-400' : ''} />
                 )}
               </Field>
               <ErrorMessage name="password" component="div" className="text-red-400 text-xs" />
