@@ -9,11 +9,28 @@ export const typeDefs = gql`
     Success
   }
 
+  type User {
+    _id:String!
+    email:String!
+    password:String!
+    isAdming:String!
+    phone:Int!
+    updatedAt: Date
+    createdAt:Date 
+  }
+
+  type tokenResponse {
+    token:String!
+  }
+
+
+
   type Query {
     sampleQuery: String!
   }
 
   type Mutation {
     sampleMutation: String!
+    loginUser(email:String!, password:String!): tokenResponse
   }
 `;
