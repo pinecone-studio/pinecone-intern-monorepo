@@ -34,7 +34,7 @@ describe('User mutation createUser resolver', () => {
     await expect(createUser({}, args)).rejects.toThrow('This username already exists');
   });
 
-  it('should create and return a new user', async () => {
+  it('should create and return a new user successfully', async () => {
     const mockSave = jest.fn().mockResolvedValue(undefined);
 
     const mockUserInstance = {
@@ -62,5 +62,29 @@ describe('User mutation createUser resolver', () => {
     });
     expect(mockSave).toHaveBeenCalled();
     expect(result).toEqual(mockUserInstance);
+  });
+  it('should create and return a new user fails', async () => {
+    const mockUserData = {
+      username: 'testuser',
+      email: 'test@example.com',
+      profilePicture: 'pic.jpg',
+    };
+    const mockSave = jest.fn().mockRejectedValue(new Error('DB error'));
+
+    (User as unknown as jest.Mock).mockImplementation(() => ({
+      ...mockUserData,
+      save: mockSave,
+    }));
+
+    await expect(
+      createUser(
+        {},
+        {
+          username: mockUserData.username,
+          email: mockUserData.email,
+          profilePicture: mockUserData.profilePicture,
+        }
+      )
+    ).rejects.toThrow('Error creating user');
   });
 });

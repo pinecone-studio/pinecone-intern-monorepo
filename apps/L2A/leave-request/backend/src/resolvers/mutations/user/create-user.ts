@@ -6,9 +6,11 @@ export async function createUser(_parent: any, args: UserInput) {
   const { username, email, profilePicture } = args;
   validateEmail(email);
   await checkIfUserExists({ username, email });
-
-  const newUser = new User({ username, email, profilePicture });
-  await newUser.save();
-
-  return newUser;
+  try {
+    const newUser = new User({ username, email, profilePicture });
+    await newUser.save();
+    return newUser;
+  } catch (error) {
+    throw new Error(`Error creating user: ${error}`);
+  }
 }
