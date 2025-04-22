@@ -1,40 +1,11 @@
-import { validateUserInput, checkIfUserExists } from '../../../../src/resolvers/mutations/user/user-helpers';
+import { validateEmail, checkIfUserExists } from '../../../../src/resolvers/mutations/user/user-helpers';
 import { User } from '../../../../src/models/models';
 
 jest.mock('../../../../src/models/models');
 describe('User helpers', () => {
-  describe('validateUserInput', () => {
-    it('should throw an error if username is empty', () => {
-      const args = {
-        username: '',
-        email: 'john@example',
-        profilePicture: 'url.jpg',
-      };
-      expect(() => validateUserInput(args)).toThrow('Username is required');
-    });
-    it('should throw an error if email is empty', () => {
-      const args = {
-        username: 'john',
-        email: '',
-        profilePicture: 'url.jpg',
-      };
-      expect(() => validateUserInput(args)).toThrow('Email is required');
-    });
+  describe('validateEmail', () => {
     it('should throw an error if email is not valid', () => {
-      const args = {
-        username: 'john',
-        email: 'john@example',
-        profilePicture: 'url.jpg',
-      };
-      expect(() => validateUserInput(args)).toThrow('Email must be valid');
-    });
-    it('should throw an error if profile picture is empty', () => {
-      const args = {
-        username: 'john',
-        email: 'john@example.com',
-        profilePicture: '',
-      };
-      expect(() => validateUserInput(args)).toThrow('Profile picture is required');
+      expect(() => validateEmail('sdfdsf')).toThrow('Email must be valid');
     });
   });
   describe('checkIfUserExists', () => {

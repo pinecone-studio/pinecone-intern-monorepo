@@ -9,11 +9,16 @@ export const typeDefs = gql`
     id: ID!
     username: String!
     email: String!
-    password: String!
     profilePicture: String!
     role: String!
     createdAt: Date!
     updatedAt: Date!
+  }
+
+  input UserInput {
+    username: String!
+    email: String!
+    profilePicture: String!
   }
 
   type Query {
@@ -22,6 +27,6 @@ export const typeDefs = gql`
 
   type Mutation {
     sampleMutation: String!
-    createUser(username: String!, email: String!, password: String!, profilePicture: String!): User!
+    createUser(userArgs: UserInput): User!
   }
 `;

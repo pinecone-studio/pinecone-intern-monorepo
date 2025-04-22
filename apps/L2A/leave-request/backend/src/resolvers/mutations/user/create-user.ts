@@ -1,16 +1,10 @@
 import { User } from '../../../models/models';
-import { validateUserInput, checkIfUserExists } from './user-helpers';
+import { validateEmail, checkIfUserExists } from './user-helpers';
+import type { UserInput } from '../../../generated';
 
-export async function createUser(
-  _parent: any,
-  args: {
-    username: string;
-    email: string;
-    profilePicture: string;
-  }
-) {
+export async function createUser(_parent: any, args: UserInput) {
   const { username, email, profilePicture } = args;
-  validateUserInput({ username, email, profilePicture });
+  validateEmail(email);
   await checkIfUserExists({ username, email });
 
   const newUser = new User({ username, email, profilePicture });
