@@ -6,7 +6,6 @@ export async function verifyOTP(
 ): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim();
 
-
   const record = await OTP.findOne({ email: normalizedEmail });
 
   if (!record) {
@@ -14,6 +13,8 @@ export async function verifyOTP(
   }
 
   if (record.otp.toString() !== otp) {
+
+ 
     return false;
   }
 

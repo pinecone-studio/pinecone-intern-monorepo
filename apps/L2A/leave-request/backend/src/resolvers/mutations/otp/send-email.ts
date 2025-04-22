@@ -15,5 +15,4 @@ export const sendEmail = async (to: string, otp: string): Promise<void> => {
     subject: "Your OTP Code",
     text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
   });
-
 };

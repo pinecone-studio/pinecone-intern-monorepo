@@ -47,10 +47,8 @@ describe("requestOTP", () => {
       throw new Error("Random failed");
     });
 
-
     const result = await requestOTP(null, { email: mockEmail });
 
     expect(result).toBe(false);
-
   });
 });

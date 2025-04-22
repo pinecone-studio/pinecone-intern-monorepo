@@ -35,17 +35,11 @@ describe("sendEmail", () => {
       subject: "Your OTP Code",
       text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
     });
-
-
   });
 
   it("should throw an error and log it if email sending fails", async () => {
     const error = new Error("SMTP error");
     sendMailMock.mockRejectedValueOnce(error);
-
-
     await expect(sendEmail(to, otp)).rejects.toThrow("SMTP error");
-
-
   });
 });
