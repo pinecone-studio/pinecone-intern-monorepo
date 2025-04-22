@@ -10,7 +10,7 @@ const CreateAccount=()=> {
           <div className="flex items-center justify-center gap-3 ">
             <div>
             <Image
-                 src="/logo.png"
+                 src="/Logo.png"
                  alt="Logo"
                  width={40}
                  height={40}
