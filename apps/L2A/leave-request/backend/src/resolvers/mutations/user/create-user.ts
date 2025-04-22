@@ -6,15 +6,14 @@ export async function createUser(
   args: {
     username: string;
     email: string;
-    password: string;
     profilePicture: string;
   }
 ) {
-  const { username, email, password, profilePicture } = args;
-  validateUserInput({ username, email, password, profilePicture });
+  const { username, email, profilePicture } = args;
+  validateUserInput({ username, email, profilePicture });
   await checkIfUserExists({ username, email });
 
-  const newUser = new User({ username, email, password, profilePicture });
+  const newUser = new User({ username, email, profilePicture });
   await newUser.save();
 
   return newUser;

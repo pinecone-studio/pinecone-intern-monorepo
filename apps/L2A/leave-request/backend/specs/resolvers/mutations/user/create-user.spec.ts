@@ -7,19 +7,9 @@ describe('User mutation createUser resolver', () => {
     const args = {
       username: 'john',
       email: 'john@example',
-      password: 'password',
       profilePicture: 'url.jpg',
     };
     await expect(createUser({}, args)).rejects.toThrow('Email must be valid');
-  });
-  it('should throw an error if password must be at least 8 characters long', async () => {
-    const args = {
-      username: 'john',
-      email: 'john@example.com',
-      password: 'secure',
-      profilePicture: 'url.jpg',
-    };
-    await expect(createUser({}, args)).rejects.toThrow('Password must be at least 8 characters long');
   });
   it('should throw an error if username already exists', async () => {
     (User.findOne as unknown as jest.Mock).mockImplementation(() => [{ _id: 'mockId' }]);
@@ -27,7 +17,6 @@ describe('User mutation createUser resolver', () => {
     const args = {
       username: 'john',
       email: 'john@example.com',
-      password: 'password',
       profilePicture: 'url.jpg',
     };
     await expect(createUser({}, args)).rejects.toThrow('This username already exists');
@@ -40,7 +29,6 @@ describe('User mutation createUser resolver', () => {
     const args = {
       username: 'john',
       email: 'john@example.com',
-      password: 'password',
       profilePicture: 'url.jpg',
     };
     await expect(createUser({}, args)).rejects.toThrow('This username already exists');
@@ -52,7 +40,6 @@ describe('User mutation createUser resolver', () => {
     const mockUserInstance = {
       username: 'john',
       email: 'john@example.com',
-      password: 'password',
       profilePicture: 'url.jpg',
       save: mockSave,
     };
@@ -63,7 +50,6 @@ describe('User mutation createUser resolver', () => {
     const args = {
       username: 'john',
       email: 'john@example.com',
-      password: 'password',
       profilePicture: 'url.jpg',
     };
 
@@ -72,7 +58,6 @@ describe('User mutation createUser resolver', () => {
     expect(User).toHaveBeenCalledWith({
       username: 'john',
       email: 'john@example.com',
-      password: 'password',
       profilePicture: 'url.jpg',
     });
     expect(mockSave).toHaveBeenCalled();

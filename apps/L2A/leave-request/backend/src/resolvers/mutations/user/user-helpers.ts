@@ -1,12 +1,10 @@
-// user-helpers.ts
 import { User } from '../../../models/models';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateUserInput({ username, email, password, profilePicture }: any) {
+export function validateUserInput({ username, email, profilePicture }: any) {
   checkUsername(username);
   checkEmail(email);
-  checkPassword(password);
   checkProfilePicture(profilePicture);
 }
 
@@ -22,15 +20,6 @@ function checkEmail(email: string) {
   }
   if (!emailRegex.test(email)) {
     throw new Error('Email must be valid');
-  }
-}
-
-function checkPassword(password: string) {
-  if (!password) {
-    throw new Error('Password is required');
-  }
-  if (password.length < 8) {
-    throw new Error('Password must be at least 8 characters long');
   }
 }
 
