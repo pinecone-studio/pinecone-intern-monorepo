@@ -15,7 +15,7 @@ export const OrderCard = ({
           <span className="text-gray-500">#{orderNumber}</span>
         </div>
         <div className="flex items-center gap-1 text-gray-500 text-xs">
-          <Clock size={14} /> {time}
+          <Clock size={15} /> {time}
         </div>
       </div>
       <div className="space-y-2">
