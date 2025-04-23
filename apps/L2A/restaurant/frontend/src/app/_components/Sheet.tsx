@@ -36,7 +36,7 @@ const HomeSheet = () => {
               <p>Бидний тухай</p>
             </button>
           </SheetHeader>{' '}
-          <Button className="bg-[#441500] w-[250px] h-[36px] mt-[600px]">Гарах</Button>
+          <Button className="bg-[#441500] w-[250px] h-[36px] mt-[500px]">Гарах</Button>
         </SheetContent>{' '}
       </Sheet>
     </div>
