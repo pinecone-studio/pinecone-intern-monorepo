@@ -17,8 +17,7 @@ const SignInForm = () => {
       initialValues={{ email: '', password: '' }}
       validationSchema={SignInSchema}
       onSubmit={(values) => {
-        console.log('Logging in with:', values);
-      }}
+        }}
     >
       {() => (
         <Form className="space-y-5">
@@ -35,7 +34,7 @@ const SignInForm = () => {
               {(msg) => <div className="text-red-500 text-sm" data-testid="email-error">{msg}</div>}
             </ErrorMessage>
           </div>
-
+ 
           <div>
             <label className="block text-sm font-medium text-gray-700 flex justify-between">
               <span>Password</span>
