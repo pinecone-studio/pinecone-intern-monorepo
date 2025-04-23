@@ -1,3 +1,4 @@
+'use client';
 import { MdOutlineDone } from 'react-icons/md';
 export const Complete = () => {
   return (

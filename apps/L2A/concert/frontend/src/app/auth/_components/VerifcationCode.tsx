@@ -1,3 +1,4 @@
+'use client';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { GoArrowLeft } from 'react-icons/go';
 import { FiRefreshCw } from 'react-icons/fi';
@@ -17,7 +18,7 @@ export const VerificationCode = () => {
               </InputOTPGroup>
             </InputOTP>
           </div>
-          <div className="flex justify-center justify-between mt-[24px] w-[210px] h-[16px] ml-[40px]">
+          <div className="flex justify-center mt-[24px] w-[210px] h-[16px] ml-[40px]">
             <div className="text-white ml-[50px] ">
               <GoArrowLeft />
             </div>

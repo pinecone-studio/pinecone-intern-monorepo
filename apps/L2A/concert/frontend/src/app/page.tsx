@@ -1,7 +1,6 @@
 'use client';
 
-import { Login } from './_components/Login';
 const Page = () => {
-  return <Login />;
+  return <div>home</div>;
 };
 export default Page;
