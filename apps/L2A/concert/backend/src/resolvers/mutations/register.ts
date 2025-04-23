@@ -1,4 +1,3 @@
-import { GraphQLError } from 'graphql';
 import { MutationResolvers } from '../../generated';
 import { UserModel } from '../../models';
 import { checkIfUserExist } from '../../utils/check-if-user-exist';
@@ -11,9 +10,6 @@ export const addUser: MutationResolvers['addUser'] = async (_, { email, password
     const user = await UserModel.create({ email, password: encryptedPassword });
     return user;
   } catch (err) {
-    if (err instanceof GraphQLError) {
-      throw err;
-    }
-    throw new GraphQLError('Бүртгүүлж чадсангүй!');
+    throw new Error('Бүртгүүлж чадсангүй!');
   }
 };

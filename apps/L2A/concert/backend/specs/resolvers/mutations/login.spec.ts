@@ -1,4 +1,4 @@
-import { GraphQLError, GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { loginUser } from '../../../src/resolvers/mutations/login';
 import bcrypt from 'bcrypt';
 import { findUserByEmail } from '../../../src/utils/find-user-by-email';
@@ -45,16 +45,16 @@ describe('login', () => {
     (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нууц үг буруу байна!');
+      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
     }
   });
 
   it('should throw if user is not found', async () => {
     (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-    (findUserByEmail as jest.Mock).mockRejectedValue(new GraphQLError('Хэрэглэгч олдсонгүй'));
+    (findUserByEmail as jest.Mock).mockRejectedValue(new Error('Хэрэглэгч олдсонгүй'));
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Хэрэглэгч олдсонгүй');
+      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
     }
   });
 

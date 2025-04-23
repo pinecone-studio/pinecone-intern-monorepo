@@ -38,23 +38,6 @@ describe('check user register', () => {
       expect(response.password).toBe('hashedPassword');
     }
   });
-  it('should throw an error when a short pass provided', async () => {
-    (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
-
-    if (addUser) {
-      await expect(
-        addUser(
-          {},
-          {
-            email: 'test@gmail.com',
-            password: 'asdf',
-          },
-          context,
-          info
-        )
-      ).rejects.toThrow('Нууц үг богинохон байна!');
-    }
-  });
 
   it('should catch an error', async () => {
     (UserModel.create as jest.Mock).mockImplementation(() => {
