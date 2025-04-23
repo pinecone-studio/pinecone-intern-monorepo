@@ -17,6 +17,7 @@ const SignInForm = () => {
       initialValues={{ email: '', password: '' }}
       validationSchema={SignInSchema}
       onSubmit={(values) => {
+        console.log(values)
         }}
     >
       {() => (
