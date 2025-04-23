@@ -107,7 +107,7 @@
     "embla-carousel-react": "^8.5.2",
     "env-cmd": "10.1.0",
     "express": "4.18.1",
-    "formik": "2.4.6",
+    "formik": "^2.4.6",
     "graphql": "16.6.0",
     "graphql-tag": "2.12.6",
     "graphql-ws": "^6.0.3",
@@ -158,7 +158,7 @@
     "vaul": "0.9.1",
     "vercel": "^41.6.1",
     "winston": "3.11.0",
-    "yup": "1.4.0",
+    "yup": "^1.4.0",
     "zod": "3.23.8"
   },
   "devDependencies": {
