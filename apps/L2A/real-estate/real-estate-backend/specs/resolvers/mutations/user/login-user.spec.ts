@@ -8,7 +8,7 @@ jest.mock('../../../../src/models/user', () => ({
   USER_MODEL: mockedUserModel,
 }));
 
-// 💡 Import AFTER the mock
+
 import { loginUser } from '../../../../src/resolvers/mutations/user/login-user';
 
 type LoginResponse = {

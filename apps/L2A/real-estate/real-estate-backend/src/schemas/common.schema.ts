@@ -12,17 +12,17 @@ export const typeDefs = gql`
   type User {
     _id:String!
     email:String!
-    password:String!
-    isAdming:String!
-    phone:Int!
-    updatedAt: Date
-    createdAt:Date 
+    isAdmin:String!
   }
 
   type tokenResponse {
     token:String!
   }
 
+  type createUserToken{
+    token:String!
+    user:User!
+  }
 
 
   type Query {
@@ -32,5 +32,6 @@ export const typeDefs = gql`
   type Mutation {
     sampleMutation: String!
     loginUser(email:String!, password:String!): tokenResponse
+    createUser(email:String!, password:String!): createUserToken!
   }
 `;
