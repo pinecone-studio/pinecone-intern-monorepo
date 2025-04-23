@@ -212,6 +212,7 @@
     "dotenv-cli": "7.2.1",
     "dotenv-webpack": "8.0.1",
     "esbuild": "0.19.2",
+    "formik": "2.4.6",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.1",
     "eslint-config-prettier": "9.0.0",
