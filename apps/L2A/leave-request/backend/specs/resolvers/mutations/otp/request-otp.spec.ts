@@ -1,5 +1,5 @@
 import { OTP } from "apps/L2A/leave-request/backend/src/models/models";
-import { requestOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations";
+import { requestOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations/otp/request-otp";
 import { sendEmail } from "apps/L2A/leave-request/backend/src/resolvers/mutations/otp/send-email";
 import { randomInt } from "crypto";
 

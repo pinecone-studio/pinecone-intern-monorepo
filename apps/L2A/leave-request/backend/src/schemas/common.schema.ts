@@ -2,33 +2,46 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar JSON
+scalar Date
 
-  scalar Date
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  profilePicture: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
 
-  type User {
-    id: ID!
-    username: String!
-    email: String!
-    profilePicture: String!
-    role: String!
-    createdAt: Date!
-    updatedAt: Date!
-  }
+input UserInput {
+  username: String!
+  email: String!
+  profilePicture: String!
+}
 
-  input UserInput {
-    username: String!
-    email: String!
-    profilePicture: String!
-    role: String!
-  }
+type AuthPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
 
-  type Query {
-    sampleQuery: String!
-  }
+type TokenPayload {
+  accessToken: String!
+  refreshToken: String!
+}
 
-  type Mutation {
-    createUser(userArgs: UserInput): User!
-    requestOTP(email: String!): Boolean
-    verifyOTP(email: String!, otp: String!): Boolean
-  }
+type Query {
+  sampleQuery: String!
+  me: User
+}
+
+type Mutation {
+  createUser(userArgs: UserInput): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  refreshToken(token: String!): TokenPayload!
+  requestOTP(email: String!): Boolean
+  verifyOTP(email: String!, otp: String!): Boolean
+}
+
 `;
+

@@ -1,7 +1,8 @@
-import * as Mutation from './mutations';
-import * as Query from './queries';
+import { queryResolvers } from './queries';
+import { mutationResolvers } from './mutations';
 
 export const resolvers = {
-  Mutation,
-  Query,
+  Query: queryResolvers,  // Query resolvers
+  Mutation: mutationResolvers,  // Mutation resolvers
 };
+
