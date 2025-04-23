@@ -1,13 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-
+ 
 # compiled output
 dist
 tmp
 /out-tsc
-
+ 
 # dependencies
 node_modules
-
+package-lock.json
+ 
+ 
 # IDEs and editors
 /.idea
 .project
@@ -16,14 +18,14 @@ node_modules
 *.launch
 .settings/
 *.sublime-workspace
-
+ 
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
+ 
 # misc
 /.sass-cache
 /connect.lock
@@ -33,19 +35,19 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-
+ 
 # System Files
 .DS_Store
 Thumbs.db
-
+ 
 .nx/cache
-
+ 
 # Next.js
 .next
 /coverage
-
+ 
 # Codegen
-
+ 
 **/generated/*.tsx
 **/generated/*.ts
 **/generated/**/*.tsx
@@ -54,28 +56,28 @@ Thumbs.db
 generated.ts
 generated.tsx
 **/generated
-
+ 
 #cypress
-
+ 
 **/cypress/results
 .cy
-
+ 
 # Code Coverage
-
+ 
 **/coverage/
 **/.nyc_output/
 .vercel
 .env
 .env.preview
-
+ 
 # Terraform
-
+ 
 **/.terraform
 **/.terraform.lock.hcl
 **/.terraform.tfstate.lock.info
 **/*.tfstate
 **/*.tfstate.*
-
+ 
 **/cypress/results
 .cy
 **/cypress/downloads
