@@ -13,11 +13,14 @@ export const Login = () => {
             <input className="rounded-md bg-black border w-[350px] h-[36px] mt-2 pl-2" />
           </div>
           <div className="bg-[#00B7F4] w-[350px] h-[36px] rounded-md text-black flex justify-center items-center mt-[24px] text-sm">Нэвтрэх</div>
-          <div className="text-[#A1A1AA] mt-[25px] text-sm">
-            Та бүртгэлтэй хаяггүй бол бүртгүүлэх хэсгээр <br /> орно уу.
+          <div className="text-[#A1A1AA] mt-[25px] text-sm flex">
+            Та бүртгэлтэй хаяггүй бол
+            <div className="underline ml-1 mr-1">бүртгүүлэх</div>
+            <p className="">
+              хэсгээр <br /> орно уу.
+            </p>
           </div>
         </div>
-        <div className="bg-[#00B7F4] bg-[#0D0D0F]  blur-[200] "></div>
       </div>
     </div>
   );

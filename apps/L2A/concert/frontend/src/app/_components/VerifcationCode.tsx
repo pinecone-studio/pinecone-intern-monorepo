@@ -3,10 +3,10 @@ import { GoArrowLeft } from 'react-icons/go';
 import { FiRefreshCw } from 'react-icons/fi';
 export const VerificationCode = () => {
   return (
-    <div className="bg-black flex justify-center">
-      <div className="w-[446px] h-[240px] border-[1px]  border-[#27272A] rounded-2xl">
+    <div className="bg-black flex justify-center h-[100vh] w-[100%]">
+      <div className="w-[446px] h-[240px] border-[1px]  border-[#27272A] rounded-2xl mt-[190px]">
         <div className="w-[350px] h-[220px] ml-[48px]">
-          <div className="text-[#A1A1AA] mt-[25px] text-sm">Имэйл хаяг руу илгээсээн 4 оронтой кодыг оруулна уу.</div>
+          <div className="text-[#A1A1AA] mt-[32px] text-sm">Имэйл хаяг руу илгээсээн 4 оронтой кодыг оруулна уу.</div>
           <div className="flex justify-center mt-[24px] text-white  hover: border-white">
             <InputOTP maxLength={4} className="">
               <InputOTPGroup>
