@@ -1,22 +1,19 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import AdminHeader from '@/app/admin/_components/Header';
 import '@testing-library/jest-dom';
-
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => <img data-testid={props['data-testid'] || 'next-image'} {...props} />,
 }));
-
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }));
-
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -27,7 +24,6 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
-
 describe('AdminHeader Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,32 +42,16 @@ describe('AdminHeader Component', () => {
     const avatarFallback = screen.getByText('CN');
     expect(avatarFallback).toBeInTheDocument();
   });
-
-  it('should have a menu button', () => {
+  it('should not have a mobile menu button', () => {
     render(<AdminHeader />);
-    const menuButton = screen.getByLabelText('Toggle menu');
-    expect(menuButton).toBeInTheDocument();
+    const menuButton = screen.queryByLabelText('Toggle menu');
+    expect(menuButton).not.toBeInTheDocument();
   });
-
-  it('should toggle mobile menu when menu button is clicked', () => {
-    render(<AdminHeader />);
-    const menuButton = screen.getByLabelText('Toggle menu');
-    fireEvent.click(menuButton);
-    const mobileMenuItems = screen.getAllByText(/Захиалга|Төсөв|Хоол|Ширээ/);
-    expect(mobileMenuItems.some(item => item.className.includes('md:hidden'))).toBe(true);
-    fireEvent.click(menuButton);
-  });
-
-  it('should highlight active menu item when clicked', () => {
+  it('should highlight menu item on hover', () => {
     render(<AdminHeader />);
     const menuItems = screen.getAllByText(/Захиалга|Төсөв|Хоол|Ширээ/);
-    const desktopItems = menuItems.filter(item => item.className.includes('hidden md:block'));
-    const secondItem = desktopItems[1];
-    fireEvent.click(secondItem);
-    expect(secondItem.className).toContain('after:bg-black');
-    const firstItem = desktopItems[0];
-    expect(firstItem.className).toContain('after:bg-transparent');
-    expect(secondItem.className).toContain('after:bg-black');
-    expect(firstItem.className).toMatch(/after:bg-transparent hover:after:bg-black/);
+    const secondItem = menuItems[1];
+    fireEvent.mouseEnter(secondItem);
+    expect(secondItem).toHaveClass('hover:bg-gray-100');
   });
 });
