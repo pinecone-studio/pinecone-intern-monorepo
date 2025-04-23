@@ -11,7 +11,6 @@ export const addUser: MutationResolvers['addUser'] = async (_, { email, password
     const user = await UserModel.create({ email, password: encryptedPassword });
     return user;
   } catch (err) {
-    console.log(err);
     if (err instanceof GraphQLError) {
       throw err;
     }
