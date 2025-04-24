@@ -8,8 +8,8 @@
     "coverage",
     "libs/**",
     "src/components/**",
-    "src/app/**/_components/**",
-    "src/app/**/components/**",
+    "src/**/_components/**",
+    "src/**/_features/**",
     "src/common/**",
     "node_modules"
   ],
