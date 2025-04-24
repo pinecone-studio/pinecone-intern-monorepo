@@ -1,4 +1,3 @@
-// login.spec.ts
 import { login } from 'apps/L2A/leave-request/backend/src/resolvers/mutations/user/login';
 import { User } from 'apps/L2A/leave-request/backend/src/models/models';
 import * as tokenUtils from 'apps/L2A/leave-request/backend/src/utils/token';
