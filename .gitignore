@@ -81,4 +81,4 @@ generated.tsx
 **/cypress/downloads
 yarn.lock
 bun.lockb
-package.json
+package-lock.json
