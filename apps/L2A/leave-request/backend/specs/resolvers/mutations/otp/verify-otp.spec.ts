@@ -1,5 +1,5 @@
 import { OTP } from "apps/L2A/leave-request/backend/src/models/models";
-import { verifyOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations";
+import { verifyOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations/otp/verify-otp";
 
 
 jest.mock("apps/L2A/leave-request/backend/src/models/models", () => ({
