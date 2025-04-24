@@ -15,10 +15,8 @@ export async function requestOTP(_: any, { email }: { email: string }) {
     );
 
     await sendEmail(normalizedEmail, otp);
-    console.log(`[OTP] Sent ${otp} to ${normalizedEmail}`);
     return true;
   } catch (err) {
-    console.error("[OTP ERROR]", err);
     return false;
   }
 }
