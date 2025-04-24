@@ -8,7 +8,7 @@ const SeatInfo = () => {
     { type: 'Энгийн тасалбар', count: 38, price: "159'000₮", color: 'text-pink-400' },
   ];
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-[80%] p-6">
       <p className="text-white p-6">Тоглолт үзэх өдөрөө сонгоно уу.</p>
       <Select>
         <SelectTrigger className="w-full bg-white text-black dark:bg-zinc-800 dark:text-white border dark:border-zinc-700" data-cy="tag-trigger">

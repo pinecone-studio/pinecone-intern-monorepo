@@ -1,5 +1,5 @@
 import { Calendar, Clock, MapPin } from 'lucide-react';
-import Image from 'next/image';
+import StadiumMap from './StadiumMap';
 
 const AboutEvent = () => {
   return (
@@ -40,7 +40,7 @@ const AboutEvent = () => {
       </div>
       <div>
         <h2 className="font-semibold mb-2">Stage plan:</h2>
-        <Image src="/assets/SeatDetail.svg" alt="Stage Plan" className="rounded-md w-full max-w-md" />
+        <StadiumMap />
       </div>
     </div>
   );
