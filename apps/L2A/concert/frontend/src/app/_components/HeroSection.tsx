@@ -1,23 +1,16 @@
-import React from "react";
-import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
-import Image from "next/image";
+import React from 'react';
+import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
+import Image from 'next/image';
 
 const HeroSection = () => {
   return (
     <div className="relative h-[550px] w-full bg-black text-white">
       <div className="absolute inset-0">
-        <Image 
-          src={`/DashbourdImg.png`}
-          alt="Concert Background"
-          fill
-          className=" object-cover opacity-60"
-        />
+        <Image src={`/DashbourdImg.png`} alt="Concert Background" fill className=" object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70"></div>
       </div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-        <div className="bg-white/10 px-4 py-1 rounded-full mb-4 text-sm font-light tracking-wider">
-          coldplay
-        </div>
+        <div className="bg-white/10 px-4 py-1 rounded-full mb-4 text-sm font-light tracking-wider">coldplay</div>
         <h1 className="text-4xl md:text-6xl font-bold">
           MUSIC <span className="font-normal">of the</span> SPHERES
         </h1>

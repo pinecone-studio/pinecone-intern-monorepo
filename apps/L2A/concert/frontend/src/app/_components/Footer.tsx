@@ -29,7 +29,7 @@ const Footer = () => {
             </div>
             <div className="flex items-start gap-2">
               <FaHeadphones className="text-white mt-1" />
-                 <div>
+              <div>
                 <p>Customer Support:</p>
                 <p className="text-white">Available 24/7</p>
               </div>
