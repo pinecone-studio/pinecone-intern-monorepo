@@ -100,7 +100,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["dotenv -e apps/L2A/leave-request/frontend/.env -- echo 'env loaded'"],
+        "commands": ["dotenv -e apps/L2A/leave-request/backend/.env -- echo 'env loaded'"],
         "parallel": false
       }
     },
