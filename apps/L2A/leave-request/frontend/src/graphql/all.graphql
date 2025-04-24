@@ -6,13 +6,14 @@ query SampleQuery {
 # Mutations
 mutation CreateUser($userArgs: UserInput!) {
   createUser(userArgs: $userArgs) {
-    id
-    username
-    email
-    profilePicture
-    role
-    createdAt
-    updatedAt
+    user {
+      id
+      username
+      email
+      profilePicture
+      createdAt
+      updatedAt
+    }
   }
 }
  
