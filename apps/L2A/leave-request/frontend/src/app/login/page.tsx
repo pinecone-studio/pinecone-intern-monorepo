@@ -1,10 +1,10 @@
 'use client';
 
-import { Dialog } from "./_features/Dialog";
+import { LoginForm } from "./_features/LoginForm";
 
 const Page = () => {
   return <div>
-    <Dialog />
+    <LoginForm />
   </div>;
 };
 

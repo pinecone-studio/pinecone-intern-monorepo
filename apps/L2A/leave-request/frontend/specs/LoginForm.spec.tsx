@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom'; 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Dialog } from '@/app/login/_features/Dialog';
+import { LoginForm } from '@/app/login/_features/LoginForm';
 
 describe('Dialog Component', () => {
-  it('renders email input and login button', () => {
-    render(<Dialog />);
+  it('1. Should render email input and login button', () => {
+    render(<LoginForm />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
-  it('shows error class on invalid email', async () => {
-    render(<Dialog />);
+  it('2. Should show error class on invalid email', async () => {
+    render(<LoginForm />);
     const emailInput = screen.getByRole('textbox');
     fireEvent.change(emailInput, { target: { value: 'invalid' } });
 
@@ -17,8 +17,8 @@ describe('Dialog Component', () => {
       expect(emailInput).toHaveClass('border-red-500');
     });
    });
-  it('enables login button on valid email', async () => {
-    render(<Dialog />);
+  it('3. Should enable login button on valid email', async () => {
+    render(<LoginForm/>);
     const emailInput = screen.getByRole('textbox');
     fireEvent.change(emailInput, { target: { value:'test@example.com'} });
 
@@ -28,8 +28,8 @@ describe('Dialog Component', () => {
       expect(loginButton).not.toBeDisabled();
     });
   });
-  it('disables login button when email is invalid', async () => {
-    render(<Dialog />);
+  it('4. Should disable login button when email is invalid', async () => {
+    render(<LoginForm/>);
     const emailInput = screen.getByRole('textbox');
     fireEvent.change(emailInput, { target: { value: 'not-an-email' } });
 

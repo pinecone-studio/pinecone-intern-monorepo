@@ -3,11 +3,14 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    email: { String, required: true },
-    password: { String, required: true },
-    username: { String, required: true },
-    profilePicture: { String, required: true },
-    role: { enum: ['admin', 'user'], default: 'user' },
+    email: { type: String, required: true },
+    username: { type: String, required: true },
+    profilePicture: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ['admin', 'manager', 'employeer'],
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -50,7 +53,11 @@ const requestTypeSchema = new Schema(
   {
     name: { type: String, required: true },
     limit: { type: Number, required: true },
-    period: { enum: ['day', 'week', 'month', 'yearly'], required: true },
+    period: {
+      type: String,
+      enum: ['day', 'week', 'month', 'yearly'],
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -58,8 +65,15 @@ const requestTypeSchema = new Schema(
   }
 );
 
-const User = mongoose.model('User', userSchema);
-const LeaveRequest = mongoose.model('LeaveRequest', leaveRequestSchema);
-const RequestType = mongoose.model('RequestType', requestTypeSchema);
+const otpSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  otp: { type: Number, required: true },
+  expiresAt: { type: Date, required: true },
+});
 
-export { User, LeaveRequest, RequestType };
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+const LeaveRequest = mongoose.models.LeaveRequest || mongoose.model('LeaveRequest', leaveRequestSchema);
+const RequestType = mongoose.models.RequestType || mongoose.model('RequestType', requestTypeSchema);
+const OTP = mongoose.models.OTP || mongoose.model('OTP',otpSchema);
+
+export { User, LeaveRequest, RequestType, OTP };

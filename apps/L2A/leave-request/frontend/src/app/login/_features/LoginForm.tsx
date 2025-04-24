@@ -2,15 +2,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Image from 'next/image';
-import { EmailInput } from "../_components/Input";
-import { LoginButton } from "../_components/Buton";
+import { EmailInput } from "../_components/EmailInput";
+import { LoginButton } from "../_components/LoginButon";
 
 const schema = z.object({
   email: z.string().email(),
 });
 type FormData = z.infer<typeof schema>;
 
-export const Dialog = () => {
+export const LoginForm = () => {
   const {
     register,
     handleSubmit,
