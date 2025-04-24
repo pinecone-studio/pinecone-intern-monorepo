@@ -1,5 +1,1 @@
-import { sampleQuery } from "./sample-query";
-
-export const queryResolvers = {
-sampleQuery
-};
+export * from './sample-query'
