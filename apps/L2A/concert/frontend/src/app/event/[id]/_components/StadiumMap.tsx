@@ -11,7 +11,7 @@ type ZoneType = {
 };
 
 type StadiumMapProps = {
-  zones?: ZoneType[]; // Accept zones as a prop for testability
+  zones?: ZoneType[];
 };
 
 const defaultZones: ZoneType[] = [
