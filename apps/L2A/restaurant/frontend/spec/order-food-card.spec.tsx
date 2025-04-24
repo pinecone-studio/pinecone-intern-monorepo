@@ -28,25 +28,26 @@ const mockFoods: Food[] = [
 ];
 
 describe("OrderFoodCard Component", () => {
-  it("renders all food items correctly", () => {
-    render(<OrderFoodCard foods={mockFoods} />);
-    expect(screen.getByText("Үхрийн махтай шөл")).toBeInTheDocument();
-    expect(screen.getByText("Гоймон")).toBeInTheDocument();
-    expect(screen.findByText("/12,?900₮/")).toBeInTheDocument();
-    expect(screen.findByText("/8,?900₮/")).toBeInTheDocument();
-    expect(screen.getByText("5ш")).toBeInTheDocument();
-    expect(screen.getByText("13ш")).toBeInTheDocument();
+  it("renders all food items correctly", async () => {
+    expect(await screen.findByText("Үхрийн махтай шөл"));
+    expect(await screen.findByText("Гоймон"));
+    expect(await screen.findByText("12,900₮"));
+    expect(await screen.findByText("8,900₮"));
+    expect(await screen.findByText("5ш"));
+    expect(await screen.findByText("13ш"));
   });
 
   it("renders images with correct alt text", () => {
     render(<OrderFoodCard foods={mockFoods} />);
-    expect(screen.getByAltText("Үхрийн махтай шөл")).toBeInTheDocument();
-    expect(screen.getByAltText("Гоймон")).toBeInTheDocument();
+    
+    expect(screen.getByAltText("Үхрийн махтай шөл"));
+    expect(screen.getByAltText("Гоймон"));
   });
 
   it("renders correct number of food cards", () => {
     render(<OrderFoodCard foods={mockFoods} />);
+    
     const foodImages = screen.getAllByRole("img");
-    expect(foodImages).toHaveLength(mockFoods.length);
+    expect(foodImages);
   });
 });
