@@ -1,4 +1,4 @@
-import { LogIn } from './_features/Login';
+import { LogIn } from './_features/login';
 
 const LoginPage = () => {
   return (
