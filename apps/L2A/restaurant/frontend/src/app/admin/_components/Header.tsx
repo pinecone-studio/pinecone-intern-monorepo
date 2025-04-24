@@ -1,6 +1,7 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 const AdminHeader = () => {
   const menuItems = ["Захиалга", "Төсөв", "Хоол", "Ширээ"];
   const renderNavItem = (item: string, index: number) => (
