@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 
 export const Header = () => {
   const pathname = usePathname();
-  console.log(pathname);
   const isTicketPage = pathname === '/admin/ticket';
   const isCancelRequestPage = pathname === '/admin/cancel-request';
 

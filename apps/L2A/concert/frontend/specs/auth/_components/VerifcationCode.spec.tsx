@@ -1,5 +1,6 @@
 import { VerificationCode } from '@/app/auth/_components/VerifcationCode';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 global.ResizeObserver = class {
   observe = jest.fn();
@@ -10,5 +11,7 @@ global.ResizeObserver = class {
 describe('render verificationcode.tsx', () => {
   it('render verificationcode component', () => {
     render(<VerificationCode />);
+
+    expect(screen.getByText(/Имэйл хаяг руу илгээсээн 4 оронтой кодыг оруулна уу./i)).toBeInTheDocument();
   });
 });
