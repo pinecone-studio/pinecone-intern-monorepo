@@ -24,11 +24,8 @@ const HeroSection = () => {
         <div className="flex items-center gap-2 mt-4 text-lg font-medium">
           <Calendar className="w-5 h-5" />
           <span>10.31 – 11.01</span>
-          
         </div>
       </div>
-
-      {/* Navigation Arrows */}
       <button className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full">
         <ChevronLeft className="w-6 h-6 text-white" />
       </button>

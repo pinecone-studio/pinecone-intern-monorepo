@@ -1,6 +1,4 @@
-
 import { FaEnvelope, FaPhoneAlt, FaHeadphones } from 'react-icons/fa';
-
 const Footer = () => {
   return (
     <footer className="bg-black text-white px-6 py-10">
@@ -12,7 +10,6 @@ const Footer = () => {
           </div>
           <p className="text-gray-400">© 2024 Booking Mongolia. All Rights Reserved.</p>
         </div>
-
         <div className="text-gray-400 w-full md:w-auto">
           <h3 className="text-lg mb-4 text-center md:text-left">Contact Information</h3>
           <div className="flex flex-col md:flex-row gap-6">
@@ -32,7 +29,7 @@ const Footer = () => {
             </div>
             <div className="flex items-start gap-2">
               <FaHeadphones className="text-white mt-1" />
-              <div>
+                 <div>
                 <p>Customer Support:</p>
                 <p className="text-white">Available 24/7</p>
               </div>
