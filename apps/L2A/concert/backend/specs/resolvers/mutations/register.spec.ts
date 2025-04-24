@@ -33,6 +33,7 @@ describe('check user register', () => {
 
     if (addUser) {
       const response: response = await addUser({}, args, context, info);
+      
       expect(response).toBeDefined();
       expect(response.email).toBe('test@gmail.com');
       expect(response.password).toBe('hashedPassword');
@@ -43,6 +44,7 @@ describe('check user register', () => {
     (UserModel.create as jest.Mock).mockImplementation(() => {
       throw new Error('db burned to the ground');
     });
+    
     jest.mock('../../../src/utils/hash-password', () => ({
       hashPassword: jest.fn().mockResolvedValue(null),
     }));

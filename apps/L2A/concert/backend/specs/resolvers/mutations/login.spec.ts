@@ -23,7 +23,9 @@ describe('login', () => {
 
     if (loginUser) {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+      
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
+      
       expect(result.email).toBe('test@gmail.com');
       expect(result.password).toBe('hashedPassword');
       expect(result.JWT).toBe('token');
@@ -32,9 +34,10 @@ describe('login', () => {
 
   it('test jwt token', async () => {
     (findUserByEmail as jest.Mock).mockResolvedValue({ id: '1', password: 'hashedPassword', email: 'test@gmail.com' });
-
+    
     if (loginUser) {
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
+      
       expect(result.id).toBe('1');
       expect(result.JWT).toBe('token');
     }

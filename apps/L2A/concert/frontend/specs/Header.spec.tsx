@@ -9,6 +9,5 @@ describe('Header', () => {
     expect(screen.getByText(/Бүртгүүлэх/i)).toBeInTheDocument();
     expect(screen.getByText(/Нэвтрэх/i)).toBeInTheDocument();
     expect(screen.getByText(/TICKET BOOKING/i)).toBeInTheDocument();
-
   });
 });
