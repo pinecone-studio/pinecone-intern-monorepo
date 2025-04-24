@@ -1,8 +1,10 @@
 'use client';
-import AdminHeader from "./_components/Header";
+import AdminHeader from './_components/Header';
 const AdminPage = () => {
-  return <div>
-<AdminHeader/>
-  </div>;
+  return (
+    <div>
+      <AdminHeader />
+    </div>
+  );
 };
 export default AdminPage;
