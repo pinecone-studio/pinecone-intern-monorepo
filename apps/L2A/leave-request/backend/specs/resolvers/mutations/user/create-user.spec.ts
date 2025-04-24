@@ -1,6 +1,7 @@
 import { createUser } from '../../../../src/resolvers/mutations/user/create-user';
 import { User } from '../../../../src/models/models';
 
+process.env.JWT_SECRET = 'test-secret';
 jest.mock('../../../../src/models/models');
 
 describe('User mutation createUser resolver', () => {
