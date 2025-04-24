@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import AboutEvent from '@/app/event/[id]/components/AboutEvent';
+import AboutEvent from '@/app/event/[id]/_components/AboutEvent';
 import '@testing-library/jest-dom';
 
 describe('AboutEvent', () => {

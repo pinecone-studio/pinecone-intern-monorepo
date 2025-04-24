@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import StadiumMap from '@/app/event/[id]/components/StadiumMap';
+import StadiumMap from '@/app/event/[id]/_components/StadiumMap';
 import '@testing-library/jest-dom';
 
 describe('StadiumMap Component', () => {
@@ -48,13 +48,13 @@ describe('StadiumMap Component', () => {
         fill: '#000',
         type: 'Normal',
         angleStart: 0,
-        angleEnd: 270, // large arc
+        angleEnd: 270,
       },
     ];
     render(<StadiumMap zones={largeArcZone} />);
     const path = screen.getByTestId('stadium-map-svg').querySelector('path');
     const d = path?.getAttribute('d');
-    expect(d).toMatch(/A \d+ \d+ 0 1 0/); // large-arc-flag = 1, sweep-flag = 0
+    expect(d).toMatch(/A \d+ \d+ 0 1 0/);
   });
 
   it('uses the correct large-arc-flag in the path for angles ≤ 180', () => {
@@ -64,12 +64,12 @@ describe('StadiumMap Component', () => {
         fill: '#000',
         type: 'Normal',
         angleStart: 0,
-        angleEnd: 90, // small arc
+        angleEnd: 90,
       },
     ];
     render(<StadiumMap zones={smallArcZone} />);
     const path = screen.getByTestId('stadium-map-svg').querySelector('path');
     const d = path?.getAttribute('d');
-    expect(d).toMatch(/A \d+ \d+ 0 0 0/); // large-arc-flag = 0, sweep-flag = 0
+    expect(d).toMatch(/A \d+ \d+ 0 0 0/);
   });
 });

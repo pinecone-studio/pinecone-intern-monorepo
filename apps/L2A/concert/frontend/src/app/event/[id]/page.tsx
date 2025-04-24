@@ -1,7 +1,7 @@
 'use client';
 
-import AboutEvent from './components/AboutEvent';
-import SeatInfo from './components/SeatInfo';
+import AboutEvent from './_components/AboutEvent';
+import SeatInfo from './_components/SeatInfo';
 
 const Page = () => {
   return (
