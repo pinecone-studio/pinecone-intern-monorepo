@@ -18,6 +18,7 @@ mutation RegisterUser($input: RegisterUserInput!) {
     sessionToken
   }
 }
+
 mutation SendMessage($input: SendMessageInput!) {
   sendMessage(input: $input) {
    _id
@@ -27,5 +28,18 @@ mutation SendMessage($input: SendMessageInput!) {
     query
     response
     createdAt
+  }
+}
+
+mutation LoginUser($input: LoginInput!) {
+  loginUser(input: $input) {
+    user {
+      _id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+    sessionToken
   }
 }

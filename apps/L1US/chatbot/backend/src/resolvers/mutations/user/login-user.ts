@@ -1,13 +1,13 @@
 import bcrypt from 'bcryptjs';
 import { UserModel } from '../../../models';
 import { catchError, generateToken } from '../../../utils';
-import { MutationResolvers, User } from '../../../generated';
+import { MutationResolvers } from '../../../generated';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_, { input }) => {
   const { email, password } = input;
 
   try {
-    const user = await UserModel.findOne<User>({ email });
+    const user = await UserModel.findOne({ email });
     if (!user) {
       throw new Error('User not found');
     }

@@ -1,4 +1,5 @@
-import { FaEnvelope, FaPhoneAlt, FaHeadphones } from "react-icons/fa";
+
+import { FaEnvelope, FaPhoneAlt, FaHeadphones } from 'react-icons/fa';
 
 const Footer = () => {
   return (

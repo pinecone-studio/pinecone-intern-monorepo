@@ -8,5 +8,13 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../../coverage/apps/L2A/restaurant/frontend',
-  collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/generated/**/*.ts', '!src/app/**/*.tsx', '!src/components/providers/*.tsx'],
+  collectCoverageFrom: [
+    '!src/app/**/*.{ts,tsx,js,jsx}',
+    'src/app/**/_components/**/*.tsx',
+    'src/app/**/components/*.tsx',
+    'src/app/**/_components/*.tsx',
+    '!src/app/**/_features/**/*.tsx',
+    '!src/**/generated/**/*.ts',
+    '!src/components/providers/*.tsx',
+  ],
 };
