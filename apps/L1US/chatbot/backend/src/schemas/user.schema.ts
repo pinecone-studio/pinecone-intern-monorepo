@@ -7,7 +7,6 @@ export const UserTypeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    password: String!
     createdAt: Date!
     updatedAt: Date!
   }

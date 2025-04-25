@@ -1,4 +1,4 @@
-import { sampleQuery } from '../../../src/resolvers/queries';
+import { sampleQuery } from "../../../src/resolvers/queries/sample-query";
 
 describe('sampleQuery', () => {
   it('should return "Hello sample query"', () => {

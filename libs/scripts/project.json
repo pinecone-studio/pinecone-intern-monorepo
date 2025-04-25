@@ -31,6 +31,18 @@
         }
       }
     },
+    "execute-cypress": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/commands/execute-cypress.ts"
+      }
+    },
+    "check-cypress-code-coverage": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node libs/scripts/src/actions/e2e/check-cypress-code-coverage.ts"
+      }
+    },
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
