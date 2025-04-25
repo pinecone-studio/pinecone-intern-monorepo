@@ -16,14 +16,15 @@ type Props = {
 
 const OrderFoodCard = ({ foods }: Props) => {
   return (
-    <div>
+    <div data-testid="order-food-card">
       {foods.map((food) => (
         <div
           key={food.id}
           className="rounded-md border flex h-[87px] w-[536px] mt-5 gap-4"
         >
           <div>
-            <Image
+            <Image 
+            data-testid="food-image"
               src={food.imageUrl}
               alt={food.name}
               width={86}

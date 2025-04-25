@@ -2,52 +2,43 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import OrderFoodCard, { Food } from "@/app/_components/OrderFoodCard";
 
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: (props: any) => {
-    const { src, alt, ...rest } = props;
-    return <img src={src} alt={alt} {...rest} />;
-  },
-}));
+describe("OrderFoodCard", () => {
+  const mockFoods: Food[] = [
+    {
+      id: 1,
+      name: "Burger",
+      price: 8000,
+      quantity: 2,
+      imageUrl: "/burger.jpg",
+    },
+    {
+      id: 2,
+      name: "Pizza",
+      price: 12000,
+      quantity: 1,
+      imageUrl: "/pizza.jpg",
+    },
+  ];
 
-const mockFoods: Food[] = [
-  {
-    id: 1,
-    name: "Үхрийн махтай шөл",
-    price: 12900,
-    quantity: 5,
-    imageUrl: "/images/beef-stirfry.jpg",
-  },
-  {
-    id: 2,
-    name: "Гоймон",
-    price: 8900,
-    quantity: 13,
-    imageUrl: "/images/noodles.jpg",
-  },
-];
-
-describe("OrderFoodCard Component", () => {
-  it("renders all food items correctly", async () => {
-    expect(await screen.findByText("Үхрийн махтай шөл"));
-    expect(await screen.findByText("Гоймон"));
-    expect(await screen.findByText("12,900₮"));
-    expect(await screen.findByText("8,900₮"));
-    expect(await screen.findByText("5ш"));
-    expect(await screen.findByText("13ш"));
+  it("renders without crashing", () => {
+    render(<OrderFoodCard foods={mockFoods} />);
+    const container = screen.getByTestId("order-food-card");
+    expect(container).toBeInTheDocument();
   });
 
-  it("renders images with correct alt text", () => {
+  it("displays correct number of food items", () => {
     render(<OrderFoodCard foods={mockFoods} />);
-    
-    expect(screen.getByAltText("Үхрийн махтай шөл"));
-    expect(screen.getByAltText("Гоймон"));
+    const images = screen.getAllByTestId("food-image");
+    expect(images).toHaveLength(mockFoods.length);
   });
 
-  it("renders correct number of food cards", () => {
+  it("displays food names, prices and quantities", () => {
     render(<OrderFoodCard foods={mockFoods} />);
-    
-    const foodImages = screen.getAllByRole("img");
-    expect(foodImages);
+
+    mockFoods.forEach((food) => {
+      expect(screen.getByText(food.name)).toBeInTheDocument();
+      expect(screen.getByText(`${food.price}₮`)).toBeInTheDocument();
+      expect(screen.getByText(`${food.quantity}ш`)).toBeInTheDocument();
+    });
   });
 });
