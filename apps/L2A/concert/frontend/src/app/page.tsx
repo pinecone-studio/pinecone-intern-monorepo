@@ -1,6 +1,6 @@
 'use client';
 
 const Page = () => {
-  return <div>home</div>;
+  return <div>tyuio</div>;
 };
 export default Page;

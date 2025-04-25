@@ -1,8 +1,7 @@
-describe('should render signup page', () => {
-  it('should render signup page', () => {
+describe('SignUp Page', () => {
+  it('should render inputs and sign up button', () => {
     cy.visit('/auth/signup');
-    cy.get('[data-cy=signup-form]').should('exist');
-    cy.get('[data-cy=signup-form]').contains('Бүртгүүлэх');
-    cy.get('[data-cy=signup-form]').contains('Та бүртгэлтэй хаяггүй бол нэвтрэх хэсгээр орно уу.');
+    cy.get('input[placeholder="Имэйл хаяг"]').should('exist');
+    cy.contains('Бүртгүүлэх').should('exist');
   });
 });

@@ -11,8 +11,8 @@ export const loginUser: MutationResolvers['loginUser'] = async (_, { email, pass
       expiresIn: '1h',
     });
 
-    return { ...user, JWT: token };
+    return { email: user.email, id: user.id, password: user.password, isAdmin: user.isAdmin, phone: user.phone, JWT: token, bookings: user.bookings };
   } catch (err) {
-    throw new Error('Нэврэхэд алдаа гарлаа!');
+    throw new Error('Нэвтрэхэд алдаа гарлаа!');
   }
 };
