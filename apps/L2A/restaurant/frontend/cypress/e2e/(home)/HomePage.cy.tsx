@@ -1,6 +1,6 @@
 describe('Home Page', () => {
     beforeEach(() => {
-      cy.visit('/');
+      cy.visit('/HomePage');
     });
   
     it('should load the home page with categories and default food list', () => {
