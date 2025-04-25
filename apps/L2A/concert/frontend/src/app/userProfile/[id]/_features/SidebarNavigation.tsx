@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 const Sidebar = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetStateAction<'profile' | 'orders' | 'password'>>; activeTab: 'profile' | 'orders' | 'password' }) => {
   return (
-    <aside className="w-64 bg-[#1c1c1e] p-4 space-y-4">
+    <aside className="w-64 bg-[#1c1c1e] p-4 space-y-4" data-cy="sidebar">
       <button
         data-cy="user-profile"
         onClick={() => setActiveTab('profile')}
@@ -19,4 +19,5 @@ const Sidebar = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetStateA
     </aside>
   );
 };
+
 export default Sidebar;
