@@ -15,13 +15,13 @@ export const AdminHeader = () => {
 
   return (
     <div className="mt-5 ml-10 mr-10 flex items-center justify-between">
-      <img src="PineconeStudio.png" className="bg-white" />
+      <img src="PineconeStudio.png" className="bg-white" alt="Pinecone Studio Logo" />
       <div className="flex items-center gap-4">
         <button className="rounded-full border p-2" onClick={() => setIsDarkMode(!isDarkMode)}>
-          {isDarkMode ? <Moon /> : <Sun />}
+          {isDarkMode ? <Moon aria-label="Moon Icon" /> : <Sun aria-label="Sun Icon" />}
         </button>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src="https://github.com/shadcn.png" alt="Avatar Image" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>

@@ -13,15 +13,6 @@ mutation CreateUser($userArgs: UserInput!) {
       updatedAt
     }
   }
-=======
-    id
-    username
-    email
-    profilePicture
-    role
-    createdAt
-    updatedAt
-  }
 }
 
 mutation RequestOTP($email: String!) {
@@ -30,4 +21,5 @@ mutation RequestOTP($email: String!) {
 
 mutation VerifyOTP($email: String!, $otp: String!) {
   verifyOTP(email: $email, otp: $otp)
+}
 

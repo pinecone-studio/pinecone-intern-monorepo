@@ -23,3 +23,4 @@ describe('Admin page tests', () => {
     cy.get('html').should('not.have.class', 'dark');
   });
 });
+});
