@@ -1,5 +1,3 @@
-// cypress/e2e/home_body.cy.ts
-
 describe('HomeBody Component', () => {
     beforeEach(() => {
       cy.visit('/');
@@ -15,13 +13,8 @@ describe('HomeBody Component', () => {
     });
   
     it('should change food items when a different category is clicked', () => {
-      // Save the first food item name to compare later
       cy.get('[data-cy="category-button"]').first().invoke('text').as('initialFood');
-  
-      // Click the second category (ensure it exists)
       cy.get('[data-cy="home-page"] button').eq(1).click();
-  
-      // Ensure the food items have changed
       cy.get('@initialFood').then((initialFood) => {
         cy.get('[data-cy="food"]').first().invoke('text').should('not.eq', initialFood);
       });
