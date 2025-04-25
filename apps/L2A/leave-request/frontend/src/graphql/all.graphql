@@ -1,18 +1,17 @@
-# Queries
 query SampleQuery {
   sampleQuery
 }
 
-# Mutations
 mutation CreateUser($userArgs: UserInput!) {
   createUser(userArgs: $userArgs) {
-    id
-    username
-    email
-    profilePicture
-    role
-    createdAt
-    updatedAt
+    user {
+      id
+      username
+      email
+      profilePicture
+      createdAt
+      updatedAt
+    }
   }
 }
 
@@ -23,3 +22,4 @@ mutation RequestOTP($email: String!) {
 mutation VerifyOTP($email: String!, $otp: String!) {
   verifyOTP(email: $email, otp: $otp)
 }
+
