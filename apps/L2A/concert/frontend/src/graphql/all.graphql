@@ -5,18 +5,3 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
-
-mutation addUser($email: String!, $password: String!) {
-  addUser(email: $email, password: $password) {
-    email
-  }
-}
-mutation LoginUser($email: String!, $password: String!) {
-  loginUser(email: $email, password: $password) {
-    email
-    id
-    isAdmin
-    phone
-    JWT
-  }
-}
