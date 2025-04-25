@@ -10,7 +10,7 @@ const HomePage = () => {
   const selectedCategory = categories.find(cat => cat.id === selectedCategoryId);
 
   return (
-    <div>
+    <div data-cy="home-page" >
       <main className="flex items-center flex-col w-[95%] mx-auto pt-10">
         <div className="text-[#441500] text-[20px] font-extralight mb-5">Хоолны цэс</div>
         
