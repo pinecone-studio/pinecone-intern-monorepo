@@ -16,7 +16,7 @@ const HomeBody = () => {
         
         <div data-cy="food" className="flex gap-2 mb-4">
           {categories.map((categor) => (
-            <button data-cy="category-button"
+            <button data-cy="category-buttons"
               key={categor.id}
               className={`px-3 py-1 rounded ${selectedCategoryId === categor.id ? "bg-[#F4F4F5] text-black" : "bg-white"}`}
               onClick={() => setSelectedCategoryId(categor.id)}
@@ -26,13 +26,13 @@ const HomeBody = () => {
           ))}
         </div>
 
-        <div className="flex flex-wrap justify-around gap-4">
+        <div data-cy="foodsdiv" className="flex flex-wrap justify-around gap-4">
           {selectedCategory?.foods.map((food) => (
-            <RenderFood data-cy="food" key={food.id} food={food} />
+            <RenderFood data-cy="foods" key={food.id} food={food} />
           ))}
         </div>
 
-        <div className="backdrop-blur-sm bg-white/30 sticky bottom-0 w-[100vw] h-[84px] flex justify-center items-center">
+        <div data-cy="Button" className="backdrop-blur-sm bg-white/30 sticky bottom-0 w-[100vw] h-[84px] flex justify-center items-center">
           <div className="w-[80%] bg-[#441500] h-[36px] rounded-md text-[14px] font-semibold flex justify-center items-center text-[#FAFAFA]">
             Захиалах
           </div>

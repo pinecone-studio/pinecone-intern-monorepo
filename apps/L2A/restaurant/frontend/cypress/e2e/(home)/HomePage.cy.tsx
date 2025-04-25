@@ -1,27 +1,35 @@
-describe('HomeBody Component', () => {
+describe('Home Page', () => {
     beforeEach(() => {
       cy.visit('/');
     });
   
-    it('should render home page and category buttons', () => {
+    it('should load the home page with categories and default food list', () => {
       cy.get('[data-cy="home-page"]').should('exist');
-      cy.get('[data-cy="home-page"] button').should('have.length.greaterThan', 0);
-    });
-  
-    it('should display food items for the default category', () => {
-      cy.get('[data-cy="food"]').should('have.length.greaterThan', 0);
-    });
-  
-    it('should change food items when a different category is clicked', () => {
-      cy.get('[data-cy="category-button"]').first().invoke('text').as('initialFood');
-      cy.get('[data-cy="home-page"] button').eq(1).click();
-      cy.get('@initialFood').then((initialFood) => {
-        cy.get('[data-cy="food"]').first().invoke('text').should('not.eq', initialFood);
+      cy.get('[data-cy="food"]').within(() => {
+        cy.get('[data-cy="category-buttons"]').should('have.length.greaterThan', 0);
       });
+      cy.get('[data-cy="Button"]').contains('Захиалах');
     });
   
-    it('should display the sticky order button', () => {
-      cy.contains('Захиалах').should('be.visible');
+    it('should switch categories and show new foods', () => {
+      let initialFoodText = '';
+      cy.get('[data-cy="foodsdiv"]')
+        .first()
+        .invoke('text')
+        .then((text) => {
+          initialFoodText = text.trim();
+          cy.get('[data-cy="category-buttons"]').eq(1).click();
+          cy.get('[data-cy="foodsdiv"]')
+            .first()
+            .invoke('text')
+            .should((newText) => {
+              expect(newText.trim()).not.to.eq(initialFoodText);
+            });
+        });
+    });
+  
+    it('should highlight the selected category button', () => {
+      cy.get('[data-cy="category-buttons"]').eq(2).click().should('have.class', 'bg-[#F4F4F5]');
     });
   });
   
