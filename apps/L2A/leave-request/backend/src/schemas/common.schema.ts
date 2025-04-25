@@ -2,18 +2,14 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar JSON
+scalar Date
 
-  scalar Date
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  profilePicture: String!
+  createdAt: Date!
+  updatedAt: Date!
+}`;
 
-  enum Response {
-    Success
-  }
-
-  type Query {
-    sampleQuery: String!
-  }
-
-  type Mutation {
-    sampleMutation: String!
-  }
-`;
