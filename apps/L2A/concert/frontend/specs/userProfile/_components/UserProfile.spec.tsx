@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import UserProfile from '@/app/userProfile/[id]/components/UserProfile';
+import UserProfile from '@/app/userProfile/[id]/_components/UserProfile';
 
 describe('UserProfile component', () => {
   it('renders input fields and button', () => {

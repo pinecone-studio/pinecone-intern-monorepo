@@ -1,19 +1,19 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import UserProfileContainer from '@/app/userProfile/[id]/components/profileNavigation';
+import UserProfileContainer from '@/app/userProfile/[id]/_components/ProfileNavigation';
 
-jest.mock('@/app/userProfile/[id]/components/UserProfile', () => {
+jest.mock('@/app/userProfile/[id]/_components/UserProfile', () => {
   const MockUserProfile = () => <div data-testid="user-profile">User Profile Component</div>;
   return MockUserProfile;
 });
 
-jest.mock('@/app/userProfile/[id]/components/OrderHistory', () => {
+jest.mock('@/app/userProfile/[id]/_components/OrderHistory', () => {
   const MockOrderHistory = () => <div data-testid="order-history-content">Order History Component</div>;
   return { __esModule: true, default: MockOrderHistory };
 });
 
-jest.mock('@/app/userProfile/[id]/components/ForgetPassword', () => {
+jest.mock('@/app/userProfile/[id]/_components/ForgetPassword', () => {
   const MockForgetPassword = () => <div data-testid="forget-password">Forget Password Component</div>;
   return MockForgetPassword;
 });

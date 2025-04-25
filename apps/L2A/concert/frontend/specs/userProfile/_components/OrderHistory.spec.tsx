@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import OrderHistory from '@/app/userProfile/[id]/components/OrderHistory';
+import OrderHistory from '@/app/userProfile/[id]/_components/OrderHistory';
 import '@testing-library/jest-dom';
 
 const mockProps = {

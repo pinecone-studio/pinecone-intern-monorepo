@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ForgetPassword from '@/app/userProfile/[id]/components/ForgetPassword';
+import ForgetPassword from '@/app/userProfile/[id]/_components/ForgetPassword';
 import '@testing-library/jest-dom';
 describe('ForgetPassword component', () => {
   beforeEach(() => {

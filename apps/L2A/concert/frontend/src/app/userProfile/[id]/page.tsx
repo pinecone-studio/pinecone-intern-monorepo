@@ -1,4 +1,4 @@
-import UserProfileContainer from './components/profileNavigation';
+import UserProfileContainer from './_components/ProfileNavigation';
 
 const App = () => {
   return (
