@@ -1,4 +1,5 @@
 'use client';
+
 export const PassRecovery = () => {
   return (
     <div className="bg-black flex justify-center w-[100%] h-[100vh] ">

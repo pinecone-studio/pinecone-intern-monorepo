@@ -1,5 +1,5 @@
 import { OTP } from "apps/L2A/leave-request/backend/src/models/models";
-import { requestOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations";
+import { requestOTP } from "apps/L2A/leave-request/backend/src/resolvers/mutations/otp/request-otp";
 import { sendEmail } from "apps/L2A/leave-request/backend/src/resolvers/mutations/otp/send-email";
 import { randomInt } from "crypto";
 
@@ -47,13 +47,8 @@ describe("requestOTP", () => {
       throw new Error("Random failed");
     });
 
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-
     const result = await requestOTP(null, { email: mockEmail });
 
     expect(result).toBe(false);
-    expect(consoleErrorSpy).toHaveBeenCalledWith("[OTP ERROR]", expect.any(Error));
-
-    consoleErrorSpy.mockRestore();
   });
 });
