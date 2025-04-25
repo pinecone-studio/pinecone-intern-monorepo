@@ -18,11 +18,11 @@ describe('Login Page', () => {
   it('should allow login with valid email', () => {
     const email = 'user@example.com';
     cy.get('input[type="email"]').type(email);
-    cy.get('button[type="submit"]').click();
     cy.window().then((win) =>
       cy.spy(win.console, 'log').as('consoleLog')
     );
-    cy.get('@consoleLog').should('have.been.calledWithMatch', { email });
+    cy.get('button[type="submit"]').click();
+    cy.get('@consoleLog').should('have.been.calledWithMatch', 'Submitted:', { email });
   });
 });
 

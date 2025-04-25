@@ -8,23 +8,23 @@ describe('AdminHeader', () => {
 
   it('renders the logo image and avatar fallback', () => {
     render(<AdminHeader />);
-    expect(screen.getByAltText('Pinecone Studio Logo')).not.toBeNull();
-    expect(screen.getByText('CN')).not.toBeNull();
+    expect(screen.getByAltText('Pinecone Studio Logo')).toBeTruthy();
+    expect(screen.getByText('CN')).toBeTruthy();
   });
 
   it('toggles between Sun and Moon icon when button is clicked', () => {
     render(<AdminHeader />);
     
-    expect(screen.getByLabelText('Sun Icon')).not.toBeNull();
+    expect(screen.getByLabelText('Sun Icon')).toBeTruthy();
 
     const button = screen.getByRole('button');
     fireEvent.click(button);
 
-    expect(screen.getByLabelText('Moon Icon')).not.toBeNull();
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
+    expect(screen.getByLabelText('Moon Icon')).toBeTruthy();
+    expect(document.documentElement.classList.contains('dark')).toBeTruthy();
 
     fireEvent.click(button);
-    expect(screen.getByLabelText('Sun Icon')).not.toBeNull();
-    expect(document.documentElement.classList.contains('dark')).toBe(false);
+    expect(screen.getByLabelText('Sun Icon')).toBeTruthy();
+    expect(document.documentElement.classList.contains('dark')).toBeFalsy();
   });
 });
