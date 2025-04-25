@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-const Navigation2 = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetStateAction<'profile' | 'orders' | 'password'>>; activeTab: 'profile' | 'orders' | 'password' }) => {
+const Sidebar = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetStateAction<'profile' | 'orders' | 'password'>>; activeTab: 'profile' | 'orders' | 'password' }) => {
   return (
     <aside className="w-64 bg-[#1c1c1e] p-4 space-y-4">
       <button
@@ -19,4 +19,4 @@ const Navigation2 = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetSt
     </aside>
   );
 };
-export default Navigation2;
+export default Sidebar;

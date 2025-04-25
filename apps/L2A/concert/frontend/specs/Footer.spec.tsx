@@ -5,7 +5,6 @@ import '@testing-library/jest-dom';
 describe('Footer', () => {
   it('renders footer', () => {
     render(<Footer />);
-
     expect(screen.getByText(/2024 Booking Mongolia. All Rights Reserved./i)).toBeInTheDocument();
   });
 });

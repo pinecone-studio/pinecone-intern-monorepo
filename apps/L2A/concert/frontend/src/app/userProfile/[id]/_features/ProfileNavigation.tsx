@@ -3,15 +3,13 @@ import { useState } from 'react';
 import ForgetPassword from './ForgetPassword';
 import UserProfile from './UserProfile';
 import OrderHistory from './OrderHistory';
-import Navigation2 from './ProfileNavigation2';
+import Sidebar from './SidebarNavigation';
 
 const UserProfileContainer = ({ orderId }: { orderId: string }) => {
   const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'password'>('profile');
-
   return (
     <div className="min-h-screen bg-[#111113] text-white flex">
-      <Navigation2 activeTab={activeTab} setActiveTab={setActiveTab} />
-
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="flex-1 p-8">
         {activeTab === 'profile' && <UserProfile />}
         {activeTab === 'orders' && (
