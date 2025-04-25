@@ -20,6 +20,7 @@ const UserProfileContainer = ({ orderId }: { orderId: string }) => {
         {activeTab === 'orders' && (
           <div className="space-y-6" data-cy="orders-tab">
             <OrderHistory
+              status="COMPLETED"
               orderId={orderId}
               date="2024.10.21"
               tickets={[

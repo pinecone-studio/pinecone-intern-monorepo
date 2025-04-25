@@ -32,14 +32,10 @@ const OrderHistory = ({ orderId, date, status, tickets }: OrderCardProps) => {
           </span>
           <span data-cy="order-date">📅 {date}</span>
         </div>
-        {status ? (
+        {status && (
           <span className="bg-gray-800 text-xs px-3 py-1 rounded" data-cy="order-status">
             {status}
           </span>
-        ) : (
-          <button className="bg-gray-700 hover:bg-gray-600 text-sm px-4 py-1 rounded" data-cy="cancel-button">
-            Цуцлах
-          </button>
         )}
       </div>
       <div className="border border-gray-700 rounded-md p-4 space-y-2" data-cy="ticket-list">

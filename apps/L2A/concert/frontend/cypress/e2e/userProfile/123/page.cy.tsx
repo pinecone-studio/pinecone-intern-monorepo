@@ -1,4 +1,4 @@
-describe('Event User Profile Tabs', () => {
+describe('User Profile Tabs', () => {
   beforeEach(() => {
     cy.visit('/userProfile/123');
   });
@@ -60,5 +60,31 @@ describe('Event User Profile Tabs', () => {
     cy.get('[data-cy="save-password"]').click();
 
     cy.get('@passwordAlertSuccess').should('have.been.calledWith', 'Нууц үг амжилттай шинэчлэгдлээ!');
+  });
+
+  it('should switch to order history and show orders', () => {
+    cy.visit('/userProfile/123');
+
+    cy.get('[data-cy="user-profile-container"]').should('exist');
+
+    cy.get('[data-cy="order-history"]').click();
+
+    cy.get('[data-cy="orders-tab"]').should('exist');
+  });
+
+  it('should switch between all tabs correctly', () => {
+    cy.get('[data-cy="user-profile"]').click({ multiple: true });
+    cy.get('[data-cy="profile-tab"]').should('exist');
+    cy.get('[data-cy="order-history"]').click({ multiple: true });
+    cy.get('[data-cy="order-status"]').should('exist');
+    cy.get('[data-cy="orders-tab"]').should('exist');
+    cy.get('[data-cy="forget-password"]').click({ multiple: true });
+    cy.get('[data-cy="password-tab"]').should('exist');
+  });
+
+  it('should block invalid characters in phone input', () => {
+    cy.get('[data-cy="user-profile"]').click({ multiple: true });
+    cy.get('[data-cy="input-phone"]').type('hello123');
+    cy.get('[data-cy="input-phone"]').should('have.value', '123');
   });
 });

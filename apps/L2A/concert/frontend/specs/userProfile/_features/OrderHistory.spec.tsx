@@ -28,9 +28,4 @@ describe('OrderHistory component', () => {
     expect(screen.getByText(/10,000₮ × 1 = 10,000₮/)).toBeInTheDocument();
     expect(screen.getByText(/Төлсөн дүн: 50,000₮/)).toBeInTheDocument();
   });
-  it('shows cancel button when status is not provided', () => {
-    const propsWithoutStatus = { ...mockProps, status: undefined };
-    render(<OrderHistory {...propsWithoutStatus} />);
-    expect(screen.getByRole('button', { name: /Цуцлах/i })).toBeInTheDocument();
-  });
 });
