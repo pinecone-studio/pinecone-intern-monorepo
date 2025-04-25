@@ -14,7 +14,7 @@ const nextConfig = {
   },
   env: {
     VERCEL_TOKEN: process.env.VERCEL_TOKEN,
-    MONGODB_URL: process.env.MONGODB_URL,
+    MONGO_URI: process.env.MONGO_URI,
   },
 };
 

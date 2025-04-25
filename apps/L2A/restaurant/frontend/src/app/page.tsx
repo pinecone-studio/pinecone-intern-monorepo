@@ -1,9 +1,13 @@
 'use client';
-
-import HomePage from "./HomePage/page";
+import HomeBody from './_features/HomeBody';
 
 const Page = () => {
-  return <div><HomePage/></div>;
+  return (
+    <div>
+      <HomeBody />{' '}
+    </div>
+  );
+
 };
 
 export default Page;
