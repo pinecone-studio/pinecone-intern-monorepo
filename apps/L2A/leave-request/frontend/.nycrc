@@ -9,7 +9,6 @@
     "libs/**",
     "src/components/**",
     "src/**/_components/**",
-    "src/**/_features/**",
     "src/common/**",
     "node_modules"
   ],
