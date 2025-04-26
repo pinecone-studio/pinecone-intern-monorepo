@@ -18,7 +18,5 @@ export default {
     '!src/components/providers/*.tsx',
   ],
 
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-
  
 };
