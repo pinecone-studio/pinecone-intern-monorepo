@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 export default {
   displayName: 'real-estate-frontend',
   preset: '../../../../jest.preset.js',
@@ -17,4 +17,8 @@ export default {
     '!src/**/generated/**/*.ts',
     '!src/components/providers/*.tsx',
   ],
+
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+
+ 
 };
