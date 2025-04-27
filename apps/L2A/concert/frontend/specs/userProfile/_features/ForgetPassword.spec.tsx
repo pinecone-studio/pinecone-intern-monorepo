@@ -7,6 +7,7 @@ describe('ForgetPassword component', () => {
     window.alert = jest.fn();
     render(<ForgetPassword />);
   });
+
   it('should update input values', () => {
     const currentInput = screen.getByLabelText(/Хуучин нууц үг:/i);
     const newInput = screen.getByLabelText(/Шинэ нууц үг:/i);
@@ -18,12 +19,14 @@ describe('ForgetPassword component', () => {
     expect(newInput).toHaveValue('newpass');
     expect(confirmInput).toHaveValue('newpass');
   });
+
   it('should alert if passwords do not match', () => {
     fireEvent.change(screen.getByLabelText(/Шинэ нууц үг:/i), { target: { value: 'password1' } });
     fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/i), { target: { value: 'password2' } });
     fireEvent.click(screen.getByText(/Хадгалах/i));
     expect(window.alert).toHaveBeenCalledWith('Шинэ нууц үг таарахгүй байна!');
   });
+
   it('should alert success if passwords match', () => {
     fireEvent.change(screen.getByLabelText(/Шинэ нууц үг:/i), { target: { value: 'samepassword' } });
     fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/i), { target: { value: 'samepassword' } });

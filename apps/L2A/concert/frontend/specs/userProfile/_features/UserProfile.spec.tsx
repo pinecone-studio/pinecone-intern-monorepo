@@ -10,6 +10,7 @@ describe('UserProfile component', () => {
     expect(screen.getByLabelText(/Имэйл хаяг:/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Хадгалах/i })).toBeInTheDocument();
   });
+
   it('allows valid phone number input only', () => {
     render(<UserProfile />);
     const phoneInput = screen.getByLabelText(/Утасны дугаар:/i) as HTMLInputElement;
@@ -18,12 +19,14 @@ describe('UserProfile component', () => {
     fireEvent.change(phoneInput, { target: { value: '9900-0000abc' } });
     expect(phoneInput.value).toBe('9900-0000');
   });
+
   it('updates email input value correctly', () => {
     render(<UserProfile />);
     const emailInput = screen.getByLabelText(/Имэйл хаяг:/i) as HTMLInputElement;
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     expect(emailInput.value).toBe('test@example.com');
   });
+
   it('calls handleSave and logs phone/email on button click', () => {
     console.log = jest.fn();
     render(<UserProfile />);

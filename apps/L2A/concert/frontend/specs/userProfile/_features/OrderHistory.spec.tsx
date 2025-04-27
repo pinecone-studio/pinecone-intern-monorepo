@@ -12,6 +12,7 @@ const mockProps = {
     { name: 'Ердийн тасалбар', price: 10000, quantity: 1, color: 'text-red-500' },
   ],
 };
+
 describe('OrderHistory component', () => {
   it('renders order details correctly', () => {
     render(<OrderHistory {...mockProps} />);
@@ -20,6 +21,7 @@ describe('OrderHistory component', () => {
     expect(screen.getByText(/2025-04-25/)).toBeInTheDocument();
     expect(screen.getByText(/Амжилттай/)).toBeInTheDocument();
   });
+
   it('renders ticket items and totals', () => {
     render(<OrderHistory {...mockProps} />);
     expect(screen.getByText(/VIP тасалбар/)).toBeInTheDocument();

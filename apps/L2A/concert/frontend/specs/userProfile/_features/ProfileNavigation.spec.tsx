@@ -15,22 +15,27 @@ jest.mock('@/app/userProfile/[id]/_features/ForgetPassword', () => {
   const MockForgetPassword = () => <div data-testid="forget-password">Forget Password Component</div>;
   return MockForgetPassword;
 });
+
 describe('UserProfileContainer', () => {
   const orderId = 'order-123';
   beforeEach(() => {
     render(<UserProfileContainer orderId={orderId} />);
   });
+
   it('should render UserProfile by default', () => {
     expect(screen.getByTestId('user-profile')).toBeInTheDocument();
   });
+
   it('should render OrderHistory when Захиалгын түүх tab is clicked', () => {
     fireEvent.click(screen.getByRole('button', { name: /Захиалгын түүх/i }));
     expect(screen.getByTestId('order-history-content')).toBeInTheDocument();
   });
+
   it('should render ForgetPassword when Нууц үг сэргээх tab is clicked', () => {
     fireEvent.click(screen.getByRole('button', { name: /Нууц үг сэргээх/i }));
     expect(screen.getByTestId('forget-password')).toBeInTheDocument();
   });
+
   it('should switch back to UserProfile when Хэрэглэгчийн мэдээлэл tab is clicked', () => {
     fireEvent.click(screen.getByRole('button', { name: /Захиалгын түүх/i }));
     fireEvent.click(screen.getByRole('button', { name: /Хэрэглэгчийн мэдээлэл/i }));
