@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { MapPin, Ruler, BedSingle, Bath } from 'lucide-react';
 
 type ListingCardProps = {
   imageUrl: string;
@@ -42,27 +43,21 @@ const ListingCard = ({
         <p className="text-lg font-semibold text-gray-900">{price}</p>
 
         <div className="flex gap-2 items-start">
-          <Image
-            src="/Vector.png"
-            alt="icon"
-            width={10}
-            height={13}
-            className="mt-[3px]"
-          />
+          <MapPin size={16} className="text-gray-500 mt-1" /> {/* Байршлын icon */}
           <p className="text-sm text-gray-600">{title}</p>
         </div>
 
         <div className="flex items-center text-sm text-gray-600 gap-4">
           <div className="flex items-center gap-1">
-            <Image src="/pic1.png" alt="area" width={16} height={16} />
+            <Ruler size={16} className="text-gray-500" />
             <span>{area} м²</span>
           </div>
           <div className="flex items-center gap-1">
-            <Image src="/pic2.png" alt="beds" width={16} height={16} />
+            <BedSingle size={16} className="text-gray-500" />
             <span>{beds} өрөө</span>
           </div>
           <div className="flex items-center gap-1">
-            <Image src="/pic3.png" alt="baths" width={16} height={16} />
+            <Bath size={16} className="text-gray-500" />
             <span>{baths} а.ц.ө</span>
           </div>
         </div>
