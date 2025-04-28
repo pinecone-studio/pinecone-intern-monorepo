@@ -1,6 +1,9 @@
- const MenuPage = () => {
-    return (
-        <div></div>
-    );
-}
+import AdminHeader from '../_components/Header';
+const MenuPage = () => {
+  return (
+    <div>
+      <AdminHeader />
+    </div>
+  );
+};
 export default MenuPage;

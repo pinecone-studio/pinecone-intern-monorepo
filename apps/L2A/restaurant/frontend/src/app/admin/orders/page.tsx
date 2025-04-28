@@ -1,10 +1,9 @@
 import AdminHeader from '../_components/Header';
-
-const FoodPage = () => {
+const OrdersPage = () => {
   return (
     <div>
       <AdminHeader />
     </div>
   );
 };
-export default FoodPage;
+export default OrdersPage;

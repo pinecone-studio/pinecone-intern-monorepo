@@ -1,8 +1,9 @@
- const TablePage = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-}
+import AdminHeader from '../_components/Header';
+const TablePage = () => {
+  return (
+    <div>
+      <AdminHeader />
+    </div>
+  );
+};
 export default TablePage;

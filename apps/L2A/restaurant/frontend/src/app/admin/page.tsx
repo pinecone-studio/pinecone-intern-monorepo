@@ -1,4 +1,5 @@
 'use client';
+
 import AdminHeader from './_components/Header';
 const AdminPage = () => {
   return (
