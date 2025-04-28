@@ -22,4 +22,3 @@ mutation RequestOTP($email: String!) {
 mutation VerifyOTP($email: String!, $otp: String!) {
   verifyOTP(email: $email, otp: $otp)
 }
-
