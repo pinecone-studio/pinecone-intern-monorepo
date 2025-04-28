@@ -6,7 +6,11 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     username: { type: String, required: true },
     profilePicture: { type: String, required: true },
-   
+    role: {
+      type: String,
+      enum: ['admin', 'manager', 'employeer'],
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -16,8 +20,14 @@ const userSchema = new Schema(
 
 const leaveRequestSchema = new Schema(
   {
+    managerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     employeeId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     requestType: { type: Schema.Types.ObjectId, ref: 'RequestType', required: true },
+    status: {
+      type: String,
+      enum: ['pending', 'allowed', 'rejected'],
+      default: 'pending',
+    },
     startDate: {
       type: Date,
       required: true,
@@ -51,7 +61,7 @@ const requestTypeSchema = new Schema(
     limit: { type: Number, required: true },
     period: {
       type: String,
-      enum: ['day', 'week', 'month', 'yearly'],
+      enum: ['day', 'week', 'month', 'year'],
       required: true,
     },
   },
@@ -70,6 +80,6 @@ const otpSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 const LeaveRequest = mongoose.models.LeaveRequest || mongoose.model('LeaveRequest', leaveRequestSchema);
 const RequestType = mongoose.models.RequestType || mongoose.model('RequestType', requestTypeSchema);
-const OTP = mongoose.models.OTP || mongoose.model('OTP',otpSchema);
+const OTP = mongoose.models.OTP || mongoose.model('OTP', otpSchema);
 
 export { User, LeaveRequest, RequestType, OTP };
