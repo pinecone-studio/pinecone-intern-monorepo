@@ -1,7 +1,24 @@
-query Query {
+query SampleQuery {
   sampleQuery
 }
 
-mutation Mutation {
-  sampleMutation
+mutation CreateUser($userArgs: UserInput!) {
+  createUser(userArgs: $userArgs) {
+    user {
+      id
+      username
+      email
+      profilePicture
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+mutation RequestOTP($email: String!) {
+  requestOTP(email: $email)
+}
+
+mutation VerifyOTP($email: String!, $otp: String!) {
+  verifyOTP(email: $email, otp: $otp)
 }

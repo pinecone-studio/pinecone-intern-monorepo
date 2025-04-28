@@ -1,5 +1,4 @@
-// specs/resolvers/mutations/login-user.spec.ts
-
+import bcrypt from 'bcryptjs';
 const mockedUserModel = {
   findOne: jest.fn(),
 };
@@ -21,13 +20,24 @@ describe('loginUser resolver', () => {
   });
 
   it('should return token when user is found', async () => {
-    mockedUserModel.findOne.mockResolvedValueOnce({ _id: '123456' });
+    const usedPassword = '123456';
+    const hashedPassword = await bcrypt.hash(usedPassword, 10);
+    mockedUserModel.findOne.mockResolvedValueOnce({ _id: '123456', password: hashedPassword });
 
-    const result = await loginUser({}, { email: 'test@example.com', password: '123456' }) as LoginResponse;
+    const result = await loginUser({}, { email: 'test@example.com', password: usedPassword }) as LoginResponse;
 
     expect(typeof result.token).toBe('string');
     expect(result.token).toBeDefined();
   });
+
+  it('should throw error when password is incorrect', async()=>{
+    const usedPassword =  '123456';
+    const hashedPassword = await bcrypt.hash(usedPassword, 10);
+    mockedUserModel.findOne.mockResolvedValueOnce({ _id: '123456', password: hashedPassword });
+    await expect(
+      loginUser({}, { email: 'test@example.com', password: 'wrongpassword' })
+    ).rejects.toThrow('Password incorrect');
+  })
 
   it('should throw error when user not found', async () => {
     mockedUserModel.findOne.mockResolvedValueOnce(null);
