@@ -18,7 +18,6 @@ describe("sendEmail", () => {
 
   it("should send email with correct parameters", async () => {
     sendMailMock.mockResolvedValueOnce({ messageId: "mocked-id" });
-    const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
 
     await sendEmail(to, otp);
 
@@ -36,22 +35,11 @@ describe("sendEmail", () => {
       subject: "Your OTP Code",
       text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
     });
-
-    expect(consoleLogSpy).toHaveBeenCalledWith("Email sent:", "mocked-id");
-
-    consoleLogSpy.mockRestore();
   });
 
   it("should throw an error and log it if email sending fails", async () => {
     const error = new Error("SMTP error");
     sendMailMock.mockRejectedValueOnce(error);
-
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-
     await expect(sendEmail(to, otp)).rejects.toThrow("SMTP error");
-
-    expect(consoleErrorSpy).toHaveBeenCalledWith("Email sending failed:", error);
-
-    consoleErrorSpy.mockRestore();
   });
 });

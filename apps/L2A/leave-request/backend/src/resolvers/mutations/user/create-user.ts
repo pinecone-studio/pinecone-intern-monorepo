@@ -1,17 +1,31 @@
 import { User } from '../../../models/models';
-import { validateEmail, validateRole, checkIfUserExists } from './user-helpers';
+import { validateEmail, checkIfUserExists } from './user-helpers';
 import type { UserInput } from '../../../generated';
+import { generateAccessToken } from '../../../utils/token';
+import { generateRefreshToken } from '../../../utils/token';
 
-export async function createUser(_parent: any, args: UserInput) {
-  const { username, email, profilePicture, role } = args;
+export async function createUser(_parent: any, args: { userArgs: UserInput }) {
+  const { username, email, profilePicture } = args.userArgs;
+
   validateEmail(email);
-  validateRole(role);
+
   try {
     await checkIfUserExists({ username, email });
-    const newUser = new User({ username, email, profilePicture, role });
+
+    const newUser = new User({ username, email, profilePicture });
     await newUser.save();
-    return newUser;
+
+    const accessToken = generateAccessToken(newUser._id.toString());
+    const refreshToken = generateRefreshToken(newUser._id.toString());
+
+    return {
+      accessToken,
+      refreshToken,
+      user: newUser,
+    };
   } catch (error) {
     throw new Error(`Error creating user: ${error}`);
   }
 }
+
+

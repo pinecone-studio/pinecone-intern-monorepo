@@ -1,4 +1,5 @@
 'use client';
+
 export const Login = () => {
   return (
     <div data-cy="signin-form" className="bg-black flex justify-center h-[100vh] w-[100%]">
