@@ -36,7 +36,6 @@ const CategoryCarousel = () => {
   return (
     <section className="py-10">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-6">Explore by Category</h2>
         <Swiper
           spaceBetween={20}
           slidesPerView={2}

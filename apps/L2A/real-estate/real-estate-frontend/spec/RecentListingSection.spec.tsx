@@ -1,6 +1,8 @@
+
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import RecentListingsSection from '../src/app/home/_components/ResentListingSection';
+import RecentListingsSection from '../src/app/home/_components/RecentListingSection';
+
 
 
 describe('RecentListingsSection', () => {
@@ -9,14 +11,17 @@ describe('RecentListingsSection', () => {
     expect(screen.getByText('Сүүлд орсон зарууд')).toBeInTheDocument();
   });
 
-  it('renders at least one listsing card', () => {
+  it('renders at least one listing card', () => {
     render(<RecentListingsSection />);
     expect(screen.getByText('Зайсан seoul royal county хотхон')).toBeInTheDocument();
   });
 
-  it('renders View all button', () => {
+  it('renders View all link correctly', () => {
     render(<RecentListingsSection />);
-    expect(screen.getByRole('button', { name: /View all/i })).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: /View all/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/listings');
   });
 });
+
 
