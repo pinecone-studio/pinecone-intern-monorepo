@@ -2,7 +2,7 @@ import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 
 const Header = () => {
   return (
-    <nav className="flex items-center justify-between px-6 py-4 text-white bg-black" role="navigation" aria-label="Main Navigation">
+    <nav className="flex items-center justify-between px-6 py-4 text-white bg-black" role="navigation" aria-label="Main Navigation" data-testid="header">
       <div className="flex items-center gap-2 text-lg font-bold text-white">
         <span className="inline-block w-4 h-4 rounded-full bg-sky-400" aria-hidden="true"></span>
         <span>TICKET BOOKING</span>

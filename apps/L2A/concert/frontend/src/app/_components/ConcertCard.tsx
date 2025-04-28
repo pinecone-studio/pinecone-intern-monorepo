@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { CiLocationOn, CiCalendar } from 'react-icons/ci';
 const ConcertCard = () => {
   return (
-    <div className="w-[345px] rounded-2xl overflow-hidden shadow-lg bg-black text-white font-sans">
+    <div className="w-[345px] rounded-2xl overflow-hidden shadow-lg bg-black text-white font-sans" data-testid="concert-card">
       <Image src={`/ConcertCardImg.png`} alt="" width="500" height="213" />
       <div className="border-t border-purple-500 p-6">
         <h2 className="text-xl font-semibold">Music of the Spheres</h2>

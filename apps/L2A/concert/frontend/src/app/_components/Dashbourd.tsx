@@ -2,7 +2,7 @@ import HeroSection from './HeroSection';
 
 const Dashboard = () => {
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
+    <div className="bg-black text-white min-h-screen flex flex-col" data-testid="dashboard">
       <HeroSection />
       <main className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8 bg-black">
         {[...Array(9)].map((_, i) => (

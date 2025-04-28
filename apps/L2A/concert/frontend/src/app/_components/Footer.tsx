@@ -1,7 +1,7 @@
 import { FaEnvelope, FaPhoneAlt, FaHeadphones } from 'react-icons/fa';
 const Footer = () => {
   return (
-    <footer className="bg-black text-white px-6 py-10">
+    <footer className="bg-black text-white px-6 py-10" data-testid="footer">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
         <div>
           <div className="flex items-center gap-2 mb-2">

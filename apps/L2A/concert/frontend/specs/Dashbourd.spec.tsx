@@ -1,9 +1,12 @@
 import Dashboard from '@/app/_components/Dashbourd';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
-describe('Dashboard ', () => {
-  it('should render Dashbourd', async () => {
+describe('Dashboard', () => {
+  it('should render Dashboard', async () => {
     render(<Dashboard />);
+
+    const dashboard = screen.getByTestId('dashboard');
+    expect(dashboard).toBeInTheDocument();
   });
 });
