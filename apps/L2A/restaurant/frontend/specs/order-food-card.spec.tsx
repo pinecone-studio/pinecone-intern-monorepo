@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import OrderFoodCard, { Food } from "@/app/_components/OrderFoodCard";
+import OrderFoodCard, { Food } from "@/app/admin/_components/OrderFoodCard";
 
 describe("OrderFoodCard", () => {
   const mockFoods: Food[] = [

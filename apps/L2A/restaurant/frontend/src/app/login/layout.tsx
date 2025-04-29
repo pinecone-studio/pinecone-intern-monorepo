@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
-import './global.css';
 import { ApolloWrapper } from '@/components/providers';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 
 export const metadata = {
   title: 'Restaurant | Pinecone',
@@ -11,7 +11,13 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+       <AuthProvider> 
+        <ApolloWrapper>
+            {children}
+            </ApolloWrapper>
+        </AuthProvider>
+         
+        
       </body>
     </html>
   );
