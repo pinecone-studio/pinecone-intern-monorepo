@@ -1,7 +1,7 @@
-import { UserModel } from '../models';
+import { userModel } from '../models';
 
 export const findUserByEmail = async (email: string) => {
-  const user = await UserModel.findOne({ email });
+  const user = await userModel.findOne({ email });
   if (!user) {
     throw new Error('Хэрэглэгч олдсонгүй');
   }
