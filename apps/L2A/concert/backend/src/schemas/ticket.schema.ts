@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const TicketTypeDefs = gql`
   type Ticket {
@@ -8,4 +8,7 @@ export const TicketTypeDefs = gql`
     price: Int
     type: TicketType!
     status: TicketStatus!
-  }`;
+    createdAt: String!
+    updatedAt: String!
+  }
+`;

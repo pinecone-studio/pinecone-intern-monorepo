@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const BookingTypeDefs = gql`
   type Booking {
@@ -10,5 +10,4 @@ export const BookingTypeDefs = gql`
     totalAmount: Int!
     createdAt: String!
   }
-
 `;
