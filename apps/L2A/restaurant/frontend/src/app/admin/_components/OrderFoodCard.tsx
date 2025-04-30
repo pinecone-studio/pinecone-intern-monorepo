@@ -1,42 +1,39 @@
-"use client";
+import React from 'react';
 
-import Image from "next/image";
-
-export type Food = {
-  id: number;
+interface OrderItem {
+  id: string;
   name: string;
   price: number;
   quantity: number;
-  imageUrl: string;
-};
+  image: string;
+}
 
-type Props = {
-  foods: Food[]; 
-};
+interface Order {
+  id: string;
+  table: string;
+  createdAt: string;
+  items: OrderItem[];
+  status: string;
+  totalPrice: number;
+}
 
-const OrderFoodCard = ({ foods }: Props) => {
+interface OrderFoodCardProps {
+  orders: Order[];
+}
+
+const OrderFoodCard: React.FC<OrderFoodCardProps> = ({ orders }) => {
   return (
     <div data-testid="order-food-card">
-      {foods.map((food) => (
-        <div
-          key={food.id}
-          className="rounded-md border flex h-[87px] w-[536px] mt-5 gap-4"
-        >
-          <div>
-            <Image 
-            data-testid="food-image"
-              src={food.imageUrl}
-              alt={food.name}
-              width={86}
-              height={86}
-              className="h-[86px] rounded-md"
-            />
-          </div>
-          <div className="flex flex-col justify-around">
-            <h3 className="text-md font-semibold">{food.name}</h3>
-            <p className="text-md font-medium text-gray-800">{food.price}₮</p>
-            <p className="text-md font-medium text-gray-800">{food.quantity}ш</p>
-          </div>
+      {orders.map((order) => (
+        <div key={order.id}>
+          {order.items.map((food) => (
+            <div key={food.id}>
+              <img data-testid="food-image" src={food.image} alt={food.name} />
+              <p>{food.name}</p>
+              <p>{food.price}₮</p>
+              <p>{food.quantity}ш</p>
+            </div>
+          ))}
         </div>
       ))}
     </div>
