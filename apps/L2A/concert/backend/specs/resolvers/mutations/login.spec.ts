@@ -48,7 +48,7 @@ describe('login', () => {
     (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
+      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
     }
   });
 
@@ -57,7 +57,7 @@ describe('login', () => {
     (findUserByEmail as jest.Mock).mockRejectedValue(new Error('Хэрэглэгч олдсонгүй'));
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
+      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
     }
   });
 
@@ -66,7 +66,7 @@ describe('login', () => {
     (findUserByEmail as jest.Mock).mockResolvedValue(null);
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэврэхэд алдаа гарлаа!');
+      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
     }
   });
 });

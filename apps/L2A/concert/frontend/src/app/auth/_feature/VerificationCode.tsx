@@ -2,7 +2,6 @@
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { GoArrowLeft } from 'react-icons/go';
 import { FiRefreshCw } from 'react-icons/fi';
-
 export const VerificationCode = () => {
   return (
     <div className="bg-black flex justify-center h-[100vh] w-[100%]">

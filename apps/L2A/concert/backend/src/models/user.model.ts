@@ -7,6 +7,7 @@ const userSchema = new Schema(
     phone: { type: Number },
     isAdmin: { type: Boolean, required: true, default: () => false },
     updatedAt: { type: Date, default: () => new Date() },
+    bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
     JWT: { type: String },
   },
   { timestamps: true }

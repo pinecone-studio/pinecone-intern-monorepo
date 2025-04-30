@@ -1,6 +1,5 @@
 'use client';
 import { MdOutlineDone } from 'react-icons/md';
-
 export const Complete = () => {
   return (
     <div className="bg-black flex justify-center h-[100vh] w-[100%]">
