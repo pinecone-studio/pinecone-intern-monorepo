@@ -10,7 +10,7 @@ const HomeMain = () => {
 
   return (
     <div data-cy="home-page">
-      <main className="flex items-center flex-col w-[95%] mx-auto pt-10">
+      <main className="flex items-center flex-col w-[95%] mx-auto pt-10 ml-[30px]">
         <div className="text-[#441500] text-[19px] font-extralight mb-5">Хоолны цэс</div>
 
         <div data-cy="food" className="flex gap-2 mb-4">
