@@ -3,8 +3,7 @@ import gql from 'graphql-tag';
 export const QueryTypeDefs = gql`
   type Query {
     concerts: [Concert]!
-    concert(id: ID!): Concert
-    concertQuery: Concert
+    concert(concertId: String!): Concert!
     venues: [Venue!]!
     tickets(concertId: ID!): [Ticket]!
     user(id: ID!): User
