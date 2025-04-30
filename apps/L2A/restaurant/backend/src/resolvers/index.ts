@@ -1,4 +1,4 @@
-import { deleteProduct } from "./mutations";
+import { addCategory, deleteCategory, deleteProduct, updateCategory } from "./mutations";
 import { addProduct } from "./mutations/add-product";
 import { updateProduct } from "./mutations/update-product";
 
@@ -7,6 +7,9 @@ export const resolvers = {
     addProduct,
     updateProduct,
     deleteProduct,
+    addCategory,
+    updateCategory,
+    deleteCategory,
   },
 };
 

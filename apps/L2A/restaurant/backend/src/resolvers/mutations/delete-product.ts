@@ -8,6 +8,6 @@ export const deleteProduct = async (_id: string): Promise<ProductType | null> =>
   }
   return product;
 } catch (err) {
-    throw new Error(`Error deleting product: ${err}`);
+  throw new Error(`Error deleting product: ${err}`);
 }
 };

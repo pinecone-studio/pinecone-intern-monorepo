@@ -11,4 +11,10 @@ export const typeDefs = gql`
   type Query {
     getCategories: [Category!]!
   }
+
+    type Mutation {
+    addCategory(name: String!): Category!
+    updateCategory(_id: ID!, name: String!): Category!
+    deleteCategory(_id: ID!): Category!
+  }
 `;
