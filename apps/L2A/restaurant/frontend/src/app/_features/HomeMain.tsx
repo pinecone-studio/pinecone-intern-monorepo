@@ -18,7 +18,7 @@ const HomeMain = () => {
             <button
               data-cy="category-buttons"
               key={categor.id}
-              className={`px-3 py-1 rounded ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
+              className={`px-3 py-1 rounded text-[13px] ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
               onClick={() => setSelectedCategoryId(categor.id)}
             >
               {categor.name}
