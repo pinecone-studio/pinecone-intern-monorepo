@@ -1,7 +1,7 @@
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import StadiumMap from './StadiumMap';
 
-const AboutEvent = () => {
+export const AboutEvent = () => {
   return (
     <div className="w-[80%] text-white min-h-screen p-6 mx-auto space-y-8">
       <div className="flex justify-between items-center text-gray-300">
