@@ -20,3 +20,35 @@ mutation LoginUser($email: String!, $password: String!) {
     JWT
   }
 }
+
+query getConcert($concertId: ID!) {
+  concert(id: $concertId) {
+    artistName
+    date
+    description
+    id
+    specialGuestName
+    ticketCategories {
+      capacity
+      price
+      type
+    }
+    tickets {
+      id
+      seatNumber
+      price
+      type
+      status
+      createdAt
+      updatedAt
+    }
+    title
+    venue {
+      id
+      name
+      address
+      city
+      capacity
+    }
+  }
+}
