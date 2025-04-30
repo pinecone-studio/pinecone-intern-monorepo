@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Import this to use `toBeInTheDocument`
+import '@testing-library/jest-dom';
 import ConcertCard from '@/app/_components/ConcertCard';
 
 describe('ConcertCard', () => {
