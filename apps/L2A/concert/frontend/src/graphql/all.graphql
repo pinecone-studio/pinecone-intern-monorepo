@@ -18,8 +18,8 @@ mutation loginUser($email: String!, $password: String!) {
   }
 }
 
-query getConcert($concertId: ID!) {
-  concert(id: $concertId) {
+query getConcert($concertId: String!) {
+  concert(concertId: $concertId) {
     artistName
     date
     description
