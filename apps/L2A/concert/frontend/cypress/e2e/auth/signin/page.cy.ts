@@ -10,7 +10,7 @@ describe('Signin Page', () => {
   });
 
   it('should validate inputs and disable submit on invalid input', () => {
-    cy.get('input[placeholder="name@example.com"]').type('invalidemail');
+    cy.get('input[placeholder="example@example.com"]').type('invalidemail');
     cy.get('input[type="password"]').type('123');
     cy.contains('Нэвтрэх').should('be.disabled');
   });
