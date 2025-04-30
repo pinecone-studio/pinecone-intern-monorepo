@@ -1,8 +1,6 @@
-import { GraphQLError } from 'graphql';
-
 export const catchError = (error: unknown) => {
   if (error instanceof Error) {
-    throw new GraphQLError(error.message);
+    throw new Error(error.message);
   }
-  throw new GraphQLError('Серверийн алдаа');
+  throw new Error('Серверийн алдаа');
 };

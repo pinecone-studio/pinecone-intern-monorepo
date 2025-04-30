@@ -13,13 +13,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         <AppRouterCacheProvider>
           <ThemeProvider>
             <Header />
-
             <Stack direction="row">
               <Drawer />
-
               <Stack flex={1}>
                 <Toolbar />
-
                 <Container maxWidth="md">
                   <Stack py={6}>{children}</Stack>
                 </Container>

@@ -8,8 +8,9 @@ const userSchema = new Schema(
     isAdmin: { type: Boolean, required: true, default: () => false },
     updatedAt: { type: Date, default: () => new Date() },
     bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
+    JWT: { type: String },
   },
   { timestamps: true }
 );
 
-export const UserModel = models.User || model('User', userSchema);
+export const userModel = models.User || model('User', userSchema);
