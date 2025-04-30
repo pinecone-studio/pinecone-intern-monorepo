@@ -1,10 +1,15 @@
 import { User } from '../generated';
-import { UserModel } from '../models';
+import { userModel } from '../models';
+import { catchError } from './catch-error';
 
 export const findUserByEmail = async (email: string): Promise<User> => {
-  const user = await UserModel.findOne({ email });
-  if (!user) {
-    throw new Error('Хэрэглэгч олдсонгүй');
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      throw new Error('Хэрэглэгч олдсонгүй');
+    }
+    return user;
+  } catch (err) {
+    return catchError(err);
   }
-  return user;
 };

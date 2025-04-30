@@ -10,7 +10,7 @@ import { useLoginUserMutation } from '@/generated';
 import Link from 'next/link';
 
 const LoginForm = () => {
-  const [LoginUser] = useLoginUserMutation();
+  const [loginUser] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -21,7 +21,7 @@ const LoginForm = () => {
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     console.log(values);
     try {
-      const response = await LoginUser({ variables: values });
+      const response = await loginUser({ variables: values });
       if (response.data?.loginUser.JWT) {
         const now = new Date();
         const expiry = now.getTime() + 24 * 60 * 60 * 1000;
