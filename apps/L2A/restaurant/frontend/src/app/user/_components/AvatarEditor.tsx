@@ -6,7 +6,7 @@ export const AvatarEditor = () => {
         <>
          <div
            data-testid="user-avatar"
-           className="w-[26vw] h-[26vw] rounded-full bg-[#F4F4F5] flex justify-center items-center mt-3 mb-3"
+           className="w-[26vw] h-[26vw] rounded-full bg-[#F4F4F5] flex justify-center items-center mt-3 mb-10"
          >
             <PiUserLight className="w-[12vw] h-[12vw] text-[#441500]" />
          </div>
