@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { CreatePostHeader } from '@/app/createpost/_components/CreatePostHeader';
+import { CreatePostHeader } from '@/app/create-post/_components/CreatePostHeader';
 import '@testing-library/jest-dom';
 
 
