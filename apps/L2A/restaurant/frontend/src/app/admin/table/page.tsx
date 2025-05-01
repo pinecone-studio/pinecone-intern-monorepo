@@ -1,4 +1,10 @@
+import TableSemiHeader from './_features/AdminTableSemiHeader';
+
 const Table = () => {
-  return <div>table</div>;
+  return (
+    <div>
+      <TableSemiHeader />
+    </div>
+  );
 };
 export default Table;
