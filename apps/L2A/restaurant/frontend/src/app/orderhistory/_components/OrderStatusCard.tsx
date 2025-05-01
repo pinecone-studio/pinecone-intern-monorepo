@@ -25,7 +25,6 @@ export const OrderStatusCard = ({
           {statusType.label}
         </div>
       </div>
-
       <div className="flex justify-between gap-2">
         <p className="text-[#3F4145]">{timestamp}</p>
         <p className="text-[#3F4145] text-lg font-semibold">{totalPrice.toLocaleString()}₮</p>
