@@ -11,7 +11,7 @@ const nextConfig = {
     svgr: false,
   },
   env: {
-    BACKEND_URI: process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql',
+    BACKEND_URI: process.env.BACKEND_URI ?? '',
   },
   images: {
     remotePatterns: [
