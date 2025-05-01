@@ -24,7 +24,6 @@ const Page = () => {
   return (
     <div className="flex flex-col items-center w-full px-5">
       <p className="text-[#441500] text-xl py-8">Захиалгын түүх</p>
-
       <div className="flex flex-col gap-4 w-full">
         {orders.map((order) => (
           <OrderStatusCard
