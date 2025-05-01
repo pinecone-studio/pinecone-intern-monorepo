@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'; // ✅ this is missing in your test
+import '@testing-library/jest-dom';
 import { render, screen } from "@testing-library/react";
 import AdminFoodList from '@/app/admin/food/_features/AdminFoodList';
 
