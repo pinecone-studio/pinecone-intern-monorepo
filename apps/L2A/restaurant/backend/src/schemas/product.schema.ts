@@ -30,7 +30,7 @@ export const typeDefs = gql`
 
   type Mutation {
     addProduct(name: String!, price: Float!, description: String!, images: [String!]!, category: ID!): Product
-
     updateProduct(input: ProductUpdateInput!): Product
+    deleteProduct(id: ID!): Product
   }
 `;

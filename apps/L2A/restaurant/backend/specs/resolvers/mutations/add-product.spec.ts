@@ -2,7 +2,12 @@ import { addProduct } from "../../../src/resolvers/mutations/add-product";
 import { productModel } from "../../../src/models/product.model"; 
 import { Types } from "mongoose";
 
-jest.mock("../../../src/models/product.model"); 
+// ✅ Properly mock productModel.create
+jest.mock("../../../src/models/product.model", () => ({
+  productModel: {
+    create: jest.fn(), // mock the create function
+  },
+}));
 
 describe("addProduct", () => {
   const mockProduct = {
@@ -31,9 +36,26 @@ describe("addProduct", () => {
 
   it("should throw an error if input is missing required fields", async () => {
     const invalidInput = { ...mockProduct, name: undefined };
-    
+
     await expect(addProduct(null, invalidInput)).rejects.toThrowError(
-      "Product name is required."
+      /Product name is required/
+    );
+  });
+
+  it("should throw an error if product creation fails", async () => {
+    const validInput = {
+      _id: "some-fake-id",
+      name: "Failing Product",
+      price: 999,
+      description: "Should fail",
+      images: ["img.jpg"],
+      category: new Types.ObjectId(),
+    };
+
+    (productModel.create as jest.Mock).mockRejectedValue(new Error("DB error"));
+
+    await expect(addProduct(null, validInput)).rejects.toThrowError(
+      /Error creating product:/
     );
   });
 });
