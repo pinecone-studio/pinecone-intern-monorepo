@@ -1,4 +1,4 @@
-describe('Sign In Page', () => {
+describe('Signup Page', () => {
   const email = `cypressTest${Math.round(Math.random() * 3000)}@gmail.com`;
 
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe('Sign In Page', () => {
   it('should sign up successfully and clears the success message after 5s', () => {
     const password = 'test1234567890';
     cy.clock();
-    cy.intercept('POST', process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql').as('gql');
+    cy.intercept('POST', '**/api/graphql').as('gql');
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
     cy.get('input[name="confirmPassword"]').type(password);
@@ -22,7 +22,7 @@ describe('Sign In Page', () => {
   it("should sign up successfully but shouldn't trigger if statement", () => {
     const password = 'test1234567890';
 
-    cy.intercept('POST', process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql', {
+    cy.intercept('POST', '**/api/graphql', {
       body: {
         data: {
           addUser: null,
@@ -39,7 +39,7 @@ describe('Sign In Page', () => {
   it('should throw an error', () => {
     const password = 'test1234567890';
 
-    cy.intercept('POST', process.env.BACKEND_URI ?? 'http://localhost:4200/api/graphql').as('gql');
+    cy.intercept('POST', '**/api/graphql').as('gql');
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
     cy.get('input[name="confirmPassword"]').type(password);
