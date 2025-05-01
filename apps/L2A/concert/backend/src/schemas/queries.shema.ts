@@ -9,5 +9,6 @@ export const QueryTypeDefs = gql`
     user(id: ID!): User
     bookings(userId: ID!): [Booking]!
     sampleQuery: String!
+    GetUserInfo(JWT: String!): User
   }
 `;
