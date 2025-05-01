@@ -13,20 +13,13 @@ export const buildUpdateData = (input: ProductInput) => {
   return updateData;
 };
 
-const addIfPresent = (
-  target: Partial<Record<string, unknown>>,
-  key: string,
-  value: unknown
-) => {
+const addIfPresent = (target: Partial<Record<string, unknown>>, key: string, value: unknown) => {
   if (value !== undefined && value !== null) {
     target[key] = value;
   }
 };
 
-const addIfCategory = (
-  target: Partial<Record<string, unknown>>,
-  category?: string
-) => {
+const addIfCategory = (target: Partial<Record<string, unknown>>, category?: string) => {
   if (category) {
     target.category = new Types.ObjectId(category);
   }

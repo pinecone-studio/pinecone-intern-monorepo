@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type Category {
@@ -12,7 +12,7 @@ export const typeDefs = gql`
     getCategories: [Category!]!
   }
 
-    type Mutation {
+  type Mutation {
     addCategory(name: String!): Category!
     updateCategory(_id: ID!, name: String!): Category!
     deleteCategory(_id: ID!): Category!
