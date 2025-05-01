@@ -2,6 +2,7 @@ import { MutationResolvers } from '../../generated';
 import jwt from 'jsonwebtoken';
 import { findUserByEmail } from '../../utils/find-user-by-email';
 import { checkPassword } from '../../utils/check-password';
+import { catchError } from '../../utils/catch-error';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_, { email, password }) => {
   try {
@@ -13,6 +14,6 @@ export const loginUser: MutationResolvers['loginUser'] = async (_, { email, pass
 
     return { email: user.email, id: user.id, password: user.password, isAdmin: user.isAdmin, phone: user.phone, JWT: token, bookings: user.bookings };
   } catch (err) {
-    throw new Error('Нэвтрэхэд алдаа гарлаа!');
+    return catchError(err);
   }
 };

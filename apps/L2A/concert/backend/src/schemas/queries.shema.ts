@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const QueryTypeDefs = gql`
   type Query {
@@ -9,5 +9,6 @@ export const QueryTypeDefs = gql`
     user(id: ID!): User
     bookings(userId: ID!): [Booking]!
     sampleQuery: String!
+    GetUserInfo(JWT: String!): User
   }
-`
+`;
