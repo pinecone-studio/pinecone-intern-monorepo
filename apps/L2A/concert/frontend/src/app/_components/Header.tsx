@@ -1,6 +1,7 @@
 'use client';
 import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { useAuth } from './context/AuthContext';
+import Link from 'next/link';
 
 const Header = () => {
   const { user } = useAuth();
@@ -31,8 +32,12 @@ const Header = () => {
       ) : (
         <div className="flex items-center gap-4">
           <FaShoppingCart className="text-xl text-white" aria-label="Shopping Cart" />
-          <button className="px-4 py-2 text-white border border-gray-700 rounded-md">Бүртгүүлэх</button>
-          <button className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">Нэвтрэх</button>
+          <Link href={'/auth/signup'}>
+            <button className="px-4 py-2 text-white border border-gray-700 rounded-md">Бүртгүүлэх</button>
+          </Link>
+          <Link href={'/auth/signin'}>
+            <button className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">Нэвтрэх</button>
+          </Link>
         </div>
       )}
     </nav>
