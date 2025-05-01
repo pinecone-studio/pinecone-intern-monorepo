@@ -1,3 +1,5 @@
+import WalletPayment from "./_components/WalletPayment";
+
 const WalletPage = () => {
     return (
         <div className="bg-[#e4e4e7] h-screen w-full flex flex-col justify-between items-center"> 
@@ -10,12 +12,11 @@ const WalletPage = () => {
                 </div>
                 <div className="text-[#3F4145] text-[14px] font-extralight">
                     Үлдэгдэл
-                </div>
-                
+                </div>  
             </div>
             <div data-testid="wallet-white-section" className="bg-[#ffffff] w-full h-3/4 rounded-t-xl">
-        
-                </div>
+                <WalletPayment amount={324} date="24.10.19" time="15:25" />
+            </div>
         </div>
     )
 }
