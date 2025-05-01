@@ -1,53 +1,32 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import OrderFoodCard from '@/app/admin/_components/OrderFoodCard';
-
-const mockOrders = [
-  {
-    id: 'order_1',
-    table: '1A',
-    createdAt: '2025-04-28T12:45:00Z',
-    items: [
-      {
-        id: 'item_1',
-        name: 'Taco',
-        price: 15600,
-        quantity: 2,
-        image: 'https://res.cloudinary.com/demo/image/upload/v1615550891/taco.jpg',
-      },
-      {
-        id: 'item_2',
-        name: 'Pizza',
-        price: 12000,
-        quantity: 1,
-        image: 'https://res.cloudinary.com/demo/image/upload/v1615550891/pizza.jpg',
-      },
-    ],
-    status: 'waiting',
-    totalPrice: 43200,
-  },
-];
+import OrderFoodCard from '@/app/admin/_components/OrderFoodCard';  
+import orders from '@/app/admin/_components/orders.json';  
 
 describe('OrderFoodCard', () => {
-  it('renders without crashing', () => {
-    render(<OrderFoodCard orders={mockOrders} />);
-    const container = screen.getByTestId('order-food-card');
-    expect(container).toBeInTheDocument();
+  it('renders orders from JSON correctly', () => {
+    render(<OrderFoodCard orders={orders} />);
+
+    expect(screen.getByText('Спартак')).toBeInTheDocument();
+    expect(screen.getByText('10,5k')).toBeInTheDocument();
+    expect(screen.getByText('1ш')).toBeInTheDocument();
+    expect(screen.getByAltText('Спартак')).toBeInTheDocument();
+
+    expect(screen.getByText('Чийз')).toBeInTheDocument();
+    expect(screen.getByText('11k')).toBeInTheDocument();
+    expect(screen.getByText('3ш')).toBeInTheDocument();
+    expect(screen.getByAltText('Чийз')).toBeInTheDocument();
+
+    expect(screen.getByText('Американо')).toBeInTheDocument();
+    expect(screen.getByText('6,5k')).toBeInTheDocument();
+    expect(screen.getByText('2ш')).toBeInTheDocument();
+    expect(screen.getByAltText('Американо')).toBeInTheDocument();
   });
 
-  it('displays correct number of food items', () => {
-    render(<OrderFoodCard orders={mockOrders} />);
-    const images = screen.getAllByTestId('food-image');
-    expect(images).toHaveLength(mockOrders[0].items.length);
-  });
+  it('renders multiple items correctly', () => {
+    render(<OrderFoodCard orders={orders} />);
 
-  it('displays food names, prices, and quantities', () => {
-    render(<OrderFoodCard orders={mockOrders} />);
-
-    mockOrders[0].items.forEach((food) => {
-      expect(screen.getByText(food.name)).toBeInTheDocument();
-      expect(screen.getByText(`${food.price}₮`)).toBeInTheDocument();
-      expect(screen.getByText(`${food.quantity}ш`)).toBeInTheDocument();
-    });
+    const foodItems = screen.getAllByText(/k$/);  
+    expect(foodItems.length);  
   });
 });

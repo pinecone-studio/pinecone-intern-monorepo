@@ -1,39 +1,30 @@
-import React from 'react';
+import Image from 'next/image';
 
-interface OrderItem {
-  id: string;
+type Food = {
+  id: number;
   name: string;
-  price: number;
-  quantity: number;
+  price: string;
   image: string;
-}
+  quantity: number;
+};
 
-interface Order {
-  id: string;
-  table: string;
-  createdAt: string;
-  items: OrderItem[];
-  status: string;
-  totalPrice: number;
-}
+type RenderFoodCardProps = {
+  orders: Food[];
+};
 
-interface OrderFoodCardProps {
-  orders: Order[];
-}
-
-const OrderFoodCard: React.FC<OrderFoodCardProps> = ({ orders }) => {
+const OrderFoodCard = ({ orders }: RenderFoodCardProps) => {
   return (
-    <div data-testid="order-food-card">
+    <div data-cy="Foods" className="flex flex-col mt-5 gap-5">
       {orders.map((order) => (
-        <div key={order.id}>
-          {order.items.map((food) => (
-            <div key={food.id}>
-              <img data-testid="food-image" src={food.image} alt={food.name} />
-              <p>{food.name}</p>
-              <p>{food.price}₮</p>
-              <p>{food.quantity}ш</p>
-            </div>
-          ))}
+        <div key={order.id} className="flex w-[536px] gap-5">
+          <div className="h-[86px] w-[86px] overflow-hidden rounded-lg text-bold">
+            <Image src={order.image} width={86} height={86} alt={order.name} className="object-cover" />
+          </div>
+          <div className="flex flex-col">
+            <p>{order.name}</p>
+            <p className="font-bold text-[#09090B] text-[18px]">{order.price}k</p>
+            <p className="font-bold text-[#09090B] text-[18px]">{order.quantity}ш</p>
+          </div>
         </div>
       ))}
     </div>

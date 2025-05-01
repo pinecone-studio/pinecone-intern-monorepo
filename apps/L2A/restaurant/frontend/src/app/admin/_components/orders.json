@@ -1,0 +1,23 @@
+[
+    {
+        "id": 9,
+        "name": "Спартак",
+        "price": "10,5",
+        "quantity": 1,
+        "image": "https://natashaskitchen.com/wp-content/uploads/2014/10/Chocolate-Spartak-31.jpg"
+      },
+      {
+        "id": 10,
+        "name": "Чийз",
+        "price": "11",
+        "quantity": 3,
+        "image": "https://cakesbymk.com/wp-content/uploads/2023/11/Template-Size-for-Blog-Photos-24.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Американо",
+        "price": "6,5",
+        "quantity": 2,
+        "image": "https://www.coffeebeans.ph/storage/2023/07/americano.jpg"
+      }
+]
