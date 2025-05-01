@@ -15,7 +15,7 @@ export const CreatePostPrice = () => {
         value={price}
         data-testid="price"
         onChange={(e) => setPrice(e.target.value)}
-        className="w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500"
+        className="w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
       />
     </div>
   );
