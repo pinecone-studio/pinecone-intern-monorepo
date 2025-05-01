@@ -1,6 +1,9 @@
+'use client';
 import { FaSearch, FaShoppingCart } from 'react-icons/fa';
+import { useAuth } from './context/AuthContext';
 
 const Header = () => {
+  const { user } = useAuth();
   return (
     <nav className="flex items-center justify-between px-6 py-4 text-white bg-black" role="navigation" aria-label="Main Navigation" data-testid="header">
       <div className="flex items-center gap-2 text-lg font-bold text-white">
@@ -13,11 +16,25 @@ const Header = () => {
           <FaSearch className="text-white" aria-hidden="true" />
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <FaShoppingCart className="text-xl text-white" aria-label="Shopping Cart" />
-        <button className="px-4 py-2 text-white border border-gray-700 rounded-md">Бүртгүүлэх</button>
-        <button className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">Нэвтрэх</button>
-      </div>
+      {user ? (
+        <div className="flex items-center gap-4">
+          <div>{user.email}</div>
+          <button
+            onClick={() => {
+              localStorage.clear();
+            }}
+            className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500"
+          >
+            Гарах
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-4">
+          <FaShoppingCart className="text-xl text-white" aria-label="Shopping Cart" />
+          <button className="px-4 py-2 text-white border border-gray-700 rounded-md">Бүртгүүлэх</button>
+          <button className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">Нэвтрэх</button>
+        </div>
+      )}
     </nav>
   );
 };

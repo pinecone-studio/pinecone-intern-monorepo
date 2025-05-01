@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button';
 import { LoginSchema } from '../utils/login-schema';
 import { useLoginUserMutation } from '@/generated';
 import Link from 'next/link';
+import { useAuth } from '@/app/_components/context/AuthContext';
 
 const LoginForm = () => {
+  const { setJWT } = useAuth();
   const [loginUser] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -27,6 +29,7 @@ const LoginForm = () => {
         const expiry = now.getTime() + 24 * 60 * 60 * 1000;
 
         localStorage.setItem('token', response.data.loginUser.JWT);
+        setJWT(response.data.loginUser.JWT);
         localStorage.setItem('tokenExpiry', expiry.toString());
       }
     } catch (error) {
