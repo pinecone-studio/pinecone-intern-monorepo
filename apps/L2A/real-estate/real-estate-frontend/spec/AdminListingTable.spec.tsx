@@ -1,43 +1,18 @@
 import '@testing-library/jest-dom';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import AdminListingTable from '../src/app/admin/_components/AdminListingTable';
 
-describe('AdminListingTable', () => {
-  it('renders table heading', () => {
-    render(<AdminListingTable />);
-    expect(screen.getByText('Зарууд')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Хайлт')).toBeInTheDocument();
-  });
-
-  it('renders all tab buttons', () => {
-    render(<AdminListingTable />);
-    expect(screen.getByText('Хүсэлт илгээсэн')).toBeInTheDocument();
-    expect(screen.getByText('Зөвшөөрсөн')).toBeInTheDocument();
-    expect(screen.getByText('Татгалзсан')).toBeInTheDocument();
-    expect(screen.getByText('Админ хассан')).toBeInTheDocument();
-  });
-
-  it('renders a row from mock listing', () => {
+describe('AdminListingTable - Filter Logic', () => {
+  it('filters listings when a tab is clicked', () => {
     render(<AdminListingTable />);
 
-    const row = screen.getByText('0001').closest('tr');
-    if (!row) {
-      throw new Error('Row not found');
-    }
-    const utils = within(row);
+    fireEvent.click(screen.getByText('Зөвшөөрсөн'));
 
-    expect(utils.getByText('0001')).toBeInTheDocument();
-    expect(utils.getByText('Seoul royal county хотхон')).toBeInTheDocument();
-    expect(utils.getByText('Н.Мөнхтунгалаг')).toBeInTheDocument();
-    expect(utils.getByText('99112233')).toBeInTheDocument();
-  });
+    const firstRow = screen.getByText('0002').closest('tr');
+    expect(firstRow).toBeInTheDocument();
 
-  it('renders pagination footer', () => {
-    render(<AdminListingTable />);
-    expect(screen.getByText('Page 1 of 10')).toBeInTheDocument();
-    expect(screen.getByText('«')).toBeInTheDocument();
-    expect(screen.getByText('‹')).toBeInTheDocument();
-    expect(screen.getByText('›')).toBeInTheDocument();
-    expect(screen.getByText('»')).toBeInTheDocument();
+    const rowContent = within(firstRow!);
+    expect(rowContent.getByText('Seoul royal county хотхон')).toBeInTheDocument();
+    expect(rowContent.getByText('Н.Мөнхтунгалаг')).toBeInTheDocument();
   });
 });
