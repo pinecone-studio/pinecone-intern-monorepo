@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import OrderFoodCard from '@/app/admin/_components/OrderFoodCard';  
+import OrderFoodCard from '@/app/admin/_components/OrderFood';  
 import orders from '@/app/admin/_components/orders.json';  
 
 describe('OrderFoodCard', () => {

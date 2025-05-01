@@ -1,4 +1,4 @@
-import OrderFoodCard from "../_components/OrderFoodCard";
+import OrderFoodCard from "../_components/OrderFood";
 import orders from "../_components/orders.json";
 
 const Orders = () => {
