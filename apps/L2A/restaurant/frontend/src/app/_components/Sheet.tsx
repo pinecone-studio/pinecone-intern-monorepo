@@ -20,18 +20,28 @@ const HomeSheet = () => {
               <GrHomeRounded className="w-[16px] h-[16px]" />
               <p>Нүүр хуудас</p>
             </button>
-            <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
-              <IoWalletOutline />
-              <p> Хэтэвч</p>
-            </button>
+            <Link href={'/user/wallet'}>
+              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+                <IoWalletOutline />
+                <p> Хэтэвч</p>
+              </button>
+            </Link>
             <button className="flex gap-2 border-b-2 border-b-gray-300  h-[68px] items-center">
               <MdOutlinePerson />
               <p>Хэрэглэгч</p>
             </button>
+
             <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
               <RiFilter3Line />
-              <p>Захиалгын түүх</p>
+              <p>Захиалга</p>
             </button>
+
+            <Link href={'/orderhistory'}>
+              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+                <RiFilter3Line />
+                <p>Захиалгын түүх</p>
+              </button>
+            </Link>
             <Link href={'/user/information'}>
               <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
                 <IoIosInformationCircleOutline />
