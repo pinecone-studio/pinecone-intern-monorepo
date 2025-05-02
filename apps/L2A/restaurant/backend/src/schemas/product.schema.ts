@@ -36,6 +36,9 @@ export const typeDefs = gql`
   
   type Query {
   products: [Product!]!
+  getAllProducts: [Product!]!
+  getProductById(id: ID!): Product
+  getProductsByCategory(categoryId: ID!): [Product!]!
   product(id: ID!): Product
   productsByCategory(categoryId: ID!): [Product!]!
 }

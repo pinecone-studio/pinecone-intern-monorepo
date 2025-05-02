@@ -11,9 +11,9 @@ export const resolvers = {
     deleteProduct,
   },
   Query: {
-    products : getAllProducts,
-    product : getProductById,
-    productsByCategory : getProductsByCategory,
+    getAllProducts,
+    getProductById,
+    getProductsByCategory,
   }
 };
 
