@@ -1,37 +1,35 @@
-import { addCategory } from "../../../src/resolvers/mutations/add-category";
-import { categoryModel } from "../../../src/models/category.model";
+import { addCategory } from '../../../src/resolvers/mutations/add-category';
+import { categoryModel } from '../../../src/models/category.model';
 
-jest.mock("../../../src/models/category.model");
-describe("addCategory", () => {
-  const mockCategory = {
-    _id: "123",
-    name: "Desserts",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  beforeEach(() => {
+jest.mock('../../../src/models/category.model');
+
+describe('addCategory', () => {
+  const mockCreate = categoryModel.create as jest.Mock;
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
-  it("should successfully create a category", async () => {
-    (categoryModel.create as jest.Mock).mockResolvedValue(mockCategory);
-    const result = await addCategory(null, { name: "Desserts" });
+
+  it('should create and return a new category', async () => {
+    const input = { name: 'New Category' };
+    const mockCategory = { _id: '123', name: 'New Category' };
+
+    mockCreate.mockResolvedValue(mockCategory);
+
+    const result = await addCategory(undefined, { input });
+
+    expect(mockCreate).toHaveBeenCalledWith({ name: 'New Category' });
     expect(result).toEqual(mockCategory);
-    expect(categoryModel.create).toHaveBeenCalledWith({ name: "Desserts" });
   });
-  it("should throw an error if name is missing", async () => {
-    await expect(addCategory(null, { name: "" })).rejects.toThrow(
-      /Category name is required/
-    );
-  });
-  it("should throw an error if name is not a string", async () => {
-    await expect(addCategory(null, { name: 123 as unknown as string})).rejects.toThrow(
-      /Category name is required/
-    );
-  });
-  it("should throw an error if category creation fails", async () => {
-    (categoryModel.create as jest.Mock).mockRejectedValue(new Error("DB error"));
-    await expect(addCategory(null, { name: "Drinks" })).rejects.toThrow(
-      /Error creating category:/
-    );
+
+  it('should throw an error if category creation fails', async () => {
+    const input = { name: 'Fail Category' };
+    const errorMessage = 'Database error';
+
+    mockCreate.mockRejectedValue(new Error(errorMessage));
+
+    await expect(addCategory(undefined, { input })).rejects.toThrow(`Error creating category: Error: ${errorMessage}`);
+
+    expect(mockCreate).toHaveBeenCalledWith({ name: 'Fail Category' });
   });
 });

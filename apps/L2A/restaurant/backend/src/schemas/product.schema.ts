@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  scalar Date
-
   type Product {
     _id: ID!
     name: String!
@@ -14,12 +12,15 @@ export const typeDefs = gql`
     updatedAt: Date!
   }
 
-  type Category {
-    _id: ID!
+  input AddProductInput {
     name: String!
+    price: Float!
+    description: String!
+    images: [String!]!
+    category: ID!
   }
 
-  input ProductUpdateInput {
+  input UpdateProductInput {
     _id: ID!
     name: String
     price: Float
@@ -28,9 +29,13 @@ export const typeDefs = gql`
     category: ID
   }
 
-  type Mutation {
-    addProduct(name: String!, price: Float!, description: String!, images: [String!]!, category: ID!): Product
-    updateProduct(input: ProductUpdateInput!): Product
-    deleteProduct(id: ID!): Product
+  input DeleteProductInput {
+    _id: ID!
+  }
+
+  extend type Mutation {
+    addProduct(input: AddProductInput!): Product
+    updateProduct(input: UpdateProductInput!): Product
+    deleteProduct(input: DeleteProductInput!): Product
   }
 `;

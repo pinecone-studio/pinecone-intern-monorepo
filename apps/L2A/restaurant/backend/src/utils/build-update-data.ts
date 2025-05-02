@@ -1,14 +1,14 @@
-import { ProductInput } from '../models/product.model';
+import { UpdateProductInput } from '../generated';
 import { Types } from 'mongoose';
 
-export const buildUpdateData = (input: ProductInput) => {
-  const updateData: Partial<Record<keyof ProductInput, unknown>> = {};
+export const buildUpdateData = (input: UpdateProductInput) => {
+  const updateData: Partial<Record<keyof UpdateProductInput, unknown>> = {};
 
   addIfPresent(updateData, 'name', input.name);
   addIfPresent(updateData, 'price', input.price);
   addIfPresent(updateData, 'description', input.description);
   addIfPresent(updateData, 'images', input.images);
-  addIfCategory(updateData, input.category?.toString());
+  addIfCategory(updateData, input.category);
 
   return updateData;
 };

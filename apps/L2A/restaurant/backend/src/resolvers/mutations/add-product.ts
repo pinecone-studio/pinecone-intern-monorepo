@@ -1,17 +1,16 @@
-import { ProductInput } from '../../models/product.model';
-import { validateProductInput } from '../../utils/validate-product-input';
+import { AddProductInput } from '../../generated';
 import { productModel } from '../../models/product.model';
 import { Types } from 'mongoose';
 
-export const addProduct = async (_: unknown, input: ProductInput) => {
+export const addProduct = async (_: unknown, { input }: { input: AddProductInput }) => {
   try {
-    validateProductInput(input);
     return await createProduct(input);
   } catch (error) {
-    throw new Error(`Error adding product: ${error}`);
+    throw new Error(`Error adding product: ${(error as Error).message}`);
   }
 };
-export const createProduct = async (input: ProductInput) => {
+
+export const createProduct = async (input: AddProductInput) => {
   try {
     return await productModel.create({
       name: input.name,
@@ -21,6 +20,6 @@ export const createProduct = async (input: ProductInput) => {
       category: new Types.ObjectId(input.category),
     });
   } catch (error) {
-    throw new Error(`Error creating product: ${error}`);
+    throw new Error(`Error creating product: ${(error as Error).message}`);
   }
 };

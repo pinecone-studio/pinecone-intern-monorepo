@@ -1,20 +1,24 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Category {
-    _id: ID!
-    name: String!
-    createdAt: Date!
-    updatedAt: Date!
-  }
-
-  type Query {
+  extend type Query {
     getCategories: [Category!]!
   }
 
-  type Mutation {
-    addCategory(name: String!): Category!
-    updateCategory(_id: ID!, name: String!): Category!
-    deleteCategory(_id: ID!): Category!
+  input AddCategoryInput {
+    name: String!
+  }
+  input UpdateCategoryInput {
+    _id: ID!
+    name: String!
+  }
+  input DeleteCategoryInput {
+    _id: ID!
+  }
+
+  extend type Mutation {
+    addCategory(input: AddCategoryInput): Category!
+    updateCategory(input: UpdateCategoryInput): Category!
+    deleteCategory(input: DeleteCategoryInput): Category!
   }
 `;
