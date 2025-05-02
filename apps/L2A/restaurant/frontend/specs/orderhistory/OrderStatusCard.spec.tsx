@@ -1,4 +1,4 @@
-import { OrderStatusCard } from '@/app/orderhistory/_components/OrderStatusCard';
+import { OrderStatusCard } from '@/app/user/orderhistory/_components/OrderStatusCard';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 

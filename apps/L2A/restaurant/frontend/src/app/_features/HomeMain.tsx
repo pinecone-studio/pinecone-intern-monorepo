@@ -26,7 +26,7 @@ const HomeMain = () => {
           ))}
         </div>
 
-        <div data-cy="foodsdiv" className="flex flex-wrap justify-around gap-10 grid grid-cols-2">
+        <div data-cy="foodsdiv" className=" grid grid-cols-2 gap-16">
           {selectedCategory?.foods.map((food) => (
             <RenderFood key={food.id} food={food} />
           ))}

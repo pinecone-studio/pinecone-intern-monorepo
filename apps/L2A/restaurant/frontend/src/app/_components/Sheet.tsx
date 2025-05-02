@@ -28,10 +28,12 @@ const HomeSheet = () => {
               <MdOutlinePerson />
               <p>Хэрэглэгч</p>
             </button>
-            <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
-              <RiFilter3Line />
-              <p>Захиалгын түүх</p>
-            </button>
+            <Link href={'/user/orderhistory'}>
+              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+                <RiFilter3Line />
+                <p>Захиалгын түүх</p>
+              </button>
+            </Link>
             <Link href={'/user/information'}>
               <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
                 <IoIosInformationCircleOutline />
