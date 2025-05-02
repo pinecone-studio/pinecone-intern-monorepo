@@ -20,7 +20,7 @@ const HomeSheet = () => {
               <GrHomeRounded className="w-[16px] h-[16px]" />
               <p>Нүүр хуудас</p>
             </button>
-            <Link href={'/user/wallet'}>
+            <Link href={'/wallet'}>
               <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
                 <IoWalletOutline />
                 <p> Хэтэвч</p>
