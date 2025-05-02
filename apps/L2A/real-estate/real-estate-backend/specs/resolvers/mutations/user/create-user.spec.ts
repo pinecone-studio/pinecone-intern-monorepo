@@ -2,9 +2,6 @@ import { MutationCreateUserArgs } from "apps/L2A/real-estate/real-estate-backend
 import { USER_MODEL } from "apps/L2A/real-estate/real-estate-backend/src/models/user";
 import { createUser } from "apps/L2A/real-estate/real-estate-backend/src/resolvers/mutations";
 
-
-
-// Mock the USER_MODEL
 jest.mock('apps/L2A/real-estate/real-estate-backend/src/models/user');
 
 describe('createUser resolver', () => {
@@ -26,10 +23,8 @@ describe('createUser resolver', () => {
     (USER_MODEL.findOne as jest.Mock).mockResolvedValue(null);
     (USER_MODEL.create as jest.Mock).mockResolvedValue(mockNewUser);
 
-    // Execute
     const result = await createUser({}, mockArgs);
 
-    // Verify
     expect(USER_MODEL.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(USER_MODEL.create).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(result).toEqual({
@@ -48,7 +43,6 @@ describe('createUser resolver', () => {
 
     (USER_MODEL.findOne as jest.Mock).mockResolvedValue(mockExistingUser);
 
-    // Execute and verify
     await expect(createUser({}, mockArgs))
       .rejects
       .toThrow('user already exist');
@@ -73,7 +67,7 @@ describe('createUser resolver', () => {
 
   it('should properly convert ObjectId to string', async () => {
     const mockNewUser = {
-      _id: { toString: () => 'converted-id' }, // Simulate Mongoose ObjectId
+      _id: { toString: () => 'converted-id' }, 
       email: 'test@example.com',
       isAdmin: false
     };
@@ -89,6 +83,6 @@ describe('createUser resolver', () => {
   it('should handle empty email', async () => {
     await expect(createUser({}, { email: '' }))
       .rejects
-      .toThrow(); // You might want to add specific validation
+      .toThrow(); 
   });
 });
