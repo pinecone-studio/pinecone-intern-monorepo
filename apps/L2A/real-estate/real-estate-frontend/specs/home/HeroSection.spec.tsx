@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import HeroSection from '../src/app/home/_components/HeroSection';
 import '@testing-library/jest-dom';
+import HeroSection from '@/app/home/_components/HeroSection';
 describe('HeroSection', () => {
   it('renders heading correctly', () => {
     render(<HeroSection />);

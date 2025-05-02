@@ -1,7 +1,19 @@
-query Query {
-  sampleQuery
+mutation CreateUser($email: String!) {
+  createUser(email: $email) {
+  
+    id
+    email
+    isAdmin
+
+  }
 }
 
-mutation Mutation {
-  sampleMutation
+mutation CompleteSignup($email: String!, $password: String!) {
+  completeSignup(email: $email, password: $password) {
+    user {
+      id
+      email
+    }
+    token
+  }
 }

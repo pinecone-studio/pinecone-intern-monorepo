@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import RecentListingsSection from '../src/app/home/_components/RecentListingSection';
+import RecentListingsSection from '@/app/home/_components/RecentListingSection';
 
 describe('RecentListingsSection', () => {
   it('renders section title', () => {

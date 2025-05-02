@@ -1,6 +1,6 @@
+import ListingCard from '@/app/home/_components/ListingCard';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import ListingCard from '../src/app/home/_components/ListingCard';
 
 describe('ListingCard', () => {
   const mockProps = {
