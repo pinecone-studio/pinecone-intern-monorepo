@@ -14,7 +14,6 @@ describe('CreatePostField component', () => {
   it('should allow the user to type a numeric value into the input field', async () => {
     render(<CreatePostField />);
     const input = screen.getByTestId('field');
-
     await userEvent.clear(input);
     await userEvent.type(input, '250000');
 
