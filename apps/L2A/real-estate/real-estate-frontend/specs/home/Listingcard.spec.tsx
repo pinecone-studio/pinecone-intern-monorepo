@@ -2,7 +2,6 @@ import ListingCard from '@/app/home/_components/ListingCard';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
-
 describe('ListingCard', () => {
   const mockProps = {
     imageUrl: '/listingcard.png',

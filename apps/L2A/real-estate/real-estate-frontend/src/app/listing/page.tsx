@@ -74,7 +74,6 @@ const HomeListingPage =()=> {
           </div>
         </aside>
 
-
         <section className="flex-1 px-4 sm:px-6 py-6" data-cy="listing-section">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 text-sm">
             <p className="text-muted-foreground" data-cy="listing-count">Нийт: 102 зарууд</p>
