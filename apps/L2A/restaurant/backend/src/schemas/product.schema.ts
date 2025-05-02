@@ -33,4 +33,10 @@ export const typeDefs = gql`
     updateProduct(input: ProductUpdateInput!): Product
     deleteProduct(id: ID!): Product
   }
+  
+  type Query {
+  products: [Product!]!
+  product(id: ID!): Product
+  productsByCategory(categoryId: ID!): [Product!]!
+}
 `;

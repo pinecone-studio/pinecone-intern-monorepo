@@ -1,6 +1,8 @@
+
 import { deleteProduct } from "./mutations";
 import { addProduct } from "./mutations/add-product";
 import { updateProduct } from "./mutations/update-product";
+import { getAllProducts, getProductById, getProductsByCategory } from "./queries";
 
 export const resolvers = {
   Mutation: {
@@ -8,5 +10,10 @@ export const resolvers = {
     updateProduct,
     deleteProduct,
   },
+  Query: {
+    products : getAllProducts,
+    product : getProductById,
+    productsByCategory : getProductsByCategory,
+  }
 };
 
