@@ -2,6 +2,7 @@ import * as React from 'react';
 import { CreatePostHeader } from '../_components/CreatePostHeader';
 import { CreatePostName } from '../_components/CreatePostName';
 import { CreatePostPrice } from '../_components/CreatePostPrice';
+import { CreatePostField } from '../_components/CreatePostField';
  
 export const CreatePostCard = () => {
   return (
@@ -21,6 +22,7 @@ export const CreatePostCard = () => {
             <CreatePostPrice/>
           </div>
           <div>
+            <CreatePostField/>
           </div>
           <div className='w-full'>
           </div>
