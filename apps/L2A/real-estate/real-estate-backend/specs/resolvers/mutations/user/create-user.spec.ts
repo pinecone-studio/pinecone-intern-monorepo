@@ -12,7 +12,6 @@ describe('createUser resolver', () => {
   });
 
   it('should create a new user when email does not exist', async () => {
-    // Setup mock responses
     const mockNewUser = {
       _id: '507f1f77bcf86cd799439011',
       email: 'test@example.com',
@@ -35,7 +34,6 @@ describe('createUser resolver', () => {
   });
 
   it('should throw error when user already exists', async () => {
-    // Setup mock existing user
     const mockExistingUser = {
       _id: '507f1f77bcf86cd799439011',
       email: 'test@example.com'
