@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Import this to use `toBeInTheDocument`
+import '@testing-library/jest-dom';
 import ConcertCard from '@/app/_components/ConcertCard';
 
 describe('ConcertCard', () => {
-  it('renders ConcertCard', () => {
+  it('should render ConcertCard', () => {
     render(<ConcertCard />);
 
     const card = screen.getByTestId('concert-card');

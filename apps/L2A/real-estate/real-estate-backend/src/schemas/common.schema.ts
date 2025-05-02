@@ -10,21 +10,20 @@ export const typeDefs = gql`
   }
 
   type User {
-    id:String!
-    email:String!
-    isAdmin:String!
+    id: String!
+    email: String!
+    isAdmin: String!
   }
 
   type tokenResponse {
-    token:String!
-    user:User!
+    token: String!
+    user: User!
   }
 
-  type createUserToken{
-    token:String!
-    user:User!
+  type createUserToken {
+    token: String!
+    user: User!
   }
-
 
   type Query {
     sampleQuery: String!
@@ -32,8 +31,10 @@ export const typeDefs = gql`
 
   type Mutation {
     sampleMutation: String!
-    loginUser(email:String!, password:String!): tokenResponse!
-    createUser(email:String!): User!
+    loginUser(email: String!, password: String!): tokenResponse!
+    createUser(email: String!, password: String!): createUserToken!
     completeSignup(email:String!, password:String!): tokenResponse!
+    requestOTP(email: String!): Boolean
+    verifyOTP(email: String!, otp: String!): Boolean
   }
 `;
