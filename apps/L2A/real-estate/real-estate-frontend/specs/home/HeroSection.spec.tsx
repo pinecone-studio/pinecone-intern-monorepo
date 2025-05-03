@@ -28,7 +28,6 @@ describe('HeroSection', () => {
     render(<HeroSection />);
     const input = screen.getByPlaceholderText('Хот, дүүрэг, эсвэл газар хайх...');
     fireEvent.change(input, { target: { value: 'Зайсан' } });
-
     const button = screen.getByRole('button', { name: /Хайх/i });
     fireEvent.click(button);
 
