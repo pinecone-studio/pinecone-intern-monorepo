@@ -1,11 +1,4 @@
-import AdminBody from "./_features/AdminBody"
-
-const AdminPage=()=>{
-    
-    return(
-        <div >
-          <AdminBody/>
-        </div>
-    )
-}
-export default AdminPage
+const AdminPage = () => {
+  return <div>admin Page</div>;
+};
+export default AdminPage;

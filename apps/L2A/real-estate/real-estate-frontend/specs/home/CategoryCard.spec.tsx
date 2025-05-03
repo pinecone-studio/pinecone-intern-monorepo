@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-
 import '@testing-library/jest-dom';
 import CategoryCard from '@/app/home/_components/CategoryCard';
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CreatePostHeader } from '../_components/CreatePostHeader';
 import { CreatePostName } from '../_components/CreatePostName';
+import { CreatePostPrice } from '../_components/CreatePostPrice';
  
 export const CreatePostCard = () => {
   return (
@@ -12,11 +13,12 @@ export const CreatePostCard = () => {
         </div>
         <form className='space-y-4 gap-2'>
           <div>
-            <CreatePostName/>
           </div>
           <div>
+          <CreatePostName/>
           </div>
           <div>
+            <CreatePostPrice/>
           </div>
           <div>
           </div>

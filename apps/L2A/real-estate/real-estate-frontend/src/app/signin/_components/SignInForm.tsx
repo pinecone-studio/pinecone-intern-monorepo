@@ -26,9 +26,8 @@ const SignInForm =  ()=> {
     try {
       const { data } = await loginUser({ variables: { email, password } });
       Cookies.set('token', data.loginUser.token, { expires: 2, secure: true });
-      router.push('/');
+      router.push('/')
     } catch (err) {
-      
         console.error(err); 
         setError('Login failed');
       }
