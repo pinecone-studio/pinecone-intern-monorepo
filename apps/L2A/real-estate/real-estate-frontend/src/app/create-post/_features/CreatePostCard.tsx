@@ -6,7 +6,6 @@ import { CreatePostField } from '../_components/CreatePostField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormValues = {
-  price: number;
   field: number;
 }
  
