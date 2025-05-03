@@ -23,6 +23,7 @@ describe('CreatePostField Component', () => {
 
   it('should trigger validation on blur', () => {
     const triggerMock = jest.fn();
+    
     render(<TestWrapper trigger={triggerMock} />);
     const input = screen.getByTestId('field');
     fireEvent.blur(input);
