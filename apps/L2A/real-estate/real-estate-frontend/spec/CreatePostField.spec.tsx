@@ -1,22 +1,37 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import { CreatePostField } from '@/app/create-post/_components/CreatePostField';
+import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { useForm } from 'react-hook-form';
 
-describe('CreatePostField component', () => {
-  it('renders a number input field with test id "field"', () => {
-    render(<CreatePostField />);
+type TestWrapperProps = {
+  error?: any;
+  trigger?: (_name?: string) => Promise<boolean> | undefined;
+}
+
+const TestWrapper = ({ error, trigger }: TestWrapperProps) => {
+  const { register } = useForm();
+
+  return <CreatePostField register={register} error={error} name="area" trigger={trigger} />;
+}
+
+describe('CreatePostField Component', () => {
+  it('should render the input field', () => {
+    render(<TestWrapper />);
     const input = screen.getByTestId('field');
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('type', 'number');
   });
 
-  it('should allow the user to type a numeric value into the input field', async () => {
-    render(<CreatePostField />);
+  it('should trigger validation on blur', () => {
+    const triggerMock = jest.fn();
+    render(<TestWrapper trigger={triggerMock} />);
     const input = screen.getByTestId('field');
-    await userEvent.clear(input);
-    await userEvent.type(input, '250000');
+    fireEvent.blur(input);
+    expect(triggerMock).toHaveBeenCalledWith('area');
+  });
 
-    expect(input).toHaveValue(250000);
+  it('should show error message when error is passed', () => {
+    const error = { message: 'Талбайн утгыг заавал оруулна уу' };
+    render(<TestWrapper error={error} />);
+    expect(screen.getByText('Талбайн утгыг заавал оруулна уу')).toBeInTheDocument();
   });
 });
