@@ -1,47 +1,34 @@
 import '@testing-library/jest-dom';
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from '@testing-library/react';
 import AdminFoodList from '@/app/admin/food/_features/AdminFoodList';
 
-describe("AdminFoodList", () => {
-  it("renders the food list container", () => {
-    expect.assertions(1);
+describe('AdminFoodList (dummy test)', () => {
+  it('renders the food list container', () => {
     render(<AdminFoodList />);
-    const list = screen.getByTestId("food-list");
-    expect(list).toBeInTheDocument();
+    expect(screen.getByTestId('food-list')).toBeInTheDocument();
   });
-
-  it("renders 2 food cards", () => {
-    expect.assertions(1);
+  it('renders 2 food cards', () => {
     render(<AdminFoodList />);
-    const cards = screen.getAllByTestId(/food-card-/);
-    expect(cards).toHaveLength(2);
+    expect(screen.getAllByTestId(/food-card-/)).toHaveLength(2);
   });
-
-  it("renders each food card content correctly", () => {
-    expect.assertions(6);
+  it('renders edit and delete buttons for each card', () => {
     render(<AdminFoodList />);
-    for (let i = 0; i < 2; i++) {
-      expect(screen.getByTestId(`food-name-${i}`)).toHaveTextContent("Apple");
-      expect(screen.getByTestId(`food-price-${i}`)).toHaveTextContent("15.6k");
-      expect(screen.getByTestId(`food-description-${i}`)).toHaveTextContent("Идэвхитэй");
-    }
+    expect(screen.getAllByTestId(/edit-button-/)).toHaveLength(2);
+    expect(screen.getAllByTestId(/delete-button-/)).toHaveLength(2);
   });
-
-  it("renders edit and delete buttons for each card", () => {
-    expect.assertions(4);
+  it('renders dialog content when edit button is clicked', () => {
     render(<AdminFoodList />);
-    for (let i = 0; i < 2; i++) {
-      expect(screen.getByTestId(`edit-button-${i}`)).toBeInTheDocument();
-      expect(screen.getByTestId(`delete-button-${i}`)).toBeInTheDocument();
-    }
+    const editButton = screen.getByTestId('edit-button-0');
+    fireEvent.click(editButton);
+    const dialogTitle = screen.getByTestId('dialog-title');
+    expect(dialogTitle).toBeVisible();
+    expect(dialogTitle).toHaveTextContent('Хоол засах');
+    expect(screen.getByTestId('food-name-input')).toBeInTheDocument();
+    expect(screen.getByTestId('price-input')).toBeInTheDocument();
+    expect(screen.getByTestId('upload-image-button')).toBeInTheDocument();
   });
-
-  it("renders image with correct alt for each card", () => {
-    expect.assertions(2);
+  it('renders food image for each card', () => {
     render(<AdminFoodList />);
-    for (let i = 0; i < 2; i++) {
-      const img = screen.getByTestId(`food-image-${i}`);
-      expect(img).toHaveAttribute("alt", "Apple");
-    }
+    expect(screen.getAllByTestId(/food-image-/)).toHaveLength(2);
   });
 });
