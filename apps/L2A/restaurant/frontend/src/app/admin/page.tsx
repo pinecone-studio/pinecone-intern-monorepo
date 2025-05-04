@@ -1,11 +1,11 @@
-import AdminBody from "./_features/AdminBody"
+import Orders from "./orders/page"
 
 const AdminPage=()=>{
-    
     return(
         <div >
-          <AdminBody/>
+          <Orders />
         </div>
     )
 }
-export default AdminPage
+
+export default AdminPage;

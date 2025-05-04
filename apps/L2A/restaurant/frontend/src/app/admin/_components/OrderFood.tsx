@@ -1,29 +1,47 @@
-import Image from 'next/image';
+"use client";
+
+import Image from "next/image";
 
 export type Food = {
   id: number;
   name: string;
-  price: string;
+  price: number;
   image: string;
   quantity: number;
 };
 
-type RenderFoodCardProps = {
+type FoodProps = {
   orders: Food[];
 };
 
-const OrderFoodCard = ({ orders }: RenderFoodCardProps) => {
+const OrderFood = ({ orders }: FoodProps) => {
   return (
-    <div data-cy="Foods" className="flex flex-col mt-5 gap-5">
-      {orders.map((order) => (
-        <div key={order.id} className="flex w-[536px] gap-5">
+    <div className="flex flex-col gap-4">
+      {orders.map((item) => (
+        <div
+          key={item.id}
+          className="flex w-[536px] gap-6"
+          data-cy="food-item"
+        >
           <div className="h-[86px] w-[86px] overflow-hidden rounded-lg text-bold">
-            <Image src={order.image} width={86} height={86} alt={order.name} className="object-cover" />
+            <Image
+              src={item.image}
+              width={86}
+              height={86}
+              alt={item.name}
+              className="object-cover"
+            />
           </div>
-          <div className="flex flex-col">
-            <p>{order.name}</p>
-            <p className="font-bold text-[#09090B] text-[18px]">{order.price}k</p>
-            <p className="font-bold text-[#09090B] text-[18px]">{order.quantity}ш</p>
+          <div className="flex flex-col justify-center">
+            <p className="font-bold text-[#09090B]" data-cy="food-name">
+              {item.name}
+            </p>
+            <p className="font-bold text-[#09090B]" data-cy="food-price">
+              {item.price}₮
+            </p>
+            <p className="font-bold text-[#09090B]" data-cy="food-qty">
+              {item.quantity}ш
+            </p>
           </div>
         </div>
       ))}
@@ -31,4 +49,4 @@ const OrderFoodCard = ({ orders }: RenderFoodCardProps) => {
   );
 };
 
-export default OrderFoodCard;
+export default OrderFood;
