@@ -1,6 +1,17 @@
 query Query {
   sampleQuery
 }
+query GetUserInfo($jwt: String!) {
+  GetUserInfo(JWT: $jwt) {
+    email
+    id
+    phone
+    isAdmin
+    bookings {
+      id
+    }
+  }
+}
 
 mutation Mutation {
   sampleMutation
@@ -15,5 +26,37 @@ mutation loginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
     JWT
     email
+  }
+}
+
+query getConcert($concertId: String!) {
+  concert(concertId: $concertId) {
+    artistName
+    date
+    description
+    id
+    specialGuestName
+    ticketCategories {
+      capacity
+      price
+      type
+    }
+    tickets {
+      id
+      seatNumber
+      price
+      type
+      status
+      createdAt
+      updatedAt
+    }
+    title
+    venue {
+      id
+      name
+      address
+      city
+      capacity
+    }
   }
 }

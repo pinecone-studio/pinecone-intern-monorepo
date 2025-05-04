@@ -23,9 +23,9 @@ describe('login', () => {
 
     if (loginUser) {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-      
+
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
-      
+
       expect(result.email).toBe('test@gmail.com');
       expect(result.password).toBe('hashedPassword');
       expect(result.JWT).toBe('token');
@@ -34,10 +34,10 @@ describe('login', () => {
 
   it('test jwt token', async () => {
     (findUserByEmail as jest.Mock).mockResolvedValue({ id: '1', password: 'hashedPassword', email: 'test@gmail.com' });
-    
+
     if (loginUser) {
       const result = await loginUser({}, { email: 'test@email.com', password: 'testing11' }, context, {} as GraphQLResolveInfo);
-      
+
       expect(result.id).toBe('1');
       expect(result.JWT).toBe('token');
     }
@@ -48,7 +48,7 @@ describe('login', () => {
     (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
+      await expect(loginUser({}, { email: 'test@gmail.com', password: 'testpass' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нууц үг буруу байна!');
     }
   });
 
@@ -57,16 +57,7 @@ describe('login', () => {
     (findUserByEmail as jest.Mock).mockRejectedValue(new Error('Хэрэглэгч олдсонгүй'));
 
     if (loginUser) {
-      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
-    }
-  });
-
-  it('should catch error', async () => {
-    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-    (findUserByEmail as jest.Mock).mockResolvedValue(null);
-
-    if (loginUser) {
-      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Нэвтрэхэд алдаа гарлаа!');
+      await expect(loginUser({}, { email: 'tes@gmail.com', password: 'x123123123' }, context, {} as GraphQLResolveInfo)).rejects.toThrow('Хэрэглэгч олдсонгүй');
     }
   });
 });

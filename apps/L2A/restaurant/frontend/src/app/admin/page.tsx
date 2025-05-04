@@ -1,3 +1,4 @@
+
 import Orders from "./orders/page"
 
 const AdminPage=()=>{
@@ -9,3 +10,5 @@ const AdminPage=()=>{
 }
 
 export default AdminPage;
+
+

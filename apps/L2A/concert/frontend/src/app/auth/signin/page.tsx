@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button';
 import { LoginSchema } from '../utils/login-schema';
 import { useLoginUserMutation } from '@/generated';
 import Link from 'next/link';
+import { useAuth } from '@/app/_components/context/AuthContext';
 
 const LoginForm = () => {
+  const { setJWT } = useAuth();
   const [loginUser] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -19,20 +21,20 @@ const LoginForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
     try {
       const response = await loginUser({ variables: values });
       if (response.data?.loginUser.JWT) {
         const now = new Date();
         const expiry = now.getTime() + 24 * 60 * 60 * 1000;
-
         localStorage.setItem('token', response.data.loginUser.JWT);
+        setJWT(response.data.loginUser.JWT);
         localStorage.setItem('tokenExpiry', expiry.toString());
       }
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
+
   return (
     <div data-cy="signin-form" className="flex justify-center h-[100vh] items-center w-[100%]">
       <div>

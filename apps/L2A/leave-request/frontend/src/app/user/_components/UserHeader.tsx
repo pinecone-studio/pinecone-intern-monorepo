@@ -9,12 +9,12 @@ const UserHeader = () => {
         <div className="flex justify-between items-center px-4 mt-4 ml-2">
           <div className="flex justify-start items-center gap-4 text-black ">
             <div>
-              <Image src="/images/Logo.png" alt="Logo" width={100} height={40} />
+              <Image src="/images/Logo.png" alt="Logo" width={30} height={30} />
             </div>
           </div>
           <div className="flex justify-end items-center gap-4 text-black mr-4">
             <div>
-              <Image src="/images/Avatar.png" alt="Avatar" width={40} height={40} className="rounded-full" />
+              <Image src="/images/Avatar.png" alt="Avatar" width={30} height={30} className="rounded-full" />
             </div>
           </div>
         </div>
