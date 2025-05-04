@@ -1,4 +1,4 @@
-describe('AdminFoodList (dummy e2e test)', () => {
+describe('AdminFoodList (dummy uptade dialog)', () => {
   beforeEach(() => {
     cy.visit('/admin/food');
   });
