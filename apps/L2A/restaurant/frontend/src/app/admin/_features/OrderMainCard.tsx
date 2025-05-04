@@ -57,11 +57,9 @@ const OrderMainCard = ({ order }: OrderProps) => {
           🕒 {order.time}
         </div>
       </div>
-
       <div className="border-t py-4">
         <OrderFood orders={order.items} />
       </div>
-
       <div
         className="flex items-center justify-between border-t pt-4"
         data-cy="order-total"
@@ -69,7 +67,6 @@ const OrderMainCard = ({ order }: OrderProps) => {
         <p className="text-base font-medium">Нийлбэр дүн:</p>
         <p className="text-lg font-bold">{total.toLocaleString()}₮</p>
       </div>
-
       <div className="flex items-center justify-end gap-3 mt-3">
         <Select data-cy="select">
           <SelectTrigger className="w-[160px]">
