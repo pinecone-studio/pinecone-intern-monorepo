@@ -17,7 +17,7 @@ const AdminFoodList = () => {
     status: 'active',
     image: '/apple.png',
     previewImage: '/apple.png',
-  }));  
+  }));
   const handleEdit = (itemId: string, changes: unknown) => {
     console.log('Edit:', itemId, changes);
   };

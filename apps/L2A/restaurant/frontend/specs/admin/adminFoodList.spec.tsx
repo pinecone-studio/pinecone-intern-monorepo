@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import AdminFoodList from '@/app/admin/food/_features/AdminFoodList';
 
-describe('AdminFoodList (dummy test)', () => {
+describe('AdminFoodList (dummy uptade dialog)', () => {
   it('renders the food list container', () => {
     render(<AdminFoodList />);
     expect(screen.getByTestId('food-list')).toBeInTheDocument();
