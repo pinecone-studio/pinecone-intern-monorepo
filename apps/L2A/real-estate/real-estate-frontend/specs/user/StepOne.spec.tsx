@@ -11,6 +11,7 @@ jest.mock('@/generated', () => ({
 describe('StepOne Component', () => {
   const mockSetStep = jest.fn();
   const mockCreateUser = jest.fn();
+  const mockSetParentEmail = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -29,14 +30,14 @@ describe('StepOne Component', () => {
   });
 
   it('renders the email input field and submit button', () => {
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     expect(screen.getByLabelText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('name@example.com')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
   });
 
   it('shows error when submitting empty form', async () => {
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     fireEvent.submit(screen.getByTestId('step-one-form'));
     await waitFor(() => {
       expect(screen.getByTestId('error-message')).toHaveTextContent('Email is required');
@@ -48,7 +49,7 @@ describe('StepOne Component', () => {
     mockCreateUser.mockResolvedValueOnce({
       data: { createUser: { email: testEmail } }
     });
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: testEmail }
     });
@@ -65,20 +66,21 @@ describe('StepOne Component', () => {
     mockCreateUser.mockResolvedValueOnce({
       data: { createUser: { email: testEmail } }
     });
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: testEmail }
     });
     fireEvent.submit(screen.getByTestId('step-one-form'));
     await waitFor(() => {
       expect(window.localStorage.setItem).toHaveBeenCalledWith('email', testEmail);
-      expect(mockSetStep).toHaveBeenCalledWith(3);
+      expect(mockSetStep).toHaveBeenCalledWith(2);
+      expect(mockSetParentEmail).toHaveBeenCalledWith(testEmail); 
     });
   });
 
   it('shows error message when mutation fails', async () => {
     mockCreateUser.mockRejectedValueOnce(new Error('Mutation failed'));
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: 'test@example.com' }
     });
@@ -93,13 +95,13 @@ describe('StepOne Component', () => {
       mockCreateUser,
       { loading: true },
     ]);
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     expect(screen.getByRole('button')).toBeDisabled();
     expect(screen.getByText('Logging in...')).toBeInTheDocument();
   });
 
   it('clears error when user starts typing', async () => {
-    render(<StepOne setStep={mockSetStep} />);
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);
     fireEvent.submit(screen.getByTestId('step-one-form'));
     await waitFor(() => {
       expect(screen.getByTestId('error-message')).toHaveTextContent('Email is required');
@@ -119,7 +121,7 @@ describe('StepOne Component', () => {
         createUser: {         } 
       }
     });
-    render(<StepOne setStep={mockSetStep} />);    
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);    
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: testEmail }
     });
@@ -136,7 +138,7 @@ describe('StepOne Component', () => {
     mockCreateUser.mockResolvedValueOnce({
       data: null
     });
-    render(<StepOne setStep={mockSetStep} />);    
+    render(<StepOne setStep={mockSetStep} setEmail={mockSetParentEmail}  />);    
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: testEmail }
     });
