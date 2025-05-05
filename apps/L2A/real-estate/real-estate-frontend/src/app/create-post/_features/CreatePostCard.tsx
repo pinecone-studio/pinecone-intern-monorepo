@@ -33,15 +33,11 @@ export const CreatePostCard = () => {
         <div className="w-[728px] h-[842px] flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
           <div className="w-[680px] h-[692px] space-y-4 mt-6">
             <CreatePostHeader />
-
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
-
             <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
-
             <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
           </div>
         </div>
-
         <div>
           <button type="submit" className="bg-green-200 p-2 rounded-lg">
             Зар оруулах хүсэлт илгээх
