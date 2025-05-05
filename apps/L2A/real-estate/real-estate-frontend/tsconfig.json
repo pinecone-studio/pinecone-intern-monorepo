@@ -21,7 +21,7 @@
       "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
       "@/*": ["src/*"]
     },
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "cypress"]
   },
   
 
@@ -33,7 +33,8 @@
     "**/*.jsx",
     "../../../../apps/L2A/real-estate/real-estate-frontend/.next/types/**/*.ts",
     "../../../../dist/apps/L2A/real-estate/real-estate-frontend/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "cypress/support/index.d.ts",
   ],
 "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
   

@@ -21,7 +21,7 @@ const AdminHeader = () => {
             </Link>
           ))}
         </nav>
-        <div data-testid="avatar-container" className="absolute top-4 right-8">
+        <div data-testid="avatar-container" className="absolute top-18 right-8">
           <Avatar data-testid="avatar">
             <AvatarImage src="https://github.com/shadcn.png" data-testid="avatar-image" />
             <AvatarFallback data-testid="avatar-fallback">CN</AvatarFallback>
