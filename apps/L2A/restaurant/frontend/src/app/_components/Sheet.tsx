@@ -16,34 +16,33 @@ const HomeSheet = () => {
         </SheetTrigger>
         <SheetContent side="right">
           <SheetHeader>
-            <button className="flex gap-2 border-b-2 border-b-gray-300  h-[68px] items-center mt-7">
-              <GrHomeRounded className="w-[16px] h-[16px]" />
-              <p>Нүүр хуудас</p>
-            </button>
-            <Link href={'/wallet'}>
-              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+            <Link className="border-b-2 border-b-gray-300" href={'/'}>
+              <button className="flex gap-2   h-[68px] items-center mt-7">
+                <GrHomeRounded className="w-[16px] h-[16px]" />
+                <p>Нүүр хуудас</p>
+              </button>
+            </Link>
+            <Link className="border-b-2 border-b-gray-300" href={'/wallet'}>
+              <button className="flex gap-2  h-[68px] items-center">
                 <IoWalletOutline />
                 <p> Хэтэвч</p>
               </button>
             </Link>
-            <button className="flex gap-2 border-b-2 border-b-gray-300  h-[68px] items-center">
-              <MdOutlinePerson />
-              <p>Хэрэглэгч</p>
-            </button>
+            <Link className="border-b-2 border-b-gray-300" href={'/profile'}>
+              <button className="flex gap-2 h-[68px] items-center">
+                <MdOutlinePerson />
+                <p>Хэрэглэгч</p>
+              </button>
+            </Link>
 
-            <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
-              <RiFilter3Line />
-              <p>Захиалга</p>
-            </button>
-
-            <Link href={'/orderhistory'}>
-              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+            <Link className="border-b-2 border-b-gray-300" href={'/orderhistory'}>
+              <button className="flex gap-2 h-[68px] items-center">
                 <RiFilter3Line />
                 <p>Захиалгын түүх</p>
               </button>
             </Link>
-            <Link href={'/user/information'}>
-              <button className="flex gap-2 border-b-2 border-b-gray-300 h-[68px] items-center">
+            <Link className="border-b-2 border-b-gray-300" href={'/user/information'}>
+              <button className="flex gap-2 h-[68px] items-center">
                 <IoIosInformationCircleOutline />
                 <p>Бидний тухай</p>
               </button>
