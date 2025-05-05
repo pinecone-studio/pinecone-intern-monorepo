@@ -1,6 +1,6 @@
+import AdminListingTable from '@/app/admin/_components/AdminListingTable';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, within } from '@testing-library/react';
-import AdminListingTable from '../src/app/admin/_components/AdminListingTable';
 
 describe('AdminListingTable - Filter Logic', () => {
   it('filters listings when a tab is clicked', () => {

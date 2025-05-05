@@ -3,11 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { CreatePostHeader } from '@/app/create-post/_components/CreatePostHeader';
 import '@testing-library/jest-dom';
 
-
-
 describe('CreatePostHeader', () => {
   test('renders header and description with correct text and classes', () => {
-    render(<CreatePostHeader/>);
+    render(<CreatePostHeader />);
 
     const infoElement = screen.getByTestId('Info');
     expect(infoElement).toBeInTheDocument();

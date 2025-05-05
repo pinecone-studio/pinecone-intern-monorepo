@@ -2,6 +2,7 @@
 import { useCompleteSignupMutation } from "@/generated";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 export const StepThree = () => {
 const [completeSignup, {loading}] = useCompleteSignupMutation();
@@ -22,10 +23,16 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   try {
-    await completeSignup({
+    const {data} = await completeSignup({
       variables: { email, password },
     });
     localStorage.removeItem('email'); 
+    if (data?.completeSignup?.token) {
+      Cookies.set('token', data.completeSignup.token, { expires: 2, secure: true });
+    } else {
+      throw new Error("Token is undefined");
+    }
+   
     router.push('/')
   } catch (err) {
     console.error('Complete signup failed', err);
@@ -36,7 +43,6 @@ const handleSubmit = async (e: React.FormEvent) => {
   return(
     <>
     <form  onSubmit={handleSubmit} className="space-y-5" data-cy="step-three-form">
-
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           Password
@@ -52,7 +58,6 @@ const handleSubmit = async (e: React.FormEvent) => {
           required
         />
       </div>
-
       
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">

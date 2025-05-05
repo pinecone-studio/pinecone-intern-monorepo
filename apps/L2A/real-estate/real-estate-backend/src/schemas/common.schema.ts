@@ -33,7 +33,7 @@ export const typeDefs = gql`
     sampleMutation: String!
     loginUser(email: String!, password: String!): tokenResponse!
     createUser(email: String!): User!
-    completeSignup(email: String!, password: String!): tokenResponse!
+    completeSignup(email:String!, password:String!): tokenResponse!
     requestOTP(email: String!): Boolean
     verifyOTP(email: String!, otp: String!): Boolean
   }

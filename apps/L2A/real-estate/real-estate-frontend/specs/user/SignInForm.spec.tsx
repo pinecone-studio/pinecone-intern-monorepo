@@ -29,7 +29,7 @@ const mockError = {
     query: LOGIN_USER,
     variables: { email: 'wrong@example.com', password: 'wrongpass' },
   },
-  error: new Error('Login failed'),
+  error: new GraphQLError('Login failed'),
 };
 
 describe('SignInForm', () => {

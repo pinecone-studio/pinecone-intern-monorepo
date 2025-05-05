@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useCreateUserMutation } from '@/generated';
 import { StepOneProps } from '../page';
 
-export const StepOne = ({ setStep }: StepOneProps) => {
+export const StepOne = ({ setStep, setEmail:setParentEmail }: StepOneProps) => {
   const [createUser, { loading }] = useCreateUserMutation();
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -24,14 +24,14 @@ export const StepOne = ({ setStep }: StepOneProps) => {
       const { data } = await createUser({ variables: { email } });
       if (data?.createUser?.email) {
         localStorage.setItem('email', email);
-        setStep(3);
+        setParentEmail(email);
+        setStep(2);
       }
     } catch (err) {
       console.error('sign up error', err);
       setError('Create new email failed');
     }
   };
-
   return (
     <form 
       onSubmit={handleSubmit} 
