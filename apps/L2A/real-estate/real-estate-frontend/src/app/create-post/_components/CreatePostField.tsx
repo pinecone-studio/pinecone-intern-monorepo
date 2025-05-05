@@ -1,29 +1,30 @@
-import { FieldError, FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import React from 'react';
 
-type Props<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  error: FieldError | undefined;
-  trigger?: (_name?: Path<T>) => Promise<boolean> | undefined;
-  name: Path<T>;
-};
+type Props = {
+  name: string;
+  value: number;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) =>void;
+  onBlur: (_e: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
+}
 
-export const CreatePostField = <T extends FieldValues>({ register, error, name: _name, trigger }: Props<T>) => {
+export const CreatePostField = ({ name, value, onChange, onBlur, error}: Props) => {
+
   return (
     <div>
-      <label htmlFor={_name} className="block text-sm text-[#09090B] pb-2">
-        Талбай
-      </label>
+      <label className="block text-sm text-[#09090B] pb-2">Талбай</label>
       <input
-        id={_name}
-        {...register(_name, { required: 'Талбайн утгыг заавал оруулна уу' })}
-        onBlur={trigger ? () => trigger(_name) : undefined}
-        name={_name}
+        id={name}
+        name={name}
         type="number"
+        onBlur={onBlur}
+        onChange={onChange}
+        value={value}
         placeholder="Талбай (м2)"
         data-testid="field"
         className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
-      {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
+      {error && <p className='text-red-500 text-sm mt-1'>{error}</p>}
     </div>
   );
 };

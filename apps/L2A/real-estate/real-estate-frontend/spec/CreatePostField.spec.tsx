@@ -1,38 +1,44 @@
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { CreatePostField } from '@/app/create-post/_components/CreatePostField';
-import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useForm } from 'react-hook-form';
 
-type TestWrapperProps = {
-  error?: any;
-  trigger?: (_name?: string) => Promise<boolean> | undefined;
-}
+describe('CreatePostField component', () => {
+  const baseProps = {
+    name: 'field',
+    value: 20,
+    onChange: jest.fn(),
+    onBlur: jest.fn(),
+  };
 
-const TestWrapper = ({ error, trigger }: TestWrapperProps) => {
-  const { register } = useForm();
+  it('renders input with correct props', () => {
+    render(<CreatePostField {...baseProps} />);
+    const input = screen.getByTestId('field') as HTMLInputElement;
 
-  return <CreatePostField register={register} error={error} name="area" trigger={trigger} />;
-}
-
-describe('CreatePostField Component', () => {
-  it('should render the input field', () => {
-    render(<TestWrapper />);
-    const input = screen.getByTestId('field');
     expect(input).toBeInTheDocument();
+    expect(input.name).toBe('field');
+    expect(input.value).toBe('20');
+    expect(input.placeholder).toBe('Талбай (м2)');
   });
 
-  it('should trigger validation on blur', () => {
-    const triggerMock = jest.fn();
-    
-    render(<TestWrapper trigger={triggerMock} />);
+  it('calls onChange when input value changes', () => {
+    render(<CreatePostField {...baseProps} />);
+    const input = screen.getByTestId('field');
+    fireEvent.change(input, { target: { value: '30' } });
+
+    expect(baseProps.onChange).toHaveBeenCalled();
+  });
+
+  it('calls onBlur when input loses focus', () => {
+    render(<CreatePostField {...baseProps} />);
     const input = screen.getByTestId('field');
     fireEvent.blur(input);
-    expect(triggerMock).toHaveBeenCalledWith('area');
+
+    expect(baseProps.onBlur).toHaveBeenCalled();
   });
 
-  it('should show error message when error is passed', () => {
-    const error = { message: 'Талбайн утгыг заавал оруулна уу' };
-    render(<TestWrapper error={error} />);
-    expect(screen.getByText('Талбайн утгыг заавал оруулна уу')).toBeInTheDocument();
+  it('displays error message if error prop is provided', () => {
+    render(<CreatePostField {...baseProps} error="Талбайн утга буруу байна" />);
+    expect(screen.getByText('Талбайн утга буруу байна')).toBeInTheDocument();
   });
 });

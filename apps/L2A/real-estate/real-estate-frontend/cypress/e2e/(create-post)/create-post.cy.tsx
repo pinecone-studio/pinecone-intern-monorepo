@@ -3,26 +3,26 @@ describe('CreatePostCard form', () => {
     cy.visit('/create-post');
   });
 
-  it('should render the form fields', () => {
-    cy.get('[data-testid="field"]').should('exist');
-    cy.contains('Зар оруулах хүсэлт илгээх').should('exist');
-  });
-
-  it('should show error if field is empty and blurred', () => {
-    cy.get('[data-testid="field"]').focus().blur();
+  it('shows validation error when field is empty', () => {
+    cy.get('button[type="submit"]').click();
     cy.contains('Талбайн утгыг заавал оруулна уу').should('exist');
   });
 
-  it('should submit form with valid data', () => {
-    cy.window().then((win) => {
-      cy.spy(win.console, 'log').as('consoleLog');
+  it('shows validation error for too small value', () => {
+    cy.get('[data-testid="field"]').clear().type('5');
+    cy.get('button[type="submit"]').click();
+    cy.contains('Талбайн утга 2-оос дээш байх ёстой').should('exist');
+  });
 
-      cy.get('[data-testid="field"]').type('150');
-      cy.contains('Зар оруулах хүсэлт илгээх').click();
-
-      cy.get('@consoleLog').should('have.been.calledWithMatch', 'Form data', {
-        field: 150,
+  it('submits the form with valid data', () => {
+    const stub = cy.stub(console, 'log');
+    cy.get('[data-testid="field"]').clear().type('50');
+    cy.get('button[type="submit"]')
+      .click()
+      .then(() => {
+        expect(stub).to.have.been.calledWithMatch({
+          field: 50,
+        });
       });
-    });
   });
 });
