@@ -17,3 +17,11 @@ mutation CompleteSignup($email: String!, $password: String!) {
     token
   }
 }
+
+mutation VerifyOTP($email:String!, $otp:String!){
+  verifyOTP(email:$email, otp:$otp)
+}
+
+mutation RequestOTP($email:String!){
+  requestOTP(email:$email)
+}

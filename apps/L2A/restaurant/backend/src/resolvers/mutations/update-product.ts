@@ -1,31 +1,28 @@
-import { ProductInput } from '../../models/product.model';
-import { validateUpdateInput } from '../../utils/validate-update-input'; 
+import { UpdateProductInput } from '../../generated';
 import { productModel } from '../../models/product.model';
 import { buildUpdateData } from '../../utils/build-update-data';
 
+export const updateProduct = async (_: unknown, { input }: { input: UpdateProductInput }) => {
+  if (!input._id) {
+    throw new Error('Product ID is required');
+  }
 
-export const updateProduct = async (_: unknown, input: ProductInput) => {
   try {
-    validateUpdateInput(input);
     return await updateProductInDB(input);
   } catch (error) {
-    throw new Error(`Error updating product: ${error}`);
+    if (error instanceof Error) {
+      throw new Error(`Error updating product: ${error.message}`);
+    }
   }
 };
 
-export const updateProductInDB = async (input: ProductInput) => {
-  try{
+export const updateProductInDB = async (input: UpdateProductInput) => {
   const updateData = buildUpdateData(input);
-  const updatedProduct = await productModel.findByIdAndUpdate(
-    input._id,
-    updateData,
-    { new: true }
-  );
+  const updatedProduct = await productModel.findByIdAndUpdate(input._id, updateData, { new: true });
+
   if (!updatedProduct) {
     throw new Error('Product not found');
   }
+
   return updatedProduct;
-} catch (error) {
-  throw new Error(`Error updating product: ${error}`);
-}
 };
