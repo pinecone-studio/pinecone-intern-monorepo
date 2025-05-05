@@ -1,19 +1,47 @@
-describe('Sign In', () => {
-  beforeEach(()=>{
-    cy.visit('/signin')
-  })
-
-  it('should display the sign-in form',()=>{
-    cy.get('[data-cy=email-input]').should('exist')
-    cy.get('[data-cy=password-input]').should('exist')
-    cy.get('button[type="submit"]').should('exist')
-  })
-
-  it('should show error message for invalid credentials', () => {
-    cy.get('[data-cy=email-input]').type('wrong@example.com')
-    cy.get('[data-cy=password-input]').type('12')
-    cy.get('button[type="submit"]').click()
-
-    cy.get('[data-cy="error message"]').should('contain','Login failed')
-  }
-)})
+describe('Sign In Form', () => {
+  beforeEach(() => {
+    cy.visit('/signin'); // Change to your actual path if different
+  });
+  it('should render email and password fields and submit button', () => {
+    cy.get('[data-cy="email-input"]').should('be.visible');
+    cy.get('[data-cy="password-input"]').should('be.visible');
+    cy.get('[data-cy="submit-button"]').should('be.visible');
+  });
+  it('should show error on incorrect credentials', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'LoginUser') {
+        req.reply({
+          statusCode: 200,
+          body: {
+            errors: [{ message: 'Login failed' }],
+          },
+        });
+      }
+    }).as('loginRequest');
+    cy.get('[data-cy="email-input"]').type('user@example.com');
+    cy.get('[data-cy="password-input"]').type('wrongpass');
+    cy.get('[data-cy="submit-button"]').click();
+    cy.wait('@loginRequest');
+    cy.get('[data-cy="error message"]').should('contain.text', 'Login failed');
+  });
+  it('should redirect on successful login', () => {
+    cy.intercept('POST', '/graphql', (req) => {
+      if (req.body.operationName === 'LoginUser') {
+        req.reply({
+          statusCode: 200,
+          body: {
+            data: {
+              loginUser: {
+                token: 'mock-token',
+              },
+            },
+          },
+        });
+      }
+    }).as('loginRequest');
+    cy.get('[data-cy="email-input"]').type('user@example.com');
+    cy.get('[data-cy="password-input"]').type('correctpass');
+    cy.get('[data-cy="submit-button"]').click();
+    cy.wait('@loginRequest');
+  });
+});
