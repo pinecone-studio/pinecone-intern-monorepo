@@ -1,6 +1,6 @@
 import { OTP } from '../../../models/otp';
 
-export async function verifyOTP(_: unknown, { email, otp }: { email: string; otp: string }): Promise<boolean> {
+export async function verifyOTP(_: any, { email, otp }: { email: string; otp: string }): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim();
 
   const record = await OTP.findOne({ email: normalizedEmail });

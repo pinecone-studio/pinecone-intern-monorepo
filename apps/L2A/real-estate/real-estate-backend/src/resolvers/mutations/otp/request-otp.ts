@@ -2,7 +2,7 @@ import { randomInt } from 'crypto';
 import { sendEmail } from './send-email';
 import { OTP } from '../../../models/otp';
 
-export async function requestOTP(_: unknown, { email }: { email: string }) {
+export async function requestOTP(_: any, { email }: { email: string }) {
   try {
     const normalizedEmail = email.toLowerCase().trim();
     const otp = randomInt(100000, 999999).toString();
