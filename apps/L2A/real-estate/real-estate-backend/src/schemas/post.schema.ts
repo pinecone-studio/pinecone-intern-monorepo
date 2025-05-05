@@ -32,7 +32,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    GetPosts: [Post!]!
-    post(id: ID!): Post
+    getPosts: [Post!]!
+    getPostById(id: ID!): Post
   }
 `;
