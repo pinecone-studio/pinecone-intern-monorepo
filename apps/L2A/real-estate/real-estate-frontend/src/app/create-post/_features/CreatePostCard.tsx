@@ -18,8 +18,8 @@ export const CreatePostCard = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      price: 0,
-      field: 0,
+      price: '',
+      field: '',
     },
     validationSchema,
     onSubmit: (values) => {

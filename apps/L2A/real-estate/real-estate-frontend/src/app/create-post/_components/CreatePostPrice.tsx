@@ -2,7 +2,7 @@ import React from 'react';
 
 type Props = {
   name: string;
-  value: number;
+  value: number | string;
   onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (_e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
