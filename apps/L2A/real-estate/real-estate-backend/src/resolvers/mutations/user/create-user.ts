@@ -3,7 +3,7 @@ import { USER_MODEL } from "../../../models/user";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../../../utils/jwt";
 
-export const createUser = async (_: any, args: MutationCreateUserArgs) => {
+export const createUser = async (_: unknown, args: MutationCreateUserArgs) => {
   const { email, password } = args; 
 
   const existingUser = await USER_MODEL.findOne({ email });
