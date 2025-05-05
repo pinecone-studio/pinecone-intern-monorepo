@@ -3,7 +3,7 @@ import Orders from "./orders/page"
 
 const AdminPage=()=>{
     return(
-        <div >
+        <div>
           <Orders />
         </div>
     )

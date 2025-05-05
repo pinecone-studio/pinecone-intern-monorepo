@@ -1,8 +1,8 @@
 "use client";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import OrderFood from "@/app/admin/_components/OrderFood";
-import type { Food } from "@/app/admin/_components/OrderFood";
+import OrderFood from "@/app/admin/orders/_components/OrderFood";
+import type { Food } from "@/app/admin/orders/_components/OrderFood";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
 type Order = {

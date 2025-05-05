@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import OrderDialog from "@/app/admin/_features/OrderDialog";
-import type { Food } from "@/app/admin/_components/OrderFood";
+import OrderDialog from "@/app/admin/orders/_features/OrderDialog";
+import type { Food } from "@/app/admin/orders/_components/OrderFood";
 import {
   Select,
   SelectTrigger,

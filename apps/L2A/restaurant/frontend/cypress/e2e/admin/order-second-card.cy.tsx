@@ -1,6 +1,6 @@
 describe("OrderSecondCard", () => {
     beforeEach(() => {
-      cy.visit("/admin");
+      cy.visit("/admin/orders");
     });
     it("should display order card with table number, order number, and total", () => {
       cy.get('[data-cy="order-card"]').first().within(() => {

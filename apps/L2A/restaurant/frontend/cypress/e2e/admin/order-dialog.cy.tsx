@@ -1,6 +1,6 @@
 describe("OrderDialog", () => {
     beforeEach(() => {
-      cy.visit("/admin"); 
+      cy.visit("/admin/orders"); 
     });
     it("opens the dialog and displays correct content", () => {
       cy.get('[data-cy="dialog-button"]').first().click();

@@ -1,12 +1,14 @@
 "use client";
 
-import OrderMainCard from "@/app/admin/_features/OrderMainCard";
+import OrderMainCard from "@/app/admin/orders/_features/OrderMainCard";
 import orderData from "@/app/admin/_components/orders.json";
-import OrderSecondCard from "../_features/OrderSecondCard";
+import OrderSecondCard from "./_features/OrderSecondCard";
+import OrderHeader from "./_features/OrderHeader";
 
 const Orders = () => {
   return (
     <div className="flex flex-col items-center justify-center">
+      <OrderHeader />
       <div>
         {orderData.orders.map((ordersData) => (
           <OrderMainCard key={ordersData.orderNumber} order={ordersData} />
@@ -20,5 +22,4 @@ const Orders = () => {
     </div>
   )
 };
-
 export default Orders;
