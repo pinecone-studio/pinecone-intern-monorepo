@@ -8,13 +8,17 @@ import { useFormik } from 'formik';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Нэр заавал оруулна уу'),
+  price: Yup.number().required('Үнэ заавал оруулна уу').min(0, 'Үнэ 0-ээс их байх ёстой'),
   field: Yup.number().required('Талбайн утгыг заавал оруулна уу').min(10, 'Талбайн утга 2-оос дээш байх ёстой'),
 });
+
+const getFieldError = (touched: any, errors: any, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
 
 export const CreatePostCard = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
+      price: 0,
       field: 0,
     },
     validationSchema,
@@ -25,30 +29,19 @@ export const CreatePostCard = () => {
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4 gap-2">
-      <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center ">
+      <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center">
         <div className="w-[728px] h-[842px] flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
           <div className="w-[680px] h-[692px] space-y-4 mt-6">
-            <div className="space-y-2">
-              <CreatePostHeader />
-            </div>
-            <CreatePostName
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.name && formik.errors.name ? formik.errors.name : undefined}
-              onBlur={formik.handleBlur}
-            />
-            <CreatePostPrice />
-            <CreatePostField
-              name="field"
-              value={formik.values.field}
-              onChange={formik.handleChange}
-              error={formik.touched.field && formik.errors.field ? formik.errors.field : undefined}
-              onBlur={formik.handleBlur}
-            />
-            <div className="w-full"></div>
+            <CreatePostHeader />
+
+            <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
+
+            <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
+
+            <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
           </div>
         </div>
+
         <div>
           <button type="submit" className="bg-green-200 p-2 rounded-lg">
             Зар оруулах хүсэлт илгээх

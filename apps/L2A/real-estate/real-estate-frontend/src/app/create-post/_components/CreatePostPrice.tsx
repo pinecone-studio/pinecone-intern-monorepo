@@ -1,22 +1,29 @@
-import { useState } from "react";
+import React from 'react';
 
-export const CreatePostPrice = () => {
-  const [price, setPrice] = useState('');
+type Props = {
+  name: string;
+  value: number;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (_e: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
+};
 
+export const CreatePostPrice = ({name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label htmlFor="post-price" className="block text-sm text-[#09090B] pb-2">
-        Үнэ
-      </label>
+      <label className="block text-sm text-[#09090B] pb-2">Үнэ</label>
       <input
-        id="post-price"
-        name="price"
+        id={name}
+        name={name}
         type="number"
-        value={price}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder="Үнэ (₮)"
         data-testid="price"
-        onChange={(e) => setPrice(e.target.value)}
-        className="w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
+        className={`w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
+      {error && <p className='text-red-500 text-sm mt-1'>{error}</p>}
     </div>
   );
 };
