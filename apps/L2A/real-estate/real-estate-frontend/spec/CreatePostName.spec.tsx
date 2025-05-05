@@ -1,17 +1,46 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { CreatePostName } from '@/app/create-post/_components/CreatePostName';
+import '@testing-library/jest-dom';
 
-describe('CreatePostName', () => {
-  it('renders input and updates value when typed', async () => {
-    render(<CreatePostName/>);
+describe('CreatePostName component', () => {
+  const baseProps = {
+    name: 'name',
+    value: '',
+    onChange: jest.fn(),
+    onBlur: jest.fn(),
+  };
+
+  it('renders input with correct props', () => {
+    render(<CreatePostName {...baseProps} />);
+    const input = screen.getByTestId('Name') as HTMLInputElement;
+
+    expect(input).toBeInTheDocument();
+    expect(input.name).toBe('name');
+    expect(input.value).toBe('');
+    expect(input.placeholder).toBe('Нэр');
+  });
+
+  it('calls onChange when input value changes', () => {
+    render(<CreatePostName {...baseProps} />);
     const input = screen.getByTestId('Name');
 
-    expect(input).toBeInTheDocument(); 
+    fireEvent.change(input, { target: { value: 'Жишээ нэр' } });
 
-    await userEvent.type(input, 'Name');
+    expect(baseProps.onChange).toHaveBeenCalled();
+  });
 
-    expect(input).toHaveValue('Name');
+  it('calls onBlur when input loses focus', () => {
+    render(<CreatePostName {...baseProps} />);
+    const input = screen.getByTestId('Name');
+
+    fireEvent.blur(input);
+
+    expect(baseProps.onBlur).toHaveBeenCalled();
+  });
+
+  it('displays error message if error prop is provided', () => {
+    render(<CreatePostName {...baseProps} error="Нэр заавал шаардлагатай" />);
+    expect(screen.getByText('Нэр заавал шаардлагатай')).toBeInTheDocument();
   });
 });

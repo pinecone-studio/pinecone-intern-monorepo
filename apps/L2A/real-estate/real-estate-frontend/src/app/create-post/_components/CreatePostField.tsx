@@ -9,7 +9,6 @@ type Props = {
 }
 
 export const CreatePostField = ({ name, value, onChange, onBlur, error}: Props) => {
-
   return (
     <div>
       <label className="block text-sm text-[#09090B] pb-2">Талбай</label>

@@ -7,21 +7,21 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 const validationSchema = Yup.object({
-  field: Yup.number()
-    .required('Талбайн утгыг заавал оруулна уу')
-    .min(10, 'Талбайн утга 2-оос дээш байх ёстой')
+  name: Yup.string().required('Нэр заавал оруулна уу'),
+  field: Yup.number().required('Талбайн утгыг заавал оруулна уу').min(10, 'Талбайн утга 2-оос дээш байх ёстой'),
 });
- 
+
 export const CreatePostCard = () => {
-   const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
+      name: '',
       field: 0,
     },
     validationSchema,
-  onSubmit: (values) => {
-    console.log("Form data", values);
-  }
-   })
+    onSubmit: (values) => {
+      console.log('Form data', values);
+    },
+  });
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4 gap-2">
@@ -31,9 +31,20 @@ export const CreatePostCard = () => {
             <div className="space-y-2">
               <CreatePostHeader />
             </div>
-            <CreatePostName />
+            <CreatePostName
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && formik.errors.name ? formik.errors.name : undefined}
+              onBlur={formik.handleBlur}
+            />
             <CreatePostPrice />
-            <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} error={formik.touched.field && formik.errors.field ? formik.errors.field : undefined} onBlur={formik.handleBlur} 
+            <CreatePostField
+              name="field"
+              value={formik.values.field}
+              onChange={formik.handleChange}
+              error={formik.touched.field && formik.errors.field ? formik.errors.field : undefined}
+              onBlur={formik.handleBlur}
             />
             <div className="w-full"></div>
           </div>
