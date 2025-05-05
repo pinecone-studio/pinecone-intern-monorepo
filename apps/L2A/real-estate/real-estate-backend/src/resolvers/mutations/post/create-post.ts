@@ -4,9 +4,6 @@ import { POST_MODEL } from "../../../models/post";
 
 export const createPost = async (_: any, args: { input: CreatePostInput }) => {
   const { propertyOwnerId, title, description, price, propertyDetail } = args.input;
-  if (!propertyOwnerId || !title || !propertyDetail) {
-    throw new Error("Бүх талбарууд шаардлагатай");
-  }
     const newPost = await POST_MODEL.create({
       propertyOwnerId,
       title,
@@ -15,7 +12,6 @@ export const createPost = async (_: any, args: { input: CreatePostInput }) => {
       propertyDetail,
       status: "pending", 
     });
-
     return {
       id: newPost._id.toString(),
       propertyOwnerId: newPost.propertyOwnerId.toString(),

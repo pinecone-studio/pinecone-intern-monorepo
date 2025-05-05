@@ -27,13 +27,12 @@ export const typeDefs = gql`
     price: Float!
     propertyDetail: ID!
   }
-
   type Mutation {
     createPost(input: CreatePostInput!): Post!
   }
 
   type Query {
-    posts: [Post!]!
+    GetPosts: [Post!]!
     post(id: ID!): Post
   }
 `;

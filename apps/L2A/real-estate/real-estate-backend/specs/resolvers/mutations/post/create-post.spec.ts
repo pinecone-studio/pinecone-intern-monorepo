@@ -24,7 +24,7 @@ describe("createPost", () => {
     jest.clearAllMocks();
   });
 
-  it("should create a post successfully", async () => {
+  it("should create a post and return the correct result", async () => {
     (POST_MODEL.create as jest.Mock).mockResolvedValue(mockPost);
 
     const args = {
@@ -36,9 +36,7 @@ describe("createPost", () => {
         propertyDetail: "property-detail-id",
       },
     };
-
     const result = await createPost(null, args);
-
     expect(POST_MODEL.create).toHaveBeenCalledWith({
       ...args.input,
       status: "pending",
@@ -56,21 +54,8 @@ describe("createPost", () => {
       createdAt: "2023-01-01T00:00:00Z",
     });
   });
-
-  it("should throw an error if required fields are missing", async () => {
-    const args = {
-      input: {
-        propertyOwnerId: "",
-        title: "",
-        description: "desc",
-        price: 1000,
-        propertyDetail: "",
-      },
-    };
-
-    await expect(createPost(null, args)).rejects.toThrow("Бүх талбарууд шаардлагатай");
-  });
 });
+
 
 
 
