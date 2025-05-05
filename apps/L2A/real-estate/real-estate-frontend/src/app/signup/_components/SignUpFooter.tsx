@@ -5,8 +5,8 @@ const SignupFooter = ({ step }: { step: number }) => {
           <>
             OR
             <div className="mt-2">
-              <a href="/signup" className="underline text-blue-600" data-cy="signup-link">
-                Create an account
+              <a href="/signin" className="underline text-[#18181B]" data-cy="signin-link">
+                <button className="w-full border-[1px] rounded-full py-2 rounded-lg hover:bg-gray-200" data-cy="log-in-button">Log in </button>
               </a>
             </div>
             <p className="mt-6 text-xs">

@@ -6,7 +6,7 @@ describe('SignUpFooter', () => {
   it('renders terms and links only on step 1', () => {
     render(<SignupFooter step={1} />);
     expect(screen.getByText('OR')).toBeInTheDocument();
-    expect(screen.getByText('Create an account')).toBeInTheDocument();
+    expect(screen.getByText('Log in')).toBeInTheDocument();
     expect(screen.getByText('Terms of Service')).toBeInTheDocument();
     expect(screen.getByText('Privacy Policy')).toBeInTheDocument();
   });

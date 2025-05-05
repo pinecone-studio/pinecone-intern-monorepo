@@ -69,20 +69,20 @@ export const StepTwo = ({setStep}:StepTwoProps) => {
     return (
         <>
         <div className="flex flex-col items-center justify-center">
-         <InputOTP onChange={(value)=> setOtp(value)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+         <InputOTP data-cy="otp-input" onChange={(value)=> setOtp(value)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
       <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
+        <InputOTPSlot  index={0} />
+        <InputOTPSlot  index={1} />
+        <InputOTPSlot  index={2} />
+        <InputOTPSlot  index={3} />
+        <InputOTPSlot  index={4} />
+        <InputOTPSlot  index={5} />
       </InputOTPGroup>
     </InputOTP>
-      {error && <p className="text-red-500">{error}</p>}
-      {!resendEnabled && <p className="text-gray-500">Send again({timer})</p>}
+      {error && <p className="text-red-500" data-cy="otp-error">{error}</p>}
+      {!resendEnabled && <p className="text-gray-500" data-cy="resend-otp-button">Send again({timer})</p>}
       {resendEnabled && <button className="text-[15px] font-500 text-[#09090B]" onClick={sendOTP}>Send again({timer})</button>}
-      {loading && <p className="text-gray-500">Verifying OTP...</p>}
+      {loading && <p className="text-gray-500" data-cy="otp-loading">Verifying OTP...</p>}
     </div>
         </>
     )

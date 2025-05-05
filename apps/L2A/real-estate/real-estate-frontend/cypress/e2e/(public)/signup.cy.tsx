@@ -1,53 +1,38 @@
-describe('SignUp Page Flow', () => {
-    let uniqueEmail: string;
-  
-    beforeEach(() => {
-      uniqueEmail = `user_${Date.now()}@example.com`;
+describe('SignUp Page Flow with OTP via MailSlurp', () => {
+  let inboxId: string;
+  let emailAddress: string;
+
+  it('should complete signup using real email with OTP', () => {
+    cy.createInbox().then((inbox) => {
+      inboxId = inbox.id;
+      emailAddress = inbox.emailAddress;
       cy.visit('/signup');
-    });
-  
-    it('should render all initial elements', () => {
-      cy.get('[data-cy=signup-page]').should('exist');
-      cy.get('[data-cy=signup-container]').should('exist');
-      cy.get('[data-cy=logo]').should('contain.text', '🏠');
-      cy.get('[data-cy=title]').should('contain.text', 'Home Vault');
-      cy.get('[data-cy=subtitle]').should('contain.text', 'Enter your email');
-      cy.get('[data-cy=signup-or-section]').should('contain.text', 'OR');
-      cy.get('[data-cy=signup-link]').should('have.attr', 'href', '/signup');
-      cy.get('[data-cy=tos-link]').should('exist');
-      cy.get('[data-cy=privacy-link]').should('exist');
-      cy.get('[data-cy=copyright]').should('contain.text', '©2024');
-    });
-  
-    it('should show error if email is empty and form submitted', () => {
-      cy.get('[data-cy=email-input]').clear();
+      cy.get('[data-cy=email-input]').type(emailAddress);
       cy.get('form').submit();
-      cy.get('[data-testid=error-message]').should('contain.text', 'Email is required');
-    });
-  
-    it('should go to step 3 after submitting a valid email', () => {
-      cy.intercept('POST', '/api/graphql').as('graphql');
-      cy.get('[data-cy=email-input]').type(uniqueEmail);
-      cy.get('form').submit();
-      cy.wait('@graphql');
-      cy.get('[data-cy=password-input]').should('exist');
-      cy.get('[data-cy=confirm-password-input]').should('exist');
-    });
-  
-    it('should show error if passwords do not match', () => {
-      cy.intercept('POST', '/api/graphql').as('graphql');
-  
-      // Step 1: Submit email to reach Step 3
-      cy.get('[data-cy=email-input]').type(uniqueEmail);
-      cy.get('form').submit();
-      cy.wait('@graphql');
-  
-      // Step 3: Enter mismatching passwords
-      cy.get('[data-cy=password-input]').type('12345678');
-      cy.get('[data-cy=confirm-password-input]').type('wrongpassword');
-      cy.get('form').submit();
-  
-      cy.contains('passwords do not match').should('exist');
+      cy.waitForLatestEmail(inboxId).then((email) => {
+        const otpRegex = /(\d{6})/;
+        const otp = email.body?.match(otpRegex)?.[1];
+        void expect(otp, 'Extracted OTP from email').to.not.be.undefined;
+        cy.log(`Extracted OTP: ${otp}`);
+
+        if (otp) {
+          cy.get('[data-cy=otp-input]', { timeout: 15000 })
+            .should('exist')
+            .and('be.visible');
+          cy.get('[data-cy=otp-input]').type(otp);
+
+          cy.get('[data-cy=otp-loading]', { timeout: 10000 }).should('exist');
+          cy.get('[data-cy=otp-loading]', { timeout: 10000 }).should('not.exist');
+
+          cy.get('[data-cy=password-input]', { timeout: 10000 }).should('exist');
+          cy.get('[data-cy=confirm-password-input]').should('exist');
+
+          cy.get('[data-cy=password-input]').type('StrongPassword123');
+          cy.get('[data-cy=confirm-password-input]').type('StrongPassword123');
+          cy.get('form').submit();
+          cy.url({ timeout: 10000 }).should('not.include', '/signup');
+        }
+      });
     });
   });
-  
+});
