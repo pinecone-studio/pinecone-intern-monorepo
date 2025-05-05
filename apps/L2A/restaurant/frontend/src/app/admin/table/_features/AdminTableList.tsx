@@ -32,7 +32,6 @@ const AdminTableList = () => {
               <Button variant="secondary" data-testid={`classroom-${classroom.id}-qr-button`}>
                 QR харах
               </Button>
-
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="secondary" data-testid={`classroom-${classroom.id}-edit-button`}>
@@ -49,7 +48,6 @@ const AdminTableList = () => {
                   </Button>
                 </DialogContent>
               </Dialog>
-
               <Button variant="secondary" data-testid={`classroom-${classroom.id}-delete-button`}>
                 <TrashIcon className="w-4 h-4" />
               </Button>
