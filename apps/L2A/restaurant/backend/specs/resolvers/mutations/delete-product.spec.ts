@@ -20,12 +20,12 @@ describe('deleteProduct', () => {
       updatedAt: new Date(),
     };
     (productModel.findByIdAndDelete as jest.Mock).mockResolvedValue(mockProduct);
-    const result = await deleteProduct('123');
+    const result = await deleteProduct(undefined, { input: { _id: '123' } });
     expect(result).toEqual(mockProduct);
     expect(productModel.findByIdAndDelete).toHaveBeenCalledWith('123');
   });
   it('should throw an error if the product is not found', async () => {
     (productModel.findByIdAndDelete as jest.Mock).mockResolvedValue(null);
-    await expect(deleteProduct('123')).rejects.toThrow('Product not found');
+    await expect(deleteProduct(undefined, { input: { _id: '123' } })).rejects.toThrow('Product not found');
   });
 });
