@@ -1,9 +1,9 @@
-describe('HomeOrder and CartItem E2E Test', () => {
+describe('HomeOrder and CartItem', () => {
     beforeEach(() => {
       cy.visit('/'); 
     });
   
-    it('opens the order drawer and displays cart item details', () => {
+    it('should opens the order drawer', () => {
       cy.get('[data-cy="Foods"]').first().click();
       cy.contains('Таны захиалга').should('be.visible');
       cy.contains('Taco Taco').should('be.visible');
@@ -11,7 +11,7 @@ describe('HomeOrder and CartItem E2E Test', () => {
       cy.get('img[alt="Taco Taco"]').should('be.visible');
     });
   
-    it('increments and decrements quantity', () => {
+    it('should show increments and decrements', () => {
       cy.get('[data-cy="Foods"]').first().click();
       cy.contains('Таны захиалга').should('be.visible');
       cy.contains('1').should('exist');

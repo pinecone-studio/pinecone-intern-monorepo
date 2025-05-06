@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 
 
 describe('HomeOrder', () => {
-  it('renders the order title and passes product to CartItem', () => {
+  it('should render the order title and passes product to CartItem', () => {
     render(<HomeOrder />);
 
     expect(screen.getByText('Таны захиалга')).toBeInTheDocument();
