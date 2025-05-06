@@ -17,4 +17,4 @@ export const resolvers = {
     getProductById,
     getProductsByCategory,
   }
-
+}
