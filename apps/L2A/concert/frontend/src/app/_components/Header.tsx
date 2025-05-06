@@ -2,7 +2,6 @@
 import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { useAuth } from './context/AuthContext';
 import Link from 'next/link';
-
 const Header = () => {
   const { user } = useAuth();
   return (
@@ -43,5 +42,4 @@ const Header = () => {
     </nav>
   );
 };
-
 export default Header;

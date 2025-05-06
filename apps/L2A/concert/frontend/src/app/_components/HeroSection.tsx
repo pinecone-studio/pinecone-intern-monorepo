@@ -1,13 +1,11 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import Image from 'next/image';
-
 const HeroSection = () => {
   return (
     <div className="relative h-[550px] w-full bg-black text-white" data-testid="hero-section">
       <div className="absolute inset-0">
         <Image src={process.env.NEXT_PUBLIC_COLDPLAY_HERO!} alt="Concert" fill className="object-cover opacity-60" />
-
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70"></div>
       </div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
@@ -31,5 +29,4 @@ const HeroSection = () => {
     </div>
   );
 };
-
 export default HeroSection;

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import HeroSection from './HeroSection';
-
 const Dashboard = () => {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col " data-testid="dashboard">
