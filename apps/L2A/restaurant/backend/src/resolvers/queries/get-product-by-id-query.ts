@@ -1,6 +1,6 @@
 import { productModel } from '../../models/product.model';
 
-const handleGetProductByIdError = (error: unknown) => {
+const GetProductByIdError = (error: unknown) => {
   if (error instanceof Error && error.message === 'Product not found') {
     throw error;
   }
@@ -17,6 +17,6 @@ export const getProductById = async (_: unknown, { id }: { id: string }) => {
 
     return product;
   } catch (error: unknown) {
-    handleGetProductByIdError(error);
+    GetProductByIdError(error);
   }
 };
