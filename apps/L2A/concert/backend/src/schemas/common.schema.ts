@@ -5,9 +5,42 @@ export const typeDefs = gql`
     userId: ID!
     concertId: ID!
   }
-  input TicketCategoryInput {
-    type: TicketType!
+
+  input CreateTicketInput {
+    concert: ID!
+    date: String!
+    seatType: String!
     price: Int!
-    capacity: Int!
+    status: TicketStatus
+    userId: ID
+  }
+
+  input CreateConcertInput {
+    title: String!
+    description: String
+    thumbnailUrl: String
+    doorOpen: String!
+    musicStart: String!
+    venue: ID!
+    artistName: String!
+    specialGuestName: String
+    seatData: [SeatDataInput!]!
+    endDate: String!
+  }
+
+  input SeatInfoInput {
+    price: Int!
+    availableTickets: Int!
+  }
+
+  input SeatCategoriesInput {
+    VIP: SeatInfoInput!
+    Standard: SeatInfoInput!
+    Backseat: SeatInfoInput!
+  }
+
+  input SeatDataInput {
+    date: String!
+    seats: SeatCategoriesInput!
   }
 `;

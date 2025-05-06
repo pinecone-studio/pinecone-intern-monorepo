@@ -1,99 +1,68 @@
-import { GraphQLResolveInfo } from 'graphql';
-import { createConcert } from '../../../src/resolvers/mutations';
-import { catchError } from '../../../src/utils/catch-error';
-import { TicketType } from '../../../src/generated';
-import * as venueModelModule from '../../../src/models/venue.model';
-import * as concertModelModule from '../../../src/models/concert.model';
+import { createConcert as createConcertResolver } from '../../../src/resolvers/mutations';
+import { concertModel } from '../../../src/models/concert.model';
+import { Types } from 'mongoose';
 
+const createConcert = createConcertResolver as NonNullable<typeof createConcertResolver>;
+if (!createConcert) throw new Error('createConcert resolver is undefined');
+
+jest.mock('dayjs', () => jest.fn((date) => jest.requireActual('dayjs')(date)));
 jest.mock('../../../src/models/concert.model', () => ({
-  concertModel: {
-    create: jest.fn().mockResolvedValue({
-      title: 'testing_title',
-      description: 'testing_descs',
-      venue: 'testing_venue_id',
-      artistName: 'testing_artist_name',
-      specialGuestName: 'testting_guest_name',
-      ticketCategories: [
-        {
-          type: 'BACKSEAT',
-          price: 500,
-          capacity: 100,
-        },
-      ],
-    }),
-  },
+  concertModel: jest.fn().mockImplementation((data: any) => ({
+    ...data,
+    save: jest.fn().mockResolvedValue({ ...data, venue: new Types.ObjectId(data.venue) }),
+  })),
 }));
 
-jest.mock('../../../src/models/venue.model', () => ({
-  venueModel: {
-    findById: jest.fn().mockResolvedValue({ id: 'testing_venue_id' }),
-  },
-}));
+describe('createConcert mutation', () => {
+  const baseInput = {
+    title: 'Test Concert',
+    description: 'Test Description',
+    thumbnailUrl: 'http://test.com/image.jpg',
+    doorOpen: '18:00',
+    musicStart: '19:00',
+    venue: '609e126a81b1f50f8cfa2d75',
+    artistName: 'Test Artist',
+    specialGuestName: 'Test Guest',
+    seatData: [{ date: '2025-05-01', seats: { VIP: { price: 1000, availableTickets: 10 }, Standard: { price: 500, availableTickets: 20 }, Backseat: { price: 300, availableTickets: 30 } } }],
+    endDate: '2025-05-01',
+  };
 
-jest.mock('../../../src/utils/catch-error', () => ({
-  catchError: jest.fn((error) => {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-    throw new Error('Серверийн алдаа');
-  }),
-}));
+  beforeEach(() => jest.clearAllMocks());
 
-const context = {};
-const info = {} as GraphQLResolveInfo;
-const args = {
-  title: 'testing_title',
-  description: 'testing_descs',
-  venueId: 'testing_venue_id',
-  artistName: 'testing_artist_name',
-  specialGuestName: 'testting_guest_name',
-  ticketCategories: [
-    {
-      capacity: 100,
-      price: 500,
-      type: TicketType.Backseat,
-    },
-  ],
-};
+  it('should create and save a concert with all fields and handle optional fields', async () => {
+    const response = await createConcert({}, { input: baseInput }, {}, {} as any);
+    expect(concertModel).toHaveBeenCalledWith(expect.objectContaining({ ...baseInput, venue: expect.any(Types.ObjectId), seatData: expect.any(Array) }));
+    expect(response).toMatchObject({ ...baseInput, venue: expect.any(Types.ObjectId), seatData: [{ date: '2025-05-01', seats: baseInput.seatData[0].seats }] });
 
-describe('createConcert mutation tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+    const inputWithoutOptional = { ...baseInput, description: undefined, thumbnailUrl: undefined, specialGuestName: undefined };
+    const responseNoOptional = await createConcert({}, { input: inputWithoutOptional }, {}, {} as any);
+    expect(concertModel).toHaveBeenCalledWith(expect.objectContaining({ description: undefined, thumbnailUrl: undefined, specialGuestName: undefined }));
+    expect(responseNoOptional).toMatchObject({ description: undefined, thumbnailUrl: undefined, specialGuestName: undefined });
   });
 
-  it('should successfully create a concert', async () => {
-    const response = await createConcert?.({}, args, context, info);
+  it('should generate seatData for single and multi-day concerts', async () => {
+    const singleDayResponse = await createConcert({}, { input: baseInput }, {}, {} as any);
+    expect(singleDayResponse.seatData).toHaveLength(1);
+    expect(singleDayResponse.seatData[0]).toMatchObject(baseInput.seatData[0]);
 
-    expect(response?.artistName).toBe(args.artistName);
-    expect(response?.title).toBe(args.title);
-    expect(response?.ticketCategories[0].type).toBe(args.ticketCategories[0].type);
-    expect(catchError).not.toHaveBeenCalled();
+    const multiDayInput = { ...baseInput, endDate: '2025-05-03' };
+    const multiDayResponse = await createConcert({}, { input: multiDayInput }, {}, {} as any);
+    expect(multiDayResponse.seatData).toHaveLength(3);
+    expect(multiDayResponse.seatData.map((d: any) => d.date)).toEqual(['2025-05-01', '2025-05-02', '2025-05-03']);
   });
 
-  it('should throw "Venue not found" and call catchError when venue is not found', async () => {
-    jest.spyOn(venueModelModule.venueModel, 'findById').mockResolvedValueOnce(null);
-
-    await expect(createConcert?.({}, args, context, info)).rejects.toThrow('Venue not found');
-    expect(catchError).toHaveBeenCalledWith(expect.any(Error));
-    expect(catchError).toHaveBeenCalledWith(expect.objectContaining({ message: 'Venue not found' }));
-    expect(catchError).toHaveBeenCalledTimes(1);
+  it('should handle endDate before startDate', async () => {
+    const response = await createConcert({}, { input: { ...baseInput, endDate: '2025-04-30' } }, {}, {} as any);
+    expect(response.seatData).toHaveLength(0);
   });
 
-  it('should handle non-Error thrown by concertModel.create with "Серверийн алдаа"', async () => {
-    const nonError = 'Unexpected database error';
-    jest.spyOn(concertModelModule.concertModel, 'create').mockRejectedValueOnce(nonError);
-
-    await expect(createConcert?.({}, args, context, info)).rejects.toThrow('Серверийн алдаа');
-    expect(catchError).toHaveBeenCalledWith(nonError);
-    expect(catchError).toHaveBeenCalledTimes(1);
+  it('should throw error if save() fails', async () => {
+    (concertModel as unknown as jest.Mock).mockImplementation(() => ({ save: jest.fn().mockRejectedValue(new Error('Database save failed')) }));
+    await expect(createConcert({}, { input: baseInput }, {}, {} as any)).rejects.toThrow('Database save failed');
   });
 
-  it('should handle Error thrown by concertModel.create with same message', async () => {
-    const error = new Error('Concert creation failed');
-    jest.spyOn(concertModelModule.concertModel, 'create').mockRejectedValueOnce(error);
-
-    await expect(createConcert?.({}, args, context, info)).rejects.toThrow('Concert creation failed');
-    expect(catchError).toHaveBeenCalledWith(error);
-    expect(catchError).toHaveBeenCalledTimes(1);
+  it('should handle invalid venue ID and date formats', async () => {
+    await expect(createConcert({}, { input: { ...baseInput, venue: 'invalid-id' } }, {}, {} as any)).rejects.toThrow();
+    await expect(createConcert({}, { input: { ...baseInput, seatData: [{ ...baseInput.seatData[0], date: 'invalid-date' }], endDate: 'invalid-date' } }, {}, {} as any)).rejects.toThrow();
   });
 });

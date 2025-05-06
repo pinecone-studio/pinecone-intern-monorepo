@@ -11,4 +11,16 @@ import { QueryTypeDefs } from './queries.shema';
 import { TicketCategoryTypeDefs } from './ticket-category.schema';
 import { VenueTypeDefs } from './venue.schema';
 
-export const typeDefs = mergeTypeDefs([CommonTypeDefs, BookingTypeDefs, ConcertTypeDefs, EnumTypeDefs, MutationTypeDefs, OTPTypeDefs, QueryTypeDefs, TicketCategoryTypeDefs, TicketTypeDefs, UserTypeDefs, VenueTypeDefs]);
+export const typeDefs = mergeTypeDefs([
+  CommonTypeDefs,
+  BookingTypeDefs,
+  ConcertTypeDefs,
+  EnumTypeDefs,
+  MutationTypeDefs,
+  OTPTypeDefs,
+  QueryTypeDefs,
+  TicketCategoryTypeDefs,
+  TicketTypeDefs,
+  UserTypeDefs,
+  VenueTypeDefs,
+]);

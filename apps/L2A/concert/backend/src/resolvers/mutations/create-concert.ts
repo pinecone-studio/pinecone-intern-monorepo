@@ -1,26 +1,51 @@
+import dayjs from 'dayjs';
+import { Types } from 'mongoose';
 import { MutationResolvers } from '../../generated';
 import { concertModel } from '../../models/concert.model';
-import { venueModel } from '../../models/venue.model';
-import { catchError } from '../../utils/catch-error';
 
-export const createConcert: MutationResolvers['createConcert'] = async (_, { title, description, venueId, artistName, specialGuestName, ticketCategories }) => {
-  try {
-    const venue = await venueModel.findById(venueId);
-    if (!venue) {
-      throw new Error('Venue not found');
-    }
+export const createConcert: MutationResolvers['createConcert'] = async (_, { input }) => {
+  const { title, description, thumbnailUrl, doorOpen, musicStart, venue, artistName, specialGuestName, seatData, endDate } = input;
 
-    const concert = await concertModel.create({
-      title,
-      description,
-      venue,
-      artistName,
-      specialGuestName,
-      ticketCategories,
-    });
+  const startDate = seatData[0].date;
+  const start = dayjs(startDate);
+  const end = dayjs(endDate);
 
-    return concert;
-  } catch (error) {
-    catchError(error);
-  }
+  const daysCount = end.diff(start, 'day') + 1;
+
+  const generatedSeatData = Array.from({ length: daysCount }, (_, i) => {
+    const date = start.add(i, 'day').format('YYYY-MM-DD');
+    return {
+      date,
+      seats: {
+        VIP: {
+          price: seatData[0].seats.VIP.price,
+          availableTickets: seatData[0].seats.VIP.availableTickets,
+        },
+        Standard: {
+          price: seatData[0].seats.Standard.price,
+          availableTickets: seatData[0].seats.Standard.availableTickets,
+        },
+        Backseat: {
+          price: seatData[0].seats.Backseat.price,
+          availableTickets: seatData[0].seats.Backseat.availableTickets,
+        },
+      },
+    };
+  });
+
+  const newConcert = new concertModel({
+    title,
+    description: description ?? undefined,
+    thumbnailUrl: thumbnailUrl ?? undefined,
+    doorOpen,
+    musicStart,
+    venue: new Types.ObjectId(venue),
+    artistName,
+    specialGuestName: specialGuestName ?? undefined,
+    seatData: generatedSeatData,
+    endDate: endDate,
+  });
+
+  const savedConcert = await newConcert.save();
+  return savedConcert;
 };
