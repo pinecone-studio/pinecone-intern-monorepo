@@ -1,4 +1,5 @@
 import { productModel } from '../../models/product.model';
+import { ProductError } from '../../utils/product-error';
 
 export const getAllProducts = async () => {
   try {
@@ -6,6 +7,6 @@ export const getAllProducts = async () => {
 
     return products;
   } catch (error: unknown) {
-    throw new Error('Error fetching all products');
-  }
+    ProductError(error, 'Product not found');
+    }
 };

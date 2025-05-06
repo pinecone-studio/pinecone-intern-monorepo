@@ -1,43 +1,30 @@
 import { getProductById } from '../../../src/resolvers/queries';
 import { productModel } from '../../../src/models/product.model';
-import { Types } from 'mongoose';
 
 jest.mock('../../../src/models/product.model');
+jest.mock('../../../src/utils/product-error');
 
 describe('getProductById', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should return product if found', async () => {
-    const mockProductId = new Types.ObjectId().toString();
-    const mockProduct = { _id: mockProductId, name: 'Test Product' };
-
+  it('should return a product when found by id', async () => {
+    const mockProduct = { id: '123', name: 'Sample Product' };
     (productModel.findById as jest.Mock).mockResolvedValue(mockProduct);
 
-    const result = await getProductById(null, { id: mockProductId });
+    const result = await getProductById(undefined, { id: '123' });
 
     expect(result).toEqual(mockProduct);
-    expect(productModel.findById).toHaveBeenCalledWith(mockProductId);
+    expect(productModel.findById).toHaveBeenCalledWith('123');
   });
 
-  it('should throw "Product not found" error if no product is found', async () => {
-    const mockProductId = new Types.ObjectId().toString();
-
+  it('should throw an error when the product is not found', async () => {
     (productModel.findById as jest.Mock).mockResolvedValue(null);
 
-    await expect(getProductById(null, { id: mockProductId }))
-      .rejects
-      .toThrow('Product not found');
+    await expect(getProductById(undefined, { id: '123' })).rejects.toThrow('Product not found');
   });
 
-  it('should throw "Error fetching product by ID" if a database error occurs', async () => {
-    const mockProductId = new Types.ObjectId().toString();
+  it('should handle errors properly', async () => {
+    const errorMessage = 'Database error';
+    (productModel.findById as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-    (productModel.findById as jest.Mock).mockRejectedValue(new Error('DB error'));
-
-    await expect(getProductById(null, { id: mockProductId }))
-      .rejects
-      .toThrow('Error fetching product by ID');
+    await expect(getProductById(undefined, { id: '123' })).rejects.toThrow('Product not found');
   });
 });

@@ -1,5 +1,6 @@
 import { productModel } from '../../models/product.model';
 import { Types } from 'mongoose';
+import { ProductError } from '../../utils/product-error';
 
 export const getProductsByCategory = async (_: unknown, { categoryId }: { categoryId: string }) => {
   try {
@@ -11,13 +12,6 @@ export const getProductsByCategory = async (_: unknown, { categoryId }: { catego
 
     return products;
   } catch (error: unknown) {
-    handleError(error);
+    ProductError(error, 'Product not found');
   }
-};
-
-const handleError = (error: unknown): never => {
-  if (error instanceof Error && error.message === 'Product not found') {
-    throw new Error('Product not found');
-  }
-  throw new Error('Error fetching products by category');
 };

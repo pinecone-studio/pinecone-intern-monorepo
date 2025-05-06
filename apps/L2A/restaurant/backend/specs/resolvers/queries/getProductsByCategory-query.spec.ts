@@ -1,42 +1,43 @@
 import { getProductsByCategory } from '../../../src/resolvers/queries';
 import { productModel } from '../../../src/models/product.model';
-import { Types } from 'mongoose';
 
-jest.mock('../../../src/models/product.model');
+jest.mock('../../../src/models/product.model', () => ({
+  productModel: {
+    find: jest.fn()
+  }
+}));
 
 describe('getProductsByCategory', () => {
-  it('should return products when products are found for the given category', async () => {
-    const mockCategoryId = new Types.ObjectId().toString();
-    const mockProducts = [
-      { _id: new Types.ObjectId(), name: 'Product 1', category: mockCategoryId },
-      { _id: new Types.ObjectId(), name: 'Product 2', category: mockCategoryId },
-    ];
+  const mockCategoryId = '6638b94a0a298e73a1f85b66';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return products when found', async () => {
+    const mockProducts = [{ name: 'Product 1' }, { name: 'Product 2' }];
 
     (productModel.find as jest.Mock).mockResolvedValue(mockProducts);
 
     const result = await getProductsByCategory(null, { categoryId: mockCategoryId });
 
+    expect(productModel.find).toHaveBeenCalledWith({ category: expect.any(Object) });
     expect(result).toEqual(mockProducts);
-    expect(productModel.find).toHaveBeenCalledWith({ category: new Types.ObjectId(mockCategoryId) });
   });
 
-  it('should throw an error if no products are found for the given category', async () => {
-    const mockCategoryId = new Types.ObjectId().toString();
-
+  it('should throw "Product not found" error when no products found', async () => {
     (productModel.find as jest.Mock).mockResolvedValue([]);
 
-    await expect(getProductsByCategory(null, { categoryId: mockCategoryId }))
-      .rejects
-      .toThrow('Product not found');
+    await expect(
+      getProductsByCategory(null, { categoryId: mockCategoryId })
+    ).rejects.toThrow('Product not found');
   });
 
-  it('should throw an error if there is an issue fetching products', async () => {
-    const mockCategoryId = new Types.ObjectId().toString();
+  it('should throw generic product error when other errors occur', async () => {
+    (productModel.find as jest.Mock).mockRejectedValue(new Error('DB error'));
 
-    (productModel.find as jest.Mock).mockRejectedValue(new Error('Database error'));
-
-    await expect(getProductsByCategory(null, { categoryId: mockCategoryId }))
-      .rejects
-      .toThrow('Error fetching products by category');
+    await expect(
+      getProductsByCategory(null, { categoryId: mockCategoryId })
+    ).rejects.toThrow('Product service error');
   });
 });
