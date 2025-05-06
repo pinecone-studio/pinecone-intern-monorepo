@@ -6,7 +6,7 @@ import Footer from './_components/Footer';
 const Page = () => {
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex flex-col items-center justify-center">
         <HomeMain />
       </div>
       <Link href={'/login'}>
