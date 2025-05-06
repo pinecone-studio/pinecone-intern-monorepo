@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <div className="relative h-[550px] w-full bg-black text-white" data-testid="hero-section">
       <div className="absolute inset-0">
-        <Image src={process.env.NEXT_PUBLIC_COLDPLAY_HERO!} alt="Concert" fill className="object-cover opacity-60" />
+        <Image src={`https://contessa-project.eu/wp-content/uploads/2022/05/placeholder.gif`} alt="Concert" fill className="object-cover opacity-60" />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70"></div>
       </div>

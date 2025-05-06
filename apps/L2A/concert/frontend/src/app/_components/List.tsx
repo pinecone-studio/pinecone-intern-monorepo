@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+
 const ListPage = () => {
   const [search, setSearch] = useState('');
   const [selectedDate, setSelectedDate] = useState('Өдөр сонгох');
   const [openDropdown, setOpenDropdown] = useState(false);
   const dates = ['2025-05-05', '2025-05-06', '2025-05-07', '2025-05-08', '2025-05-09'];
   const dropdownRef = useRef(null);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !(dropdownRef.current as any).contains(e.target)) {
@@ -16,6 +18,7 @@ const ListPage = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <div className="flex flex-wrap items-center gap-4 px-8 py-6 border-b border-gray-800">
