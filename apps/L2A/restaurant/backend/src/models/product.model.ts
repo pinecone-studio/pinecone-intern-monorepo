@@ -17,17 +17,16 @@ export type ProductInput = {
   price?: number;
   description?: string;
   images?: string[];
-  category?: Types.ObjectId; 
+  category?: Types.ObjectId;
 };
 
-
 type CategoryType = {
-    _id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  
+  _id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 const productSchema = new Schema<ProductType>({
   name: {
     type: String,

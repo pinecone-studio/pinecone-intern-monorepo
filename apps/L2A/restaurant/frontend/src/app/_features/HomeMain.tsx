@@ -10,7 +10,7 @@ const HomeMain = () => {
 
   return (
     <div data-cy="home-page">
-      <main className="flex items-center flex-col w-[95%] mx-auto pt-10">
+      <main className="flex items-center flex-col w-[95%] mx-auto pt-10 ml-[30px]">
         <div className="text-[#441500] text-[19px] font-extralight mb-5">Хоолны цэс</div>
 
         <div data-cy="food" className="flex gap-2 mb-4">
@@ -18,7 +18,7 @@ const HomeMain = () => {
             <button
               data-cy="category-buttons"
               key={categor.id}
-              className={`px-3 py-1 rounded ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
+              className={`px-3 py-1 rounded text-[13px] ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
               onClick={() => setSelectedCategoryId(categor.id)}
             >
               {categor.name}
