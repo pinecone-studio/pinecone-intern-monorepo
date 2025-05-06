@@ -1,21 +1,29 @@
-import { useState } from "react";
+import React from 'react';
 
-export const CreatePostName = () => {
-  const [name, setName] = useState('');
-  
+type Props = {
+  name: string;
+  value: string;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (_e: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
+};
+
+export const CreatePostName = ({ name, value, onChange, onBlur, error }: Props) => {
   return (
     <div>
-      <label htmlFor="post-name" className="block text-sm text-[#09090B] pb-2">
-        Нэр
-      </label>
+      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Нэр</label>
       <input
-        id="post-name"
+        id={name}
+        name={name}
         type="text"
-        value={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder="Нэр"
         data-testid="Name"
-        onChange={(e) => setName(e.target.value)}
-        className="w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
+        className={`w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
+      <div className="h-5 mt-1">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
     </div>
   );
 };
