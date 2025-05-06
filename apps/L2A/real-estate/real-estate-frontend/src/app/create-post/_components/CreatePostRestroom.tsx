@@ -8,10 +8,10 @@ type Props = {
   error?: string;
 };
 
-export const CreatePostRoom = ({name, value, onChange, onBlur, error}: Props) => {
+export const CreatePostRestroom = ({name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Өрөө</label>
+      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Ариун цэврийн Өрөө</label>
       <input
         id={name}
         name={name}
@@ -20,7 +20,7 @@ export const CreatePostRoom = ({name, value, onChange, onBlur, error}: Props) =>
         onChange={onChange}
         onBlur={onBlur}
         placeholder="Өрөөний тоо"
-        data-testid="room"
+        data-testid="restroom"
         className={`w-full block px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
       <div className="h-5 mt-1">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
