@@ -45,4 +45,5 @@ export const typeDefs = gql`
   product(id: ID!): Product
   productsByCategory(categoryId: ID!): [Product!]!
 }
+`;
 
