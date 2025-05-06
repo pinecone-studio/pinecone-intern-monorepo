@@ -5,14 +5,16 @@ import { CreatePostPrice } from '../_components/CreatePostPrice';
 import { CreatePostField } from '../_components/CreatePostField';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { CreatePostRoom } from '../_components/CreatePostRoom';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Нэр заавал оруулна уу'),
   price: Yup.number().required('Үнэ заавал оруулна уу').min(0, 'Үнэ 0-ээс их байх ёстой'),
   field: Yup.number().required('Талбайн утгыг заавал оруулна уу').min(10, 'Талбайн утга 2-оос дээш байх ёстой'),
+  room: Yup.number().required('Өрөөний тоог заавал оруулна уу').min(1, 'Өрөөний тоо 1-ээс их байх ёстой'),
 });
 
-const getFieldError = (touched: any, errors: any, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
+const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
 
 export const CreatePostCard = () => {
   const formik = useFormik({
@@ -20,6 +22,7 @@ export const CreatePostCard = () => {
       name: '',
       price: '',
       field: '',
+      room: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -28,14 +31,15 @@ export const CreatePostCard = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="space-y-4 gap-2">
+    <form onSubmit={formik.handleSubmit} className="space-y-2 gap-2">
       <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center">
         <div className="w-[728px] h-[842px] flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
-          <div className="w-[680px] h-[692px] space-y-4 mt-6">
+          <div className="w-[680px] h-[692px] space-y-2 mt-2">
             <CreatePostHeader />
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
             <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
             <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
+            <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
           </div>
         </div>
         <div>

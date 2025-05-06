@@ -1,0 +1,62 @@
+{
+  "orders": [
+    {
+      "table": "1B",
+      "time": "12:45",
+      "status": "Хүлээгдэж буй",
+      "orderNumber": "#33999",
+      "items": [
+        {
+          "id": 1,
+          "name": "Капучино",
+          "price": 7500,
+          "quantity": 2,
+          "image": "https://cakesbymk.com/wp-content/uploads/2023/11/Template-Size-for-Blog-Photos-24.jpg"
+        },
+        {
+          "id": 3,
+          "name": "Латте",
+          "price": 8000,
+          "quantity": 1,
+          "image": "https://natashaskitchen.com/wp-content/uploads/2014/10/Chocolate-Spartak-31.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Американо",
+          "price": 6500,
+          "quantity": 2,
+          "image": "https://www.coffeebeans.ph/storage/2023/07/americano.jpg"
+        }
+      ]
+    },
+    {
+      "table": "2A",
+      "time": "13:10",
+      "status": "Хүлээгдэж буй",
+      "orderNumber": "#34000",
+      "items": [
+        {
+          "id": 9,
+          "name": "Спартак",
+          "price": 10500,
+          "quantity": 1,
+          "image": "https://natashaskitchen.com/wp-content/uploads/2014/10/Chocolate-Spartak-31.jpg"
+        },
+        {
+          "id": 10,
+          "name": "Смүүти",
+          "price": 11500,
+          "quantity": 3,
+          "image": "https://www.shutterstock.com/image-photo/milkshakes-different-flavors-plastic-take-260nw-2481399731.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Американо",
+          "price": 6500,
+          "quantity": 2,
+          "image": "https://www.coffeebeans.ph/storage/2023/07/americano.jpg"
+        }
+      ]
+    }
+  ]
+}
