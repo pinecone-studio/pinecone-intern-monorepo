@@ -1,8 +1,7 @@
-import { DeleteProductInput } from '../../generated';
+import { DeleteProductInput, Product } from '../../generated';
 import { productModel } from '../../models/product.model';
-import { ProductType } from '../../models/product.model';
 
-export const deleteProduct = async (_: unknown, { input } : { input: DeleteProductInput }): Promise<ProductType | null> => {
+export const deleteProduct = async (_: unknown, { input }: { input: DeleteProductInput }): Promise<Product | null> => {
   try {
     const { _id } = input;
     const product = await productModel.findByIdAndDelete(_id);

@@ -13,13 +13,4 @@ export const typeDefs = gql`
   type Service {
     sdl: String!
   }
-
-  type Query {
-    sampleQuery: String!
-    _service: Service!
-  }
-
-  type Mutation {
-    sampleMutation: String!
-  }
 `;

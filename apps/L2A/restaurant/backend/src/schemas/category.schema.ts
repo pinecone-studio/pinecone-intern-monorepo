@@ -1,10 +1,6 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  extend type Query {
-    getCategories: [Category!]!
-  }
-
   input AddCategoryInput {
     name: String!
   }
@@ -14,11 +10,5 @@ export const typeDefs = gql`
   }
   input DeleteCategoryInput {
     _id: ID!
-  }
-
-  extend type Mutation {
-    addCategory(input: AddCategoryInput): Category!
-    updateCategory(input: UpdateCategoryInput): Category!
-    deleteCategory(input: DeleteCategoryInput): Category!
   }
 `;
