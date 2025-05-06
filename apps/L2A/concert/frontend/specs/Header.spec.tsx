@@ -1,9 +1,10 @@
 import Header from '@/app/_components/Header';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import '@testing-library/jest-dom';
 import { AuthProvider, useAuth } from '@/app/_components/context/AuthContext';
 import { GetUserInfoDocument } from '@/generated';
+import React from 'react';
+import '@testing-library/jest-dom';
 
 const userMock = {
   request: {
@@ -21,6 +22,17 @@ const userMock = {
     },
   },
 };
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+  }),
+  usePathname: () => '/auth/signin',
+  useSearchParams: () => new URLSearchParams({ foo: 'bar' }),
+}));
 
 describe('Header', () => {
   it('should render Header when not logged in', async () => {
@@ -44,8 +56,6 @@ describe('Header', () => {
       return null;
     });
 
-    const clearSpy = jest.spyOn(Storage.prototype, 'clear');
-
     render(
       <MockedProvider mocks={[userMock]} addTypename={false}>
         <AuthProvider>
@@ -61,9 +71,7 @@ describe('Header', () => {
     expect(logoutButton).toBeInTheDocument();
 
     fireEvent.click(logoutButton);
-    expect(clearSpy).toHaveBeenCalled();
-
-    clearSpy.mockRestore();
+    expect(window.location.pathname).toBe('/');
   });
 
   it('should throw error when useAuth is used outside AuthProvider', () => {
