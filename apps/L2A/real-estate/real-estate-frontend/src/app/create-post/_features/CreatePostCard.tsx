@@ -4,8 +4,10 @@ import { CreatePostName } from '../_components/CreatePostName';
 import { CreatePostPrice } from '../_components/CreatePostPrice';
 import { CreatePostField } from '../_components/CreatePostField';
 import { CreatePostRestroom } from '../_components/CreatePostRestroom';
+import { CreatePostRoom } from '../_components/CreatePostRoom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Нэр заавал оруулна уу'),
@@ -41,6 +43,7 @@ export const CreatePostCard = () => {
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
             <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
             <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
+            <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
             <CreatePostRestroom name="restroom" value={formik.values.restroom} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'restroom')} />
           </div>
         </div>
