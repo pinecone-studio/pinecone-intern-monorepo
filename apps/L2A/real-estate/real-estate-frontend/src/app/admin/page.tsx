@@ -6,7 +6,6 @@ import ListingDetailAdminView from './_components/ListingDetailAdminView';
 const AdminPage = () => {
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
-  // mockListings-г энд дахин ашиглана
   const listings: Listing[] = new Array(10).fill(null).map((_, i) => ({
     id: `${i + 1}`.padStart(4, '0'),
     name: 'Seoul royal county хотхон',
@@ -17,16 +16,7 @@ const AdminPage = () => {
   }));
 
   return (
-    <div className="p-6">
-      {selectedListing ? (
-        <ListingDetailAdminView listing={selectedListing} />
-      ) : (
-        <AdminListingTable
-          listings={listings}
-          onSelect={(listing) => setSelectedListing(listing)}
-        />
-      )}
-    </div>
+    <div className="p-6">{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>
   );
 };
 
