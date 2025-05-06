@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import SignInForm, { LOGIN_USER } from '@/app/signin/_components/SignInForm';
 import '@testing-library/jest-dom';
 import { jest } from '@jest/globals';
+import { GraphQLError } from 'graphql';
 
 jest.mock('js-cookie');
 const mockPush = jest.fn();
