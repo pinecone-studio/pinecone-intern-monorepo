@@ -1,4 +1,4 @@
-import ForgetPassword from './_components/ForgetPassword';
+import ForgetPassword from './_features/ForgetPassword';
 
 const ForgetHomePage = () => {
   return (

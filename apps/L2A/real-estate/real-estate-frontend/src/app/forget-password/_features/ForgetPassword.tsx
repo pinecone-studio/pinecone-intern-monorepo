@@ -20,7 +20,6 @@ const ForgetPassword = () => {
 
         return;
       }
-      console.log('Reset password link sent to:', email);
 
       setSubmitted(true);
     },

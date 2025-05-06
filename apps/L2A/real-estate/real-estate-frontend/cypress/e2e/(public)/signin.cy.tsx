@@ -1,6 +1,6 @@
 describe('Sign In Form', () => {
   beforeEach(() => {
-    cy.visit('/signin'); // Change to your actual path if different
+    cy.visit('/signin');
   });
   it('should render email and password fields and submit button', () => {
     cy.get('[data-cy="email-input"]').should('be.visible');

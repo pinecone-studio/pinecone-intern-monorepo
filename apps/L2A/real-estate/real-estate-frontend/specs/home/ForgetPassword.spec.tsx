@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom';
-import ForgetPassword from '@/app/forget-password/_components/ForgetPassword';
+import ForgetPassword from '@/app/forget-password/_features/ForgetPassword';
 
 describe('ForgetPassword Component', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('ForgetPassword Component', () => {
 
   const getSubmitButton = () => screen.getByTestId('submit-button');
 
-  test('renders heading, email input, and submit button', () => {
+  it('1.renders heading, email input, and submit button', () => {
     expect(screen.getByText(/forget password/i)).toBeInTheDocument();
 
     expect(getEmailInput()).toBeInTheDocument();
@@ -22,13 +22,13 @@ describe('ForgetPassword Component', () => {
     expect(getSubmitButton()).toBeInTheDocument();
   });
 
-  test('displays an error when submitting empty form', async () => {
+  it('2.displays an error when submitting empty form', async () => {
     await userEvent.click(getSubmitButton());
 
     expect(await screen.findByText(/email is required/i)).toBeInTheDocument();
   });
 
-  test('shows success message after valid email submission', async () => {
+  it('3.shows success message after valid email submission', async () => {
     await userEvent.clear(getEmailInput());
 
     await userEvent.type(getEmailInput(), 'test@example.com');
@@ -40,7 +40,7 @@ describe('ForgetPassword Component', () => {
     expect(await screen.findByText(/a reset link has been sent/i)).toBeInTheDocument();
   });
 
-  test('placeholder test for loading state', async () => {
+  it('4.placeholder test for loading state', async () => {
     expect(true).toBe(true);
   });
 });

@@ -33,12 +33,12 @@ const mockError = {
   error: new GraphQLError('Login failed'),
 };
 
-describe('SignInForm', () => {
+describe('1.SignInForm', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders form inputs and button', () => {
+  it('2.renders form inputs and button', () => {
     render(
       <MockedProvider mocks={[]}>
         <SignInForm />
@@ -49,7 +49,7 @@ describe('SignInForm', () => {
     expect(screen.getByTestId('submit-button')).toHaveTextContent(/Continue/i);
   });
 
-  it('successfully logs in and sets cookie, navigates', async () => {
+  it('3.successfully logs in and sets cookie, navigates', async () => {
     render(
       <MockedProvider mocks={[mockSuccess]} addTypename={false}>
         <SignInForm />
@@ -70,7 +70,7 @@ describe('SignInForm', () => {
     });
   });
 
-  it('shows error message when login fails', async () => {
+  it('4.shows error message when login fails', async () => {
     render(
       <MockedProvider mocks={[mockError]} addTypename={false}>
         <SignInForm />
@@ -89,7 +89,7 @@ describe('SignInForm', () => {
     expect(errorText).toBeInTheDocument();
   });
 
-  it('disables button and shows loading state', async () => {
+  it('5.disables button and shows loading state', async () => {
     render(
       <MockedProvider mocks={[mockSuccess]} addTypename={false}>
         <SignInForm />
