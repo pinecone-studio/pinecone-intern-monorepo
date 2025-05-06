@@ -5,7 +5,6 @@ describe('HomeOrder and CartItem E2E Test', () => {
   
     it('opens the order drawer and displays cart item details', () => {
       cy.get('[data-cy="Foods"]').first().click();
-  
       cy.contains('Таны захиалга').should('be.visible');
       cy.contains('Taco Taco').should('be.visible');
       cy.contains('15.6k').should('be.visible');
@@ -14,7 +13,6 @@ describe('HomeOrder and CartItem E2E Test', () => {
   
     it('increments and decrements quantity', () => {
       cy.get('[data-cy="Foods"]').first().click();
-  
       cy.contains('Таны захиалга').should('be.visible');
       cy.contains('1').should('exist');
       cy.get('button').contains('+').click();

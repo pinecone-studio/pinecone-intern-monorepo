@@ -1,4 +1,5 @@
 'use client';   
+
 import CartItem from '@/app/_components/CartItems';
 
 const product = {
