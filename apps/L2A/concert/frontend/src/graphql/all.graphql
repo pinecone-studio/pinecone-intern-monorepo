@@ -1,6 +1,17 @@
 query Query {
   sampleQuery
 }
+query GetUserInfo($jwt: String!) {
+  GetUserInfo(JWT: $jwt) {
+    email
+    id
+    phone
+    isAdmin
+    bookings {
+      id
+    }
+  }
+}
 
 mutation Mutation {
   sampleMutation

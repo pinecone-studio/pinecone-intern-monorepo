@@ -1,19 +1,18 @@
 'use client';
 import Link from 'next/link';
-import HomeBody from './_features/HomeBody';
-import { Button } from '@/components/ui/button';
 import HomeMain from './_features/HomeMain';
+import Footer from './_components/Footer';
 
 const Page = () => {
   return (
-    <div className="flex justify-between">
-      <HomeBody />
-      <HomeMain />
+    <div>
+      <div className="flex justify-between">
+        <HomeMain />
+      </div>
       <Link href={'/login'}>
-        <Button>sign in</Button>
+        <Footer />
       </Link>
     </div>
   );
 };
-
 export default Page;
