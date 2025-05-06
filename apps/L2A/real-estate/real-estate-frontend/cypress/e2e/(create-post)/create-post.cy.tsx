@@ -1,6 +1,6 @@
 describe('CreatePostCard Form', () => {
   beforeEach(() => {
-    cy.visit('/create-post'); // ⛳ path-аа тохируулна уу!
+    cy.visit('/create-post');
   });
 
   it('successfully submits form with valid data', () => {
