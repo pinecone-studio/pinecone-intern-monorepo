@@ -5,3 +5,5 @@ export * from './delete-product';
 export * from './add-category';
 export * from './update-category';
 export * from './delete-category';
+export * from './create-order';
+export * from './register';

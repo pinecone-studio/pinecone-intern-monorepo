@@ -1,15 +1,7 @@
-import { addCategory, deleteCategory, deleteProduct, updateCategory } from "./mutations";
-import { addProduct } from "./mutations/add-product";
-import { updateProduct } from "./mutations/update-product";
+import * as Mutation from './mutations';
+import * as Query from './queries';
 
 export const resolvers = {
-  Mutation: {
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    addCategory,
-    updateCategory,
-    deleteCategory,
-  },
+  Mutation,
+  Query,
 };
-
