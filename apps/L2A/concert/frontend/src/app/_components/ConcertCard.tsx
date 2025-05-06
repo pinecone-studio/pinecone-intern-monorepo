@@ -4,7 +4,7 @@ import { CiLocationOn, CiCalendar } from 'react-icons/ci';
 const ConcertCard = () => {
   return (
     <div className="w-[345px] rounded-2xl overflow-hidden shadow-lg bg-black text-white font-sans" data-testid="concert-card">
-      <Image src={`https://contessa-project.eu/wp-content/uploads/2022/05/placeholder.gif`} alt="" width="500" height="213" />
+      <Image src={`/Placeholder.gif`} alt="" width="500" height="213" />
       <div className="border-t border-purple-500 p-6">
         <h2 className="text-xl font-semibold">Music of the Spheres</h2>
         <p className="text-gray-400 mb-4">coldplay</p>
