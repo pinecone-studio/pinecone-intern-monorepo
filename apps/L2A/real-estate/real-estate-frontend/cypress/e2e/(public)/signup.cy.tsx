@@ -1,6 +1,6 @@
 describe('SignUp Page Flow with Mocked OTP', () => {
   it('should complete signup using mocked OTP', () => {
-    const generatedMail = `_user${Date.now()}@example.com`;
+    const generatedMails = `_user${Date.now()}@example.com`;
     cy.intercept('POST', '/api/graphql', (req) => {
       const body = req.body;
       if (body.query.includes('verifyOTP')) {
@@ -28,7 +28,7 @@ describe('SignUp Page Flow with Mocked OTP', () => {
       }
     }).as('graphql');
     cy.visit('/signup');
-    cy.get('[data-cy=email-input]').type(generatedMail);
+    cy.get('[data-cy=email-input]').type(generatedMails);
     cy.get('form').submit();
     cy.get('[data-cy=otp-input]').type('123456'); 
     cy.wait('@graphql'); 
