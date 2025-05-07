@@ -1,9 +1,9 @@
-describe('Admin Listing Table Filter', () => {
+describe('Admin Listing Table - Filter by Tab', () => {
   beforeEach(() => {
     cy.visit('/admin');
   });
 
-  it('filters listings by selected tab', () => {
+  it('displays only listings that match the selected tab (Зөвшөөрсөн)', () => {
     cy.contains('Зөвшөөрсөн').click();
 
     cy.get('table tbody tr').should('have.length.greaterThan', 0);
