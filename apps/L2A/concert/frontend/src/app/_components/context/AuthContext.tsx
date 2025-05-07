@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetUserInfoQuery } from '@/generated';
+import { useRouter } from 'next/navigation';
 import { createContext, Dispatch, ReactNode, useContext, useState, useEffect } from 'react';
 
 type UserType = {
@@ -15,11 +16,13 @@ type AuthContextType = {
   JWT: string;
   setJWT: Dispatch<React.SetStateAction<string>>;
   user: UserType | null;
+  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const [JWT, setJWT] = useState<string>('');
   const [user, setUser] = useState<UserType | null>(null);
 
@@ -57,7 +60,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [data]);
 
-  return <AuthContext.Provider value={{ JWT, setJWT, user }}>{children}</AuthContext.Provider>;
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('tokenExpiry');
+    setJWT('');
+    setUser(null);
+    router.push('/auth/signin');
+  };
+
+  return <AuthContext.Provider value={{ JWT, setJWT, user, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

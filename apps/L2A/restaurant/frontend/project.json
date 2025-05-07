@@ -151,7 +151,9 @@
         "testingType": "e2e",
         "reporter": "mochawesome",
         "devServerTarget": "restaurant-frontend:serve:development",
+
         "browser": "chromium"
+
       },
       "dependsOn": [
         {

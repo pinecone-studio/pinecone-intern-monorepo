@@ -1,14 +1,14 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Category {
+  input AddCategoryInput {
+    name: String!
+  }
+  input UpdateCategoryInput {
     _id: ID!
     name: String!
-    createdAt: Date!
-    updatedAt: Date!
   }
-
-  type Query {
-    getCategories: [Category!]!
+  input DeleteCategoryInput {
+    _id: ID!
   }
 `;
