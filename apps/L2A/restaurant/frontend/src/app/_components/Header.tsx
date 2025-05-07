@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sheet"
 import { Notification } from '../_features/Notification';
 
-
 const Header = () => {
   return (
     <div data-cy="Header" className="flex justify-between w-[100%] h-[56px] bg-[#F4F4F5]">
