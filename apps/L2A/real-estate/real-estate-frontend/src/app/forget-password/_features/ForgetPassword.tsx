@@ -12,7 +12,6 @@ const ForgetPassword = () => {
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       setError('');
       if (!email) {
         setError('Email is required');
@@ -32,7 +31,6 @@ const ForgetPassword = () => {
         </div>
         <h2 className="text-lg font-medium mb-1 text-center">Forget password</h2>
         <p className="text-gray-500 text-sm text-center mb-4">Enter your email account to reset password</p>
-
         {submitted ? (
           <p className="text-green-600 text-sm text-center mb-4">A reset link has been sent to your email.</p>
         ) : (
