@@ -12,5 +12,8 @@ export const MutationTypeDefs = gql`
     cancelBooking(bookingId: ID!): Booking!
     registerUser(email: String!, password: String!): User!
     sampleMutation(text: String): String!
+    updateUserInfo(id: String!, email: String, password: String, phone: Int): User!
+    OTP(email: String!): String!
+    changePassword(otp: String!, newPassword: String!): String!
   }
 `;

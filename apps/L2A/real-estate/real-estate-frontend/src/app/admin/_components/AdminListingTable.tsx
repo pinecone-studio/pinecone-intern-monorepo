@@ -3,21 +3,26 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+export type Listing = {
+  id: string;
+  name: string;
+  owner: string;
+  phone: string;
+  image: string;
+  status: string;
+};
+
+type AdminListingTableProps = {
+  listings: Listing[];
+  onSelect: (_listing: Listing) => void;
+};
+
 const TABS = ['Хүсэлт илгээсэн', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
 
-const mockListings = new Array(10).fill(null).map((_, i) => ({
-  id: `${i + 1}`.padStart(4, '0'),
-  name: 'Seoul royal county хотхон',
-  owner: 'Н.Мөнхтунгалаг',
-  phone: '99112233',
-  image: '/listingcard.png',
-  status: TABS[i % 4],
-}));
-
-const AdminListingTable = () => {
+const AdminListingTable = ({ listings, onSelect }: AdminListingTableProps) => {
   const [selectedTab, setSelectedTab] = useState<string>('Хүсэлт илгээсэн');
 
-  const filteredListings = mockListings.filter((listing) => listing.status === selectedTab);
+  const filteredListings = listings.filter((listing) => listing.status === selectedTab);
 
   return (
     <div className="p-6">
@@ -46,9 +51,9 @@ const AdminListingTable = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredListings.map((listing, i) => (
-              <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-2 text-blue-600 underline cursor-pointer border-x">{listing.id}</td>
+            {filteredListings.map((listing) => (
+              <tr key={listing.id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => onSelect(listing)}>
+                <td className="px-4 py-2 text-blue-600 underline border-x">{listing.id}</td>
                 <td className="px-4 py-2 flex items-center gap-2 border-x">
                   <Image src={listing.image} alt="thumb" width={40} height={40} className="rounded-md object-cover" />
                   {listing.name}
