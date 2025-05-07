@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CreatePostHeader } from '../_components/CreatePostHeader';
+import { CreatePostType } from '../_components/CreatePostType';
 import { CreatePostName } from '../_components/CreatePostName';
 import { CreatePostPrice } from '../_components/CreatePostPrice';
 import { CreatePostField } from '../_components/CreatePostField';
@@ -7,7 +8,7 @@ import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostRoom } from '../_components/CreatePostRoom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { CreatePostType } from '../_components/CreatePostType';
+
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу'),

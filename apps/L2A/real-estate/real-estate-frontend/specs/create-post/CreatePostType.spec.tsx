@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('@/components/ui/select', () => ({
-  Select: ({ children, value, onValueChange }: any) => (
+  Select: ({ children, _value, onValueChange }: any) => (
     <div data-testid="select" onClick={() => onValueChange('apartment')}>
       {children}
     </div>
