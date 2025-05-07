@@ -7,9 +7,10 @@ import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostRoom } from '../_components/CreatePostRoom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
+import { CreatePostType } from '../_components/CreatePostType';
 
 const validationSchema = Yup.object({
+  type: Yup.string().required('Төрлөө сонгоно уу'),
   name: Yup.string().required('Нэр заавал оруулна уу'),
   price: Yup.number().required('Үнэ заавал оруулна уу').min(0, 'Үнэ 0-ээс их байх ёстой'),
   field: Yup.number().required('Талбайн утгыг заавал оруулна уу').min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой'),
@@ -22,6 +23,7 @@ const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: stri
 export const CreatePostCard = () => {
   const formik = useFormik({
     initialValues: {
+      type: '',
       name: '',
       price: '',
       field: '',
@@ -40,11 +42,18 @@ export const CreatePostCard = () => {
         <div className="w-[728px] h-[842px] flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
           <div className="w-[680px] h-[692px] space-y-2 mt-2">
             <CreatePostHeader />
+            <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
             <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
             <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
             <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
-            <CreatePostRestroom name="restroom" value={formik.values.restroom} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'restroom')} />
+            <CreatePostRestroom
+              name="restroom"
+              value={formik.values.restroom}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={getFieldError(formik.touched, formik.errors, 'restroom')}
+            />
           </div>
         </div>
         <div>
