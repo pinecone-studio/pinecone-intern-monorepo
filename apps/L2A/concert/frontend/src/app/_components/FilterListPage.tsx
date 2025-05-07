@@ -5,7 +5,7 @@ import ListCards from './ListCards';
 import SearchIcon from '../_assets/SearchIcon';
 import ChevronIcon from '../_assets/ChevronIcon';
 
-const ListPage = () => {
+const FilterListPage = () => {
   const [search, setSearch] = useState('');
   const [selectedDate, setSelectedDate] = useState('Өдөр сонгох');
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -64,4 +64,4 @@ const ListPage = () => {
     </div>
   );
 };
-export default ListPage;
+export default FilterListPage;

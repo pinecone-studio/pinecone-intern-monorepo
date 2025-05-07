@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const ListCards = () => {
   return (
-    <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-8">
       {[...Array(12)].map((_, i) => (
         <div key={i} className="bg-[#141414] rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
           <div className="h-48 bg-gray-700">
@@ -19,7 +19,7 @@ const ListCards = () => {
           </div>
         </div>
       ))}
-    </main>
+    </div>
   );
 };
 export default ListCards;
