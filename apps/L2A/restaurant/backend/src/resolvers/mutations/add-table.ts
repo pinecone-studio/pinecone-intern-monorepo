@@ -4,17 +4,13 @@ import { Types } from 'mongoose';
 
 export const addTable = async (parent: unknown, args: { input: AddTableInput }): Promise<Table> => {
   const { name } = args.input;
-
   const qrCodeUrl = `https://example.com/qrcode/${new Types.ObjectId().toString()}`;
-
   const newTable = new tableModel({
     name,
     qrCodeUrl,
   });
-
   try {
     const savedTable = await newTable.save();
-
     return {
       _id: savedTable._id.toString(),
       name: savedTable.name,

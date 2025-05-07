@@ -8,13 +8,4 @@ import { UserTypeDefs } from './user.schema';
 import { QueryTypeDefs } from './query.schema';
 import { MutationTypeDefs } from './mutation.schema';
 
-export const typeDefs = mergeTypeDefs([
-  CommonTypeDefs,
-  ProductTypeDefs,
-  CategoryTypeDefs,
-  TableTypeDefs,
-  OrderTypeDefs,
-  UserTypeDefs,
-  QueryTypeDefs,
-  MutationTypeDefs
-]);
+export const typeDefs = mergeTypeDefs([CommonTypeDefs, ProductTypeDefs, CategoryTypeDefs, TableTypeDefs, OrderTypeDefs, UserTypeDefs, QueryTypeDefs, MutationTypeDefs]);
