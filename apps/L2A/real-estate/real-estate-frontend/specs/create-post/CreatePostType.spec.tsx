@@ -2,6 +2,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CreatePostType } from '@/app/create-post/_components/CreatePostType';
 import '@testing-library/jest-dom';
+import { jest } from '@jest/globals';
+
+
+jest.mock('@radix-ui/react-select');
 
 describe('CreatePostType', () => {
   beforeAll(() => {
@@ -13,11 +17,8 @@ describe('CreatePostType', () => {
 
     render(<CreatePostType name="type" value="" onChange={handleChange} />);
 
-    const trigger = screen.getByTestId('type');
-    await userEvent.click(trigger);
-
-    const option = await screen.findByText('Орон сууц');
-    await userEvent.click(option);
+    const select = screen.getByTestId('type');
+    await userEvent.selectOptions(select, 'apartment');
 
     expect(handleChange).toHaveBeenCalledWith('apartment');
   });
@@ -32,13 +33,11 @@ describe('CreatePostType', () => {
 
     const trigger = container.querySelector(`#type`);
     expect(trigger).toHaveClass('border-red-500');
-
     expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
   });
 
   it('renders invisible placeholder error space when no error is given', () => {
     render(<CreatePostType name="type" value="" onChange={() => {}} />);
-
     const placeholder = screen.getByText('placeholder');
     expect(placeholder).toHaveClass('invisible');
   });
