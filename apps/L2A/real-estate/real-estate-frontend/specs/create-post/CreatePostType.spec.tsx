@@ -31,7 +31,7 @@ describe('CreatePostType', () => {
   });
 
   it('renders with error styles when error prop is true', () => {
-    const { container } = render(<CreatePostType name="type" value="house" onChange={jest.fn()} />);
+    const { container } = render(<CreatePostType name="type" value="house" onChange={jest.fn()} error={true} />);
     expect(container.querySelector('.border-destructive')).toBeInTheDocument();
   });
 });
