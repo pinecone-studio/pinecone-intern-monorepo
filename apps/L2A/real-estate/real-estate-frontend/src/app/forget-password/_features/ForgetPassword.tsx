@@ -14,15 +14,12 @@ const ForgetPassword = () => {
       e.preventDefault();
 
       setError('');
-
       if (!email) {
         setError('Email is required');
         return;
       }
-
       setSubmitted(true);
     },
-
     [email]
   );
 
