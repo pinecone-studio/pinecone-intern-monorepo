@@ -56,7 +56,7 @@ describe('1.SignInForm', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByTestId('email-input'), {
+    fireEvent.change(screen.getByTestId('email-Input'), {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password-input'), {
@@ -77,7 +77,7 @@ describe('1.SignInForm', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByTestId('email-input'), {
+    fireEvent.change(screen.getByTestId('email-Input'), {
       target: { value: 'wrong@example.com' },
     });
     fireEvent.change(screen.getByTestId('password-input'), {
@@ -96,7 +96,7 @@ describe('1.SignInForm', () => {
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByTestId('email-input'), {
+    fireEvent.change(screen.getByTestId('email-Input'), {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password-input'), {

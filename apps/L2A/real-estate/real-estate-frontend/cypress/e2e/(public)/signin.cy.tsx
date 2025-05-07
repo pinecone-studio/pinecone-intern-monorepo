@@ -3,7 +3,8 @@ describe('Sign In Form', () => {
     cy.visit('/signin');
   });
   it('should render email and password fields and submit button', () => {
-    cy.get('[data-cy="email-input"]').should('be.visible');
+    cy.get('[data-cy="form"]').should('be.visible');
+    cy.get('[data-cy="email-Input"]').should('be.visible');
     cy.get('[data-cy="password-input"]').should('be.visible');
     cy.get('[data-cy="submit-button"]').should('be.visible');
   });
@@ -18,7 +19,7 @@ describe('Sign In Form', () => {
         });
       }
     }).as('loginRequest');
-    cy.get('[data-cy="email-input"]').type('user@example.com');
+    cy.get('[data-cy="email-Input"]').type('user@example.com');
     cy.get('[data-cy="password-input"]').type('wrongpass');
     cy.get('[data-cy="submit-button"]').click();
     cy.wait('@loginRequest');
@@ -39,7 +40,7 @@ describe('Sign In Form', () => {
         });
       }
     }).as('loginRequest');
-    cy.get('[data-cy="email-input"]').type('user@example.com');
+    cy.get('[data-cy="email-Input"]').type('user@example.com');
     cy.get('[data-cy="password-input"]').type('correctpass');
     cy.get('[data-cy="submit-button"]').click();
     cy.wait('@loginRequest');

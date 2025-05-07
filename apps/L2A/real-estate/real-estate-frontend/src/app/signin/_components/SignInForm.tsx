@@ -30,7 +30,7 @@ const SignInForm = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form data-cyid="form" onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email
@@ -38,7 +38,7 @@ const SignInForm = () => {
         <input
           id="email"
           type="email"
-          data-testid="email-input"
+          data-testid="email-Input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
