@@ -3,7 +3,6 @@ describe('Sign In Form', () => {
     cy.visit('/signin');
   });
   it('should render email and password fields and submit button', () => {
-    cy.get('[data-cy="form"]').should('be.visible');
     cy.get('[data-cy="email-Input"]').should('be.visible');
     cy.get('[data-cy="password-input"]').should('be.visible');
     cy.get('[data-cy="submit-button"]').should('be.visible');

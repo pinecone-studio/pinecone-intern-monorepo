@@ -17,7 +17,6 @@ const ForgetPassword = () => {
 
       if (!email) {
         setError('Email is required');
-
         return;
       }
 
