@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { Mail, Phone, Headphones, Facebook, Youtube, Instagram } from 'lucide-react'
-import Image from 'next/image'
+import { Mail, Phone, Headphones, Facebook, Youtube, Instagram } from 'lucide-react';
+import Image from 'next/image';
 
-const Footer = ()=> {
+const Footer = () => {
   return (
     <div className="w-full bg-white border-t">
       <footer className="px-4 sm:px-6 py-8 text-sm text-gray-700 max-w-[1280px] mx-auto">
@@ -46,6 +46,6 @@ const Footer = ()=> {
         </div>
       </footer>
     </div>
-  )
-}
-export default Footer
+  );
+};
+export default Footer;
