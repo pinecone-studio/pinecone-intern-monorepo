@@ -16,22 +16,30 @@ describe('CreatePostType', () => {
     const trigger = screen.getByTestId('type');
     await userEvent.click(trigger);
 
-    const option = await screen.findByText((content, element) => {
-      return element?.textContent === 'Орон сууц';
-    });
-
+    const option = await screen.findByText('Орон сууц');
     await userEvent.click(option);
 
     expect(handleChange).toHaveBeenCalledWith('apartment');
   });
 
   it('renders selected value correctly', () => {
-    render(<CreatePostType name="type" value="house" onChange={jest.fn()} />);
+    render(<CreatePostType name="type" value="house" onChange={() => {}} />);
     expect(screen.getByText('Хувийн сууц')).toBeInTheDocument();
   });
 
-  it('renders with error styles when error prop is true', () => {
-    const { container } = render(<CreatePostType name="type" value="house" onChange={jest.fn()} error={true} />);
-    expect(container.querySelector('.border-destructive')).toBeInTheDocument();
+  it('renders with error styles when error prop is provided', () => {
+    const { container } = render(<CreatePostType name="type" value="" onChange={() => {}} error="Алдаа гарлаа" />);
+
+    const trigger = container.querySelector(`#type`);
+    expect(trigger).toHaveClass('border-red-500');
+
+    expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
+  });
+
+  it('renders invisible placeholder error space when no error is given', () => {
+    render(<CreatePostType name="type" value="" onChange={() => {}} />);
+
+    const placeholder = screen.getByText('placeholder');
+    expect(placeholder).toHaveClass('invisible');
   });
 });

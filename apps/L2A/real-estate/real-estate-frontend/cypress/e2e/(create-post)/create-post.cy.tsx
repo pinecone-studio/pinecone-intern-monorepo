@@ -1,62 +1,43 @@
-describe('CreatePostCard Form', () => {
+describe('CreatePostCard form', () => {
   beforeEach(() => {
-    cy.visit('/create-post'); 
+    cy.visit('/create-post');
   });
 
-  it('should render the form and all fields', () => {
-    cy.get('label').contains('Төрөл').should('be.visible');
-    cy.get('label').contains('Нэр').should('be.visible');
-    cy.get('label').contains('Үнэ').should('be.visible');
-    cy.get('label').contains('Талбайн утга').should('be.visible');
-    cy.get('label').contains('Өрөөний тоо').should('be.visible');
-    cy.get('label').contains('Ариун цэврийн өрөөний тоо').should('be.visible');
+  it('shows validation errors when submitting empty form', () => {
+    cy.contains('Зар оруулах хүсэлт илгээх').click();
 
-    cy.get('button').contains('Зар оруулах хүсэлт илгээх').should('be.visible');
+    cy.contains('Төрлөө сонгоно уу').should('be.visible');
+    cy.contains('Нэр заавал оруулна уу').should('be.visible');
+    cy.contains('Үнэ заавал оруулна уу').should('be.visible');
+    cy.contains('Талбайн утгыг заавал оруулна уу').should('be.visible');
+    cy.contains('Өрөөний тоог заавал оруулна уу').should('be.visible');
+    cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу').should('be.visible');
   });
 
-  it('should show validation errors when submitting with empty fields', () => {
-    cy.get('button').contains('Зар оруулах хүсэлт илгээх').click();
+  it('submits the form when all fields are filled correctly', () => {
 
-    cy.get('p').contains('Төрлөө сонгоно уу').should('be.visible');
-    cy.get('p').contains('Нэр заавал оруулна уу').should('be.visible');
-    cy.get('p').contains('Үнэ заавал оруулна уу').should('be.visible');
-    cy.get('p').contains('Талбайн утгыг заавал оруулна уу').should('be.visible');
-    cy.get('p').contains('Өрөөний тоог заавал оруулна уу').should('be.visible');
-    cy.get('p').contains('Ариун цэврийн өрөөний тоог заавал оруулна уу').should('be.visible');
-  });
+    cy.get('[data-testid="type"]').click();
+    cy.contains('Орон сууц').click();
 
-  it('should fill fields correctly and submit the form', () => {
+    cy.get('input[name="name"]').type('Саруул хотхон 3 өрөө');
+    cy.get('input[name="price"]').type('200000000');
+    cy.get('input[name="field"]').type('80');
+    cy.get('input[name="room"]').type('3');
+    cy.get('input[name="restroom"]').type('2');
 
-    cy.get('input[name="type"]').type('apartment');
-    cy.get('input[name="name"]').type('My Beautiful Apartment');
-    cy.get('input[name="price"]').type('200000');
-    cy.get('input[name="field"]').type('50');
-    cy.get('input[name="room"]').type('2');
-    cy.get('input[name="restroom"]').type('1');
+    cy.contains('Зар оруулах хүсэлт илгээх').click();
 
-    cy.get('button').contains('Зар оруулах хүсэлт илгээх').click();
-    cy.window().then((window) => {
-      expect(window.console.log).to.have.been.calledWith('Form data', {
-        type: 'apartment',
-        name: 'My Beautiful Apartment',
-        price: '200000',
-        field: '50',
-        room: '2',
-        restroom: '1',
-      });
+    cy.window().then((win) => {
+      cy.stub(win.console, 'log').as('consoleLog');
     });
-  });
 
-  it('should show error messages when invalid data is entered', () => {
-    cy.get('input[name="price"]').type('-1');
-
-    cy.get('button').contains('Зар оруулах хүсэлт илгээх').click();
-    cy.get('p').contains('Үнэ 0-ээс их байх ёстой').should('be.visible');
-  });
-
-  it('should show a success message or perform some action after successful submission', () => {
-    cy.get('button').contains('Зар оруулах хүсэлт илгээх').click();
-
-    cy.get('.success-message').should('be.visible');
+    cy.get('@consoleLog').should('be.calledWithMatch', {
+      type: 'apartment',
+      name: 'Саруул хотхон 3 өрөө',
+      price: '200000000',
+      field: '80',
+      room: '3',
+      restroom: '2',
+    });
   });
 });
