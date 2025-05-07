@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { Types } from 'mongoose';
 import { MutationResolvers } from '../../generated';
 import { concertModel } from '../../models/concert.model';
+import { seatModel } from '../../models/seat.model';
 
 export const createConcert: MutationResolvers['createConcert'] = async (_, { input }) => {
   const { title, description, thumbnailUrl, doorOpen, musicStart, venue, artistName, specialGuestName, seatData, endDate } = input;
@@ -9,12 +10,29 @@ export const createConcert: MutationResolvers['createConcert'] = async (_, { inp
   const startDate = seatData[0].date;
   const start = dayjs(startDate);
   const end = dayjs(endDate);
-
   const daysCount = end.diff(start, 'day') + 1;
+
+  if (daysCount <= 0) {
+    throw new Error('endDate must be the same or after start date');
+  }
+
+  const concert = await concertModel.create({
+    title,
+    description,
+    thumbnailUrl,
+    doorOpen,
+    musicStart,
+    venue: new Types.ObjectId(venue),
+    artistName,
+    specialGuestName,
+    seatData: [],
+    endDate,
+  });
 
   const generatedSeatData = Array.from({ length: daysCount }, (_, i) => {
     const date = start.add(i, 'day').format('YYYY-MM-DD');
     return {
+      concertId: concert._id,
       date,
       seats: {
         VIP: {
@@ -33,19 +51,11 @@ export const createConcert: MutationResolvers['createConcert'] = async (_, { inp
     };
   });
 
-  const newConcert = new concertModel({
-    title,
-    description: description ?? undefined,
-    thumbnailUrl: thumbnailUrl ?? undefined,
-    doorOpen,
-    musicStart,
-    venue: new Types.ObjectId(venue),
-    artistName,
-    specialGuestName: specialGuestName ?? undefined,
-    seatData: generatedSeatData,
-    endDate: endDate,
-  });
+  const insertedSeats = await seatModel.insertMany(generatedSeatData);
+  const seatIds = insertedSeats.map((seat) => seat._id);
 
-  const savedConcert = await newConcert.save();
-  return savedConcert;
+  concert.seatData = seatIds;
+  await concert.save();
+
+  return concert;
 };

@@ -4,8 +4,8 @@ export const ConcertTypeDefs = gql`
   type Concert {
     id: ID!
     title: String!
-    description: String
-    thumbnailUrl: String
+    description: String!
+    thumbnailUrl: String!
     doorOpen: String!
     musicStart: String!
     venue: Venue!
@@ -15,19 +15,16 @@ export const ConcertTypeDefs = gql`
     endDate: String!
   }
 
-  type SeatData {
-    date: String!
-    seats: SeatCategories!
-  }
-
-  type SeatCategories {
-    VIP: SeatInfo!
-    Standard: SeatInfo!
-    Backseat: SeatInfo!
-  }
-
-  type SeatInfo {
-    price: Int!
-    availableTickets: Int!
+  input CreateConcertInput {
+    title: String!
+    description: String!
+    thumbnailUrl: String!
+    doorOpen: String!
+    musicStart: String!
+    venue: ID!
+    artistName: String!
+    specialGuestName: String
+    seatData: [SeatDataInput!]!
+    endDate: String!
   }
 `;

@@ -10,4 +10,9 @@ export const BookingTypeDefs = gql`
     totalAmount: Int!
     createdAt: String!
   }
+
+  input CreateBookingInput {
+    userId: ID!
+    concertId: ID!
+  }
 `;
