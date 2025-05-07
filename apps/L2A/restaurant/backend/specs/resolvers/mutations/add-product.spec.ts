@@ -1,6 +1,7 @@
-import { addProduct, createProduct } from '../../../src/resolvers/mutations/add-product';
+import { addProduct } from '../../../src/resolvers/mutations/add-product';
 import { productModel } from '../../../src/models/product.model';
 import { Types } from 'mongoose';
+import { createProduct } from '../../../src/utils/create-product';
 
 jest.mock('../../../src/models/product.model', () => ({
   productModel: {

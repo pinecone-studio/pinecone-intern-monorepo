@@ -7,7 +7,10 @@ import { PropsWithChildren } from 'react';
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-      <SignedIn><UserButton></UserButton>{children}</SignedIn>
+      <SignedIn>
+        <UserButton></UserButton>
+        {children}
+      </SignedIn>
       <SignedOut>
         <LogIn />
       </SignedOut>
