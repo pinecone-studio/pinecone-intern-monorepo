@@ -15,9 +15,7 @@ const AdminPage = () => {
     status: ['Хүсэлт илгээсэн', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'][i % 4],
   }));
 
-  return (
-    <div className="p-6">{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>
-  );
+  return <div>{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>;
 };
 
 export default AdminPage;
