@@ -5,3 +5,4 @@ export * from './create-booking';
 export * from './create-concert';
 export * from './create-venue';
 export * from './create-ticket';
+export * from './update-user';

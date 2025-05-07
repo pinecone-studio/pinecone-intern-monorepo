@@ -7,13 +7,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { LoginSchema } from '../utils/login-schema';
 import { useLoginUserMutation } from '@/generated';
-import Link from 'next/link';
 import { useAuth } from '@/app/_components/context/AuthContext';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
+  const router = useRouter();
   const { setJWT } = useAuth();
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { error }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
+    mode: 'onChange',
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
@@ -29,6 +32,7 @@ const LoginForm = () => {
         localStorage.setItem('token', response.data.loginUser.JWT);
         setJWT(response.data.loginUser.JWT);
         localStorage.setItem('tokenExpiry', expiry.toString());
+        router.push('/');
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -68,12 +72,13 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
+              {error && <div className="text-red-500 text-sm">{error.message}</div>}
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="w-[350px] h-[36px] mt-[12px] bg-[#00B7F4]">
                 {form.formState.isSubmitting ? 'Түр хүлээнэ үү...' : 'Нэвтрэх'}
               </Button>
               <div className="text-[#A1A1AA] text-center text-sm mt-6">
                 Та бүртгэлтэй хаягтай бол{' '}
-                <Link href={`/auth/signin`} className="cursor-pointer underline">
+                <Link href={`/auth/signup`} className="cursor-pointer underline">
                   бүртгүүлэх
                 </Link>{' '}
                 хэсгээр орно уу!
