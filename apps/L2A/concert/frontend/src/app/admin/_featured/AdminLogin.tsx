@@ -7,12 +7,13 @@ import { Input } from '@/components/ui/input';
 import { useLoginUserMutation } from '@/generated';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const Login = () => {
+const AdminLogin = () => {
   const router = useRouter();
-  const { setJWT } = useAuth();
+  const { setJWT, user } = useAuth();
   const [loginUser, { error }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     mode: 'onChange',
@@ -22,6 +23,7 @@ const Login = () => {
       password: '',
     },
   });
+
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     try {
       const response = await loginUser({ variables: values });
@@ -31,12 +33,17 @@ const Login = () => {
         localStorage.setItem('token', response.data.loginUser.JWT);
         setJWT(response.data.loginUser.JWT);
         localStorage.setItem('tokenExpiry', expiry.toString());
-        router.push('/');
       }
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
+
+  useEffect(() => {
+    if (user?.isAdmin) {
+      router.push('/admin/ticket');
+    }
+  }, [router, user]);
 
   return (
     <div data-cy="signin-form" className="flex justify-center h-[100vh] items-center w-[100%] ">
@@ -87,4 +94,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default AdminLogin;
