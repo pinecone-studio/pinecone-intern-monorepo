@@ -21,7 +21,7 @@ export const CreatePostField = ({ name, value, onChange, onBlur, error}: Props) 
         value={value}
         placeholder="Талбай (м2)"
         data-testid="field"
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
+        className={`w-full px-2 py-1 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
       <div className="h-3 mt-1">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
     </div>
