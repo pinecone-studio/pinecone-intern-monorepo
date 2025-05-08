@@ -1,4 +1,4 @@
-import AddTicketDialog from './ticket/_components/AddTicketDialog';
+import AddTicketDialog from './_components/AddTicketDialog';
 
 const Page = () => {
   return (
