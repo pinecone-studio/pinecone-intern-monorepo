@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
     .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой!'),
   parking: Yup.string().required('Зогсоол сонгоно уу!'),
   text: Yup.string().required('Дэлгэрэнгүй тайлбар оруулна уу!'),
-  District: Yup.string().required('Дүүрэг заавал оруулна уу!'),
+  district: Yup.string().required('Дүүрэг заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
