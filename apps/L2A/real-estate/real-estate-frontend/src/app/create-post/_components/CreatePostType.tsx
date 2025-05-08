@@ -23,7 +23,7 @@ export const CreatePostType = ({ name, value, onChange, error }: Props) => {
         <SelectTrigger
           id={name}
           data-testid="type"
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'border-input focus:ring-ring'}`}
+          className={`w-full px-2 py-1 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'border-input focus:ring-ring'}`}
         >
           <SelectValue placeholder="Сонгоно уу" />
         </SelectTrigger>
