@@ -1,13 +1,8 @@
 import { categoryModel } from "../../models/category.model";
-
-export const category = async (_: unknown, { id }: { id: string }) => {
+export const Categories = async () => {
   try {
-    const foundCategory = await categoryModel.findById(id);
-    if (!foundCategory) {
-      throw new Error('Category not found');
-    }
-    return foundCategory;
+    return await categoryModel.find();
   } catch (error) {
-    throw new Error(`Error fetching category: ${error}`);
+    throw new Error(`Error fetching categories: ${error}`);
   }
 };
