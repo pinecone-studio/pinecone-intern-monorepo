@@ -31,7 +31,7 @@ describe('CreatePostFloor component', () => {
   });
 
   it('should calls onBlur when input loses focus', () => {
-    render(<CreatePostField {...baseProps} />);
+    render(<CreatePostFloor {...baseProps} />);
     const input = screen.getByTestId('floor');
     fireEvent.blur(input);
 
@@ -39,7 +39,7 @@ describe('CreatePostFloor component', () => {
   });
 
   it('should displays error message if error prop is provided', () => {
-    render(<CreatePostField {...baseProps} error="Давхрын утга буруу байна" />);
+    render(<CreatePostFloor {...baseProps} error="Давхрын утга буруу байна" />);
     expect(screen.getByText('Давхрын утга буруу байна')).toBeInTheDocument();
   });
 });

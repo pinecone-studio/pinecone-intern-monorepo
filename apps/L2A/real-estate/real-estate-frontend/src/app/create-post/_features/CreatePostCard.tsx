@@ -18,7 +18,6 @@ import { CreatePostYear } from '../_components/CreatePostYear';
 import { CreatePostWindows } from '../_components/CreatePostWindows';
 import { CreatePostWindow } from '../_components/CreatePostWindow';
 import { CreatePostDoor } from '../_components/CreatePostDoor';
-import { floor } from 'cypress/types/lodash';
 import { CreatePostFloor } from '../_components/CreatePostFloor';
 
 const validationSchema = Yup.object({
