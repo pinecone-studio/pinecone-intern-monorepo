@@ -1,33 +1,53 @@
-describe('TableSemiHeader', () => {
+describe('TableSemiHeader E2E', () => {
   beforeEach(() => {
-    cy.visit('/admin/table');
+    cy.visit("/admin/table");
   });
-  const clickAddTableButton = () => cy.get('[data-testid="add-table-button"]').click();
-  it('renders header title', () => {
-    cy.get('[data-testid="header-title"]').should('contain.text', 'Ширээ');
+
+  it('renders header and button', () => {
+    cy.get('[data-testid="header-title"]').should('contain', 'Ширээ');
+    cy.get('[data-testid="add-table-button"]').should('exist');
   });
-  it('opens dialog when clicking add table button', () => {
-    clickAddTableButton();
-    cy.get('[data-testid="dialog-content"]').should('exist');
+
+  it('opens dialog and closes it', () => {
+    cy.get('[data-testid="add-table-button"]').click();
+    cy.get('[data-testid="dialog-content"]').should('be.visible');
+
+    // Close the dialog
+    cy.get('body').type('{esc}');
+    cy.get('[data-testid="dialog-content"]').should('not.exist');
   });
-  it('shows alert when input is empty and clicking create', () => {
+
+  it('shows error toast on empty submission', () => {
+    cy.get('[data-testid="add-table-button"]').click();
+    cy.get('[data-testid="create-button"]').click();
+    cy.get('[data-sonner-toast]').should('contain', 'Ширээний нэр хоосон байна');
+  });
+
+  it('creates table, generates QR and shows download', () => {
+    // Intercept GraphQL + QR code
+    cy.intercept('POST', '**/graphql', {
+      body: {
+        data: {
+          addTable: { _id: 'abcde123' },
+        },
+      },
+    }).as('addTable');
+
+    // Mock QRCode (we don't actually generate it here)
     cy.window().then((win) => {
-      cy.stub(win, 'alert').as('alertStub');
-      clickAddTableButton();
-      cy.get('[data-testid="create-button"]').click();
-      cy.get('@alertStub').should('have.been.calledWith', 'Ширээний нэр хоосон байна');
+      cy.stub(win.URL, 'createObjectURL').returns('blob:fakeqr');
     });
-  });
-  it('shows success alert and QR code when input is filled', () => {
-    cy.window().then((win) => {
-      cy.stub(win, 'alert').as('alertStub');
-      clickAddTableButton();
-      cy.get('[data-testid="table-name-input"]').type('Table 1');
-      cy.get('[data-testid="create-button"]').click();
-      cy.get('@alertStub').should('have.been.calledWith', 'Амжилттай ширээ нэмэгдлээ!');
-      cy.get('[data-testid="qr-wrapper"]').should('exist');
-      cy.get('[data-testid="qr-image"]').should('be.visible');
-      cy.get('[data-testid="qr-download-button"]').should('exist');
-    });
+
+    cy.get('[data-testid="add-table-button"]').click();
+    cy.get('[data-testid="table-name-input"]').type('Cypress Table');
+    cy.get('[data-testid="create-button"]').click();
+
+    // Wait for the GraphQL + QR generation
+    cy.wait('@addTable');
+
+    // Check QR wrapper & download
+    cy.get('[data-testid="qr-wrapper"]').should('be.visible');
+    cy.get('[data-testid="qr-image"]').should('have.attr', 'src').and('include', 'data:image');
+    cy.get('[data-testid="qr-download-button"]').should('be.visible');
   });
 });

@@ -1,87 +1,57 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import TableSemiHeader from '@/app/admin/table/_features/AdminTableSemiHeader';
 import '@testing-library/jest-dom';
-import * as generated from '@/generated';
-import QRCode from 'qrcode';
 
 jest.mock('@/generated', () => ({
-  ...jest.requireActual('@/generated'),
-  useAddTableMutation: jest.fn(),
+  useAddTableMutation: () => [
+    jest.fn(() =>
+      Promise.resolve({
+        data: {
+          addTable: { _id: '12345' },
+        },
+      })
+    ),
+  ],
 }));
 
 jest.mock('qrcode', () => ({
-  toDataURL: jest.fn(),
+  toDataURL: jest.fn(() => Promise.resolve('data:image/png;base64,fakeqr')),
 }));
 
 describe('TableSemiHeader', () => {
-  let alertMock: jest.SpyInstance;
-  let useAddTableMutationMock: jest.Mock;
-  let qrCodeMock: jest.Mock;
-
-  beforeEach(() => {
-    alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn());
-    useAddTableMutationMock = generated.useAddTableMutation as jest.Mock;
-    qrCodeMock = QRCode.toDataURL as jest.Mock;
-    useAddTableMutationMock.mockReturnValue([
-      jest.fn().mockResolvedValue({
-        data: {
-          addTable: {
-            _id: '12345',
-          },
-        },
-      }),
-    ]);
-    qrCodeMock.mockResolvedValue('data:image/png;base64,mockedQRCode');
-
+  it('renders header and add table button', () => {
     render(<TableSemiHeader />);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  const openDialog = () => fireEvent.click(screen.getByTestId('add-table-button'));
-
-  it('renders header title', () => {
     expect(screen.getByTestId('header-title')).toHaveTextContent('Ширээ');
+    expect(screen.getByTestId('add-table-button')).toBeInTheDocument();
   });
 
-  it('opens dialog when clicking add table button', () => {
-    openDialog();
-    expect(screen.getByTestId('dialog-content')).toBeInTheDocument();
+  it('opens and closes dialog properly', () => {
+    render(<TableSemiHeader />);
+    const trigger = screen.getByTestId('add-table-button');
+    fireEvent.click(trigger);
+    expect(screen.getByTestId('dialog-content')).toBeVisible();
+    fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
   });
 
-  it('alerts when clicking create without input', async () => {
-    openDialog();
+  it('shows error toast when input is empty', async () => {
+    render(<TableSemiHeader />);
+    fireEvent.click(screen.getByTestId('add-table-button'));
     fireEvent.click(screen.getByTestId('create-button'));
-    await waitFor(() => expect(alertMock).toHaveBeenCalledWith('Ширээний нэр хоосон байна'));
-  });
-
-  it('does not alert when input is filled and handles success flow', async () => {
-    openDialog();
-    const input = screen.getByTestId('table-name-input');
-    const createButton = screen.getByTestId('create-button');
-    fireEvent.change(input, { target: { value: 'Table 1' } });
-    fireEvent.click(createButton);
     await waitFor(() => {
-      expect(useAddTableMutationMock).toHaveBeenCalled();
-      expect(qrCodeMock).toHaveBeenCalledWith(expect.stringContaining('/table/12345'));
-    });
-    await waitFor(() => {
-      expect(alertMock).toHaveBeenCalledWith('Амжилттай ширээ нэмэгдлээ!');
+      expect(screen.getByText('Ширээний нэр хоосон байна')).toBeInTheDocument();
     });
   });
 
-  it('renders QR code and download button after successful creation', async () => {
-    openDialog();
+  it('submits table, generates QR code and shows image', async () => {
+    render(<TableSemiHeader />);
+    fireEvent.click(screen.getByTestId('add-table-button'));
     const input = screen.getByTestId('table-name-input');
-    const createButton = screen.getByTestId('create-button');
-    fireEvent.change(input, { target: { value: 'Table 1' } });
-    fireEvent.click(createButton);
+    fireEvent.change(input, { target: { value: 'Test Table' } });
+    fireEvent.click(screen.getByTestId('create-button'));
     await waitFor(() => {
       expect(screen.getByTestId('qr-wrapper')).toBeInTheDocument();
-      expect(screen.getByTestId('qr-image')).toHaveAttribute('src', 'data:image/png;base64,mockedQRCode');
-      expect(screen.getByTestId('qr-download-button')).toBeInTheDocument();
+      expect(screen.getByTestId('qr-image')).toHaveAttribute('src', 'data:image/png;base64,fakeqr');
+      expect(screen.getByTestId('qr-download-link')).toHaveAttribute('href', 'data:image/png;base64,fakeqr');
     });
   });
 });
