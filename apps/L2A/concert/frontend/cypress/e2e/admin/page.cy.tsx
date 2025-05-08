@@ -1,10 +1,9 @@
-describe('Sign In Page', () => {
+describe('admin login test', () => {
   const email = 'glpzghoo@gmail.com';
 
   beforeEach(() => {
     cy.clearLocalStorage();
-
-    cy.visit('/auth/signin');
+    cy.visit('/admin');
   });
 
   it('should log in successfully', () => {
@@ -15,6 +14,7 @@ describe('Sign In Page', () => {
     cy.get('input[name="password"]').type(password);
     cy.get('button[type="submit"]').click();
     cy.wait('@gql').its('response.statusCode').should('eq', 200);
+    cy.url().should('include', '/admin/ticket');
   });
 
   it("should login successfully but shouldn't trigger if statement", () => {
@@ -36,7 +36,7 @@ describe('Sign In Page', () => {
   });
 
   it('should throw an error', () => {
-    const password = 'my.as.glpzghoo@gmail.com';
+    const password = 'glpzghoo@gmail.com1';
 
     cy.intercept('POST', '**/api/graphql').as('gql');
     cy.get('input[name="email"]').type(email);
