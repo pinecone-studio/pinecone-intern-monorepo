@@ -1,12 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import OrderHeader from "@/app/admin/_components/OrderHeader";
+import "@testing-library/jest-dom";
 
-describe("OrderHeader Component", () => {
-  it("renders initial buttons", () => {
+jest.mock("date-fns", () => ({
+  ...jest.requireActual("date-fns"),
+  format: () => "Өнөөдөр",
+}));
+
+describe("OrderHeader", () => {
+  it("renders title and buttons", () => {
     render(<OrderHeader />);
-
-    expect(screen.getByText("Захиалга"));
-    expect(screen.getByText("Өнөөдөр"));
-    expect(screen.getByText("Төлөв"));
+    expect(screen.getByText("Захиалга")).toBeVisible();
+    expect(screen.getByText("Өнөөдөр")).toBeVisible();
+    expect(screen.getByText("Төлөв")).toBeVisible();
+  });
+  
+  it("opens date picker calendar", () => {
+    render(<OrderHeader />);
+    fireEvent.click(screen.getByText("Өнөөдөр"));
+    expect(screen.getByRole("dialog")).toBeVisible(); 
   });
 });

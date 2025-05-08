@@ -20,7 +20,7 @@ const STATUSES = [
 const OrderHeader = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [status, setStatus] = useState<string | null>(null);
-
+  
   return (
     <div className="flex items-center justify-between w-[600px] mt-7" data-cy="order-header">
       <p className="font-semibold text-3xl text-gray-800" data-cy="order-title">Захиалга</p>
