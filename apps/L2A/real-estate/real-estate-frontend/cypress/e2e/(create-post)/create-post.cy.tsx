@@ -3,7 +3,7 @@ describe('CreatePostCard form', () => {
     cy.visit('/create-post');
   });
 
-  it('should show validation messages when submitting empty form', () => {
+  it('1. should show validation messages when submitting empty form', () => {
     cy.contains('Зар оруулах хүсэлт илгээх').click();
 
     cy.contains('Төрлөө сонгоно уу').should('exist');
@@ -14,7 +14,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу').should('exist');
   });
 
-  it('should submit the form with valid inputs', () => {
+  it('2. should submit the form with valid inputs', () => {
      cy.window().then((win) => {
        cy.spy(win.console, 'log').as('consoleLog');
      });
