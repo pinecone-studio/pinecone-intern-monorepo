@@ -10,7 +10,7 @@ export type Request = {
 
 const TableRow = ({ request }: { request: Request }) => {
   return (
-    <div className="grid grid-cols-6 whitespace-nowrap text-black text-base border-b border-b-1 p-3">
+    <div data-testid={`request-${request.id}`} className="grid grid-cols-6 whitespace-nowrap text-black text-base border-b border-b-1 p-3">
       <p className="p-4 font-medium">{request.concertName}</p>
       <p className="p-4 font-normal overflow-scroll">{request.bankInfo}</p>
       <p className="p-4 font-medium">{request.owner}</p>

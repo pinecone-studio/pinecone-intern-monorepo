@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import TableRow from './_components/TableRow';
 import TableHeader from './_feature/TableHeader';
-import { requests } from './_feature/TestArray';
+import { requests } from './utils/test-array';
 
 const itemsPerPage = 5;
 
@@ -33,13 +33,13 @@ const Page = () => {
           </div>
 
           <div className="flex justify-end gap-2 mt-4">
-            <button className="px-3 py-1 border rounded disabled:opacity-50" onClick={handlePrev} disabled={currentPage === 1}>
+            <button data-testid="cancel-request-prev-button" className="px-3 py-1 border rounded disabled:opacity-50" onClick={handlePrev} disabled={currentPage === 1}>
               prev
             </button>
             <span className="flex items-center px-2 py-1 text-sm">
               {currentPage} / {totalPages}
             </span>
-            <button className="px-3 py-1 border rounded disabled:opacity-50" onClick={handleNext} disabled={currentPage === totalPages}>
+            <button data-testid="cancel-request-next-button" className="px-3 py-1 border rounded disabled:opacity-50" onClick={handleNext} disabled={currentPage === totalPages}>
               next
             </button>
           </div>
