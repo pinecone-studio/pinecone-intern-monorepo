@@ -21,6 +21,7 @@ import { CreatePostDoor } from '../_components/CreatePostDoor';
 import { CreatePostFloor } from '../_components/CreatePostFloor';
 import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 import { CreatePostGround } from '../_components/CreatePostGround';
+import { CreatePostBalcony } from '../_components/CreatePostBalcony';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -52,6 +53,7 @@ const validationSchema = Yup.object({
   floor: Yup.number().required('Давхар заавал оруулна уу!').min(1, 'Давхар 1-ээс их байх ёстой!'),
   aptfloor: Yup.number().required('Давхрын тоог заавал оруулна уу!').min(1, 'Давхрын тоо 1-ээс их байх ёстой!'),
   ground: Yup.string().required('Шалны загвар заавал оруулна уу!'),
+  balcony: Yup.string().required('Тагтны тоо заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -77,6 +79,7 @@ export const CreatePostCard = () => {
       floor: '',
       aptfloor: '',
       ground: '',
+      balcony: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -146,6 +149,7 @@ export const CreatePostCard = () => {
                 <CreatePostFloor name="floor" value={formik.values.floor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'floor')}/>
                 <CreatePostApartFloor name='aptfloor' value={formik.values.aptfloor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'aptfloor')}/>
                 <CreatePostGround name='ground' value={formik.values.ground} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'ground')}/>
+                <CreatePostBalcony name='balcony' value={formik.values.balcony} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'balcony')}/>
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Давхрын тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Барилгын давхрын тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Шалны загварыг заавал оруулна уу!').should('be.visible');
+    cy.contains('Тагтны тоог заавал оруулна уу!').should('be.visible');
   });
 
   it('Submits form when all fields are valid', () => {
@@ -48,6 +49,7 @@ describe('CreatePostCard form', () => {
     cy.get('input[name="floor"]').type('5');
     cy.get('input[name="aptfloor"]').type('3');
     cy.get('input[name="ground"]').type('Паркетан шал');
+    cy.get('input[name="balcony"]').type('1');
 
     cy.get('button[type="submit"]').click();
 
@@ -73,6 +75,7 @@ describe('CreatePostCard form', () => {
       floor: '5',
       aptfloor: '3',
       ground: 'Паркетан шал',
+      balcony: '1',
     });
   });
 });
