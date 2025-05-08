@@ -1,5 +1,5 @@
 import { categoryModel } from "../../models/category.model";
-export const Categories = async () => {
+export const getCategories = async () => {
   try {
     return await categoryModel.find();
   } catch (error) {

@@ -1,4 +1,4 @@
-import { Category } from '../../../src/resolvers/queries/get-category-query'; 
+import { getCategoryById } from '../../../src/resolvers/queries/get-category-query'; 
 import { categoryModel } from '../../../src/models/category.model';
 
 jest.mock('../../../src/models/category.model');
@@ -13,7 +13,7 @@ describe('category resolver', () => {
   it('should return a category when found', async () => {
     (categoryModel.findById as jest.Mock).mockResolvedValue(mockCategory);
 
-    const result = await Category(null, { id: '123' });
+    const result = await getCategoryById(null, { id: '123' });
     expect(result).toEqual(mockCategory);
     expect(categoryModel.findById).toHaveBeenCalledWith('123');
   });
@@ -21,7 +21,7 @@ describe('category resolver', () => {
   it('should throw an error when category not found', async () => {
     (categoryModel.findById as jest.Mock).mockResolvedValue(null);
 
-    await expect(Category(null, { id: '123' }))
+    await expect(getCategoryById(null, { id: '123' }))
       .rejects
       .toThrow('Category not found');
   });
@@ -29,7 +29,7 @@ describe('category resolver', () => {
   it('should throw an error when there is a DB error', async () => {
     (categoryModel.findById as jest.Mock).mockRejectedValue(new Error('DB error'));
 
-    await expect(Category(null, { id: '123' }))
+    await expect(getCategoryById(null, { id: '123' }))
       .rejects
       .toThrow('Error fetching category: Error: DB error');
   });

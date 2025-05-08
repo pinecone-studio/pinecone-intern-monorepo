@@ -5,6 +5,6 @@ export const QueryTypeDefs = gql`
     sampleQuery: String!
     _service: Service!
     getCategories: [Category!]!
-    getCategory(id: ID!): Category!
+    getCategoryById(id: ID!): Category!
   }
 `;

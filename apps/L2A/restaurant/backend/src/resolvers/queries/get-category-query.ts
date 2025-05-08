@@ -1,6 +1,6 @@
 import { categoryModel } from "../../models/category.model";
 
-export const Category = async (_: unknown, { id }: { id: string }) => {
+export const getCategoryById = async (_: unknown, { id }: { id: string }) => {
   try {
     const foundCategory = await categoryModel.findById(id);
     if (!foundCategory) {
