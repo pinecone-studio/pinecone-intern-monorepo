@@ -1,6 +1,6 @@
 describe("OrderMainCard", () => {
   beforeEach(() => {
-    cy.visit("/admin"); 
+    cy.visit("/admin/orders"); 
   });
   it("renders order data correctly", () => {
     cy.get("[data-cy=order-card]").first().within(() => {
