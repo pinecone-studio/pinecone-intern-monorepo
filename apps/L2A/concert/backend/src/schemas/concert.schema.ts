@@ -9,9 +9,10 @@ export const ConcertTypeDefs = gql`
     doorOpen: String!
     musicStart: String!
     venue: Venue!
+    primaryPrice: Int!
     artistName: String!
     specialGuestName: String
-    seatData: [SeatData!]!
+    seatData: [SeatData]!
     endDate: String!
   }
 
