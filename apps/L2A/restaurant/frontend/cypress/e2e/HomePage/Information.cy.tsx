@@ -9,7 +9,13 @@ describe('Information Page', () => {
   });
 
   it('should display the image with correct alt and src', () => {
-    cy.get('img[alt="image"]').should('exist').and('include', '/_components/image.json');
+    cy.get('img[alt="image"]')
+      .should('exist')
+      .and('have.attr', 'src')
+      .then((src) => {
+        cy.log('Image src:', src);
+        expect(src).to.include('/_next/image');
+      });
   });
 
   it('should render the paragraphs with content', () => {

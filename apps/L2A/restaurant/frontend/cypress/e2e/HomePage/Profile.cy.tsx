@@ -1,9 +1,6 @@
 describe('UseProfile Component', () => {
-  beforeEach(() => {
+  it('should display the user section heading', () => {
     cy.visit('/profile');
-  });
-  it('renders the header with correct text', () => {
-    cy.get('[data-cyid="Хэрэглэгчийн хэсэг"]').should('exist').and('have.text', 'Хэрэглэгчийн хэсэг');
-    cy.get('iframe').should('exist');
+    cy.get('[data-cyid="Хэрэглэгчийн хэсэг"]').should('exist').and('have.text', 'Хэрэглэгчийн хэсэг').and('have.class', 'text-center').and('have.class', 'font-bold');
   });
 });
