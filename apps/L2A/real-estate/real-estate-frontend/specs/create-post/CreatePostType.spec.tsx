@@ -26,7 +26,7 @@ describe('CreatePostType', () => {
     window.HTMLElement.prototype.scrollIntoView = jest.fn();
   });
 
-  it('calls onChange when an option is selected', async () => {
+  it('should calls onChange when an option is selected', async () => {
     const handleChange = jest.fn();
 
     render(<CreatePostType name="type" value="" onChange={handleChange} />);
@@ -40,12 +40,12 @@ describe('CreatePostType', () => {
     expect(handleChange).toHaveBeenCalledWith('apartment');
   });
 
-  it('renders selected value correctly', () => {
+  it('should renders selected value correctly', () => {
     render(<CreatePostType name="type" value="house" onChange={jest.fn()} />);
     expect(screen.getByText('Хувийн сууц')).toBeInTheDocument();
   });
 
-  it('renders with error styles when error prop is provided', () => {
+  it('should renders with error styles when error prop is provided', () => {
     const { container } = render(<CreatePostType name="type" value="" onChange={jest.fn()} error="Алдаа гарлаа" />);
 
     const trigger = container.querySelector('#type');
@@ -53,7 +53,7 @@ describe('CreatePostType', () => {
     expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
   });
 
-  it('renders invisible placeholder error space when no error is given', () => {
+  it('should renders invisible placeholder error space when no error is given', () => {
     render(<CreatePostType name="type" value="" onChange={jest.fn()} />);
     const placeholder = screen.getByText('placeholder');
     expect(placeholder).toHaveClass('invisible');
