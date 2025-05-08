@@ -117,7 +117,6 @@ export const CreatePostCard = () => {
                 onBlur={formik.handleBlur}
                 error={getFieldError(formik.touched, formik.errors, 'section')}
               />
-              <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
