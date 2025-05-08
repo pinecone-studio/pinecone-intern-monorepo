@@ -7,6 +7,7 @@ const AdminHeader = () => {
   const pathname = usePathname();
   const isTicketPage = pathname === '/admin/ticket';
   const isCancelRequestPage = pathname === '/admin/cancel-request';
+  const isAdmin = pathname.startsWith('/admin/');
 
   return (
     <header className="pt-4 px-6 bg-background">
@@ -20,14 +21,16 @@ const AdminHeader = () => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <div className="flex text-sm font-medium">
-        <Link data-testid="ticket-button-admin" href={'/admin/ticket'} className={`p-[6px]` + (isTicketPage ? ' border-b border-black' : '')}>
-          <div className="p-[6px]">Тасалбар</div>
-        </Link>
-        <Link data-testid="cancel-request-admin" href={'/admin/cancel-request'} className={`p-[6px]` + (isCancelRequestPage ? ' border-b border-black' : '')}>
-          <div className="p-[6px]">Цуцлах хүсэлт</div>
-        </Link>
-      </div>
+      {isAdmin && (
+        <div className="flex text-sm font-medium">
+          <Link data-testid="ticket-button-admin" href={'/admin/ticket'} className={`p-[6px]` + (isTicketPage ? ' border-b border-black' : '')}>
+            <div className="p-[6px]">Тасалбар</div>
+          </Link>
+          <Link data-testid="cancel-request-admin" href={'/admin/cancel-request'} className={`p-[6px]` + (isCancelRequestPage ? ' border-b border-black' : '')}>
+            <div className="p-[6px]">Цуцлах хүсэлт</div>
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
