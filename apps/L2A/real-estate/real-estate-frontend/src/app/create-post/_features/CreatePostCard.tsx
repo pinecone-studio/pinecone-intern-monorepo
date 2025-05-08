@@ -15,6 +15,7 @@ import { CreatePostDistrict } from '../_components/CreatePostDistrict';
 import { CreatePostSection } from '../_components/CreatePostSection';
 import { CreatePostApartment } from '../_components/CreatePostApartment';
 import { CreatePostYear } from '../_components/CreatePostYear';
+import { CreatePostWindows } from '../_components/CreatePostWindows';
 import { CreatePostWindow } from '../_components/CreatePostWindow';
 
 const validationSchema = Yup.object({
@@ -40,11 +41,9 @@ const validationSchema = Yup.object({
   text: Yup.string().required('Дэлгэрэнгүй тайлбар оруулна уу!'),
   district: Yup.string().required('Дүүрэг заавал оруулна уу!'),
   section: Yup.string().required('Хороо заавал оруулна уу!'),
-  year: Yup.number()
-    .required('Ашиглалтанд орсон он заавал оруулна уу!'),
-  windows: Yup.number()
-    .required('Цонхны тоо заавал оруулна уу!')
-    .min(1, 'Цонхны тоо 1-ээс их байх ёстой!'),
+  year: Yup.number().required('Ашиглалтанд орсон он заавал оруулна уу!'),
+  windows: Yup.number().required('Цонхны тоо заавал оруулна уу!').min(1, 'Цонхны тоо 1-ээс их байх ёстой!'),
+  window: Yup.string().required('Цонхны загварыг заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -65,6 +64,7 @@ export const CreatePostCard = () => {
       section: '',
       year: '',
       windows: '',
+      window: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -123,7 +123,13 @@ export const CreatePostCard = () => {
             <div className="p-2 space-y-2 mt-1">
               <CreatePostApartment />
               <CreatePostYear name="year" value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
-              <CreatePostWindow name='windows' value={formik.values.windows} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'windows')} />
+              <CreatePostWindows
+                name="windows"
+                value={formik.values.windows}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'windows')}/>
+                <CreatePostWindow name="window" value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')}/>
             </div>
           </div>
         </div>

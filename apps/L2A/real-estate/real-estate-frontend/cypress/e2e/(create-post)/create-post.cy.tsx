@@ -18,6 +18,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Хороо заавал оруулна уу!').should('be.visible');
     cy.contains('Ашиглалтанд орсон он заавал оруулна уу!').should('be.visible');
     cy.contains('Цонхны тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Цонхны загварыг заавал оруулна уу!').should('be.visible');
   });
 
   it('Submits form when all fields are valid', () => {
@@ -38,6 +39,7 @@ describe('CreatePostCard form', () => {
     cy.get('input[name="section"]').type('1-р хороо');
     cy.get('input[name="year"]').type('2023');
     cy.get('input[name="windows"]').type('2');
+    cy.get('input[name="window"]').type('3 цонхтой');
 
     cy.get('button[type="submit"]').click();
 
@@ -58,6 +60,7 @@ describe('CreatePostCard form', () => {
       section: '1-р хороо',
       year: '2023',
       windows: '2',
+      window: '3 цонхтой',
     });
   });
 });
