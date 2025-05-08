@@ -11,6 +11,7 @@ import { CreatePostText } from '../_components/CreatePostText';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { CreatePostLocation } from '../_components/CreatePostLocation';
+import { CreatePostDistrict } from '../_components/CreatePostDistrict';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -33,6 +34,7 @@ const validationSchema = Yup.object({
     .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой!'),
   parking: Yup.string().required('Зогсоол сонгоно уу!'),
   text: Yup.string().required('Дэлгэрэнгүй тайлбар оруулна уу!'),
+  District: Yup.string().required('Дүүрэг заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -49,6 +51,7 @@ export const CreatePostCard = () => {
       parking: '',
       text: '',
       location: '',
+      district: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -86,6 +89,7 @@ export const CreatePostCard = () => {
           </div>
           <div className="p-2 space-y-2 mt-1">
             <CreatePostLocation />
+            <CreatePostDistrict name='district' value={formik.values.district} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'district')} />
           </div>
         </div>
         <div>
