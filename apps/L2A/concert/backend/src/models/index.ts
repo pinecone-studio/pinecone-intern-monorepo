@@ -4,3 +4,4 @@ export * from './booking.model';
 export * from './concert.model';
 export * from './ticket.model';
 export * from './otp.model';
+export * from './seat.model';

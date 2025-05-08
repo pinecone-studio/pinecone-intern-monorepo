@@ -11,8 +11,9 @@ const concertSchema = new Schema<Concert>(
     venue: { type: Schema.Types.ObjectId, ref: 'Venue', required: true },
     artistName: { type: String, required: true },
     specialGuestName: { type: String },
-    seatData: [{ type: Schema.Types.ObjectId, ref: 'Seat' }],
+    seatData: [{ type: Schema.Types.ObjectId, ref: 'Seat', required: true }],
     endDate: { type: String, required: true },
+    primaryPrice: { type: Number, required: true },
   },
   { timestamps: true }
 );
