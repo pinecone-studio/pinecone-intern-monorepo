@@ -13,6 +13,8 @@ import { useFormik } from 'formik';
 import { CreatePostLocation } from '../_components/CreatePostLocation';
 import { CreatePostDistrict } from '../_components/CreatePostDistrict';
 import { CreatePostSection } from '../_components/CreatePostSection';
+import { CreatePostApartment } from '../_components/CreatePostApartment';
+import { CreatePostYear } from '../_components/CreatePostYear';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -37,6 +39,8 @@ const validationSchema = Yup.object({
   text: Yup.string().required('Дэлгэрэнгүй тайлбар оруулна уу!'),
   district: Yup.string().required('Дүүрэг заавал оруулна уу!'),
   section: Yup.string().required('Хороо заавал оруулна уу!'),
+  year: Yup.number()
+    .required('Ашиглалтанд орсон он заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -55,6 +59,7 @@ export const CreatePostCard = () => {
       location: '',
       district: '',
       section: '',
+      year: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -64,7 +69,7 @@ export const CreatePostCard = () => {
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-2 gap-2">
-      <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center">
+      <div className="w-full py-6 px-6 bg-[#F4F4F5] flex justify-center items-center">
         <div>
           <div className="p-4 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
@@ -93,9 +98,27 @@ export const CreatePostCard = () => {
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
               <CreatePostLocation />
-              <CreatePostDistrict name='district' value={formik.values.district} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'district')} />
-              <CreatePostSection name='section' value={formik.values.section} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'section')} />
+              <CreatePostDistrict
+                name="district"
+                value={formik.values.district}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'district')}
+              />
+              <CreatePostSection
+                name="section"
+                value={formik.values.section}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'section')}
+              />
+            </div>
           </div>
+          <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
+            <div className="p-2 space-y-2 mt-1">
+              <CreatePostApartment />
+              <CreatePostYear name='year' value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
+            </div>
           </div>
         </div>
         <div>
