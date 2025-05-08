@@ -29,8 +29,8 @@ export const CreatePostType = ({ name, value, onChange, error }: Props) => {
         </SelectTrigger>
         <SelectContent data-testid="type-options">
           <SelectGroup>
-            <SelectItem value="apartment">Орон сууц</SelectItem>
-            <SelectItem value="house">Хувийн сууц</SelectItem>
+            <SelectItem data-testid="type-option-apartment" value="apartment">Орон сууц</SelectItem>
+            <SelectItem data-testid="type-option-house" value="house">Хувийн сууц</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

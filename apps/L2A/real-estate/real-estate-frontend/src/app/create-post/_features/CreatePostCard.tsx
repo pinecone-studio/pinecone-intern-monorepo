@@ -13,10 +13,22 @@ import { useFormik } from 'formik';
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу'),
   name: Yup.string().required('Нэр заавал оруулна уу'),
-  price: Yup.number().required('Үнэ заавал оруулна уу').min(0, 'Үнэ 0-ээс их байх ёстой'),
-  field: Yup.number().required('Талбайн утгыг заавал оруулна уу').min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой'),
-  room: Yup.number().required('Өрөөний тоог заавал оруулна уу').min(1, 'Өрөөний тоо 1-ээс их байх ёстой'),
-  restroom: Yup.number().required('Ариун цэврийн өрөөний тоог заавал оруулна уу').min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой'),
+  price: Yup.number()
+    .transform((_value, originalValue) => Number(originalValue))
+    .required('Үнэ заавал оруулна уу')
+    .min(0, 'Үнэ 0-ээс их байх ёстой'),
+  field: Yup.number()
+    .transform((_value, originalValue) => Number(originalValue))
+    .required('Талбайн утгыг заавал оруулна уу')
+    .min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой'),
+  room: Yup.number()
+    .transform((_value, originalValue) => Number(originalValue))
+    .required('Өрөөний тоог заавал оруулна уу')
+    .min(1, 'Өрөөний тоо 1-ээс их байх ёстой'),
+  restroom: Yup.number()
+    .transform((_value, originalValue) => Number(originalValue))
+    .required('Ариун цэврийн өрөөний тоог заавал оруулна уу')
+    .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
