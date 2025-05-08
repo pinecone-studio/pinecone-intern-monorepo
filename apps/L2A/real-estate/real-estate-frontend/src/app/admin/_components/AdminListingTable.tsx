@@ -25,7 +25,7 @@ const AdminListingTable = ({ listings, onSelect }: AdminListingTableProps) => {
   const filteredListings = listings.filter((listing) => listing.status === selectedTab);
 
   return (
-    <div>
+    <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Зарууд</h1>
 
       <div className="flex justify-between items-center mb-4">
