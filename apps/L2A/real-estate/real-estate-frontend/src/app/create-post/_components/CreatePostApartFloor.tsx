@@ -12,7 +12,7 @@ export const CreatePostApartFloor = ({ name, value, onChange, onBlur, error}: Pr
   return (
     <div>
       <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">
-        Хэдэн давхарт
+        Барилгын давхар
       </label>
       <input
         id={name}
