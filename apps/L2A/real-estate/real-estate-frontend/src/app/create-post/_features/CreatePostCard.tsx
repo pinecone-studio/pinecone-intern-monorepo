@@ -17,6 +17,7 @@ import { CreatePostApartment } from '../_components/CreatePostApartment';
 import { CreatePostYear } from '../_components/CreatePostYear';
 import { CreatePostWindows } from '../_components/CreatePostWindows';
 import { CreatePostWindow } from '../_components/CreatePostWindow';
+import { CreatePostDoor } from '../_components/CreatePostDoor';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -44,6 +45,7 @@ const validationSchema = Yup.object({
   year: Yup.number().required('Ашиглалтанд орсон он заавал оруулна уу!'),
   windows: Yup.number().required('Цонхны тоо заавал оруулна уу!').min(1, 'Цонхны тоо 1-ээс их байх ёстой!'),
   window: Yup.string().required('Цонхны загварыг заавал оруулна уу!'),
+  door: Yup.string().required('Хаалганы загварыг заавал оруулна уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -65,6 +67,7 @@ export const CreatePostCard = () => {
       year: '',
       windows: '',
       window: '',
+      door: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -130,6 +133,7 @@ export const CreatePostCard = () => {
                 onBlur={formik.handleBlur}
                 error={getFieldError(formik.touched, formik.errors, 'windows')}/>
                 <CreatePostWindow name="window" value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')}/>
+                <CreatePostDoor name="door" value={formik.values.door} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'door')}/>
             </div>
           </div>
         </div>
