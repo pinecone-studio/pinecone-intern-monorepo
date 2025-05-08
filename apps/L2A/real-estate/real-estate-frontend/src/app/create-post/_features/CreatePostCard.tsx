@@ -7,10 +7,10 @@ import { CreatePostField } from '../_components/CreatePostField';
 import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostRoom } from '../_components/CreatePostRoom';
 import { CreatePostParking } from '../_components/CreatePostParking';
+import { CreatePostText } from '../_components/CreatePostText';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { CreatePostText } from '../_components/CreatePostText';
-import { text } from 'stream/consumers';
+
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу'),
@@ -31,6 +31,9 @@ const validationSchema = Yup.object({
     .transform((_value, originalValue) => Number(originalValue))
     .required('Ариун цэврийн өрөөний тоог заавал оруулна уу')
     .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой'),
+  parking: Yup.string().required('Зогсооол сонгоно уу'),
+  text: Yup.string()
+    .required('Дэлгэрэнгүй тайлбар оруулна уу!')
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);

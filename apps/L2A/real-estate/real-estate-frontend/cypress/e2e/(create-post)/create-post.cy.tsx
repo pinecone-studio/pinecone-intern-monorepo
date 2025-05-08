@@ -1,5 +1,3 @@
-import { text } from "stream/consumers";
-
 describe('CreatePostCard form', () => {
   beforeEach(() => {
     cy.visit('/create-post');
