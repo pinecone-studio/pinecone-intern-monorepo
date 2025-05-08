@@ -10,7 +10,7 @@ import { IoIosClose } from 'react-icons/io';
 
 const FeaturedEvent = () => {
   return (
-    <Dialog>
+    <Dialog data-cy="featured-event">
       <DialogTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DialogTrigger>
