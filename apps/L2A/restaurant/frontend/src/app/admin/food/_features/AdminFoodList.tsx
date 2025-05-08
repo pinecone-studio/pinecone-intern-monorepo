@@ -37,7 +37,7 @@ const AdminFoodList = () => {
               {item.price}
             </p>
             <p data-testid={`food-description-${index}`} className="text-sm text-gray-500">
-              {item.status === 'active' ? 'Идэвхитэй' : 'Идэвхигүй'}
+              {item.status === 'active'}
             </p>
           </CardContent>
           <div data-testid={`food-actions-${index}`} className="flex items-center">
@@ -67,17 +67,6 @@ const AdminFoodList = () => {
                       </Label>
                     </div>
                   </RadioGroup>
-                  <div>
-                    <input type="file" accept="image/*" onChange={(e) => handleEdit(item.id, { file: e.target.files?.[0] })} className="hidden" id={`file-input-${index}`} data-testid="file-input" />
-                    <Button className="w-full" variant="secondary" onClick={() => document.getElementById(`file-input-${index}`)?.click()} data-testid="upload-image-button">
-                      + Зураг засах
-                    </Button>
-                    {item.previewImage && (
-                      <div className="mt-2 relative aspect-square w-full" data-testid="image-preview-container">
-                        <Image src={item.previewImage} alt="Food preview" className="rounded-md object-cover" fill sizes="100%" data-testid="food-image-preview" />
-                      </div>
-                    )}
-                  </div>
                   <Input placeholder="Үнэ" defaultValue={item.price} onChange={(e) => handleEdit(item.id, { price: e.target.value })} data-testid="price-input" />
                 </div>
                 <DialogFooter className="pt-4">

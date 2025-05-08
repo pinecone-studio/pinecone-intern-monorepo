@@ -25,6 +25,5 @@ describe('AdminFoodList (dummy uptade dialog)', () => {
     cy.get('[data-testid="dialog-title"]').should('be.visible').and('contain', 'Хоол засах');
     cy.get('[data-testid="food-name-input"]').should('exist');
     cy.get('[data-testid="price-input"]').should('exist');
-    cy.get('[data-testid="upload-image-button"]').should('exist');
   });
 });
