@@ -6,25 +6,27 @@ import { CreatePostPrice } from '../_components/CreatePostPrice';
 import { CreatePostField } from '../_components/CreatePostField';
 import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostRoom } from '../_components/CreatePostRoom';
+import { CreatePostParking } from '../_components/CreatePostParking';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
+import { CreatePostText } from '../_components/CreatePostText';
+import { text } from 'stream/consumers';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу'),
   name: Yup.string().required('Нэр заавал оруулна уу'),
   price: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
-    .required('Үнэ заавал оруулна уу')
-    .min(0, 'Үнэ 0-ээс их байх ёстой'),
+    .required('Үнэ заавал оруулна уу!')
+    .min(0, 'Үнэ 0-ээс их байх ёстой!'),
   field: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
     .required('Талбайн утгыг заавал оруулна уу')
     .min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой'),
   room: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
-    .required('Өрөөний тоог заавал оруулна уу')
-    .min(1, 'Өрөөний тоо 1-ээс их байх ёстой'),
+    .required('Өрөөний тоог заавал оруулна уу!')
+    .min(1, 'Өрөөний тоо 1-ээс их байх ёстой!'),
   restroom: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
     .required('Ариун цэврийн өрөөний тоог заавал оруулна уу')
@@ -42,6 +44,8 @@ export const CreatePostCard = () => {
       field: '',
       room: '',
       restroom: '',
+      parking: '',
+      text: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -67,6 +71,13 @@ export const CreatePostCard = () => {
               onBlur={formik.handleBlur}
               error={getFieldError(formik.touched, formik.errors, 'restroom')}
             />
+            <CreatePostParking
+              name="parking"
+              value={formik.values.parking}
+              onChange={(value) => formik.setFieldValue('parking', value)}
+              error={getFieldError(formik.touched, formik.errors, 'parking')}
+            />
+            <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
           </div>
         </div>
         <div>

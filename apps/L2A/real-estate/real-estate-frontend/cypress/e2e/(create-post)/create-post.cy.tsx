@@ -1,42 +1,52 @@
+import { text } from "stream/consumers";
+
 describe('CreatePostCard form', () => {
   beforeEach(() => {
     cy.visit('/create-post');
   });
 
-  it('1. should show validation messages when submitting empty form', () => {
-    cy.contains('Зар оруулах хүсэлт илгээх').click();
+  it('Displays validation errors when fields are empty', () => {
+    cy.get('button[type="submit"]').click();
 
-    cy.contains('Төрлөө сонгоно уу').should('exist');
-    cy.contains('Нэр заавал оруулна уу').should('exist');
-    cy.contains('Үнэ заавал оруулна уу').should('exist');
-    cy.contains('Талбайн утгыг заавал оруулна уу').should('exist');
-    cy.contains('Өрөөний тоог заавал оруулна уу').should('exist');
-    cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу').should('exist');
+    cy.contains('Төрлөө сонгоно уу!').should('be.visible');
+    cy.contains('Нэр заавал оруулна уу!').should('be.visible');
+    cy.contains('Үнэ заавал оруулна уу!').should('be.visible');
+    cy.contains('Талбайн утгыг заавал оруулна уу!').should('be.visible');
+    cy.contains('Өрөөний тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Зогсоолын утга сонгоно уу!').should('be.visible');
+    cy.contains('Дэлгэрэнгүй тайлбар бичнэ үү!').should('be.visible');
   });
 
-  it('2.should submit the form with valid inputs', () => {
-     cy.window().then((win) => {
-       cy.spy(win.console, 'log').as('consoleLog');
-     });
-     
-    cy.get('input[name="name"]').type('Туршилтын байр');
-    cy.get('input[name="price"]').type('150000000');
+  it('Submits form when all fields are valid', () => {
+    cy.get('[data-testid="type"]').click();
+    cy.get('[data-testid="type-option-house"]').click();
+
+    cy.get('input[name="name"]').type('Шинэ байр');
+    cy.get('input[name="price"]').type('100000000');
     cy.get('input[name="field"]').type('80');
     cy.get('input[name="room"]').type('3');
     cy.get('input[name="restroom"]').type('2');
+    cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
 
-    cy.get('[data-testid="type"]').click();
-    cy.get('[data-testid="type-option-apartment"]').click();
+    cy.get('[data-testid="parking"]').click();
+    cy.get('[data-testid="parking-option-yes"]').click();
 
-    cy.contains('Зар оруулах хүсэлт илгээх').click();
+    cy.get('button[type="submit"]').click();
+
+    cy.window().then((win) => {
+      cy.stub(win.console, 'log').as('consoleLog');
+    });
 
     cy.get('@consoleLog').should('be.calledWithMatch', {
-      name: 'Туршилтын байр',
-      price: 150000000,
-      field: 80,
-      room: 3,
-      restroom: 2,
-      type: 'apartment',
+      type: 'house',
+      name: 'Шинэ байр',
+      price: '100000000',
+      field: '80',
+      room: '3',
+      restroom: '2',
+      parking: 'yes',
+      text: 'Шинэ байрны тайлбар',
     });
   });
 });
