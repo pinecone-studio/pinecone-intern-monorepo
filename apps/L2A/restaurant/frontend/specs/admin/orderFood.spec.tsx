@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import OrderFood from "@/app/admin/_components/OrderFood";
+import OrderFood from "@/app/admin/orders/_components/OrderFood";
 import orderData from "@/app/admin/_components/orders.json";
 
 describe("OrderFood Component", () => {
