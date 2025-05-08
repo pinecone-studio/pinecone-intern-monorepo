@@ -9,7 +9,7 @@ describe('CreatePostLocation', () => {
 
     const infoElement = screen.getByTestId('Apartment');
     expect(infoElement).toBeInTheDocument();
-    expect(infoElement).toHaveTextContent('Барилгийн дэлгэрэнгүй');
+    expect(infoElement).toHaveTextContent('Барилгын дэлгэрэнгүй');
     expect(infoElement).toHaveClass('text-[#09090B]', 'text-lg');
 
     const descElement = screen.getByTestId('Desc');
