@@ -10,7 +10,7 @@ const HomeMain = () => {
 
   return (
     <div data-cy="home-page">
-      <main className="flex items-center flex-col w-[95%] mx-auto pt-10 ml-[30px]">
+      <main className="flex items-center flex-col w-full mx-auto pt-10">
         <div className="text-[#441500] text-[19px] font-extralight mb-5">Хоолны цэс</div>
 
         <div data-cy="food" className="flex gap-2 mb-4">
@@ -26,7 +26,7 @@ const HomeMain = () => {
           ))}
         </div>
 
-        <div data-cy="foodsdiv" className="flex flex-wrap items-center gap-10 grid grid-cols-2">
+        <div data-cy="foodsdiv" className="items-center gap-5 grid grid-cols-2">
           {selectedCategory?.foods.map((food) => (
             <RenderFood key={food.id} food={food} />
           ))}
