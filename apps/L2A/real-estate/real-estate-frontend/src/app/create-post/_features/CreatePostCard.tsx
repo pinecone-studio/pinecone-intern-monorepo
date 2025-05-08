@@ -22,7 +22,6 @@ import { CreatePostFloor } from '../_components/CreatePostFloor';
 import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 import { CreatePostGround } from '../_components/CreatePostGround';
 import { CreatePostBalcony } from '../_components/CreatePostBalcony';
-import { CreatePostLift } from '../_components/CreatePostLift';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -55,7 +54,6 @@ const validationSchema = Yup.object({
   aptfloor: Yup.number().required('Давхрын тоог заавал оруулна уу!').min(1, 'Давхрын тоо 1-ээс их байх ёстой!'),
   ground: Yup.string().required('Шалны загвар заавал оруулна уу!'),
   balcony: Yup.string().required('Тагтны тоо заавал оруулна уу!'),
-  lift: Yup.string().required('Лифтийн утга сонгоно уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -82,7 +80,6 @@ export const CreatePostCard = () => {
       aptfloor: '',
       ground: '',
       balcony: '',
-      lift: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -141,7 +138,6 @@ export const CreatePostCard = () => {
               <CreatePostApartFloor name="aptfloor" value={formik.values.aptfloor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'aptfloor')}/>
               <CreatePostGround name="ground" value={formik.values.ground} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'ground')} />
               <CreatePostBalcony name="balcony" value={formik.values.balcony} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'balcony')}/>
-              <CreatePostLift name="lift" value={formik.values.lift} onChange={(value) => formik.setFieldValue('lift', value)} error={getFieldError(formik.touched, formik.errors, 'lift')} />
             </div>
           </div>
         </div>
