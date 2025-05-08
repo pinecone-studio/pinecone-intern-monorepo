@@ -59,8 +59,8 @@ export const CreatePostCard = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-2 gap-2">
       <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center">
-        <div className="p-6 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
-          <div className="p-4 space-y-2 mt-1">
+        <div className="p-4 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
+          <div className="p-2 space-y-2 mt-1">
             <CreatePostHeader />
             <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
