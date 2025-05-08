@@ -8,7 +8,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Notification } from '../_features/Notification';
-import { ShoppingCart } from '../_features/ShoppingCart';
+import { ShoppingCart} from '../_features/ShoppingCart';
+
 
 const Header = () => {
   return (
