@@ -15,6 +15,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Зогсоолын утга сонгоно уу!').should('be.visible');
     cy.contains('Дэлгэрэнгүй тайлбар бичнэ үү!').should('be.visible');
     cy.contains('Дүүрэг заавал оруулна уу!').should('be.visible');
+    cy.contains('Хороо заавал оруулна уу!').should('be.visible');
   });
 
   it('Submits form when all fields are valid', () => {
@@ -28,6 +29,7 @@ describe('CreatePostCard form', () => {
     cy.get('input[name="restroom"]').type('2');
     cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
     cy.get('input[name="district"]').type('Сүхбаатар');
+    cy.get('input[name="section"]').type('1-р хороо');
 
     cy.get('[data-testid="parking"]').click();
     cy.get('[data-testid="parking-option-yes"]').click();
@@ -48,6 +50,7 @@ describe('CreatePostCard form', () => {
       parking: 'yes',
       text: 'Шинэ байрны тайлбар',
       district: 'Сүхбаатар',
+      section: '1-р хороо',
     });
   });
 });
