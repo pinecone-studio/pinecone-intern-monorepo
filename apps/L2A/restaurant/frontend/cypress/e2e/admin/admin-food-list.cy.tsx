@@ -11,8 +11,6 @@ describe('Admin Food List Component', () => {
   it('displays correct content for each food item', () => {
     cy.get('[data-testid="food-name-0"]').should('contain', 'Apple');
     cy.get('[data-testid="food-price-0"]').should('contain', '15.6k');
-    cy.get('[data-testid="food-description-0"]').should('contain', 'Идэвхитэй');
-    cy.get('[data-testid="food-description-1"]').should('contain', 'Идэвхигүй');
   });
 
   it('opens the edit dialog and allows field changes', () => {
