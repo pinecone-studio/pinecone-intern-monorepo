@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CreatePostYear } from '@/app/create-post/_components/CreatePostYear';
 import '@testing-library/jest-dom';
 
-
 describe('CreatePostYear', () => {
   const defaultProps = {
     name: 'year',

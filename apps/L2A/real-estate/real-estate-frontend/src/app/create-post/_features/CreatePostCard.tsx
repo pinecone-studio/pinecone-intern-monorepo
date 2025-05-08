@@ -19,6 +19,7 @@ import { CreatePostWindows } from '../_components/CreatePostWindows';
 import { CreatePostWindow } from '../_components/CreatePostWindow';
 import { CreatePostDoor } from '../_components/CreatePostDoor';
 import { CreatePostFloor } from '../_components/CreatePostFloor';
+import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -48,6 +49,7 @@ const validationSchema = Yup.object({
   window: Yup.string().required('Цонхны загварыг заавал оруулна уу!'),
   door: Yup.string().required('Хаалганы загварыг заавал оруулна уу!'),
   floor: Yup.number().required('Давхар заавал оруулна уу!').min(1, 'Давхар 1-ээс их байх ёстой!'),
+  aptfloor: Yup.number().required('Давхрын тоог заавал оруулна уу!').min(1, 'Давхрын тоо 1-ээс их байх ёстой!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -71,6 +73,7 @@ export const CreatePostCard = () => {
       window: '',
       door: '',
       floor: '',
+      aptfloor: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -138,6 +141,7 @@ export const CreatePostCard = () => {
                 <CreatePostWindow name="window" value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')}/>
                 <CreatePostDoor name="door" value={formik.values.door} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'door')}/>
                 <CreatePostFloor name="floor" value={formik.values.floor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'floor')}/>
+                <CreatePostApartFloor name='aptfloor' value={formik.values.aptfloor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'aptfloor')}/>
             </div>
           </div>
         </div>

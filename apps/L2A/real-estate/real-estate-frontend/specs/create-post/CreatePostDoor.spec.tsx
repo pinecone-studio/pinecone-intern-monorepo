@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CreatePostDoor } from '@/app/create-post/_components/CreatePostDoor';
 import '@testing-library/jest-dom';
 
-
 describe('CreatePostDoor component', () => {
   const baseProps = {
     name: 'door',

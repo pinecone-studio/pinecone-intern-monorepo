@@ -12,7 +12,7 @@ describe('CreatePostRestroom', () => {
     error: '',
   };
 
-  it('renders label and input correctly', () => {
+  it('should renders label and input correctly', () => {
     render(<CreatePostRestroom {...mockProps} />);
 
     expect(screen.getByLabelText(/ариун цэврийн өрөө/i)).toBeInTheDocument();
@@ -20,7 +20,7 @@ describe('CreatePostRestroom', () => {
     expect(screen.getByTestId('restroom')).toHaveValue(1);
   });
 
-  it('calls onChange when input value changes', () => {
+  it('should calls onChange when input value changes', () => {
     render(<CreatePostRestroom {...mockProps} />);
     const input = screen.getByTestId('restroom');
 
@@ -28,7 +28,7 @@ describe('CreatePostRestroom', () => {
     expect(mockProps.onChange).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onBlur when input is blurred', () => {
+  it('should calls onBlur when input is blurred', () => {
     render(<CreatePostRestroom {...mockProps} />);
     const input = screen.getByTestId('restroom');
 
@@ -36,7 +36,7 @@ describe('CreatePostRestroom', () => {
     expect(mockProps.onBlur).toHaveBeenCalledTimes(1);
   });
 
-  it('displays error message when error is provided', () => {
+  it('should displays error message when error is provided', () => {
     render(<CreatePostRestroom {...mockProps} error="Заавал бөглөнө үү" />);
     expect(screen.getByText('Заавал бөглөнө үү')).toBeInTheDocument();
   });
