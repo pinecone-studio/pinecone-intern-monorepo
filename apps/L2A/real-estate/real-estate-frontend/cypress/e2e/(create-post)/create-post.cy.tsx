@@ -24,6 +24,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Барилгын давхрын тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Шалны загварыг заавал оруулна уу!').should('be.visible');
     cy.contains('Тагтны тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Лифтийн утга сонгоно уу!').should('be.visible');
   });
 
   it('Submits form when all fields are valid', () => {
@@ -50,6 +51,7 @@ describe('CreatePostCard form', () => {
     cy.get('input[name="aptfloor"]').type('3');
     cy.get('input[name="ground"]').type('Паркетан шал');
     cy.get('input[name="balcony"]').type('1');
+    cy.get('[data-testid="lift"]').click();
 
     cy.get('button[type="submit"]').click();
 
@@ -76,6 +78,7 @@ describe('CreatePostCard form', () => {
       aptfloor: '3',
       ground: 'Паркетан шал',
       balcony: '1',
+      lift: 'yes',
     });
   });
 });

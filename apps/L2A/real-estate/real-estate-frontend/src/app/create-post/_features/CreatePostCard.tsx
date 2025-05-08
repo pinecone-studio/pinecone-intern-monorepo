@@ -22,6 +22,7 @@ import { CreatePostFloor } from '../_components/CreatePostFloor';
 import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 import { CreatePostGround } from '../_components/CreatePostGround';
 import { CreatePostBalcony } from '../_components/CreatePostBalcony';
+import { CreatePostLift } from '../_components/CreatePostLift';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -54,6 +55,7 @@ const validationSchema = Yup.object({
   aptfloor: Yup.number().required('Давхрын тоог заавал оруулна уу!').min(1, 'Давхрын тоо 1-ээс их байх ёстой!'),
   ground: Yup.string().required('Шалны загвар заавал оруулна уу!'),
   balcony: Yup.string().required('Тагтны тоо заавал оруулна уу!'),
+  lift: Yup.string().required('Лифтийн утга сонгоно уу!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -80,6 +82,7 @@ export const CreatePostCard = () => {
       aptfloor: '',
       ground: '',
       balcony: '',
+      lift: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -99,15 +102,31 @@ export const CreatePostCard = () => {
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
               <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
               <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
-              <CreatePostRestroom name="restroom" value={formik.values.restroom} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors,'restroom')}/>
-              <CreatePostParking name="parking" value={formik.values.parking} onChange={(value) => formik.setFieldValue('parking', value)} error={getFieldError(formik.touched, formik.errors,'parking')}/>
+              <CreatePostRestroom
+                name="restroom"
+                value={formik.values.restroom}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'restroom')}
+              />
+              <CreatePostParking
+                name="parking"
+                value={formik.values.parking}
+                onChange={(value) => formik.setFieldValue('parking', value)}
+                error={getFieldError(formik.touched, formik.errors, 'parking')}
+              />
               <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
               <CreatePostLocation />
-              <CreatePostDistrict name="district" value={formik.values.district} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'district')}/>
+              <CreatePostDistrict
+                name="district"
+                value={formik.values.district}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'district')}/>
               <CreatePostSection name="section" value={formik.values.section} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'section')}/>
             </div>
           </div>
@@ -115,18 +134,14 @@ export const CreatePostCard = () => {
             <div className="p-2 space-y-2 mt-1">
               <CreatePostApartment />
               <CreatePostYear name="year" value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
-              <CreatePostWindows
-                name="windows"
-                value={formik.values.windows}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={getFieldError(formik.touched, formik.errors, 'windows')}/>
-                <CreatePostWindow name="window" value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')}/>
-                <CreatePostDoor name="door" value={formik.values.door} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'door')}/>
-                <CreatePostFloor name="floor" value={formik.values.floor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'floor')}/>
-                <CreatePostApartFloor name='aptfloor' value={formik.values.aptfloor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'aptfloor')}/>
-                <CreatePostGround name='ground' value={formik.values.ground} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'ground')}/>
-                <CreatePostBalcony name='balcony' value={formik.values.balcony} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'balcony')}/>
+              <CreatePostWindows name="windows" value={formik.values.windows} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'windows')} />
+              <CreatePostWindow name="window" value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')} />
+              <CreatePostDoor name="door" value={formik.values.door} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'door')} />
+              <CreatePostFloor name="floor" value={formik.values.floor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'floor')} />
+              <CreatePostApartFloor name="aptfloor" value={formik.values.aptfloor} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'aptfloor')}/>
+              <CreatePostGround name="ground" value={formik.values.ground} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'ground')} />
+              <CreatePostBalcony name="balcony" value={formik.values.balcony} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'balcony')}/>
+              <CreatePostLift name="lift" value={formik.values.lift} onChange={(value) => formik.setFieldValue('lift', value)} error={getFieldError(formik.touched, formik.errors, 'lift')} />
             </div>
           </div>
         </div>
