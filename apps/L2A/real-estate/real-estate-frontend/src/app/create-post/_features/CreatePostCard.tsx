@@ -15,6 +15,7 @@ import { CreatePostDistrict } from '../_components/CreatePostDistrict';
 import { CreatePostSection } from '../_components/CreatePostSection';
 import { CreatePostApartment } from '../_components/CreatePostApartment';
 import { CreatePostYear } from '../_components/CreatePostYear';
+import { CreatePostWindow } from '../_components/CreatePostWindow';
 
 const validationSchema = Yup.object({
   type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -41,6 +42,9 @@ const validationSchema = Yup.object({
   section: Yup.string().required('Хороо заавал оруулна уу!'),
   year: Yup.number()
     .required('Ашиглалтанд орсон он заавал оруулна уу!'),
+    window: Yup.number()
+    .required('Цонхны тоо заавал оруулна уу!')
+    .min(1, 'Цонхны тоо 1-ээс их байх ёстой!'),
 });
 
 const getFieldError = (touched: { [key: string]: boolean }, errors: { [key: string]: string }, field: string) => (touched[field] && errors[field] ? errors[field] : undefined);
@@ -60,6 +64,7 @@ export const CreatePostCard = () => {
       district: '',
       section: '',
       year: '',
+      window: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -112,12 +117,14 @@ export const CreatePostCard = () => {
                 onBlur={formik.handleBlur}
                 error={getFieldError(formik.touched, formik.errors, 'section')}
               />
+              <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
               <CreatePostApartment />
-              <CreatePostYear name='year' value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
+              <CreatePostYear name="year" value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
+              <CreatePostWindow name='window' value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')} />
             </div>
           </div>
         </div>
