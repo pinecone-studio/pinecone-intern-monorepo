@@ -42,7 +42,7 @@ const validationSchema = Yup.object({
   section: Yup.string().required('Хороо заавал оруулна уу!'),
   year: Yup.number()
     .required('Ашиглалтанд орсон он заавал оруулна уу!'),
-    window: Yup.number()
+  windows: Yup.number()
     .required('Цонхны тоо заавал оруулна уу!')
     .min(1, 'Цонхны тоо 1-ээс их байх ёстой!'),
 });
@@ -64,7 +64,7 @@ export const CreatePostCard = () => {
       district: '',
       section: '',
       year: '',
-      window: '',
+      windows: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -124,7 +124,7 @@ export const CreatePostCard = () => {
             <div className="p-2 space-y-2 mt-1">
               <CreatePostApartment />
               <CreatePostYear name="year" value={formik.values.year} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'year')} />
-              <CreatePostWindow name='window' value={formik.values.window} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'window')} />
+              <CreatePostWindow name='windows' value={formik.values.windows} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'windows')} />
             </div>
           </div>
         </div>

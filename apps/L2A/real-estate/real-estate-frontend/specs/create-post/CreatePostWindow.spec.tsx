@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 describe('CreatePostWindow', () => {
   const defaultProps = {
-    name: 'window',
+    name: 'windows',
     value: 2,
     onChange: jest.fn(),
     onBlur: jest.fn(),
@@ -22,7 +22,7 @@ describe('CreatePostWindow', () => {
   it('should calls onChange when input value changes', () => {
     render(<CreatePostWindow {...defaultProps} />);
 
-    const input = screen.getByTestId('window');
+    const input = screen.getByTestId('windows');
     fireEvent.change(input, { target: { value: '3' } });
 
     expect(defaultProps.onChange).toHaveBeenCalled();
@@ -31,7 +31,7 @@ describe('CreatePostWindow', () => {
   it('should calls onBlur when input loses focus', () => {
     render(<CreatePostWindow {...defaultProps} />);
 
-    const input = screen.getByTestId('window');
+    const input = screen.getByTestId('windows');
     fireEvent.blur(input);
 
     expect(defaultProps.onBlur).toHaveBeenCalled();
