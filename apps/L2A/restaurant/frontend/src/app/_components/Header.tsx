@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Notification } from '../_features/Notification';
+import { ShoppingCart } from '../_features/ShoppingCart';
 
 const Header = () => {
   return (
@@ -16,7 +17,12 @@ const Header = () => {
         <Logo />
       </div>
       <div className="flex justify-center items-center gap-4 mr-[20px]">
+        <Sheet>
+        < SheetTrigger>
         <CiShoppingCart data-testid="shopping-cart-icon" className="w-[26px] h-[26px]" />
+        </SheetTrigger>
+        <SheetContent><ShoppingCart/></SheetContent>
+        </Sheet>
         <Sheet>
         < SheetTrigger>
         <IoIosNotificationsOutline data-testid="notification-icon" className="w-[26px] h-[26px]" />
