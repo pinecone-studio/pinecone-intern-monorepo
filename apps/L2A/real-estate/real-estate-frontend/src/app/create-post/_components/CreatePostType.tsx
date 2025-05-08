@@ -34,7 +34,7 @@ export const CreatePostType = ({ name, value, onChange, error }: Props) => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <div className="h-5 mt-1">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
+      <div className="h-3 mt-1">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
     </div>
   );
 };

@@ -13,25 +13,25 @@ import { useFormik } from 'formik';
 
 
 const validationSchema = Yup.object({
-  type: Yup.string().required('Төрлөө сонгоно уу'),
-  name: Yup.string().required('Нэр заавал оруулна уу'),
+  type: Yup.string().required('Төрлөө сонгоно уу!'),
+  name: Yup.string().required('Нэр заавал оруулна уу!'),
   price: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
     .required('Үнэ заавал оруулна уу!')
     .min(0, 'Үнэ 0-ээс их байх ёстой!'),
   field: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
-    .required('Талбайн утгыг заавал оруулна уу')
-    .min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой'),
+    .required('Талбайн утгыг заавал оруулна уу!')
+    .min(10, 'Талбайн утга 2-оос дээш оронтой байх ёстой!'),
   room: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
     .required('Өрөөний тоог заавал оруулна уу!')
     .min(1, 'Өрөөний тоо 1-ээс их байх ёстой!'),
   restroom: Yup.number()
     .transform((_value, originalValue) => Number(originalValue))
-    .required('Ариун цэврийн өрөөний тоог заавал оруулна уу')
-    .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой'),
-  parking: Yup.string().required('Зогсооол сонгоно уу'),
+    .required('Ариун цэврийн өрөөний тоог заавал оруулна уу!')
+    .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой!'),
+  parking: Yup.string().required('Зогсоол сонгоно уу!'),
   text: Yup.string()
     .required('Дэлгэрэнгүй тайлбар оруулна уу!')
 });
@@ -59,8 +59,8 @@ export const CreatePostCard = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-2 gap-2">
       <div className="w-full h-screen bg-[#F4F4F5] flex justify-center items-center">
-        <div className="w-[728px] h-[842px] flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
-          <div className="w-[680px] h-[692px] space-y-2 mt-2">
+        <div className="p-6 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
+          <div className="p-4 space-y-2 mt-1">
             <CreatePostHeader />
             <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
             <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
