@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import HeroSection from './HeroSection';
-
 const Dashboard = () => {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col " data-testid="dashboard">
@@ -9,7 +8,7 @@ const Dashboard = () => {
         {[...Array(8)].map((_, i) => (
           <div key={i} className="bg-[#141414] w-[425px] h-[360px] rounded-lg overflow-hidden">
             <div className="h-48 bg-gray-700">
-              <Image src={`https://contessa-project.eu/wp-content/uploads/2022/05/placeholder.gif`} alt="" className="w-full h-full object-cover" width={425} height={370} />
+              <Image src={`/placeholder.webp`} alt="" className="w-full h-full object-cover" width={425} height={370} />
             </div>
             <div className="p-4 flex flex-col gap-2 ">
               <h3 className="font-semibold">Music of the Spheres</h3>

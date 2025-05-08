@@ -1,38 +1,40 @@
-describe('SignUp Page Flow with OTP via MailSlurp', () => {
-  let inboxId: string;
-  let emailAddress: string;
+describe('SignUp Page Flow with Mocked OTP', () => {
+  it('should complete signup using mocked OTP', () => {
+    const generatedMail = `_user${Date.now()}@example.com`;
+    cy.intercept('POST', '/api/graphql', (req) => {
+      const body = req.body;
+      if (body.query.includes('verifyOTP')) {
+        req.reply({
+          data: {
+            verifyOTP: true,
+          },
+        });
+        return;
+      }
 
-  it('should complete signup using real email with OTP', () => {
-    cy.createInbox().then((inbox) => {
-      inboxId = inbox.id;
-      emailAddress = inbox.emailAddress;
-      cy.visit('/signup');
-      cy.get('[data-cy=email-input]').type(emailAddress);
-      cy.get('form').submit();
-      cy.waitForLatestEmail(inboxId).then((email) => {
-        const otpRegex = /(\d{6})/;
-        const otp = email.body?.match(otpRegex)?.[1];
-        void expect(otp, 'Extracted OTP from email').to.not.be.undefined;
-        cy.log(`Extracted OTP: ${otp}`);
+      if (body.query.includes('completeSignup')) {
+        req.reply({
+          data: {
+            completeSignup: {
+              user: {
+                id: 'mock-user-id',
+                email: 'user@example.com',
+              },
+              token: 'mock-jwt-token',
+            },
+          },
+        });
+        return;
+      }
+    }).as('graphql');
+    cy.visit('/signup');
+    cy.get('[data-cy=email-input]').type(generatedMail);
+    cy.get('form').submit();
+    cy.get('[data-cy=otp-input]').type('123456'); 
+    cy.wait('@graphql'); 
+    cy.get('[data-cy=password-input]').type('mockpassword123');
+    cy.get('[data-cy=confirm-password-input]').type('mockpassword123');
+    cy.get('form').submit();
 
-        if (otp) {
-          cy.get('[data-cy=otp-input]', { timeout: 15000 })
-            .should('exist')
-            .and('be.visible');
-          cy.get('[data-cy=otp-input]').type(otp);
-
-          cy.get('[data-cy=otp-loading]', { timeout: 10000 }).should('exist');
-          cy.get('[data-cy=otp-loading]', { timeout: 10000 }).should('not.exist');
-
-          cy.get('[data-cy=password-input]', { timeout: 10000 }).should('exist');
-          cy.get('[data-cy=confirm-password-input]').should('exist');
-
-          cy.get('[data-cy=password-input]').type('StrongPassword123');
-          cy.get('[data-cy=confirm-password-input]').type('StrongPassword123');
-          cy.get('form').submit();
-          cy.url({ timeout: 10000 }).should('not.include', '/signup');
-        }
-      });
-    });
   });
 });

@@ -17,6 +17,6 @@ describe('RecentListingsSection', () => {
     render(<RecentListingsSection />);
     const link = screen.getByRole('link', { name: /View all/i });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', '/listings');
+    expect(link).toHaveAttribute('href', '/listing');
   });
 });

@@ -11,4 +11,13 @@ export const TicketTypeDefs = gql`
     createdAt: String!
     updatedAt: String!
   }
+
+  input CreateTicketInput {
+    concert: ID!
+    date: String!
+    seatType: String!
+    price: Int!
+    status: TicketStatus
+    userId: ID!
+  }
 `;
