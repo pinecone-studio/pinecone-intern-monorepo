@@ -14,7 +14,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('Header', () => {
-  it('renders default header on non-admin page', () => {
+  it('1. renders default header on non-admin page', () => {
     (usePathname as jest.Mock).mockReturnValue('/');
 
     render(<Header />);
@@ -25,7 +25,7 @@ describe('Header', () => {
     expect(screen.getByText('Нэвтрэх')).toBeInTheDocument();
   });
 
-  it('renders admin text only on /admin route', () => {
+  it('2. renders admin text only on /admin route', () => {
     (usePathname as jest.Mock).mockReturnValue('/admin');
 
     render(<Header />);
