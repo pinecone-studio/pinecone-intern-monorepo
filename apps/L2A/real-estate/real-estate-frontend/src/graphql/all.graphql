@@ -1,6 +1,5 @@
 mutation CreateUser($email: String!) {
   createUser(email: $email) {
-  
     id
     email
     isAdmin
