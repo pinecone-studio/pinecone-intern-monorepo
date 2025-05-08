@@ -99,39 +99,16 @@ export const CreatePostCard = () => {
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
               <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
               <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
-              <CreatePostRestroom
-                name="restroom"
-                value={formik.values.restroom}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={getFieldError(formik.touched, formik.errors, 'restroom')}
-              />
-              <CreatePostParking
-                name="parking"
-                value={formik.values.parking}
-                onChange={(value) => formik.setFieldValue('parking', value)}
-                error={getFieldError(formik.touched, formik.errors, 'parking')}
-              />
+              <CreatePostRestroom name="restroom" value={formik.values.restroom} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors,'restroom')}/>
+              <CreatePostParking name="parking" value={formik.values.parking} onChange={(value) => formik.setFieldValue('parking', value)} error={getFieldError(formik.touched, formik.errors,'parking')}/>
               <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
               <CreatePostLocation />
-              <CreatePostDistrict
-                name="district"
-                value={formik.values.district}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={getFieldError(formik.touched, formik.errors, 'district')}
-              />
-              <CreatePostSection
-                name="section"
-                value={formik.values.section}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={getFieldError(formik.touched, formik.errors, 'section')}
-              />
+              <CreatePostDistrict name="district" value={formik.values.district} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'district')}/>
+              <CreatePostSection name="section" value={formik.values.section} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'section')}/>
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
