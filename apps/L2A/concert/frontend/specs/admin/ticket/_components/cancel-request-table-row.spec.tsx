@@ -13,7 +13,7 @@ describe('TableRow', () => {
     status: 'шилжүүлсэн',
   };
 
-  it('renders all request fields correctly', () => {
+  it('should render all request fields', () => {
     render(<TableRow request={mockRequest} />);
 
     expect(screen.getByText('Хайртай аав')).toBeInTheDocument();

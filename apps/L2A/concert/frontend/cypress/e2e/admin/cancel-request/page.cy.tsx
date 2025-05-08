@@ -1,4 +1,4 @@
-describe('a', () => {
+describe('Admin cancel request process', () => {
   it('should navigate through pages', () => {
     cy.visit('/admin/cancel-request');
 

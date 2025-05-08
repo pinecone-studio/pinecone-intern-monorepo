@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import TableRow from './_components/TableRow';
-import TableHeader from './_feature/TableHeader';
+import TableHeader from './_components/TableHeader';
 import { requests } from './utils/test-array';
 
 const itemsPerPage = 5;
