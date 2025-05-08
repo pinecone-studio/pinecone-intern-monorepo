@@ -1,39 +1,46 @@
+'use client';
+
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import React from 'react';
+import { usePathname } from 'next/navigation';
+import AdminHeader from '@/app/admin/_components/AdminHeader';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
 
-import { usePathname } from 'next/navigation';
-import { Header } from 'src/app/admin/_components/Header';
+describe('AdminHeader', () => {
+  it('renders and highlights Тасалбар when pathname is /admin/ticket', () => {
+    usePathname.mockReturnValue('/admin/ticket');
 
-describe('Header component', () => {
-  it('should render header with logo and avatar', () => {
-    (usePathname as jest.Mock).mockReturnValue('/admin/ticket');
+    render(<AdminHeader />);
 
-    render(<Header />);
+    const ticketLink = screen.getByTestId('ticket-button-admin');
+    const cancelLink = screen.getByTestId('cancel-request-admin');
+
+    expect(ticketLink).toHaveClass('border-b');
+    expect(cancelLink).not.toHaveClass('border-b');
+  });
+
+  it('renders and highlights Цуцлах хүсэлт when pathname is /admin/cancel-request', () => {
+    usePathname.mockReturnValue('/admin/cancel-request');
+
+    render(<AdminHeader />);
+
+    const ticketLink = screen.getByTestId('ticket-button-admin');
+    const cancelLink = screen.getByTestId('cancel-request-admin');
+
+    expect(ticketLink).not.toHaveClass('border-b');
+    expect(cancelLink).toHaveClass('border-b');
+  });
+
+  it('renders default header content', () => {
+    usePathname.mockReturnValue('/admin/ticket');
+
+    render(<AdminHeader />);
 
     expect(screen.getByText('TICKET BOOKING')).toBeInTheDocument();
-    expect(screen.getByText('CN')).toBeInTheDocument();
-  });
-
-  it('should highlight the "Тасалбар" link when pathname is /admin/ticket', () => {
-    (usePathname as jest.Mock).mockReturnValue('/admin/ticket');
-
-    render(<Header />);
-
-    const ticketLink = screen.getByText('Тасалбар').parentElement;
-    expect(ticketLink).toHaveClass('border-b border-black');
-  });
-
-  it('should highlight the "Цуцлах хүсэлт" link when pathname is /admin/cancel-request', () => {
-    (usePathname as jest.Mock).mockReturnValue('/admin/cancel-request');
-
-    render(<Header />);
-
-    const cancelLink = screen.getByText('Цуцлах хүсэлт').parentElement;
-    expect(cancelLink).toHaveClass('border-b border-black');
+    expect(screen.getByText('Тасалбар')).toBeInTheDocument();
+    expect(screen.getByText('Цуцлах хүсэлт')).toBeInTheDocument();
   });
 });

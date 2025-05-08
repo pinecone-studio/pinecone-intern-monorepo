@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -25,8 +24,9 @@ const SignInForm =  ()=> {
 
     try {
       const { data } = await loginUser({ variables: { email, password } });
-      Cookies.set('token', data.loginUser.token, { expires: 2, secure: true });
+      localStorage.setItem(`token`, data.loginUser.token);
       router.push('/')
+      router.refresh()
     } catch (err) {
         console.error(err); 
         setError('Login failed');

@@ -5,7 +5,6 @@ import '@testing-library/jest-dom';
 describe('HeroSection', () => {
   it('should render HeroSection component', () => {
     render(<HeroSection />);
-
     const heroSection = screen.getByTestId('hero-section');
     expect(heroSection).toBeInTheDocument();
   });

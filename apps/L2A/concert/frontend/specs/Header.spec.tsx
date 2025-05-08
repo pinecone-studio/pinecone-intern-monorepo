@@ -43,13 +43,11 @@ describe('Header', () => {
         </AuthProvider>
       </MockedProvider>
     );
-
     expect(await screen.findByTestId('header')).toBeInTheDocument();
     expect(screen.getByText(/Бүртгүүлэх/i)).toBeInTheDocument();
     expect(screen.getByText(/Нэвтрэх/i)).toBeInTheDocument();
     expect(screen.getByText(/TICKET BOOKING/i)).toBeInTheDocument();
   });
-
   it('should show user email and logout when logged in', async () => {
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => {
       if (key === 'token') return 'mock-jwt-token';
@@ -63,23 +61,19 @@ describe('Header', () => {
         </AuthProvider>
       </MockedProvider>
     );
-
     const emailElement = await screen.findByText('test@example.com');
     expect(emailElement).toBeInTheDocument();
-
     const logoutButton = screen.getByRole('button', { name: /Гарах/i });
     expect(logoutButton).toBeInTheDocument();
-
     fireEvent.click(logoutButton);
+
     expect(window.location.pathname).toBe('/');
   });
-
   it('should throw error when useAuth is used outside AuthProvider', () => {
     const DummyComponent = () => {
       useAuth();
       return null;
     };
-
     expect(() => render(<DummyComponent />)).toThrowError('useAuth must be used within an AuthProvider');
   });
 });

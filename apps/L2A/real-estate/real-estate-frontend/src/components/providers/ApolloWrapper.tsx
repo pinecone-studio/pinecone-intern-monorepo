@@ -18,8 +18,7 @@ const makeClient = () => {
     return {
       headers: {
         ...headers,
-        authorization: token ?? '',
-      },
+        authorization: token ? `Bearer ${token}` : '',      },
     };
   });
 
