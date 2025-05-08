@@ -31,7 +31,7 @@ describe('Header component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly for unauthenticated users', () => {
+  it('Should renders correctly for unauthenticated users', () => {
     (useAuth as jest.Mock).mockReturnValue({
       user: null,
       isLoggedIn: false,
@@ -44,7 +44,7 @@ describe('Header component', () => {
     expect(screen.getByText('+ Зар оруулах')).toBeInTheDocument();
   });
 
-  it('renders correctly for authenticated users', () => {
+  it('Should renders correctly for authenticated users', () => {
     (useAuth as jest.Mock).mockReturnValue({
       user: { email: 'test@example.com' },
       isLoggedIn: true,
@@ -57,7 +57,7 @@ describe('Header component', () => {
     expect(screen.queryByText('Нэвтрэх')).not.toBeInTheDocument();
   });
 
-  it('handles logout correctly', async () => {
+  it('Should handles logout correctly', async () => {
     localStorage.setItem('token', 'test-token');
     localStorage.setItem('email', 'test@example.com');
     (useAuth as jest.Mock).mockReturnValue({
@@ -75,7 +75,7 @@ describe('Header component', () => {
     expect(mockRefresh).toHaveBeenCalled();
   });
 
-  it('shows loading state correctly', () => {
+  it('Should shows loading state correctly', () => {
     (useAuth as jest.Mock).mockReturnValue({
       user: null,
       isLoggedIn: false,

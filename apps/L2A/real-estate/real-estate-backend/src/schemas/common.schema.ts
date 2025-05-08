@@ -25,7 +25,7 @@ export const typeDefs = gql`
     user: User!
   }
 
-  extend type Query {
+  type Query {
     sampleQuery: String!
   }
 

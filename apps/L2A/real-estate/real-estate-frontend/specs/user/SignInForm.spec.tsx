@@ -60,7 +60,7 @@ describe('SignInForm', () => {
     expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
   });
 
-  it('handles successful login', async () => {
+  it('Should handles successful login', async () => {
     render(
       <MockedProvider mocks={[mockSuccess]}>
         <SignInForm />
@@ -80,7 +80,7 @@ describe('SignInForm', () => {
     });
   });
 
-  it('shows error message on failed login', async () => {
+  it('Should shows error message on failed login', async () => {
     render(
       <MockedProvider mocks={[mockError]}>
         <SignInForm />
@@ -98,7 +98,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Login failed')).toBeInTheDocument();
   });
 
-  it('shows loading state during submission', async () => {
+  it('Should shows loading state during submission', async () => {
     render(
       <MockedProvider mocks={[mockSuccess]}>
         <SignInForm />
