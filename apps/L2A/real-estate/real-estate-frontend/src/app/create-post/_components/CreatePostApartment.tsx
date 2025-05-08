@@ -1,7 +1,7 @@
 export const CreatePostApartment = () => {
   return (
-    <div className="my-4">
-      <div data-testid="Info" className="text-[#09090B] text-lg ">
+    <div className="mt-4">
+      <div data-testid="Apartment" className="text-[#09090B] text-lg ">
         Барилгийн дэлгэрэнгүй
       </div>
       <div data-testid="Desc" className="text-[#71717A] text-sm">
