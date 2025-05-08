@@ -29,3 +29,41 @@ mutation loginUser($email: String!, $password: String!) {
     isAdmin
   }
 }
+
+query Concert($concertId: String!) {
+  concert(concertId: $concertId) {
+    artistName
+    description
+    doorOpen
+    endDate
+    id
+    musicStart
+    seatData {
+      date
+      seats {
+        Backseat {
+          price
+          availableTickets
+        }
+        Standard {
+          availableTickets
+          price
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
+    }
+    specialGuestName
+    thumbnailUrl
+    title
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
+  }
+}
