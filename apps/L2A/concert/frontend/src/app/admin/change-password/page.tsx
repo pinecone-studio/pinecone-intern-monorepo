@@ -31,12 +31,8 @@ const ChangePassword = () => {
   });
 
   const onSubmit = async (_values: z.infer<typeof ChangePasswordSchema>) => {
-    try {
-      alert('Нууц үг амжилттай шинэчлэгдлээ.');
-      router.push('/auth/signin');
-    } catch (err) {
-      console.error('Нууц үг шинэчлэх үед алдаа гарлаа:', err);
-    }
+    alert('Нууц үг амжилттай шинэчлэгдлээ.');
+    router.push('/auth/signin');
   };
 
   return (

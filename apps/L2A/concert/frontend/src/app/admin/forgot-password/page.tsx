@@ -24,13 +24,9 @@ const ForgotPassword = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof EmailOnlySchema>) => {
-    try {
-      console.log('Илгээсэн email:', values.email);
+    console.log('Илгээсэн email:', values.email);
 
-      router.push('/admin/change-password');
-    } catch (err) {
-      console.error('Сэргээх үед алдаа гарлаа:', err);
-    }
+    router.push('/admin/change-password');
   };
 
   return (
