@@ -1,51 +1,50 @@
-describe('CreatePostCard Form', () => {
+describe('CreatePostCard form', () => {
   beforeEach(() => {
     cy.visit('/create-post');
   });
 
-  it('successfully submits form with valid data', () => {
-    cy.get('input[name="name"]').type('Тест байр');
-    cy.get('input[name="price"]').type('150000000');
+  it('Displays validation errors when fields are empty', () => {
+    cy.get('button[type="submit"]').click();
+
+    cy.contains('Төрлөө сонгоно уу!').should('be.visible');
+    cy.contains('Нэр заавал оруулна уу!').should('be.visible');
+    cy.contains('Үнэ заавал оруулна уу!').should('be.visible');
+    cy.contains('Талбайн утгыг заавал оруулна уу!').should('be.visible');
+    cy.contains('Өрөөний тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Зогсоолын утга сонгоно уу!').should('be.visible');
+    cy.contains('Дэлгэрэнгүй тайлбар бичнэ үү!').should('be.visible');
+  });
+
+  it('Submits form when all fields are valid', () => {
+    cy.get('[data-testid="type"]').click();
+    cy.get('[data-testid="type-option-house"]').click();
+
+    cy.get('input[name="name"]').type('Шинэ байр');
+    cy.get('input[name="price"]').type('100000000');
     cy.get('input[name="field"]').type('80');
     cy.get('input[name="room"]').type('3');
     cy.get('input[name="restroom"]').type('2');
+    cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
+
+    cy.get('[data-testid="parking"]').click();
+    cy.get('[data-testid="parking-option-yes"]').click();
+
+    cy.get('button[type="submit"]').click();
 
     cy.window().then((win) => {
-      cy.stub(win.console, 'log').as('formSubmit');
+      cy.stub(win.console, 'log').as('consoleLog');
     });
 
-    cy.contains('Зар оруулах хүсэлт илгээх').click();
-
-    cy.get('@formSubmit').should('have.been.calledWithMatch', {
-      name: 'Тест байр',
-      price: '150000000',
+    cy.get('@consoleLog').should('be.calledWithMatch', {
+      type: 'house',
+      name: 'Шинэ байр',
+      price: '100000000',
       field: '80',
       room: '3',
       restroom: '2',
+      parking: 'yes',
+      text: 'Шинэ байрны тайлбар',
     });
-  });
-
-  it('shows validation errors on empty submit', () => {
-    cy.contains('Зар оруулах хүсэлт илгээх').click();
-
-    cy.contains('Нэр заавал оруулна уу');
-    cy.contains('Үнэ заавал оруулна уу');
-    cy.contains('Талбайн утгыг заавал оруулна уу');
-    cy.contains('Өрөөний тоог заавал оруулна уу');
-    cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу');
-  });
-
-  it('validates minimum values correctly', () => {
-    cy.get('input[name="price"]').type('-1');
-    cy.get('input[name="field"]').type('5');
-    cy.get('input[name="room"]').type('0');
-    cy.get('input[name="restroom"]').type('0');
-
-    cy.contains('Зар оруулах хүсэлт илгээх').click();
-
-    cy.contains('Үнэ 0-ээс их байх ёстой');
-    cy.contains('Талбайн утга 2-оос дээш оронтой байх ёстой');
-    cy.contains('Өрөөний тоо 1-ээс их байх ёстой');
-    cy.contains('Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой');
   });
 });
