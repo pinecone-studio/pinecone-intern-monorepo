@@ -55,10 +55,3 @@ const OrderMainCard = ({ order }: OrderProps) => {
   );
 };
 export default OrderMainCard;
-
-
-
-
-
-
-

@@ -1,8 +1,8 @@
 "use client";
 
 import orderData from "@/app/admin/orders/_components/orders.json";
-import OrderMainCard from "@/app/admin/orders/_features/OrderMainCard";
-import OrderSecondCard from "@/app/admin/orders/_features/OrderSecondCard";
+import OrderMainCard from "@/app/admin/orders/_components/OrderMainCard";
+import OrderSecondCard from "@/app/admin/orders/_components/OrderSecondCard";
 
 const Orders = () => {
   return (
