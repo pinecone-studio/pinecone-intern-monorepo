@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ThirdStep = ({ email }: { email: string }) => {
-  return <div>ThirdStep</div>;
+  return <div>{email}</div>;
 };
 
 export default ThirdStep;

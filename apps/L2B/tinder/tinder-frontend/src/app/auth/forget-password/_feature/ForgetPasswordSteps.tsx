@@ -11,7 +11,7 @@ export type StepOneProps = {
   setEmail: (_email: string) => void;
 };
 
-const SignUpSteps = () => {
+const ForgetPasswordSteps = () => {
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>('');
   return (
@@ -25,4 +25,4 @@ const SignUpSteps = () => {
   );
 };
 
-export default SignUpSteps;
+export default ForgetPasswordSteps;

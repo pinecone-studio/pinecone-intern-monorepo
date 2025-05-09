@@ -3,7 +3,11 @@ type Props = {
   setStep: Dispatch<SetStateAction<number>>;
 };
 const SecondStep = ({ setStep }: Props) => {
-  return <div>SecondStep</div>;
+  return (
+    <div>
+      <button onClick={() => setStep(3)}>next step</button>
+    </div>
+  );
 };
 
 export default SecondStep;
