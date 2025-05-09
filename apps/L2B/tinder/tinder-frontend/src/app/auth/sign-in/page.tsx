@@ -1,7 +1,7 @@
 import React from 'react';
 
-const page = () => {
-  return <div>page</div>;
+const SignInPage = () => {
+  return <div data-cy="Sign-In-Page">page</div>;
 };
 
-export default page;
+export default SignInPage;
