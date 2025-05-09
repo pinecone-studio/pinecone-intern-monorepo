@@ -1,6 +1,6 @@
 describe('TableSemiHeader E2E', () => {
   beforeEach(() => {
-    cy.visit("/admin/table");
+    cy.visit('/admin/table');
   });
 
   it('renders header and button', () => {
@@ -11,8 +11,6 @@ describe('TableSemiHeader E2E', () => {
   it('opens dialog and closes it', () => {
     cy.get('[data-testid="add-table-button"]').click();
     cy.get('[data-testid="dialog-content"]').should('be.visible');
-
-    // Close the dialog
     cy.get('body').type('{esc}');
     cy.get('[data-testid="dialog-content"]').should('not.exist');
   });
@@ -24,7 +22,6 @@ describe('TableSemiHeader E2E', () => {
   });
 
   it('creates table, generates QR and shows download', () => {
-    // Intercept GraphQL + QR code
     cy.intercept('POST', '**/graphql', {
       body: {
         data: {
@@ -32,8 +29,6 @@ describe('TableSemiHeader E2E', () => {
         },
       },
     }).as('addTable');
-
-    // Mock QRCode (we don't actually generate it here)
     cy.window().then((win) => {
       cy.stub(win.URL, 'createObjectURL').returns('blob:fakeqr');
     });
@@ -41,11 +36,7 @@ describe('TableSemiHeader E2E', () => {
     cy.get('[data-testid="add-table-button"]').click();
     cy.get('[data-testid="table-name-input"]').type('Cypress Table');
     cy.get('[data-testid="create-button"]').click();
-
-    // Wait for the GraphQL + QR generation
     cy.wait('@addTable');
-
-    // Check QR wrapper & download
     cy.get('[data-testid="qr-wrapper"]').should('be.visible');
     cy.get('[data-testid="qr-image"]').should('have.attr', 'src').and('include', 'data:image');
     cy.get('[data-testid="qr-download-button"]').should('be.visible');

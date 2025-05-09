@@ -51,14 +51,12 @@ const TableSemiHeader = () => {
       setLoading(false);
     }
   };
-
   const handleDialogChange = (open: boolean) => {
     setIsDialogOpen(open);
     if (!open) {
       resetForm();
     }
   };
-
   return (
     <div className="flex justify-between p-4 max-w-4xl mx-auto" data-testid="table-header-wrapper">
       <Toaster position="top-center" expand={true} data-testid="toaster-root" />
@@ -79,7 +77,6 @@ const TableSemiHeader = () => {
           <Button onClick={handleCreate} disabled={loading} type="button" data-testid="create-button">
             {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
           </Button>
-
           {qrUrl && (
             <div className="mt-4 text-center" data-testid="qr-wrapper">
               <p className="text-sm mb-2" data-testid="qr-instruction">
