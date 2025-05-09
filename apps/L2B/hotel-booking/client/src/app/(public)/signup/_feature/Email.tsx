@@ -67,7 +67,7 @@ export const Email = ({ setEmail, currentStep, setCurrentStep }: Props) => {
       <div className="flex items-center gap-4 my-6">
         <span className="text-[#71717a] text-[12px]">OR</span>
       </div>
-      <Link href="/login">
+      <Link href="/signin">
         <Button variant={'secondary'} className="w-[350px]">
           Log in
         </Button>
