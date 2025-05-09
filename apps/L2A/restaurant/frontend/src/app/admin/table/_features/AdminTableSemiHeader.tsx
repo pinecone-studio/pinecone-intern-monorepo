@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import { useAddTableMutation } from '@/generated';
-import QRCode from 'qrcode';
 import { Toaster, toast } from 'sonner';
+import QRCode from 'qrcode';
+
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  (window as Window & typeof globalThis & { QRCode: typeof QRCode }).QRCode = QRCode;
+}
 
 const TableSemiHeader = () => {
   const [tableName, setTableName] = useState('');

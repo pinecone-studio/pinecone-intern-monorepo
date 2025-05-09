@@ -10,7 +10,7 @@ describe('TableSemiHeader Test', () => {
     cy.get('[data-testid="add-table-button"]').click();
     cy.get('[data-testid="dialog-title"]').should('contain', 'Ширээ нэмэх');
     cy.get('body').type('{esc}');
-    cy.get('[data-testid="dialog-root"]').should('not.exist'); 
+    cy.get('[data-testid="dialog-root"]').should('not.exist');
   });
   it('resets the form when dialog closes and reopens', () => {
     cy.get('[data-testid="add-table-button"]').click();
@@ -40,16 +40,15 @@ describe('TableSemiHeader Test', () => {
     cy.get('[data-testid="create-button"]').click();
     cy.wait('@addTable');
     cy.contains('Ширээ амжилттай нэмэгдлээ!').should('exist');
-    cy.get('[data-testid="qr-wrapper"]').as('qrSection').within(() => {
-      cy.get('[data-testid="qr-instruction"]').should('contain', 'Ширээний QR код:');
-      cy.get('[data-testid="qr-image"]').should('be.visible');
-      cy.get('[data-testid="qr-download-button"]').should('contain', 'Татах');
-      cy.get('[data-testid="qr-download-link"]')
-        .should('have.attr', 'href')
-        .and('include', 'data:image/png;base64');
-      cy.get('[data-testid="qr-download-link"]')
-        .should('have.attr', 'download', 'Test Table-qr.png');
-    });
+    cy.get('[data-testid="qr-wrapper"]')
+      .as('qrSection')
+      .within(() => {
+        cy.get('[data-testid="qr-instruction"]').should('contain', 'Ширээний QR код:');
+        cy.get('[data-testid="qr-image"]').should('be.visible');
+        cy.get('[data-testid="qr-download-button"]').should('contain', 'Татах');
+        cy.get('[data-testid="qr-download-link"]').should('have.attr', 'href').and('include', 'data:image/png;base64');
+        cy.get('[data-testid="qr-download-link"]').should('have.attr', 'download', 'Test Table-qr.png');
+      });
   });
   it('handles GraphQL error and shows error toast', () => {
     cy.intercept('POST', '**/graphql', (req) => {
@@ -67,5 +66,30 @@ describe('TableSemiHeader Test', () => {
     cy.get('[data-testid="create-button"]').click();
     cy.wait('@addTableError');
     cy.contains('Серверийн алдаа. Дахин оролдоно уу.').should('exist');
+  });
+  it('shows error toast if QR code generation fails', () => {
+    cy.window().then((win) => {
+      const typedWin = win as unknown as Window & {
+        QRCode: {
+          toDataURL: (_text: string) => Promise<string>;
+        };
+      };
+      return cy.stub(typedWin.QRCode, 'toDataURL').as('qrStub').rejects(new Error('Failed to generate QR'));
+    });
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'AddTable') {
+        req.reply({
+          data: {
+            addTable: { _id: 'dummy-id-qr-error' },
+          },
+        });
+      }
+    }).as('addTable');
+    cy.get('[data-testid="add-table-button"]').click();
+    cy.get('[data-testid="table-name-input"]').type('Table With QR Error');
+    cy.get('[data-testid="create-button"]').click();
+    cy.wait('@addTable');
+    cy.contains('QR код үүсгэхэд алдаа гарлаа.').should('exist');
+    cy.get('@qrStub').should('have.been.called');
   });
 });
