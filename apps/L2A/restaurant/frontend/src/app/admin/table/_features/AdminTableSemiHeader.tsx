@@ -38,25 +38,25 @@ const TableSemiHeader = () => {
           setQrUrl(qrDataUrl);
           toast.success('Ширээ амжилттай нэмэгдлээ!');
         } catch (qrError) {
-          console.error('QR Code generation failed:', qrError);
           toast.error('QR код үүсгэхэд алдаа гарлаа.');
         }
       } else {
         toast.error('Ширээ үүсгэхэд алдаа гарлаа.');
       }
     } catch (error) {
-      console.error('GraphQL error:', error);
       toast.error('Серверийн алдаа. Дахин оролдоно уу.');
     } finally {
       setLoading(false);
     }
   };
+
   const handleDialogChange = (open: boolean) => {
     setIsDialogOpen(open);
     if (!open) {
       resetForm();
     }
   };
+
   return (
     <div className="flex justify-between p-4 max-w-4xl mx-auto" data-testid="table-header-wrapper">
       <Toaster position="top-center" expand={true} data-testid="toaster-root" />
@@ -65,11 +65,20 @@ const TableSemiHeader = () => {
       </h1>
       <Dialog open={isDialogOpen} onOpenChange={handleDialogChange} data-testid="dialog-root">
         <DialogTrigger asChild>
-          <Button variant="secondary" type="button" data-testid="add-table-button">
+          <Button
+            variant="secondary"
+            type="button"
+            data-testid="add-table-button"
+            onClick={() => {
+              resetForm();
+              setIsDialogOpen(true);
+            }}
+          >
             Ширээ +
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[340px]" data-testid="dialog-content">
+
+        <DialogContent className="w-[340px] h-auto">
           <DialogHeader>
             <DialogTitle data-testid="dialog-title">Ширээ нэмэх</DialogTitle>
           </DialogHeader>
