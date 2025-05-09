@@ -1,5 +1,5 @@
 import React from 'react';
-import { render,screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ThirdStep from '@/app/auth/sign-up/_components/ThirdStep';
 
@@ -9,7 +9,7 @@ describe('ThirdStep component', () => {
 
     render(<ThirdStep email={testEmail} />);
 
-    const emailElement = screen.getByText('testEmail');
+    const emailElement = screen.getByText('test@example.com');
     expect(emailElement).toBeInTheDocument();
   });
 });
