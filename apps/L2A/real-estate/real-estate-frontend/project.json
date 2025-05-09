@@ -151,7 +151,7 @@
         "testingType": "e2e",
         "reporter": "mochawesome",
         "devServerTarget": "real-estate-frontend:serve:development",
-        "browser": "chrome"
+        "browser": "electron"
       },
       "dependsOn": [
         {
