@@ -13,6 +13,17 @@ query GetUserInfo($jwt: String!) {
   }
 }
 
+query concerts {
+  concerts {
+    id
+    artistName
+    description
+    title
+    thumbnailUrl
+    doorOpen
+  }
+}
+
 mutation Mutation {
   sampleMutation
 }
