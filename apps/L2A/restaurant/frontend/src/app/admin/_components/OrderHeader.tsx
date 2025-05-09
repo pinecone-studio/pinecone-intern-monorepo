@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon, Route } from "lucide-react";
-import { format } from "date-fns";
 
 const STATUSES = [
   { label: "Бэлэн", value: "ready" },
@@ -28,27 +27,28 @@ const OrderHeader = () => {
         <Popover>
           <PopoverTrigger asChild>
             <button
-              data-cy="date-picker-trigger"
+              data-testid="date-picker-trigger"
               className="flex items-center gap-2 px-4 py-2 border rounded-md"
             >
               <CalendarIcon className="w-4 h-4" />
-              <span>{date ? format(date, "Өнөөдөр") : "Огноо сонгох"}</span>
+              <span>{date && date.toLocaleDateString().split("T")[0]}</span>
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="end">
             <Calendar
+            defaultMonth={new Date()}
               mode="single"
               selected={date}
               onSelect={setDate}
               initialFocus
-              data-cy="date-picker-calendar"
+              data-testid="date-picker-calendar"
             />
           </PopoverContent>
         </Popover>
         <Popover>
           <PopoverTrigger asChild>
             <button
-              data-cy="status-picker-trigger"
+              data-testid="status-picker-trigger"
               className="flex items-center gap-2 px-4 py-2 border rounded-md max-w-[180px] justify-between"
             >
               <div className="flex items-center gap-2">
@@ -63,7 +63,7 @@ const OrderHeader = () => {
                 <li
                   key={item.value}
                   onClick={() => setStatus(item.label)}
-                  data-cy={`status-option-${item.value}`}
+                  data-testid={`status-option-${item.value}`}
                   className={`cursor-pointer px-3 py-2 rounded-md hover:bg-gray-100 ${
                     status === item.label ? "bg-gray-100 font-medium" : ""
                   }`}

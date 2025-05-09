@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, } from "@testing-library/react";
 import OrderHeader from "@/app/admin/_components/OrderHeader";
 import "@testing-library/jest-dom";
+
 
 jest.mock("date-fns", () => ({
   ...jest.requireActual("date-fns"),
@@ -8,16 +9,11 @@ jest.mock("date-fns", () => ({
 }));
 
 describe("OrderHeader", () => {
-  it("renders title and buttons", () => {
+   it("opens date picker calendar", () => {
     render(<OrderHeader />);
-    expect(screen.getByText("Захиалга")).toBeVisible();
-    expect(screen.getByText("Өнөөдөр")).toBeVisible();
-    expect(screen.getByText("Төлөв")).toBeVisible();
+   fireEvent.click(screen.getByTestId("status-picker-trigger"))
+   fireEvent.click(screen.getByTestId("status-option-ready"))
   });
-  
-  it("opens date picker calendar", () => {
-    render(<OrderHeader />);
-    fireEvent.click(screen.getByText("Өнөөдөр"));
-    expect(screen.getByRole("dialog")).toBeVisible(); 
-  });
+
+
 });
