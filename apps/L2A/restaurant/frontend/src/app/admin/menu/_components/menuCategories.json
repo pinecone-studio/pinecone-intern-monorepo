@@ -1,0 +1,112 @@
+[
+    {
+      "id": 1,
+      "name": "Кофе, цай",
+      "foods": [
+        {
+          "id": 1,
+          "name": "Латте",
+          "price": "7,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.nescafe.com/my/sites/default/files/2023-04/RecipeHero_CaramelLatte_1066x1066.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Американо",
+          "price": "6,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.coffeebeans.ph/storage/2023/07/americano.jpg"
+        },
+        {
+          "id": 3,
+          "name": "Ногоон цай",
+          "price": "1,8",
+          "status": "Идэвхтэй",
+          "image": "https://www.mycuppa.com.au/cdn/shop/files/mycuppa-Green-Tea-2.png?v=1712458291&width=1214"
+        },
+        {
+          "id": 4,
+          "name": "Липтон цай",
+          "price": "1,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.webstaurantstore.com/images/products/large/551196/2072580.jpg"
+        },
+        {
+          "id": 15,
+          "name": "Липтон цай",
+          "price": "1,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.webstaurantstore.com/images/products/large/551196/2072580.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Ундаа, ус",
+      "foods": [
+        {
+          "id": 5,
+          "name": "Кола",
+          "price": "6,0",
+          "status": "Идэвхтэй",
+          "image": "https://cdn.uengage.io/uploads/18085/image-381513-1685703917.jpeg"
+        },
+        {
+          "id": 6,
+          "name": "Пепси",
+          "price": "6,0",
+          "status": "Идэвхтэй",
+          "image": "https://superalko.de/5290-superlarge_default/pepsi-cola-24x033cl.jpg"
+        },
+        {
+          "id": 7,
+          "name": "Фанта",
+          "price": "6,0",
+          "status": "Идэвхтэй",
+          "image": "https://digitalcontent.api.tesco.com/v2/media/ghs/9d172c6a-2091-4014-ae47-d6799510f09a/4f5768e0-2734-4a83-872a-a9db6c9973a0_906346657.jpeg?h=960&w=960"
+        },
+        {
+          "id": 8,
+          "name": "Оргилуун ус",
+          "price": "3,5",
+          "status": "Идэвхтэй",
+          "image": "https://assets.nomin.mn/preview/a8/orgiluun-tonic-0.33_8.654.000.105.962__preview.png"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Амттан",
+      "foods": [
+        {
+          "id": 9,
+          "name": "Спартак",
+          "price": "10,5",
+          "status": "Идэвхтэй",
+          "image": "https://natashaskitchen.com/wp-content/uploads/2014/10/Chocolate-Spartak-31.jpg"
+        },
+        {
+          "id": 10,
+          "name": "Чийз",
+          "price": "11",
+          "status": "Идэвхтэй",
+          "image": "https://cakesbymk.com/wp-content/uploads/2023/11/Template-Size-for-Blog-Photos-24.jpg"
+        },
+        {
+          "id": 11,
+          "name": "Зайрмаг",
+          "price": "8,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.jiomart.com/images/product/original/rvtuoridmk/mr-unbreakable-plastic-transparent-ice-cream-cup-250ml-pack-of-12-product-images-orvtuoridmk-p597458280-1-202301101245.png?im=Resize=(420,420)"
+        },
+        {
+          "id": 12,
+          "name": "Смүүти",
+          "price": "11,5",
+          "status": "Идэвхтэй",
+          "image": "https://www.shutterstock.com/image-photo/milkshakes-different-flavors-plastic-take-260nw-2481399731.jpg"
+        }
+      ]
+    }
+  ]
+  

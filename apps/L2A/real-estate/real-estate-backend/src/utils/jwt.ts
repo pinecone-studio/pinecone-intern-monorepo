@@ -7,13 +7,10 @@ export const generateToken = (userData:object)=>{
 }
 
 export const verifyToken = (token:string)=>{
-   
     try{
         return jwt.verify(token,SECRET)
     }catch(error){
         console.log("error while verifying token");
         return null;
     }
-
-
 }

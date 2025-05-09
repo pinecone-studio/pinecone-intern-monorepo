@@ -13,6 +13,18 @@ query GetUserInfo($jwt: String!) {
   }
 }
 
+query concerts {
+  concerts {
+    id
+    artistName
+    description
+    title
+    primaryPrice
+    thumbnailUrl
+    doorOpen
+  }
+}
+
 mutation Mutation {
   sampleMutation
 }
@@ -26,5 +38,44 @@ mutation loginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
     JWT
     email
+    isAdmin
+  }
+}
+
+query Concert($concertId: String!) {
+  concert(concertId: $concertId) {
+    artistName
+    description
+    doorOpen
+    endDate
+    id
+    musicStart
+    seatData {
+      date
+      seats {
+        Backseat {
+          price
+          availableTickets
+        }
+        Standard {
+          availableTickets
+          price
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
+    }
+    specialGuestName
+    thumbnailUrl
+    title
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
   }
 }

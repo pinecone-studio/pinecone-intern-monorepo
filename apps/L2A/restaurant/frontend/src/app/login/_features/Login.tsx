@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import Logo from '../_components/Logo';
 import { SignInButton } from '@clerk/nextjs';
@@ -9,7 +10,7 @@ export const LogIn = () => {
         <Logo />
       </div>
       <div className="flex justify-center">
-        <SignInButton mode="modal">
+        <SignInButton data-cyid="sign-in-modal" mode="modal">
           <Button data-cy="login-btn" className="bg-red-900 w-[200px]">
             Нэвтрэх
           </Button>

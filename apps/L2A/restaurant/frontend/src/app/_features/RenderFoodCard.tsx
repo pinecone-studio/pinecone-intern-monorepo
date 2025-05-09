@@ -2,14 +2,14 @@ import Image from 'next/image';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import HomeOrder from './HomeOrder';
 
-type Food = {
+export type Food = {
   id: number;
   name: string;
   price: string;
   image: string;
 };
 
-type RenderFoodCardProps = {
+export type RenderFoodCardProps = {
   food: Food;
 };
 

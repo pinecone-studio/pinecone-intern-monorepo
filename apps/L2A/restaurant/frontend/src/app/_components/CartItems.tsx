@@ -35,7 +35,7 @@ const CartItem = ({ item, onDelete }: CartItemProps) => {
           +
         </button>
       </div>
-      <button onClick={onDelete} className="ml-4 text-red-500 text-xl">
+      <button data-cyid="delete-button" onClick={onDelete} className="ml-4 text-red-500 text-xl">
         🗑️
       </button>
     </div>
