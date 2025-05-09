@@ -1,43 +1,43 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CreatePostRoom } from '@/app/create-post/_components/CreatePostRoom';
+import { CreatePostWindows } from '@/app/create-post/_components/CreatePostWindows';
 import '@testing-library/jest-dom';
 
-describe('CreatePostRoom', () => {
+describe('CreatePostWindows', () => {
   const defaultProps = {
-    name: 'room',
+    name: 'windows',
     value: 2,
     onChange: jest.fn(),
     onBlur: jest.fn(),
   };
 
   it('should renders label and input correctly', () => {
-    render(<CreatePostRoom {...defaultProps} />);
+    render(<CreatePostWindows {...defaultProps} />);
 
-    expect(screen.getByLabelText('Өрөө')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Өрөөний тоо')).toBeInTheDocument();
+    expect(screen.getByLabelText('Цонхны тоо')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Цонхны тоо оруулна уу')).toBeInTheDocument();
   });
 
   it('should calls onChange when input value changes', () => {
-    render(<CreatePostRoom {...defaultProps} />);
+    render(<CreatePostWindows {...defaultProps} />);
 
-    const input = screen.getByTestId('room');
+    const input = screen.getByTestId('windows');
     fireEvent.change(input, { target: { value: '3' } });
 
     expect(defaultProps.onChange).toHaveBeenCalled();
   });
 
   it('should calls onBlur when input loses focus', () => {
-    render(<CreatePostRoom {...defaultProps} />);
+    render(<CreatePostWindows {...defaultProps} />);
 
-    const input = screen.getByTestId('room');
+    const input = screen.getByTestId('windows');
     fireEvent.blur(input);
 
     expect(defaultProps.onBlur).toHaveBeenCalled();
   });
 
   it('should shows error message when error prop is provided', () => {
-    render(<CreatePostRoom {...defaultProps} error="Алдаа гарлаа" />);
+    render(<CreatePostWindows {...defaultProps} error="Алдаа гарлаа" />);
 
     expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
   });
