@@ -19,6 +19,7 @@ query concerts {
     artistName
     description
     title
+    primaryPrice
     thumbnailUrl
     doorOpen
   }
