@@ -9,6 +9,7 @@ import { useAddTableMutation } from '@/generated';
 import { Toaster, toast } from 'sonner';
 import QRCode from 'qrcode';
 
+/* istanbul ignore next */
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as Window & typeof globalThis & { QRCode: typeof QRCode }).QRCode = QRCode;
 }
