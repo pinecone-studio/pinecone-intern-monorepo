@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import FirstStep from '@/app/auth/sign-up/_components/FirstStep';
+import FirstStep from '@/app/auth/forget-password/_components/FirstStep';
 
 describe('FirstStep component', () => {
   it('should call setStep(2) when the button is clicked', () => {
