@@ -13,7 +13,7 @@ const concertSchema = new Schema<Concert>(
     specialGuestName: { type: String },
     seatData: [{ type: Schema.Types.ObjectId, ref: 'Seat', required: true }],
     endDate: { type: String, required: true },
-    primaryPrice: { type: Number, required: true },
+    primaryPrice: { type: Number, required: true, default: () => 10000 },
   },
   { timestamps: true }
 );

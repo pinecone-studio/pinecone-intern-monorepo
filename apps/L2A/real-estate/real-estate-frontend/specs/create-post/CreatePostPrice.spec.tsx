@@ -11,7 +11,7 @@ describe('CreatePostPrice component', () => {
     onBlur: jest.fn(),
   };
 
-  it('renders input with correct props', () => {
+  it('should renders input with correct props', () => {
     render(<CreatePostPrice {...baseProps} />);
     const input = screen.getByTestId('price') as HTMLInputElement;
 
@@ -21,7 +21,7 @@ describe('CreatePostPrice component', () => {
     expect(input.placeholder).toBe('Үнэ (₮)');
   });
 
-  it('calls onChange when input value changes', () => {
+  it('should calls onChange when input value changes', () => {
     render(<CreatePostPrice {...baseProps} />);
     const input = screen.getByTestId('price');
     fireEvent.change(input, { target: { value: '2000000' } });
@@ -29,7 +29,7 @@ describe('CreatePostPrice component', () => {
     expect(baseProps.onChange).toHaveBeenCalled();
   });
 
-  it('calls onBlur when input loses focus', () => {
+  it('should calls onBlur when input loses focus', () => {
     render(<CreatePostPrice {...baseProps} />);
     const input = screen.getByTestId('price');
     fireEvent.blur(input);
@@ -37,7 +37,7 @@ describe('CreatePostPrice component', () => {
     expect(baseProps.onBlur).toHaveBeenCalled();
   });
 
-  it('displays error message if error prop is provided', () => {
+  it('should displays error message if error prop is provided', () => {
     render(<CreatePostPrice {...baseProps} error="Үнэ оруулах шаардлагатай" />);
     expect(screen.getByText('Үнэ оруулах шаардлагатай')).toBeInTheDocument();
   });
