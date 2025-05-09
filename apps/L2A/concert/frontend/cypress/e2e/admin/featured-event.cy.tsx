@@ -34,18 +34,12 @@ describe('FeaturedEvent Modal', () => {
   });
 
   it('should display image upload section and hidden file input', () => {
-    cy.contains('Зураг оруулах').click();
-    cy.get('input[type="file"]').should('exist').and('not.be.visible');
+    cy.get('label[for="image-upload"]').click();
+    cy.get('input[data-cy="file-input"]').should('exist').should('not.be.visible');
   });
 
   it('should display the "Хадгалах" save button', () => {
     cy.contains('Хадгалах').should('be.visible');
-  });
-
-  it('should disable save button after clicking with valid input', () => {
-    cy.get('input[placeholder="Гарчиг оруулах"]').type('Test');
-    cy.contains('Хадгалах').click();
-    cy.get('button').contains('Хадгалах').should('be.disabled');
   });
 
   it('should show validation message on empty title input', () => {
@@ -54,14 +48,20 @@ describe('FeaturedEvent Modal', () => {
     cy.contains('Гарчиг шаардлагатай').should('exist');
   });
 
-  it('should close the modal when clicking the close button', () => {
-    cy.get('button').contains('×').click();
+  it('should disable save button during submission', () => {
+    cy.get('input[placeholder="Гарчиг оруулах"]').type('Test');
+    cy.contains('Хадгалах').click();
+    cy.contains('Хадгалах').should('be.disabled');
+  });
+
+  it('should close modal after successful save', () => {
+    cy.get('input[placeholder="Гарчиг оруулах"]').type('Test');
+    cy.contains('Хадгалах').click();
     cy.contains('Онцлох тоглолт болгох').should('not.exist');
   });
 
-  it('should close modal after saving valid data', () => {
-    cy.get('input[placeholder="Гарчиг оруулах"]').type('Test');
-    cy.contains('Хадгалах').click();
+  it('should close modal when close button is clicked', () => {
+    cy.get('button[aria-label="Close"]').click();
     cy.contains('Онцлох тоглолт болгох').should('not.exist');
   });
 });
