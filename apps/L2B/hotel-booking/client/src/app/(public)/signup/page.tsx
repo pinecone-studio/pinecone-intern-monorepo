@@ -8,6 +8,6 @@ const SignUpPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const FormSteps = [Email, Password][currentStep];
 
-  return <FormSteps currentStep={currentStep} setCurrentStep={setCurrentStep} setEmail={setEmail} />;
+  return <FormSteps currentStep={currentStep} setCurrentStep={setCurrentStep} email={email} setEmail={setEmail} />;
 };
 export default SignUpPage;

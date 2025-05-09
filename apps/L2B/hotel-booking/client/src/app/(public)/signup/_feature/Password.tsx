@@ -1,3 +1,7 @@
-export const Password = () => {
-  return <div>Password form coming soon</div>;
+type Props = {
+  email: string;
+};
+
+export const Password = ({ email }: Props) => {
+  return <div>{email}</div>;
 };
