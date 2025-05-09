@@ -32,4 +32,18 @@ export const typeDefs = gql`
   input DeleteProductInput {
     _id: ID!
   }
+  extend type Mutation {
+    addProduct(input: AddProductInput!): Product
+    updateProduct(input: UpdateProductInput!): Product
+    deleteProduct(input: DeleteProductInput!): Product
+  }
+  
+  type Query {
+  getAllProducts: [Product!]!
+  getProductById(id: ID!): Product
+  getProductsByCategory(categoryId: ID!): [Product!]!
+  product(id: ID!): Product
+  productsByCategory(categoryId: ID!): [Product!]!
+}
 `;
+
