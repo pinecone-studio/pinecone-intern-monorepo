@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Food } from "@/app/admin/orders/_components/OrderFood";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import OrderDialog from "./Dialog";
 
 type Order = {
   table: string;
@@ -20,7 +22,9 @@ const getTotalPrice = (items: { price: number; quantity: number }[]) => {
 };
 
 const OrderSecondCard = ({ order }: OrderProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const total = getTotalPrice(order.items);
+
   return (
     <>
       <div className="w-[600px] border rounded-lg shadow-md bg-white px-6 py-5 mt-5" data-cy="order-card">
@@ -47,11 +51,12 @@ const OrderSecondCard = ({ order }: OrderProps) => {
               <SelectItem value="дууссан" data-cy="select-item-done">Дууссан</SelectItem>
             </SelectContent>
           </Select>
-          <Button className="rounded-md" data-cy="save-button">
+          <Button className="rounded-md" data-cy="save-button" onClick={() => setIsOpen(true)}>
             Дэлгэрэнгүй харах
           </Button>
         </div>
       </div>
+      <OrderDialog open={isOpen} onOpenChange={setIsOpen} order={order} data-cy="order-dialog" />
     </>
   );
 };
