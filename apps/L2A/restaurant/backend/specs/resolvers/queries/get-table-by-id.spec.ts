@@ -36,7 +36,6 @@ describe('getTableById', () => {
       name: 'No QR Table',
       createdAt: date,
       updatedAt: date,
-      // no qrCodeUrl
     });
 
     const result = await getTableById(null, { id: 'noqr' });
