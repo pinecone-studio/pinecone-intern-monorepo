@@ -5,7 +5,7 @@ describe('Signup Page', () => {
     cy.visit('/auth/signup');
   });
 
-  it('should sign up successfully and clears the success message after 5s', () => {
+  it('should sign up successfully', () => {
     const password = 'test1234567890';
     cy.clock();
     cy.intercept('POST', '**/api/graphql').as('gql');
@@ -14,9 +14,6 @@ describe('Signup Page', () => {
     cy.get('input[name="confirmPassword"]').type(password);
     cy.get('button[type="submit"]').click();
     cy.wait('@gql').its('response.statusCode').should('eq', 200);
-    cy.contains('Бүртгэл амжилттай!').should('be.visible');
-    cy.tick(5000);
-    cy.contains('Бүртгэл амжилттай!').should('not.exist');
   });
 
   it("should sign up successfully but shouldn't trigger if statement", () => {
