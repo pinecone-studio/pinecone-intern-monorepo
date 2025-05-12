@@ -41,7 +41,7 @@ export const SignUpEmail = ({ setEmail, currentStep, setCurrentStep }: Props) =>
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="w-[350px] max-w-md space-y-4 mt-6">
           <div>
-            <label htmlFor="email" className="text-sm font-medium mb-2">
+            <label htmlFor="email" className="text-[14px] font-medium mb-2">
               Email
             </label>
             <Input
@@ -49,30 +49,41 @@ export const SignUpEmail = ({ setEmail, currentStep, setCurrentStep }: Props) =>
               id="email"
               type="email"
               {...register('email')}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-visible:ring-0"
-              placeholder="you@example.com"
+              className="mt-2 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-visible:ring-0 font-extralight"
+              placeholder="name@example.com"
             />
             {errors.email && (
-              <p data-cy="Sign-Up-Email-Input-Error-Message" className="text-sm text-red-500 mt-2">
+              <p data-cy="Sign-Up-Email-Input-Error-Message" className="text-sm text-red-500 mt-2 font-thin">
                 {errors.email.message}
               </p>
             )}
           </div>
 
-          <Button data-cy="Sign-Up-Submit-Button" type="submit" disabled={isSubmitting} className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+          <Button data-cy="Sign-Up-Submit-Button" type="submit" disabled={isSubmitting} className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
             {isSubmitting ? 'Submitting...' : 'Continue'}
           </Button>
         </form>
       </FormProvider>
-      <div className="flex items-center gap-4 my-6">
-        <span className="text-[#71717a] text-[12px]">OR</span>
+      <div className="flex items-center gap-4 w-[350px] my-5">
+        <div className="flex-grow border-t border-gray-300"></div>
+        <span className="text-[#71717a] text-[12px] font-light">OR</span>
+        <div className="flex-grow border-t border-gray-300"></div>
       </div>
       <Link href="/signin">
-        <Button variant={'secondary'} className="w-[350px]">
+        <Button variant={'ghost'} className="w-[350px] border-[1px]">
           Log in
         </Button>
       </Link>
-      <p className="w-[350px] text-center font-light text-[#71717a] text-[14px] mt-6">By clicking continue, you agree to our Terms of Service and Privacy Policy.</p>
+      <p className="w-[249px] text-center font-light text-[#71717a] text-[14px] mt-6">
+        By clicking continue, you agree to our{' '}
+        <Link href="#" className="underline">
+          Terms of Service
+        </Link>{' '}
+        and{' '}
+        <Link href="#" className="underline">
+          Privacy Policy.
+        </Link>
+      </p>
     </div>
   );
 };
