@@ -15,7 +15,7 @@ const ForgetPasswordSteps = () => {
   const [email, setEmail] = useState<string>('');
   return (
     <div className="flex flex-col gap-[24px]">
-      <Image src="/tinder.svg" width={100} height={24} alt="tinder" className="m-auto" />
+      <Image src="/tinder.svg" width={100} height={24} alt="tinder" />
 
       {step === 1 && <FirstStep setStep={setStep} setEmail={setEmail} />}
       {step === 2 && <SecondStep setStep={setStep} />}
