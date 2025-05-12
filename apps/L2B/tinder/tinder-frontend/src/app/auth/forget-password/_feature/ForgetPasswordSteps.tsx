@@ -5,7 +5,6 @@ import FirstStep from '../_components/FirstStep';
 import SecondStep from '../_components/SecondStep';
 import ThirdStep from '../_components/ThirdStep';
 
-
 export type StepOneProps = {
   setStep: (_step: number) => void;
   setEmail: (_email: string) => void;

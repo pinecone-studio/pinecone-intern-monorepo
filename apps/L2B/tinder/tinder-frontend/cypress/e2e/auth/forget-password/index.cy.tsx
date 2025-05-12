@@ -7,7 +7,7 @@ describe('forget password page', () => {
     cy.get('input[placeholder="email"]').should('exist');
     cy.get('input[placeholder="email"]').type('test@gmail.com');
 
-    cy.contains('next step').click();
+    cy.contains('Continue').click();
 
     cy.contains('next step').click();
 
