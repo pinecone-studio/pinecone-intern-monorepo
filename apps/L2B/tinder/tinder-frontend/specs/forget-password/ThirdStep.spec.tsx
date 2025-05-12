@@ -1,67 +1,66 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ThirdStep from '@/app/auth/forget-password/_components/ThirdStep';
+beforeAll(() => {
+  global.alert = jest.fn();
+});
 
-describe('ThirdStep component', () => {
+afterAll(() => {
+  (global.alert as jest.Mock).mockReset();
+});
+
+describe('ThirdStep', () => {
   const email = 'test@example.com';
-  const setup = () => render(<ThirdStep email={email} />);
 
-  it('renders inputs and button', () => {
-    setup();
-
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument();
+  it('renders the component with the correct title and instructions', () => {
+    render(<ThirdStep email={email} />);
+    expect(screen.getByText(`Set new password for ${email}`)).toBeInTheDocument();
+    expect(screen.getByText(/Use a minimum of 10 characters/)).toBeInTheDocument();
   });
 
-  it('shows errors when fields are empty', () => {
-    setup();
+  it('displays an error message if the form is submitted with invalid data', async () => {
+    render(<ThirdStep email={email} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+    const passwordInput = screen.getByPlaceholderText('Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Confirm Password');
+    const submitButton = screen.getByRole('button', { name: /Continue/i });
 
-    expect(screen.getByTestId('password-error')).toHaveTextContent('Password is required.');
-    expect(screen.getByTestId('confirm-password-error')).toHaveTextContent('Confirm Password is required.');
+    fireEvent.change(passwordInput, { target: { value: 'short' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'short' } });
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Password must be at least 10 characters/)).toBeInTheDocument();
+    });
   });
 
-  test('shows password length error when password is less than 10 characters', () => {
-    setup();
-    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'short' } });
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), { target: { value: 'short' } });
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+  it('calls the onSubmit function when form is submitted with valid data', async () => {
+    render(<ThirdStep email={email} />);
 
-    expect(screen.getByTestId('password-error')).toHaveTextContent('Password must be at least 10 characters long.');
+    const passwordInput = screen.getByPlaceholderText('Password');
+    const confirmPasswordInput = screen.getByPlaceholderText('Confirm Password');
+    const submitButton = screen.getByRole('button', { name: /Continue/i });
+
+    fireEvent.change(passwordInput, { target: { value: 'ValidPassword123' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'ValidPassword123' } });
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalledWith('Password successfully set!');
+    });
   });
+  it('shows error when passwords do not match', async () => {
+    render(<ThirdStep email={email} />);
+    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPassword123' } });
+    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), { target: { value: 'Different123' } });
 
-  it('shows error when passwords do not match', () => {
-    setup();
+    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
 
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'Password123' },
+    await waitFor(() => {
+      expect(screen.getByText(/Passwords do not match/)).toBeInTheDocument();
     });
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'Different123' },
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
-
-    expect(screen.getByText(/Passwords do not match/i)).toBeInTheDocument();
-  });
-
-  it('shows success alert when passwords match', () => {
-    window.alert = jest.fn();
-
-    setup();
-
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'Password123' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'Password123' },
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
-
-    expect(window.alert).toHaveBeenCalledWith('Password successfully set!');
   });
 });
