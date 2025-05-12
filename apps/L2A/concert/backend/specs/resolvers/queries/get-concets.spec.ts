@@ -9,7 +9,7 @@ describe('concert Resolver', () => {
   });
 
   it('should return a concert with populated venue', async () => {
-    const mockConcert = [
+    const mockConcerts = [
       {
         _id: 'concert123',
         title: 'Test Concert',
@@ -19,15 +19,23 @@ describe('concert Resolver', () => {
         },
       },
     ];
-    (concertModel.find as jest.Mock).mockReturnValue(mockConcert);
+    const populateMock = jest.fn().mockReturnValue(mockConcerts);
+
+    (concertModel.find as jest.Mock).mockReturnValue({
+      populate: populateMock,
+    });
 
     const result = await concerts();
 
-    expect(result).toEqual(mockConcert);
+    expect(result).toEqual(mockConcerts);
   });
 
   it('should throw an error when no concert is found', async () => {
-    (concertModel.find as jest.Mock).mockReturnValue(null);
+    const populateMock = jest.fn().mockReturnValue(null);
+
+    (concertModel.find as jest.Mock).mockReturnValue({
+      populate: populateMock,
+    });
 
     await expect(concerts()).rejects.toThrow('Concert not found');
   });

@@ -15,7 +15,7 @@ const tableSchema = new Schema<TableType>({
   },
   qrCodeUrl: {
     type: String,
-    required: false,
+    required: true,
   },
   createdAt: {
     type: Date,

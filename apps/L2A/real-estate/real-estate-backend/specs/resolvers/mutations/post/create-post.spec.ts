@@ -1,60 +1,76 @@
-import { createPost } from "apps/L2A/real-estate/real-estate-backend/src/resolvers/mutations/post/create-post";
-import { POST_MODEL } from "apps/L2A/real-estate/real-estate-backend/src/models/post";
+import { createPost } from 'apps/L2A/real-estate/real-estate-backend/src/resolvers/mutations';
+import { POST_MODEL } from 'apps/L2A/real-estate/real-estate-backend/src/models/post';
+import { PropertyType } from 'apps/L2A/real-estate/real-estate-backend/src/generated';
 
-jest.mock("apps/L2A/real-estate/real-estate-backend/src/models/post", () => ({
-  POST_MODEL: {
-    create: jest.fn(),
-  },
-}));
+describe('createPost', () => {
+  it('should create a post successfully', async () => {
+    const input = {
+      balcony: true,
+      completionDate: '2025-01-01',
+      description: 'A lovely house with a big garden',
+      floorNumber: 2,
+      garage: true,
+      images: ['image1.jpg', 'image2.jpg'],
+      price: 350000,
+      propertyOwnerId: 'userId123',
+      restrooms: 2,
+      roofMaterial: 'tile',
+      size: 120.5,
+      status: 'pending',
+      title: 'Beautiful House',
+      totalFloors: 5,
+      totalRooms: 3,
+      type: 'house' as PropertyType,
+      windowType: 'double-glazed',
+      windowsCount: 10,
+    };
 
-describe("createPost", () => {
-  const mockPost = {
-    _id: { toString: () => "mock-id" },
-    propertyOwnerId: { toString: () => "owner-id" },
-    title: "Test Title",
-    description: "Test Description",
-    price: 123456,
-    propertyDetail: { toString: () => "property-detail-id" },
-    status: "pending",
-    updatedAt: { toString: () => "2023-01-01T00:00:00Z" },
-    createdAt: { toString: () => "2023-01-01T00:00:00Z" },
-  };
+    const mockCreate = jest.fn().mockResolvedValue({
+      _id: 'generatedPostId123',
+      ...input,
+      createdAt: new Date().toISOString(), 
+      updatedAt: new Date().toISOString(),
+      lift: undefined,
+      location: undefined,
+    });
+    POST_MODEL.create = mockCreate;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
+    const result = await createPost(null, { input });
+    expect(POST_MODEL.create).toHaveBeenCalledTimes(1);
+    expect(POST_MODEL.create).toHaveBeenCalledWith(expect.objectContaining(input));
+    expect(result).toHaveProperty('_id');
+    expect(result.title).toBe(input.title);
+    expect(result.status).toBe('pending');
+    expect(result.createdAt).toBeDefined();
+    expect(result.updatedAt).toBeDefined();
+    expect(result.lift).toBeUndefined();
+    expect(result.location).toBeUndefined();
   });
 
-  it("should create a post and return the correct result", async () => {
-    (POST_MODEL.create as jest.Mock).mockResolvedValue(mockPost);
-
-    const args = {
-      input: {
-        propertyOwnerId: "owner-id",
-        title: "Test Title",
-        description: "Test Description",
-        price: 123456,
-        propertyDetail: "property-detail-id",
-      },
+  it('should handle errors when creation fails', async () => {
+    const input = {
+      title: 'Test Error Post',
+      description: 'Description for post',
+      price: 100000,
+      propertyOwnerId: 'userId123',
     };
-    const result = await createPost(null, args);
-    expect(POST_MODEL.create).toHaveBeenCalledWith({
-      ...args.input,
-      status: "pending",
-    });
 
-    expect(result).toEqual({
-      id: "mock-id",
-      propertyOwnerId: "owner-id",
-      title: "Test Title",
-      description: "Test Description",
-      price: 123456,
-      propertyDetail: "property-detail-id",
-      status: "pending",
-      updatedAt: "2023-01-01T00:00:00Z",
-      createdAt: "2023-01-01T00:00:00Z",
-    });
+    const mockCreate = jest.fn().mockRejectedValue(new Error('Database error'));
+
+    POST_MODEL.create = mockCreate;
+
+    await expect(createPost(null, { input })).rejects.toThrow('Database error');
+
+    expect(POST_MODEL.create).toHaveBeenCalledTimes(1);
   });
 });
+
+
+
+
+
+
+
 
 
 
