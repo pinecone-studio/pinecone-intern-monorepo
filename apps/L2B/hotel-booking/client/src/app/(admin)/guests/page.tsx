@@ -1,5 +1,9 @@
 const Guests = () => {
-  return <div className="ml-5 ">Guests Page</div>;
+  return (
+    <div data-cy="Guests-Page" className="ml-5">
+      Guests Page
+    </div>
+  );
 };
 
 export default Guests;

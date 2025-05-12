@@ -54,7 +54,7 @@ const AdminSideBar = () => {
           <div className="w-full h-12 p-2 flex justify-between items-center ">
             <div className="flex gap-2 items-center">
               <div className="w-9 h-9 bg-slate-50 rounded-lg overflow-hidden">
-                <Image src={''} alt="" />
+                <Image src="/placeholder.png" width={36} height={36} alt="" />
               </div>
               <div className="flex flex-col justify-center">
                 <h4 className="text-sm font-medium ">admin</h4>
