@@ -106,8 +106,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L2B/tinder/tinder-frontend/.env | xargs)"],
-        "parallel": false
+        "command": "dotenv -e apps/L2B/tinder/tinder-frontend/.env -- nx run Tinder-frontend-2025-2B:codegen:dev"
       }
     },
     "clean": {
