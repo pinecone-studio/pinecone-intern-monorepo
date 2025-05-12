@@ -24,7 +24,7 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
     setStep(2);
   };
   return (
-    <div className="w-full max-w-[600px] mx-auto flex flex-col items-center">
+    <div className="w-[350px]">
       <div className="w-full text-center mb-6">
         <h1 className="text-2xl font-semibold mb-1">Forget password</h1>
         <p className="text-gray-500 text-sm">Enter your email account to reset password</p>
