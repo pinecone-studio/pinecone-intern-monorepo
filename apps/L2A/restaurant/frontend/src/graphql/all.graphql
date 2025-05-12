@@ -5,3 +5,12 @@ query Query {
 mutation Mutation {
   sampleMutation
 }
+mutation AddTable($input: AddTableInput!) {
+  addTable(input: $input) {
+    _id
+    name
+    qrCodeUrl
+    createdAt
+    updatedAt
+  }
+}

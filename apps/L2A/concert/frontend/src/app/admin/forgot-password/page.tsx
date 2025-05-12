@@ -40,7 +40,14 @@ const ForgotPassword = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} type="email" autoComplete="email" placeholder="Имэйл хаяг" className="rounded-md border w-[350px] h-[36px] mt-1 pl-2 shadow" />
+                  <Input
+                    data-testid="forget-password-email-input"
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Имэйл хаяг"
+                    className="rounded-md border w-[350px] h-[36px] mt-1 pl-2 shadow"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

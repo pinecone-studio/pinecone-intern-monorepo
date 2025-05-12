@@ -6,7 +6,6 @@ describe('Sign In Page', () => {
 
     cy.visit('/auth/signin');
   });
-
   it('should log in successfully', () => {
     const password = 'glpzghoo@gmail.com';
 
