@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { Email } from './_feature/Email';
-import { Password } from './_feature/Password';
+import { SignUpEmail } from './_feature/SignUpEmail';
+import { SignUpPassword } from './_feature/SignUpPassword';
 
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
-  const FormSteps = [Email, Password][currentStep];
+  const FormSteps = [SignUpEmail, SignUpPassword][currentStep];
 
   return <FormSteps currentStep={currentStep} setCurrentStep={setCurrentStep} email={email} setEmail={setEmail} />;
 };

@@ -18,7 +18,7 @@ type Props = {
   setCurrentStep: Dispatch<number>;
 };
 
-export const Email = ({ setEmail, currentStep, setCurrentStep }: Props) => {
+export const SignUpEmail = ({ setEmail, currentStep, setCurrentStep }: Props) => {
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: { email: '' },

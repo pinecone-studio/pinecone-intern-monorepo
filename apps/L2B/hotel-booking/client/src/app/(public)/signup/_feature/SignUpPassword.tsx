@@ -2,6 +2,6 @@ type Props = {
   email: string;
 };
 
-export const Password = ({ email }: Props) => {
+export const SignUpPassword = ({ email }: Props) => {
   return <div>{email}</div>;
 };
