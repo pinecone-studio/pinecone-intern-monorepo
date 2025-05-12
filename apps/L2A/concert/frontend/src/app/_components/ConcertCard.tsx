@@ -1,26 +1,38 @@
 import React from 'react';
 import Image from 'next/image';
-import { CiLocationOn, CiCalendar } from 'react-icons/ci';
-const ConcertCard = () => {
+import { Concert } from '@/generated';
+import Link from 'next/link';
+const ConcertCard = ({ concert }: { concert: Concert }) => {
+  const start = new Date(Number(concert.musicStart));
+
   return (
-    <div className="w-[345px] rounded-2xl overflow-hidden shadow-lg bg-black text-white font-sans" data-testid="concert-card">
-      <Image src={`/Placeholder.gif`} alt="" width="500" height="213" />
-      <div className="border-t border-purple-500 p-6">
-        <h2 className="text-xl font-semibold">Music of the Spheres</h2>
-        <p className="text-gray-400 mb-4">coldplay</p>
-        <p className="text-3xl font-bold mb-4">200’000$</p>
-        <div className="flex items-center justify-between text-gray-400">
-          <div className="flex items-center gap-2">
-            <CiCalendar />
-            <span>10.31</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CiLocationOn />
-            <span>UG ARENA</span>
-          </div>
+    <Link data-testid={`concert-card`} href={`/event/${concert.id}`} target="_blank" className="bg-[#141414] w-[425px] h-[360px] rounded-lg overflow-hidden">
+      <div className="h-48 bg-gray-700">
+        <Image src={`${concert?.thumbnailUrl ?? `/placeholder.webp`}`} alt={concert?.title} className="w-full h-full object-cover" width={425} height={370} />
+      </div>
+      <div className="p-4 flex flex-col gap-2">
+        <h3 className="font-semibold">{concert?.title}</h3>
+        <p className="text-sm text-gray-400 mb-2">{concert?.artistName}</p>
+        <p className="font-semibold">Price: {concert?.primaryPrice}</p>
+        <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <span>
+            <span>
+              📅&nbsp;
+              {start.toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })}{' '}
+              {start.toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </span>
+          </span>
+          <span>📍 {concert?.venue?.name}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export default ConcertCard;

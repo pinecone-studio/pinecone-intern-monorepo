@@ -1,6 +1,6 @@
 describe('Render event menu', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('event');
   });
   it('should render the event menu', () => {
     cy.intercept({ method: 'POST', url: '**/api/graphql' }).as('getConcerts');

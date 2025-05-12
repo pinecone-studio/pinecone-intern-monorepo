@@ -22,6 +22,7 @@ query concerts {
     primaryPrice
     thumbnailUrl
     doorOpen
+    musicStart
   }
 }
 
