@@ -4,26 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import { useState } from 'react';
-
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const newErrors: typeof errors = {};
-
     if (!email.trim()) newErrors.email = 'Error in email';
     if (!password.trim()) newErrors.password = 'Error in password';
-
     setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-    }
   };
-
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
       <form onSubmit={handleSubmit} className="w-full max-w-[400px] flex flex-col items-center gap-8 px-4">
@@ -96,5 +87,4 @@ const SignInPage = () => {
     </div>
   );
 };
-
 export default SignInPage;
