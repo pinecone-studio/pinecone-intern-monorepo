@@ -8,6 +8,7 @@ describe('Render event menu', () => {
     cy.wait('@getConcerts');
   });
 
+  // a
   it('should show the "no concerts" message when the API returns zero concerts', () => {
     cy.intercept('POST', '**/api/graphql', {
       body: { data: { concerts: [] } },
