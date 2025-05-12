@@ -4,9 +4,9 @@ describe('SignUpPage Steps', () => {
   });
 
   it('should go from step 1 to step 3 and display the email', () => {
-    cy.get('input[placeholder="email"]').should('exist');
-    cy.get('input[placeholder="email"]').type('test@example.com');
-    cy.contains('next step').click();
+    cy.get('input[placeholder="name@example.com"]').should('exist');
+    cy.get('input[placeholder="name@example.com"]').type('test@example.com');
+    cy.contains('Continue').click();
 
     cy.contains('next step').click();
 
