@@ -29,7 +29,7 @@ const ConcertCard = ({ concert }: { concert: Concert }) => {
               })}
             </span>
           </span>
-          <span>📍{concert?.venue?.address}</span>
+          <span>📍{concert?.venue?.name}</span>
         </div>
       </div>
     </Link>
