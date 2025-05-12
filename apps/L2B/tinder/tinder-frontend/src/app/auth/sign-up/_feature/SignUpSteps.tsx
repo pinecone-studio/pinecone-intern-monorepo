@@ -14,7 +14,7 @@ const SignUpSteps = () => {
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>('');
   return (
-    <div className="flex flex-col gap-[24px]">
+    <div className="flex flex-col gap-[24px] justify-center items-center">
       <Image src="/tinder.svg" width={100} height={24} alt="tinder" />
 
       {step === 1 && <FirstStep setStep={setStep} setEmail={setEmail} />}
