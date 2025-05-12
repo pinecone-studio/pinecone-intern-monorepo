@@ -12,4 +12,7 @@ export const UserTypeDefs = gql`
     isAdmin: Boolean!
     phone: Int
   }
+  type Mutation {
+    addUser(email: String!, password: String!): User!
+  }
 `;
