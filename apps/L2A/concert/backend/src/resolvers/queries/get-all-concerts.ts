@@ -3,7 +3,7 @@ import { catchError } from '../../utils/catch-error';
 
 export const concerts = async () => {
   try {
-    const concerts = await concertModel.find();
+    const concerts = await concertModel.find().populate('venue');
     if (!concerts) {
       throw new Error('Concert not found');
     }
