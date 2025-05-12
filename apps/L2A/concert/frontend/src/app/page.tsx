@@ -10,7 +10,7 @@ const Page = () => {
   const concerts = data?.concerts?.filter((c): c is Concert => c !== null) ?? [];
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col" data-testid="dashboard">
+    <div className="bg-black text-white min-h-screen flex flex-col items-center" data-testid="dashboard">
       {loading ? (
         <LoadingText />
       ) : data?.concerts ? (

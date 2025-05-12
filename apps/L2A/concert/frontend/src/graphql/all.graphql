@@ -23,6 +23,9 @@ query concerts {
     thumbnailUrl
     doorOpen
     musicStart
+    venue {
+      address
+    }
   }
 }
 

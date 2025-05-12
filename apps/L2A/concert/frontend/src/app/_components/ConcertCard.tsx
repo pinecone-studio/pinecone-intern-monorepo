@@ -13,7 +13,7 @@ const ConcertCard = ({ concert }: { concert: Concert }) => {
       <div className="p-4 flex flex-col gap-2">
         <h3 className="font-semibold">{concert?.title}</h3>
         <p className="text-sm text-gray-400 mb-2">{concert?.artistName}</p>
-        <p className="font-semibold">Price: {concert?.primaryPrice}</p>
+        <p className="font-semibold">Үнэ: {concert?.primaryPrice}₮</p>
         <div className="flex justify-between text-xs text-gray-500 mt-1">
           <span>
             <span>
@@ -29,7 +29,7 @@ const ConcertCard = ({ concert }: { concert: Concert }) => {
               })}
             </span>
           </span>
-          <span>📍 {concert?.venue?.name}</span>
+          <span>📍{concert?.venue?.address}</span>
         </div>
       </div>
     </Link>

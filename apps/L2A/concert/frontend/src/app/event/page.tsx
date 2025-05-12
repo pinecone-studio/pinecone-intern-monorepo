@@ -10,7 +10,9 @@ const Page = () => {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col" data-testid="dashboard">
       {loading ? (
-        <LoadingText />
+        <div className=" flex justify-center w-full min-h-screen">
+          <LoadingText />
+        </div>
       ) : data?.concerts ? (
         data.concerts.length > 0 ? (
           <>
