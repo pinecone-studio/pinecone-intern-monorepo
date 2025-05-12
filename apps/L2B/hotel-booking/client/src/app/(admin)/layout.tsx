@@ -3,7 +3,7 @@ import AdminSideBar from './_components/AdminSideBar';
 
 const adminLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="flex absolute max-h-[10000px] ">
+    <div className="flex max-h-full ">
       <AdminSideBar />
       {children}
     </div>
