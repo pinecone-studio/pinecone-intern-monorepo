@@ -32,6 +32,7 @@ describe('AdminSideBar', () => {
     render(<AdminSideBar />);
     const hotelsButton = screen.getByText('Hotels');
     fireEvent.click(hotelsButton);
+    expect(hotelsButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/hotels');
   });
 
@@ -39,6 +40,7 @@ describe('AdminSideBar', () => {
     render(<AdminSideBar />);
     const guestsButton = screen.getByText('Guests');
     fireEvent.click(guestsButton);
+    expect(guestsButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/guests');
   });
 });

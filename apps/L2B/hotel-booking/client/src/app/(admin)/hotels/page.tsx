@@ -1,5 +1,5 @@
 const Hotels = () => {
-  return <div>Hotels Page</div>;
+  return <div data-cy="Hotels-Page">Hotels Page</div>;
 };
 
 export default Hotels;

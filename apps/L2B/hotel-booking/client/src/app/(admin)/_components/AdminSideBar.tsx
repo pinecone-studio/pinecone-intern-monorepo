@@ -15,7 +15,7 @@ const AdminSideBar = () => {
   const router = useRouter();
 
   return (
-    <div className="w-60 max-h-full bg-white border-r border-r-[#E2E8F0] ">
+    <div data-cy="AdminSideBar" className="w-60 max-h-full bg-white border-r border-r-[#E2E8F0] ">
       <div className="w-full max-h-full sticky top-0">
         <div className="w-full h-16 p-2  ">
           <div className="w-56 h-[3.25rem] p-2 gap-2 flex m-auto ">
