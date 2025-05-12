@@ -12,7 +12,7 @@ import AddTicketTimeInput from '../_components/AddTicketTimeInputs';
 import AddTicketSeatInput from '../_components/AddTicketSeatInputs';
 import AddTicketVenueInputs from '../_components/AddTicketVenueInfoInputs';
 import { useEffect } from 'react';
-import AddTicketImageURLInput from '../_components/AddTicketImageUrlInput.tsx';
+import AddTicketImageURLInput from '../_components/AddTicketImageUrlInput';
 
 const AddTicketDialog = () => {
   const form = useForm<z.infer<typeof AddTicketSchema>>({
