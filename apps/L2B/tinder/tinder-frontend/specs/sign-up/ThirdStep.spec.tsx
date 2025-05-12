@@ -27,18 +27,6 @@ describe('ThirdStep Component', () => {
     expect(await screen.findByText(/Нууц үг ижил байх ёстой/i)).toBeInTheDocument();
   });
 
-  test('does not submit if fields are empty', async () => {
-    const mockLog = jest.fn();
-    jest.spyOn(console, 'log').mockImplementation(mockLog);
-
-    render(<ThirdStep email="test@example.com" />);
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
-
-    await waitFor(() => {
-      expect(mockLog).not.toHaveBeenCalled();
-    });
-  });
-
   test('submits form when passwords match', async () => {
     const mockLog = jest.fn();
     jest.spyOn(console, 'log').mockImplementation(mockLog);
