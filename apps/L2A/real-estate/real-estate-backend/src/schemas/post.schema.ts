@@ -4,15 +4,23 @@ export const typeDefs = gql`
   scalar Date
 
   enum PostStatus {
-    pending
-    approved
-    declined
+    PENDING
+    SALE
+    APPROVED
+    DECLINED
+    SOLD
+    SAVED
+  }
+  enum feature{
+    CENTRAL
+  AIRY
+  PREMIUM_ZONE
   }
 
   enum PropertyType {
-    apartment
-    house
-    office
+    APARTMENT
+    HOUSE
+    OFFICE
   }
 
   input LocationInput {
@@ -30,6 +38,7 @@ export const typeDefs = gql`
     propertyOwnerId: ID!
     title: String!
     description: String!
+    feature: [feature]
     price: Float!
     images: [String]
     type: PropertyType
@@ -55,6 +64,7 @@ export const typeDefs = gql`
   propertyOwnerId: ID!
   title: String!
   description: String!
+  feature: [feature]
   price: Float!
   images: [String]
   type: PropertyType

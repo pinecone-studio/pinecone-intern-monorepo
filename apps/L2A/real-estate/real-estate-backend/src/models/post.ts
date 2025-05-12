@@ -10,6 +10,12 @@ const POST_SCHEMA = new mongoose.Schema(
       type: String,
       required: true,
     },
+    feature: [
+      {
+        type: String,
+        enum: ["CENTRAL", "AIRY","PREMIUM_ZONE"],
+      },
+    ],
     description: {
       type: String,
       required: true,
@@ -21,7 +27,7 @@ const POST_SCHEMA = new mongoose.Schema(
     images: [String],
     type: {
       type: String,
-      enum: ["apartment", "house", "office"],
+      enum: ["APARTMENT", "HOUSE", "OFFICE"],
     },
     size: Number,
     totalRooms: Number,
@@ -42,8 +48,9 @@ const POST_SCHEMA = new mongoose.Schema(
     lift: Boolean,
     status: {
       type: String,
-      enum: ["pending", "approved", "declined"],
-      default: "pending",
+      enum: ["PENDING", "SALE", "APPROVED","DECLINED", "SOLD", "SAVED"],
+      default: "PENDING",
+      required: true,
     },
   },
   {
