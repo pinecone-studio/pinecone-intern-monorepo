@@ -32,7 +32,7 @@
     "@emotion/styled": "11.11.5",
     "@graphql-tools/merge": "9.0.0",
     "@graphql-yoga/node": "^3.9.1",
-    "@hookform/resolvers": "3.9.1",
+    "@hookform/resolvers": "^5.0.1",
     "@material-tailwind/react": "2.1.9",
     "@mui/icons-material": "5.15.14",
     "@mui/material": "5.15.14",
@@ -163,7 +163,7 @@
     "vercel": "^41.7.3",
     "winston": "3.11.0",
     "yup": "1.4.0",
-    "zod": "3.23.8"
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.30",
