@@ -1,9 +1,5 @@
 const Guests = () => {
-  return (
-    <div className="ml-5">
-      <p>guests</p>
-    </div>
-  );
+  return <div className="ml-5 ">Guests Page</div>;
 };
 
 export default Guests;

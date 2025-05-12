@@ -1,8 +1,17 @@
 'use client';
 import { LogOut, Zap } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const AdminSideBar = () => {
+  const [selectedPage, setSelectedPage] = useState<string | '/hotels'>('/hotels');
+
+  const handleSelect = (uri: string) => {
+    setSelectedPage(uri);
+    router.push(uri);
+  };
+
   const router = useRouter();
 
   return (
@@ -21,17 +30,31 @@ const AdminSideBar = () => {
         </div>
         <div className="w-full h-[92vh] flex flex-col items-center justify-between p-2 ">
           <div className="w-full h-20 flex flex-col gap-1 justify-start">
-            <button onClick={() => router.push('/hotels')} className="bg-[#F4F4F5] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5 ">
+            <button
+              onClick={() => {
+                handleSelect('/hotels');
+              }}
+              className={
+                selectedPage === '/hotels' ? 'bg-[#F4F4F5] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5' : 'text-[#71717A] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5'
+              }
+            >
               <Zap size={20} strokeWidth={2} /> Hotels
             </button>
-            <button onClick={() => router.push('/guests')} className="bg-[#F4F4F5] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5 ">
+            <button
+              onClick={() => {
+                handleSelect('/guests');
+              }}
+              className={
+                selectedPage === '/guests' ? 'bg-[#F4F4F5] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5' : 'text-[#71717A] flex gap-2 items-center min-w-32 h-8 rounded-sm px-2 py-1.5'
+              }
+            >
               <Zap size={20} strokeWidth={2} /> Guests
             </button>
           </div>
           <div className="w-full h-12 p-2 flex justify-between items-center ">
             <div className="flex gap-2 items-center">
-              <div className="w-9 h-9 rounded-lg overflow-hidden">
-                <img src="https://res.cloudinary.com/da889nybx/image/upload/v1746794667/__1_nywrpt.jpg" alt="pfp" />
+              <div className="w-9 h-9 bg-slate-50 rounded-lg overflow-hidden">
+                <Image src={''} alt="" />
               </div>
               <div className="flex flex-col justify-center">
                 <h4 className="text-sm font-medium ">admin</h4>
