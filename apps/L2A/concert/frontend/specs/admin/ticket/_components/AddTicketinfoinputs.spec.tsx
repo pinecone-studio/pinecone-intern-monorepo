@@ -17,15 +17,15 @@ const Wrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
+      <form>
         <AddTicketInfoInput form={form} />
       </form>
     </Form>
   );
 };
 
-describe('AddTicketInfoInput', () => {
-  it('renders all info inputs', () => {
+describe('Ticket Info Input', () => {
+  it('should render all info inputs', () => {
     render(<Wrapper />);
 
     expect(screen.getByTestId('concert-title')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('AddTicketInfoInput', () => {
     expect(screen.getByTestId('artist-name')).toBeInTheDocument();
   });
 
-  it('allows typing into all info inputs', async () => {
+  it('should allow typing into all info inputs', async () => {
     render(<Wrapper />);
     const user = userEvent.setup();
 

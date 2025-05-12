@@ -17,7 +17,7 @@ const Wrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
+      <form>
         <AddTicketVenueInputs form={form} />
       </form>
     </Form>
@@ -25,7 +25,7 @@ const Wrapper = () => {
 };
 
 describe('AddTicketVenueInputs', () => {
-  it('renders all venue inputs', () => {
+  it('should render all venue inputs', () => {
     render(<Wrapper />);
 
     expect(screen.getByTestId('venue-name')).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('AddTicketVenueInputs', () => {
     expect(screen.getByTestId('venue-city')).toBeInTheDocument();
   });
 
-  it('allows typing into all venue inputs', async () => {
+  it('should allow typing into all venue inputs', async () => {
     render(<Wrapper />);
     const user = userEvent.setup();
 

@@ -17,7 +17,7 @@ const Wrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
+      <form>
         <AddTicketTimeInput form={form} />
       </form>
     </Form>
@@ -25,7 +25,7 @@ const Wrapper = () => {
 };
 
 describe('AddTicketTimeInput', () => {
-  it('renders all date and time inputs', () => {
+  it('should render all date and time inputs', () => {
     render(<Wrapper />);
 
     expect(screen.getByTestId('start-date')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('AddTicketTimeInput', () => {
     expect(screen.getByTestId('music-start')).toBeInTheDocument();
   });
 
-  it('allows typing/selecting date and time inputs', async () => {
+  it('should allow typing/selecting date and time inputs', async () => {
     render(<Wrapper />);
     const user = userEvent.setup();
 

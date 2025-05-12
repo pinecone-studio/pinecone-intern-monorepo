@@ -17,15 +17,15 @@ const Wrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
+      <form>
         <AddTicketSeatInput form={form} />
       </form>
     </Form>
   );
 };
 
-describe('AddTicketSeatInput', () => {
-  it('renders all seat and price inputs', () => {
+describe('Seat Input', () => {
+  it('should render all seat and price inputs', () => {
     render(<Wrapper />);
 
     expect(screen.getByLabelText(/Арын суудлын тоо/i)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe('AddTicketSeatInput', () => {
     expect(screen.getByLabelText(/Энгийн суудлын үнэ/i)).toBeInTheDocument();
   });
 
-  it('allows typing into all seat and price inputs', async () => {
+  it('should allow typing into all seat and price inputs', async () => {
     render(<Wrapper />);
     const user = userEvent.setup();
 

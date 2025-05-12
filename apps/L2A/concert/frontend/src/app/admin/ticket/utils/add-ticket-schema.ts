@@ -15,7 +15,7 @@ export const AddTicketSchema = z.object({
   startDate: z.string().min(5, 'Цаг сонгоно уу!'),
   AvialableTicketCountBackSeat: z.number().min(1, { message: 'Арын суудлын тоо оруулах ёстой!' }),
   BackSeatTicketPrice: z.number().min(4, 'Дор хаяж 1000 төгрөг оруулна уу!'),
-  AvialableTicketCountVIP: z.number().min(1, { message: 'VIP суудлын тоо оруулах ёстой!' }),
+  ticketCountVip: z.number().min(1, { message: 'VIP суудлын тоо оруулах ёстой!' }),
   VIPTicketPrice: z.number().min(4, 'Дор хаяж 1000 төгрөг оруулна уу!'),
   AvialableTicketCountStandard: z.number().min(1, { message: 'Энгийн суудлын тоо оруулах ёстой!' }),
   StandardTicketPrice: z.number().min(4, 'Дор хаяж 1000 төгрөг оруулна уу!'),

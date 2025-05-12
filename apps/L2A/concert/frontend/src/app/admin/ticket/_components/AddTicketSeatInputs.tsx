@@ -22,7 +22,7 @@ const AddTicketSeatInput = ({ form }: { form: UseFormReturn<z.infer<typeof AddTi
           )}
         />
         <FormField
-          name="AvialableTicketCountVIP"
+          name="ticketCountVip"
           control={form.control}
           render={({ field }) => (
             <FormItem>

@@ -1,7 +1,5 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-
 import { UseFormReturn } from 'react-hook-form';
 import z from 'zod';
 import { AddTicketSchema } from '../utils/add-ticket-schema';

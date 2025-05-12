@@ -1,7 +1,6 @@
 'use client';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { AddTicketSchema } from '../utils/add-ticket-schema';
@@ -13,7 +12,7 @@ import AddTicketTimeInput from '../_components/AddTicketTimeInputs';
 import AddTicketSeatInput from '../_components/AddTicketSeatInputs';
 import AddTicketVenueInputs from '../_components/AddTicketVenueInfoInputs';
 import { useEffect } from 'react';
-import AddTicketImageURLInput from '../_components/AddTicketImageURLInput';
+import AddTicketImageURLInput from '../_components/AddTicketImageUrlInput.tsx';
 
 const AddTicketDialog = () => {
   const form = useForm<z.infer<typeof AddTicketSchema>>({

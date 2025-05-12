@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { AddTicketSchema } from '@/app/admin/ticket/utils/add-ticket-schema';
 import { AddTicketDefaultValues } from '@/app/admin/ticket/utils/add-ticket-default-values';
-import AddTicketImageURLInput from '@/app/admin/ticket/_components/AddTicketImageURLInput';
+import AddTicketImageURLInput from '@/app/admin/ticket/_components/AddTicketImageUrlInput.tsx';
 import z from 'zod';
 import '@testing-library/jest-dom';
 
@@ -17,20 +17,20 @@ const Wrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})}>
+      <form>
         <AddTicketImageURLInput form={form} />
       </form>
     </Form>
   );
 };
 
-describe('AddTicketImageURLInput', () => {
-  it('renders the image URL input', () => {
+describe('Image URL', () => {
+  it('should render the image URL input', () => {
     render(<Wrapper />);
     expect(screen.getByTestId('thumbnail-url')).toBeInTheDocument();
   });
 
-  it('allows typing a URL into the input', async () => {
+  it('should allow typing a URL into the input', async () => {
     render(<Wrapper />);
     const user = userEvent.setup();
     const input = screen.getByTestId('thumbnail-url');
