@@ -11,7 +11,7 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen flex flex-col">
         <ApolloWrapper>
           <LayoutClient>{children}</LayoutClient>
         </ApolloWrapper>
