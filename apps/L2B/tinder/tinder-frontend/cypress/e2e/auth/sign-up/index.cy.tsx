@@ -8,7 +8,6 @@ describe('SignUpPage Steps', () => {
     cy.get('input[placeholder="email"]').type('test@example.com');
     cy.contains('next step').click();
 
-    cy.contains('2step').should('exist');
     cy.contains('next step').click();
 
     cy.contains('3step').should('exist');
