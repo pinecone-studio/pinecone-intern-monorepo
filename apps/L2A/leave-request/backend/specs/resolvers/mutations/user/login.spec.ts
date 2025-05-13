@@ -27,11 +27,10 @@ describe('login resolver', () => {
 
     (User.findOne as jest.Mock).mockResolvedValueOnce(mockUser);
 
-    // Женераци хийх token-ын mock
     (tokenUtils.generateAccessToken as jest.Mock).mockReturnValue('mockAccessToken');
     (tokenUtils.generateRefreshToken as jest.Mock).mockReturnValue('mockRefreshToken');
 
-    const result = // Сайжруулсан код:
+    const result = 
     await login({ email: 'test@example.com', password: 'correctPassword' });
     ;
     

@@ -4,8 +4,8 @@ export { createUser } from './user/create-user';
 export {completeSignup} from "./user/complete-user"
 export * from './otp/request-otp';
 export * from './otp/verify-otp';
-export * from './post/create-post'
-
+export * from './post/create-post';
+export * from "./post/delete-post-by-id"
 export * from './post/update-post-by-id';
 
 
