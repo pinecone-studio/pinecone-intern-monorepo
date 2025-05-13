@@ -40,6 +40,7 @@ describe('TableRow', () => {
     expect(screen.getByText('И.Алтангэрэл')).toBeInTheDocument();
     expect(screen.getByText('182’000₮')).toBeInTheDocument();
     expect(screen.getByText('10/23')).toBeInTheDocument();
+    
     const button = screen.getByText('дуусгах');
     expect(screen.getByText('дуусгах')).toBeInTheDocument();
     fireEvent.click(button);

@@ -1,7 +1,9 @@
 'use client';
 
+import Card from "./_components/Card/Page";
+
 const Page = () => {
-  return <div>Home Page</div>;
+  return <div><Card/></div>;
 };
 
 export default Page;
