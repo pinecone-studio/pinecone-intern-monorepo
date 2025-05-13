@@ -20,7 +20,7 @@ const ThirdStep = ({ email }: { email: string }) => {
   };
 
   return (
-    <div className="w-full max-w-sm p-6 space-y-6">
+    <div className="w-full max-w-sm p-6 space-y-6" data-cy="Step3">
       <div className="text-center">
         <h2 className="text-xl font-semibold text-black">Set new password for {email}</h2>
         <p className="text-sm text-gray-500">

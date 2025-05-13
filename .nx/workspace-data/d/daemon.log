@@ -1,0 +1,586 @@
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.666Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.669Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.674Z - Established a connection. Number of open connections: 1
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.675Z - Established a connection. Number of open connections: 2
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.677Z - Closed a connection. Number of open connections: 1
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.679Z - [REQUEST]: Client Request for Project Graph Received
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.695Z - Time taken for 'loadSpecifiedNxPlugins' 1.0952079999999853ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.892Z - Time taken for 'Load Nx Plugin: /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/plugins/js' 212.608833ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.896Z - Time taken for 'Load Nx Plugin: /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/plugins/project-json/build-nodes/project-json' 214.93695800000003ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.902Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.902Z - [REQUEST]: 
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.902Z - [REQUEST]: 
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:26.982Z - Time taken for 'loadDefaultNxPlugins' 221.173375ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.206Z - Time taken for 'build-project-configs' 205.86599999999999ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.750Z - [SYNC]: collect registered sync generators
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.752Z - [REQUEST]: Responding to the client. project-graph
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.760Z - Time taken for 'total for creating and serializing project graph' 1072.729458ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.763Z - Done responding to the client project-graph
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.763Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1073. Response time: 11.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.770Z - [REQUEST]: Responding to the client. handleRunPreTasksExecution
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.770Z - Done responding to the client handleRunPreTasksExecution
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.770Z - Handled PRE_TASKS_EXECUTION. Handling time: 1. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.770Z - Time taken for 'preTasksExecution' 0.36304100000006656ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.846Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.846Z - Done responding to the client handleHashTasks
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.846Z - Handled HASH_TASKS. Handling time: 15. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.926Z - [REQUEST]: Responding to the client. handleGetEstimatedTaskTimings
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.926Z - Done responding to the client handleGetEstimatedTaskTimings
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:27.926Z - Handled GET_ESTIMATED_TASK_TIMINGS. Handling time: 43. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:28.954Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:28.954Z - Done responding to the client recordOutputsHash
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:28.954Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.273Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.273Z - Done responding to the client recordOutputsHash
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.273Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.276Z - [REQUEST]: Responding to the client. handleRecordTaskRuns
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.276Z - Done responding to the client handleRecordTaskRuns
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.276Z - Handled RECORD_TASK_RUNS. Handling time: 1. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.277Z - [REQUEST]: Responding to the client. handleGetFlakyTasks
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.277Z - Done responding to the client handleGetFlakyTasks
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:29.277Z - Handled GET_FLAKY_TASKS. Handling time: 0. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:32.548Z - [REQUEST]: Responding to the client. handleRunPostTasksExecution
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:32.548Z - Done responding to the client handleRunPostTasksExecution
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:32.548Z - Handled POST_TASKS_EXECUTION. Handling time: 0. Response time: 0.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:32.548Z - Time taken for 'postTasksExecution' 0.08262500000000728ms
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:03:32.555Z - Closed a connection. Number of open connections: 0
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:40.500Z - [WATCHER]: Processing file changes in outputs
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:40.662Z - [WATCHER]: Processing file changes in outputs
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.081Z - Established a connection. Number of open connections: 1
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.082Z - Closed a connection. Number of open connections: 0
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.082Z - Established a connection. Number of open connections: 1
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.083Z - [REQUEST]: Responding to the client with an error. Daemon outdated NX_VERSION_CHANGED
+Error: NX_VERSION_CHANGED
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:94:88)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:74:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Socket.Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.085Z - Done responding to the client null
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.085Z - [REQUEST]: Client Request for Project Graph Received
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.086Z - [REQUEST]: Responding to the client. project-graph
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.086Z - Time taken for 'total for creating and serializing project graph' 0.3825840000063181ms
+Error: write EPIPE
+    at WriteWrap.onWriteComplete [as oncomplete] (node:internal/stream_base_commons:87:19) {
+  errno: -32,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.091Z - Done responding to the client project-graph
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.091Z - Socket error
+Error: write EPIPE
+    at WriteWrap.onWriteComplete [as oncomplete] (node:internal/stream_base_commons:87:19) {
+  errno: -32,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.091Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 5.
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:04:54.091Z - Closed a connection. Number of open connections: 0
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:05:52.466Z - [WATCHER]: Processing file changes in outputs
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:05:52.466Z - [WATCHER]: Stopping the watcher for /Users/zayaz/Desktop/pinecone-intern-monorepo (sources)
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:05:52.466Z - [WATCHER]: Stopping the watcher for /Users/zayaz/Desktop/pinecone-intern-monorepo (outputs)
+[NX v21.0.0 Daemon Server] - 2025-05-08T06:05:52.468Z - Server stopped because: "NX_VERSION_CHANGED"
+[NX Daemon Server] - 2025-05-08T06:05:55.672Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:05:55.681Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:05:55.683Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:05:55.685Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:05:55.686Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:05:55.689Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:05:55.750Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:05:55.750Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:05:55.750Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:05:55.794Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:05:55.795Z - Time taken for 'total for creating and serializing project graph' 106.202583ms
+[NX Daemon Server] - 2025-05-08T06:05:55.796Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:05:55.796Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 106. Response time: 2.
+[NX Daemon Server] - 2025-05-08T06:05:55.798Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:05:55.798Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:05:55.799Z - Time taken for 'total for creating and serializing project graph' 0.11754099999996015ms
+[NX Daemon Server] - 2025-05-08T06:05:55.799Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:05:55.799Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:05:55.800Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:05:56.804Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:05:56.806Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:05:56.806Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:05:56.807Z - Time taken for 'total for creating and serializing project graph' 0.21612499999991996ms
+[NX Daemon Server] - 2025-05-08T06:05:56.807Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:05:56.807Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:05:56.807Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:05:56.810Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:05:56.812Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:05:57.055Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:05:57.061Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:05:57.063Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:05:57.064Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:05:57.068Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:05:57.070Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:05:57.132Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:05:57.132Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:05:57.132Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:05:57.219Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:05:57.220Z - Time taken for 'total for creating and serializing project graph' 149.07075ms
+[NX Daemon Server] - 2025-05-08T06:05:57.220Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:05:57.220Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 149. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:05:57.222Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:05:57.222Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:05:57.223Z - Time taken for 'total for creating and serializing project graph' 0.11033399999996618ms
+[NX Daemon Server] - 2025-05-08T06:05:57.223Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:05:57.223Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:05:57.224Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:01.229Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:01.231Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:01.231Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.232Z - Time taken for 'total for creating and serializing project graph' 0.2007080000003043ms
+[NX Daemon Server] - 2025-05-08T06:06:01.232Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:01.232Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.232Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:01.235Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:01.237Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:01.474Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:01.481Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:01.485Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:01.491Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:01.492Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:01.495Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:01.540Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:01.540Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:01.540Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:01.590Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.591Z - Time taken for 'total for creating and serializing project graph' 95.14729100000002ms
+[NX Daemon Server] - 2025-05-08T06:06:01.591Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.591Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 95. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:01.593Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:01.593Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.594Z - Time taken for 'total for creating and serializing project graph' 0.10474999999999568ms
+[NX Daemon Server] - 2025-05-08T06:06:01.594Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:01.594Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:01.595Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:10.600Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:10.602Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:10.602Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:10.602Z - Time taken for 'total for creating and serializing project graph' 0.20874999999978172ms
+[NX Daemon Server] - 2025-05-08T06:06:10.602Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:10.603Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:10.603Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:10.606Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:10.608Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:10.854Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:10.864Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:10.865Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:10.866Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:10.870Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:10.872Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:10.967Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:10.967Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:10.967Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:11.141Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:11.141Z - Time taken for 'total for creating and serializing project graph' 268.49749999999995ms
+[NX Daemon Server] - 2025-05-08T06:06:11.142Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:11.142Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 269. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:11.144Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:11.144Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:11.144Z - Time taken for 'total for creating and serializing project graph' 0.11504100000001927ms
+[NX Daemon Server] - 2025-05-08T06:06:11.145Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:11.145Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:11.146Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:29.183Z - [WATCHER]: 0 file(s) created or restored, 2 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2025-05-08T06:06:29.184Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2025-05-08T06:06:29.184Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2025-05-08T06:06:29.184Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:06:29.184Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2025-05-08T06:06:29.184Z - Time taken for 'changed-projects' 0.20166600000084145ms
+[NX Daemon Server] - 2025-05-08T06:06:29.329Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:29.330Z - [REQUEST]: nx.json,package.json
+[NX Daemon Server] - 2025-05-08T06:06:29.330Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:29.966Z - Time taken for 'hash changed files from watcher' 1.8538339999977325ms
+[NX Daemon Server] - 2025-05-08T06:06:30.188Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:30.191Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:30.191Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.191Z - Time taken for 'total for creating and serializing project graph' 0.22362499999871943ms
+[NX Daemon Server] - 2025-05-08T06:06:30.192Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:30.192Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.192Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:30.195Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:30.197Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:30.557Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:30.574Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:30.575Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:30.577Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:30.578Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:30.580Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:30.628Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:30.629Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:30.629Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:30.686Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.686Z - Time taken for 'total for creating and serializing project graph' 105.764209ms
+[NX Daemon Server] - 2025-05-08T06:06:30.693Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.693Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 106. Response time: 7.
+[NX Daemon Server] - 2025-05-08T06:06:30.695Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:30.696Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.696Z - Time taken for 'total for creating and serializing project graph' 0.11108300000000781ms
+[NX Daemon Server] - 2025-05-08T06:06:30.697Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:30.697Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:30.698Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:31.700Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:31.701Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:31.702Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:31.702Z - Time taken for 'total for creating and serializing project graph' 0.11950000000001637ms
+[NX Daemon Server] - 2025-05-08T06:06:31.702Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:31.702Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:31.702Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:06:31.704Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:31.706Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:31.921Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:31.926Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:31.929Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:31.933Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:31.935Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:31.937Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:32.006Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:32.006Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:32.007Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:32.140Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:32.141Z - Time taken for 'total for creating and serializing project graph' 203.184583ms
+[NX Daemon Server] - 2025-05-08T06:06:32.141Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:32.141Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 203. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:32.142Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:32.142Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:32.142Z - Time taken for 'total for creating and serializing project graph' 0.06554199999999355ms
+[NX Daemon Server] - 2025-05-08T06:06:32.142Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:32.142Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:06:32.143Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:32.220Z - [WATCHER]: nx.json was modified
+[NX Daemon Server] - 2025-05-08T06:06:32.221Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2025-05-08T06:06:32.221Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2025-05-08T06:06:32.221Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:06:32.221Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2025-05-08T06:06:32.222Z - Time taken for 'changed-projects' 0.3453339999999798ms
+[NX Daemon Server] - 2025-05-08T06:06:32.390Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:32.390Z - [REQUEST]: nx.json
+[NX Daemon Server] - 2025-05-08T06:06:32.390Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:32.833Z - Time taken for 'hash changed files from watcher' 1.757249999999999ms
+[NX Daemon Server] - 2025-05-08T06:06:33.225Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:33.228Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:33.228Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.229Z - Time taken for 'total for creating and serializing project graph' 0.22800000000006548ms
+[NX Daemon Server] - 2025-05-08T06:06:33.229Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:33.229Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.229Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:33.233Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:33.235Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:33.472Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:33.479Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:33.484Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:33.485Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:33.488Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:33.489Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:33.584Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:33.584Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:33.584Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:33.716Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.717Z - Time taken for 'total for creating and serializing project graph' 227.134459ms
+[NX Daemon Server] - 2025-05-08T06:06:33.717Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.717Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 227. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:33.719Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:33.719Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.719Z - Time taken for 'total for creating and serializing project graph' 0.10616700000002766ms
+[NX Daemon Server] - 2025-05-08T06:06:33.720Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:33.720Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:33.721Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:36.148Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:36.151Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:36.151Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.152Z - Time taken for 'total for creating and serializing project graph' 0.229041000000052ms
+[NX Daemon Server] - 2025-05-08T06:06:36.152Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:36.152Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.152Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:36.155Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:36.157Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:36.394Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:36.401Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:36.404Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:36.404Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:36.407Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:36.408Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:36.550Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:36.550Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:36.550Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:36.677Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.678Z - Time taken for 'total for creating and serializing project graph' 268.594875ms
+[NX Daemon Server] - 2025-05-08T06:06:36.678Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.678Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 269. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:36.680Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:36.680Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.680Z - Time taken for 'total for creating and serializing project graph' 0.11112500000001546ms
+[NX Daemon Server] - 2025-05-08T06:06:36.681Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:36.681Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:36.681Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:42.727Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:42.729Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:42.729Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:42.730Z - Time taken for 'total for creating and serializing project graph' 0.21916700000019773ms
+[NX Daemon Server] - 2025-05-08T06:06:42.730Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:42.730Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:42.730Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:42.735Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:42.737Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:42.974Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:42.979Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:42.984Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:42.984Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:42.986Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:42.988Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:43.037Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:43.037Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:43.037Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:43.079Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:43.079Z - Time taken for 'total for creating and serializing project graph' 91.237583ms
+[NX Daemon Server] - 2025-05-08T06:06:43.080Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:43.080Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 91. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:43.082Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:43.082Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:43.082Z - Time taken for 'total for creating and serializing project graph' 0.10391599999999812ms
+[NX Daemon Server] - 2025-05-08T06:06:43.083Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:43.083Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:43.084Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:44.087Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:44.091Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:44.091Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.091Z - Time taken for 'total for creating and serializing project graph' 0.2104580000000169ms
+[NX Daemon Server] - 2025-05-08T06:06:44.091Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:44.092Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.092Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:44.094Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:44.096Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:44.346Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:44.353Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:44.356Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:44.360Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:44.361Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:44.363Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:44.415Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:44.416Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:44.416Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:44.495Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.496Z - Time taken for 'total for creating and serializing project graph' 132.300209ms
+[NX Daemon Server] - 2025-05-08T06:06:44.496Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.496Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 132. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:44.498Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:44.498Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.498Z - Time taken for 'total for creating and serializing project graph' 0.10408300000000281ms
+[NX Daemon Server] - 2025-05-08T06:06:44.499Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:44.499Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:44.499Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:48.503Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:48.506Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:48.506Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.506Z - Time taken for 'total for creating and serializing project graph' 0.2047500000007858ms
+[NX Daemon Server] - 2025-05-08T06:06:48.506Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:48.507Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.507Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:48.510Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-08T06:06:48.512Z - Done responding to the client null
+[NX Daemon Server] - 2025-05-08T06:06:48.760Z - Started listening on: /var/folders/wn/pyfpgsz51d9dp1h2dkf2xnbm0000gn/T/e32639a8c45cd0723abd/d.sock
+[NX Daemon Server] - 2025-05-08T06:06:48.764Z - [WATCHER]: Subscribed to changes within: /Users/zayaz/Desktop/pinecone-intern-monorepo (native)
+[NX Daemon Server] - 2025-05-08T06:06:48.769Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:48.772Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:48.774Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:48.776Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:48.829Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:06:48.829Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:48.829Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:06:48.881Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.881Z - Time taken for 'total for creating and serializing project graph' 105.138791ms
+[NX Daemon Server] - 2025-05-08T06:06:48.882Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.882Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 105. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:48.884Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:48.884Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.884Z - Time taken for 'total for creating and serializing project graph' 0.11587499999995998ms
+[NX Daemon Server] - 2025-05-08T06:06:48.884Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:48.884Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:06:48.885Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:53.401Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:54.762Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:54.763Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:54.764Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:54.764Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:06:54.764Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:54.770Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:54.770Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:54.770Z - Time taken for 'total for creating and serializing project graph' 0.10091700000066339ms
+[NX Daemon Server] - 2025-05-08T06:06:54.775Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:54.775Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 5.
+[NX Daemon Server] - 2025-05-08T06:06:54.781Z - [REQUEST]: Responding to the client. handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:06:54.790Z - Done responding to the client handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:06:54.790Z - Handled REQUEST_FILE_DATA. Handling time: 3. Response time: 9.
+[NX Daemon Server] - 2025-05-08T06:06:54.795Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:55.146Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2025-05-08T06:06:55.157Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:55.157Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:06:55.157Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:06:55.159Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:55.159Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:55.159Z - Time taken for 'total for creating and serializing project graph' 0.11070800000015879ms
+[NX Daemon Server] - 2025-05-08T06:06:55.160Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:55.160Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:55.162Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:06:55.162Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:06:55.162Z - Time taken for 'total for creating and serializing project graph' 0.13579200000003766ms
+[NX Daemon Server] - 2025-05-08T06:06:55.163Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:06:55.163Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:06:55.164Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:08.145Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:07:08.146Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:08.146Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.147Z - Time taken for 'total for creating and serializing project graph' 0.12237499999901047ms
+[NX Daemon Server] - 2025-05-08T06:07:08.147Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:08.147Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.147Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:07:08.152Z - [REQUEST]: Responding to the client. handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:07:08.153Z - Done responding to the client handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:07:08.153Z - Handled REQUEST_FILE_DATA. Handling time: 3. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:07:08.155Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:08.321Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2025-05-08T06:07:08.322Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:08.322Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:08.322Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:08.324Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:08.324Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.324Z - Time taken for 'total for creating and serializing project graph' 0.16670800000065356ms
+[NX Daemon Server] - 2025-05-08T06:07:08.327Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.327Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 3.
+[NX Daemon Server] - 2025-05-08T06:07:08.329Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:08.330Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.330Z - Time taken for 'total for creating and serializing project graph' 0.18333300000085728ms
+[NX Daemon Server] - 2025-05-08T06:07:08.330Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:08.330Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:07:08.331Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:08.354Z - [WATCHER]: .vscode/settings.json was modified
+[NX Daemon Server] - 2025-05-08T06:07:08.355Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2025-05-08T06:07:08.355Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2025-05-08T06:07:08.355Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:07:08.355Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2025-05-08T06:07:08.355Z - Time taken for 'changed-projects' 0.16358299999774317ms
+[NX Daemon Server] - 2025-05-08T06:07:08.461Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2025-05-08T06:07:08.461Z - [REQUEST]: .vscode/settings.json
+[NX Daemon Server] - 2025-05-08T06:07:08.461Z - [REQUEST]: 
+[NX Daemon Server] - 2025-05-08T06:07:08.887Z - Time taken for 'hash changed files from watcher' 0.9879580000015267ms
+[NX Daemon Server] - 2025-05-08T06:07:09.359Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-08T06:07:09.362Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:09.362Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.363Z - Time taken for 'total for creating and serializing project graph' 0.19874999999956344ms
+[NX Daemon Server] - 2025-05-08T06:07:09.363Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:09.363Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.363Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:07:09.368Z - [REQUEST]: Responding to the client. handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:07:09.369Z - Done responding to the client handleRequestFileData
+[NX Daemon Server] - 2025-05-08T06:07:09.369Z - Handled REQUEST_FILE_DATA. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2025-05-08T06:07:09.372Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:09.454Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2025-05-08T06:07:09.454Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:09.454Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-08T06:07:09.454Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2025-05-08T06:07:09.456Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:09.456Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.456Z - Time taken for 'total for creating and serializing project graph' 0.07899999999790452ms
+[NX Daemon Server] - 2025-05-08T06:07:09.456Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.456Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:07:09.458Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-08T06:07:09.459Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.459Z - Time taken for 'total for creating and serializing project graph' 0.1334580000002461ms
+[NX Daemon Server] - 2025-05-08T06:07:09.459Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-08T06:07:09.459Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2025-05-08T06:07:09.460Z - Established a connection. Number of open connections: 2
