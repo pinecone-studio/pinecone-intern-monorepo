@@ -11,7 +11,7 @@ export const SignUpHeader = ({ h3, p }: Props) => {
         <h2 className="text-[#09090b] text-[20px]">Pedia</h2>
       </div>
       <h3 className="text-[24px] leading-8 mb-[4px] font-medium font-inter">{h3}</h3>
-      <p className="font-light text-[#71717a]">{p}</p>
+      <p className="font-light text-[#71717a] text-center text-[14px]">{p}</p>
     </div>
   );
 };
