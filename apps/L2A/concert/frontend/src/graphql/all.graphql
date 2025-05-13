@@ -57,6 +57,7 @@ query Concert($concertId: String!) {
     }
     specialGuestName
     thumbnailUrl
+    primaryPrice
     title
     venue {
       address
