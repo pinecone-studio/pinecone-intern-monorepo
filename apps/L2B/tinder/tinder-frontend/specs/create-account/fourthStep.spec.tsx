@@ -1,57 +1,107 @@
-import FourthStep from '@/app/auth/create-account/_components/FourthStep';
-import { render, fireEvent } from '@testing-library/react';
+import ImageUploadPage from '@/app/auth/create-account/_components/ImageUploadPage'; // path-аа зөв тохируул
+import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-describe('FourthStep', () => {
-  it('should show error when no image is uploaded', () => {
-    render(<FourthStep setStep={mockSetStep} />);
-    fireEvent.click(screen.getByText('Next'));
-    expect(screen.getByText('Please upload at least 3 photos to continue.')).toBeInTheDocument();
-    expect(mockSetStep).not.toHaveBeenCalled();
+describe('ImageUploadPage', () => {
+  const mockSetStep = jest.fn();
+
+  beforeEach(() => {
+    mockSetStep.mockClear();
+    global.URL.createObjectURL = jest.fn(() => 'mock-url'); // File preview-ийг mock хийх
   });
 
-  it('should show error when less than 3 images are uploaded', () => {
-    render(<FourthStep setStep={mockSetStep} />);
+  it('renders title and buttons correctly', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
+    expect(screen.getByText('Upload your image')).toBeInTheDocument();
+    expect(screen.getByText('Upload image')).toBeInTheDocument();
+    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByText('Back')).toBeInTheDocument();
+  });
 
-    const fileInput = screen.getByLabelText(/upload image/i) as HTMLInputElement;
+  it('shows error if no images uploaded and Next is clicked', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
+    fireEvent.click(screen.getByText('Next'));
+    expect(screen.getByText('Please select a photo to upload.')).toBeInTheDocument();
+  });
 
-    const files = [new File(['dummy'], 'photo1.png', { type: 'image/png' }), new File(['dummy'], 'photo2.png', { type: 'image/png' })];
+  it('shows error if less than 3 images uploaded', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
 
-    fireEvent.change(fileInput, { target: { files } });
+    const input = screen.getByLabelText(/upload image/i);
+    const files = [
+      new File(['img1'], 'img1.png', { type: 'image/png' }),
+      new File(['img2'], 'img2.png', { type: 'image/png' }),
+    ];
+
+    fireEvent.change(input, { target: { files } });
     fireEvent.click(screen.getByText('Next'));
 
     expect(screen.getByText('Please upload at least 3 photos to continue.')).toBeInTheDocument();
-    expect(mockSetStep).not.toHaveBeenCalled();
   });
 
-  it('should call setStep when 3 or more images are uploaded', () => {
-    render(<FourthStep setStep={mockSetStep} />);
+  it('allows proceeding when 3 or more images are uploaded', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
 
-    const fileInput = screen.getByLabelText(/upload image/i) as HTMLInputElement;
+    const input = screen.getByLabelText(/upload image/i);
+    const files = [
+      new File(['img1'], 'img1.png', { type: 'image/png' }),
+      new File(['img2'], 'img2.png', { type: 'image/png' }),
+      new File(['img3'], 'img3.png', { type: 'image/png' }),
+      new File(['img3'], 'img4.png', { type: 'image/png' }),
+    ];
 
-    const files = [new File(['dummy'], 'photo1.png', { type: 'image/png' }), new File(['dummy'], 'photo2.png', { type: 'image/png' }), new File(['dummy'], 'photo3.png', { type: 'image/png' })];
-
-    fireEvent.change(fileInput, { target: { files } });
+    fireEvent.change(input, { target: { files } });
     fireEvent.click(screen.getByText('Next'));
 
     expect(mockSetStep).toHaveBeenCalledWith(4);
   });
 
-  it('should remove an image when remove button is clicked', () => {
-    render(<FourthStep setStep={mockSetStep} />);
+  it('removes image when remove button is clicked', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
 
-    const fileInput = screen.getByLabelText(/upload image/i) as HTMLInputElement;
+    const input = screen.getByLabelText(/upload image/i);
+    const files = [
+      new File(['img1'], 'img1.png', { type: 'image/png' }),
+      new File(['img2'], 'img2.png', { type: 'image/png' }),
+      new File(['img3'], 'img3.png', { type: 'image/png' }),
+    ];
 
-    const files = [new File(['dummy'], 'photo1.png', { type: 'image/png' }), new File(['dummy'], 'photo2.png', { type: 'image/png' }), new File(['dummy'], 'photo3.png', { type: 'image/png' })];
+    fireEvent.change(input, { target: { files } });
 
-    fireEvent.change(fileInput, { target: { files } });
+    const removeButtons = screen.getAllByRole('button').filter(btn => btn.innerHTML.includes('svg'));
+    fireEvent.click(removeButtons[0]);
 
-    // Устгах товчийг олж дарна
-    const removeButtons = screen.getAllByRole('button');
-    const removeButton = removeButtons.find((btn) => btn.innerHTML.includes('svg'));
-    fireEvent.click(removeButton!);
+    const images = screen.getAllByAltText(/Uploaded image/);
+    expect(images.length).toBe(2); // 1-ийг устгасан
+  });
 
-    // Хүлээгдэж буй үр дүн
-    expect(screen.queryAllByAltText(/Uploaded image/i).length).toBe(2);
+  it('shows "Please select a photo to upload." when no image is selected', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
+    fireEvent.click(screen.getByText('Next'));
+    expect(screen.getByText('Please select a photo to upload.')).toBeInTheDocument();
+  });
+
+  it('does nothing when no file is uploaded (handleImageUpload empty)', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
+    const input = screen.getByLabelText(/upload image/i);
+    fireEvent.change(input, { target: { files: [] } }); // files.length = 0
+    expect(screen.queryByAltText(/Uploaded image/)).not.toBeInTheDocument();
+  });
+
+  it('calls setStep(4) when at least 4 images are uploaded', () => {
+    render(<ImageUploadPage setStep={mockSetStep} />);
+  
+    const input = screen.getByLabelText(/upload image/i);
+    const files = [
+      new File(['img1'], 'img1.png', { type: 'image/png' }),
+      new File(['img2'], 'img2.png', { type: 'image/png' }),
+      new File(['img3'], 'img3.png', { type: 'image/png' }),
+      new File(['img4'], 'img4.png', { type: 'image/png' }),
+    ];
+  
+    fireEvent.change(input, { target: { files } });
+    fireEvent.click(screen.getByText('Next'));
+  
+    expect(mockSetStep).toHaveBeenCalledWith(4);
   });
 });
