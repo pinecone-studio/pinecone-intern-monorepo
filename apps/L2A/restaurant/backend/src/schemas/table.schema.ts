@@ -23,15 +23,9 @@ export const typeDefs = gql`
   input DeleteTableInput {
     _id: ID!
   }
-
-  extend type Mutation {
+  type Mutation {
     addTable(input: AddTableInput!): Table
     updateTable(input: UpdateTableInput!): Table
     deleteTable(input: DeleteTableInput!): Table
   }
-    
-  extend type Query {
-    getTableById(id: ID!): Table
-   }
-
 `;

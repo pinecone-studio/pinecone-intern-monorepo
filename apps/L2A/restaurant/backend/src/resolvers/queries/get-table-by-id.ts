@@ -4,7 +4,6 @@ import { Table } from '../../generated';
 export const getTableById = async (_: unknown, { id }: { id: string }): Promise<Table> => {
   try {
     const table = await tableModel.findById(id);
-
     if (!table) {
       throw new Error('Table not found');
     }
