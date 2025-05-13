@@ -1,18 +1,26 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar Date
 
   enum PostStatus {
-    pending
-    approved
-    declined
+    PENDING
+    SALE
+    APPROVED
+    DECLINED
+    SOLD
+    SAVED
+  }
+  enum feature {
+    CENTRAL
+    AIRY
+    PREMIUM_ZONE
   }
 
   enum PropertyType {
-    apartment
-    house
-    office
+    APARTMENT
+    HOUSE
+    OFFICE
   }
 
   input LocationInput {
@@ -29,8 +37,9 @@ export const typeDefs = gql`
     _id: ID!
     propertyOwnerId: ID!
     title: String!
-    description: String!
-    price: Float!
+    description: String
+    feature: [feature]
+    price: Float
     images: [String]
     type: PropertyType
     size: Float
@@ -52,30 +61,32 @@ export const typeDefs = gql`
   }
 
   input CreatePostInput {
-  propertyOwnerId: ID!
-  title: String!
-  description: String!
-  price: Float!
-  images: [String]
-  type: PropertyType
-  size: Float
-  totalRooms: Int
-  garage: Boolean
-  restrooms: Int
-  location: LocationInput
-  completionDate: Date
-  windowsCount: Int
-  windowType: String
-  roofMaterial: String
-  floorNumber: Int
-  balcony: Boolean
-  totalFloors: Int
-  lift: Boolean
-}
-
+    propertyOwnerId: ID!
+    title: String!
+    description: String!
+    feature: [feature]
+    price: Float!
+    images: [String]
+    type: PropertyType
+    size: Float
+    totalRooms: Int
+    garage: Boolean
+    restrooms: Int
+    location: LocationInput
+    completionDate: Date
+    windowsCount: Int
+    windowType: String
+    roofMaterial: String
+    floorNumber: Int
+    balcony: Boolean
+    totalFloors: Int
+    lift: Boolean
+  }
 
   type Mutation {
     createPost(input: CreatePostInput!): Post!
+    deletePostById(_id: ID!): Post!
+    updatePostById(_id: ID!, input: CreatePostInput!): Post!
   }
 
   type Query {

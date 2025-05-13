@@ -70,7 +70,7 @@ export const SignUpEmail = ({ setEmail, currentStep, setCurrentStep }: Props) =>
         <div className="flex-grow border-t border-gray-300"></div>
       </div>
       <Link href="/signin">
-        <Button variant={'ghost'} className="w-[350px] border-[1px]">
+        <Button data-cy="Sign-Up-Login-Button" variant={'ghost'} className="w-[350px] border-[1px]">
           Log in
         </Button>
       </Link>

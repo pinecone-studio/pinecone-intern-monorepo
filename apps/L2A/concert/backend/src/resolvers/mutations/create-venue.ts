@@ -4,12 +4,6 @@ import { catchError } from '../../utils/catch-error';
 
 export const createVenue: MutationResolvers['createVenue'] = async (_, { name, address, city, capacity }) => {
   try {
-    const existingVenue = await venueModel.findOne({ name });
-
-    if (existingVenue) {
-      throw new Error('Venue already exists');
-    }
-
     const newVenue = await venueModel.create({
       name,
       address,
