@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { Button } from '@/components/ui/button';
+import { useEffect, useRef, useState } from 'react';
 
 const otpSchema = z.object({
   otp: z.string().length(4, 'Must be 4 digits'),
@@ -18,10 +18,38 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
   const {
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<z.infer<typeof otpSchema>>({
     resolver: zodResolver(otpSchema),
   });
+
+  const [canResend, setCanResend] = useState(false);
+  const [timer, setTimer] = useState(15);
+  const [isLoading, setIsLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setCanResend(true);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const resendCode = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      console.log('Code resent for email:', email);
+      setTimer(15);
+      setCanResend(false);
+      setIsLoading(false);
+    }, 1000);
+  };
 
   const onSubmit = (data: z.infer<typeof otpSchema>) => {
     console.log('OTP submitted:', data.otp, 'for email:', email);
@@ -36,7 +64,7 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
           <h2 className="text-[#09090b] text-[20px]">Pedia</h2>
         </div>
         <h3 className="text-[24px] leading-8 mb-[4px] font-medium font-inter">Confirm email</h3>
-        <p className="font-light text-[#71717a] max-w-xs text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it’s not in your inbox.</p>
+        <p className="font-light text-[#71717a] max-w-xs text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it's not in your inbox.</p>
       </div>
       <form data-cy="otp-form" onSubmit={handleSubmit(onSubmit)} className="w-[350px] max-w-md mt-6">
         <div data-cy="otp-input" className="mb-4 flex justify-center">
@@ -45,9 +73,17 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
             textAlign="center"
             onChange={(value) => {
               setValue('otp', value);
-              if (value.length === 4) handleSubmit(onSubmit)();
+              if (value.length === 4) {
+                setIsLoading(true);
+                setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  setIsLoading(false);
+                }, 500);
+              }
             }}
             className="gap-2 justify-center"
+            disabled={isLoading}
+            ref={inputRef}
           >
             <InputOTPGroup>
               {[...Array(4)].map((_, i) => (
@@ -61,13 +97,23 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
             </p>
           )}
         </div>
-        <Button data-cy="submit-btn" type="submit" className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
-          {isSubmitting ? 'Processing...' : 'Continue'}
-        </Button>
         <div className="flex flex-col items-center gap-4 mt-4">
-          <button data-cy="resend-btn" type="button" className="text-[#2563eb] text-[14px] font-light hover:underline disabled:text-gray-400 disabled:no-underline">
-            Resend code
+          <button
+            data-cy="resend-btn"
+            type="button"
+            onClick={resendCode}
+            disabled={!canResend || isLoading}
+            className="text-[#2563eb] text-[14px] font-light hover:underline disabled:text-gray-400 disabled:no-underline"
+          >
+            {canResend ? 'Resend code' : `Resend code (${timer})`}
           </button>
+
+          {isLoading && (
+            <div role="status" className="flex items-center gap-2 mt-2">
+              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <span className="text-sm text-gray-500">Processing...</span>
+            </div>
+          )}
         </div>
       </form>
       <div className="absolute bottom-8 text-sm text-[#09090B] font-light">©2024 Pedia is an Pedia Group company.</div>

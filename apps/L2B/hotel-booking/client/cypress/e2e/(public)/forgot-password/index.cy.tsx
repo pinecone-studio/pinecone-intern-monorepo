@@ -16,7 +16,7 @@ describe('Password Reset Flow', () => {
     cy.get('[data-cy="otp-page"]').should('be.visible');
     cy.contains('test@example.com').should('be.visible');
 
-    cy.get('[data-cy="otp-input"] input').type('1234');
+    cy.get('[data-cy="otp-input"]').find('input').type('1234');
     cy.get('@consoleLog').should('be.calledWithMatch', 'OTP submitted:', '1234', 'for email:', 'test@example.com');
 
     cy.get('[data-cy="new-password-page"]').should('be.visible');
@@ -40,25 +40,48 @@ describe('Password Reset Flow', () => {
     cy.get('[data-cy="error-message"]').should('be.visible').and('contain', 'Valid email is required');
   });
 
-  it('should handle OTP page interactions and errors', () => {
-    cy.get('[data-cy="email-input"]').type('test@example.com');
+  it('should show error on wrong OTP and allow retry', () => {
+    cy.get('[data-cy="email-input"]', { timeout: 10000 }).type('test@example.com');
     cy.get('[data-cy="submit-btn"]').click();
-    cy.get('[data-cy="otp-page"]').should('be.visible');
+    cy.get('[data-cy="otp-page"]', { timeout: 10000 }).should('be.visible');
 
-    cy.get('[data-cy="otp-form"] [data-cy="submit-btn"]').click();
-    cy.get('[data-cy="error-message"]').should('be.visible').and('contain', 'Required');
+    cy.get('[data-cy="otp-input"]', { timeout: 10000 }).find('input').type('123');
+    cy.get('[data-cy="otp-form"]').submit();
 
-    cy.get('[data-cy="otp-input"] input').type('12');
-    cy.get('[data-cy="otp-form"] [data-cy="submit-btn"]').click();
-    cy.get('[data-cy="error-message"]').should('be.visible').and('contain', 'Must be 4 digits');
+    cy.get('[data-cy="error-message"]', { timeout: 3000 }).should('contain', 'Must be 4 digits');
 
-    cy.get('[data-cy="resend-btn"]').should('include.text', 'Resend code');
+    // Retry with valid OTP
+    cy.get('[data-cy="otp-input"]').find('input').clear().type('1234');
+
+    cy.get('@consoleLog').should('be.calledWithMatch', 'OTP submitted:', '1234', 'for email:', 'test@example.com');
+    cy.get('[data-cy="new-password-page"]', { timeout: 5000 }).should('exist');
+    cy.contains('test@example.com').should('exist');
+  });
+
+  it('should enable resend button after 15 seconds and restart timer on click', () => {
+    cy.get('[data-cy="email-input"]', { timeout: 10000 }).type('test@example.com');
+    cy.get('[data-cy="submit-btn"]').click();
+    cy.get('[data-cy="otp-page"]', { timeout: 10000 }).should('be.visible');
+
+    cy.get('[data-cy="resend-btn"]', { timeout: 10000 }).should('contain.text', 'Resend code (15)').and('be.disabled');
+
+    cy.wait(16000);
+
+    cy.get('[data-cy="resend-btn"]').should('contain.text', 'Resend code').and('not.be.disabled');
+
+    cy.get('[data-cy="resend-btn"]').click();
+
+    cy.get('[role="status"]').should('be.visible');
+    cy.contains('Processing...').should('be.visible');
+
+    cy.get('@consoleLog').should('be.calledWith', 'Code resent for email:', 'test@example.com');
+    cy.get('[data-cy="resend-btn"]', { timeout: 2000 }).should('contain.text', 'Resend code (15)').and('be.disabled');
   });
 
   it('should validate all password requirements and submission', () => {
     cy.get('[data-cy="email-input"]').type('test@example.com');
     cy.get('[data-cy="submit-btn"]').click();
-    cy.get('[data-cy="otp-input"] input').type('1234');
+    cy.get('[data-cy="otp-input"]').find('input').type('1234');
     cy.get('[data-cy="new-password-page"]').should('be.visible');
 
     cy.get('[data-cy="new-password-form"] [data-cy="submit-btn"]').click();
@@ -97,19 +120,26 @@ describe('Password Reset Flow', () => {
   });
 
   it('should test component unmounting for OTP timer cleanup', () => {
-    cy.get('[data-cy="email-input"]').type('test@example.com');
+    cy.get('[data-cy="email-input"]', { timeout: 10000 }).type('test@example.com');
     cy.get('[data-cy="submit-btn"]').click();
-    cy.get('[data-cy="otp-page"]').should('be.visible');
+    cy.get('[data-cy="otp-page"]', { timeout: 10000 }).should('be.visible');
 
     cy.visit('/login');
+    cy.window().then((win) => {
+      expect(win.console.error).not.to.be.called;
+    });
   });
 
   it('should test isSubmitting state in all forms', () => {
-    cy.get('[data-cy="email-input"]').type('test@example.com');
+    cy.get('[data-cy="email-input"]', { timeout: 10000 }).type('test@example.com');
     cy.get('[data-cy="submit-btn"]').click();
+    cy.get('[data-cy="otp-page"]', { timeout: 10000 }).should('be.visible');
 
-    cy.get('[data-cy="otp-input"] input').type('1234');
+    cy.get('[data-cy="otp-input"]').find('input').type('1234');
+    cy.get('[role="status"]').should('be.visible');
+    cy.contains('Processing...').should('be.visible');
 
+    cy.get('[data-cy="new-password-page"]').should('be.visible');
     cy.get('[data-cy="password-input"]').type('StrongPass123');
     cy.get('[data-cy="confirm-password-input"]').type('StrongPass123');
     cy.get('[data-cy="submit-btn"]').click();
