@@ -74,7 +74,7 @@ export const AboutEvent: FC<AboutEventProps> = ({ eventData }) => {
   }
 
   return (
-    <div className="text-white min-h-screen mx-auto space-y-8">
+    <div data-testid="about-event" className="text-white min-h-screen mx-auto space-y-8">
       <div className="flex justify-between items-center text-gray-300">
         {renderDateTime(eventData.endDate, eventData.musicStart)}
         {renderVenue(eventData.venue?.name)}

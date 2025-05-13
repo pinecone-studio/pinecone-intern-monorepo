@@ -27,7 +27,7 @@ const ConcertBanner: FC<ConcertBannerProps> = ({ eventData }) => {
   const eventTitle = eventData.title || 'Untitled Event';
 
   return (
-    <div className="relative w-full h-[400px] bg-gray-900 text-white overflow-hidden">
+    <div data-testid="concert-banner" className="relative w-full h-[400px] bg-gray-900 text-white overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-85"></div>
       </div>

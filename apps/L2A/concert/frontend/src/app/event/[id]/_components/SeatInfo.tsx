@@ -115,7 +115,7 @@ const SeatInfo: FC<SeatInfoProps> = ({ eventData }) => {
   }
 
   return (
-    <div className="space-y-6 mx-auto">
+    <div data-testid="seat-info" className="space-y-6 mx-auto">
       <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу.</p>
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
       <TicketList options={ticketOptions} />

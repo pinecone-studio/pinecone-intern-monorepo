@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe('Concert Page E2E', () => {
   const mockConcertResponse = {
     data: {
@@ -14,8 +12,23 @@ describe('Concert Page E2E', () => {
         thumbnailUrl: '/images/mock.jpg',
         primaryPrice: 100,
         specialGuestName: 'Guest B',
-        seatData: [{ date: '2025-05-20', seats: { VIP: { availableTickets: 2, price: 150 }, Standard: { availableTickets: 5, price: 75 }, Backseat: { availableTickets: 0, price: 50 } } }],
-        venue: { id: '1', name: 'Mock Venue', address: '123 Main St', city: 'Ulaanbaatar', capacity: 5000 },
+        seatData: [
+          {
+            date: '2025-05-20',
+            seats: {
+              VIP: { availableTickets: 2, price: 150 },
+              Standard: { availableTickets: 5, price: 75 },
+              Backseat: { availableTickets: 0, price: 50 },
+            },
+          },
+        ],
+        venue: {
+          id: '1',
+          name: 'Mock Venue',
+          address: '123 Main St',
+          city: 'Ulaanbaatar',
+          capacity: 5000,
+        },
       },
     },
   };
@@ -26,20 +39,31 @@ describe('Concert Page E2E', () => {
         req.reply(mockConcertResponse);
       }
     }).as('getConcert');
+
+    cy.visit('/event/123');
   });
 
   it('displays loading state then renders concert details', () => {
     cy.contains('Loading...').should('be.visible');
     cy.wait('@getConcert');
-    cy.get('[data-testid="concert-banner"]').should('contain', 'Mock Concert');
-    cy.contains('Artist A').should('be.visible');
-    cy.contains('2025-05-20').should('be.visible');
-    cy.contains('Guest B').should('be.visible');
-    cy.contains('Тоглолт үзэх өдрөө сонгоно уу.').should('be.visible');
-    cy.contains('VIP тасалбар (2)').should('be.visible');
-    cy.contains('Энгийн тасалбар (5)').should('be.visible');
-    cy.contains('Арын тасалбар (0)').should('be.visible');
-    cy.get('button').contains('Тасалбар захиалах').should('not.be.disabled');
+    cy.get('[data-testid="concert-banner"]').should('be.visible').and('contain', 'Mock Concert');
+    cy.get('[data-testid="about-event"]')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Artist A').should('be.visible');
+        cy.contains('Guest B').should('be.visible');
+        cy.contains('2025-05-20').should('be.visible');
+      });
+
+    cy.get('[data-testid="seat-info"]')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Тоглолт үзэх өдрөө сонгоно уу.').should('be.visible');
+        cy.contains('VIP тасалбар (2)').should('be.visible');
+        cy.contains('Энгийн тасалбар (5)').should('be.visible');
+        cy.contains('Арын тасалбар (0)').should('be.visible');
+        cy.get('button').contains('Тасалбар захиалах').should('not.be.disabled');
+      });
   });
 
   it('handles error state gracefully', () => {
