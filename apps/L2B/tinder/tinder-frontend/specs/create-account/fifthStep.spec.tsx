@@ -11,7 +11,7 @@ describe('Fifth component', () => {
 
   it('renders the heading text', () => {
     render(<Fifth />);
-    const heading = screen.getByText("You`'`re all set!");
+    const heading = screen.getByText('Youre all set!');
     expect(heading).toBeInTheDocument();
   });
 
