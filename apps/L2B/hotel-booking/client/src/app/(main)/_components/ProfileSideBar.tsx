@@ -16,7 +16,7 @@ const ProfileSideBar = () => {
     <div className="w-[298px]">
       <div className="w-[250px] flex flex-col gap-0.5 justify-start">
         <button
-          data-testId="Profile"
+          data-testid="Profile"
           onClick={() => {
             handleSelect('/profile');
           }}
@@ -25,7 +25,7 @@ const ProfileSideBar = () => {
           <p className="text-[14px] font-normal">Profile</p>
         </button>
         <button
-          data-testId="Contact"
+          data-testid="Contact"
           onClick={() => {
             handleSelect('/contact');
           }}
@@ -34,7 +34,7 @@ const ProfileSideBar = () => {
           <p className="text-[14px] font-normal">Contact</p>
         </button>
         <button
-          data-testId="Security"
+          data-testid="Security"
           onClick={() => {
             handleSelect('/security');
           }}
