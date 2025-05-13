@@ -11,25 +11,3 @@ mutation AddUser($email: String!, $password: String!) {
     relation
   }
 }
-
-query GetUser($id: ID!) {
-  getUser(_id: $id) {
-    birth
-    email
-    firstName
-    lastName
-    phone
-    relation
-  }
-}
-
-query GetUsers {
-  getUsers {
-    birth
-    email
-    firstName
-    lastName
-    phone
-    relation
-  }
-}
