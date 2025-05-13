@@ -8,7 +8,7 @@ import FifthStep from '../_components/FifthStep';
 import Image from 'next/image';
 
 const CreateAccountSteps = () => {
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(3);
   const Steps = [FirstStep, SecondStep, ThirdStep, FourthStep, FifthStep][step];
   return (
     <div className="flex flex-col gap-[24px]  w-full items-center mt-[80px]">
