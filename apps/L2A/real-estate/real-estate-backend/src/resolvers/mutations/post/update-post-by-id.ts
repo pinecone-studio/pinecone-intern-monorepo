@@ -1,4 +1,3 @@
-import { CreatePostInput } from "../../../generated";
 import { POST_MODEL } from "../../../models/post";
 
 export const updatePostById = async(_: any, args: { _id: string; input: any }) => {
