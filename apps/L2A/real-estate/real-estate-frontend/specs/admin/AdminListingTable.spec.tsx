@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AdminListingTable, { Listing } from '@/app/admin/_components/AdminListingTable';
-import { MockedProvider } from '@apollo/client/testing';
-import { GetPostsDocument } from '@/generated';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { GetPostsDocument, GetPostsQuery } from '@/generated';
 
 const mockPush = jest.fn();
 
@@ -31,7 +31,7 @@ const mockListings: Listing[] = [
   },
 ];
 
-const mocks = [
+const mocks: MockedResponse<GetPostsQuery>[] = [
   {
     request: {
       query: GetPostsDocument,
@@ -44,19 +44,23 @@ const mocks = [
   },
 ];
 
-const loadingMock = [
+const loadingMock: MockedResponse<GetPostsQuery>[] = [
   {
     request: {
       query: GetPostsDocument,
     },
-    result: new Promise(() => {}),
   },
 ];
 
-const errorMock = [
+const errorMock: MockedResponse<GetPostsQuery>[] = [
   {
     request: {
       query: GetPostsDocument,
+    },
+    result: {
+      data: {
+        getPosts: [],
+      },
     },
     error: new Error('Mocked error'),
   },
