@@ -22,4 +22,26 @@ describe('UserListingPage', () => {
     const tbody = rowgroups[1];
     expect(within(tbody).getAllByRole('row')).toHaveLength(2);
   });
+
+  it('filters listings by all statuses to cover branches', () => {
+    const statuses = ['Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Буцаагдсан', 'Хадгалсан'];
+
+    render(<UserListingPage />);
+
+    statuses.forEach((status) => {
+      fireEvent.click(screen.getByRole('button', { name: status }));
+      const rowgroups = screen.getAllByRole('rowgroup');
+      const tbody = rowgroups[1];
+      expect(within(tbody).getAllByRole('row').length).toBeGreaterThan(0);
+    });
+  });
+
+  it('shows all listings again after returning to "Зарууд" tab', () => {
+    render(<UserListingPage />);
+    fireEvent.click(screen.getByRole('button', { name: 'Хадгалсан' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Зарууд' }));
+    const rowgroups = screen.getAllByRole('rowgroup');
+    const tbody = rowgroups[1];
+    expect(within(tbody).getAllByRole('row')).toHaveLength(10);
+  });
 });
