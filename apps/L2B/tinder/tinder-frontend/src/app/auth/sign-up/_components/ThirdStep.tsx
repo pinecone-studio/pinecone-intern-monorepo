@@ -9,11 +9,18 @@ import { Input } from '@/components/ui/input';
 
 const passwordForm = z
   .object({
-    password: z.string(),
-    confirm: z.string(),
+    password: z
+      .string()
+      .min(1, 'Password can not be empty')
+      .min(8, 'Password needs to be at least 8 letters.')
+      .regex(/[A-Z]/, 'At least one capital letter needs to be included.')
+      .regex(/[0-9]/, 'At least one number needs to be included.')
+      .regex(/[^A-Za-z0-9]/, 'At least one special character needs to be included.'),
+    confirm: z.string().min(1, 'Password can not be empty.'),
+    email: z.string(),
   })
   .refine((data) => data.password === data.confirm, {
-    message: 'Нууц үг ижил байх ёстой.',
+    message: 'Password do not match',
     path: ['confirm'],
   });
 
@@ -23,6 +30,7 @@ const ThirdStep = ({ email }: { email: string }) => {
     defaultValues: {
       password: '',
       confirm: '',
+      email,
     },
   });
 
@@ -45,9 +53,8 @@ const ThirdStep = ({ email }: { email: string }) => {
               <FormItem>
                 <FormLabel className="font-bold">Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="********" {...field} />
+                  <Input type="password" placeholder="********" data-testid="password-input" {...field} />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -59,9 +66,8 @@ const ThirdStep = ({ email }: { email: string }) => {
               <FormItem>
                 <FormLabel className="font-bold">Confirm Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="********" {...field} />
+                  <Input type="password" placeholder="********" data-testid="confirm-password-input" {...field} />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
