@@ -83,3 +83,15 @@ query Concert($concertId: String!) {
     }
   }
 }
+
+mutation createVenue($name: String!, $address: String!, $city: String!, $capacity: Int!) {
+  createVenue(name: $name, address: $address, city: $city, capacity: $capacity) {
+    id
+  }
+}
+
+mutation CreateConcert($input: CreateConcertInput!) {
+  createConcert(input: $input) {
+    id
+  }
+}
