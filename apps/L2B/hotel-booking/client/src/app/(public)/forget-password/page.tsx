@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { ForgetPasswordEmail } from './_features/ForgetPasswordEmail';
 import { ForgetPasswordNew } from './_features/ForgetPasswordNew';
-import { ForgetPasswordOtp } from './_features/ForgetPasswordOTP';
+import { ForgetPasswordOtp } from './_features/ForgetPasswordStep3';
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState('');
