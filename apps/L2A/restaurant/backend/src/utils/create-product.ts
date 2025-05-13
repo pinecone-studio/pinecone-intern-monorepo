@@ -7,7 +7,7 @@ export const createProduct = async (input: AddProductInput) => {
     return await productModel.create({
       name: input.name,
       price: input.price,
-      description: input.description,
+      status: input.status,
       images: input.images,
       category: new Types.ObjectId(input.category),
     });

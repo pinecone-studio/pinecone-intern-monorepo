@@ -9,7 +9,7 @@ describe('updateProduct', () => {
     _id: '12345',
     name: 'Test Product',
     price: 100,
-    description: 'A test product',
+    status: true,
     images: ['image1.jpg'],
     category: new Types.ObjectId(),
   };
@@ -19,7 +19,7 @@ describe('updateProduct', () => {
       _id: mockProduct._id,
       name: mockProduct.name,
       price: mockProduct.price,
-      description: mockProduct.description,
+      status: mockProduct.status,
       images: mockProduct.images,
       category: mockProduct.category.toString(),
     },
@@ -40,7 +40,7 @@ describe('updateProduct', () => {
       {
         name: mockProduct.name,
         price: mockProduct.price,
-        description: mockProduct.description,
+        status: mockProduct.status,
         images: mockProduct.images,
         category: expect.any(Types.ObjectId),
       },
