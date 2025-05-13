@@ -18,7 +18,7 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
   const {
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<z.infer<typeof otpSchema>>({
     resolver: zodResolver(otpSchema),
   });
@@ -64,6 +64,7 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
           <h2 className="text-[#09090b] text-[20px]">Pedia</h2>
         </div>
         <h3 className="text-[24px] leading-8 mb-[4px] font-medium font-inter">Confirm email</h3>
+
         <p className="font-light text-[#71717a] max-w-xs text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it&#39;s not in your inbox.</p>
       </div>
       <form data-cy="otp-form" onSubmit={handleSubmit(onSubmit)} className="w-[350px] max-w-md mt-6">
@@ -78,7 +79,7 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
                 setTimeout(() => {
                   handleSubmit(onSubmit)();
                   setIsLoading(false);
-                }, 500); 
+                }, 500);
               }
             }}
             className="gap-2 justify-center"
