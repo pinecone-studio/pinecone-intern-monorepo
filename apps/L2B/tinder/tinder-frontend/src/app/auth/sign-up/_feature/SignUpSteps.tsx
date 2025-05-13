@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import FirstStep from '../_components/FirstStep';
-import SecondStep from '../_components/SecondStep';
+import SecondStep from './SecondStep';
 import ThirdStep from '../_components/ThirdStep';
 
 export type StepOneProps = {
