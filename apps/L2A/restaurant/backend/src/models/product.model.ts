@@ -21,8 +21,8 @@ const productSchema = new Schema<Product>({
     type: Number,
     required: true,
   },
-  description: {
-    type: String,
+  status: {
+    type: Boolean,
     required: true,
   },
   images: {
