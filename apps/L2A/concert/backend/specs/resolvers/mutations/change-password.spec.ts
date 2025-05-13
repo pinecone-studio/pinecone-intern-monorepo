@@ -45,4 +45,10 @@ describe('changeCurrentPassword', () => {
 
     expect(result).toEqual(updatedUser);
   });
+
+  it('should throw an error', async () => {
+    (userModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('Серверийн алдаа'));
+
+    await expect(changeCurrentPassword({}, args, context, info)).rejects.toThrow(new Error('Серверийн алдаа'));
+  });
 });
