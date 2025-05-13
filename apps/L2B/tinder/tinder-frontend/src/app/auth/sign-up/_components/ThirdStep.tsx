@@ -78,7 +78,6 @@ const ThirdStep = ({ email }: { email: string }) => {
           </Button>
         </form>
       </Form>
-      <p>{email}</p>
     </div>
   );
 };
