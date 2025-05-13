@@ -1,5 +1,5 @@
 'use client';
-import AdminSideBar from '@/app/(admin)/_components/AdminSideBar';
+import ProfileSideBar from '@/app/(main)/_components/ProfileSideBar';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
@@ -22,14 +22,14 @@ describe('ProfileSideBar', () => {
   });
 
   it('renders sidebar correctly', () => {
-    render(<AdminSideBar />);
+    render(<ProfileSideBar />);
     expect(screen.getByTestId('Profile')).toBeInTheDocument();
     expect(screen.getByTestId('Contact')).toBeInTheDocument();
     expect(screen.getByTestId('Security')).toBeInTheDocument();
   });
 
   it('navigates to /profile when Profile button is clicked', () => {
-    render(<AdminSideBar />);
+    render(<ProfileSideBar />);
     const profileButton = screen.getByTestId('Profile');
     fireEvent.click(profileButton);
     expect(profileButton).toHaveClass('bg-[#F4F4F5]');
@@ -37,7 +37,7 @@ describe('ProfileSideBar', () => {
   });
 
   it('navigates to /contact when Contact button is clicked', () => {
-    render(<AdminSideBar />);
+    render(<ProfileSideBar />);
     const contactButton = screen.getByText('Contact');
     fireEvent.click(contactButton);
     expect(contactButton).toHaveClass('bg-[#F4F4F5]');
@@ -45,7 +45,7 @@ describe('ProfileSideBar', () => {
   });
 
   it('navigates to /security when Security button is clicked', () => {
-    render(<AdminSideBar />);
+    render(<ProfileSideBar />);
     const securityButton = screen.getByText('Security');
     fireEvent.click(securityButton);
     expect(securityButton).toHaveClass('bg-[#F4F4F5]');
