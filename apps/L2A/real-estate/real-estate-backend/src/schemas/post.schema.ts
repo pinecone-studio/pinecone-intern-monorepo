@@ -86,6 +86,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createPost(input: CreatePostInput!): Post!
+    deletePostById(_id: ID!): Post!
   }
 
   type Query {
