@@ -20,4 +20,7 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     interceptGraphql(props: InterceptGraphqlType): void;
   }
+  interface Chainable<Subject> {
+    clerkLogin(location: string, email: string): void;
+  }
 }
