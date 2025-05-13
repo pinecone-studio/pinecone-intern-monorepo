@@ -1,27 +1,78 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
-import Image from 'next/image'
+import { useAuth } from '@/hooks/useAuth';
+import Link from 'next/link';
+import * as React from "react" 
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useRouter } from 'next/navigation';
 
-const Header=()=>{
+const Header = () => {
+  const { user, isLoggedIn, loading } = useAuth();
+  const router = useRouter();
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    router.refresh();
+  };
+
   return (
-    <div className="w-full bg-white border-b">
-      <header className="max-w-[1280px] mx-auto flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-3 gap-2">
+    <header className="border-b">
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center py-2 px-6">
         <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="logo" width={32} height={32} className="object-contain" />
-          <span className="text-lg font-semibold">Home Vault</span>
+          <img src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
+          <span className="font-bold">Home Vault</span>
         </div>
-        <div className="flex gap-2 items-center flex-wrap justify-end">
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white flex items-center gap-1 rounded-xl px-4 py-2">
-            <Plus className="w-4 h-4" /> Зар оруулах
-          </Button>
-          <Button variant="ghost" className="text-sm">Бүртгүүлэх</Button>
-          <Button variant="ghost" className="text-sm">Нэвтрэх</Button>
+
+        <div className="flex gap-4 items-center">
+          <Link href="/create" className="bg-orange-500 text-white px-4 py-1.5 rounded-md">
+            + Зар оруулах
+          </Link>
+
+          {!loading && (
+            <>
+              {isLoggedIn ? (
+                <>
+                  <Link href="/my-listings">Миний зарууд</Link>
+                  <span className="text-gray-600 text-sm">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">{user?.email}</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56" forceMount>
+                        <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuCheckboxItem 
+                          onClick={handleLogout}
+                          className='text-red-500'
+                          data-testid="logout-button"
+                        >
+                          Гарах
+                        </DropdownMenuCheckboxItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Link href="/signup">Бүртгүүлэх</Link>
+                  <Link href="/signin">Нэвтрэх</Link>
+                </>
+              )}
+            </>
+          )}
         </div>
-      </header>
-    </div>
-  )
-}
-export default Header
- 
+      </div>
+    </header>
+  );
+};
+
+export default Header;

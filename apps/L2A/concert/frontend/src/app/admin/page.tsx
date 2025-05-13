@@ -1,10 +1,7 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import AdminLogin from './_featured/AdminLogin';
 
-const AdminPage = () => {
-  const router = useRouter();
-  router.push('/admin/ticket');
-  return <div></div>;
+const Admin = () => {
+  return <AdminLogin />;
 };
-
-export default AdminPage;
+export default Admin;

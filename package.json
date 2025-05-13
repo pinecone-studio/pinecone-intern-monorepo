@@ -32,7 +32,7 @@
     "@emotion/styled": "11.11.5",
     "@graphql-tools/merge": "9.0.0",
     "@graphql-yoga/node": "^3.9.1",
-    "@hookform/resolvers": "3.9.1",
+    "@hookform/resolvers": "^5.0.1",
     "@material-tailwind/react": "2.1.9",
     "@mui/icons-material": "5.15.14",
     "@mui/material": "5.15.14",
@@ -151,6 +151,7 @@
     "react-toastify": "10.0.5",
     "shadcn": "^2.1.8",
     "sonner": "1.5.0",
+    "sonnet": "^0.0.1",
     "styled-components": "6.1.8",
     "swiper": "^11.2.1",
     "tailwind-merge": "2.3.0",
@@ -159,10 +160,10 @@
     "tslib": "2.3.0",
     "validator": "^13.12.0",
     "vaul": "0.9.1",
-    "vercel": "^41.6.1",
+    "vercel": "^41.7.3",
     "winston": "3.11.0",
     "yup": "1.4.0",
-    "zod": "3.23.8"
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.30",

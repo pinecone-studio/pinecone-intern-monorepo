@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ListingCard from '@/app/home/_components/ListingCard';
 import BuildingDetails from './BuildingDetails';
+import StatusSelect from './StatusSelect';
 
 type Props = {
   listing: {
@@ -14,7 +15,6 @@ type Props = {
 
 const ListingDetailAdminView = ({ listing }: Props) => {
   const [status, setStatus] = useState('Хүлээгдэж буй');
-  const statuses = ['Хүлээгдэж буй', 'Зөвшөөрөх', 'Татгалзах'];
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -32,7 +32,6 @@ const ListingDetailAdminView = ({ listing }: Props) => {
                 <p className="text-gray-500">Утасны дугаар</p>
                 <p className="font-medium">99112233</p>
               </div>
-
               <div>
                 <p className="text-gray-500">Нэр</p>
                 <p className="font-medium">Seoul royal county хотхон</p>
@@ -41,7 +40,6 @@ const ListingDetailAdminView = ({ listing }: Props) => {
                 <p className="text-gray-500">Үнэ</p>
                 <p className="font-medium">880,000,000₮</p>
               </div>
-
               <div>
                 <p className="text-gray-500">Талбай</p>
                 <p className="font-medium">200.0 м²</p>
@@ -50,7 +48,6 @@ const ListingDetailAdminView = ({ listing }: Props) => {
                 <p className="text-gray-500">Унтлагын өрөө</p>
                 <p className="font-medium">4 өрөө</p>
               </div>
-
               <div>
                 <p className="text-gray-500">Ариун цэврийн өрөө</p>
                 <p className="font-medium">2 өрөө</p>
@@ -63,11 +60,7 @@ const ListingDetailAdminView = ({ listing }: Props) => {
 
             <div className="text-sm">
               <p className="text-gray-500 mb-1">Дэлгэрэнгүй тайлбар</p>
-              <p className="text-gray-800">
-                Seoul Royal County хотхонд тавтай морилно уу! Зайсанд байрлах энэхүү орчин үеийн, бараг шинэ, фермерийн хэв маягтай үзэсгэлэнтэй байр нь онцгой, дахин давтагдашгүй шийдлүүдтэй. Шилэн
-                эргэдэг хаалга нь таньж хоёр давхар өндөртэй, тэнгэрийн цонх, 16 фут урт эвхэгддэг хаалттай их тансаг руу чиглүүлж, улмаар өргөн задгай талбай руу гаргана. Гэр дотор болон гадаа орчинд
-                амьдрах боломжтой энэхүү байшин нь зочдыг хүлээн авахад тохиромжтой.
-              </p>
+              <p className="text-gray-800">Seoul Royal County хотхонд тавтай морилно уу! ...</p>
             </div>
           </div>
 
@@ -84,9 +77,7 @@ const ListingDetailAdminView = ({ listing }: Props) => {
 
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-semibold mb-2">Байршил</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Please tell us the name of the guest staying at the hotel as it appears on the ID that they’ll present at check-in. If the guest has more than one last name, please enter them all.
-            </p>
+            <p className="text-sm text-gray-500 mb-4">Please tell us the name of the guest...</p>
             <div className="grid grid-cols-2 gap-4 text-sm text-gray-800 mb-2">
               <div>
                 <p className="text-gray-500">Дүүрэг</p>
@@ -111,13 +102,7 @@ const ListingDetailAdminView = ({ listing }: Props) => {
 
           <div className="mt-4">
             <label className="text-sm font-medium mb-1 block">Төлөв</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)} className="w-full border px-3 py-2 rounded-md text-sm">
-              {statuses.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
+            <StatusSelect value={status} onChange={(newStatus) => setStatus(newStatus)} />
           </div>
         </div>
       </div>

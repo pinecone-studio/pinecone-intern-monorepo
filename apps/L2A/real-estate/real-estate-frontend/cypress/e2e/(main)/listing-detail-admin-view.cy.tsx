@@ -18,7 +18,7 @@ describe('ListingDetailAdminView E2E', () => {
 
   it('renders image gallery with 8 images', () => {
     cy.contains('Зураг').should('be.visible');
-    cy.get('div[role="img"], img').should('have.length', 8);
+    cy.get('img[alt="listing"]').should('have.length', 8);
   });
 
   it('displays correct location section', () => {
@@ -32,7 +32,7 @@ describe('ListingDetailAdminView E2E', () => {
     cy.contains('Барилгын дэлгэрэнгүй').should('be.visible');
     cy.contains('2012').should('be.visible');
     cy.contains('6').should('be.visible');
-    cy.contains('Төмөр вакум').should('have.length', 2);
+    cy.get('p').contains('Төмөр вакум').should('have.length.at.least', 1);
     cy.contains('4 давхарт').should('be.visible');
     cy.contains('5 давхарт').should('be.visible');
     cy.contains('Ламинат').should('be.visible');
@@ -40,9 +40,11 @@ describe('ListingDetailAdminView E2E', () => {
     cy.contains('Байгаа').should('be.visible');
   });
 
-  it('can change status dropdown', () => {
+  it('can change status dropdown and show success toast', () => {
     cy.get('select').should('have.value', 'Хүлээгдэж буй');
     cy.get('select').select('Зөвшөөрөх');
     cy.get('select').should('have.value', 'Зөвшөөрөх');
+    cy.contains('Төлөв амжилттай солигдлоо').should('be.visible');
+    cy.contains('Thank you for your review!').should('be.visible');
   });
 });

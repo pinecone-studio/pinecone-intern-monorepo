@@ -11,14 +11,14 @@ describe('CreatePostRoom', () => {
     onBlur: jest.fn(),
   };
 
-  it('renders label and input correctly', () => {
+  it('should renders label and input correctly', () => {
     render(<CreatePostRoom {...defaultProps} />);
 
     expect(screen.getByLabelText('Өрөө')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Өрөөний тоо')).toBeInTheDocument();
   });
 
-  it('calls onChange when input value changes', () => {
+  it('should calls onChange when input value changes', () => {
     render(<CreatePostRoom {...defaultProps} />);
 
     const input = screen.getByTestId('room');
@@ -27,7 +27,7 @@ describe('CreatePostRoom', () => {
     expect(defaultProps.onChange).toHaveBeenCalled();
   });
 
-  it('calls onBlur when input loses focus', () => {
+  it('should calls onBlur when input loses focus', () => {
     render(<CreatePostRoom {...defaultProps} />);
 
     const input = screen.getByTestId('room');
@@ -36,7 +36,7 @@ describe('CreatePostRoom', () => {
     expect(defaultProps.onBlur).toHaveBeenCalled();
   });
 
-  it('shows error message when error prop is provided', () => {
+  it('should shows error message when error prop is provided', () => {
     render(<CreatePostRoom {...defaultProps} error="Алдаа гарлаа" />);
 
     expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
