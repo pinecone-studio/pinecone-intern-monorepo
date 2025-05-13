@@ -1,11 +1,9 @@
 'use client';
 
-import type React from 'react';
-
 import { useState } from 'react';
-import Image from 'next/image';
-import { X, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { StepFourthCart } from './_components/StepFourthCart';
 
 const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -52,14 +50,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
             .fill(0)
             .map((_, index) => {
               if (index < selectedImages.length) {
-                return (
-                  <div key={index} className="relative w-[197px] h-[296px] overflow-hidden rounded-md bg-gray-100">
-                    <Image src={selectedImages[index] || '/placeholder.svg'} alt={`Uploaded image ${index + 1}`} fill className="object-cover" />
-                    <button onClick={() => removeImage(index)} className="absolute w-8 h-8 right-1 top-1 rounded-[10px] bg-white p-1 shadow-md">
-                      <X className="h-4 w-4 text-gray-600 m-auto" />
-                    </button>
-                  </div>
-                );
+                return <StepFourthCart key={index} index={index} selectedImages={selectedImages} removeImage={removeImage} />;
               } else {
                 return <div key={index} className="flex w-[197px] h-[296px] items-center justify-center rounded-md bg-gray-100"></div>;
               }
