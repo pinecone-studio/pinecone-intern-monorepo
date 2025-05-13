@@ -4,7 +4,7 @@ export const QueryTypeDefs = gql`
   type Query {
     concerts: [Concert]!
     concert(concertId: String!): Concert!
-    venues: [Venue!]!
+    venues: [Venue]!
     tickets(concertId: ID!): [Ticket]!
     user(id: ID!): User
     bookings(userId: ID!): [Booking]!

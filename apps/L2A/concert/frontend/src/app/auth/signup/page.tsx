@@ -6,16 +6,19 @@ import { useAddUserMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import { SignUpSchema } from '../utils/signup-schema';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
-  const [addUser] = useAddUserMutation();
+  const [addUser, { error }] = useAddUserMutation();
   const [userRegistered, setUserRegistered] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
@@ -30,17 +33,12 @@ const SignUpForm = () => {
       if (response.data?.addUser) {
         setUserRegistered(true);
         form.reset();
+        router.push('/auth/signin');
       }
     } catch (error) {
       console.error('Signup error:', error);
     }
   };
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setUserRegistered(false);
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, [userRegistered]);
 
   return (
     <div data-cy="signup-form" className="flex justify-center items-center h-[100vh] w-[100%]">
@@ -111,6 +109,7 @@ const SignUpForm = () => {
               />
 
               {userRegistered && <p className="text-green-500 text-center">Бүртгэл амжилттай!</p>}
+              {error && <p className="text-red-500 text-center">{error.message}</p>}
 
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="w-[350px] h-[36px] mt-[12px] bg-[#00B7F4]">
                 {form.formState.isSubmitting ? 'Илгээж байна...' : 'Бүртгүүлэх'}

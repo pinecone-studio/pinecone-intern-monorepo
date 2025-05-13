@@ -7,11 +7,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { LoginSchema } from '../utils/login-schema';
 import { useLoginUserMutation } from '@/generated';
+import { useAuth } from '@/app/_components/context/AuthContext';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
-  const [loginUser] = useLoginUserMutation();
+  const router = useRouter();
+  const { setJWT } = useAuth();
+  const [loginUser, { error }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
+    mode: 'onChange',
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
@@ -19,20 +24,21 @@ const LoginForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
     try {
       const response = await loginUser({ variables: values });
       if (response.data?.loginUser.JWT) {
         const now = new Date();
         const expiry = now.getTime() + 24 * 60 * 60 * 1000;
-
         localStorage.setItem('token', response.data.loginUser.JWT);
+        setJWT(response.data.loginUser.JWT);
         localStorage.setItem('tokenExpiry', expiry.toString());
+        router.push('/');
       }
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
+
   return (
     <div data-cy="signin-form" className="flex justify-center h-[100vh] items-center w-[100%]">
       <div>
@@ -66,12 +72,13 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
+              {error && <div className="text-red-500 text-sm">{error.message}</div>}
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="w-[350px] h-[36px] mt-[12px] bg-[#00B7F4]">
                 {form.formState.isSubmitting ? 'Түр хүлээнэ үү...' : 'Нэвтрэх'}
               </Button>
               <div className="text-[#A1A1AA] text-center text-sm mt-6">
                 Та бүртгэлтэй хаягтай бол{' '}
-                <Link href={`/auth/signin`} className="cursor-pointer underline">
+                <Link href={`/auth/signup`} className="cursor-pointer underline">
                   бүртгүүлэх
                 </Link>{' '}
                 хэсгээр орно уу!

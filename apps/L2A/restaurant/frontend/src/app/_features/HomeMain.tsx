@@ -10,7 +10,7 @@ const HomeMain = () => {
 
   return (
     <div data-cy="home-page">
-      <main className="flex items-center flex-col w-[95%] mx-auto pt-10">
+      <main className="flex items-center flex-col w-full mx-auto pt-10">
         <div className="text-[#441500] text-[19px] font-extralight mb-5">Хоолны цэс</div>
 
         <div data-cy="food" className="flex gap-2 mb-4">
@@ -18,7 +18,7 @@ const HomeMain = () => {
             <button
               data-cy="category-buttons"
               key={categor.id}
-              className={`px-3 py-1 rounded ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
+              className={`px-3 py-1 rounded text-[13px] ${selectedCategoryId === categor.id ? 'bg-[#F4F4F5] text-black' : 'bg-white'}`}
               onClick={() => setSelectedCategoryId(categor.id)}
             >
               {categor.name}
@@ -26,7 +26,7 @@ const HomeMain = () => {
           ))}
         </div>
 
-        <div data-cy="foodsdiv" className="flex flex-wrap justify-around gap-10 grid grid-cols-2">
+        <div data-cy="foodsdiv" className="items-center gap-5 grid grid-cols-2">
           {selectedCategory?.foods.map((food) => (
             <RenderFood key={food.id} food={food} />
           ))}

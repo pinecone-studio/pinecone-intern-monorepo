@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -12,7 +12,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
-const SignInForm =  ()=> {
+const SignInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -25,16 +25,14 @@ const SignInForm =  ()=> {
 
     try {
       const { data } = await loginUser({ variables: { email, password } });
-      Cookies.set('token', data.loginUser.token, { expires: 2, secure: true });
+      localStorage.setItem(`token`, data.loginUser.token);
       router.push('/');
+      router.refresh();
     } catch (err) {
-      
-        console.error(err); 
-        setError('Login failed');
-      }
-     
+      console.error(err);
+      setError('Login failed');
     }
-  
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -54,9 +52,14 @@ const SignInForm =  ()=> {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Password
-        </label>
+        <div className="flex justify-between text-blue-600 cursor-pointer">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <Link href="/forget-password" className="text-sm font-medium text-blue-600 hover:text-blue-500 underline" data-cy="forgot-password-link">
+            Forget Password?
+          </Link>
+        </div>
         <input
           id="password"
           type="password"
@@ -69,17 +72,16 @@ const SignInForm =  ()=> {
         />
       </div>
 
-      {error && <p className="text-red-500 text-sm" data-cy="error message">{error}</p>}
+      {error && (
+        <p className="text-red-500 text-sm" data-cy="error message">
+          {error}
+        </p>
+      )}
 
-      <button
-        type="submit"
-        className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600"
-        disabled={loading}
-        data-cy="submit-button"
-      >
+      <button type="submit" className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600" disabled={loading} data-cy="submit-button">
         {loading ? 'Logging in...' : 'Continue'}
       </button>
     </form>
   );
-}
+};
 export default SignInForm;

@@ -1,61 +1,68 @@
-import { addProduct } from "../../../src/resolvers/mutations/add-product"; 
-import { productModel } from "../../../src/models/product.model"; 
-import { Types } from "mongoose";
+import { addProduct } from '../../../src/resolvers/mutations/add-product';
+import { productModel } from '../../../src/models/product.model';
+import { Types } from 'mongoose';
+import { createProduct } from '../../../src/utils/create-product';
 
-// ✅ Properly mock productModel.create
-jest.mock("../../../src/models/product.model", () => ({
+jest.mock('../../../src/models/product.model', () => ({
   productModel: {
-    create: jest.fn(), // mock the create function
+    create: jest.fn(),
   },
 }));
 
-describe("addProduct", () => {
-  const mockProduct = {
-    _id: "12345",
-    name: "Test Product",
-    price: 1000,
-    description: "A test product",
-    images: ["image1.jpg"],
-    category: new Types.ObjectId(),
+describe('Product resolvers', () => {
+  const mockCreate = productModel.create as jest.Mock;
+
+  const input = {
+    name: 'Test Product',
+    price: 100,
+    status: true,
+    images: ['img1.jpg'],
+    category: new Types.ObjectId().toHexString(),
   };
 
-  it("should add a new product to the database", async () => {
-    (productModel.create as jest.Mock).mockResolvedValue(mockProduct);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    const result = await addProduct(null, mockProduct);
+  describe('createProduct', () => {
+    it('should create and return a product', async () => {
+      const mockProduct = { ...input, _id: 'prod123' };
+      mockCreate.mockResolvedValue(mockProduct);
 
-    expect(result).toEqual(mockProduct);
-    expect(productModel.create).toHaveBeenCalledWith({
-      name: "Test Product",
-      price: 1000,
-      description: "A test product",
-      images: ["image1.jpg"],
-      category: expect.anything(),
+      const result = await createProduct(input);
+
+      expect(mockCreate).toHaveBeenCalledWith({
+        name: input.name,
+        price: input.price,
+        status: input.status,
+        images: input.images,
+        category: expect.any(Types.ObjectId),
+      });
+
+      expect(result).toEqual(mockProduct);
+    });
+
+    it('should throw an error if creation fails', async () => {
+      mockCreate.mockRejectedValue(new Error('DB error'));
+
+      await expect(createProduct(input)).rejects.toThrow('Error creating product: DB error');
     });
   });
 
-  it("should throw an error if input is missing required fields", async () => {
-    const invalidInput = { ...mockProduct, name: undefined };
+  describe('addProduct', () => {
+    it('should call createProduct and return result', async () => {
+      const mockProduct = { ...input, _id: 'prod123' };
+      mockCreate.mockResolvedValue(mockProduct);
 
-    await expect(addProduct(null, invalidInput)).rejects.toThrowError(
-      /Product name is required/
-    );
-  });
+      const result = await addProduct(undefined, { input });
 
-  it("should throw an error if product creation fails", async () => {
-    const validInput = {
-      _id: "some-fake-id",
-      name: "Failing Product",
-      price: 999,
-      description: "Should fail",
-      images: ["img.jpg"],
-      category: new Types.ObjectId(),
-    };
+      expect(result).toEqual(mockProduct);
+    });
 
-    (productModel.create as jest.Mock).mockRejectedValue(new Error("DB error"));
+    it('should throw error if createProduct throws', async () => {
+      mockCreate.mockRejectedValue(new Error('DB fail'));
 
-    await expect(addProduct(null, validInput)).rejects.toThrowError(
-      /Error creating product:/
-    );
+      await expect(addProduct(undefined, { input })).rejects.toThrow('Error adding product: Error creating product: DB fail');
+    });
   });
 });

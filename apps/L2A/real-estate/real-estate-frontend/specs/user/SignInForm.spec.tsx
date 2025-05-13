@@ -1,17 +1,24 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
 import { MockedProvider } from '@apollo/client/testing';
-import Cookies from 'js-cookie';
 import SignInForm, { LOGIN_USER } from '@/app/signin/_components/SignInForm';
 import '@testing-library/jest-dom';
-import { jest } from '@jest/globals';
 
+const localStorageMock = {
+  setItem: jest.fn(),
+  getItem: jest.fn(),
+  removeItem: jest.fn(),
+};
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
-
-
-jest.mock('js-cookie');
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ push: jest.fn() }),
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
+jest.mock('js-cookie', () => ({
+  set: jest.fn(),
 }));
 
 const mockSuccess = {
@@ -23,7 +30,6 @@ const mockSuccess = {
     data: {
       loginUser: {
         token: 'mocked-token',
-        user: { id: '1', email: 'test@example.com' },
       },
     },
   },
@@ -34,15 +40,14 @@ const mockError = {
     query: LOGIN_USER,
     variables: { email: 'wrong@example.com', password: 'wrongpass' },
   },
-  error: new GraphQLError('Login failed'), // Proper error object
+  error: new GraphQLError('Login failed'),
 };
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
-
 describe('SignInForm', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders form fields', () => {
     render(
       <MockedProvider mocks={[]}>
@@ -50,43 +55,64 @@ describe('SignInForm', () => {
       </MockedProvider>
     );
 
-    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Continue/i })).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
   });
 
-  it('handles successful login', async () => {
+  it('Should handles successful login', async () => {
     render(
       <MockedProvider mocks={[mockSuccess]}>
         <SignInForm />
       </MockedProvider>
     );
 
-    fireEvent.change(screen.getByLabelText(/Email/i), { 
-      target: { value: 'test@example.com' } 
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'test@example.com' },
     });
-    fireEvent.change(screen.getByLabelText(/Password/i), { 
-      target: { value: 'password123' } 
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'password123' },
     });
-    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
 
     await waitFor(() => {
-      expect(Cookies.set).toHaveBeenCalledWith('token', 'mocked-token', expect.anything());
+      expect(localStorageMock.setItem).toHaveBeenCalledWith('token', 'mocked-token');
     });
   });
 
-  it('shows "Login failed" for any error', async () => {
+  it('Should shows error message on failed login', async () => {
     render(
       <MockedProvider mocks={[mockError]}>
         <SignInForm />
       </MockedProvider>
     );
-  
-    // Combined input changes
-    fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'wrong@example.com' } });
-    fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'wrongpass' } });
-    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
-  
+
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'wrong@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'wrongpass' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
     expect(await screen.findByText('Login failed')).toBeInTheDocument();
+  });
+
+  it('Should shows loading state during submission', async () => {
+    render(
+      <MockedProvider mocks={[mockSuccess]}>
+        <SignInForm />
+      </MockedProvider>
+    );
+
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'test@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'password123' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    expect(await screen.findByText('Logging in...')).toBeInTheDocument();
   });
 });
