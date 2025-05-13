@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { ForgetPasswordEmail } from './_features/ForgetPasswordEmail';
 import { ForgetPasswordNew } from './_features/ForgetPasswordNew';
-import { ForgetPasswordOTP } from './_features/ForgetPasswordOTP';
+import { ForgetPasswordOtp } from './_features/ForgetPasswordOTP';
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const ForgetPasswordPage = () => {
   return (
     <div data-cy="forget-password-page">
       {currentStep === 0 && <ForgetPasswordEmail setEmail={setEmail} setCurrentStep={setCurrentStep} />}
-      {currentStep === 1 && <ForgetPasswordOTP email={email} setCurrentStep={setCurrentStep} />}
+      {currentStep === 1 && <ForgetPasswordOtp email={email} setCurrentStep={setCurrentStep} />}
       {currentStep === 2 && <ForgetPasswordNew email={email} onComplete={handleComplete} />}
     </div>
   );

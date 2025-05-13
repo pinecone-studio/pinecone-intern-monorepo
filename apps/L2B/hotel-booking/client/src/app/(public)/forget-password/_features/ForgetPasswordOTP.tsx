@@ -14,7 +14,7 @@ type Props = {
   setCurrentStep: (_step: number) => void;
 };
 
-export const ForgetPasswordOTP = ({ email, setCurrentStep }: Props) => {
+export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
   const {
     setValue,
     handleSubmit,
