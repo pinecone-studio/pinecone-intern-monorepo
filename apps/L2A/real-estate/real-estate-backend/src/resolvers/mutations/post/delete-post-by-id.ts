@@ -1,4 +1,3 @@
-import { CreatePostInput } from "../../../generated";
 import { POST_MODEL } from "../../../models/post";
 export const deletePostById = async (_: any, args: {_id: string }) => {
   const { _id } = args;
