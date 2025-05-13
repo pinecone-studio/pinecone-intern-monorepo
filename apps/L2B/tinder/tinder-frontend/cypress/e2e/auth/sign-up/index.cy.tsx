@@ -1,16 +1,27 @@
-describe('SignUpPage Steps', () => {
+describe('SignUp Third Step', () => {
   beforeEach(() => {
     cy.visit('/auth/sign-up');
-  });
 
-  it('should go from step 1 to step 3 and display the email', () => {
-    cy.get('input[placeholder="name@example.com"]').should('exist');
     cy.get('input[placeholder="name@example.com"]').type('test@example.com');
     cy.contains('Continue').click();
 
-    cy.contains('next step').click();
+    cy.get('[data-testid="otp"]').type('1234');
+    cy.contains('Continue').click();
+  });
 
-    cy.contains('3step').should('exist');
+  it('shows error if passwords do not match', () => {
+    cy.get('[data-testid="password-input"]').type('Password123!');
+    cy.get('[data-testid="confirm-password-input"]').type('Mismatch123!');
+    cy.contains('Continue').click();
+
+    cy.contains('Password do not match').should('exist');
+  });
+
+  it('submits when password is valid and matches confirm', () => {
+    cy.get('[data-testid="password-input"]').type('Password123!');
+    cy.get('[data-testid="confirm-password-input"]').type('Password123!');
+    cy.contains('Continue').click();
+
     cy.contains('test@example.com').should('exist');
   });
 });
