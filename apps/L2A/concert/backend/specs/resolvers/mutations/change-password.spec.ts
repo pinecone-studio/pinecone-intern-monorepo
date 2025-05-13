@@ -1,9 +1,9 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { GraphQLResolveInfo } from 'graphql';
 import { userModel } from '../../../src/models';
 import changeCurrentPassword from '../../../src/resolvers/mutations/change-password';
 
-jest.mock('bcryptjs');
+jest.mock('bcrypt');
 jest.mock('../../../src/models', () => ({
   userModel: {
     findOne: jest.fn(),
