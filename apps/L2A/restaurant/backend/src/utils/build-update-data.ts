@@ -6,7 +6,7 @@ export const buildUpdateData = (input: UpdateProductInput) => {
 
   addIfPresent(updateData, 'name', input.name);
   addIfPresent(updateData, 'price', input.price);
-  addIfPresent(updateData, 'description', input.description);
+  addIfPresent(updateData, 'status', input.status);
   addIfPresent(updateData, 'images', input.images);
   addIfCategory(updateData, input.category);
 

@@ -29,4 +29,9 @@ export const typeDefs = gql`
     updateTable(input: UpdateTableInput!): Table
     deleteTable(input: DeleteTableInput!): Table
   }
+    
+  extend type Query {
+    getTableById(id: ID!): Table
+   }
+
 `;

@@ -5,7 +5,7 @@ export const typeDefs = gql`
     _id: ID!
     name: String!
     price: Int!
-    description: String!
+    status: Boolean!
     images: [String!]!
     category: Category!
     createdAt: Date!
@@ -15,7 +15,7 @@ export const typeDefs = gql`
   input AddProductInput {
     name: String!
     price: Float!
-    description: String!
+    status: Boolean!
     images: [String!]!
     category: ID!
   }
@@ -24,7 +24,7 @@ export const typeDefs = gql`
     _id: ID!
     name: String
     price: Float
-    description: String
+    status: Boolean
     images: [String]
     category: ID
   }
