@@ -154,7 +154,6 @@
 
         "browser": "chromium"
 
-
       },
       "dependsOn": [
         {

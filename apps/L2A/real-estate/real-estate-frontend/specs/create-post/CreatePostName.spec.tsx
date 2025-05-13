@@ -11,7 +11,7 @@ describe('CreatePostName component', () => {
     onBlur: jest.fn(),
   };
 
-  it('renders input with correct props', () => {
+  it('should renders input with correct props', () => {
     render(<CreatePostName {...baseProps} />);
     const input = screen.getByTestId('Name') as HTMLInputElement;
 
@@ -21,7 +21,7 @@ describe('CreatePostName component', () => {
     expect(input.placeholder).toBe('Нэр');
   });
 
-  it('calls onChange when input value changes', () => {
+  it('should calls onChange when input value changes', () => {
     render(<CreatePostName {...baseProps} />);
     const input = screen.getByTestId('Name');
 
@@ -30,7 +30,7 @@ describe('CreatePostName component', () => {
     expect(baseProps.onChange).toHaveBeenCalled();
   });
 
-  it('calls onBlur when input loses focus', () => {
+  it('should calls onBlur when input loses focus', () => {
     render(<CreatePostName {...baseProps} />);
     const input = screen.getByTestId('Name');
 
@@ -39,7 +39,7 @@ describe('CreatePostName component', () => {
     expect(baseProps.onBlur).toHaveBeenCalled();
   });
 
-  it('displays error message if error prop is provided', () => {
+  it('should displays error message if error prop is provided', () => {
     render(<CreatePostName {...baseProps} error="Нэр заавал шаардлагатай" />);
     expect(screen.getByText('Нэр заавал шаардлагатай')).toBeInTheDocument();
   });

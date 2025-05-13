@@ -2,7 +2,6 @@
 import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { useAuth } from './context/AuthContext';
 import Link from 'next/link';
-
 const Header = () => {
   const { user, logout } = useAuth();
 
@@ -13,7 +12,7 @@ const Header = () => {
       old text-white"
       >
         <span className="inline-block w-4 h-4 rounded-full bg-sky-400" aria-hidden="true"></span>
-        <span>TICKET BOOKING</span>
+        <Link href={'/'}>TICKET BOOKING</Link>
       </div>
       <div className="flex-1 max-w-xl mx-6">
         <div className="flex items-center px-4 py-2 bg-black border border-gray-700 rounded-md">
@@ -42,5 +41,4 @@ const Header = () => {
     </nav>
   );
 };
-
 export default Header;

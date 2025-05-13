@@ -1,14 +1,13 @@
 describe('Sign In Page', () => {
-  const email = 'glpzghoo1@gmail.com';
+  const email = 'glpzghoo@gmail.com';
 
   beforeEach(() => {
     cy.clearLocalStorage();
 
     cy.visit('/auth/signin');
   });
-
   it('should log in successfully', () => {
-    const password = 'my.as.glpzghoo@gmail.com1';
+    const password = 'glpzghoo@gmail.com';
 
     cy.intercept('POST', '**/api/graphql').as('gql');
     cy.get('input[name="email"]').type(email);
@@ -18,7 +17,7 @@ describe('Sign In Page', () => {
   });
 
   it("should login successfully but shouldn't trigger if statement", () => {
-    const password = 'my.as.glpzghoo@gmail.com1';
+    const password = 'glpzghoo@gmail.com';
 
     cy.intercept('POST', '**/api/graphql', {
       statusCode: 200,

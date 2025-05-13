@@ -1,9 +1,16 @@
+import AddTicketDialog from './_featured/AddTicketDialog';
+
 const Page = () => {
   return (
-    <div className="flex flex-col w-full h-screen bg-[#E4E4E7]">
-      <div className="flex flex-col w-full h-full p-10">
-        <h1 className="text-3xl font-bold">Admin Page</h1>
-        <p className="mt-2 text-gray-600">Manage your application here.</p>
+    <div className="flex flex-col w-full h-screen bg-secondary">
+      <div className="flex flex-col items-center w-full h-full p-10">
+        <div className=" w-9/12 bg-background flex justify-between p-5 rounded-2xl">
+          <div>
+            <div className="font-bold">Концерт</div>
+            <div className=" text-gray-400 text-xs">Идэвхитэй зарагдаж буй концертууд</div>
+          </div>
+          <AddTicketDialog />
+        </div>
       </div>
     </div>
   );

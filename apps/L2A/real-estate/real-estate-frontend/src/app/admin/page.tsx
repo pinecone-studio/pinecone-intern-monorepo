@@ -3,21 +3,22 @@
 import { useState } from 'react';
 import AdminListingTable, { Listing } from './_components/AdminListingTable';
 import ListingDetailAdminView from './_components/ListingDetailAdminView';
+
 const AdminPage = () => {
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
-  const listings: Listing[] = new Array(10).fill(null).map((_, i) => ({
+  const statuses = ['Хүлээгдэж буй', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
+
+  const listings: Listing[] = new Array(12).fill(null).map((_, i) => ({
     id: `${i + 1}`.padStart(4, '0'),
-    name: 'Seoul royal county хотхон',
-    owner: 'Н.Мөнхтунгалаг',
-    phone: '99112233',
+    name: `Зар #${i + 1}`,
+    owner: `Эзэмшигч ${i + 1}`,
+    phone: `9911${String(1000 + i).slice(-4)}`,
     image: '/listingcard.png',
-    status: ['Хүсэлт илгээсэн', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'][i % 4],
+    status: statuses[i % 4],
   }));
 
-  return (
-    <div className="p-6">{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>
-  );
+  return <div>{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>;
 };
 
 export default AdminPage;

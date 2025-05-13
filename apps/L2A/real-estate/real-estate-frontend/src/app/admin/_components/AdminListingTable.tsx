@@ -17,15 +17,15 @@ type AdminListingTableProps = {
   onSelect: (_listing: Listing) => void;
 };
 
-const TABS = ['Хүсэлт илгээсэн', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
+const TABS = ['Хүлээгдэж буй', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
 
 const AdminListingTable = ({ listings, onSelect }: AdminListingTableProps) => {
-  const [selectedTab, setSelectedTab] = useState<string>('Хүсэлт илгээсэн');
+  const [selectedTab, setSelectedTab] = useState<string>('Хүлээгдэж буй');
 
   const filteredListings = listings.filter((listing) => listing.status === selectedTab);
 
   return (
-    <div>
+    <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Зарууд</h1>
 
       <div className="flex justify-between items-center mb-4">
@@ -47,21 +47,29 @@ const AdminListingTable = ({ listings, onSelect }: AdminListingTableProps) => {
               <th className="px-4 py-2 border-x">ID</th>
               <th className="px-4 py-2 border-x">Нэр</th>
               <th className="px-4 py-2 border-x">Эзэмшигч</th>
-              <th className="px-4 py-2 border-x">Утасны дугаар</th>
+              <th className="px-4 py-2 border-x">Утас</th>
             </tr>
           </thead>
           <tbody>
-            {filteredListings.map((listing) => (
-              <tr key={listing.id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => onSelect(listing)}>
-                <td className="px-4 py-2 text-blue-600 underline border-x">{listing.id}</td>
-                <td className="px-4 py-2 flex items-center gap-2 border-x">
-                  <Image src={listing.image} alt="thumb" width={40} height={40} className="rounded-md object-cover" />
-                  {listing.name}
+            {filteredListings.length > 0 ? (
+              filteredListings.map((listing) => (
+                <tr key={listing.id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => onSelect(listing)}>
+                  <td className="px-4 py-2 text-blue-600 underline border-x">{listing.id}</td>
+                  <td className="px-4 py-2 flex items-center gap-2 border-x">
+                    <Image src={listing.image} alt="thumb" width={40} height={40} className="rounded-md object-cover" />
+                    {listing.name}
+                  </td>
+                  <td className="px-4 py-2 border-x">{listing.owner}</td>
+                  <td className="px-4 py-2 border-x">{listing.phone}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center py-6 text-gray-500">
+                  Энэ төлөвт зар алга.
                 </td>
-                <td className="px-4 py-2 border-x">{listing.owner}</td>
-                <td className="px-4 py-2 border-x">{listing.phone}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 

@@ -6,7 +6,7 @@ import { useAddUserMutation } from '@/generated';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SignUpSchema } from '../utils/signup-schema';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -39,12 +39,6 @@ const SignUpForm = () => {
       console.error('Signup error:', error);
     }
   };
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setUserRegistered(false);
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, [userRegistered]);
 
   return (
     <div data-cy="signup-form" className="flex justify-center items-center h-[100vh] w-[100%]">
