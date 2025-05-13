@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-
 import { Button } from '@/components/ui/button';
 
 const otpSchema = z.object({
@@ -12,7 +11,7 @@ const otpSchema = z.object({
 
 type Props = {
   email: string;
-  setCurrentStep: (step: number) => void;
+  setCurrentStep: (_step: number) => void;
 };
 
 export const ForgetPasswordOTP = ({ email, setCurrentStep }: Props) => {

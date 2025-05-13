@@ -10,8 +10,8 @@ const emailSchema = z.object({
 });
 
 type Props = {
-  setEmail: (email: string) => void;
-  setCurrentStep: (step: number) => void;
+  setEmail: (_email: string) => void;
+  setCurrentStep: (_step: number) => void;
 };
 
 export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
@@ -28,7 +28,6 @@ export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
     setEmail(data.email);
     setCurrentStep(1);
   };
-
   return (
     <div data-cy="email-page" className="h-screen flex flex-col relative items-center justify-center px-4">
       <div className="flex flex-col items-center">
@@ -41,7 +40,6 @@ export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
           <p className="font-light text-[#71717a]">Enter your email account to reset password</p>
         </div>
       </div>
-
       <form data-cy="email-form" onSubmit={handleSubmit(onSubmit)} className="w-[350px] max-w-md space-y-4 mt-6">
         <div>
           <label data-cy="email-label" htmlFor="email" className="text-[14px] font-medium mb-2">
@@ -61,7 +59,6 @@ export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
             </p>
           )}
         </div>
-
         <Button data-cy="submit-btn" type="submit" disabled={isSubmitting} className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
           {isSubmitting ? 'Processing...' : 'Continue'}
         </Button>

@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { ForgetPasswordEmail } from './_features/ForgetPasswordEmail';
-import { ForgetPasswordOTP } from './_features/ForgetPasswordOTP';
 import { ForgetPasswordNew } from './_features/ForgetPasswordNew';
+import { ForgetPasswordOTP } from './_features/ForgetPasswordOTP';
 
-export default function ForgetPasswordPage() {
+const ForgetPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -19,4 +19,5 @@ export default function ForgetPasswordPage() {
       {currentStep === 2 && <ForgetPasswordNew email={email} onComplete={handleComplete} />}
     </div>
   );
-}
+};
+export default ForgetPasswordPage;
