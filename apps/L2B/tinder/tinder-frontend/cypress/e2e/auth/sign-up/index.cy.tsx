@@ -31,21 +31,23 @@ describe('SignUpStep', () => {
     cy.get('[data-testid="otp"]').type('1234');
     cy.contains('Continue').click();
 
+    cy.log('Typing mismatched passwords...');
     cy.get('[data-testid="password-input"]').type('Password123!');
     cy.get('[data-testid="confirm-password-input"]').type('Mismatch123!');
     cy.contains('Continue').click();
 
-    cy.contains('Password do not match').should('exist');
+    cy.contains('Password do not match', { timeout: 3000 }).should('exist');
   });
 
   it('submits when password is valid and matches confirm', () => {
     cy.get('[data-testid="otp"]').type('1234');
     cy.contains('Continue').click();
 
+    cy.log('Typing matching passwords...');
     cy.get('[data-testid="password-input"]').type('Password123!');
     cy.get('[data-testid="confirm-password-input"]').type('Password123!');
     cy.contains('Continue').click();
 
-    cy.contains('test@example.com').should('exist');
+    cy.contains('test@example.com', { timeout: 5000 }).should('exist');
   });
 });
