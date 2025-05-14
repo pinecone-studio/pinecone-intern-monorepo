@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Concert } from '@/generated';
-import FormatDate from '@/app/_utils/FormatDate';
+import FormatDate from '@/app/_utils/format-date';
 
 type SeatInfoProps = {
   eventData: Concert;

@@ -38,6 +38,7 @@ query Concert($concertId: String!) {
     endDate
     id
     musicStart
+    featured
     seatData {
       date
       seats {

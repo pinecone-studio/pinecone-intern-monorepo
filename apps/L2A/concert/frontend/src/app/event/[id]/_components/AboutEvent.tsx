@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import StadiumMap from './StadiumMap';
 import { Concert } from '@/generated';
-import FormatDate from '@/app/_utils/FormatDate';
+import FormatDate from '@/app/_utils/format-date';
 
 type AboutEventProps = {
   eventData: Concert;

@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 import { Concert } from '@/generated';
-import FormatDate from '@/app/_utils/FormatDate';
+import FormatDate from '@/app/_utils/format-date';
 
 type ConcertBannerProps = {
   eventData: Concert;

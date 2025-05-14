@@ -1,11 +1,11 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import FormatDate from '@/app/_utils/FormatDate';
+import FormatDate from '@/app/_utils/format-date';
 import { extractFormattedDates } from '@/app/event/[id]/_components/ConcertBanner';
 import ConcertBanner from '@/app/event/[id]/_components/ConcertBanner';
 
-jest.mock('@/app/_utils/FormatDate', () => ({
+jest.mock('@/app/_utils/format-date', () => ({
   __esModule: true,
   default: jest.fn(),
 }));

@@ -8,12 +8,11 @@ import { useParams } from 'next/navigation';
 import ConcertBanner from './_components/ConcertBanner';
 
 const Page: FC = () => {
-  const { id } = useParams();
-  const concertId = Array.isArray(id) ? id[0] : id;
+  const { id }: { id: string } = useParams();
 
   const { data, loading, error } = useConcertQuery({
-    variables: { concertId },
-    skip: !concertId,
+    variables: { concertId: id },
+    skip: !id,
   });
 
   if (loading) {
@@ -42,7 +41,6 @@ const Page: FC = () => {
       <div>
         <TypedHeroSection eventData={concert} />
       </div>
-
       <div className="flex flex-col md:flex-row w-full md:w-[70%] mx-auto gap-10 py-6 px-4">
         <div className="w-full md:w-[70%]">
           <TypedAboutEvent eventData={concert} />

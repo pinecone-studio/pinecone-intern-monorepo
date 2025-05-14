@@ -29,4 +29,26 @@ describe('Concert Page (real data) E2E', () => {
         cy.get('button').contains('Тасалбар захиалах').should('not.be.disabled');
       });
   });
+
+  it('should find no concerts', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        data: {
+          concerts: null,
+        },
+      },
+    }).as('noconcert');
+    cy.wait('@noconcert');
+    cy.contains('No concert found').should('be.visible');
+  });
+
+  it('should throw an error', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        errors: [{ message: 'fail' }],
+      },
+    }).as('error');
+    cy.wait('@error');
+    cy.contains('Error').should('be.visible');
+  });
 });
