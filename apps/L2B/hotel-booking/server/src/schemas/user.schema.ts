@@ -12,6 +12,12 @@ export const UserTypeDefs = gql`
     isAdmin: Boolean!
     phone: Int
   }
+
+  type Query {
+    getUser(_id: ID!): User!
+    getUsers: [User!]!
+  }
+
   type Mutation {
     addUser(email: String!, password: String!): User!
   }

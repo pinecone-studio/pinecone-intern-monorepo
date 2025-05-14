@@ -28,27 +28,27 @@ describe('ProfileSideBar', () => {
     expect(screen.getByTestId('Security')).toBeInTheDocument();
   });
 
-  it('navigates to /hotels when Hotels button is clicked', () => {
+  it('navigates to /profile when Profile button is clicked', () => {
     render(<ProfileSideBar />);
-    const hotelsButton = screen.getByTestId('Profile');
-    fireEvent.click(hotelsButton);
-    expect(hotelsButton).toHaveClass('bg-[#F4F4F5]');
+    const profileButton = screen.getByTestId('Profile');
+    fireEvent.click(profileButton);
+    expect(profileButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/profile');
   });
 
-  it('navigates to /guests when Guests button is clicked', () => {
+  it('navigates to /contact when Contact button is clicked', () => {
     render(<ProfileSideBar />);
-    const guestsButton = screen.getByTestId('Contact');
-    fireEvent.click(guestsButton);
-    expect(guestsButton).toHaveClass('bg-[#F4F4F5]');
+    const contactButton = screen.getByTestId('Contact');
+    fireEvent.click(contactButton);
+    expect(contactButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/contact');
   });
 
-  it('navigates to /guests when Guests button is clicked', () => {
+  it('navigates to /security when Security button is clicked', () => {
     render(<ProfileSideBar />);
-    const guestsButton = screen.getByTestId('Security');
-    fireEvent.click(guestsButton);
-    expect(guestsButton).toHaveClass('bg-[#F4F4F5]');
+    const securityButton = screen.getByTestId('Security');
+    fireEvent.click(securityButton);
+    expect(securityButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/security');
   });
 });
