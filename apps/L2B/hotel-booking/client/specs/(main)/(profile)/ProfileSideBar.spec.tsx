@@ -38,7 +38,7 @@ describe('ProfileSideBar', () => {
 
   it('navigates to /contact when Contact button is clicked', () => {
     render(<ProfileSideBar />);
-    const contactButton = screen.getByText('Contact');
+    const contactButton = screen.getByTestId('Contact');
     fireEvent.click(contactButton);
     expect(contactButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/contact');
@@ -46,7 +46,7 @@ describe('ProfileSideBar', () => {
 
   it('navigates to /security when Security button is clicked', () => {
     render(<ProfileSideBar />);
-    const securityButton = screen.getByText('Security');
+    const securityButton = screen.getByTestId('Security');
     fireEvent.click(securityButton);
     expect(securityButton).toHaveClass('bg-[#F4F4F5]');
     expect(mockPush).toHaveBeenCalledWith('/security');
