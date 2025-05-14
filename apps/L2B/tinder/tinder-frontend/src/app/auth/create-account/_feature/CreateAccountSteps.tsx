@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import FirstStep from './FirstStep';
-import SecondStep from '../_components/SecondStep';
+import SecondStep from './SecondStep';
 import ThirdStep from '../_components/ThirdStep';
 import FourthStep from '../_components/FourthStep';
 import FifthStep from '../_components/FifthStep';

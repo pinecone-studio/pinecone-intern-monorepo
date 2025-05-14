@@ -1,4 +1,4 @@
-import SecondStep from '@/app/auth/create-account/_components/SecondStep';
+import SecondStep from '@/app/auth/create-account/_feature/SecondStep';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
