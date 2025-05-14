@@ -9,7 +9,7 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/Untitled_design_-_2025-04-04T120716.374_aytEwTQ.webp');
+    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -44,7 +44,7 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/Untitled_design_-_2025-04-04T120716.374_aytEwTQ.webp');
+    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -76,7 +76,7 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/Untitled_design_-_2025-04-04T120716.374_aytEwTQ.webp');
+    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -122,7 +122,7 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/Untitled_design_-_2025-04-04T120716.374_aytEwTQ.webp');
+    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
