@@ -4,6 +4,8 @@ import HeroSection from './_components/HeroSection';
 import ConcertCard from './_components/ConcertCard';
 import LoadingText from './_components/LoadingText';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { HoverCard, HoverCardTrigger } from '@/components/ui/hover-card';
 
 const Page = () => {
   const { data, loading } = useConcertsQuery();
@@ -19,7 +21,11 @@ const Page = () => {
             <HeroSection concert={concerts[0]} />
             <main className="flex flex-col gap-[32px] justify-center w-3/4 rounded-lg">
               <Link className="pl-11 pt-11" href={`/event`}>
-                Бүгдийг нь харах
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button variant="link">Бүгдийг нь харах</Button>
+                  </HoverCardTrigger>
+                </HoverCard>
               </Link>
               <div className="flex flex-wrap gap-[32px] justify-center items-center rounded-lg">
                 {concerts.map((concert) => (
