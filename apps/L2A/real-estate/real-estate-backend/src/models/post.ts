@@ -24,6 +24,10 @@ const POST_SCHEMA = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    number: {
+      type: Number,
+      required: true,
+    },
     images: [String],
     type: {
       type: String,

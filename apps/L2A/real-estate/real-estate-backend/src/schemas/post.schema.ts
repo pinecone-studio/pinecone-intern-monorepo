@@ -40,6 +40,7 @@ export const typeDefs = gql`
     description: String
     feature: [feature]
     price: Float
+    number:Int
     images: [String]
     type: PropertyType
     size: Float
@@ -66,6 +67,7 @@ export const typeDefs = gql`
   description: String!
   feature: [feature]
   price: Float!
+  number:Int
   images: [String]
   type: PropertyType
   size: Float
