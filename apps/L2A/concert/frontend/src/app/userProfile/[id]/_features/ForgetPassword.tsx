@@ -37,7 +37,6 @@ const ForgetPassword = () => {
         alert(data.error || 'Алдаа гарлаа.');
       }
     } catch (error) {
-      console.error(error);
       alert('Алдаа гарлаа.');
     }
   };
