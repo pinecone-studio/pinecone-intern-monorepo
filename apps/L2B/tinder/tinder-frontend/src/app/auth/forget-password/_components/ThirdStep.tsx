@@ -20,7 +20,7 @@ const ThirdStep = ({ email }: { email: string }) => {
   };
 
   return (
-    <div className="w-full max-w-sm p-6 space-y-6">
+    <div className="w-full max-w-sm p-6 space-y-6" data-testid="Step3">
       <div className="text-center">
         <h2 className="text-xl font-semibold text-black">Set new password for {email}</h2>
         <p className="text-sm text-gray-500">
@@ -38,7 +38,7 @@ const ThirdStep = ({ email }: { email: string }) => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="Password" />
+                  <Input data-testid="password-input" {...field} type="password" placeholder="Password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -51,13 +51,13 @@ const ThirdStep = ({ email }: { email: string }) => {
               <FormItem>
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="Confirm Password" />
+                  <Input data-testid="confirm-password-input" {...field} type="password" placeholder="Confirm Password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <button type="submit" className="w-full py-3 bg-pink-500 text-white rounded-full font-medium hover:bg-pink-600 transition">
+          <button type="submit" data-testid="submit-password" className="w-full py-3 bg-pink-500 text-white rounded-full font-medium hover:bg-pink-600 transition">
             Continue
           </button>
         </form>
