@@ -95,3 +95,24 @@ mutation CreateConcert($input: CreateConcertInput!) {
     id
   }
 }
+
+query AdminGetConcerts {
+  concerts {
+    id
+    artistName
+    description
+    doorOpen
+    musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    title
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
+  }
+}
