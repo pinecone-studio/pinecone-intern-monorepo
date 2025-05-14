@@ -1,6 +1,7 @@
 import ForgetPassword from '@/app/userProfile/[id]/_features/ForgetPassword';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
 describe('ForgetPassword Component', () => {
   beforeAll(() => {
     global.alert = jest.fn();
@@ -17,7 +18,7 @@ describe('ForgetPassword Component', () => {
     fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/), { target: { value: 'newPassword123' } });
   };
 
-  it('should render the form with email, current password, new password and confirm password fields', () => {
+  it('should render the form with email, current password, new password, and confirm password fields', () => {
     render(<ForgetPassword />);
 
     expect(screen.getByLabelText(/Имэйл:/)).toBeInTheDocument();
