@@ -66,7 +66,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
         </div>
 
         <div className="flex justify-between">
-          <Button variant="outline" className="px-6 border-[#E4E4E7] border rounded-full">
+          <Button variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
             Back
           </Button>
           <Button className="bg-gradient-to-r from-pink-500 to-red-500 px-6 text-white hover:from-pink-600 hover:to-red-600 rounded-full" onClick={handleNext}>
