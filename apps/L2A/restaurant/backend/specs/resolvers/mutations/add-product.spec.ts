@@ -15,7 +15,7 @@ describe('Product resolvers', () => {
   const input = {
     name: 'Test Product',
     price: 100,
-    description: 'A test product',
+    status: true,
     images: ['img1.jpg'],
     category: new Types.ObjectId().toHexString(),
   };
@@ -34,7 +34,7 @@ describe('Product resolvers', () => {
       expect(mockCreate).toHaveBeenCalledWith({
         name: input.name,
         price: input.price,
-        description: input.description,
+        status: input.status,
         images: input.images,
         category: expect.any(Types.ObjectId),
       });

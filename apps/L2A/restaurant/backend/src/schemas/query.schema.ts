@@ -4,7 +4,14 @@ export const QueryTypeDefs = gql`
   type Query {
     sampleQuery: String!
     _service: Service!
+
     getCategories: [Category!]!
     getCategoryById(id: ID!): Category!
+
+    getOrders: [Order]!
+    getCategories: [Category]!
+     getTableById(id: ID!): Table
+    getAllTables: [Table]!
+
   }
 `;

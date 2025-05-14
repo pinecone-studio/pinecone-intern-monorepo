@@ -83,3 +83,36 @@ query Concert($concertId: String!) {
     }
   }
 }
+
+mutation createVenue($name: String!, $address: String!, $city: String!, $capacity: Int!) {
+  createVenue(name: $name, address: $address, city: $city, capacity: $capacity) {
+    id
+  }
+}
+
+mutation CreateConcert($input: CreateConcertInput!) {
+  createConcert(input: $input) {
+    id
+  }
+}
+
+query AdminGetConcerts {
+  concerts {
+    id
+    artistName
+    description
+    doorOpen
+    musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    title
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
+  }
+}
