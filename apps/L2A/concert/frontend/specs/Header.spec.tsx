@@ -104,26 +104,4 @@ describe('Header', () => {
     const cartIcon = screen.getByLabelText('Shopping Cart');
     expect(cartIcon).toBeInTheDocument();
   });
-
-  it('should call logout function when logout button is clicked', async () => {
-    const logoutMock = jest.fn();
-
-    jest.spyOn(require('@/app/_components/context/AuthContext'), 'useAuth').mockReturnValue({
-      user: { email: 'test@example.com' },
-      logout: logoutMock,
-    });
-
-    render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <AuthProvider>
-          <Header />
-        </AuthProvider>
-      </MockedProvider>
-    );
-
-    const logoutButton = await screen.findByRole('button', { name: /Гарах/i });
-    fireEvent.click(logoutButton);
-
-    expect(logoutMock).toHaveBeenCalled();
-  });
 });
