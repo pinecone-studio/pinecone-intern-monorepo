@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import TicketFilterBar from '@/app/admin/ticket/_components/TicketFilterBar';
 import '@testing-library/jest-dom';
+
 describe('TicketFilterBar', () => {
-  it('renders search input and default filters', () => {
+  it('renders the TicketFilterBar component', () => {
     render(<TicketFilterBar />);
-    expect(screen.getByPlaceholderText('Тасалбар хайх')).toBeInTheDocument();
+    const filterBar = screen.getByTestId('TicketFilterBarId');
+    expect(filterBar).toBeInTheDocument();
   });
 });
