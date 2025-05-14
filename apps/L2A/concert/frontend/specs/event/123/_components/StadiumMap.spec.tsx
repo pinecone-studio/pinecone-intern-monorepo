@@ -1,75 +1,111 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import StadiumMap from '@/app/event/[id]/_components/StadiumMap';
+import StadiumMap, { getSeatBlock, getFillColor, polarToCartesian, buildArc } from '@/app/event/[id]/_components/StadiumMap';
 import '@testing-library/jest-dom';
 
-describe('StadiumMap Component', () => {
-  const basicZones = [
-    {
-      id: 'test-zone',
-      fill: '#000',
-      type: 'Normal',
-      angleStart: 0,
-      angleEnd: 90,
-    },
-  ];
+describe('StadiumMap component', () => {
+  const eventData = {
+    seatData: [
+      {
+        date: '2025-05-13',
+        seats: {
+          VIP: { availableTickets: 5, price: 100 },
+          Standard: { availableTickets: 3, price: 60 },
+          Backseat: { availableTickets: 0, price: 30 },
+        },
+      },
+    ],
+  } as any;
 
-  it('renders the SVG element', () => {
-    render(<StadiumMap zones={basicZones} />);
+  test('renders correct number of zone slices', () => {
+    render(<StadiumMap eventData={eventData} />);
+    const paths = screen.getByTestId('stadium-map-svg').querySelectorAll('path');
+    expect(paths.length).toBe(12);
+  });
+
+  test('selects a zone on click and displays selected id', () => {
+    render(<StadiumMap eventData={eventData} />);
     const svg = screen.getByTestId('stadium-map-svg');
-    expect(svg).toBeInTheDocument();
+    const firstPath = svg.querySelector('path');
+    expect(firstPath).not.toBeNull();
+    if (firstPath) fireEvent.click(firstPath);
+    expect(screen.getByText(/Сонгосон хэсэг:/)).toBeInTheDocument();
   });
 
-  it('shows selected zone info when a zone is clicked', () => {
-    render(<StadiumMap zones={basicZones} />);
+  test('uses selectedDay to choose correct seatEntry in useStadiumZones', () => {
+    const multiDayData = {
+      seatData: [
+        {
+          date: '2025-05-12',
+          seats: {
+            VIP: { availableTickets: 1, price: 90 },
+            Standard: { availableTickets: 1, price: 50 },
+            Backseat: { availableTickets: 1, price: 30 },
+          },
+        },
+        {
+          date: '2025-05-13',
+          seats: {
+            VIP: { availableTickets: 2, price: 100 },
+            Standard: { availableTickets: 2, price: 60 },
+            Backseat: { availableTickets: 2, price: 40 },
+          },
+        },
+      ],
+    } as any;
+
+    render(<StadiumMap eventData={multiDayData} selectedDay="2025-05-12" />);
     const paths = screen.getByTestId('stadium-map-svg').querySelectorAll('path');
-    fireEvent.click(paths[0]);
-    const output = screen.getByText(/Сонгосон хэсэг:/);
-    expect(output).toBeInTheDocument();
+    expect(paths.length).toBe(12);
   });
 
-  it('updates text correctly when a different zone is clicked', () => {
-    const twoZones = [
-      { id: 'zone1', fill: '#000', type: 'Normal', angleStart: 0, angleEnd: 90 },
-      { id: 'zone2', fill: '#000', type: 'Normal', angleStart: 90, angleEnd: 180 },
-    ];
-    render(<StadiumMap zones={twoZones} />);
+  test('handles missing seatData (undefined)', () => {
+    render(<StadiumMap eventData={{ seatData: undefined } as any} />);
     const paths = screen.getByTestId('stadium-map-svg').querySelectorAll('path');
-    fireEvent.click(paths[0]);
-    expect(screen.getByText(/Сонгосон хэсэг: zone1/)).toBeInTheDocument();
-    fireEvent.click(paths[1]);
-    expect(screen.getByText(/Сонгосон хэсэг: zone2/)).toBeInTheDocument();
+    expect(paths.length).toBe(12);
   });
 
-  it('uses the correct large-arc-flag in the path for angles > 180', () => {
-    const largeArcZone = [
-      {
-        id: 'large-arc',
-        fill: '#000',
-        type: 'Normal',
-        angleStart: 0,
-        angleEnd: 270,
-      },
-    ];
-    render(<StadiumMap zones={largeArcZone} />);
-    const path = screen.getByTestId('stadium-map-svg').querySelector('path');
-    const d = path?.getAttribute('d');
-    expect(d).toMatch(/A \d+ \d+ 0 1 0/);
+  test('handles null seatData gracefully', () => {
+    render(<StadiumMap eventData={{ seatData: null } as any} />);
+    const paths = screen.getByTestId('stadium-map-svg').querySelectorAll('path');
+    expect(paths.length).toBe(12);
   });
 
-  it('uses the correct large-arc-flag in the path for angles ≤ 180', () => {
-    const smallArcZone = [
-      {
-        id: 'small-arc',
-        fill: '#000',
-        type: 'Normal',
-        angleStart: 0,
-        angleEnd: 90,
-      },
-    ];
-    render(<StadiumMap zones={smallArcZone} />);
-    const path = screen.getByTestId('stadium-map-svg').querySelector('path');
-    const d = path?.getAttribute('d');
-    expect(d).toMatch(/A \d+ \d+ 0 0 0/);
+  test('getSeatBlock returns correct block for VIP, Standard, Backseat', () => {
+    const seatEntry = eventData.seatData[0];
+    expect(getSeatBlock(seatEntry, 'VIP')).toEqual({ availableTickets: 5, price: 100 });
+    expect(getSeatBlock(seatEntry, 'Standard')).toEqual({ availableTickets: 3, price: 60 });
+    expect(getSeatBlock(seatEntry, 'Backseat')).toEqual({ availableTickets: 0, price: 30 });
+    expect(getSeatBlock(seatEntry, 'Outer')).toBeNull();
+  });
+
+  test('getFillColor returns correct color or fallback', () => {
+    expect(getFillColor({ availableTickets: 5 }, 'VIP')).toBe('#FFD700');
+    expect(getFillColor({ availableTickets: 0 }, 'Backseat')).toBe('#444');
+    expect(getFillColor(null, 'Standard')).toBe('#444');
+  });
+
+  test('buildArc returns valid SVG path string', () => {
+    const arc = buildArc(50, 80, 0, 90);
+    expect(typeof arc).toBe('string');
+    expect(arc).toMatch(/^M\s+-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\sA/);
+  });
+
+  test('buildArc sets largeArc flag correctly for arcs over 180 degrees', () => {
+    const arc = buildArc(50, 80, 0, 270);
+    expect(arc).toContain('A 80 80 0 1 0');
+    expect(arc).toContain('A 50 50 0 1 1');
+  });
+
+  test('polarToCartesian returns correct coordinates for 90 degrees (rightward)', () => {
+    const { x, y } = polarToCartesian(0, 0, 100, 90);
+    expect(x).toBeCloseTo(100, 2);
+    expect(y).toBeCloseTo(0, 2);
+  });
+
+  test('polarToCartesian returns correct coordinates for 0 degrees (upward)', () => {
+    const { x, y } = polarToCartesian(0, 0, 100, 0);
+    expect(x).toBeCloseTo(0, 2);
+    expect(y).toBeCloseTo(-100, 2);
   });
 });

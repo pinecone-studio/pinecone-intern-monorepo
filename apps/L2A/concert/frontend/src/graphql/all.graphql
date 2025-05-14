@@ -54,6 +54,7 @@ query Concert($concertId: String!) {
     endDate
     id
     musicStart
+    featured
     seatData {
       date
       seats {
@@ -73,6 +74,7 @@ query Concert($concertId: String!) {
     }
     specialGuestName
     thumbnailUrl
+    primaryPrice
     title
     venue {
       address
