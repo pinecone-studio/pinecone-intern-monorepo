@@ -11,7 +11,7 @@ type Props = {
 export const CreatePostDistrict = ({ name, value, onChange, onBlur, error }: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Дүүрэг</label>
+      <label htmlFor={name} className="block text-md text-[#09090B] pb-1 mt-6">Дүүрэг</label>
       <input
         id={name}
         name={name}

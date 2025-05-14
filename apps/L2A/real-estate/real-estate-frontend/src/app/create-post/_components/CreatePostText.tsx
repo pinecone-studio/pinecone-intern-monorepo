@@ -9,7 +9,7 @@ type Props = {
 export const CreatePostText = ({name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label className="block text-sm text-[#09090B] pb-2">Дэлгэрэнгүй тайлбар</label>
+      <label className="block text-md text-[#09090B] pb-2">Дэлгэрэнгүй тайлбар</label>
       <textarea  id={name}
         name={name}
         value={value}

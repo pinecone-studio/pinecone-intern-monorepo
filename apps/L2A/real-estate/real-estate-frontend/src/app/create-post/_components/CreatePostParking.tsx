@@ -13,7 +13,7 @@ type Props = {
 export const CreatePostParking = ({ name, value, onChange, error }: Props) => {
   return (
     <div>
-      <label className="block text-sm text-[#09090B] pb-1" htmlFor={name}>Дулаан зогсоол</label>
+      <label className="block text-md text-[#09090B] pb-1" htmlFor={name}>Дулаан зогсоол</label>
       <Select
         name={name}
         value={value}

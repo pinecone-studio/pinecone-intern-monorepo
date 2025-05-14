@@ -13,7 +13,7 @@ type Props = {
 export const CreatePostType = ({ name, value, onChange, error }: Props) => {
   return (
     <div>
-      <label className="block text-sm text-[#09090B] pb-1" htmlFor={name}>
+      <label className="block text-md text-[#09090B] pb-1" htmlFor={name}>
         Төрөл
       </label>
       <Select
