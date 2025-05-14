@@ -6,7 +6,6 @@ import AboutEvent from './_components/AboutEvent';
 import SeatInfo from './_components/SeatInfo';
 import { useParams } from 'next/navigation';
 import ConcertBanner from './_components/ConcertBanner';
-import ConcertCard from '@/app/_components/ConcertCard';
 import RecommendConcert from './_components/RecommendConcert';
 
 const Page: FC = () => {
