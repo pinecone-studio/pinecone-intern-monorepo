@@ -1,7 +1,7 @@
-import { X } from "lucide-react";
-import Image from "next/image";
+import { X } from 'lucide-react';
+import Image from 'next/image';
 
-export const StepFourthCart = ({ index, selectedImages, removeImage }: StepFourthCartProps) => {
+export const StepFourthCart = ({ index, selectedImages, removeImage }: { index: number; selectedImages: string[]; removeImage: (index: number) => void }) => {
   return (
     <div className="relative w-[197px] h-[296px] overflow-hidden rounded-md bg-gray-100">
       <Image src={selectedImages[index] || '/placeholder.svg'} alt={`Uploaded image ${index + 1}`} fill className="object-cover" />
