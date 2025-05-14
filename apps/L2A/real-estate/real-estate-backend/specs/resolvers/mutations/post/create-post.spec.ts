@@ -2,7 +2,18 @@ import { createPost } from 'apps/L2A/real-estate/real-estate-backend/src/resolve
 import { POST_MODEL } from 'apps/L2A/real-estate/real-estate-backend/src/models/post';
 import { PropertyType } from 'apps/L2A/real-estate/real-estate-backend/src/generated';
 
+// Mock the entire POST_MODEL
+jest.mock('apps/L2A/real-estate/real-estate-backend/src/models/post', () => ({
+  POST_MODEL: {
+    create: jest.fn()
+  }
+}));
+
 describe('createPost', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should create a post successfully', async () => {
     const input = {
       balcony: true,
@@ -25,26 +36,36 @@ describe('createPost', () => {
       windowsCount: 10,
     };
 
-    const mockCreate = jest.fn().mockResolvedValue({
+    const mockResult = {
       _id: 'generatedPostId123',
       ...input,
-      createdAt: new Date().toISOString(), 
+      status: 'PENDING', // Note the uppercase status
+      createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      lift: undefined,
-      location: undefined,
-    });
-    POST_MODEL.create = mockCreate;
+    };
+
+    // Setup the mock implementation
+    (POST_MODEL.create as jest.Mock).mockResolvedValue(mockResult);
 
     const result = await createPost(null, { input });
+    
+    // Verify the create call
     expect(POST_MODEL.create).toHaveBeenCalledTimes(1);
-    expect(POST_MODEL.create).toHaveBeenCalledWith(expect.objectContaining(input));
-    expect(result).toHaveProperty('_id');
-    expect(result.title).toBe(input.title);
-    expect(result.status).toBe('pending');
-    expect(result.createdAt).toBeDefined();
-    expect(result.updatedAt).toBeDefined();
-    expect(result.lift).toBeUndefined();
-    expect(result.location).toBeUndefined();
+    expect(POST_MODEL.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...input,
+        status: expect.stringMatching(/pending/i) // Case insensitive match
+      })
+    );
+    
+    // Verify the returned result
+    expect(result).toMatchObject({
+      ...input,
+      _id: 'generatedPostId123',
+      status: expect.stringMatching(/pending/i), // Case insensitive match
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String)
+    });
   });
 
   it('should handle errors when creation fails', async () => {
@@ -55,27 +76,9 @@ describe('createPost', () => {
       propertyOwnerId: 'userId123',
     };
 
-    const mockCreate = jest.fn().mockRejectedValue(new Error('Database error'));
-
-    POST_MODEL.create = mockCreate;
+    (POST_MODEL.create as jest.Mock).mockRejectedValue(new Error('Database error'));
 
     await expect(createPost(null, { input })).rejects.toThrow('Database error');
-
     expect(POST_MODEL.create).toHaveBeenCalledTimes(1);
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

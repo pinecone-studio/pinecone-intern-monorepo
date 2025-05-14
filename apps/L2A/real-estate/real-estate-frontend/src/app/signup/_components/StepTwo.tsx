@@ -5,7 +5,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRequestOtpMutation, useVerifyOtpMutation } from "@/generated";
 
 export const StepTwo = ({setStep}:StepTwoProps) => {
@@ -16,14 +16,7 @@ export const StepTwo = ({setStep}:StepTwoProps) => {
     const [email] = useState<string>(()=>localStorage.getItem('email') || '');
     const [timer, setTimer] = useState<number>(15); 
     const [resendEnabled, setResendEnabled] = useState<boolean>(false);
-    const otpRequestRef = useRef(false)
 
-    useEffect(() => {
-        if(!otpRequestRef.current && email){
-            otpRequestRef.current = true;
-            sendOTP();
-        } 
-    },[email])
 
     const sendOTP = async ()=>{
         if(!email){
