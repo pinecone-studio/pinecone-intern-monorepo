@@ -8,6 +8,7 @@ export const UserTypeDefs = gql`
     firstName: String
     lastName: String
     birth: Date
+    emergencyPhone: Int
     relation: String
     isAdmin: Boolean!
     phone: Int
@@ -20,5 +21,8 @@ export const UserTypeDefs = gql`
 
   type Mutation {
     addUser(email: String!, password: String!): User!
+    updatePersonalInformation(_id: ID!, firstName: String!, lastName: String!, birth: Date!): User!
+    updateContact(_id: ID!, phone: Int!, emergencyPhone: Int!, relation: String!): User!
+    updatePassword(_id: ID!, password: String!): User!
   }
 `;
