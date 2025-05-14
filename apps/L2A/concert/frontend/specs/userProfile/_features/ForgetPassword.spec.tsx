@@ -1,6 +1,6 @@
 import ForgetPassword from '@/app/userProfile/[id]/_features/ForgetPassword';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-
+import '@testing-library/jest-dom';
 describe('ForgetPassword Component', () => {
   beforeAll(() => {
     global.alert = jest.fn();
@@ -9,6 +9,13 @@ describe('ForgetPassword Component', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
+  const fillForm = async () => {
+    fireEvent.change(screen.getByLabelText(/Имэйл:/), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/Хуучин нууц үг:/), { target: { value: 'oldPassword123' } });
+    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг:/), { target: { value: 'newPassword123' } });
+    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/), { target: { value: 'newPassword123' } });
+  };
 
   it('should render the form with email, current password, new password and confirm password fields', () => {
     render(<ForgetPassword />);
@@ -40,10 +47,7 @@ describe('ForgetPassword Component', () => {
 
     render(<ForgetPassword />);
 
-    fireEvent.change(screen.getByLabelText(/Имэйл:/), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText(/Хуучин нууц үг:/), { target: { value: 'oldPassword123' } });
-    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг:/), { target: { value: 'newPassword123' } });
-    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/), { target: { value: 'newPassword123' } });
+    await fillForm();
 
     fireEvent.click(screen.getByRole('button', { name: /Хадгалах/ }));
 
@@ -60,10 +64,7 @@ describe('ForgetPassword Component', () => {
 
     render(<ForgetPassword />);
 
-    fireEvent.change(screen.getByLabelText(/Имэйл:/), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText(/Хуучин нууц үг:/), { target: { value: 'oldPassword123' } });
-    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг:/), { target: { value: 'newPassword123' } });
-    fireEvent.change(screen.getByLabelText(/Шинэ нууц үг давтах:/), { target: { value: 'newPassword123' } });
+    await fillForm();
 
     fireEvent.click(screen.getByRole('button', { name: /Хадгалах/ }));
 
