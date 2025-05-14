@@ -13,7 +13,7 @@ const CreateAccountSteps = () => {
   return (
     <div className="flex flex-col gap-[24px]  w-full items-center mt-[80px]">
       <Image src="/tinder.svg" width={100} height={25} alt="logo" />
-      <Steps setStep={setStep} />
+      <Steps setStep={setStep} step={step}/>
     </div>
   );
 };
