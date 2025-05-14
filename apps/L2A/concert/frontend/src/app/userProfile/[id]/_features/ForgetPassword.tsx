@@ -5,13 +5,41 @@ const ForgetPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (newPassword !== confirmPassword) {
       alert('Шинэ нууц үг таарахгүй байна!');
       return;
     }
-    alert('Нууц үг амжилттай шинэчлэгдлээ!');
+
+    try {
+      const response = await fetch('/api/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+          email,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Нууц үг амжилттай шинэчлэгдлээ!');
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+      } else {
+        alert(data.error || 'Алдаа гарлаа.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Алдаа гарлаа.');
+    }
   };
 
   return (
@@ -21,6 +49,19 @@ const ForgetPassword = () => {
       </h1>
       <h2 className="text-2xl font-semibold mb-4">Нууц үг сэргээх</h2>
       <div className="bg-[#1c1c1e] p-8 rounded-xl max-w-2xl space-y-6" data-cy="password-form">
+        <div>
+          <label htmlFor="email" className="block mb-2 text-lg">
+            Имэйл:
+          </label>
+          <input
+            id="email"
+            data-cy="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none"
+          />
+        </div>
         <div>
           <label htmlFor="current-password" className="block mb-2 text-lg">
             Хуучин нууц үг:
