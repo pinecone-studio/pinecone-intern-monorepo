@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { StepFourthCart } from './_components/StepFourthCart';
+import { StepFourthCart } from '../_components/StepFourthCart';
 
 const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -14,8 +14,8 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
       setError('Please select a photo to upload.');
       return;
     }
-    if (selectedImages.length <= 3) {
-      setError('Please upload at least 3 photos to continue.');
+    if (selectedImages.length < 1) {
+      setError('Please upload at least 1 photo to continue.');
       return;
     }
     setStep(4);
