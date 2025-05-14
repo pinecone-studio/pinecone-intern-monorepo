@@ -1,6 +1,8 @@
 describe('User Profile Tabs', () => {
+  const pass = 'changepass@gmail.com';
+
   beforeEach(() => {
-    cy.visit('/userProfile/123');
+    cy.visit('/profile/123');
   });
 
   it('should render sidebar and default to user profile', () => {
@@ -32,38 +34,43 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="total-price"]').should('contain.text', '₮');
   });
 
-  it('should switch to forget password and validate mismatched passwords', () => {
-    cy.get('[data-cy="forget-password"]').click();
-    cy.get('[data-cy="password-tab"]').should('exist');
+  it('should change password successfully', () => {
+    cy.intercept('POST', '**/api/graphql').as('waitlogin');
+    cy.intercept('POST', '**/api/graphql').as('waitpasschange');
+    cy.visit('/auth/signin');
+    cy.get('input[name="email"]').type(pass);
+    cy.get('input[name="password"]').type(pass);
+    cy.get('button[type="submit"]').click();
+    cy.wait('@waitlogin');
 
-    cy.get('[data-cy="current-password"]').type('oldpass');
-    cy.get('[data-cy="new-password"]').type('newpass123');
-    cy.get('[data-cy="confirm-password"]').type('differentpass');
+    cy.visit('/profile/123');
 
-    cy.window().then((win) => cy.spy(win, 'alert').as('passwordAlertMismatch'));
+    cy.get('[data-testid="forget-password"]').click();
 
-    cy.get('[data-cy="save-password"]').click();
+    cy.get('[data-testid="current-password"]').type(pass);
+    cy.get('[data-testid="new-password"]').type(pass);
+    cy.get('[data-testid="confirm-password"]').type(pass);
+    cy.get('[data-testid="save-password"]').click();
 
-    cy.get('@passwordAlertMismatch').should('have.been.calledWith', 'Шинэ нууц үг таарахгүй байна!');
+    cy.wait('@waitpasschange');
+    cy.contains('Амжилттай солигдлоо!').should('be.visible');
   });
 
-  it('should switch to forget password and validate successful password change', () => {
-    cy.get('[data-cy="forget-password"]').click();
-    cy.get('[data-cy="password-tab"]').should('exist');
+  it('should throw an error on password change', () => {
+    cy.get('[data-testid="forget-password"]').click();
+    cy.intercept('POST', '**/api/graphql').as('waitapi');
 
-    cy.get('[data-cy="current-password"]').type('oldpass');
-    cy.get('[data-cy="new-password"]').type('newpass123');
-    cy.get('[data-cy="confirm-password"]').type('newpass123');
+    cy.get('[data-testid="current-password"]').type(pass);
+    cy.get('[data-testid="new-password"]').type(pass);
+    cy.get('[data-testid="confirm-password"]').type(pass);
+    cy.get('[data-testid="save-password"]').click();
 
-    cy.window().then((win) => cy.spy(win, 'alert').as('passwordAlertSuccess'));
-
-    cy.get('[data-cy="save-password"]').click();
-
-    cy.get('@passwordAlertSuccess').should('have.been.calledWith', 'Нууц үг амжилттай шинэчлэгдлээ!');
+    cy.wait('@waitapi');
+    cy.contains('Хэрэглэгч олдсонгүй').should('be.visible');
   });
 
   it('should switch to order history and show orders', () => {
-    cy.visit('/userProfile/123');
+    cy.visit('/profile/123');
 
     cy.get('[data-cy="user-profile-container"]').should('exist');
 
@@ -78,8 +85,8 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="order-history"]').click({ multiple: true });
     cy.get('[data-cy="order-status"]').should('exist');
     cy.get('[data-cy="orders-tab"]').should('exist');
-    cy.get('[data-cy="forget-password"]').click({ multiple: true });
-    cy.get('[data-cy="password-tab"]').should('exist');
+    cy.get('[data-testid="forget-password"]').click({ multiple: true });
+    cy.get('[data-testid="password-tab"]').should('exist');
   });
 
   it('should block invalid characters in phone input', () => {

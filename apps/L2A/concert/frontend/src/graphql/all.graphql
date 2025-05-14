@@ -118,3 +118,10 @@ query AdminGetConcerts {
     }
   }
 }
+
+mutation ChangeCurrentPassword($email: String!, $currentPassword: String!, $newPassword: String!) {
+  changeCurrentPassword(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
+    id
+    email
+  }
+}
