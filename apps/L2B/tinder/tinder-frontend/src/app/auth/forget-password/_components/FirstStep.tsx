@@ -33,8 +33,12 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
       <div className="w-full space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input type="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} placeholder="email" />
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          <Input type="email" data-testid="email-input" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} placeholder="email" />
+          {error && (
+            <p data-testid="email-error" className="text-sm text-red-500">
+              {error}
+            </p>
+          )}
         </div>
         <Button data-testid="forget-password-firstStep-button" onClick={() => handleContinue()} type="submit" className="w-full bg-[#fe3c72] hover:bg-[#e62a5b] text-white rounded-full">
           Continue

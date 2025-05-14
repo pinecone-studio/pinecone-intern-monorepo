@@ -1,0 +1,26 @@
+Daemon process terminated and closed the connection
+
+Messages from the log:
+[NX Daemon Server] - 2025-05-14T05:38:37.111Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2025-05-14T05:38:37.112Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2025-05-14T05:38:37.113Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2025-05-14T05:38:37.113Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2025-05-14T05:38:37.114Z - Time taken for 'total for creating and serializing project graph' 0.08324999999604188ms
+[NX Daemon Server] - 2025-05-14T05:38:37.114Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2025-05-14T05:38:37.114Z - Done responding to the client project-graph
+[NX Daemon Server] - 2025-05-14T05:38:37.114Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2025-05-14T05:38:37.116Z - [REQUEST]: Responding to the client with an error. Invalid payload from the client Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+Error: Unsupported payload sent to daemon server: {"type":"GET_CONTEXT_FILE_DATA"}
+    at handleMessage (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:105:104)
+    at /Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/daemon/server/server.js:45:15
+    at Socket.<anonymous> (/Users/zayaz/Desktop/pinecone-intern-monorepo/node_modules/nx/src/utils/consume-messages-from-socket.js:13:17)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+[NX Daemon Server] - 2025-05-14T05:38:37.116Z - Done responding to the client null
+
+
+
+More information: /Users/zayaz/Desktop/pinecone-intern-monorepo/.nx/workspace-data/d/daemon.log
