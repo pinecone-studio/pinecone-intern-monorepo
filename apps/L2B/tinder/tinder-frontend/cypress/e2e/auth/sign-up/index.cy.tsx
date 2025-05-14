@@ -14,8 +14,9 @@ describe('SignUpStep', () => {
 
     cy.get('[data-testid="otp"]').type('1234');
 
-    cy.get('[data-testid="3step"]', { timeout: 5000 }).should('exist');
-    cy.contains('test@example.com').should('exist');
+    cy.get('[data-testid="password-input"]').type('Password123!');
+    cy.get('[data-testid="confirm-password-input"]').type('Password123!');
+    cy.contains('Continue').click();
   });
 
   it('should enable resend button after 15 seconds and restart timer on click', () => {
@@ -28,5 +29,26 @@ describe('SignUpStep', () => {
 
     cy.contains('Send again').click();
     cy.contains(/Send again \(15\)/).should('exist');
+  });
+
+  it('shows error if passwords do not match', () => {
+    cy.get('[data-testid="otp"]').clear().type('1234');
+    cy.contains('Continue').click();
+
+    cy.get('[data-testid="password-input"]').type('Password123!');
+    cy.get('[data-testid="confirm-password-input"]').type('Mismatch123!');
+    cy.contains('Continue').click();
+
+    cy.contains('Password do not match', { timeout: 3000 }).should('exist');
+  });
+
+  it('submits when password is valid and matches confirm', () => {
+    cy.get('[data-testid="otp"]').clear().type('1234');
+    cy.contains('Continue').click();
+
+    cy.log('Filling matching password fields...');
+    cy.get('[data-testid="password-input"]').type('Password123!');
+    cy.get('[data-testid="confirm-password-input"]').type('Password123!');
+    cy.contains('Continue').click();
   });
 });
