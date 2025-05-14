@@ -1,5 +1,5 @@
 'use client';
-import ProfileSideBar from '@/app/(main)/_components/ProfileSideBar';
+import ProfileSideBar from '@/app/(main)/(profiles)/_components/ProfileSideBar';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
