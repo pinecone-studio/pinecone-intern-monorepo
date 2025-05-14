@@ -11,10 +11,12 @@ import AddTicketInfoInput from '../_components/AddTicketinfoinputs';
 import AddTicketTimeInput from '../_components/AddTicketTimeInputs';
 import AddTicketSeatInput from '../_components/AddTicketSeatInputs';
 import AddTicketVenueInputs from '../_components/AddTicketVenueInfoInputs';
-import { useEffect } from 'react';
 import AddTicketImageURLInput from '../_components/AddTicketImageUrlInput';
+import { useCreateConcertMutation, useCreateVenueMutation } from '@/generated';
 
 const AddTicketDialog = () => {
+  const [createVenue, { loading: venueLoading }] = useCreateVenueMutation();
+  const [CreateConcert, { error, loading, data }] = useCreateConcertMutation();
   const form = useForm<z.infer<typeof AddTicketSchema>>({
     resolver: zodResolver(AddTicketSchema),
     defaultValues: AddTicketDefaultValues,
@@ -22,11 +24,50 @@ const AddTicketDialog = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof AddTicketSchema>) => {
-    console.log(values);
+    try {
+      const { venueName, venueAddress, venueCity, venueCapacity } = values;
+
+      const responseVenue = await createVenue({ variables: { name: venueName, address: venueAddress, city: venueCity, capacity: venueCapacity } });
+
+      if (responseVenue?.data?.createVenue) {
+        await CreateConcert({
+          variables: {
+            input: {
+              artistName: values.artistName,
+              description: values.description,
+              endDate: values.endDate,
+              doorOpen: values.musicStart,
+              musicStart: values.musicStart,
+              thumbnailUrl: values.thumbnailUrl,
+              title: values.title,
+              venue: responseVenue.data.createVenue?.id,
+              seatData: [
+                {
+                  date: values.startDate,
+                  seats: {
+                    Backseat: {
+                      availableTickets: values.AvialableTicketCountBackSeat,
+                      price: values.BackSeatTicketPrice,
+                    },
+                    Standard: {
+                      availableTickets: values.AvialableTicketCountStandard,
+                      price: values.StandardTicketPrice,
+                    },
+                    VIP: {
+                      availableTickets: values.ticketCountVip,
+                      price: values.VIPTicketPrice,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
-  useEffect(() => {
-    console.log(form.formState.errors);
-  }, [form]);
   return (
     <div>
       <Dialog>
@@ -44,7 +85,8 @@ const AddTicketDialog = () => {
                 <AddTicketTimeInput form={form} />
                 <AddTicketSeatInput form={form} />
               </div>
-              <Button disabled={form.formState.isSubmitting}>Click here</Button>
+              {data?.createConcert ? <div>Амжилттай нэмлээ!</div> : error && <div>Концерт нэмэхэд асуудал гарлаа!</div>}
+              <Button disabled={form.formState.isSubmitting || venueLoading || loading}>Нэмэх</Button>
             </form>
           </Form>
         </DialogContent>
