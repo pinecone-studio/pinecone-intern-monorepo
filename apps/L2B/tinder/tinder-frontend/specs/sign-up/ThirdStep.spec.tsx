@@ -11,7 +11,7 @@ describe('ThirdStep Component', () => {
     });
 
     fireEvent.change(screen.getByTestId('confirm-password-input'), {
-      target: { value: 'Mismatch123!' },
+      target: { value: 'WrongPass123!' },
     });
 
     fireEvent.click(screen.getByRole('button', { name: /continue/i }));
