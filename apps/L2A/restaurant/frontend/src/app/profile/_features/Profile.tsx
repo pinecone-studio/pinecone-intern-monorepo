@@ -1,6 +1,6 @@
 'use client';
 
-import { UserProfile, useUser } from '@clerk/nextjs';
+import { UserProfile } from '@clerk/nextjs';
 
 const UseProfile = () => {
   return (
@@ -9,7 +9,7 @@ const UseProfile = () => {
         Хэрэглэгчийн хэсэг
       </h1>{' '}
       <div className="flex justify-center">
-        <div data-cyid=" user-profile">
+        <div data-cyid="user-profile">
           <UserProfile routing="hash" />
         </div>
       </div>

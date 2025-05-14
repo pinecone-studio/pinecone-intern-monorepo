@@ -1,6 +1,12 @@
+import Header from '../_components/Header';
 import UseProfile from './_features/Profile';
 
 const Profile = () => {
-  return <UseProfile />;
+  return (
+    <>
+      <Header />
+      <UseProfile />
+    </>
+  );
 };
 export default Profile;
