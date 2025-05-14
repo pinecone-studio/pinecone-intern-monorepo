@@ -2,7 +2,6 @@ import { createPost } from 'apps/L2A/real-estate/real-estate-backend/src/resolve
 import { POST_MODEL } from 'apps/L2A/real-estate/real-estate-backend/src/models/post';
 import { PropertyType } from 'apps/L2A/real-estate/real-estate-backend/src/generated';
 
-// Mock the entire POST_MODEL
 jest.mock('apps/L2A/real-estate/real-estate-backend/src/models/post', () => ({
   POST_MODEL: {
     create: jest.fn()
@@ -39,30 +38,27 @@ describe('createPost', () => {
     const mockResult = {
       _id: 'generatedPostId123',
       ...input,
-      status: 'PENDING', // Note the uppercase status
+      status: 'PENDING', 
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    // Setup the mock implementation
     (POST_MODEL.create as jest.Mock).mockResolvedValue(mockResult);
 
     const result = await createPost(null, { input });
     
-    // Verify the create call
     expect(POST_MODEL.create).toHaveBeenCalledTimes(1);
     expect(POST_MODEL.create).toHaveBeenCalledWith(
       expect.objectContaining({
         ...input,
-        status: expect.stringMatching(/pending/i) // Case insensitive match
+        status: expect.stringMatching(/pending/i) 
       })
     );
     
-    // Verify the returned result
     expect(result).toMatchObject({
       ...input,
       _id: 'generatedPostId123',
-      status: expect.stringMatching(/pending/i), // Case insensitive match
+      status: expect.stringMatching(/pending/i), 
       createdAt: expect.any(String),
       updatedAt: expect.any(String)
     });
