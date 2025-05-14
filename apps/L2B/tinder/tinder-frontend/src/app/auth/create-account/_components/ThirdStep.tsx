@@ -1,6 +1,5 @@
 "use client"
 import { Button } from '@/components/ui/button';
-import React from 'react';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -21,7 +20,7 @@ const formSchema = z.object({
   profession:z.string().min(2).max(50),
   schoolWork:z.string().min(2).max(50)
 })
-const ThirdStep = ({ setStep }: { setStep: (_step: number) => void }) => {
+const ThirdStep = ({ setStep,step }: { setStep: (_step: number) => void ,step:number}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,9 +38,11 @@ const ThirdStep = ({ setStep }: { setStep: (_step: number) => void }) => {
 
   }
   return (
-    <div>
+    <div className='flex flex-col gap-[24px]' >
+      <div className='w-[350px] flex flex-col items-center'>
       <p className='text-[24px] text-[#09090B] font-semibold'>Your Details</p>
       <p className='text-[#71717A]'>Please provide the following information to help us get to know you better.</p>
+      </div>
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
@@ -110,10 +111,8 @@ const ThirdStep = ({ setStep }: { setStep: (_step: number) => void }) => {
           )}
         />
         <div className='flex justify-between'>
-        <Button className='rounded-full w-[64px] h-[36px]'type='button' onClick={(()=>setStep(2))}>Back</Button>
+        <Button className='rounded-full w-[64px] h-[36px]'type='button' onClick={() => setStep(step - 1)}>Back</Button>
         <Button className='bg-[#E11D48E5] rounded-full w-[64px] h-[36px]' type="submit">Next</Button></div>
-        
-        
       </form>
     </Form>
     </div>
