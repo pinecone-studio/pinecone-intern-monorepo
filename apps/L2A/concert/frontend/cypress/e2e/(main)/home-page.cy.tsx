@@ -3,9 +3,10 @@ describe('Render event menu', () => {
     cy.visit('/');
   });
   it('should render the event menu', () => {
-    cy.intercept({ method: 'POST', url: '**/api/graphql' }).as('getConcerts');
+    cy.intercept('POST', '**/api/graphql').as('getConcerts');
     cy.contains('Түр хүлээнэ үү!');
     cy.wait('@getConcerts');
+    cy.get('[data-testid="concert-card"]');
   });
 
   it('should show the "no concerts" message when the API returns zero concerts', () => {
