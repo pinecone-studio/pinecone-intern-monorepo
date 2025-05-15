@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import CartItem from '@/app/_components/CartItems';
-// Import jest-dom to extend Jest matchers
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 
 
