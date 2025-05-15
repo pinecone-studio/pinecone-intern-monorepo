@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { useForm, Controller } from 'react-hook-form';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { useForm, Controller, FormProvider } from 'react-hook-form';
 import '@testing-library/jest-dom';
 import { DatePicker } from '@/app/(main)/(profiles)/profile/_components/DatePicker';
 
@@ -8,14 +7,16 @@ type FormValues = {
   birth: Date | null;
 };
 
-const Wrapper = () => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      birth: null,
-    },
+const Wrapper = ({ defaultValues }: { defaultValues?: FormValues }) => {
+  const methods = useForm<FormValues>({
+    defaultValues: defaultValues || { birth: null },
   });
 
-  return <Controller control={control} name="birth" render={({ field }) => <DatePicker field={field} />} />;
+  return (
+    <FormProvider {...methods}>
+      <Controller control={methods.control} name="birth" render={({ field }) => <DatePicker field={field} />} />
+    </FormProvider>
+  );
 };
 
 describe('DatePicker', () => {
@@ -26,29 +27,16 @@ describe('DatePicker', () => {
     expect(screen.getByTestId('Personal-Birth-Drop-Down')).toBeInTheDocument();
   });
 
-  it('opens calendar popover when clicked', async () => {
+  it('opens calendar popover when clicked', () => {
     render(<Wrapper />);
     const button = screen.getByTestId('Personal-Birth-Drop-Down');
-    await userEvent.click(button);
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    fireEvent.click(button);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('shows age helper text when date is selected', () => {
     const birthday = new Date(2000, 0, 1);
-
-    const CustomWrapper = () => {
-      const { control } = useForm<FormValues>({
-        defaultValues: {
-          birth: birthday,
-        },
-      });
-
-      return <Controller control={control} name="birth" render={({ field }) => <DatePicker field={field} />} />;
-    };
-
-    render(<CustomWrapper />);
-
-    // Энэ хэсэг таны `getHelperText()`-ийн буцаадаг тексттэй таарах ёстой.
+    render(<Wrapper defaultValues={{ birth: birthday }} />);
     expect(screen.getByText(/years old/i)).toBeInTheDocument();
   });
 });

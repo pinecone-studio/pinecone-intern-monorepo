@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { MiddleHeader } from '@/app/(main)/(profiles)/_components/MiddleHeader';
 
 describe('MiddleHeader', () => {

@@ -1,10 +1,11 @@
 import { PersonalInformation } from './_feature/PersonalInformation';
+import { Suspense } from 'react';
 
 const ProfilePage = () => {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <PersonalInformation />
-    </div>
+    </Suspense>
   );
 };
 export default ProfilePage;
