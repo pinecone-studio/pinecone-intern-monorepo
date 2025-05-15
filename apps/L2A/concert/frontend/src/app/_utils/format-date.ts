@@ -1,8 +1,6 @@
-const FormatDate = (input?: string): string => {
-  if (!input) return 'Тодорхойгүй';
-
+const FormatDate = (input: string): string => {
   const date = new Date(input);
-  console.log(typeof input);
+
   if (!isNaN(date.getTime())) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
