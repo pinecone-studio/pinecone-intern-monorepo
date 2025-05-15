@@ -30,11 +30,11 @@ describe('DatePicker', () => {
     render(<Wrapper />);
     const button = screen.getByTestId('Personal-Birth-Drop-Down');
     await userEvent.click(button);
-    expect(await screen.findByRole('dialog')).toBeInTheDocument(); // Popover open
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
   });
 
   it('shows age helper text when date is selected', () => {
-    const birthday = new Date(2000, 0, 1); // Jan 1, 2000
+    const birthday = new Date(2000, 0, 1);
 
     const CustomWrapper = () => {
       const { control } = useForm<FormValues>({
