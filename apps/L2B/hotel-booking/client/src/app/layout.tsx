@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { Footer } from '@/app/_components/Footer';
+import Header from './_components/Header';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -13,6 +14,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body className="flex flex-col gap-5">
         <ApolloWrapper>
+          <Header/>
           {children}
           <Footer />
         </ApolloWrapper>
