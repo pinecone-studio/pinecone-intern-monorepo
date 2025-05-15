@@ -1,8 +1,8 @@
 import { userModel } from '../../models';
 
-export const deleteUser = async (_: unknown, { email }: { email: string }) => {
+export const deleteUser = async () => {
   try {
-    const deletedUser = await userModel.deleteMany({ email: /test/i });
+    await userModel.deleteMany({ email: /test/i });
     return true;
   } catch (error) {
     throw new Error('failed to delete user');
