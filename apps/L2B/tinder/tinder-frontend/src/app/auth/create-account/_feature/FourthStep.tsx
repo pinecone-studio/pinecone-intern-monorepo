@@ -14,10 +14,10 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
       setError('Please select a photo to upload.');
       return;
     }
-    if (selectedImages.length < 1) {
-      setError('Please upload at least 1 photo to continue.');
-      return;
-    }
+    // if (selectedImages.length <= 1) {
+    //   setError('Please upload at least 1 photo to continue.');
+    //   return;
+    // }
     setStep(4);
   };
 
@@ -55,7 +55,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
                 return <div key={index} className="flex w-[197px] h-[296px] items-center justify-center rounded-md bg-gray-100"></div>;
               }
             })}
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p data-cy='imageError' className="text-sm text-red-500">{error}</p>}
         </div>
         <div className="mb-6">
           <label htmlFor="image-upload" className="flex w-full cursor-pointer items-center justify-center rounded-full border border-[#E11D48] py-3 text-sm font-medium text-gray-700 hover:bg-gray-50">
@@ -66,7 +66,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
         </div>
 
         <div className="flex justify-between">
-          <Button variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
+          <Button data-cy="step-button" variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
             Back
           </Button>
           <Button className="bg-gradient-to-r from-pink-500 to-red-500 px-6 text-white hover:from-pink-600 hover:to-red-600 rounded-full" onClick={handleNext}>
