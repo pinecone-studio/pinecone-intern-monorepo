@@ -4,16 +4,18 @@ import '@testing-library/jest-dom';
 import Header from '@/app/_components/Header';
 
 jest.mock('next/link', () => {
-  return ({ children, href }) => <a href={href}>{children}</a>;
+  const Link = ({ children, href }) => <a href={href}>{children}</a>;
+  Link.displayName = 'Link';
+  return Link;
 });
 
 describe('Header Component', () => {
-  test('renders logo and title correctly', () => {
+  it('renders logo and title correctly', () => {
     render(<Header />);
     expect(screen.getByText('Pedia')).toBeInTheDocument();
   });
 
-  test('renders navigation links', () => {
+  it('renders navigation links', () => {
     render(<Header />);
     const links = screen.getByTestId('link');
     expect(links).toBeInTheDocument();
