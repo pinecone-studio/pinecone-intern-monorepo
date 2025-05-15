@@ -1,41 +1,53 @@
-import { getPostById } from '../../../src/resolvers/queries/get-post-by-id';
+import { getPostById } from '../../../src/resolvers/queries';
 import { POST_MODEL } from '../../../src/models/post';
 import mongoose from 'mongoose';
 
-jest.mock('../../models/post', () => ({
+jest.mock('../../../src/models/post', () => ({
   POST_MODEL: {
-    find: jest.fn(),
+    findOne: jest.fn(),
   },
 }));
 
-describe('getPostsById', () => {
-  const mockObjectId = new mongoose.Types.ObjectId().toHexString();
-  const mockPost = { _id: mockObjectId, title: 'Test Post' };
+describe('getPostById', () => {
+  const mockId = new mongoose.Types.ObjectId().toHexString();
+  const mockPost = {
+    _id: mockId,
+    title: 'Test Post',
+    description: 'Mock Description',
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return posts when given a valid ID', async () => {
-    (POST_MODEL.find as jest.Mock).mockResolvedValue([mockPost]);
+  it('should return post when found', async () => {
+    (POST_MODEL.findOne as jest.Mock).mockResolvedValue(mockPost);
 
-    const result = await getPostById({}, { _id: mockObjectId });
+    const result = await getPostById({}, { _id: mockId });
 
-    expect(POST_MODEL.find).toHaveBeenCalledWith({ _id: new mongoose.Types.ObjectId(mockObjectId) });
-    expect(result).toEqual([mockPost]);
+    expect(POST_MODEL.findOne).toHaveBeenCalledWith({ _id: new mongoose.Types.ObjectId(mockId) });
+    expect(result).toEqual(mockPost);
   });
 
-  it('should return an empty array and log error on failure', async () => {
-    const error = new Error('Database error');
-    (POST_MODEL.find as jest.Mock).mockRejectedValue(error);
+  it('should return null when no post found', async () => {
+    (POST_MODEL.findOne as jest.Mock).mockResolvedValue(null);
 
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const result = await getPostById({}, { _id: mockId });
 
-    const result = await getPostById({}, { _id: mockObjectId });
+    expect(result).toBeNull();
+  });
 
+  it('should return null and log error when exception occurs', async () => {
+    const error = new Error('DB Error');
+    (POST_MODEL.findOne as jest.Mock).mockRejectedValue(error);
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
+    const result = await getPostById({}, { _id: mockId });
     expect(consoleSpy).toHaveBeenCalledWith(error);
-    expect(result).toEqual([]);
-
+    expect(result).toBeNull();
     consoleSpy.mockRestore();
   });
-});
+  
+  });
+
+
+
