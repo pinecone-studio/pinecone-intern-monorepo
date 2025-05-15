@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useEffect, useRef, useState } from 'react';
+import { useRequestPasswordResetMutation, useVerifyPasswordResetOtpMutation } from '@/generated';
 
 const otpSchema = z.object({
   otp: z.string().length(4, 'Must be 4 digits'),
@@ -15,17 +16,19 @@ type Props = {
 };
 
 export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
+  const [verifyOtp, { loading: verifyLoading }] = useVerifyPasswordResetOtpMutation();
+  const [requestPasswordReset, { loading: resendLoading }] = useRequestPasswordResetMutation();
   const {
     setValue,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<z.infer<typeof otpSchema>>({
     resolver: zodResolver(otpSchema),
   });
 
   const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(15);
-  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -37,23 +40,37 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
     } else {
       setCanResend(true);
     }
-
     return () => clearInterval(interval);
   }, [timer]);
 
-  const resendCode = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log('Code resent for email:', email);
+  const handleResendCode = async () => {
+    try {
+      await requestPasswordReset({ variables: { email } });
       setTimer(15);
       setCanResend(false);
-      setIsLoading(false);
-    }, 1000);
+    } catch (err) {
+      setError('otp', { message: 'Failed to resend OTP' });
+    }
   };
 
-  const onSubmit = (data: z.infer<typeof otpSchema>) => {
-    console.log('OTP submitted:', data.otp, 'for email:', email);
-    setCurrentStep(2);
+  const onSubmit = async (data: z.infer<typeof otpSchema>) => {
+    try {
+      const response = await verifyOtp({
+        variables: { email, otp: data.otp },
+      });
+
+      if (response.data?.verifyPasswordResetOTP.success) {
+        setCurrentStep(2);
+      } else {
+        setError('otp', {
+          message: response.data?.verifyPasswordResetOTP.message || 'Invalid OTP',
+        });
+      }
+    } catch (err) {
+      setError('otp', {
+        message: 'Failed to verify OTP',
+      });
+    }
   };
 
   return (
@@ -64,7 +81,6 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
           <h2 className="text-[#09090b] text-[20px]">Pedia</h2>
         </div>
         <h3 className="text-[24px] leading-8 mb-[4px] font-medium font-inter">Confirm email</h3>
-
         <p className="font-light text-[#71717a] max-w-xs text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it&#39;s not in your inbox.</p>
       </div>
       <form data-cy="otp-form" onSubmit={handleSubmit(onSubmit)} className="w-[350px] max-w-md mt-6">
@@ -75,15 +91,11 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
             onChange={(value) => {
               setValue('otp', value);
               if (value.length === 4) {
-                setIsLoading(true);
-                setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  setIsLoading(false);
-                }, 500);
+                handleSubmit(onSubmit)();
               }
             }}
             className="gap-2 justify-center"
-            disabled={isLoading}
+            disabled={verifyLoading}
             ref={inputRef}
           >
             <InputOTPGroup>
@@ -102,18 +114,16 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
           <button
             data-cy="resend-btn"
             type="button"
-            onClick={resendCode}
-            disabled={!canResend || isLoading}
+            onClick={handleResendCode}
+            disabled={!canResend || resendLoading}
             className="text-[#2563eb] text-[14px] font-light hover:underline disabled:text-gray-400 disabled:no-underline"
           >
             {canResend ? 'Resend code' : `Resend code (${timer})`}
           </button>
-
-          {isLoading && (
-            <div role="status" className="flex items-center gap-2 mt-2">
-              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-sm text-gray-500">Processing...</span>
-            </div>
+          {errors.otp && (
+            <p data-cy="error-message" className="text-sm text-red-500 text-center mt-2 font-thin">
+              {errors.otp.message}
+            </p>
           )}
         </div>
       </form>

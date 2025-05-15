@@ -5,15 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useResetPasswordMutation } from '@/generated';
+import { useState } from 'react';
 
 const passwordSchema = z
   .object({
-    password: z
-      .string()
-      .min(10, 'Password must be at least 10 characters')
-      .regex(/[A-Z]/, 'Must contain uppercase letter')
-      .regex(/[a-z]/, 'Must contain lowercase letter')
-      .regex(/[0-9]/, 'Must contain number'),
+    password: z.string().min(8, 'Password must be at least 8 characters').regex(/[a-z]/, 'Must contain lowercase letter').regex(/[0-9]/, 'Must contain number'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -21,25 +18,35 @@ const passwordSchema = z
     path: ['confirmPassword'],
   });
 
-type Props = {
-  email: string;
-  onComplete: () => void;
-};
-
-export const ForgetPasswordNew = ({ email, onComplete }: Props) => {
+export const ForgetPasswordNew = ({ email }: { email: string }) => {
+  const [resetPassword, { loading }] = useResetPasswordMutation();
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<z.infer<typeof passwordSchema>>({
     resolver: zodResolver(passwordSchema),
   });
-  const router = useRouter();
 
-  const onSubmit = (data: z.infer<typeof passwordSchema>) => {
-    console.log('New password submitted for:', email, 'Password:', data.password);
-    router.push('/login');
-    onComplete();
+  const onSubmit = async (data: z.infer<typeof passwordSchema>) => {
+    setServerError(null);
+    try {
+      const response = await resetPassword({
+        variables: {
+          email,
+          password: data.password,
+        },
+      });
+      if (response.data?.resetPassword.success) {
+        router.push('/signin');
+      } else {
+        setServerError('Failed to reset password');
+      }
+    } catch (err) {
+      setServerError('Failed to reset password');
+    }
   };
 
   return (
@@ -64,7 +71,7 @@ export const ForgetPasswordNew = ({ email, onComplete }: Props) => {
             type="password"
             {...register('password')}
             className="mt-2 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-visible:ring-0 font-extralight"
-            placeholder="••••••••••"
+            placeholder="••••••••"
           />
           {errors.password && (
             <p data-cy="error-message" className="text-sm text-red-500 mt-2 font-thin">
@@ -72,7 +79,6 @@ export const ForgetPasswordNew = ({ email, onComplete }: Props) => {
             </p>
           )}
         </div>
-
         <div>
           <label data-cy="confirm-password-label" htmlFor="confirmPassword" className="text-[14px] font-medium mb-2">
             Confirm Password
@@ -83,7 +89,7 @@ export const ForgetPasswordNew = ({ email, onComplete }: Props) => {
             type="password"
             {...register('confirmPassword')}
             className="mt-2 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-visible:ring-0 font-extralight"
-            placeholder="••••••••••"
+            placeholder="••••••••"
           />
           {errors.confirmPassword && (
             <p data-cy="error-message" className="text-sm text-red-500 mt-2 font-thin">
@@ -91,12 +97,15 @@ export const ForgetPasswordNew = ({ email, onComplete }: Props) => {
             </p>
           )}
         </div>
-
-        <Button data-cy="submit-btn" type="submit" disabled={isSubmitting} className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
-          {isSubmitting ? 'Processing...' : 'Continue'}
+        {serverError && (
+          <p data-cy="error-message" className="text-sm text-red-500 mt-2 font-thin">
+            {serverError}
+          </p>
+        )}
+        <Button data-cy="submit-btn" type="submit" disabled={loading} className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+          {loading ? 'Resetting...' : 'Continue'}
         </Button>
       </form>
-
       <div className="absolute bottom-8 text-sm text-[#09090B] font-light">©2024 Pedia is an Pedia Group company.</div>
     </div>
   );
