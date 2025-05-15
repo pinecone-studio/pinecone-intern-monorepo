@@ -20,10 +20,17 @@ const SecondStep = ({ setStep, email }: Props) => {
 
   useEffect(() => {
     if (!canResend && timer > 0) {
-      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+      const interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
       return () => clearInterval(interval);
     }
-    if (timer === 0) setCanResend(true);
+  }, [canResend, timer]);
+
+  useEffect(() => {
+    if (timer === 0 && !canResend) {
+      setCanResend(true);
+    }
   }, [timer, canResend]);
 
   useEffect(() => {
@@ -57,8 +64,8 @@ const SecondStep = ({ setStep, email }: Props) => {
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-4" data-testid="otp-slot">
-        <InputOtp setOtp={setOtp} error={error} setError={setError} otp={otp} verifying={verifying} resending={resending} handleResend={handleResend} timer={timer} canResend={canResend} />
+      <div className="flex flex-col items-center gap-4">
+        <InputOtp setOtp={setOtp} error={error} otp={otp} verifying={verifying} resending={resending} handleResend={handleResend} timer={timer} canResend={canResend} />
 
         {(verifying || resending) && (
           <div role="status" className="flex items-center gap-2 mt-2 text-sm text-black">

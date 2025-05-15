@@ -6,7 +6,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 type InputOtpProps = {
   setOtp: (_val: string) => void;
   error: string;
-  setError: (_val: string) => void;
+
   otp: string;
   verifying: boolean;
   resending: boolean;
@@ -15,16 +15,16 @@ type InputOtpProps = {
   canResend: boolean;
 };
 
-const InputOtp = ({ setOtp, error, setError, otp, verifying, resending, handleResend, timer, canResend }: InputOtpProps) => {
+const InputOtp = ({ setOtp, error, otp, verifying, resending, handleResend, timer, canResend }: InputOtpProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (val: string) => {
     setOtp(val);
-    if (error) setError('');
+
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4" data-testid="otp-slot">
       <form autoComplete="one-time-code" className="flex">
         <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} value={otp} onChange={handleChange} disabled={verifying || resending} ref={inputRef} data-testid="otp">
           <InputOTPGroup className="rounded-2xl">
