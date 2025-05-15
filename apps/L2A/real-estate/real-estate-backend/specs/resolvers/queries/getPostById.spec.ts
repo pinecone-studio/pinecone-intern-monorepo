@@ -1,67 +1,53 @@
-import { getPostsById } from '../../../src/resolvers/queries';
+import { getPostById } from '../../../src/resolvers/queries';
 import { POST_MODEL } from '../../../src/models/post';
 import mongoose from 'mongoose';
 
-
 jest.mock('../../../src/models/post', () => ({
   POST_MODEL: {
-    find: jest.fn(),
+    findOne: jest.fn(),
   },
 }));
 
-
-jest.mock('mongoose', () => {
-  const actual = jest.requireActual('mongoose');
-  return {
-    ...actual,
-    Types: {
-      ObjectId: jest.fn(),
-    },
+describe('getPostById', () => {
+  const mockId = new mongoose.Types.ObjectId().toHexString();
+  const mockPost = {
+    _id: mockId,
+    title: 'Test Post',
+    description: 'Mock Description',
   };
-});
 
-describe('getPostsByUserId', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return posts for a given propertyOwnerId', async () => {
-    const mockPosts = [
-      { _id: '1', title: 'Post 1' },
-      { _id: '2', title: 'Post 2' },
-    ];
-    const mockObjectId = { toString: () => 'mocked-id', id: 'user123' };
-    ((mongoose.Types.ObjectId as unknown) as jest.Mock).mockReturnValue(mockObjectId);
-    (POST_MODEL.find as jest.Mock).mockResolvedValue(mockPosts);
+  it('should return post when found', async () => {
+    (POST_MODEL.findOne as jest.Mock).mockResolvedValue(mockPost);
 
-    const propertyOwnerId = 'user123';
-    const result = await getPostsById(null, { propertyOwnerId });
+    const result = await getPostById({}, { _id: mockId });
 
-    expect(mongoose.Types.ObjectId).toHaveBeenCalledWith(propertyOwnerId);
-    expect(POST_MODEL.find).toHaveBeenCalledWith({ propertyOwnerId: mockObjectId });
-    expect(result).toEqual(mockPosts);
+    expect(POST_MODEL.findOne).toHaveBeenCalledWith({ _id: new mongoose.Types.ObjectId(mockId) });
+    expect(result).toEqual(mockPost);
   });
 
-  it('should return an empty array if an error occurs', async () => {
-    (POST_MODEL.find as jest.Mock).mockRejectedValue(new Error('DB error'));
-    const mockObjectId = { toString: () => 'mocked-id', id: 'bad-id' };
-    ((mongoose.Types.ObjectId as unknown) as jest.Mock).mockReturnValue(mockObjectId);
+  it('should return null when no post found', async () => {
+    (POST_MODEL.findOne as jest.Mock).mockResolvedValue(null);
 
-    const result = await getPostsById(null, { propertyOwnerId: 'bad-id' });
+    const result = await getPostById({}, { _id: mockId });
 
-    expect(mongoose.Types.ObjectId).toHaveBeenCalledWith('bad-id');
-    expect(result).toEqual([]);
+    expect(result).toBeNull();
   });
 
-  it('should return an empty array if ObjectId constructor throws', async () => {
-    ((mongoose.Types.ObjectId as unknown) as jest.Mock).mockImplementation(() => {
-      throw new Error('Invalid ObjectId');
-    });
-
-    const result = await getPostsById(null, { propertyOwnerId: 'invalid-id' });
-
-    expect(result).toEqual([]);
+  it('should return null and log error when exception occurs', async () => {
+    const error = new Error('DB Error');
+    (POST_MODEL.findOne as jest.Mock).mockRejectedValue(error);
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
+    const result = await getPostById({}, { _id: mockId });
+    expect(consoleSpy).toHaveBeenCalledWith(error);
+    expect(result).toBeNull();
+    consoleSpy.mockRestore();
   });
-});
+  
+  });
+
 
 
