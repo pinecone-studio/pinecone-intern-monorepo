@@ -3,33 +3,32 @@ import { MiddleHeader } from '../../_components/MiddleHeader';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { differenceInYears, format } from 'date-fns';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { CalendarIcon } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
 import { useGetUserQuery, useUpdatePersonalInformationMutation } from '@/generated';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
+import { DatePicker } from '../_components/DatePicker';
 
-const formSchema = z.object({
+const personalInfoSchema = z.object({
   firstName: z.string().min(2, { message: 'First name must be at least 2 characters.' }),
   lastName: z.string().min(2, { message: 'Last name must be at least 2 characters.' }),
   birth: z.date().nullable().optional(),
 });
 
+export type PersonalInformationFormValues = z.infer<typeof personalInfoSchema>;
+
 export const PersonalInformation = () => {
   const [updatePersonalInformation] = useUpdatePersonalInformationMutation();
   const { data } = useGetUserQuery({
     variables: {
-      id: '682207ae2c5870fba2e6da4c',
+      id: '682207ae2c5870fba2e6da4c', //nevtersen hereglegchiin _id baih ystoi
     },
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof personalInfoSchema>>({
+    resolver: zodResolver(personalInfoSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -45,9 +44,9 @@ export const PersonalInformation = () => {
     }
   }, [data, form]);
 
-  const userId = '682207ae2c5870fba2e6da4c';
+  const userId = '682207ae2c5870fba2e6da4c'; //nevtersen hereglegchiin _id baih ystoi
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof personalInfoSchema>) {
     if (!userId) {
       console.error('User ID not found');
       return;
@@ -78,7 +77,7 @@ export const PersonalInformation = () => {
   }
 
   return (
-    <div>
+    <div data-cy="Personal-Information-Page">
       <MiddleHeader h3="Personal Information" p="This is how others will see you on the site." />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -90,9 +89,9 @@ export const PersonalInformation = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
+                    <Input data-cy="Personal-First-Name-Input" className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
                   </FormControl>
-                  <FormMessage className="font-extralight" />
+                  <FormMessage data-cy="Personal-First-Name-Input-Error-Message" className="font-extralight" />
                 </FormItem>
               )}
             />
@@ -103,53 +102,15 @@ export const PersonalInformation = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
+                    <Input data-cy="email-inputs" className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
                   </FormControl>
                   <FormMessage className="font-extralight" />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="birth"
-              render={({ field }) => {
-                const age = field.value instanceof Date ? differenceInYears(new Date(), field.value) : null;
-                return (
-                  <FormItem className="flex flex-col w-[324px]">
-                    <FormLabel>Date of birth</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button variant="outline" className={`w-full flex justify-between border-[1px] font-extralight ${!field.value && 'text-muted-foreground'}`}>
-                            {field.value ? format(field.value, 'yyyy-MM-dd') : 'Pick a date'}
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value ? field.value : undefined}
-                          onSelect={field.onChange}
-                          captionLayout="dropdown"
-                          fromYear={1900}
-                          toYear={new Date().getFullYear()}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    {age !== null ? (
-                      <p className="text-sm text-muted-foreground font-extralight">{age} years old</p>
-                    ) : (
-                      <p className="text-[14px] font-extralight text-[#71717a]">Your date of birth is used to calculate your age.</p>
-                    )}
-                    <FormMessage className="font-extralight" />
-                  </FormItem>
-                );
-              }}
-            />
+            <FormField control={form.control} name="birth" render={({ field }) => <DatePicker field={field} />} />
           </div>
-          <Button className="w-[128px] bg-[#2563eb]" type="submit">
+          <Button data-cy="Personal-Update-Button" className="w-[128px] bg-[#2563eb]" type="submit">
             Update Profile
           </Button>
         </form>
