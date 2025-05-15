@@ -12,19 +12,26 @@ query GetUserInfo($jwt: String!) {
     }
   }
 }
-
 query concerts {
   concerts {
     id
     artistName
     description
-    title
-    primaryPrice
-    thumbnailUrl
     doorOpen
     musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    title
     venue {
       address
+      capacity
+      city
+      id
+      name
+    }
+    seatData {
+      date
     }
   }
 }
