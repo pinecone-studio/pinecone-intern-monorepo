@@ -13,19 +13,22 @@ describe('SignUpStep', () => {
 
   it('should enable resend button after 15 seconds and restart timer on click', () => {
     cy.clock();
+
     cy.contains(/Send again \(\d+\)/).should('exist');
     cy.contains('Send again').should('be.disabled');
+
     cy.tick(15000);
+
     cy.contains('Send again').should('not.be.disabled');
 
     cy.contains('Send again').click();
+
     cy.tick(1000);
     cy.contains(/Send again \(15\)/).should('exist');
 
     cy.tick(15000);
     cy.contains('Send again').should('not.be.disabled');
   });
-
   it('should verify otp', () => {
     cy.intercept('POST', '**/graphql', {
       body: {

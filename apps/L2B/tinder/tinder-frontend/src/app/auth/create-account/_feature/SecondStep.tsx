@@ -62,7 +62,7 @@ const SecondStep = ({ setStep }: { setStep: (_step: number) => void }) => {
             )}
           </div>
           <div className="flex justify-between pt-4">
-            <Button variant="outline" className="w-[65px] text-black border rounded-full" onClick={() => setStep(0)}>
+            <Button variant="outline" className="w-[65px] text-black border rounded-full" onClick={() => setStep(0)} data-cy="2step-back-button">
               Back
             </Button>
             <Button onClick={handleNext} className="w-[65px] rounded-full bg-rose-500 hover:bg-rose-600">
