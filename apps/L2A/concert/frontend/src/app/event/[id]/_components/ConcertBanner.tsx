@@ -3,6 +3,7 @@
 import React, { FC } from 'react';
 import { Concert } from '@/generated';
 import FormatDate from '@/app/_utils/format-date';
+import Image from 'next/image';
 
 type ConcertBannerProps = {
   eventData: Concert;
@@ -27,7 +28,8 @@ const ConcertBanner: FC<ConcertBannerProps> = ({ eventData }) => {
   const eventTitle = eventData.title || 'Untitled Event';
 
   return (
-    <div data-testid="concert-banner" className="relative w-full h-[400px] bg-gray-900 text-white overflow-hidden">
+    <div data-testid="concert-banner" className="relative w-full h-[400px] text-white overflow-hidden">
+      <Image src={eventData.thumbnailUrl ?? `/placeholder.webp`} alt="Concert" fill className="object-cover opacity-60" />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-85"></div>
       </div>
