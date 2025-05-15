@@ -13,7 +13,7 @@ const Sidebar = ({ setActiveTab, activeTab }: { setActiveTab: Dispatch<SetStateA
       <button data-cy="order-history" onClick={() => setActiveTab('orders')} className={`w-full text-left px-4 py-2 rounded ${activeTab === 'orders' ? 'bg-[#2c2c2e]' : 'hover:underline'}`}>
         Захиалгын түүх
       </button>
-      <button data-cy="forget-password" onClick={() => setActiveTab('password')} className={`w-full text-left px-4 py-2 rounded ${activeTab === 'password' ? 'bg-[#2c2c2e]' : 'hover:underline'}`}>
+      <button data-testid="forget-password" onClick={() => setActiveTab('password')} className={`w-full text-left px-4 py-2 rounded ${activeTab === 'password' ? 'bg-[#2c2c2e]' : 'hover:underline'}`}>
         Нууц үг сэргээх
       </button>
     </aside>

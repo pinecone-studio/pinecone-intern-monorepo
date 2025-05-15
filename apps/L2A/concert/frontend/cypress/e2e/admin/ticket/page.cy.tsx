@@ -1,14 +1,29 @@
 describe('Add Ticket Dialog', () => {
+  const imageUrl = [
+    'https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp',
+    'https://ticket.mn/files/concerts/images/Untitled_design_26_nJW8fzr.webp',
+    'https://ticket.mn/files/concerts/images/a1200_0Kca0aP.webp',
+    'https://ticket.mn/files/concerts/images/pro_1200.webp',
+    'https://ticket.mn/files/concerts/images/zurag_1200_zns0nK3.webp',
+    'https://ticket.mn/files/concerts/images/Untitled_design_43_3mhm5VP.webp',
+    'https://ticket.mn/files/concerts/images/Untitled_design_39_31BxgTc.webp',
+    'https://ticket.mn/files/concerts/images/games_show_41qnaMi.webp',
+    'https://ticket.mn/files/concerts/images/Untitled_design_38_iH5Ulo9.webp',
+    'https://ticket.mn/files/concerts/images/Fiddleland_Ensemble_pboOxXr.webp',
+    'https://ticket.mn/files/concerts/images/hunt_nuur_standart_uClNZY8.webp',
+    'https://ticket.mn/files/concerts/images/30.1200_L20sqUy.webp',
+  ];
   beforeEach(() => {
     cy.visit('/admin/ticket');
     cy.contains('Концерт нэмэх').click();
   });
 
   it('should fill out and submit the Add Ticket form', () => {
+    cy.intercept('POST', '**/api/graphql').as('waitapi');
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
+    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 11)]);
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -28,22 +43,22 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
 
     cy.contains('Нэмэх').click();
+    cy.wait('@waitapi');
+    cy.contains('Амжилттай нэмлээ!').should('be.visible');
   });
 
   it('should fill out and submit the Add Ticket form successfully but should not trigger if statement', () => {
     cy.intercept('POST', '**/api/graphql', {
       body: {
         data: {
-          createVenue: {
-            id: 'mock-venue-id',
-          },
+          createVenue: null,
         },
       },
     }).as('mockCreateVenue');
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
+    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -65,34 +80,17 @@ describe('Add Ticket Dialog', () => {
     cy.contains('Нэмэх').click();
     cy.wait('@mockCreateVenue');
   });
-
-  it('should throw an error', () => {
-    cy.intercept('POST', '**/api/graphql', (req) => {
-      const bodyString = JSON.stringify(req.body);
-
-      if (bodyString.includes('createVenue')) {
-        req.reply({
-          body: {
-            data: {
-              createVenue: {
-                id: 'mock-venue-id',
-              },
-            },
-          },
-        });
-      } else if (bodyString.includes('createConcert')) {
-        req.reply({
-          body: {
-            errors: [{ message: 'createConcert failed' }],
-          },
-        });
-      }
+  it('should throw an error on first mutation', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        error: [{ message: 'fail' }],
+      },
     }).as('graphqlIntercept');
 
     cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
     cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
     cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type('https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp');
+    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
 
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
@@ -113,7 +111,48 @@ describe('Add Ticket Dialog', () => {
 
     cy.contains('Нэмэх').click();
     cy.wait('@graphqlIntercept');
+  });
 
+  it('should throw an error on second mutation', () => {
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      const operationName = req.body.operationName;
+      if (operationName === 'CreateVenue') {
+        req.reply({
+          data: {
+            createVenue: {
+              id: 'venue-123',
+            },
+          },
+        });
+      }
+
+      if (operationName === 'CreateConcert') {
+        req.reply({
+          errors: [{ message: 'Failed to create concert' }],
+        });
+      }
+    }).as('graphqlIntercept');
+
+    cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
+    cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
+    cy.get('[data-testid="artist-name"]').type('Жавхлан');
+    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
+    cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
+    cy.get('[data-testid="venue-capacity"]').type('200');
+    cy.get('[data-testid="venue-address"]').type('Улаанбаатар, Энхтайвны өргөн чөлөө');
+    cy.get('[data-testid="venue-city"]').type('Улаанбаатар');
+    cy.get('[data-testid="start-date"]').type('2025-06-01');
+    cy.get('[data-testid="end-date"]').type('2025-06-02');
+    cy.get('[data-testid="music-start"]').type('18:30');
+    cy.get('[data-testid="back-seat-count"]').clear().type('100');
+    cy.get('[data-testid="vip-seat-count"]').clear().type('50');
+    cy.get('[data-testid="standard-seat-count"]').clear().type('150');
+    cy.get('[data-testid="back-seat-price"]').clear().type('20000');
+    cy.get('[data-testid="vip-seat-price"]').clear().type('50000');
+    cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
+
+    cy.contains('Нэмэх').click();
+    cy.wait('@graphqlIntercept');
     cy.contains('Концерт нэмэхэд асуудал гарлаа!').should('be.visible');
   });
 });

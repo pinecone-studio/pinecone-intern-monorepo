@@ -23,7 +23,7 @@ const Header = () => {
 
       {user ? (
         <div className="flex items-center gap-4">
-          <div>{user.email}</div>
+          <Link href={`/profile/${user.id}`}>{user.email}</Link>
           <button data-testid="logout-button" onClick={logout} className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500 ">
             Гарах
           </button>

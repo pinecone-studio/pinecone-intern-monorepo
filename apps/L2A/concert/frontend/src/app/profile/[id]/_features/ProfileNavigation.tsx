@@ -31,7 +31,7 @@ const UserProfileContainer = ({ orderId }: { orderId: string }) => {
           </div>
         )}
         {activeTab === 'password' && (
-          <div data-cy="password-tab">
+          <div data-testid="password-tab">
             <ForgetPassword />
           </div>
         )}
