@@ -17,7 +17,13 @@ type Props = {
 };
 
 export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
-  const [requestReset, { loading }] = useRequestPasswordResetMutation();
+  const [requestReset, { loading }] = useRequestPasswordResetMutation({
+    onError: () => {
+      form.setError('email', {
+        message: 'Failed to send reset email',
+      });
+    },
+  });
 
   const form = useForm<z.infer<typeof emailSchema>>({
     resolver: zodResolver(emailSchema),
@@ -27,20 +33,14 @@ export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
   });
 
   const onSubmit = async (data: z.infer<typeof emailSchema>) => {
-    try {
-      const response = await requestReset({
-        variables: { email: data.email },
-      });
+    const response = await requestReset({
+      variables: { email: data.email },
+    });
 
-      if (response.data?.requestPasswordReset.success) {
-        setEmail(data.email);
-        setCurrentStep(1);
-      } else {
-        form.setError('email', {
-          message: 'Failed to send reset email',
-        });
-      }
-    } catch (err) {
+    if (response.data?.requestPasswordReset.success) {
+      setEmail(data.email);
+      setCurrentStep(1);
+    } else {
       form.setError('email', {
         message: 'Failed to send reset email',
       });
@@ -84,7 +84,6 @@ export const ForgetPasswordEmail = ({ setEmail, setCurrentStep }: Props) => {
               </FormItem>
             )}
           />
-
           <Button data-cy="submit-btn" type="submit" disabled={loading} className="w-full bg-[#2563eb] text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
             {loading ? 'Sending...' : 'Continue'}
           </Button>

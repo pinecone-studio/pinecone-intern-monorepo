@@ -17,7 +17,11 @@ type Props = {
 
 export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
   const [verifyOtp, { loading: verifyLoading }] = useVerifyPasswordResetOtpMutation();
-  const [requestPasswordReset, { loading: resendLoading }] = useRequestPasswordResetMutation();
+  const [requestPasswordReset, { loading: resendLoading }] = useRequestPasswordResetMutation({
+    onError: () => {
+      setError('otp', { message: 'Failed to resend OTP' });
+    },
+  });
   const {
     setValue,
     handleSubmit,
@@ -44,31 +48,21 @@ export const ForgetPasswordOtp = ({ email, setCurrentStep }: Props) => {
   }, [timer]);
 
   const handleResendCode = async () => {
-    try {
-      await requestPasswordReset({ variables: { email } });
-      setTimer(15);
-      setCanResend(false);
-    } catch (err) {
-      setError('otp', { message: 'Failed to resend OTP' });
-    }
+    await requestPasswordReset({ variables: { email } });
+    setTimer(15);
+    setCanResend(false);
   };
 
   const onSubmit = async (data: z.infer<typeof otpSchema>) => {
-    try {
-      const response = await verifyOtp({
-        variables: { email, otp: data.otp },
-      });
+    const response = await verifyOtp({
+      variables: { email, otp: data.otp },
+    });
 
-      if (response.data?.verifyPasswordResetOTP.success) {
-        setCurrentStep(2);
-      } else {
-        setError('otp', {
-          message: response.data?.verifyPasswordResetOTP.message || 'Invalid OTP',
-        });
-      }
-    } catch (err) {
+    if (response.data?.verifyPasswordResetOTP.success) {
+      setCurrentStep(2);
+    } else {
       setError('otp', {
-        message: 'Failed to verify OTP',
+        message: response.data?.verifyPasswordResetOTP.message || 'Invalid OTP',
       });
     }
   };

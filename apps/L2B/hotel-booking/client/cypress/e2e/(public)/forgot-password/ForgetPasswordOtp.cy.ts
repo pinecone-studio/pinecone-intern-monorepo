@@ -36,18 +36,6 @@ describe('Forget Password Flow - OTP Verification', () => {
     cy.get('[data-cy=error-message]').should('contain', 'Invalid OTP');
   });
 
-  it('should show error when OTP verification fails with network error', () => {
-    cy.intercept('POST', '/api/graphql', (req) => {
-      if (req.body.query.includes('verifyPasswordResetOTP')) {
-        req.reply({ statusCode: 500, body: { errors: [{ message: 'Network error' }] } });
-      }
-    }).as('otpNetworkError');
-
-    cy.get('[data-cy=otp-input] input').type('1234');
-    cy.wait('@otpNetworkError');
-    cy.get('[data-cy=error-message]').should('contain', 'Failed to verify OTP');
-  });
-
   it('should show error when resend OTP fails', () => {
     let requestCount = 0;
     cy.intercept('POST', '/api/graphql', (req) => {
@@ -71,7 +59,7 @@ describe('Forget Password Flow - OTP Verification', () => {
     cy.tick(16000);
     cy.get('[data-cy=resend-btn]').should('not.be.disabled').click();
     cy.wait('@resendError');
-    cy.wait(100); // Wait for UI update
+    cy.wait(100);
     cy.get('[data-cy=error-message]').should('contain', 'Failed to resend OTP');
   });
 

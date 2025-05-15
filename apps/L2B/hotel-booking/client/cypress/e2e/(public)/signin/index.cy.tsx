@@ -76,7 +76,7 @@ describe('Sign In Flow', () => {
     cy.get('[data-cy=password-input]').type('ValidPass123');
     cy.get('[data-cy=submit-btn]').click();
     cy.wait('@networkError');
-    cy.get('[data-cy=error-message]').should('contain', 'Error in login');
+    cy.get('[data-cy=error-message]').should('contain', 'Invalid credentials');
   });
 
   it('should navigate to forget password page', () => {

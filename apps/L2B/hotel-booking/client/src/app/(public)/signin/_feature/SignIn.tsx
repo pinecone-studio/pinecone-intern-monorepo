@@ -26,7 +26,11 @@ const formSchema = z.object({
 });
 
 const SignIn = () => {
-  const [login, { loading }] = useLoginMutation();
+  const [login, { loading }] = useLoginMutation({
+    onError: () => {
+      setServerError('Invalid credentials');
+    },
+  });
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,22 +42,18 @@ const SignIn = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      setServerError(null);
-      const response = await login({
-        variables: {
-          email: values.email,
-          password: values.password,
-        },
-      });
-      if (response.data?.login.token) {
-        localStorage.setItem('authToken', response.data.login.token);
-        router.push('/');
-      } else {
-        setServerError('Invalid credentials');
-      }
-    } catch (err) {
-      setServerError('Error in login');
+    setServerError(null);
+    const response = await login({
+      variables: {
+        email: values.email,
+        password: values.password,
+      },
+    });
+    if (response.data?.login.token) {
+      localStorage.setItem('authToken', response.data.login.token);
+      router.push('/');
+    } else {
+      setServerError('Invalid credentials');
     }
   }
 

@@ -19,7 +19,11 @@ const passwordSchema = z
   });
 
 export const ForgetPasswordNew = ({ email }: { email: string }) => {
-  const [resetPassword, { loading }] = useResetPasswordMutation();
+  const [resetPassword, { loading }] = useResetPasswordMutation({
+    onError: () => {
+      setServerError('Failed to reset password');
+    },
+  });
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
   const {
@@ -32,19 +36,15 @@ export const ForgetPasswordNew = ({ email }: { email: string }) => {
 
   const onSubmit = async (data: z.infer<typeof passwordSchema>) => {
     setServerError(null);
-    try {
-      const response = await resetPassword({
-        variables: {
-          email,
-          password: data.password,
-        },
-      });
-      if (response.data?.resetPassword.success) {
-        router.push('/signin');
-      } else {
-        setServerError('Failed to reset password');
-      }
-    } catch (err) {
+    const response = await resetPassword({
+      variables: {
+        email,
+        password: data.password,
+      },
+    });
+    if (response.data?.resetPassword.success) {
+      router.push('/signin');
+    } else {
       setServerError('Failed to reset password');
     }
   };
