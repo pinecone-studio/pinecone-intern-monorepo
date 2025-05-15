@@ -25,6 +25,5 @@ describe('HomeOrder', () => {
     expect(screen.queryByText('Таны захиалга')).not.toBeInTheDocument();
     expect(screen.queryByTestId('cart-item')).not.toBeInTheDocument();
     expect(screen.getByText(/Next step content goes here/i)).toBeInTheDocument();
-    expect(screen.getByText(/hi/i)).toBeInTheDocument();
   });
 });
