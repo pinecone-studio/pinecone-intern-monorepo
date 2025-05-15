@@ -10,20 +10,29 @@ import { useGetUserQuery, useUpdatePersonalInformationMutation } from '@/generat
 import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { DatePicker } from '../_components/DatePicker';
+import { useSearchParams } from 'next/navigation';
 
 const personalInfoSchema = z.object({
   firstName: z.string().min(2, { message: 'First name must be at least 2 characters.' }),
   lastName: z.string().min(2, { message: 'Last name must be at least 2 characters.' }),
-  birth: z.date().nullable().optional(),
+  birth: z.date(),
 });
 
 export type PersonalInformationFormValues = z.infer<typeof personalInfoSchema>;
 
 export const PersonalInformation = () => {
-  const [updatePersonalInformation] = useUpdatePersonalInformationMutation();
+  const serachParams = useSearchParams();
+  const userId = serachParams.get('userId');
+  const [updatePersonalInformation] = useUpdatePersonalInformationMutation({
+    onCompleted: () => {
+      toast.success('Successfully updated!');
+    },
+  });
+
   const { data } = useGetUserQuery({
+    skip: !userId,
     variables: {
-      id: '682207ae2c5870fba2e6da4c', //nevtersen hereglegchiin _id baih ystoi
+      id: userId ?? '',
     },
   });
 
@@ -44,36 +53,18 @@ export const PersonalInformation = () => {
     }
   }, [data, form]);
 
-  const userId = '682207ae2c5870fba2e6da4c'; //nevtersen hereglegchiin _id baih ystoi
-
   async function onSubmit(values: z.infer<typeof personalInfoSchema>) {
     if (!userId) {
-      console.error('User ID not found');
       return;
     }
-
-    try {
-      const response = await updatePersonalInformation({
-        variables: {
-          id: userId,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          birth: values.birth ? values.birth.toISOString() : null,
-        },
-      });
-
-      if (response.data) {
-        toast.success('Successfully updated!');
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error('Error occurred:', err.message);
-        toast.error('An error occurred while updating the information.');
-      } else {
-        console.error('An unknown error occurred');
-        toast.error('An unknown error occurred.');
-      }
-    }
+    await updatePersonalInformation({
+      variables: {
+        id: userId,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        birth: values.birth.toISOString(),
+      },
+    });
   }
 
   return (
@@ -102,9 +93,9 @@ export const PersonalInformation = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input data-cy="email-inputs" className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
+                    <Input data-cy="Personal-Last-Name-Input" className="w-[324px] font-extralight focus-visible:ring-0" placeholder="Placeholder" {...field} />
                   </FormControl>
-                  <FormMessage className="font-extralight" />
+                  <FormMessage data-cy="Personal-Last-Name-Input-Error-Message" className="font-extralight" />
                 </FormItem>
               )}
             />
