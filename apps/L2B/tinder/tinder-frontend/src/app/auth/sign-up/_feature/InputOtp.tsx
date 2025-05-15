@@ -6,7 +6,6 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 type InputOtpProps = {
   setOtp: (_val: string) => void;
   error: string;
-
   otp: string;
   verifying: boolean;
   resending: boolean;
@@ -20,7 +19,6 @@ const InputOtp = ({ setOtp, error, otp, verifying, resending, handleResend, time
 
   const handleChange = (val: string) => {
     setOtp(val);
-
   };
 
   return (
