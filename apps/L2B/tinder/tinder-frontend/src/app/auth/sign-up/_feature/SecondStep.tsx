@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useIsVerifiedMutation } from '@/generated';
-import InputOtp from '../_components/InputOtp';
+import InputOtp from './InputOtp';
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
