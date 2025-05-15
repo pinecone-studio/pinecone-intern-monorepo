@@ -96,9 +96,10 @@ const HomeListingPage =()=> {
               />
             ))}
           </div>
+          <div></div>
         </section>
       </main>
     </div>
   )
 }
-export default HomeListingPage
+export default HomeListingPage 
