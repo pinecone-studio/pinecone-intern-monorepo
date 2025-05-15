@@ -94,6 +94,7 @@ export const typeDefs = gql`
 
   type Query {
     getPosts: [Post!]
-    getPostsById(propertyOwnerId: ID!): [Post!]
+    getPostById(_id: ID!): Post
+    getPostsByUserId(propertyOwnerId: ID!): [Post!]
   }
 `;
