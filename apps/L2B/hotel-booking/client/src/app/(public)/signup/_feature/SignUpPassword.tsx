@@ -70,7 +70,7 @@ export const SignUpPassword = ({ email }: Props) => {
               </FormItem>
             )}
           />
-          <Button data-cy="Sign-Up-Password-Submit-Button" type="submit" className="w-full bg-[#2563eb]">
+          <Button data-cy="Sign-Up-Password-Submit-Button" type="submit" className="w-full bg-[#2563eb] hover:bg-accent-none hover:shadow-sm">
             Continue
           </Button>
         </form>
