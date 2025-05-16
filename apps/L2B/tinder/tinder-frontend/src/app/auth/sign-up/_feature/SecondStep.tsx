@@ -1,94 +1,76 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
+import React, { useEffect, useState } from 'react';
+
+import { useIsVerifiedMutation } from '@/generated';
+import InputOtp from './InputOtp';
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
 };
 
-const SecondStep = ({ setStep }: Props) => {
-  const correctCode = '1234';
-  const [value, setValue] = useState('');
+const RESEND_TIMEOUT = 15;
+
+const SecondStep = ({ setStep, email }: Props) => {
+  const [verifyOtp, { loading: verifying }] = useIsVerifiedMutation();
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [canResend, setCanResend] = useState(false);
-  const [timer, setTimer] = useState(15);
-  const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [timer, setTimer] = useState(RESEND_TIMEOUT);
+  const [resending, setResending] = useState(false);
+
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (timer > 0) {
-      interval = setInterval(() => {
+    if (!canResend && timer > 0) {
+      const interval = setInterval(() => {
         setTimer((prev) => prev - 1);
       }, 1000);
-    } else {
+      return () => clearInterval(interval);
+    }
+  }, [canResend, timer]);
+
+  useEffect(() => {
+    if (timer === 0 && !canResend) {
       setCanResend(true);
     }
+  }, [timer, canResend]);
 
-    return () => clearInterval(interval);
-  }, [timer]);
+  useEffect(() => {
+    if (otp.length === 4) {
+      (async () => {
+        const { data } = await verifyOtp({ variables: { email, otp } });
+        if (data?.isVerified === 'success') {
+          setStep(3);
+        } else {
+          setError('The password is incorrect. Please check again.');
+        }
+      })();
+    }
+  }, [otp]);
 
-  const resendCode = () => {
-    setIsLoading(true);
+  const handleResend = () => {
+    setResending(true);
     setTimeout(() => {
-      console.log('Code resent!');
-      setTimer(15);
+      setTimer(RESEND_TIMEOUT);
       setCanResend(false);
-      setIsLoading(false);
+      setResending(false);
     }, 1000);
   };
 
-  const handleChange = (val: string) => {
-    setValue(val);
-    if (error) setError('');
-  };
-
-  useEffect(() => {
-    if (value.length === 4) {
-      setIsLoading(true);
-      setTimeout(() => {
-        if (value === correctCode) {
-          setError('');
-          setStep(3);
-        } else {
-          setError('Wrong code. Please try again.');
-          setValue('');
-          setTimeout(() => {
-            inputRef.current?.focus();
-          }, 100);
-        }
-        setIsLoading(false);
-      }, 1500);
-    }
-  }, [value]);
-
   return (
-    <div className="flex flex-col gap-[24px]">
-      <div className="flex flex-col gap-[4px] py-[8px] text-[24px] items-center justify-center">
-        <p className="font-semibold text-[#09090B]">Confirm email</p>
-        <p className="text-[#71717A] text-[14px] text-center w-[322px] h-[60px]">To continue, enter the secure code we sent to n.shagai@nest.mn. Check junk mail if it’s not in your inbox.</p>
+    <div className="flex flex-col gap-6">
+      <div className="text-center">
+        <p className="text-2xl font-semibold text-[#09090B]">Confirm email</p>
+        <p className="text-sm text-[#71717A] mt-1 w-[322px]">
+          To continue, enter the secure code we sent to <strong>{email}</strong>. Check junk mail if it’s not in your inbox.
+        </p>
       </div>
 
-      <div className="flex flex-col gap-[16px] items-center justify-center" data-testid="otp-slot">
-        <form autoComplete="one-time-code" className="flex">
-          <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} value={value} onChange={handleChange} disabled={isLoading} ref={inputRef} data-testid="otp">
-            <InputOTPGroup className="rounded-2xl">
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-            </InputOTPGroup>
-          </InputOTP>
-        </form>
+      <div className="flex flex-col items-center gap-4">
+        <InputOtp setOtp={setOtp} error={error} otp={otp} verifying={verifying} resending={resending} handleResend={handleResend} timer={timer} canResend={canResend} />
 
-        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-
-        <button className="text-[16px] font-medium disabled:opacity-70" onClick={resendCode} disabled={!canResend || isLoading}>
-          {canResend ? 'Send again' : `Send again (${timer})`}
-        </button>
-
-        {isLoading && (
-          <div role="status" className="flex items-center gap-2 mt-2 text-black text-sm">
-            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+        {(verifying || resending) && (
+          <div role="status" className="flex items-center gap-2 mt-2 text-sm text-black">
+            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            {verifying ? 'Verifying...' : 'Resending...'}
           </div>
         )}
       </div>

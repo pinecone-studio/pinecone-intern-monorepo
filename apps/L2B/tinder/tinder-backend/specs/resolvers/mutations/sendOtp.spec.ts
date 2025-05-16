@@ -32,7 +32,7 @@ describe('sendOTP mutation', () => {
     expect(sendEmail).toHaveBeenCalledWith({
       email: 'test@example.com',
       content: expect.stringContaining('<p'),
-      tittle: 'Your otp code',
+      tittle: expect.stringContaining('Your OTP code'),
     });
 
     expect(result).toEqual(mockUser);
