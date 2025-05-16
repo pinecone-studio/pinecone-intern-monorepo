@@ -11,6 +11,7 @@ type Order = {
   orderNumber: string;
   items: Food[];
 };
+
 type OrderDialogProps = {
   order: Order;
   open: boolean;
@@ -20,6 +21,7 @@ type OrderDialogProps = {
 const getTotalPrice = (items: { price: number; quantity: number }[]) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 };
+
 const OrderDialog = ({ order, open, onOpenChange }: OrderDialogProps) => {
   const total = getTotalPrice(order.items);
   return (
