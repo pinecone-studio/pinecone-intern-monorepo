@@ -14,6 +14,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Зогсоолын утга сонгоно уу!').should('be.visible');
     cy.contains('Дэлгэрэнгүй тайлбар бичнэ үү!').should('be.visible');
+    cy.contains('Зураг заавал оруулна уу!').should('be.visible');
     cy.contains('Дүүрэг заавал оруулна уу!').should('be.visible');
     cy.contains('Хороо заавал оруулна уу!').should('be.visible');
     cy.contains('Ашиглалтанд орсон он заавал оруулна уу!').should('be.visible');
@@ -40,6 +41,9 @@ describe('CreatePostCard form', () => {
     cy.get('[data-testid="parking-option-yes"]').click();
 
     cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
+    cy.window().then(() => {
+      cy.get('input[name="images"]').type('https://example.com/image1.jpg');
+    });
     cy.get('input[name="district"]').type('Сүхбаатар');
     cy.get('input[name="section"]').type('1-р хороо');
     cy.get('input[name="year"]').type('2023');
@@ -66,6 +70,7 @@ describe('CreatePostCard form', () => {
       restroom: '2',
       parking: 'yes',
       text: 'Шинэ байрны тайлбар',
+      images: [],
       district: 'Сүхбаатар',
       section: '1-р хороо',
       year: '2023',

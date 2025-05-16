@@ -1,0 +1,72 @@
+import React, { useRef, useState } from 'react';
+
+type Props = {
+  name: string;
+  value: string[];
+  onChange: (_urls: string[]) => void;
+  error?: string;
+};
+
+export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    setUploading(true);
+    const files = Array.from(e.target.files);
+
+    for (const file of files) {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', 'food-delivery');
+
+      const res = await fetch('https://api.cloudinary.com/v1_1/do0qq0f0b/upload', {
+        method: 'POST',
+        body: data,
+      });
+
+      const result = await res.json();
+      onChange([...value, result.secureUrl]);
+    }
+
+    setUploading(false);
+  };
+
+  const removeImage = (index: number) => {
+    const updated = [...value];
+    updated.splice(index, 1);
+    onChange(updated);
+  };
+
+  return (
+    <div data-testid="images" className="space-y-2">
+      <div className="gap-2 mb-6">
+        <div className="text-[#09090B] text-lg ">Зураг</div>
+        <div className="text-[#71717A] text-sm">
+          Please tell us the name of the guest staying at the hotel as it appears on the ID that they’ll present at check-in. If the guest has more than one last name, please enter them all.
+        </div>
+      </div>
+      <div className="p-2 flex justify-center border border-[#E4E4E7] text-[#18181B] rounded-md">
+        <button data-testid='upload-button' type="button" onClick={() => inputRef.current?.click()} disabled={uploading}>
+          {uploading ? 'Түр хүлээнэ үү...' : '+ Зураг оруулах'}
+        </button>
+      </div>
+      <input name={name} ref={inputRef} type="file" multiple hidden onChange={handleUpload} accept="image/*" data-testid="image-input"/>
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      <div className="grid grid-cols-3 gap-2 pt-4">
+        {value.map((url, idx) => (
+          <div key={idx} className="relative">
+            <img src={url} alt="preview" className="w-full h-36 object-cover rounded" />
+            <button type="button" onClick={() => removeImage(idx)} className="absolute top-1 right-1 bg-[#FFFFFF] text-black px-2 rounded-md">
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
