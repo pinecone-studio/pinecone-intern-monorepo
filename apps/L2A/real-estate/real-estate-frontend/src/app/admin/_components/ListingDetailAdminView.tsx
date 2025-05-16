@@ -12,7 +12,7 @@ type Props = {
     name: string;
   };
 };
-
+ 
 const ListingDetailAdminView = ({ listing }: Props) => {
   const [status, setStatus] = useState('Хүлээгдэж буй');
 
