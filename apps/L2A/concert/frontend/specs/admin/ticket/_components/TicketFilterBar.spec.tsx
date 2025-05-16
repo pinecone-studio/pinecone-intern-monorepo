@@ -6,7 +6,6 @@ describe('TicketFilterBar Component', () => {
   beforeEach(() => {
     render(<TicketFilterBar />);
   });
-
   test('renders search input', () => {
     expect(screen.getByTestId('search-input')).toBeInTheDocument();
   });

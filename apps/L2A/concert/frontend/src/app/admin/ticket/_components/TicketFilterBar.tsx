@@ -1,34 +1,27 @@
 'use client';
-
 import { useState, useRef } from 'react';
 import { format } from 'date-fns';
 import { CalendarIcon, CirclePlus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '../../../../../../../../../libs/shadcn/src/lib/utils';
-
 const TicketFilterBar = () => {
   const [filters, setFilters] = useState<string[]>(['Davaidasha', 'Хурд']);
   const [field, setField] = useState<{ value: Date | null }>({ value: null });
   const inputRef = useRef<HTMLInputElement>(null);
-
   const removeFilter = (filter: string) => {
     setFilters((prev) => prev.filter((f) => f !== filter));
   };
-
   const clearFilters = () => {
     setFilters([]);
   };
-
   const handleButtonClick = () => {
     inputRef.current?.showPicker?.();
     inputRef.current?.click();
   };
-
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.valueAsDate;
     setField({ value: selectedDate });
   };
-
   return (
     <div className="flex justify-between p-4 rounded-md w-full max-w-[1620px]" data-testid="ticket-filter-bar">
       <div className="flex gap-4" data-testid="filter-left-section">
@@ -62,5 +55,4 @@ const TicketFilterBar = () => {
     </div>
   );
 };
-
 export default TicketFilterBar;
