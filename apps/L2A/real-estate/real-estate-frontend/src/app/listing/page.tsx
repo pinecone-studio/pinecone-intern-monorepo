@@ -21,19 +21,7 @@ const HomeListingPage = () => {
   const [lift, setLift] = useQueryParamState('lift');
   const [balcony, setBalcony] = useQueryParamState('balcony');
 
-  const filters = buildFilters({
-    type,
-    totalRooms,
-    restrooms,
-    city,
-    district,
-    minPrice,
-    maxPrice,
-    garage,
-    lift,
-    balcony,
-  });
-
+  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony,});
   const { data } = useFilterPostQuery({ variables: { filter: filters } });
 
   const toggleType = (value: string) => {
@@ -49,16 +37,12 @@ const HomeListingPage = () => {
   const selectedTypes = type?.split(',') ?? [];
 
   const toggleRoom = (value: number) => {
-    const updated = selectedRooms.includes(value)
-      ? selectedRooms.filter((v) => v !== value)
-      : [...selectedRooms, value];
+    const updated = selectedRooms.includes(value) ? selectedRooms.filter((v) => v !== value): [...selectedRooms, value];
     setTotalRooms(updated.join(','));
   };
 
   const toggleRestroom = (value: number) => {
-    const updated = selectedRestrooms.includes(value)
-      ? selectedRestrooms.filter((v) => v !== value)
-      : [...selectedRestrooms, value];
+    const updated = selectedRestrooms.includes(value)? selectedRestrooms.filter((v) => v !== value): [...selectedRestrooms, value];
     setTotalRestrooms(updated.join(','));
   };
 
@@ -67,29 +51,21 @@ const HomeListingPage = () => {
       <main className="flex-1 flex flex-col lg:flex-row mx-auto w-full max-w-[1280px]">
         <aside className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm" data-cy="listing-sidebar">
           <Input placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
-
           <div className="space-y-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2" data-cy="type-apartment">
-                <Checkbox id="apartment" checked={selectedTypes.includes("APARTMENT")}
-                  onCheckedChange={() => toggleType("APARTMENT")}
-                />
+                <Checkbox id="apartment" checked={selectedTypes.includes("APARTMENT")} onCheckedChange={() => toggleType("APARTMENT")}/>
                 <Label htmlFor="apartment">Байр</Label>
               </div>
               <div className="flex items-center gap-2" data-cy="type-house">
-                <Checkbox id="house" checked={selectedTypes.includes("HOUSE")}
-                  onCheckedChange={() => toggleType("HOUSE")}
-                />
+                <Checkbox id="house" checked={selectedTypes.includes("HOUSE")} onCheckedChange={() => toggleType("HOUSE")}/>
                 <Label htmlFor="house">Хаус</Label>
               </div>
               <div className="flex items-center gap-2" data-cy="type-office">
-                <Checkbox id="office" checked={selectedTypes.includes("OFFICE")}
-                  onCheckedChange={() => toggleType("OFFICE")}
-                />
+                <Checkbox id="office" checked={selectedTypes.includes("OFFICE")} onCheckedChange={() => toggleType("OFFICE")}/>
                 <Label htmlFor="office">Оффис</Label>
               </div>
             </div>
-
             <div>
               <Label className="block mb-2">Байршил</Label>
               <select className="w-full mb-2 border rounded px-2 py-1 text-sm" data-cy="select-city">
@@ -99,7 +75,6 @@ const HomeListingPage = () => {
                 <option>Дүүрэг</option>
               </select>
             </div>
-
             <div>
               <Label className="block mb-2">Үнэ</Label>
               <select className="w-full border rounded px-2 py-1 text-sm" data-cy="price-min">
@@ -109,7 +84,6 @@ const HomeListingPage = () => {
                 <option>Дээд</option>
               </select>
             </div>
-
             <div>
               <Label className="block mb-2">Өрөө</Label>
               {[1, 2, 3, 4, 5].map((room) => (
@@ -119,7 +93,6 @@ const HomeListingPage = () => {
                 </div>
               ))}
             </div>
-
             <div>
               <Label className="block mb-2">Ариун цэврийн өрөө</Label>
               {[1, 2, 3].map((bath) => (
@@ -129,7 +102,6 @@ const HomeListingPage = () => {
                 </div>
               ))}
             </div>
-
             <div>
               <Label className="block mb-2">Бусад</Label>
               <div className="space-y-2">
@@ -149,7 +121,6 @@ const HomeListingPage = () => {
             </div>
           </div>
         </aside>
-
         <section className="flex-1 px-4 sm:px-6 py-6" data-cy="listing-section">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 text-sm">
             <p className="text-muted-foreground" data-cy="listing-count">
@@ -159,7 +130,6 @@ const HomeListingPage = () => {
               Сүүлд нэмэгдсэн <ChevronDown className="w-4 h-4" />
             </Button>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-cy="listing-grid">
             {data?.filterPosts?.map((item) => (
               <ListingCard

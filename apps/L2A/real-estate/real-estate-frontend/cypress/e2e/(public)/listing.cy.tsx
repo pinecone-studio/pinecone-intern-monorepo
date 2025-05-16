@@ -88,11 +88,13 @@ describe('Listing Page', () => {
     });
 
     it('should show empty state when no results', () => {
+      // eslint-disable-next-line no-secrets/no-secrets
       cy.visit('/listing?type=CASTLE&totalRooms=99');
       cy.get('[data-cy="listing-grid"]').children().should('have.length', 0);
     });
 
     it('should show empty state with impossible filter', () => {
+      // eslint-disable-next-line no-secrets/no-secrets
       cy.visit('/listing?type=NON_EXISTENT_TYPE');
       cy.get('[data-cy="listing-grid"]').children().should('have.length', 0);
     });
@@ -105,7 +107,6 @@ describe('Listing Page', () => {
 
     it('should open sort options when clicked', () => {
       cy.get('[data-cy="sort-button"]').click();
-      // Optional: assert sort options dropdown
     });
   });
 });
