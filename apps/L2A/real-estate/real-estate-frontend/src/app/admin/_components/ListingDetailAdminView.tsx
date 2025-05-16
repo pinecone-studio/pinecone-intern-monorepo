@@ -7,6 +7,7 @@ import StatusSelect from './StatusSelect';
 
 
 const ListingDetailAdminView = () => {
+
   const [status, setStatus] = useState('Хүлээгдэж буй');
   
 

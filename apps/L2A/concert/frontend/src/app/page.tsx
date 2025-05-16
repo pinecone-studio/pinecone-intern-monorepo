@@ -28,7 +28,7 @@ const Page = () => {
                 </HoverCard>
               </Link>
               <div className="flex flex-wrap gap-[32px] justify-center items-center rounded-lg">
-                {concerts.map((concert) => (
+                {concerts.splice(0, 9).map((concert) => (
                   <ConcertCard key={concert.id} concert={concert} />
                 ))}
               </div>

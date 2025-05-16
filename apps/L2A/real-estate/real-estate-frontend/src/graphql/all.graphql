@@ -3,7 +3,6 @@ mutation CreateUser($email: String!) {
     id
     email
     isAdmin
-
   }
 }
 
@@ -17,10 +16,20 @@ mutation CompleteSignup($email: String!, $password: String!) {
   }
 }
 
-mutation VerifyOTP($email:String!, $otp:String!){
-  verifyOTP(email:$email, otp:$otp)
+mutation ResetPassword($email: String!, $password: String!) {
+  resetPassword(email: $email, password: $password) {
+    user {
+      id
+      email
+    }
+    token
+  }
 }
 
-mutation RequestOTP($email:String!){
-  requestOTP(email:$email)
+mutation VerifyOTP($email: String!, $otp: String!) {
+  verifyOTP(email: $email, otp: $otp)
+}
+
+mutation RequestOTP($email: String!) {
+  requestOTP(email: $email)
 }
