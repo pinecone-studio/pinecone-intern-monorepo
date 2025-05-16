@@ -6,7 +6,6 @@ import { GuestInfo } from '../_feature/GuestDetail';
 export const RoomPriceDetail = ({ guestInfo, totalPrice }: { guestInfo: GuestInfo; totalPrice: number }) => {
   return (
     <div className="space-y-6 max-w-[440px] w-full">
-      {/* Room Details */}
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
@@ -21,7 +20,6 @@ export const RoomPriceDetail = ({ guestInfo, totalPrice }: { guestInfo: GuestInf
         </div>
       </div>
 
-      {/* Price Details */}
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="p-6">
           <h2 className="text-lg font-semibold mb-4">Price Detail</h2>
