@@ -2,22 +2,15 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
-import * as React from "react" 
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const { user, isLoggedIn, loading } = useAuth();
   const router = useRouter();
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
@@ -41,7 +34,7 @@ const Header = () => {
             <>
               {isLoggedIn ? (
                 <>
-                  <Link href="/my-listings">Миний зарууд</Link>
+                  <Link href="/user-listing">Миний зарууд</Link>
                   <span className="text-gray-600 text-sm">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -50,11 +43,7 @@ const Header = () => {
                       <DropdownMenuContent className="w-56" forceMount>
                         <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuCheckboxItem 
-                          onClick={handleLogout}
-                          className='text-red-500'
-                          data-testid="logout-button"
-                        >
+                        <DropdownMenuCheckboxItem onClick={handleLogout} className="text-red-500" data-testid="logout-button">
                           Гарах
                         </DropdownMenuCheckboxItem>
                       </DropdownMenuContent>
