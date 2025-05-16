@@ -38,6 +38,7 @@ export const typeDefs = gql`
     propertyOwnerId: ID!
     title: String!
     description: String
+    number:Int
     feature: [feature]
     price: Float
     images: [String]
@@ -64,6 +65,7 @@ export const typeDefs = gql`
   propertyOwnerId: ID!
   title: String!
   description: String!
+  number:Int
   feature: [feature]
   price: Float!
   images: [String]

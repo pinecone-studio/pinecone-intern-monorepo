@@ -1,18 +1,5 @@
+import { mockConcerts } from '../utils/mock-concert-data';
 describe('Add Ticket Dialog', () => {
-  const imageUrl = [
-    'https://ticket.mn/files/concerts/images/alsu_LIped1Y.webp',
-    'https://ticket.mn/files/concerts/images/Untitled_design_26_nJW8fzr.webp',
-    'https://ticket.mn/files/concerts/images/a1200_0Kca0aP.webp',
-    'https://ticket.mn/files/concerts/images/pro_1200.webp',
-    'https://ticket.mn/files/concerts/images/zurag_1200_zns0nK3.webp',
-    'https://ticket.mn/files/concerts/images/Untitled_design_43_3mhm5VP.webp',
-    'https://ticket.mn/files/concerts/images/Untitled_design_39_31BxgTc.webp',
-    'https://ticket.mn/files/concerts/images/games_show_41qnaMi.webp',
-    'https://ticket.mn/files/concerts/images/Untitled_design_38_iH5Ulo9.webp',
-    'https://ticket.mn/files/concerts/images/Fiddleland_Ensemble_pboOxXr.webp',
-    'https://ticket.mn/files/concerts/images/hunt_nuur_standart_uClNZY8.webp',
-    'https://ticket.mn/files/concerts/images/30.1200_L20sqUy.webp',
-  ];
   beforeEach(() => {
     cy.visit('/admin/ticket');
     cy.contains('Концерт нэмэх').click();
@@ -20,28 +7,29 @@ describe('Add Ticket Dialog', () => {
 
   it('should fill out and submit the Add Ticket form', () => {
     cy.intercept('POST', '**/api/graphql').as('waitapi');
-    cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
-    cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
-    cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 11)]);
-
+    cy.get('[data-testid="concert-title"]').type(mockConcerts.title[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="concert-description"]').type(mockConcerts.description[Math.floor(Math.random() * 9)]);
+    cy.get('[data-testid="artist-name"]').type(mockConcerts.artistName[Math.floor(Math.random() * 9)]);
+    cy.get('[data-testid="thumbnail-url"]').type(mockConcerts.thumbnailUrl[Math.floor(Math.random() * 12)]);
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
     cy.get('[data-testid="venue-address"]').type('Улаанбаатар, Энхтайвны өргөн чөлөө');
     cy.get('[data-testid="venue-city"]').type('Улаанбаатар');
-
-    cy.get('[data-testid="start-date"]').type('2025-06-01');
-    cy.get('[data-testid="end-date"]').type('2025-06-02');
+    cy.get('[data-testid="start-date"]').type('2025-06-12');
+    cy.get('[data-testid="end-date"]').type('2025-06-16');
     cy.get('[data-testid="music-start"]').type('18:30');
-
     cy.get('[data-testid="back-seat-count"]').clear().type('100');
     cy.get('[data-testid="vip-seat-count"]').clear().type('50');
     cy.get('[data-testid="standard-seat-count"]').clear().type('150');
-
-    cy.get('[data-testid="back-seat-price"]').clear().type('20000');
-    cy.get('[data-testid="vip-seat-price"]').clear().type('50000');
-    cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
-
+    cy.get('[data-testid="back-seat-price"]')
+      .clear()
+      .type(mockConcerts.BACKSEAT[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="vip-seat-price"]')
+      .clear()
+      .type(mockConcerts.VIP_PRICE[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="standard-seat-price"]')
+      .clear()
+      .type(mockConcerts.standard[Math.floor(Math.random() * 5)]);
     cy.contains('Нэмэх').click();
     cy.wait('@waitapi');
     cy.contains('Амжилттай нэмлээ!').should('be.visible');
@@ -55,27 +43,29 @@ describe('Add Ticket Dialog', () => {
         },
       },
     }).as('mockCreateVenue');
-    cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
-    cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
-    cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
-
+    cy.get('[data-testid="concert-title"]').type(mockConcerts.title[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="concert-description"]').type(mockConcerts.description[Math.floor(Math.random() * 9)]);
+    cy.get('[data-testid="artist-name"]').type(mockConcerts.artistName[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="thumbnail-url"]').type(mockConcerts.thumbnailUrl[Math.floor(Math.random() * 12)]);
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
     cy.get('[data-testid="venue-address"]').type('Улаанбаатар, Энхтайвны өргөн чөлөө');
     cy.get('[data-testid="venue-city"]').type('Улаанбаатар');
-
     cy.get('[data-testid="start-date"]').type('2025-06-01');
     cy.get('[data-testid="end-date"]').type('2025-06-02');
     cy.get('[data-testid="music-start"]').type('18:30');
-
     cy.get('[data-testid="back-seat-count"]').clear().type('100');
     cy.get('[data-testid="vip-seat-count"]').clear().type('50');
     cy.get('[data-testid="standard-seat-count"]').clear().type('150');
-
-    cy.get('[data-testid="back-seat-price"]').clear().type('20000');
-    cy.get('[data-testid="vip-seat-price"]').clear().type('50000');
-    cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
+    cy.get('[data-testid="back-seat-price"]')
+      .clear()
+      .type(mockConcerts.BACKSEAT[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="vip-seat-price"]')
+      .clear()
+      .type(mockConcerts.VIP_PRICE[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="standard-seat-price"]')
+      .clear()
+      .type(mockConcerts.standard[Math.floor(Math.random() * 5)]);
 
     cy.contains('Нэмэх').click();
     cy.wait('@mockCreateVenue');
@@ -86,29 +76,29 @@ describe('Add Ticket Dialog', () => {
         error: [{ message: 'fail' }],
       },
     }).as('graphqlIntercept');
-
-    cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
-    cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
-    cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
-
+    cy.get('[data-testid="concert-title"]').type(mockConcerts.title[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="concert-description"]').type(mockConcerts.description[Math.floor(Math.random() * 9)]);
+    cy.get('[data-testid="artist-name"]').type(mockConcerts.artistName[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="thumbnail-url"]').type(mockConcerts.thumbnailUrl[Math.floor(Math.random() * 12)]);
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
     cy.get('[data-testid="venue-address"]').type('Улаанбаатар, Энхтайвны өргөн чөлөө');
     cy.get('[data-testid="venue-city"]').type('Улаанбаатар');
-
     cy.get('[data-testid="start-date"]').type('2025-06-01');
     cy.get('[data-testid="end-date"]').type('2025-06-02');
     cy.get('[data-testid="music-start"]').type('18:30');
-
     cy.get('[data-testid="back-seat-count"]').clear().type('100');
     cy.get('[data-testid="vip-seat-count"]').clear().type('50');
     cy.get('[data-testid="standard-seat-count"]').clear().type('150');
-
-    cy.get('[data-testid="back-seat-price"]').clear().type('20000');
-    cy.get('[data-testid="vip-seat-price"]').clear().type('50000');
-    cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
-
+    cy.get('[data-testid="back-seat-price"]')
+      .clear()
+      .type(mockConcerts.BACKSEAT[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="vip-seat-price"]')
+      .clear()
+      .type(mockConcerts.VIP_PRICE[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="standard-seat-price"]')
+      .clear()
+      .type(mockConcerts.standard[Math.floor(Math.random() * 5)]);
     cy.contains('Нэмэх').click();
     cy.wait('@graphqlIntercept');
   });
@@ -132,11 +122,10 @@ describe('Add Ticket Dialog', () => {
         });
       }
     }).as('graphqlIntercept');
-
-    cy.get('[data-testid="concert-title"]').type('Монголын Гайхамшигт Урлагийн тоглолт');
-    cy.get('[data-testid="concert-description"]').type('Ардын урлагийн "Хуур Магнай" чуулга...');
-    cy.get('[data-testid="artist-name"]').type('Жавхлан');
-    cy.get('[data-testid="thumbnail-url"]').type(imageUrl[Math.ceil(Math.random() * 12)]);
+    cy.get('[data-testid="concert-title"]').type(mockConcerts.title[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="concert-description"]').type(mockConcerts.description[Math.floor(Math.random() * 9)]);
+    cy.get('[data-testid="artist-name"]').type(mockConcerts.artistName[Math.floor(Math.random() * 10)]);
+    cy.get('[data-testid="thumbnail-url"]').type(mockConcerts.thumbnailUrl[Math.floor(Math.random() * 12)]);
     cy.get('[data-testid="venue-name"]').type('МҮЭСТО');
     cy.get('[data-testid="venue-capacity"]').type('200');
     cy.get('[data-testid="venue-address"]').type('Улаанбаатар, Энхтайвны өргөн чөлөө');
@@ -147,9 +136,15 @@ describe('Add Ticket Dialog', () => {
     cy.get('[data-testid="back-seat-count"]').clear().type('100');
     cy.get('[data-testid="vip-seat-count"]').clear().type('50');
     cy.get('[data-testid="standard-seat-count"]').clear().type('150');
-    cy.get('[data-testid="back-seat-price"]').clear().type('20000');
-    cy.get('[data-testid="vip-seat-price"]').clear().type('50000');
-    cy.get('[data-testid="standard-seat-price"]').clear().type('30000');
+    cy.get('[data-testid="back-seat-price"]')
+      .clear()
+      .type(mockConcerts.BACKSEAT[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="vip-seat-price"]')
+      .clear()
+      .type(mockConcerts.VIP_PRICE[Math.floor(Math.random() * 5)]);
+    cy.get('[data-testid="standard-seat-price"]')
+      .clear()
+      .type(mockConcerts.standard[Math.floor(Math.random() * 5)]);
 
     cy.contains('Нэмэх').click();
     cy.wait('@graphqlIntercept');

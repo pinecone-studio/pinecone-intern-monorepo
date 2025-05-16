@@ -16,7 +16,6 @@ describe('ConcertCard', () => {
       musicStart: '2025-06-15T19:00:00Z',
       endDate: '2025-06-15T21:00:00Z',
       seatData: [],
-      specialGuestName: null,
       venue: {
         __typename: 'Venue',
         id: 'venue-1234',
