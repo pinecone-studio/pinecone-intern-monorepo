@@ -17,7 +17,9 @@ export const sendOTP = async (_: unknown, { email }: { email: string }) => {
     });
 
     return newUser;
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
   }
 };

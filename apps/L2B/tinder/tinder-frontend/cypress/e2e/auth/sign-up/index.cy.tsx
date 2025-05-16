@@ -1,4 +1,5 @@
 describe('SignUpStep', () => {
+  
   beforeEach(() => {
     cy.visit('/auth/sign-up');
     cy.get('input[placeholder="name@example.com"]').type(`test${Math.floor(Math.random() * 10000)}@example.com`);
