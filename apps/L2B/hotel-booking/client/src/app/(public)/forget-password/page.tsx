@@ -8,15 +8,11 @@ const ForgetPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleComplete = () => {
-    console.log('Password reset complete!');
-  };
-
   return (
     <div data-cy="forget-password-page">
       {currentStep === 0 && <ForgetPasswordEmail setEmail={setEmail} setCurrentStep={setCurrentStep} />}
       {currentStep === 1 && <ForgetPasswordOtp email={email} setCurrentStep={setCurrentStep} />}
-      {currentStep === 2 && <ForgetPasswordNew email={email} onComplete={handleComplete} />}
+      {currentStep === 2 && <ForgetPasswordNew email={email} />}
     </div>
   );
 };

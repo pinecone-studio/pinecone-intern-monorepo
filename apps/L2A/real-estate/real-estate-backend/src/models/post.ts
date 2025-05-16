@@ -20,6 +20,10 @@ const POST_SCHEMA = new mongoose.Schema(
       type: String,
       required: true,
     },
+    number: {
+      type: Number,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,

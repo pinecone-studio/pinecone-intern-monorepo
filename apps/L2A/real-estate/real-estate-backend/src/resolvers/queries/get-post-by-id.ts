@@ -1,15 +1,13 @@
 import { POST_MODEL } from "../../models/post";
 import mongoose from "mongoose";
 
-export const getPostsById = async (_: any, args: { propertyOwnerId: string }) => {
+export const getPostById = async (_: any, args: { _id: string }) => {
   try {
-    const propertyOwnerId = new mongoose.Types.ObjectId(args.propertyOwnerId);
-    const posts = await POST_MODEL.find({ propertyOwnerId });
-    return posts;
+    const _id = new mongoose.Types.ObjectId(args._id);
+    return await POST_MODEL.findOne({ _id });
   } catch (error) {
     console.error(error);
-    return [];
+    return null;
   }
 };
-
 

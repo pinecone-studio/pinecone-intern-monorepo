@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 export type Request = {
   id: string;
   concertName: string;
@@ -16,7 +18,15 @@ const TableRow = ({ request }: { request: Request }) => {
       <p className="p-4 font-medium">{request.owner}</p>
       <p className="p-4 grid justify-end font-medium">{request.amount}</p>
       <p className="p-4 grid justify-end font-normal">{request.date}</p>
-      <p className="p-4 grid justify-end">{request.status}</p>
+      <div className="w-full px-3 py-3 flex justify-end">
+        {request.status === 'дуусгах' ? (
+          <Button className="rounded-md border" variant={'outline'}>
+            {request.status}
+          </Button>
+        ) : (
+          <p className="bg-secondary rounded-full px-[10px] flex items-center text-xs">{request.status}</p>
+        )}
+      </div>
     </div>
   );
 };

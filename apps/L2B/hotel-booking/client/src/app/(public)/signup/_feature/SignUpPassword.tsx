@@ -7,12 +7,12 @@ import { useAddUserMutation } from '@/generated';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SignUpHeader } from '../_components/SignUpHeader';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const passwordSchema = z
   .object({
-    password: z.string().min(1, { message: 'Password is required.' }),
-    confirmPassword: z.string().min(1, { message: 'Confirm Password is required.' }),
+    password: z.string().min(8, { message: 'Password is required.' }),
+    confirmPassword: z.string().min(8, { message: 'Confirm Password is required.' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match.',
@@ -32,11 +32,11 @@ export const SignUpPassword = ({ email }: Props) => {
     },
   });
   const [addUser] = useAddUserMutation();
-  // const router = useRouter();
+  const router = useRouter();
 
   const onSubmit = async (data: z.infer<typeof passwordSchema>) => {
     await addUser({ variables: { email, password: data.password } });
-    // router.push('/signin');
+    router.push('/signin');
   };
 
   return (
@@ -51,7 +51,7 @@ export const SignUpPassword = ({ email }: Props) => {
               <FormItem>
                 <FormLabel className="text-[14px] font-normal">Password</FormLabel>
                 <FormControl>
-                  <Input data-cy="Sign-Up-Password-Input" type="password" placeholder="password" {...field} className="w-[350px] focus-visible:ring-0 font-extralight" />
+                  <Input data-cy="Sign-Up-Password-Input" type="password" placeholder="••••••••" {...field} className="w-[350px] focus-visible:ring-0 font-extralight" />
                 </FormControl>
                 <FormMessage data-cy="Sign-Up-Password-Input-Error-Message" className="font-extralight" />
               </FormItem>
@@ -64,13 +64,13 @@ export const SignUpPassword = ({ email }: Props) => {
               <FormItem>
                 <FormLabel className="text-[14px] font-normal">Confirm Password</FormLabel>
                 <FormControl>
-                  <Input data-cy="Sign-Up-ConfirmPassword-Input" type="password" placeholder="confirm password" {...field} className="focus-visible:ring-0 font-extralight" />
+                  <Input data-cy="Sign-Up-ConfirmPassword-Input" type="password" placeholder="••••••••" {...field} className="focus-visible:ring-0 font-extralight" />
                 </FormControl>
                 <FormMessage data-cy="Sign-Up-ConfirmPassword-Input-Error-Message" className="font-extralight" />
               </FormItem>
             )}
           />
-          <Button data-cy="Sign-Up-Password-Submit-Button" type="submit" className="w-full bg-[#2563eb]">
+          <Button data-cy="Sign-Up-Password-Submit-Button" type="submit" className="w-full bg-[#2563eb] hover:bg-accent-none hover:shadow-sm">
             Continue
           </Button>
         </form>

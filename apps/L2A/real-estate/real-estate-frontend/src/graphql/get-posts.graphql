@@ -1,0 +1,31 @@
+query GetPosts {
+  getPosts {
+    _id
+    balcony
+    completionDate
+    createdAt
+    description
+    feature
+    floorNumber
+    garage
+    images
+    lift
+    location {
+      address
+      city
+      district
+    }
+    price
+    propertyOwnerId
+    restrooms
+    roofMaterial
+    size
+    title
+    totalFloors
+    totalRooms
+    updatedAt
+    windowType
+    windowsCount
+    type
+  }
+}

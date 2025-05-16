@@ -14,6 +14,7 @@ export const ConcertTypeDefs = gql`
     specialGuestName: String
     seatData: [SeatData]!
     endDate: String!
+    featured: Boolean!
   }
 
   input CreateConcertInput {

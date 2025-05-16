@@ -19,7 +19,9 @@ const SignInPage = () => {
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
       <form onSubmit={handleSubmit} className="w-full max-w-[400px] flex flex-col items-center gap-8 px-4">
         <div className="flex flex-col items-center gap-1">
-          <Image src="/tinder.svg" alt="" width={1000} height={1000} className="h-[100px] w-[100px] text-[#fe3c72]" />
+          <Link href={'/'}>
+            <Image src="/tinder.svg" alt="" width={1000} height={1000} className="h-[100px] w-[100px] text-[#fe3c72]" />
+          </Link>
           <h2 className="text-2xl font-semibold">Sign in</h2>
           <p className="text-sm text-gray-500">Enter your email below to sign in</p>
         </div>
@@ -73,9 +75,9 @@ const SignInPage = () => {
               By clicking continue, you agree to our{' '}
               <Link href="/" className="underline">
                 Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link href="/privacy" className="underline">
+              </Link>
+              and
+              <Link href="/" className="underline">
                 Privacy Policy
               </Link>
               .

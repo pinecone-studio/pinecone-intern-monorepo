@@ -6,7 +6,10 @@ export const QueryTypeDefs = gql`
     _service: Service!
     getOrders: [Order]!
     getCategories: [Category]!
-     getTableById(id: ID!): Table
+    getCategoryById(id: ID!): Category
+    getTableById(id: ID!): Table
     getAllTables: [Table]!
+    getOrderById(id: ID!): Order
+    getProducts: [Product]!
   }
 `;

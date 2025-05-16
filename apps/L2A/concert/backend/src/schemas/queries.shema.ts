@@ -10,5 +10,6 @@ export const QueryTypeDefs = gql`
     bookings(userId: ID!): [Booking]!
     sampleQuery: String!
     GetUserInfo(JWT: String!): User
+    deleteTestDocs: Boolean!
   }
 `;

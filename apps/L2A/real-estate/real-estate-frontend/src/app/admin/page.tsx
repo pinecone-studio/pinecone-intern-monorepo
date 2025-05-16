@@ -1,12 +1,7 @@
 'use client';
-
-import { useState } from 'react';
 import AdminListingTable, { Listing } from './_components/AdminListingTable';
-import ListingDetailAdminView from './_components/ListingDetailAdminView';
 
 const AdminPage = () => {
-  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
-
   const statuses = ['Хүлээгдэж буй', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
 
   const listings: Listing[] = new Array(12).fill(null).map((_, i) => ({
@@ -18,7 +13,7 @@ const AdminPage = () => {
     status: statuses[i % 4],
   }));
 
-  return <div>{selectedListing ? <ListingDetailAdminView listing={selectedListing} /> : <AdminListingTable listings={listings} onSelect={(listing) => setSelectedListing(listing)} />}</div>;
+  return <AdminListingTable listings={listings} />;
 };
 
 export default AdminPage;

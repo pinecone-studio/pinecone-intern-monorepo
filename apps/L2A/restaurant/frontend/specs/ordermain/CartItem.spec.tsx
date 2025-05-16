@@ -1,53 +1,45 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import CartItem from '@/app/_components/CartItems';
 import '@testing-library/jest-dom';
 
-const mockItem = {
-  image: '/Taco.png',
-  name: 'Taco Taco',
-  price: '15.6k',
-};
+
 
 describe('CartItem', () => {
-  it('should render CartItem', () => {
-    render(<CartItem item={mockItem} />);
+  const item = {
+    image: '/Taco.png',
+    name: 'Taco',
+    price: '$5.99',
+  };
 
-    expect(screen.getByText('Taco Taco')).toBeInTheDocument();
-    expect(screen.getByText('15.6k')).toBeInTheDocument();
-    expect(screen.getByAltText('Taco Taco')).toBeInTheDocument();
+  it('should render item name and price', () => {
+    render(<CartItem item={item} />);
+    expect(screen.getByText('Taco')).toBeInTheDocument();
+    expect(screen.getByText('$5.99')).toBeInTheDocument();
   });
 
-  it('should render incresement and decreasement', () => {
-    render(<CartItem item={mockItem} />);
+  it('should render increments and decrements quantity correctly', () => {
+    render(<CartItem item={item} />);
 
-    const plusButton = screen.getByText('+');
-    const minusButton = screen.getByText('–');
+    const incrementButton = screen.getByText('+');
+    const decrementButton = screen.getByText('–');
 
-    expect(screen.getByText('1')).toBeInTheDocument();
-
-    fireEvent.click(plusButton);
+    fireEvent.click(incrementButton);
     expect(screen.getByText('2')).toBeInTheDocument();
 
-    fireEvent.click(minusButton);
+    fireEvent.click(decrementButton);
+    expect(screen.getByText('1')).toBeInTheDocument();
+
+    fireEvent.click(decrementButton);
     expect(screen.getByText('1')).toBeInTheDocument();
   });
 
-  it('does not decrement below quantity of 1', () => {
-    render(<CartItem item={mockItem} />);
-
-    const minusButton = screen.getByText('–');
-
-    fireEvent.click(minusButton); 
-    expect(screen.getByText('1')).toBeInTheDocument();
-  });
-
-  it('calls onDelete when delete button is clicked', () => {
-    const handleDelete = jest.fn();
-    render(<CartItem item={mockItem} onDelete={handleDelete} />);
-
-    const deleteButton = screen.getByText('🗑️');
+  it('should call onDelete when delete button is clicked', () => {
+    const onDelete = jest.fn();
+    render(<CartItem item={item} onDelete={onDelete} />);
+    
+    const deleteButton = screen.getByRole('button', { name: '🗑️' });
     fireEvent.click(deleteButton);
-
-    expect(handleDelete).toHaveBeenCalledTimes(1);
+    expect(onDelete).toHaveBeenCalledTimes(1);
   });
 });

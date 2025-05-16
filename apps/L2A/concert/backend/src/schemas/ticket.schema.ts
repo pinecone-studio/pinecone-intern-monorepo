@@ -8,8 +8,15 @@ export const TicketTypeDefs = gql`
     price: Int
     type: TicketType!
     status: TicketStatus!
+    cancerRequest: Boolean!
+    refundStatus: RefundStatus!
     createdAt: String!
     updatedAt: String!
+  }
+  enum RefundStatus {
+    PENDING
+    APPROVED
+    REJECTED
   }
 
   input CreateTicketInput {

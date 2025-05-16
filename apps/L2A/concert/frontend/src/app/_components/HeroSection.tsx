@@ -15,9 +15,9 @@ const HeroSection = ({ concert }: { concert: Concert }) => {
         <h1 className="text-4xl md:text-6xl font-bold">{concert.title}</h1>
         <div className="flex items-center gap-2 mt-4 text-lg font-medium">
           <Calendar className="w-5 h-5" />
-          <span>{concert.doorOpen}</span>
-          <span> - </span>
-          <span>11.01</span>
+          <span>
+            {concert.seatData[0]?.date} {concert.musicStart}
+          </span>
         </div>
       </div>
       <button className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full">

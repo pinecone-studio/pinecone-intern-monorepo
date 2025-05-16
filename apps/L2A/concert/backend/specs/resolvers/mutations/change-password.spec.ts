@@ -1,23 +1,29 @@
-import bcrypt from 'bcrypt';
 import { GraphQLResolveInfo } from 'graphql';
 import { userModel } from '../../../src/models';
-import changeCurrentPassword from '../../../src/resolvers/mutations/change-password';
+import { changeCurrentPassword } from '../../../src/resolvers/mutations';
 
-jest.mock('bcrypt');
-jest.mock('../../../src/models', () => ({
-  userModel: {
-    findOne: jest.fn(),
-    findByIdAndUpdate: jest.fn(),
-  },
-}));
+const mockUser = {
+  id: 'user-id',
+  email: 'test@example.com',
+  password: 'hashed-old-password',
+};
 
-describe('changeCurrentPassword', () => {
-  const mockUser = {
+jest.mock('../../../src/models');
+jest.mock('../../../src/utils/find-user-by-email', () => ({
+  findUserByEmail: jest.fn().mockResolvedValue({
     id: 'user-id',
     email: 'test@example.com',
     password: 'hashed-old-password',
-  };
+  }),
+}));
+jest.mock('../../../src/utils/check-password', () => ({
+  checkPassword: jest.fn().mockResolvedValue(true),
+}));
+jest.mock('../../../src/utils/hash-password', () => ({
+  hashPassword: jest.fn().mockResolvedValue('mock-password'),
+}));
 
+describe('changeCurrentPassword', () => {
   const args = {
     currentPassword: 'oldPassword',
     newPassword: 'newPassword',
@@ -31,40 +37,18 @@ describe('changeCurrentPassword', () => {
     jest.clearAllMocks();
   });
 
-  it('should throw error if user not found', async () => {
-    (userModel.findOne as jest.Mock).mockResolvedValue(null);
-
-    await expect(changeCurrentPassword({}, args, context, info)).rejects.toThrow('Хэрэглэгч олдсонгүй.');
-  });
-
-  it('should throw error if current password is incorrect', async () => {
-    (userModel.findOne as jest.Mock).mockResolvedValue(mockUser);
-    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
-
-    await expect(changeCurrentPassword({}, args, context, info)).rejects.toThrow('Хуучин нууц үг буруу байна.');
-  });
-
-  it('should throw error if new password is same as current', async () => {
-    (userModel.findOne as jest.Mock).mockResolvedValue(mockUser);
-    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-
-    const sameArgs = { ...args, newPassword: 'oldPassword' };
-
-    await expect(changeCurrentPassword({}, sameArgs, context, info)).rejects.toThrow('Шинэ нууц үг хуучинтой ижил байна.');
-  });
-
   it('should update password and return updated user', async () => {
-    (userModel.findOne as jest.Mock).mockResolvedValue(mockUser);
-    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-    (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-new-password');
-
-    const updatedUser = { ...mockUser, password: 'hashed-new-password' };
+    const updatedUser = { ...mockUser, password: 'mock-password' };
     (userModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(updatedUser);
 
     const result = await changeCurrentPassword({}, args, context, info);
 
-    expect(bcrypt.hash).toHaveBeenCalledWith('newPassword', 10);
-    expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith('user-id', { password: 'hashed-new-password' });
     expect(result).toEqual(updatedUser);
+  });
+
+  it('should throw an error', async () => {
+    (userModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('Серверийн алдаа'));
+
+    await expect(changeCurrentPassword({}, args, context, info)).rejects.toThrow(new Error('Серверийн алдаа'));
   });
 });

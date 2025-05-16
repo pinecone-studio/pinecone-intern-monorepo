@@ -60,7 +60,7 @@ describe('check user register', () => {
           context,
           info
         )
-      ).rejects.toThrow('Бүртгүүлж чадсангүй!');
+      ).rejects.toThrow('db burned to the ground');
     }
   });
 });

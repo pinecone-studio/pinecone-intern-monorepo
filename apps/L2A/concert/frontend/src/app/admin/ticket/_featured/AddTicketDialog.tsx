@@ -85,7 +85,8 @@ const AddTicketDialog = () => {
                 <AddTicketTimeInput form={form} />
                 <AddTicketSeatInput form={form} />
               </div>
-              {data?.createConcert ? <div>Амжилттай нэмлээ!</div> : error && <div>Концерт нэмэхэд асуудал гарлаа!</div>}
+              {data?.createConcert && <div>Амжилттай нэмлээ!</div>}
+              {error && <div>Концерт нэмэхэд асуудал гарлаа!</div>}
               <Button disabled={form.formState.isSubmitting || venueLoading || loading}>Нэмэх</Button>
             </form>
           </Form>

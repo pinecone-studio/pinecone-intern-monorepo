@@ -8,7 +8,7 @@ export const createPost = async (_: any, args: { input: CreatePostInput }) => {
   const newPost = await POST_MODEL.create({
     ...args.input, 
     garage: garage || false,
-    status: "pending",
+    status: "PENDING",
     createdAt: new Date(),
     updatedAt: new Date(),
   });

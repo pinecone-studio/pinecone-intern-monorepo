@@ -23,6 +23,9 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI ?? '',
+    JWT_SECRET: process.env.JWT_SECRET,
+    MAIL: process.env.MAIL,
+    MAIL_SECRET: process.env.MAIL_SECRET,
   },
   nx: {
     svgr: false,
