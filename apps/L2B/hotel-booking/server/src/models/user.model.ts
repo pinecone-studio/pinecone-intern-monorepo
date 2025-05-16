@@ -7,6 +7,7 @@ const userSchema = new Schema(
     firstName: { type: String },
     lastName: { type: String },
     birth: { type: Date },
+    emergencyPhone: { type: Number },
     relation: { type: String },
     phone: { type: Number },
     isAdmin: { type: Boolean, required: true, default: () => false },
