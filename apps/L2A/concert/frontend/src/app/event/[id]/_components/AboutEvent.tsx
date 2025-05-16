@@ -23,7 +23,7 @@ export const formatTime = (timestamp?: string | number): string => {
   return `${hours}:${minutes}`;
 };
 
-export const renderDateTime = (endDate: string, musicStart?: string | number) => (
+export const renderDateTime = (endDate: string, musicStart?: string) => (
   <div className="flex items-center gap-4">
     <div className="flex items-center gap-1">
       <Calendar size={18} className="text-gray-500" />
@@ -31,7 +31,7 @@ export const renderDateTime = (endDate: string, musicStart?: string | number) =>
     </div>
     <div className="flex items-center gap-1">
       <Clock size={18} className="text-gray-500" />
-      <span>{formatTime(musicStart)}</span>
+      <span>{musicStart}</span>
     </div>
   </div>
 );
@@ -53,7 +53,7 @@ export const renderArtists = (artistName?: string, specialGuestName?: string) =>
   );
 };
 
-export const renderSchedule = (doorOpen?: string, musicStart?: string | number) => (
+export const renderSchedule = (doorOpen?: string, musicStart?: string) => (
   <div>
     <h2 className="font-semibold mb-1">Тоглолтын цагийн хуваарь:</h2>
     <ul className="list-disc list-inside text-gray-200">
@@ -61,7 +61,7 @@ export const renderSchedule = (doorOpen?: string, musicStart?: string | number) 
         <strong>Door open:</strong> {doorOpen && !isNaN(Number(doorOpen)) && Number(doorOpen) < 1000 ? `${doorOpen} цагийн өмнө` : doorOpen}
       </li>
       <li>
-        <strong>Music start:</strong> {formatTime(musicStart)}
+        <strong>Music start:</strong> {musicStart}
       </li>
     </ul>
   </div>
