@@ -36,8 +36,15 @@ describe('ListingCard', () => {
     expect(screen.getByText(`${mockProps.city}, ${mockProps.district}`)).toBeInTheDocument();
   });
 
+  it('renders fallback image when image is null', () => {
+  render(<ListingCard {...mockProps} image={null} />);
+  const img = screen.getByAltText('no image');
+  expect(img).toBeInTheDocument();
+  expect(img).not.toHaveAttribute('src', '/listingcard.png');
+});
+
   it('renders image with fallback alt text', () => {
-    render(<ListingCard {...mockProps} />);
+    render(<ListingCard {...mockProps}  />);
     const img = screen.getByAltText('no image');
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('src', mockProps.image);

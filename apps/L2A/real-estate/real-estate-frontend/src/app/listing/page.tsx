@@ -45,8 +45,8 @@ const HomeListingPage = () => {
     const updated = selectedRestrooms.includes(value)? selectedRestrooms.filter((v) => v !== value): [...selectedRestrooms, value];
     setTotalRestrooms(updated.join(','));
   };
-
   return (
+    
     <div className="flex flex-col min-h-screen bg-[#f8f8f8]" data-cy="listing-page">
       <main className="flex-1 flex flex-col lg:flex-row mx-auto w-full max-w-[1280px]">
         <aside className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm" data-cy="listing-sidebar">
