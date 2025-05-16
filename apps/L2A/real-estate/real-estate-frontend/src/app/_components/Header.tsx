@@ -20,10 +20,10 @@ const Header = () => {
   return (
     <header className="border-b">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center py-2 px-6">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
           <span className="font-bold">Home Vault</span>
-        </div>
+        </Link>
 
         <div className="flex gap-4 items-center">
           <Link href="/create" className="bg-orange-500 text-white px-4 py-1.5 rounded-md">
