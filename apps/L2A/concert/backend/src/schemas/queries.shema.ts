@@ -5,10 +5,11 @@ export const QueryTypeDefs = gql`
     concerts: [Concert]!
     concert(concertId: String!): Concert!
     venues: [Venue]!
-    tickets(concertId: ID!): [Ticket]!
+    tickets: [Ticket]!
     user(id: ID!): User
     bookings(userId: ID!): [Booking]!
     sampleQuery: String!
     GetUserInfo(JWT: String!): User
+    requests: [Request]!
   }
 `;

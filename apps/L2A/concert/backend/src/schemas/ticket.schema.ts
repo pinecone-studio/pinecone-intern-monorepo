@@ -8,7 +8,7 @@ export const TicketTypeDefs = gql`
     price: Int
     type: TicketType!
     status: TicketStatus!
-    cancerRequest: Boolean!
+    cancelRequest: Boolean!
     refundStatus: RefundStatus!
     createdAt: String!
     updatedAt: String!
