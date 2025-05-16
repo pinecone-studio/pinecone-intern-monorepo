@@ -15,6 +15,7 @@ type Props = {
 
 const ListingDetailAdminView = ({ listing }: Props) => {
   const [status, setStatus] = useState('Хүлээгдэж буй');
+  
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -98,7 +99,7 @@ const ListingDetailAdminView = ({ listing }: Props) => {
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm">
-          <ListingCard imageUrl={listing.image} price="880,000,000₮" title={listing.name} beds={4} baths={2} area={200} location="Хан-Уул дүүрэг, 1-р хороо, Зайсан" imageCount="1/9" />
+          <ListingCard image={listing.image} price={880000000} title={listing.name} totalRooms={4} restrooms={2} size={200} city="1-р хороо, Зайсан" district="Хан-Уул дүүрэг, " imageCount="1/9" />
 
           <div className="mt-4">
             <label className="text-sm font-medium mb-1 block">Төлөв</label>
