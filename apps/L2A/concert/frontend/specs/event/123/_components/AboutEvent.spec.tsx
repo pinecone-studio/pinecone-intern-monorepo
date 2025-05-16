@@ -79,23 +79,32 @@ describe('AboutEvent helpers', () => {
   });
 
   describe('renderSchedule()', () => {
-    beforeEach(() => {
-      (FormatDate as jest.Mock).mockReturnValue('DFLT');
-    });
-
     test('renders “Door open” with hours-ago when numeric < 1000', () => {
       render(renderSchedule('120', undefined));
       expect(screen.getByText(/120 цагийн өмнө/)).toBeInTheDocument();
     });
 
-    test('renders “Music start” via formatTime in local time', () => {
-      const ms = 3_600_000;
-      const d = new Date(ms);
-      const hh = String(d.getHours()).padStart(2, '0');
-      const mm = String(d.getMinutes()).padStart(2, '0');
+    test('renders “Door open” as-is when number >= 1000 or non-numeric', () => {
+      render(renderSchedule('2048', undefined));
+      expect(screen.getByText('2048')).toBeInTheDocument();
 
-      render(renderSchedule(undefined, ms));
-      expect(screen.getByText(`${hh}:${mm}`)).toBeInTheDocument();
+      render(renderSchedule('NotANumber', undefined));
+      expect(screen.getByText('NotANumber')).toBeInTheDocument();
+    });
+
+    test('renders “Music start” as string if string passed', () => {
+      render(renderSchedule(undefined, '18:00'));
+      expect(screen.getByText('18:00')).toBeInTheDocument();
+    });
+
+    test('renders “Music start” as number if number passed', () => {
+      render(renderSchedule(undefined, 7200000));
+      expect(screen.getByText('7200000')).toBeInTheDocument();
+    });
+
+    test('renders fallback label even if “Music start” undefined', () => {
+      render(renderSchedule(undefined, undefined));
+      expect(screen.getByText('Music start:')).toBeInTheDocument();
     });
   });
 });

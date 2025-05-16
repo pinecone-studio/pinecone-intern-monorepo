@@ -61,7 +61,7 @@ export const renderSchedule = (doorOpen?: string, musicStart?: string | number) 
         <strong>Door open:</strong> {doorOpen && !isNaN(Number(doorOpen)) && Number(doorOpen) < 1000 ? `${doorOpen} цагийн өмнө` : doorOpen}
       </li>
       <li>
-        <strong>Music start:</strong> {formatTime(musicStart)}
+        <strong>Music start:</strong> {musicStart}
       </li>
     </ul>
   </div>
