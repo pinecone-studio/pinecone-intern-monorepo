@@ -21,7 +21,7 @@ const Card = () => (
         </p>
       </div>
       <div className="flex py-4 gap-2">
-        <p className="bg-[#18BA51] rounded-full w-[39px] h-[20px] font-md text-sm flex items-center justify-center text-white ">8.6</p>
+        <p className="bg-[#2563EB] rounded-full w-[39px] h-[20px] font-light text-sm flex items-center justify-center text-white ">8.6</p>
         <p className="text-sm font-medium">Excellent</p>
       </div>
     </div>
