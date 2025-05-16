@@ -22,5 +22,6 @@ export const UserTypeDefs = gql`
   type Mutation {
     addUser(email: String!, password: String!): User!
     updatePersonalInformation(_id: ID!, firstName: String!, lastName: String!, birth: Date!): User!
+    updateContact(_id: ID!, phone: Int!, email: String!, emergencyPhone: Int!, relation: String!): User!
   }
 `;
