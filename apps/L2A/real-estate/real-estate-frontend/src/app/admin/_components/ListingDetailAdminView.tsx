@@ -2,18 +2,11 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import ListingCard from '@/app/home/_components/ListingCard';
 import BuildingDetails from './BuildingDetails';
 import StatusSelect from './StatusSelect';
 
-type Props = {
-  listing: {
-    image: string;
-    name: string;
-  };
-};
 
-const ListingDetailAdminView = ({ listing }: Props) => {
+const ListingDetailAdminView = () => {
   const [status, setStatus] = useState('Хүлээгдэж буй');
   
 
@@ -99,7 +92,7 @@ const ListingDetailAdminView = ({ listing }: Props) => {
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm">
-          <ListingCard image={listing.image} price={880000000} title={listing.name} totalRooms={4} restrooms={2} size={200} city="1-р хороо, Зайсан" district="Хан-Уул дүүрэг, " imageCount="1/9" />
+
 
           <div className="mt-4">
             <label className="text-sm font-medium mb-1 block">Төлөв</label>

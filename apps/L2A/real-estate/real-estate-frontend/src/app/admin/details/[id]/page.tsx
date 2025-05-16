@@ -1,15 +1,10 @@
 import ListingDetailAdminView from '../../_components/ListingDetailAdminView';
 
-interface PageProps {
-  params: { id: string };
-}
-const DetailsPage = ({ params }: PageProps) => {
+
+const DetailsPage = () => {
   return (
     <ListingDetailAdminView
-      listing={{
-        image: '/listingcard.png',
-        name: params.id,
-      }}
+ 
     />
   );
 };
