@@ -15,13 +15,9 @@ export const updateContact: MutationResolvers['updateContact'] = async (_, { _id
     { new: true }
   );
 
-  console.log('updatedUser', updatedUser);
-
   if (!updatedUser) {
     throw new Error('User not found');
   }
-
-  console.log('!updatedUser', !updatedUser);
 
   return updatedUser;
 };
