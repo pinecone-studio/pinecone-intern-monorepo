@@ -88,11 +88,6 @@ describe('AboutEvent helpers', () => {
       expect(screen.getByText(/120 цагийн өмнө/)).toBeInTheDocument();
     });
 
-    test('falls back to date for non-numeric doorOpen', () => {
-      render(renderSchedule('foo', undefined));
-      expect(screen.getByText('DFLT')).toBeInTheDocument();
-    });
-
     test('renders “Music start” via formatTime in local time', () => {
       const ms = 3_600_000;
       const d = new Date(ms);

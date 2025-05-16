@@ -11,5 +11,6 @@ export const QueryTypeDefs = gql`
     sampleQuery: String!
     GetUserInfo(JWT: String!): User
     requests: [Request]!
+    deleteTestDocs: Boolean!
   }
 `;

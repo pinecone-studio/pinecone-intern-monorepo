@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Concert } from '@/generated';
 import Link from 'next/link';
 const ConcertCard = ({ concert }: { concert: Concert }) => {
-  const start = new Date(Number(concert.musicStart));
+  const day = new Date(String(concert.seatData[0]?.date));
 
   return (
     <Link data-testid={`concert-card`} href={`/event/${concert.id}`} target="_blank" className="bg-[#141414] w-[425px] h-[360px] rounded-lg overflow-hidden">
@@ -18,15 +18,12 @@ const ConcertCard = ({ concert }: { concert: Concert }) => {
           <span>
             <span>
               📅&nbsp;
-              {start.toLocaleDateString(undefined, {
+              {day.toLocaleDateString(undefined, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
               })}{' '}
-              {start.toLocaleTimeString(undefined, {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
+              {concert.musicStart}
             </span>
           </span>
           <span>📍{concert?.venue?.name}</span>
