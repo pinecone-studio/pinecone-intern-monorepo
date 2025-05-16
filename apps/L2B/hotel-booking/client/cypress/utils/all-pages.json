@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ["///","///guests","///guests/[guestid]","///hotels","///hotels/[hotelid]","///hotels/[hotelid]/[roomId]","///contact","///profile","///security","///forget-password","///signin","///signup"]
+=======
+["///","///guest-info","///guests","///hotels","///contact","///profile","///security","///forget-password","///login","///signin","///signup"]
+>>>>>>> 4d02d2ae (feat(guest detail page): guest detail page front end)
