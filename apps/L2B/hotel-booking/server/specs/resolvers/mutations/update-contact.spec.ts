@@ -24,10 +24,12 @@ describe('updateContact Mutation', () => {
       {},
       {
         _id: '12345',
-        phone: 87654321,
-        email: 'test@gmail.com',
-        emergencyPhone: 12345678,
-        relation: 'Siblings',
+        input: {
+          phone: 87654321,
+          email: 'test@gmail.com',
+          emergencyPhone: 12345678,
+          relation: 'Siblings',
+        },
       },
       {},
       {} as GraphQLResolveInfo
@@ -56,10 +58,12 @@ describe('updateContact Mutation', () => {
         {},
         {
           _id: '12345',
-          phone: 87654321,
-          email: 'test@gmail.com',
-          emergencyPhone: 12345678,
-          relation: 'Siblings',
+          input: {
+            phone: 87654321,
+            email: 'test@gmail.com',
+            emergencyPhone: 12345678,
+            relation: 'Siblings',
+          },
         },
         {},
         {} as GraphQLResolveInfo
