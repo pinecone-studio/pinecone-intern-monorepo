@@ -8,7 +8,7 @@ export const userTypeDefs = gql`
   type User {
     _id: ID!
     email: String!
-    password: String!
+    password: String
     isVerified: Boolean
     verficationCode: String!
     createdAt: String

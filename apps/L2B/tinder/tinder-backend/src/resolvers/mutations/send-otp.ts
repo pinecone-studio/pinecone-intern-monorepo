@@ -15,6 +15,8 @@ export const sendOTP = async (_: unknown, { email }: { email: string }) => {
     });
     return newUser;
   } catch (error) {
-    throw new Error('failed to send otp mutation');
+    if (error instanceof Error) {
+      throw error;
+    }
   }
 };
