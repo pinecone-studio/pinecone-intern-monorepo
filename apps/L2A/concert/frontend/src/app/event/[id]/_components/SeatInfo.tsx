@@ -111,12 +111,12 @@ const SeatInfo: FC<SeatInfoProps> = ({ eventData }) => {
   const isDisabled = !selectedDay || ticketOptions.length === 0;
 
   if (!eventData || !eventData.seatData || dates.length === 0) {
-    return <div className="text-white p-6">No ticket information available</div>;
+    return <div className="text-white p-6">Тасалбар дууссан!</div>;
   }
 
   return (
     <div data-testid="seat-info" className="space-y-6 mx-auto">
-      <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу.</p>
+      <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу!</p>
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
       <TicketList options={ticketOptions} />
       <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
