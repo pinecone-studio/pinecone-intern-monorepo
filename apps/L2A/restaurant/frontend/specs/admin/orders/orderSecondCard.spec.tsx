@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import OrderSecondCard from "@/app/admin/orders/_components/OrderSecondCard";
 import ordersData from "@/app/admin/orders/_components/orders.json";
 import "@testing-library/jest-dom";
@@ -11,10 +12,9 @@ type Order = {
   orderNumber: string;
   items: Food[];
 };
-
 const order: Order = ordersData.orders[0];
 
-describe("OrderSecondCard - using real JSON data", () => {
+describe("OrderSecondCard", () => {
   it("renders order info from JSON", () => {
     render(<OrderSecondCard order={order} />);
 
@@ -29,7 +29,6 @@ describe("OrderSecondCard - using real JSON data", () => {
       0
     );
     render(<OrderSecondCard order={order} />);
-
     expect(screen.getByText(`${total.toLocaleString()}₮`)).toBeInTheDocument();
   });
 
@@ -37,5 +36,16 @@ describe("OrderSecondCard - using real JSON data", () => {
     render(<OrderSecondCard order={order} />);
     expect(screen.getByText("Хүлээгдэж буй")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Дэлгэрэнгүй харах" })).toBeInTheDocument();
+  });
+
+  it("opens dialog on button click", async () => {
+    render(<OrderSecondCard order={order} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Дэлгэрэнгүй харах" }));
+
+    expect(document.querySelector('[data-cy="order-dialog"]'));
+    expect(screen.findByText(order.orderNumber));
+    expect(screen.findByText(order.table));
+    expect(screen.findByText(`🕒 ${order.time}`));
   });
 });
