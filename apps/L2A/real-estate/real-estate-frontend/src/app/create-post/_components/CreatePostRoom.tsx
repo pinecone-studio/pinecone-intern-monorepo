@@ -11,7 +11,7 @@ type Props = {
 export const CreatePostRoom = ({name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Өрөө</label>
+      <label htmlFor={name} className="block text-md text-[#09090B] pb-1">Өрөө</label>
       <input
         id={name}
         name={name}

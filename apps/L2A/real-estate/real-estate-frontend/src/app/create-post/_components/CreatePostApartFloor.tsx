@@ -11,7 +11,7 @@ type Props = {
 export const CreatePostApartFloor = ({ name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">
+      <label htmlFor={name} className="block text-md text-[#09090B] pb-1">
         Барилгын давхар
       </label>
       <input
