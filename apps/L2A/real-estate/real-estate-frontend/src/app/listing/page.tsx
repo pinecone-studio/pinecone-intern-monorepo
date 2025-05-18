@@ -8,6 +8,8 @@ import { useQueryParamState } from '@/hooks/useQueryState';
 import { buildFilters } from '@/lib';
 import { useFilterPostQuery } from '@/generated';
 import ListingCard from '../home/_components/ListingCard';
+import { useDebounce } from '@/hooks/debounce-hook';
+import { useState } from 'react';
 
 const HomeListingPage = () => {
   const [type, setType] = useQueryParamState('type')
@@ -20,10 +22,12 @@ const HomeListingPage = () => {
   const [garage, setGarage] = useQueryParamState('garage');
   const [lift, setLift] = useQueryParamState('lift');
   const [balcony, setBalcony] = useQueryParamState('balcony');
+  const [searchInput, setSearchInput] = useState('')
+  const debouncedSearch = useDebounce(searchInput , 500)
+  
 
-  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony,});
+  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony, searchValue:debouncedSearch});
   const { data } = useFilterPostQuery({ variables: { filter: filters } });
-
   const toggleType = (value: string) => {
     const current = type?.split(',') ?? [];
     const updated = current.includes(value)
@@ -46,11 +50,10 @@ const HomeListingPage = () => {
     setTotalRestrooms(updated.join(','));
   };
   return (
-    
     <div className="flex flex-col min-h-screen bg-[#f8f8f8]" data-cy="listing-page">
       <main className="flex-1 flex flex-col lg:flex-row mx-auto w-full max-w-[1280px]">
         <aside className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm" data-cy="listing-sidebar">
-          <Input placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
+          <Input onChange={(e)=>setSearchInput(e.target.value)} placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
           <div className="space-y-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2" data-cy="type-apartment">
@@ -150,5 +153,4 @@ const HomeListingPage = () => {
     </div>
   );
 };
-
 export default HomeListingPage;

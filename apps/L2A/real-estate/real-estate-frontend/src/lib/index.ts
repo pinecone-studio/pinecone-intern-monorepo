@@ -4,6 +4,7 @@ import { buildRooms } from "./build-room";
 import { buildRestrooms } from "./build-rest-room";
 import { buildLocation } from "./build-location";
 import { buildBooleans } from "./build-boolean";
+import { buildSearch } from "./build-search";
 
 
 export const buildFilters = (params: Record<string, any>) => ({
@@ -13,4 +14,5 @@ export const buildFilters = (params: Record<string, any>) => ({
   ...buildLocation(params.city, params.district),
   ...buildPrice(params.minPrice, params.maxPrice),
   ...buildBooleans(params),
+  ...buildSearch(params.searchValue)
 });
