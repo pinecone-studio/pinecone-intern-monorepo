@@ -14,6 +14,8 @@ input PostFilterInput {
   garage: Boolean
   lift: Boolean
   balcony: Boolean
+  searchValue:String
+  debouncedSearch:String
 }
 
  type Query {
