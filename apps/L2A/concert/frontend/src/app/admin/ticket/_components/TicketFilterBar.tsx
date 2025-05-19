@@ -8,22 +8,26 @@ const TicketFilterBar = () => {
   const [filters, setFilters] = useState<string[]>(['Davaidasha', 'Хурд']);
   const [field, setField] = useState<{ value: Date | null }>({ value: null });
   const inputRef = useRef<HTMLInputElement>(null);
+
   const removeFilter = (filter: string) => {
     setFilters((prev) => prev.filter((f) => f !== filter));
   };
+
   const clearFilters = () => {
     setFilters([]);
   };
+
   const handleButtonClick = () => {
     inputRef.current?.showPicker?.();
     inputRef.current?.click();
   };
+
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.valueAsDate;
     setField({ value: selectedDate });
   };
   return (
-    <div className="flex justify-between p-4 rounded-md w-full max-w-[1620px]" data-testid="ticket-filter-bar">
+    <div className="flex justify-between pt-4 pb-4 rounded-md  w-3/4 " data-testid="ticket-filter-bar">
       <div className="flex gap-4" data-testid="filter-left-section">
         <input type="text" placeholder="Тасалбар хайх" className="px-3 py-1 border border-gray-300 rounded-md w-60 text-sm" data-testid="search-input" />
         <div className="flex flex-wrap items-center gap-2 border border-gray-300 px-3 py-0.5 rounded-md bg-white" data-testid="filter-tags-container">
@@ -45,7 +49,7 @@ const TicketFilterBar = () => {
           Цэвэрлэх <X size={14} />
         </button>
       </div>
-      <div className="relative" data-testid="date-picker-container">
+      <div className="relative border border-gray-300 rounded-md" data-testid="date-picker-container">
         <Button variant="outline" className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')} onClick={handleButtonClick} data-testid="calendar-button">
           {field.value ? format(field.value, 'PPP') : <span>Өдөр сонгох</span>}
           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
