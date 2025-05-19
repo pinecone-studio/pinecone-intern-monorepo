@@ -1,14 +1,40 @@
 'use client';
 import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+
+const UPDATE_USER_INFO = gql`
+  mutation UpdateUserInfo($id: ID!, $email: String, $phone: String) {
+    updateUserInfo(id: $id, email: $email, phone: $phone) {
+      _id
+      email
+      phone
+    }
+  }
+`;
 
 const UserProfile = () => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [updateUserInfo] = useMutation(UPDATE_USER_INFO);
 
-  const handleSave = () => {
-    console.log('Phone:', phone);
-    console.log('Email:', email);
-    alert('Хувийн мэдээлэл хадгалагдлаа.');
+  const userId = '123';
+
+  const handleSave = async () => {
+    try {
+      const { data } = await updateUserInfo({
+        variables: {
+          id: userId,
+          email,
+          phone,
+        },
+      });
+
+      alert('Хувийн мэдээлэл хадгалагдлаа.');
+      console.log('Updated user:', data.updateUserInfo);
+    } catch (err) {
+      console.error('Хадгалах үед алдаа гарлаа:', err);
+      alert('Алдаа гарлаа. Дахин оролдоно уу.');
+    }
   };
 
   return (

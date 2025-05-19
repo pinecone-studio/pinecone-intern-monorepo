@@ -1,5 +1,5 @@
 describe('Concert Page (real data) E2E', () => {
-  const CONCERT_ID = '6822df60925fe87d0acc9744';
+  const CONCERT_ID = '6824b74c8db390ee25b237e9';
 
   beforeEach(() => {
     cy.visit(`/event/${CONCERT_ID}`);

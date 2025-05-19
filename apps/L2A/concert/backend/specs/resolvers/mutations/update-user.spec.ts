@@ -1,54 +1,51 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { userModel } from '../../../src/models';
 import { updateUserInfo } from '../../../src/resolvers/mutations';
-import { checkPassword } from '../../../src/utils/check-password';
-import { findUserById } from '../../../src/utils/find-user-by-id';
+import { catchError } from '../../../src/utils/catch-error';
 
 jest.mock('../../../src/models');
-jest.mock('../../../src/utils/check-password');
-jest.mock('../../../src/utils/find-user-by-id');
+jest.mock('../../../src/utils/catch-error');
 
 describe('updateUserInfo', () => {
   const mockUserId = 'user-id-123';
-  const mockPassword = 'correct-password';
-  const mockUser = {
+  const mockUpdatedUser = {
     _id: mockUserId,
-    email: 'old@example.com',
-    phone: '99119911',
-    password: 'hashed-password',
+    email: 'new@example.com',
+    phone: '99112233',
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should throw an error if password is not provided', async () => {
-    if (updateUserInfo) {
-      await expect(updateUserInfo({}, { id: mockUserId, email: 'new@example.com', password: '', phone: 99110000 }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Нууц үг оруулна уу!');
-    }
+  it('should update user email and phone successfully', async () => {
+    (userModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockUpdatedUser);
+
+    const result = await updateUserInfo(
+      {},
+      {
+        id: mockUserId,
+        email: 'new@example.com',
+        phone: '99112233',
+      }
+    );
+
+    expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith(mockUserId, { email: 'new@example.com', phone: '99112233' }, { new: true });
+    expect(result).toEqual(mockUpdatedUser);
   });
 
-  it('should update user info if password is correct', async () => {
-    (findUserById as jest.Mock).mockResolvedValue(mockUser);
-    (checkPassword as jest.Mock).mockResolvedValue(true);
-    const updatedUser = {
-      _id: mockUserId,
-      email: 'new@example.com',
-      phone: '99110000',
-    };
-    (userModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(updatedUser);
-    if (updateUserInfo) {
-      const result = await updateUserInfo({}, { id: mockUserId, email: 'new@example.com', password: mockPassword, phone: 99110000 }, {}, {} as GraphQLResolveInfo);
+  it('should call catchError if an error occurs', async () => {
+    const mockError = new Error('DB error');
+    (userModel.findByIdAndUpdate as jest.Mock).mockRejectedValue(mockError);
 
-      expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith(mockUserId, { email: 'new@example.com', phone: 99110000 }, { new: true });
-      expect(result).toEqual(updatedUser);
-    }
-  });
+    await updateUserInfo(
+      {},
+      {
+        id: mockUserId,
+        email: 'error@example.com',
+        phone: '99001122',
+      }
+    );
 
-  it('should catch errors and throw them', async () => {
-    (findUserById as jest.Mock).mockRejectedValue(new Error('DB error'));
-    if (updateUserInfo) {
-      await expect(updateUserInfo({}, { id: mockUserId, email: 'fail@example.com', password: mockPassword, phone: 99118888 }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('DB error');
-    }
+    expect(catchError).toHaveBeenCalledWith(mockError);
   });
 });
