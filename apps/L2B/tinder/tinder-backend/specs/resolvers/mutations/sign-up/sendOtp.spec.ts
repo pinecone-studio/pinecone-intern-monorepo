@@ -1,13 +1,13 @@
-import { userModel } from '../../../src/models';
-import { sendOTP } from '../../../src/resolvers/mutations';
-import { sendEmail } from '../../../src/utils/send-email';
+import { userModel } from 'apps/L2B/tinder/tinder-backend/src/models';
+import { sendOTP } from 'apps/L2B/tinder/tinder-backend/src/resolvers/mutations';
+import { sendEmail } from 'apps/L2B/tinder/tinder-backend/src/utils/send-email';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   userModel: {
     create: jest.fn(),
   },
 }));
-jest.mock('../../../src/utils/send-email', () => ({
+jest.mock('../../../../src/utils/send-email', () => ({
   sendEmail: jest.fn(),
 }));
 describe('sendOTP mutation', () => {
