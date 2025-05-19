@@ -1,3 +1,4 @@
+
 import FoodCard from "./_features/FoodCard";
 import menuCategories from "./_components/menuCategories.json";
 import MenuCard from "./_features/MenuCard";
@@ -11,7 +12,9 @@ const Menu = () => {
           <FoodCard key={food.id} food={food} />
         ))
       )}
+
     </div>
   );
 };
+
 export default Menu;
