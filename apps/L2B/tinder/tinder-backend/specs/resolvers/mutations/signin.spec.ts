@@ -52,6 +52,6 @@ describe('signIn', () => {
     (userModel.findOne as jest.Mock).mockResolvedValueOnce(mockUser);
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(false);
 
-    await expect(signIn({}, { email: 'test@gmail.com', password: 'wrongpass' })).rejects.toThrow('password is correct');
+    await expect(signIn({}, { email: 'test@gmail.com', password: 'wrongpass' })).rejects.toThrow('password is not found');
   });
 });

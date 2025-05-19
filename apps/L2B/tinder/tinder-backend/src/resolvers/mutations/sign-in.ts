@@ -14,7 +14,7 @@ export const signIn = async (_: unknown, args: { email: string; password: string
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    throw new Error('password is correct');
+    throw new Error(' password is not found');
   }
 
   const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
