@@ -1,6 +1,6 @@
 describe("OrderHeader component", () => {
   beforeEach(() => {
-    cy.visit("/admin/orders"); 
+    cy.visit("/admin/order"); 
   });
 
   it("should display the correct title", () => {

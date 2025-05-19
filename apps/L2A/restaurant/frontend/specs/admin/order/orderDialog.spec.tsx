@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import OrderSecondCard from "@/app/admin/orders/_components/OrderSecondCard";
-import ordersData from "@/app/admin/orders/_components/orders.json";
+import OrderSecondCard from "@/app/admin/order/_components/OrderSecondCard";
+import ordersData from "@/app/admin/order/_components/orders.json";
 import "@testing-library/jest-dom";
-import type { Food } from "@/app/admin/orders/_components/OrderFood";
+import type { Food } from "@/app/admin/order/_components/OrderFood";
 
 type Order = {
   table: string;

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import OrderMainCard from "@/app/admin/orders/_components/OrderMainCard";
-import ordersData from "@/app/admin/orders/_components/orders.json";
+import OrderMainCard from "@/app/admin/order/_components/OrderMainCard";
+import ordersData from "@/app/admin/order/_components/orders.json";
 import "@testing-library/jest-dom";
-import type { Food } from "@/app/admin/orders/_components/OrderFood";
+import type { Food } from "@/app/admin/order/_components/OrderFood";
 
 type Order = {
   table: string;
