@@ -11,7 +11,7 @@ const MenuCard = () => {
     const selectedCategory = menuCategories.find((category) => category.id === selectedCategoryId);
     return (
       <div>
-        <Card className="flex flex-col justify-center w-[600px] px-10 pt-10 mt-5">
+        <Card className="flex flex-col justify-center w-[600px] px-10 pt-10 mt-4 mb-10">
           <p className="font-semibold text-2xl">Цэс</p>
           <CardContent>
             <div data-cy="home-page">
