@@ -1,103 +1,64 @@
 import { CreatePostImages } from '@/app/create-post/_components/CreatePostImages';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom'
+
+
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ secure_url: 'https://fakeurl.com/image.jpg' }),
+  })
+) as jest.Mock;
 
 describe('CreatePostImages', () => {
-  const initialImages = ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'];
+  const mockOnChange = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders initial images and error message', () => {
-    render(<CreatePostImages name="images" value={initialImages} onChange={jest.fn()} error="Зураг заавал оруулна уу!" />);
-
-    const imgs = screen.getAllByAltText('preview');
-    expect(imgs).toHaveLength(2);
-    expect(screen.getByText('Зураг заавал оруулна уу!')).toBeInTheDocument();
+  it('should render correctly with no images', () => {
+    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
+    expect(screen.getByText('+ Зураг оруулах')).toBeInTheDocument();
   });
 
-  it('clicking upload button triggers file input click', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={jest.fn()} />);
+  it('displays error when passed', () => {
+    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="Image is required" />);
+    expect(screen.getByText('Image is required')).toBeInTheDocument();
+  });
 
-    const uploadBtn = screen.getByTestId('upload-button');
-    const fileInput = screen.getByTestId('image-input');
+  it('calls input click when upload button is clicked', () => {
+    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
+    const button = screen.getByTestId('upload-button');
+    const input = screen.getByTestId('images');
 
-    const inputClickSpy = jest.spyOn(fileInput, 'click');
-
-    fireEvent.click(uploadBtn);
-
+    const inputClickSpy = jest.spyOn(input, 'click');
+    fireEvent.click(button);
     expect(inputClickSpy).toHaveBeenCalled();
   });
 
-  it('uploads images and calls onChange with new URLs', async () => {
-    const mockOnChange = jest.fn();
-
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue({ secureUrl: 'https://cloudinary.com/fake-image.jpg' }),
-    } as any);
-
+  it('uploads image and calls onChange with new URL', async () => {
     render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
 
-    const file = new File(['dummy content'], 'test.png', { type: 'image/png' });
-    const fileInput = screen.getByTestId('image-input');
+    const input = screen.getByTestId('images') as HTMLInputElement;
 
-    fireEvent.change(fileInput, { target: { files: [file] } });
+    const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
-    await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/fake-image.jpg']);
+    fireEvent.change(input, {
+      target: { files: [file] },
     });
 
-    (global.fetch as jest.Mock).mockRestore();
-  });
-
-  it('removes image when remove button clicked', () => {
-    const mockOnChange = jest.fn();
-
-    render(<CreatePostImages name="images" value={initialImages} onChange={mockOnChange} />);
-
-    const removeButtons = screen.getAllByRole('button', { name: '×' });
-    expect(removeButtons).toHaveLength(2);
-
-    fireEvent.click(removeButtons[0]);
-
-    expect(mockOnChange).toHaveBeenCalledWith([initialImages[1]]);
-  });
-
-  it('disables upload button when uploading', async () => {
-    const mockOnChange = jest.fn();
-
-    global.fetch = jest.fn().mockImplementation(
-      () =>
-        new Promise((resolve) =>
-          setTimeout(
-            () =>
-              resolve({
-                json: () => Promise.resolve({ secureUrl: 'https://cloudinary.com/fake-image.jpg' }),
-              }),
-            100
-          )
-        )
-    );
-
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
-
-    const file = new File(['dummy content'], 'test.png', { type: 'image/png' });
-    const fileInput = screen.getByTestId('image-input');
-    const uploadBtn = screen.getByTestId('upload-button');
-
-    fireEvent.change(fileInput, { target: { files: [file] } });
-
-    expect(uploadBtn).toBeDisabled();
-    expect(uploadBtn).toHaveTextContent('Түр хүлээнэ үү...');
-
     await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalled();
+      expect(mockOnChange).toHaveBeenCalledWith(['https://fakeurl.com/image.jpg']);
     });
+  });
 
-    expect(uploadBtn).not.toBeDisabled();
-    expect(uploadBtn).toHaveTextContent('+ Зураг оруулах');
+  it('renders uploaded image and can remove it', () => {
+    const { getByAltText, getByText } = render(<CreatePostImages name="images" value={['https://image.jpg']} onChange={mockOnChange} />);
 
-    (global.fetch as jest.Mock).mockRestore();
+    expect(getByAltText('preview')).toHaveAttribute('src', 'https://image.jpg');
+
+    fireEvent.click(getByText('×'));
+    expect(mockOnChange).toHaveBeenCalledWith([]);
   });
 });

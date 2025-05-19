@@ -46,7 +46,7 @@ export const useCreatePostFormik = () =>
         .min(1, 'Ариун цэврийн өрөөний тоо 1-ээс их байх ёстой!'),
       parking: Yup.string().required('Зогсоол сонгоно уу!'),
       text: Yup.string().required('Дэлгэрэнгүй тайлбар оруулна уу!'),
-      images: Yup.string().required('Зураг заавал оруулна уу!'),
+      images: Yup.array().min(1, 'Зураг заавал оруулна уу!'),
       district: Yup.string().required('Дүүрэг заавал оруулна уу!'),
       section: Yup.string().required('Хороо заавал оруулна уу!'),
       year: Yup.number().required('Ашиглалтанд орсон он заавал оруулна уу!'),
@@ -59,6 +59,6 @@ export const useCreatePostFormik = () =>
       balcony: Yup.string().required('Тагтны тоо заавал оруулна уу!'),
     }),
     onSubmit: (values) => {
-      console.log('Form submitted:', values);
+      console.log('Form data', values);
     },
   });

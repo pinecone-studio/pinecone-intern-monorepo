@@ -24,7 +24,6 @@ import { CreatePostImages } from '../_components/CreatePostImages';
 import { useCreatePostFormik } from '../formUtils';
 import { FormikErrors, FormikTouched } from 'formik';
 
-
 export const CreatePostCard = () => {
   const formik = useCreatePostFormik();
   const getFieldError = (touched: FormikTouched<any>, errors: FormikErrors<any>, field: string): string | undefined => {
@@ -33,18 +32,24 @@ export const CreatePostCard = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit} className="space-y-2 gap-2">
-      <div className="w-full py-6 px-6 bg-[#F4F4F5] flex justify-center items-center">
+    <form onSubmit={formik.handleSubmit} className="flex justify-center space-y-2 gap-2">
+      <div className="w-full py-6 px-6 bg-[#F4F4F5] flex justify-center">
         <div>
-          <div className="p-4 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
-            <div className="p-2 space-y-2 mt-1">
+          <div className="p-2 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
+            <div className="p-1 space-y-2 my-2">
               <CreatePostHeader />
               <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
               <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
               <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
               <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
-              <CreatePostRestroom name="restroom" value={formik.values.restroom} onChange={formik.handleChange} onBlur={formik.handleBlur}error={getFieldError(formik.touched, formik.errors, 'restroom')}/>
+              <CreatePostRestroom
+                name="restroom"
+                value={formik.values.restroom}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched, formik.errors, 'restroom')}
+              />
               <CreatePostParking
                 name="parking"
                 value={formik.values.parking}
@@ -52,6 +57,10 @@ export const CreatePostCard = () => {
                 error={getFieldError(formik.touched, formik.errors, 'parking')}
               />
               <CreatePostText name="text" value={formik.values.text} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'text')} />
+            </div>
+          </div>
+          <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
+            <div className="p-2 space-y-2 mt-1">
               <CreatePostImages name="images" value={formik.values.images} onChange={(urls) => formik.setFieldValue('images', urls)} error={getFieldError(formik.touched, formik.errors, 'images')} />
             </div>
           </div>

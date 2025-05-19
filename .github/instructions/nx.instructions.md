@@ -15,7 +15,7 @@ You have access to the Nx MCP server and the tools it provides. Use them. Follow
 - To help answer questions about the workspace structure or simply help with demonstrating how tasks depend on each other, use the 'nx_visualize_graph' tool
 
 # Generation Guidelines
-If the user wants to generate something, use the following flow: 
+If the user wants to generate something, use the following flow:
 
 - learn about the nx workspace and any specifics the user needs by using the 'nx_workspace' tool and the 'nx_project_details' tool if applicable
 - get the available generators using the 'nx_generators' tool
@@ -27,6 +27,6 @@ If the user wants to generate something, use the following flow:
 - wait for the user to finish the generator
 - read the generator log file using the 'nx_read_generator_log' tool
 - use the information provided in the log file to answer the user's question or continue with what they were doing
-
+undefined
 
 
