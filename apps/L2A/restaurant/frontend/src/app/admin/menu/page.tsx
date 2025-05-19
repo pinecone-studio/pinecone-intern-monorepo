@@ -1,4 +1,4 @@
-import MenuTab from "./_features/MenuTab";
+import MenuTab from "./_features/MainTab";
 
 const Menu = () => {
   return (

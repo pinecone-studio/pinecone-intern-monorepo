@@ -1,9 +1,9 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MenuCard from "./MenuCard";
+import MenuCard from "./ProductCard";
 
-const MenuTab = () => {
+const MainTab = () => {
     return (
         <div data-testid="menu-tab">
             <Tabs defaultValue="tab-products" className="w-[536px] mt-10">
@@ -26,4 +26,4 @@ const MenuTab = () => {
     );
 };
 
-export default MenuTab;
+export default MainTab;

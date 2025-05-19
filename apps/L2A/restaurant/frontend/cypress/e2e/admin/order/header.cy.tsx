@@ -1,4 +1,4 @@
-describe("OrderHeader component", () => {
+describe("OrderHeader", () => {
   beforeEach(() => {
     cy.visit("/admin/order"); 
   });

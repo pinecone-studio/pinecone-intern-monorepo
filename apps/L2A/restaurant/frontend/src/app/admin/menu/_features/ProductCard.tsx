@@ -6,7 +6,7 @@ import { IoAddSharp } from "react-icons/io5";
 import FoodCard from "./FoodCard";
 import { useState } from "react";
 
-const MenuCard = () => {
+const ProductCard = () => {
     const [selectedCategoryId, setSelectedCategoryId] = useState<number>(menuCategories[0].id);
     const selectedCategory = menuCategories.find((category) => category.id === selectedCategoryId);
     return (
@@ -47,4 +47,4 @@ const MenuCard = () => {
     )
 };
 
-export default MenuCard;
+export default ProductCard;
