@@ -18,4 +18,9 @@ export const EnumTypeDefs = gql`
     STANDART
     BACKSEAT
   }
+
+  enum RequestStatus {
+    APPROVED
+    PENDING
+  }
 `;

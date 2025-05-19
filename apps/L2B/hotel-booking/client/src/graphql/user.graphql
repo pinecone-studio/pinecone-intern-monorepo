@@ -33,3 +33,12 @@ query GetUsers {
     relation
   }
 }
+
+mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: String!, $birth: Date!) {
+  updatePersonalInformation(_id: $id, firstName: $firstName, lastName: $lastName, birth: $birth) {
+    birth
+    firstName
+    lastName
+    id
+  }
+}

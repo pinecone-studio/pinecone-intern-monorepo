@@ -10,6 +10,7 @@ import { OTPTypeDefs } from './otp.schema';
 import { QueryTypeDefs } from './queries.shema';
 import { VenueTypeDefs } from './venue.schema';
 import { SeatDataTypeDefs } from './seat.schema';
+import { RequestTypeDefs } from './cancel-request.schema';
 
 export const typeDefs = mergeTypeDefs([
   CommonTypeDefs,
@@ -23,4 +24,5 @@ export const typeDefs = mergeTypeDefs([
   UserTypeDefs,
   VenueTypeDefs,
   SeatDataTypeDefs,
+  RequestTypeDefs,
 ]);

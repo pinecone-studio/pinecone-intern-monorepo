@@ -1,3 +1,4 @@
+import TicketFilterBar from './_components/TicketFilterBar';
 import AddTicketDialog from './_featured/AddTicketDialog';
 
 const Page = () => {
@@ -9,8 +10,10 @@ const Page = () => {
             <div className="font-bold">Концерт</div>
             <div className=" text-gray-400 text-xs">Идэвхитэй зарагдаж буй концертууд</div>
           </div>
+          <div></div>
           <AddTicketDialog />
         </div>
+        <TicketFilterBar />
       </div>
     </div>
   );

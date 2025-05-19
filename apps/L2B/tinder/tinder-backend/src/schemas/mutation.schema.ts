@@ -24,6 +24,10 @@ export const mutationTypeDefs = gql`
     sendOTP(email: String!): User!
     isVerified(email: String!, otp: String!): String!
     addUser(email: String!, password: String!): User!
+
     signIn(email: String!, password: String!): SignInResponse!
+
+    deleteUser: Boolean
+
   }
 `;
