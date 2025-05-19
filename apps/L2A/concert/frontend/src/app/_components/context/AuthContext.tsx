@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (JWT) {
-      localStorage.setItem('jwt', JWT);
+      localStorage.setItem('token', JWT);
     }
   }, [JWT]);
 

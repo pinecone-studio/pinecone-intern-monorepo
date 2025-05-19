@@ -1,30 +1,23 @@
-import bcrypt from 'bcrypt';
 import { userModel } from '../../models';
 import { MutationResolvers } from '../../generated';
+import { findUserByEmail } from '../../utils/find-user-by-email';
+import { checkPassword } from '../../utils/check-password';
+import { hashPassword } from '../../utils/hash-password';
+import { catchError } from '../../utils/catch-error';
 
-const changeCurrentPassword: MutationResolvers['changeCurrentPassword'] = async (_, { currentPassword, newPassword, email }) => {
-  const user = await userModel.findOne({ email });
+export const changeCurrentPassword: MutationResolvers['changeCurrentPassword'] = async (_, { currentPassword, newPassword, email }) => {
+  try {
+    const user = await findUserByEmail(email);
 
-  if (!user) {
-    throw new Error('Хэрэглэгч олдсонгүй.');
+    await checkPassword(currentPassword, user.password);
+    const hashed = await hashPassword(newPassword);
+
+    const updatedUser = await userModel.findByIdAndUpdate(user.id, {
+      password: hashed,
+    });
+
+    return updatedUser;
+  } catch (err) {
+    catchError(err);
   }
-
-  const isMatch = await bcrypt.compare(currentPassword, user.password);
-  if (!isMatch) {
-    throw new Error('Хуучин нууц үг буруу байна.');
-  }
-
-  if (currentPassword === newPassword) {
-    throw new Error('Шинэ нууц үг хуучинтой ижил байна.');
-  }
-
-  const hashed = await bcrypt.hash(newPassword, 10);
-
-  const updatedUser = await userModel.findByIdAndUpdate(user.id, {
-    password: hashed,
-  });
-
-  return updatedUser;
 };
-
-export default changeCurrentPassword;

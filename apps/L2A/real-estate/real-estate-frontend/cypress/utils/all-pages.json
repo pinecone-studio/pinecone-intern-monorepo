@@ -1,1 +1,1 @@
-["///","///admin","///create-post","///detailed","///forget-password","///home","///listing","///signin","///signup","///user-listing"]
+["///","///admin","///admin/details/[id]","///create-post","///detailed","///forget-password","///home","///listing","///signin","///signup","///user-listing"]

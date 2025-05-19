@@ -112,13 +112,7 @@ const PropertyDetailPage = () => {
             .map((_, i) => (
               <ListingCard
                 key={i}
-                imageUrl="/listingcard.png"
-                price="880,000,000₮"
-                title="Зайсан seoul royal country хотхон"
-                area={200}
-                beds={4}
-                baths={2}
-                location="Хан-Уул дүүрэг, 1-р хороо, Хан-Уул дүүрэг..."
+            image={"image.png"} price={880000000} title={"image2.png"} totalRooms={4} restrooms={2} size={200} city="1-р хороо, Зайсан" district="Хан-Уул дүүрэг, " imageCount="1/9"
               />
             ))}
         </div>

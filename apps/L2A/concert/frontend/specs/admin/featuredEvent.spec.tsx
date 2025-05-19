@@ -10,8 +10,7 @@ describe('FeaturedEvent Component', () => {
 
   it('opens the dialog when the trigger button is clicked', () => {
     render(<FeaturedEvent />);
-    const button = screen.getByRole('button', { name: /edit profile/i });
-    fireEvent.click(button);
+    fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
     expect(screen.getByText('Онцлох тоглолт болгох')).toBeInTheDocument();
   });
 
@@ -38,5 +37,46 @@ describe('FeaturedEvent Component', () => {
     render(<FeaturedEvent />);
     fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
     expect(screen.getByRole('button', { name: 'Хадгалах' })).toBeInTheDocument();
+  });
+
+  it('shows error when trying to save with empty title', () => {
+    render(<FeaturedEvent />);
+    fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
+    const saveButton = screen.getByRole('button', { name: 'Хадгалах' });
+    fireEvent.click(saveButton);
+    expect(screen.getByText('Гарчиг шаардлагатай')).toBeInTheDocument();
+  });
+
+  it('saves successfully when title is valid and closes dialog', async () => {
+    render(<FeaturedEvent />);
+    fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
+
+    const input = screen.getByPlaceholderText('Гарчиг оруулах');
+    fireEvent.change(input, { target: { value: 'My Event' } });
+
+    const saveButton = screen.getByRole('button', { name: 'Хадгалах' });
+    fireEvent.click(saveButton);
+
+    await new Promise((r) => setTimeout(r, 1100));
+
+    expect(screen.queryByText('Онцлох тоглолт болгох')).not.toBeInTheDocument();
+  });
+
+  it('closes the dialog when the close button is clicked', () => {
+    render(<FeaturedEvent />);
+    fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
+
+    const closeButton = screen.getByLabelText('Close');
+    fireEvent.click(closeButton);
+
+    expect(screen.queryByText('Онцлох тоглолт болгох')).not.toBeInTheDocument();
+  });
+
+  it('contains hidden file input for image upload', () => {
+    render(<FeaturedEvent />);
+    fireEvent.click(screen.getByRole('button', { name: /edit profile/i }));
+
+    const fileInput = screen.getByTestId('file-input');
+    expect(fileInput).toBeInTheDocument();
   });
 });

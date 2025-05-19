@@ -1,6 +1,16 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AdminListingTable, { Listing } from '@/app/admin/_components/AdminListingTable';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { GetPostsDocument, GetPostsQuery } from '@/generated';
+
+const mockPush = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
 
 const mockListings: Listing[] = [
   {
@@ -21,43 +31,95 @@ const mockListings: Listing[] = [
   },
 ];
 
-describe('AdminListingTable', () => {
-  it('renders all tab buttons', () => {
-    render(<AdminListingTable listings={mockListings} onSelect={jest.fn()} />);
-    expect(screen.getByText('Хүлээгдэж буй')).toBeInTheDocument();
+const mocks: MockedResponse<GetPostsQuery>[] = [
+  {
+    request: {
+      query: GetPostsDocument,
+    },
+    result: {
+      data: {
+        getPosts: [],
+      },
+    },
+  },
+];
+
+const loadingMock: MockedResponse<GetPostsQuery>[] = [
+  {
+    request: {
+      query: GetPostsDocument,
+    },
+  },
+];
+
+const errorMock: MockedResponse<GetPostsQuery>[] = [
+  {
+    request: {
+      query: GetPostsDocument,
+    },
+    result: {
+      data: {
+        getPosts: [],
+      },
+    },
+    error: new Error('Mocked error'),
+  },
+];
+
+const renderWithApollo = (ui: React.ReactNode, customMocks = mocks) =>
+  render(
+    <MockedProvider mocks={customMocks} addTypename={false}>
+      {ui}
+    </MockedProvider>
+  );
+
+describe('AdminListingTable - Full Coverage', () => {
+  it('renders all tab buttons', async () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />);
+    expect(await screen.findByText('Хүлээгдэж буй')).toBeInTheDocument();
     expect(screen.getByText('Зөвшөөрсөн')).toBeInTheDocument();
     expect(screen.getByText('Татгалзсан')).toBeInTheDocument();
     expect(screen.getByText('Админ хассан')).toBeInTheDocument();
   });
 
-  it('filters listings by selected tab', () => {
-    render(<AdminListingTable listings={mockListings} onSelect={jest.fn()} />);
-    fireEvent.click(screen.getByText('Зөвшөөрсөн'));
-
-    expect(screen.getByText('0002')).toBeInTheDocument();
-    expect(screen.queryByText('0001')).not.toBeInTheDocument();
+  it('filters listings by selected tab', async () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />);
+    fireEvent.click(await screen.findByText('Зөвшөөрсөн'));
+    await waitFor(() => {
+      expect(screen.getByText('0002')).toBeInTheDocument();
+      expect(screen.queryByText('0001')).not.toBeInTheDocument();
+    });
   });
 
-  it('calls onSelect when a row is clicked', () => {
-    const handleSelect = jest.fn();
-    render(<AdminListingTable listings={mockListings} onSelect={handleSelect} />);
-    fireEvent.click(screen.getByText('0001'));
-    expect(handleSelect).toHaveBeenCalledWith(expect.objectContaining({ id: '0001' }));
+  it('shows empty state when no listings match the tab', async () => {
+    renderWithApollo(<AdminListingTable listings={[]} />);
+    fireEvent.click(await screen.findByText('Админ хассан'));
+    expect(await screen.findByText('Энэ төлөвт зар алга.')).toBeInTheDocument();
   });
 
-  it('renders search input and pagination buttons', () => {
-    render(<AdminListingTable listings={mockListings} onSelect={jest.fn()} />);
-    expect(screen.getByPlaceholderText('Хайлт')).toBeInTheDocument();
+  it('navigates to detail page when a row is clicked', async () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />);
+    fireEvent.click(await screen.findByText('0001'));
+    expect(mockPush).toHaveBeenCalledWith('/admin/details/0001');
+  });
+
+  it('renders search input and pagination buttons', async () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />);
+    expect(await screen.findByPlaceholderText('Хайлт')).toBeInTheDocument();
     expect(screen.getByText('Page 1 of 10')).toBeInTheDocument();
     expect(screen.getByText('«')).toBeInTheDocument();
     expect(screen.getByText('‹')).toBeInTheDocument();
     expect(screen.getByText('›')).toBeInTheDocument();
     expect(screen.getByText('»')).toBeInTheDocument();
   });
-  describe('AdminListingTable - Empty State', () => {
-    it('shows empty state when no listings match the tab', () => {
-      render(<AdminListingTable listings={[]} onSelect={jest.fn()} />);
-      expect(screen.getByText('Энэ төлөвт зар алга.')).toBeInTheDocument();
-    });
+
+  it('shows loading state', () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />, loadingMock);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+
+  it('shows error state', async () => {
+    renderWithApollo(<AdminListingTable listings={mockListings} />, errorMock);
+    expect(await screen.findByText(/Error loading posts/)).toBeInTheDocument();
   });
 });

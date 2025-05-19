@@ -17,7 +17,7 @@ const Page = () => {
     >
       <Header />
       <Container />
-      <Footer/>
+      <Footer />
     </div>
   );
 };

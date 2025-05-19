@@ -1,10 +1,33 @@
-describe('event detail page', () => {
-  it('eventiin tuhai delgerengui medeelel haragdana', () => {
-    cy.visit('/event/12345');
-    cy.contains('Special Artist');
-    cy.get(`[data-cy="tag-trigger"]`).click();
-    cy.get(`[data-cy="tag-option"]`).first().click();
-    cy.get(`[data-cy="submit day"]`).click();
-    cy.contains('11 сарын 15');
+describe('Concert Page (real data) E2E', () => {
+  const CONCERT_ID = '6824b74c8db390ee25b237e9';
+
+  beforeEach(() => {
+    cy.visit(`/event/${CONCERT_ID}`);
+  });
+
+  it('renders the banner with the correct title', () => {
+    cy.get('[data-testid="concert-banner"]').should('be.visible').and('contain', 'МОНГОЛЫН ГАЙХАМШИГТ УРЛАГИЙН ТОГЛОЛТ');
+  });
+
+  it('should find no concerts', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        data: {
+          concerts: null,
+        },
+      },
+    }).as('noconcert');
+    cy.wait('@noconcert');
+    cy.contains('No concert found').should('be.visible');
+  });
+
+  it('should throw an error', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        errors: [{ message: 'fail' }],
+      },
+    }).as('error');
+    cy.wait('@error');
+    cy.contains('Error').should('be.visible');
   });
 });
