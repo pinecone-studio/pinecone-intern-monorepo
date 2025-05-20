@@ -59,7 +59,7 @@ const SecondStep = ({ setStep }: Props) => {
         setIsLoading(false);
       }, 1500);
     }
-  }, [value]);
+  }, [value, setStep]);
 
   return (
     <div className="flex flex-col gap-[24px]">

@@ -1,13 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { StepFourthCart } from '@/app/auth/create-account/_components/StepFourthCart';
-import '@testing-library/jest-dom';
-import type { ImgHTMLAttributes } from 'react';
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: ImgHTMLAttributes<HTMLImageElement>) => (
+  default: ({ fill, ...props }: React.ImgHTMLAttributes<HTMLImageElement> & { fill?: boolean }) => (
     <img {...props} alt={props.alt || 'mocked'} />
   ),
 }));
