@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { ApolloWrapper } from '@/components/providers';
-import { ClerkProvider } from '@clerk/nextjs';
+import { AuthProvider } from '@/components/providers/AuthProvider';
+import Header from '../_components/Header';
 
 export const metadata = {
   title: 'Restaurant | Pinecone',
@@ -11,9 +12,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ClerkProvider>
+        <Header />
+        <AuthProvider>
           <ApolloWrapper>{children}</ApolloWrapper>
-        </ClerkProvider>
+        </AuthProvider>
       </body>
     </html>
   );

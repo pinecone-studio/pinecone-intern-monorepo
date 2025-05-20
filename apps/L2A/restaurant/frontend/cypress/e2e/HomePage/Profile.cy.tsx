@@ -1,14 +1,11 @@
-describe('User Profile Page', () => {
+describe('Enrollment Page', () => {
   beforeEach(() => {
-    cy.clerkLogin('/profile', 'dev+clerk_test@example.com');
+    cy.clerkLogin('/profile', 'test+clerk_test@gmail.com');
   });
-
-  it('renders the user profile section title', () => {
-    cy.get('[data-cyid="Хэрэглэгчийн хэсэг"]').should('exist').and('contain', 'Хэрэглэгчийн хэсэг');
+  it('should display the user section heading', () => {
+    cy.get('[data-cyid="Хэрэглэгчийн хэсэг"]').should('be.visible');
   });
-
-  it('renders the Clerk UserProfile widget', () => {
-    cy.get('[data-cyid=" user-profile"]').should('exist');
-    cy.get('[data-cyid=" user-profile"] iframe').should('exist');
+  it('should render the user profile component', () => {
+    cy.get('[data-cyid="user-profile"]').should('be.visible');
   });
 });

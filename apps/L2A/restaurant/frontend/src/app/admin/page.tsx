@@ -1,14 +1,5 @@
-
-import Orders from "./orders/page"
-
-const AdminPage=()=>{
-    return(
-        <div >
-          <Orders />
-        </div>
-    )
-}
+const AdminPage = () => {
+  return <div></div>;
+};
 
 export default AdminPage;
-
-
