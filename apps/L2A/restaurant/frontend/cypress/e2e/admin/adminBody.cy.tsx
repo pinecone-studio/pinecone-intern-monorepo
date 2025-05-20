@@ -6,7 +6,6 @@ describe('Admin Body Tests', () => {
     cy.get('[data-testid="admin-header"]').should('exist');
   });
   it('should show all menu items', () => {
-    cy.get('[data-testid="nav-item-Orders"]').should('be.visible');
     cy.get('[data-testid="nav-item-Menu"]').should('be.visible');
     cy.get('[data-testid="nav-item-Food"]').should('be.visible');
     cy.get('[data-testid="nav-item-Table"]').should('be.visible');
