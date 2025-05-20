@@ -146,3 +146,11 @@ mutation ChangeCurrentPassword($email: String!, $currentPassword: String!, $newP
     email
   }
 }
+
+mutation updateUserInfo($id: String!, $email: String, $phone: Int) {
+  updateUserInfo(id: $id, email: $email, phone: $phone) {
+    id
+    email
+    phone
+  }
+}
