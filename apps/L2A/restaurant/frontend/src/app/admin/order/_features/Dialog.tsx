@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import OrderFood, { Food } from "./OrderFood";
+import FoodCard, { Food } from "../_components/FoodCard";
 
 type Order = {
   table: string;
@@ -35,13 +35,13 @@ const OrderDialog = ({ order, open, onOpenChange }: OrderDialogProps) => {
           <div className="font-bold" data-cy="dialog-order-time">🕒 {order.time}</div>
         </div>
         <div className="border-t pt-4" data-cy="dialog-order-foods">
-          <OrderFood orders={order.items} />
+          <FoodCard orders={order.items} />
         </div>
         <div className="flex items-center justify-between gap-2 pt-3 border-t" data-cy="dialog-status">
           <p>Төлөв:</p>
           <Select>
             <SelectTrigger className="w-[160px]" data-cy="dialog-status-trigger">
-              <SelectValue placeholder="Хүлээгдэж буй" data-cy="dialog-status-value" />
+              <SelectValue placeholder="Дууссан" data-cy="dialog-status-value" />
             </SelectTrigger>
             <SelectContent data-cy="dialog-status-options">
               <SelectItem value="Бэлэн" data-cy="dialog-status-ready">Бэлэн</SelectItem>

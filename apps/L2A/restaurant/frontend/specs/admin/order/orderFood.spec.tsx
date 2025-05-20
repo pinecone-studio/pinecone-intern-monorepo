@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import OrderFood from "@/app/admin/order/_components/OrderFood";
-import orderData from "@/app/admin/order/_components/orders.json";
+import OrderFood from "@/app/admin/order/_components/FoodCard";
+import orderData from "@/app/admin/order/_components/orderdata.json";
 
 describe("OrderFood Component", () => {
   it("renders food items from JSON correctly", () => {
