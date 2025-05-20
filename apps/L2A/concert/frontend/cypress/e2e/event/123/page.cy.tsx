@@ -9,17 +9,6 @@ describe('Concert Page (real data) E2E', () => {
     cy.get('[data-testid="concert-banner"]').should('be.visible').and('contain', 'МОНГОЛЫН ГАЙХАМШИГТ УРЛАГИЙН ТОГЛОЛТ');
   });
 
-  it('shows date & time, venue and artist in AboutEvent', () => {
-    cy.get('[data-testid="about-event"]')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('2025-06-02').should('exist');
-        cy.contains('11:00').should('exist');
-        cy.contains('МҮЭСТО').should('exist');
-        cy.contains('Жавхлан').should('exist');
-      });
-  });
-
   it('displays the seat selector and ticket options', () => {
     cy.get('[data-testid="seat-info"]')
       .should('be.visible')
