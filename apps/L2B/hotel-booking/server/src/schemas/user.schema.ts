@@ -30,5 +30,6 @@ export const UserTypeDefs = gql`
     addUser(email: String!, password: String!): User!
     updatePersonalInformation(_id: ID!, firstName: String!, lastName: String!, birth: Date!): User!
     updateContact(_id: ID!, input: ContactInput!): User!
+    updatePassword(_id: ID!, password: String!): User!
   }
 `;
