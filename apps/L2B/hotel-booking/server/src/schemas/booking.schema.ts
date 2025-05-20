@@ -1,9 +1,18 @@
 import gql from 'graphql-tag';
 
 export const BookingTypeDefs = gql`
+  scalar Date
+
   type GuestInfo {
     adults: Int!
     children: Int!
+  }
+
+  enum BookingStatus {
+    booked
+    checked_in
+    checked_out
+    cancelled
   }
 
   type Booking {
@@ -11,21 +20,19 @@ export const BookingTypeDefs = gql`
     userId: ID!
     hotelId: ID!
     roomId: ID!
+    FirstName: String!
+    LastName: String!
+    email: String!
+    phone: String!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInfo!
+    roomNumber: String!
     totalPrice: Float!
     status: BookingStatus!
-    images: [String!]!
+    images: [String]
     createdAt: Date
     updatedAt: Date
-  }
-
-  enum BookingStatus {
-    BOOKED
-    CHECKED_IN
-    CHECKED_OUT
-    CANCELLED
   }
 
   input GuestInput {
@@ -37,13 +44,17 @@ export const BookingTypeDefs = gql`
     userId: ID!
     hotelId: ID!
     roomId: ID!
+    FirstName: String!
+    LastName: String!
+    email: String!
+    phone: String!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInput!
+    roomNumber: String!
     totalPrice: Float!
-    images: [String!]!
+    images: [String]
   }
-
   type Query {
     bookings: [Booking!]!
     booking(id: ID!): Booking
@@ -53,8 +64,6 @@ export const BookingTypeDefs = gql`
 
   type Mutation {
     createBooking(input: BookingInput!): Booking!
-    cancelBooking(id: ID!): Booking!
-    checkIn(id: ID!): Booking!
-    checkOut(id: ID!): Booking!
+    updateBookingStatus(id: ID!, status: BookingStatus!): Booking!
   }
 `;
