@@ -2,11 +2,24 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { passwordSchema } from './PasswordSchema';
+import { passwordSchema } from '../_components/PasswordSchema';
+import { useRouter } from 'next/navigation';
+import { useForgotPasswordMutation } from '@/generated';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const ThirdStep = ({ email }: { email: string }) => {
+  const router = useRouter();
+  const [forgotPassword, { loading }] = useForgotPasswordMutation({
+    onCompleted: () => {
+      toast.success('Password successfully changed!');
+      router.push('/auth/sign-in');
+    },
+  });
+
   const form = useForm({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -15,8 +28,9 @@ const ThirdStep = ({ email }: { email: string }) => {
     },
   });
 
-  const onSubmit = () => {
-    alert('Password successfully set!');
+  const onSubmit = async (data: { password: string }) => {
+    const { password } = data;
+    await forgotPassword({ variables: { password, email } });
   };
 
   return (
@@ -57,9 +71,9 @@ const ThirdStep = ({ email }: { email: string }) => {
               </FormItem>
             )}
           />
-          <button type="submit" data-testid="submit-password" className="w-full py-3 bg-pink-500 text-white rounded-full font-medium hover:bg-pink-600 transition">
-            Continue
-          </button>
+          <Button type="submit" disabled={loading} data-testid="submit-password" className="w-full py-3 bg-pink-500 text-white rounded-full font-medium hover:bg-pink-600 transition">
+            {loading ? 'loading...' : 'Continue'}
+          </Button>
         </form>
       </Form>
     </div>
