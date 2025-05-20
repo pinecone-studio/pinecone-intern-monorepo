@@ -14,7 +14,7 @@ type FoodProps = {
   orders: Food[];
 };
 
-const OrderFood = ({ orders }: FoodProps) => {
+const FoodCard = ({ orders }: FoodProps) => {
   return (
     <div className="flex flex-col gap-4">
       {orders.map((item) => (
@@ -49,4 +49,4 @@ const OrderFood = ({ orders }: FoodProps) => {
   );
 };
 
-export default OrderFood;
+export default FoodCard;

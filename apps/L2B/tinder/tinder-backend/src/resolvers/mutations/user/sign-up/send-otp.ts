@@ -1,5 +1,5 @@
-import { userModel } from '../../models';
-import { sendEmail } from '../../utils/send-email';
+import { userModel } from '../../../../models';
+import { sendEmail } from '../../../../utils/send-email';
 
 export const sendOTP = async (_: unknown, { email }: { email: string }) => {
   try {

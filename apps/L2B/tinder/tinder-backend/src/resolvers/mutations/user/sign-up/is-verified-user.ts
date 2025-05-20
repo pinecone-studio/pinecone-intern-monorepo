@@ -1,4 +1,4 @@
-import { userModel } from '../../models';
+import { userModel } from '../../../../models';
 
 export const isVerified = async (_: unknown, { email, otp }: { email: string; otp: string }) => {
   try {

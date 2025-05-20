@@ -1,4 +1,4 @@
-import { userModel } from '../../models';
+import { userModel } from '../../../../models';
 
 export const deleteUser = async () => {
   try {

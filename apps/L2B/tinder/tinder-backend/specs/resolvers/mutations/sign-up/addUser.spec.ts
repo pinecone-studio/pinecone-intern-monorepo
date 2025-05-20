@@ -1,8 +1,8 @@
+import { userModel } from 'apps/L2B/tinder/tinder-backend/src/models';
+import { addUser } from 'apps/L2B/tinder/tinder-backend/src/resolvers/mutations';
 import bcrypt from 'bcrypt';
-import { userModel } from '../../../src/models';
-import { addUser } from '../../../src/resolvers/mutations';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   userModel: {
     findOne: jest.fn(),
     findByIdAndUpdate: jest.fn(),
