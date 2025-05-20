@@ -1,7 +1,7 @@
 'use caent';
-export default function DashboardTable() {
+const DashboardTable = () => {
   return (
-    <div className=" bg-white font-grey-800 overflow-x-auto border border-gray-200 rounded-md w-3/4" data-testid="dashboard-table">
+    <div className=" bg-white font-grey-800  border border-gray-200 rounded-md w-3/4" data-testid="dashboard-table">
       <table className="w-full text-sm text-left whitespace-nowrap">
         <thead className="">
           <tr>
@@ -30,4 +30,6 @@ export default function DashboardTable() {
       </table>
     </div>
   );
-}
+};
+
+export default DashboardTable;

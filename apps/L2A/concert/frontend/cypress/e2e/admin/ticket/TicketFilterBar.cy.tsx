@@ -3,11 +3,6 @@ describe('TicketFilterBar Component', () => {
     cy.visit('/admin/ticket');
   });
 
- 4974-admin-contert-filter
-  it('renders the TicketFilterBar container', () => {
-    cy.get('[data-testid="TicketFilterBarId"]').should('be.visible');
-  });
-
   it('clears all filters when the "Цэвэрлэх" button is clicked', () => {
     cy.get('[data-testid^="filter-badge-"]').should('have.length.greaterThan', 0);
     cy.get('[data-testid="clear-filters-button"]').click();

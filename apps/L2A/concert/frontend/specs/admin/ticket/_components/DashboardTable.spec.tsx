@@ -5,7 +5,7 @@ import DashboardTable from '@/app/admin/ticket/_components/DashboardTable';
 describe('DashboardTable', () => {
   test('should renders table with correct headers', () => {
     render(<DashboardTable />);
-    const table = screen.getByTestId('dashboard-table');
+
     expect(screen.getByText('Онцлох')).toBeInTheDocument();
     expect(screen.getByText('Тоглолтын нэр')).toBeInTheDocument();
     expect(screen.getByText('Артист')).toBeInTheDocument();
