@@ -28,3 +28,23 @@ mutation SendOTP($email: String!) {
 mutation isVerified($email: String!, $otp: String!) {
   isVerified(email: $email, otp: $otp)
 }
+
+mutation SendForgotOtp($email: String!) {
+  sendForgotOtp(email: $email)
+}
+
+mutation ForgotMatchOtp($email: String!, $otp: String!) {
+  forgotMatchOtp(email: $email, otp: $otp)
+}
+
+mutation ForgotPassword($email: String!, $password: String!) {
+  forgotPassword(email: $email, password: $password) {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}

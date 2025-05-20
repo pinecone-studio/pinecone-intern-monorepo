@@ -1,76 +1,73 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
+import { useForgotMatchOtpMutation, useSendForgotOtpMutation } from '@/generated';
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
 };
 
-const SecondStep = ({ setStep }: Props) => {
-  const correctCode = '1234';
+const SecondStep = ({ setStep, email }: Props) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
-  const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(15);
-  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [forgotMatchOtp, { loading }] = useForgotMatchOtpMutation();
+  const [sendForgotOtp] = useSendForgotOtpMutation();
+  const canResend = timer === 0;
+
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (timer > 0) {
-      interval = setInterval(() => {
+    if (!canResend) {
+      const interval = setInterval(() => {
         setTimer((prev) => prev - 1);
       }, 1000);
-    } else {
-      setCanResend(true);
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  const resendCode = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log('Code resent!');
-      setTimer(15);
-      setCanResend(false);
-      setIsLoading(false);
-    }, 1000);
-  };
+  }, [canResend]);
 
   const handleChange = (val: string) => {
     setValue(val);
-    if (error) setError('');
   };
 
   useEffect(() => {
+    const verifyOtp = async () => {
+      const { data } = await forgotMatchOtp({ variables: { email, otp: value } });
+
+      if (data?.forgotMatchOtp === 'success') {
+        setError('');
+        setStep(3);
+      } else {
+        setError('Wrong code. Please try again.');
+        setValue('');
+        setTimeout(() => inputRef.current?.focus(), 100);
+      }
+    };
+
     if (value.length === 4) {
-      setIsLoading(true);
-      setTimeout(() => {
-        if (value === correctCode) {
-          setError('');
-          setStep(3);
-        } else {
-          setError('Wrong code. Please try again.');
-          setValue('');
-          setTimeout(() => {
-            inputRef.current?.focus();
-          }, 100);
-        }
-        setIsLoading(false);
-      }, 1500);
+      verifyOtp();
     }
-  }, [value, setStep]);
+  }, [value, email, forgotMatchOtp, setStep]);
+
+  const resendCode = async () => {
+    setError('');
+    setValue('');
+
+    await sendForgotOtp({ variables: { email } });
+    setTimer(15);
+  };
 
   return (
-    <div className="flex flex-col gap-[24px]">
-      <div className="flex flex-col gap-[4px] py-[8px] text-[24px] items-center justify-center">
-        <p className="font-semibold text-[#09090B]">Confirm email</p>
-        <p className="text-[#71717A] text-[14px] text-center w-[322px] h-[60px]">To continue, enter the secure code we sent to n.shagai@nest.mn. Check junk mail if it’s not in your inbox.</p>
+    <div className="flex flex-col gap-6">
+      <div className="text-center">
+        <p className="text-xl font-semibold text-[#09090B]">Confirm email</p>
+        <p className="text-sm text-[#71717A] mt-1 w-[322px]">To continue, enter the secure code we sent to {email}. Check junk mail if it’s not in your inbox.</p>
       </div>
 
-      <div className="flex flex-col gap-[16px] items-center justify-center" data-testid="otp-slot">
-        <form autoComplete="one-time-code" className="flex">
-          <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} value={value} onChange={handleChange} disabled={isLoading} ref={inputRef} data-testid="otp">
+      <div className="flex flex-col items-center gap-4" data-testid="otp-slot">
+        <form autoComplete="one-time-code">
+          <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} value={value} onChange={handleChange} disabled={loading} ref={inputRef}>
             <InputOTPGroup className="rounded-2xl">
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
@@ -80,15 +77,16 @@ const SecondStep = ({ setStep }: Props) => {
           </InputOTP>
         </form>
 
-        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <button className="text-[16px] font-medium disabled:opacity-70" onClick={resendCode} disabled={!canResend || isLoading}>
+        <button data-testid="resend-button" className="text-base font-medium text-blue-600 disabled:opacity-60" onClick={resendCode} disabled={!canResend || loading}>
           {canResend ? 'Send again' : `Send again (${timer})`}
         </button>
 
-        {isLoading && (
-          <div role="status" className="flex items-center gap-2 mt-2 text-black text-sm">
-            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+        {loading && (
+          <div className="flex items-center gap-2 text-sm text-black mt-2">
+            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            Loading...
           </div>
         )}
       </div>
