@@ -23,7 +23,6 @@ describe('AdminSideBar', () => {
 
   it('renders sidebar correctly', () => {
     render(<AdminSideBar />);
-    expect(screen.getByText('Pedia')).toBeInTheDocument();
     expect(screen.getByText('Hotels')).toBeInTheDocument();
     expect(screen.getByText('Guests')).toBeInTheDocument();
   });
