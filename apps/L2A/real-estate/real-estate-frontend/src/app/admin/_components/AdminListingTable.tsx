@@ -5,29 +5,22 @@ import Image from 'next/image';
 import { useGetPostsQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
-export type Listing = {
-  id: string;
-  name: string;
-  owner: string;
-  phone: string;
-  image: string;
-  status: string;
-};
-
-type AdminListingTableProps = {
-  listings: Listing[];
-};
 const TABS = ['Хүлээгдэж буй', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
+const STATUS_MAP: Record<string, string> = {
+  'Хүлээгдэж буй': 'PENDING',
+  Зөвшөөрсөн: 'APPROVED',
+  Татгалзсан: 'REJECTED',
+  'Админ хассан': 'BLOCKED',
+};
 
-const AdminListingTable = ({ listings }: AdminListingTableProps) => {
+const AdminListingTable = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<string>('Хүлээгдэж буй');
   const { data, loading, error } = useGetPostsQuery();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading posts: {error.message}</p>;
-  console.log('data', data?.getPosts);
-  const filteredListings = listings.filter((listing) => listing.status === selectedTab);
+  const filteredListings = (data?.getPosts ?? []).filter((listing) => listing.status === STATUS_MAP[selectedTab]);
 
   return (
     <div className="p-6">
@@ -58,14 +51,14 @@ const AdminListingTable = ({ listings }: AdminListingTableProps) => {
           <tbody>
             {filteredListings.length > 0 ? (
               filteredListings.map((listing) => (
-                <tr key={listing.id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => router.push(`/admin/details/${listing.id}`)}>
-                  <td className="px-4 py-2 text-blue-600 underline border-x">{listing.id}</td>
+                <tr key={listing._id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => router.push(`/admin/details/${listing._id}`)}>
+                  <td className="px-4 py-2 text-blue-600 underline border-x">{listing._id}</td>
                   <td className="px-4 py-2 flex items-center gap-2 border-x">
-                    <Image src={listing.image} alt="thumb" width={40} height={40} className="rounded-md object-cover" />
-                    {listing.name}
+                    <Image src="/listingcard.png" alt="thumb" width={40} height={40} className="rounded-md object-cover" />
+                    {listing.title}
                   </td>
-                  <td className="px-4 py-2 border-x">{listing.owner}</td>
-                  <td className="px-4 py-2 border-x">{listing.phone}</td>
+                  <td className="px-4 py-2 border-x">{listing.propertyOwnerId}</td>
+                  <td className="px-4 py-2 border-x">{listing.number}</td>
                 </tr>
               ))
             ) : (
