@@ -1,29 +1,49 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import HomeOrder from '@/app/_features/HomeOrder';
+import HomeOrder from '@/app/_features/HomeOrder'; 
 import '@testing-library/jest-dom';
 
-jest.mock('@/app/_components/CartItems', () => {
-  const MockCartItem = () => <div data-testid="cart-item">Mock CartItem</div>;
-  MockCartItem.displayName = 'MockCartItem';
-  return MockCartItem;
-});
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
 
-describe('HomeOrder', () => {
-  it('shoudl render initial step of CartItem', () => {
-    render(<HomeOrder />);
-    expect(screen.getByText('Таны захиалга')).toBeInTheDocument();
-    expect(screen.getByTestId('cart-item')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Захиалах/i })).toBeInTheDocument();
+describe('HomeOrder Component', () => {
+  beforeEach(() => {
+    mockPush.mockClear(); 
   });
 
-  it('should switches to next step when "Захиалах" button is clicked', () => {
+  it('renders CartItem and "Захиалах" button', () => {
     render(<HomeOrder />);
+    expect(screen.getByTestId('cart-item')).toBeInTheDocument();
+    expect(screen.getByText('Таны захиалга')).toBeInTheDocument();
+    expect(screen.getByTestId('order-button')).toBeInTheDocument();
+  });
 
-    const orderButton = screen.getByRole('button', { name: /Захиалах/i });
-    fireEvent.click(orderButton);
+  it('opens the AlertDialog when Захиалах button is clicked', () => {
+    render(<HomeOrder />);
+    fireEvent.click(screen.getByTestId('order-button'));
+    expect(screen.getByText('Зааланд суух эсэх')).toBeInTheDocument();
+  });
 
-    expect(screen.queryByText('Таны захиалга')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('cart-item')).not.toBeInTheDocument();
-    expect(screen.getByText(/Next step content goes here/i)).toBeInTheDocument();
+  it('selects dine-in and navigates to /', () => {
+    render(<HomeOrder />);
+    fireEvent.click(screen.getByTestId('order-button'));
+    fireEvent.click(screen.getByTestId('radio-dinein'));
+    expect(mockPush).toHaveBeenCalledWith('/');
+  });
+
+  it('selects takeaway and navigates to /', () => {
+    render(<HomeOrder />);
+    fireEvent.click(screen.getByTestId('order-button'));
+    fireEvent.click(screen.getByTestId('radio-takeaway'));
+    expect(mockPush).toHaveBeenCalledWith('/');
+  });
+
+  it('closes dialog via AlertDialogCancel', () => {
+    render(<HomeOrder />);
+    fireEvent.click(screen.getByTestId('order-button'));
+    fireEvent.click(screen.getByTestId('close-dialog'));
   });
 });
