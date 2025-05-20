@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { userModel } from '../../../src/models';
 import { hashPassword } from '../../../src/utils/auth';
-import { UpdatePassword } from '../../../src/resolvers/mutations';
+import { updatePassword } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models');
 jest.mock('../../../src/utils/auth');
@@ -20,7 +20,7 @@ describe('updatePassword resolver', () => {
     (hashPassword as jest.Mock).mockResolvedValue('newHashedPassword');
     userModel.findByIdAndUpdate = jest.fn().mockResolvedValue(mockUser);
 
-    const result = await UpdatePassword!({}, { _id: 'user123', password: 'newPassword' }, {}, {} as GraphQLResolveInfo);
+    const result = await updatePassword!({}, { _id: 'user123', password: 'newPassword' }, {}, {} as GraphQLResolveInfo);
 
     expect(hashPassword).toHaveBeenCalledWith('newPassword');
 
@@ -33,6 +33,6 @@ describe('updatePassword resolver', () => {
 
     userModel.findByIdAndUpdate = jest.fn().mockResolvedValue(null);
 
-    await expect(UpdatePassword!({}, { _id: 'user123', password: 'pass' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('User not found');
+    await expect(updatePassword!({}, { _id: 'user123', password: 'pass' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('User not found');
   });
 });
