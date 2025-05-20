@@ -17,11 +17,11 @@ const AdminListingTable = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<string>('Хүлээгдэж буй');
   const { data, loading, error } = useGetPostsQuery();
-
+  console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading posts: {error.message}</p>;
   const filteredListings = (data?.getPosts ?? []).filter((listing) => listing.status === STATUS_MAP[selectedTab]);
-
+  console.log(filteredListings);
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Зарууд</h1>
