@@ -3,7 +3,6 @@ import { bookingModel } from '../../models';
 
 export const createBooking: MutationResolvers['createBooking'] = async (_: unknown, { input }) => {
   try {
-    console.log('Booking Input:', input);
     const newBooking = await bookingModel.create({
       ...input,
       status: 'booked',
