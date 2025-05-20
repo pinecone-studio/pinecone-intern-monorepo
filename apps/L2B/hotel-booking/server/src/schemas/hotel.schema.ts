@@ -4,19 +4,31 @@ export const HotelTypeDefs = gql`
   type Hotel {
     id: ID!
     name: String!
-    description: String
-    location: String
+    location: String!
+    starRating: Int
+    rating: Float!
+    description: String!
+    amenities: [String!]
+    phone: String
     images: [String!]!
-    rooms: [Room!]!
     createdAt: Date
     updatedAt: Date
   }
 
+  type SuccessResponse {
+    success: Boolean!
+    message: String
+  }
+
   input HotelInput {
-    name: String!
-    description: String
+    name: String
     location: String
-    images: [String!]!
+    starRating: Int
+    rating: Float
+    description: String
+    amenities: [String!]
+    phone: String
+    images: [String!]
   }
 
   type Query {
@@ -26,7 +38,7 @@ export const HotelTypeDefs = gql`
 
   type Mutation {
     createHotel(input: HotelInput!): Hotel!
-    updateHotel(id: ID!, input: HotelInput!): Hotel!
+    updateHotel(id: ID!, input: HotelInput): Hotel!
     deleteHotel(id: ID!): SuccessResponse!
   }
 `;
