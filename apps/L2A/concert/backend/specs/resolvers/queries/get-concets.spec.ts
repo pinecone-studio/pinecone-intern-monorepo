@@ -22,7 +22,9 @@ describe('concert Resolver', () => {
     const populateMock = jest.fn().mockReturnValue(mockConcerts);
 
     (concertModel.find as jest.Mock).mockReturnValue({
-      populate: populateMock,
+      populate: jest.fn().mockReturnValue({
+        populate: populateMock,
+      }),
     });
 
     const result = await concerts();
@@ -34,7 +36,9 @@ describe('concert Resolver', () => {
     const populateMock = jest.fn().mockReturnValue(null);
 
     (concertModel.find as jest.Mock).mockReturnValue({
-      populate: populateMock,
+      populate: jest.fn().mockReturnValue({
+        populate: populateMock,
+      }),
     });
 
     await expect(concerts()).rejects.toThrow('Concert not found');

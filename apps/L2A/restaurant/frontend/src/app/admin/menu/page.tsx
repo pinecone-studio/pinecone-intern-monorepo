@@ -1,15 +1,11 @@
-import FoodCard from "./_features/FoodCard";
-import menuCategories from "./_components/menuCategories.json";
+import MenuTab from "./_features/MainTab";
 
 const Menu = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
-      {menuCategories.map((category) =>
-        category.foods.map((food) => (
-          <FoodCard key={food.id} food={food} />
-        ))
-      )}
+    <div className="flex flex-col items-center justify-center">
+      <MenuTab />
     </div>
   );
 };
+
 export default Menu;

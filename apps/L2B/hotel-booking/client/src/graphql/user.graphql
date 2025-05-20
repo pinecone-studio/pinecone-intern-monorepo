@@ -11,3 +11,45 @@ mutation AddUser($email: String!, $password: String!) {
     relation
   }
 }
+
+query GetUser($id: ID!) {
+  getUser(_id: $id) {
+    birth
+    email
+    firstName
+    lastName
+    phone
+    relation
+    emergencyPhone
+  }
+}
+
+query GetUsers {
+  getUsers {
+    birth
+    email
+    firstName
+    lastName
+    phone
+    relation
+  }
+}
+
+mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: String!, $birth: Date!) {
+  updatePersonalInformation(_id: $id, firstName: $firstName, lastName: $lastName, birth: $birth) {
+    birth
+    firstName
+    lastName
+    id
+  }
+}
+
+mutation UpdateContact($id: ID!, $input: ContactInput!) {
+  updateContact(_id: $id, input: $input) {
+    id
+    phone
+    email
+    emergencyPhone
+    relation
+  }
+}

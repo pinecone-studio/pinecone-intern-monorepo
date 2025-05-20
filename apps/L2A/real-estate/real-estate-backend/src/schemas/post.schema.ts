@@ -37,9 +37,10 @@ export const typeDefs = gql`
     _id: ID!
     propertyOwnerId: ID!
     title: String!
-    description: String!
+    description: String
+    number:Int
     feature: [feature]
-    price: Float!
+    price: Float
     images: [String]
     type: PropertyType
     size: Float
@@ -64,6 +65,7 @@ export const typeDefs = gql`
   propertyOwnerId: ID!
   title: String!
   description: String!
+  number:Int
   feature: [feature]
   price: Float!
   images: [String]
@@ -86,10 +88,14 @@ export const typeDefs = gql`
 
   type Mutation {
     createPost(input: CreatePostInput!): Post!
+    deletePostById(_id: ID!): Post!
+    updatePostById(_id: ID!, input: CreatePostInput!): Post!
   }
 
   type Query {
     getPosts: [Post!]
-    getPostsById(propertyOwnerId: ID!): [Post!]
+    getPostsByUserId(propertyOwnerId: ID!): [Post!]
+    getPostById(_id: ID!): Post
+
   }
 `;

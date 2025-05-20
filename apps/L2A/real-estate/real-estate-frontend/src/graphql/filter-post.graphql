@@ -1,0 +1,14 @@
+query FilterPost($filter:PostFilterInput){
+    filterPosts(filter:$filter){
+        _id
+        price
+        images
+        restrooms
+        totalRooms
+        location{
+        city
+        district}
+        size
+        title
+    }
+}

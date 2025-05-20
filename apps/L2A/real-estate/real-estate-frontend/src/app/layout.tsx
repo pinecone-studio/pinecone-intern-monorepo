@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import LayoutClient from './_components/LayoutClient';
@@ -13,7 +13,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body className="min-h-screen flex flex-col">
         <ApolloWrapper>
-          <LayoutClient>{children}</LayoutClient>
+          <LayoutClient><Suspense>{children}</Suspense></LayoutClient>
         </ApolloWrapper>
       </body>
     </html>

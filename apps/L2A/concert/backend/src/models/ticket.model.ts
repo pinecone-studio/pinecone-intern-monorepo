@@ -15,6 +15,12 @@ const ticketSchema = new Schema(
       enum: ['AVAILABLE', 'RESERVED', 'SOLD'],
       default: 'AVAILABLE',
     },
+    cancelRequest: { type: Boolean, default: false },
+    refundStatus: {
+      type: String,
+      enum: ['PENDING', 'APPROVED', 'REJECTED'],
+      default: 'PENDING',
+    },
   },
   { timestamps: true }
 );
