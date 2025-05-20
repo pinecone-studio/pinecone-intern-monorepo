@@ -14,7 +14,7 @@ describe("Menu Page Tabs", () => {
     cy.get('[data-testid="content-products"]').should("be.visible");
     cy.get('[data-testid="content-manage"]').should("not.be.visible");
   });
-
+  
   it("switches to 'Цэс удирдах' tab and shows its content", () => {
     cy.get('[data-testid="tab-manage"]').click();
     cy.get('[data-testid="content-manage"]').should("be.visible");
@@ -23,7 +23,8 @@ describe("Menu Page Tabs", () => {
 
   it("switches back to 'Цэсний бүтээгдэхүүн'", () => {
     cy.get('[data-testid="tab-manage"]').click();
-    cy.get('[data-testid="tab-products"]').click();
-    cy.get('[data-testid="content-products"]').should("be.visible");
+    cy.get('[data-testid="tab-products"]').should("be.visible");
+    cy.get('[data-testid="content-products"]').click();
   });
+
 });

@@ -6,9 +6,9 @@ import CategoryCard from "./CategoryCard";
 
 const ManageCard = () => {
   return (
-    <div data-cy="managecard-wrapper">
+    <div>
       <Card
-        data-cy="managecard"
+        data-testid="managecard"
         className="flex flex-col justify-center w-[600px] px-2 pt-10 pb-5 mt-4 mb-10"
       >
         <p data-cy="managecard-title" className="font-semibold text-2xl ml-5">
