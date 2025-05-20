@@ -1,4 +1,4 @@
-describe('FoodCard component', () => {
+describe('FoodCard', () => {
     beforeEach(() => {
       cy.visit('/admin/menu');
     });
