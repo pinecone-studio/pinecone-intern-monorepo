@@ -7,6 +7,7 @@ import SeatInfo from './_components/SeatInfo';
 import { useParams } from 'next/navigation';
 import ConcertBanner from './_components/ConcertBanner';
 import RecommendConcert from './_components/RecommendConcert';
+import LoadingText from '@/app/_components/LoadingText';
 
 const Page: FC = () => {
   const { id }: { id: string } = useParams();
@@ -17,7 +18,11 @@ const Page: FC = () => {
   });
 
   if (loading) {
-    return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <LoadingText />
+      </div>
+    );
   }
 
   if (error) {
@@ -29,9 +34,6 @@ const Page: FC = () => {
   if (!concert) {
     return <div className="min-h-screen bg-black text-white flex items-center justify-center">No concert found</div>;
   }
-
-  console.log('Concert data:', concert);
-  console.log('Seat data:', concert.seatData);
 
   const TypedAboutEvent = AboutEvent as FC<{ eventData: Concert }>;
   const TypedSeatInfo = SeatInfo as FC<{ eventData: Concert }>;

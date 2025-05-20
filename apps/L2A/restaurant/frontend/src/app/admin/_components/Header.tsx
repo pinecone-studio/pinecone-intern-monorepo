@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const AdminHeader = () => {
   const menuItems = [
-    { name: 'Orders', link: '/admin/orders' },
+    { name: 'Order', link: '/admin/order' },
     { name: 'Menu', link: '/admin/menu' },
     { name: 'Food', link: '/admin/food' },
     { name: 'Table', link: '/admin/table' },

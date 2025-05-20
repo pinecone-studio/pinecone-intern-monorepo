@@ -5,6 +5,7 @@ query GetPosts {
     completionDate
     createdAt
     description
+    number
     feature
     floorNumber
     garage
@@ -27,5 +28,6 @@ query GetPosts {
     windowType
     windowsCount
     type
+    status
   }
 }

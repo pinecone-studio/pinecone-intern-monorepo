@@ -31,6 +31,20 @@ query concerts {
       name
     }
     seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
       date
     }
   }
