@@ -1,10 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { StepFourthCart } from '@/app/auth/create-account/_components/StepFourthCart';
+import '@testing-library/jest-dom';
+import type { ImgHTMLAttributes } from 'react';
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => <img {...props} alt={props.alt || 'mocked'} />,
+  default: (props: ImgHTMLAttributes<HTMLImageElement>) => (
+    <img {...props} alt={props.alt || 'mocked'} />
+  ),
 }));
 
 describe('StepFourthCart', () => {
@@ -22,7 +27,7 @@ describe('StepFourthCart', () => {
     render(
       <StepFourthCart
         index={1}
-        selectedImages={['/only-one.jpg']} // index 1 is missing
+        selectedImages={['/only-one.jpg']}
         removeImage={mockRemoveImage}
       />
     );

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StepFourthCart } from '../_components/StepFourthCart';
+import { ImageUpload } from '../_components/ImageUpload';
 
 const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -13,20 +13,17 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
     if (!selectedImages.length) {
       setError('Please select a photo to upload.');
       return;
+    } else {
+      setStep(4);
     }
-    // if (selectedImages.length <= 1) {
-    //   setError('Please upload at least 1 photo to continue.');
-    //   return;
-    // }
-    setStep(4);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
+    if (files) {
       const newImages = [...selectedImages];
       for (let i = 0; i < files.length; i++) {
-        if (newImages.length < 9) {
+        if (newImages.length < 6) {
           newImages.push(URL.createObjectURL(files[i]));
         }
       }
@@ -57,13 +54,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
             })}
           {error && <p data-cy='imageError' className="text-sm text-red-500">{error}</p>}
         </div>
-        <div className="mb-6">
-          <label htmlFor="image-upload" className="flex w-full cursor-pointer items-center justify-center rounded-full border border-[#E11D48] py-3 text-sm font-medium text-gray-700 hover:bg-gray-50">
-            <Plus className="mr-2 h-4 w-4" />
-            Upload image
-            <input id="image-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleImageUpload} />
-          </label>
-        </div>
+            <ImageUpload handleImageUpload={handleImageUpload} />
 
         <div className="flex justify-between">
           <Button data-cy="step-button" variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
