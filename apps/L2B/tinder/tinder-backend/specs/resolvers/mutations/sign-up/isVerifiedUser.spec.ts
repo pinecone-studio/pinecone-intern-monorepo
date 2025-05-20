@@ -1,7 +1,7 @@
-import { isVerified } from '../../../src/resolvers/mutations';
-import { userModel } from '../../../src/models';
+import { userModel } from 'apps/L2B/tinder/tinder-backend/src/models';
+import { isVerified } from 'apps/L2B/tinder/tinder-backend/src/resolvers/mutations';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   userModel: {
     findOne: jest.fn(),
     findByIdAndUpdate: jest.fn(),

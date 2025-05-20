@@ -1,7 +1,7 @@
-import { userModel } from '../../../src/models';
-import { deleteUser } from '../../../src/resolvers/mutations/delete-user';
+import { userModel } from '../../../../src/models';
+import { deleteUser } from '../../../../src/resolvers/mutations';
 
-jest.mock('../../../src/models', () => ({
+jest.mock('../../../../src/models', () => ({
   userModel: {
     deleteMany: jest.fn(),
   },

@@ -1,5 +1,5 @@
-import { userModel } from '../../models';
 import bcrypt from 'bcrypt';
+import { userModel } from '../../../../models';
 export const addUser = async (_: unknown, { email, password }: { email: string; password: string }) => {
   try {
     const user = await userModel.findOne({ email });
