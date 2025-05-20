@@ -1,6 +1,6 @@
 describe('Payment Selection Page', () => {
   beforeEach(() => {
-    cy.visit('/payment'); // Update this path to wherever your component is rendered
+    cy.visit('/payment'); 
   });
 
   it('renders the main elements correctly', () => {
@@ -11,20 +11,17 @@ describe('Payment Selection Page', () => {
       .and('contain.text', 'сонгоно уу');
 
     cy.get('select')
-      .should('exist')
-      
+      .should('exist') 
   });
 it('renders payment buttons with correct labels and icons', () => {
   cy.get('[data-testid="qpay-button"]').should('exist').and('contain.text', 'Qpay');
   cy.get('[data-testid="socialpay-button"]').should('exist').and('contain.text', 'SocialPay');
   cy.get('[data-testid="wallet-button"]').should('exist').and('contain.text', 'Хэтэвч');
 
-  // Optionally check that there's an <img> inside each button
   cy.get('[data-testid="qpay-button"] img').should('exist');
   cy.get('[data-testid="socialpay-button"] img').should('exist');
   cy.get('[data-testid="wallet-button"] img').should('exist');
 });
-
 
   it('displays order details correctly', () => {
     cy.contains('Захиалгын нийт дүн:').should('exist');
