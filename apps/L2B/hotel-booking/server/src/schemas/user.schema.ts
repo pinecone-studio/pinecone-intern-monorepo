@@ -8,10 +8,10 @@ export const UserTypeDefs = gql`
     firstName: String
     lastName: String
     birth: Date
-    emergencyPhone: Int
+    emergencyPhone: String
     relation: String
     isAdmin: Boolean!
-    phone: Int
+    phone: String
   }
 
   type Query {
@@ -20,9 +20,9 @@ export const UserTypeDefs = gql`
   }
 
   input ContactInput {
-    phone: Int!
+    phone: String!
     email: String!
-    emergencyPhone: Int!
+    emergencyPhone: String!
     relation: String!
   }
 
