@@ -1,0 +1,120 @@
+query Booking($bookingId: ID!) {
+  booking(id: $bookingId) {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
+query Bookings {
+  bookings {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
+query PastBookings($userId: ID!) {
+  pastBookings(userId: $userId) {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
+query UpcomingBookings {
+  upcomingBookings {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    images
+    createdAt
+    updatedAt
+    status
+  }
+}
+mutation CreateBooking($input: BookingInput!) {
+  createBooking(input: $input) {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateBookingStatus($updateBookingStatusId: ID!, $status: BookingStatus!) {
+  updateBookingStatus(id: $updateBookingStatusId, status: $status) {
+    id
+    userId
+    hotelId
+    roomId
+    checkInDate
+    checkOutDate
+    guests {
+      adults
+      children
+    }
+    roomNumber
+    totalPrice
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}

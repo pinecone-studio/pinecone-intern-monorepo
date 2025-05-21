@@ -22,7 +22,7 @@ const OrderHeader = () => {
   
   return (
     <div className="flex items-center justify-between w-[600px] mt-7" data-cy="order-header">
-      <p className="font-semibold text-3xl text-gray-800" data-cy="order-title">Захиалга</p>
+      <p className="font-semibold text-3xl" data-cy="order-title">Захиалга</p>
       <div className="flex gap-2">
         <Popover>
           <PopoverTrigger asChild>
