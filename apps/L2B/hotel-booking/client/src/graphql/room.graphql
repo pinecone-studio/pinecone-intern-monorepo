@@ -1,0 +1,136 @@
+mutation CreateRoom($input: RoomInput!) {
+  createRoom(input: $input) {
+    id
+    hotelId
+    name
+    type
+    pricePerNight
+    information
+    services {
+      bathroom
+      accessibility
+      entertainment
+      foodAndDrink
+      starsRating
+      other
+      internet
+      bedroom
+    }
+    images
+    roomNumber
+    isAvailable
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteRoom($deleteRoomId: ID!) {
+  deleteRoom(id: $deleteRoomId) {
+    success
+    message
+  }
+}
+
+mutation UpdateRoom($updateRoomId: ID!, $input: RoomUpdateInput) {
+  updateRoom(id: $updateRoomId, input: $input) {
+    id
+    hotelId
+    name
+    type
+    pricePerNight
+    information
+    services {
+      bathroom
+      accessibility
+      entertainment
+      foodAndDrink
+      starsRating
+      other
+      internet
+      bedroom
+    }
+    images
+    roomNumber
+    isAvailable
+    createdAt
+    updatedAt
+  }
+}
+
+query Room($roomId: ID!) {
+  room(id: $roomId) {
+    id
+    hotelId
+    name
+    type
+    pricePerNight
+    information
+    services {
+      bathroom
+      accessibility
+      entertainment
+      foodAndDrink
+      starsRating
+      other
+      internet
+      bedroom
+    }
+    images
+    roomNumber
+    isAvailable
+    createdAt
+    updatedAt
+  }
+}
+
+query Rooms {
+  rooms {
+    id
+    hotelId
+    name
+    type
+    pricePerNight
+    information
+    services {
+      bathroom
+      accessibility
+      entertainment
+      foodAndDrink
+      starsRating
+      other
+      internet
+      bedroom
+    }
+    images
+    roomNumber
+    isAvailable
+    createdAt
+    updatedAt
+  }
+}
+
+query RoomsByHotel($hotelId: ID!) {
+  roomsByHotel(hotelId: $hotelId) {
+    id
+    hotelId
+    name
+    type
+    pricePerNight
+    information
+    services {
+      bathroom
+      accessibility
+      entertainment
+      foodAndDrink
+      starsRating
+      other
+      internet
+      bedroom
+    }
+    images
+    roomNumber
+    isAvailable
+    createdAt
+    updatedAt
+  }
+}
