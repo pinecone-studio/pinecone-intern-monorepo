@@ -44,7 +44,7 @@ const SecondStep = ({ setStep, email }: Props) => {
         }
       })();
     }
-  }, [otp]);
+  }, [otp, email, setStep, verifyOtp]);
 
   const handleResend = () => {
     setResending(true);
