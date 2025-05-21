@@ -4,6 +4,7 @@ import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogTrigger 
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const product = {
   image: '/images/taco.jpg',
@@ -46,31 +47,35 @@ const HomeOrder = () => {
               </div>
 
               <div className="flex gap-8 justify-center">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="dineOption"
-                    value="dinein"
-                    onChange={() => handleRouteChange('dinein')}
-                    checked={option === 'dinein'}
-                    data-testid="radio-dinein"
-                    className="w-[20px] h-[20px]"
-                  />
-                  Эндээ идэх
-                </label>
-
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="dineOption"
-                    value="takeaway"
-                    onChange={() => handleRouteChange('takeaway')}
-                    checked={option === 'takeaway'}
-                    data-testid="radio-takeaway"
-                    className="w-[20px] h-[20px]"
-                  />
-                  Авч явах
-                </label>
+                <Link href={'/payment'}>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="dineOption"
+                      value="dinein"
+                      onChange={() => handleRouteChange('dinein')}
+                      checked={option === 'dinein'}
+                      data-testid="radio-dinein"
+                      className="w-[20px] h-[20px]"
+                    />
+                    Эндээ идэх
+                  </label>
+                </Link>
+                <Link href="/payment">
+                  {' '}
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="dineOption"
+                      value="takeaway"
+                      onChange={() => handleRouteChange('takeaway')}
+                      checked={option === 'takeaway'}
+                      data-testid="radio-takeaway"
+                      className="w-[20px] h-[20px]"
+                    />
+                    Авч явах
+                  </label>
+                </Link>
               </div>
             </AlertDialogContent>
           </AlertDialog>
