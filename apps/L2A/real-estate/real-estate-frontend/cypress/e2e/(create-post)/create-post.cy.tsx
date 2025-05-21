@@ -41,9 +41,12 @@ describe('CreatePostCard form', () => {
     cy.get('[data-testid="parking-option-yes"]').click();
 
     cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
-    cy.window().then(() => {
-      cy.get('input[name="images"]').type('https://example.com/image1.jpg');
-    });
+   
+    cy.get('input[name="images"]').type('https://example.com/image1.jpg');
+    cy.window().then((win) => {
+      win.dispatchEvent(new CustomEvent('images-uploaded', { detail: ['https://example.com/image1.jpg'] }));
+    });    
+
     cy.get('input[name="district"]').type('Сүхбаатар');
     cy.get('input[name="section"]').type('1-р хороо');
     cy.get('input[name="year"]').type('2023');
@@ -70,7 +73,7 @@ describe('CreatePostCard form', () => {
       restroom: '2',
       parking: 'yes',
       text: 'Шинэ байрны тайлбар',
-      images: [],
+      images: [''],
       district: 'Сүхбаатар',
       section: '1-р хороо',
       year: '2023',

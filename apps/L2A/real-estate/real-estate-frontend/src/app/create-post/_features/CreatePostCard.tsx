@@ -21,7 +21,7 @@ import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 import { CreatePostGround } from '../_components/CreatePostGround';
 import { CreatePostBalcony } from '../_components/CreatePostBalcony';
 import { CreatePostImages } from '../_components/CreatePostImages';
-import { useCreatePostFormik } from '../formUtils';
+import { useCreatePostFormik } from '../form-utils';
 import { FormikErrors, FormikTouched } from 'formik';
 
 export const CreatePostCard = () => {

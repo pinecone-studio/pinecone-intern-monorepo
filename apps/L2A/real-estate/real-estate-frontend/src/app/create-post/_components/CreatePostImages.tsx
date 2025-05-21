@@ -29,7 +29,9 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
 
       const result = await res.json();
       onChange([...value, result.secure_url]);
+  
     }
+
 
     setUploading(false);
   };
@@ -41,32 +43,46 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
   };
 
   return (
-    <div className="space-y-2">
-      <div className="gap-2 mb-6">
-        <div className="text-[#09090B] text-lg">Зураг</div>
-        <div className="text-[#71717A] text-sm">
-          Please tell us the name of the guest staying at the hotel as it appears on the ID that they’ll present at check-in. If the guest has more than one last name, please enter them all.
-        </div>
-      </div>
-
-      <div className={`p-2 flex justify-center border rounded-md ${error ? 'border-red-500' : 'border-[#E4E4E7]'}`}>
-        <button data-testid="upload-button" type="button" onClick={() => inputRef.current?.click()} disabled={uploading}>
-          {uploading ? 'Түр хүлээнэ үү...' : '+ Зураг оруулах'}
-        </button>
-      </div>
-
-      <input id={name} name={name} ref={inputRef} type="file" multiple hidden onChange={handleUpload} accept="image/*" data-testid="images" />
-      <div className="h-3 my-2">{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm invisible">placeholder</p>}</div>
-      <div className="grid grid-cols-3 gap-4 pt-1">
-        {value.map((url, idx) => (
-          <div key={idx} className="relative">
-            <img src={url} alt="preview" className="w-full h-36 object-cover rounded" />
-            <button type="button" onClick={() => removeImage(idx)} className="absolute top-1 right-1 bg-[#FFFFFF] text-black px-2 rounded-md">
-              ×
-            </button>
-          </div>
-        ))}
-      </div>
+    <div data-testid="image-container" className="space-y-2">
+    <div className={`p-2 flex justify-center border rounded-md ${error ? 'border-red-500' : 'border-[#E4E4E7]'}`}>
+      <button data-testid="upload-button" type="button" onClick={() => inputRef.current?.click()} disabled={uploading}>
+        {uploading ? 'Түр хүлээнэ үү...' : '+ Зураг оруулах'}
+      </button>
     </div>
+    <input
+      id={name}
+      name={name}
+      ref={inputRef}
+      type="file"
+      multiple
+      hidden
+      onChange={handleUpload}
+      accept="image/*"
+      data-testid="image-input"
+    />
+
+    <div className="h-3 my-2">
+      {error ? (
+        <p className="text-red-500 text-sm">{error}</p>
+      ) : (
+        <p className="text-sm invisible">placeholder</p>
+      )}
+    </div>
+
+    <div className="grid grid-cols-3 gap-4 pt-1">
+      {value.map((url, idx) => (
+        <div key={idx} className="relative">
+          <img src={url} alt="preview" className="w-full h-36 object-cover rounded" />
+          <button
+            type="button"
+            onClick={() => removeImage(idx)}
+            className="absolute top-1 right-1 bg-[#FFFFFF] text-black px-2 rounded-md"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
   );
 };

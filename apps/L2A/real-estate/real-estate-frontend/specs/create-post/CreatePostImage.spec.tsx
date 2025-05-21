@@ -1,64 +1,148 @@
-import { CreatePostImages } from '@/app/create-post/_components/CreatePostImages';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom'
-
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { CreatePostImages } from '@/app/create-post/_components/CreatePostImages'; // Adjust path accordingly
 
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve({ secure_url: 'https://fakeurl.com/image.jpg' }),
+    /* eslint-disable camelcase */
+    json: () => Promise.resolve({ secure_url: 'https://cloudinary.com/some-image-url' }),
   })
 ) as jest.Mock;
 
-describe('CreatePostImages', () => {
-  const mockOnChange = jest.fn();
+describe('CreatePostImages Component', () => {
+  let mockOnChange: jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    mockOnChange = jest.fn();
   });
 
-  it('should render correctly with no images', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
-    expect(screen.getByText('+ Зураг оруулах')).toBeInTheDocument();
+  it('should render the component with an upload button', () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const uploadButton = screen.getByTestId('upload-button');
+    expect(uploadButton).toBeInTheDocument();
   });
 
-  it('displays error when passed', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="Image is required" />);
-    expect(screen.getByText('Image is required')).toBeInTheDocument();
-  });
-
-  it('calls input click when upload button is clicked', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
-    const button = screen.getByTestId('upload-button');
-    const input = screen.getByTestId('images');
-
+  it('should trigger file input click when upload button is clicked', () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const input = screen.getByTestId('image-input') as HTMLInputElement;
+    const uploadButton = screen.getByTestId('upload-button');
     const inputClickSpy = jest.spyOn(input, 'click');
-    fireEvent.click(button);
-    expect(inputClickSpy).toHaveBeenCalled();
+    expect(input).toHaveAttribute('hidden');
+    fireEvent.click(uploadButton);
+    expect(inputClickSpy).toHaveBeenCalledTimes(1);
+    inputClickSpy.mockRestore();
   });
+  it('should handle file upload and call onChange with the image URL', async () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const input = screen.getByTestId('image-input') as HTMLInputElement;
+    const file = new File(['dummy content'], 'test-image.jpg', { type: 'image/jpeg' });
+    Object.defineProperty(input, 'files', { value: [file] });
+    fireEvent.change(input);
 
-  it('uploads image and calls onChange with new URL', async () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} />);
+    await waitFor(() => expect(mockOnChange).toHaveBeenCalled());
 
-    const input = screen.getByTestId('images') as HTMLInputElement;
+    expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/some-image-url']);
+  });
+  it('should display uploading state when file is being uploaded', async () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const uploadButton = screen.getByTestId('upload-button');
+    const input = screen.getByTestId('image-input') as HTMLInputElement;
 
-    const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+    fireEvent.click(uploadButton);
 
-    fireEvent.change(input, {
-      target: { files: [file] },
-    });
+    const file = new File(['dummy content'], 'test-image.jpg', { type: 'image/jpeg' });
+    Object.defineProperty(input, 'files', { value: [file] });
+    fireEvent.change(input);
 
     await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalledWith(['https://fakeurl.com/image.jpg']);
+      expect(uploadButton).toHaveTextContent('Түр хүлээнэ үү...');
     });
   });
 
-  it('renders uploaded image and can remove it', () => {
-    const { getByAltText, getByText } = render(<CreatePostImages name="images" value={['https://image.jpg']} onChange={mockOnChange} />);
+  it('should show an error message when passed an error prop', () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error="An error occurred"
+      />
+    );
+    const errorMessage = screen.getByText(/An error occurred/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
 
-    expect(getByAltText('preview')).toHaveAttribute('src', 'https://image.jpg');
-
-    fireEvent.click(getByText('×'));
-    expect(mockOnChange).toHaveBeenCalledWith([]);
+  it('should remove an image when remove button is clicked', () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={['https://cloudinary.com/image1', 'https://cloudinary.com/image2']}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const removeButton = screen.getAllByText('×')[0];
+    fireEvent.click(removeButton);
+    expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/image2']);
+  });
+  it('should not call onChange if no files are selected', async () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    );
+    const input = screen.getByTestId('image-input') as HTMLInputElement;
+    Object.defineProperty(input, 'files', { value: null });
+    fireEvent.change(input);
+    expect(mockOnChange).not.toHaveBeenCalled();
+  });
+  it('should call onChange with image URL on successful upload', async () => {
+    render(
+      <CreatePostImages
+        name="images"
+        value={[]}
+        onChange={mockOnChange}
+        error=""
+      />
+    )
+    const input = screen.getByTestId('image-input') as HTMLInputElement;
+    const file = new File(['dummy content'], 'test-image.jpg', { type: 'image/jpeg' });
+    Object.defineProperty(input, 'files', { value: [file] });
+    fireEvent.change(input);
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/some-image-url']);
+    });
   });
 });
