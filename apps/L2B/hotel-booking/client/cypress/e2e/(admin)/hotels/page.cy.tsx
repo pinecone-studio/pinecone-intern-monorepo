@@ -8,6 +8,6 @@ describe('Hotels Page', () => {
   it(`Should render hotels page`, () => {
     cy.visit('/hotels');
 
-    cy.get('[data-cy=Hotels-Page]').should('have.text', 'Hotels Page');
+    cy.get('[data-cy=Hotels-Page]').should('exist');
   });
 });

@@ -8,11 +8,13 @@ export const typeDefs = gql`
   enum Response {
     Success
   }
-
+  type SuccessResponse {
+    success: Boolean!
+    message: String!
+  }
   type Query {
     sampleQuery: String!
   }
-
   type Mutation {
     sampleMutation: String!
   }

@@ -31,6 +31,20 @@ query concerts {
       name
     }
     seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
       date
     }
   }
@@ -130,5 +144,13 @@ mutation ChangeCurrentPassword($email: String!, $currentPassword: String!, $newP
   changeCurrentPassword(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
     id
     email
+  }
+}
+
+mutation updateUserInfo($id: String!, $email: String, $phone: Int) {
+  updateUserInfo(id: $id, email: $email, phone: $phone) {
+    id
+    email
+    phone
   }
 }

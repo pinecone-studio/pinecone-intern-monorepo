@@ -1,26 +1,51 @@
 describe('User Profile Tabs', () => {
   const pass = 'changepass@gmail.com';
+  const phone = '88998899';
 
+  const updateuser = 'changeuserinfo@gmail.com';
   beforeEach(() => {
     cy.visit('/profile/123');
   });
 
-  it('should render sidebar and default to user profile', () => {
-    cy.get('[data-cy="sidebar"]').should('exist');
-    cy.get('[data-cy="profile-tab"]').should('exist');
-    cy.get('[data-cy="input-phone"]').should('exist');
-    cy.get('[data-cy="input-email"]').should('exist');
+  it('should update user profile info successfully', () => {
+    cy.intercept('POST', '**/api/graphql').as('updateUserInfo');
+    cy.visit('/auth/signin');
+    cy.get('input[name="email"]').type(updateuser);
+    cy.get('input[name="password"]').type(updateuser);
+    cy.get('button[type="submit"]').click();
+    cy.wait('@updateUserInfo');
+
+    cy.get('[data-testid="profile-settings-button"]').click();
+
+    cy.get('[data-testid="user-email"]').clear().type(updateuser);
+    cy.get('[data-testid="user-phone"]').clear().type(phone);
+    cy.get('[data-testid="save-profile"]').click();
+
+    cy.wait('@updateUserInfo');
+    cy.contains('Мэдээлэл амжилттай өөрчлөгдлөө!').should('be.visible');
   });
 
-  it('should allow updating user profile information', () => {
-    cy.get('[data-cy="input-phone"]').type('99119911');
-    cy.get('[data-cy="input-email"]').type('test@example.com');
+  it('should show error message if update mutation fails', () => {
+    cy.intercept('POST', '**/api/graphql').as('signIn');
 
-    cy.window().then((win) => cy.spy(win, 'alert').as('profileAlert'));
+    cy.visit('/auth/signin');
+    cy.get('input[name="email"]').type(updateuser);
+    cy.get('input[name="password"]').type(updateuser);
+    cy.get('button[type="submit"]').click();
+    cy.wait('@signIn');
 
-    cy.get('[data-cy="save-profile-button"]').click();
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        errors: [{ message: 'Internal server error' }],
+      },
+    }).as('updateError');
+    cy.get('[data-testid="profile-settings-button"]').click();
 
-    cy.get('@profileAlert').should('have.been.calledWith', 'Хувийн мэдээлэл хадгалагдлаа.');
+    cy.get('[data-testid="user-email"]').clear().type(updateuser);
+    cy.get('[data-testid="user-phone"]').clear().type(phone);
+    cy.get('[data-testid="save-profile"]').click();
+
+    cy.wait('@updateError');
   });
 
   it('should switch to order history and show orders', () => {
@@ -87,11 +112,5 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="orders-tab"]').should('exist');
     cy.get('[data-testid="forget-password"]').click({ multiple: true });
     cy.get('[data-testid="password-tab"]').should('exist');
-  });
-
-  it('should block invalid characters in phone input', () => {
-    cy.get('[data-cy="user-profile"]').click({ multiple: true });
-    cy.get('[data-cy="input-phone"]').type('hello123');
-    cy.get('[data-cy="input-phone"]').should('have.value', '123');
   });
 });

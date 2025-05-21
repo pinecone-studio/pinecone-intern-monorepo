@@ -1,1 +1,1 @@
-["///","///admin","///admin/cancel-request","///admin/change-password","///admin/forgot-password","///admin/ticket","///auth/signin","///auth/signup","///event","///event/[id]","///profile/[id]"]
+["///","///admin","///admin/cancel-request","///admin/change-password","///admin/forgot-password","///admin/ticket","///auth/signin","///auth/signup","///booking/[id]","///event","///event/[id]","///profile/[id]"]

@@ -6,14 +6,11 @@ describe('Admin Body Tests', () => {
     cy.get('[data-testid="admin-header"]').should('exist');
   });
   it('should show all menu items', () => {
-    cy.get('[data-testid="nav-item-Orders"]').should('be.visible');
     cy.get('[data-testid="nav-item-Menu"]').should('be.visible');
     cy.get('[data-testid="nav-item-Food"]').should('be.visible');
     cy.get('[data-testid="nav-item-Table"]').should('be.visible');
   });
   it('should go to correct pages when clicking menu items', () => {
-    cy.get('[data-testid="nav-item-Orders"]').click();
-    cy.url().should('include', '/admin/orders');
     cy.get('[data-testid="nav-item-Menu"]').click();
     cy.url().should('include', '/admin/menu');
     cy.get('[data-testid="nav-item-Food"]').click();

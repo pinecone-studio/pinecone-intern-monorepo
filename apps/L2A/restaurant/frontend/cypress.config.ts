@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import { clerkSetup } from '@clerk/testing/cypress';
 import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset';
 import { defineConfig } from 'cypress';
 
@@ -10,7 +11,7 @@ const config: Cypress.ConfigOptions<unknown> = {
     }),
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config);
-      return config;
+      return clerkSetup({ config });
     },
     supportFolder: './cypress/support',
     supportFile: './cypress/support/e2e.ts',
