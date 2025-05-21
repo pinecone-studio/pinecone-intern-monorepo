@@ -22,7 +22,8 @@ export const GET_ALL_CATEGORIES = gql`
   }
 `;
 
-const FoodForm = () => {
+// eslint-disable-next-line no-unused-vars
+const FoodForm = ({ uploadImage = uploadImageToCloudinary }: { uploadImage?: (file: File) => Promise<string> }) => {
   const [open, setOpen] = useState(false);
   const [foodName, setFoodName] = useState('');
   const [price, setPrice] = useState('');
@@ -88,7 +89,11 @@ const FoodForm = () => {
     if (!validateForm()) return;
     try {
       setIsSubmitting(true);
-      const imageUrl = await uploadImageToCloudinary(file as File);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const imageUrl = await (typeof window !== 'undefined' && (window as any).__mockUploadImage
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ? (window as any).__mockUploadImage(file)
+      : uploadImage(file as File));    
       await submitProduct(imageUrl);
       toast.success('Food item added successfully!');
       setOpen(false);
@@ -141,8 +146,7 @@ const FoodForm = () => {
             {imageUrlPreview && (
               <div className="mt-2 relative aspect-square w-full" data-testid="image-preview">
                 <Image src={imageUrlPreview} alt="food-image-preview" className="rounded-md object-cover" fill sizes="100%" />
-              </div>
-            )}
+              </div>)}
           </div>
           <Input placeholder="Үнэ" value={price} onChange={(e) => setPrice(e.target.value)} data-testid="price-input" />
         </div>
