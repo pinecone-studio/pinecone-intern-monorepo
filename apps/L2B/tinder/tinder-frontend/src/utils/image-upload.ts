@@ -22,6 +22,8 @@ export const imageUpload = async (file: File | null, userId: string) => {
     });
 
     const data = await res.json();
+
+    console.log('image upload fetch data:', data);
     return data.secure_url;
   } catch (err) {
     console.error('Upload failed:', err);

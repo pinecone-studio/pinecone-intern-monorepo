@@ -14,6 +14,7 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
       setError('Please select a photo to upload.');
       return;
     } else {
+      imageUpload(selectedImages)
       setStep(4);
     }
   };
