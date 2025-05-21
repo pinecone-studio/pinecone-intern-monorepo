@@ -25,7 +25,6 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
         method: 'POST',
         body: data,
       });
-
       const result = await res.json();
       onChange([...value, result.secure_url]);
   
