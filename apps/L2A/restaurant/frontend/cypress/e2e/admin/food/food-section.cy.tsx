@@ -1,6 +1,6 @@
 describe('FoodSecHead Layout', () => {
     beforeEach(() => {
-      cy.visit('/admin/food'); 
+      cy.visit('/admin/food');
     });
   
     it('renders header and form trigger', () => {

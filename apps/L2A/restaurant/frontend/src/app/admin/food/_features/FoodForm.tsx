@@ -1,4 +1,3 @@
-// components/FoodForm.tsx
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
