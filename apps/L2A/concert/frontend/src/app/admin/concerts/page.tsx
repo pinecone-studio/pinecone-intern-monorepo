@@ -1,4 +1,3 @@
-import DashboardTable from './_components/DashboardTable';
 import TicketDashboard from './_components/TicketDashboard';
 import TicketFilterBar from './_components/TicketFilterBar';
 import AddTicketDialog from './_featured/AddTicketDialog';
@@ -16,7 +15,7 @@ const Page = () => {
         </div>
         <div className="w-3/4 h-[1px] bg-gray-200 mt-7 "></div>
         <TicketFilterBar />
-        <DashboardTable />
+        {/* <DashboardTable /> */}
         <TicketDashboard />
       </div>
     </div>

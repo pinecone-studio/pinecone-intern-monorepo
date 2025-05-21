@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DashboardTable from '@/app/admin/ticket/_components/DashboardTable';
+import DashboardTable from '@/app/admin/concerts/_components/DashboardTable';
 
 describe('DashboardTable', () => {
   test('should renders table with correct headers', () => {

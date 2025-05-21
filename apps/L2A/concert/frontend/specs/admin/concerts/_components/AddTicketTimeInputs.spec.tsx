@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
-import { AddTicketSchema } from '@/app/admin/ticket/utils/add-ticket-schema';
-import { AddTicketDefaultValues } from '@/app/admin/ticket/utils/add-ticket-default-values';
-import AddTicketTimeInput from '@/app/admin/ticket/_components/AddTicketTimeInputs';
+import { AddTicketSchema } from '@/app/admin/concerts/utils/add-ticket-schema';
+import { AddTicketDefaultValues } from '@/app/admin/concerts/utils/add-ticket-default-values';
+import AddTicketTimeInput from '@/app/admin/concerts/_components/AddTicketTimeInputs';
 import z from 'zod';
 import '@testing-library/jest-dom';
 
