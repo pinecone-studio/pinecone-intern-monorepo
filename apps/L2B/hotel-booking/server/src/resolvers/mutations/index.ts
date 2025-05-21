@@ -7,4 +7,4 @@ export * from './update-contact';
 export * from './update-password';
 export * from './booking';
 export * from './hotel';
-
+export * from './room';
