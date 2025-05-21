@@ -1,16 +1,20 @@
+'use client';
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type Props = {
+interface SelectFilterProps {
   placeholder: string;
   items: {
     item: string;
     value: string;
   }[];
-};
-//
-export const SelectFilter = ({ items, placeholder }: Props) => {
+  value?: string;
+  onValueChange?: (_value: string) => void;
+}
+
+export const SelectFilter = ({ items, placeholder, value, onValueChange }: SelectFilterProps) => {
   return (
-    <Select>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger data-testid={`select-trigger-${placeholder?.toLowerCase()}`} className="w-[210px] focus-visible:ring-0">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
