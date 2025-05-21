@@ -8,7 +8,7 @@ const Page = () => {
       <div className="flex flex-col items-center w-full h-full p-10">
         <div className=" w-9/12 flex justify-between rounded-2xl">
           <div>
-            <h1 className=" text-xl">Концерт</h1>
+            <h1 className="text-xl">Концерт</h1>
             <div className=" text-gray-400 text-s">Идэвхитэй зарагдаж буй концертууд</div>
           </div>
           <AddTicketDialog />
