@@ -10,7 +10,13 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
   const [emailValue, setEmailValue] = useState('');
   const [error, setError] = useState('');
 
-  const [sendForgotOtp, { loading }] = useSendForgotOtpMutation();
+  const [sendForgotOtp, { loading }] = useSendForgotOtpMutation({
+    onCompleted: () => {
+      setError('');
+      setEmail(emailValue);
+      setStep(2);
+    },
+  });
 
   const handleContinue = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,11 +28,11 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
       setError('Please enter a valid email address');
       return;
     }
+
     setError('');
-    setEmail(emailValue);
     await sendForgotOtp({ variables: { email: emailValue } });
-    setStep(2);
   };
+
   return (
     <div className="w-[350px] m-auto">
       <div className="w-full text-center mb-6">
@@ -44,17 +50,12 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
             </p>
           )}
         </div>
-        <Button
-          data-testid="forget-password-firstStep-button"
-          disabled={loading}
-          onClick={() => handleContinue()}
-          type="submit"
-          className="w-full bg-[#fe3c72] hover:bg-[#e62a5b] text-white rounded-full"
-        >
+        <Button data-testid="forget-password-firstStep-button" disabled={loading} onClick={handleContinue} type="submit" className="w-full bg-[#fe3c72] hover:bg-[#e62a5b] text-white rounded-full">
           {loading ? 'loading...' : 'Continue'}
         </Button>
       </div>
     </div>
   );
 };
+
 export default FirstStep;
