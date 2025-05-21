@@ -35,6 +35,18 @@ query GetUsers {
   }
 }
 
+query GetCurrentUser($jwt: String!) {
+  getCurrentUser(JWT: $jwt) {
+    email
+    firstName
+    lastName
+    birth
+    emergencyPhone
+    relation
+    phone
+  }
+}
+
 mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: String!, $birth: Date!) {
   updatePersonalInformation(_id: $id, firstName: $firstName, lastName: $lastName, birth: $birth) {
     birth
