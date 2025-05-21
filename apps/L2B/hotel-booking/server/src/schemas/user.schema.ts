@@ -17,6 +17,7 @@ export const UserTypeDefs = gql`
   type Query {
     getUser(_id: ID!): User!
     getUsers: [User!]!
+    getCurrentUser(JWT: String!): User!
   }
 
   input ContactInput {

@@ -27,7 +27,12 @@ describe('Booking Query Resolvers', () => {
 
   it('should return a booking by ID', async () => {
     const mockBooking = { id: 'abc123', name: 'Test Booking' };
-    (bookingModel.findById as jest.Mock).mockResolvedValueOnce(mockBooking);
+
+    const populateMock3 = jest.fn().mockResolvedValueOnce(mockBooking);
+    const populateMock2 = jest.fn().mockReturnValue({ populate: populateMock3 });
+    const populateMock1 = jest.fn().mockReturnValue({ populate: populateMock2 });
+
+    (bookingModel.findById as jest.Mock).mockReturnValue({ populate: populateMock1 });
 
     const result = await booking!({}, { id: 'abc123' }, {}, info);
     expect(bookingModel.findById).toHaveBeenCalledWith('abc123');
@@ -35,14 +40,24 @@ describe('Booking Query Resolvers', () => {
   });
 
   it('should throw if booking not found', async () => {
-    (bookingModel.findById as jest.Mock).mockResolvedValueOnce(null);
+    const populateMock3 = jest.fn().mockResolvedValueOnce(null);
+    const populateMock2 = jest.fn().mockReturnValue({ populate: populateMock3 });
+    const populateMock1 = jest.fn().mockReturnValue({ populate: populateMock2 });
+
+    (bookingModel.findById as jest.Mock).mockReturnValue({ populate: populateMock1 });
 
     await expect(booking!({}, { id: 'missing-id' }, {}, info)).rejects.toThrow('Booking not found');
   });
 
   it('should return upcoming bookings', async () => {
     const mockUpcoming = [{ id: 'upcoming1' }];
-    (bookingModel.find as jest.Mock).mockResolvedValueOnce(mockUpcoming);
+    (bookingModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockResolvedValueOnce(mockUpcoming),
+        }),
+      }),
+    });
 
     const result = await upcomingBookings!({}, {}, {}, info);
     expect(bookingModel.find).toHaveBeenCalledWith({
@@ -53,12 +68,15 @@ describe('Booking Query Resolvers', () => {
 
   it('should return past bookings for a user', async () => {
     const mockPast = [{ id: 'past1' }];
-    const userId = 'user123';
-    (bookingModel.find as jest.Mock).mockResolvedValueOnce(mockPast);
+    (bookingModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockResolvedValueOnce(mockPast),
+      }),
+    });
 
-    const result = await pastBookings!({}, { userId }, {}, info);
+    const result = await pastBookings!({}, { userId: 'user123' }, {}, info);
     expect(bookingModel.find).toHaveBeenCalledWith({
-      userId,
+      userId: 'user123',
       checkOutDate: { $lt: expect.any(Date) },
     });
     expect(result).toEqual(mockPast);

@@ -5,3 +5,4 @@ export * from './user/sign-up/delete-user';
 export * from './user/sign-up/is-verified-user';
 export * from './user/sign-up/send-otp';
 export * from './user/forget-password/forgot-password';
+export * from './user/sign-in/sign-in';

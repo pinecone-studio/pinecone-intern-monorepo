@@ -4,4 +4,6 @@ export * from './get-users';
 export * from './booking';
 export * from './get-hotels';
 export * from './get-hotel';
+export * from './room';
+export * from './current-user';
 
