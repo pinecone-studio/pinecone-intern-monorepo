@@ -12,6 +12,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
+        <Toaster />
         <ApolloWrapper>{children}</ApolloWrapper>
         <Toaster richColors position="top-center" />
       </body>
