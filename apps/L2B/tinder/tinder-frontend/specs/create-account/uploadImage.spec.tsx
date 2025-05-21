@@ -6,10 +6,8 @@ describe('ImageUpload', () => {
   it('renders the upload label with Plus icon and text', () => {
     render(<ImageUpload handleImageUpload={jest.fn()} />);
     
-    // Check text
     expect(screen.getByText(/upload image/i)).toBeInTheDocument();
 
-    // Check for Plus icon using test ID
     expect(screen.getByTestId('plus-icon')).toBeInTheDocument();
   });
 

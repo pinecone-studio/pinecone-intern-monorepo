@@ -120,7 +120,7 @@ describe('Create Account - Third Step (Your Details)', () => {
     );
  
     cy.contains('Next').click();
-    // cy.contains('Youre all set!').should('exist');
-    // cy.get('[data-cy="next-button"]').click();
+    cy.contains('Youre all set!').should('exist');
+    cy.get('[data-cy="next-button"]').click();
   });
 });
