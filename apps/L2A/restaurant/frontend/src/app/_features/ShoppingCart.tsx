@@ -1,10 +1,12 @@
 export const ShoppingCart = () => {
   return (
-    <div className="max-w-sm mx-auto bg-white rounded-xl p-4">
+    <div data-testid="tom div" className="max-w-sm mx-auto bg-white rounded-xl p-4">
       <div className="p-4 border-b">
-        <h2 className="text-xl font-semibold">Захиалгын түүх</h2>
+        <h2 data-testid="Захиалгын түүх" className="text-xl font-semibold">
+          Захиалгын түүх
+        </h2>
       </div>
-      <div className="p-4 space-y-2">
+      <div data-testid="cards" className="p-4 space-y-2">
         {['42,800₮', '27,450₮', '18,900₮', '21,900₮', '24,200₮', '19,750₮'].map((price, index) => (
           <div key={index} className="p-3 bg-white rounded-lg flex justify-between items-center border">
             <div>

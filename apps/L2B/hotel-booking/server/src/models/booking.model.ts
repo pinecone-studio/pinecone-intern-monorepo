@@ -8,16 +8,16 @@ const BookingSchema = new Schema(
     checkInDate: { type: Date, required: true },
     checkOutDate: { type: Date, required: true },
     guests: {
-      adults: { type: Number, required: true, default: 1 },
-      children: { type: Number, required: true, default: 0 },
+      adults: { type: Number, required: true },
+      children: { type: Number, required: true },
     },
     totalPrice: { type: Number, required: true },
     status: {
       type: String,
-      enum: ['booked', 'checked-in', 'checked-out', 'cancelled'],
-      default: 'checked-out',
+      enum: ['booked', 'checked_in', 'checked_out', 'cancelled'],
+      default: 'booked',
     },
-    images: [{ type: String }],
+    images: [{ type: String, required: true }],
   },
   { timestamps: true }
 );
