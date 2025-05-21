@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { StepOneProps } from '../_feature/ForgetPasswordSteps';
+import { StepOneProps } from './ForgetPasswordSteps';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -28,9 +28,11 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
       setError('Please enter a valid email address');
       return;
     }
+
     setError('');
     await sendForgotOtp({ variables: { email: emailValue } });
   };
+
   return (
     <div className="w-[350px] m-auto">
       <div className="w-full text-center mb-6">
@@ -55,4 +57,5 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
     </div>
   );
 };
+
 export default FirstStep;
