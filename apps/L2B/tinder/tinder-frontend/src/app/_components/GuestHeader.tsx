@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const Header = () => {
+const GuestHeader = () => {
   return (
     <div className="w-[80%] flex justify-between items-center mt-3">
       <Link href={'/'}>
@@ -20,4 +20,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default GuestHeader;
