@@ -1,12 +1,7 @@
 import ListingDetailAdminView from '../../_components/ListingDetailAdminView';
 
-
 const DetailsPage = () => {
-  return (
-    <ListingDetailAdminView
- 
-    />
-  );
+  return <ListingDetailAdminView />;
 };
 
 export default DetailsPage;
