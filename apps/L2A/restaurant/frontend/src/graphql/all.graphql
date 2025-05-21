@@ -14,3 +14,25 @@ mutation AddTable($input: AddTableInput!) {
     updatedAt
   }
 }
+mutation AddProduct($input: AddProductInput!) {
+  addProduct(input: $input) {
+    _id
+    name
+    price
+    status
+    images
+    createdAt
+    updatedAt
+    category {
+      _id
+    }
+  }
+}
+query GetCategories {
+  getCategories {
+    _id
+    name
+    createdAt
+    updatedAt
+  }
+}
