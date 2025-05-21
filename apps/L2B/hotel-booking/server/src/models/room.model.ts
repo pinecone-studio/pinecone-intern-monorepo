@@ -3,7 +3,7 @@ import { model, models, Schema } from 'mongoose';
 const roomSchema = new Schema(
   {
     hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel', required: true },
-    name: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
     type: {
       type: String,
       enum: ['single', 'double', 'twin', 'suite', 'deluxe', 'family'],
@@ -11,20 +11,11 @@ const roomSchema = new Schema(
     },
     pricePerNight: { type: Number, required: true },
     information: { type: String, required: true },
-    services: {
-      bathroom: { type: [String], default: [] },
-      accessibility: { type: [String], default: [] },
-      entertainment: { type: [String], default: [] },
-      foodAndDrink: { type: [String], default: [] },
-      starsRating: { type: Number, min: 1, max: 5 },
-      other: { type: [String], default: [] },
-      internet: { type: [String], default: [] },
-      bedroom: { type: [String], default: [] },
-    },
-    images: { type: [String], default: [] },
+    services: [String],
+    starRating: { type: Number, min: 1, max: 5 },
     maxOccupancy: { type: Number, required: true },
     isAvailable: { type: Boolean, default: true },
-    roomNumber: { type: String, required: true },
+    images: [{ type: String }],
   },
   { timestamps: true }
 );
