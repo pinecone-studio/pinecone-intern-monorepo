@@ -47,11 +47,9 @@ describe('FoodForm Modal Functionality', () => {
     cy.get('[data-testid="add-food-button"]').click();
     cy.get('[data-testid="food-name-input"]').type('Test Food');
     cy.get('[data-testid="price-input"]').type('1200');
-
     cy.get('[data-testid="category-select"]').click();
     cy.wait(300);
     cy.get('[data-testid="category-cat1"]').click();
-
     cy.get('[data-testid="submit-button"]').click();
     cy.contains('Please upload an image.').should('exist');
   });
@@ -70,13 +68,10 @@ describe('FoodForm Modal Functionality', () => {
 
   it('selects category and toggles status', () => {
     cy.get('[data-testid="add-food-button"]').click();
-
     cy.get('[data-testid="category-select"]').click();
     cy.wait(300);
     cy.get('[data-testid="category-cat1"]').click();
-
     cy.get('[data-testid="category-select-value"]').should('not.have.text', 'Select category');
-
     cy.get('[data-testid="status-inactive"]').click().should('be.checked');
     cy.get('[data-testid="status-active"]').click().should('be.checked');
   });
@@ -89,43 +84,56 @@ describe('FoodForm Modal Functionality', () => {
     }).as('addProduct');
 
     cy.get('[data-testid="add-food-button"]').click();
-
     cy.get('[data-testid="food-name-input"]').type('Test Food');
     cy.get('[data-testid="price-input"]').type('1200');
-
     cy.get('[data-testid="category-select"]').click();
     cy.wait(300);
     cy.get('[data-testid="category-cat1"]').click();
-
     cy.get('[data-testid="image-input"]').selectFile('cypress/fixtures/sample.jpg', { force: true });
-
     cy.get('[data-testid="submit-button"]').click();
-
     cy.wait('@addProduct');
     cy.contains('Food item added successfully!').should('exist');
   });
 
-  it('shows error toast if mutation fails', () => {
+  it('shows error toast if GraphQL mutation fails', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'AddProductInput') {
-        req.reply({ errors: [{ message: 'Mock mutation failed' }] });
+        req.reply({ errors: [{ message: 'Mutation failed' }] });
       }
     }).as('failedMutation');
 
     cy.get('[data-testid="add-food-button"]').click();
-
     cy.get('[data-testid="food-name-input"]').type('Fail Case');
     cy.get('[data-testid="price-input"]').type('1000');
-
     cy.get('[data-testid="category-select"]').click();
     cy.wait(300);
     cy.get('[data-testid="category-cat1"]').click();
-
     cy.get('[data-testid="image-input"]').selectFile('cypress/fixtures/sample.jpg', { force: true });
-
     cy.get('[data-testid="submit-button"]').click();
-
     cy.wait('@failedMutation');
+    cy.contains('Something went wrong. Please try again.').should('exist');
+  });
+
+  it('shows error toast if image upload fails (simulated)', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cy.window().then((win: any) => {
+      cy.stub(win, 'uploadImageToCloudinary').throws(new Error('Upload failed'));
+    });
+
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'AddProductInput') {
+        req.reply({ data: { addProductInput: { success: true } } });
+      }
+    });
+
+    cy.get('[data-testid="add-food-button"]').click();
+    cy.get('[data-testid="food-name-input"]').type('Upload Fail');
+    cy.get('[data-testid="price-input"]').type('900');
+    cy.get('[data-testid="category-select"]').click();
+    cy.wait(300);
+    cy.get('[data-testid="category-cat1"]').click();
+    cy.get('[data-testid="image-input"]').selectFile('cypress/fixtures/sample.jpg', { force: true });
+    cy.get('[data-testid="submit-button"]').click();
     cy.contains('Something went wrong. Please try again.').should('exist');
   });
 });
