@@ -20,10 +20,6 @@ export const BookingTypeDefs = gql`
     userId: ID!
     hotelId: ID!
     roomId: ID!
-    FirstName: String!
-    LastName: String!
-    email: String!
-    phone: String!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInfo!
@@ -44,10 +40,6 @@ export const BookingTypeDefs = gql`
     userId: ID!
     hotelId: ID!
     roomId: ID!
-    FirstName: String!
-    LastName: String!
-    email: String!
-    phone: String!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInput!
