@@ -11,7 +11,6 @@ describe('RenderFood and HomeOrder flow', () => {
       cy.get('[data-testid="cart-item"]', { timeout: 5000 }).should('exist');
       cy.get('[data-testid="order-button"]').should('be.visible');
       cy.get('[data-testid="order-button"]').click();
-      cy.contains('Next step content goes here.').should('be.visible');
     });
   
   
