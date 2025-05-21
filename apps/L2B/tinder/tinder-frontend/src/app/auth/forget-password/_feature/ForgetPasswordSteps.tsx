@@ -1,9 +1,10 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import FirstStep from './FirstStep';
+
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
+import FirstStep from './FirstStep';
 
 export type StepOneProps = {
   setStep: (_step: number) => void;
