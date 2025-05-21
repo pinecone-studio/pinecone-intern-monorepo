@@ -1,5 +1,5 @@
 const guestPage = () => {
-  return;
+  return <div>guest id Page</div>;
 };
 
 export default guestPage;
