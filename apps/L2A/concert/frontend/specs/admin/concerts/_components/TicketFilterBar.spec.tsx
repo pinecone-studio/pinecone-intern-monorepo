@@ -1,4 +1,4 @@
-import TicketFilterBar from '@/app/admin/ticket/_components/TicketFilterBar';
+import TicketFilterBar from '@/app/admin/concerts/_components/TicketFilterBar';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 

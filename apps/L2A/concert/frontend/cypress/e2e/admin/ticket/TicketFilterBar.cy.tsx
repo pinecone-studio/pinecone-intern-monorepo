@@ -1,6 +1,6 @@
 describe('TicketFilterBar Component', () => {
   beforeEach(() => {
-    cy.visit('/admin/ticket');
+    cy.visit('/admin/concerts');
   });
 
   it('clears all filters when the "Цэвэрлэх" button is clicked', () => {

@@ -12,7 +12,7 @@ export const ConcertTypeDefs = gql`
     primaryPrice: Int!
     artistName: String!
     specialGuestName: String
-    seatData: [SeatData]!
+    seatData: [SeatData!]!
     endDate: String!
     featured: Boolean!
   }

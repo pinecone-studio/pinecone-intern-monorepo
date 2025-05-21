@@ -41,7 +41,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     if (user?.isAdmin) {
-      router.push('/admin/ticket');
+      router.push('/admin/concerts');
     }
   }, [router, user]);
 

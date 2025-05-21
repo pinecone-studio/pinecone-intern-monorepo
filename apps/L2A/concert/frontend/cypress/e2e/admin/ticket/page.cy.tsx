@@ -1,7 +1,7 @@
 import { mockConcerts } from '../utils/mock-concert-data';
 describe('Add Ticket Dialog', () => {
   beforeEach(() => {
-    cy.visit('/admin/ticket');
+    cy.visit('/admin/concerts');
     cy.contains('Концерт нэмэх').click();
   });
 

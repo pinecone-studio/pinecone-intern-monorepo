@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import AddTicketSeatInput from '@/app/admin/ticket/_components/AddTicketSeatInputs';
-import { AddTicketSchema } from '@/app/admin/ticket/utils/add-ticket-schema';
-import { AddTicketDefaultValues } from '@/app/admin/ticket/utils/add-ticket-default-values';
+import AddTicketSeatInput from '@/app/admin/concerts/_components/AddTicketSeatInputs';
+import { AddTicketSchema } from '@/app/admin/concerts/utils/add-ticket-schema';
+import { AddTicketDefaultValues } from '@/app/admin/concerts/utils/add-ticket-default-values';
 import { Form } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
