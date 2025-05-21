@@ -80,7 +80,7 @@ export const getFillColor = (block: { availableTickets: number } | null, type: Z
   return colorMap[type];
 };
 
-const ZoneSlice: FC<{ z: ZoneType; seatEntry?: Concert['seatData'][0] | null; onSelect: (_id: string) => void }> = ({ z, seatEntry, onSelect }) => {
+const ZoneSlice: FC<{ z: ZoneType; seatEntry?: Concert['seatData'][0]; onSelect: (_id: string) => void }> = ({ z, seatEntry, onSelect }) => {
   const block = getSeatBlock(seatEntry, z.type);
   const fill = getFillColor(block, z.type);
 
