@@ -16,7 +16,6 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
 
     setUploading(true);
     const files = Array.from(e.target.files);
-
     for (const file of files) {
       const data = new FormData();
       data.append('file', file);
