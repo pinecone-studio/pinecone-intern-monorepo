@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { RestRoomsCompProps } from "@/lib/filter-types";
+import { RestRoomsCompProps } from "@/lib/typescripts";
 
 const RestRoomsComp = ({restrooms, setTotalRestrooms}:RestRoomsCompProps) =>{
     const selectedRestrooms = restrooms?.split(',').map(Number) ?? [];

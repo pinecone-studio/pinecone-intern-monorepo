@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ListingCard from '@/app/home/_components/ListingCard';
 
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => <img {...props} />,
+}));
+
 describe('ListingCard', () => {
   const mockProps = {
     image: '/listingcard.png',
@@ -36,17 +41,19 @@ describe('ListingCard', () => {
     expect(screen.getByText(`${mockProps.city}, ${mockProps.district}`)).toBeInTheDocument();
   });
 
-  it('renders fallback image when image is null', () => {
-  render(<ListingCard {...mockProps} image={null} />);
+it('renders fallback image when image is null', () => {
+  render(<ListingCard {...mockProps} image={null as any} />);
   const img = screen.getByAltText('no image');
   expect(img).toBeInTheDocument();
-  expect(img).not.toHaveAttribute('src', '/listingcard.png');
+  expect(img.getAttribute('src')).toContain('/placeholder.png'); 
 });
 
-  it('renders image with fallback alt text', () => {
-    render(<ListingCard {...mockProps}  />);
-    const img = screen.getByAltText('no image');
-    expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('src', mockProps.image);
-  });
+
+it('renders main image when image is provided', () => {
+  render(<ListingCard {...mockProps} />);
+  const img = screen.getByAltText('no image');
+  expect(img).toBeInTheDocument();
+  expect(img.getAttribute('src')).toContain('/listingcard.png'); 
+});
+
 });

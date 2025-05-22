@@ -1,4 +1,6 @@
 
+import { LucideIcon } from 'lucide-react';
+
 /* eslint-disable no-unused-vars */
 export type OthersCompProps = {
 garage:boolean | string | null
@@ -28,4 +30,16 @@ export type LocationCompProps = {
 setCity: (value:string)=>void;
 setDistrict: (value:string)=>void;
 
+};
+
+export type Props = {
+  mainImage: string;
+  images?: string[] | null;
+  setMainImage: (src: string) => void;
+};
+
+export type InfoItem = {
+  icon: LucideIcon;
+  label: string;
+  value?: string | number | null;
 };

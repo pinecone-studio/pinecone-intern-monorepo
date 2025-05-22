@@ -1,6 +1,7 @@
 'use client';
 
 import { MapPin, Ruler, BedSingle, Bath } from 'lucide-react';
+import Image from 'next/image';
 
 type ListingCardProps = {
   image: string | undefined | null; 
@@ -20,7 +21,7 @@ const ListingCard = ({ image, price, restrooms, totalRooms, size, city,district,
   return (
     <div className="w-full max-w-sm bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
       <div className="relative w-full h-48">
-        <img src={image ?? undefined} alt="no image"  className="object-cover h-[200px] w-full" />
+        <Image width={200} height={200} src={image || '/placeholder.png'} alt="no image"  className="object-cover h-[200px] w-full" />
       </div>
 
       <div className="p-4  space-y-2">
