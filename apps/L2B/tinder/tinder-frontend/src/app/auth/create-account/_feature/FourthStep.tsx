@@ -20,15 +20,14 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const newImages = [...selectedImages];
-      for (let i = 0; i < files.length; i++) {
-        if (newImages.length < 6) {
-          newImages.push(URL.createObjectURL(files[i]));
-        }
+
+    const newImages = [...selectedImages];
+    for (let i = 0; i < files!.length; i++) {
+      if (newImages.length < 6) {
+        newImages.push(URL.createObjectURL(files![i]));
       }
-      setSelectedImages(newImages);
     }
+    setSelectedImages(newImages);
   };
   const removeImage = (index: number) => {
     const newImages = [...selectedImages];
@@ -52,9 +51,13 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
                 return <div key={index} className="flex w-[197px] h-[296px] items-center justify-center rounded-md bg-gray-100"></div>;
               }
             })}
-          {error && <p data-cy='imageError' className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <p data-cy="imageError" className="text-sm text-red-500">
+              {error}
+            </p>
+          )}
         </div>
-            <ImageUpload handleImageUpload={handleImageUpload} />
+        <ImageUpload handleImageUpload={handleImageUpload} />
 
         <div className="flex justify-between">
           <Button data-cy="step-button" variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>

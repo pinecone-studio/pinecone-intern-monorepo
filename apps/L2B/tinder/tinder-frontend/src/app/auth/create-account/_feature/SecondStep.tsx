@@ -56,7 +56,9 @@ const SecondStep = ({ setStep }: { setStep: (_step: number) => void }) => {
               </PopoverContent>
             </Popover>
             {error ? (
-              <p className={`text-[14px] ${error ? 'text-red-500' : 'text-gray-500'}`}>Please select your date of birth.</p>
+              <p data-error={error} className={`data-[error=true]:text-red-500 text-gray-500 text-[14px] `}>
+                Please select your date of birth.
+              </p>
             ) : (
               <p className="text-[14px] text-[#71717a]">Your date of birth is used to calculate your age.</p>
             )}

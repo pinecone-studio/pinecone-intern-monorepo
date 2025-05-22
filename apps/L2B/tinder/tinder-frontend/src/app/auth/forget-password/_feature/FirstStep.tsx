@@ -1,15 +1,24 @@
 'use client';
 import React, { useState } from 'react';
-import { StepOneProps } from '../_feature/ForgetPasswordSteps';
+import { StepOneProps } from './ForgetPasswordSteps';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { useSendForgotOtpMutation } from '@/generated';
 
 const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
   const [emailValue, setEmailValue] = useState('');
   const [error, setError] = useState('');
 
-  const handleContinue = () => {
+  const [sendForgotOtp, { loading }] = useSendForgotOtpMutation({
+    onCompleted: () => {
+      setError('');
+      setEmail(emailValue);
+      setStep(2);
+    },
+  });
+
+  const handleContinue = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailValue.trim()) {
       setError('Email is required');
@@ -19,10 +28,11 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
       setError('Please enter a valid email address');
       return;
     }
+
     setError('');
-    setEmail(emailValue);
-    setStep(2);
+    await sendForgotOtp({ variables: { email: emailValue } });
   };
+
   return (
     <div className="w-[350px] m-auto">
       <div className="w-full text-center mb-6">
@@ -40,11 +50,12 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
             </p>
           )}
         </div>
-        <Button data-testid="forget-password-firstStep-button" onClick={() => handleContinue()} type="submit" className="w-full bg-[#fe3c72] hover:bg-[#e62a5b] text-white rounded-full">
-          Continue
+        <Button data-testid="forget-password-firstStep-button" disabled={loading} onClick={handleContinue} type="submit" className="w-full bg-[#fe3c72] hover:bg-[#e62a5b] text-white rounded-full">
+          {loading ? 'loading...' : 'Continue'}
         </Button>
       </div>
     </div>
   );
 };
+
 export default FirstStep;

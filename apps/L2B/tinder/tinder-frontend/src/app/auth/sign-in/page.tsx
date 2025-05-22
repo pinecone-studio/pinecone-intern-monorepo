@@ -42,7 +42,7 @@ const SignInPage = () => {
           <div className="space-y-2 flex flex-col">
             <div className="flex justify-between items-center">
               <label className="text-sm font-medium">Password</label>
-              <Link href="/" className="text-sm text-blue-500 hover:underline">
+              <Link href="/auth/forget-password" className="text-sm text-blue-500 hover:underline">
                 Forget password?
               </Link>
             </div>
@@ -66,9 +66,11 @@ const SignInPage = () => {
             <div className="h-[1px] bg-gray-200 flex-1"></div>
           </div>
 
-          <Button variant="outline" className="w-full border border-gray-300 rounded-full hover:bg-gray-50">
-            Create an account
-          </Button>
+          <Link href={'/auth/sign-up'}>
+            <Button variant="outline" className="w-full border border-gray-300 rounded-full hover:bg-gray-50">
+              Create an account
+            </Button>
+          </Link>
 
           <div className="text-center text-xs text-gray-500 mt-6">
             <p>
