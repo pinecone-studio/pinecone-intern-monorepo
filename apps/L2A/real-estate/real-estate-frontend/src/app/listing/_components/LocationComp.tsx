@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label"
 import { useGetPostsQuery } from "@/generated"
-import { LocationCompProps } from "@/lib/filter-types"
+import { LocationCompProps } from "@/lib/typescripts"
 
 const LocationComp = ({setCity, setDistrict }:LocationCompProps) => {
     const {data} = useGetPostsQuery()

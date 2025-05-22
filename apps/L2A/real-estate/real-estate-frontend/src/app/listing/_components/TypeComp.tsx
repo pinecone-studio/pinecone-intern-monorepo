@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { TypeCompProps } from "@/lib/filter-types";
+import { TypeCompProps } from "@/lib/typescripts";
 
 
 const TypeComp = ({type, setType}:TypeCompProps)=>{

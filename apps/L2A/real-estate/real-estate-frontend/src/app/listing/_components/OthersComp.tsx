@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { OthersCompProps } from "@/lib/filter-types"
+import { OthersCompProps } from "@/lib/typescripts"
 
 const OthersComp = ({garage, setGarage, lift, setLift, balcony, setBalcony}:OthersCompProps) =>{
     return (<>

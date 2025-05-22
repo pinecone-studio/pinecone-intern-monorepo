@@ -14,6 +14,7 @@ import PriceComp from './_components/PriceComp';
 import RoomsComp from './_components/RoomsComp';
 import RestRoomsComp from './_components/RestRoomsComp';
 import OthersComp from './_components/OthersComp';
+import Link from 'next/link';
 
 const HomeListingPage = () => {
   const [type, setType] = useQueryParamState('type')
@@ -59,6 +60,7 @@ const HomeListingPage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-cy="listing-grid">
             {data?.filterPosts?.map((item) => (
+              <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
               <ListingCard
                 key={item?._id}
                 price={item?.price}
@@ -69,7 +71,7 @@ const HomeListingPage = () => {
                 district={item?.location?.district}
                 image={item?.images?.[0]}
                 title={item?.title}
-              />
+              /></Link>
             ))}
           </div>
 

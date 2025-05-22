@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { RoomsCompProps } from "@/lib/filter-types";
+import { RoomsCompProps } from "@/lib/typescripts";
 
 const RoomsComp = ({totalRooms, setTotalRooms}:RoomsCompProps) =>{
   const selectedRooms = totalRooms?.split(',').map(Number) ?? [];
