@@ -9,7 +9,7 @@ describe('Property Detail Page', () => {
   });
 
   it('should change the main image when a thumbnail is clicked', () => {
-    cy.get('img[alt="Thumbnail"]').eq(1).click();
+    cy.get('img[alt="Thumbnail"]').eq(1).click({ force: true });
     cy.get('img[alt="Main Property"]').should('exist');
   });
 

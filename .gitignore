@@ -82,5 +82,6 @@ generated.tsx
 yarn.lock
 bun.lockb
 package-lock.json
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
+.cursor\rules\nx-rules.mdc
+.github\instructions\nx.instructions.md
+

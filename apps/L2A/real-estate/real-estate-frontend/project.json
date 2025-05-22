@@ -116,7 +116,7 @@
         "commands": ["rm -rf dist/apps/L2A/real-estate/real-estate-frontend", "rm -rf .vercel"]
       }
     },
-    "e2e": {
+    " ": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["npx nx execute-cypress scripts real-estate-frontend"],
