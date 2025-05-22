@@ -29,6 +29,6 @@ describe('UserHeader component', () => {
 
     expect(hrefs).toContain('/');
     expect(hrefs).toContain('/message');
-    expect(hrefs).toContain('/profile');
+    expect(hrefs).toContain('/edit-profile');
   });
 });
