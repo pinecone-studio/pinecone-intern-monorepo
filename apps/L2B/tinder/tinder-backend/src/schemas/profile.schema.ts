@@ -1,0 +1,41 @@
+import gql from 'graphql-tag';
+
+export const profileTypeDefs = gql`
+  scalar JSON
+
+  scalar Date
+
+  type ProfileInfo {
+    name: String!
+    bio: String!
+    interest: String!
+    profession: String!
+    school: String!
+  }
+  type Profile {
+    _id: ID!
+    user: ID!
+    interestedIn: String!
+    age: Int!
+    profileInfo: ProfileInfo!
+    images: [String!]!
+  }
+  input ProfileInput {
+    name: String!
+    bio: String!
+    interest: String!
+    profession: String!
+    school: String!
+  }
+  input CreateProfileInput {
+    user: ID!
+    interestedIn: String!
+    age: Int!
+    profileInfo: ProfileInput!
+    images: [String!]!
+  }
+
+  type Mutation {
+    createProfile(input: CreateProfileInput!): Profile!
+  }
+`;
