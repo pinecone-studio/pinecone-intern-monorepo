@@ -64,7 +64,7 @@ const SignInPage = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="example@email.com" {...field} />
+                    <Input type="email" placeholder="example@email.com." {...field} />
                   </FormControl>
                   <FormMessage data-testid="email-error" role="alert" />
                 </FormItem>
