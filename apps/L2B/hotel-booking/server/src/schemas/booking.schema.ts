@@ -23,7 +23,6 @@ export const BookingTypeDefs = gql`
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInfo!
-    roomNumber: String!
     totalPrice: Float!
     status: BookingStatus!
     images: [String]
@@ -43,7 +42,6 @@ export const BookingTypeDefs = gql`
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInput!
-    roomNumber: String!
     totalPrice: Float!
     images: [String]
   }
