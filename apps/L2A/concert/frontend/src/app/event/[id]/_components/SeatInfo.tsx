@@ -121,7 +121,7 @@ const SeatInfo: FC<SeatInfoProps> = ({ eventData }) => {
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
       <TicketList options={ticketOptions} />
       <Link href={`/booking/${eventData.id}`} target="_blank">
-        <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
+        <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed mt-6">
           Тасалбар захиалах
         </Button>
       </Link>

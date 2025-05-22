@@ -1,5 +1,5 @@
 const RideSide = () => {
-  const colors = ['#e9d5ff', '#d8b4fe', '#818cf8'];
+  const colors = ['#f2edf0', '#de5ba9', '#818cf8'];
   const rings = [
     { r1: 300, r2: 240, color: colors[0] },
     { r1: 220, r2: 160, color: colors[1] },

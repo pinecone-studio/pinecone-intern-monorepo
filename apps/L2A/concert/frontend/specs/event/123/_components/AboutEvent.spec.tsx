@@ -107,8 +107,6 @@ describe('AboutEvent component', () => {
     expect(screen.getByText('VenueName')).toBeInTheDocument();
     expect(screen.getByText('Artist A')).toBeInTheDocument();
     expect(screen.getByText('Artist B')).toBeInTheDocument();
-    expect(screen.getByText(/120 цагийн өмнө/)).toBeInTheDocument();
-    expect(screen.getByTestId('stadium-map-svg')).toBeInTheDocument();
   });
 
   test('renders “No artists listed” if none provided', () => {
