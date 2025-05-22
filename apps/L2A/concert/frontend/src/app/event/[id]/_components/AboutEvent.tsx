@@ -2,9 +2,9 @@
 
 import React, { FC } from 'react';
 import { Calendar, Clock, MapPin } from 'lucide-react';
-import StadiumMap from './StadiumMap';
 import { Concert } from '@/generated';
 import FormatDate from '@/app/_utils/format-date';
+import StagePlan from '@/app/StagePlan/_feature/Stage';
 
 type AboutEventProps = {
   eventData: Concert;
@@ -83,7 +83,7 @@ export const AboutEvent: FC<AboutEventProps> = ({ eventData }) => {
       {renderSchedule(eventData.doorOpen, eventData.musicStart)}
       <div>
         <h2 className="font-semibold mb-2 text-gray-200">Stage plan:</h2>
-        <StadiumMap eventData={eventData} />
+        <StagePlan />
       </div>
     </div>
   );

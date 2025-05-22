@@ -79,6 +79,7 @@ query Concert($concertId: String!) {
     featured
     seatData {
       date
+      id
       seats {
         Backseat {
           price

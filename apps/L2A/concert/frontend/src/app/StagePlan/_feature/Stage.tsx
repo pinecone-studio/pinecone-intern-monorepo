@@ -2,7 +2,7 @@
 import RideSide from './RideSide';
 
 const StagePlan = () => {
-  const colors = ['#e9d5ff', '#d8b4fe', '#818cf8'];
+  const colors = ['#f2edf0', '#de5ba9', '#818cf8'];
   const rings = [
     { r1: 300, r2: 240, color: colors[0] },
     { r1: 220, r2: 160, color: colors[1] },
@@ -36,8 +36,8 @@ const StagePlan = () => {
   };
 
   return (
-    <div className="flex  items-center bg-black min-h-screen">
-      <svg viewBox="0 0 800 800" width="600" height="500">
+    <div className="flex items-center bg-black">
+      <svg viewBox="35 0 800 800" width="800" height="800">
         {rings.map((ring, ringIndex) =>
           [...Array(sectors)].map((_, i) => {
             const start = (360 / sectors) * i;
@@ -61,11 +61,9 @@ const StagePlan = () => {
           <rect x="400" y="560" width="135" height="60" />
           <rect x="400" y="640" width="135" height="60" />
         </g>
-        <svg viewBox="0 0 800 800" width={800} height={800}>
-          <g transform="translate(135, 0)">
-            <RideSide />
-          </g>
-        </svg>
+        <g transform="translate(135, 0)">
+          <RideSide />
+        </g>
       </svg>
     </div>
   );

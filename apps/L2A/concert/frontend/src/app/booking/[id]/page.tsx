@@ -5,6 +5,7 @@ import SeatSelection from './_components/SeatSelection';
 import { Concert, useConcertQuery } from '@/generated';
 import LoadingText from '../../_components/LoadingText';
 import { FC } from 'react';
+import StagePlan from '@/app/StagePlan/_feature/Stage';
 
 const Page: FC = () => {
   const { id }: { id: string } = useParams();
@@ -35,8 +36,13 @@ const Page: FC = () => {
   const TypedSeatSelection = SeatSelection as FC<{ event: Concert }>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 rounded-lg shadow-md">
-      <TypedSeatSelection event={concert} />
+    <div className="mx-auto p-6 rounded-lg shadow-md flex justify-around items-center">
+      <div className="w-[40%]">
+        <StagePlan />
+      </div>
+      <div className="w-[30%]">
+        <TypedSeatSelection event={concert} />
+      </div>
     </div>
   );
 };
