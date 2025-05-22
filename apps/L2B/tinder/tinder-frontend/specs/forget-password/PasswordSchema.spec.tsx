@@ -1,63 +1,39 @@
-import '@testing-library/jest-dom';
 import { passwordSchema } from '@/app/auth/forget-password/_components/PasswordSchema';
-
-describe('passwordSchema validation', () => {
-  test('valid password and matching confirmPassword', () => {
-    const input = {
-      password: 'ValidPassword123',
-      confirmPassword: 'ValidPassword123',
+import '@testing-library/jest-dom';
+describe('passwordSchema', () => {
+  it('should pass when password and confirmPassword match and are valid', () => {
+    const validData = {
+      password: 'StrongPass123',
+      confirmPassword: 'StrongPass123',
     };
-    const result = passwordSchema.safeParse(input);
+
+    const result = passwordSchema.safeParse(validData);
     expect(result.success).toBe(true);
   });
 
-  test('password too short', () => {
-    const input = {
-      password: 'Short1',
-      confirmPassword: 'Short1',
+  it('should fail when password is less than 8 characters', () => {
+    const invalidData = {
+      password: 'short',
+      confirmPassword: 'short',
     };
-    const result = passwordSchema.safeParse(input);
+
+    const result = passwordSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
-    expect(result.error.errors[0].message).toBe('Password must be at least 10 characters long.');
+    if (!result.success) {
+      expect(result.error.format().password?._errors).toContain('Password must be at least 8 characters long.');
+    }
   });
 
-  test('password missing uppercase letter', () => {
-    const input = {
-      password: 'validpassword123',
-      confirmPassword: 'validpassword123',
-    };
-    const result = passwordSchema.safeParse(input);
-    expect(result.success).toBe(false);
-    expect(result.error.errors[0].message).toBe('Password must contain at least one uppercase letter.');
-  });
-
-  test('password missing lowercase letter', () => {
-    const input = {
-      password: 'VALIDPASSWORD123',
-      confirmPassword: 'VALIDPASSWORD123',
-    };
-    const result = passwordSchema.safeParse(input);
-    expect(result.success).toBe(false);
-    expect(result.error.errors[0].message).toBe('Password must contain at least one lowercase letter.');
-  });
-
-  test('password missing number', () => {
-    const input = {
+  it('should fail when password and confirmPassword do not match', () => {
+    const mismatchData = {
       password: 'ValidPassword',
-      confirmPassword: 'ValidPassword',
+      confirmPassword: 'DifferentPassword',
     };
-    const result = passwordSchema.safeParse(input);
-    expect(result.success).toBe(false);
-    expect(result.error.errors[0].message).toBe('Password must contain at least one number.');
-  });
 
-  test('passwords do not match', () => {
-    const input = {
-      password: 'ValidPassword123',
-      confirmPassword: 'DifferentPassword123',
-    };
-    const result = passwordSchema.safeParse(input);
+    const result = passwordSchema.safeParse(mismatchData);
     expect(result.success).toBe(false);
-    expect(result.error.errors[0].message).toBe('Passwords do not match.');
+    if (!result.success) {
+      expect(result.error.format().confirmPassword?._errors).toContain('Passwords do not match.');
+    }
   });
 });

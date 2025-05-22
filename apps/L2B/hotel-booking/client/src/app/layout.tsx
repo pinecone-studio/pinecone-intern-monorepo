@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { Toaster } from 'sonner';
+import { AuthProvider } from './(main)/_context/AuthContext';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -13,7 +14,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body className="flex flex-col gap-5">
         <Toaster />
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <AuthProvider>{children}</AuthProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );

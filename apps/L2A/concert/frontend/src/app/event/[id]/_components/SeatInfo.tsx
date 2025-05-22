@@ -5,6 +5,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Button } from '@/components/ui/button';
 import { Concert } from '@/generated';
 import FormatDate from '@/app/_utils/format-date';
+import Link from 'next/link';
 
 type SeatInfoProps = {
   eventData: Concert;
@@ -55,7 +56,7 @@ export function buildTicketOptions(seat?: Concert['seatData'][0]): TicketOption[
 export function useSeatData(seatData?: Concert['seatData']) {
   const dates = extractDates(seatData);
   const [selectedDay, setSelectedDay] = React.useState<string | undefined>(dates[0]);
-  const selectedSeat = seatData?.find((d) => d?.date && FormatDate(d.date) === selectedDay) ?? null;
+  const selectedSeat = seatData?.find((d) => d?.date && FormatDate(d.date) === selectedDay);
   const ticketOptions = buildTicketOptions(selectedSeat);
 
   return { dates, selectedDay, setSelectedDay, ticketOptions };
@@ -119,9 +120,11 @@ const SeatInfo: FC<SeatInfoProps> = ({ eventData }) => {
       <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу!</p>
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
       <TicketList options={ticketOptions} />
-      <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
-        Тасалбар захиалах
-      </Button>
+      <Link href={`/booking/${eventData.id}`} target="_blank">
+        <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
+          Тасалбар захиалах
+        </Button>
+      </Link>
     </div>
   );
 };

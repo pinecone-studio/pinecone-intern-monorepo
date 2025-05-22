@@ -1,9 +1,16 @@
 'use client';
 
-import Card from "./_components/Card/Page";
+import { useAuth } from './(main)/_context/AuthContext';
+import Card from './_components/Card/Page';
 
 const Page = () => {
-  return <div><Card/></div>;
+  const { user } = useAuth();
+  console.log('user', user);
+  return (
+    <div>
+      <Card />
+    </div>
+  );
 };
 
 export default Page;

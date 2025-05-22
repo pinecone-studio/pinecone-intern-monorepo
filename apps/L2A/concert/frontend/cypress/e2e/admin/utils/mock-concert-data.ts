@@ -57,7 +57,7 @@ export const mockConcerts = {
     'https://ticket.mn/files/concerts/images/hunt_nuur_standart_uClNZY8.webp',
     'https://ticket.mn/files/concerts/images/30.1200_L20sqUy.webp',
   ],
-  VIP_PRICE: ['100000', '90000', '80000', '70000', '60000'],
-  BACKSEAT: ['20000', '30000', '40000', '50000', '60000'],
-  standard: ['5000', '10000', '15000', '20000', '25000'],
+  VIP_PRICE: ['10000', '9000', '8000', '7000', '6000'],
+  BACKSEAT: ['2000', '3000', '4000', '5000', '6000'],
+  standard: ['500', '1000', '1500', '2000', '2500'],
 };

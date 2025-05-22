@@ -14,7 +14,7 @@ describe('admin login test', () => {
     cy.get('input[name="password"]').type(password);
     cy.get('button[type="submit"]').click();
     cy.wait('@gql').its('response.statusCode').should('eq', 200);
-    cy.url().should('include', '/admin/ticket');
+    cy.url().should('include', '/admin/concerts');
   });
 
   it("should login successfully but shouldn't trigger if statement", () => {
