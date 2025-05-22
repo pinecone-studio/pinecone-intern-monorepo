@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import DiscountCalendar from './DiscountCalendar';
 
 const MenuDialog = () => {
   return (
@@ -23,7 +22,6 @@ const MenuDialog = () => {
             <DialogDescription className="flex flex-col">
               <Input type="text" placeholder="Хямдралын нэр" className="w-[291px] mt-4" />
               <Input type="text" placeholder="Хямдралын хувь" className="w-[291px] mt-4" />
-              <DiscountCalendar />
             </DialogDescription>
             <Button className="w-[291px]" data-testid="edit-submit">
               Нэмэх
