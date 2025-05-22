@@ -152,7 +152,7 @@
         "reporter": "mochawesome",
         "devServerTarget": "restaurant-frontend:serve:development",
 
-        "browser": "chrome"
+        "browser": "electron"
 
       },
       "dependsOn": [

@@ -1,5 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MainCard from "./_features/MainCard";
+'use client';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import MainCard from './_features/MainCard';
+import SecondCard from './_features/SecondCard';
 
 const MenuPage = () => {
   return (
@@ -17,7 +20,7 @@ const MenuPage = () => {
           <MainCard />
         </TabsContent>
         <TabsContent data-testid="content-manage" value="tab-manage">
-          add
+          <SecondCard />
         </TabsContent>
       </Tabs>
     </div>
