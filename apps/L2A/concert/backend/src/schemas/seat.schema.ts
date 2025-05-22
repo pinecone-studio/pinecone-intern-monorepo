@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const SeatDataTypeDefs = gql`
   type SeatData {
+    id: String!
     date: String!
     seats: SeatCategories!
   }
