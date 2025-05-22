@@ -10,7 +10,6 @@ query Booking($bookingId: ID!) {
       adults
       children
     }
-    roomNumber
     totalPrice
     status
     images
@@ -30,7 +29,6 @@ query Bookings {
       adults
       children
     }
-    roomNumber
     totalPrice
     status
     images
@@ -50,7 +48,6 @@ query PastBookings($userId: ID!) {
       adults
       children
     }
-    roomNumber
     totalPrice
     status
     images
@@ -70,7 +67,6 @@ query UpcomingBookings {
       adults
       children
     }
-    roomNumber
     totalPrice
     images
     createdAt
@@ -90,7 +86,6 @@ mutation CreateBooking($input: BookingInput!) {
       adults
       children
     }
-    roomNumber
     totalPrice
     status
     images
@@ -110,7 +105,6 @@ mutation UpdateBookingStatus($updateBookingStatusId: ID!, $status: BookingStatus
       adults
       children
     }
-    roomNumber
     totalPrice
     status
     images
