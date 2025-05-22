@@ -1,7 +1,7 @@
 import React from 'react';
 
-const page = () => {
-  return <div>pageasdasd</div>;
+const ProfileImagePage = () => {
+  return <div>Profile image page</div>;
 };
 
-export default page;
+export default ProfileImagePage;
