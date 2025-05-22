@@ -5,6 +5,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Button } from '@/components/ui/button';
 import { Concert } from '@/generated';
 import FormatDate from '@/app/_utils/format-date';
+import Link from 'next/link';
 
 type SeatInfoProps = {
   eventData: Concert;
@@ -119,9 +120,11 @@ const SeatInfo: FC<SeatInfoProps> = ({ eventData }) => {
       <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу!</p>
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
       <TicketList options={ticketOptions} />
-      <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
-        Тасалбар захиалах
-      </Button>
+      <Link href={`/booking/${eventData.id}`} target="_blank">
+        <Button disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">
+          Тасалбар захиалах
+        </Button>
+      </Link>
     </div>
   );
 };
