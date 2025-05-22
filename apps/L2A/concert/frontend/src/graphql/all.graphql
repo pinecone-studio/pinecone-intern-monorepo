@@ -156,3 +156,21 @@ mutation updateUserInfo($id: String!, $email: String, $phone: Int) {
     phone
   }
 }
+
+mutation OTP($email: String!) {
+  OTP(email: $email) {
+    id
+  }
+}
+
+mutation OtpStep2($email: String!, $otp: Int!) {
+  OtpStep2(email: $email, otp: $otp) {
+    id
+  }
+}
+
+mutation OtpStep3($email: String!, $otp: Int!, $password: String!) {
+  OtpStep3(email: $email, otp: $otp, password: $password) {
+    id
+  }
+}
