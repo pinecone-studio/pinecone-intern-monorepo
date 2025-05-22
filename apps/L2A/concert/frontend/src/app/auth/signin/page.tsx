@@ -72,6 +72,11 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
+              <div className="flex w-10/12 justify-end">
+                <Link href={`/auth/reset-password`} className="text-xs">
+                  Нууц үгээ мартсан уу?
+                </Link>
+              </div>
               {error && <div className="text-red-500 text-sm">{error.message}</div>}
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="w-[350px] h-[36px] mt-[12px] bg-[#00B7F4]">
                 {form.formState.isSubmitting ? 'Түр хүлээнэ үү...' : 'Нэвтрэх'}
