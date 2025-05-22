@@ -48,6 +48,7 @@ describe('Header', () => {
     expect(screen.getByText(/Нэвтрэх/i)).toBeInTheDocument();
     expect(screen.getByText(/TICKET BOOKING/i)).toBeInTheDocument();
   });
+
   it('should show user email and logout when logged in', async () => {
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => {
       if (key === 'token') return 'mock-jwt-token';
@@ -69,11 +70,38 @@ describe('Header', () => {
 
     expect(window.location.pathname).toBe('/');
   });
+
   it('should throw error when useAuth is used outside AuthProvider', () => {
     const DummyComponent = () => {
       useAuth();
       return null;
     };
     expect(() => render(<DummyComponent />)).toThrowError('useAuth must be used within an AuthProvider');
+  });
+
+  it('should render search input field', () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <AuthProvider>
+          <Header />
+        </AuthProvider>
+      </MockedProvider>
+    );
+
+    const searchInput = screen.getByPlaceholderText('Хайлт');
+    expect(searchInput).toBeInTheDocument();
+  });
+
+  it('should render shopping cart icon', () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <AuthProvider>
+          <Header />
+        </AuthProvider>
+      </MockedProvider>
+    );
+
+    const cartIcon = screen.getByLabelText('Shopping Cart');
+    expect(cartIcon).toBeInTheDocument();
   });
 });

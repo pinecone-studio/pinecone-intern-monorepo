@@ -1,21 +1,25 @@
 'use client';
-import { StepTwoProps } from '@/app/signup/page';
+import { PasswordStepOneProps } from '../page';
 import { useState } from 'react';
 
-export const PasswordStepOne = ({ setStep }: StepTwoProps) => {
-  const [email, setEmail] = useState('');
+export const PasswordStepOne = ({ setStep, setEmail }: PasswordStepOneProps) => {
+  const [email, setEmailLocal] = useState('');
   const [error, setError] = useState('');
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setEmailLocal(e.target.value);
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStep(2);
     if (!email) {
       setError('Email is required');
       return;
     }
+    setEmail(email);
+    setStep(2);
   };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <p className="text-2xl text-center font-bold">Forget password</p>

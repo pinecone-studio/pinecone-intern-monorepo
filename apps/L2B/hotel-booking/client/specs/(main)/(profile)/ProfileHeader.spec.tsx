@@ -1,4 +1,4 @@
-import { ProfileHeader } from '@/app/(main)/_components/ProfileHeader';
+import { ProfileHeader } from '@/app/(main)/(profiles)/_components/ProfileHeader';
 import { GetUserDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';

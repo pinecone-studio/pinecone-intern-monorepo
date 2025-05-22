@@ -12,19 +12,41 @@ query GetUserInfo($jwt: String!) {
     }
   }
 }
-
 query concerts {
   concerts {
     id
     artistName
     description
-    title
-    primaryPrice
-    thumbnailUrl
     doorOpen
     musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    featured
+    title
     venue {
       address
+      capacity
+      city
+      id
+      name
+    }
+    seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
+      date
     }
   }
 }
@@ -54,6 +76,7 @@ query Concert($concertId: String!) {
     endDate
     id
     musicStart
+    featured
     seatData {
       date
       seats {
@@ -73,6 +96,7 @@ query Concert($concertId: String!) {
     }
     specialGuestName
     thumbnailUrl
+    primaryPrice
     title
     venue {
       address
@@ -114,5 +138,20 @@ query AdminGetConcerts {
       id
       name
     }
+  }
+}
+
+mutation ChangeCurrentPassword($email: String!, $currentPassword: String!, $newPassword: String!) {
+  changeCurrentPassword(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
+    id
+    email
+  }
+}
+
+mutation updateUserInfo($id: String!, $email: String, $phone: Int) {
+  updateUserInfo(id: $id, email: $email, phone: $phone) {
+    id
+    email
+    phone
   }
 }

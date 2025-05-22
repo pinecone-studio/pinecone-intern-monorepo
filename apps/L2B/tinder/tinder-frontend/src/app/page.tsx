@@ -1,6 +1,6 @@
 import Container from './_components/Container';
 import Footer from './_components/Footer';
-import Header from './_components/Header';
+import GuestHeader from './_components/GuestHeader';
 
 const Page = () => {
   return (
@@ -15,9 +15,9 @@ const Page = () => {
       }}
       className="flex  flex-col  items-center gap-6 "
     >
-      <Header />
+      <GuestHeader />
       <Container />
-      <Footer/>
+      <Footer />
     </div>
   );
 };
