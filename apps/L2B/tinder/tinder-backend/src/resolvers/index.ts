@@ -1,7 +1,12 @@
-import * as Mutation from './mutations';
+import userResolvers from './mutations/user';
+import imageResolvers from './mutations/image';
 import * as Query from './queries';
 
 export const resolvers = {
-  Mutation,
   Query,
+  Mutation: {
+    ...userResolvers.Mutation,
+    ...imageResolvers.Mutation,
+  },
+  Upload: imageResolvers.Upload,
 };

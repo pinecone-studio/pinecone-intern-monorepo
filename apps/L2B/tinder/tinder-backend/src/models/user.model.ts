@@ -6,6 +6,7 @@ const userSchema = new Schema(
     password: { type: String },
     isVerified: { type: Boolean, default: false },
     verficationCode: { type: String, required: true },
+    images: [String],
   },
   { timestamps: true }
 );

@@ -2,5 +2,6 @@ import { mergeTypeDefs } from '@graphql-tools/merge';
 import { userTypeDefs } from './user.schema';
 
 import { queryTypeDefs } from './query.schema';
+import { mutationTypeDefs } from './mutation.schema';
 
-export const typeDefs = mergeTypeDefs([userTypeDefs, queryTypeDefs]);
+export const typeDefs = mergeTypeDefs([userTypeDefs, queryTypeDefs, mutationTypeDefs]);

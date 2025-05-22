@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 
-export const userTypeDefs = gql`
+export const userTypeDefs = `
   scalar JSON
 
   scalar Date
@@ -13,6 +13,7 @@ export const userTypeDefs = gql`
     verficationCode: String!
     createdAt: String
     updatedAt: String
+    images: [String],
   }
 
   type Mutation {

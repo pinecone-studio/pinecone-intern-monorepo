@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 
-export const queryTypeDefs = gql`
+export const queryTypeDefs = `
   scalar JSON
 
   scalar Date
