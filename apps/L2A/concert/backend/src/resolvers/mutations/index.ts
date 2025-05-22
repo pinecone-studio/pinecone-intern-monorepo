@@ -7,3 +7,6 @@ export * from './create-venue';
 export * from './create-ticket';
 export * from './update-user';
 export * from './change-password';
+export * from './otp';
+export * from './otp-step2';
+export * from './otp-step3';
