@@ -1,10 +1,10 @@
-import Header from '@/app/_components/Header';
+import GuestHeader from '@/app/_components/GuestHeader';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('header components', () => {
   beforeEach(() => {
-    render(<Header />);
+    render(<GuestHeader />);
   });
   it('renders the header image', () => {
     const image = screen.getByAltText('header-image');
