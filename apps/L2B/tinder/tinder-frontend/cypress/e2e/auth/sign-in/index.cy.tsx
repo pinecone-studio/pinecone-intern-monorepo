@@ -30,15 +30,12 @@ describe('SignInPage Integration Tests', () => {
 
     cy.wait('@signInMutation');
 
-    // Verify localStorage
     cy.window().should((win) => {
       expect(win.localStorage.getItem('token')).to.eq('fake-jwt-token');
     });
 
-    // Verify redirect
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
 
-    // Verify success toast
     cy.get('[data-sonner-toast]').should('contain.text', 'Login successful');
   });
 
