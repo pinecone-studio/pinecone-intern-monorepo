@@ -1,5 +1,5 @@
 'use client';
-import { useGetCurrentUserQuery } from '@/generated';
+import { useGetCurrentUserLazyQuery } from '@/generated';
 import { UserType } from '@/utils/type';
 import { useRouter } from 'next/navigation';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
@@ -13,18 +13,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const [JWT, setJWT] = useState<string>('');
   const [user, setUser] = useState<UserType | null>(null);
-
-  useEffect(() => {
-    const storedJWT = localStorage.getItem('authToken');
-    if (storedJWT) setJWT(storedJWT);
-  }, []);
-
-  const { data } = useGetCurrentUserQuery({
-    variables: { jwt: JWT },
-    skip: !JWT,
-  });
 
   const extractUserData = (rawUser: any): UserType => {
     const { email, phone = '', firstName = '', lastName = '', birth = new Date(), emergencyPhone = '', relation = '' } = rawUser;
@@ -39,23 +28,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   };
 
-  const handleUserData = () => {
-    if (data?.getCurrentUser) {
-      const userData = extractUserData(data.getCurrentUser);
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } else {
-      localStorage.clear();
-    }
-  };
+  const [getCurrentUser] = useGetCurrentUserLazyQuery();
 
   useEffect(() => {
-    handleUserData();
-  }, [data, handleUserData]);
+    const storedJWT = localStorage.getItem('authToken') || '';
+    getCurrentUser({
+      variables: {
+        jwt: storedJWT,
+      },
+      onCompleted: (data) => {
+        const userData = extractUserData(data.getCurrentUser);
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+      },
+    });
+  }, []);
 
   const logout = () => {
     localStorage.removeItem('authToken');
-    setJWT('');
     setUser(null);
     router.push('/auth/signin');
   };
