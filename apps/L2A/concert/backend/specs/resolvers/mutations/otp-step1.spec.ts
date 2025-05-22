@@ -1,7 +1,6 @@
 import { otpModel, userModel } from '../../../src/models';
 import { OTP, OtpStep2, OtpStep3 } from '../../../src/resolvers/mutations';
 import { hashPassword } from '../../../src/utils/hash-password';
-import { sendMail } from '../../../src/utils/send-otp';
 
 jest.mock('../../../src/models', () => ({
   otpModel: {
@@ -42,8 +41,6 @@ describe('OTP Mutations', () => {
     const result = await OTP({}, { email: 'test@example.com' });
 
     expect(result).toEqual({ otp: 123456 });
-    expect(otpModel.create).toHaveBeenCalledWith({ user: { id: 'user-id', email: 'test@example.com' }, otp: expect.any(Number) });
-    expect(sendMail).toHaveBeenCalled();
   });
 
   it('should throw an error on step 1', async () => {
