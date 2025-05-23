@@ -3,7 +3,6 @@ import Logo from '../(auth)/login/_components/Logo';
 import { CiShoppingCart } from 'react-icons/ci';
 import HomeSheet from './Sheet';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Notification } from '../_features/Notification';
 import { ShoppingCart } from '../_features/ShoppingCart';
 
 const Header = () => {
@@ -26,7 +25,6 @@ const Header = () => {
             <IoIosNotificationsOutline data-testid="notification-icon" className="w-[26px] h-[26px]" />
           </SheetTrigger>
           <SheetContent>
-            <Notification />
           </SheetContent>
         </Sheet>
         <HomeSheet data-testid="home-sheet" />
