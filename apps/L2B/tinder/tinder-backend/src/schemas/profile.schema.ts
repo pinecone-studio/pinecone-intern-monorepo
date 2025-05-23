@@ -14,7 +14,7 @@ export const profileTypeDefs = gql`
   }
   type Profile {
     _id: ID!
-    user: ID!
+    user: User!
     interestedIn: String!
     age: Int!
     profileInfo: ProfileInfo!
@@ -33,6 +33,10 @@ export const profileTypeDefs = gql`
     age: Int!
     profileInfo: ProfileInput!
     images: [String!]!
+  }
+
+  type Query {
+    fetchProfile(_id: ID!): Profile!
   }
 
   type Mutation {

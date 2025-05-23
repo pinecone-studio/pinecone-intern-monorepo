@@ -1,8 +1,8 @@
-import { model, models, Schema } from 'mongoose';
+import { model, models, Schema, Types } from 'mongoose';
 
 const profileSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: Types.ObjectId, ref: 'User', required: true },
     interestedIn: { type: String, required: true },
     age: { type: Number, required: true },
     profileInfo: {
