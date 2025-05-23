@@ -14,8 +14,7 @@ const MenuDialog = () => {
             Хямдрал
             <Plus className="w-4 h-4 text-muted-foreground" />
           </Button>
-        </DialogTrigger>
-
+        </DialogTrigger>  
         <DialogContent data-testid="edit-dialog">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">Хямдрал нэмэх</DialogTitle>
