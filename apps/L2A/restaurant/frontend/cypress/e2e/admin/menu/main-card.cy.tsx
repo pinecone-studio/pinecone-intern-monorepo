@@ -13,4 +13,8 @@ describe('MainCard Component', () => {
     cy.get('[data-cy="category-buttons"]').eq(1).click();
     cy.get('[data-cy="foodsdiv"]').children().should('have.length.greaterThan', 0);
   });
+
+  it("should select category", ()=> {
+    cy.get('[data-testid="category-button-1"]').click();
+  })
 });

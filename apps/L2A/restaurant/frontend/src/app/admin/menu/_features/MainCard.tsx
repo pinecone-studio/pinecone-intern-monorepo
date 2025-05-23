@@ -16,9 +16,10 @@ const MainCard = () => {
           <div data-cy="home-page">
             <div className="flex items-center flex-col pt-3">
               <div data-cy="food" className="flex gap-2 mb-4 w-[536px] border-b">
-                {menuCategories.map((category) => (
+                {menuCategories.map((category, i) => (
                   <div
                     data-cy="category-buttons"
+                    data-testid={`category-button-${i}`}
                     key={category.id}
                     className="flex items-center justify-center px-3 py-2 text-[14px] hover:border-b-2 hover:border-black"
                     onClick={() => setSelectedCategoryId(category.id)}
