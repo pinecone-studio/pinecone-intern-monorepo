@@ -48,3 +48,6 @@ mutation ForgotPassword($email: String!, $password: String!) {
     updatedAt
   }
 }
+mutation SignIn($email: String!, $password: String!) {
+  signIn(email: $email, password: $password)
+}
