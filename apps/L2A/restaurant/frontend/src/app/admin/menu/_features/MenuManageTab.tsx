@@ -15,7 +15,7 @@ const MenuManageTab = () => {
             Цэс
           </TabsTrigger>
           <TabsTrigger data-testid="discount1" value="discount" className="w-[120px]">
-            Хямдрал
+            Хямдрал.
           </TabsTrigger>
         </TabsList>
         <TabsContent data-testid="all" value="all">
