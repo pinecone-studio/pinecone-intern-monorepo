@@ -5,9 +5,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Image from 'next/image';
 import { Room, useRoomsByHotelQuery } from '@/generated';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const RoomsByHotel = () => {
   const [rooms, setRooms] = useState<Room[]>();
+  const router = useRouter();
 
   const { data } = useRoomsByHotelQuery({
     variables: {
@@ -74,7 +76,7 @@ export const RoomsByHotel = () => {
               </TableHeader>
               <TableBody>
                 {rooms?.filter(tab.filter).map((room: Room, index) => (
-                  <TableRow key={index} className="cursor-pointer">
+                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/hotel-id/${room.id}`)}>
                     <TableCell className="border-r-[1px]">{room.roomNumber}</TableCell>
                     <TableCell className="flex items-center gap-3 border-r-[1px]">
                  {room.images?.[0] ? (
