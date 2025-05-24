@@ -1,15 +1,11 @@
 'use client';
 
-import { useAuth } from './(main)/_context/AuthContext';
-import Card from './_components/Card/Page';
+import SearchFilter from './(main)/_components/SeacrhFilter';
 
 const Page = () => {
-  const { user } = useAuth();
-  console.log('user', user);
-
   return (
     <div>
-      <Card />
+      <SearchFilter />
     </div>
   );
 };
