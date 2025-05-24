@@ -70,4 +70,10 @@ describe.only('RoomsByHotel Page', () => {
     cy.contains('Unknown Room');
     cy.contains('1 Bed');
   });
+
+  it('should navigate to room detail page on row click', () => {
+    cy.get('table').contains('td', 'Mock Room 1').parents('tr').click();
+
+    cy.location('pathname').should('eq', '/hotels/hotel-id/1');
+  });
 });
