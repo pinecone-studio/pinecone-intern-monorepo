@@ -14,6 +14,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Ариун цэврийн өрөөний тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Зогсоолын утга сонгоно уу!').should('be.visible');
     cy.contains('Дэлгэрэнгүй тайлбар бичнэ үү!').should('be.visible');
+    cy.contains('Зураг заавал оруулна уу!').should('be.visible');
     cy.contains('Дүүрэг заавал оруулна уу!').should('be.visible');
     cy.contains('Хороо заавал оруулна уу!').should('be.visible');
     cy.contains('Ашиглалтанд орсон он заавал оруулна уу!').should('be.visible');
@@ -24,6 +25,7 @@ describe('CreatePostCard form', () => {
     cy.contains('Барилгын давхрын тоог заавал оруулна уу!').should('be.visible');
     cy.contains('Шалны загварыг заавал оруулна уу!').should('be.visible');
     cy.contains('Тагтны тоог заавал оруулна уу!').should('be.visible');
+    cy.contains('Зураг заавал оруулна уу!').should('be.visible');
   });
 
   it('Submits form when all fields are valid', () => {
@@ -40,6 +42,8 @@ describe('CreatePostCard form', () => {
     cy.get('[data-testid="parking-option-yes"]').click();
 
     cy.get('textarea[name="text"]').type('Шинэ байрны тайлбар');
+    cy.get('button[type="submit"]').click();
+
     cy.get('input[name="district"]').type('Сүхбаатар');
     cy.get('input[name="section"]').type('1-р хороо');
     cy.get('input[name="year"]').type('2023');
@@ -51,11 +55,14 @@ describe('CreatePostCard form', () => {
     cy.get('input[name="ground"]').type('Паркетан шал');
     cy.get('input[name="balcony"]').type('1');
 
+    cy.get('[data-testid="image-upload-input"]').selectFile('cypress/fixtures/sample.jpg', { force: true });
     cy.get('button[type="submit"]').click();
 
     cy.window().then((win) => {
       cy.stub(win.console, 'log').as('consoleLog');
     });
+
+    cy.get('button[type="submit"]').click();
 
     cy.get('@consoleLog').should('be.calledWithMatch', {
       type: 'house',
@@ -66,6 +73,7 @@ describe('CreatePostCard form', () => {
       restroom: '2',
       parking: 'yes',
       text: 'Шинэ байрны тайлбар',
+      images: ['test.jpg'],
       district: 'Сүхбаатар',
       section: '1-р хороо',
       year: '2023',

@@ -11,7 +11,7 @@ type Props = {
 export const CreatePostYear = ({name, value, onChange, onBlur, error}: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Ашиглалтанд орсон он</label>
+      <label htmlFor={name} className="block text-MD text-[#09090B] pb-1 mt-4">Ашиглалтанд орсон он</label>
       <input
         id={name}
         name={name}
