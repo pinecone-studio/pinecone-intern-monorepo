@@ -1,7 +1,19 @@
-mutation CreateRoom($input: RoomInput!) {
-  createRoom(input: $input) {
-    id
-    hotelId
+mutation CreateRoom {
+  createRoom {
+    _id
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
     name
     type
     pricePerNight
@@ -31,10 +43,22 @@ mutation DeleteRoom($deleteRoomId: ID!) {
   }
 }
 
-mutation UpdateRoom($updateRoomId: ID!, $input: RoomUpdateInput) {
-  updateRoom(id: $updateRoomId, input: $input) {
-    id
-    hotelId
+mutation UpdateRoom {
+  updateRoom {
+    _id
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
     name
     type
     pricePerNight
@@ -57,10 +81,22 @@ mutation UpdateRoom($updateRoomId: ID!, $input: RoomUpdateInput) {
   }
 }
 
-query Room($roomId: ID!) {
-  room(id: $roomId) {
-    id
-    hotelId
+query Room {
+  room {
+    _id
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
     name
     type
     pricePerNight
@@ -85,8 +121,20 @@ query Room($roomId: ID!) {
 
 query Rooms {
   rooms {
-    id
-    hotelId
+    _id
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
     name
     type
     pricePerNight
@@ -109,10 +157,9 @@ query Rooms {
   }
 }
 
-query RoomsByHotel($hotelId: ID!) {
+query RoomsByHotel($hotelId: ID) {
   roomsByHotel(hotelId: $hotelId) {
-    id
-    hotelId
+    _id
     name
     type
     pricePerNight

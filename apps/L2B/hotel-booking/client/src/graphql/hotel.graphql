@@ -1,6 +1,6 @@
 mutation UpdateHotel($updateHotelId: ID!, $input: HotelInput) {
   updateHotel(id: $updateHotelId, input: $input) {
-    id
+    _id
     name
     location
     starRating
@@ -16,7 +16,7 @@ mutation UpdateHotel($updateHotelId: ID!, $input: HotelInput) {
 
 mutation CreateHotel($input: HotelInput!) {
   createHotel(input: $input) {
-    id
+    _id
     name
     location
     starRating
@@ -39,7 +39,7 @@ mutation DeleteHotel($deleteHotelId: ID!) {
 
 query Hotel($hotelId: ID!) {
   hotel(id: $hotelId) {
-    id
+    _id
     name
     location
     starRating
@@ -55,7 +55,7 @@ query Hotel($hotelId: ID!) {
 
 query Hotels {
   hotels {
-    id
+    _id
     name
     location
     starRating

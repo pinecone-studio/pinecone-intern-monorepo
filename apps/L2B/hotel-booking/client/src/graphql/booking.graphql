@@ -1,9 +1,66 @@
 query Booking($bookingId: ID!) {
   booking(id: $bookingId) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -19,10 +76,67 @@ query Booking($bookingId: ID!) {
 }
 query Bookings {
   bookings {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -36,12 +150,70 @@ query Bookings {
     updatedAt
   }
 }
+
 query PastBookings($userId: ID!) {
   pastBookings(userId: $userId) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -57,10 +229,67 @@ query PastBookings($userId: ID!) {
 }
 query UpcomingBookings {
   upcomingBookings {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -68,18 +297,75 @@ query UpcomingBookings {
       children
     }
     totalPrice
+    status
     images
     createdAt
     updatedAt
-    status
   }
 }
 mutation CreateBooking($input: BookingInput!) {
   createBooking(input: $input) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -95,10 +381,67 @@ mutation CreateBooking($input: BookingInput!) {
 }
 mutation UpdateBookingStatus($updateBookingStatusId: ID!, $status: BookingStatus!) {
   updateBookingStatus(id: $updateBookingStatusId, status: $status) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      hotelId {
+        _id
+        name
+        location
+        starRating
+        rating
+        description
+        amenities
+        phone
+        images
+        createdAt
+        updatedAt
+      }
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
