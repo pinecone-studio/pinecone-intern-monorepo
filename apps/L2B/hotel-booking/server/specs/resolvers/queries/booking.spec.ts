@@ -1,84 +1,138 @@
-import { GraphQLResolveInfo } from 'graphql';
-import { bookingModel } from '../../../src/models';
-import { booking, bookings, pastBookings, upcomingBookings } from '../../../src/resolvers/queries';
+const mockBookingModel = {
+  find: jest.fn(),
+  findById: jest.fn(),
+};
 
 jest.mock('../../../src/models', () => ({
-  bookingModel: {
-    find: jest.fn(),
-    findById: jest.fn(),
-  },
+  bookingModel: mockBookingModel,
 }));
+
+import { GraphQLResolveInfo } from 'graphql';
+import { booking, bookings, pastBookings, upcomingBookings } from '../../../src/resolvers/queries/booking';
 
 describe('Booking Query Resolvers', () => {
   const info = {} as GraphQLResolveInfo;
+  const mockBooking = {
+    _id: 'booking1',
+    userId: { _id: 'user1', name: 'Test User' },
+    hotelId: { _id: 'hotel1', name: 'Test Hotel' },
+    roomId: { _id: 'room1', name: 'Test Room' },
+    checkInDate: new Date('2023-12-01'),
+    checkOutDate: new Date('2023-12-05'),
+    totalPrice: 500,
+    status: 'booked',
+  };
+
+  const createMockQuery = (resolveValue: any) => ({
+    populate: jest.fn().mockReturnThis(),
+    then: jest.fn((resolve) => resolve(resolveValue)),
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2023-11-01'));
   });
 
-  it('should return all bookings', async () => {
-    const mockBookings = [{ id: '1' }, { id: '2' }];
-    (bookingModel.find as jest.Mock).mockResolvedValueOnce(mockBookings);
-
-    const result = await bookings!({}, {}, {}, info);
-    expect(bookingModel.find).toHaveBeenCalledWith({});
-    expect(result).toEqual(mockBookings);
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
-  it('should return a booking by ID', async () => {
-    const mockBooking = { id: 'abc123', name: 'Test Booking' };
+  describe('bookings', () => {
+    it('should return all bookings with populated fields', async () => {
+      const mockQuery = createMockQuery([mockBooking]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
 
-    const populateMock3 = jest.fn().mockResolvedValueOnce(mockBooking);
-    const populateMock2 = jest.fn().mockReturnValue({ populate: populateMock3 });
-    const populateMock1 = jest.fn().mockReturnValue({ populate: populateMock2 });
+      const result = await bookings!({}, {}, {}, info);
 
-    (bookingModel.findById as jest.Mock).mockReturnValue({ populate: populateMock1 });
-
-    const result = await booking!({}, { id: 'abc123' }, {}, info);
-    expect(bookingModel.findById).toHaveBeenCalledWith('abc123');
-    expect(result).toEqual(mockBooking);
-  });
-
-  it('should throw if booking not found', async () => {
-    const populateMock3 = jest.fn().mockResolvedValueOnce(null);
-    const populateMock2 = jest.fn().mockReturnValue({ populate: populateMock3 });
-    const populateMock1 = jest.fn().mockReturnValue({ populate: populateMock2 });
-
-    (bookingModel.findById as jest.Mock).mockReturnValue({ populate: populateMock1 });
-
-    await expect(booking!({}, { id: 'missing-id' }, {}, info)).rejects.toThrow('Booking not found');
-  });
-
-  it('should return upcoming bookings', async () => {
-    const mockUpcoming = [{ id: 'upcoming1' }];
-    (bookingModel.find as jest.Mock).mockReturnValue({
-      populate: jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          populate: jest.fn().mockResolvedValueOnce(mockUpcoming),
-        }),
-      }),
+      expect(mockBookingModel.find).toHaveBeenCalledWith();
+      expect(mockQuery.populate).toHaveBeenCalledWith('userId');
+      expect(mockQuery.populate).toHaveBeenCalledWith('hotelId');
+      expect(mockQuery.populate).toHaveBeenCalledWith('roomId');
+      expect(result).toEqual([mockBooking]);
     });
 
-    const result = await upcomingBookings!({}, {}, {}, info);
-    expect(bookingModel.find).toHaveBeenCalledWith({
-      checkInDate: { $gte: expect.any(Date) },
+    it('should return empty array when no bookings exist', async () => {
+      const mockQuery = createMockQuery([]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
+
+      const result = await bookings!({}, {}, {}, info);
+      expect(result).toEqual([]);
     });
-    expect(result).toEqual(mockUpcoming);
   });
 
-  it('should return past bookings for a user', async () => {
-    const mockPast = [{ id: 'past1' }];
-    (bookingModel.find as jest.Mock).mockReturnValue({
-      populate: jest.fn().mockReturnValue({
-        populate: jest.fn().mockResolvedValueOnce(mockPast),
-      }),
+  describe('booking', () => {
+    it('should return a booking by ID with populated fields', async () => {
+      const mockQuery = createMockQuery(mockBooking);
+      mockBookingModel.findById.mockReturnValueOnce(mockQuery);
+
+      const result = await booking!({}, { id: 'booking1' }, {}, info);
+
+      expect(mockBookingModel.findById).toHaveBeenCalledWith('booking1');
+      expect(mockQuery.populate).toHaveBeenCalledWith('userId');
+      expect(result).toEqual(mockBooking);
     });
 
-    const result = await pastBookings!({}, { userId: 'user123' }, {}, info);
-    expect(bookingModel.find).toHaveBeenCalledWith({
-      userId: 'user123',
-      checkOutDate: { $lt: expect.any(Date) },
+    it('should throw an error if booking not found', async () => {
+      const mockQuery = createMockQuery(null);
+      mockBookingModel.findById.mockReturnValueOnce(mockQuery);
+
+      await expect(booking!({}, { id: 'invalid-id' }, {}, info)).rejects.toThrow('Booking not found');
     });
-    expect(result).toEqual(mockPast);
+
+    it('should throw an error if booking is undefined', async () => {
+      const mockQuery = createMockQuery(undefined);
+      mockBookingModel.findById.mockReturnValueOnce(mockQuery);
+
+      await expect(booking!({}, { id: 'undefined-id' }, {}, info)).rejects.toThrow('Booking not found');
+    });
+  });
+
+  describe('upcomingBookings', () => {
+    it('should return upcoming bookings with populated fields', async () => {
+      const mockQuery = createMockQuery([mockBooking]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
+
+      const result = await upcomingBookings!({}, {}, {}, info);
+
+      const expectedDate = new Date('2023-11-01');
+      expect(mockBookingModel.find).toHaveBeenCalledWith({ checkInDate: { $gte: expectedDate } });
+      expect(mockQuery.populate).toHaveBeenCalledWith('userId');
+      expect(result).toEqual([mockBooking]);
+    });
+
+    it('should return empty array when no upcoming bookings', async () => {
+      const mockQuery = createMockQuery([]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
+
+      const result = await upcomingBookings!({}, {}, {}, info);
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('pastBookings', () => {
+    it('should return past bookings for a user with populated fields', async () => {
+      jest.setSystemTime(new Date('2024-01-01'));
+      const mockQuery = createMockQuery([mockBooking]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
+
+      const result = await pastBookings!({}, { userId: 'user1' }, {}, info);
+
+      const expectedDate = new Date('2024-01-01');
+      expect(mockBookingModel.find).toHaveBeenCalledWith({
+        userId: 'user1',
+        checkOutDate: { $lt: expectedDate },
+      });
+      expect(mockQuery.populate).toHaveBeenCalledWith('userId');
+      expect(result).toEqual([mockBooking]);
+    });
+
+    it('should return empty array when user has no past bookings', async () => {
+      const mockQuery = createMockQuery([]);
+      mockBookingModel.find.mockReturnValueOnce(mockQuery);
+
+      const result = await pastBookings!({}, { userId: 'user-no-bookings' }, {}, info);
+      expect(result).toEqual([]);
+    });
   });
 });

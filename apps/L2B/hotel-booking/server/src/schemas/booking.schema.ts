@@ -16,10 +16,10 @@ export const BookingTypeDefs = gql`
   }
 
   type Booking {
-    id: ID!
-    userId: ID!
-    hotelId: ID!
-    roomId: ID!
+    _id: ID!
+    userId: User!
+    hotelId: Hotel!
+    roomId: Room!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInfo!
