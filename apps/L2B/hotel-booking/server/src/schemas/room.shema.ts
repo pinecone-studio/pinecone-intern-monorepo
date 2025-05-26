@@ -37,7 +37,7 @@ export const RoomTypeDefs = gql`
   }
 
   input RoomInput {
-    hotelId: String
+    hotelId: ID
     name: String
     type: RoomType
     pricePerNight: Float
