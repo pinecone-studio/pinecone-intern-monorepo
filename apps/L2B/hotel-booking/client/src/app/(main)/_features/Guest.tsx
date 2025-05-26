@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ChevronDown, Minus, Plus, User } from 'lucide-react';
 import React from 'react';
-import useCounter from './UseCounter';
+import useCounter from '../_components/UseCounter';
 
 const GuestOptions = () => {
   const [isGuestOpen, setIsGuestOpen] = React.useState(false);
@@ -12,7 +12,7 @@ const GuestOptions = () => {
   const guestInfo = `${adults} ${adults === 1 ? 'traveller' : 'travellers'}, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`;
 
   return (
-    <div data-cy="guest-options">
+    <div data-cy="guest-options" data-testid="guest-options">
       <Popover open={isGuestOpen} onOpenChange={setIsGuestOpen}>
         <PopoverTrigger asChild className="border-[1px]" data-cy="guest-options-trigger">
           <Button variant="outline" className="w-full justify-between text-left font-normal h-[40px]" data-cy="guest-options-trigger">

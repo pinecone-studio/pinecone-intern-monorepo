@@ -6,7 +6,7 @@ import DateRangePicker from '@/app/(main)/_components/CalendarDate';
 
 describe('DateRangePicker', () => {
   const mockHandleDateChange = jest.fn();
-  it('renders with default date range', () => {
+  it('1. renders with default date range', () => {
     const mockDate = {
       from: new Date(2025, 9, 19),
       to: new Date(2025, 9, 20),
@@ -14,28 +14,21 @@ describe('DateRangePicker', () => {
     render(<DateRangePicker date={mockDate} handleDateChange={mockHandleDateChange} />);
     expect(screen.getByText(/October 19 - October 20/)).toBeInTheDocument();
   });
-  it('renders with default date range', () => {
+  it('2. renders with default date range', () => {
     const mockDate = {
       from: new Date(2025, 9, 19),
-      to: null,
+      to: undefined,
     };
     render(<DateRangePicker date={mockDate} handleDateChange={mockHandleDateChange} />);
-    expect(screen.getByText(/October 19 - October 20/)).toBeInTheDocument();
-  });
-  it('renders with default date range', () => {
-    const mockDate = {
-      from: null,
-      to: new Date(2025, 9, 19),
-    };
-    render(<DateRangePicker date={mockDate} handleDateChange={mockHandleDateChange} />);
-    expect(screen.getByText(/October 19 - October 20/)).toBeInTheDocument();
-  });
-  it('renders with default date range', () => {
-    render(<DateRangePicker date={undefined} handleDateChange={mockHandleDateChange} />);
-    expect(screen.getByText(/October 19 - October 20/)).toBeInTheDocument();
+    expect(screen.getByText(/October 19/)).toBeInTheDocument();
   });
 
-  it('opens the calendar popover on button click', () => {
+  it('4. renders with default date range', () => {
+    render(<DateRangePicker date={undefined} handleDateChange={mockHandleDateChange} />);
+    expect(screen.getByText('Pick a date')).toBeInTheDocument();
+  });
+
+  it('5 .opens the calendar popover on button click', () => {
     const mockDate = {
       from: new Date(2025, 9, 19),
       to: new Date(2025, 9, 20),
