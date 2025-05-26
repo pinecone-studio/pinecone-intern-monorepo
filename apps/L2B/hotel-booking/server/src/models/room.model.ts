@@ -2,15 +2,15 @@ import { model, models, Schema } from 'mongoose';
 
 const roomSchema = new Schema(
   {
-    hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel', required: true },
-    name: { type: String, required: true },
+    hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel' },
+    name: { type: String },
     type: {
       type: String,
       enum: ['single', 'double', 'twin', 'suite', 'deluxe', 'family'],
       required: true,
     },
-    pricePerNight: { type: Number, required: true },
-    information: { type: String, required: true },
+    pricePerNight: { type: Number },
+    information: { type: [String] },
     services: {
       bathroom: { type: [String], default: [] },
       accessibility: { type: [String], default: [] },
@@ -22,7 +22,7 @@ const roomSchema = new Schema(
       bedroom: { type: [String], default: [] },
     },
     images: { type: [String], default: [] },
-    roomNumber: { type: Number, required: true },
+    roomNumber: { type: Number },
     isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }

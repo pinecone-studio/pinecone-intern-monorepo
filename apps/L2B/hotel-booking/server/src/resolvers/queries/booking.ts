@@ -2,14 +2,13 @@ import { QueryResolvers } from '../../generated';
 import { bookingModel } from '../../models';
 
 export const bookings: QueryResolvers['bookings'] = async () => {
-  return await bookingModel.find({});
+  return await bookingModel.find().populate('userId').populate('hotelId').populate('roomId');
 };
 
 export const booking: QueryResolvers['booking'] = async (_, { id }) => {
   const foundBooking = await bookingModel.findById(id).populate('userId').populate('hotelId').populate('roomId');
-  if (!foundBooking) {
-    throw new Error('Booking not found');
-  }
+
+  if (!foundBooking) throw new Error('Booking not found');
   return foundBooking;
 };
 
@@ -29,6 +28,7 @@ export const pastBookings: QueryResolvers['pastBookings'] = async (_, { userId }
       userId,
       checkOutDate: { $lt: today },
     })
-    .populate('roomId')
-    .populate('hotelId');
+    .populate('userId')
+    .populate('hotelId')
+    .populate('roomId');
 };
