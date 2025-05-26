@@ -28,7 +28,7 @@ export const HeaderAuth = ({ bg, user }: HeaderAuthProps) => {
           <Link href={`/profile?userId=${user.id}`}>
             <div className="flex itemws-center gap-3 cursor-pointer">
               <User size={16} />
-              <p className="text-[14px]">My Profile</p>
+              <p className="text-[14px]">My profile</p>
             </div>
           </Link>
           <div className="flex items-center gap-3 cursor-pointer" onClick={logout}>
