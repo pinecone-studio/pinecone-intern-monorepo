@@ -24,4 +24,11 @@ describe('HeaderAuth', () => {
     expect(screen.getByText(/my booking/i)).toBeInTheDocument();
     expect(screen.getByText('Alice')).toBeInTheDocument();
   });
+
+  it('renders "My Profile" if firstName is not provided', async () => {
+    const user = { id: '456' };
+    renderWithAuth(user);
+
+    expect(screen.getByText(/my profile/i)).toBeInTheDocument();
+  });
 });

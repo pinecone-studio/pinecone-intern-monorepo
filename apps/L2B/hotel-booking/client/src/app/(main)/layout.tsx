@@ -13,12 +13,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const bgColor = blueBgRoutes.includes(pathname) ? 'blue' : 'white';
 
   return (
-    <html>
-      <body>
-        {showHeader && <Header bg={bgColor} />}
-        {children}
-      </body>
-    </html>
+    <div>
+      {showHeader && <Header bg={bgColor} />}
+      {children}
+    </div>
   );
 };
 
