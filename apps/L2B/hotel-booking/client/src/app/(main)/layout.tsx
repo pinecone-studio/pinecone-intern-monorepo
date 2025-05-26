@@ -2,7 +2,7 @@
 import Header from '../_components/Header';
 import { usePathname } from 'next/navigation';
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   const hideHeaderRoutes = ['/signin', '/signup'];
@@ -22,4 +22,4 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default RootLayout;
+export default Layout;
