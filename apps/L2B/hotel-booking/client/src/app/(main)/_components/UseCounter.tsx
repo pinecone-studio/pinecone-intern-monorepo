@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 
 const useCounter = (initialValue = 1, min = 1) => {
