@@ -1,6 +1,7 @@
 import { OrderStatusCard } from '@/app/orderhistory/_components/OrderStatusCard';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import Header from '@/app/_components/Header';
 
 describe('OrderStatusCard', () => {
   const baseProps = {
@@ -10,6 +11,7 @@ describe('OrderStatusCard', () => {
   };
 
   it('renders correctly with status "done"', () => {
+    render(<Header />);
     render(<OrderStatusCard {...baseProps} status="done" />);
     expect(screen.getByText('#12345')).toBeInTheDocument();
     expect(screen.getByText('Дууссан')).toBeInTheDocument();
