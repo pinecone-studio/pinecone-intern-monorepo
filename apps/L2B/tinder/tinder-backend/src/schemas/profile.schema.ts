@@ -37,6 +37,7 @@ export const profileTypeDefs = gql`
 
   type Query {
     fetchProfile(_id: ID!): Profile!
+    fetchAllProfile: [Profile!]!
   }
 
   type Mutation {
