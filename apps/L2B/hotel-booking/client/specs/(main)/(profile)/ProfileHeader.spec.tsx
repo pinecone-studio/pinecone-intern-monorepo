@@ -1,42 +1,33 @@
 import { ProfileHeader } from '@/app/(main)/(profiles)/_components/ProfileHeader';
-import { GetUserDocument } from '@/generated';
-import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { AuthContext } from '@/app/(main)/_context/AuthContext';
+import { UserType } from '@/utils/type';
 
-const mockUserEmail = 'testuser@example.com';
+const mockUser: UserType = {
+  _id: '682207ae2c5870fba2e6da4c',
+  email: 'testuser@example.com',
+  firstName: 'Test',
+  lastName: 'User',
+  birth: new Date('1990-01-01'),
+  phone: '123456789',
+  relation: 'Friend',
+  emergencyPhone: '987654321',
+};
 
-const mocks = [
-  {
-    request: {
-      query: GetUserDocument,
-      variables: {
-        id: '682207ae2c5870fba2e6da4c',
-      },
-    },
-    result: {
-      data: {
-        getUser: {
-          __typename: 'User',
-          email: mockUserEmail,
-        },
-      },
-    },
-  },
-];
+const renderWithProviders = () => {
+  return render(
+    <AuthContext.Provider value={{ user: mockUser, logout: jest.fn(), fetchUser: jest.fn() }}>
+      <ProfileHeader />
+    </AuthContext.Provider>
+  );
+};
 
 describe('ProfileHeader', () => {
-  it('renders user email from useGetUserQuery', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <ProfileHeader />
-      </MockedProvider>
-    );
+  it('renders user email from useAuth', async () => {
+    renderWithProviders();
 
-    expect(screen.getByText('Hi,')).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.getByText(mockUserEmail)).toBeInTheDocument();
-    });
+    expect(screen.getByText('Hi,Test')).toBeInTheDocument();
+    expect(screen.getByText(mockUser.email)).toBeInTheDocument();
   });
 });
