@@ -15,6 +15,7 @@ export const createProfile: MutationResolvers['createProfile'] = async (_: unkno
     },
     images: input.images,
   });
+  const populateNewProfile = await newProfile.populate('user');
 
-  return newProfile;
+  return populateNewProfile;
 };
