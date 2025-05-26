@@ -1,4 +1,4 @@
-import Card from '@/app/_components/Card/Page';
+import Card from '@/app/_components/Card/Card';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';

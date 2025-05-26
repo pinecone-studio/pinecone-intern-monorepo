@@ -1,10 +1,11 @@
 import { HeadphonesIcon, MailIcon, PhoneIcon } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const Footer = () => {
   return (
     <footer className="w-screen py-10 flex justify-center ">
-      <div className="max-w-[1280px] h-[200px] flex gap-[120px] text-[14px] m-auto">
+      <div className="max-w-[1135px] h-[200px] flex gap-[120px] text-[14px] m-auto">
         <div className="flex flex-col ">
           <Link href={'/'}>
             <div className=" flex gap-2 items-center ">
@@ -13,6 +14,7 @@ export const Footer = () => {
             </div>
           </Link>
           <p>© 2024 Booking Mongolia. All Rights Reserved</p>
+          <Image width={250} height={200} alt="" src="/payment.png" className="mt-8" />
         </div>
         <div className=" flex flex-col gap-3 w-[158px] h-40 ">
           <p>Contact Information</p>

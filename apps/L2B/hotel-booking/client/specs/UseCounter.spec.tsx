@@ -29,7 +29,7 @@ describe('useCounter', () => {
     act(() => {
       result.current.decrement();
     });
-    expect(result.current.count).toBe(1); // should not go below min
+    expect(result.current.count).toBe(1);
   });
 
   it('respects custom min value', () => {
