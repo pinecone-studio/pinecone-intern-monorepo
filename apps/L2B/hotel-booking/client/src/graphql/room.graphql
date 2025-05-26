@@ -43,8 +43,8 @@ mutation DeleteRoom($deleteRoomId: ID!) {
   }
 }
 
-mutation UpdateRoom {
-  updateRoom {
+mutation UpdateRoom($updateRoomId: ID, $input: RoomUpdateInput) {
+  updateRoom(id: $updateRoomId, input: $input) {
     _id
     hotelId {
       _id
@@ -81,8 +81,8 @@ mutation UpdateRoom {
   }
 }
 
-query Room {
-  room {
+query Room($roomId: ID) {
+  room(id: $roomId) {
     _id
     hotelId {
       _id
