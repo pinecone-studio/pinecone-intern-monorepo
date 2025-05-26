@@ -8,7 +8,7 @@ describe('GeneralInfo feature', () => {
 
   beforeEach(() => {
     cy.intercept('POST', '**/graphql', (req) => {
-      if (req.body.operationName === 'room') {
+      if (req.body.query?.includes('room(')) {
         req.reply({
           data: {
             room: mockRoom,
@@ -16,11 +16,11 @@ describe('GeneralInfo feature', () => {
         });
       }
     }).as('getRoom');
-
     cy.visit('/hotels/abc123/room123');
   });
 
   it('renders General Info correctly', () => {
+    cy.visit('/hotels/abc123/room123');
     cy.wait('@getRoom');
 
     cy.contains('General Info').should('exist');
