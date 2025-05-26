@@ -1,12 +1,6 @@
-'use client';
-
-import SearchFilter from './(main)/_components/SeacrhFilter';
 
 const Page = () => {
-  return (
-    <div>
-      <SearchFilter />
-    </div>
-  );
+  return <div></div>;
+
 };
 export default Page;

@@ -3,6 +3,7 @@ import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { Toaster } from 'sonner';
 import { AuthProvider } from './(main)/_context/AuthContext';
+import Layout from './(main)/layout';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -15,7 +16,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body className="flex flex-col gap-5">
         <Toaster />
         <ApolloWrapper>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Layout>{children}</Layout>
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>
