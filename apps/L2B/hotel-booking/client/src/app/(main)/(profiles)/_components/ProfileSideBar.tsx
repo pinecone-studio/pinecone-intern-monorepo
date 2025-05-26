@@ -1,8 +1,10 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuth } from '../../_context/AuthContext';
 
 const ProfileSideBar = () => {
+  const { user } = useAuth();
   const [selectedPage, setSelectedPage] = useState<string | '/hotels'>('/hotels');
 
   const handleSelect = (uri: string) => {
@@ -18,27 +20,27 @@ const ProfileSideBar = () => {
         <button
           data-testid="Profile"
           onClick={() => {
-            handleSelect('/profile');
+            handleSelect(`/profile?userId=${user?._id}`);
           }}
-          className={selectedPage === '/profile' ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
+          className={selectedPage === `/profile?userId=${user?._id}` ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
         >
           <p className="text-[14px] font-normal">Profile</p>
         </button>
         <button
           data-testid="Contact"
           onClick={() => {
-            handleSelect('/contact');
+            handleSelect(`/contact?userId=${user?._id}`);
           }}
-          className={selectedPage === '/contact' ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
+          className={selectedPage === `/contact?userId=${user?._id}` ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
         >
           <p className="text-[14px] font-normal">Contact</p>
         </button>
         <button
           data-testid="Security"
           onClick={() => {
-            handleSelect('/security');
+            handleSelect(`/security?userId=${user?._id}`);
           }}
-          className={selectedPage === '/security' ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
+          className={selectedPage === `/security?userId=${user?._id}` ? 'bg-[#F4F4F5] flex items-center h-9 rounded-sm px-2 py-1.5' : 'flex items-center h-9 rounded-sm px-2 py-1.5'}
         >
           <p className="text-[14px] font-normal">Security</p>
         </button>

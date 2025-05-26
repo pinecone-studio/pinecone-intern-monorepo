@@ -3,7 +3,7 @@ import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { Toaster } from 'sonner';
 import { AuthProvider } from './(main)/_context/AuthContext';
-import Layout from './(main)/layout';
+import HeaderWrapper from './(main)/_components/HeaderWrapper';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -17,7 +17,8 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         <Toaster />
         <ApolloWrapper>
           <AuthProvider>
-            <Layout>{children}</Layout>
+            <HeaderWrapper />
+            {children}
           </AuthProvider>
         </ApolloWrapper>
       </body>

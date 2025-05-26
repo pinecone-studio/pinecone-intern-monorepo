@@ -35,7 +35,7 @@ export const DatePicker = ({ field }: DatePickerProps) => {
           <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} captionLayout="dropdown" fromYear={1900} toYear={new Date().getFullYear()} initialFocus />
         </PopoverContent>
       </Popover>
-      {getHelperText(age)}
+      <p className="text-[14px] font-extralight">{getHelperText(age)}</p>
       <FormMessage data-cy="Personal-Birth-Drop-Down-Error-Message" className="font-extralight" />
     </FormItem>
   );

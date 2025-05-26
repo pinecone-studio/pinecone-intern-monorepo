@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
 
   const extractUserData = (rawUser: any): UserType => {
-    const { id, email, phone = '', firstName = '', lastName = '', birth = new Date(), emergencyPhone = '', relation = '' } = rawUser;
+    const { _id, email, phone = '', firstName = '', lastName = '', birth = new Date(), emergencyPhone = '', relation = '' } = rawUser;
     return {
-      id,
+      _id,
       email,
       phone,
       firstName,
