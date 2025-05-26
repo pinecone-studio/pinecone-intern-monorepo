@@ -25,7 +25,7 @@ export const HeaderAuth = ({ bg, user }: HeaderAuthProps) => {
           </p>
         </PopoverTrigger>
         <PopoverContent align="start" className="flex flex-col gap-3 max-w-[180px]">
-          <Link href={'/profile'}>
+          <Link href={`/profile?userId=${user.id}`}>
             <div className="flex items-center gap-3 cursor-pointer">
               <User size={16} />
               <p className="text-[14px]">My Profile</p>

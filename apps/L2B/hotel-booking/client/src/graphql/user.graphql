@@ -31,15 +31,12 @@ query GetUser($id: ID!) {
 query GetUsers {
   getUsers {
     _id
+    birth
     email
-    password
     firstName
     lastName
-    birth
-    emergencyPhone
-    relation
-    isAdmin
     phone
+    relation
   }
 }
 
@@ -72,7 +69,6 @@ mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: Str
     phone
   }
 }
-
 
 mutation UpdateContact($id: ID!, $input: ContactInput!) {
   updateContact(_id: $id, input: $input) {
