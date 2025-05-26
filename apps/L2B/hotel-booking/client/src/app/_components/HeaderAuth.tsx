@@ -24,14 +24,18 @@ export const HeaderAuth = ({ bg, user }: HeaderAuthProps) => {
             {user.firstName}
           </p>
         </PopoverTrigger>
-        <PopoverContent className="flex flex-col gap-3">
-          <div className="flex items-center gap-3">
-            <User size={16} />
-            <p>My Profile</p>
-          </div>
+        <PopoverContent align="start" className="flex flex-col gap-3 max-w-[180px]">
+          <Link href={'/profile'}>
+            <div className="flex items-center gap-3 cursor-pointer">
+              <User size={16} />
+              <p className="text-[14px]">My Profile</p>
+            </div>
+          </Link>
           <div className="flex items-center gap-3 cursor-pointer" onClick={logout}>
             <LogOut size={16} />
-            <p data-testid="logout-button">Sign out</p>
+            <p className="text-[14px]" data-testid="logout-button">
+              Sign out
+            </p>
           </div>
         </PopoverContent>
       </Popover>

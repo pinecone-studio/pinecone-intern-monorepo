@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useAuth } from '../(main)/_context/AuthContext';
 import { HeaderAuth } from './HeaderAuth';
 
@@ -17,10 +18,12 @@ const Header = ({ bg }: Props) => {
   return (
     <div className={`${bgColor} w-screen h-[64px] flex items-center`} data-testid="header">
       <div className="flex w-[1280px] items-center justify-between m-auto">
-        <div className="flex gap-2 items-center">
-          <div className={`${dotColor} w-5 h-5 rounded-full`} />
-          <p className={`${textColor} text-[19px]`}>Pedia</p>
-        </div>
+        <Link href={'/'}>
+          <div className="flex gap-2 items-center">
+            <div className={`${dotColor} w-5 h-5 rounded-full cursor-pointer`} />
+            <p className={`${textColor} text-[19px] cursor-pointer`}>Pedia</p>
+          </div>
+        </Link>
         <HeaderAuth user={user} bg={bg} />
       </div>
     </div>
