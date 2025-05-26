@@ -18,7 +18,7 @@ describe('CreatePostDistrict component', () => {
     expect(input).toBeInTheDocument();
     expect(input.name).toBe('district');
     expect(input.value).toBe('');
-    expect(input.placeholder).toBe('Дүүрэг оруулна уу');
+    expect(input.placeholder).toBe('Дүүрэг заавал оруулна уу!');
   });
 
   it('should calls onChange when input value changes', () => {

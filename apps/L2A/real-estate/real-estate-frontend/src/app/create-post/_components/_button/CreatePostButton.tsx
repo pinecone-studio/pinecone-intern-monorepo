@@ -26,7 +26,7 @@ export const CreatePostButton = ({
   onSubmit
 }: Props) => {
   return (
-    <div data-testid="button" className="h-[800px] flex flex-col gap-4 rounded-lg">
+    <div className="h-[800px] flex flex-col gap-4 rounded-lg">
       <div>
         <div className="text-[#09090B]">Хэрэглэгчдэд харагдах</div>
         <div className="text-[#71717A]">Таны оруулсан мэдээлэл хэрэглэгчдэд харагдах үзүүлэлт</div>
@@ -47,7 +47,8 @@ export const CreatePostButton = ({
         </div>
       </div>
       <button 
-        type="button"  
+       data-testid="button"
+        type="submit"  
         onClick={onSubmit} 
         className="bg-[#F97316] text-[#FAFAFA] p-2 rounded-lg"
       >
