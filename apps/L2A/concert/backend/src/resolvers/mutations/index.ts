@@ -10,3 +10,4 @@ export * from './change-password';
 export * from './otp';
 export * from './otp-step2';
 export * from './otp-step3';
+export * from './search-events';
