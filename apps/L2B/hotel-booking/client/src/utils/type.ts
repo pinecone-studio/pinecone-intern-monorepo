@@ -10,3 +10,11 @@ export type UserType = {
   relation: string;
   emergencyPhone: string;
 };
+
+export type HotelForm = {
+  name: string | null;
+  description: string | null;
+  starRating?: number | null;
+  phone: string | null;
+  rating?: number | null;
+};
