@@ -130,7 +130,7 @@ export const HotelImage = () => {
       <div className="flex flex-col gap-2">
         {images.length > 0 && (
           <div className="w-full bg-amber-50">
-            <Image src={images[0] || ''} alt="Hotel main image" width={318} height={192} className="w-full h-48 object-cover rounded-sm" />
+            <Image src={images[0] || ''} data-testid="hotel-img" alt="Hotel main image" width={318} height={192} className="w-full h-48 object-cover rounded-sm" />
           </div>
         )}
         <div className="grid grid-cols-2 gap-2">
