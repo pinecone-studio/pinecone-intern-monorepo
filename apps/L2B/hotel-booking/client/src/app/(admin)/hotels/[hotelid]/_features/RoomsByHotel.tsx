@@ -18,7 +18,7 @@ export const RoomsByHotel = () => {
   });
 
   useEffect(() => {
-   if (data?.roomsByHotel) {
+    if (data?.roomsByHotel) {
       setRooms(data.roomsByHotel.filter((r): r is Room => r !== null));
     }
   }, [data]);
@@ -76,13 +76,13 @@ export const RoomsByHotel = () => {
               </TableHeader>
               <TableBody>
                 {rooms?.filter(tab.filter).map((room: Room, index) => (
-                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/hotel-id/${room.id}`)}>
+                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/hotel-id/${room._id}`)}>
                     <TableCell className="border-r-[1px]">{room.roomNumber}</TableCell>
                     <TableCell className="flex items-center gap-3 border-r-[1px]">
-                 {room.images?.[0] ? (
+                      {room.images?.[0] ? (
                         <Image
                           src={room.images[0]?.startsWith('http') ? room.images[0] : '/' + room.images[0]}
-                          alt={room.name ?? 'Room image'}
+                          alt={'Room image'}
                           width={100}
                           height={100}
                           className="w-12 h-12 rounded object-cover"
