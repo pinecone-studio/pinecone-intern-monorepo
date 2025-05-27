@@ -13,7 +13,7 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="flex flex-col gap-5">
+      <body className="flex flex-col">
         <Toaster />
         <ApolloWrapper>
           <AuthProvider>

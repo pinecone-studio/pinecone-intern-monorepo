@@ -3,7 +3,7 @@ import { Flower, ParkingCircle, Star, Wifi } from 'lucide-react';
 
 const Card = () => (
   <div data-testid="card-component" className="border-2 max-w-[280px] w-[100%] md:w-[260px] sm:w-[220px] overflow-hidden h-[360px] m-auto rounded-xl shadow-sm hover:shadow-md transition-shadow">
-    <Image width={280} height={166} className="bg-gray-200" src="/placeholder.png" alt="" />
+    <Image width={500} height={500} className="bg-gray-200 h-[160px]" src="/placeholder.png" alt="" />
     <div className="p-4">
       <h1 className="font-bold text-base">Hotel Name</h1>
       <Star fill="orange" color="orange" size={16} />
