@@ -187,6 +187,7 @@ mutation searchEvents($name: String) {
     thumbnailUrl
     featured
     title
+    endDate
     venue {
       address
       capacity
@@ -210,6 +211,7 @@ mutation searchEvents($name: String) {
         }
       }
       date
+      id
     }
   }
 }

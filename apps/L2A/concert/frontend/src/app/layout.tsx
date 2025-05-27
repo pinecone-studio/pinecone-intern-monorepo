@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import Footer from './_components/Footer';
@@ -18,7 +18,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           <AuthProvider>
             <BookingProvider>
               <ThemeWrapper>
-                <div className="min-h-screen">{children}</div>
+                <div className="min-h-screen">
+                  <Suspense>{children}</Suspense>
+                </div>
                 <Footer />
               </ThemeWrapper>
             </BookingProvider>

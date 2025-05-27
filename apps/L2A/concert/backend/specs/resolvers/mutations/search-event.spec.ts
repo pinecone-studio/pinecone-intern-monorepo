@@ -22,6 +22,6 @@ describe('searchEvent', () => {
   });
 
   it('should throw an error when name is not provided', async () => {
-    await expect(searchEvents(null, { name: '' })).rejects.toThrow('Name parameter is required for searching events.');
+    await expect(searchEvents(null, { name: '' })).rejects.toThrow('Хайлтын утга шаардлагатай!');
   });
 });
