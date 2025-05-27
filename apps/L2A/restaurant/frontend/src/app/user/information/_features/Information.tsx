@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Img from '../_components/image.json';
+import Header from '@/app/_components/Header';
 const Information = () => {
   return (
     <div>
+      <Header />
       <div className="flex justify-center text-[1.5rem] mt-5 mb-5">
         <h1 data-testid="Бидний тухай" className="text-[#441500]">
           Бидний тухай
