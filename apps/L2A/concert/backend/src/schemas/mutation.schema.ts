@@ -18,5 +18,6 @@ export const MutationTypeDefs = gql`
     OtpStep3(email: String!, otp: Int!, password: String!): User!
     changePassword(otp: String!, newPassword: String!): String!
     changeCurrentPassword(email: String!, currentPassword: String!, newPassword: String!): User!
+    searchEvents(name: String): [Concert!]!
   }
 `;
