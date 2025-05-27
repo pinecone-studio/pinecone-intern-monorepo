@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from '@/app/_components/context/AuthContext';
 import { GetUserInfoDocument } from '@/generated';
 import React from 'react';
 import '@testing-library/jest-dom';
+import { BookingProvider } from '@/app/_components/context/BookingContext';
 
 const userMock = {
   request: {
@@ -39,7 +40,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -58,7 +61,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[userMock]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -83,7 +88,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -96,7 +103,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );

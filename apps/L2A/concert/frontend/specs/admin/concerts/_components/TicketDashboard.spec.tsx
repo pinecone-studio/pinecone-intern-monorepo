@@ -30,6 +30,7 @@ const mockConcerts: Concert[] = [
     seatData: [
       {
         date: '2025-01-01',
+        id: 'deez',
         seats: {
           Backseat: { availableTickets: 100, price: 100000, __typename: 'SeatInfo' },
           VIP: { availableTickets: 50, price: 300000, __typename: 'SeatInfo' },
@@ -64,6 +65,7 @@ const mockConcerts: Concert[] = [
     seatData: [
       {
         date: '2025-01-01',
+        id: 'deez-2',
         seats: {
           Backseat: { availableTickets: 100, price: 100000, __typename: 'SeatInfo' },
           VIP: { availableTickets: 50, price: 300000, __typename: 'SeatInfo' },
