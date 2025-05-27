@@ -7,13 +7,13 @@ import { Room, useRoomsByHotelQuery } from '@/generated';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const RoomsByHotel = () => {
+export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
   const [rooms, setRooms] = useState<Room[]>();
   const router = useRouter();
 
   const { data } = useRoomsByHotelQuery({
     variables: {
-      hotelId: '682ac7df47df32a8a9907cb1',
+      hotelId: hotelId,
     },
   });
 

@@ -16,7 +16,7 @@ const Page = () => {
             <h3 className="font-semibold text-2xl mb-6  ">Popular Hotels</h3>
             <Button className="w-[84px] h-[40px] bg-white  border-[1px] text-black hover:bg-transparent">View all</Button>
           </div>
-          <div className=" max-width-[1165px] w-full grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-2 m-auto">
+          <div className=" max-width-[1165px] w-full grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-auto">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((card, index) => (
               <Card key={index} />
             ))}
@@ -27,7 +27,7 @@ const Page = () => {
             <h3 className="font-semibold text-2xl mb-6">Most booked hotels in Mongolia in past months</h3>
             <Button className="w-[84px] h-[40px] bg-white  border-[1px] text-black hover:bg-transparent">View all</Button>
           </div>
-          <div className=" max-width-[1165px] w-full grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-2 m-auto">
+          <div className=" max-width-[1165px] w-full grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-auto">
             {[1, 2, 3, 4].map((card, index) => (
               <Card key={index} />
             ))}
