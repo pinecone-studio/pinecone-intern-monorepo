@@ -174,3 +174,42 @@ mutation OtpStep3($email: String!, $otp: Int!, $password: String!) {
     id
   }
 }
+
+mutation searchEvents($name: String) {
+  searchEvents(name: $name) {
+    id
+    artistName
+    description
+    doorOpen
+    musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    featured
+    title
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
+    seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
+      date
+    }
+  }
+}
