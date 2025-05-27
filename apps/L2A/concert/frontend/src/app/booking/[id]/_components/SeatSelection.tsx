@@ -1,11 +1,11 @@
 'use client';
-
 import React, { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Concert } from '@/generated';
 import FormatDate from '@/app/_utils/format-date';
 import { DateSelector } from '../../_utils/DataSelector';
 import { TotalPriceBreakdown } from '../../_utils/TotalPriceBreakdown';
+import { useBooking } from '@/app/_components/context/BookingContext';
 
 type SeatInfoProps = {
   event: Concert;
@@ -20,12 +20,6 @@ type TicketOption = {
   selected: number;
 };
 
-type Booking = {
-  date: string;
-  tickets: { type: string; count: number; price: number }[];
-  totalPrice: number;
-};
-
 const extractDates = (seatData?: Concert['seatData']): string[] =>
   seatData && seatData.length > 0
     ? seatData
@@ -34,17 +28,13 @@ const extractDates = (seatData?: Concert['seatData']): string[] =>
         .map((d) => FormatDate(d))
     : [];
 
-export function buildTicketOptions(seat?: Concert['seatData'][0]): TicketOption[] {
+const buildTicketOptions = (seat?: Concert['seatData'][0]): TicketOption[] => {
   if (!seat || !seat.seats) return [];
 
-  const seatTypes: Array<{
-    key: 'Backseat' | 'Standard' | 'VIP';
-    type: string;
-    color: string;
-  }> = [
-    { key: 'Backseat', type: 'Арын тасалбар', color: 'text-white' },
-    { key: 'Standard', type: 'Энгийн тасалбар', color: 'text-pink-400' },
-    { key: 'VIP', type: 'VIP тасалбар', color: 'text-blue-400' },
+  const seatTypes = [
+    { key: 'Backseat' as const, type: 'Арын тасалбар', color: 'text-white' },
+    { key: 'Standard' as const, type: 'Энгийн тасалбар', color: 'text-pink-400' },
+    { key: 'VIP' as const, type: 'VIP тасалбар', color: 'text-blue-400' },
   ];
 
   return seatTypes.reduce<TicketOption[]>((opts, { key, type, color }) => {
@@ -61,19 +51,29 @@ export function buildTicketOptions(seat?: Concert['seatData'][0]): TicketOption[
     }
     return opts;
   }, []);
-}
-const useSeatData = (seatData?: Concert['seatData']) => {
+};
+
+const useSeatData = (seatData: Concert['seatData']) => {
   const dates = extractDates(seatData);
   const [selectedDay, setSelectedDay] = useState<string>(dates[0]);
-  const selectedSeat = seatData?.find((d) => d?.date && FormatDate(d.date) === selectedDay);
+  const selectedSeat = seatData.find((d) => d.date && FormatDate(d.date) === selectedDay);
   const [ticketOptions, setTicketOptions] = useState<TicketOption[]>(() => buildTicketOptions(selectedSeat));
 
   const incrementTicketQuantity = (_index: number) => setTicketOptions((prev) => prev.map((opt, i) => (i === _index ? { ...opt, selected: Math.min(opt.count, opt.selected + 1) } : opt)));
 
   const decrementTicketQuantity = (_index: number) => setTicketOptions((prev) => prev.map((opt, i) => (i === _index ? { ...opt, selected: Math.max(0, opt.selected - 1) } : opt)));
 
-  return { dates, selectedDay, setSelectedDay, ticketOptions, incrementTicketQuantity, decrementTicketQuantity };
+  return {
+    dates,
+    selectedDay,
+    setSelectedDay,
+    ticketOptions,
+    selectedSeat,
+    incrementTicketQuantity,
+    decrementTicketQuantity,
+  };
 };
+
 const TicketList: FC<{
   options: TicketOption[];
   incrementQuantity: (_index: number) => void;
@@ -109,11 +109,19 @@ const TicketList: FC<{
   );
 
 const SeatSelection: FC<SeatInfoProps> = ({ event }) => {
-  const { dates, selectedDay, setSelectedDay, ticketOptions, incrementTicketQuantity, decrementTicketQuantity } = useSeatData(event?.seatData);
+  const { dates, selectedDay, setSelectedDay, ticketOptions, selectedSeat, incrementTicketQuantity, decrementTicketQuantity } = useSeatData(event?.seatData);
+
+  const { setBooking } = useBooking();
 
   const saveBooking = () => {
-    const booking: Booking = {
+    console.log(selectedSeat);
+    console.log(selectedDay);
+
+    setBooking({
+      concertId: event.id,
+      concertName: event.title,
       date: selectedDay,
+      seatDataId: selectedSeat!.id,
       tickets: ticketOptions
         .filter((opt) => opt.selected > 0)
         .map((opt) => ({
@@ -122,23 +130,22 @@ const SeatSelection: FC<SeatInfoProps> = ({ event }) => {
           price: opt.price,
         })),
       totalPrice: ticketOptions.reduce((sum, opt) => sum + opt.selected * opt.price, 0),
-    };
-    localStorage.setItem('booking', JSON.stringify(booking));
+    });
+
     alert('Booking saved successfully!');
   };
 
-  const isDisabled = !selectedDay || ticketOptions.every((opt) => opt.selected === 0);
-
-  if (!event || !event.seatData || dates.length === 0) return <div className="text-white p-6">Тасалбар дууссан!</div>;
+  if (!event || !event.seatData || dates.length === 0) {
+    return <div className="text-white p-6">Тасалбар дууссан!</div>;
+  }
 
   return (
     <div className="space-y-6 mx-auto p-6 bg-zinc-900 rounded-lg">
       <p className="text-white text-lg">Тоглолт үзэх өдрөө сонгоно уу!</p>
       <DateSelector dates={dates} selected={selectedDay} onChange={setSelectedDay} />
-
       <TicketList options={ticketOptions} incrementQuantity={incrementTicketQuantity} decrementQuantity={decrementTicketQuantity} />
       <TotalPriceBreakdown options={ticketOptions} />
-      <Button onClick={saveBooking} disabled={isDisabled} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg disabled:bg-gray-600 disabled:cursor-not-allowed">
+      <Button onClick={saveBooking} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg disabled:bg-gray-600 disabled:cursor-not-allowed">
         Тасалбар авах
       </Button>
     </div>

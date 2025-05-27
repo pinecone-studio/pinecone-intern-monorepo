@@ -36,7 +36,7 @@ const StagePlan = () => {
   };
 
   return (
-    <div className="flex items-center bg-black">
+    <div className="flex items-center">
       <svg viewBox="35 0 800 800" width="800" height="800">
         {rings.map((ring, ringIndex) =>
           [...Array(sectors)].map((_, i) => {
