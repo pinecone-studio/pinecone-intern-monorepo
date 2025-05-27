@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import '@testing-library/jest-dom'; // ✅ Fixes `.toBeInTheDocument()` issue
+import '@testing-library/jest-dom';
 import SearchFilter from '@/app/(main)/_components/SeacrhFilter';
 import CalendarDate from '@/app/(main)/_components/CalendarDate';
 
@@ -19,11 +19,15 @@ describe('SearchFilter', () => {
   });
 
   it('passes date and handler to CalendarDate', () => {
+    const fixedDate = new Date('2025-05-26T00:00:00.000Z');
+
+    jest.useFakeTimers().setSystemTime(fixedDate);
+
     render(<SearchFilter />);
 
     const expectedDate = {
-      from: new Date(2025, 9, 19),
-      to: new Date(2025, 9, 20),
+      from: fixedDate,
+      to: fixedDate,
     };
 
     expect(CalendarDate).toHaveBeenCalledWith(
@@ -33,12 +37,13 @@ describe('SearchFilter', () => {
       }),
       {}
     );
+
+    jest.useRealTimers();
   });
 
   it('handleDateChange updates state correctly', () => {
     let capturedHandler: any;
 
-    // Capture the handler so we can invoke it
     (CalendarDate as jest.Mock).mockImplementation(({ handleDateChange }) => {
       capturedHandler = handleDateChange;
       return <div data-testid="calendar-date" />;
@@ -51,12 +56,10 @@ describe('SearchFilter', () => {
       to: new Date(2025, 11, 2),
     };
 
-    // Use `act` to update state safely
     act(() => {
       capturedHandler(newDate);
     });
 
-    // Validate the new props passed to CalendarDate
     expect(CalendarDate).toHaveBeenLastCalledWith(
       expect.objectContaining({
         date: newDate,

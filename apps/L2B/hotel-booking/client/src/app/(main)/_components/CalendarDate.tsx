@@ -11,6 +11,8 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const DateRangePicker = ({ date, handleDateChange }: { date: DateRange | undefined; handleDateChange: (_newDate?: DateRange) => void }) => {
+  const today = new Date();
+
   function renderDateRange() {
     if (!date?.from) {
       return <span>Pick a date</span>;
@@ -35,23 +37,24 @@ const DateRangePicker = ({ date, handleDateChange }: { date: DateRange | undefin
             data-testid="calendar-button"
             id="date"
             variant="outline"
-            className={`w-full justify-between text-left text-sm  h-[38px] mt-[1px] px-4 py-4 border-[1px] rounded-l  ', ${!date && 'text-muted-foreground'}`}
+            className={`w-full justify-between text-left text-sm h-[38px] mt-[1px] px-4 py-4 border-[1px] rounded-l ${!date ? 'text-muted-foreground' : ''}`}
           >
             <span className="text-sm font-normal">{renderDateRange()}</span>
             <CalendarIcon className="h-6 w-6" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 " align="start">
+        <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus
             mode="range"
-            classNames={{
-              day_selected: 'bg-blue-500 text-white ',
-            }}
-            defaultMonth={date?.from}
             selected={date}
             onSelect={handleDateChange}
             numberOfMonths={2}
+            fromDate={today} // ⛔ Disable past dates
+            defaultMonth={date?.from ?? today} // 📅 Start from today
+            classNames={{
+              day_selected: 'bg-blue-500 text-white',
+            }}
           />
         </PopoverContent>
       </Popover>

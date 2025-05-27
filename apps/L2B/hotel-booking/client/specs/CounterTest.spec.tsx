@@ -11,14 +11,11 @@ describe('CounterTestComponent', () => {
     const incrementButton = getByTestId('increment');
     const decrementButton = getByTestId('decrement');
 
-    // Initial count
     expect(count).toHaveTextContent('1');
 
-    // Increment
     fireEvent.click(incrementButton);
     expect(count).toHaveTextContent('2');
 
-    // Decrement
     fireEvent.click(decrementButton);
     expect(count).toHaveTextContent('1');
   });
