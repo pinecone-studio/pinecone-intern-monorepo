@@ -101,7 +101,7 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-wait-until": "3.0.2",
     "daisyui": "4.10.2",
-    "date-fns": "3.6.0",
+    "date-fns": "^4.1.0",
     "dayjs": "1.11.11",
     "dotenv": "16.0.3",
     "dotenv-esbuild": "1.1.0",
