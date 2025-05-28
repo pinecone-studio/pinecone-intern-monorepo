@@ -1,15 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
-import { useSearchParams } from 'next/navigation';
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
-export const HotelLocation = () => {
+export const HotelLocation = ({ hotelId }: { hotelId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get('hotelid');
 
   const { data: { hotel } = {}, refetch } = useHotelQuery({
     variables: { hotelId: hotelId as string },

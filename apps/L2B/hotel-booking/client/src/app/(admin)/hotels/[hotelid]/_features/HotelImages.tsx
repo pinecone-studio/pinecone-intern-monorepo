@@ -4,15 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export const HotelImage = () => {
+export const HotelImage = ({ hotelId }: { hotelId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get('hotelid');
+
   const { data, refetch } = useHotelQuery({
     variables: { hotelId: hotelId as string },
     skip: !hotelId,

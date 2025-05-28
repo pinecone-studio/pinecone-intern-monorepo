@@ -3,11 +3,7 @@
 import { Phone, Star } from 'lucide-react';
 import { useHotelQuery } from '@/generated';
 import { GeneralInfoForm } from './GeneralInfoForm';
-import { useSearchParams } from 'next/navigation';
-
-export const HotelGeneralInfo = () => {
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get('hotelid');
+export const HotelGeneralInfo = ({ hotelId }: { hotelId: string }) => {
   const { data } = useHotelQuery({
     variables: { hotelId: hotelId || '' },
     skip: !hotelId,
@@ -20,7 +16,7 @@ export const HotelGeneralInfo = () => {
     <div className="w-[49rem] max-h-[19.5rem] bg-white flex flex-col p-6 rounded-[0.5rem] border ">
       <div className="w-full h-9 flex justify-between items-center ">
         <h2 className="text-lg font-semibold tracking-wide ">General Info</h2>
-        <GeneralInfoForm />
+        <GeneralInfoForm hotelId={hotelId} />
       </div>
       <div className="w-full pt-6 self-stretch border-b "></div>
       <div className="w-full pb-6 self-stretch border-t "></div>

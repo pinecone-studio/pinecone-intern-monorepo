@@ -8,12 +8,9 @@ import { Label } from '@/components/ui/label';
 import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
 import { useEffect, useState } from 'react';
 import { HotelForm } from '@/utils/type';
-import { useSearchParams } from 'next/navigation';
 
-export const GeneralInfoForm = () => {
+export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get('hotelid');
   const { data: { hotel } = {}, refetch } = useHotelQuery({
     variables: { hotelId: hotelId || '' },
     skip: !hotelId,

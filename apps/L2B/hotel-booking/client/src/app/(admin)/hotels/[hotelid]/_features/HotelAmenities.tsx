@@ -3,16 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
-import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { X } from 'lucide-react';
 
-export const HotelAmenities = () => {
+export const HotelAmenities = ({ hotelId }: { hotelId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get('hotelid');
   const [inputValue, setInputValue] = useState('');
   const [originalAmenities, setOriginalAmenities] = useState<string[]>([]);
   const [editingAmenities, setEditingAmenities] = useState<string[]>([]);
