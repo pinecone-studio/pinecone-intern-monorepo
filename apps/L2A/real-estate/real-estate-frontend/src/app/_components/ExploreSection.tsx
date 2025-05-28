@@ -6,16 +6,19 @@ import Link from 'next/link';
 const exploreItems = [
   {
     title: 'Орон сууц',
+    type: 'APARTMENT',
     count: 1209,
     imageUrl: '/listingcard.png',
   },
   {
     title: 'Байшин',
+    type: 'HOUSE',
     count: 850,
     imageUrl: '/listingcard.png',
   },
   {
     title: 'Оффис',
+    type: 'OFFICE',
     count: 670,
     imageUrl: '/listingcard.png',
   },
@@ -34,7 +37,9 @@ const ExploreSection = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {exploreItems.map((item, index) => (
+            <Link key={index} href={`/listing?type=${item.type}`}>
             <ExploreCard key={index} {...item} />
+            </Link>
           ))}
         </div>
       </div>
