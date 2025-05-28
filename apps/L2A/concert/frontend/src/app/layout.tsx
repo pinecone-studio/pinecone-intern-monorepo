@@ -4,6 +4,7 @@ import { ApolloWrapper } from '@/components/providers';
 import Footer from './_components/Footer';
 import { AuthProvider } from './_components/context/AuthContext';
 import ThemeWrapper from './_components/ThemeWrapper';
+import { BookingProvider } from './_components/context/BookingContext';
 
 export const metadata = {
   title: 'Concert-Booking website',
@@ -15,10 +16,12 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body>
         <ApolloWrapper>
           <AuthProvider>
-            <ThemeWrapper>
-              <div className="min-h-screen">{children}</div>
-              <Footer />
-            </ThemeWrapper>
+            <BookingProvider>
+              <ThemeWrapper>
+                <div className="min-h-screen">{children}</div>
+                <Footer />
+              </ThemeWrapper>
+            </BookingProvider>
           </AuthProvider>
         </ApolloWrapper>
       </body>

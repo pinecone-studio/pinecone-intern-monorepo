@@ -57,4 +57,8 @@ export const profileTypeDefs = gql`
     createProfile(input: CreateProfileInput!): Profile!
     updateProfile(id: ID!, input: UpdateProfileInput!): Profile!
   }
+
+  type Mutation {
+    updateProfileImage(userId: ID!, images: String!): Profile
+  }
 `;

@@ -1,4 +1,5 @@
 export type UserType = {
+  _id: string;
   birth: Date;
   email: string;
   firstName: string;
@@ -8,4 +9,12 @@ export type UserType = {
   phone: string;
   relation: string;
   emergencyPhone: string;
+};
+
+export type HotelForm = {
+  name: string | null;
+  description: string | null;
+  starRating?: number | null;
+  phone: string | null;
+  rating?: number | null;
 };

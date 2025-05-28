@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLoginMutation } from '@/generated';
 import { useState } from 'react';
+import { useAuth } from '@/app/(main)/_context/AuthContext';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -26,6 +27,7 @@ const formSchema = z.object({
 });
 
 const SignIn = () => {
+  const { fetchUser } = useAuth();
   const [login, { loading }] = useLoginMutation({
     onError: () => {
       setServerError('Invalid credentials');
@@ -49,8 +51,10 @@ const SignIn = () => {
         password: values.password,
       },
     });
-    if (response.data?.login.token) {
-      localStorage.setItem('authToken', response.data.login.token);
+    const token = response.data?.login.token;
+    if (token) {
+      localStorage.setItem('authToken', token);
+      await fetchUser(token);
       router.push('/');
     } else {
       setServerError('Invalid credentials');
