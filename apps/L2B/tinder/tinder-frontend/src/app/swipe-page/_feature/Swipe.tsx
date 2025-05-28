@@ -17,8 +17,6 @@ const SwipeFeature = () => {
   if (!profiles) return <Loading />;
 
   const handleSwipe = (action: 'like' | 'dislike') => {
-    if (!currentProfile) return;
-
     const actionMessages: Record<'like' | 'dislike', string> = {
       like: 'Loved',
       dislike: 'User has been deleted',
@@ -55,6 +53,7 @@ const SwipeFeature = () => {
         )}
 
         <div
+          data-testid="chevron-left"
           onClick={handlePrevImage}
           className="absolute z-20 top-1/2 left-4 -translate-y-1/2 h-10 w-10 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow-md cursor-pointer transition-all"
         >
@@ -62,6 +61,7 @@ const SwipeFeature = () => {
         </div>
 
         <div
+          data-testid="chevron-right"
           onClick={handleNextImage}
           className="absolute z-20 top-1/2 right-4 -translate-y-1/2 h-10 w-10 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow-md cursor-pointer transition-all"
         >
