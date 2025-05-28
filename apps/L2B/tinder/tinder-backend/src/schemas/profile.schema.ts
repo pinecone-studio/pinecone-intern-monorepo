@@ -27,6 +27,13 @@ export const profileTypeDefs = gql`
     profession: String!
     school: String!
   }
+  input ProfileChangeInput {
+    name: String
+    bio: String
+    interest: String
+    profession: String
+    school: String
+  }
   input CreateProfileInput {
     user: ID!
     interestedIn: String!
@@ -38,7 +45,7 @@ export const profileTypeDefs = gql`
     age: Int
     images: [String]
     interestedIn: String
-    profileInfo: ProfileInput
+    profileInfo: ProfileChangeInput
   }
 
   type Query {
