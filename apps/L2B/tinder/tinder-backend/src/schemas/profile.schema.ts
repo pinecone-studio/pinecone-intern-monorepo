@@ -27,12 +27,25 @@ export const profileTypeDefs = gql`
     profession: String!
     school: String!
   }
+  input ProfileChangeInput {
+    name: String
+    bio: String
+    interest: String
+    profession: String
+    school: String
+  }
   input CreateProfileInput {
     user: ID!
     interestedIn: String!
     age: Int!
     profileInfo: ProfileInput!
     images: [String!]!
+  }
+  input UpdateProfileInput {
+    age: Int
+    images: [String]
+    interestedIn: String
+    profileInfo: ProfileChangeInput
   }
 
   type Query {
@@ -42,6 +55,7 @@ export const profileTypeDefs = gql`
 
   type Mutation {
     createProfile(input: CreateProfileInput!): Profile!
+    updateProfile(id: ID!, input: UpdateProfileInput!): Profile!
   }
 
   type Mutation {
