@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import RelatedListings from '@/app/detailed/_components/RelatedListings'; 
+import RelatedListings from '@/app/detailed/_components/RelatedListings';
 
-jest.mock('@/app/home/_components/ListingCard', () => ({
+jest.mock('@/app/_components/ListingCard', () => ({
   __esModule: true,
   default: ({ title }: { title: string }) => <div>{title}</div>,
 }));

@@ -35,7 +35,7 @@ const categories = [
 const CategoryCarousel = () => {
   return (
     <section className="py-10">
-      <div className="max-w-6xl mx-auto px-4">
+      <div data-cy="category-carousel" className="max-w-6xl mx-auto px-4">
         <Swiper
           spaceBetween={20}
           slidesPerView={2}

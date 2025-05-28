@@ -1,14 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const HeroSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const router = useRouter();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
   };
-
+  
   return (
     <section className="relative w-full h-[500px] bg-cover bg-center flex flex-col items-center justify-center text-center" style={{ backgroundImage: `url('/listingcard.png')` }}>
       <div className="bg-black/40 absolute inset-0" />
@@ -23,7 +24,7 @@ const HeroSection = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 px-6 py-2 text-gray-700 focus:outline-none text-base border-none"
           />
-          <button type="submit" className="px-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-none">
+          <button onClick={()=>{router.push(`/listing?search=${searchTerm}`)}} type="submit" className="px-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-none">
             Хайх
           </button>
         </form>
