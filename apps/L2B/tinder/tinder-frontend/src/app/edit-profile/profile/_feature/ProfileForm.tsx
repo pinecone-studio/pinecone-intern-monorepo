@@ -10,7 +10,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { format, parse } from 'date-fns';
 import { cn } from '../../../../../../../../../libs/shadcn/src/lib/utils';
 import { ProfileUsernameEmailInput } from '../_components/ProfileUsernameEmailInput';
-import { ProfileHeader } from '../_components/ProfileHeader';
 import { ProfileInterest } from '../_components/ProfileInterest';
 
 const userdata = {
@@ -45,9 +44,12 @@ export const ProfileForm = () => {
   };
   console.log(editUserdata.interestOptions);
   return (
-    <div className="max-w-2xl mx-auto p-4 md:p-6">
+    <div className="max-w-2xl mx-auto pl-4 ">
       <div className="space-y-6">
-        <ProfileHeader />
+        <div>
+          <h1 className="text-2xl font-semibold">Personal Information</h1>
+          <p className="text-muted-foreground">This is how others will see you on the site.</p>
+        </div>
         <ProfileUsernameEmailInput handleChange={handleChange} editUserdata={editUserdata} />
         <div className="space-y-2">
           <Label htmlFor="dob">Date of birth</Label>
@@ -87,7 +89,7 @@ export const ProfileForm = () => {
           <Textarea id="bio" name="bio" placeholder="Tell us about yourself" className="min-h-[100px]" defaultValue={editUserdata.bio} onChange={handleChange} />
         </div>
 
-       <ProfileInterest setEditUserdata={setEditUserdata} editUserdata={editUserdata} />
+        <ProfileInterest setEditUserdata={setEditUserdata} editUserdata={editUserdata} />
 
         <div className="space-y-2">
           <Label htmlFor="profession">Profession</Label>
