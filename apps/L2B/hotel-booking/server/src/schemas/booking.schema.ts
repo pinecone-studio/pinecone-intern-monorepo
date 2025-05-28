@@ -25,7 +25,6 @@ export const BookingTypeDefs = gql`
     guests: GuestInfo!
     totalPrice: Float!
     status: BookingStatus!
-    images: [String]
     createdAt: Date
     updatedAt: Date
   }
@@ -43,7 +42,6 @@ export const BookingTypeDefs = gql`
     checkOutDate: Date!
     guests: GuestInput!
     totalPrice: Float!
-    images: [String]
   }
   type Query {
     bookings: [Booking!]!

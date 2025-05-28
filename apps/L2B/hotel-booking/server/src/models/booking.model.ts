@@ -17,7 +17,6 @@ const bookingSchema = new Schema(
       enum: ['booked', 'checked_in', 'checked_out', 'cancelled'],
       default: 'booked',
     },
-    images: [{ type: String }],
   },
   { timestamps: true }
 );
