@@ -65,7 +65,7 @@ export const GuestInfoPage = () => {
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <main className="flex-1 p-6">
-        <Navbar />
+        <Navbar data={guestInfo} />
 
         <div className="flex items-center gap-4 mb-6">
           <button className="p-2 rounded-full border">
