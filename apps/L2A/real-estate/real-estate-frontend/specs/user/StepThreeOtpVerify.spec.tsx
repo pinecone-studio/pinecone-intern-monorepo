@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { useVerifyOtpMutation } from '@/generated';
 import { StepTwo } from '@/app/signup/_components/StepTwo';
-import '@testing-library/jest-dom'; 
+import '@testing-library/jest-dom';
 
 jest.mock('@/generated', () => ({
   useRequestOtpMutation: jest.fn(() => [jest.fn()]),
@@ -10,9 +10,7 @@ jest.mock('@/generated', () => ({
 }));
 
 jest.mock('@/components/ui/input-otp', () => ({
-  InputOTP: ({ onChange, maxLength }: any) => (
-    <input data-testid="otp-input" onChange={(e) => onChange(e.target.value)} maxLength={maxLength} />
-  ),
+  InputOTP: ({ onChange, maxLength }: any) => <input data-testid="otp-input" onChange={(e) => onChange(e.target.value)} maxLength={maxLength} />,
   InputOTPGroup: ({ children }: any) => <div>{children}</div>,
   InputOTPSlot: () => <div />,
 }));
@@ -62,12 +60,12 @@ describe('StepTwo OTP Verification', () => {
   });
 
   it('shows loading state during OTP verification', async () => {
-    let resolvePromise: any;
-    const mockVerify = jest.fn(() => new Promise((resolve) => { resolvePromise = resolve; }));
-    (useVerifyOtpMutation as jest.Mock).mockReturnValue([mockVerify, { loading: true }]);
+    const verifyPromise = new Promise((resolve) => setTimeout(() => resolve({ data: { verifyOTP: true } }), 100));
+    (useVerifyOtpMutation as jest.Mock).mockReturnValue([() => verifyPromise, { loading: true }]);
+
     render(<StepTwo setStep={mockSetStep} />);
     fireEvent.change(screen.getByTestId('otp-input'), { target: { value: '123456' } });
+
     expect(await screen.findByText('Verifying OTP...')).toBeInTheDocument();
-    await act(() => resolvePromise({ data: { verifyOTP: true } }));
   });
 });

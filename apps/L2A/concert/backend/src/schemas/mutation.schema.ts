@@ -13,8 +13,11 @@ export const MutationTypeDefs = gql`
     registerUser(email: String!, password: String!): User!
     sampleMutation(text: String): String!
     updateUserInfo(id: String!, email: String, password: String, phone: Int): User!
-    OTP(email: String!): String!
+    OTP(email: String!): otp!
+    OtpStep2(email: String!, otp: Int!): otp!
+    OtpStep3(email: String!, otp: Int!, password: String!): User!
     changePassword(otp: String!, newPassword: String!): String!
     changeCurrentPassword(email: String!, currentPassword: String!, newPassword: String!): User!
+    searchEvents(name: String): [Concert!]!
   }
 `;

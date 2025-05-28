@@ -1,5 +1,1 @@
-
-
-["///","///guests","///hotels","///contact","///profile","///security","///forget-password","///login","///signup","///signin"]
-
-
+["///","///guests","///guests/[guestid]","///hotels","///hotels/[hotelid]","///hotels/[hotelid]/[roomId]","///contact","///profile","///security","///forget-password","///signin","///signup"]

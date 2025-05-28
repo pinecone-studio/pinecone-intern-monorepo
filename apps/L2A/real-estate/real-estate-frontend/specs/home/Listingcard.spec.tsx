@@ -1,57 +1,59 @@
-import ListingCard from '@/app/home/_components/ListingCard';
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import ListingCard from '@/app/home/_components/ListingCard';
+
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => <img {...props} />,
+}));
 
 describe('ListingCard', () => {
   const mockProps = {
-    imageUrl: '/listingcard.png',
-    price: '880,000,000₮',
+    image: '/listingcard.png',
+    price: 880000000,
     title: 'Зайсан seoul royal county хотхон',
-    beds: 4,
-    baths: 2,
-    area: 200,
-    location: 'Хан-Уул дүүрэг, 1-р хороо, Зайсан',
-    imageCount: '1/9',
+    totalRooms: 4,
+    restrooms: 2,
+    size: 200,
+    city: 'Улаанбаатар',
+    district: 'Баянзүрх',
   };
 
-  it('renders price', () => {
+  it('renders price formatted correctly', () => {
     render(<ListingCard {...mockProps} />);
-    
-
-    expect(screen.getByText(mockProps.price)).toBeInTheDocument();
+    expect(screen.getByText('880,000,000₮')).toBeInTheDocument();
   });
 
   it('renders title', () => {
     render(<ListingCard {...mockProps} />);
-    
     expect(screen.getByText(mockProps.title)).toBeInTheDocument();
   });
 
-  it('renders location', () => {
+  it('renders size, total rooms, restrooms', () => {
     render(<ListingCard {...mockProps} />);
-  
-    expect(screen.getByText(mockProps.location)).toBeInTheDocument();
+    expect(screen.getByText(`${mockProps.size} м²`)).toBeInTheDocument();
+    expect(screen.getByText(`${mockProps.totalRooms} өрөө`)).toBeInTheDocument();
+    expect(screen.getByText(`${mockProps.restrooms} а.ц.ө`)).toBeInTheDocument();
   });
 
-  it('renders image count', () => {
+  it('renders location city and district', () => {
     render(<ListingCard {...mockProps} />);
-    expect(screen.getByText(mockProps.imageCount)).toBeInTheDocument();
+    expect(screen.getByText(`${mockProps.city}, ${mockProps.district}`)).toBeInTheDocument();
   });
 
-  it('renders room details', () => {
-    render(<ListingCard {...mockProps} />);
+it('renders fallback image when image is null', () => {
+  render(<ListingCard {...mockProps} image={null as any} />);
+  const img = screen.getByAltText('no image');
+  expect(img).toBeInTheDocument();
+  expect(img.getAttribute('src')).toContain('/placeholder.png'); 
+});
 
-    expect(screen.getByText(`${mockProps.area} м²`)).toBeInTheDocument();
 
-    expect(screen.getByText(`${mockProps.beds} өрөө`)).toBeInTheDocument();
-   
-    expect(screen.getByText(`${mockProps.baths} а.ц.ө`)).toBeInTheDocument();
-  });
+it('renders main image when image is provided', () => {
+  render(<ListingCard {...mockProps} />);
+  const img = screen.getByAltText('no image');
+  expect(img).toBeInTheDocument();
+  expect(img.getAttribute('src')).toContain('/listingcard.png'); 
+});
 
-  it('renders image alt text', () => {
-    render(<ListingCard {...mockProps} />);
- 
-    const image = screen.getByAltText(mockProps.title);
-    expect(image).toBeInTheDocument();
-  });
 });

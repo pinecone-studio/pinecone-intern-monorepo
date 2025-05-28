@@ -7,6 +7,11 @@ import { requests } from './utils/test-array';
 const itemsPerPage = 5;
 
 const Page = () => {
+  // const { data, loading } = useTicketsQuery();
+  // const tickets = data?.tickets?.filter((t): t is Ticket => t !== null) ?? [];
+
+  // console.log('tickets', tickets);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(requests.length / itemsPerPage);
@@ -15,7 +20,6 @@ const Page = () => {
 
   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-
   return (
     <div className="flex flex-col w-full h-screen bg-secondary">
       <div className="flex flex-col items-center w-full h-full p-10">

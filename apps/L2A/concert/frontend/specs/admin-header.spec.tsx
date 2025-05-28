@@ -10,8 +10,8 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('AdminHeader', () => {
-  it('renders and highlights Тасалбар when pathname is /admin/ticket', () => {
-    usePathname.mockReturnValue('/admin/ticket');
+  it('renders and highlights Тасалбар when pathname is /admin/concerts', () => {
+    usePathname.mockReturnValue('/admin/concerts');
 
     render(<AdminHeader />);
 
@@ -35,12 +35,12 @@ describe('AdminHeader', () => {
   });
 
   it('renders default header content', () => {
-    usePathname.mockReturnValue('/admin/ticket');
+    usePathname.mockReturnValue('/admin/concerts');
 
     render(<AdminHeader />);
 
     expect(screen.getByText('TICKET BOOKING')).toBeInTheDocument();
-    expect(screen.getByText('Тасалбар')).toBeInTheDocument();
+    expect(screen.getByText('Концертууд')).toBeInTheDocument();
     expect(screen.getByText('Цуцлах хүсэлт')).toBeInTheDocument();
   });
 });

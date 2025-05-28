@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const AdminHeader = () => {
   const pathname = usePathname();
-  const isTicketPage = pathname === '/admin/ticket';
+  const isTicketPage = pathname === '/admin/concerts';
   const isCancelRequestPage = pathname === '/admin/cancel-request';
   const isAdmin = pathname.startsWith('/admin/');
 
@@ -23,8 +23,8 @@ const AdminHeader = () => {
       </div>
       {isAdmin && (
         <div className="flex text-sm font-medium">
-          <Link data-testid="ticket-button-admin" href={'/admin/ticket'} className={`p-[6px]` + (isTicketPage ? ' border-b border-black' : '')}>
-            <div className="p-[6px]">Тасалбар</div>
+          <Link data-testid="ticket-button-admin" href={'/admin/concerts'} className={`p-[6px]` + (isTicketPage ? ' border-b border-black' : '')}>
+            <div className="p-[6px]">Концертууд</div>
           </Link>
           <Link data-testid="cancel-request-admin" href={'/admin/cancel-request'} className={`p-[6px]` + (isCancelRequestPage ? ' border-b border-black' : '')}>
             <div className="p-[6px]">Цуцлах хүсэлт</div>

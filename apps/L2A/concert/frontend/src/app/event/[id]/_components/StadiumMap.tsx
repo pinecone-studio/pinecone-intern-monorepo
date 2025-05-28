@@ -1,93 +1,106 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
+import { Concert } from '@/generated';
+
+type StadiumMapProps = {
+  eventData: Concert;
+  selectedDay?: string;
+};
 
 type ZoneType = {
   id: string;
-  fill: string;
-  type: 'VIP' | 'Normal' | 'Back' | 'Outer';
+  type: 'VIP' | 'Standard' | 'Backseat' | 'Outer';
+  innerRadius: number;
+  outerRadius: number;
   angleStart: number;
   angleEnd: number;
 };
 
-type StadiumMapProps = {
-  zones?: ZoneType[];
-};
-
-const defaultZones: ZoneType[] = [
-  { id: 'vip1', fill: '#FFD700', type: 'VIP', angleStart: 0, angleEnd: 45 },
-  { id: 'vip2', fill: '#FFD700', type: 'VIP', angleStart: 45, angleEnd: 90 },
-  { id: 'vip3', fill: '#FFD700', type: 'VIP', angleStart: 90, angleEnd: 135 },
-  { id: 'vip4', fill: '#FFD700', type: 'VIP', angleStart: 135, angleEnd: 180 },
-  { id: 'normal1', fill: '#87CEFA', type: 'Normal', angleStart: 0, angleEnd: 45 },
-  { id: 'normal2', fill: '#87CEFA', type: 'Normal', angleStart: 45, angleEnd: 90 },
-  { id: 'normal3', fill: '#87CEFA', type: 'Normal', angleStart: 90, angleEnd: 135 },
-  { id: 'normal4', fill: '#87CEFA', type: 'Normal', angleStart: 135, angleEnd: 180 },
-  { id: 'back1', fill: '#FF6347', type: 'Back', angleStart: 180, angleEnd: 225 },
-  { id: 'back2', fill: '#FF6347', type: 'Back', angleStart: 225, angleEnd: 270 },
-  { id: 'outer1', fill: '#98FB98', type: 'Outer', angleStart: 0, angleEnd: 15 },
-  { id: 'outer2', fill: '#98FB98', type: 'Outer', angleStart: 15, angleEnd: 45 },
-  { id: 'outer3', fill: '#98FB98', type: 'Outer', angleStart: 45, angleEnd: 90 },
-  { id: 'outer4', fill: '#98FB98', type: 'Outer', angleStart: 90, angleEnd: 135 },
-  { id: 'outer5', fill: '#98FB98', type: 'Outer', angleStart: 135, angleEnd: 180 },
-  { id: 'outer6', fill: '#98FB98', type: 'Outer', angleStart: 180, angleEnd: 225 },
+const zoneShapes: ZoneType[] = [
+  { id: 'vip-0-90', type: 'VIP', innerRadius: 50, outerRadius: 80, angleStart: 0, angleEnd: 90 },
+  { id: 'vip-90-180', type: 'VIP', innerRadius: 50, outerRadius: 80, angleStart: 90, angleEnd: 180 },
+  { id: 'vip-180-270', type: 'VIP', innerRadius: 50, outerRadius: 80, angleStart: 180, angleEnd: 270 },
+  { id: 'vip-270-360', type: 'VIP', innerRadius: 50, outerRadius: 80, angleStart: 270, angleEnd: 360 },
+  { id: 'std-0-60', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 0, angleEnd: 60 },
+  { id: 'std-60-120', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 60, angleEnd: 120 },
+  { id: 'std-120-180', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 120, angleEnd: 180 },
+  { id: 'std-180-240', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 180, angleEnd: 240 },
+  { id: 'std-240-300', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 240, angleEnd: 300 },
+  { id: 'std-300-360', type: 'Standard', innerRadius: 80, outerRadius: 110, angleStart: 300, angleEnd: 360 },
+  { id: 'back-180-270', type: 'Backseat', innerRadius: 110, outerRadius: 140, angleStart: 180, angleEnd: 270 },
+  { id: 'back-270-360', type: 'Backseat', innerRadius: 110, outerRadius: 140, angleStart: 270, angleEnd: 360 },
 ];
 
-const StadiumMap: React.FC<StadiumMapProps> = ({ zones = defaultZones }) => {
-  const [selectedZone, setSelectedZone] = useState<string | null>(null);
+export const polarToCartesian = (cx: number, cy: number, r: number, angle: number) => {
+  const rad = ((angle - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+};
 
-  const handleZoneClick = (id: string) => {
-    setSelectedZone(id);
+export const buildArc = (innerR: number, outerR: number, startA: number, endA: number) => {
+  const so = polarToCartesian(0, 0, outerR, endA);
+  const eo = polarToCartesian(0, 0, outerR, startA);
+  const si = polarToCartesian(0, 0, innerR, startA);
+  const ei = polarToCartesian(0, 0, innerR, endA);
+  const largeArc = endA - startA > 180 ? 1 : 0;
+  return `M ${so.x} ${so.y} A ${outerR} ${outerR} 0 ${largeArc} 0 ${eo.x} ${eo.y} L ${si.x} ${si.y} A ${innerR} ${innerR} 0 ${largeArc} 1 ${ei.x} ${ei.y} Z`;
+};
+
+export function useStadiumZones(eventData: Concert, day?: string) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const seatArray = eventData?.seatData ?? [];
+  const seatEntry = seatArray.find((d) => d?.date === day) || seatArray[0] || null;
+  return { zones: zoneShapes, seatEntry, selected, setSelected };
+}
+
+export const getSeatBlock = (seatEntry: StadiumMapProps['eventData']['seatData'][0] | undefined, type: ZoneType['type']) => {
+  if (!seatEntry) return null;
+  switch (type) {
+    case 'VIP':
+      return seatEntry.seats.VIP;
+    case 'Standard':
+      return seatEntry.seats.Standard;
+    case 'Backseat':
+      return seatEntry.seats.Backseat;
+    default:
+      return null;
+  }
+};
+
+export const getFillColor = (block: { availableTickets: number } | null, type: ZoneType['type']) => {
+  if (!block || block.availableTickets <= 0) {
+    return '#444';
+  }
+  const colorMap: Record<ZoneType['type'], string> = {
+    VIP: '#FFD700',
+    Standard: '#87CEFA',
+    Backseat: '#FF6347',
+    Outer: '#98FB98',
   };
+  return colorMap[type];
+};
 
-  const polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
-    const angleInRadians = (angleInDegrees - 90) * (Math.PI / 180.0);
-    return {
-      x: centerX + radius * Math.cos(angleInRadians),
-      y: centerY + radius * Math.sin(angleInRadians),
-    };
-  };
+const ZoneSlice: FC<{ z: ZoneType; seatEntry?: Concert['seatData'][0]; onSelect: (_id: string) => void }> = ({ z, seatEntry, onSelect }) => {
+  const block = getSeatBlock(seatEntry, z.type);
+  const fill = getFillColor(block, z.type);
 
-  const arcPath = (x: number, y: number, innerRadius: number, outerRadius: number, startAngle: number, endAngle: number) => {
-    const startOuter = polarToCartesian(x, y, outerRadius, endAngle);
-    const endOuter = polarToCartesian(x, y, outerRadius, startAngle);
-    const startInner = polarToCartesian(x, y, innerRadius, startAngle);
-    const endInner = polarToCartesian(x, y, innerRadius, endAngle);
+  return <path d={buildArc(z.innerRadius, z.outerRadius, z.angleStart, z.angleEnd)} fill={fill} stroke="#000" strokeWidth={1} onClick={() => onSelect(z.id)} style={{ cursor: 'pointer' }} />;
+};
 
-    const largeArc = endAngle - startAngle <= 180 ? '0' : '1';
-
-    return [
-      `M ${startOuter.x} ${startOuter.y}`,
-      `A ${outerRadius} ${outerRadius} 0 ${largeArc} 0 ${endOuter.x} ${endOuter.y}`,
-      `L ${startInner.x} ${startInner.y}`,
-      `A ${innerRadius} ${innerRadius} 0 ${largeArc} 1 ${endInner.x} ${endInner.y}`,
-      'Z',
-    ].join(' ');
-  };
+const StadiumMap: FC<StadiumMapProps> = ({ eventData, selectedDay }) => {
+  const { zones, seatEntry, selected, setSelected } = useStadiumZones(eventData, selectedDay);
 
   return (
     <div className="text-black">
-      <svg data-testid="stadium-map-svg" width="400" height="400" viewBox="0 0 400 400">
+      <svg width={400} height={400} viewBox="0 0 400 400" data-testid="stadium-map-svg">
         <g transform="translate(200,200)">
-          {zones.map((zone) => {
-            const innerRadius = zone.type === 'VIP' ? 70 : zone.type === 'Normal' ? 90 : zone.type === 'Back' ? 110 : 130;
-            const outerRadius = innerRadius + 20;
-
-            return (
-              <path
-                key={zone.id}
-                d={arcPath(0, 0, innerRadius, outerRadius, zone.angleStart, zone.angleEnd)}
-                fill={zone.fill}
-                stroke="#000"
-                strokeWidth="1"
-                onClick={() => handleZoneClick(zone.id)}
-                style={{ cursor: 'pointer' }}
-              />
-            );
-          })}
+          <rect x={-60} y={-30} width={120} height={60} rx={8} fill="#222" />
+          {zones.map((z) => (
+            <ZoneSlice key={z.id} z={z} seatEntry={seatEntry} onSelect={setSelected} />
+          ))}
         </g>
       </svg>
-      {selectedZone && <p className="mt-2 text-lg font-semibold">Сонгосон хэсэг: {selectedZone}</p>}
+      {selected && <p className="mt-2 text-lg font-semibold text-white">Сонгосон хэсэг: {selected}</p>}
     </div>
   );
 };
