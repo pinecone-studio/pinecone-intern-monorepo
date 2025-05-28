@@ -9,6 +9,7 @@ type Ticket = {
 };
 
 type Booking = {
+  userId: string;
   concertId: string;
   concertName: string;
   date: string;
