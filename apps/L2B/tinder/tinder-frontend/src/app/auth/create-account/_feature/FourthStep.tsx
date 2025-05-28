@@ -6,7 +6,8 @@ import { StepFourthCart } from '../_components/StepFourthCart';
 import { ImageUpload } from '../_components/ImageUpload';
 import { uploadToCloudinary } from '@/app/utils/upload-to-cloudinary';
 
-const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
+
+const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void, handleSubmit: () => void}) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState('');
@@ -17,7 +18,8 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
       return;
     } else {
       const urls = await uploadToCloudinary(selectedFiles, 'gandak');
-      console.log(urls);
+      updateFormData({ images: urls });
+      handleSubmit();
       setStep(4);
     }
   };

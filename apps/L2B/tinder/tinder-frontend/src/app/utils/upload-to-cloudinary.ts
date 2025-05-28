@@ -1,5 +1,4 @@
 'use client';
-import dotenv from 'dotenv';
 
 export const uploadToCloudinary = async (files: File[], userId: string): Promise<string[] | undefined> => {
   if (!files || files.length === 0) {
@@ -7,10 +6,9 @@ export const uploadToCloudinary = async (files: File[], userId: string): Promise
     return;
   }
 
-  dotenv.config();
 
-  const PRESET_NAME = process.env.CLOUDINARY_PRESET_NAME;
-  const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
+const PRESET_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
+const CLOUDINARY_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_NAME;
 
   const uploadPromises = files.map(async (file) => {
     if (!PRESET_NAME || !CLOUDINARY_NAME) {

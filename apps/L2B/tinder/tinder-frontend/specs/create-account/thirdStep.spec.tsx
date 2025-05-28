@@ -4,13 +4,15 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 describe('ThirdStep Component', () => {
   const mockSetStep = jest.fn();
+  const mockUpdateFormData = jest.fn();
 
   beforeEach(() => {
     mockSetStep.mockClear();
+    mockUpdateFormData.mockClear();
   });
 
   test('renders all form fields correctly', () => {
-    render(<ThirdStep setStep={mockSetStep} step={2} />);
+    render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
 
     expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Bio/i)).toBeInTheDocument();
@@ -20,7 +22,7 @@ describe('ThirdStep Component', () => {
   });
 
   test('calls setStep on valid form submission', async () => {
-    render(<ThirdStep setStep={mockSetStep} step={2} />);
+    render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
 
     fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'A developer' } });
@@ -32,17 +34,27 @@ describe('ThirdStep Component', () => {
 
     await waitFor(() => {
       expect(mockSetStep).toHaveBeenCalledWith(3);
+      expect(mockUpdateFormData).toHaveBeenCalledWith({
+        name: 'John Doe',
+        bio: 'A developer',
+        interest: 'Coding',
+        profession: 'Engineer',
+        schoolOrWork: 'Remote Work',
+      });
     });
   });
 
-  test('shows validation errors on empty submission', async () => {
-    render(<ThirdStep setStep={mockSetStep} step={2} />);
-    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+test('shows validation errors on empty submission', async () => {
+  render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
 
-  });
+  fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+  const errors = await screen.findAllByTestId('validation-error');
+  expect(errors.length).toBeGreaterThan(0);
+});
 
   test('calls setStep with previous step on back button', () => {
-    render(<ThirdStep setStep={mockSetStep} step={2} />);
+    render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
     fireEvent.click(screen.getByRole('button', { name: /Back/i }));
     expect(mockSetStep).toHaveBeenCalledWith(1);
   });
