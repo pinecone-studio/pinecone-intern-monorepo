@@ -1,10 +1,10 @@
-import { model, models, Schema, Types } from 'mongoose';
+import { model, models, Schema } from 'mongoose';
 
-const BookingSchema = new Schema(
+const bookingSchema = new Schema(
   {
-    userId: { type: Types.ObjectId, ref: 'User', required: true },
-    hotelId: { type: Types.ObjectId, ref: 'Hotel', required: true },
-    roomId: { type: Types.ObjectId, ref: 'Room', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel', required: true },
+    roomId: { type: Schema.Types.ObjectId, ref: 'Room', required: true },
     checkInDate: { type: Date, required: true },
     checkOutDate: { type: Date, required: true },
     guests: {
@@ -17,9 +17,8 @@ const BookingSchema = new Schema(
       enum: ['booked', 'checked_in', 'checked_out', 'cancelled'],
       default: 'booked',
     },
-    images: [{ type: String, required: true }],
   },
   { timestamps: true }
 );
 
-export const bookingModel = models.Booking || model('Booking', BookingSchema);
+export const bookingModel = models.Booking || model('Booking', bookingSchema);

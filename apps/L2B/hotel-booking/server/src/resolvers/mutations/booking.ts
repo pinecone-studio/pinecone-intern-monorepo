@@ -7,7 +7,8 @@ export const createBooking: MutationResolvers['createBooking'] = async (_: unkno
       ...input,
       status: 'booked',
     });
-    return newBooking;
+    const populatedBooking = await newBooking.populate(['userId', 'hotelId', 'roomId']);
+    return populatedBooking;
   } catch (error) {
     throw new Error('Booking creation failed');
   }

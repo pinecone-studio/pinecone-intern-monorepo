@@ -1,9 +1,53 @@
 query Booking($bookingId: ID!) {
   booking(id: $bookingId) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -12,17 +56,60 @@ query Booking($bookingId: ID!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
 }
 query Bookings {
   bookings {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -31,17 +118,61 @@ query Bookings {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
 }
+
 query PastBookings($userId: ID!) {
   pastBookings(userId: $userId) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -50,17 +181,60 @@ query PastBookings($userId: ID!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
 }
 query UpcomingBookings {
   upcomingBookings {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -68,18 +242,61 @@ query UpcomingBookings {
       children
     }
     totalPrice
-    images
+    status
     createdAt
     updatedAt
-    status
   }
 }
 mutation CreateBooking($input: BookingInput!) {
   createBooking(input: $input) {
-    id
-    userId
-    hotelId
-    roomId
+    _id
+    userId {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
+    roomId {
+      _id
+      name
+      type
+      pricePerNight
+      information
+      services {
+        bathroom
+        accessibility
+        entertainment
+        foodAndDrink
+        starsRating
+        other
+        internet
+        bedroom
+      }
+      images
+      roomNumber
+      isAvailable
+      createdAt
+      updatedAt
+    }
     checkInDate
     checkOutDate
     guests {
@@ -88,26 +305,14 @@ mutation CreateBooking($input: BookingInput!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
 }
 mutation UpdateBookingStatus($updateBookingStatusId: ID!, $status: BookingStatus!) {
   updateBookingStatus(id: $updateBookingStatusId, status: $status) {
-    id
-    userId
-    hotelId
-    roomId
-    checkInDate
-    checkOutDate
-    guests {
-      adults
-      children
-    }
-    totalPrice
+    _id
     status
-    images
     createdAt
     updatedAt
   }

@@ -2,21 +2,21 @@ import gql from 'graphql-tag';
 
 export const HotelTypeDefs = gql`
   type Hotel {
-    id: ID!
-    name: String!
-    location: String!
+    _id: ID
+    name: String
+    location: String
     starRating: Int
-    rating: Float!
-    description: String!
-    amenities: [String!]
+    rating: Float
+    description: String
+    amenities: [String]
     phone: String
-    images: [String!]!
+    images: [String]
     createdAt: Date
     updatedAt: Date
   }
 
   type SuccessResponse {
-    success: Boolean!
+    success: Boolean
     message: String
   }
 
@@ -26,19 +26,19 @@ export const HotelTypeDefs = gql`
     starRating: Int
     rating: Float
     description: String
-    amenities: [String!]
+    amenities: [String]
     phone: String
-    images: [String!]
+    images: [String]
   }
 
   type Query {
-    hotels: [Hotel!]!
-    hotel(id: ID!): Hotel
+    hotels: [Hotel]
+    hotel(id: ID): Hotel
   }
 
   type Mutation {
-    createHotel(input: HotelInput!): Hotel!
-    updateHotel(id: ID!, input: HotelInput): Hotel!
-    deleteHotel(id: ID!): SuccessResponse!
+    createHotel(input: HotelInput): Hotel
+    updateHotel(id: ID, input: HotelInput): Hotel
+    deleteHotel(id: ID): SuccessResponse
   }
 `;

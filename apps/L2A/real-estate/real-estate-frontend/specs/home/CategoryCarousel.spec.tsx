@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CategoryCarousel from '@/app/home/_components/CategoryCarousel';
+import CategoryCarousel from '@/app/_components/CategoryCarousel';
 
 jest.mock('swiper/react', () => {
   return {

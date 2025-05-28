@@ -16,16 +16,15 @@ export const BookingTypeDefs = gql`
   }
 
   type Booking {
-    id: ID!
-    userId: ID!
-    hotelId: ID!
-    roomId: ID!
+    _id: ID!
+    userId: User!
+    hotelId: Hotel!
+    roomId: Room!
     checkInDate: Date!
     checkOutDate: Date!
     guests: GuestInfo!
     totalPrice: Float!
     status: BookingStatus!
-    images: [String]
     createdAt: Date
     updatedAt: Date
   }
@@ -43,7 +42,6 @@ export const BookingTypeDefs = gql`
     checkOutDate: Date!
     guests: GuestInput!
     totalPrice: Float!
-    images: [String]
   }
   type Query {
     bookings: [Booking!]!

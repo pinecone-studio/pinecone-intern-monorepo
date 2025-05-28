@@ -1,4 +1,4 @@
-import ListingCard from '@/app/home/_components/ListingCard';
+import ListingCard from '@/app/_components/ListingCard';
 import { GetPostsQuery } from '@/generated';
 import Link from 'next/link';
 

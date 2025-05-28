@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ExploreCard from '@/app/home/_components/ExploreCard';
+import ExploreCard from '@/app/_components/ExploreCard';
 
 describe('ExploreCard', () => {
   it('renders title and count correctly', () => {

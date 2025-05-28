@@ -18,8 +18,6 @@ export const filterPosts = async (_: any, { filter }: { filter: any }) => {
     ...buildBooleanFilter('balcony', filter?.balcony),
     ...buildSearchFilter(filter?.debouncedSearch)
   };
-    console.log(filter)
-
   return POST_MODEL.find(query);
 };
   

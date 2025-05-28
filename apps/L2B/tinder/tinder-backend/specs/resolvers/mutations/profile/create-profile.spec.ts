@@ -16,7 +16,7 @@ describe('createProfile', () => {
     jest.clearAllMocks();
   });
 
-  it('should create a new profile and return it', async () => {
+  it('should create a new profile and return it with populated user', async () => {
     const mockInput = {
       user: 'user123',
       interestedIn: 'music',
@@ -31,9 +31,20 @@ describe('createProfile', () => {
       images: ['img1.png', 'img2.png'],
     };
 
-    const mockProfile = { ...mockInput, _id: 'mocked-id' };
+    const mockCreatedProfile = {
+      ...mockInput,
+      _id: 'mocked-id',
+      populate: jest.fn(),
+    };
 
-    (profileModel.create as jest.Mock).mockResolvedValue(mockProfile);
+    const mockPopulatedProfile = {
+      ...mockCreatedProfile,
+      user: { id: 'user123', name: 'John' },
+    };
+
+    (mockCreatedProfile.populate as jest.Mock).mockResolvedValue(mockPopulatedProfile);
+
+    (profileModel.create as jest.Mock).mockResolvedValue(mockCreatedProfile);
 
     const args: MutationCreateProfileArgs = { input: mockInput };
     const result = await (createProfile as NonNullable<typeof createProfile>)({}, args, {}, info);
@@ -46,6 +57,8 @@ describe('createProfile', () => {
       images: mockInput.images,
     });
 
-    expect(result).toEqual(mockProfile);
+    expect(mockCreatedProfile.populate).toHaveBeenCalledWith('user');
+
+    expect(result).toEqual(mockPopulatedProfile);
   });
 });

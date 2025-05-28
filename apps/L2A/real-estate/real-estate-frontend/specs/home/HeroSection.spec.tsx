@@ -1,7 +1,20 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import HeroSection from '@/app/home/_components/HeroSection';
+import HeroSection from '@/app/_components/HeroSection';
+
+const mockPush = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
+
 describe('HeroSection', () => {
+  beforeEach(() => {
+    mockPush.mockClear();
+  });
+
   it('renders heading correctly', () => {
     render(<HeroSection />);
     expect(screen.getByText("Discover a place you’ll love to live")).toBeInTheDocument();
@@ -24,14 +37,13 @@ describe('HeroSection', () => {
     expect((input as HTMLInputElement).value).toBe('Зайсан');
   });
 
-  it('submits the form when clicking the search button', () => {
+  it('calls router.push with correct query when search button is clicked', () => {
     render(<HeroSection />);
     const input = screen.getByPlaceholderText('Хот, дүүрэг, эсвэл газар хайх...');
     fireEvent.change(input, { target: { value: 'Зайсан' } });
     const button = screen.getByRole('button', { name: /Хайх/i });
     fireEvent.click(button);
 
-    expect(button).toBeInTheDocument();
+    expect(mockPush).toHaveBeenCalledWith('/listing?search=Зайсан');
   });
 });
-

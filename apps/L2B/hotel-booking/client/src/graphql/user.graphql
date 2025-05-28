@@ -1,31 +1,36 @@
 mutation AddUser($email: String!, $password: String!) {
   addUser(email: $email, password: $password) {
-    birth
+    _id
     email
-    firstName
-    id
-    isAdmin
-    lastName
     password
-    phone
+    firstName
+    lastName
+    birth
+    emergencyPhone
     relation
+    isAdmin
+    phone
   }
 }
 
 query GetUser($id: ID!) {
   getUser(_id: $id) {
-    birth
+    _id
     email
+    password
     firstName
     lastName
-    phone
-    relation
+    birth
     emergencyPhone
+    relation
+    isAdmin
+    phone
   }
 }
 
 query GetUsers {
   getUsers {
+    _id
     birth
     email
     firstName
@@ -37,38 +42,60 @@ query GetUsers {
 
 query GetCurrentUser($jwt: String!) {
   getCurrentUser(JWT: $jwt) {
+    _id
     email
+    password
     firstName
     lastName
     birth
     emergencyPhone
     relation
+    isAdmin
     phone
   }
 }
 
 mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: String!, $birth: Date!) {
   updatePersonalInformation(_id: $id, firstName: $firstName, lastName: $lastName, birth: $birth) {
-    birth
+    _id
+    email
+    password
     firstName
     lastName
-    id
+    birth
+    emergencyPhone
+    relation
+    isAdmin
+    phone
   }
 }
 
 mutation UpdateContact($id: ID!, $input: ContactInput!) {
   updateContact(_id: $id, input: $input) {
-    id
-    phone
+    _id
     email
+    password
+    firstName
+    lastName
+    birth
     emergencyPhone
     relation
+    isAdmin
+    phone
   }
 }
 
 mutation UpdatePassword($id: ID!, $password: String!) {
   updatePassword(_id: $id, password: $password) {
-    id
+    _id
+    email
     password
+    firstName
+    lastName
+    birth
+    emergencyPhone
+    relation
+    isAdmin
+    phone
   }
 }

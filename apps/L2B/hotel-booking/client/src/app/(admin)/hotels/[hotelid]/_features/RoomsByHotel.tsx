@@ -5,19 +5,22 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Image from 'next/image';
 import { Room, useRoomsByHotelQuery } from '@/generated';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const RoomsByHotel = () => {
+export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
   const [rooms, setRooms] = useState<Room[]>();
+  const router = useRouter();
 
   const { data } = useRoomsByHotelQuery({
     variables: {
-      hotelId: '682ac7df47df32a8a9907cb1',
+      hotelId: hotelId,
     },
   });
-  console.log(data?.roomsByHotel);
 
   useEffect(() => {
-    setRooms(data?.roomsByHotel);
+    if (data?.roomsByHotel) {
+      setRooms(data.roomsByHotel.filter((r): r is Room => r !== null));
+    }
   }, [data]);
 
   const getBedLabel = (type: string) => {
@@ -73,14 +76,24 @@ export const RoomsByHotel = () => {
               </TableHeader>
               <TableBody>
                 {rooms?.filter(tab.filter).map((room: Room, index) => (
-                  <TableRow key={index} className="cursor-pointer">
+                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/${hotelId}/${room._id}`)}>
                     <TableCell className="border-r-[1px]">{room.roomNumber}</TableCell>
                     <TableCell className="flex items-center gap-3 border-r-[1px]">
-                      <Image src={room.images[0]} alt="" width={100} height={100} className="w-12 h-12 rounded object-cover" />
+                      {room.images?.[0] ? (
+                        <Image
+                          src={room.images[0]?.startsWith('http') ? room.images[0] : '/' + room.images[0]}
+                          alt={'Room image'}
+                          width={100}
+                          height={100}
+                          className="w-12 h-12 rounded object-cover"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 bg-gray-200 rounded" />
+                      )}
                       <span className="text-[14px] font-[500]">{room.name}</span>
                     </TableCell>
                     <TableCell className="border-r-[1px] w-[148px]">{room.pricePerNight}</TableCell>
-                    <TableCell className="w-[116px]">{getBedLabel(room.type)}</TableCell>
+                    <TableCell className="w-[116px]">{getBedLabel(room.type ?? 'single')}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

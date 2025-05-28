@@ -2,8 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { userModel } from '../../../../models';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'mysecretkey';
-
 export const signIn = async (_: unknown, args: { email: string; password: string }) => {
   const { email, password } = args;
 
@@ -16,8 +14,7 @@ export const signIn = async (_: unknown, args: { email: string; password: string
   if (!isPasswordValid) {
     throw new Error('password is incorrect');
   }
-
-  const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
-
+  const JWT_SECRET = process.env.JWT_SECRET || 'mysecretkey';
+  const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '1d' });
   return token;
 };

@@ -25,4 +25,8 @@ export const userTypeDefs = gql`
     forgotPassword(email: String!, password: String!): User!
     signIn(email: String!, password: String!): String!
   }
+  type Query {
+    getUsers: [User!]!
+    getCurrentUser(JWT: String!): User!
+  }
 `;

@@ -1,25 +1,42 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { AuthContext } from '../../client/src/app/(main)/_context/AuthContext';
 import Header from '@/app/_components/Header';
+import '@testing-library/jest-dom';
 
-jest.mock('next/link', () => {
-  const Link = ({ children, href }) => <a href={href}>{children}</a>;
-  Link.displayName = 'Link';
-  return Link;
-});
+const mockUser = {
+  firstName: 'John',
+};
 
-describe('Header Component', () => {
-  it('renders logo and title correctly', () => {
-    render(<Header />);
-    expect(screen.getByText('Pedia')).toBeInTheDocument();
+const renderHeader = (user: any = null, bg: 'white' | 'blue' = 'white') => {
+  return render(
+    <AuthContext.Provider value={{ user, logout: jest.fn(), fetchUser: jest.fn() }}>
+      <Header bg={bg} />
+    </AuthContext.Provider>
+  );
+};
+
+describe('Header', () => {
+  it('renders with white background', () => {
+    renderHeader(null, 'white');
+    const header = screen.getByTestId('header');
+    expect(header).toHaveClass('bg-white');
   });
 
-  it('renders navigation links', () => {
-    render(<Header />);
-    const links = screen.getByTestId('link');
-    expect(links).toBeInTheDocument();
-    expect(screen.getByText('Register')).toHaveAttribute('href', '/signup');
-    expect(screen.getByText('Sign in')).toHaveAttribute('href', '/signin');
+  it('renders with blue background', () => {
+    renderHeader(null, 'blue');
+    const header = screen.getByTestId('header');
+    expect(header).toHaveClass('bg-[#013B94]');
+  });
+
+  it('shows "Register" and "Sign in" when user is not logged in', () => {
+    renderHeader();
+    expect(screen.getByText(/register/i)).toBeInTheDocument();
+    expect(screen.getByText(/sign in/i)).toBeInTheDocument();
+  });
+
+  it('shows user name and "My Booking" when user is logged in', () => {
+    renderHeader(mockUser);
+    expect(screen.getByText('My Booking')).toBeInTheDocument();
+    expect(screen.getByText(mockUser.firstName)).toBeInTheDocument();
   });
 });

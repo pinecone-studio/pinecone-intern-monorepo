@@ -5,9 +5,9 @@ import { ChevronDown } from 'lucide-react';
 import { useQueryParamState } from '@/hooks/useQueryState';
 import { buildFilters } from '@/lib';
 import { useFilterPostQuery } from '@/generated';
-import ListingCard from '../home/_components/ListingCard';
+import ListingCard from '../_components/ListingCard';
 import { useDebounce } from '@/hooks/debounce-hook';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TypeComp from './_components/TypeComp';
 import LocationComp from './_components/LocationComp';
 import PriceComp from './_components/PriceComp';
@@ -27,17 +27,26 @@ const HomeListingPage = () => {
   const [garage, setGarage] = useQueryParamState('garage');
   const [lift, setLift] = useQueryParamState('lift');
   const [balcony, setBalcony] = useQueryParamState('balcony');
+  const [searchFromLanding, setSearchFromLanding] = useQueryParamState('search');
   const [searchInput, setSearchInput] = useState('')
   const debouncedSearch = useDebounce(searchInput , 500)
-  
-  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony, searchValue:debouncedSearch});
+  const searchValue = searchFromLanding || debouncedSearch;
+  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony, searchValue: searchValue});
   const { data } = useFilterPostQuery({ variables: { filter: filters } });
+
+  useEffect(() => {
+    if (searchFromLanding) {
+      setSearchInput(searchFromLanding);
+      setSearchFromLanding('');
+    }
+  }
+  , [searchFromLanding]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f8f8]" data-cy="listing-page">
       <main className="flex-1 flex flex-col lg:flex-row mx-auto w-full max-w-[1280px]">
         <aside className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm" data-cy="listing-sidebar">
-          <Input onChange={(e)=>setSearchInput(e.target.value)} placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
+          <Input   defaultValue={searchFromLanding || ''} onChange={(e)=>setSearchInput(e.target.value)} placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
           <div className="space-y-6 ">
           <TypeComp type={type} setType={setType}/>
           <LocationComp setCity={setCity}  setDistrict={setDistrict}/>

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ListingCard from '@/app/home/_components/ListingCard';
+import ListingCard from '@/app/_components/ListingCard';
 
 jest.mock('next/image', () => ({
   __esModule: true,

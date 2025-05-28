@@ -2,12 +2,12 @@ import { model, models, Schema } from 'mongoose';
 
 const hotelSchema = new Schema(
   {
-    name: { type: String, required: true, trim: true },
-    location: { type: String, required: true },
-    starRating: { type: Number, min: 1, max: 5 },
-    rating: { type: Number, required: true },
-    description: { type: String, required: true },
-    amenities: [String],
+    name: { type: String, trim: true, default: 'Hotel name' },
+    location: { type: String, default: 'Hotel location' },
+    starRating: { type: Number, min: 1, max: 5, default: 0 },
+    rating: { type: Number, default: 0 },
+    description: { type: String, default: 'Hotel description' },
+    amenities: { type: [String], default: [] },
     phone: { type: String },
     images: [{ type: String }],
   },
