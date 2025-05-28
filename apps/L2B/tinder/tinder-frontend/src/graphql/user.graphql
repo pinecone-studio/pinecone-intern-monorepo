@@ -51,3 +51,27 @@ mutation ForgotPassword($email: String!, $password: String!) {
 mutation SignIn($email: String!, $password: String!) {
   signIn(email: $email, password: $password)
 }
+query FetchAllProfile {
+  fetchAllProfile {
+    _id
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
