@@ -28,19 +28,6 @@ query Booking($bookingId: ID!) {
     }
     roomId {
       _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
       name
       type
       pricePerNight
@@ -69,7 +56,6 @@ query Booking($bookingId: ID!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
@@ -104,19 +90,6 @@ query Bookings {
     }
     roomId {
       _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
       name
       type
       pricePerNight
@@ -145,7 +118,6 @@ query Bookings {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
@@ -181,19 +153,6 @@ query PastBookings($userId: ID!) {
     }
     roomId {
       _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
       name
       type
       pricePerNight
@@ -222,7 +181,6 @@ query PastBookings($userId: ID!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
@@ -257,19 +215,6 @@ query UpcomingBookings {
     }
     roomId {
       _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
       name
       type
       pricePerNight
@@ -298,7 +243,6 @@ query UpcomingBookings {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
@@ -333,19 +277,6 @@ mutation CreateBooking($input: BookingInput!) {
     }
     roomId {
       _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
       name
       type
       pricePerNight
@@ -374,7 +305,6 @@ mutation CreateBooking($input: BookingInput!) {
     }
     totalPrice
     status
-    images
     createdAt
     updatedAt
   }
@@ -382,75 +312,7 @@ mutation CreateBooking($input: BookingInput!) {
 mutation UpdateBookingStatus($updateBookingStatusId: ID!, $status: BookingStatus!) {
   updateBookingStatus(id: $updateBookingStatusId, status: $status) {
     _id
-    userId {
-      _id
-      email
-      password
-      firstName
-      lastName
-      birth
-      emergencyPhone
-      relation
-      isAdmin
-      phone
-    }
-    hotelId {
-      _id
-      name
-      location
-      starRating
-      rating
-      description
-      amenities
-      phone
-      images
-      createdAt
-      updatedAt
-    }
-    roomId {
-      _id
-      hotelId {
-        _id
-        name
-        location
-        starRating
-        rating
-        description
-        amenities
-        phone
-        images
-        createdAt
-        updatedAt
-      }
-      name
-      type
-      pricePerNight
-      information
-      services {
-        bathroom
-        accessibility
-        entertainment
-        foodAndDrink
-        starsRating
-        other
-        internet
-        bedroom
-      }
-      images
-      roomNumber
-      isAvailable
-      createdAt
-      updatedAt
-    }
-    checkInDate
-    checkOutDate
-    guests {
-      adults
-      children
-    }
-    totalPrice
     status
-    images
     createdAt
     updatedAt
   }
