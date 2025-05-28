@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { useGetPostsQuery } from '@/generated';
-import RecentListingsSection from '@/app/home/_components/RecentListingSection';
 import '@testing-library/jest-dom';
+import RecentListingsSection from '@/app/_components/RecentListingSection';
 
 
 jest.mock('@/generated', () => ({
   useGetPostsQuery: jest.fn(),
 }));
 
-jest.mock('@/app/home/_components/ListingCard', () => ({
+jest.mock('@/app/_components/ListingCard', () => ({
   __esModule: true,
   default: jest.fn(() => <div data-testid="listing-card">ListingCard</div>),
 }));

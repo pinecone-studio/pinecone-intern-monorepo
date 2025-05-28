@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CategoryCard from '@/app/home/_components/CategoryCard';
+import CategoryCard from '@/app/_components/CategoryCard';
 
 describe('CategoryCard', () => {
   it('renders title and count correctly', () => {

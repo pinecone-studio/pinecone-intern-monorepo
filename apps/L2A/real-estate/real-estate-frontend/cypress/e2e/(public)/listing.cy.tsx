@@ -109,4 +109,35 @@ describe('Listing Page', () => {
       cy.get('[data-cy="sort-button"]').click();
     });
   });
+
+describe('Landing to Listing Search Propagation', () => {
+  it('should hydrate search input from query param and clear searchFromLanding', () => {
+    const keyword = 'Зайсан';
+    const encoded = encodeURIComponent(keyword);
+
+    cy.visit(`/listing?search=${encoded}`);
+
+    cy.get('[data-cy="listing-search-input"]', { timeout: 10000 })
+      .should('exist')
+      .invoke('val')
+      .should('eq', keyword);
+    cy.url().should('include', '/listing');
+    cy.get('[data-cy="listing-grid"]').children().should('have.length', 0);
+  });
+});
+describe('Force trigger searchFromLanding hydration', () => {
+  it('should hydrate from URL and trigger useEffect', () => {
+    const keyword = 'Зайсан';
+    const encoded = encodeURIComponent(keyword);
+
+    cy.visit(`/listing?search=${encoded}`);
+    cy.get('[data-cy="listing-search-input"]', { timeout: 10000 })
+      .should('exist')
+      .should('have.value', keyword);
+    cy.get('[data-cy="listing-search-input"]').focus().blur();
+    cy.wait(500);
+    cy.get('[data-cy="sort-button"]').click();
+  });
+});
+
 });
