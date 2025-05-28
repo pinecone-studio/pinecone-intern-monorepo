@@ -108,6 +108,6 @@ describe.only('RoomsByHotel Page', () => {
   it('should navigate to room detail page on row click', () => {
     cy.get('table').contains('td', 'Mock Room 1').parents('tr').click();
 
-    cy.location('pathname').should('eq', '/hotels/hotel-id/1');
+    cy.location('pathname').should('eq', '/hotels/mock-hotel-id/1');
   });
 });

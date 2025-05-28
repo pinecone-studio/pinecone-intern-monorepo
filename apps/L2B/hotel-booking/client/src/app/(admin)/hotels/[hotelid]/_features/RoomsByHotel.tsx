@@ -76,7 +76,7 @@ export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
               </TableHeader>
               <TableBody>
                 {rooms?.filter(tab.filter).map((room: Room, index) => (
-                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/hotel-id/${room._id}`)}>
+                  <TableRow key={index} className="cursor-pointer" onClick={() => router.push(`/hotels/${hotelId}/${room._id}`)}>
                     <TableCell className="border-r-[1px]">{room.roomNumber}</TableCell>
                     <TableCell className="flex items-center gap-3 border-r-[1px]">
                       {room.images?.[0] ? (
