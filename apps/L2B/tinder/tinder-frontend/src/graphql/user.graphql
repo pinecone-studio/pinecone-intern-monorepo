@@ -67,3 +67,29 @@ mutation CreateProfile($input: CreateProfileInput!) {
     images
   }
 }
+
+query FetchAllProfile {
+  fetchAllProfile {
+    _id
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
+
