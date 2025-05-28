@@ -3,14 +3,14 @@ import { model, models, Schema } from 'mongoose';
 const roomSchema = new Schema(
   {
     hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel' },
-    name: { type: String },
+    name: { type: String, default: 'Room name' },
     type: {
       type: String,
       enum: ['single', 'double', 'twin', 'suite', 'deluxe', 'family'],
       required: true,
     },
-    pricePerNight: { type: Number },
-    information: { type: [String] },
+    pricePerNight: { type: Number, default: 0 },
+    information: { type: [String], default: [] },
     services: {
       bathroom: { type: [String], default: [] },
       accessibility: { type: [String], default: [] },
