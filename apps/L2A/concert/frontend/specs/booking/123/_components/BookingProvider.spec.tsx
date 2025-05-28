@@ -50,6 +50,7 @@ describe('BookingProvider Context', () => {
           <button
             onClick={() =>
               setBooking({
+                userId: 'mockID1q23',
                 concertId: '1',
                 concertName: 'To Be Cleared',
                 date: '2025-01-01',

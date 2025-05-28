@@ -1,13 +1,5 @@
 import { FC } from 'react';
-
-type TicketOption = {
-  type: string;
-  count: number;
-  price: number;
-  formattedPrice: string;
-  color: string;
-  selected: number;
-};
+import { TicketOption } from '../[id]/_components/SeatSelection';
 
 export const TotalPriceBreakdown: FC<{ options: TicketOption[] }> = ({ options }) => {
   const totalPrice = options.reduce((sum, opt) => sum + opt.selected * opt.price, 0);
