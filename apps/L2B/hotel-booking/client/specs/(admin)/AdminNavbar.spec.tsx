@@ -1,4 +1,4 @@
-import { Navbar } from '@/app/(admin)/guest-info/_components/Navbar';
+import { Navbar } from '@/app/(admin)/hotels/[hotelid]/[roomId]/[bookingId]/_components/Navbar';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
