@@ -1,21 +1,25 @@
 import { uploadToCloudinary } from './upload-to-cloudinary';
 
+beforeAll(() => {
+  global.alert = jest.fn();
+});
+
 describe('uploadToCloudinary', () => {
   const OLD_ENV = process.env;
 
   const dummyFile = new File(['dummy content'], 'dummy.png', { type: 'image/png' });
 
   beforeEach(() => {
-    jest.resetModules(); // Reset cache
-    process.env = { ...OLD_ENV }; // Clone original env
+    jest.resetModules(); 
+    process.env = { ...OLD_ENV }; 
     process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME = 'preset';
     process.env.NEXT_PUBLIC_CLOUDINARY_NAME = 'cloudname';
-     jest.spyOn(window, 'alert').mockImplementation(() => {});
+    
     jest.clearAllMocks();
   });
 
   afterAll(() => {
-    process.env = OLD_ENV; // Restore original env
+    process.env = OLD_ENV;
   });
 
   it('returns undefined if no files are provided', async () => {
@@ -33,6 +37,7 @@ describe('uploadToCloudinary', () => {
   it('uploads file successfully and returns URLs', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
+        // eslint-disable-next-line camelcase
         json: () => Promise.resolve({ secure_url: 'http://cloudinary.com/fake-url.png' }),
       })
     ) as jest.Mock;
@@ -43,10 +48,10 @@ describe('uploadToCloudinary', () => {
   });
 
   it('handles upload failure and returns null for failed upload', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // silence error logs
+  
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error'))) as jest.Mock;
 
     const result = await uploadToCloudinary([dummyFile], '123');
-    expect(result).toEqual([]); // filters out null
+    expect(result).toEqual([]); 
   });
 });
