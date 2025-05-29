@@ -27,6 +27,35 @@ describe('uploadToCloudinary', () => {
     expect(result).toBeUndefined();
   });
 
+ it('alerts and returns undefined if no files are provided', async () => {
+  const result = await uploadToCloudinary([], '123');
+  expect(global.alert).toHaveBeenCalledWith('Please select files');
+  expect(result).toBeUndefined();
+});
+
+it('alerts and returns undefined if Cloudinary config is missing', async () => {
+  process.env.NEXT_PUBLIC_CLOUDINARY_NAME = '';
+  process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME = '';
+  const result = await uploadToCloudinary([dummyFile], '123');
+  expect(global.alert).toHaveBeenCalledWith('Cloudinary configuration is missing');
+  expect(result).toBeUndefined();
+});
+
+it('handles upload failure and logs error', async () => {
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  global.fetch = jest.fn(() => Promise.reject(new Error('Network error'))) as jest.Mock;
+
+  const result = await uploadToCloudinary([dummyFile], '123');
+  expect(result).toEqual([]);
+  expect(consoleSpy).toHaveBeenCalledWith(
+    'Upload failed for file:',
+    dummyFile.name,
+    expect.any(Error)
+  );
+
+  consoleSpy.mockRestore();
+});
+
   it('returns undefined if Cloudinary config is missing', async () => {
     process.env.NEXT_PUBLIC_CLOUDINARY_NAME = '';
     process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME = '';
