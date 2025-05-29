@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { Room, useRoomsByHotelQuery } from '@/generated';
+import { Room, useCreateRoomMutation, useRoomsByHotelQuery } from '@/generated';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -16,6 +16,8 @@ export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
       hotelId: hotelId,
     },
   });
+
+  const [createRoom] = useCreateRoomMutation();
 
   useEffect(() => {
     if (data?.roomsByHotel) {
@@ -44,11 +46,18 @@ export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
     { value: 'three', label: '3 bed', filter: (room: Room) => room.type === 'family' },
   ];
 
+  const addRoom = async () => {
+    const { data } = await createRoom();
+    if (data?.createRoom) {
+      setRooms((prev) => [...(prev || []), data.createRoom as Room]);
+    }
+  };
+
   return (
-    <div className="mt-4 max-w-[784px] w-full flex p-6 flex-col items-start gap-4 rounded-[8px] border bg-background ">
+    <div className=" max-w-[784px] w-full flex p-6 flex-col items-start gap-4 rounded-[8px] border bg-background ">
       <div className="w-full flex justify-between items-start ">
         <h3 className="text-[18px] font-[600] leading-[28px] ">Room Types</h3>
-        <Button variant={'outline'} className="flex gap-2 hover:bg-white text-[14px] font-[500] leading-[20px] hover:text-[#2563EB] text-[#2563EB] ">
+        <Button onClick={addRoom} variant={'outline'} className="flex gap-2 hover:bg-white text-[14px] font-[500] leading-[20px] hover:text-[#2563EB] text-[#2563EB] ">
           <Plus />
           Add Room
         </Button>

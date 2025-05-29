@@ -1,20 +1,21 @@
 'use client';
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
+import { useUpdateHotelMutation, Hotel } from '@/generated';
 import { useEffect, useState } from 'react';
 import { HotelForm } from '@/utils/type';
 
-export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
+type GeneralInfoFormProps = {
+  hotel: Hotel;
+};
+
+export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: { hotel } = {}, refetch } = useHotelQuery({
-    variables: { hotelId: hotelId || '' },
-    skip: !hotelId,
-  });
 
   const getInitialForm = (): HotelForm => ({
     name: '',
@@ -28,14 +29,8 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
 
   useEffect(() => {
     if (!hotel) return;
-    const { name = '', description = '', starRating, phone = '', rating } = hotel;
-    setForm({
-      name,
-      description,
-      starRating,
-      phone,
-      rating,
-    });
+    const { name = '', description = '', starRating = 0, phone = '', rating = 0 } = hotel;
+    setForm({ name, description, starRating, phone, rating });
   }, [hotel]);
 
   const [updateHotel, { loading }] = useUpdateHotelMutation();
@@ -44,7 +39,7 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
     try {
       await updateHotel({
         variables: {
-          updateHotelId: hotelId || '',
+          updateHotelId: hotel._id!,
           input: {
             name: form.name,
             description: form.description,
@@ -54,7 +49,6 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
           },
         },
       });
-      await refetch();
       setIsOpen(false);
     } catch (err) {
       console.error('Update failed:', err);
@@ -91,9 +85,7 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger data-testid="edit-general" className="px-4 flex items-center text-[#2563EB] text-sm font-medium">
-        Edit
-      </DialogTrigger>
+      <DialogTrigger className="px-4 flex items-center text-[#2563EB] text-sm font-medium">Edit</DialogTrigger>
       <DialogContent className="sm:min-w-[33rem]">
         <DialogHeader>
           <DialogTitle className="font-semibold text-base">General Info</DialogTitle>

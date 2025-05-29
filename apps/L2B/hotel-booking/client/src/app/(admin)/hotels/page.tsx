@@ -5,10 +5,12 @@ import { PanelLeft, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { FilterHotelsAdmin } from './_components/FilterHotelsAdmin';
 import { HotelsTable } from './_components/HotelsTable';
-import { Hotel, useHotelsQuery } from '@/generated';
+import { Hotel, useCreateHotelMutation, useHotelsQuery } from '@/generated';
 const HotelsPage = () => {
-  const { data, loading } = useHotelsQuery();
+  const { data, loading, refetch } = useHotelsQuery();
+  const [createHotel] = useCreateHotelMutation();
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
+  const [isCreating, setIsCreating] = useState(false);
   const validHotels = useMemo(() => {
     return (
       data?.hotels?.filter((hotel): hotel is Hotel => {
@@ -29,8 +31,21 @@ const HotelsPage = () => {
     return <div className="p-6 text-gray-600">Loading hotels...</div>;
   }
 
+  const addHotel = async () => {
+    setIsCreating(true);
+    await createHotel({
+      variables: {
+        input: {
+          starRating: 1,
+        },
+      },
+    });
+    await refetch();
+    setIsCreating(false);
+  };
+
   return (
-    <div data-cy="Hotels-Page" className="p-6 bg-gray-50 min-h-screen w-full">
+    <div data-testid="Hotels-Page" className="p-6 bg-gray-50 min-h-screen w-full">
       <div>
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
           <PanelLeft />
@@ -44,10 +59,14 @@ const HotelsPage = () => {
           <h1 className="text-2xl font-semibold text-gray-800" data-testid="page-title">
             Hotels
           </h1>
-          <Link href="/hotels/add-hotel" className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors" data-testid="add-hotel-link">
+          <div
+            onClick={!isCreating ? addHotel : undefined}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${isCreating ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'}`}
+            data-testid="add-hotel-div"
+          >
             <Plus className="h-4 w-4" />
-            Add Hotel
-          </Link>
+            {isCreating ? 'Creating...' : 'Add Hotel'}
+          </div>
         </div>
         <div className="rounded-lg shadow-sm">
           <FilterHotelsAdmin hotels={validHotels} onFilterChange={handleFilterChange} />
