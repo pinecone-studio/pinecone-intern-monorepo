@@ -75,3 +75,27 @@ query FetchAllProfile {
     images
   }
 }
+
+query GetCurrentUser($jwt: String!) {
+  getCurrentUser(JWT: $jwt) {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
+
+query GetUsers {
+  getUsers {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}

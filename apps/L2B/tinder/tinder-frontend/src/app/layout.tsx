@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import './global.css';
 import { ApolloWrapper } from '@/components/providers';
 import { Toaster } from 'sonner';
+import { AuthProvider } from './auth/context/AuthContext';
 
 export const metadata = {
   title: 'Welcome to example-frontend',
@@ -12,7 +13,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <AuthProvider>{children}</AuthProvider>
+        </ApolloWrapper>
         <Toaster richColors position="top-center" />
       </body>
     </html>

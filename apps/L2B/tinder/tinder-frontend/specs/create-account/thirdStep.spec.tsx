@@ -1,6 +1,6 @@
 import ThirdStep from '@/app/auth/create-account/_components/ThirdStep';
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 
 describe('ThirdStep Component', () => {
   const mockSetStep = jest.fn();
@@ -22,13 +22,14 @@ describe('ThirdStep Component', () => {
   test('calls setStep on valid form submission', async () => {
     render(<ThirdStep setStep={mockSetStep} step={2} />);
 
-    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'A developer' } });
-    fireEvent.change(screen.getByLabelText(/Interest/i), { target: { value: 'Coding' } });
-    fireEvent.change(screen.getByLabelText(/Profession/i), { target: { value: 'Engineer' } });
-    fireEvent.change(screen.getByLabelText(/School\/Work/i), { target: { value: 'Remote Work' } });
-
-    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
+      fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'A developer' } });
+      fireEvent.change(screen.getByLabelText(/Interest/i), { target: { value: 'Coding' } });
+      fireEvent.change(screen.getByLabelText(/Profession/i), { target: { value: 'Engineer' } });
+      fireEvent.change(screen.getByLabelText(/School\/Work/i), { target: { value: 'Remote Work' } });
+      fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+    });
 
     await waitFor(() => {
       expect(mockSetStep).toHaveBeenCalledWith(3);
@@ -37,13 +38,20 @@ describe('ThirdStep Component', () => {
 
   test('shows validation errors on empty submission', async () => {
     render(<ThirdStep setStep={mockSetStep} step={2} />);
-    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
-
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+    });
+    // Хэрэв алдааны мессеж гардаг бол энд шалгалт нэмээрэй:
+    // expect(screen.getByText(/Name is required/i)).toBeInTheDocument();
   });
 
-  test('calls setStep with previous step on back button', () => {
+  test('calls setStep with previous step on back button', async () => {
     render(<ThirdStep setStep={mockSetStep} step={2} />);
-    fireEvent.click(screen.getByRole('button', { name: /Back/i }));
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /Back/i }));
+    });
+
     expect(mockSetStep).toHaveBeenCalledWith(1);
   });
 });
