@@ -24,7 +24,7 @@ describe('ThirdStep Component', () => {
   test('calls setStep on valid form submission', async () => {
     render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
 
-    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John' } });
     fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'A developer' } });
     fireEvent.change(screen.getByLabelText(/Interest/i), { target: { value: 'Coding' } });
     fireEvent.change(screen.getByLabelText(/Profession/i), { target: { value: 'Engineer' } });
@@ -35,7 +35,7 @@ describe('ThirdStep Component', () => {
     await waitFor(() => {
       expect(mockSetStep).toHaveBeenCalledWith(3);
       expect(mockUpdateFormData).toHaveBeenCalledWith({
-        name: 'John Doe',
+        name: 'John',
         bio: 'A developer',
         interest: 'Coding',
         profession: 'Engineer',
