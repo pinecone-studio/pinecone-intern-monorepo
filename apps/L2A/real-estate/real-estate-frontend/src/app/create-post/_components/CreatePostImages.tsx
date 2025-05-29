@@ -70,7 +70,7 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
     <div className="grid grid-cols-3 gap-4 pt-1">
       {value.map((url, idx) => (
         <div key={idx} className="relative">
-          <img src={url} alt="preview" className="w-full h-36 object-cover rounded" />
+          <img src={url} alt="preview" data-testid="uploaded-image" className="w-full h-36 object-cover rounded" />
           <button
             type="button"
             onClick={() => removeImage(idx)}

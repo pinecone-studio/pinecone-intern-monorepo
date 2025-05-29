@@ -1,28 +1,25 @@
 import { CreatePostButtonImages } from "./CreatePostButtonImages";
 import { CreatePostInfo } from "./CreatePostInfo";
-import { CreatePostSaved } from "./CreatePostSaved";
 
 type Props = {
   images?: string[];
-  name: string;
+  title: string;
   price: string;
   area: string;
   rooms: string;
   restrooms: string;
   location: string;
-  onSaveDraft: () => void;
   onSubmit: () => void; 
 };
 
 export const CreatePostButton = ({ 
   images = [], 
-  name, 
+  title, 
   price, 
   area, 
   rooms, 
   restrooms, 
   location, 
-  onSaveDraft,
   onSubmit
 }: Props) => {
   return (
@@ -37,7 +34,7 @@ export const CreatePostButton = ({
         </div>
         <div className="mt-3 px-3">
           <CreatePostInfo 
-            name={name} 
+            title={title} 
             price={price} 
             area={area} 
             rooms={rooms} 
@@ -48,13 +45,14 @@ export const CreatePostButton = ({
       </div>
       <button 
        data-testid="button"
+       data-cy="create-post-button"
         type="submit"  
         onClick={onSubmit} 
         className="bg-[#F97316] text-[#FAFAFA] p-2 rounded-lg"
       >
         Зар оруулах хүсэлт илгээх
       </button>
-      <CreatePostSaved onSaveDraft={onSaveDraft} />
+
     </div>
   );
 };

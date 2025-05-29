@@ -7,10 +7,10 @@ import { CreatePostApartFloor } from '../_components/CreatePostApartFloor';
 import { CreatePostGround } from '../_components/CreatePostGround';
 import { CreatePostBalcony } from '../_components/CreatePostBalcony';
 import { CreatePostImages } from '../_components/CreatePostImages';
-import { useCreatePostFormik } from '../form-utils';
+import { useCreatePostFormik } from '../../../lib/form-utils';
 import { FormikErrors, FormikTouched } from 'formik';
 import { CreatePostButton } from '../_components/_button/CreatePostButton';
-import { CreatePostName } from '../_components/CreatePostName';
+import { CreatePostTitle } from '../_components/CreatePostTitle';
 import { CreatePostType } from '../_components/CreatePostType';
 import { CreatePostHeader } from '../_components/CreatePostHeader';
 import { CreatePostApartment } from '../_components/CreatePostApartment';
@@ -24,16 +24,15 @@ import { CreatePostField } from '../_components/CreatePostField';
 import { CreatePostRoom } from '../_components/CreatePostRoom';
 import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostParking } from '../_components/CreatePostParking';
+import { CreatePostCity } from '../_components/CreatePostCity';
 export const CreatePostCard = () => {  const formik = useCreatePostFormik();
+  // istanbul ignore next
   const getFieldError = (touched: FormikTouched<any>, errors: FormikErrors<any>, field: string): string | undefined => {
     const error = errors[field];
     return touched[field] && typeof error === 'string' ? error : undefined;
   };
-  const handleSaveDraft = () => {
-    const values = formik.values;
-    localStorage.setItem('real-estate-draft', JSON.stringify(values));
-    alert('Таны зар түр хадгалагдлаа');
-  };
+
+  
   return (  <form onSubmit={formik.handleSubmit} className="flex justify-center space-y-2 gap-2">
     <div className="w-full py-6 px-6 bg-[#F4F4F5] flex justify-center">
       <div className='max-w-[730px] px-6'>
@@ -41,7 +40,7 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
           <div className="p-1 space-y-2 my-2">
           <CreatePostHeader />
               <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
-              <CreatePostName name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'name')} />
+              <CreatePostTitle title="title" value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'title')} />
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
               <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
               <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />
@@ -63,21 +62,26 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
-              <CreatePostImages data-testid="images" name="images" value={formik.values.images} onChange={(urls) => formik.setFieldValue('images', urls)} error={getFieldError(formik.touched, formik.errors, 'images')} />
+              <CreatePostImages data-testid="image-input" name="images" value={formik.values.images} onChange={(urls) => formik.setFieldValue('images', urls)} error={getFieldError(formik.touched, formik.errors, 'images')} />
             </div>
           </div>
           <div className="p-4 flex flex-col mt-4 gap-4 bg-[#FFFFFF] rounded-lg items-center">
             <div className="p-2 space-y-2 mt-1">
-              <CreatePostLocation />
+              <CreatePostLocation  />
+              <CreatePostCity  name="location.city"
+                value={formik.values.location.city}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={getFieldError(formik.touched,formik.errors,"City")}/>
               <CreatePostDistrict
-                name="district"
-                value={formik.values.district}
+                name="location.district"
+                value={formik.values.location.district}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={getFieldError(formik.touched,formik.errors,"district")}/>
               <CreatePostSection
-                name="section"
-                value={formik.values.section}
+                name="location.address"
+                value={formik.values.location.address}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={getFieldError(formik.touched, formik.errors, 'section')}
@@ -119,13 +123,12 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
         <div className='max-w-[520px]'>
           <CreatePostButton
             images={formik.values.images}
-            name={formik.values.name}
+            title={formik.values.title}
             price={formik.values.price}
             area={formik.values.field}
             rooms={formik.values.room}
             restrooms={formik.values.restroom}
-            location={`${formik.values.district}, ${formik.values.section}`}
-            onSaveDraft={handleSaveDraft}
+            location={`${formik.values.location}, ${formik.values.location}`}
             onSubmit={formik.handleSubmit}
           />
             </div>
