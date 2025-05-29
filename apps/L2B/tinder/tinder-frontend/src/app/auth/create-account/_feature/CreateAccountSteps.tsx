@@ -27,32 +27,33 @@ const CreateAccountSteps = () => {
 
   const Steps = [FirstStep, SecondStep, ThirdStep, FourthStep, FifthStep][step];
 
-   const updateFormData = (updatedValues: Partial<FormData>) => {
-    
-    setFormData(prev => ({ ...prev, ...updatedValues }));
-    console.log(formData)
-  };
+  const updateFormData = async (updatedValues: Partial<ProfileFormData>) => {
+  setFormData(prev => ({ ...prev, ...updatedValues }));
 
+};
 
-  const handleSubmit = async () => {
- await createProfile({
-      variables: {
-        input: {
-          user: '68351c543724fbd2e052f029',
-          interestedIn: formData.interestedIn,
-          age: formData.age,
-          profileInfo: {
-            name: formData.name,
-            bio: formData.bio,
-            interest: formData.interest,
-            profession: formData.profession,
-            school: formData.schoolOrWork,
-          },
-          images: formData.images,
+  const handleSubmit = async (imagesOverride?: string[]) => {
+
+  const finalImages = imagesOverride ?? formData.images;
+
+  await createProfile({
+    variables: {
+      input: {
+        user: '68351c543724fbd2e052f029',
+        interestedIn: formData.interestedIn,
+        age: formData.age,
+        profileInfo: {
+          name: formData.name,
+          bio: formData.bio,
+          interest: formData.interest,
+          profession: formData.profession,
+          school: formData.schoolOrWork,
         },
+        images: finalImages,
       },
-    });
-        
+    },
+  });
+  
   };
 
 
