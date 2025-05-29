@@ -42,6 +42,7 @@ it('alerts and returns undefined if Cloudinary config is missing', async () => {
 });
 
 it('handles upload failure and logs error', async () => {
+// eslint-disable-next-line @typescript-eslint/no-empty-function
   const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   global.fetch = jest.fn(() => Promise.reject(new Error('Network error'))) as jest.Mock;
 
