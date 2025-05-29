@@ -4,7 +4,7 @@ const SignupFooter = ({ step }: { step: number }) => {
         {step === 1 && (
           <>
             OR
-            <div className="mt-2">
+            <div className="mt-6">
               <a href="/signin" className="underline text-[#18181B]" data-cy="signin-link">
                 <button className="w-full border-[1px] rounded-full py-2 rounded-lg hover:bg-gray-200" data-cy="log-in-button">Log in </button>
               </a>

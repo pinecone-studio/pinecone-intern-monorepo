@@ -6,7 +6,7 @@ describe('SignUpHeader', () => {
   it('renders default StepOne header', () => {
     render(<SignupHeader step={1} email="test@example.com" />);
     expect(screen.getByText('Home Vault')).toBeInTheDocument();
-    expect(screen.getByText('Enter your email below to sign in')).toBeInTheDocument();
+    expect(screen.getByText('Enter your email below to create your account')).toBeInTheDocument();
   });
 
   it('renders StepTwo header with email', () => {
