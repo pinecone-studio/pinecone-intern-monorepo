@@ -67,7 +67,7 @@ it('handles upload failure and logs error', async () => {
   it('uploads file successfully and returns URLs', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
-        // eslint-disable-next-line camelcase
+        // eslint-disable-next-line @typescript-eslint/naming-convention 
         json: () => Promise.resolve({ secure_url: 'http://cloudinary.com/fake-url.png' }),
       })
     ) as jest.Mock;
