@@ -39,7 +39,7 @@ const SwipeFeature = () => {
   }
 
   return (
-    <div className="w-full h-[85%] flex flex-col justify-start items-center px-4 pt-12 sm:px-12">
+    <div className="w-full h-[83%] flex flex-col justify-start items-center px-4 pt-12 sm:px-12">
       <div className="relative w-[90%] max-w-[440px] h-[660px] text-center shadow-2xl rounded-xl overflow-hidden">
         {currentProfile && (
           <Image

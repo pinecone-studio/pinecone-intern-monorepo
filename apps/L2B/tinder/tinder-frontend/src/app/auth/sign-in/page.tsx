@@ -4,14 +4,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useSignInMutation } from '@/generated';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-
-import { toast } from 'sonner';
+import { useAuth } from '../context/AuthContext';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email' }),
@@ -19,8 +16,7 @@ const formSchema = z.object({
 });
 
 const SignInPage = () => {
-  const router = useRouter();
-  const [signInMutation, { loading }] = useSignInMutation();
+  const { handleSignIn, signInLoading } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,20 +27,7 @@ const SignInPage = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const { data } = await signInMutation({ variables: values });
-      const token = data?.signIn;
-
-      if (token) {
-        localStorage.setItem('token', token);
-        toast.success('Login successful');
-        router.push('/');
-      } else {
-        toast.error('No token returned. Please try again.');
-      }
-    } catch (error) {
-      toast.error('Invalid email or password');
-    }
+    handleSignIn(values);
   };
 
   return (
@@ -91,8 +74,8 @@ const SignInPage = () => {
               )}
             />
 
-            <Button type="submit" className="w-full bg-[#fe3c72] hover:bg-[#e5355e] text-white rounded-full" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign in'}
+            <Button type="submit" data-testid="signin-button" className="w-full bg-[#fe3c72] hover:bg-[#e5355e] text-white rounded-full" disabled={signInLoading}>
+              {signInLoading ? 'Signing in...' : 'Sign in'}
             </Button>
 
             <div className="flex items-center justify-center gap-2 my-4">

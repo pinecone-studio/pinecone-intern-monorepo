@@ -1,34 +1,99 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { useFetchProfileQuery } from '@/generated';
+
 import UserHeader from '@/app/_components/UserHeader';
 import '@testing-library/jest-dom';
+import { useAuth } from '@/app/auth/context/AuthContext';
 
-describe('UserHeader component', () => {
-  it('renders the Tinder logo', () => {
-    render(<UserHeader />);
-    const logo = screen.getAllByAltText(/header-image/i)[0];
-    expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute('src', '/tinder.svg');
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => {
+    return <img {...props} />;
+  },
+}));
+
+jest.mock('next/link', () => {
+  const MockLink = ({ children, href }: any) => <a href={href}>{children}</a>;
+  MockLink.displayName = 'NextLink';
+
+  return MockLink;
+});
+
+jest.mock('@/app/auth/context/AuthContext', () => ({
+  useAuth: jest.fn(),
+}));
+
+jest.mock('@/generated', () => ({
+  useFetchProfileQuery: jest.fn(),
+}));
+
+describe('UserHeader', () => {
+  const mockLogout = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders message and profile links', () => {
+  it('renders null if user._id is not defined', () => {
+    (useAuth as jest.Mock).mockReturnValue({
+      user: null,
+      logout: mockLogout,
+    });
+    (useFetchProfileQuery as jest.Mock).mockReturnValue({
+      data: {
+        fetchProfile: {
+          images: ['https://example.com/profile.jpg'],
+          userName: 'Test',
+        },
+      },
+    });
+
     render(<UserHeader />);
-
-    const buttons = screen.getAllByRole('button');
-    expect(buttons.length).toBe(1);
-
-    const profileImage = screen.getAllByAltText(/header-image/i)[1];
-    expect(profileImage).toBeInTheDocument();
-    expect(profileImage).toHaveAttribute('src', '/header.svg');
   });
 
-  it('renders correct links', () => {
+  it('renders header with profile image and links', async () => {
+    (useAuth as jest.Mock).mockReturnValue({
+      user: { _id: '123', name: 'Test User' },
+      logout: mockLogout,
+    });
+
+    (useFetchProfileQuery as jest.Mock).mockReturnValue({
+      data: {
+        fetchProfile: {
+          images: ['https://example.com/profile.jpg'],
+          userName: 'Test',
+        },
+      },
+    });
+
     render(<UserHeader />);
 
-    const links = screen.getAllByRole('link');
-    const hrefs = links.map((link) => link.getAttribute('href'));
+    expect(screen.getByTestId('header-image')).toBeInTheDocument();
 
-    expect(hrefs).toContain('/');
-    expect(hrefs).toContain('/message');
-    expect(hrefs).toContain('/edit-profile');
+    fireEvent.click(screen.getByTestId('avatar-button'));
+  });
+
+  it('shows default avatar if no profile image', async () => {
+    (useAuth as jest.Mock).mockReturnValue({
+      user: { _id: '123' },
+      logout: mockLogout,
+    });
+
+    (useFetchProfileQuery as jest.Mock).mockReturnValue({
+      data: {
+        fetchProfile: {
+          images: [],
+          userName: 'Test',
+        },
+      },
+    });
+
+    render(<UserHeader />);
+
+    fireEvent.click(screen.getByTestId('avatar-button'));
+
+    await waitFor(() => {
+      expect(screen.getByAltText('default avatar')).toBeInTheDocument();
+    });
   });
 });

@@ -1,0 +1,24 @@
+query FetchProfile($id: ID!) {
+  fetchProfile(_id: $id) {
+    _id
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
