@@ -1,5 +1,5 @@
-mutation CreateRoom {
-  createRoom {
+mutation CreateRoom($input: RoomInput) {
+  createRoom(input: $input) {
     _id
     hotelId {
       _id

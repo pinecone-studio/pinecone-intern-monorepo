@@ -1,5 +1,4 @@
 'use client';
-
 import { useHotelQuery } from '@/generated';
 import { ChevronLeft, PanelLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -32,7 +31,7 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
         <span>&gt;</span>
         <div className="hover:text-blue-600 hover:cursor-pointer">Hotel Detail</div>
       </div>
-      <div className="w-[95%] mx-auto mt-4 flex gap-4">
+      <div className="w-[95%] mx-auto mt-4 flex items-center gap-4">
         <div onClick={() => router.push('/hotels')} className="w-8 h-8 hover:cursor-pointer bg-white rounded-lg border-[#E4E4E7] flex items-center justify-center">
           <ChevronLeft width={16} height={16} />
         </div>
@@ -42,6 +41,7 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
         <div className="flex flex-col gap-4">
           <UpcomingBookings hotelId={params.hotelid} />
           <RoomsByHotel hotelId={params.hotelid} />
+          <RoomsByHotel hotelId={params.hotelid} refetchHotel={refetch} />
           <HotelAmenities hotel={{ _id: hotel._id!, amenities: hotel.amenities || [] }} refetch={refetch} />
           <HotelGeneralInfo hotel={hotel} />
         </div>

@@ -3,11 +3,11 @@ import { Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { Room, useCreateRoomMutation, useRoomsByHotelQuery } from '@/generated';
+import { Room, RoomType, useCreateRoomMutation, useRoomsByHotelQuery } from '@/generated';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
+export const RoomsByHotel = ({ hotelId, refetchHotel }: { hotelId: string; refetchHotel?: () => void }) => {
   const [rooms, setRooms] = useState<Room[]>();
   const router = useRouter();
 
@@ -47,9 +47,17 @@ export const RoomsByHotel = ({ hotelId }: { hotelId: string }) => {
   ];
 
   const addRoom = async () => {
-    const { data } = await createRoom();
+    const { data } = await createRoom({
+      variables: {
+        input: {
+          hotelId: hotelId,
+          type: RoomType.Single,
+        },
+      },
+    });
     if (data?.createRoom) {
       setRooms((prev) => [...(prev || []), data.createRoom as Room]);
+      refetchHotel?.();
     }
   };
 
