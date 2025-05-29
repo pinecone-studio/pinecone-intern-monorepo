@@ -19,18 +19,14 @@ export const HotelLocation = ({ hotel, refetch }: { hotel: { _id: string; locati
   }, [hotel?.location]);
 
   const handleSave = async () => {
-    try {
-      await updateHotel({
-        variables: {
-          updateHotelId: hotel._id,
-          input: { location },
-        },
-      });
-      await refetch();
-      setIsOpen(false);
-    } catch (err) {
-      console.error('Failed to update location:', err);
-    }
+    await updateHotel({
+      variables: {
+        updateHotelId: hotel._id,
+        input: { location },
+      },
+    });
+    await refetch();
+    setIsOpen(false);
   };
 
   return (
@@ -38,7 +34,9 @@ export const HotelLocation = ({ hotel, refetch }: { hotel: { _id: string; locati
       <div className="flex w-full h-9 justify-between items-center">
         <h4 className="text-lg font-semibold tracking-wide">Location</h4>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger className="py-2 flex items-center text-[#2563EB] text-sm font-medium">Edit</DialogTrigger>
+          <DialogTrigger data-testid="edit-location" className="py-2 flex items-center text-[#2563EB] text-sm font-medium">
+            Edit
+          </DialogTrigger>
           <DialogContent className="sm:min-w-[30rem]">
             <DialogHeader>
               <DialogTitle className="font-semibold text-base">Location</DialogTitle>
@@ -46,7 +44,7 @@ export const HotelLocation = ({ hotel, refetch }: { hotel: { _id: string; locati
             <Textarea value={location} className="h-24 w-full" onChange={(e) => setLocation(e.target.value)} />
             <div className="w-full flex justify-between">
               <DialogClose asChild>
-                <Button type="button" variant={'ghost'} onClick={() => setIsOpen(false)}>
+                <Button data-testid="close-dialog" type="button" variant={'ghost'} onClick={() => setIsOpen(false)}>
                   Close
                 </Button>
               </DialogClose>

@@ -42,7 +42,7 @@ export const HotelGeneralInfo = ({ hotel }: Props) => {
             <h6 className="text-sm text-[#71717A]">Star rating</h6>
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} fill={i < starRating ? 'orange' : 'transparent'} color="orange" size={16} />
+                <Star data-testid="star-icon-filled" key={i} fill={i < starRating ? 'orange' : 'transparent'} color="orange" size={16} />
               ))}
             </div>
           </div>

@@ -85,7 +85,9 @@ export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="px-4 flex items-center text-[#2563EB] text-sm font-medium">Edit</DialogTrigger>
+      <DialogTrigger data-testid="edit-general" className="px-4 flex items-center text-[#2563EB] text-sm font-medium">
+        Edit
+      </DialogTrigger>
       <DialogContent className="sm:min-w-[33rem]">
         <DialogHeader>
           <DialogTitle className="font-semibold text-base">General Info</DialogTitle>
@@ -93,17 +95,16 @@ export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
 
         <form className="flex flex-col gap-5 w-full">
           {formFields.map(renderField)}
-
           <div className="flex flex-col gap-2">
             <Label>Star rating</Label>
             <Select value={form.starRating?.toString() ?? ''} onValueChange={(v) => setForm({ ...form, starRating: v ? +v : null })}>
-              <SelectTrigger className="w-full focus-visible:ring-0">
+              <SelectTrigger data-testid="star-rating-select" className="w-full focus-visible:ring-0">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   {[1, 2, 3, 4, 5].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
+                    <SelectItem data-testid="star-item" key={num} value={num.toString()}>
                       {num} star{num !== 1 ? 's' : ''}
                     </SelectItem>
                   ))}
@@ -112,9 +113,8 @@ export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
             </Select>
           </div>
         </form>
-
         <div className="w-full flex justify-between">
-          <Button type="button" variant="ghost" onClick={() => setIsOpen(false)}>
+          <Button data-testid="close-star-dialog" type="button" variant="ghost" onClick={() => setIsOpen(false)}>
             Close
           </Button>
           <Button onClick={handleSave} disabled={loading} className="px-4 py-2 bg-[#2563EB] hover:bg-[#2564ebeb]">

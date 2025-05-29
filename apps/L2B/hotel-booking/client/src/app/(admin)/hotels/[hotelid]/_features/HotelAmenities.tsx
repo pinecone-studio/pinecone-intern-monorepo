@@ -40,8 +40,6 @@ export const HotelAmenities = ({ hotel, refetch }: { hotel: { _id: string; ameni
     if (e.key === 'Enter') {
       e.preventDefault();
       handleAddAmenity();
-    } else if (e.key === 'Backspace' && inputValue === '' && editingAmenities.length) {
-      handleRemoveAmenity(editingAmenities[editingAmenities.length - 1]);
     }
   };
 
@@ -69,7 +67,6 @@ export const HotelAmenities = ({ hotel, refetch }: { hotel: { _id: string; ameni
           }}
         >
           <DialogTrigger className="py-2 flex items-center text-[#2563EB] text-sm font-medium">Edit</DialogTrigger>
-
           <DialogContent className="sm:min-w-[38rem]">
             <DialogHeader>
               <DialogTitle className="font-semibold text-base">Amenities</DialogTitle>
@@ -92,6 +89,7 @@ export const HotelAmenities = ({ hotel, refetch }: { hotel: { _id: string; ameni
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
+                    data-testid="amenities-input"
                     placeholder={editingAmenities.length === 0 ? 'e.g. Pool, WiFi, Gym…' : ''}
                     className="flex-1 min-w-[100px] outline-none bg-transparent"
                   />

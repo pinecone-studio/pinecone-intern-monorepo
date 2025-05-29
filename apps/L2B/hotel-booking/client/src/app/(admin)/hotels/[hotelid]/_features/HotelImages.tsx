@@ -16,14 +16,12 @@ import {
 import { useUpdateHotelMutation } from '@/generated';
 import Image from 'next/image';
 import { useState } from 'react';
-
 type HotelImageProps = {
   hotel: {
     _id: string;
     images?: (string | null)[] | null;
   };
 };
-
 export const HotelImage = ({ hotel }: HotelImageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -40,7 +38,6 @@ export const HotelImage = ({ hotel }: HotelImageProps) => {
       reader.readAsDataURL(file);
     });
   };
-
   const handleSave = async () => {
     if (!hotel._id || !selectedFiles.length) return;
     const uploadedUrls = await Promise.all(
@@ -53,7 +50,6 @@ export const HotelImage = ({ hotel }: HotelImageProps) => {
         return data.secure_url || '';
       })
     );
-
     await updateHotel({
       variables: {
         updateHotelId: hotel._id,
@@ -64,7 +60,6 @@ export const HotelImage = ({ hotel }: HotelImageProps) => {
     setPreviewImages([]);
     setIsOpen(false);
   };
-
   const handleDelete = async (img: string) => {
     if (!hotel._id) return;
     await updateHotel({
@@ -80,14 +75,16 @@ export const HotelImage = ({ hotel }: HotelImageProps) => {
       <div className="flex w-[98%] h-9 justify-between items-center">
         <h4 className="text-lg font-semibold tracking-wide">Images</h4>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger className="py-2 flex items-center text-[#2563EB] text-sm font-medium">Edit</DialogTrigger>
+          <DialogTrigger data-testid="hotel-image-edit" className="py-2 flex items-center text-[#2563EB] text-sm font-medium">
+            Edit
+          </DialogTrigger>
           <DialogContent className="sm:min-w-[50rem]">
             <DialogHeader>
               <DialogTitle className="font-semibold text-base">Images</DialogTitle>
             </DialogHeader>
             <div className="pb-6 px-6 w-full h-[30rem] grid grid-cols-2 gap-2 overflow-scroll">
               <div className="relative border w-[345px] h-[200px] border-[#E4E4E7] bg-[#f4f4f5] rounded-sm p-8 text-center hover:border-gray-300 transition-colors cursor-pointer">
-                <input type="file" multiple accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                <input data-testid="file-input" type="file" multiple accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                 <div className="flex flex-col mt-10 items-center justify-center space-y-2">
                   <div className="w-6 h-6 text-[#2563EB]">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">

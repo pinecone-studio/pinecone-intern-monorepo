@@ -45,7 +45,6 @@ export const RoomsByHotel = ({ hotelId, refetchHotel }: { hotelId: string; refet
     { value: 'two', label: '2 bed', filter: (room: Room) => room.type === 'twin' || room.type === 'deluxe' || room.type === 'suite' },
     { value: 'three', label: '3 bed', filter: (room: Room) => room.type === 'family' },
   ];
-
   const addRoom = async () => {
     const { data } = await createRoom({
       variables: {
@@ -57,6 +56,7 @@ export const RoomsByHotel = ({ hotelId, refetchHotel }: { hotelId: string; refet
     });
     if (data?.createRoom) {
       setRooms((prev) => [...(prev || []), data.createRoom as Room]);
+      router.push(`/hotels/${hotelId}/${data.createRoom._id}`);
       refetchHotel?.();
     }
   };

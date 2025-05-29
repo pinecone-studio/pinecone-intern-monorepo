@@ -7,8 +7,8 @@ import { HotelAmenities } from './_features/HotelAmenities';
 import { HotelGeneralInfo } from './_features/HotelGeneralInfo';
 import { HotelImage } from './_features/HotelImages';
 import { HotelLocation } from './_features/HotelLocation';
-import { UpcomingBookings } from './_feature/UpcomingBookings';
 import { useRouter } from 'next/navigation';
+import { UpcomingBookings } from './_features/UpcomingBookings';
 
 const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   const { data, error, refetch } = useHotelQuery({
@@ -40,7 +40,6 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
       <div className="w-[95%] mx-auto mt-4 min-h-full flex gap-5">
         <div className="flex flex-col gap-4">
           <UpcomingBookings hotelId={params.hotelid} />
-          <RoomsByHotel hotelId={params.hotelid} />
           <RoomsByHotel hotelId={params.hotelid} refetchHotel={refetch} />
           <HotelAmenities hotel={{ _id: hotel._id!, amenities: hotel.amenities || [] }} refetch={refetch} />
           <HotelGeneralInfo hotel={hotel} />
