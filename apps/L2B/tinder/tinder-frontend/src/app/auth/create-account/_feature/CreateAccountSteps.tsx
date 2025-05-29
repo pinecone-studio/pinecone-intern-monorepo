@@ -6,9 +6,8 @@ import ThirdStep from '../_components/ThirdStep';
 import FourthStep from './FourthStep';
 import FifthStep from '../_components/FifthStep';
 import Image from 'next/image';
-import { useCreateProfileMutation } from '@/generated';
 import { ProfileFormData } from '@/app/utils/types';
-import { useAuth } from '@/app/auth/context/AuthContext';
+import { useCreateProfileMutation } from '@/generated';
 
 
 const CreateAccountSteps = () => {
@@ -26,14 +25,6 @@ const CreateAccountSteps = () => {
     images: [],
   });
 
-
- const { user } = useAuth();
-
- if (!user) {
-    return <div className="text-red-500">You must be logged in to create a profile.</div>;
-  }
-
-
   const Steps = [FirstStep, SecondStep, ThirdStep, FourthStep, FifthStep][step];
 
   const updateFormData = async (updatedValues: Partial<ProfileFormData>) => {
@@ -48,7 +39,7 @@ const CreateAccountSteps = () => {
   await createProfile({
     variables: {
       input: {
-        user: user._id,
+        user: '68351c543724fbd2e052f029',
         interestedIn: formData.interestedIn,
         age: formData.age,
         profileInfo: {
