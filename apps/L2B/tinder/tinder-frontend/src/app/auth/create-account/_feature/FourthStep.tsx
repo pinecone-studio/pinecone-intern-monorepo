@@ -4,22 +4,35 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { StepFourthCart } from '../_components/StepFourthCart';
 import { ImageUpload } from '../_components/ImageUpload';
+import { uploadToCloudinary } from '@/app/utils/upload-to-cloudinary';
 
-const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
+
+const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void, handleSubmit: (_urls: string[]) => void}) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState('');
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!selectedImages.length) {
       setError('Please select a photo to upload.');
       return;
     } else {
+      const urls = await uploadToCloudinary(selectedFiles, 'gandak');
+
+      
+     updateFormData({ images: urls });
+
+
+        handleSubmit(urls ?? []);
+
+
       setStep(4);
     }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    setSelectedFiles(Array.from(files!));
 
     const newImages = [...selectedImages];
     for (let i = 0; i < files!.length; i++) {
@@ -72,3 +85,4 @@ const ImageUploadPage = ({ setStep }: { setStep: (_step: number) => void }) => {
   );
 };
 export default ImageUploadPage;
+
