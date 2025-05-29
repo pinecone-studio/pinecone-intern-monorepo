@@ -23,6 +23,12 @@ describe('calculateAge', () => {
     expect(calculateAge(birthDate)).toBe(25);
   });
 
+  it('decrements age when birthday is later in the year (age-- runs)', () => {
+  expect(calculateAge('2000-12-31')).toBe(new Date().getFullYear() - 2000 - 1);
+});
+
+  
+
   it('calculates age correctly when birthday has not yet happened this year', () => {
     const birthDate = '2000-09-10'; // September 10 > May 29 → birthday has not happened
     expect(calculateAge(birthDate)).toBe(24);
