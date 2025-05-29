@@ -1,8 +1,13 @@
+import Image from "next/image";
+
 const SignupHeader = ({ step, email }: { step: number; email: string }) => {
     return (
       <div className="text-center" data-cy="signup-header">
-        <div className="text-4xl font-bold text-orange-600" data-cy="logo">🏠</div>
+        <div className="flex gap-2 items-center justify-center" data-cy="logo">
+          <Image src="/logo.png" alt="logo" width={36} height={20}/>
+     
         <h2 className="text-2xl font-bold" data-cy="title">Home Vault</h2>
+           </div>
         {step === 3 && <h2 className="text-[20px] pt-[15px]">Create password</h2>}
         <div className="mt-2 text-gray-600" data-cy="subtitle">
           {step === 2 ? (

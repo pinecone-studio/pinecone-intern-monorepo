@@ -10,7 +10,7 @@ const SignupFooter = ({ step }: { step: number }) => {
               </a>
             </div>
             <p className="mt-6 text-xs">
-              By clicking continue, you agree to our
+              By clicking continue, you agree to our{" "}
               <a href="#" className="underline" data-cy="tos-link">
                 Terms of Service
               </a>{" "}
@@ -21,7 +21,7 @@ const SignupFooter = ({ step }: { step: number }) => {
             </p>
           </>
         )}
-           <p className="text-xs text-center text-gray-400 mt-6" data-cy="copyright">
+           <p className="text-xs text-center text-gray-400 mt-6 absolute bottom-4 right-0 left-0" data-cy="copyright">
           ©2024 Home Vault
         </p>
       </div>
