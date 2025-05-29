@@ -10,12 +10,13 @@ const SignInPage = () => {
             <Image src="/logo.png" alt="logo" width={34} height={18}/>
           <h2 className="text-2xl font-bold">Home Vault</h2>
           </div>
+          <p className="text-[32px] font-bold">Sign in</p>
           <p className="mt-2 text-gray-600">Enter your email below to sign in</p>
         </div>
         <SignInForm />
         <div className="text-center text-sm text-gray-500">
           OR
-          <div className="mt-2 p-2 border rounded-md">
+          <div className="mt-6 p-2 border rounded-md">
             <a href="/signup" className="text-[#18181B]">
               Create an account
             </a>
