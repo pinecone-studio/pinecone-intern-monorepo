@@ -61,8 +61,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setJWT(token);
       toast.success('Login successful');
       router.push('/swipe-page');
-    } else {
-      toast.error('No token returned. Please try again.');
     }
   };
 

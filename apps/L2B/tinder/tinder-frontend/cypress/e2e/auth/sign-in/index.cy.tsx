@@ -46,27 +46,6 @@ describe('SignInPage Integration Tests', () => {
     cy.get('[data-testid="password-error"]').should('contain.text', 'Password must be at least 8 characters');
   });
 
-  it('should display error toast when server returns no token', () => {
-    cy.intercept('POST', '**/api/graphql', (req) => {
-      if (req.body.operationName === 'SignIn') {
-        req.reply({
-          statusCode: 200,
-          body: {
-            data: {
-              signIn: null,
-            },
-          },
-        });
-      }
-    });
-
-    cy.get('input[type="email"]').type('test@example.com');
-    cy.get('input[type="password"]').type('validPassword123');
-    cy.get('button[type="submit"]').click();
-
-    cy.get('[data-sonner-toast]').should('contain.text', 'No token returned');
-  });
-
   it('should display error toast for failed sign in', () => {
     cy.intercept('POST', '**/api/graphql', (req) => {
       if (req.body.operationName === 'SignIn') {

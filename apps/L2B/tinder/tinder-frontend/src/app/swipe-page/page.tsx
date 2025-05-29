@@ -1,7 +1,7 @@
 'use client';
 import UserHeader from '../_components/UserHeader';
 import Footer from '../_components/Footer';
-import SwipeFeature from './_feature/Swipe';
+import SwipeFeature from './_feature/SwipeFeature';
 
 const UserPage = () => {
   return (
