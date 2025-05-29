@@ -1,20 +1,20 @@
 import React from 'react';
 
 type Props = {
-  name: string;
+  title: string;
   value: string;
   onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (_e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
 };
 
-export const CreatePostName = ({ name, value, onChange, onBlur, error }: Props) => {
+export const CreatePostTitle = ({ title, value, onChange, onBlur, error }: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-[#09090B] pb-1">Нэр</label>
+      <label htmlFor={title} className="block text-sm text-[#09090B] pb-1">Нэр</label>
       <input
-        id={name}
-        name={name}
+        id={title}
+        title={title}
         type="text"
         value={value}
         onChange={onChange}
