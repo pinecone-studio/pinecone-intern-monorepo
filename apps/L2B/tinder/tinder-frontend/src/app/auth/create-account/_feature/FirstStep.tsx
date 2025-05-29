@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
+
 const FirstStep = ({ setStep, updateFormData }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void } ) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [error, setError] = useState(false);
+
+
 
   const handleNextClick = () => {
     if (!selectedValue) {
       setError(true);
     } else {
       setError(false);
-      updateFormData({ interestedIn: selectedValue });
+      updateFormData({ interestedIn: selectedValue,  });
       setStep(1);
     }
   };

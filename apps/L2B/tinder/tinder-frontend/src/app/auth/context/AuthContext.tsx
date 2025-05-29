@@ -5,6 +5,7 @@ import { Profile, useFetchProfileQuery, useGetCurrentUserQuery, useSignInMutatio
 import { toast } from 'sonner';
 import Loading from '@/app/_components/Loading';
 
+
 type UserType = {
   email: string;
   password?: string | null;
