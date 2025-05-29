@@ -6,6 +6,7 @@ import { HotelGeneralInfo } from './_features/HotelGeneralInfo';
 import { HotelImage } from './_features/HotelImages';
 import { HotelLocation } from './_features/HotelLocation';
 import Link from 'next/link';
+import { UpcomingBookings } from './_feature/UpcomingBookings';
 const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   return (
     <div className="p-6 w-full min-h-full bg-[#e4e4e768] ">
@@ -19,7 +20,9 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
       </div>
       <main className="w-full min-h-full flex gap-5">
         <div>
+          <UpcomingBookings hotelId={params.hotelid} />
           <RoomsByHotel hotelId={params.hotelid} />
+
           <HotelAmenities hotelId={params.hotelid} />
           <HotelGeneralInfo hotelId={params.hotelid} />
         </div>
