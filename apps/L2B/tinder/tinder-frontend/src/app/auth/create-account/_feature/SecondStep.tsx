@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import React from 'react';
 import calculateAge from '@/app/utils/calculate-age';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SecondStep = ({ setStep, updateFormData }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void }) => {
   const [date, setDate] = React.useState<Date>();
   const [error, setError] = React.useState(false);
