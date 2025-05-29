@@ -56,7 +56,7 @@ const SignInForm = () => {
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Password
           </label>
-          <Link href="/forget-password" className="text-sm font-medium text-blue-600 hover:text-blue-500 underline" data-cy="forgot-password-link">
+          <Link href="/forget-password" className="text-sm font-medium text-blue-600 hover:text-blue-500" data-cy="forgot-password-link">
             Forget Password?
           </Link>
         </div>

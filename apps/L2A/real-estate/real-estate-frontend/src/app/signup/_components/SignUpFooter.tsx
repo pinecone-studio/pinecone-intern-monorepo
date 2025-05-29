@@ -11,6 +11,7 @@ const SignupFooter = ({ step }: { step: number }) => {
             </div>
             <p className="mt-6 text-xs">
               By clicking continue, you agree to our{" "}
+              <br />
               <a href="#" className="underline" data-cy="tos-link">
                 Terms of Service
               </a>{" "}
