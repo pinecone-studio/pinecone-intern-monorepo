@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { StepFourthCart } from '../_components/StepFourthCart';
 import { ImageUpload } from '../_components/ImageUpload';
 import { uploadToCloudinary } from '@/app/utils/upload-to-cloudinary';
+import { useAuth } from '../../context/AuthContext';
 
 
 const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void, handleSubmit: (_urls: string[]) => void}) => {
@@ -12,12 +13,18 @@ const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState('');
 
+  const {user} = useAuth();
+
+  if (!user) {
+    return <div className="text-red-500">You must be logged in to upload images.</div>;
+  }
+
   const handleNext = async () => {
     if (!selectedImages.length) {
       setError('Please select a photo to upload.');
       return;
     } else {
-      const urls = await uploadToCloudinary(selectedFiles, 'gandak');
+      const urls = await uploadToCloudinary(selectedFiles, user._id);
 
       
      updateFormData({ images: urls });
