@@ -21,7 +21,7 @@ const UserHeader = () => {
   }
 
   return (
-    <header className="w-full flex  justify-center items-center mt-3 border-b p-[16px]" style={{ borderColor: '#E4E4E7', alignSelf: 'stretch' }}>
+    <header className="w-full flex  justify-center items-center  border-b p-[16px]" style={{ borderColor: '#E4E4E7', alignSelf: 'stretch' }}>
       <div className="flex justify-between items-center w-[80%]">
         <div>
           <Link href="/swipe-page">
