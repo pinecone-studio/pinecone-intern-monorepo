@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useGetCurrentUserQuery, useSignInMutation } from '@/generated';
 import { toast } from 'sonner';
 
+
 type UserType = {
   email: string;
   password?: string | null;

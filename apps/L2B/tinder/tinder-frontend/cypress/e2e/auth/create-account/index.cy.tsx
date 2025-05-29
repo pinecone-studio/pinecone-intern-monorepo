@@ -8,6 +8,41 @@ const testFile = new File([blob], fileName, { type: 'image/jpeg' });
 describe('Create Account', () => {
   beforeEach(() => {
 
+     cy.window().then((win) => {
+    win.localStorage.setItem('token', 'fake-jwt-token');
+  });
+
+  cy.intercept('POST', '/api/graphql', (req) => {
+    if (req.body.operationName === 'GetCurrentUser') {
+      req.reply({
+        data: {
+          getCurrentUser: {
+            _id: 'mock-user-id',
+            email: 'test@example.com',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            verficationCode: '',
+            __typename: 'User',
+            isVerified: true,
+          },
+        },
+      });
+    }
+
+    if (req.body.operationName === 'CreateProfile') {
+      req.reply({
+        data: {
+          createProfile: {
+            id: 'mock-id',
+            status: 'SUCCESS',
+          },
+        },
+      });
+    }
+  });
+
+  cy.visit('/auth/create-account');
+
     cy.intercept('POST', '/api/graphql', (req) => {
   if (req.body.operationName === 'CreateProfile') {
     req.reply({
