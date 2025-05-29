@@ -28,7 +28,7 @@ export const uploadToCloudinary = async (files: File[], userId: string): Promise
       });
 
       const data = await res.json();
-       // eslint-disable-next-line camelcase
+      // eslint-disable-next-line @typescript-eslint/naming-convention 
     return data.secure_url;
     } catch (err) {
       console.error('Upload failed for file:', file.name, err);

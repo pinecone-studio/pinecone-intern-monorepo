@@ -3,6 +3,7 @@ describe('Upload to Cloudinary', () => {
     cy.intercept('POST', 'https://api.cloudinary.com/**', {
       statusCode: 200,
       body: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention 
         secure_url: 'https://cloudinary.com/fake.png',
       },
     }).as('upload');
