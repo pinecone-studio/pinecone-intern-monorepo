@@ -116,7 +116,7 @@
         "commands": ["rm -rf dist/apps/L2A/restaurant/frontend", "rm -rf .vercel"]
       }
     },
-    "e2e": {
+    "": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["npx nx execute-cypress scripts restaurant-frontend"],
@@ -124,7 +124,7 @@
       },
       "dependsOn": [{ "target": "cypress:clean" }]
     },
-    "e2e:open": {
+    " :open": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["npx nx cypress restaurant-frontend --watch"],
@@ -152,7 +152,7 @@
         "reporter": "mochawesome",
         "devServerTarget": "restaurant-frontend:serve:development",
 
-        "browser": "electron"
+        "browser": "chrome"
 
       },
       "dependsOn": [
@@ -238,7 +238,7 @@
       "options": {
         "commands": ["graphql-codegen --config ./apps/L2A/restaurant/frontend/codegen.ts"]
       },
-      "dependsOn": [
+      "dependsOn": [ 
         {
           "target": "get-secrets:prod"
         }
