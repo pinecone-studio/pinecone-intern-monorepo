@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push('/auth/sign-in');
   };
 
+
   return <AuthContext.Provider value={{ logout, user, handleSignIn, signInLoading }}>{children}</AuthContext.Provider>;
 };
 
