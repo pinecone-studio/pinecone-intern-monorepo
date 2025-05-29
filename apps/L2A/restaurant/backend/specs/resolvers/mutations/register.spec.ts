@@ -18,8 +18,7 @@ describe('register resolver', () => {
     const mockInput = {
       username: 'testuser',
       email: 'test@example.com',
-    };
-
+    }
     const mockUser = {
       _id: 'user123',
       username: mockInput.username,
