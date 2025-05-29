@@ -19,7 +19,7 @@ export const CreatePostDistrict = ({ name, value, onChange, onBlur, error }: Pro
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="Дүүрэг оруулна уу"
+        placeholder="Дүүрэг заавал оруулна уу!"
         data-testid="district"
         className={`w-full block px-2 py-1 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />

@@ -4,15 +4,14 @@ export const createPost = async (_: any, args: { input: CreatePostInput }) => {
   const {
     garage,
   } = args.input;
-
   const newPost = await POST_MODEL.create({
-    ...args.input, 
+    ...args.input,
     garage: garage || false,
+    propertyOwnerId: args.input.propertyOwnerId ,
     status: "PENDING",
     createdAt: new Date(),
     updatedAt: new Date(),
   });
-
   return newPost;
 };
 
