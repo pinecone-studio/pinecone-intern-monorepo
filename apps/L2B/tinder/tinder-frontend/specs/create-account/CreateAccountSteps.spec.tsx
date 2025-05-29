@@ -2,7 +2,8 @@ import ThirdStep from '@/app/auth/create-account/_components/ThirdStep';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
-describe('ThirdStep Component', () => {
+
+describe('Create Account Component', () => {
   const mockSetStep = jest.fn();
   const mockUpdateFormData = jest.fn();
 
@@ -52,6 +53,8 @@ test('shows validation errors on empty submission', async () => {
   const errors = await screen.findAllByTestId('validation-error');
   expect(errors.length).toBeGreaterThan(0);
 });
+
+
 
   test('calls setStep with previous step on back button', () => {
     render(<ThirdStep setStep={mockSetStep} step={2} updateFormData={mockUpdateFormData} />);
