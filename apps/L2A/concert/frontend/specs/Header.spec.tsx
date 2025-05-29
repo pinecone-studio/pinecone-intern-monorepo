@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from '@/app/_components/context/AuthContext';
 import { GetUserInfoDocument } from '@/generated';
 import React from 'react';
 import '@testing-library/jest-dom';
+import { BookingProvider } from '@/app/_components/context/BookingContext';
 
 const userMock = {
   request: {
@@ -39,7 +40,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -58,7 +61,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[userMock]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -83,7 +88,9 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
@@ -96,12 +103,45 @@ describe('Header', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
         <AuthProvider>
-          <Header />
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
         </AuthProvider>
       </MockedProvider>
     );
 
     const cartIcon = screen.getByLabelText('Shopping Cart');
     expect(cartIcon).toBeInTheDocument();
+  });
+
+  it('should type and click enter', () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <AuthProvider>
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
+        </AuthProvider>
+      </MockedProvider>
+    );
+    const searchInput = screen.getByPlaceholderText('Хайлт');
+    fireEvent.change(searchInput, { target: { value: 'test search' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    expect(searchInput).toHaveValue('test search');
+  });
+  it('should type and click anybutton', () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <AuthProvider>
+          <BookingProvider>
+            <Header />
+          </BookingProvider>
+        </AuthProvider>
+      </MockedProvider>
+    );
+    const searchInput = screen.getByPlaceholderText('Хайлт');
+    fireEvent.change(searchInput, { target: { value: 'test search' } });
+    fireEvent.keyDown(searchInput, { key: 'a', code: 'KeyA', charCode: 65 });
+    expect(searchInput).toHaveValue('test search');
   });
 });

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ExploreSection from '@/app/home/_components/ExploreSection';
+import ExploreSection from '@/app/_components/ExploreSection';
 
 describe('ExploreSection', () => {
   it('renders section title', () => {

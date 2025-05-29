@@ -1,0 +1,28 @@
+query GetPostById($_id:ID!) {
+    getPostById (_id:$_id) {
+    _id
+    title
+    description
+    number
+    feature
+    completionDate
+    price
+    images
+    size
+    totalRooms
+    garage
+    restrooms
+    location {
+        address
+        city
+        district
+    }
+    windowsCount
+    windowType
+    roofMaterial
+    floorNumber
+    balcony
+    totalFloors
+    lift
+    }
+}

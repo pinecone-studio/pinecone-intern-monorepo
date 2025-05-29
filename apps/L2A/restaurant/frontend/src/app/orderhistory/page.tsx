@@ -1,3 +1,4 @@
+import Header from '../_components/Header';
 import { OrderStatusCard } from './_components/OrderStatusCard';
 import type { OrderStatus } from './_components/OrderStatusCard';
 
@@ -22,12 +23,15 @@ const orders: {
 ];
 const Page = () => {
   return (
-    <div className="flex flex-col items-center w-full px-5">
-      <p className="text-[#441500] text-xl py-8">Захиалгын түүх</p>
-      <div className="flex flex-col gap-4 w-full">
-        {orders.map((order) => (
-          <OrderStatusCard key={order.orderId} orderId={order.orderId} status={order.status} timestamp={order.timestamp} totalPrice={order.totalPrice} />
-        ))}
+    <div>
+      <Header />
+      <div className="flex flex-col items-center w-full px-5">
+        <p className="text-[#441500] text-xl py-8">Захиалгын түүх</p>
+        <div className="flex flex-col gap-4 w-full">
+          {orders.map((order) => (
+            <OrderStatusCard key={order.orderId} orderId={order.orderId} status={order.status} timestamp={order.timestamp} totalPrice={order.totalPrice} />
+          ))}
+        </div>
       </div>
     </div>
   );

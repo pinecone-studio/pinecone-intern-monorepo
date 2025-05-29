@@ -1,15 +1,9 @@
 import { IoIosNotificationsOutline } from 'react-icons/io';
-import Logo from '../login/_components/Logo';
+import Logo from '../(auth)/login/_components/Logo';
 import { CiShoppingCart } from 'react-icons/ci';
 import HomeSheet from './Sheet';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { Notification } from '../_features/Notification';
-import { ShoppingCart} from '../_features/ShoppingCart';
-
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { ShoppingCart } from '../_features/ShoppingCart';
 
 const Header = () => {
   return (
@@ -19,16 +13,19 @@ const Header = () => {
       </div>
       <div className="flex justify-center items-center gap-4 mr-[20px]">
         <Sheet>
-        < SheetTrigger>
-        <CiShoppingCart data-testid="shopping-cart-icon" className="w-[26px] h-[26px]" />
-        </SheetTrigger>
-        <SheetContent><ShoppingCart/></SheetContent>
+          <SheetTrigger>
+            <CiShoppingCart data-testid="shopping-cart-icon" className="w-[26px] h-[26px]" />
+          </SheetTrigger>
+          <SheetContent>
+            <ShoppingCart />
+          </SheetContent>
         </Sheet>
         <Sheet>
-        < SheetTrigger>
-        <IoIosNotificationsOutline data-testid="notification-icon" className="w-[26px] h-[26px]" />
-        </SheetTrigger>
-        <SheetContent><Notification/></SheetContent>
+          <SheetTrigger>
+            <IoIosNotificationsOutline data-testid="notification-icon" className="w-[26px] h-[26px]" />
+          </SheetTrigger>
+          <SheetContent>
+          </SheetContent>
         </Sheet>
         <HomeSheet data-testid="home-sheet" />
       </div>

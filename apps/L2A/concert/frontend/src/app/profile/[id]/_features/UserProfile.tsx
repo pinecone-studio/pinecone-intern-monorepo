@@ -1,14 +1,40 @@
 'use client';
-import React, { useState } from 'react';
+import { useUpdateUserInfoMutation } from '@/generated';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { UpdateUserInfoSchema } from '../../_utils/update-use-info-schema';
+import z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useAuth } from '@/app/_components/context/AuthContext';
+import { Button } from '@/components/ui/button';
 
 const UserProfile = () => {
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const { user } = useAuth();
+  const [updateUserInfo, { data, loading }] = useUpdateUserInfoMutation();
+  const form = useForm<z.infer<typeof UpdateUserInfoSchema>>({
+    resolver: zodResolver(UpdateUserInfoSchema),
+    defaultValues: {
+      email: user?.email,
+      phone: String(user?.phone),
+    },
+  });
+  if (!user) {
+    return <div>Хэрэглэгч эхлээд нэвтрэх ёстой!</div>;
+  }
 
-  const handleSave = () => {
-    console.log('Phone:', phone);
-    console.log('Email:', email);
-    alert('Хувийн мэдээлэл хадгалагдлаа.');
+  const handleSave = async (value: z.infer<typeof UpdateUserInfoSchema>) => {
+    try {
+      await updateUserInfo({
+        variables: {
+          id: user?.id,
+          ...value,
+          phone: Number(value.phone),
+        },
+      });
+    } catch (err) {
+      console.error('Хадгалах үед алдаа гарлаа:', err);
+    }
   };
 
   return (
@@ -16,46 +42,42 @@ const UserProfile = () => {
       <h1 className="text-3xl font-bold mb-8" data-cy="profile-title">
         Захиалагчийн мэдээлэл
       </h1>
-      <div className="bg-[#1c1c1e] p-8 rounded-xl space-y-6 max-w-4xl" data-cy="profile-form">
-        <div>
-          <label htmlFor="phone" className="block text-lg mb-2">
-            Утасны дугаар:
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            placeholder="9900-0000"
-            value={phone}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^[0-9-]*$/.test(value)) {
-                setPhone(value);
-              }
-            }}
-            data-cy="input-phone"
-            className="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label htmlFor="email" className="block text-lg mb-2">
-            Имэйл хаяг:
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="name@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            data-cy="input-email"
-            className="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none"
-          />
-        </div>
-        <div className="text-right">
-          <button onClick={handleSave} data-cy="save-profile-button" className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded">
-            Хадгалах
-          </button>
-        </div>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSave)}>
+          <div className="bg-[#1c1c1e] p-8 rounded-xl space-y-6 max-w-4xl" data-cy="profile-form">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Имэйл хаяг:</FormLabel>
+                  <FormControl>
+                    <Input data-testid="user-email" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Утасны дугаар:</FormLabel>
+                  <FormControl>
+                    <Input data-testid="user-phone" type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {data && <div>Мэдээлэл амжилттай өөрчлөгдлөө!</div>}
+            <Button disabled={loading || !form.formState.isValid} type="submit" data-testid="save-profile">
+              Хадгалах
+            </Button>
+          </div>
+        </form>
+      </Form>
     </main>
   );
 };

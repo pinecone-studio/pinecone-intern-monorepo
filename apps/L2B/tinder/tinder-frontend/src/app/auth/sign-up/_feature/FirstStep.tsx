@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { useSendOtpMutation } from '@/generated';
+import Link from 'next/link';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -57,7 +58,9 @@ const FirstStep = ({ setStep, setEmail }: StepOneProps) => {
           <div className="w-full border"></div>
         </div>
 
-        <Button className="w-[350px] h-[36px] text-black rounded-2xl bg-white border-[#E4E4E7] border">Log in</Button>
+        <Link href={'/auth/sign-in'}>
+          <Button className="w-[350px] h-[36px] text-black rounded-2xl bg-white border-[#E4E4E7] border  hover:bg-gray-50">Log in</Button>
+        </Link>
 
         <p className="text-[14px] text-[#71717A] text-center">By clicking continue, you agree to our Terms of Service and Privacy Policy.</p>
       </form>

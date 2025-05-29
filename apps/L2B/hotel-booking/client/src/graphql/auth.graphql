@@ -8,9 +8,16 @@ mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
     token
     user {
-      id
+      _id
       email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
       isAdmin
+      phone
     }
   }
 }

@@ -4,6 +4,7 @@ describe('Information Page', () => {
   });
 
   it('should display the title correctly', () => {
+    // cy.get('h1[data-testid="Header"]').should('exist');
     cy.get('[data-testid="Бидний тухай"]').should('exist');
     cy.get('[data-testid="Бидний тухай"]').should('have.text', 'Бидний тухай');
   });

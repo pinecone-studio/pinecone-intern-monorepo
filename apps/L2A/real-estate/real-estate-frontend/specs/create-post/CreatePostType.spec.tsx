@@ -1,61 +1,68 @@
 import React from 'react';
-import { CreatePostType } from '@/app/create-post/_components/CreatePostType';
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { CreatePostType } from '@/app/create-post/_components/CreatePostType';
+import '@testing-library/jest-dom';
+window.HTMLElement.prototype.hasPointerCapture = () => false;
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+window.HTMLElement.prototype.scrollIntoView = () => {};
 
-jest.mock('@/components/ui/select', () => ({
-  Select: ({ children, _value, onValueChange }: any) => (
-    <div data-testid="select" onClick={() => onValueChange('apartment')}>
-      {children}
-    </div>
-  ),
-  SelectTrigger: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  SelectValue: ({ placeholder }: any) => <span>{placeholder}</span>,
-  SelectContent: ({ children }: any) => <div>{children}</div>,
-  SelectItem: ({ children, value, ...props }: any) => (
-    <div {...props} data-value={value}>
-      {children}
-    </div>
-  ),
-  SelectGroup: ({ children }: any) => <div>{children}</div>,
-}));
+describe('CreatePostType component (Shadcn)', () => {
+  const mockOnChange = jest.fn();
 
-describe('CreatePostType', () => {
-  beforeAll(() => {
-    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  const setup = (props = {}) => {
+    render(
+      <CreatePostType
+        name="type"
+        value=""
+        onChange={mockOnChange}
+        {...props}
+      />
+    );
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should calls onChange when an option is selected', async () => {
-    const handleChange = jest.fn();
-
-    render(<CreatePostType name="type" value="" onChange={handleChange} />);
-
-    const trigger = screen.getByTestId('type');
-    await userEvent.click(trigger);
-
-    const option = await screen.findByText('Орон сууц');
-    await userEvent.click(option);
-
-    expect(handleChange).toHaveBeenCalledWith('apartment');
+  test('renders label and placeholder', () => {
+    setup();
+    expect(screen.getByLabelText('Төрөл')).toBeInTheDocument();
+    expect(screen.getByText('Сонгоно уу')).toBeInTheDocument();
   });
 
-  it('should renders selected value correctly', () => {
-    render(<CreatePostType name="type" value="house" onChange={jest.fn()} />);
-    expect(screen.getByText('Хувийн сууц')).toBeInTheDocument();
+  test('shows options and selects "APARTMENT"', async () => {
+    setup();
+    const user = userEvent.setup();
+    await user.click(screen.getByTestId('type'));
+
+    const apartmentOption = await screen.findByRole('option', { name: /APARTMENT/i });
+    await user.click(apartmentOption);
+
+    expect(mockOnChange).toHaveBeenCalledWith('APARTMENT');
   });
 
-  it('should renders with error styles when error prop is provided', () => {
-    const { container } = render(<CreatePostType name="type" value="" onChange={jest.fn()} error="Алдаа гарлаа" />);
+  test('shows error message when error prop is passed', () => {
+    setup({ error: 'Field is required' });
 
-    const trigger = container.querySelector('#type');
-    expect(trigger).toHaveClass('border-red-500');
-    expect(screen.getByText('Алдаа гарлаа')).toBeInTheDocument();
+    expect(screen.getByText('Field is required')).toBeInTheDocument();
+    expect(screen.getByTestId('type')).toHaveClass('border-red-500');
   });
 
-  it('should renders invisible placeholder error space when no error is given', () => {
-    render(<CreatePostType name="type" value="" onChange={jest.fn()} />);
+  test('renders placeholder paragraph when no error', () => {
+    setup();
     const placeholder = screen.getByText('placeholder');
     expect(placeholder).toHaveClass('invisible');
+  });
+
+  test('can select "house" and fire onChange', async () => {
+    setup();
+    const user = userEvent.setup();
+    await user.click(screen.getByTestId('type'));
+
+    const houseOption = await screen.findByRole('option', { name: /Хувийн сууц/i });
+    await user.click(houseOption);
+
+    expect(mockOnChange).toHaveBeenCalledWith('house');
   });
 });

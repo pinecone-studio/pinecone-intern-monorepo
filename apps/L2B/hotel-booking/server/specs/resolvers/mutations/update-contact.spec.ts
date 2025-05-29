@@ -7,9 +7,9 @@ jest.mock('../../../src/models');
 describe('updateContact Mutation', () => {
   const mockUser = {
     _id: '12345',
-    phone: 12345678,
+    phone: '12345678',
     email: 'test@email.com',
-    emergencyPhone: 87654321,
+    emergencyPhone: '87654321',
     relation: 'Parent',
   };
 
@@ -25,9 +25,9 @@ describe('updateContact Mutation', () => {
       {
         _id: '12345',
         input: {
-          phone: 87654321,
+          phone: '87654321',
           email: 'test@gmail.com',
-          emergencyPhone: 12345678,
+          emergencyPhone: '12345678',
           relation: 'Siblings',
         },
       },
@@ -39,9 +39,9 @@ describe('updateContact Mutation', () => {
       '12345',
       {
         $set: {
-          phone: 87654321,
+          phone: '87654321',
           email: 'test@gmail.com',
-          emergencyPhone: 12345678,
+          emergencyPhone: '12345678',
           relation: 'Siblings',
         },
       },
@@ -59,9 +59,9 @@ describe('updateContact Mutation', () => {
         {
           _id: '12345',
           input: {
-            phone: 87654321,
+            phone: '87654321',
             email: 'test@gmail.com',
-            emergencyPhone: 12345678,
+            emergencyPhone: '12345678',
             relation: 'Siblings',
           },
         },

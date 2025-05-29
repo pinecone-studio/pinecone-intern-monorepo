@@ -22,6 +22,7 @@ query concerts {
     primaryPrice
     specialGuestName
     thumbnailUrl
+    featured
     title
     venue {
       address
@@ -31,6 +32,20 @@ query concerts {
       name
     }
     seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
       date
     }
   }
@@ -64,6 +79,7 @@ query Concert($concertId: String!) {
     featured
     seatData {
       date
+      id
       seats {
         Backseat {
           price
@@ -130,5 +146,72 @@ mutation ChangeCurrentPassword($email: String!, $currentPassword: String!, $newP
   changeCurrentPassword(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
     id
     email
+  }
+}
+
+mutation updateUserInfo($id: String!, $email: String, $phone: Int) {
+  updateUserInfo(id: $id, email: $email, phone: $phone) {
+    id
+    email
+    phone
+  }
+}
+
+mutation OTP($email: String!) {
+  OTP(email: $email) {
+    id
+  }
+}
+
+mutation OtpStep2($email: String!, $otp: Int!) {
+  OtpStep2(email: $email, otp: $otp) {
+    id
+  }
+}
+
+mutation OtpStep3($email: String!, $otp: Int!, $password: String!) {
+  OtpStep3(email: $email, otp: $otp, password: $password) {
+    id
+  }
+}
+
+mutation searchEvents($name: String) {
+  searchEvents(name: $name) {
+    id
+    artistName
+    description
+    doorOpen
+    musicStart
+    primaryPrice
+    specialGuestName
+    thumbnailUrl
+    featured
+    title
+    endDate
+    venue {
+      address
+      capacity
+      city
+      id
+      name
+    }
+    seatData {
+      seats {
+        Backseat {
+          availableTickets
+          price
+        }
+        Standard {
+          price
+          availableTickets
+        }
+        VIP {
+          availableTickets
+          price
+        }
+      }
+      date
+      id
+    }
   }
 }

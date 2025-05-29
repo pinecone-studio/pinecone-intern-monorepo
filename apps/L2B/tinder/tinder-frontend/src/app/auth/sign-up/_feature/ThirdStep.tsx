@@ -14,9 +14,7 @@ const passwordForm = z
     password: z
       .string()
       .min(1, 'Password can not be empty')
-      .min(8, 'Password needs to be at least 8 letters.')
-      .regex(/[A-Z]/, 'At least one capital letter needs to be included.')
-      .regex(/[0-6]/, 'At least one number needs to be included.'),
+      .min(8, 'Password needs to be at least 8 letters.'),
     confirm: z.string().min(1, 'Password can not be empty.'),
     email: z.string(),
   })

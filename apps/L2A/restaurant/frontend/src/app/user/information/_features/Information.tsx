@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Img from '../_components/image.json';
+
 const Information = () => {
   return (
     <div>

@@ -6,7 +6,7 @@ import SeatInfo, { DateSelector } from '@/app/event/[id]/_components/SeatInfo';
 describe('SeatInfo component', () => {
   test('renders fallback when no seatData', () => {
     render(<SeatInfo eventData={{ seatData: [] } as any} />);
-    expect(screen.getByText('No ticket information available')).toBeInTheDocument();
+    expect(screen.getByText('Тасалбар дууссан!')).toBeInTheDocument();
   });
 
   test('renders ticket options with zero counts and enables button', () => {
@@ -24,7 +24,7 @@ describe('SeatInfo component', () => {
     } as any;
 
     render(<SeatInfo eventData={eventData} />);
-    expect(screen.getByText('Тоглолт үзэх өдрөө сонгоно уу.')).toBeInTheDocument();
+    expect(screen.getByText('Тоглолт үзэх өдрөө сонгоно уу!')).toBeInTheDocument();
     expect(screen.getByText('2025-05-13')).toBeInTheDocument();
     expect(screen.getByText('Арын тасалбар (0)')).toBeInTheDocument();
     expect(screen.getByText('Энгийн тасалбар (0)')).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('SeatInfo component', () => {
     } as any;
 
     render(<SeatInfo eventData={eventData} />);
-    expect(screen.getByText('No ticket information available')).toBeInTheDocument();
+    expect(screen.getByText('Тасалбар дууссан!')).toBeInTheDocument();
   });
 
   test('renders fallback when valid seats exist but date is missing', () => {
@@ -83,7 +83,7 @@ describe('SeatInfo component', () => {
     } as any;
 
     render(<SeatInfo eventData={eventData} />);
-    expect(screen.getByText('No ticket information available')).toBeInTheDocument();
+    expect(screen.getByText('Тасалбар дууссан!')).toBeInTheDocument();
   });
 
   test('does not show ticket type if price is missing', () => {

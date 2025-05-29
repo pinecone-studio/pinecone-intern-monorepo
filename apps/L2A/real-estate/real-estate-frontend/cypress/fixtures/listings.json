@@ -1,0 +1,17 @@
+{
+  "filterPosts": [
+    {
+      "_id": "1",
+      "price": 125000000,
+      "title": "Шинэ байр түрээслүүлнэ",
+      "totalRooms": 2,
+      "restrooms": 2,
+      "size": 12,
+      "location": {
+        "city": "Улаанбаатар",
+        "district": "Баянзүрх"
+      },
+      "images": ["/img1.png"]
+    }
+  ]
+}

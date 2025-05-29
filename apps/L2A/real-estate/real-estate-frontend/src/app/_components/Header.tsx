@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const Header = () => {
   const { user, isLoggedIn, loading } = useAuth();
@@ -21,7 +22,7 @@ const Header = () => {
     <header className="border-b">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center py-2 px-6">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
+          <Image src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
           <span className="font-bold">Home Vault</span>
         </Link>
 
