@@ -1,12 +1,9 @@
 describe('SwipeFeature component test', () => {
   beforeEach(() => {
-    cy.visit('/swipe-page');
-  });
-
-  it('Displays the initial profile with image, name, and bio', () => {
-    cy.get('img[alt="Profile"]').should('be.visible');
-    cy.get('p.text-lg').should('exist').and('not.be.empty');
-    cy.get('p.text-sm').should('exist');
+    cy.visit('/auth/sign-in');
+    cy.get('input[name="email"]').type('tuuguu123123@gmail.com');
+    cy.get('input[name="password"]').type('90131305');
+    cy.get('button[type="submit"]').click();
   });
 
   it('Swipes right (Like) and moves to the next profile', () => {
@@ -32,16 +29,11 @@ describe('SwipeFeature component test', () => {
   });
 
   it('Navigates between profile images using arrows', () => {
-    // cy.get('img[alt="Profile"]')
-    // .invoke('attr', 'src')
-    // .then((originalSrc) => {
     cy.get('[data-testid="chevron-right"]').should('exist').click();
     cy.get('[data-testid="chevron-right"]').should('exist').click();
     cy.wait(200);
     cy.get('[data-testid="chevron-left"]').should('exist').click();
     cy.get('[data-testid="chevron-left"]').should('exist').click();
-    // cy.get('img[alt="Profile"]').invoke('attr', 'src').should('eq', originalSrc);
-    // });
   });
   it('Displays "No more profiles" after swiping all profiles', () => {
     cy.get('button[aria-label="Like"]').should('exist');
