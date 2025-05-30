@@ -97,13 +97,7 @@ export const RoomsByHotel = ({ hotelId, refetchHotel }: { hotelId: string; refet
                     <TableCell className="border-r-[1px]">{room.roomNumber}</TableCell>
                     <TableCell className="flex items-center gap-3 border-r-[1px]">
                       {room.images?.[0] ? (
-                        <Image
-                          src={room.images[0]?.startsWith('http') ? room.images[0] : '/' + room.images[0]}
-                          alt={'Room image'}
-                          width={100}
-                          height={100}
-                          className="w-12 h-12 rounded object-cover"
-                        />
+                        <Image src={room.images[0]} alt={'Room image'} width={100} height={100} className="w-12 h-12 rounded object-cover" />
                       ) : (
                         <div className="w-12 h-12 bg-gray-200 rounded" />
                       )}
