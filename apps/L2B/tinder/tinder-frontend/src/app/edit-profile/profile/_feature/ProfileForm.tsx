@@ -55,13 +55,13 @@ const ProfileForm = () => {
       interestedIn: '',
     },
   });
-
+  console.log(currentProfile);
   useEffect(() => {
     if (currentProfile) {
-      const dob = currentProfile.age ? getApproxDOBFromAge(currentProfile.age) : undefined;
+      const dob = getApproxDOBFromAge(currentProfile.age);
       form.reset({
-        name: currentProfile.profileInfo.name ?? '',
-        email: currentProfile.user.email ?? '',
+        name: currentProfile.profileInfo.name,
+        email: currentProfile.user.email,
         dob,
         bio: currentProfile.profileInfo.bio,
         profession: currentProfile.profileInfo.profession,
@@ -74,11 +74,9 @@ const ProfileForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const age = calculateAge(values.dob);
 
-    if (!currentProfile?._id) return;
-
     await updateProfile({
       variables: {
-        updateProfileId: currentProfile.user._id,
+        updateProfileId: currentProfile!.user._id,
         input: {
           age,
           interestedIn: values.interestedIn,

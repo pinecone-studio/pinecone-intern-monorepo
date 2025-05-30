@@ -13,15 +13,23 @@ describe('Profile page', () => {
 
     cy.contains('15').click();
   });
+  it('should populate form with currentProfile values', () => {
+    cy.get('input[name="name"]').should('have.value', 'Burhan');
+    cy.get('input[name="email"]').should('have.value', 'tuuguu123123@gmail.com');
 
-  // it.only('should handle missing date of birth (dob) gracefully', () => {
-  //   cy.get('[data-testid="profile-calendar"]').click();
-  //   cy.get('body').click(0, 0);
+    cy.get('textarea[name="bio"]').should('have.value', 'bi bol burhan namaig shut');
 
-  //   cy.get('[data-testid="profile-submitButton"]').click();
+    cy.get('input[name="profession"]').should('have.value', 'software engineer');
 
-  //   cy.contains('Date of birth is required').should('be.visible');
-  // });
+    cy.get('input[name="school"]').should('have.value', 'pinecone');
+
+    cy.get('[data-testid="profile-select"]').should('have.value', 'Female');
+
+    // Date of birth should be in YYYY-MM-DD format
+    // cy.get('[data-testid="profile-calendar"] input')
+    //   .invoke('val')
+    //   .should('match', /^\d{4}-\d{2}-\d{2}$/);
+  });
 
   it('should select Male from the dropdown', () => {
     cy.get('[data-testid="profile-select"]').select('Male');
