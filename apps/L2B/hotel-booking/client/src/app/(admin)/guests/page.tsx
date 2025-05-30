@@ -8,7 +8,6 @@ import { Booking, useBookingsQuery } from '@/generated';
 
 const Guests = () => {
   const { data, loading } = useBookingsQuery();
-  console.log('fetched data:', data);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
   const validHotels = useMemo(() => {
     return data?.bookings?.filter((booking): booking is Booking => booking !== null && typeof booking._id === 'string' && typeof booking.status === 'string') || [];
@@ -22,7 +21,7 @@ const Guests = () => {
     setFilteredBookings(filtered);
   }, []);
   if (loading) {
-    return <div className="p-6 text-gray-600">Loading guests...</div>;
+    return <div className="w-full h-screen flex items-center justify-center text-gray-600">Loading guests...</div>;
   }
 
   return (

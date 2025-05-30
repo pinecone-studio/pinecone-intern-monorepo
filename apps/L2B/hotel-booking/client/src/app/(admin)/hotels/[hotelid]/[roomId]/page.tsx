@@ -42,7 +42,7 @@ const RoomDetailPage = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center" data-cy="loading-state">
+      <div className="h-screen w-full flex items-center justify-center" data-cy="loading-state">
         Loading...
       </div>
     );
