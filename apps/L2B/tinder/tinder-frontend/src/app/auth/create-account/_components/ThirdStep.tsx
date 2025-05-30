@@ -16,6 +16,7 @@ const formSchema = z.object({
 
 export type FormData = z.infer<typeof formSchema>;
 
+
 const ThirdStep = ({ setStep, step, updateFormData }: { setStep: (_step: number) => void; step: number; updateFormData: (_data: FormData) => void  }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
