@@ -22,8 +22,6 @@ const RoomDetailPage = () => {
     setRoom(data?.room);
   }, [data]);
 
-  console.log('room query:', room);
-
   return (
     <div className="p-6 w-full min-h-full bg-[#e4e4e768] ">
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">

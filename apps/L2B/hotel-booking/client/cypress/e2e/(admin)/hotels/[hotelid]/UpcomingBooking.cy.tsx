@@ -1,8 +1,9 @@
 describe('UpcomingBookings Component', () => {
+  const hotelId = `682ac7df47df32a8a9907cb1`;
   const mockBookings = [
     {
       _id: 'booking1234',
-      hotelId: { _id: 'hotel123' },
+      hotelId: { _id: `${hotelId}` },
       roomId: { _id: 'room1', name: 'Deluxe Room' },
       userId: { firstName: 'John' },
       guests: { adults: 2, children: 1 },
@@ -11,7 +12,7 @@ describe('UpcomingBookings Component', () => {
     },
     {
       _id: 'booking5678',
-      hotelId: { _id: 'hotel123' },
+      hotelId: { _id: `${hotelId}` },
       roomId: { _id: 'room2', name: 'Presidential Suite' },
       userId: { firstName: 'Alice' },
       guests: { adults: 1, children: 0 },
@@ -20,7 +21,7 @@ describe('UpcomingBookings Component', () => {
     },
     {
       _id: 'booking9999',
-      hotelId: { _id: 'hotel123' },
+      hotelId: { _id: `${hotelId}` },
       roomId: { _id: 'room3', name: 'Single Room' },
       userId: { firstName: 'Bob' },
       guests: { adults: 1, children: 0 },
@@ -29,7 +30,7 @@ describe('UpcomingBookings Component', () => {
     },
     {
       _id: 'booking0000',
-      hotelId: { _id: 'hotel123' },
+      hotelId: { _id: `${hotelId}` },
       roomId: { _id: 'room4' },
       userId: { firstName: 'Charlie' },
       guests: { adults: 1, children: 1 },
@@ -49,7 +50,7 @@ describe('UpcomingBookings Component', () => {
       }
     }).as('getBookings');
 
-    cy.visit('/hotels/hotel123');
+    cy.visit(`/hotels/${hotelId}`);
     cy.wait('@getBookings');
   });
 
@@ -91,11 +92,11 @@ describe('UpcomingBookings Component', () => {
 
   it('should navigate to booking details when a row is clicked', () => {
     cy.contains('tr', 'John').click();
-    cy.url().should('include', '/hotels/hotel123/room1/booking1234');
+    cy.url().should('include', `/hotels/${hotelId}/room1/booking1234`);
 
     cy.go('back');
     cy.contains('tr', 'Alice').click();
-    cy.url().should('include', '/hotels/hotel123/room2/booking5678');
+    cy.url().should('include', `/hotels/${hotelId}/room2/booking5678`);
   });
 
   it('should display sorting buttons in Date and Rooms columns', () => {
@@ -111,7 +112,7 @@ describe('UpcomingBookings Component', () => {
         }
       }).as('getEmptyBookings');
 
-      cy.visit('/hotels/hotel123');
+      cy.visit(`/hotels/${hotelId}`);
       cy.wait('@getEmptyBookings');
     });
 
@@ -136,7 +137,7 @@ describe('UpcomingBookings Component', () => {
       }
     }).as('getBookingsWithMissingName');
 
-    cy.visit('/hotels/hotel123');
+    cy.visit(`/hotels/${hotelId}`);
     cy.wait('@getBookingsWithMissingName');
 
     cy.contains('Unknown Guest').should('exist');
