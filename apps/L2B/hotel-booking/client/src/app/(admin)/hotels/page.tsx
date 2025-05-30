@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { FilterHotelsAdmin } from './_components/FilterHotelsAdmin';
 import { HotelsTable } from './_components/HotelsTable';
 import { Hotel, useCreateHotelMutation, useHotelsQuery } from '@/generated';
+import { useRouter } from 'next/navigation';
 const HotelsPage = () => {
+  const router = useRouter();
   const { data, loading, refetch } = useHotelsQuery();
   const [createHotel] = useCreateHotelMutation();
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
@@ -33,17 +35,19 @@ const HotelsPage = () => {
 
   const addHotel = async () => {
     setIsCreating(true);
-    await createHotel({
+    const data = await createHotel({
       variables: {
         input: {
           starRating: 1,
         },
       },
     });
-    await refetch();
-    setIsCreating(false);
+    if (data.data?.createHotel) {
+      router.push(`/hotels/${data.data.createHotel._id}`);
+      setIsCreating(false);
+    }
+    refetch();
   };
-
   return (
     <div data-testid="Hotels-Page" className="p-6 bg-gray-50 min-h-screen w-full">
       <div>
