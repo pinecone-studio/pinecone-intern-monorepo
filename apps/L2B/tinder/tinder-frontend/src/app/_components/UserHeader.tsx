@@ -4,17 +4,11 @@ import { MessageSquare } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 
-import { useFetchProfileQuery } from '@/generated';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Loading from './Loading';
 import { useAuth } from '../auth/context/AuthContext';
 const UserHeader = () => {
-  const { logout, user } = useAuth();
-
-  const { data } = useFetchProfileQuery({
-    variables: { id: user?._id ?? '' },
-    skip: !user?._id,
-  });
+  const { logout, user, currentProfile } = useAuth();
 
   if (!user) {
     return <Loading />;
@@ -40,7 +34,7 @@ const UserHeader = () => {
               <Button variant="outline" data-testid="avatar-button">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-black">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src={data?.fetchProfile.images?.[0]} alt="profile image" />
+                    <AvatarImage src={currentProfile?.images?.[0]} alt="profile image" />
                     <AvatarFallback>
                       <img src="/defaultAvatar.webp" alt="default avatar" className="w-full h-full object-cover rounded-full" />
                     </AvatarFallback>

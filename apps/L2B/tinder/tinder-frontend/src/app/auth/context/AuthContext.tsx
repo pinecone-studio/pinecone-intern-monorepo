@@ -1,7 +1,7 @@
 'use client';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useGetCurrentUserQuery, useSignInMutation } from '@/generated';
+import { Profile, useFetchProfileQuery, useGetCurrentUserQuery, useSignInMutation } from '@/generated';
 import { toast } from 'sonner';
 
 type UserType = {
@@ -23,6 +23,7 @@ type AuthContextType = {
   user: UserType | null;
   handleSignIn: (_values: valuesType) => void;
   signInLoading: boolean;
+  currentProfile: Profile | undefined;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -51,6 +52,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     variables: { jwt: JWT },
     skip: !JWT,
   });
+
+  const { data: profileData } = useFetchProfileQuery({
+    variables: { id: user?._id ?? '' },
+    skip: !user?._id,
+  });
+
+  const currentProfile: Profile | undefined = profileData?.fetchProfile;
 
   const handleSignIn = async (values: valuesType) => {
     const { data } = await signInMutation({ variables: values });
@@ -83,7 +91,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push('/auth/sign-in');
   };
 
-  return <AuthContext.Provider value={{ logout, user, handleSignIn, signInLoading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ logout, user, handleSignIn, signInLoading, currentProfile }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

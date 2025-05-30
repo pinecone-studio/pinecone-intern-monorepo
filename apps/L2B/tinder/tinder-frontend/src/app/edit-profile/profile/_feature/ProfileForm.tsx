@@ -1,109 +1,115 @@
+/* eslint-disable camelcase */
+
 'use client';
-import { useState } from 'react';
-import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+
+import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Textarea } from '@/components/ui/textarea';
-import { format, parse } from 'date-fns';
-import { cn } from '../../../../../../../../../libs/shadcn/src/lib/utils';
-import { ProfileUsernameEmailInput } from '../_components/ProfileUsernameEmailInput';
-import { ProfileInterest } from '../_components/ProfileInterest';
+import { useAuth } from '@/app/auth/context/AuthContext';
 
-const userdata = {
-  name: 'Elon Musk',
-  email: 'test@email.com',
-  gender: 'male',
-  dob: '21 Aug 1990',
-  bio: 'Adventurous spirit with a passion for travel, photography, and discovering new cultures while pursuing a career in graphic design.',
-  interestOptions: ['Art', 'Music', 'Investment', 'Technology', 'Design', 'Education', 'Health'],
-  profession: 'Software Engineer',
-  schoolOrWork: 'Amazon',
-};
-export const ProfileForm = () => {
-  const [date, setDate] = useState<Date | undefined>(() => parse(userdata.dob, 'dd MMM yyyy', new Date()));
-  const [editUserdata, setEditUserdata] = useState(userdata);
+import { z } from 'zod';
+import { ProfileNameEmailFields, ProfileDobField, ProfileBioField, ProfileInterest, ProfileProfessionField, ProfileSchoolField, ProfileGenderInterest } from './index';
+import { calculateAge, getApproxDOBFromAge } from '@/app/utils/calculate-age';
+import { useUpdateProfileMutation } from '@/generated';
+import { toast } from 'sonner';
 
-  const handleDateSelect = (selectedDate: Date | undefined) => {
-    setDate(selectedDate);
-    if (selectedDate) {
-      setEditUserdata((prev) => ({
-        ...prev,
-        dob: format(selectedDate, 'dd MMM yyyy'),
-      }));
+const formSchema = z.object({
+  name: z.string().min(2, { message: 'Username must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Invalid email address.' }),
+
+  dob: z
+    .date({
+      required_error: 'Date of birth is required',
+      invalid_type_error: 'Invalid date',
+    })
+    .optional(),
+  interestedIn: z.string(),
+  bio: z.string().min(5, { message: 'Bio must be at least 5 characters.' }),
+  profession: z.string().min(2, { message: 'Profession must be at least 2 characters.' }),
+  school: z.string().min(2, { message: 'School must be at least 2 characters.' }),
+  interestOptions: z.array(z.string()).max(10, 'You can select up to 10 interests'),
+});
+
+export type ProfileFormType = z.infer<typeof formSchema>;
+
+const ProfileForm = () => {
+  const { currentProfile } = useAuth();
+  const [updateProfile, { loading }] = useUpdateProfileMutation({
+    onCompleted: () => {
+      toast.success('successfully changed!');
+    },
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      dob: undefined,
+      bio: '',
+      profession: '',
+      school: '',
+      interestOptions: [],
+      interestedIn: '',
+    },
+  });
+
+  useEffect(() => {
+    if (currentProfile) {
+      const dob = currentProfile.age ? getApproxDOBFromAge(currentProfile.age) : undefined;
+      form.reset({
+        name: currentProfile.profileInfo.name ?? '',
+        email: currentProfile.user.email ?? '',
+        dob,
+        bio: currentProfile.profileInfo.bio,
+        profession: currentProfile.profileInfo.profession,
+        school: currentProfile.profileInfo.school,
+        interestedIn: currentProfile.interestedIn,
+      });
     }
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setEditUserdata((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  console.log(editUserdata.interestOptions);
+  }, [currentProfile, form]);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const age = calculateAge(values.dob);
+
+    if (!currentProfile?._id) return;
+
+    await updateProfile({
+      variables: {
+        updateProfileId: currentProfile.user._id,
+        input: {
+          age,
+          interestedIn: values.interestedIn,
+          profileInfo: {
+            name: values.name,
+            bio: values.bio,
+            profession: values.profession,
+            school: values.school,
+            interest: 'Art',
+          },
+        },
+      },
+    });
+  }
   return (
-    <div className="max-w-2xl mx-auto pl-4 ">
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-semibold">Personal Information</h1>
-          <p className="text-muted-foreground">This is how others will see you on the site.</p>
-        </div>
-        <ProfileUsernameEmailInput handleChange={handleChange} editUserdata={editUserdata} />
-        <div className="space-y-2">
-          <Label htmlFor="dob">Date of birth</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" name="day" className={cn('w-full justify-between text-left font-normal border', !date && 'text-muted-foreground')}>
-                {date ? format(date, 'dd MMM yyyy') : '21 Aug 1990'}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar mode="single" selected={parse(editUserdata.dob, 'dd MMM yyyy', new Date())} onSelect={handleDateSelect} initialFocus />
-            </PopoverContent>
-          </Popover>
-          <p className="text-sm text-muted-foreground">Your date of birth is used to calculate your age.</p>
-        </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <ProfileNameEmailFields control={form.control} />
+        <ProfileDobField control={form.control} />
+        <ProfileBioField control={form.control} />
+        <ProfileGenderInterest control={form.control} />
+        <ProfileInterest control={form.control} name="interestOptions" />
+        <ProfileProfessionField control={form.control} />
+        <ProfileSchoolField control={form.control} />
 
-        <div className="space-y-2">
-          <Label htmlFor="gender">Gender Preferences:</Label>
-          <div className="relative">
-            <select
-              id="gender"
-              className="w-full h-10 px-3 py-2 bg-background border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-ring focus:border-input"
-              defaultValue={editUserdata.gender}
-              onChange={handleChange}
-            >
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-              <option value="Everyone">Everyone</option>
-            </select>
-            <ChevronDownIcon data-testid="gender-chevron" className="absolute right-3 top-3 h-4 w-4 opacity-50" />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="bio">Bio</Label>
-          <Textarea id="bio" name="bio" placeholder="Tell us about yourself" className="min-h-[100px]" defaultValue={editUserdata.bio} onChange={handleChange} />
-        </div>
-
-        <ProfileInterest setEditUserdata={setEditUserdata} editUserdata={editUserdata} />
-
-        <div className="space-y-2">
-          <Label htmlFor="profession">Profession</Label>
-          <Input id="profession" defaultValue="Software Engineer" onChange={handleChange} />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="school">School/Work</Label>
-          <Input id="school" defaultValue={editUserdata.schoolOrWork} onChange={handleChange} />
-        </div>
-        <Button className="bg-pink-500 hover:bg-pink-600 text-white" onClick={() => console.log(editUserdata)}>
-          Update profile
+        <Button data-testid="profile-submitButton" type="submit" className="bg-red-500 hover:bg-red-700" disabled={loading}>
+          {loading ? 'updating...' : ' Update profile'}
         </Button>
-      </div>
-    </div>
+      </form>
+    </Form>
   );
 };
+
+export default ProfileForm;
