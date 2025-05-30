@@ -33,13 +33,18 @@ export const GuestInfoPage = () => {
     skip: !bookingId,
   });
 
-  console.log('data.booking', data?.booking);
-
   useEffect(() => {
     if (data?.booking) {
       setGuestInfo(data.booking);
     }
   }, [data?.booking]);
+
+  if (!data)
+    return (
+      <div className="h-screen w-full flex items-center justify-center" data-cy="loading-state">
+        Loading...
+      </div>
+    );
 
   const calculateNights = (checkIn: string, checkOut: string): number => {
     const checkInDate = new Date(checkIn);

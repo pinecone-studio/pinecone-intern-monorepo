@@ -30,7 +30,7 @@ const HotelsPage = () => {
   }, []);
 
   if (loading) {
-    return <div className="p-6 text-gray-600">Loading hotels...</div>;
+    return <div className="h-screen w-full flex items-center justify-center text-gray-600">Loading hotels...</div>;
   }
 
   const addHotel = async () => {

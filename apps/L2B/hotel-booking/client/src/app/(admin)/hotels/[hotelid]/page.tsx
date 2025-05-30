@@ -19,7 +19,7 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   const router = useRouter();
   const hotel = data?.hotel;
 
-  if (error || !hotel) return <div>loading...</div>;
+  if (error || !hotel) return <div className="h-screen w-full flex items-center justify-center">loading...</div>;
 
   return (
     <main className="w-full h-full pb-6 bg-[#e4e4e768]">
