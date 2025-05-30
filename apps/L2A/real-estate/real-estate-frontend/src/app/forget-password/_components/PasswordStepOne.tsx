@@ -21,8 +21,9 @@ export const PasswordStepOne = ({ setStep, setEmail }: PasswordStepOneProps) => 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-2">
       <p className="text-2xl text-center font-bold">Forget password</p>
+       <p className='flex justify-center items-center text-[#71717A]'>Enter your email account to reset password</p>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email
