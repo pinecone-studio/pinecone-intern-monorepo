@@ -54,6 +54,7 @@ export const RoomsByHotel = ({ hotelId, refetchHotel }: { hotelId: string; refet
         },
       },
     });
+
     if (data?.createRoom) {
       setRooms((prev) => [...(prev || []), data.createRoom as Room]);
       router.push(`/hotels/${hotelId}/${data.createRoom._id}`);
