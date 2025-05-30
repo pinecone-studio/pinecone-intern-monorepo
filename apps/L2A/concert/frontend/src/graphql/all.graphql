@@ -215,3 +215,26 @@ mutation searchEvents($name: String) {
     }
   }
 }
+
+mutation CreateTicketOrder($input: CreateTicketOrderInput!) {
+  createTicketOrder(input: $input) {
+    tickets {
+      id
+      ticket {
+        Backseat {
+          count
+          price
+        }
+        Standard {
+          count
+          price
+        }
+        VIP {
+          count
+          price
+        }
+      }
+    }
+    totalPrice
+  }
+}

@@ -15,7 +15,6 @@ const Page = () => {
         </div>
         <div className="w-3/4 h-[1px] bg-gray-200 mt-7 "></div>
         <TicketFilterBar />
-        {/* <DashboardTable /> */}
         <TicketDashboard />
       </div>
     </div>
