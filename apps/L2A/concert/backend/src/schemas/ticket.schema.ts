@@ -7,16 +7,9 @@ export const TicketTypeDefs = gql`
     seatNumber: String!
     price: Int
     type: TicketType!
-    status: TicketStatus!
-    cancelRequest: Boolean!
-    refundStatus: RefundStatus!
     createdAt: String!
     updatedAt: String!
-  }
-  enum RefundStatus {
-    PENDING
-    APPROVED
-    REJECTED
+    user: User!
   }
 
   input CreateTicketInput {
@@ -26,5 +19,20 @@ export const TicketTypeDefs = gql`
     price: Int!
     status: TicketStatus
     userId: ID!
+  }
+
+  input TicketInput {
+    type: String!
+    count: Int!
+    price: Int!
+  }
+
+  input CreateTicketOrderInput {
+    userId: ID!
+    concertId: ID!
+    date: String!
+    seatDataId: ID!
+    tickets: [TicketInput!]!
+    totalPrice: Int!
   }
 `;

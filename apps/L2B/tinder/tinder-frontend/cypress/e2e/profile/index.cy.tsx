@@ -1,63 +1,52 @@
-describe('Profile Form', () => {
+describe('Profile page', () => {
   beforeEach(() => {
-    cy.visit('/edit-profile/profile');
+    cy.visit('/auth/sign-in');
+    cy.get('input[name="email"]').type('tuuguu123123@gmail.com');
+    cy.get('input[name="password"]').type('90131305');
+    cy.get('button[type="submit"]').click();
+    cy.get('[data-testid="avatar-button"]').should('be.visible').click();
+    cy.get('[data-testid="profile-link"]').click();
   });
 
-  it('renders form with initial values', () => {
-    cy.get('input[name="email"]').should('have.value', 'test@email.com');
-    cy.contains('21 Aug 1990');
+  it('should open calendar and select a valid date', () => {
+    cy.get('[data-testid="profile-calendar"]').click();
+
+    cy.contains('15').click();
+  });
+  it('should populate form with currentProfile values', () => {
+    cy.get('input[name="name"]').should('have.value', 'Burhan');
+    cy.get('input[name="email"]').should('have.value', 'tuuguu123123@gmail.com');
+
+    cy.get('textarea[name="bio"]').should('have.value', 'bi bol burhan namaig shut');
+
+    cy.get('input[name="profession"]').should('have.value', 'software engineer');
+
+    cy.get('input[name="school"]').should('have.value', 'pinecone');
+
+    cy.get('[data-testid="profile-select"]').should('have.value', 'Female');
+
+    // Date of birth should be in YYYY-MM-DD format
+    // cy.get('[data-testid="profile-calendar"] input')
+    //   .invoke('val')
+    //   .should('match', /^\d{4}-\d{2}-\d{2}$/);
   });
 
-  it('can change name and email', () => {
-    cy.get('input[name="name"]').clear().type('Tony Stark');
-    cy.get('input[name="email"]').clear().type('ironman@starkindustries.com');
+  it('should select Male from the dropdown', () => {
+    cy.get('[data-testid="profile-select"]').select('Male');
+    cy.get('[data-testid="profile-select"]').should('have.value', 'Male');
   });
 
-  it('can change bio', () => {
-    cy.get('textarea[name="bio"]').clear().type('Genius, billionaire, playboy, philanthropist.');
+  it('should toggle interest off if already selected', () => {
+    cy.get('[data-testid="interest-Art"]').click();
+    cy.get('[data-testid="interest-Art"]').should('have.class', 'bg-gray-900'); // Сонгогдсон эсэхийг шалгах
+
+    cy.get('[data-testid="interest-Art"]').click();
+    cy.get('[data-testid="interest-Art"]').should('not.have.class', 'bg-gray-900'); // Сонголт арилсан эсэх
   });
 
-  it('can change gender preference', () => {
-    cy.get('select#gender').select('Everyone');
-  });
-
-  it('can select a new date from calendar', () => {
-    cy.get('button[name="day"]').click();
-    cy.get('button[name="day"').contains('15').click();
-  });
-  it('can not select a new date from calendar', () => {
-    cy.get('button[name="day"]').click();
-    cy.get('button[name="day"').contains('15').click({ force: true }).contains('15').click({ force: true });
-  });
-  it('can change profession and school/work', () => {
-    cy.get('input#profession').clear().type('Inventor');
-    cy.get('input#school').clear().type('Stark Industries');
-  });
-  it('can remove interests', () => {
-    cy.contains('Art').click();
-    cy.contains('Music').click();
-    cy.contains('Technology').click();
-  });
-it('should not allow selecting more than 10 interests', () => {
-    const firstTen = [
-      'Fashion',
-      'Travel',
-      'Food',
-    ];
-    firstTen.forEach((interest) => {
-      cy.contains('button', interest).click();
-    });
-    cy.get('button.bg-gray-900').should('have.length', 10);
-    cy.contains('button', 'Gaming').should('be.disabled');
-    cy.contains('button', 'Sports').should('not.have.class', 'bg-gray-900');
-    cy.get('button.bg-gray-900').should('have.length', 10);
-  });
-
-  it(' limit reached → do nothing', () => {
-    cy.contains('Science').click();
-    cy.contains('History').click();
-  });
-  it('submits the form', () => {
-    cy.contains('Update profile').click();
+  it('should click submit button and show success toast', () => {
+    cy.wait(800);
+    cy.get('[data-testid="profile-submitButton"]').click();
+    cy.contains('successfully changed!', { timeout: 5000 }).should('be.visible');
   });
 });

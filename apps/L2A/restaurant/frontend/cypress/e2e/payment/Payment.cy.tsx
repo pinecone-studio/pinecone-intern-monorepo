@@ -1,6 +1,6 @@
 describe('PaymentDone Component', () => {
   beforeEach(() => {
-    cy.visit('/payment-done');
+    cy.visit('/payment/done');
   });
 
   it('displays success animation and message', () => {

@@ -1,17 +1,27 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useUpcomingBookingsQuery } from '@/generated';
+import { Booking, useUpcomingBookingsQuery } from '@/generated';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type Props = {
   hotelId: string;
 };
 
 export const UpcomingBookings = ({ hotelId }: Props) => {
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const { data } = useUpcomingBookingsQuery();
-  console.log('upcomingBookings', data);
-  console.log('hotelId:', hotelId);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data?.upcomingBookings) {
+      const filteredBookings = data.upcomingBookings.filter((booking) => booking.hotelId?._id === hotelId);
+      setBookings(filteredBookings);
+    }
+  }, [data?.upcomingBookings, hotelId]);
 
   return (
     <div className="p-6 max-w-[784px] w-full rounded-[8px] border bg-background ">
@@ -43,8 +53,15 @@ export const UpcomingBookings = ({ hotelId }: Props) => {
         </TableHeader>
 
         <TableBody>
-          {data?.upcomingBookings.map((booking) => (
-            <TableRow key={booking._id}>
+          {bookings.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                No upcoming bookings
+              </TableCell>
+            </TableRow>
+          )}
+          {bookings.map((booking) => (
+            <TableRow key={booking._id} className="cursor-pointer " onClick={() => router.push(`/hotels/${booking.hotelId?._id}/${booking.roomId?._id}/${booking._id}`)}>
               <TableCell className="border-r-[1px]">{booking._id.slice(-4).toUpperCase()}</TableCell>
               <TableCell className="border-r-[1px]">
                 <div className="font-medium text-sm">{booking.userId?.firstName || 'Unknown Guest'}</div>

@@ -14,3 +14,12 @@ mutation AddTable($input: AddTableInput!) {
     updatedAt
   }
 }
+query GetAllTables {
+  getAllTables {
+    _id
+    createdAt
+    name
+    qrCodeUrl
+    updatedAt
+  }
+}

@@ -81,7 +81,7 @@ describe.only('HotelImage Component', () => {
     cy.wait('@getHotel');
     cy.get("[data-testid='hotel-image-edit']").click();
 
-    cy.get('[data-testid="hotel-image-upload"]').selectFile([], { force: true });
+    cy.get('[data-testid="file-input"]').selectFile([], { force: true });
   });
   it('3. closes the dialog when Close button is clicked', () => {
     const hotelId = '682ac7df47df32a8a9907cb1';

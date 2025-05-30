@@ -1,20 +1,21 @@
 'use client';
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
+import { useUpdateHotelMutation, Hotel } from '@/generated';
 import { useEffect, useState } from 'react';
 import { HotelForm } from '@/utils/type';
 
-export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
+type GeneralInfoFormProps = {
+  hotel: Hotel;
+};
+
+export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: { hotel } = {}, refetch } = useHotelQuery({
-    variables: { hotelId: hotelId || '' },
-    skip: !hotelId,
-  });
 
   const getInitialForm = (): HotelForm => ({
     name: '',
@@ -28,14 +29,8 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
 
   useEffect(() => {
     if (!hotel) return;
-    const { name = '', description = '', starRating, phone = '', rating } = hotel;
-    setForm({
-      name,
-      description,
-      starRating,
-      phone,
-      rating,
-    });
+    const { name = '', description = '', starRating = 0, phone = '', rating = 0 } = hotel;
+    setForm({ name, description, starRating, phone, rating });
   }, [hotel]);
 
   const [updateHotel, { loading }] = useUpdateHotelMutation();
@@ -44,7 +39,7 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
     try {
       await updateHotel({
         variables: {
-          updateHotelId: hotelId || '',
+          updateHotelId: hotel._id!,
           input: {
             name: form.name,
             description: form.description,
@@ -54,7 +49,6 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
           },
         },
       });
-      await refetch();
       setIsOpen(false);
     } catch (err) {
       console.error('Update failed:', err);
@@ -75,6 +69,7 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
         <Textarea value={form[key] ?? ''} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
       ) : (
         <Input
+          className="focus-visible:ring-0 focus:ring-0 "
           value={form[key] ?? ''}
           onChange={(e) =>
             setForm({
@@ -101,17 +96,16 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
 
         <form className="flex flex-col gap-5 w-full">
           {formFields.map(renderField)}
-
           <div className="flex flex-col gap-2">
             <Label>Star rating</Label>
             <Select value={form.starRating?.toString() ?? ''} onValueChange={(v) => setForm({ ...form, starRating: v ? +v : null })}>
-              <SelectTrigger className="w-full focus-visible:ring-0">
+              <SelectTrigger data-testid="star-rating-select" className="w-full focus-visible:ring-0">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   {[1, 2, 3, 4, 5].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
+                    <SelectItem data-testid="star-item" key={num} value={num.toString()}>
                       {num} star{num !== 1 ? 's' : ''}
                     </SelectItem>
                   ))}
@@ -120,9 +114,8 @@ export const GeneralInfoForm = ({ hotelId }: { hotelId: string }) => {
             </Select>
           </div>
         </form>
-
         <div className="w-full flex justify-between">
-          <Button type="button" variant="ghost" onClick={() => setIsOpen(false)}>
+          <Button data-testid="close-star-dialog" type="button" variant="ghost" onClick={() => setIsOpen(false)}>
             Close
           </Button>
           <Button onClick={handleSave} disabled={loading} className="px-4 py-2 bg-[#2563EB] hover:bg-[#2564ebeb]">

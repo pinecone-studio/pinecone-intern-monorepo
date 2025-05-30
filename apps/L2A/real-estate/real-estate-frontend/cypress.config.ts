@@ -8,6 +8,7 @@ const config: Cypress.ConfigOptions<unknown> = {
     ...nxE2EPreset(__filename, {
       cypressDir: 'cypress',
     }),
+    experimentalFetchPolyfill: true,
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config);
       return config;

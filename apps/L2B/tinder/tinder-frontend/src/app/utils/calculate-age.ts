@@ -1,16 +1,13 @@
-function calculateAge(dateString: string): number {
-  const birthDate = new Date(dateString);
+
+export function calculateAge(dob: Date | undefined): number | null {
+ 
   const today = new Date();
-
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const hasHadBirthdayThisYear =
-    today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
-
-  if (!hasHadBirthdayThisYear) {
-    age--;
-  }
-
+  const age = today.getFullYear() - dob!.getFullYear();
   return age;
 }
-export default calculateAge;
+
+export function getApproxDOBFromAge(age: number): Date {
+  const today = new Date();
+  return new Date(today.getFullYear() - age, today.getMonth(), today.getDate());
+}
+

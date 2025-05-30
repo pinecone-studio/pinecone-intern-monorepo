@@ -22,3 +22,18 @@ query FetchProfile($id: ID!) {
     images
   }
 }
+
+mutation UpdateProfile($updateProfileId: ID!, $input: UpdateProfileInput!) {
+  updateProfile(id: $updateProfileId, input: $input) {
+    _id
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+  }
+}
