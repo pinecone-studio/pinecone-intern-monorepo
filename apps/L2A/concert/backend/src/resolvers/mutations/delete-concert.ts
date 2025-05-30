@@ -9,7 +9,6 @@ export const deleteEvent: MutationResolvers['deleteEvent'] = async (_, { id }) =
       throw new Error('Концерт олдсонгүй!');
     }
     const deletedEvent = await concertModel.findByIdAndDelete(id);
-    console.log(deletedEvent);
     return deletedEvent;
   } catch (err) {
     catchError(err);
