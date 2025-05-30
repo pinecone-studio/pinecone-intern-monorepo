@@ -46,19 +46,6 @@ mutation DeleteRoom($deleteRoomId: ID!) {
 mutation UpdateRoom($updateRoomId: ID, $input: RoomUpdateInput) {
   updateRoom(id: $updateRoomId, input: $input) {
     _id
-    hotelId {
-      _id
-      name
-      location
-      starRating
-      rating
-      description
-      amenities
-      phone
-      images
-      createdAt
-      updatedAt
-    }
     name
     type
     pricePerNight
@@ -78,6 +65,19 @@ mutation UpdateRoom($updateRoomId: ID, $input: RoomUpdateInput) {
     isAvailable
     createdAt
     updatedAt
+    hotelId {
+      _id
+      name
+      location
+      starRating
+      rating
+      description
+      amenities
+      phone
+      images
+      createdAt
+      updatedAt
+    }
   }
 }
 

@@ -69,6 +69,7 @@ export const GeneralInfoForm = ({ hotel }: GeneralInfoFormProps) => {
         <Textarea value={form[key] ?? ''} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
       ) : (
         <Input
+          className="focus-visible:ring-0 focus:ring-0 "
           value={form[key] ?? ''}
           onChange={(e) =>
             setForm({

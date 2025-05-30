@@ -1,3 +1,5 @@
+import { RoomType } from '@/generated';
+
 export type UserType = {
   _id: string;
   birth: Date;
@@ -17,4 +19,26 @@ export type HotelForm = {
   starRating?: number | null;
   phone: string | null;
   rating?: number | null;
+};
+
+export type Room = {
+  __typename?: 'Room';
+  _id?: string | null;
+  name?: string | null;
+  type?: RoomType;
+  pricePerNight?: number | null;
+  roomNumber?: number | null;
+  isAvailable?: boolean | null;
+  information?: string[] | null;
+  images?: string[] | null;
+  services?: Record<string, string[]> | null;
+};
+
+export type RoomFormData = {
+  name: string;
+  type: RoomType;
+  pricePerNight: number;
+  roomNumber: number;
+  isAvailable: boolean;
+  information: string[];
 };
