@@ -16,6 +16,9 @@ const POST_SCHEMA = new mongoose.Schema(
         enum: ["CENTRAL", "AIRY","PREMIUM_ZONE"],
       },
     ],
+    ownerName: {
+      type: String,
+    },
     description: {
       type: String,
       required: true,
@@ -47,6 +50,7 @@ const POST_SCHEMA = new mongoose.Schema(
     windowType: String,
     roofMaterial: String,
     floorNumber: Number,
+    door: String,
     balcony: Boolean,
     totalFloors: Number,
     lift: Boolean,

@@ -29,6 +29,7 @@ describe('Create Post Form E2E Test (Mock fetch)', () => {
   it('should submit the form and show success message', () => {
     cy.get('[data-testid="type"]').click();
     cy.get('[data-testid="house"]').click();
+    cy.get('input[title="name"]').type('Тест хэрэглэгч');
     cy.get('input[title="title"]').type('Шинэ байр');
     cy.get('input[name="price"]').type('100000000');
     cy.get('input[name="field"]').type('80');
