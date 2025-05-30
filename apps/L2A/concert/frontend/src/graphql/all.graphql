@@ -215,3 +215,9 @@ mutation searchEvents($name: String) {
     }
   }
 }
+
+mutation deleteEvent($deleteEventId: String!) {
+  deleteEvent(id: $deleteEventId) {
+    id
+  }
+}
