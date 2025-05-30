@@ -3,86 +3,34 @@ import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import TicketDashboard from '@/app/admin/concerts/_components/TicketDashboard';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { Concert, ConcertsDocument } from '@/generated';
+import { ConcertsDocument, DeleteEventDocument } from '@/generated';
 import { GraphQLError } from 'graphql';
-
-const mockConcerts: Concert[] = [
-  {
-    id: 'mock-1',
-    artistName: 'Жавхлан',
-    description: 'Тур mock data',
-    doorOpen: '18:30',
-    musicStart: '19:00',
-    primaryPrice: 10000,
-    specialGuestName: null,
-    endDate: '2025-06-18',
-    thumbnailUrl: '',
-    title: 'Mock Concert 1',
-    featured: true,
-    venue: {
-      id: 'venue-1',
-      name: 'UB Palace',
-      address: 'UB street',
-      city: 'Ulaanbaatar',
-      capacity: 1000,
-      __typename: 'Venue',
-    },
-    seatData: [
-      {
-        date: '2025-01-01',
-        id: 'deez',
-        seats: {
-          Backseat: { availableTickets: 100, price: 100000, __typename: 'SeatInfo' },
-          VIP: { availableTickets: 50, price: 300000, __typename: 'SeatInfo' },
-          Standard: { availableTickets: 150, price: 200000, __typename: 'SeatInfo' },
-          __typename: 'SeatCategories',
-        },
-        __typename: 'SeatData',
-      },
-    ],
-    __typename: 'Concert',
-  },
-  {
-    id: 'mock-2',
-    artistName: 'Жавхлан',
-    description: 'Тур mock data',
-    doorOpen: '18:30',
-    musicStart: '19:00',
-    primaryPrice: 10000,
-    specialGuestName: null,
-    endDate: '2025-06-18',
-    thumbnailUrl: '',
-    title: 'Mock Concert 2',
-    featured: false,
-    venue: {
-      id: 'venue-1',
-      name: 'UB Palace',
-      address: 'UB street',
-      city: 'Ulaanbaatar',
-      capacity: 1000,
-      __typename: 'Venue',
-    },
-    seatData: [
-      {
-        date: '2025-01-01',
-        id: 'deez-2',
-        seats: {
-          Backseat: { availableTickets: 100, price: 100000, __typename: 'SeatInfo' },
-          VIP: { availableTickets: 50, price: 300000, __typename: 'SeatInfo' },
-          Standard: { availableTickets: 150, price: 200000, __typename: 'SeatInfo' },
-          __typename: 'SeatCategories',
-        },
-        __typename: 'SeatData',
-      },
-    ],
-    __typename: 'Concert',
-  },
-];
+import { mockConcerts } from 'specs/utils/mock-concert-info';
 
 const mocks = [
   {
-    request: { query: ConcertsDocument },
-    result: { data: { concerts: mockConcerts } },
+    request: {
+      query: ConcertsDocument,
+    },
+    result: {
+      data: { concerts: mockConcerts },
+    },
+  },
+  {
+    request: {
+      query: DeleteEventDocument,
+      variables: {
+        deleteEventId: 'mock-2',
+      },
+    },
+    result: {
+      data: {
+        deleteEvent: {
+          id: 'mock-2',
+          __typename: 'Event',
+        },
+      },
+    },
   },
 ];
 
@@ -114,6 +62,20 @@ describe('TicketDashboard Component', () => {
     });
     const pagination = screen.getByTestId('page-btn-1');
     fireEvent.click(pagination);
+  });
+
+  it('should click on delete button', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={true}>
+        <TicketDashboard />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-btn-1')).toBeInTheDocument();
+    });
+    const deletebutton = screen.getByTestId('delete-btn-1');
+    fireEvent.click(deletebutton);
   });
 
   it('should throw an eror', async () => {
