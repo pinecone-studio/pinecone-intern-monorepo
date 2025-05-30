@@ -3,6 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import CategoryCard from './CategoryCard';
+import Link from 'next/link';
 
 const categories = [
   {
@@ -46,8 +47,10 @@ const CategoryCarousel = () => {
           }}
         >
           {categories.map((category, index) => (
-            <SwiperSlide key={index}>
-              <CategoryCard {...category} />
+          
+            <SwiperSlide key={`carousel-${index}`}>
+                <Link  href={`/listing`}>
+              <CategoryCard {...category} /></Link>
             </SwiperSlide>
           ))}
         </Swiper>
