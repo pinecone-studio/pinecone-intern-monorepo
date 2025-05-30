@@ -7,7 +7,7 @@ import { ImageUpload } from '../_components/ImageUpload';
 import { uploadToCloudinary } from '@/app/utils/upload-to-cloudinary';
 import { useAuth } from '../../context/AuthContext';
 
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void, handleSubmit: (_urls: string[]) => void}) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);

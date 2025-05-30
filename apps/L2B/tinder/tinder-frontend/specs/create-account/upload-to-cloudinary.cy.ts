@@ -4,6 +4,7 @@ describe('Upload to Cloudinary', () => {
       statusCode: 200,
       body: {
         // eslint-disable-next-line @typescript-eslint/naming-convention 
+        // eslint-disable-next-line camelcase
         secure_url: 'https://cloudinary.com/fake.png',
       },
     }).as('upload');
