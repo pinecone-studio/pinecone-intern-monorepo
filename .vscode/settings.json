@@ -3,5 +3,4 @@
   "files.watcherExclude": {
     "**/target": true
   },
-  "nxConsole.generateAiAgentRules": true,
 }

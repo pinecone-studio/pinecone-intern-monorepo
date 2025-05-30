@@ -24,8 +24,8 @@ const ForgetPasswordPage = () => {
   const [email, setEmail] = useState<string>('');
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4" data-cy="forget-password-page">
-      <div className="max-w-md w-full space-y-6" data-cy="forget-password-container">
+    <div className="min-h-screen flex items-center justify-center bg-white px-2" data-cy="forget-password-page">
+      <div className="max-w-md w-full space-y-auto" data-cy="forget-password-container">
         <div className="text-center" data-cy="signup-header" />
         <div className="flex gap-3 items-center justify-center mb-8">
            <Image src="/logo.png" alt="logo" width={34} height={18}/>
