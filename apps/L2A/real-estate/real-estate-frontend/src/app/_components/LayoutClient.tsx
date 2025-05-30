@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 const LayoutClient = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-  const hideLayout = pathname === '/signin' || pathname === '/signup';
+  const hideLayout = pathname === '/signin' || pathname === '/signup' || pathname === '/forget-password';
 
   return (
     <>
