@@ -20,5 +20,6 @@ export const MutationTypeDefs = gql`
     changeCurrentPassword(email: String!, currentPassword: String!, newPassword: String!): User!
     searchEvents(name: String): [Concert!]!
     deleteEvent(id: String!): Concert!
+    featureAnEvent(concertId: String!): Concert!
   }
 `;
