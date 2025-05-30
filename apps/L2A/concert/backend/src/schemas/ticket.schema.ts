@@ -4,21 +4,22 @@ export const TicketTypeDefs = gql`
   type Ticket {
     id: ID!
     concert: Concert!
-    seatNumber: String!
-    price: Int
-    type: TicketType!
+    user: User!
+    totalPrice: Int
+    ticket: TicketBreakdown!
     createdAt: String!
     updatedAt: String!
-    user: User!
   }
 
-  input CreateTicketInput {
-    concert: ID!
-    date: String!
-    seatType: String!
+  type TicketBreakdown {
+    Standard: TicketTypeDetail!
+    VIP: TicketTypeDetail!
+    Backseat: TicketTypeDetail!
+  }
+
+  type TicketTypeDetail {
+    count: Int!
     price: Int!
-    status: TicketStatus
-    userId: ID!
   }
 
   input TicketInput {
@@ -33,6 +34,11 @@ export const TicketTypeDefs = gql`
     date: String!
     seatDataId: ID!
     tickets: [TicketInput!]!
+    totalPrice: Int!
+  }
+
+  type TicketOrderPayload {
+    tickets: Ticket!
     totalPrice: Int!
   }
 `;
