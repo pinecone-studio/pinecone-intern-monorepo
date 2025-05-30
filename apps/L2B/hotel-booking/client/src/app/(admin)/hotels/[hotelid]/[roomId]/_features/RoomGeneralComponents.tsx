@@ -82,7 +82,7 @@ export const RoomGeneralInfoForm = ({ formData, setFormData, information, setInf
               <Label>{field.replace(/([A-Z])/g, ' $1')}</Label>
               <Input
                 className="focus-visible:ring-0"
-                type={field === 'name' ? 'text' : 'number'}
+                type={field === 'name' ? 'text' : 'text'}
                 value={formData[field]}
                 onChange={(e) =>
                   setFormData({
