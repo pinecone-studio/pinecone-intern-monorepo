@@ -2,6 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react'; // Importing a close icon from Lucide
+import { useCreateTicketOrderMutation } from '@/generated';
+import { Snackbar } from '@mui/material';
 
 type Ticket = {
   type: string;
@@ -24,7 +26,19 @@ type CartModalProps = {
 };
 
 export const CartModal = ({ isOpen, onClose, booking, onClear }: CartModalProps) => {
+  const [createTicket, { loading, data }] = useCreateTicketOrderMutation();
   if (!isOpen) return null;
+
+  const onSubmit = async () => {
+    const bookingString = localStorage.getItem('booking');
+    const booking = JSON.parse(bookingString!);
+    const { concertId, seatDataId, tickets, userId, date, totalPrice } = booking;
+    try {
+      await createTicket({ variables: { input: { concertId, seatDataId, tickets, date, totalPrice, userId } } });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -37,6 +51,8 @@ export const CartModal = ({ isOpen, onClose, booking, onClear }: CartModalProps)
         </div>
 
         <div className="p-6">
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={loading} message="Түр хүлээнэ үү~" />
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!data} message="Амжилттай захиаллаа!" />
           {booking ? (
             <div className="space-y-6">
               <div className="space-y-4">
@@ -78,11 +94,11 @@ export const CartModal = ({ isOpen, onClose, booking, onClear }: CartModalProps)
               </div>
 
               <div className="flex gap-3 pt-2">
-                <Button variant="outline" onClick={onClose} className="flex-1 text-white border-zinc-700 hover:bg-zinc-800 hover:text-white">
-                  Хаах
-                </Button>
                 <Button onClick={onClear} className="flex-1 bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-900/20">
                   Цэвэрлэх
+                </Button>{' '}
+                <Button onClick={onSubmit} variant="outline" className="flex-1 bg-green-700 text-white border-green-700 hover:bg-green-800 hover:text-white">
+                  Худалдан авах
                 </Button>
               </div>
             </div>
