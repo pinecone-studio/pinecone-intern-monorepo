@@ -3,7 +3,7 @@ import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import TicketDashboard from '@/app/admin/concerts/_components/TicketDashboard';
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { ConcertsDocument, DeleteEventDocument } from '@/generated';
+import { ConcertsDocument, DeleteEventDocument, FeatureAnEventDocument } from '@/generated';
 import { GraphQLError } from 'graphql';
 import { mockConcerts } from 'specs/utils/mock-concert-info';
 
@@ -28,6 +28,21 @@ const mocks = [
         deleteEvent: {
           id: 'mock-2',
           __typename: 'Event',
+        },
+      },
+    },
+  },
+  {
+    request: {
+      query: FeatureAnEventDocument,
+      variables: {
+        concertId: 'mock-2',
+      },
+    },
+    result: {
+      data: {
+        featureAnEvent: {
+          id: 'mock-2',
         },
       },
     },
@@ -76,6 +91,20 @@ describe('TicketDashboard Component', () => {
     });
     const deletebutton = screen.getByTestId('delete-btn-1');
     fireEvent.click(deletebutton);
+  });
+
+  it('should click on feature button', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={true}>
+        <TicketDashboard />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('favorite-btn-1')).toBeInTheDocument();
+    });
+    const favoritebutton = screen.getByTestId('favorite-btn-1');
+    fireEvent.click(favoritebutton);
   });
 
   it('should throw an eror', async () => {

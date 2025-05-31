@@ -1,12 +1,13 @@
 'use client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { Concert, useConcertsQuery } from '@/generated';
 import LoadingText from '@/app/_components/LoadingText';
 import { useState } from 'react';
 import DeleteConcertButton from './DeleteConcert';
+import FeatureAnEvent from './FeatureAnEvent';
 
 const TicketDashboard = () => {
   const { data, loading, error } = useConcertsQuery();
@@ -86,9 +87,7 @@ const TicketDashboard = () => {
                   {calculate(row).toLocaleString()}
                 </td>
                 <td className="p-3 flex gap-2">
-                  <Button variant="ghost" size="icon" title="Онцлох" data-testid={`favorite-btn-${idx}`}>
-                    <Star className="h-4 w-4 hover:text-yellow-500" />
-                  </Button>
+                  <FeatureAnEvent idx={idx} id={row.id} />
                   <Button variant="ghost" size="icon" title="Засах" data-testid={`edit-btn-${idx}`}>
                     <Pencil className="h-4 w-4 hover:text-blue-500" />
                   </Button>

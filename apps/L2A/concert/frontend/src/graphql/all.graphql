@@ -221,3 +221,9 @@ mutation deleteEvent($deleteEventId: String!) {
     id
   }
 }
+
+mutation featureAnEvent($concertId: String!) {
+  featureAnEvent(concertId: $concertId) {
+    id
+  }
+}
