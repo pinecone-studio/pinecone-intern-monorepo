@@ -12,5 +12,6 @@ export const QueryTypeDefs = gql`
     GetUserInfo(JWT: String!): User
     requests: [Request]!
     deleteTestDocs: Boolean!
+    userTickets(userId: String!): [Ticket!]!
   }
 `;

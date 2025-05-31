@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../generated';
-import { concertModel } from '../../models';
+import { concertModel, ticketModel } from '../../models';
 import { catchError } from '../../utils/catch-error';
 
 export const deleteEvent: MutationResolvers['deleteEvent'] = async (_, { id }) => {
@@ -8,6 +8,7 @@ export const deleteEvent: MutationResolvers['deleteEvent'] = async (_, { id }) =
     if (!event) {
       throw new Error('Концерт олдсонгүй!');
     }
+    await ticketModel.deleteMany({ concert: id });
     const deletedEvent = await concertModel.findByIdAndDelete(id);
     return deletedEvent;
   } catch (err) {
