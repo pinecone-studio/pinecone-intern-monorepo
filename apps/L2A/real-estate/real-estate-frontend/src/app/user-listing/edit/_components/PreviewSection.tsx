@@ -37,7 +37,7 @@ const PreviewSection = () => {
         </div>
 
         <div className="mt-6 space-y-3">
-          <Button data-cy="submit-post-button" className="w-full bg-orange-500 text-white text-sm font-medium hover:bg-orange-600">
+          <Button data-cy="submit-post-button" className="w-full   bg-orange-500 text-white text-sm font-medium hover:bg-orange-600">
             Зар оруулах хүсэлт илгээх
           </Button>
           <Button variant="outline" data-cy="save-post-button" className="w-full text-sm font-medium" data-testid="open-save-dialog-button" onClick={() => setOpenSaveModal(true)}>
