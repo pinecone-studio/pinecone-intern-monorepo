@@ -21,5 +21,6 @@ export const MutationTypeDefs = gql`
     searchEvents(name: String): [Concert!]!
     deleteEvent(id: String!): Concert!
     featureAnEvent(concertId: String!): Concert!
+    updateEventInfo(concertId: String!, description: String, title: String, artistName: String): Concert!
   }
 `;
