@@ -4,9 +4,23 @@ const base64Data = base64Image.split(',')[1];
 const byteArray = Uint8Array.from(Buffer.from(base64Data, 'base64'));
 const blob = new Blob([byteArray], { type: 'image/jpeg' });
 const testFile = new File([blob], fileName, { type: 'image/jpeg' });
- 
-describe('Create Account - Third Step (Your Details)', () => {
+
+describe('Create Account', () => {
   beforeEach(() => {
+
+    cy.intercept('POST', '/api/graphql', (req) => {
+  if (req.body.operationName === 'CreateProfile') {
+    req.reply({
+      data: {
+        createProfile: {
+          id: 'mock-id',
+          status: 'SUCCESS',
+        },
+      },
+    });
+  }
+});
+
     cy.visit('/auth/create-account');
     cy.contains('Next').click();
     cy.contains('Select').click();
@@ -123,3 +137,4 @@ describe('Create Account - Third Step (Your Details)', () => {
     cy.contains('Youre all set!').should('exist');
   });
 });
+
