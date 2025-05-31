@@ -221,6 +221,13 @@ mutation deleteEvent($deleteEventId: String!) {
     id
   }
 }
+
+mutation featureAnEvent($concertId: String!) {
+  featureAnEvent(concertId: $concertId) {
+    id
+  }
+}
+
 mutation CreateTicketOrder($input: CreateTicketOrderInput!) {
   createTicketOrder(input: $input) {
     tickets {
@@ -243,3 +250,4 @@ mutation CreateTicketOrder($input: CreateTicketOrderInput!) {
     totalPrice
   }
 }
+
