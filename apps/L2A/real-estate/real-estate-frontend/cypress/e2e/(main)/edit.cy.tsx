@@ -1,6 +1,6 @@
 describe('Edit Page E2E', () => {
   beforeEach(() => {
-    cy.visit('/user-listing/edit/123'); 
+    cy.visit('/user-listing/edit/123');
   });
 
   it('renders all main sections', () => {
@@ -51,5 +51,24 @@ describe('Edit Page E2E', () => {
     cy.get('[data-cy="submit-post-button"]').should('contain.text', 'Зар оруулах хүсэлт илгээх');
     cy.get('[data-cy="save-post-button"]').should('contain.text', 'Хадгалаад гарах');
     cy.get('[data-cy="delete-post-button"]').should('contain.text', 'Устгах');
+  });
+  it('opens save modal on save button click', () => {
+    cy.get('[data-cy="save-post-button"]').click();
+    cy.get('[data-cy="dialog-content"]').should('contain.text', 'Хадгалах уу?');
+    cy.get('[data-cy="dialog-footer"]').should('exist');
+    cy.get('[data-cy="dialog-content"]').within(() => {
+      cy.contains('Хадгалах').should('exist');
+      cy.contains('Болих').should('exist');
+    });
+  });
+
+  it('opens delete modal on delete button click', () => {
+    cy.get('[data-cy="delete-post-button"]').click();
+    cy.get('[data-cy="dialog-content"]').should('contain.text', 'Устгах уу?');
+    cy.get('[data-cy="dialog-footer"]').should('exist');
+    cy.get('[data-cy="dialog-content"]').within(() => {
+      cy.contains('Устгах').should('exist');
+      cy.contains('Болих').should('exist');
+    });
   });
 });

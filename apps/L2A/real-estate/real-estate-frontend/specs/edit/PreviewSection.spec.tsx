@@ -1,35 +1,44 @@
-import PreviewSection from '@/app/user-listing/edit/_components/PreviewSection';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import PreviewSection from '@/app/user-listing/edit/_components/PreviewSection';
 
 describe('PreviewSection', () => {
-  it('renders preview title and description text', () => {
+  it('renders buttons correctly', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByText('Хэрэглэгчдэд харагдах')).toBeInTheDocument();
-    expect(
-      screen.getByText('Таны оруулсан мэдээлэл хэрэглэгчдэд харагдах үзүүлэлт')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Зар оруулах хүсэлт илгээх')).toBeInTheDocument();
+    expect(screen.getByText('Хадгалаад гарах')).toBeInTheDocument();
+    expect(screen.getByText('Устгах')).toBeInTheDocument();
   });
 
-  it('renders the ListingPreviewCard with correct props', () => {
+  it('opens and closes save dialog', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByText('880,000,000₮')).toBeInTheDocument();
-    expect(screen.getByText('Seoul royal county хотхон')).toBeInTheDocument();
-    expect(screen.getByText('200 м²')).toBeInTheDocument();
-    expect(screen.getByText('4 өрөө')).toBeInTheDocument();
-    expect(screen.getByText('2 а.ц.ө')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Хан-Уул дүүрэг, 1-р хороо/)
-    ).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('open-save-dialog-button'));
+    expect(screen.getByText('Хадгалах уу?')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Болих'));
+    expect(screen.queryByText('Хадгалах уу?')).not.toBeInTheDocument();
   });
 
-  it('renders all action buttons', () => {
+  it('opens and closes delete dialog', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByRole('button', { name: /Зар оруулах хүсэлт илгээх/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Хадгалаад гарах/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Устгах/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('open-delete-dialog-button'));
+    expect(screen.getByText('Устгах уу?')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Болих'));
+    expect(screen.queryByText('Устгах уу?')).not.toBeInTheDocument();
+  });
+
+  it('closes save dialog on confirm click', () => {
+    render(<PreviewSection />);
+    fireEvent.click(screen.getByTestId('open-save-dialog-button'));
+    fireEvent.click(screen.getByTestId('confirm-save-button'));
+    expect(screen.queryByText('Хадгалах уу?')).not.toBeInTheDocument();
+  });
+
+  it('closes delete dialog on confirm click', () => {
+    render(<PreviewSection />);
+    fireEvent.click(screen.getByTestId('open-delete-dialog-button'));
+    fireEvent.click(screen.getByTestId('confirm-delete-button'));
+    expect(screen.queryByText('Устгах уу?')).not.toBeInTheDocument();
   });
 });
