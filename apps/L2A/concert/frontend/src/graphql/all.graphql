@@ -251,3 +251,8 @@ mutation CreateTicketOrder($input: CreateTicketOrderInput!) {
   }
 }
 
+mutation UpdateEventInfo($concertId: String!, $description: String, $title: String, $artistName: String) {
+  updateEventInfo(concertId: $concertId, description: $description, title: $title, artistName: $artistName) {
+    id
+  }
+}
