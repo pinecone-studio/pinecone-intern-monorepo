@@ -17,7 +17,6 @@ const GET_POSTS_BY_USER_ID = gql`
     }
   }
 `;
-
 const statuses: Listing['status'][] = ['Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Буцаагдсан', 'Хадгалсан'];
 
 const UserListingPage = () => {
@@ -60,7 +59,7 @@ const UserListingPage = () => {
       <h1 className="text-xl font-semibold mb-4">Миний зарууд</h1>
 
       <div className="flex gap-2 mb-4">
-        <button onClick={() => setSelectedTab('Зарууд')} className={`px-4 py-1.5 rounded-md text-sm border ${selectedTab === 'Зарууд' ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-50'}`}>
+        <button data-testid="" onClick={() => setSelectedTab('Зарууд')} className={`px-4 py-1.5 rounded-md text-sm border ${selectedTab === 'Зарууд' ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-50'}`}>
           Зарууд
         </button>
         {statuses.map((tab) => (
