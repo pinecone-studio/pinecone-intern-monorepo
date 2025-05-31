@@ -25,7 +25,7 @@ const UserListingPage = () => {
   const { data: meData } = useMeQuery();
   const userId = meData?.me?.id;
 
-  const { data } = useQuery(GET_POSTS_BY_USER_ID, {
+  const { data, loading } = useQuery(GET_POSTS_BY_USER_ID, {
     variables: { propertyOwnerId: userId },
     skip: !userId,
   });
@@ -70,7 +70,15 @@ const UserListingPage = () => {
         ))}
       </div>
 
-      <UserListingTable listings={filteredListings} />
+      {loading ? (
+        <div data-testid="skeleton-loader" className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-10 bg-gray-200 rounded animate-pulse" />
+          ))}
+        </div>
+      ) : (
+        <UserListingTable listings={filteredListings} />
+      )}
     </div>
   );
 };
