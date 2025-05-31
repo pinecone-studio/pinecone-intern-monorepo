@@ -1,5 +1,5 @@
 describe('Booking Page', () => {
-  const concertId = '6824b74c8db390ee25b237e9';
+  const concertId = '682c156a1a614ed87f49673b';
   beforeEach(() => {
     cy.visit(`/booking/${concertId}`);
   });
