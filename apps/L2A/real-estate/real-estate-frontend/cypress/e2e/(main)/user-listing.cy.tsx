@@ -66,9 +66,8 @@ describe('UserListingPage E2E', () => {
     cy.get('table tbody tr')
       .first()
       .within(() => {
-        cy.get('img')
-          .should('have.attr', 'src')
-          .and('match', /url=%2Fplaceholder\.png/);
+        cy.get('img').should('have.attr', 'src').and('include', 'url=%2Fplaceholder.png');
+
         cy.contains('Тодорхойгүй').should('exist');
       });
   });
@@ -89,5 +88,52 @@ describe('UserListingPage E2E', () => {
     cy.get('table tbody tr').each(($row) => {
       cy.wrap($row).find('svg').should('have.length.at.least', 3);
     });
+  });
+
+  it('does not run GET_POSTS_BY_USER_ID query if userId is missing', () => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'Me') {
+        req.reply({ data: { me: null } }); // no ID returned
+      }
+      if (req.body.operationName === 'GetPostsByUserId') {
+        throw new Error('Should not be called');
+      }
+    });
+
+    cy.visit('/user-listing');
+    cy.contains('Миний зарууд').should('exist');
+    cy.get('table tbody tr').should('not.exist');
+  });
+
+  it('shows fallback translated status for unknown enum', () => {
+    cy.fixture('userListingFallback.json').then((mockData) => {
+      mockData.data.getPostsByUserId[0].status = 'MYSTERY_STATUS';
+
+      cy.intercept('POST', '**/graphql', (req) => {
+        if (req.body.operationName === 'Me') {
+          req.reply({ data: { me: { id: 'mock-user-id' } } });
+        } else if (req.body.operationName === 'GetPostsByUserId') {
+          req.reply(mockData);
+        }
+      });
+
+      cy.visit('/user-listing');
+      cy.contains('button', 'Зарууд').click();
+      cy.get('table tbody tr').first().contains('Хүлээгдэж буй');
+    });
+  });
+
+  it('handles empty post listing gracefully', () => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'Me') {
+        req.reply({ data: { me: { id: 'mock-user-id' } } });
+      } else if (req.body.operationName === 'GetPostsByUserId') {
+        req.reply({ data: { getPostsByUserId: [] } });
+      }
+    });
+
+    cy.visit('/user-listing');
+    cy.contains('button', 'Зарууд').click();
+    cy.get('table tbody tr').should('have.length', 0);
   });
 });
