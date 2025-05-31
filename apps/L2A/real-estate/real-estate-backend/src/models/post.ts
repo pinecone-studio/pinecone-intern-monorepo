@@ -49,6 +49,7 @@ const POST_SCHEMA = new mongoose.Schema(
     windowsCount: Number,
     windowType: String,
     roofMaterial: String,
+    doorMaterial: String,
     floorNumber: Number,
     door: String,
     balcony: Boolean,

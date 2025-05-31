@@ -53,6 +53,7 @@ export const typeDefs = gql`
     windowsCount: Int
     windowType: String
     roofMaterial: String
+    doorMaterial: String
     floorNumber: Int
     door:String
     balcony: Boolean
@@ -82,6 +83,7 @@ export const typeDefs = gql`
   windowsCount: Int
   windowType: String
   roofMaterial: String
+  doorMaterial: String
   floorNumber: Int
   door:String
   balcony: Boolean
