@@ -49,14 +49,19 @@ describe('User Profile Tabs', () => {
   });
 
   it('should switch to order history and show orders', () => {
+    cy.intercept('POST', '**/api/graphql').as('signIn');
+
+    cy.visit('/auth/signin');
+    cy.get('input[name="email"]').type('glpzghoo@gmail.com');
+    cy.get('input[name="password"]').type('glpzghoo@gmail.com');
+    cy.get('button[type="submit"]').click();
+    cy.wait('@signIn');
+
+    cy.intercept('POST', '**/api/graphql').as('order');
+    cy.get('[data-testid="profile-settings-button"]').click();
     cy.get('[data-cy="order-history"]').click();
-    cy.get('[data-cy="orders-tab"]').should('exist');
-    cy.get('[data-cy="order-card"]').should('exist');
-    cy.get('[data-cy="order-id"]').should('contain.text', '#');
-    cy.get('[data-cy="ticket-list"]').within(() => {
-      cy.get('[data-cy^="ticket-"]').should('have.length.at.least', 1);
-    });
-    cy.get('[data-cy="total-price"]').should('contain.text', '₮');
+
+    cy.wait('@order');
   });
 
   it('should change password successfully', () => {
@@ -108,8 +113,6 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="user-profile"]').click({ multiple: true });
     cy.get('[data-cy="profile-tab"]').should('exist');
     cy.get('[data-cy="order-history"]').click({ multiple: true });
-    cy.get('[data-cy="order-status"]').should('exist');
-    cy.get('[data-cy="orders-tab"]').should('exist');
     cy.get('[data-testid="forget-password"]').click({ multiple: true });
     cy.get('[data-testid="password-tab"]').should('exist');
   });

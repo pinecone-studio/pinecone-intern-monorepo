@@ -51,6 +51,39 @@ query concerts {
   }
 }
 
+query userTickets($userId: String!) {
+  userTickets(userId: $userId) {
+    id
+    concert {
+      id
+      title
+      description
+      thumbnailUrl
+      doorOpen
+      musicStart
+      primaryPrice
+      featured
+    }
+    totalPrice
+    ticket {
+      Standard {
+        count
+        price
+      }
+      VIP {
+        count
+        price
+      }
+      Backseat {
+        count
+        price
+      }
+    }
+    createdAt
+    updatedAt
+  }
+}
+
 mutation Mutation {
   sampleMutation
 }
