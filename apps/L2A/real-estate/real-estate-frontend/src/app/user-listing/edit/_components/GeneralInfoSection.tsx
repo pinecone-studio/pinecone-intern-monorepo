@@ -11,7 +11,7 @@ const GeneralInfoSection = () => {
       label: 'Төрөл',
       component: (
         <Select defaultValue="Орон сууц">
-          <SelectTrigger data-testid="select-type">
+          <SelectTrigger data-cy="select-type">
             <SelectValue placeholder="Сонгох" />
           </SelectTrigger>
           <SelectContent>
@@ -23,21 +23,21 @@ const GeneralInfoSection = () => {
     },
     {
       label: 'Нэр',
-      component: <Input defaultValue="Seoul royal county хотхон" data-testid="input-name" />,
+      component: <Input defaultValue="Seoul royal county хотхон" data-cy="input-name" />,
     },
     {
       label: 'Үнэ',
-      component: <Input defaultValue="880,000,000" data-testid="input-price" />,
+      component: <Input defaultValue="880,000,000" data-cy="input-price" />,
     },
     {
       label: 'Талбай',
-      component: <Input defaultValue="200" data-testid="input-area" />,
+      component: <Input defaultValue="200" data-cy="input-area" />,
     },
     {
       label: 'Өрөө',
       component: (
         <Select defaultValue="4">
-          <SelectTrigger data-testid="select-room">
+          <SelectTrigger data-cy="select-room">
             <SelectValue placeholder="Сонгох" />
           </SelectTrigger>
           <SelectContent>
@@ -54,7 +54,7 @@ const GeneralInfoSection = () => {
       label: 'Ариун цэврийн өрөө',
       component: (
         <Select defaultValue="2">
-          <SelectTrigger data-testid="select-restroom">
+          <SelectTrigger data-cy="select-restroom">
             <SelectValue placeholder="Сонгох" />
           </SelectTrigger>
           <SelectContent>
@@ -69,7 +69,7 @@ const GeneralInfoSection = () => {
       label: 'Дулаан зогсоол',
       component: (
         <Select defaultValue="Байхгүй">
-          <SelectTrigger data-testid="select-parking">
+          <SelectTrigger data-cy="select-parking">
             <SelectValue placeholder="Сонгох" />
           </SelectTrigger>
           <SelectContent>
@@ -84,7 +84,7 @@ const GeneralInfoSection = () => {
       component: (
         <Textarea
           className="max-h-[136px] min-h-[136px]"
-          data-testid="textarea-description"
+          data-cy="textarea-description"
           defaultValue="Seoul Royal County хотхонд тавтай морилно уу! Зайсанд байрлах энэхүү орчин үеийн, бараг шинэ, фермерийн хэв маягтай үзэсгэлэнтэй байшин нь онцгой, дахин давтагдашгүй шийдлүүдтэй..."
         />
       ),

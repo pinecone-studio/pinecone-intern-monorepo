@@ -17,7 +17,7 @@ describe('UserListingTable', () => {
   it('renders correct number of rows for "Зарууд" tab (all)', () => {
     render(<UserListingTable listings={mockListings} />);
     const rows = screen.getAllByRole('row');
-    expect(rows.length).toBe(mockListings.length + 1); // +1 for header row
+    expect(rows.length).toBe(mockListings.length + 1);
   });
 
   it('renders correct columns', () => {
