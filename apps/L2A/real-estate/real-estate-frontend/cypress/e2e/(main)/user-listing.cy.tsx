@@ -39,7 +39,7 @@ describe('UserListingPage E2E', () => {
 
   it('displays all listings under "Зарууд" tab', () => {
     cy.contains('button', 'Зарууд').click();
-    cy.get('table tbody tr').should('have.length', 3); // adjust expected count based on fixture
+    cy.get('table tbody tr').should('have.length', 3);
   });
 
   ['Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Буцаагдсан', 'Хадгалсан'].forEach((status) => {
@@ -68,7 +68,7 @@ describe('UserListingPage E2E', () => {
       .within(() => {
         cy.get('img')
           .should('have.attr', 'src')
-          .and('match', /url=%2Fplaceholder\.png/); // <-- updated here
+          .and('match', /url=%2Fplaceholder\.png/);
         cy.contains('Тодорхойгүй').should('exist');
       });
   });
