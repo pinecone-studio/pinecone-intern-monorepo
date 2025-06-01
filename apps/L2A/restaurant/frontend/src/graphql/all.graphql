@@ -23,3 +23,12 @@ query GetAllTables {
     updatedAt
   }
 }
+query GetCategories {
+  getCategories {
+    _id
+    name
+    createdAt
+    updatedAt
+  }
+}
+
