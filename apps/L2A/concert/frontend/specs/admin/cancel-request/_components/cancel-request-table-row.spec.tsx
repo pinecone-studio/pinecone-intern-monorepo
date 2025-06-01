@@ -6,7 +6,8 @@ describe('TableRow', () => {
   const mockRequest = {
     id: '1',
     concert: { title: 'Хайртай аав' },
-    user: { email: 'altangerel@example.com' },
+    accountNumber: '123456789',
+    bankOwnerName: 'Алтангэрэл',
     ticket: { totalPrice: 182000 },
     createdAt: String(Date.now()),
     status: 'FINISHED',
@@ -15,15 +16,16 @@ describe('TableRow', () => {
   it('renders finished request properly', () => {
     render(<TableRow request={mockRequest} />);
     expect(screen.getByText('Хайртай аав')).toBeInTheDocument();
-    expect(screen.getByText('altangerel@example.com')).toBeInTheDocument();
+    expect(screen.getByText('123456789')).toBeInTheDocument();
+    expect(screen.getByText('Алтангэрэл')).toBeInTheDocument();
     expect(screen.getByText('182000')).toBeInTheDocument();
-    expect(screen.getByText(/shiljuulsen/i)).toBeInTheDocument();
+    expect(screen.getByText('Шилжүүлсэн')).toBeInTheDocument();
   });
 
-  it('renders pending request with Duusgah button', () => {
+  it('renders pending request with "Дуусгах" button', () => {
     render(<TableRow request={{ ...mockRequest, status: 'PENDING' }} />);
-    const button = screen.getByText('Duusgah');
+    const button = screen.getByRole('button', { name: 'Дуусгах' });
     expect(button).toBeInTheDocument();
-    fireEvent.click(button);
+    fireEvent.click(button); // Optional: assert side effects if any
   });
 });

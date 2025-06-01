@@ -2,24 +2,30 @@
 import TableRow from './_components/TableRow';
 import TableHeader from './_components/TableHeader';
 import { Request, useGetCancelRequestsQuery } from '@/generated';
+import LoadingText from '@/app/_components/LoadingText';
 
 const Page = () => {
-  const { data } = useGetCancelRequestsQuery();
-  console.log(data);
+  const { data, loading } = useGetCancelRequestsQuery();
   const requests = data?.getCancelRequests?.filter((c): c is Request => c !== null) ?? [];
+
   return (
-    <div className="flex flex-col w-full h-screen bg-secondary">
-      <div className="flex flex-col items-center w-full h-full p-10">
-        <div className="w-10/12 flex flex-col p-5">
-          <div>
-            <h2 className="font-medium text-lg">Хүсэлтүүд</h2>
-            <p className="text-muted-foreground text-sm">Ирсэн цуцлах хүсэлтүүд</p>
-          </div>
-          <div className="my-6 border-b border-[#E4E4E7]" />
-          <div className="bg-white rounded-md border border-[#E4E4E7]">
-            <TableHeader />
-            {requests.length > 0 ? requests.map((request) => <TableRow key={request.id} request={request} />) : <div>Хүсэлт одоогоор алга!</div>}
-          </div>
+    <div className="flex flex-col w-full min-h-screen bg-secondary px-4 md:px-8 py-10">
+      <div className="max-w-5xl mx-auto w-full space-y-6">
+        <div>
+          <h2 className="text-xl font-semibold tracking-tight">Цуцлах хүсэлтүүд</h2>
+          <p className="text-sm text-muted-foreground">Админд ирсэн бүх цуцлах хүсэлтүүд</p>
+        </div>
+        <div className="bg-white border border-[#E4E4E7] rounded-xl shadow-sm overflow-hidden">
+          <TableHeader />
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[120px] py-6">
+              <LoadingText />
+            </div>
+          ) : requests.length > 0 ? (
+            requests.map((request) => <TableRow key={request.id} request={request} />)
+          ) : (
+            <div className="p-6 text-center text-sm text-muted-foreground">Цуцлах хүсэлт олдсонгүй.</div>
+          )}
         </div>
       </div>
     </div>
