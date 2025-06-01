@@ -5,7 +5,7 @@ export const TicketTypeDefs = gql`
     id: ID!
     concert: Concert!
     user: User!
-    totalPrice: Int
+    totalPrice: Int!
     ticket: TicketBreakdown!
     createdAt: String!
     updatedAt: String!
