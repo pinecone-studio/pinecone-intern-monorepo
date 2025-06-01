@@ -124,6 +124,51 @@ query FeaturedEvents {
   }
 }
 
+query GetCancelRequests {
+  getCancelRequests {
+    id
+    concert {
+      id
+      title
+      description
+      thumbnailUrl
+      doorOpen
+      musicStart
+      primaryPrice
+      artistName
+      specialGuestName
+      endDate
+      featured
+    }
+    user {
+      id
+      email
+    }
+    ticket {
+      id
+      totalPrice
+      ticket {
+        Standard {
+          count
+          price
+        }
+        VIP {
+          count
+          price
+        }
+        Backseat {
+          count
+          price
+        }
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    status
+  }
+}
+
 mutation Mutation {
   sampleMutation
 }
@@ -326,6 +371,12 @@ mutation CreateTicketOrder($input: CreateTicketOrderInput!) {
 
 mutation UpdateEventInfo($concertId: String!, $description: String, $title: String, $artistName: String) {
   updateEventInfo(concertId: $concertId, description: $description, title: $title, artistName: $artistName) {
+    id
+  }
+}
+
+mutation createCancelRequest($userId: String!, $ticketId: String!) {
+  createCancelRequest(userId: $userId, ticketId: $ticketId) {
     id
   }
 }
