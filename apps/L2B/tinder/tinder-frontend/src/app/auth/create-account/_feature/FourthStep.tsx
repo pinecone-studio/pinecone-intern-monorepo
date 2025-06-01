@@ -49,6 +49,7 @@ const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (
     }
     setSelectedImages(newImages);
   };
+  
   const removeImage = (index: number) => {
     const newImages = [...selectedImages];
     newImages.splice(index, 1);
