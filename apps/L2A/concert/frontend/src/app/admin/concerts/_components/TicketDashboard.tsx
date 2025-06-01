@@ -34,7 +34,6 @@ const TicketDashboard = () => {
 
     return result;
   };
-  console.log(concerts);
   return (
     <div className="p-4 w-3/4">
       <Card className="overflow-x-auto">

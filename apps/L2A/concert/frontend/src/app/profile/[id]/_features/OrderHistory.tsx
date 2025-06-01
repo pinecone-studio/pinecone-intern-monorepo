@@ -33,7 +33,6 @@ const OrderHistory = () => {
           {tickets.length > 0 ? (
             tickets.map((ticket) => (
               <div key={ticket.id} className="bg-[#2c2c2e] rounded-lg p-4 shadow-lg space-y-4" data-cy={`ticket-${ticket.id}`}>
-                {/* Header */}
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col gap-1">
                     <h3 className="text-xl font-bold">{ticket.concert.title}</h3>
@@ -44,8 +43,6 @@ const OrderHistory = () => {
                     <p className="text-xs text-gray-400">Захиалсан: {formatDate(ticket.createdAt)}</p>
                   </div>
                 </div>
-
-                {/* Ticket Types */}
                 <div className="bg-[#3a3a3c] p-3 rounded space-y-2">
                   {Object.entries(ticket.ticket)
                     .filter(([type]) => type !== '__typename')
@@ -58,8 +55,6 @@ const OrderHistory = () => {
                       </div>
                     ))}
                 </div>
-
-                {/* Total */}
                 <div className="text-right font-bold text-lg text-green-400" data-cy="ticket-total">
                   Нийт: {formatPrice(ticket.totalPrice)}
                 </div>
