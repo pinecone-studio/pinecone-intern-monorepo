@@ -7,6 +7,22 @@ describe('User Profile Tabs', () => {
     cy.visit('/profile/123');
   });
 
+  it('should click on cancel request', () => {
+    cy.intercept('POST', '**/api/graphql').as('updateUserInfo');
+    cy.visit('/auth/signin');
+    cy.get('input[name="email"]').type('glpzghoo@gmail.com');
+    cy.get('input[name="password"]').type('glpzghoo@gmail.com');
+    cy.get('button[type="submit"]').click();
+    cy.wait('@updateUserInfo');
+
+    cy.visit('/profile/123');
+
+    cy.get('[data-cy="order-history"]').click();
+    cy.wait('@updateUserInfo');
+
+    cy.get('[data-testid="cancel-request-button"]').first().click();
+    cy.wait('@updateUserInfo');
+  });
   it('should update user profile info successfully', () => {
     cy.intercept('POST', '**/api/graphql').as('updateUserInfo');
     cy.visit('/auth/signin');
@@ -23,6 +39,11 @@ describe('User Profile Tabs', () => {
 
     cy.wait('@updateUserInfo');
     cy.contains('Мэдээлэл амжилттай өөрчлөгдлөө!').should('be.visible');
+
+    cy.get('[data-testid="profile-settings-button"]').click();
+    cy.get('[data-cy="order-history"]').click();
+
+    cy.wait('@updateUserInfo');
   });
 
   it('should show error message if update mutation fails', () => {
@@ -46,22 +67,6 @@ describe('User Profile Tabs', () => {
     cy.get('[data-testid="save-profile"]').click();
 
     cy.wait('@updateError');
-  });
-
-  it('should switch to order history and show orders', () => {
-    cy.intercept('POST', '**/api/graphql').as('signIn');
-
-    cy.visit('/auth/signin');
-    cy.get('input[name="email"]').type('glpzghoo@gmail.com');
-    cy.get('input[name="password"]').type('glpzghoo@gmail.com');
-    cy.get('button[type="submit"]').click();
-    cy.wait('@signIn');
-
-    cy.intercept('POST', '**/api/graphql').as('order');
-    cy.get('[data-testid="profile-settings-button"]').click();
-    cy.get('[data-cy="order-history"]').click();
-
-    cy.wait('@order');
   });
 
   it('should change password successfully', () => {
@@ -97,16 +102,6 @@ describe('User Profile Tabs', () => {
 
     cy.wait('@waitapi');
     cy.contains('Хэрэглэгч олдсонгүй').should('be.visible');
-  });
-
-  it('should switch to order history and show orders', () => {
-    cy.visit('/profile/123');
-
-    cy.get('[data-cy="user-profile-container"]').should('exist');
-
-    cy.get('[data-cy="order-history"]').click();
-
-    cy.get('[data-cy="orders-tab"]').should('exist');
   });
 
   it('should switch between all tabs correctly', () => {

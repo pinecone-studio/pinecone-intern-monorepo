@@ -1,25 +1,12 @@
 'use client';
-import { useState } from 'react';
 import TableRow from './_components/TableRow';
 import TableHeader from './_components/TableHeader';
-import { requests } from './utils/test-array';
-
-const itemsPerPage = 5;
+import { Request, useGetCancelRequestsQuery } from '@/generated';
 
 const Page = () => {
-  // const { data, loading } = useTicketsQuery();
-  // const tickets = data?.tickets?.filter((t): t is Ticket => t !== null) ?? [];
-
-  // console.log('tickets', tickets);
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(requests.length / itemsPerPage);
-  const start = (currentPage - 1) * itemsPerPage;
-  const currentItems = requests.slice(start, start + itemsPerPage);
-
-  const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const { data } = useGetCancelRequestsQuery();
+  console.log(data);
+  const requests = data?.getCancelRequests?.filter((c): c is Request => c !== null) ?? [];
   return (
     <div className="flex flex-col w-full h-screen bg-secondary">
       <div className="flex flex-col items-center w-full h-full p-10">
@@ -31,21 +18,7 @@ const Page = () => {
           <div className="my-6 border-b border-[#E4E4E7]" />
           <div className="bg-white rounded-md border border-[#E4E4E7]">
             <TableHeader />
-            {currentItems.map((request) => (
-              <TableRow key={request.id} request={request} />
-            ))}
-          </div>
-
-          <div className="flex justify-end gap-2 mt-4">
-            <button data-testid="cancel-request-prev-button" className="px-3 py-1 border rounded disabled:opacity-50" onClick={handlePrev} disabled={currentPage === 1}>
-              prev
-            </button>
-            <span className="flex items-center px-2 py-1 text-sm">
-              {currentPage} / {totalPages}
-            </span>
-            <button data-testid="cancel-request-next-button" className="px-3 py-1 border rounded disabled:opacity-50" onClick={handleNext} disabled={currentPage === totalPages}>
-              next
-            </button>
+            {requests.length > 0 ? requests.map((request) => <TableRow key={request.id} request={request} />) : <div>Хүсэлт одоогоор алга!</div>}
           </div>
         </div>
       </div>
