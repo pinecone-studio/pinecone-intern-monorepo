@@ -31,4 +31,11 @@ query GetCategories {
     updatedAt
   }
 }
+mutation DeleteCategory($input: DeleteCategoryInput!) {
+  deleteCategory(input: $input) {
+    _id
+    name
+  }
+}
+
 
