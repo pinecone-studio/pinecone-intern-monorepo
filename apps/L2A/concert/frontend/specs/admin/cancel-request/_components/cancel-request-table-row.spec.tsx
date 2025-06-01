@@ -26,6 +26,6 @@ describe('TableRow', () => {
     render(<TableRow request={{ ...mockRequest, status: 'PENDING' }} />);
     const button = screen.getByRole('button', { name: 'Дуусгах' });
     expect(button).toBeInTheDocument();
-    fireEvent.click(button); // Optional: assert side effects if any
+    fireEvent.click(button);
   });
 });
