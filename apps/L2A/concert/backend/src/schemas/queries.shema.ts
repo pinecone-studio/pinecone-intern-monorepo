@@ -13,5 +13,6 @@ export const QueryTypeDefs = gql`
     requests: [Request]!
     deleteTestDocs: Boolean!
     userTickets(userId: String!): [Ticket!]!
+    featuredEvents: [Concert!]!
   }
 `;
