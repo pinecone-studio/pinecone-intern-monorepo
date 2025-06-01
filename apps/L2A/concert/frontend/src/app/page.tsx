@@ -1,7 +1,7 @@
 'use client';
 
 import { Concert, useConcertsQuery } from '@/generated';
-import HeroSection from './_components/HeroSection';
+import HeroSection from './_featured/HeroSection';
 import ConcertCard from './_components/ConcertCard';
 import LoadingText from './_components/LoadingText';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ const Page = () => {
       ) : data?.concerts ? (
         data.concerts.length > 0 ? (
           <div className="flex flex-col items-center w-full gap-12">
-            <HeroSection concert={concerts[0]} />
+            <HeroSection />
             <main className="w-full flex flex-col gap-8">
               <div className="flex justify-end pr-4">
                 <Link href="/event">
