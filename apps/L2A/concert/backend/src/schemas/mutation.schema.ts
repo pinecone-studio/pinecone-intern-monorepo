@@ -20,6 +20,6 @@ export const MutationTypeDefs = gql`
     deleteEvent(id: String!): Concert!
     featureAnEvent(concertId: String!): Concert!
     updateEventInfo(concertId: String!, description: String, title: String, artistName: String): Concert!
-    createCancelRequest(userId: String!, ticketId: String!): Request!
+    createCancelRequest(userId: String!, ticketId: String!, bankName: String!, accountNumber: String!, bankOwnerName: String!): Request!
   }
 `;

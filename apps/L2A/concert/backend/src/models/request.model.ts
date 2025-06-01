@@ -23,6 +23,18 @@ const RequestSchema = new Schema(
       enum: ['APPROVED', 'PENDING'],
       default: 'PENDING',
     },
+    bankName: {
+      type: String,
+      required: true,
+    },
+    accountNumber: {
+      type: String,
+      required: true,
+    },
+    bankOwnerName: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: { createdAt: true, updatedAt: false },

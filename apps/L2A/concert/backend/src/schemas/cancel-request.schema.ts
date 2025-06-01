@@ -8,5 +8,8 @@ export const RequestTypeDefs = gql`
     ticket: Ticket!
     createdAt: String!
     status: RequestStatus!
+    bankName: String!
+    accountNumber: String!
+    bankOwnerName: String!
   }
 `;
