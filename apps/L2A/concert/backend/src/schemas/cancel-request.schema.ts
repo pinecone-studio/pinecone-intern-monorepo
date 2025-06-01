@@ -4,8 +4,7 @@ export const RequestTypeDefs = gql`
   type Request {
     id: ID!
     concert: Concert!
-    accountInfo: String!
-    ownerName: String!
+    user: User!
     ticket: Ticket!
     createdAt: String!
     status: RequestStatus!

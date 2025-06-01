@@ -14,5 +14,6 @@ export const QueryTypeDefs = gql`
     deleteTestDocs: Boolean!
     userTickets(userId: String!): [Ticket!]!
     featuredEvents: [Concert!]!
+    getCancelRequests: [Request!]!
   }
 `;
