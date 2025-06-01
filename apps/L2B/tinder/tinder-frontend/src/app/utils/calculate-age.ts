@@ -9,3 +9,6 @@ export function getApproxDOBFromAge(age: number): Date {
   const today = new Date();
   return new Date(today.getFullYear() - age, today.getMonth(), today.getDate());
 }
+
+
+export default calculateAge;

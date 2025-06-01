@@ -17,7 +17,9 @@ const SecondStep = ({ setStep, updateFormData }: { setStep: (_step: number) => v
   const handleNext = () => {
     if (date) {
       setError(false);
-      const age = calculateAge(date.toISOString());
+      const age = calculateAge(date);
+
+      console.log(age)
       updateFormData({ age: age });
       setStep(2);
     } else {
