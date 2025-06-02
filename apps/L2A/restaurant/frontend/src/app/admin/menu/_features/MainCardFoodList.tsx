@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import DeleteUpdateDialog from './DeleteUpdateDialog';
 
 export type Food = {
   id: number;
@@ -22,7 +21,6 @@ const MainCardFoodList = ({ food }: FoodCardProps) => {
           <p className="font-bold">{food.price}k</p>
           <p className="text-sm font-bold border px-1 w-[80px] rounded text-center">{food.status}</p>
         </div>
-        <DeleteUpdateDialog />
       </div>
     </div>
   );
