@@ -5,6 +5,7 @@ import Card from './_components/Card/Card';
 import { Footer } from './_components/Footer';
 import { HomeHeadline } from './_components/HomeHeadline';
 
+
 const Page = () => {
   return (
     <div>
