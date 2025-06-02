@@ -166,6 +166,9 @@ query GetCancelRequests {
     }
     createdAt
     status
+    bankOwnerName
+    bankName
+    accountNumber
   }
 }
 
@@ -375,8 +378,8 @@ mutation UpdateEventInfo($concertId: String!, $description: String, $title: Stri
   }
 }
 
-mutation createCancelRequest($userId: String!, $ticketId: String!) {
-  createCancelRequest(userId: $userId, ticketId: $ticketId) {
+mutation createCancelRequest($userId: String!, $ticketId: String!, $bankName: String!, $accountNumber: String!, $bankOwnerName: String!) {
+  createCancelRequest(userId: $userId, ticketId: $ticketId, bankName: $bankName, accountNumber: $accountNumber, bankOwnerName: $bankOwnerName) {
     id
   }
 }
