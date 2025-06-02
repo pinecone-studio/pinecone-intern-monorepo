@@ -47,6 +47,38 @@ describe('User Listing Page (via UI login)', () => {
     cy.get('table tbody tr').first().contains('Тодорхойгүй');
   });
 
+  it('shows listings and placeholder image when no images present', () => {
+    // ✅ stub listings with no images
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      if (req.body.operationName === 'GetPostsByUserId') {
+        req.alias = 'getListingsNoImage';
+        req.reply({
+          data: {
+            getPostsByUserId: [
+              {
+                _id: 'listing-1',
+                title: 'Placeholder Test',
+                images: [],
+                status: null,
+                price: null,
+                propertyOwnerId: 'mock-user-id',
+              },
+            ],
+          },
+        });
+      }
+    });
+
+    cy.visit('/user-listing');
+    cy.wait('@getListingsNoImage');
+
+    // ✅ check placeholder
+    cy.get('table tbody tr').first().find('img').should('have.attr', 'src').and('include', 'placeholder.png');
+
+    // ✅ check fallback price
+    cy.get('table tbody tr').first().contains('Тодорхойгүй');
+  });
+
   it('filters by status correctly', () => {
     const statuses = ['Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Зарууд'];
 
