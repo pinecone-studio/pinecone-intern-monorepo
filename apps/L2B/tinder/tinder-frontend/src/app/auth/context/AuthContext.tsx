@@ -30,6 +30,8 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+
+  
   const router = useRouter();
 
   const [user, setUser] = useState<UserType | null>(null);
@@ -43,10 +45,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    const storedJWT = localStorage.getItem('token');
-    if (storedJWT) {
-      setJWT(storedJWT);
-    }
+    const authDisabled = localStorage.getItem('disable-auth') === 'true';
+  if (authDisabled) {
+    setUser(null);
+    setJWT('');
+    return;
+  }
+
+  const storedJWT = localStorage.getItem('token');
+  if (storedJWT) {
+    setJWT(storedJWT);
+  }
   }, []);
 
   const { data } = useGetCurrentUserQuery({
