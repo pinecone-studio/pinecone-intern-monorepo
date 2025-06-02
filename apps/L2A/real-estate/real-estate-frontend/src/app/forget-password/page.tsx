@@ -35,7 +35,7 @@ const ForgetPasswordPage = () => {
         {step === 2 && <PasswordStepTwo setStep={setStep} email={email} />}
         {step === 3 && <PasswordStepThree email={email} />}
       </div>
-      <p className="text-xs text-center text-gray-400 mt-6 absolute bottom-4 right-0 left-0">©2024 Home Vault</p>
+      <p className="text-xs text-center text-gray-400 absolute bottom-10 right-0 left-0">©2024 Home Vault</p>
     </div>
   );
 };
