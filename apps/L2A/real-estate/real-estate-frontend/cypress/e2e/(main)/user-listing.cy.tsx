@@ -16,7 +16,6 @@ describe('User Listing Page (via UI login)', () => {
   });
 
   it('shows listings and placeholder image when no images present', () => {
-    // ✅ stub listings with no images
     cy.intercept('POST', '**/api/graphql', (req) => {
       if (req.body.operationName === 'GetPostsByUserId') {
         req.alias = 'getListingsNoImage';
@@ -39,16 +38,12 @@ describe('User Listing Page (via UI login)', () => {
 
     cy.visit('/user-listing');
     cy.wait('@getListingsNoImage');
-
-    // ✅ check placeholder
     cy.get('table tbody tr').first().find('img').should('have.attr', 'src').and('include', 'placeholder.png');
 
-    // ✅ check fallback price
     cy.get('table tbody tr').first().contains('Тодорхойгүй');
   });
 
   it('shows listings and placeholder image when no images present', () => {
-    // ✅ stub listings with no images
     cy.intercept('POST', '**/api/graphql', (req) => {
       if (req.body.operationName === 'GetPostsByUserId') {
         req.alias = 'getListingsNoImage';
@@ -71,11 +66,7 @@ describe('User Listing Page (via UI login)', () => {
 
     cy.visit('/user-listing');
     cy.wait('@getListingsNoImage');
-
-    // ✅ check placeholder
     cy.get('table tbody tr').first().find('img').should('have.attr', 'src').and('include', 'placeholder.png');
-
-    // ✅ check fallback price
     cy.get('table tbody tr').first().contains('Тодорхойгүй');
   });
 
@@ -91,5 +82,36 @@ describe('User Listing Page (via UI login)', () => {
     cy.get('table tbody tr').each(($row) => {
       cy.wrap($row).find('svg').should('have.length.at.least', 3);
     });
+  });
+
+  it('filters listings when non-default tab is selected', () => {
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      if (req.body.operationName === 'Me') {
+        req.reply({ data: { me: { id: 'mock-user-id' } } });
+      } else if (req.body.operationName === 'GetPostsByUserId') {
+        req.alias = 'getTabFilterData';
+        req.reply({
+          data: {
+            getPostsByUserId: [
+              {
+                _id: 'listing-2',
+                title: 'Filter Test',
+                images: [],
+                status: 'SOLD',
+                price: 1000000,
+                propertyOwnerId: 'mock-user-id',
+              },
+            ],
+          },
+        });
+      }
+    });
+
+    cy.visit('/user-listing');
+    cy.wait('@getTabFilterData');
+    cy.get('button').contains('Зарагдсан').click({ force: true });
+
+    cy.get('table tbody tr').should('have.length', 1);
+    cy.contains('Зарагдсан');
   });
 });

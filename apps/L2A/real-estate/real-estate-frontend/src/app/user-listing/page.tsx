@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useMeQuery } from '@/generated';
 import UserListingTable, { Listing } from './_components/UserListingTable';
+import { translateStatus } from '@/lib/translate-status';
 
 const GET_POSTS_BY_USER_ID = gql`
   query GetPostsByUserId($propertyOwnerId: ID!) {
@@ -83,14 +84,3 @@ const UserListingPage = () => {
 };
 
 export default UserListingPage;
-
-function translateStatus(status: string): Listing['status'] {
-  const statusMap: Record<string, Listing['status']> = {
-    PENDING: 'Хүлээгдэж буй',
-    SALE: 'Зарагдаж байгаа',
-    SOLD: 'Зарагдсан',
-    DECLINED: 'Буцаагдсан',
-    SAVED: 'Хадгалсан',
-  };
-  return statusMap[status?.toUpperCase()] ?? 'Хүлээгдэж буй';
-}
