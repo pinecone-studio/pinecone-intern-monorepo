@@ -22,7 +22,7 @@ const SignupFooter = ({ step }: { step: number }) => {
             </p>
           </>
         )}
-           <p className="text-xs text-center text-gray-400 mt-6 absolute bottom-4 right-0 left-0" data-cy="copyright">
+           <p className="text-xs text-center text-gray-400 absolute bottom-10 right-0 left-0" data-cy="copyright">
           ©2024 Home Vault
         </p>
       </div>
