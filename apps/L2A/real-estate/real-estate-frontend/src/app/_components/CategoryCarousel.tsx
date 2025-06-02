@@ -4,32 +4,28 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import CategoryCard from './CategoryCard';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const categories = [
   {
     title: 'Шинээр нэмэгдсэн',
-    count: 1209,
-    imageUrl: '/listingcard.png',
+    imageUrl: '/shine.png',
   },
   {
     title: 'Хотын төвтэй ойрхон',
-    count: 850,
-    imageUrl: '/listingcard.png',
+    imageUrl: '/hotiin-tuv.jpeg',
   },
   {
     title: 'Агаар сайтай бүс',
-    count: 670,
-    imageUrl: '/listingcard.png',
+    imageUrl: '/agar.png',
   },
   {
     title: 'А зэргийн бүс',
-    count: 540,
-    imageUrl: '/listingcard.png',
+    imageUrl: '/a-zereglel.png',
   },
   {
     title: 'Тансаг зэрэглэл',
-    count: 300,
-    imageUrl: '/listingcard.png',
+    imageUrl: '/tansag.png',
   },
 ];
 
@@ -46,13 +42,25 @@ const CategoryCarousel = () => {
             1024: { slidesPerView: 4 },
           }}
         >
-          {categories.map((category, index) => (
-          
-            <SwiperSlide key={`carousel-${index}`}>
-                <Link  href={`/listing`}>
-              <CategoryCard {...category} /></Link>
-            </SwiperSlide>
-          ))}
+          <div className=''>
+            {categories.map((category, index) => (
+              <SwiperSlide key={`carousel-${index}`}>
+                <Link href={`/listing`} className='block'>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: index * 0.1,
+                      duration: 0.6,
+                      ease: 'easeOut',
+                    }}
+                  >
+                    <CategoryCard {...category} />
+                  </motion.div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </div>
         </Swiper>
       </div>
     </section>
