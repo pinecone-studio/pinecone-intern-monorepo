@@ -7,4 +7,5 @@ export * from './update-category';
 export * from './delete-category';
 export * from './create-order';
 export * from './register';
-export * from './add-table'
+export * from './add-table';
+export * from './delete-table';

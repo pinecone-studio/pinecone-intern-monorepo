@@ -23,3 +23,12 @@ query GetAllTables {
     updatedAt
   }
 }
+mutation DeleteTable($input: DeleteTableInput!) {
+  deleteTable(input: $input) {
+    _id
+    createdAt
+    name
+    qrCodeUrl
+    updatedAt
+  }
+}

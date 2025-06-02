@@ -5,7 +5,7 @@ import { PencilIcon, TrashIcon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
-import { useGetAllTablesQuery } from '@/generated';
+import { useDeleteTableMutation, useGetAllTablesQuery } from '@/generated';
 
 type Table = {
   _id: string;
@@ -17,10 +17,26 @@ type Table = {
 
 const AdminTableList = () => {
   const [tableName, setTableName] = useState('');
+  const [deleteTableMutation] = useDeleteTableMutation();
   const [tables, setTables] = useState<Table[]>([]);
   const { data } = useGetAllTablesQuery();
 
   console.log('AdminTableList data:', data);
+  const handleDelete = async (tableId: string) => {
+    try {
+      await deleteTableMutation({
+        variables: {
+          input: {
+            _id: tableId,
+          },
+        },
+      });
+
+      setTables((prevTables) => prevTables.filter((table) => table._id !== tableId));
+    } catch (error) {
+      console.error('Failed to delete table:', error);
+    }
+  };
   useEffect(() => {
     if (data?.getAllTables && Array.isArray(data.getAllTables)) {
       setTables(
@@ -74,7 +90,7 @@ const AdminTableList = () => {
                   </Button>
                 </DialogContent>
               </Dialog>
-              <Button variant="secondary" data-testid={`classroom-${table._id}-delete-button`}>
+              <Button variant="secondary" data-testid={`classroom-${table._id}-delete-button`} onClick={() => handleDelete(table._id)}>
                 <TrashIcon className="w-4 h-4" />
               </Button>
             </div>
