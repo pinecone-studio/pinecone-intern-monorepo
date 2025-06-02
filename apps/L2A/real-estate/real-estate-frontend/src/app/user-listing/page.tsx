@@ -69,7 +69,6 @@ const UserListingPage = () => {
           </button>
         ))}
       </div>
-
       {loading ? (
         <div data-testid="skeleton-loader" className="space-y-3">
           {Array.from({ length: 3 }).map((_, i) => (
