@@ -56,3 +56,17 @@ mutation UpdateTable($input: UpdateTableInput!) {
     _id
   }
 }
+mutation AddProduct($input: AddProductInput!) {
+  addProduct(input: $input) {
+    _id
+    category {
+      _id
+    }
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}
