@@ -4,12 +4,15 @@ import '@testing-library/jest-dom';
 import AdminTableList from '@/app/admin/table/_features/AdminTableList';
 import * as generatedHooks from '@/generated';
 
+// Mock all GraphQL hooks
 jest.mock('@/generated', () => ({
   useGetAllTablesQuery: jest.fn(),
   useDeleteTableMutation: jest.fn(),
+  useUpdateTableMutation: jest.fn(),
 }));
 
 const mockDeleteTableMutation = jest.fn();
+const mockUpdateTableMutation = jest.fn();
 
 const mockTables = [
   {
@@ -32,6 +35,8 @@ beforeEach(() => {
   });
 
   (generatedHooks.useDeleteTableMutation as jest.Mock).mockReturnValue([mockDeleteTableMutation]);
+
+  (generatedHooks.useUpdateTableMutation as jest.Mock).mockReturnValue([mockUpdateTableMutation]);
 });
 
 it('renders classroom table rows', () => {
@@ -67,4 +72,32 @@ it('opens dialog and updates input value', () => {
   fireEvent.change(input, { target: { value: 'Updated Table Name' } });
 
   expect(input).toHaveValue('Updated Table Name');
+});
+
+it('updates table when update button is clicked', async () => {
+  render(<AdminTableList />);
+  const editButton = screen.getByTestId('classroom-1-edit-button');
+
+  // Open the dialog
+  fireEvent.click(editButton);
+
+  // Change the input value
+  const input = screen.getByTestId('classroom-1-input');
+  fireEvent.change(input, { target: { value: 'Updated Table Name' } });
+
+  // Click the update button
+  const updateButton = screen.getByTestId('classroom-1-update-button');
+  fireEvent.click(updateButton);
+
+  // Assert update mutation is called correctly
+  await waitFor(() => {
+    expect(mockUpdateTableMutation).toHaveBeenCalledWith({
+      variables: {
+        input: {
+          _id: '1',
+          name: 'Updated Table Name',
+        },
+      },
+    });
+  });
 });

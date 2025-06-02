@@ -5,7 +5,7 @@ import { PencilIcon, TrashIcon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
-import { useDeleteTableMutation, useGetAllTablesQuery } from '@/generated';
+import { useDeleteTableMutation, useGetAllTablesQuery, useUpdateTableMutation } from '@/generated';
 
 type Table = {
   _id: string;
@@ -17,26 +17,14 @@ type Table = {
 
 const AdminTableList = () => {
   const [tableName, setTableName] = useState('');
-  const [deleteTableMutation] = useDeleteTableMutation();
+  const [selectedTable, setSelectedTable] = useState<Table | null>(null);
   const [tables, setTables] = useState<Table[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const [updateTableMutation] = useUpdateTableMutation();
+  const [deleteTableMutation] = useDeleteTableMutation();
   const { data } = useGetAllTablesQuery();
 
-  console.log('AdminTableList data:', data);
-  const handleDelete = async (tableId: string) => {
-    try {
-      await deleteTableMutation({
-        variables: {
-          input: {
-            _id: tableId,
-          },
-        },
-      });
-
-      setTables((prevTables) => prevTables.filter((table) => table._id !== tableId));
-    } catch (error) {
-      console.error('Failed to delete table:', error);
-    }
-  };
   useEffect(() => {
     if (data?.getAllTables && Array.isArray(data.getAllTables)) {
       setTables(
@@ -52,10 +40,41 @@ const AdminTableList = () => {
     }
   }, [data]);
 
-  console.log('Tables:', tables);
+  const handleDelete = async (tableId: string) => {
+    try {
+      await deleteTableMutation({
+        variables: {
+          input: { _id: tableId },
+        },
+      });
 
-  const handleUpdate = () => {
-    console.log('Update clicked with name:', tableName);
+      setTables((prevTables) => prevTables.filter((table) => table._id !== tableId));
+    } catch (error) {
+      console.error('Failed to delete table:', error);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!selectedTable) return;
+
+    try {
+      await updateTableMutation({
+        variables: {
+          input: {
+            _id: selectedTable._id,
+            name: tableName,
+          },
+        },
+      });
+
+      setTables((prev) => prev.map((table) => (table._id === selectedTable._id ? { ...table, name: tableName } : table)));
+
+      setSelectedTable(null);
+      setTableName('');
+      setOpen(false);
+    } catch (error) {
+      console.error('Failed to update table:', error);
+    }
   };
 
   if (!tables.length) {
@@ -74,9 +93,18 @@ const AdminTableList = () => {
               <Button variant="secondary" data-testid={`classroom-${table._id}-qr-button`}>
                 QR харах
               </Button>
-              <Dialog>
+
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <Button variant="secondary" data-testid={`classroom-${table._id}-edit-button`}>
+                  <Button
+                    variant="secondary"
+                    data-testid={`classroom-${table._id}-edit-button`}
+                    onClick={() => {
+                      setSelectedTable(table);
+                      setTableName(table.name);
+                      setOpen(true);
+                    }}
+                  >
                     <PencilIcon className="w-4 h-4" />
                   </Button>
                 </DialogTrigger>
@@ -90,6 +118,7 @@ const AdminTableList = () => {
                   </Button>
                 </DialogContent>
               </Dialog>
+
               <Button variant="secondary" data-testid={`classroom-${table._id}-delete-button`} onClick={() => handleDelete(table._id)}>
                 <TrashIcon className="w-4 h-4" />
               </Button>

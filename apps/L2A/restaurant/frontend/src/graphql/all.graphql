@@ -49,5 +49,10 @@ mutation DeleteCategory($input: DeleteCategoryInput!) {
   }
 }
 
-
-
+mutation UpdateTable($input: UpdateTableInput!) {
+  updateTable(input: $input) {
+    createdAt
+    name
+    _id
+  }
+}
