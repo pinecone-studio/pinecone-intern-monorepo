@@ -12,3 +12,6 @@ export * from './otp-step2';
 export * from './otp-step3';
 export * from './search-events';
 export * from './delete-concert';
+export * from './feature-an-event';
+export * from './update-event-info';
+export * from './create-cancel-request';

@@ -1,19 +1,15 @@
 'use client';
+
 import { useEffect, useState } from 'react';
-import { useHotelQuery, useUpdateHotelMutation } from '@/generated';
+import { useUpdateHotelMutation } from '@/generated';
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
-export const HotelLocation = ({ hotelId }: { hotelId: string }) => {
+export const HotelLocation = ({ hotel, refetch }: { hotel: { _id: string; location?: string }; refetch: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { data: { hotel } = {}, refetch } = useHotelQuery({
-    variables: { hotelId: hotelId as string },
-    skip: !hotelId,
-  });
-
   const [location, setLocation] = useState(hotel?.location || '');
+
   const [updateHotel, { loading: mutationLoading }] = useUpdateHotelMutation();
 
   useEffect(() => {
@@ -23,20 +19,14 @@ export const HotelLocation = ({ hotelId }: { hotelId: string }) => {
   }, [hotel?.location]);
 
   const handleSave = async () => {
-    if (!hotelId) return;
-
-    try {
-      await updateHotel({
-        variables: {
-          updateHotelId: hotelId,
-          input: { location },
-        },
-      });
-      await refetch();
-      setIsOpen(false);
-    } catch (err) {
-      console.error('Failed to update location:', err);
-    }
+    await updateHotel({
+      variables: {
+        updateHotelId: hotel._id,
+        input: { location },
+      },
+    });
+    await refetch();
+    setIsOpen(false);
   };
 
   return (
@@ -54,7 +44,7 @@ export const HotelLocation = ({ hotelId }: { hotelId: string }) => {
             <Textarea value={location} className="h-24 w-full" onChange={(e) => setLocation(e.target.value)} />
             <div className="w-full flex justify-between">
               <DialogClose asChild>
-                <Button type="button" variant={'ghost'} onClick={() => setIsOpen(false)}>
+                <Button data-testid="close-dialog" type="button" variant={'ghost'} onClick={() => setIsOpen(false)}>
                   Close
                 </Button>
               </DialogClose>

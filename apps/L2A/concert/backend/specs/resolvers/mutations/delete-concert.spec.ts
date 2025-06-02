@@ -1,4 +1,4 @@
-import { concertModel } from '../../../src/models';
+import { concertModel, ticketModel } from '../../../src/models';
 import { deleteEvent } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models');
@@ -7,6 +7,8 @@ describe('delete an event', () => {
   it('should delete an event', async () => {
     (concertModel.findById as jest.Mock).mockResolvedValue({ id: 'mocked-id' });
     (concertModel.findByIdAndDelete as jest.Mock).mockResolvedValue({ id: 'mocked-id' });
+    (ticketModel.deleteMany as jest.Mock).mockResolvedValue([{ id: 'mockidssssssss' }]);
+
     const result = await deleteEvent({}, { id: 'mocked-id' });
     expect(result).toEqual({ id: 'mocked-id' });
   });

@@ -27,7 +27,6 @@ const SignUpForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
-    console.log({ values });
     try {
       const response = await addUser({ variables: { email: values.email, password: values.password } });
       if (response.data?.addUser) {

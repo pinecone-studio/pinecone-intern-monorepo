@@ -15,9 +15,22 @@ import RoomsComp from './_components/RoomsComp';
 import RestRoomsComp from './_components/RestRoomsComp';
 import OthersComp from './_components/OthersComp';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton'; 
+
+const SkeletonCard = () => (
+  <div
+    className="bg-white rounded-lg shadow p-4 space-y-4"
+    data-testid="listing-skeleton"
+  >
+    <Skeleton className="h-40 w-full" />
+    <Skeleton className="h-4 w-2/3" />
+    <Skeleton className="h-4 w-1/2" />
+    <Skeleton className="h-4 w-1/3" />
+  </div>
+);
 
 const HomeListingPage = () => {
-  const [type, setType] = useQueryParamState('type')
+  const [type, setType] = useQueryParamState('type');
   const [city, setCity] = useQueryParamState('city');
   const [district, setDistrict] = useQueryParamState('district');
   const [minPrice] = useQueryParamState('minPrice');
@@ -28,32 +41,63 @@ const HomeListingPage = () => {
   const [lift, setLift] = useQueryParamState('lift');
   const [balcony, setBalcony] = useQueryParamState('balcony');
   const [searchFromLanding, setSearchFromLanding] = useQueryParamState('search');
-  const [searchInput, setSearchInput] = useState('')
-  const debouncedSearch = useDebounce(searchInput , 500)
+  const [searchInput, setSearchInput] = useState('');
+  const debouncedSearch = useDebounce(searchInput, 500);
   const searchValue = searchFromLanding || debouncedSearch;
-  const filters = buildFilters({type,totalRooms,restrooms,city,district,minPrice,maxPrice,garage,lift,balcony, searchValue: searchValue});
-  const { data } = useFilterPostQuery({ variables: { filter: filters } });
+
+  const filters = buildFilters({
+    type,
+    totalRooms,
+    restrooms,
+    city,
+    district,
+    minPrice,
+    maxPrice,
+    garage,
+    lift,
+    balcony,
+    searchValue,
+  });
+
+  const { data, loading } = useFilterPostQuery({
+    variables: { filter: filters },
+  });
 
   useEffect(() => {
     if (searchFromLanding) {
       setSearchInput(searchFromLanding);
       setSearchFromLanding('');
     }
-  }
-  , [searchFromLanding]);
+  }, [searchFromLanding]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f8f8]" data-cy="listing-page">
       <main className="flex-1 flex flex-col lg:flex-row mx-auto w-full max-w-[1280px]">
-        <aside className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm" data-cy="listing-sidebar">
-          <Input   defaultValue={searchFromLanding || ''} onChange={(e)=>setSearchInput(e.target.value)} placeholder="Хот, дүүрэг, эсвэл газар хайх..." className="mb-5" data-cy="listing-search-input" />
-          <div className="space-y-6 ">
-          <TypeComp type={type} setType={setType}/>
-          <LocationComp setCity={setCity}  setDistrict={setDistrict}/>
-          <PriceComp/>
-          <RoomsComp totalRooms={totalRooms} setTotalRooms={setTotalRooms}/>
-          <RestRoomsComp restrooms={restrooms} setTotalRestrooms={setTotalRestrooms}/>
-          <OthersComp garage={garage} setGarage={setGarage} lift={lift} setLift={setLift} balcony={balcony} setBalcony={setBalcony}/>
+        <aside
+          className="w-full lg:w-[300px] border-r px-4 lg:px-6 py-6 bg-white text-sm"
+          data-cy="listing-sidebar"
+        >
+          <Input
+            defaultValue={searchFromLanding || ''}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Хот, дүүрэг, эсвэл газар хайх..."
+            className="mb-5"
+            data-cy="listing-search-input"
+          />
+          <div className="space-y-6">
+            <TypeComp type={type} setType={setType} />
+            <LocationComp setCity={setCity} setDistrict={setDistrict} />
+            <PriceComp />
+            <RoomsComp totalRooms={totalRooms} setTotalRooms={setTotalRooms} />
+            <RestRoomsComp restrooms={restrooms} setTotalRestrooms={setTotalRestrooms} />
+            <OthersComp
+              garage={garage}
+              setGarage={setGarage}
+              lift={lift}
+              setLift={setLift}
+              balcony={balcony}
+              setBalcony={setBalcony}
+            />
           </div>
         </aside>
 
@@ -67,26 +111,32 @@ const HomeListingPage = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-cy="listing-grid">
-            {data?.filterPosts?.map((item) => (
-              <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
-              <ListingCard
-                key={item?._id}
-                price={item?.price}
-                totalRooms={item?.totalRooms}
-                restrooms={item?.restrooms}
-                size={item?.size}
-                city={item?.location?.city}
-                district={item?.location?.district}
-                image={item?.images?.[0]}
-                title={item?.title}
-              /></Link>
-            ))}
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            data-cy="listing-grid"
+          >
+            {loading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+              : data?.filterPosts?.map((item) => (
+                  <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
+                    <ListingCard
+                      key={item?._id}
+                      price={item?.price}
+                      totalRooms={item?.totalRooms}
+                      restrooms={item?.restrooms}
+                      size={item?.size}
+                      city={item?.location?.city}
+                      district={item?.location?.district}
+                      image={item?.images?.[0]}
+                      title={item?.title}
+                    />
+                  </Link>
+                ))}
           </div>
-
         </section>
       </main>
     </div>
   );
 };
+
 export default HomeListingPage;

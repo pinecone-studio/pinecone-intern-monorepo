@@ -1,4 +1,5 @@
 describe.only('RoomsByHotel Page', () => {
+  const hotelId = `682ac7df47df32a8a9907cb1`;
   beforeEach(() => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'RoomsByHotel') {
@@ -6,7 +7,7 @@ describe.only('RoomsByHotel Page', () => {
           data: {
             roomsByHotel: [
               {
-                _id: '1',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '101',
                 name: 'Mock Room 1',
                 pricePerNight: 120,
@@ -14,7 +15,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: ['https://via.placeholder.com/100'],
               },
               {
-                _id: '2',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '202',
                 name: 'Mock Room 2',
                 pricePerNight: 150,
@@ -22,7 +23,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: ['https://via.placeholder.com/100'],
               },
               {
-                _id: '3',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '303',
                 name: 'Mock Room 3',
                 pricePerNight: 90,
@@ -30,7 +31,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: ['https://via.placeholder.com/100'],
               },
               {
-                _id: '4',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '404',
                 name: 'Unknown Room',
                 pricePerNight: 100,
@@ -38,7 +39,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: ['https://via.placeholder.com/100'],
               },
               {
-                _id: '5',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '505',
                 name: 'No Image Room',
                 pricePerNight: 80,
@@ -46,7 +47,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: [],
               },
               {
-                _id: '6',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '606',
                 name: 'Relative Image Room',
                 pricePerNight: 110,
@@ -54,7 +55,7 @@ describe.only('RoomsByHotel Page', () => {
                 images: ['room1.jpg'],
               },
               {
-                _id: '7',
+                _id: '682ac7df47df32a8a9907cb1',
                 roomNumber: '707',
                 name: null,
                 pricePerNight: null,
@@ -67,7 +68,7 @@ describe.only('RoomsByHotel Page', () => {
       }
     });
 
-    cy.visit('/hotels/mock-hotel-id');
+    cy.visit(`/hotels/${hotelId}`);
   });
 
   it('should display mocked rooms', () => {
@@ -108,6 +109,6 @@ describe.only('RoomsByHotel Page', () => {
   it('should navigate to room detail page on row click', () => {
     cy.get('table').contains('td', 'Mock Room 1').parents('tr').click();
 
-    cy.location('pathname').should('eq', '/hotels/mock-hotel-id/1');
+    cy.location('pathname').should('eq', `/hotels/${hotelId}`);
   });
 });

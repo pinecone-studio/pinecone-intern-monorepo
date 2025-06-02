@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useBooking } from '@/app/_components/context/BookingContext';
 import { CartIconWithModal } from '@/app/_components/CartIconWithModal';
+import { MockedProvider } from '@apollo/client/testing';
 
 jest.mock('./../../src/app/_components/context/BookingContext.tsx', () => ({
   ...jest.requireActual('./../../src/app/_components/context/BookingContext.tsx'),
@@ -22,7 +23,11 @@ describe('CartIconWithModal', () => {
   });
 
   it('should render the cart icon', () => {
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     expect(screen.getByLabelText('Shopping Cart')).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
@@ -33,17 +38,29 @@ describe('CartIconWithModal', () => {
       booking: { concertName: 'Test Concert' },
     });
 
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     expect(screen.getByText('!')).toBeInTheDocument();
   });
 
   it('should not show notification badge when there is no booking', () => {
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     expect(screen.queryByText('!')).not.toBeInTheDocument();
   });
 
   it('should open modal when cart icon is clicked', () => {
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     fireEvent.click(screen.getByLabelText('Shopping Cart'));
     expect(screen.getByText('Миний тасалбарууд')).toBeInTheDocument();
   });
@@ -61,19 +78,31 @@ describe('CartIconWithModal', () => {
       booking: testBooking,
     });
 
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     fireEvent.click(screen.getByLabelText('Shopping Cart'));
     expect(screen.getByText(testBooking.concertName)).toBeInTheDocument();
   });
 
   it('should show empty state when no booking exists', () => {
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     fireEvent.click(screen.getByLabelText('Shopping Cart'));
     expect(screen.getByText('Тасалбар байхгүй байна')).toBeInTheDocument();
   });
 
   it('should close modal when onClose is called', () => {
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     fireEvent.click(screen.getByLabelText('Shopping Cart'));
     fireEvent.click(screen.getByLabelText('Close modal'));
     expect(screen.queryByText('Миний тасалбарууд')).not.toBeInTheDocument();
@@ -92,7 +121,11 @@ describe('CartIconWithModal', () => {
       booking: testBooking,
     });
 
-    render(<CartIconWithModal />);
+    render(
+      <MockedProvider>
+        <CartIconWithModal />
+      </MockedProvider>
+    );
     fireEvent.click(screen.getByLabelText('Shopping Cart'));
     fireEvent.click(screen.getByText('Цэвэрлэх'));
     expect(mockClearBooking).toHaveBeenCalled();

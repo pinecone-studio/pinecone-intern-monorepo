@@ -6,10 +6,8 @@ export const MutationTypeDefs = gql`
     loginUser(email: String!, password: String!): User!
     createConcert(input: CreateConcertInput!): Concert!
     createVenue(name: String!, address: String!, city: String!, capacity: Int!): Venue!
-    createTicket(concert: String!, seatNumber: String!, price: Int, type: String!, Status: String): Ticket!
-    reserveTickets(concertId: ID!, ticketIds: [ID!]!): [Ticket!]!
+    createTicketOrder(input: CreateTicketOrderInput!): TicketOrderPayload!
     createBooking(input: CreateBookingInput!, ticketIds: [String!]!): Booking!
-    cancelBooking(bookingId: ID!): Booking!
     registerUser(email: String!, password: String!): User!
     sampleMutation(text: String): String!
     updateUserInfo(id: String!, email: String, password: String, phone: Int): User!
@@ -20,5 +18,8 @@ export const MutationTypeDefs = gql`
     changeCurrentPassword(email: String!, currentPassword: String!, newPassword: String!): User!
     searchEvents(name: String): [Concert!]!
     deleteEvent(id: String!): Concert!
+    featureAnEvent(concertId: String!): Concert!
+    updateEventInfo(concertId: String!, description: String, title: String, artistName: String): Concert!
+    createCancelRequest(userId: String!, ticketId: String!, bankName: String!, accountNumber: String!, bankOwnerName: String!): Request!
   }
 `;

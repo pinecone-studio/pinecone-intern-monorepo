@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PasswordStepOne } from './_components/PasswordStepOne';
 import { PasswordStepTwo } from './_components/PasswordStepTwo';
 import { PasswordStepThree } from './_components/PasswordStepThree';
-import SignupHeader from '../signup/_components/SigUpHeader';
+import Image from 'next/image';
 
 export type PasswordStepOneProps = {
   setStep: (_step: number) => void;
@@ -24,15 +24,18 @@ const ForgetPasswordPage = () => {
   const [email, setEmail] = useState<string>('');
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4" data-cy="forget-password-page">
-      <div className="max-w-md w-full space-y-6" data-cy="forget-password-container">
+    <div className="min-h-screen flex items-center justify-center bg-white px-2" data-cy="forget-password-page">
+      <div className="max-w-md w-full space-y-auto" data-cy="forget-password-container">
         <div className="text-center" data-cy="signup-header" />
-        <SignupHeader step={-1} email=" " />
-
+        <div className="flex gap-3 items-center justify-center mb-8">
+           <Image src="/logo.png" alt="logo" width={34} height={18}/>
+           <h2 className="text-2xl font-bold">Home Vault</h2>
+            </div>
         {step === 1 && <PasswordStepOne setStep={setStep} setEmail={setEmail} />}
         {step === 2 && <PasswordStepTwo setStep={setStep} email={email} />}
         {step === 3 && <PasswordStepThree email={email} />}
       </div>
+      <p className="text-xs text-center text-gray-400 mt-6 absolute bottom-4 right-0 left-0">©2024 Home Vault</p>
     </div>
   );
 };

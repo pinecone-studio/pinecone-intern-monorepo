@@ -4,27 +4,41 @@ export const TicketTypeDefs = gql`
   type Ticket {
     id: ID!
     concert: Concert!
-    seatNumber: String!
-    price: Int
-    type: TicketType!
-    status: TicketStatus!
-    cancelRequest: Boolean!
-    refundStatus: RefundStatus!
+    user: User!
+    totalPrice: Int!
+    ticket: TicketBreakdown!
     createdAt: String!
     updatedAt: String!
   }
-  enum RefundStatus {
-    PENDING
-    APPROVED
-    REJECTED
+
+  type TicketBreakdown {
+    Standard: TicketTypeDetail!
+    VIP: TicketTypeDetail!
+    Backseat: TicketTypeDetail!
   }
 
-  input CreateTicketInput {
-    concert: ID!
-    date: String!
-    seatType: String!
+  type TicketTypeDetail {
+    count: Int!
     price: Int!
-    status: TicketStatus
+  }
+
+  input TicketInput {
+    type: String!
+    count: Int!
+    price: Int!
+  }
+
+  input CreateTicketOrderInput {
     userId: ID!
+    concertId: ID!
+    date: String!
+    seatDataId: ID!
+    tickets: [TicketInput!]!
+    totalPrice: Int!
+  }
+
+  type TicketOrderPayload {
+    tickets: Ticket!
+    totalPrice: Int!
   }
 `;

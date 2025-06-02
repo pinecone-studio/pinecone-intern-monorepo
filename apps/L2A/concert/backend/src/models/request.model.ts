@@ -7,23 +7,33 @@ const RequestSchema = new Schema(
       ref: 'Concert',
       required: true,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     ticket: {
       type: Schema.Types.ObjectId,
       ref: 'Ticket',
       required: true,
     },
-    accountInfo: {
-      type: String,
-      required: true,
-    },
-    ownerName: {
-      type: String,
-      required: true,
-    },
     status: {
       type: String,
       required: true,
-      enum: ['ШИЛЖҮҮЛСЭН', 'ДУУСГАХ'],
+      enum: ['APPROVED', 'PENDING'],
+      default: 'PENDING',
+    },
+    bankName: {
+      type: String,
+      required: true,
+    },
+    accountNumber: {
+      type: String,
+      required: true,
+    },
+    bankOwnerName: {
+      type: String,
+      required: true,
     },
   },
   {

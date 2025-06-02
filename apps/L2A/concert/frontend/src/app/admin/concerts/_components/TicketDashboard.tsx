@@ -1,11 +1,13 @@
 'use client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Pencil, Trash } from 'lucide-react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { Concert, useConcertsQuery } from '@/generated';
 import LoadingText from '@/app/_components/LoadingText';
 import { useState } from 'react';
+import DeleteConcertButton from './DeleteConcert';
+import FeatureAnEvent from './FeatureAnEvent';
+import EditEventInfo from '../_featured/EditEventInfo';
 
 const TicketDashboard = () => {
   const { data, loading, error } = useConcertsQuery();
@@ -32,7 +34,6 @@ const TicketDashboard = () => {
 
     return result;
   };
-  console.log(concerts);
   return (
     <div className="p-4 w-3/4">
       <Card className="overflow-x-auto">
@@ -85,15 +86,9 @@ const TicketDashboard = () => {
                   {calculate(row).toLocaleString()}
                 </td>
                 <td className="p-3 flex gap-2">
-                  <Button variant="ghost" size="icon" title="Онцлох" data-testid={`favorite-btn-${idx}`}>
-                    <Star className="h-4 w-4 hover:text-yellow-500" />
-                  </Button>
-                  <Button variant="ghost" size="icon" title="Засах" data-testid={`edit-btn-${idx}`}>
-                    <Pencil className="h-4 w-4 hover:text-blue-500" />
-                  </Button>
-                  <Button variant="ghost" size="icon" title="Устгах" data-testid={`delete-btn-${idx}`}>
-                    <Trash className="h-4 w-4 hover:text-red-500" />
-                  </Button>
+                  <FeatureAnEvent idx={idx} id={row.id} />
+                  <EditEventInfo concert={row} idx={idx} />
+                  <DeleteConcertButton idx={idx} id={row.id} />
                 </td>
               </tr>
             ))}

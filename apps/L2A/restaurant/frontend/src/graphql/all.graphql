@@ -23,6 +23,7 @@ query GetAllTables {
     updatedAt
   }
 }
+
 mutation DeleteTable($input: DeleteTableInput!) {
   deleteTable(input: $input) {
     _id
@@ -32,3 +33,14 @@ mutation DeleteTable($input: DeleteTableInput!) {
     updatedAt
   }
 }
+
+query GetCategories {
+  getCategories {
+    _id
+    name
+    createdAt
+    updatedAt
+  }
+}
+
+

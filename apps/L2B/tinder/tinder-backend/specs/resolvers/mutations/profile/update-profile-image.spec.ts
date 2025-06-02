@@ -12,7 +12,7 @@ describe('updateProfileImage', () => {
     jest.clearAllMocks();
   });
 
-  it('should set image and return updated profile', async () => {
+  it('should set images and return updated profile', async () => {
     const mockProfile = {
       _id: 'profile1',
       user: 'user123',
@@ -23,7 +23,7 @@ describe('updateProfileImage', () => {
 
     const result = await updateProfileImage(null, {
       userId: 'user123',
-      images: 'img2.png',
+      images: ['img2.png'],
     });
 
     expect(profileModel.findOneAndUpdate).toHaveBeenCalledWith({ user: 'user123' }, { $set: { images: ['img2.png'] } }, { new: true });
@@ -37,7 +37,7 @@ describe('updateProfileImage', () => {
     await expect(
       updateProfileImage(null, {
         userId: 'nonexistent-user',
-        images: 'img.png',
+        images: ['img.png'],
       })
     ).rejects.toThrow('Profile not found. Please create a profile first.');
   });

@@ -76,6 +76,15 @@ describe('HotelAmenities Component', () => {
     cy.contains('Edit').click();
     cy.get('[data-testid="amenities-input"]').should('exist');
     cy.contains('Save').click();
-    // No crash, no errors
+  });
+
+  it('resets unsaved changes when reopening the edit dialog', () => {
+    cy.contains('Edit').click();
+    cy.get('[data-testid="amenities-input"]').type('Sauna{enter}');
+    cy.contains('Close').click();
+    cy.contains('Edit').click();
+    cy.contains('Sauna').should('not.exist');
+    cy.contains('WiFi').should('exist');
+    cy.contains('Pool').should('exist');
   });
 });

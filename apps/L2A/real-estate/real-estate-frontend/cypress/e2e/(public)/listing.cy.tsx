@@ -86,7 +86,7 @@ describe('Listing Page', () => {
         .children()
         .should('have.length.greaterThan', 0);
     });
-
+    
     it('should show empty state when no results', () => {
       // eslint-disable-next-line no-secrets/no-secrets
       cy.visit('/listing?type=CASTLE&totalRooms=99');
@@ -98,6 +98,19 @@ describe('Listing Page', () => {
       cy.visit('/listing?type=NON_EXISTENT_TYPE');
       cy.get('[data-cy="listing-grid"]').children().should('have.length', 0);
     });
+
+      it('should show skeletons while loading', () => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      // eslint-disable-next-line max-nested-callbacks
+      req.on('response', (res) => {
+        res.setDelay(1000); // artificial 1s delay
+      });
+    }).as('slowPosts');
+
+    cy.visit('/listing');
+    cy.get('[data-testid="listing-skeleton"]').should('have.length', 6);
+    cy.wait('@slowPosts');
+  });
   });
 
   describe('Sorting', () => {

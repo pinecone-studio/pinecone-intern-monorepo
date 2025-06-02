@@ -37,7 +37,7 @@ const SignInForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email
         </label>
         <input
@@ -53,10 +53,10 @@ const SignInForm = () => {
       </div>
       <div>
         <div className="flex justify-between text-blue-600 cursor-pointer">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
-          <Link href="/forget-password" className="text-sm font-medium text-blue-600 hover:text-blue-500 underline" data-cy="forgot-password-link">
+          <Link href="/forget-password" className="text-sm font-medium text-blue-600 hover:text-blue-500 mb-1" data-cy="forgot-password-link">
             Forget Password?
           </Link>
         </div>
