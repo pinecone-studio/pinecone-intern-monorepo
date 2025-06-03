@@ -11,6 +11,7 @@ describe('deleting an event', () => {
   });
 
   it('should navigate through pages', () => {
+    cy.wait('@featuring');
     cy.get('[data-testid="next-pagination"]').click();
     cy.get('[data-testid="next-pagination"]').click();
     cy.get('[data-testid="next-pagination"]').click();
@@ -18,7 +19,5 @@ describe('deleting an event', () => {
     cy.get('[data-testid="prev-pagination"]').click();
     cy.get('[data-testid="prev-pagination"]').click();
     cy.get('[data-testid="pagination-1"]').click({ force: true });
-
-    cy.wait('@featuring');
   });
 });
