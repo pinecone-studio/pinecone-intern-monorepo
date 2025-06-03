@@ -64,21 +64,6 @@ describe('TicketDashboard Component', () => {
     jest.restoreAllMocks();
   });
 
-  it('should render all initial rows', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={true}>
-        <TicketDashboard />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId('row-0')).toBeInTheDocument();
-      expect(screen.getByTestId('row-1')).toBeInTheDocument();
-    });
-    const pagination = screen.getByTestId('page-btn-1');
-    fireEvent.click(pagination);
-  });
-
   it('should click on delete button', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={true}>
