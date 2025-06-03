@@ -1,8 +1,9 @@
-import { productModel } from "../../models/product.model";
+import { productModel } from '../../models/product.model';
 
 export const getProducts = async () => {
   try {
-    return await productModel.find();
+    const products = await productModel.find();
+    return products;
   } catch (error) {
     throw new Error(`Error fetching products: ${(error as Error).message}`);
   }
