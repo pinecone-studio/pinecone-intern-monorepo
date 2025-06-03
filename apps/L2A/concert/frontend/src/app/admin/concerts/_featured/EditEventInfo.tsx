@@ -8,8 +8,8 @@ import z from 'zod';
 import { EditEventInfoSchema } from '../utils/edit-event-info-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
-import LoadingText from '@/app/_components/LoadingText';
 import { Snackbar } from '@mui/material';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 type Props = {
   concert: Concert;
@@ -85,7 +85,7 @@ const EditEventInfo = ({ concert, idx }: Props) => {
               />
             </div>
             <Button data-testid={`edit-event-button-${idx}`} disabled={!form.formState.isValid || form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? <LoadingText /> : 'Засах'}
+              {form.formState.isSubmitting ? <LoadingAnimation /> : 'Засах'}
             </Button>
           </form>
         </Form>

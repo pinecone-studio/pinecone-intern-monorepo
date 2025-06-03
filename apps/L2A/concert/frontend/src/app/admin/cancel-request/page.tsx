@@ -2,7 +2,7 @@
 import TableRow from './_components/TableRow';
 import TableHeader from './_components/TableHeader';
 import { Request, useGetCancelRequestsQuery } from '@/generated';
-import LoadingText from '@/app/_components/LoadingText';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 const Page = () => {
   const { data, loading } = useGetCancelRequestsQuery();
@@ -19,7 +19,7 @@ const Page = () => {
           <TableHeader />
           {loading ? (
             <div className="flex justify-center items-center min-h-[120px] py-6">
-              <LoadingText />
+              <LoadingAnimation />
             </div>
           ) : requests.length > 0 ? (
             requests.map((request) => <TableRow key={request.id} request={request} />)
