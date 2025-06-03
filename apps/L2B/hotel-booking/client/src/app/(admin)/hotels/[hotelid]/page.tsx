@@ -9,6 +9,8 @@ import { HotelImage } from './_features/HotelImages';
 import { HotelLocation } from './_features/HotelLocation';
 import { useRouter } from 'next/navigation';
 import { UpcomingBookings } from './_features/UpcomingBookings';
+import Loading from '@/app/(main)/_components/Loading';
+
 
 const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   const { data, error, refetch } = useHotelQuery({
@@ -19,7 +21,7 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   const router = useRouter();
   const hotel = data?.hotel;
 
-  if (error || !hotel) return <div className="h-screen w-full flex items-center justify-center">loading...</div>;
+  if (error || !hotel) return <Loading />;
 
   return (
     <main className="w-full h-full pb-6 bg-[#e4e4e768]">

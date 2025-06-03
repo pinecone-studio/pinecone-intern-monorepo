@@ -7,6 +7,7 @@ import { HomeHeadline } from './_components/HomeHeadline';
 import RoomCard from './(main)/_components/RoomCard';
 
 
+
 const Page = () => {
   return (
     <div>
