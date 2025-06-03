@@ -8,6 +8,7 @@ import DeleteConcertButton from './DeleteConcert';
 import FeatureAnEvent from './FeatureAnEvent';
 import EditEventInfo from '../_featured/EditEventInfo';
 import LoadingAnimation from '@/app/_components/LoadingAnimation';
+import PaginationConcerts from '../_featured/ConcertsPagination';
 
 const TicketDashboard = () => {
   const { data, loading, error } = useConcertsQuery();
@@ -23,7 +24,7 @@ const TicketDashboard = () => {
   if (loading) {
     return <LoadingAnimation />;
   }
-
+  const totalPages = Math.ceil(concerts.length / itemsPerPage);
   const calculate = (concert: Concert): number => {
     const result = concert.seatData.reduce((prev, acc) => {
       const backseat = acc.seats.Backseat.availableTickets * acc.seats.Backseat.price;
@@ -97,11 +98,7 @@ const TicketDashboard = () => {
       </Card>
 
       <div className="flex justify-center mt-4 gap-2" data-testid="pagination">
-        {[1, 2, 3, 4, 5, 6].map((num) => (
-          <Button onClick={() => setPage(num)} key={num} variant="outline" className="w-8 h-8 p-0" data-testid={`page-btn-${num}`}>
-            {num}
-          </Button>
-        ))}
+        <PaginationConcerts setPage={setPage} page={page} totalPages={totalPages} />
       </div>
     </div>
   );
