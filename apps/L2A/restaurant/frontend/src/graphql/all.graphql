@@ -23,6 +23,17 @@ query GetAllTables {
     updatedAt
   }
 }
+
+mutation DeleteTable($input: DeleteTableInput!) {
+  deleteTable(input: $input) {
+    _id
+    createdAt
+    name
+    qrCodeUrl
+    updatedAt
+  }
+}
+
 query GetCategories {
   getCategories {
     _id
@@ -38,4 +49,57 @@ mutation DeleteCategory($input: DeleteCategoryInput!) {
   }
 }
 
-
+mutation UpdateTable($input: UpdateTableInput!) {
+  updateTable(input: $input) {
+    createdAt
+    name
+    _id
+  }
+}
+mutation AddProduct($input: AddProductInput!) {
+  addProduct(input: $input) {
+    _id
+    category {
+      _id
+    }
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}
+query getProducts {
+  getProducts {
+    _id
+    name
+    price
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteProduct($input: DeleteProductInput!) {
+  deleteProduct(input: $input) {
+    _id
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}
+mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input) {
+    _id
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}

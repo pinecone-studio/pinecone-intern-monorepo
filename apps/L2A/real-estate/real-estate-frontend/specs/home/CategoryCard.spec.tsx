@@ -7,20 +7,17 @@ describe('CategoryCard', () => {
     render(
       <CategoryCard
         title="Шинээр нэмэгдсэн"
-        count={1209}
-        imageUrl="/listingcard.png"
+        imageUrl="/shine.png"
       />
     );
 
     expect(screen.getByText('Шинээр нэмэгдсэн')).toBeInTheDocument();
-    expect(screen.getByText('1,209')).toBeInTheDocument();
   });
 
   it('renders the image correctly', () => {
     render(
       <CategoryCard
         title="Хотын төвтэй ойрхон"
-        count={850}
         imageUrl="/listingcard.png"
       />
     );

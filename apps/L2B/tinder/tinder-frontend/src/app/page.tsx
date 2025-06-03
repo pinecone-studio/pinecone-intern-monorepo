@@ -1,8 +1,19 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Container from './_components/Container';
 import Footer from './_components/Footer';
 import GuestHeader from './_components/GuestHeader';
+import { useAuth } from './auth/context/AuthContext';
 
 const Page = () => {
+  const { JWT } = useAuth();
+  const router = useRouter();
+  if (JWT) {
+    router.push('/swipe-page');
+    return;
+  }
+
   return (
     <div
       style={{
@@ -13,7 +24,7 @@ const Page = () => {
         minHeight: '100vh',
         color: '#FAFAFA',
       }}
-      className="flex  flex-col  items-center gap-6 "
+      className="flex flex-col items-center gap-6"
     >
       <GuestHeader />
       <Container />

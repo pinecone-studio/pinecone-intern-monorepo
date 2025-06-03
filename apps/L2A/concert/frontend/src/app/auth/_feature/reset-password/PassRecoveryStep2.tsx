@@ -4,8 +4,8 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { GoArrowLeft } from 'react-icons/go';
 import { FiRefreshCw } from 'react-icons/fi';
 import { useOtpStep2Mutation } from '@/generated';
-import LoadingText from '@/app/_components/LoadingText';
 import { ArrowLeftCircle } from 'lucide-react';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 export const PassRecoveryStep2 = ({ setStep }: { setStep: Dispatch<SetStateAction<number>> }) => {
   const [otp, setOtp] = useState('');
@@ -56,7 +56,7 @@ export const PassRecoveryStep2 = ({ setStep }: { setStep: Dispatch<SetStateActio
             </InputOTP>
           </div>
           {error && <div className=" text-red-400 text-xs justify-center flex">{error.message}</div>}
-          {loading && <LoadingText />}
+          {loading && <LoadingAnimation />}
           <div className="flex cursor-pointer justify-center  gap-11">
             <div data-testid="otp-step2-backspace" onClick={() => setOtp((prev) => prev.slice(0, -1))} className="text-white cursor-pointer">
               <GoArrowLeft />

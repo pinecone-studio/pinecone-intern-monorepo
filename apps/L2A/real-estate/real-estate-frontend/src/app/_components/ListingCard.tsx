@@ -4,27 +4,27 @@ import { MapPin, Ruler, BedSingle, Bath } from 'lucide-react';
 import Image from 'next/image';
 
 type ListingCardProps = {
-  image: string | undefined | null; 
+  image: string | undefined | null;
   price?: number | null | undefined;
   title: string | null | undefined;
   totalRooms: number | null | undefined
   restrooms: number | null | undefined;
   size: number | null | undefined
-  city:string | null | undefined;
-  district:string | null | undefined;
-  imageCount?: string | null |undefined;
+  city: string | null | undefined;
+  district: string | null | undefined;
+  imageCount?: string | null | undefined;
 };
 
 
-const ListingCard = ({ image, price, restrooms, totalRooms, size, city,district,title }: ListingCardProps) => {
+const ListingCard = ({ image, price, restrooms, totalRooms, size, city, district, title }: ListingCardProps) => {
 
   return (
     <div className="w-full max-w-sm bg-white rounded-xl shadow-md overflow-hidden transition-all duration-500 ease-in-out hover:scale-[1.05] hover:shadow-xl hover:translate-y-[-2px]">
       <div className="relative w-full h-48">
-        <Image width={200} height={200} src={image || '/placeholder.png'} alt="no image"  className="object-cover h-[200px] w-full" />
+        <Image width={200} height={200} src={image || '/placeholder.png'} alt="no image" className="object-cover h-[200px] w-full" />
       </div>
 
-      <div className="p-4  space-y-2">
+      <div className="p-4 space-y-2">
         <p className="text-lg font-semibold text-gray-900">{price?.toLocaleString()}₮</p>
 
         <div className="flex gap-2 items-start">
@@ -47,8 +47,8 @@ const ListingCard = ({ image, price, restrooms, totalRooms, size, city,district,
           </div>
         </div>
         <p className="text-xs text-gray-400 line-clamp-2">
-  {[city, district].filter(Boolean).join(', ')}
-</p>
+          {[city, district].filter(Boolean).join(', ')}
+        </p>
       </div>
     </div>
   );

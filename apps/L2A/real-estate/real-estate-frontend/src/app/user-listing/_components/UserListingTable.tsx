@@ -26,7 +26,6 @@ const statusColor = {
 };
 
 const UserListingTable = ({ listings }: Props) => {
-  console.log('UserListingTable listings:', listings);
   return (
     <div className="overflow-x-auto">
       <table className="table-auto text-sm border w-full">

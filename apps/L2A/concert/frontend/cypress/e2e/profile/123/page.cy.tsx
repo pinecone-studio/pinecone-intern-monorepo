@@ -20,7 +20,12 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="order-history"]').click();
     cy.wait('@updateUserInfo');
 
-    cy.get('[data-testid="cancel-request-button"]').first().click();
+    cy.get('[data-testid="cancel-request-button-0"]').click();
+    cy.get('[data-testid="account-name-0"]').type('golomt');
+    cy.get('[data-testid="account-number-0"]').type('1105142602');
+    cy.get('[data-testid="account-owner-0"]').type('adiyakhuu');
+
+    cy.get('[data-testid="send-cancel-request-0"]').click();
     cy.wait('@updateUserInfo');
   });
   it('should update user profile info successfully', () => {

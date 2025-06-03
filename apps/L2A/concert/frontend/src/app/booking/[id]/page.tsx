@@ -3,9 +3,9 @@
 import { useParams } from 'next/navigation';
 import SeatSelection from './_components/SeatSelection';
 import { Concert, useConcertQuery } from '@/generated';
-import LoadingText from '../../_components/LoadingText';
 import { FC } from 'react';
 import StagePlan from '@/app/StagePlan/_feature/Stage';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 const Page: FC = () => {
   const { id }: { id: string } = useParams();
@@ -18,7 +18,7 @@ const Page: FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <LoadingText />
+        <LoadingAnimation />
       </div>
     );
   }

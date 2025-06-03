@@ -23,13 +23,12 @@ const OrderHistory = () => {
         <>
           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={loading} message="Түр хүлээнэ үү!" />
           <Snackbar autoHideDuration={500} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} message={error?.message} />
-
           <h2 className="text-2xl font-semibold" data-cy="order-title">
             🎟️ Захиалгын түүх
           </h2>
 
           {tickets.length > 0 ? (
-            tickets.map((ticket) => <OrderCard key={ticket.id} ticket={ticket} />)
+            tickets.map((ticket, i) => <OrderCard index={i} userId={user.id} key={ticket.id} ticket={ticket} />)
           ) : (
             <div className="text-gray-400" data-cy="no-tickets-message">
               Тасалбарын түүх алга
