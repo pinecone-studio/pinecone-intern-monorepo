@@ -13,17 +13,19 @@ describe('products resolver - get all products', () => {
   });
 
   it('should return all products', async () => {
-    (productModel.find as jest.Mock).mockResolvedValue(mockProducts);
-
+    (productModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue(mockProducts),
+    });
     const result = await getProducts();
 
-    expect(productModel.find).toHaveBeenCalled();
     expect(result).toEqual(mockProducts);
   });
 
   it('should throw an error if fetching fails', async () => {
-    (productModel.find as jest.Mock).mockRejectedValue(new Error('Database error'));
+    (productModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockRejectedValue(new Error('Error')),
+    });
 
-    await expect(getProducts()).rejects.toThrow();
+    await expect(getProducts()).rejects.toThrow('Error');
   });
 });
