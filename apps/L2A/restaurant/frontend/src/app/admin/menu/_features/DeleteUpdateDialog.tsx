@@ -12,17 +12,21 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { useDeleteCategoryMutation } from '@/generated';
+import { useDeleteCategoryMutation, useUpdateCategoryMutation} from '@/generated';
 
-type Props = {
-  categoryId: string;
-  foodId?: number;
-  onSuccess?: () => void;
-};
+  type Props = {
+    categoryId: string;
+    initialName: string;
+    onSuccess?: () => void;
+  };
 
-const DeleteUpdateDialog = ({ categoryId, onSuccess }: Props) => {
+const DeleteUpdateDialog = ({ categoryId, initialName, onSuccess }: Props) => {
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState(initialName);
+
   const [deleteCategory, { loading: deleteLoading }] = useDeleteCategoryMutation();
+  const [updateCategory, { loading: updateLoading }] = useUpdateCategoryMutation();
 
   const handleDelete = async () => {
     try {
@@ -32,15 +36,32 @@ const DeleteUpdateDialog = ({ categoryId, onSuccess }: Props) => {
         },
       });
       if (onSuccess) onSuccess();
-      setOpen(false); 
+      setOpen(false);
     } catch (error) {
       console.error('Delete failed:', error);
     }
   };
 
+  const handleUpdate = async () => {
+    try {
+      await updateCategory({
+        variables: {
+          input: {
+            _id: categoryId,
+            name: categoryName,
+          },
+        },
+      });
+      if (onSuccess) onSuccess();
+      setEditOpen(false);
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  };
+
   return (
     <div className="flex items-center gap-7" data-testid="food-actions">
-      <Dialog>
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogTrigger asChild>
           <button data-testid="edit-trigger">
             <Pencil className="w-4 h-4" />
@@ -50,10 +71,21 @@ const DeleteUpdateDialog = ({ categoryId, onSuccess }: Props) => {
           <DialogHeader>
             <DialogTitle>Ангилал засах</DialogTitle>
             <DialogDescription>
-              <Input type="text" placeholder="Ангилалын нэр" className="w-[291px] mt-2 mb-3" />
+              <Input
+                type="text"
+                placeholder="Ангилалын нэр"
+                className="w-[291px] mt-2 mb-3"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
             </DialogDescription>
-            <Button className="w-[291px]" data-testid="edit-submit">
-              Шинэчлэх
+            <Button
+              className="w-[291px]"
+              data-testid="edit-submit"
+              onClick={handleUpdate}
+              disabled={updateLoading}
+            >
+              {updateLoading ? 'Шинэчилж байна...' : 'Шинэчлэх'}
             </Button>
           </DialogHeader>
         </DialogContent>
@@ -61,7 +93,7 @@ const DeleteUpdateDialog = ({ categoryId, onSuccess }: Props) => {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button  data-testid={`category-${categoryId}-delete-button`}>
+          <button data-testid={`category-${categoryId}-delete-button`}>
             <Trash className="w-4 h-4" />
           </button>
         </DialogTrigger>

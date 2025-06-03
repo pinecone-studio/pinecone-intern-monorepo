@@ -5,15 +5,14 @@ import { CheckCircle } from 'lucide-react';
 import { useGetCategoriesQuery } from '@/generated';
 import DeleteUpdateDialog from './DeleteUpdateDialog';
 
-
 const MenuList = () => {
-  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const { data, loading, error, refetch } = useGetCategoriesQuery();
 
   const handleSuccess = () => {
-    setSuccess(true);
-    refetch(); 
-    setTimeout(() => setSuccess(false), 3000);
+    setSuccessMessage('Амжилттай'); 
+    refetch();
+    setTimeout(() => setSuccessMessage(''), 3000);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -26,22 +25,26 @@ const MenuList = () => {
           {data?.getCategories?.map((category) =>
             category ? (
               <div
-              data-testid={`category-row-${category._id}`}
+                data-testid={`category-row-${category._id}`}
                 key={category._id}
                 className="flex justify-between px-3 py-5 text-[16px] border-b"
               >
                 {category.name}
-                <DeleteUpdateDialog categoryId={category._id} onSuccess={handleSuccess}/>  
+                <DeleteUpdateDialog
+                  categoryId={category._id}
+                  initialName={category.name}
+                  onSuccess={handleSuccess}
+                />
               </div>
             ) : null
           )}
         </div>
       </div>
 
-      {success && (
+      {successMessage && (
         <div className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg flex items-center gap-2 z-50">
           <CheckCircle className="w-5 h-5" />
-          <span>Амжилттай устгалаа!</span>
+          <span>{successMessage}</span>
         </div>
       )}
     </>

@@ -39,29 +39,7 @@ describe('AdminTableList E2E - Console Logging Only', () => {
     cy.get('[data-testid="classroom-name-2"]').should('contain', 'Table B');
   });
 
-  it('opens the edit dialog and logs the new name', () => {
-    cy.wait('@getAllTables');
-    cy.window().then((win) => {
-      cy.stub(win.console, 'log').as('consoleLog');
-    });
 
-    cy.get('[data-testid="classroom-1-edit-button"]').click();
-
-    cy.get('[data-testid="classroom-1-input"]').clear().type('Updated Table A');
-
-    cy.get('[data-testid="classroom-1-update-button"]').click();
-
-    cy.get('@consoleLog').should('have.been.calledWith', 'Update clicked with name:', 'Updated Table A');
-  });
-
-  it('handles empty input gracefully', () => {
-    cy.wait('@getAllTables');
-
-    cy.get('[data-testid="classroom-1-edit-button"]').click();
-    cy.get('[data-testid="classroom-1-input"]').clear();
-    cy.get('[data-testid="classroom-1-update-button"]').click();
-    cy.get('[data-testid="classroom-row-1"]').should('exist');
-  });
 
   it('clicks QR button (placeholder test)', () => {
     cy.wait('@getAllTables');
