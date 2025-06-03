@@ -2,7 +2,7 @@
 import { Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useState } from 'react';
 import { useFetchAllProfileQuery } from '@/generated';
-import Loading from '@/app/_components/Loading';
+
 import Image from 'next/image';
 
 const SwipeFeature = () => {
@@ -14,7 +14,7 @@ const SwipeFeature = () => {
 
   const currentProfile = profiles?.[currentIndex];
 
-  if (!profiles) return <Loading />;
+  if (!profiles) return;
 
   const handleSwipe = (action: 'like' | 'dislike') => {
     const actionMessages: Record<'like' | 'dislike', string> = {
