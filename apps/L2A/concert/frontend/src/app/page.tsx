@@ -3,10 +3,10 @@
 import { Concert, useConcertsQuery } from '@/generated';
 import HeroSection from './_featured/HeroSection';
 import ConcertCard from './_components/ConcertCard';
-import LoadingText from './_components/LoadingText';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardTrigger } from '@/components/ui/hover-card';
+import LoadingAnimation from './_components/LoadingAnimation';
 
 const Page = () => {
   const { data, loading } = useConcertsQuery();
@@ -15,7 +15,7 @@ const Page = () => {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center px-4 py-8" data-testid="dashboard">
       {loading ? (
-        <LoadingText />
+        <LoadingAnimation />
       ) : data?.concerts ? (
         data.concerts.length > 0 ? (
           <div className="flex flex-col items-center w-full gap-12">

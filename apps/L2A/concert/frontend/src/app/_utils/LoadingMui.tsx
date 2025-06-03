@@ -4,7 +4,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 const LinearColor = () => {
   return (
-    <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+    <Stack sx={{ width: '25vh', color: 'grey.500', marginLeft: '-110px' }} spacing={2}>
       <LinearProgress color="primary" />
     </Stack>
   );

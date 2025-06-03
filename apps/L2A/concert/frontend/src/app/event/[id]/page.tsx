@@ -7,7 +7,7 @@ import SeatInfo from './_components/SeatInfo';
 import { useParams } from 'next/navigation';
 import ConcertBanner from './_components/ConcertBanner';
 import RecommendConcert from './_components/RecommendConcert';
-import LoadingText from '@/app/_components/LoadingText';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 const Page: FC = () => {
   const { id }: { id: string } = useParams();
@@ -20,7 +20,7 @@ const Page: FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <LoadingText />
+        <LoadingAnimation />
       </div>
     );
   }

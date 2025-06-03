@@ -7,9 +7,9 @@ import { ResetPasswordStep3Schema } from '../../utils/reset-password-steps/reset
 import z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import LoadingText from '@/app/_components/LoadingText';
 import { ArrowLeftCircle } from 'lucide-react';
 import { useOtpStep3Mutation } from '@/generated';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 const PassRecoveryStep3 = ({ setStep }: { setStep: Dispatch<SetStateAction<number>> }) => {
   const [OtpStep3] = useOtpStep3Mutation();
@@ -66,7 +66,7 @@ const PassRecoveryStep3 = ({ setStep }: { setStep: Dispatch<SetStateAction<numbe
                 )}
               />
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} className="w-full">
-                {form.formState.isSubmitting ? <LoadingText /> : 'Үргэлжлүүлэх'}
+                {form.formState.isSubmitting ? <LoadingAnimation /> : 'Үргэлжлүүлэх'}
               </Button>
             </div>
           </form>
