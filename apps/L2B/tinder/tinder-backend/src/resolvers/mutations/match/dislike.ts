@@ -16,7 +16,6 @@ export const dislike: MutationResolvers['dislike'] = async (_: unknown, { likerI
   await liked.save();
 
   return {
-    match: false,
-    matchedUserId: undefined,
+    disliked: true,
   };
 };

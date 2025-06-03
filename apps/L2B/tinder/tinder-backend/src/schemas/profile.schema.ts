@@ -54,6 +54,9 @@ export const profileTypeDefs = gql`
     match: Boolean!
     matchedUserId: ID
   }
+  type Disliked {
+    disliked: Boolean!
+  }
 
   type Query {
     fetchProfile(_id: ID!): Profile!
@@ -65,6 +68,6 @@ export const profileTypeDefs = gql`
     updateProfile(id: ID!, input: UpdateProfileInput!): Profile!
     updateProfileImage(userId: ID!, images: [String!]!): Profile
     like(likerId: ID!, likedId: ID!): MatchResponse
-    dislike(likerId: ID!, likedId: ID!): MatchResponse
+    dislike(likerId: ID!, likedId: ID!): Disliked
   }
 `;

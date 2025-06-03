@@ -42,8 +42,7 @@ describe('dislike mutation', () => {
     expect(liked.save).toHaveBeenCalled();
 
     expect(result).toEqual({
-      match: false,
-      matchedUserId: undefined,
+      disliked: true,
     });
   });
 
