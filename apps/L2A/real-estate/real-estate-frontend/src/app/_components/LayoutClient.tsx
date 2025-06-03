@@ -12,7 +12,7 @@ const LayoutClient = ({ children }: { children: ReactNode }) => {
   return (
     <>
       {!hideLayout && <Header />}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-[#F4F4F5]">{children}</main>
       {!hideLayout && <Footer />}
     </>
   );
