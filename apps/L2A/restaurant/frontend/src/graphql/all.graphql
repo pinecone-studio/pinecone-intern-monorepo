@@ -81,3 +81,14 @@ query getProducts {
     updatedAt
   }
 }
+mutation DeleteProduct($input: DeleteProductInput!) {
+  deleteProduct(input: $input) {
+    _id
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}

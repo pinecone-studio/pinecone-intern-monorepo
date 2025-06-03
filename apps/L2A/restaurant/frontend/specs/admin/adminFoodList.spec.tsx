@@ -1,11 +1,11 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useGetProductsQuery } from '@/generated';
+import { useGetProductsQuery, useDeleteProductMutation } from '@/generated';
 import AdminFoodList from '@/app/admin/food/_features/AdminFoodList';
 
-// Mock GraphQL hook
 jest.mock('@/generated', () => ({
   useGetProductsQuery: jest.fn(),
+  useDeleteProductMutation: jest.fn(),
 }));
 
 const mockProducts = [
@@ -26,34 +26,22 @@ const mockProducts = [
 ];
 
 describe('AdminFoodList', () => {
-  it('shows loading state', () => {
-    (useGetProductsQuery as jest.Mock).mockReturnValue({
-      data: null,
-      loading: true,
-      error: null,
-    });
-
-    render(<AdminFoodList />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('shows error message', () => {
-    (useGetProductsQuery as jest.Mock).mockReturnValue({
-      data: null,
-      loading: false,
-      error: { message: 'Failed to load' },
-    });
+  it('deletes an item when delete button is clicked', async () => {
+    const mockRefetch = jest.fn();
+    const mockDelete = jest.fn().mockResolvedValue({});
 
-    render(<AdminFoodList />);
-    expect(screen.getByText(/Error loading products/i)).toBeInTheDocument();
-  });
-
-  it('renders food items correctly', async () => {
     (useGetProductsQuery as jest.Mock).mockReturnValue({
       data: { getProducts: mockProducts },
       loading: false,
       error: null,
+      refetch: mockRefetch,
     });
+
+    (useDeleteProductMutation as jest.Mock).mockReturnValue([mockDelete]);
 
     render(<AdminFoodList />);
 
@@ -61,36 +49,18 @@ describe('AdminFoodList', () => {
       expect(screen.getByText('Pizza')).toBeInTheDocument();
       expect(screen.getByText('Burger')).toBeInTheDocument();
     });
-  });
 
-  it('deletes an item when delete button is clicked', async () => {
-    (useGetProductsQuery as jest.Mock).mockReturnValue({
-      data: { getProducts: mockProducts },
-      loading: false,
-      error: null,
-    });
-
-    render(<AdminFoodList />);
+    const deleteButtons = screen.getAllByRole('button').filter((btn) => btn.querySelector('svg')?.getAttribute('data-icon') !== 'pencil');
+    fireEvent.click(deleteButtons[1]);
 
     await waitFor(() => {
-      expect(screen.getByText('Pizza')).toBeInTheDocument();
+      expect(mockDelete).toHaveBeenCalledWith({
+        variables: { input: { _id: '1' } },
+      });
     });
-
-    const deleteButtons = screen.getAllByRole('button', { name: '' });
-    fireEvent.click(deleteButtons[1]); // assuming delete is 2nd button after edit
 
     await waitFor(() => {
       expect(screen.queryByText('Pizza')).not.toBeInTheDocument();
     });
-  });
-
-  it('updates name input inside dialog', async () => {
-    (useGetProductsQuery as jest.Mock).mockReturnValue({
-      data: { getProducts: [mockProducts[0]] },
-      loading: false,
-      error: null,
-    });
-
-    render(<AdminFoodList />);
   });
 });

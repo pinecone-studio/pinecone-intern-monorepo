@@ -8,12 +8,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useGetProductsQuery } from '@/generated';
+import { useGetProductsQuery, useDeleteProductMutation } from '@/generated';
 import { useState, useEffect } from 'react';
 
 const AdminFoodList = () => {
-  const { data, loading, error } = useGetProductsQuery();
-  console.log('AdminFoodList data:', data);
+  const { data, loading, error, refetch } = useGetProductsQuery();
+  const [deleteProductMutation] = useDeleteProductMutation();
   const [foodItems, setFoodItems] = useState<any[]>([]);
 
   useEffect(() => {
@@ -26,8 +26,14 @@ const AdminFoodList = () => {
     setFoodItems((prev) => prev.map((item) => (item._id === itemId ? { ...item, ...changes } : item)));
   };
 
-  const handleDelete = (itemId: string) => {
-    setFoodItems((prev) => prev.filter((item) => item._id !== itemId));
+  const handleDelete = async (itemId: string) => {
+    try {
+      await deleteProductMutation({ variables: { input: { _id: itemId } } });
+      setFoodItems((prev) => prev.filter((item) => item._id !== itemId));
+      await refetch();
+    } catch (err) {
+      console.error('Failed to delete product:', err);
+    }
   };
 
   if (loading) return <p>Loading...</p>;
