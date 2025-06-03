@@ -4,14 +4,14 @@ import React from 'react';
 import { Calendar } from 'lucide-react';
 import Image from 'next/image';
 import { Concert, useFeaturedEventsQuery } from '@/generated';
-import LoadingText from '../_components/LoadingText';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import LoadingAnimation from '../_components/LoadingAnimation';
 
 const HeroSection = () => {
   const { data, loading } = useFeaturedEventsQuery();
   const concerts = data?.featuredEvents?.filter((c): c is Concert => c !== null) ?? [];
 
-  if (loading) return <LoadingText />;
+  if (loading) return <LoadingAnimation />;
 
   return (
     <Carousel data-testid="hero-section" className="w-full">

@@ -3,11 +3,11 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { Concert, useConcertsQuery } from '@/generated';
-import LoadingText from '@/app/_components/LoadingText';
 import { useState } from 'react';
 import DeleteConcertButton from './DeleteConcert';
 import FeatureAnEvent from './FeatureAnEvent';
 import EditEventInfo from '../_featured/EditEventInfo';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 const TicketDashboard = () => {
   const { data, loading, error } = useConcertsQuery();
@@ -21,7 +21,7 @@ const TicketDashboard = () => {
   const start = (page - 1) * itemsPerPage;
   const end = page * itemsPerPage;
   if (loading) {
-    return <LoadingText />;
+    return <LoadingAnimation />;
   }
 
   const calculate = (concert: Concert): number => {

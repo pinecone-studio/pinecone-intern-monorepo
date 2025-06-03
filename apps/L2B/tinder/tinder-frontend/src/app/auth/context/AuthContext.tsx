@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { useRouter } from 'next/navigation';
 import { Profile, useFetchProfileQuery, useGetCurrentUserQuery, useSignInMutation } from '@/generated';
 import { toast } from 'sonner';
+import Loading from '@/app/_components/Loading';
 
 type UserType = {
   email: string;
@@ -24,6 +25,7 @@ type AuthContextType = {
   handleSignIn: (_values: valuesType) => void;
   signInLoading: boolean;
   currentProfile: Profile | undefined;
+  JWT: string;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [user, setUser] = useState<UserType | null>(null);
   const [JWT, setJWT] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [signInMutation, { loading: signInLoading }] = useSignInMutation({
     onError: (error) => {
@@ -83,15 +86,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
       setUser(userData as UserType);
     }
+    setLoading(false);
   }, [data]);
 
+  if (loading) {
+    return <Loading />;
+  }
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
     router.push('/auth/sign-in');
   };
 
-  return <AuthContext.Provider value={{ logout, user, handleSignIn, signInLoading, currentProfile }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ logout, user, handleSignIn, signInLoading, currentProfile, JWT }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
