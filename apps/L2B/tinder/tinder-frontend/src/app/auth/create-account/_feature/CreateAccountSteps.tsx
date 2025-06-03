@@ -8,11 +8,16 @@ import FifthStep from '../_components/FifthStep';
 import Image from 'next/image';
 import { ProfileFormData } from '@/app/utils/types';
 import { useCreateProfileMutation } from '@/generated';
+import { useAuth } from '../../context/AuthContext';
 
 
 const CreateAccountSteps = () => {
   const [step, setStep] = useState<number>(0);
   const [createProfile]= useCreateProfileMutation()
+
+  const {user} = useAuth();
+
+  
 
   const [formData, setFormData] = useState<ProfileFormData>({
     interestedIn: '',
@@ -24,6 +29,10 @@ const CreateAccountSteps = () => {
     schoolOrWork: '',
     images: [],
   });
+
+  if (!user) {
+    return <div className="text-red-500">You must be logged in to create profile.</div>;
+  }
 
   const Steps = [FirstStep, SecondStep, ThirdStep, FourthStep, FifthStep][step];
 
@@ -60,7 +69,7 @@ const CreateAccountSteps = () => {
   return (
     <div className="flex flex-col gap-[24px]  w-full items-center mt-[80px]">
       <Image src="/tinder.svg" width={100} height={25} alt="logo" />
-      <Steps setStep={setStep} step={step} updateFormData = {updateFormData} handleSubmit= {handleSubmit} />
+      <Steps setStep={setStep} step={step} updateFormData = {updateFormData} handleSubmit= {handleSubmit} userId={user._id}/>
     </div>
   );
 };

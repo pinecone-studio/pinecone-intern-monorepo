@@ -5,26 +5,31 @@ import { Button } from '@/components/ui/button';
 import { StepFourthCart } from '../_components/StepFourthCart';
 import { ImageUpload } from '../_components/ImageUpload';
 import { uploadToCloudinary } from '@/app/utils/upload-to-cloudinary';
-import { useAuth } from '../../context/AuthContext';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void, handleSubmit: (_urls: string[]) => void}) => {
+const ImageUploadPage = ({
+  setStep,
+  updateFormData,
+  handleSubmit,
+  userId,
+}: {
+  setStep: (_step: number) => void;
+  updateFormData: (_data: any) => void;
+  handleSubmit: (_urls: string[]) => void;
+  userId: string;
+}) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState('');
 
-  const {user} = useAuth();
-
-  if (!user) {
-    return <div className="text-red-500">You must be logged in to upload images.</div>;
-  }
+  
 
   const handleNext = async () => {
     if (!selectedImages.length) {
       setError('Please select a photo to upload.');
       return;
     } else {
-      const urls = await uploadToCloudinary(selectedFiles, user._id);
+      const urls = await uploadToCloudinary(selectedFiles, userId);
 
       
      updateFormData({ images: urls });
@@ -81,10 +86,10 @@ const ImageUploadPage = ({ setStep, updateFormData, handleSubmit }: { setStep: (
         <ImageUpload handleImageUpload={handleImageUpload} />
 
         <div className="flex justify-between">
-          <Button data-cy="step-button" variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
+          <Button data-cy="back-button" variant="outline" className="px-6 border-[#E4E4E7] border rounded-full" onClick={() => setStep(2)}>
             Back
           </Button>
-          <Button className="bg-gradient-to-r from-pink-500 to-red-500 px-6 text-white hover:from-pink-600 hover:to-red-600 rounded-full" onClick={handleNext}>
+          <Button data-cy="step-button" className="bg-gradient-to-r from-pink-500 to-red-500 px-6 text-white hover:from-pink-600 hover:to-red-600 rounded-full" onClick={handleNext}>
             Next
           </Button>
         </div>
