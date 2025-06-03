@@ -13,6 +13,9 @@ const profileSchema = new Schema(
       school: { type: String, required: true },
     },
     images: { type: [String], required: true },
+    liked: [{ type: Types.ObjectId, ref: 'User', required: true }],
+    disliked: [{ type: Types.ObjectId, ref: 'User', required: true }],
+    matched: [{ type: Types.ObjectId, ref: 'User', required: true }],
   },
   { timestamps: true }
 );
