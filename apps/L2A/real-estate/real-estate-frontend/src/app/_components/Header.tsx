@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Header = () => {
   const { user, isLoggedIn, loading } = useAuth();
@@ -21,16 +22,17 @@ const Header = () => {
   return (
     <header className="border-b">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center py-2 px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
-          <span className="font-bold">Home Vault</span>
-        </Link>
+        <motion.div className="flex items-start gap-2 cursor-pointer">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="logo" width={24} height={24} className="object-contain" />
+            <span className="font-bold hover:text-gray-500">Home Vault</span>
+          </Link>
+        </motion.div>
 
         <div className="flex gap-4 items-center">
-          <Link href="/create-post" className="bg-orange-500 text-white px-4 py-1.5 rounded-md">
-            + Зар оруулах
-          </Link>
-
+            <Link href="/create-post" className="bg-orange-500 text-white px-4 py-1.5 rounded-md hover:bg-orange-600">
+              + Зар оруулах
+            </Link>
           {!loading && (
             <>
               {isLoggedIn ? (
@@ -53,8 +55,12 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Link href="/signup">Бүртгүүлэх</Link>
-                  <Link href="/signin">Нэвтрэх</Link>
+                  <motion.div className="flex items-start gap-2 cursor-pointer hover:text-gray-500">
+                    <Link href="/signup">Бүртгүүлэх</Link>
+                  </motion.div>
+                  <motion.div className="flex items-start gap-2 cursor-pointer hover:text-gray-500">
+                    <Link href="/signin">Нэвтрэх</Link>
+                  </motion.div>
                 </>
               )}
             </>
