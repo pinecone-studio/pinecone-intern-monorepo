@@ -70,3 +70,14 @@ mutation AddProduct($input: AddProductInput!) {
     updatedAt
   }
 }
+query getProducts {
+  getProducts {
+    _id
+    name
+    price
+    status
+    images
+    createdAt
+    updatedAt
+  }
+}
