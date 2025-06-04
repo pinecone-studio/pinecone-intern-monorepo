@@ -17,8 +17,6 @@ const CreateAccountSteps = () => {
 
   const {user} = useAuth();
 
-  
-
   const [formData, setFormData] = useState<ProfileFormData>({
     interestedIn: '',
     age: 0,

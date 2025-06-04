@@ -11,7 +11,7 @@ describe('Profile page', () => {
   it('should open calendar and select a valid date', () => {
     cy.get('[data-testid="profile-calendar"]').click();
 
-    cy.contains('15').click();
+    cy.contains('1').click();
   });
   it('should populate form with currentProfile values', () => {
     cy.get('input[name="name"]').should('have.value', 'Burhan');
@@ -49,4 +49,7 @@ describe('Profile page', () => {
     cy.get('[data-testid="profile-submitButton"]').click();
     cy.contains('successfully changed!', { timeout: 5000 }).should('be.visible');
   });
+
+ 
+
 });

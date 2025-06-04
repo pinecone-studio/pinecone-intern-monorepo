@@ -35,6 +35,8 @@ describe('SwipeFeature component test', () => {
     cy.get('[data-testid="chevron-left"]').should('exist').click();
     cy.get('[data-testid="chevron-left"]').should('exist').click();
   });
+
+
   it('Displays "No more profiles" after swiping all profiles', () => {
     cy.get('button[aria-label="Like"]').should('exist');
 
