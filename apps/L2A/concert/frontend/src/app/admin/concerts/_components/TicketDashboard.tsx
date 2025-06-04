@@ -27,10 +27,7 @@ const TicketDashboard = ({ searchTerm }: TicketDashboardProps) => {
   const itemsPerPage = 5;
   const start = (page - 1) * itemsPerPage;
   const end = page * itemsPerPage;
-  
-  if (loading) {
-    return <LoadingAnimation />;
-  }
+
   const totalPages = Math.ceil(concerts.length / itemsPerPage);
   const calculate = (concert: Concert): number => {
     return concert.seatData.reduce((prev, acc) => {
