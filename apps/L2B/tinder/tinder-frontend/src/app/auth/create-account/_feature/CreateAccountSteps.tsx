@@ -73,4 +73,3 @@ const CreateAccountSteps = () => {
 };
 
 export default CreateAccountSteps;
-
