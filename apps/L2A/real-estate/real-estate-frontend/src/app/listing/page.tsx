@@ -15,7 +15,7 @@ import RoomsComp from './_components/RoomsComp';
 import RestRoomsComp from './_components/RestRoomsComp';
 import OthersComp from './_components/OthersComp';
 import Link from 'next/link';
-import { Skeleton } from '@/components/ui/skeleton'; 
+import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonCard = () => (
   <div
@@ -118,20 +118,20 @@ const HomeListingPage = () => {
             {loading
               ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
               : data?.filterPosts?.map((item) => (
-                  <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
-                    <ListingCard
-                      key={item?._id}
-                      price={item?.price}
-                      totalRooms={item?.totalRooms}
-                      restrooms={item?.restrooms}
-                      size={item?.size}
-                      city={item?.location?.city}
-                      district={item?.location?.district}
-                      image={item?.images?.[0]}
-                      title={item?.title}
-                    />
-                  </Link>
-                ))}
+                <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
+                  <ListingCard
+                    key={item?._id}
+                    price={item?.price}
+                    totalRooms={item?.totalRooms}
+                    restrooms={item?.restrooms}
+                    size={item?.size}
+                    city={item?.location?.city}
+                    district={item?.location?.district}
+                    image={item?.images?.[0]}
+                    title={item?.title}
+                  />
+                </Link>
+              ))}
           </div>
         </section>
       </main>
