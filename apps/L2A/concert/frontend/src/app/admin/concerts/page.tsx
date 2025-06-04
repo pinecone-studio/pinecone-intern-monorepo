@@ -1,8 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import TicketDashboard from './_components/TicketDashboard';
 import TicketFilterBar from './_components/TicketFilterBar';
 import AddTicketDialog from './_featured/AddTicketDialog';
 
 const Page = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   return (
     <div className="flex flex-col w-full h-screen bg-secondary">
       <div className="flex flex-col items-center w-full h-full p-10">
@@ -14,8 +18,8 @@ const Page = () => {
           <AddTicketDialog />
         </div>
         <div className="w-3/4 h-[1px] bg-gray-200 mt-7 "></div>
-        <TicketFilterBar />
-        <TicketDashboard />
+        <TicketFilterBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <TicketDashboard searchTerm={searchTerm} />
       </div>
     </div>
   );

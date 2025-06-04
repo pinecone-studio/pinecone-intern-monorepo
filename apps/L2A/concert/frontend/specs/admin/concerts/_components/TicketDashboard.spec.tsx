@@ -55,6 +55,7 @@ const mockError = [
     error: new GraphQLError('failed'),
   },
 ];
+
 describe('TicketDashboard Component', () => {
   beforeEach(() => {
     jest.spyOn(window, 'prompt').mockImplementation(() => 'Шинэ нэр');
@@ -67,7 +68,7 @@ describe('TicketDashboard Component', () => {
   it('should render all initial rows', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={true}>
-        <TicketDashboard />
+        <TicketDashboard searchTerm="" />
       </MockedProvider>
     );
 
@@ -75,6 +76,7 @@ describe('TicketDashboard Component', () => {
       expect(screen.getByTestId('row-0')).toBeInTheDocument();
       expect(screen.getByTestId('row-1')).toBeInTheDocument();
     });
+
     const pagination = screen.getByTestId('page-btn-1');
     fireEvent.click(pagination);
   });
@@ -82,39 +84,54 @@ describe('TicketDashboard Component', () => {
   it('should click on delete button', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={true}>
-        <TicketDashboard />
+        <TicketDashboard searchTerm="" />
       </MockedProvider>
     );
 
     await waitFor(() => {
       expect(screen.getByTestId('delete-btn-1')).toBeInTheDocument();
     });
-    const deletebutton = screen.getByTestId('delete-btn-1');
-    fireEvent.click(deletebutton);
+
+    const deleteButton = screen.getByTestId('delete-btn-1');
+    fireEvent.click(deleteButton);
   });
 
   it('should click on feature button', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={true}>
-        <TicketDashboard />
+        <TicketDashboard searchTerm="" />
       </MockedProvider>
     );
 
     await waitFor(() => {
       expect(screen.getByTestId('favorite-btn-1')).toBeInTheDocument();
     });
-    const favoritebutton = screen.getByTestId('favorite-btn-1');
-    fireEvent.click(favoritebutton);
+
+    const featureButton = screen.getByTestId('favorite-btn-1');
+    fireEvent.click(featureButton);
   });
 
-  it('should throw an eror', async () => {
+  it('should display error message on query failure', async () => {
     render(
       <MockedProvider mocks={mockError} addTypename={false}>
-        <TicketDashboard />
+        <TicketDashboard searchTerm="" />
       </MockedProvider>
     );
+
     await waitFor(() => {
       expect(screen.getByText(/failed/i)).toBeInTheDocument();
+    });
+  });
+  it('should filter concerts by title', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={true}>
+        <TicketDashboard searchTerm="Concert 1" />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('row-0')).toBeInTheDocument();
+      expect(screen.queryByTestId('row-1')).not.toBeInTheDocument();
     });
   });
 });
