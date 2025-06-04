@@ -4,7 +4,7 @@ import React from 'react';
 
 const GuestHeader = () => {
   return (
-    <div className="w-[80%] flex justify-between items-center mt-3">
+    <div data-testid="guest-header" className="w-[80%] flex justify-between items-center mt-3">
       <Link href={'/'}>
         <Image src="header.svg" width={100} height={25} alt="header-image" />
       </Link>
