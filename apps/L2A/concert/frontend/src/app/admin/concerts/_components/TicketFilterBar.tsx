@@ -1,10 +1,16 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, SetStateAction } from 'react';
 import { format } from 'date-fns';
 import { CalendarIcon, CirclePlus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '../../../../../../../../../libs/shadcn/src/lib/utils';
-const TicketFilterBar = () => {
+
+type TicketFilterBarProps = {
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<SetStateAction<string>>;
+};
+
+const TicketFilterBar = ({ searchTerm, setSearchTerm }: TicketFilterBarProps) => {
   const [filters, setFilters] = useState<string[]>(['Davaidasha', 'Хурд']);
   const [field, setField] = useState<{ value: Date | null }>({ value: null });
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,11 +32,25 @@ const TicketFilterBar = () => {
     const selectedDate = e.target.valueAsDate;
     setField({ value: selectedDate });
   };
+
   return (
-    <div className="flex justify-between pt-4 pb-4 rounded-md  w-3/4 " data-testid="ticket-filter-bar">
+    <div className="flex justify-between pt-4 pb-4 rounded-md w-3/4" data-testid="ticket-filter-bar">
       <div className="flex gap-4" data-testid="filter-left-section">
-        <input type="text" placeholder="Тасалбар хайх" className="px-3 py-1 border border-gray-300 rounded-md w-60 text-sm" data-testid="search-input" />
-        <div className=" hidden xl:flex flex-wrap items-center gap-2 border border-gray-300 px-3 py-0.5 rounded-md bg-white" data-testid="filter-tags-container">
+        <input
+          data-testid="search-input"
+          type="text"
+          placeholder="Нэрээр хайх"
+          className="text-sm px-3 py-2 rounded-md bg-white border border-gray-300 hover:bg-gray-100 hidden xl:flex items-center gap-1"
+          aria-label="Хайлт хийх"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              // ('ym bh heregtei bn');
+            }
+          }}
+        />
+        <div className="hidden xl:flex flex-wrap items-center gap-2 border border-gray-300 px-3 py-0.5 rounded-md bg-white" data-testid="filter-tags-container">
           <button className="text-gray-500 hover:text-black flex items-center gap-1" data-testid="add-artist-button">
             <CirclePlus />
             <span className="text-black">Уран бүтээлч</span>
@@ -58,4 +78,5 @@ const TicketFilterBar = () => {
     </div>
   );
 };
+
 export default TicketFilterBar;
