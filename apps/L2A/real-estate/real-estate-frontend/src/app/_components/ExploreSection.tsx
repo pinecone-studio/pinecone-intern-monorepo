@@ -23,7 +23,7 @@ const exploreItems = [
     count: 670,
     imageUrl: '/office.png',
   },
-];
+]
 
 const ExploreSection = () => {
   return (

@@ -42,25 +42,23 @@ const CategoryCarousel = () => {
             1024: { slidesPerView: 4 },
           }}
         >
-          <div className=''>
-            {categories.map((category, index) => (
-              <SwiperSlide key={`carousel-${index}`}>
-                <Link href={`/listing`} className='block'>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      delay: index * 0.1,
-                      duration: 0.6,
-                      ease: 'easeOut',
-                    }}
-                  >
-                    <CategoryCard {...category} />
-                  </motion.div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </div>
+          {categories.map((category, index) => (
+            <SwiperSlide key={`carousel-${index}`}>
+              <Link href={`/listing`} className='block'>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: index * 0.1,
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <CategoryCard {...category} />
+                </motion.div>
+              </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>

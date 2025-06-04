@@ -1,35 +1,45 @@
+import { render, screen, fireEvent } from '@testing-library/react';
 import PreviewSection from '@/app/user-listing/edit/_components/PreviewSection';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
 
 describe('PreviewSection', () => {
-  it('renders preview title and description text', () => {
+  it('renders preview section correctly', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByText('Хэрэглэгчдэд харагдах')).toBeInTheDocument();
-    expect(
-      screen.getByText('Таны оруулсан мэдээлэл хэрэглэгчдэд харагдах үзүүлэлт')
-    ).toBeInTheDocument();
+
+expect(screen.getByRole('heading', { name: /Хэрэглэгчдэд харагдах/i })).toBeInTheDocument();
+expect(screen.getByText(/Таны оруулсан мэдээлэл хэрэглэгчдэд/i)).toBeInTheDocument();
+
+    expect(screen.getByTestId('listing-preview-card')).toBeInTheDocument();
+    expect(screen.getByTestId('submit-post-button')).toBeInTheDocument();
+    expect(screen.getByTestId('save-post-button')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-post-button')).toBeInTheDocument();
   });
 
-  it('renders the ListingPreviewCard with correct props', () => {
+  it('opens delete confirmation dialog when clicking delete', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByText('880,000,000₮')).toBeInTheDocument();
-    expect(screen.getByText('Seoul royal county хотхон')).toBeInTheDocument();
-    expect(screen.getByText('200 м²')).toBeInTheDocument();
-    expect(screen.getByText('4 өрөө')).toBeInTheDocument();
-    expect(screen.getByText('2 а.ц.ө')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Хан-Уул дүүрэг, 1-р хороо/)
-    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('delete-post-button'));
+
+    expect(screen.getByTestId('delete-confirm-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('confirm-delete-button')).toBeInTheDocument();
+    expect(screen.getByTestId('cancel-delete-button')).toBeInTheDocument();
+    expect(screen.getByText(/Та устгахдаа итгэлтэй байна уу/i)).toBeInTheDocument();
   });
 
-  it('renders all action buttons', () => {
+  it('closes delete dialog when clicking cancel', () => {
     render(<PreviewSection />);
-    
-    expect(screen.getByRole('button', { name: /Зар оруулах хүсэлт илгээх/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Хадгалаад гарах/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Устгах/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('delete-post-button'));
+    fireEvent.click(screen.getByTestId('cancel-delete-button'));
+    expect(screen.queryByTestId('delete-confirm-modal')).not.toBeInTheDocument();
+  });
+
+  it('closes delete dialog when clicking confirm delete', () => {
+    render(<PreviewSection />);
+
+    fireEvent.click(screen.getByTestId('delete-post-button'));
+    fireEvent.click(screen.getByTestId('confirm-delete-button'));
+    expect(screen.queryByTestId('delete-confirm-modal')).not.toBeInTheDocument();
   });
 });
+
