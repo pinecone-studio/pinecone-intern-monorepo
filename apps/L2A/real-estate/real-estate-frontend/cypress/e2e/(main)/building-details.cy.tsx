@@ -1,7 +1,31 @@
 describe('Building Details Component', () => {
   beforeEach(() => {
-    cy.visit('/admin');
-    cy.contains('0001').click();
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.operationName === 'GetPostById') {
+        req.reply({
+          data: {
+            getPostById: {
+              _id: '0001',
+              title: 'Тест байр',
+              propertyOwnerId: 'owner-123',
+              number: '99119922',
+              status: 'APPROVED',
+              yearBuilt: '2012',
+              windowsCount: 6,
+              windowType: 'Төмөр вакум',
+              doorType: 'Төмөр вакум',
+              floorNumber: 4,
+              totalFloors: 5,
+              floorMaterial: 'Ламинат',
+              balcony: '2 тагттай',
+              lift: 'Байгаа',
+            },
+          },
+        });
+      }
+    });
+
+    cy.visit('/admin/details/0001');
   });
 
   it('should render all building detail rows correctly', () => {

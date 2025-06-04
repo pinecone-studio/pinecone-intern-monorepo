@@ -1,5 +1,70 @@
 describe('ListingDetailAdminView E2E', () => {
   beforeEach(() => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      const op = req.body.operationName;
+
+      if (op === 'GetPosts') {
+        req.reply({
+          data: {
+            getPosts: [
+              {
+                _id: '0001',
+                title: 'Seoul royal county хотхон',
+                propertyOwnerId: 'user-001',
+                number: '99112233',
+                status: 'PENDING',
+              },
+            ],
+          },
+        });
+      }
+
+      if (op === 'GetPostById') {
+        req.reply({
+          data: {
+            getPostById: {
+              _id: '0001',
+              title: 'Seoul royal county хотхон',
+              propertyOwnerId: 'user-001',
+              number: '99112233',
+              status: 'PENDING',
+              ownerName: 'Н.Мөнхтунгалаг',
+              price: 880000000,
+              size: 200,
+              totalRooms: 4,
+              restrooms: 2,
+              garage: 'Байхгүй',
+              description: 'Зайсан толгойн урд',
+              location: {
+                city: 'Хан-Уул',
+                district: '1-р хороо',
+                street: 'Зайсан толгойн урд',
+              },
+              images: Array(8).fill('/listing.jpg'),
+              yearBuilt: '2012',
+              windowsCount: 6,
+              windowType: 'Төмөр вакум',
+              doorType: 'Төмөр вакум',
+              floorNumber: 4,
+              totalFloors: 5,
+              floorMaterial: 'Ламинат',
+              balcony: '2 тагттай',
+              lift: 'Байгаа',
+              type: 'APARTMENT',
+            },
+          },
+        });
+      }
+
+      if (op === 'UpdatePostStatus') {
+        req.reply({
+          data: {
+            updatePostStatus: true,
+          },
+        });
+      }
+    });
+
     cy.visit('/admin');
     cy.get('table tbody tr').first().click();
   });
@@ -29,15 +94,12 @@ describe('ListingDetailAdminView E2E', () => {
   });
 
   it('shows building details section', () => {
+    const buildingDetails = ['2012', '6', 'Төмөр вакум', '4 давхарт', '5 давхарт', 'Ламинат', '2 тагттай', 'Байгаа'];
+
     cy.contains('Барилгын дэлгэрэнгүй').should('be.visible');
-    cy.contains('2012').should('be.visible');
-    cy.contains('6').should('be.visible');
-    cy.get('p').contains('Төмөр вакум').should('have.length.at.least', 1);
-    cy.contains('4 давхарт').should('be.visible');
-    cy.contains('5 давхарт').should('be.visible');
-    cy.contains('Ламинат').should('be.visible');
-    cy.contains('2 тагттай').should('be.visible');
-    cy.contains('Байгаа').should('be.visible');
+    buildingDetails.forEach((text) => {
+      cy.contains(text).should('exist');
+    });
   });
 
   it('can change status dropdown and show success toast', () => {

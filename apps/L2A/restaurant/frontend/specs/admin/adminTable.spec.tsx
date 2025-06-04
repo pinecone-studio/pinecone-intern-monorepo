@@ -1,60 +1,103 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-
-import { useGetAllTablesQuery } from '@/generated';
+import React from 'react';
 import '@testing-library/jest-dom';
 import AdminTableList from '@/app/admin/table/_features/AdminTableList';
+import * as generatedHooks from '@/generated';
 
-// 1. MOCK THE HOOK
+// Mock all GraphQL hooks
 jest.mock('@/generated', () => ({
   useGetAllTablesQuery: jest.fn(),
+  useDeleteTableMutation: jest.fn(),
+  useUpdateTableMutation: jest.fn(),
 }));
 
-// 2. TEST DATA
+const mockDeleteTableMutation = jest.fn();
+const mockUpdateTableMutation = jest.fn();
+
 const mockTables = [
   {
     _id: '1',
     name: 'Table 1',
-    qrCodeUrl: 'https://example.com/qr1',
-    createdAt: '2023-01-01',
+    createdAt: '2025-01-01',
+    qrCodeUrl: 'https://example.com/qr1.png',
+  },
+  {
+    _id: '2',
+    name: 'Table 2',
+    createdAt: '2025-01-02',
+    qrCodeUrl: 'https://example.com/qr2.png',
   },
 ];
 
-// 3. SETUP
 beforeEach(() => {
-  (useGetAllTablesQuery as jest.Mock).mockReturnValue({
-    data: {
-      getAllTables: mockTables,
-    },
+  (generatedHooks.useGetAllTablesQuery as jest.Mock).mockReturnValue({
+    data: { getAllTables: mockTables },
+  });
+
+  (generatedHooks.useDeleteTableMutation as jest.Mock).mockReturnValue([mockDeleteTableMutation]);
+
+  (generatedHooks.useUpdateTableMutation as jest.Mock).mockReturnValue([mockUpdateTableMutation]);
+});
+
+it('renders classroom table rows', () => {
+  render(<AdminTableList />);
+  expect(screen.getByTestId('classroom-row-1')).toBeInTheDocument();
+  expect(screen.getByTestId('classroom-row-2')).toBeInTheDocument();
+});
+
+it('deletes a table when delete button is clicked', async () => {
+  render(<AdminTableList />);
+  const deleteButton = screen.getByTestId('classroom-1-delete-button');
+
+  fireEvent.click(deleteButton);
+
+  await waitFor(() => {
+    expect(mockDeleteTableMutation).toHaveBeenCalledWith({
+      variables: {
+        input: {
+          _id: '1',
+        },
+      },
+    });
   });
 });
 
-// 4. BASIC RENDER TEST
-test('renders table list with name', async () => {
+it('opens dialog and updates input value', () => {
   render(<AdminTableList />);
+  const editButton = screen.getByTestId('classroom-1-edit-button');
 
-  expect(await screen.findByTestId('classroom-name-1')).toHaveTextContent('Table 1');
+  fireEvent.click(editButton);
+
+  const input = screen.getByTestId('classroom-1-input');
+  fireEvent.change(input, { target: { value: 'Updated Table Name' } });
+
+  expect(input).toHaveValue('Updated Table Name');
 });
 
-// 5. EDIT DIALOG TEST
-test('opens edit dialog and types a name', async () => {
+it('updates table when update button is clicked', async () => {
   render(<AdminTableList />);
+  const editButton = screen.getByTestId('classroom-1-edit-button');
 
-  // Open dialog
-  fireEvent.click(await screen.findByTestId('classroom-1-edit-button'));
+  // Open the dialog
+  fireEvent.click(editButton);
 
-  // Wait for input inside dialog
-  const input = await screen.findByTestId('classroom-1-input');
+  // Change the input value
+  const input = screen.getByTestId('classroom-1-input');
+  fireEvent.change(input, { target: { value: 'Updated Table Name' } });
 
-  // Change input value
-  fireEvent.change(input, { target: { value: 'Шинэ нэр' } });
+  // Click the update button
+  const updateButton = screen.getByTestId('classroom-1-update-button');
+  fireEvent.click(updateButton);
 
-  expect(input).toHaveValue('Шинэ нэр');
-
-  // Click update button
-  fireEvent.click(screen.getByTestId('classroom-1-update-button'));
-
-  // We can mock console.log to test it later
+  // Assert update mutation is called correctly
   await waitFor(() => {
-    expect(screen.getByTestId('classroom-1-update-button')).toBeInTheDocument();
+    expect(mockUpdateTableMutation).toHaveBeenCalledWith({
+      variables: {
+        input: {
+          _id: '1',
+          name: 'Updated Table Name',
+        },
+      },
+    });
   });
 });

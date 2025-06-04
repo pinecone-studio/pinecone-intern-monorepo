@@ -7,8 +7,8 @@ import { ResetPasswordStep1Schema } from '../../utils/reset-password-steps/reset
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import LoadingText from '@/app/_components/LoadingText';
 import { useOtpMutation } from '@/generated';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 
 export const PassRecoveryStep1 = ({ setStep }: { setStep: Dispatch<SetStateAction<number>> }) => {
   const [OTP, { error, loading }] = useOtpMutation();
@@ -53,7 +53,7 @@ export const PassRecoveryStep1 = ({ setStep }: { setStep: Dispatch<SetStateActio
               />
               {error && <div className=" text-red-400 text-xs justify-center flex">{error.message}</div>}
               <Button disabled={!form.formState.isValid || loading} className="w-full bg-foreground">
-                {loading ? <LoadingText /> : 'Үргэлжлүүлэх'}
+                {loading ? <LoadingAnimation /> : 'Үргэлжлүүлэх'}
               </Button>
             </div>
           </form>

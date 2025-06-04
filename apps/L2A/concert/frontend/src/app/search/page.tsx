@@ -1,9 +1,9 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import LoadingText from '../_components/LoadingText';
 import { Concert, useSearchEventsMutation } from '@/generated';
 import ConcertCard from '../_components/ConcertCard';
+import LoadingAnimation from '../_components/LoadingAnimation';
 
 const SearchPage = () => {
   const name = useSearchParams().get('name');
@@ -31,7 +31,7 @@ const SearchPage = () => {
   if (loading) {
     return (
       <div className=" flex  justify-center">
-        <LoadingText />
+        <LoadingAnimation />
       </div>
     );
   }

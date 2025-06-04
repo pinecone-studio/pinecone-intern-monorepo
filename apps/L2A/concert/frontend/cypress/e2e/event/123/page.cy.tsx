@@ -1,12 +1,12 @@
 describe('Concert Page (real data) E2E', () => {
-  const CONCERT_ID = '6824b74c8db390ee25b237e9';
+  const CONCERT_ID = '682c156a1a614ed87f49673b';
 
   beforeEach(() => {
     cy.visit(`/event/${CONCERT_ID}`);
   });
 
   it('renders the banner with the correct title', () => {
-    cy.get('[data-testid="concert-banner"]').should('be.visible').and('contain', 'МОНГОЛЫН ГАЙХАМШИГТ УРЛАГИЙН ТОГЛОЛТ');
+    cy.get('[data-testid="concert-banner"]').should('be.visible').and('contain', 'NOMADIC LEGEND');
   });
 
   it('should find no concerts', () => {

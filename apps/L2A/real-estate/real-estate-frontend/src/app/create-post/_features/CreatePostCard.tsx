@@ -25,6 +25,7 @@ import { CreatePostRoom } from '../_components/CreatePostRoom';
 import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostParking } from '../_components/CreatePostParking';
 import { CreatePostCity } from '../_components/CreatePostCity';
+import { CreatePostName } from '../_components/CreatePostName';
 export const CreatePostCard = () => {  const formik = useCreatePostFormik();
   // istanbul ignore next
   const getFieldError = (touched: FormikTouched<any>, errors: FormikErrors<any>, field: string): string | undefined => {
@@ -39,6 +40,7 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
         <div className="p-2 flex flex-col gap-4 bg-[#FFFFFF] rounded-lg items-center">
           <div className="p-1 space-y-2 my-2">
           <CreatePostHeader />
+          <CreatePostName name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched,formik.errors,'name')}/>
               <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
               <CreatePostTitle title="title" value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'title')} />
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
@@ -128,7 +130,7 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
             area={formik.values.field}
             rooms={formik.values.room}
             restrooms={formik.values.restroom}
-            location={`${formik.values.location}, ${formik.values.location}`}
+            location={`${formik.values.location.district}, ${formik.values.location.city}, ${formik.values.location.address}`}
             onSubmit={formik.handleSubmit}
           />
             </div>

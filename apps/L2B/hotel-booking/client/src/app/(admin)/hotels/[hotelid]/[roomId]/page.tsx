@@ -6,6 +6,8 @@ import { ChevronRight } from 'lucide-react';
 import { RoomGeneralInfo } from './_features/RoomGeneralInfo';
 import { RoomServices } from './_features/RoomServices';
 import { RoomImages } from './_features/RoomImages';
+import Loading from '@/app/(main)/_components/Loading';
+
 
 const Breadcrumbs = ({ hotelId, hotelName }: { hotelId?: string | null; hotelName?: string | null }) => (
   <div className="flex items-center gap-2 text-sm text-gray-500 mb-6" data-cy="breadcrumbs">
@@ -28,10 +30,10 @@ const getRoomData = (room: any) => ({
   images: room.images?.filter((img: string | null): img is string => img !== null) ?? null,
   services: room.services
     ? Object.fromEntries(
-        Object.entries(room.services)
-          .filter(([_, v]) => Array.isArray(v))
-          .map(([k, v]) => [k, (v as (string | null)[]).filter((x): x is string => x !== null)])
-      )
+      Object.entries(room.services)
+        .filter(([_, v]) => Array.isArray(v))
+        .map(([k, v]) => [k, (v as (string | null)[]).filter((x): x is string => x !== null)])
+    )
     : undefined,
 });
 
@@ -42,9 +44,7 @@ const RoomDetailPage = () => {
 
   if (loading)
     return (
-      <div className="h-screen w-full flex items-center justify-center" data-cy="loading-state">
-        Loading...
-      </div>
+      <Loading />
     );
   const roomData = getRoomData(data?.room);
 

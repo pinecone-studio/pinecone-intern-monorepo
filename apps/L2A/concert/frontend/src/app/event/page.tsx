@@ -1,7 +1,7 @@
 'use client';
 import { Concert, useConcertsQuery } from '@/generated';
-import LoadingText from '../_components/LoadingText';
 import ConcertCard from '../_components/ConcertCard';
+import LoadingAnimation from '../_components/LoadingAnimation';
 
 const Page = () => {
   const { data, loading } = useConcertsQuery();
@@ -11,7 +11,7 @@ const Page = () => {
     <div className="bg-black text-white min-h-screen flex flex-col" data-testid="dashboard">
       {loading ? (
         <div className=" flex justify-center w-full min-h-screen">
-          <LoadingText />
+          <LoadingAnimation />
         </div>
       ) : data?.concerts ? (
         data.concerts.length > 0 ? (

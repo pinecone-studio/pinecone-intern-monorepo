@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useCreateUserMutation } from '@/generated';
 import { StepOneProps } from '../page';
 
-export const StepOne = ({ setStep, setEmail:setParentEmail }: StepOneProps) => {
+export const StepOne = ({ setStep, setEmail: setParentEmail }: StepOneProps) => {
   const [createUser, { loading }] = useCreateUserMutation();
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -33,14 +33,14 @@ export const StepOne = ({ setStep, setEmail:setParentEmail }: StepOneProps) => {
     }
   };
   return (
-    <form 
-      onSubmit={handleSubmit} 
+    <form
+      onSubmit={handleSubmit}
       className="space-y-5"
-      data-testid="step-one-form" 
+      data-testid="step-one-form"
       data-cy="step-one-form"
     >
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email
         </label>
         <input

@@ -15,7 +15,7 @@ export const HeaderAuth = ({ bg, user }: HeaderAuthProps) => {
   const linkTextClass = `${isBlue ? 'text-white' : 'text-black'} text-[14px] font-[400]`;
   return user ? (
     <div className="flex gap-8">
-      <Link className={linkTextClass} href="/booking-detail">
+      <Link className={linkTextClass} href="/my-booking">
         My Booking
       </Link>
       <Popover>

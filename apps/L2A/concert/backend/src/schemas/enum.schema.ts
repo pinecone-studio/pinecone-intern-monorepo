@@ -13,12 +13,6 @@ export const EnumTypeDefs = gql`
     CANCELLED
   }
 
-  enum TicketType {
-    VIP
-    STANDART
-    BACKSEAT
-  }
-
   enum RequestStatus {
     APPROVED
     PENDING

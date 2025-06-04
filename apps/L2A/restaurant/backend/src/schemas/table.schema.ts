@@ -27,5 +27,6 @@ export const typeDefs = gql`
     addTable(input: AddTableInput!): Table
     updateTable(input: UpdateTableInput!): Table
     deleteTable(input: DeleteTableInput!): Table
+    deleteTableById(tableId: ID!): Table!
   }
 `;

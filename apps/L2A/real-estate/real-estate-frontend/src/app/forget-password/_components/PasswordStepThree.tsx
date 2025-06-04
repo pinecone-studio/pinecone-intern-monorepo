@@ -57,18 +57,26 @@ export const PasswordStepThree = ({ email, testLoading }: PasswordStepThreeProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <p className="text-xl font-bold text-center">Create new password</p>
-
-      <input type="password" placeholder="New password" value={password} onChange={(e) => setPassword(e.target.value)} data-testid="new-password" className="w-full px-4 py-2 border rounded-md" />
-
-      <input
-        type="password"
-        placeholder="Confirm password"
-        value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
-        data-testid="confirm-password"
-        className="w-full px-4 py-2 border rounded-md"
-      />
+      <div >
+        <p className="text-xl font-bold text-center">Set new password</p>
+        <p className='text-[#71717A] text-sm flex justify-center items-center px-auto'>Use a minimum of 10 characters, including </p>
+        <p className='text-[#71717A] text-sm flex justify-center items-center px-auto'> uppercase letters, lowercase letters, and numbers</p>
+      </div>
+      <div>
+        <label className="text-sm text-[#09090B]">New Password</label>
+        <input type="password" placeholder="New password" value={password} onChange={(e) => setPassword(e.target.value)} data-testid="new-password" className="w-full px-4 py-2 border rounded-md" />
+      </div>
+      <div>
+        <label className="text-sm text-[#09090B]">Confirm Password</label>
+        <input
+          type="password"
+          placeholder="Confirm password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          data-testid="confirm-password"
+          className="w-full px-4 py-2 border rounded-md"
+        />
+      </div>
 
       {error && (
         <p data-testid="reset-error" className="text-red-500">

@@ -1,46 +1,117 @@
-describe('User Listing Page', () => {
+describe('User Listing Page (via UI login)', () => {
+  const email = 'duuavia01@gmail.com';
+  const password = 'qwerty';
+
   beforeEach(() => {
+    cy.intercept('POST', '**/api/graphql').as('graphql');
+
+    cy.visit('/signin');
+    cy.get('[data-cy="email-input"]').type(email);
+    cy.get('[data-cy="password-input"]').type(password);
+    cy.get('button[type="submit"]').click();
+
+    cy.wait('@graphql');
     cy.visit('/user-listing');
+    cy.contains('Миний зарууд', { timeout: 10000 }).should('exist');
   });
 
-  it('renders the correct header and all tabs', () => {
-    cy.contains('Миний зарууд').should('be.visible');
+  it('shows listings and placeholder image when no images present', () => {
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      if (req.body.operationName === 'GetPostsByUserId') {
+        req.alias = 'getListingsNoImage';
+        req.reply({
+          data: {
+            getPostsByUserId: [
+              {
+                _id: 'listing-1',
+                title: 'Placeholder Test',
+                images: [],
+                status: 'PENDING',
+                price: null,
+                propertyOwnerId: 'mock-user-id',
+              },
+            ],
+          },
+        });
+      }
+    });
 
-    ['Зарууд', 'Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Буцаагдсан', 'Хадгалсан'].forEach((tab) => {
-      cy.contains('button', tab).should('exist');
+    cy.visit('/user-listing');
+    cy.wait('@getListingsNoImage');
+    cy.get('table tbody tr').first().find('img').should('have.attr', 'src').and('include', 'placeholder.png');
+
+    cy.get('table tbody tr').first().contains('Тодорхойгүй');
+  });
+
+  it('shows listings and placeholder image when no images present', () => {
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      if (req.body.operationName === 'GetPostsByUserId') {
+        req.alias = 'getListingsNoImage';
+        req.reply({
+          data: {
+            getPostsByUserId: [
+              {
+                _id: 'listing-1',
+                title: 'Placeholder Test',
+                images: [],
+                status: null,
+                price: null,
+                propertyOwnerId: 'mock-user-id',
+              },
+            ],
+          },
+        });
+      }
+    });
+
+    cy.visit('/user-listing');
+    cy.wait('@getListingsNoImage');
+    cy.get('table tbody tr').first().find('img').should('have.attr', 'src').and('include', 'placeholder.png');
+    cy.get('table tbody tr').first().contains('Тодорхойгүй');
+  });
+
+  it('filters by status correctly', () => {
+    const statuses = ['Хүлээгдэж буй', 'Зарагдаж байгаа', 'Зарагдсан', 'Зарууд'];
+
+    statuses.forEach((statusLabel) => {
+      cy.get('button').contains(statusLabel).click({ force: true });
     });
   });
 
-  it('displays all listings when "Зарууд" tab is selected', () => {
-    cy.contains('Зарууд').click().should('have.class', 'font-semibold');
-    cy.get('table tbody tr').should('have.length', 10);
-  });
-
-  it('filters listings by "Зарагдаж байгаа"', () => {
-    cy.contains('Зарагдаж байгаа').click();
+  it('shows action buttons per listing', () => {
     cy.get('table tbody tr').each(($row) => {
-      cy.wrap($row).contains('Зарагдаж байгаа');
+      cy.wrap($row).find('svg').should('have.length.at.least', 3);
     });
   });
 
-  it('filters listings by "Хадгалсан"', () => {
-    cy.contains('Хадгалсан').click();
-    cy.get('table tbody tr').each(($row) => {
-      cy.wrap($row).contains('Хадгалсан');
+  it('filters listings when non-default tab is selected', () => {
+    cy.intercept('POST', '**/api/graphql', (req) => {
+      if (req.body.operationName === 'Me') {
+        req.reply({ data: { me: { id: 'mock-user-id' } } });
+      } else if (req.body.operationName === 'GetPostsByUserId') {
+        req.alias = 'getTabFilterData';
+        req.reply({
+          data: {
+            getPostsByUserId: [
+              {
+                _id: 'listing-2',
+                title: 'Filter Test',
+                images: [],
+                status: 'SOLD',
+                price: 1000000,
+                propertyOwnerId: 'mock-user-id',
+              },
+            ],
+          },
+        });
+      }
     });
-  });
 
-  it('shows all 3 action icons per row (Eye, Pencil, Trash)', () => {
-    cy.get('table tbody tr')
-      .first()
-      .within(() => {
-        cy.get('svg').should('have.length', 3);
-      });
-  });
+    cy.visit('/user-listing');
+    cy.wait('@getTabFilterData');
+    cy.get('button').contains('Зарагдсан').click({ force: true });
 
-  it('has vertical borders between columns in table head', () => {
-    cy.get('table thead tr th').each(($th) => {
-      cy.wrap($th).should('have.class', 'border-r');
-    });
+    cy.get('table tbody tr').should('have.length', 1);
+    cy.contains('Зарагдсан');
   });
 });

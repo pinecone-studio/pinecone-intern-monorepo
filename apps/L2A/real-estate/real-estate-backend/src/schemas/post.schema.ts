@@ -37,6 +37,7 @@ export const typeDefs = gql`
     _id: ID!
     propertyOwnerId: ID!
     title: String!
+    ownerName: String
     description: String
     number:Int
     feature: [feature]
@@ -53,6 +54,7 @@ export const typeDefs = gql`
     windowType: String
     roofMaterial: String
     floorNumber: Int
+    door:String
     balcony: Boolean
     totalFloors: Int
     lift: Boolean
@@ -64,6 +66,7 @@ export const typeDefs = gql`
   input CreatePostInput {
   propertyOwnerId: ID!
   title: String!
+  ownerName: String
   description: String!
   number:Int
   feature: [feature]
@@ -80,6 +83,7 @@ export const typeDefs = gql`
   windowType: String
   roofMaterial: String
   floorNumber: Int
+  door:String
   balcony: Boolean
   totalFloors: Int
   lift: Boolean

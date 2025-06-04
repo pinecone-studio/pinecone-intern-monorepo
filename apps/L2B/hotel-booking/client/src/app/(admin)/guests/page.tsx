@@ -5,6 +5,7 @@ import { FilterGuestsAdmin } from '../guests/_components/FilterGuestsAdmin';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GuestTable } from './_components/GuestsTable';
 import { Booking, useBookingsQuery } from '@/generated';
+import Loading from '@/app/(main)/_components/Loading';
 
 const Guests = () => {
   const { data, loading } = useBookingsQuery();
@@ -21,7 +22,7 @@ const Guests = () => {
     setFilteredBookings(filtered);
   }, []);
   if (loading) {
-    return <div className="w-full h-screen flex items-center justify-center text-gray-600">Loading guests...</div>;
+    return <Loading />
   }
 
   return (

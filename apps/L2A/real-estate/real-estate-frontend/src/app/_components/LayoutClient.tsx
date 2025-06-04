@@ -7,12 +7,12 @@ import Footer from './Footer';
 
 const LayoutClient = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-  const hideLayout = pathname === '/signin' || pathname === '/signup';
+  const hideLayout = pathname === '/signin' || pathname === '/signup' || pathname === '/forget-password';
 
   return (
     <>
       {!hideLayout && <Header />}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-[#F4F4F5]">{children}</main>
       {!hideLayout && <Footer />}
     </>
   );

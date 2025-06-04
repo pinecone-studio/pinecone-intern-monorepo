@@ -7,8 +7,7 @@ export * from './user/sign-up/send-otp';
 export * from './user/forget-password/forgot-password';
 export * from './user/sign-in/sign-in';
 export * from './profile/create-profile';
-
 export * from './profile/update-profile';
-
 export * from './profile/update-image';
-
+export * from './match/match';
+export * from './match/dislike';

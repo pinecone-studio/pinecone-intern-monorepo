@@ -7,6 +7,8 @@ import { FilterHotelsAdmin } from './_components/FilterHotelsAdmin';
 import { HotelsTable } from './_components/HotelsTable';
 import { Hotel, useCreateHotelMutation, useHotelsQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
+import Loading from '@/app/(main)/_components/Loading';
+
 const HotelsPage = () => {
   const router = useRouter();
   const { data, loading, refetch } = useHotelsQuery();
@@ -30,7 +32,7 @@ const HotelsPage = () => {
   }, []);
 
   if (loading) {
-    return <div className="h-screen w-full flex items-center justify-center text-gray-600">Loading hotels...</div>;
+    return <Loading />
   }
 
   const addHotel = async () => {

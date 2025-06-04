@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 describe('Listing Page', () => {
   beforeEach(() => {
     cy.visit('/listing');
@@ -86,6 +87,20 @@ describe('Listing Page', () => {
         .children()
         .should('have.length.greaterThan', 0);
     });
+    
+  it('should navigate to detailed page when a listing card is clicked', () => {
+  cy.intercept('POST', '**/graphql').as('getListings'); 
+
+  cy.visit('/listing');
+  cy.wait('@getListings'); 
+
+  cy.get('[data-cy="listing-grid"]')
+    .children()
+    .first()
+    .click();
+
+  cy.url().should('include', '/detailed/');
+});
 
     it('should show empty state when no results', () => {
       // eslint-disable-next-line no-secrets/no-secrets
@@ -98,6 +113,19 @@ describe('Listing Page', () => {
       cy.visit('/listing?type=NON_EXISTENT_TYPE');
       cy.get('[data-cy="listing-grid"]').children().should('have.length', 0);
     });
+
+      it('should show skeletons while loading', () => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      // eslint-disable-next-line max-nested-callbacks
+      req.on('response', (res) => {
+        res.setDelay(1000); 
+      });
+    }).as('slowPosts');
+
+    cy.visit('/listing');
+    cy.get('[data-testid="listing-skeleton"]').should('have.length', 6);
+    cy.wait('@slowPosts');
+  });
   });
 
   describe('Sorting', () => {
@@ -138,6 +166,4 @@ describe('Force trigger searchFromLanding hydration', () => {
     cy.wait(500);
     cy.get('[data-cy="sort-button"]').click();
   });
-});
-
-});
+});});

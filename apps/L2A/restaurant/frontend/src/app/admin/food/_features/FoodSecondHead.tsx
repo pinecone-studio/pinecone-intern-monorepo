@@ -7,22 +7,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Image from 'next/image';
+import { useAddProductMutation } from '@/generated';
+
 const FoodSecHead = () => {
   const [foodName, setFoodName] = useState('');
   const [price, setPrice] = useState('');
-  const [status, setStatus] = useState('active');
+  const [category, setCategory] = useState('');
+  const [addProduct] = useAddProductMutation();
+  const [status, setStatus] = useState<boolean>(true);
   const [image, setImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (!isDialogOpen) resetForm();
   }, [isDialogOpen]);
+
   const resetForm = () => {
     setFoodName('');
     setPrice('');
-    setStatus('active');
+    setStatus(true);
     setImage(null);
+    setCategory('');
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
@@ -37,14 +45,35 @@ const FoodSecHead = () => {
       alert('Only image files are allowed.');
     }
   };
-  const handleSubmit = () => {
-    if (!foodName || !price || !image) {
-      alert('Please fill out all fields and upload an image.');
-      return;
+
+  const isFormValid = () => {
+    if (!foodName || !price || !image || !category) {
+      alert('Бүх талбарыг бөглөнө үү.');
+      return false;
     }
-    console.log({ foodName, status, image, price });
-    setIsDialogOpen(false);
+    return true;
   };
+
+  const handleSubmit = async () => {
+    if (!isFormValid()) return;
+    try {
+      await addProduct({
+        variables: {
+          input: {
+            name: foodName,
+            price: parseFloat(price),
+            status,
+            images: [image as string],
+            category,
+          },
+        },
+      });
+      setIsDialogOpen(false);
+    } catch (e) {
+      alert('Хоол нэмэхэд алдаа гарлаа.');
+    }
+  };
+
   return (
     <div className="flex justify-between p-4 max-w-4xl mx-auto" data-testid="food-section-header">
       <h1 className="text-2xl font-bold" data-testid="food-title">
@@ -62,7 +91,7 @@ const FoodSecHead = () => {
           </DialogHeader>
           <div className="space-y-4 py-2">
             <Input placeholder="Хоолны нэр" value={foodName} onChange={(e) => setFoodName(e.target.value)} data-testid="food-name-input" />
-            <RadioGroup value={status} onValueChange={setStatus} className="flex justify-around" data-testid="status-radio-group">
+            <RadioGroup value={status ? 'active' : 'inactive'} onValueChange={(val) => setStatus(val === 'active')} className="flex justify-around" data-testid="status-radio-group">
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="active" id="active" data-testid="active-radio" />
                 <Label htmlFor="active" data-testid="active-label">
@@ -88,6 +117,7 @@ const FoodSecHead = () => {
               )}
             </div>
             <Input placeholder="Үнэ" value={price} onChange={(e) => setPrice(e.target.value)} data-testid="price-input" />
+            <Input placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} data-testid="category-input" />
           </div>
           <DialogFooter className="pt-4">
             <Button className="w-full" onClick={handleSubmit} data-testid="create-food-button">
@@ -99,4 +129,5 @@ const FoodSecHead = () => {
     </div>
   );
 };
+
 export default FoodSecHead;

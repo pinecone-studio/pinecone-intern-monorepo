@@ -44,6 +44,6 @@ describe('HeroSection', () => {
     const button = screen.getByRole('button', { name: /Хайх/i });
     fireEvent.click(button);
 
-    expect(mockPush).toHaveBeenCalledWith('/listing?search=Зайсан');
+    expect(mockPush).toHaveBeenCalledWith(`/listing?search=${encodeURIComponent('Зайсан')}`);
   });
 });

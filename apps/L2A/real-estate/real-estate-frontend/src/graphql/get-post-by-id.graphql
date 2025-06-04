@@ -2,12 +2,16 @@ query GetPostById($_id:ID!) {
     getPostById (_id:$_id) {
     _id
     title
+    propertyOwnerId
+    ownerName
     description
     number
     feature
+    type
     completionDate
     price
     images
+    door
     size
     totalRooms
     garage

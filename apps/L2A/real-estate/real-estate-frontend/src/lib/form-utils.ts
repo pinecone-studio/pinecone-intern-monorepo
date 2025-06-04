@@ -12,6 +12,7 @@ export const useCreatePostFormik = () => {
     initialValues: {
       type: '',
       title: '',
+      name: '',
       price: '',
       field: '',
       room: '',
@@ -36,6 +37,7 @@ export const useCreatePostFormik = () => {
     validationSchema: Yup.object({
       type: Yup.string().required('Төрлөө сонгоно уу!'),
       title: Yup.string().required('Нэр заавал оруулна уу!'),
+      name: Yup.string().required('Эзэмшигчийн нэр заавал оруулна уу!'),
       price: Yup.number()
         .transform((_value, originalValue) => Number(originalValue))
         .required('Үнэ заавал оруулна уу!')
@@ -86,7 +88,9 @@ export const useCreatePostFormik = () => {
 
   const variables = {
     input: {
+     
       title: values.title,
+      ownerName: values.name,
       location: {
         address: values.location.address,
         city: values.location.city,
@@ -104,6 +108,7 @@ export const useCreatePostFormik = () => {
       windowsCount: Number(values.windows),
       windowType: values.window,
       roofMaterial: values.door,
+      door: values.door,
       floorNumber: Number(values.floor),
       totalFloors: Number(values.aptfloor),
       balcony: Boolean(values.balcony),
@@ -113,7 +118,7 @@ export const useCreatePostFormik = () => {
   };
 
   try {
-    const response = await fetch('http://localhost:4200/api/graphql', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI ?? "http://localhost:4200/api/graphql"}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

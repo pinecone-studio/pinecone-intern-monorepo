@@ -5,7 +5,7 @@ import UserProfile from './UserProfile';
 import OrderHistory from './OrderHistory';
 import Sidebar from './SidebarNavigation';
 
-const UserProfileContainer = ({ orderId }: { orderId: string }) => {
+const UserProfileContainer = () => {
   const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'password'>('profile');
 
   return (
@@ -19,15 +19,7 @@ const UserProfileContainer = ({ orderId }: { orderId: string }) => {
         )}
         {activeTab === 'orders' && (
           <div className="space-y-6" data-cy="orders-tab">
-            <OrderHistory
-              status="COMPLETED"
-              orderId={orderId}
-              date="2024.10.21"
-              tickets={[
-                { name: 'Арын тасалбар', price: 89000, quantity: 2, color: 'text-white' },
-                { name: 'VIP тасалбар', price: 99000, quantity: 8, color: 'text-blue-500' },
-              ]}
-            />
+            <OrderHistory />
           </div>
         )}
         {activeTab === 'password' && (

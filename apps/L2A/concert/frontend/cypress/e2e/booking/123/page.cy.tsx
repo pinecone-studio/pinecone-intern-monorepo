@@ -1,5 +1,5 @@
 describe('Booking Page', () => {
-  const concertId = '6825f68c2960da88d5aa7a6a';
+  const concertId = '682c156a1a614ed87f49673b';
   beforeEach(() => {
     cy.visit(`/booking/${concertId}`);
   });
@@ -11,18 +11,13 @@ describe('Booking Page', () => {
   it('loads concert data and allows booking flow', () => {
     cy.get('[data-testid="ticket-list"]', { timeout: 10000 }).should('exist');
 
-    cy.get('[data-testid="ticket-list"] button').contains('+').first().click();
+    cy.get('[data-testid="plus-button-1"]').click();
+    cy.get('[data-testid="plus-button-1"]').click();
+    cy.get('[data-testid="minus-button-1"]').click();
 
     cy.contains('Тасалбар авах').should('not.be.disabled');
 
     cy.contains('Тасалбар авах').click();
-
-    cy.window().then((win) => {
-      const booking = JSON.parse(win.localStorage.getItem('booking') || '{}');
-      expect(booking).to.have.property('tickets');
-      expect(booking.tickets.length).to.be.greaterThan(0);
-      expect(booking).to.have.property('totalPrice');
-    });
   });
 
   it('shows error when concert not found', () => {

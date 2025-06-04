@@ -1,5 +1,5 @@
 'use client';
-import LoadingText from '@/app/_components/LoadingText';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { MdOutlineDone } from 'react-icons/md';
@@ -22,7 +22,7 @@ export const Complete = () => {
             <MdOutlineDone className="w-[65px] h-[56px] text-[#00B7F4] " />
           </div>
           <div className="text-white flex flex-col justify-center items-center gap-2">
-            <div>Нууц үг амжилттай солигдлоо.</div> <LoadingText />
+            <div>Нууц үг амжилттай солигдлоо.</div> <LoadingAnimation />
           </div>
         </div>
       </div>

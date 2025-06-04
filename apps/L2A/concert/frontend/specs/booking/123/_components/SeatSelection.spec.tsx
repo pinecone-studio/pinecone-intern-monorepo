@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import { BookingProvider } from '@/app/_components/context/BookingContext';
 import { AuthContext, AuthProvider } from '@/app/_components/context/AuthContext';
 import { MockedProvider } from '@apollo/client/testing';
-import { baseEvent } from './utils/mock-concert-info';
+import { baseEvent } from '../../../utils/mock-concert-info';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({

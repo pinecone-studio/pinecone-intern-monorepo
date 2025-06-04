@@ -4,6 +4,9 @@ import SearchFilter from './(main)/_components/SeacrhFilter';
 import Card from './_components/Card/Card';
 import { Footer } from './_components/Footer';
 import { HomeHeadline } from './_components/HomeHeadline';
+import RoomCard from './(main)/_components/RoomCard';
+
+
 
 const Page = () => {
   return (
@@ -33,8 +36,10 @@ const Page = () => {
             ))}
           </div>
         </div>
+        <RoomCard />
       </main>
       <Footer />
+
     </div>
   );
 };

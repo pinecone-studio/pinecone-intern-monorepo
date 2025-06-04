@@ -68,7 +68,6 @@ export const renderSchedule = (doorOpen?: string, musicStart?: string) => (
 );
 
 export const AboutEvent: FC<AboutEventProps> = ({ eventData }) => {
-  console.log('eventData in AboutEvent:', eventData);
   if (!eventData.endDate) {
     return <div>Error: Missing required event date</div>;
   }

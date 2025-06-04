@@ -33,3 +33,37 @@ mutation VerifyOTP($email: String!, $otp: String!) {
 mutation RequestOTP($email: String!) {
   requestOTP(email: $email)
 }
+
+mutation UpdatePostById($id:ID!, $input: CreatePostInput!) {
+  updatePostById(_id:$id, input: $input) {
+    _id
+    propertyOwnerId
+    title
+    ownerName
+    description
+    number
+    feature
+    price
+    images
+    type
+    size
+    totalRooms
+    garage
+    restrooms
+    location {
+      address
+      city
+      district
+    }
+    completionDate
+    windowsCount
+    windowType
+    roofMaterial
+    floorNumber
+    door
+    balcony
+    totalFloors
+    lift
+    status
+  }
+}

@@ -1,23 +1,22 @@
-import { USER_MODEL } from "../../../models/user";
-import { generateToken } from "../../../utils/jwt";
-import bcrypt from "bcryptjs"
+import { USER_MODEL } from '../../../models/user';
+import { generateToken } from '../../../utils/jwt';
+import bcrypt from 'bcryptjs';
 
 export const loginUser = async (_: unknown, { email, password }: any) => {
   const user = await USER_MODEL.findOne({ email });
   if (!user) throw new Error('user not found');
 
-  const checkPassword = await bcrypt.compare(password, user.password)
+  const checkPassword = await bcrypt.compare(password, user.password);
 
-  if(!checkPassword) throw new Error ('Password incorrect')
+  if (!checkPassword) throw new Error('Password incorrect');
 
-
-  const token = generateToken({ id: user._id.toString(), email:user.email });
+  const token = generateToken({ id: user._id.toString(), email: user.email });
 
   return {
-    user:{
-      id:user._id.toString(),
-      email:user.email
+    user: {
+      id: user._id.toString(),
+      email: user.email,
     },
     token,
   };
-};  
+};

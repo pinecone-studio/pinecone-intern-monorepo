@@ -1,0 +1,30 @@
+{
+  "data": {
+    "getPostsByUserId": [
+      {
+        "_id": "1",
+        "title": "No Price No Image",
+        "images": null,
+        "status": "PENDING",
+        "price": null,
+        "propertyOwnerId": "mock-user-id"
+      },
+      {
+        "_id": "2",
+        "title": "Unknown Status",
+        "images": [],
+        "status": "UNKNOWN_STATUS",
+        "price": 1000000,
+        "propertyOwnerId": "mock-user-id"
+      },
+      {
+        "_id": "3",
+        "title": "Зарагдаж байгаа байр",
+        "images": ["/test.jpg"],
+        "status": "SALE",
+        "price": 10000000,
+        "propertyOwnerId": "mock-user-id"
+      }
+    ]
+  }
+}

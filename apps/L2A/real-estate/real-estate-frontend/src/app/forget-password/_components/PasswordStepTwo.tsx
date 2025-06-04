@@ -75,6 +75,12 @@ export const PasswordStepTwo = ({ setStep, email, testLoading }: PasswordStepTwo
 
   return (
     <div className="flex flex-col items-center justify-center">
+      <div className='mb-6 text-center text-[#71717A]'>
+        <p className="text-2xl font-bold text-center text-[#09090B]">Confirm email</p>
+        To continue, enter the secure code we sent to <br />
+        <b>{email} </b>Check junk mail if it’s not in
+       <br /> your inbox.
+      </div>
       <InputOTP data-cy="otp-input" onChange={(val) => setOtp(val)} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
         <InputOTPGroup>
           {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -90,11 +96,11 @@ export const PasswordStepTwo = ({ setStep, email, testLoading }: PasswordStepTwo
       )}
 
       {!resendEnabled ? (
-        <p className="text-gray-500" data-cy="resend-otp-button">
+        <p className=" text-[#09090B] mt-4" data-cy="resend-otp-button">
           Send again ({timer})
         </p>
       ) : (
-        <button onClick={sendOTP} className="text-[15px] font-500 text-[#09090B]">
+        <button onClick={sendOTP} className="text-[15px] font-500 text-[#09090B] mt-4">
           Send again ({timer})
         </button>
       )}

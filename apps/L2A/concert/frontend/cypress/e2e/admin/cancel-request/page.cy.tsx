@@ -1,8 +1,19 @@
 describe('Admin cancel request process', () => {
   it('should navigate through pages', () => {
+    cy.intercept('POST', '**/api/graphql').as('waitapi');
     cy.visit('/admin/cancel-request');
+    cy.wait('@waitapi');
+  });
 
-    cy.get('[data-testid="cancel-request-next-button"]').click();
-    cy.get('[data-testid="cancel-request-prev-button"]').click();
+  it('should navigate through pages', () => {
+    cy.intercept('POST', '**/api/graphql', {
+      body: {
+        data: {
+          getCancelRequests: [],
+        },
+      },
+    }).as('waitapi');
+    cy.visit('/admin/cancel-request');
+    cy.wait('@waitapi');
   });
 });

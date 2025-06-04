@@ -1,6 +1,6 @@
 'use client';
 import ConcertCard from '@/app/_components/ConcertCard';
-import LoadingText from '@/app/_components/LoadingText';
+import LoadingAnimation from '@/app/_components/LoadingAnimation';
 import { Concert, useConcertsQuery } from '@/generated';
 
 const RecommendConcert = () => {
@@ -11,7 +11,7 @@ const RecommendConcert = () => {
     <div className="bg-black text-white min-h-screen flex flex-col" data-testid="dashboard">
       {loading ? (
         <div className=" flex justify-center w-full min-h-screen">
-          <LoadingText />
+          <LoadingAnimation />
         </div>
       ) : data?.concerts ? (
         data.concerts.length > 0 ? (

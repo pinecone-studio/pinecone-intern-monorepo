@@ -8,7 +8,7 @@ const RecentListingsSection = () => {
   const isLoading = loading || !data?.getPosts;
 
   return (
-    <section data-cy="recent-listings-section" className="py-10 bg-white">
+    <section data-cy="recent-listings-section" className="py-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold">Сүүлд орсон зарууд</h2>
