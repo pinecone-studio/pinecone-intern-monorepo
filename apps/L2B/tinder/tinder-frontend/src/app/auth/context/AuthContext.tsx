@@ -50,12 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    const authDisabled = localStorage.getItem('disable-auth') === 'true';
-  if (authDisabled) {
-    setUser(null);
-    setJWT('');
-    return;
-  }
+
 
   const storedJWT = localStorage.getItem('token');
   if (storedJWT) {

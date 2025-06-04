@@ -1,5 +1,5 @@
 const fileName = 'test.png';
-const base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAAUA...'; // Use real short base64 string
+const base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAAUA...'; 
 const byteArray = Uint8Array.from(Buffer.from(base64Image, 'base64'));
 const blob = new Blob([byteArray], { type: 'image/png' });
 const testFile = new File([blob], fileName, { type: 'image/png' });

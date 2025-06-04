@@ -7,10 +7,6 @@ const FirstStep = ({ setStep, updateFormData }: { setStep: (_step: number) => vo
   const [selectedValue, setSelectedValue] = useState('');
   const [error, setError] = useState(false);
 
-  
-
-
-
   const handleNextClick = () => {
     if (!selectedValue) {
       setError(true);

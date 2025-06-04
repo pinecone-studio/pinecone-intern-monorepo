@@ -44,4 +44,7 @@ describe('Profile page', () => {
     cy.get('[data-testid="profile-submitButton"]').click();
     cy.contains('successfully changed!', { timeout: 5000 }).should('be.visible');
   });
+
+ 
+
 });
