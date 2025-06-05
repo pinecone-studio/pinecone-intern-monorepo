@@ -87,7 +87,7 @@ export const typeDefs = gql`
   balcony: Boolean
   totalFloors: Int
   lift: Boolean
-  status: PostStatus!
+  status: PostStatus
 }
 
 input UpdatePostInput {

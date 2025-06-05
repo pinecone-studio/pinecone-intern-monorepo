@@ -67,3 +67,36 @@ mutation UpdatePostById($id:ID!, $input: UpdatePostInput!) {
     status
   }
 }
+
+mutation DeletePostById($id:ID!) {
+  deletePostById(_id:$id) {
+    _id
+    propertyOwnerId
+    title
+    ownerName
+    description
+    number
+    feature
+    price
+    images
+    type
+    size
+    totalRooms
+    garage
+    restrooms
+    location {
+      address
+      city
+      district
+    }
+    completionDate
+    windowsCount
+    windowType
+    roofMaterial
+    floorNumber
+    door
+    balcony
+    totalFloors
+    lift
+  }
+}

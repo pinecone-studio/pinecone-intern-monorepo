@@ -34,6 +34,7 @@ export const useCreatePostFormik = () => {
       aptfloor: '',
       ground: '',
       balcony: '',
+      status:"PENDING"
     },
     validationSchema: Yup.object({
       type: Yup.string().required('Төрлөө сонгоно уу!'),
@@ -117,6 +118,7 @@ export const useCreatePostFormik = () => {
       balcony: Boolean(values.balcony),
       lift: true,
       images: values.images,
+      status: values.status.toUpperCase(),
     },
   };
 
