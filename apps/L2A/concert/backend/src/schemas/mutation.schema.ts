@@ -21,5 +21,6 @@ export const MutationTypeDefs = gql`
     featureAnEvent(concertId: String!): Concert!
     updateEventInfo(concertId: String!, description: String, title: String, artistName: String): Concert!
     createCancelRequest(userId: String!, ticketId: String!, bankName: String!, accountNumber: String!, bankOwnerName: String!): Request!
+    changeStatus(requestId: String!): Request!
   }
 `;
