@@ -13,7 +13,7 @@ export const createConcert: MutationResolvers['createConcert'] = async (_, { inp
   const daysCount = end.diff(start, 'day') + 1;
 
   if (daysCount <= 0) {
-    throw new Error('endDate must be the same or after start date');
+    throw new Error('Дуусах огноо нь эхлэх огнооноос өмнө байж болохгүй.');
   }
 
   const concert = await concertModel.create({
