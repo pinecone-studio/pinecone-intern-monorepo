@@ -6,6 +6,6 @@ describe('render table', () => {
   it('should render table header', async () => {
     render(<TableHeader />);
 
-    expect(screen.getByText('Дансны мэдээлэл')).toBeInTheDocument();
+    expect(screen.getByText('Дансны дугаар')).toBeInTheDocument();
   });
 });

@@ -3,16 +3,17 @@ import { format } from 'date-fns';
 import CancelButton from './CancelButton';
 
 const TableRow = ({ request }: { request: Request }) => {
-  console.log(request);
   return (
-    <div data-testid={`request-${request.id}`} className="grid grid-cols-6 text-black text-sm border-b border-gray-200 px-4 py-2 items-center hover:bg-gray-50 transition-colors">
-      <p className="truncate font-medium">{request.concert.title}</p>
-      <p className="">{request.accountNumber}</p>
-      <p className="font-medium">{request.bankOwnerName}</p>
-      <p className="text-right font-medium">{request.ticket.totalPrice}</p>
-      <p className="text-right">{format(new Date(Number(request.createdAt)), 'yyyy-MM-dd HH:mm:ss')}</p>
-      <div className="flex justify-end">
-        {request.status === 'PENDING' ? <CancelButton request={request} /> : <p className="bg-green-100 text-green-800 rounded-full px-3 py-1 text-xs font-medium">Шилжүүлсэн</p>}
+    <div data-testid={`request-${request.id}`} className="flex flex-col md:flex-row md:items-center justify-between px-6 py-4 hover:bg-gray-50 text-sm transition">
+      <p className="w-full md:w-1/5 font-medium truncate">{request.concert.title}</p>
+      <p className="w-full md:w-1/5 truncate">{request.accountNumber}</p>
+      <p className="w-full md:w-1/5 truncate">{request.bankName}</p>
+      <p className="w-full md:w-1/5 font-medium truncate">{request.bankOwnerName}</p>
+      <p className="w-full md:w-1/5 text-right font-semibold">{request.ticket.totalPrice.toLocaleString()}₮</p>
+      <p className="w-full md:w-1/5 text-right text-gray-500">{format(new Date(Number(request.createdAt)), 'yyyy-MM-dd HH:mm')}</p>
+
+      <div className="w-full md:w-[120px] flex justify-end mt-2 md:mt-0">
+        {request.status === 'PENDING' ? <CancelButton request={request} /> : <span className="inline-block rounded-full bg-green-100 text-green-700 px-3 py-1 text-xs font-medium">Шилжүүлсэн</span>}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 'use client';
+
 import { FaSearch } from 'react-icons/fa';
 import { useAuth } from './context/AuthContext';
 import Link from 'next/link';
@@ -11,57 +12,59 @@ const Header = () => {
   const { user, logout } = useAuth();
   const [name, setName] = useState('');
 
-  const handleSearch = async () => {
-    router.push(`/search?name=${encodeURIComponent(name)}`);
+  const handleSearch = () => {
+    if (name.trim()) {
+      router.push(`/search?name=${encodeURIComponent(name)}`);
+    }
   };
 
   return (
-    <nav className="flex items-center justify-around px-6 py-4 text-white bg-black" role="navigation" aria-label="Main Navigation" data-testid="header">
-      <div className="flex items-center gap-2 text-lg font-bold text-white">
-        <span className="inline-block w-4 h-4 rounded-full bg-sky-400" aria-hidden="true"></span>
-        <Link href={'/'}>TICKET BOOKING</Link>
+    <nav className="w-full bg-black text-white px-6 py-4 flex flex-col md:flex-row items-center justify-around gap-4" role="navigation" aria-label="Main Navigation" data-testid="header">
+      <div className="flex items-center gap-2 text-lg font-bold">
+        <span className="w-4 h-4 rounded-full bg-sky-400" />
+        <Link href="/" className="hover:underline">
+          TICKET BOOKING
+        </Link>
       </div>
-      <div className="flex-1 max-w-xl mx-6">
-        <div className="flex items-center px-4 py-2 bg-black border border-gray-700 rounded-md ml-[190px] mr-[-80px]">
+      <div className="flex-1 max-w-lg w-full">
+        <div className="flex items-center px-4 py-2 border border-gray-700 rounded-md bg-black">
           <input
             type="text"
-            data-testid="search-input"
             placeholder="Хайлт"
-            className="flex-1 text-white placeholder-gray-400 bg-transparent outline-none"
             aria-label="Search"
+            data-testid="search-input"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch();
-              }
-            }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none"
           />
-          <FaSearch className="text-white" aria-hidden="true" />
-        </div>
-      </div>
-
-      <CartIconWithModal />
-
-      {user ? (
-        <div className="flex items-center gap-4">
-          <Link data-testid="profile-settings-button" href={`/profile/${user.id}`}>
-            {user.email}
-          </Link>
-          <button data-testid="logout-button" onClick={logout} className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">
-            Гарах
+          <button onClick={handleSearch} aria-label="Search">
+            <FaSearch className="text-white hover:text-sky-400" />
           </button>
         </div>
-      ) : (
-        <div className="flex items-center gap-4">
-          <Link href={'/auth/signup'}>
-            <button className="px-4 py-2 text-white border border-gray-700 rounded-md">Бүртгүүлэх</button>
-          </Link>
-          <Link href={'/auth/signin'}>
-            <button className="px-4 py-2 font-medium text-black rounded-md bg-sky-400 hover:bg-sky-500">Нэвтрэх</button>
-          </Link>
-        </div>
-      )}
+      </div>
+      <div className="flex items-center gap-4">
+        <CartIconWithModal />
+        {user ? (
+          <div className="flex items-center gap-4">
+            <Link href={`/profile`} data-testid="profile-settings-button" className="text-sm hover:underline">
+              {user.email}
+            </Link>
+            <button onClick={logout} data-testid="logout-button" className="px-4 py-2 font-medium text-black bg-sky-400 hover:bg-sky-500 rounded-md">
+              Гарах
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Link href="/auth/signup">
+              <button className="px-4 py-2 border border-gray-700 rounded-md text-sm">Бүртгүүлэх</button>
+            </Link>
+            <Link href="/auth/signin">
+              <button className="px-4 py-2 font-medium text-black bg-sky-400 hover:bg-sky-500 rounded-md text-sm">Нэвтрэх</button>
+            </Link>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

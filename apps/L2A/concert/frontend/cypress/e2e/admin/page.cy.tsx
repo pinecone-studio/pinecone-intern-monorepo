@@ -35,6 +35,12 @@ describe('admin login test', () => {
     cy.wait('@gql').its('response.statusCode').should('eq', 200);
   });
 
+  it('should navigate to reset password', () => {
+    cy.get('[data-testid="admin-reset-password"]').click();
+
+    cy.url().should('include', '/auth/reset-password');
+  });
+
   it('should throw an error', () => {
     const password = 'glpzghoo@gmail.com1';
 

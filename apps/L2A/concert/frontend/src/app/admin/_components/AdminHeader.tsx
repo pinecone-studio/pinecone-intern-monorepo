@@ -1,4 +1,5 @@
 'use client';
+
 import { useAuth } from '@/app/_components/context/AuthContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,39 +9,40 @@ const AdminHeader = () => {
   const pathname = usePathname();
   const isTicketPage = pathname === '/admin/concerts';
   const isCancelRequestPage = pathname === '/admin/cancel-request';
-  const isAdmin = pathname.startsWith('/admin/');
   const { user, logout } = useAuth();
 
   return (
-    <header className="pt-4 px-6 bg-background">
-      <div className="flex justify-between pl-2 ">
-        <div className="flex items-center gap-1">
-          <div className="w-5 h-5 bg-[#00B7F4] rounded-full"></div>
-          <h1 className="text-2xl font-semibold">TICKET BOOKING</h1>
-        </div>
+    <header className="w-full bg-background border-b border-muted px-6 py-4">
+      <div className="flex justify-between items-center">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-5 h-5 bg-[#00B7F4] rounded-full" />
+          <h1 className="text-xl font-bold tracking-tight hover:underline">TICKET BOOKING</h1>
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="bg-gray-400 rounded-lg p-2 text-white text-sm border-2 border-stone-300">{user?.email}</div>
+            <div className="bg-gray-500 text-white rounded-md px-4 py-2 text-sm border border-gray-300 hover:bg-gray-600 transition">{user?.email}</div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <div onClick={logout}>Log out</div>
+            <DropdownMenuItem onClick={logout} className="cursor-pointer">
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {isAdmin && (
-        <div className="flex text-sm font-medium">
-          <Link data-testid="ticket-button-admin" href={'/admin/concerts'} className={`p-[6px]` + (isTicketPage ? ' border-b border-black' : '')}>
-            <div className="p-[6px]">Концертууд</div>
-          </Link>
-          <Link data-testid="cancel-request-admin" href={'/admin/cancel-request'} className={`p-[6px]` + (isCancelRequestPage ? ' border-b border-black' : '')}>
-            <div className="p-[6px]">Цуцлах хүсэлт</div>
-          </Link>
-        </div>
-      )}
+      <div className="mt-4 flex space-x-6 text-sm font-medium border-b border-gray-200">
+        <Link href="/admin/concerts" data-testid="ticket-button-admin" className={`pb-2 transition ${isTicketPage ? 'border-b-2 border-black text-black' : 'text-muted-foreground hover:text-black'}`}>
+          Концертууд
+        </Link>
+        <Link
+          href="/admin/cancel-request"
+          data-testid="cancel-request-admin"
+          className={`pb-2 transition ${isCancelRequestPage ? 'border-b-2 border-black text-black' : 'text-muted-foreground hover:text-black'}`}
+        >
+          Цуцлах хүсэлт
+        </Link>
+      </div>
     </header>
   );
 };

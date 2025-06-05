@@ -6,7 +6,7 @@ describe('deleting an event', () => {
 
   it('should feature an event', () => {
     cy.get('[data-testid="favorite-btn-2"]').click();
-    cy.contains('Түр хүлээнэ үү!').should('be.visible');
+    cy.contains('Онцолж байна...').should('be.visible');
     cy.wait('@featuring');
   });
 

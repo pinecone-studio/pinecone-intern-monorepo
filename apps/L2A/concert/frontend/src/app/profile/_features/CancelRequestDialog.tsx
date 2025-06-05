@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useCreateCancelRequestMutation } from '@/generated';
 import z from 'zod';
-import { CancelRequestSchema } from '../../_utils/cancel-request-bankinfo-schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Snackbar } from '@mui/material';
+import { CancelRequestSchema } from '../_utils/cancel-request-bankinfo-schema';
 
 const CancelRequestDialog = ({ ticketId, userId, index }: { ticketId: string; userId: string; index: number }) => {
   const [createCancelRequest, { error, loading }] = useCreateCancelRequestMutation();

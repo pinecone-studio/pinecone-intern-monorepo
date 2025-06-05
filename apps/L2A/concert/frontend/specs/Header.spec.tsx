@@ -140,6 +140,7 @@ describe('Header', () => {
       </MockedProvider>
     );
     const searchInput = screen.getByPlaceholderText('Хайлт');
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
     fireEvent.change(searchInput, { target: { value: 'test search' } });
     fireEvent.keyDown(searchInput, { key: 'a', code: 'KeyA', charCode: 65 });
     expect(searchInput).toHaveValue('test search');
