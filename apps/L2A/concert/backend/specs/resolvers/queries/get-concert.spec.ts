@@ -58,7 +58,7 @@ describe('Concert Query Resolver', () => {
     const mockExec = jest.fn().mockResolvedValue(null);
     (concertModel.findById as jest.Mock).mockReturnValue({ populate: mockPopulate, exec: mockExec });
 
-    await expect(concert?.({}, { concertId: mockConcertId }, mockContext, mockInfo)).rejects.toThrow('Concert not found');
+    await expect(concert?.({}, { concertId: mockConcertId }, mockContext, mockInfo)).rejects.toThrow('Тоглолт олдсонгүй.');
     expect(concertModel.findById).toHaveBeenCalledWith(mockConcertId);
     expect(normalizeConcert).not.toHaveBeenCalled();
   });

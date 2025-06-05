@@ -7,6 +7,7 @@ import { useFormikContext } from 'formik';
 
 const BuildingInfoSection = () => {
   const { values, setFieldValue } = useFormikContext<any>();
+  console.log(values)
 
   return (
     <div className="bg-white rounded-xl border p-6 space-y-4 shadow-sm">

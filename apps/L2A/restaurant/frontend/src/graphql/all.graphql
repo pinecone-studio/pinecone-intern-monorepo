@@ -103,3 +103,11 @@ mutation UpdateProduct($input: UpdateProductInput!) {
     updatedAt
   }
 }
+mutation UpdateCategory($input: UpdateCategoryInput) {
+  updateCategory(input: $input) {
+    _id
+    createdAt
+    name
+    updatedAt
+  }
+}

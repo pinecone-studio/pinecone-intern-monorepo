@@ -44,6 +44,7 @@ describe('Create Post Form E2E Test (Mock fetch)', () => {
     cy.get('input[name="location.city"]').type('Улаанбаатар');
     cy.get('input[name="location.district"]').type('Сүхбаатар');
     cy.get('input[name="location.address"]').type('1-р хороо');
+    cy.get('input[name="number"]').type('999999');
     cy.get('input[name="year"]').type('2023');
     cy.get('input[name="windows"]').type('2');
     cy.get('input[name="window"]').type('3 цонхтой');

@@ -5,7 +5,7 @@ export const concerts = async () => {
   try {
     const concerts = await concertModel.find().populate('venue').populate('seatData').sort({ date: -1 });
     if (!concerts) {
-      throw new Error('Concert not found');
+      throw new Error('Тоглолт олдсонгүй.');
     }
     return concerts;
   } catch (error) {

@@ -46,6 +46,6 @@ describe('concert Resolver', () => {
       populate: populateFirstMock,
     });
 
-    await expect(concerts()).rejects.toThrow('Concert not found');
+    await expect(concerts()).rejects.toThrow('Тоглолт олдсонгүй.');
   });
 });

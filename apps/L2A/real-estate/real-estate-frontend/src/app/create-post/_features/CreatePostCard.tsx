@@ -26,6 +26,7 @@ import { CreatePostRestroom } from '../_components/CreatePostRestroom';
 import { CreatePostParking } from '../_components/CreatePostParking';
 import { CreatePostCity } from '../_components/CreatePostCity';
 import { CreatePostName } from '../_components/CreatePostName';
+import { CreatePostNumber } from '../_components/CreatePostNumber';
 export const CreatePostCard = () => {  const formik = useCreatePostFormik();
   // istanbul ignore next
   const getFieldError = (touched: FormikTouched<any>, errors: FormikErrors<any>, field: string): string | undefined => {
@@ -43,6 +44,7 @@ export const CreatePostCard = () => {  const formik = useCreatePostFormik();
           <CreatePostName name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched,formik.errors,'name')}/>
               <CreatePostType name="type" value={formik.values.type} onChange={(value) => formik.setFieldValue('type', value)} error={getFieldError(formik.touched, formik.errors, 'type')} />
               <CreatePostTitle title="title" value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'title')} />
+              <CreatePostNumber name='number' value={formik.values.number} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched,formik.errors,'number')}/>
               <CreatePostPrice name="price" value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'price')} />
               <CreatePostField name="field" value={formik.values.field} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'field')} />
               <CreatePostRoom name="room" value={formik.values.room} onChange={formik.handleChange} onBlur={formik.handleBlur} error={getFieldError(formik.touched, formik.errors, 'room')} />

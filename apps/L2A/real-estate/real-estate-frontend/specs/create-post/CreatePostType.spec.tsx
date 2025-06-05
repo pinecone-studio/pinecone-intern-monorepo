@@ -55,14 +55,36 @@ describe('CreatePostType component (Shadcn)', () => {
     expect(placeholder).toHaveClass('invisible');
   });
 
-  test('can select "house" and fire onChange', async () => {
+  test('can select "HOUSE" and fire onChange', async () => {
     setup();
     const user = userEvent.setup();
     await user.click(screen.getByTestId('type'));
 
-    const houseOption = await screen.findByRole('option', { name: /Хувийн сууц/i });
+    const houseOption = await screen.findByRole('option', { name: /HOUSE/i });
     await user.click(houseOption);
 
-    expect(mockOnChange).toHaveBeenCalledWith('house');
+    expect(mockOnChange).toHaveBeenCalledWith('HOUSE');
   });
+  test('can select "APARTMENT" and fire onChange', async () => {
+  setup();
+  const user = userEvent.setup();
+  await user.click(screen.getByTestId('type'));
+
+  const houseOption = await screen.findByRole('option', { name: /APARTMENT/i });
+  await user.click(houseOption);
+
+  expect(mockOnChange).toHaveBeenCalledWith('APARTMENT');
+});
+
+test('can select "OFFICE" and fire onChange', async () => {
+  setup();
+  const user = userEvent.setup();
+  await user.click(screen.getByTestId('type'));
+
+  const officeOption = await screen.findByRole('option', { name: /OFFICE/i });
+  await user.click(officeOption);
+
+  expect(mockOnChange).toHaveBeenCalledWith('OFFICE');
+});
+
 });

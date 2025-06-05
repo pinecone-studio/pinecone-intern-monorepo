@@ -1,39 +1,44 @@
-import { profileModel } from '../../../../src/models/profile.model';
-import { fetchProfile } from '../../../../src/resolvers/queries';
+import { profileModel } from 'apps/L2B/tinder/tinder-backend/src/models';
+import { fetchProfile } from 'apps/L2B/tinder/tinder-backend/src/resolvers/queries';
 
-jest.mock('../../../../src/models/profile.model', () => ({
+jest.mock('apps/L2B/tinder/tinder-backend/src/models', () => ({
   profileModel: {
-    findOne: jest.fn(),
+    findById: jest.fn(),
   },
 }));
 
-describe('Profile Query Resolver - fetchProfile', () => {
+describe('fetchProfile', () => {
+  const mockProfile = {
+    _id: '123',
+    name: 'Test User',
+    matched: [{ _id: '456', name: 'Matched User' }],
+    user: { _id: '789', username: 'testuser' },
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return a profile by ID with populated user', async () => {
-    const mockProfile = {
-      _id: 'profile123',
-      profileInfo: { name: 'Test User' },
-      user: { _id: 'user123', email: 'test@example.com' },
-    };
+  it('should return profile when found', async () => {
+    const populateMatched = jest.fn().mockResolvedValue(mockProfile);
+    const populateUser = jest.fn().mockReturnValue({ populate: populateMatched });
 
-    const populateMock = jest.fn().mockResolvedValueOnce(mockProfile);
-    (profileModel.findOne as jest.Mock).mockReturnValue({ populate: populateMock });
+    (profileModel.findById as jest.Mock).mockReturnValue({ populate: populateUser });
 
-    const result = await fetchProfile({}, { _id: 'profile123' });
+    const result = await fetchProfile(null, { _id: '123' });
 
-    expect(profileModel.findOne).toHaveBeenCalledWith({ user: 'profile123' });
-    expect(populateMock).toHaveBeenCalledWith('user');
+    expect(profileModel.findById).toHaveBeenCalledWith('123');
+    expect(populateUser).toHaveBeenCalledWith('user');
+    expect(populateMatched).toHaveBeenCalledWith('matched');
     expect(result).toEqual(mockProfile);
   });
 
-  it('should throw an error if profile is not found', async () => {
-    const populateMock = jest.fn().mockResolvedValueOnce(null);
-    (profileModel.findOne as jest.Mock).mockReturnValue({ populate: populateMock });
+  it('should throw an error if profile not found', async () => {
+    const populateMatched = jest.fn().mockResolvedValue(null);
+    const populateUser = jest.fn().mockReturnValue({ populate: populateMatched });
 
-    await expect(fetchProfile({}, { _id: 'nonexistent' })).rejects.toThrow('Profile not found');
-    expect(profileModel.findOne).toHaveBeenCalledWith({ user: 'nonexistent' });
+    (profileModel.findById as jest.Mock).mockReturnValue({ populate: populateUser });
+
+    await expect(fetchProfile(null, { _id: 'notfound' })).rejects.toThrow('Profile not found');
   });
 });

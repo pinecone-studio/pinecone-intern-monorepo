@@ -19,7 +19,7 @@ export const CreatePostTitle = ({ title, value, onChange, onBlur, error }: Props
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="Нэр"
+        placeholder="Нэр оруулна уу"
         data-testid="Name"
         className={`w-full block px-2 py-1 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />

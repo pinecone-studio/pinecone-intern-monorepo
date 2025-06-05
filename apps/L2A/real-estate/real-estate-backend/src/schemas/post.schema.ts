@@ -13,8 +13,8 @@ export const typeDefs = gql`
   }
   enum feature{
     CENTRAL
-  AIRY
-  PREMIUM_ZONE
+     AIRY
+     PREMIUM_ZONE
   }
 
   enum PropertyType {
@@ -78,7 +78,7 @@ export const typeDefs = gql`
   garage: Boolean
   restrooms: Int
   location: LocationInput
-  completionDate: Date
+  completionDate: String
   windowsCount: Int
   windowType: String
   roofMaterial: String

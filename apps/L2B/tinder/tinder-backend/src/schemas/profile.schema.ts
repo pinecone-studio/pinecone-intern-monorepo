@@ -21,7 +21,7 @@ export const profileTypeDefs = gql`
     images: [String!]!
     liked: [ID]
     disliked: [ID]
-    matched: [ID]
+    matched: [Profile!]!
   }
   input ProfileInput {
     name: String!

@@ -1,86 +1,107 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { CreatePostImages } from '@/app/create-post/_components/CreatePostImages';
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    // eslint-disable-next-line camelcase
-    json: () => Promise.resolve({ secure_url: 'https://cloudinary.com/some-image-url' }),
-  })
-) as jest.Mock;
+import '@testing-library/jest-dom';
 
-describe('CreatePostImages Component', () => {
-  let mockOnChange: jest.Mock;
+const mockOnChange = jest.fn();
 
-  beforeEach(() => {
-    mockOnChange = jest.fn();
-  });
+const setup = (props = {}) => {
+  render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} {...props} />);
+};
 
-  it('should render the component with an upload button', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="" />);
-    expect(screen.getByTestId('upload-button')).toBeInTheDocument();
-  });
-
-  it('should trigger file input click when upload button is clicked', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="" />);
-    const input = screen.getByTestId('image-input') as HTMLInputElement;
-    const inputClickSpy = jest.spyOn(input, 'click');
-    fireEvent.click(screen.getByTestId('upload-button'));
-    expect(inputClickSpy).toHaveBeenCalledTimes(1);
-    inputClickSpy.mockRestore();
-  });
-
-  it('should call onChange with uploaded image URL', async () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="" />);
-    const input = screen.getByTestId('image-input') as HTMLInputElement;
-    const file = new File(['dummy content'], 'test-image.jpg', { type: 'image/jpeg' });
-
-    Object.defineProperty(input, 'files', { value: [file] });
-    fireEvent.change(input);
-
-    await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/some-image-url']);
-    });
-  });
-
-  it('should show uploading state during upload', async () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="" />);
-    const uploadButton = screen.getByTestId('upload-button');
-    const input = screen.getByTestId('image-input') as HTMLInputElement;
-    const file = new File(['dummy content'], 'test-image.jpg', { type: 'image/jpeg' });
-
-    Object.defineProperty(input, 'files', { value: [file] });
-    fireEvent.change(input);
-
-    await waitFor(() => {
-      expect(uploadButton).toHaveTextContent(/Түр хүлээнэ үү/);
-    });
-  });
-
-  it('should show error message if provided', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="Some error" />);
-    expect(screen.getByText(/Some error/i)).toBeInTheDocument();
-  });
-
-  it('should remove image when remove button is clicked', () => {
-    render(
-      <CreatePostImages
-        name="images"
-        value={['https://cloudinary.com/image1', 'https://cloudinary.com/image2']}
-        onChange={mockOnChange}
-        error=""
-      />
-    );
-    const removeButton = screen.getAllByText('×')[0];
-    fireEvent.click(removeButton);
-    expect(mockOnChange).toHaveBeenCalledWith(['https://cloudinary.com/image2']);
-  });
-
-  it('should not call onChange if no files selected', () => {
-    render(<CreatePostImages name="images" value={[]} onChange={mockOnChange} error="" />);
-    const input = screen.getByTestId('image-input') as HTMLInputElement;
-    Object.defineProperty(input, 'files', { value: null });
-    fireEvent.change(input);
-    expect(mockOnChange).not.toHaveBeenCalled();
-  });
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
+test('renders upload button and input', () => {
+  setup();
+  expect(screen.getByTestId('upload-button')).toBeInTheDocument();
+  expect(screen.getByTestId('image-input')).toBeInTheDocument();
+});
+
+test('shows error message if error prop is passed', () => {
+  setup({ error: 'Required field' });
+  expect(screen.getByText('Required field')).toBeInTheDocument();
+});
+
+test('renders placeholder when no error', () => {
+  setup();
+  expect(screen.getByText('placeholder')).toHaveClass('invisible');
+});
+
+test('clicking the upload button triggers input click', () => {
+  setup();
+  const input = screen.getByTestId('image-input') as HTMLInputElement;
+  const clickSpy = jest.spyOn(input, 'click');
+
+  fireEvent.click(screen.getByTestId('upload-button'));
+  expect(clickSpy).toHaveBeenCalled();
+});
+
+test('simulates image upload and updates image list', async () => {
+  const secureUrl = 'https://example.com/test.jpg';
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      // eslint-disable-next-line camelcase
+      json: () => Promise.resolve({ secure_url: secureUrl }),
+    })
+  ) as jest.Mock;
+
+  setup();
+
+  const file = new File(['dummy'], 'test.jpg', { type: 'image/jpeg' });
+  const input = screen.getByTestId('image-input');
+  fireEvent.change(input, { target: { files: [file] } });
+
+  await waitFor(() => {
+    expect(mockOnChange).toHaveBeenCalledWith([secureUrl]);
+  });
+});
+test('does nothing if no files are selected', async () => {
+  setup();
+  const input = screen.getByTestId('image-input');
+  fireEvent.change(input, { target: { files: null } });
+
+  expect(mockOnChange).not.toHaveBeenCalled();
+});
+
+
+test('logs error to console if upload fails', async () => {
+  const error = new Error('Upload failed');
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  global.fetch = jest.fn(() => Promise.reject(error)) as jest.Mock;
+
+  setup();
+
+  const file = new File(['dummy'], 'fail.jpg', { type: 'image/jpeg' });
+  const input = screen.getByTestId('image-input');
+  fireEvent.change(input, { target: { files: [file] } });
+
+  await waitFor(() => {
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Зураг оруулах үед алдаа гарлаа',
+      error
+    );
+  });
+
+  consoleSpy.mockRestore();
+});
+
+test('removes image on close button click', async () => {
+  const imageUrl = 'https://example.com/image.jpg';
+
+  render(
+    <CreatePostImages
+      name="images"
+      value={[imageUrl]}
+      onChange={mockOnChange}
+    />
+  );
+
+  expect(screen.getByTestId('uploaded-image')).toHaveAttribute('src', imageUrl);
+
+  fireEvent.click(screen.getByRole('button', { name: '×' }));
+
+  expect(mockOnChange).toHaveBeenCalledWith([]);
+});

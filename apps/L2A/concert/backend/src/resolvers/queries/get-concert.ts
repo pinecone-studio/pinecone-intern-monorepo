@@ -8,7 +8,7 @@ export const concert: QueryResolvers['concert'] = async (_, { concertId }) => {
     const concert = await concertModel.findById(concertId).populate('venue').populate('seatData').exec();
 
     if (!concert) {
-      throw new Error('Concert not found');
+      throw new Error('Тоглолт олдсонгүй.');
     }
     return normalizeConcert(concert);
   } catch (error) {
