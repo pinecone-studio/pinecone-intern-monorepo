@@ -58,7 +58,7 @@ const HeroSection = () => {
 
         <motion.form
           onSubmit={handleSearch}
-          className="flex flex-col sm:flex-row w-full max-w-[640px] mx-auto bg-white rounded-lg overflow-hidden border border-gray-300 shadow-md"
+          className="flex flex-col sm:flex-row w-full max-w-[640px] mx-auto rounded-lg overflow-hidden border border-gray-300 shadow-md"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}

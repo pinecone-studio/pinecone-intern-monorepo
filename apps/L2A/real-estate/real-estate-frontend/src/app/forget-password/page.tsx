@@ -28,12 +28,16 @@ const ForgetPasswordPage = () => {
       <div className="max-w-md w-full space-y-auto" data-cy="forget-password-container">
         <div className="text-center" data-cy="signup-header" />
         <div className="flex gap-3 items-center justify-center mb-8">
-           <Image src="/logo.png" alt="logo" width={34} height={18}/>
-           <h2 className="text-2xl font-bold">Home Vault</h2>
-            </div>
+          <Image src="/logo.png" alt="logo" width={34} height={18} />
+          <h2 className="text-2xl font-bold">Home Vault</h2>
+        </div>
         {step === 1 && <PasswordStepOne setStep={setStep} setEmail={setEmail} />}
         {step === 2 && <PasswordStepTwo setStep={setStep} email={email} />}
-        {step === 3 && <PasswordStepThree email={email} />}
+        {step === 3 && (
+          <div data-cy="step-three">
+            <PasswordStepThree email={email} />
+          </div>
+        )}
       </div>
       <p className="text-xs text-center text-gray-400 absolute bottom-10 right-0 left-0">©2024 Home Vault</p>
     </div>

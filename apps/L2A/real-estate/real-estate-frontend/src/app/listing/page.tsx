@@ -15,6 +15,19 @@ import RoomsComp from './_components/RoomsComp';
 import RestRoomsComp from './_components/RestRoomsComp';
 import OthersComp from './_components/OthersComp';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const SkeletonCard = () => (
+  <div
+    className="bg-white rounded-lg shadow p-4 space-y-4"
+    data-testid="listing-skeleton"
+  >
+    <Skeleton className="h-40 w-full" />
+    <Skeleton className="h-4 w-2/3" />
+    <Skeleton className="h-4 w-1/2" />
+    <Skeleton className="h-4 w-1/3" />
+  </div>
+);
 
 const HomeListingPage = () => {
   const [type, setType] = useQueryParamState('type')
@@ -67,22 +80,28 @@ const HomeListingPage = () => {
               Сүүлд нэмэгдсэн <ChevronDown className="w-4 h-4" />
             </Button>
           </div>
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            data-cy="listing-grid"
+          >
+            {loading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+              : data?.filterPosts?.map((item) => (
+                <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
+                  <ListingCard
+                    key={item?._id}
+                    price={item?.price}
+                    totalRooms={item?.totalRooms}
+                    restrooms={item?.restrooms}
+                    size={item?.size}
+                    city={item?.location?.city}
+                    district={item?.location?.district}
+                    image={item?.images?.[0]}
+                    title={item?.title}
+                  />
+                </Link>
+              ))}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-cy="listing-grid">
-            {data?.filterPosts?.map((item) => (
-              <Link href={`/detailed/${item?._id}`} key={`detailed-${item?._id}`}>
-              <ListingCard
-                key={item?._id}
-                price={item?.price}
-                totalRooms={item?.totalRooms}
-                restrooms={item?.restrooms}
-                size={item?.size}
-                city={item?.location?.city}
-                district={item?.location?.district}
-                image={item?.images?.[0]}
-                title={item?.title}
-              /></Link>
-            ))}
           </div>
 
         </section>

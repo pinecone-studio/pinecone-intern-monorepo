@@ -40,6 +40,68 @@ expect(screen.getByText(/Таны оруулсан мэдээлэл хэрэгл
     fireEvent.click(screen.getByTestId('delete-post-button'));
     fireEvent.click(screen.getByTestId('confirm-delete-button'));
     expect(screen.queryByTestId('delete-confirm-modal')).not.toBeInTheDocument();
+
   });
+
+  it('renders preview section wrapper (line 33-55 coverage)', () => {
+  const mockValues = {
+    images: [],
+    price: '100000000',
+    title: 'Test Title',
+    size: 120,
+    totalRooms: '3',
+    restrooms: '1',
+    location: {
+      district: 'Сүхбаатар',
+      city: '1-р хороо',
+      address: 'UB tower',
+    },
+  };
+  jest.spyOn(require('formik'), 'useFormikContext').mockReturnValue({values: mockValues, submitForm: jest.fn(),});
+  render(<PreviewSection draftKey="test-draft" />);
+  expect(screen.getByTestId('preview-section')).toBeInTheDocument();
+});
+
+it('renders fallback values for ListingPreviewCard props', () => {
+  const fallbackValues = {
+    images: [], 
+    price: '', 
+    title: '', 
+    size: '', 
+    totalRooms: '', 
+    restrooms: '',
+    location: {
+      district: '',
+      city: '',
+      address: '',
+    },
+  };
+  jest.spyOn(require('formik'), 'useFormikContext').mockReturnValue({values: fallbackValues,submitForm: jest.fn(),});
+  render(<PreviewSection draftKey="draft-fallback-test" />);
+  expect(screen.getByTestId('mock-preview-card')).toBeInTheDocument();
+  expect(screen.getByText('Гарчиг оруулаагүй')).toBeInTheDocument(); 
+  expect(screen.getByText('₮')).toBeInTheDocument(); 
+});
+
+it('uses provided image when values.images has items', () => {
+  const valuesWithImage = {
+    images: ['custom-image.jpg'],
+    price: '999999',
+    title: 'Custom Title',
+    size: 100,
+    totalRooms: '2',
+    restrooms: '1',
+    location: {
+      district: 'Баянзүрх',
+      city: '2-р хороо',
+      address: 'Peace Avenue',
+    },
+  };
+
+  jest.spyOn(require('formik'), 'useFormikContext').mockReturnValue({values: valuesWithImage,submitForm: jest.fn(),});
+  render(<PreviewSection draftKey="test-image-cover" />);
+  expect(screen.getByText('Custom Title')).toBeInTheDocument();
+  expect(screen.getByText('999999₮')).toBeInTheDocument();
+});
 });
 

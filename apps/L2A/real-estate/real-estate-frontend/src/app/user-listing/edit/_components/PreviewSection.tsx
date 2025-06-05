@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use client';
 
 import { useState } from 'react';
@@ -16,14 +17,18 @@ import {
 const PreviewSection = () => {
   const [open, setOpen] = useState(false);
 
+
   return (
-    <Card className="w-full max-w-[520px] self-start border-none shadow-none" data-cy="preview-section">
+    <Card
+      className="w-full max-w-[520px] self-start border-none shadow-none"
+      data-testid="preview-section"
+      data-cy="preview-section"
+    >
       <CardContent className="p-6 pb-6 bg-[#F9F9F9]">
         <h3 className="text-xl font-semibold mb-1">Хэрэглэгчдэд харагдах</h3>
         <p className="text-sm text-muted-foreground mb-4">
           Таны оруулсан мэдээлэл хэрэглэгчдэд харагдах үзүүлэлт
         </p>
-
         <div data-cy="listing-preview-card" data-testid="listing-preview-card">
           <ListingPreviewCard
             images={[
@@ -43,21 +48,24 @@ const PreviewSection = () => {
 
         <div className="mt-6 space-y-3">
           <Button
+            onClick={submitForm}
             data-cy="submit-post-button"
             data-testid="submit-post-button"
             className="w-full bg-orange-500 text-white text-sm font-medium hover:bg-orange-600"
           >
             Зар оруулах хүсэлт илгээх
           </Button>
+
           <Button
+            type="button"
             variant="outline"
             data-cy="save-post-button"
             data-testid="save-post-button"
             className="w-full text-sm font-medium"
+            onClick={handleSaveToLocal}
           >
             Хадгалаад гарах
           </Button>
-
       
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -102,6 +110,7 @@ const PreviewSection = () => {
               </div>
             </DialogContent>
           </Dialog>
+
         </div>
       </CardContent>
     </Card>

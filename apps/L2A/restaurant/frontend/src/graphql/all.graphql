@@ -92,3 +92,22 @@ mutation DeleteProduct($input: DeleteProductInput!) {
     updatedAt
   }
 }
+mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input) {
+    _id
+    createdAt
+    images
+    name
+    price
+    status
+    updatedAt
+  }
+}
+mutation UpdateCategory($input: UpdateCategoryInput) {
+  updateCategory(input: $input) {
+    _id
+    createdAt
+    name
+    updatedAt
+  }
+}
