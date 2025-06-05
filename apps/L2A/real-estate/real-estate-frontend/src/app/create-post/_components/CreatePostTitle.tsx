@@ -11,7 +11,7 @@ type Props = {
 export const CreatePostTitle = ({ title, value, onChange, onBlur, error }: Props) => {
   return (
     <div>
-      <label htmlFor={title} className="block text-sm text-[#09090B] pb-1">Нэр</label>
+      <label htmlFor={title} className="block text-sm text-[#09090B] pb-1">Эзэмшигчийн Нэр</label>
       <input
         id={title}
         title={title}
@@ -19,7 +19,7 @@ export const CreatePostTitle = ({ title, value, onChange, onBlur, error }: Props
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="Нэр"
+        placeholder="Эзэмшигчийн нэр оруулна уу"
         data-testid="Name"
         className={`w-full block px-2 py-1 border rounded-lg focus:outline-none focus:ring-1 ${error ? 'border-red-500 focus:ring-red-500' : 'focus:ring-1'}`}
       />
