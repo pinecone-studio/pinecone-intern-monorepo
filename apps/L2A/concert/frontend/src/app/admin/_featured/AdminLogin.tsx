@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { useLoginUserMutation } from '@/generated';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -86,7 +87,9 @@ const AdminLogin = () => {
               <Button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="w-[350px] h-[36px] mt-1 bg-black">
                 {form.formState.isSubmitting ? 'Түр хүлээнэ үү...' : 'Нэвтрэх'}
               </Button>
-              <div className="text-black text-center text-base mt-1">Нууц үг мартсан?</div>
+              <Link data-testid="admin-reset-password" href={`/auth/reset-password`} className="text-black text-center text-base mt-1">
+                Нууц үг мартсан?
+              </Link>
             </div>
           </form>
         </Form>
