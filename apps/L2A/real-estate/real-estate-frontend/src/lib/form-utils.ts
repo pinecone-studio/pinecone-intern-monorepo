@@ -109,7 +109,7 @@ export const useCreatePostFormik = () => {
       garage: Boolean(values.parking),
       windowsCount: Number(values.windows),
       windowType: values.window,
-      roofMaterial: values.door,
+      roofMaterial: values.ground,
       door: values.door,
       completionDate: values.year,
       floorNumber: Number(values.floor),
