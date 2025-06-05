@@ -13,8 +13,8 @@ export const typeDefs = gql`
   }
   enum feature{
     CENTRAL
-  AIRY
-  PREMIUM_ZONE
+     AIRY
+     PREMIUM_ZONE
   }
 
   enum PropertyType {
