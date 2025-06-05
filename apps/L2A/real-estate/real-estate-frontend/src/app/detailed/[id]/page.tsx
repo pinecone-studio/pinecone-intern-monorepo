@@ -23,7 +23,7 @@ const PropertyDetailPage = () => {
   const post = dataById?.getPostById;
 
   const infoItems = [
-    { icon: User, label: 'Эзэмшигч', value: 'no' },
+    { icon: User, label: 'Эзэмшигч', value: post?.ownerName },
     { icon: Phone, label: 'Утасны дугаар', value: post?.number },
     { icon: Ruler, label: 'Талбай', value: `${post?.size}м²` },
     { icon: BedDouble, label: 'Өрөө', value: `${post?.totalRooms} өрөө` },
