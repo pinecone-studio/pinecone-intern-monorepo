@@ -45,7 +45,7 @@ const POST_SCHEMA = new mongoose.Schema(
       city: String,
       district: String,
     },
-    completionDate: Date,
+    completionDate: String,
     windowsCount: Number,
     windowType: String,
     roofMaterial: String,

@@ -78,7 +78,7 @@ export const typeDefs = gql`
   garage: Boolean
   restrooms: Int
   location: LocationInput
-  completionDate: Date
+  completionDate: String
   windowsCount: Int
   windowType: String
   roofMaterial: String

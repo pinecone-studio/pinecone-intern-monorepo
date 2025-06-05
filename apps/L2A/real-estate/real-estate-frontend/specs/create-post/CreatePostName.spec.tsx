@@ -14,7 +14,7 @@ describe('CreatePostName component', () => {
 
   it('should render input and label correctly', () => {
     render(<CreatePostName {...props} />);
-    expect(screen.getByLabelText('Нэр')).toBeInTheDocument();
+    expect(screen.getByLabelText('Эзэмшигчийн Нэр')).toBeInTheDocument();
     expect(screen.getByTestId('Title')).toHaveValue('Test Title');
   });
 

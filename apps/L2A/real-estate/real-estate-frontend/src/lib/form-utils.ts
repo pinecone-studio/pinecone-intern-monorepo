@@ -37,8 +37,8 @@ export const useCreatePostFormik = () => {
     },
     validationSchema: Yup.object({
       type: Yup.string().required('Төрлөө сонгоно уу!'),
-      title: Yup.string().required('Нэр заавал оруулна уу!'),
-      name: Yup.string().required('Эзэмшигчийн нэр заавал оруулна уу!'),
+      title: Yup.string().required('Эзэмшигчийн нэр заавал оруулна уу!'),
+      name: Yup.string().required('Нэр заавал оруулна уу!'),
       price: Yup.number()
         .transform((_value, originalValue) => Number(originalValue))
         .required('Үнэ заавал оруулна уу!')
@@ -109,8 +109,9 @@ export const useCreatePostFormik = () => {
       garage: Boolean(values.parking),
       windowsCount: Number(values.windows),
       windowType: values.window,
-      roofMaterial: values.door,
+      roofMaterial: values.ground,
       door: values.door,
+      completionDate: values.year,
       floorNumber: Number(values.floor),
       totalFloors: Number(values.aptfloor),
       balcony: Boolean(values.balcony),
