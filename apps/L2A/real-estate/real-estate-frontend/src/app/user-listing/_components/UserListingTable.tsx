@@ -3,6 +3,17 @@
 import Image from 'next/image';
 import { Eye, Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useDeletePostByIdMutation } from '@/generated';
 
 export type Listing = {
   id: string;
@@ -26,6 +37,11 @@ const statusColor = {
 };
 
 const UserListingTable = ({ listings }: Props) => {
+  const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [deletePostById] = useDeletePostByIdMutation();
+  const [listingData, setListingData] = useState<Listing[]>(listings);
+
   return (
     <div className="overflow-x-auto">
       <table className="table-auto text-sm border w-full">
@@ -39,7 +55,7 @@ const UserListingTable = ({ listings }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {listings.map((l, i) => (
+          {listingData.map((l, i) => (
             <tr key={i} className="border-t hover:bg-gray-50">
               <td className="px-2 py-2 border-r w-[1%] whitespace-nowrap">{l.id}</td>
               <td className="px-4 py-2 border-r flex items-center gap-2">
@@ -52,11 +68,60 @@ const UserListingTable = ({ listings }: Props) => {
               <td className="px-4 py-2 border-r">{l.price}</td>
               <td className="px-6 py-2 text-center w-[1%] whitespace-nowrap">
                 <div className="flex justify-center gap-6">
-                  <Link className="flex justify-center gap-6" href={`/user-listing/edit/${l?.id}`}>
+                  <Link className="flex justify-center gap-6" href={`/user-listing/edit/${l.id}`}>
                     <Eye className="w-4 h-4 cursor-pointer hover:text-blue-400 transition-all" />
                     <Pencil className="w-4 h-4 cursor-pointer hover:text-green-400 transition-all" />
                   </Link>
-                  <Trash className="w-4 h-4 cursor-pointer hover:text-red-400 transition-all" />
+
+                  <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogTrigger asChild>
+                      <Trash
+                       data-testid={`trash-icon-${l.id}`}
+                        className="w-4 h-4 cursor-pointer hover:text-red-400 transition-all"
+                        onClick={() => {
+                          setSelectedId(l.id);
+                          setOpen(true);
+                        }}
+                      />
+                    </DialogTrigger>
+                    <DialogContent className="w-[480px] h-[168px]" data-cy="delete-confirm-modal">
+                      <DialogHeader>
+                        <DialogTitle className="text-[#09090B] text-[20px]">Та устгахдаа итгэлтэй байна уу?</DialogTitle>
+                        <DialogDescription className="text-[16px]">
+                          Мэдээллийг устгаснаар дахин сэргээх боломжгүй
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex justify-end gap-2 mt-4">
+                        <Button
+                          variant="outline"
+                          onClick={() => setOpen(false)}
+                          data-cy="cancel-delete-button"
+                        >
+                          Болих
+                        </Button>
+                        <Button
+                          variant="destructive"
+                           onClick={async () => {
+                             // istanbul ignore next
+              if (selectedId) {
+                try {
+                  await deletePostById({ variables: { id: selectedId } });
+                 
+                  setListingData(prev =>
+                    prev.filter(post => post.id !== selectedId)
+                  );
+                } catch (error) {
+                  console.error('Алдаа гарлаа', error);
+                }
+                setOpen(false);
+              }
+            }}
+          >
+                          Устгах
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </td>
             </tr>
