@@ -15,7 +15,7 @@ const profileSchema = new Schema(
     images: { type: [String], required: true },
     liked: [{ type: Types.ObjectId, ref: 'User', required: true }],
     disliked: [{ type: Types.ObjectId, ref: 'User', required: true }],
-    matched: [{ type: Types.ObjectId, ref: 'User', required: true }],
+    matched: [{ type: Types.ObjectId, ref: 'Profile', required: true }],
   },
   { timestamps: true }
 );
