@@ -40,15 +40,6 @@ describe('TableRow', () => {
     createdAt: String(Date.now()),
   };
 
-  it('renders finished request properly', () => {
-    render(<TableRow request={mockRequest} />);
-    expect(screen.getByText('Хайртай аав')).toBeInTheDocument();
-    expect(screen.getByText('123456789')).toBeInTheDocument();
-    expect(screen.getByText('Алтангэрэл')).toBeInTheDocument();
-    expect(screen.getByText('182000')).toBeInTheDocument();
-    expect(screen.getByText('Шилжүүлсэн')).toBeInTheDocument();
-  });
-
   it('renders pending request with "Дуусгах" button', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={true}>

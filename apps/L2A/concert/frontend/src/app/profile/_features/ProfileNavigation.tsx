@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import ForgetPassword from './ForgetPassword';
 import UserProfile from './UserProfile';
@@ -9,23 +10,23 @@ const UserProfileContainer = () => {
   const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'password'>('profile');
 
   return (
-    <div className="min-h-screen bg-[#111113] text-white flex" data-cy="user-profile-container">
+    <div className="min-h-screen bg-[#0f0f0f] text-white flex flex-col md:flex-row" data-cy="user-profile-container">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="flex-1 p-8" data-cy="profile-main">
+      <main className="flex-1 px-6 py-8 md:p-10" data-cy="profile-main">
         {activeTab === 'profile' && (
-          <div data-cy="profile-tab">
+          <section data-cy="profile-tab">
             <UserProfile />
-          </div>
+          </section>
         )}
         {activeTab === 'orders' && (
-          <div className="space-y-6" data-cy="orders-tab">
+          <section className="space-y-6" data-cy="orders-tab">
             <OrderHistory />
-          </div>
+          </section>
         )}
         {activeTab === 'password' && (
-          <div data-testid="password-tab">
+          <section data-cy="password-tab">
             <ForgetPassword />
-          </div>
+          </section>
         )}
       </main>
     </div>

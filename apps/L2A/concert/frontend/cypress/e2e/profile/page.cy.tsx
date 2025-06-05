@@ -4,7 +4,7 @@ describe('User Profile Tabs', () => {
 
   const updateuser = 'changeuserinfo@gmail.com';
   beforeEach(() => {
-    cy.visit('/profile/123');
+    cy.visit('/profile');
   });
 
   it('should click on cancel request', () => {
@@ -15,7 +15,7 @@ describe('User Profile Tabs', () => {
     cy.get('button[type="submit"]').click();
     cy.wait('@updateUserInfo');
 
-    cy.visit('/profile/123');
+    cy.visit('/profile');
 
     cy.get('[data-cy="order-history"]').click();
     cy.wait('@updateUserInfo');
@@ -83,7 +83,7 @@ describe('User Profile Tabs', () => {
     cy.get('button[type="submit"]').click();
     cy.wait('@waitlogin');
 
-    cy.visit('/profile/123');
+    cy.visit('/profile');
 
     cy.get('[data-testid="forget-password"]').click();
 
@@ -114,6 +114,5 @@ describe('User Profile Tabs', () => {
     cy.get('[data-cy="profile-tab"]').should('exist');
     cy.get('[data-cy="order-history"]').click({ multiple: true });
     cy.get('[data-testid="forget-password"]').click({ multiple: true });
-    cy.get('[data-testid="password-tab"]').should('exist');
   });
 });

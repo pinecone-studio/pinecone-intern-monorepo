@@ -32,7 +32,7 @@ describe('AdminHeader', () => {
     localStorageMock.getItem.mockImplementation((key) => (key === 'user' ? null : undefined));
   });
 
-  it('renders and highlights Тасалбар when pathname is /admin/concerts', () => {
+  it('renders and highlights', () => {
     (usePathname as jest.Mock).mockReturnValue('/admin/concerts');
 
     render(
@@ -46,8 +46,8 @@ describe('AdminHeader', () => {
     const ticketLink = screen.getByTestId('ticket-button-admin');
     const cancelLink = screen.getByTestId('cancel-request-admin');
 
-    expect(ticketLink).toHaveClass('border-b');
-    expect(cancelLink).not.toHaveClass('border-b');
+    expect(ticketLink).toHaveClass('border-b-2');
+    expect(cancelLink).not.toHaveClass('border-b-2');
   });
 
   it('renders and highlights Цуцлах хүсэлт when pathname is /admin/cancel-request', () => {
@@ -64,8 +64,8 @@ describe('AdminHeader', () => {
     const ticketLink = screen.getByTestId('ticket-button-admin');
     const cancelLink = screen.getByTestId('cancel-request-admin');
 
-    expect(ticketLink).not.toHaveClass('border-b');
-    expect(cancelLink).toHaveClass('border-b');
+    expect(ticketLink).not.toHaveClass('border-b-2');
+    expect(cancelLink).toHaveClass('border-b-2');
   });
 
   it('renders default header content', () => {
