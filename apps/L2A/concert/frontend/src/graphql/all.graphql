@@ -383,3 +383,9 @@ mutation createCancelRequest($userId: String!, $ticketId: String!, $bankName: St
     id
   }
 }
+
+mutation changeStatus($requestId: String!) {
+  changeStatus(requestId: $requestId) {
+    id
+  }
+}
