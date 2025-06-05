@@ -17,7 +17,7 @@ describe('BuildingInfoSection ', () => {
     door: 'Төмөр вакум',
     floorNumber: 4,
     totalFloors: 5,
-    flooring: 'Ламинат',
+    roofMaterial: 'Ламинат',
     balcony: true,
   };
 
