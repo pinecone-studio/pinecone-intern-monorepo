@@ -19,7 +19,7 @@ describe('AdminListingTable - Basic rendering', () => {const mockUseQuery = useG
   it('shows loading state', () => {
     mockUseQuery.mockReturnValue({ loading: true });
     render(<AdminListingTable />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText('Уншиж байна...')).toBeInTheDocument();
   });
 
   it('renders when error is undefined', () => {
