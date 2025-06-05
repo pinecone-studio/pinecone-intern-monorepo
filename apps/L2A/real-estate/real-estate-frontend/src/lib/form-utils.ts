@@ -112,7 +112,6 @@ export const useCreatePostFormik = () => {
       completionDate:String(values.year),
       roofMaterial: values.ground,
       door: values.door,
-      completionDate: values.year,
       floorNumber: Number(values.floor),
       totalFloors: Number(values.aptfloor),
       balcony: Boolean(values.balcony),
