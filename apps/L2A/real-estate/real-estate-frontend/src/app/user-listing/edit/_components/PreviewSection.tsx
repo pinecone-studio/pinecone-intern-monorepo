@@ -6,9 +6,21 @@ import { Button } from '@/components/ui/button';
 import ListingPreviewCard from '@/app/_components/ListingPreviewCard';
 import { useFormikContext } from 'formik';
 import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useState } from 'react';
+
+  
 
 const PreviewSection = ({ draftKey }: { draftKey: string }) => {
   const { values, submitForm } = useFormikContext<any>();
+  const [open, setOpen] = useState(false);
 
   const handleSaveToLocal = () => {
     try {
@@ -79,15 +91,49 @@ const PreviewSection = ({ draftKey }: { draftKey: string }) => {
             Хадгалаад гарах
           </Button>
 
-          <Button
-            type="button"
-            variant="ghost"
-            data-cy="delete-post-button"
-            data-testid="delete-post-button"
-            className="w-full text-sm text-destructive font-medium"
-          >
-            Устгах
-          </Button>
+           <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                data-cy="delete-post-button"
+                data-testid="delete-post-button"
+                className="w-full text-sm text-destructive font-medium"
+                onClick={() => setOpen(true)}
+              >
+                Устгах
+              </Button>
+            </DialogTrigger>
+            <DialogContent className='w-[480px] h-[168px] ' data-cy="delete-confirm-modal" data-testid="delete-confirm-modal">
+              <DialogHeader>
+                <DialogTitle className='text-[#09090B] text-[20px]'>Та устгахдаа итгэлтэй байна уу?</DialogTitle>
+                <DialogDescription className='text-[16px]'>
+                  Мэдээллийг устгаснаар дахин сэргээх боломжгүй
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-end gap-2 mt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setOpen(false)}
+                  data-cy="cancel-delete-button"
+                  data-testid="cancel-delete-button"
+                >
+                  Болих
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  data-cy="confirm-delete-button"
+                  data-testid="confirm-delete-button"
+                  
+                  className='bg-[#F97316] w-[78px] h-[36px] text-white'
+       >
+                  Устгах
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardContent>
     </Card>
