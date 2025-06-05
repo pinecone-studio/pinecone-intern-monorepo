@@ -62,7 +62,7 @@ describe('createConcert mutation', () => {
       endDate: '2025-04-30',
     };
 
-    await expect(createConcert?.(null, { input: invalidInput }, {}, mockInfo)).rejects.toThrow('endDate must be the same or after start date');
+    await expect(createConcert?.(null, { input: invalidInput }, {}, mockInfo)).rejects.toThrow('Дуусах огноо нь эхлэх огнооноос өмнө байж болохгүй.');
   });
 
   it('should handle invalid venue ID and malformed dates', async () => {
