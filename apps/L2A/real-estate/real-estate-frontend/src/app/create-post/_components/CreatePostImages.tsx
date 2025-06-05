@@ -11,28 +11,36 @@ export const CreatePostImages = ({ name, value, onChange, error }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
+ const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (!e.target.files) return;
 
-    setUploading(true);
-    const files = Array.from(e.target.files);
-    for (const file of files) {
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', 'food-delivery');
+  setUploading(true);
+  const files = Array.from(e.target.files);
 
-      const res = await fetch('https://api.cloudinary.com/v1_1/do0qq0f0b/upload', {
-        method: 'POST',
-        body: data,
-      });
-      const result = await res.json();
-      onChange([...value, result.secure_url]);
-  
-    }
+  const uploadPromises = files.map(async (file) => {
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'food-delivery');
 
+    const res = await fetch('https://api.cloudinary.com/v1_1/do0qq0f0b/upload', {
+      method: 'POST',
+      body: data,
+    });
 
+    const result = await res.json();
+    return result.secure_url as string;
+  });
+
+  try {
+    const uploadedUrls = await Promise.all(uploadPromises);
+    onChange([...value, ...uploadedUrls]);
+  } catch (error) {
+    console.error('Зураг оруулах үед алдаа гарлаа', error);
+  } finally {
     setUploading(false);
-  };
+  }
+};
+
 
   const removeImage = (index: number) => {
     const updated = [...value];
