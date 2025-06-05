@@ -28,5 +28,6 @@ query GetPostById($_id:ID!) {
     balcony
     totalFloors
     lift
+    status
     }
 }

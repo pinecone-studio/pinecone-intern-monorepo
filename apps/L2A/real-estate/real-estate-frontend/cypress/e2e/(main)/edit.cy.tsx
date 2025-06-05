@@ -33,10 +33,8 @@ describe('Edit Page E2E Test', () => {
   };
 
   beforeEach(() => {
-    // localStorage цэвэрлэх
     cy.window().then(win => win.localStorage.removeItem(DRAFT_KEY));
 
-    // GraphQL mock intercept
     cy.intercept('POST', '**/graphql', (req) => {
       const operationName = req.body.operationName;
 
@@ -87,7 +85,6 @@ describe('Edit Page E2E Test', () => {
   });
 
   it('submits updated form and clears draft (covers lines 53-73)', () => {
-    // Эхлээд draft нэмэх (дараа нь clear болно)
     cy.window().then(win => {
       win.localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: 'Old Draft' }));
     });

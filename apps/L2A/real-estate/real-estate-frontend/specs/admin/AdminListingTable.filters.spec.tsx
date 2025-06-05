@@ -21,7 +21,7 @@ describe('AdminListingTable - Filters & interaction', () => {
     jest.clearAllMocks();
   });
 
-  it('filters and switches tabs correctly', async () => {
+   it('filters and switches tabs correctly', async () => {
     mockUseQuery.mockReturnValue({
       loading: false,
       error: undefined,
@@ -50,16 +50,7 @@ describe('AdminListingTable - Filters & interaction', () => {
             title: 'Rejected',
             propertyOwnerId: 'O3',
             number: 3,
-            status: 'REJECTED',
-            createdAt: '',
-            updatedAt: '',
-          },
-          {
-            _id: '4',
-            title: 'Blocked',
-            propertyOwnerId: 'O4',
-            number: 4,
-            status: 'BLOCKED',
+            status: 'DECLINED',
             createdAt: '',
             updatedAt: '',
           },
@@ -68,14 +59,39 @@ describe('AdminListingTable - Filters & interaction', () => {
     });
 
     render(<AdminListingTable />);
+
     fireEvent.click(screen.getByText('Зөвшөөрсөн'));
-    expect(await screen.findByText('Approved')).toBeInTheDocument();
+    expect(await screen.findByText('Approved')).toBeInTheDocument(); 
 
     fireEvent.click(screen.getByText('Татгалзсан'));
-    expect(await screen.findByText('Rejected')).toBeInTheDocument();
+    expect(await screen.findByText('Rejected')).toBeInTheDocument(); 
 
     fireEvent.click(screen.getByText('Админ хассан'));
-    expect(await screen.findByText('Blocked')).toBeInTheDocument();
+    expect(await screen.findByText('Энэ төлөвт зар алга.')).toBeInTheDocument(); 
+  });
+
+  it('navigates to detail page on row click', async () => {
+    mockUseQuery.mockReturnValue({
+      loading: false,
+      error: undefined,
+      data: {
+        getPosts: [
+          {
+            _id: '99',
+            title: 'Clickable',
+            propertyOwnerId: 'O99',
+            number: 9999,
+            status: 'PENDING',
+            createdAt: '',
+            updatedAt: '',
+          },
+        ],
+      },
+    });
+
+    render(<AdminListingTable />);
+    fireEvent.click(await screen.findByText('Clickable'));
+    expect(mockPush).toHaveBeenCalledWith('/admin/details/99');
   });
 
   it('navigates to detail page on row click', async () => {

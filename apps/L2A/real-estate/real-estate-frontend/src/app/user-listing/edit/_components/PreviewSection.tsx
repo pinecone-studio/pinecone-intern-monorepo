@@ -39,10 +39,7 @@ const PreviewSection = ({ draftKey }: { draftKey: string }) => {
       data-cy="preview-section"
     >
       <CardContent className="p-6 pb-6 bg-[#F9F9F9]">
-        <h3 className="text-xl font-semibold mb-1">Хэрэглэгчдэд харагдах</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          Таны оруулсан мэдээлэл хэрэглэгчдэд харагдах үзүүлэлт
-        </p>
+     
 
         <div data-testid="listing-preview-card" data-cy="listing-preview-card">
           <ListingPreviewCard

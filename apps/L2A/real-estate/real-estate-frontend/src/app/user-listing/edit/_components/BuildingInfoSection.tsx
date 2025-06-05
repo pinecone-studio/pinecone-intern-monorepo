@@ -80,7 +80,7 @@ const BuildingInfoSection = () => {
       <div className="space-y-1">
         <Label>Шал</Label>
         <Input
-          value={values.flooring || ''}
+          value={values.roofMaterial || ''}
           onChange={(e) => setFieldValue('flooring', e.target.value)}
           data-cy="input-flooring"
           data-testid="input-flooring"
@@ -90,7 +90,7 @@ const BuildingInfoSection = () => {
       <div className="space-y-1">
         <Label>Тагт</Label>
         <Input
-          value={values.balcony ? '2 тагттай' : ''}
+          value={values.balcony ? 'Байгаа' : 'Байхгүй'}
           onChange={(e) =>
             setFieldValue('balcony', e.target.value.toLowerCase().includes('тагт'))
           }

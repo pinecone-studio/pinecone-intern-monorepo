@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import BuildingInfoSection from '@/app/user-listing/edit/_components/BuildingInfoSection';
 import { useFormikContext } from 'formik';
 
-// 🧠 Mock formik context
 jest.mock('formik', () => ({
   useFormikContext: jest.fn(),
 }));
@@ -17,7 +16,7 @@ describe('BuildingInfoSection ', () => {
     door: 'Төмөр вакум',
     floorNumber: 4,
     totalFloors: 5,
-    flooring: 'Ламинат',
+    roofMaterial: 'Ламинат',
     balcony: true,
   };
 
@@ -37,7 +36,7 @@ describe('BuildingInfoSection ', () => {
     expect(screen.getByDisplayValue('4')).toBeInTheDocument();
     expect(screen.getByDisplayValue('5')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Ламинат')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('2 тагттай')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Байгаа')).toBeInTheDocument();
   });
 it('renders with empty values (fallback defaults)', () => {
   (useFormikContext as jest.Mock).mockReturnValue({
@@ -48,7 +47,7 @@ it('renders with empty values (fallback defaults)', () => {
       door: undefined,
       floorNumber: undefined,
       totalFloors: undefined,
-      flooring: undefined,
+      roofMaterial: undefined,
       balcony: false,
     },
     setFieldValue: mockSetFieldValue,
@@ -63,7 +62,7 @@ it('renders with empty values (fallback defaults)', () => {
   expect(screen.getByTestId('input-floor')).toHaveValue(null);
   expect(screen.getByTestId('input-building-floors')).toHaveValue(null);
   expect(screen.getByTestId('input-flooring')).toHaveValue('');
-  expect(screen.getByTestId('input-balcony')).toHaveValue('');
+  expect(screen.getByTestId('input-balcony')).toHaveValue('Байхгүй');
 });
   it('calls setFieldValue for all input changes', () => {
     render(<BuildingInfoSection />);

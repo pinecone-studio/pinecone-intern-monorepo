@@ -34,7 +34,7 @@ mutation RequestOTP($email: String!) {
   requestOTP(email: $email)
 }
 
-mutation UpdatePostById($id:ID!, $input: CreatePostInput!) {
+mutation UpdatePostById($id:ID!, $input: UpdatePostInput!) {
   updatePostById(_id:$id, input: $input) {
     _id
     propertyOwnerId

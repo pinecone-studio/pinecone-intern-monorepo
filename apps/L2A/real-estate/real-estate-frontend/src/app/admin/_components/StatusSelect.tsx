@@ -1,25 +1,49 @@
+/* eslint-disable complexity */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircle } from 'lucide-react';
+import { GetPostByIdQuery, UpdatePostInput, useUpdatePostByIdMutation } from '@/generated';
 
 type Props = {
   value: string;
   onChange: (_: string) => void;
+  id: string;
+  post?: GetPostByIdQuery['getPostById'];
 };
 
-const StatusSelect = ({ value, onChange }: Props) => {
+const statusMap: Record<string, 'PENDING' | 'APPROVED' | 'DECLINED'> = {
+  'Хүлээгдэж буй': 'PENDING',
+  'Зөвшөөрөх': 'APPROVED',
+  'Татгалзах': 'DECLINED',
+};
+
+const StatusSelect = ({post, value, onChange, id }: Props) => {
   const statuses = ['Хүлээгдэж буй', 'Зөвшөөрөх', 'Татгалзах'];
   const [statusChanged, setStatusChanged] = useState(false);
   const prevValue = useRef(value);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const [updatePostStatus] = useUpdatePostByIdMutation();
+
+  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStatus = e.target.value;
     if (newStatus !== value) {
       onChange(newStatus);
+      try {
+    await updatePostStatus({
+  variables: {
+    id,
+    input: {
+      status: statusMap[newStatus] as UpdatePostInput['status'],
+      propertyOwnerId: post?.propertyOwnerId ?? '',
+    },
+  },
+});
+      } catch (err) {
+        console.error('Status update error:', err);
+      }
     }
   };
-
   useEffect(() => {
     if (prevValue.current !== value) {
       setStatusChanged(true);
@@ -32,7 +56,11 @@ const StatusSelect = ({ value, onChange }: Props) => {
 
   return (
     <div className="space-y-2">
-      <select value={value} onChange={handleChange} className="border px-3 py-1.5 rounded-md text-sm w-full">
+      <select
+       value={value}
+        onChange={handleChange}
+        className="border px-3 py-1.5 rounded-md text-sm w-full"
+      >
         {statuses.map((s) => (
           <option key={s} value={s}>
             {s}

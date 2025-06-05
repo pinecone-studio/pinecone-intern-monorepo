@@ -1,8 +1,13 @@
 'use client';
 
+import { GetPostByIdQuery } from '@/generated';
 import React from 'react';
 
-const BuildingDetails = () => {
+type Props = {
+  data: GetPostByIdQuery['getPostById']
+}
+
+const BuildingDetails = ({data}:Props) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm">
       <h2 className="text-lg font-semibold mb-4">Барилгын дэлгэрэнгүй</h2>
@@ -15,42 +20,42 @@ const BuildingDetails = () => {
         <div className="py-2 border-b">
           <span className="font-medium">Цонхны тоо:</span>
         </div>
-        <div className="py-2 border-b text-right">6</div>
+        <div className="py-2 border-b text-right">{data?.windowsCount}</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Цонх:</span>
         </div>
-        <div className="py-2 border-b text-right">Төмөр вакум</div>
+        <div className="py-2 border-b text-right">{data?.windowType}</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Хаалга:</span>
         </div>
-        <div className="py-2 border-b text-right">Төмөр вакум</div>
+        <div className="py-2 border-b text-right">{data?.door}</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Хэдэн давхарт:</span>
         </div>
-        <div className="py-2 border-b text-right">4 давхарт</div>
+        <div className="py-2 border-b text-right">{data?.floorNumber} давхарт</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Барилгын давхар:</span>
         </div>
-        <div className="py-2 border-b text-right">5 давхарт</div>
+        <div className="py-2 border-b text-right">{data?.totalFloors} давхар</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Шал:</span>
         </div>
-        <div className="py-2 border-b text-right">Ламинат</div>
+        <div className="py-2 border-b text-right">{data?.roofMaterial}</div>
 
         <div className="py-2 border-b">
           <span className="font-medium">Тагт:</span>
         </div>
-        <div className="py-2 border-b text-right">2 тагттай</div>
+        <div className="py-2 border-b text-right">{data?.balcony ? "Байгаа" : "Байхгүй"}</div>
 
         <div className="py-2">
           <span className="font-medium">Лифт:</span>
         </div>
-        <div className="py-2 text-right">Байгаа</div>
+        <div className="py-2 text-right">{data?.lift ? "Байгаа" : "Байхгүй"}</div>
       </div>
     </div>
   );
