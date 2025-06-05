@@ -8,22 +8,21 @@ import { useRouter } from 'next/navigation';
 const TABS = ['Хүлээгдэж буй', 'Зөвшөөрсөн', 'Татгалзсан', 'Админ хассан'];
 const STATUS_MAP: Record<string, string> = {
   'Хүлээгдэж буй': 'PENDING',
-  Зөвшөөрсөн: 'APPROVED',
-  Татгалзсан: 'REJECTED',
-  'Админ хассан': 'BLOCKED',
+  'Зөвшөөрсөн':'APPROVED',
+  'Татгалзсан': 'DECLINED',
+  'Админ хассан': '',
 };
 
 const AdminListingTable = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<string>('Хүлээгдэж буй');
   const { data, loading, error } = useGetPostsQuery();
-  console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading posts: {error.message}</p>;
   const filteredListings = (data?.getPosts ?? []).filter((listing) => listing.status === STATUS_MAP[selectedTab]);
-  console.log(filteredListings);
+
   return (
-    <div className="p-6">
+    <div  className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Зарууд</h1>
 
       <div className="flex justify-between items-center mb-4">
@@ -52,13 +51,19 @@ const AdminListingTable = () => {
             {filteredListings.length > 0 ? (
               filteredListings.map((listing) => (
                 <tr key={listing._id} className="border-t hover:bg-gray-50 cursor-pointer" onClick={() => router.push(`/admin/details/${listing._id}`)}>
-                  <td className="px-4 py-2 text-blue-600 underline border-x">{listing._id}</td>
+                  <td className="px-4 py-2 text-[#00000]  border-x max-w-[100px] truncate whitespace-nowrap">{listing._id}</td>
                   <td className="px-4 py-2 flex items-center gap-2 border-x">
-                    <Image src="/listingcard.png" alt="thumb" width={40} height={40} className="rounded-md object-cover" />
+                   <Image
+                      src={listing?.images?.[0] ?? '/placeholder.png'}
+                      alt="thumb"
+                      width={40}
+                      height={40}
+                      className="rounded-md object-cover"
+                    />
                     {listing.title}
                   </td>
-                  <td className="px-4 py-2 border-x">{listing.propertyOwnerId}</td>
-                  <td className="px-4 py-2 border-x">{listing.number}</td>
+                  <td className="px-4 py-2 border-x">{listing?.ownerName}</td>
+                  <td className="px-4 py-2 border-x">{listing?.number}</td>
                 </tr>
               ))
             ) : (

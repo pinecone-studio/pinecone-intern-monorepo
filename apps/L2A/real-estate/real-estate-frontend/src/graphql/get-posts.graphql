@@ -10,6 +10,8 @@ query GetPosts {
     floorNumber
     garage
     images
+    door
+    ownerName
     lift
     location {
       address

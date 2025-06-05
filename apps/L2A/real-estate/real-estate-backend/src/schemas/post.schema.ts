@@ -87,13 +87,40 @@ export const typeDefs = gql`
   balcony: Boolean
   totalFloors: Int
   lift: Boolean
+  status: PostStatus!
 }
 
+input UpdatePostInput {
+  propertyOwnerId: ID!
+  title: String
+  ownerName: String
+  description: String
+  number:Int
+  feature: [feature]
+  price: Float
+  images: [String]
+  type: PropertyType
+  size: Float
+  totalRooms: Int
+  garage: Boolean
+  restrooms: Int
+  location: LocationInput
+  completionDate: String
+  windowsCount: Int
+  windowType: String
+  roofMaterial: String
+  floorNumber: Int
+  door:String
+  balcony: Boolean
+  totalFloors: Int
+  lift: Boolean
+  status: PostStatus
+}
 
   type Mutation {
     createPost(input: CreatePostInput!): Post!
     deletePostById(_id: ID!): Post!
-    updatePostById(_id: ID!, input: CreatePostInput!): Post!
+    updatePostById(_id: ID!, input: UpdatePostInput!): Post!
   }
 
   type Query {

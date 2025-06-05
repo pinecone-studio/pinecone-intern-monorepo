@@ -13,15 +13,16 @@ type ListingCardProps = {
   city: string | null | undefined;
   district: string | null | undefined;
   imageCount?: string | null | undefined;
+  className?: string;
 };
 
 
-const ListingCard = ({ image, price, restrooms, totalRooms, size, city, district, title }: ListingCardProps) => {
+const ListingCard = ({ className, image, price, restrooms, totalRooms, size, city, district, title }: ListingCardProps) => {
 
   return (
-    <div className="w-full max-w-sm bg-white rounded-xl shadow-md overflow-hidden transition-all duration-500 ease-in-out hover:scale-[1.05] hover:shadow-xl hover:translate-y-[-2px]">
+    <div data-testid="listing-card" className={`${className ? ` ${className}` : ''}  bg-white rounded-xl shadow-md overflow-hidden transition-all duration-500 ease-in-out hover:scale-[1.05] hover:shadow-xl hover:translate-y-[-2px]`}>
       <div className="relative w-full h-48">
-        <Image width={200} height={200} src={image || '/placeholder.png'} alt="no image" className="object-cover h-[200px] w-full" />
+        <Image fill src={image || '/placeholder.png'} alt="no image" className="object-cover h-[200px] w-full" />
       </div>
 
       <div className="p-4 space-y-2">

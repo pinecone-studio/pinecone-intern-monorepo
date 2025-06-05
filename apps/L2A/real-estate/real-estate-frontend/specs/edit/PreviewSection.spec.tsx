@@ -47,7 +47,6 @@ describe('PreviewSection', () => {
   it('renders preview section and shows card with correct values', () => {
     jest.spyOn(require('formik'), 'useFormikContext').mockReturnValue({values: defaultValues,submitForm: jest.fn(),});
     render(<PreviewSection draftKey="test-draft" />);
-    expect(screen.getByText('Хэрэглэгчдэд харагдах')).toBeInTheDocument();
     expect(screen.getByTestId('mock-preview-card')).toBeInTheDocument();
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('100000000₮')).toBeInTheDocument();

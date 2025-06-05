@@ -48,12 +48,19 @@ it('renders fallback image when image is null', () => {
   expect(img.getAttribute('src')).toContain('/placeholder.png'); 
 });
 
-
 it('renders main image when image is provided', () => {
   render(<ListingCard {...mockProps} />);
   const img = screen.getByAltText('no image');
   expect(img).toBeInTheDocument();
   expect(img.getAttribute('src')).toContain('/listingcard.png'); 
 });
+
+it('applies custom classname if provided', () => {
+  const customClass = 'custom-class';
+  render(<ListingCard {...mockProps} className={customClass} />);
+  const card = screen.getByTestId('listing-card');
+  expect(card.className).toContain(customClass);
+});
+
 
 });

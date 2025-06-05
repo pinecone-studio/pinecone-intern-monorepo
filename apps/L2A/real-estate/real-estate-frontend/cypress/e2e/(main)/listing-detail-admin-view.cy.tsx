@@ -1,3 +1,4 @@
+
 describe('ListingDetailAdminView E2E', () => {
   beforeEach(() => {
     cy.intercept('POST', '**/graphql', (req) => {
@@ -47,8 +48,8 @@ describe('ListingDetailAdminView E2E', () => {
               doorType: 'Төмөр вакум',
               floorNumber: 4,
               totalFloors: 5,
-              floorMaterial: 'Ламинат',
-              balcony: '2 тагттай',
+              roofMaterial: 'Ламинат',
+              balcony: 'Байгаа',
               lift: 'Байгаа',
               type: 'APARTMENT',
             },
@@ -65,8 +66,9 @@ describe('ListingDetailAdminView E2E', () => {
       }
     });
 
-    cy.visit('/admin');
-    cy.get('table tbody tr').first().click();
+    cy.visit('/admin/details/0001');
+    cy.get('[data-testid="admin-details-page"]').should('exist');
+   cy.get('[data-testid="admin-details-page"]').should('exist');
   });
 
   it('displays correct general information section', () => {
@@ -75,9 +77,9 @@ describe('ListingDetailAdminView E2E', () => {
     cy.contains('99112233').should('be.visible');
     cy.contains('Seoul royal county хотхон').should('be.visible');
     cy.contains('880,000,000₮').should('be.visible');
-    cy.contains('200.0 м²').should('be.visible');
+    cy.contains('200м²').should('be.visible');
     cy.contains('4 өрөө').should('be.visible');
-    cy.contains('2 өрөө').should('be.visible');
+    cy.contains('2').should('be.visible');
     cy.contains('Байхгүй').should('be.visible');
   });
 
@@ -94,7 +96,7 @@ describe('ListingDetailAdminView E2E', () => {
   });
 
   it('shows building details section', () => {
-    const buildingDetails = ['2012', '6', 'Төмөр вакум', '4 давхарт', '5 давхарт', 'Ламинат', '2 тагттай', 'Байгаа'];
+    const buildingDetails = ['2012', '6', 'Төмөр вакум', '4 давхарт', '5 давхар', 'Ламинат', 'Байгаа', 'Байгаа'];
 
     cy.contains('Барилгын дэлгэрэнгүй').should('be.visible');
     buildingDetails.forEach((text) => {

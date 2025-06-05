@@ -34,6 +34,7 @@ describe('Edit Page E2E Test', () => {
 
   beforeEach(() => {
     cy.window().then(win => win.localStorage.removeItem(DRAFT_KEY));
+
     cy.intercept('POST', '**/graphql', (req) => {
       const operationName = req.body.operationName;
 

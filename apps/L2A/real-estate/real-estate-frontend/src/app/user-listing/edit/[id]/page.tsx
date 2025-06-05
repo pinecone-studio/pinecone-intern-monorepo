@@ -67,6 +67,7 @@ const Page = () => {
     completionDate: post.completionDate || '',
     door: post.door || '',
     flooring: '',
+    status: post.status || 'Хүлээгдэж буй',
   };
  /* istanbul ignore next */
   const handleSubmit = async (values: any) => {
@@ -102,6 +103,7 @@ const Page = () => {
             windowsCount: parseInt(values.windowsCount),
             windowType: values.windowType,
             completionDate: values.completionDate,
+            status:values.status,
             door: values.door,
           },
         },
