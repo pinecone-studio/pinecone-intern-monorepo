@@ -75,7 +75,7 @@ const AdminFoodList = () => {
           <Image width={87} height={87} src={item.images?.[0] || '/images.jpeg'} alt={item.name} className="w-20 h-20 rounded-lg object-cover" />
           <CardContent className="flex-1 ml-4 p-0">
             <h3 className="font-semibold">{item.name}</h3>
-            <p className="font-bold">{item.price}</p>
+            <p className="font-bold">{item.price}k</p>
             <p className="text-sm text-gray-500">{item.status}</p>
           </CardContent>
           <div className="flex items-center space-x-2">
