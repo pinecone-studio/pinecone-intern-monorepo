@@ -50,8 +50,8 @@ const DateRangePicker = ({ date, handleDateChange }: { date: DateRange | undefin
             selected={date}
             onSelect={handleDateChange}
             numberOfMonths={2}
-            fromDate={today} // ⛔ Disable past dates
-            defaultMonth={date?.from ?? today} // 📅 Start from today
+            fromDate={today}
+            defaultMonth={date?.from ?? today}
             classNames={{
               day_selected: 'bg-blue-500 text-white',
             }}

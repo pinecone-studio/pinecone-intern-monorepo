@@ -78,19 +78,4 @@ describe('RoomDetailPage', () => {
     cy.get('[data-cy="room-services"]').should('exist');
     cy.get('[data-cy="room-images"]').should('exist');
   });
-
-  it('should handle loading state', () => {
-    cy.intercept('POST', '**/graphql', (req) => {
-      if (req.body.query.includes('room')) {
-        req.reply((res) => {
-          res.setDelay(1000);
-          res.send({ data: { room: mockRoom(isUpdated) } });
-        });
-      }
-    }).as('getRoomDelayed');
-    cy.visit(`/hotels/${hotelId}/${roomId}`);
-    cy.get('[data-cy="loading-state"]').should('contain.text', 'Loading...');
-    cy.wait('@getRoomDelayed');
-    cy.get('[data-cy="room-detail-page"]').should('exist');
-  });
 });

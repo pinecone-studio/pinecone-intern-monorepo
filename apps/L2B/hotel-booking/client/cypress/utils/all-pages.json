@@ -1,3 +1,1 @@
-
-["///","///guests","///hotels","///hotels/[hotelid]","///hotels/[hotelid]/[roomId]","///hotels/[hotelid]/[roomId]/[bookingId]","///contact","///profile","///security","///hotel-detail/[hotelId]","///forget-password","///signin","///signup"]
-
+["///","///guests","///hotels","///hotels/[hotelid]","///hotels/[hotelid]/[roomId]","///hotels/[hotelid]/[roomId]/[bookingId]","///contact","///profile","///security","///hotel-detail/[hotelId]","///my-booking","///search-result","///forget-password","///signin","///signup"]
