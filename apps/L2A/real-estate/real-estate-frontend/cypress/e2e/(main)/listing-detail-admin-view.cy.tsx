@@ -1,10 +1,34 @@
-
+/* eslint-disable no-secrets/no-secrets */
 describe('ListingDetailAdminView E2E', () => {
   beforeEach(() => {
+    const mockAdminToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+      'eyJpZCI6ImFkbWluLWlkIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImlzQWRtaW4iOnRydWV9.' +
+      'signature-placeholder';
+
+    cy.window().then((win) => {
+      win.localStorage.setItem('token', mockAdminToken);
+    });
+
     cy.intercept('POST', '**/graphql', (req) => {
       const op = req.body.operationName;
 
+      if (op === 'Me') {
+        req.alias = 'getMe';
+        req.reply({
+          data: {
+            me: {
+              id: 'admin-id',
+              email: 'admin@test.com',
+              isAdmin: true,
+            },
+          },
+        });
+        return;
+      }
+
       if (op === 'GetPosts') {
+        req.alias = 'getPosts';
         req.reply({
           data: {
             getPosts: [
@@ -18,9 +42,11 @@ describe('ListingDetailAdminView E2E', () => {
             ],
           },
         });
+        return;
       }
 
       if (op === 'GetPostById') {
+        req.alias = 'getPostById';
         req.reply({
           data: {
             getPostById: {
@@ -55,20 +81,22 @@ describe('ListingDetailAdminView E2E', () => {
             },
           },
         });
+        return;
       }
 
       if (op === 'UpdatePostStatus') {
+        req.alias = 'updatePostStatus';
         req.reply({
           data: {
             updatePostStatus: true,
           },
         });
+        return;
       }
     });
 
     cy.visit('/admin/details/0001');
     cy.get('[data-testid="admin-details-page"]').should('exist');
-   cy.get('[data-testid="admin-details-page"]').should('exist');
   });
 
   it('displays correct general information section', () => {

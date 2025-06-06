@@ -1,7 +1,33 @@
+/* eslint-disable no-secrets/no-secrets */
 describe('Admin Listing Detail Page', () => {
   beforeEach(() => {
+    const mockAdminToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+      'eyJpZCI6ImFkbWluLWlkIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImlzQWRtaW4iOnRydWV9.' +
+      'signature-placeholder';
+
+    cy.window().then((win) => {
+      win.localStorage.setItem('token', mockAdminToken);
+    });
+
     cy.intercept('POST', '**/graphql', (req) => {
-      if (req.body.operationName === 'GetPostById') {
+      const operationName = req.body.operationName;
+
+      if (operationName === 'Me') {
+        req.alias = 'getMe';
+        req.reply({
+          data: {
+            me: {
+              id: 'admin-id',
+              email: 'admin@test.com',
+              isAdmin: true,
+            },
+          },
+        });
+        return;
+      }
+
+      if (operationName === 'GetPostById') {
         req.alias = 'getPostById';
         req.reply({
           data: {
@@ -22,7 +48,7 @@ describe('Admin Listing Detail Page', () => {
               location: {
                 city: 'Улаанбаатар',
                 district: 'Баянзүрх',
-                address: 'Улаанбаатар хот, Баянзүрх дүүрэг, 26-р хороо'
+                address: 'Улаанбаатар хот, Баянзүрх дүүрэг, 26-р хороо',
               },
               windowsCount: 6,
               windowType: 'Төмөр вакум',
@@ -31,13 +57,13 @@ describe('Admin Listing Detail Page', () => {
               totalFloors: 5,
               roofMaterial: 'Ламинат',
               balcony: true,
-              lift: true
-            }
-          }
+              lift: true,
+            },
+          },
         });
+        return;
       }
     });
-
     cy.visit('/admin/details/0001');
     cy.wait('@getPostById');
   });
