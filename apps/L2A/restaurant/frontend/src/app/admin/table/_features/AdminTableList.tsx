@@ -90,10 +90,6 @@ const AdminTableList = () => {
               {table.name}
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="secondary" data-testid={`classroom-${table._id}-qr-button`}>
-                QR харах
-              </Button>
-
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button
