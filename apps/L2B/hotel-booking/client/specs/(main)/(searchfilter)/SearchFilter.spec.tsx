@@ -102,17 +102,14 @@ describe('SearchFilter', () => {
     fireEvent.click(screen.getByTestId('increment-kids'));
     fireEvent.click(screen.getByTestId('increment-adults'));
 
-    fireEvent.click(screen.getByTestId('increment-rooms'));
-
     fireEvent.click(screen.getByTestId('guest-options-done'));
 
     fireEvent.click(screen.getByRole('button', { name: /search/i }));
 
     const calledUrl = push.mock.calls[0][0];
 
-    expect(calledUrl).toMatch('/search-result?from=2025-06-06&to=2025-06-06&adults=3&children=2&rooms=2');
+    expect(calledUrl).toMatch('/search-result?from=2025-06-06&to=2025-06-06&adults=3&children=2');
     expect(calledUrl).toMatch(/children=2/);
-    expect(calledUrl).toMatch(/rooms=2/);
   });
   it('should return early if date.from or date.to is undefined', () => {
     (CalendarDate as jest.Mock).mockImplementation(({ handleDateChange }) => {

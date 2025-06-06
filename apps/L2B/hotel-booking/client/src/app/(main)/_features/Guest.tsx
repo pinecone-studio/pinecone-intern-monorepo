@@ -4,18 +4,17 @@ import { ChevronDown, Minus, Plus, User } from 'lucide-react';
 import React from 'react';
 import useCounter from '../_components/UseCounter';
 
-const GuestOptions = ({ onGuestChange }: { onGuestChange: (_adults: number, _kids: number, _newRoom: number) => void }) => {
+const GuestOptions = ({ onGuestChange }: { onGuestChange: (_adults: number, _kids: number) => void }) => {
   const [isGuestOpen, setIsGuestOpen] = React.useState(false);
   const { count: adults, increment: incrementAdults, decrement: decrementAdults } = useCounter(1);
   const { count: kids, increment: incrementKids, decrement: decrementKids } = useCounter(0);
-  const { count: rooms, increment: incrementRooms, decrement: decrementRooms } = useCounter(1);
 
   React.useEffect(() => {
-    onGuestChange(adults, kids, rooms);
-  }, [adults, kids, onGuestChange, rooms]);
+    onGuestChange(adults, kids);
+  }, [adults, kids, onGuestChange]);
 
   const totalGuests = adults + kids;
-  const guestInfo = `${totalGuests} ${totalGuests === 1 ? 'traveller' : 'travellers'}, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`;
+  const guestInfo = `${totalGuests} ${totalGuests === 1 ? 'traveller' : 'travellers'}`;
 
   return (
     <div data-cy="guest-options" data-testid="guest-options">
@@ -61,21 +60,6 @@ const GuestOptions = ({ onGuestChange }: { onGuestChange: (_adults: number, _kid
                   {kids}
                 </h1>
                 <Button variant="outline" size="icon" className="h-8 w-8 rounded-full" onClick={incrementKids} data-testid="increment-kids" data-cy="increment-kids">
-                  <Plus className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <h1 className="text-sm font-normal">Rooms</h1>
-              <div className="flex items-center gap-3">
-                <Button variant="outline" size="icon" className="h-8 w-8 rounded-full" onClick={decrementRooms} data-testid="decrement-rooms" data-cy="decrement-rooms">
-                  <Minus className="h-3 w-3" />
-                </Button>
-                <h1 className="w-4 text-center" data-cy="room-count">
-                  {rooms}
-                </h1>
-                <Button variant="outline" size="icon" className="h-8 w-8 rounded-full" onClick={incrementRooms} data-testid="increment-rooms" data-cy="increment-rooms">
                   <Plus className="h-3 w-3" />
                 </Button>
               </div>

@@ -14,15 +14,13 @@ const SearchFilter = () => {
   });
   const [adults, setAdults] = React.useState(1);
   const [kids, setKids] = React.useState(0);
-  const [room, setRoom] = React.useState(1);
   const handleDateChange = (newDate: DateRange | undefined) => {
     setDate(newDate);
   };
 
-  const handleGuestChange = (newAdults: number, newKids: number, newRoom: number) => {
+  const handleGuestChange = (newAdults: number, newKids: number) => {
     setAdults(newAdults);
     setKids(newKids);
-    setRoom(newRoom);
   };
 
   const handleSearch = () => {
@@ -32,7 +30,6 @@ const SearchFilter = () => {
       to: date.to.toLocaleDateString('en-CA'),
       adults: adults.toString(),
       children: kids.toString(),
-      rooms: room.toString(),
     });
 
     router.push(`/search-result?${params.toString()}`);
