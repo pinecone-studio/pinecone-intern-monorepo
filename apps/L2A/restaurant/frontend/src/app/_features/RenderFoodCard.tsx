@@ -6,7 +6,7 @@ export type Food = {
   id: number;
   name: string;
   price: string;
-  image: string;
+  images: string;
 };
 
 export type RenderFoodCardProps = {
@@ -20,7 +20,7 @@ const RenderFood = ({ food }: RenderFoodCardProps) => {
         <DrawerTrigger asChild>
           <button key={food.id} data-cy="Foods" className="flex flex-col">
             <div className="h-[150px] w-[150px] bg-gray overflow-hidden bg-cover">
-              <Image src={food.image || '/images.jpeg'} className="rounded-lg" width={160} height={160} alt={food.name} />
+              <Image src={food.images?.[0] || '/images.jpeg'} className="rounded-lg" width={160} height={160} alt={food.name} />
             </div>
             <div>{food.name}</div>
             <div className="font-bold text-[#09090B] text-[18px]">{food.price}k</div>
