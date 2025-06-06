@@ -1,11 +1,12 @@
-import Image from 'next/image';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import HomeOrder from './HomeOrder';
+import Image from 'next/image';
+
 
 export type Food = {
   id: number;
   name: string;
-  price: string;
+  price: string | number;
   images: string;
 };
 
@@ -14,16 +15,18 @@ export type RenderFoodCardProps = {
 };
 
 const RenderFood = ({ food }: RenderFoodCardProps) => {
-  return (
-    <div>
+  console.log(food);
+  
+    return (
+    <div className="w-full max-w-[180px]">
       <Drawer>
         <DrawerTrigger asChild>
-          <button key={food.id} data-cy="Foods" className="flex flex-col">
-            <div className="h-[150px] w-[150px] bg-gray overflow-hidden bg-cover">
-              <Image src={food.images?.[0] || '/images.jpeg'} className="rounded-lg" width={160} height={160} alt={food.name} />
+          <button data-cy="Foods" className="flex flex-col gap-1 items-start w-full">
+            <div className="h-[160px] w-[160px] bg-gray-200 rounded-lg overflow-hidden relative">
+              <Image src={food.images || food.images[0]} className="rounded-lg" width={180} height={180} alt={food.name} />
             </div>
-            <div>{food.name}</div>
-            <div className="font-bold text-[#09090B] text-[18px]">{food.price}k</div>
+            <div className="text-[#09090B] text-[14px] font-light truncate">{food.name}</div>
+            <div className="text-[#09090B] text-[18px] font-bold">{food.price}k</div>
           </button>
         </DrawerTrigger>
         <DrawerContent>
