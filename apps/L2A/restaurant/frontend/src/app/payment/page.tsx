@@ -27,13 +27,6 @@ const PaymentSelection = () => {
               <p>SocialPay</p>
             </button>
           </Link>
-          <Link href={'/payment/done'}>
-            {' '}
-            <button data-testid="wallet-button" className="bg-[#FFFFFF] shadow-sm p-3 rounded-lg w-24 flex justify-center items-center flex-col gap-2">
-              <Image width={40} height={40} alt="favicon" src="/favicon.ico" />
-              <p>Хэтэвч</p>
-            </button>
-          </Link>
         </div>
         <div className="text-gray-700 text-sm">
           <p className="flex justify-between mb-1 text-[#8B8E95] text-[14px] font-light">
