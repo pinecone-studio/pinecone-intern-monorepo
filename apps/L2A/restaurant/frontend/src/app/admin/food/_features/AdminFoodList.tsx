@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 
 const AdminFoodList = () => {
   const { data, loading, error, refetch } = useGetProductsQuery();
+  console.log(data);
   const [updateProductMutation] = useUpdateProductMutation();
   const [deleteProductMutation] = useDeleteProductMutation();
   const [foodItems, setFoodItems] = useState<any[]>([]);
@@ -71,7 +72,7 @@ const AdminFoodList = () => {
       {/* eslint-disable complexity */}
       {foodItems.map((item, index) => (
         <Card key={item._id} data-testid={`food-card-${index}`} className="flex items-center p-4">
-          <Image width={87} height={87} src={item.image || '/images.jpeg'} alt={item.name} className="w-20 h-20 rounded-lg object-cover" />
+          <Image width={87} height={87} src={item.images?.[0] || '/images.jpeg'} alt={item.name} className="w-20 h-20 rounded-lg object-cover" />
           <CardContent className="flex-1 ml-4 p-0">
             <h3 className="font-semibold">{item.name}</h3>
             <p className="font-bold">{item.price}</p>
