@@ -1,12 +1,28 @@
 'use client';
 
-import { useState } from 'react';
-import categories from '../_components/categories.json';
+import { useEffect, useState } from 'react';
 import RenderFood from './RenderFoodCard';
+import { useGetCategoriesQuery } from '@/generated';
 
 const HomeMain = () => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(categories[0].id);
+  const { data, loading, error } = useGetCategoriesQuery();
+  const [categories, setCategories] = useState<any[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  console.log('data', data);
+
+  useEffect(() => {
+    if (data?.getCategories) {
+      setCategories(data.getCategories);
+      if (!selectedCategoryId && data.getCategories.length > 0) {
+        setSelectedCategoryId(data.getCategories[0]?._id !== undefined ? Number(data.getCategories[0]._id) : null);
+      }
+    }
+  }, [data, selectedCategoryId]);
+
   const selectedCategory = categories.find((cat) => cat.id === selectedCategoryId);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Алдаа гарлаа: {error.message}</div>;
 
   return (
     <div data-cy="home-page">
@@ -27,7 +43,7 @@ const HomeMain = () => {
         </div>
 
         <div data-cy="foodsdiv" className="items-center gap-5 grid grid-cols-2">
-          {selectedCategory?.foods.map((food) => (
+          {selectedCategory?.foods.map((food: any) => (
             <RenderFood key={food.id} food={food} />
           ))}
         </div>
