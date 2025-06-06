@@ -78,7 +78,7 @@ const AdminTableList = () => {
   };
 
   if (!tables.length) {
-    return <div>Loading...</div>;
+    return <div className='text-center'>Loading...</div>;
   }
 
   return (
