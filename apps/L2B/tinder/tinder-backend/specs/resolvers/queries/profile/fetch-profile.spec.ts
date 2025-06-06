@@ -3,15 +3,15 @@ import { fetchProfile } from 'apps/L2B/tinder/tinder-backend/src/resolvers/queri
 
 jest.mock('apps/L2B/tinder/tinder-backend/src/models', () => ({
   profileModel: {
-    findById: jest.fn(),
+    findOne: jest.fn(),
   },
 }));
 
 describe('fetchProfile', () => {
   const mockProfile = {
     _id: '123',
-    name: 'Test User',
-    matched: [{ _id: '456', name: 'Matched User' }],
+    profileInfo: { name: 'Test User' },
+    matched: [{ _id: '456', profileInfo: { name: 'Matched User' } }],
     user: { _id: '789', username: 'testuser' },
   };
 
@@ -23,11 +23,11 @@ describe('fetchProfile', () => {
     const populateMatched = jest.fn().mockResolvedValue(mockProfile);
     const populateUser = jest.fn().mockReturnValue({ populate: populateMatched });
 
-    (profileModel.findById as jest.Mock).mockReturnValue({ populate: populateUser });
+    (profileModel.findOne as jest.Mock).mockReturnValue({ populate: populateUser });
 
-    const result = await fetchProfile(null, { _id: '123' });
+    const result = await fetchProfile(null, { _id: '789' });
 
-    expect(profileModel.findById).toHaveBeenCalledWith('123');
+    expect(profileModel.findOne).toHaveBeenCalledWith({ user: '789' });
     expect(populateUser).toHaveBeenCalledWith('user');
     expect(populateMatched).toHaveBeenCalledWith('matched');
     expect(result).toEqual(mockProfile);
@@ -37,8 +37,8 @@ describe('fetchProfile', () => {
     const populateMatched = jest.fn().mockResolvedValue(null);
     const populateUser = jest.fn().mockReturnValue({ populate: populateMatched });
 
-    (profileModel.findById as jest.Mock).mockReturnValue({ populate: populateUser });
+    (profileModel.findOne as jest.Mock).mockReturnValue({ populate: populateUser });
 
-    await expect(fetchProfile(null, { _id: 'notfound' })).rejects.toThrow('Profile not found');
+    await expect(fetchProfile(null, { _id: 'notfound' })).rejects.toThrow('Profile not found.');
   });
 });
