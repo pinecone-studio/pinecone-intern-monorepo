@@ -11,9 +11,13 @@ const formSchema = z.object({
   bio: z.string().min(2).max(50),
   interest: z.string().min(2).max(50),
   profession: z.string().min(2).max(50),
-  schoolWork: z.string().min(2).max(50),
+  schoolOrWork: z.string().min(2).max(50),
 });
-const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: number }) => {
+
+export type FormData = z.infer<typeof formSchema>;
+
+
+const ThirdStep = ({ setStep, step, updateFormData }: { setStep: (_step: number) => void; step: number; updateFormData: (_data: FormData) => void  }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,12 +25,12 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
       bio: '',
       interest: '',
       profession: '',
-      schoolWork: '',
+      schoolOrWork: '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+   updateFormData(values);
     setStep(3);
   }
   return (
@@ -46,7 +50,7 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
                 <FormControl>
                   <Input placeholder="Enter your name" {...field} data-cy="input-name" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage data-testid="validation-error"/>
               </FormItem>
             )}
           />
@@ -59,7 +63,7 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
                 <FormControl>
                   <Input placeholder="Tell us about yourself" {...field} data-cy="input-bio" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage data-testid="validation-error"/>
               </FormItem>
             )}
           />
@@ -72,7 +76,7 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
                 <FormControl>
                   <Input placeholder="What are your interests?" {...field} data-cy="input-interest" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage data-testid="validation-error"/>
               </FormItem>
             )}
           />
@@ -85,20 +89,20 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
                 <FormControl>
                   <Input placeholder="Enter you profession" {...field} data-cy="input-profession" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage data-testid="validation-error"/>
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="schoolWork"
+            name="schoolOrWork"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>School/Work</FormLabel>
                 <FormControl>
                   <Input placeholder="What are your interests" {...field} data-cy="input-school" />
                 </FormControl>
-                <FormMessage />
+                <FormMessage data-testid="validation-error"/>
               </FormItem>
             )}
           />
@@ -117,3 +121,4 @@ const ThirdStep = ({ setStep, step }: { setStep: (_step: number) => void; step: 
 };
 
 export default ThirdStep;
+

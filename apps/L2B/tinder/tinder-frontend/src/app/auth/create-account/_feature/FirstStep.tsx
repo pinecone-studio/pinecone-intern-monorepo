@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
-const FirstStep = ({ setStep }: { setStep: (_step: number) => void }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FirstStep = ({ setStep, updateFormData }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void } ) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [error, setError] = useState(false);
 
@@ -11,6 +12,7 @@ const FirstStep = ({ setStep }: { setStep: (_step: number) => void }) => {
       setError(true);
     } else {
       setError(false);
+      updateFormData({ interestedIn: selectedValue,  });
       setStep(1);
     }
   };
@@ -46,3 +48,4 @@ const FirstStep = ({ setStep }: { setStep: (_step: number) => void }) => {
 };
 
 export default FirstStep;
+
