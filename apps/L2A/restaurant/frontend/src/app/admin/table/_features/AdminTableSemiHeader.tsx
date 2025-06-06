@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
@@ -9,7 +15,6 @@ import { useAddTableMutation } from '@/generated';
 import { Toaster, toast } from 'sonner';
 import QRCode from 'qrcode';
 
-/* istanbul ignore next */
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as Window & typeof globalThis & { QRCode: typeof QRCode }).QRCode = QRCode;
 }
@@ -20,22 +25,29 @@ const TableSemiHeader = () => {
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [addTableMutation] = useAddTableMutation();
+
   const resetForm = () => {
     setTableName('');
     setQrUrl(null);
+    setLoading(false);
   };
+
   const handleCreate = async () => {
     const trimmedName = tableName.trim();
     if (!trimmedName) {
       toast.error('Ширээний нэр хоосон байна');
       return;
     }
+
     try {
       setLoading(true);
+
       const { data } = await addTableMutation({
         variables: { input: { name: trimmedName } },
       });
+
       const createdId = data?.addTable?._id;
+
       if (createdId) {
         const qrText = `${window.location.origin}/table/${createdId}`;
         try {
@@ -87,18 +99,50 @@ const TableSemiHeader = () => {
           <DialogHeader>
             <DialogTitle data-testid="dialog-title">Ширээ нэмэх</DialogTitle>
           </DialogHeader>
-          <Input placeholder="Ширээний нэр" value={tableName} onChange={(e) => setTableName(e.target.value)} data-testid="table-name-input" />
-          <Button onClick={handleCreate} disabled={loading} type="button" data-testid="create-button">
-            {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
-          </Button>
+          <Input
+            placeholder="Ширээний нэр"
+            value={tableName}
+            onChange={(e) => setTableName(e.target.value)}
+            data-testid="table-name-input"
+          />
+          {/* Үүсгэх товч зөвхөн QR код үүсээгүй үед харагдана */}
+          {!qrUrl && (
+            <Button
+              onClick={handleCreate}
+              disabled={loading}
+              type="button"
+              data-testid="create-button"
+            >
+              {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
+            </Button>
+          )}
+
+          {/* QR код болон татах товч зөвхөн QR url байгаа үед харагдана */}
           {qrUrl && (
             <div className="mt-4 text-center" data-testid="qr-wrapper">
               <p className="text-sm mb-2" data-testid="qr-instruction">
                 Ширээний QR код:
               </p>
-              <Image src={qrUrl} alt={`QR code for ${tableName}`} width={200} height={200} className="mx-auto" data-testid="qr-image" />
-              <a href={qrUrl} download={`${tableName}-qr.png`} data-testid="qr-download-link" aria-label={`Download QR code for ${tableName}`}>
-                <Button variant="outline" className="mt-2" type="button" data-testid="qr-download-button">
+              <Image
+                src={qrUrl}
+                alt={`QR code for ${tableName}`}
+                width={200}
+                height={200}
+                className="mx-auto"
+                data-testid="qr-image"
+              />
+              <a
+                href={qrUrl}
+                download={`${tableName}-qr.png`}
+                data-testid="qr-download-link"
+                aria-label={`Download QR code for ${tableName}`}
+              >
+                <Button
+                  variant="outline"
+                  className="mt-2"
+                  type="button"
+                  data-testid="qr-download-button"
+                >
                   Татах
                 </Button>
               </a>
@@ -109,4 +153,5 @@ const TableSemiHeader = () => {
     </div>
   );
 };
+
 export default TableSemiHeader;

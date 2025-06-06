@@ -5,4 +5,4 @@ export * from './get-orders';
 export * from './get-order-by-id';
 export * from './get-categories';
 export * from './get-category-by-id';
-export * from './get-products';
+export * from './get-products'; 
