@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import RenderFood from './RenderFoodCard';
-import { useGetCategoriesQuery } from '@/generated';
-
+import { useGetCategoriesQuery, useGetProductsQuery } from '@/generated';
+/* eslint-disable complexity */
 const HomeMain = () => {
   const { data, loading, error } = useGetCategoriesQuery();
+  const { data: ordersData, loading: ordersLoading, error: ordersError } = useGetProductsQuery();
+
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
-  console.log('data', data);
+  const [orders, setOrders] = useState<any[]>([]);
+  console.log('orders', orders);
 
   useEffect(() => {
     if (data?.getCategories) {
@@ -19,10 +22,16 @@ const HomeMain = () => {
     }
   }, [data, selectedCategoryId]);
 
+  useEffect(() => {
+    if (ordersData?.getProducts) {
+      setOrders(ordersData.getProducts);
+    }
+  }, [ordersData]);
+
   const selectedCategory = categories.find((cat) => cat.id === selectedCategoryId);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Алдаа гарлаа: {error.message}</div>;
+  if (loading || ordersLoading) return <div>Loading...</div>;
+  if (error || ordersError) return <div>Алдаа гарлаа: {error?.message || ordersError?.message}</div>;
 
   return (
     <div data-cy="home-page">
@@ -42,9 +51,17 @@ const HomeMain = () => {
           ))}
         </div>
 
-        <div data-cy="foodsdiv" className="items-center gap-5 grid grid-cols-2">
+        <div className="text-[15px] text-gray-600 mb-3">Категори доторх хоолнууд:</div>
+        <div data-cy="foodsdiv" className="items-center gap-5 grid grid-cols-2 mb-8">
           {selectedCategory?.foods.map((food: any) => (
             <RenderFood key={food.id} food={food} />
+          ))}
+        </div>
+
+        <div className="text-[15px] text-gray-600 mb-3">Захиалсан хоолнууд:</div>
+        <div data-cy="ordersdiv" className="items-center gap-5 grid grid-cols-2">
+          {orders.map((order: any) => (
+            <RenderFood key={order._id} food={order} />
           ))}
         </div>
       </main>
