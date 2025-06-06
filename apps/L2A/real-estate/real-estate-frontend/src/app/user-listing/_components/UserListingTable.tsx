@@ -40,7 +40,6 @@ const UserListingTable = ({ listings }: Props) => {
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [deletePostById] = useDeletePostByIdMutation();
-  const [listingData, setListingData] = useState<Listing[]>(listings);
 
   return (
     <div className="overflow-x-auto">
@@ -55,7 +54,7 @@ const UserListingTable = ({ listings }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {listingData.map((l, i) => (
+          {listings.map((l, i) => (
             <tr key={i} className="border-t hover:bg-gray-50">
               <td className="px-2 py-2 border-r w-[1%] whitespace-nowrap">{l.id}</td>
               <td className="px-4 py-2 border-r flex items-center gap-2">
@@ -107,9 +106,7 @@ const UserListingTable = ({ listings }: Props) => {
                 try {
                   await deletePostById({ variables: { id: selectedId } });
                  
-                  setListingData(prev =>
-                    prev.filter(post => post.id !== selectedId)
-                  );
+                
                 } catch (error) {
                   console.error('Алдаа гарлаа', error);
                 }
