@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const product = {
-  image: '/images/taco.jpg',
-  name: 'Taco Taco',
-  price: '15.6k',
+  image: '/https://montuul.mn/wp-content/uploads/2024/05/fda.jpg',
+  name: 'Тактуритан',
+  price: '28k',
 };
 
 const HomeOrder = () => {
