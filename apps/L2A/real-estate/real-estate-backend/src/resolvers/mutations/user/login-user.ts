@@ -10,7 +10,7 @@ export const loginUser = async (_: unknown, { email, password }: any) => {
 
   if (!checkPassword) throw new Error('Password incorrect');
 
-  const token = generateToken({ id: user._id.toString(), email: user.email });
+  const token = generateToken({ id: user._id.toString(), email: user.email, isAdmin: user.isAdmin });
 
   return {
     user: {

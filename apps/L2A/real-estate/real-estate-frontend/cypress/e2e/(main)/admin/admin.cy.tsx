@@ -1,9 +1,36 @@
+/* eslint-disable no-secrets/no-secrets */
+/* eslint-disable complexity */
 describe('Admin Listing Table - Filter by Tab', () => {
   beforeEach(() => {
-    cy.intercept('POST', '**/graphql', (req) => {
-      const { operationName } = req.body;
+    const mockAdminToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+      'eyJpZCI6ImFkbWluLWlkIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImlzQWRtaW4iOnRydWV9.' +
+      'signature-placeholder';
 
-      if (operationName === 'GetPosts') {
+    cy.window().then((win) => {
+      win.localStorage.setItem('token', mockAdminToken);
+    });
+
+    cy.intercept('POST', '**/graphql', (req) => {
+      const operationName = req.body.operationName;
+      const query = req.body.query || '';
+
+      if (operationName === 'Me' || query.includes('query Me')) {
+        req.alias = 'getMe';
+        req.reply({
+          data: {
+            me: {
+              id: 'admin-id',
+              email: 'admin@test.com',
+              isAdmin: true,
+            },
+          },
+        });
+        return;
+      }
+
+      if (operationName === 'GetPosts' || query.includes('query GetPosts')) {
+        req.alias = 'getPosts';
         req.reply({
           data: {
             getPosts: [
@@ -31,9 +58,11 @@ describe('Admin Listing Table - Filter by Tab', () => {
             ],
           },
         });
+        return;
       }
 
-      if (operationName === 'GetPostById') {
+      if (operationName === 'GetPostById' || query.includes('query GetPostById')) {
+        req.alias = 'getPostById';
         req.reply({
           data: {
             getPostById: {
@@ -50,17 +79,18 @@ describe('Admin Listing Table - Filter by Tab', () => {
             },
           },
         });
+        return;
       }
     });
 
     cy.visit('/admin');
+    cy.wait('@getPosts', { timeout: 10000 });
   });
 
   it('displays only listings that match the selected tab (Зөвшөөрсөн)', () => {
     cy.contains('Зөвшөөрсөн').click().should('have.class', 'font-semibold');
 
     cy.get('table tbody tr').should('have.length', 1);
-
     cy.get('table tbody tr').within(() => {
       cy.contains('Гоё байр').should('exist');
       cy.contains('99119911').should('exist');
@@ -70,13 +100,11 @@ describe('Admin Listing Table - Filter by Tab', () => {
 
   it('shows empty message when no listings match tab', () => {
     cy.contains('Татгалзсан').click();
-
     cy.contains('Энэ төлөвт зар алга.').should('exist');
   });
 
   it('clicking row navigates to detail page and shows detail content', () => {
     cy.contains('Хүлээгдэж буй').click();
-
     cy.get('table tbody tr').first().click();
 
     cy.url().should('include', '/admin/details/listing-2');
