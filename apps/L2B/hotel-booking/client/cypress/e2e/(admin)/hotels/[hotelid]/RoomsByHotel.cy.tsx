@@ -52,7 +52,7 @@ describe.only('RoomsByHotel Page', () => {
                 name: 'Relative Image Room',
                 pricePerNight: 110,
                 type: 'double',
-                images: ['room1.jpg'],
+                images: ['https://room1.jpg'],
               },
               {
                 _id: '682ac7df47df32a8a9907cb1',
