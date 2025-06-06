@@ -5,19 +5,21 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Image from 'next/image';
-import { useAddProductMutation } from '@/generated';
+import { useAddProductMutation, useGetCategoriesQuery } from '@/generated';
 
 const FoodSecHead = () => {
   const [foodName, setFoodName] = useState('');
   const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<{ id: string; name: string } | null>(null);
   const [addProduct] = useAddProductMutation();
   const [status, setStatus] = useState<boolean>(true);
   const [image, setImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { data } = useGetCategoriesQuery();
 
   useEffect(() => {
     if (!isDialogOpen) resetForm();
@@ -28,7 +30,7 @@ const FoodSecHead = () => {
     setPrice('');
     setStatus(true);
     setImage(null);
-    setCategory('');
+    setCategory(null);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +44,7 @@ const FoodSecHead = () => {
       };
       reader.readAsDataURL(file);
     } else {
-      alert('Only image files are allowed.');
+      alert('Зөвхөн зураг файл оруулна уу.');
     }
   };
 
@@ -64,7 +66,7 @@ const FoodSecHead = () => {
             price: parseFloat(price),
             status,
             images: [image as string],
-            category,
+            category: category!.id,
           },
         },
       });
@@ -117,7 +119,23 @@ const FoodSecHead = () => {
               )}
             </div>
             <Input placeholder="Үнэ" value={price} onChange={(e) => setPrice(e.target.value)} data-testid="price-input" />
-            <Input placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} data-testid="category-input" />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" data-testid="select-category-button">
+                  {category?.name || 'Select Category'}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 max-h-60 overflow-y-auto space-y-2">
+                {data?.getCategories?.map(
+                  (cat) =>
+                    cat && (
+                      <Button key={cat._id} variant="ghost" className="w-full justify-start" onClick={() => setCategory({ id: cat._id, name: cat.name })} data-testid={`category-option-${cat._id}`}>
+                        {cat.name}
+                      </Button>
+                    )
+                )}
+              </PopoverContent>
+            </Popover>
           </div>
           <DialogFooter className="pt-4">
             <Button className="w-full" onClick={handleSubmit} data-testid="create-food-button">

@@ -1,55 +1,62 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import FoodSecHead from '@/app/admin/food/_features/FoodSecondHead';
 
-// Mock GraphQL mutation
 jest.mock('@/generated', () => ({
-  useAddProductMutation: () => [jest.fn().mockResolvedValue({ data: { addProduct: { id: '1' } } })],
+  useAddProductMutation: jest.fn(() => [jest.fn()]),
+  useGetCategoriesQuery: jest.fn(() => ({
+    data: {
+      getCategories: [
+        { _id: '1', name: 'Breakfast' },
+        { _id: '2', name: 'Lunch' },
+      ],
+    },
+  })),
 }));
 
 describe('FoodSecHead component', () => {
-  it('renders the component properly', () => {
-    render(
-      <MockedProvider>
-        <FoodSecHead />
-      </MockedProvider>
-    );
-
-    expect(screen.getByTestId('food-section-header')).toBeInTheDocument();
+  it('renders title and button', () => {
+    render(<FoodSecHead />);
     expect(screen.getByTestId('food-title')).toHaveTextContent('Хоол');
     expect(screen.getByTestId('add-food-button')).toBeInTheDocument();
   });
 
-  it('opens the dialog when "Хоол +" button is clicked', () => {
-    render(
-      <MockedProvider>
-        <FoodSecHead />
-      </MockedProvider>
-    );
-
+  it('opens dialog when button is clicked', () => {
+    render(<FoodSecHead />);
     fireEvent.click(screen.getByTestId('add-food-button'));
     expect(screen.getByTestId('food-dialog')).toBeInTheDocument();
-    expect(screen.getByTestId('dialog-title')).toHaveTextContent('Хоол нэмэх');
   });
 
-  it('can input food name, price, category, and status', () => {
-    render(
-      <MockedProvider>
-        <FoodSecHead />
-      </MockedProvider>
-    );
-
+  it('shows image preview after uploading valid image', async () => {
+    render(<FoodSecHead />);
     fireEvent.click(screen.getByTestId('add-food-button'));
 
-    fireEvent.change(screen.getByTestId('food-name-input'), { target: { value: 'Burger' } });
-    fireEvent.change(screen.getByTestId('price-input'), { target: { value: '3500' } });
-    fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Fast Food' } });
+    const file = new File(['image content'], 'test.png', { type: 'image/png' });
+    const input = screen.getByTestId('file-input') as HTMLInputElement;
 
-    fireEvent.click(screen.getByTestId('inactive-radio'));
+    // Simulate uploading
+    await waitFor(() => {
+      fireEvent.change(input, { target: { files: [file] } });
+    });
 
-    expect(screen.getByTestId('food-name-input')).toHaveValue('Burger');
-    expect(screen.getByTestId('price-input')).toHaveValue('3500');
-    expect(screen.getByTestId('category-input')).toHaveValue('Fast Food');
+    await waitFor(() => {
+      expect(screen.getByTestId('food-image-preview')).toBeInTheDocument();
+    });
+  });
+
+  it('shows alert if required fields are missing', () => {
+    window.alert = jest.fn();
+    render(<FoodSecHead />);
+    fireEvent.click(screen.getByTestId('add-food-button'));
+    fireEvent.click(screen.getByTestId('create-food-button'));
+    expect(window.alert).toHaveBeenCalledWith('Бүх талбарыг бөглөнө үү.');
+  });
+
+  it('selects category correctly', () => {
+    render(<FoodSecHead />);
+    fireEvent.click(screen.getByTestId('add-food-button'));
+    fireEvent.click(screen.getByTestId('select-category-button'));
+    fireEvent.click(screen.getByTestId('category-option-1'));
+    expect(screen.getByTestId('select-category-button')).toHaveTextContent('Breakfast');
   });
 });
