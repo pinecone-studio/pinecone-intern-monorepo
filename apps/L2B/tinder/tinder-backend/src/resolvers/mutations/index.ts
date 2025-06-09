@@ -9,5 +9,5 @@ export * from './user/sign-in/sign-in';
 export * from './profile/create-profile';
 export * from './profile/update-profile';
 export * from './profile/update-image';
-export * from './match/match';
 export * from './match/dislike';
+export * from './match/like';

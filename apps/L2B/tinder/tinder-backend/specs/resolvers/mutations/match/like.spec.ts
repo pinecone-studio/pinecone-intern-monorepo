@@ -1,132 +1,61 @@
-import { profileModel } from 'apps/L2B/tinder/tinder-backend/src/models/profile.model';
+import { profileModel } from 'apps/L2B/tinder/tinder-backend/src/models';
 import { like } from 'apps/L2B/tinder/tinder-backend/src/resolvers/mutations';
 
-jest.mock('apps/L2B/tinder/tinder-backend/src/models/profile.model');
+jest.mock('apps/L2B/tinder/tinder-backend/src/models', () => ({
+  profileModel: {
+    findById: jest.fn(),
+  },
+}));
 
-const mockFindById = profileModel.findById as jest.Mock;
-
-describe('like mutation', () => {
-  const likerId = 'user1';
-  const likedId = 'user2';
+describe('like function', () => {
+  let fromProfileMock: any;
+  let toProfileMock: any;
 
   beforeEach(() => {
+    fromProfileMock = {
+      liked: [],
+      matched: [],
+      save: jest.fn(),
+    };
+
+    toProfileMock = {
+      liked: [],
+      matched: [],
+      save: jest.fn(),
+    };
+
     jest.clearAllMocks();
   });
 
-  it('should throw error if liker and liked are the same', async () => {
-    await expect(like(undefined, { likerId: 'user1', likedId: 'user1' })).rejects.toThrow('Cannot like yourself');
+  it('should like a user without a match', async () => {
+    (profileModel.findById as jest.Mock).mockResolvedValueOnce(fromProfileMock).mockResolvedValueOnce(toProfileMock);
+
+    const result = await like(null, { fromUserId: 'user1', toUserId: 'user2' });
+
+    expect(fromProfileMock.liked).toContain('user2');
+    expect(fromProfileMock.save).toHaveBeenCalledTimes(1);
+    expect(toProfileMock.save).not.toHaveBeenCalled();
+    expect(result).toBe('User liked successfully');
   });
 
-  it('should throw error if one of the profiles is not found', async () => {
-    mockFindById.mockResolvedValueOnce(null);
+  it('should like and match users if toProfile already liked fromUser', async () => {
+    toProfileMock.liked = ['user1'];
 
-    await expect(like(undefined, { likerId, likedId })).rejects.toThrow('Profile not found');
+    (profileModel.findById as jest.Mock).mockResolvedValueOnce(fromProfileMock).mockResolvedValueOnce(toProfileMock);
+
+    const result = await like(null, { fromUserId: 'user1', toUserId: 'user2' });
+
+    expect(fromProfileMock.liked).toContain('user2');
+    expect(fromProfileMock.matched).toContain('user2');
+    expect(toProfileMock.matched).toContain('user1');
+    expect(fromProfileMock.save).toHaveBeenCalledTimes(2); // first like, then match
+    expect(toProfileMock.save).toHaveBeenCalledTimes(1); // only after match
+    expect(result).toBe('Match occurred! 🎉');
   });
 
-  it('should return match: true for mutual like', async () => {
-    const liker = {
-      _id: likerId,
-      liked: [],
-      disliked: [],
-      matched: [],
-      save: jest.fn(),
-    };
+  it('should throw an error if one or both profiles not found', async () => {
+    (profileModel.findById as jest.Mock).mockResolvedValueOnce(null); // fromProfile is null
 
-    const liked = {
-      _id: likedId,
-      liked: [likerId],
-      disliked: [likerId],
-      matched: [],
-      save: jest.fn(),
-    };
-
-    mockFindById.mockImplementation((id: string) => {
-      if (id === likerId) return Promise.resolve(liker);
-      if (id === likedId) return Promise.resolve(liked);
-      return null;
-    });
-
-    const result = await like(undefined, { likerId, likedId });
-
-    expect(result).toEqual({
-      match: true,
-      matchedUserId: likedId,
-    });
-
-    expect(liker.matched).toContain(likedId);
-    expect(liked.matched).toContain(likerId);
-    expect(liked.liked).not.toContain(likerId);
-    expect(liked.disliked).not.toContain(likerId);
-    expect(liker.save).toHaveBeenCalled();
-    expect(liked.save).toHaveBeenCalled();
-  });
-
-  it('should return match: false for non-mutual like', async () => {
-    const liker = {
-      _id: likerId,
-      liked: [],
-      disliked: [],
-      matched: [],
-      save: jest.fn(),
-    };
-
-    const liked = {
-      _id: likedId,
-      liked: [],
-      disliked: [],
-      matched: [],
-      save: jest.fn(), // will not be called
-    };
-
-    mockFindById.mockImplementation((id: string) => {
-      if (id === likerId) return Promise.resolve(liker);
-      if (id === likedId) return Promise.resolve(liked);
-      return null;
-    });
-
-    const result = await like(undefined, { likerId, likedId });
-
-    expect(result).toEqual({
-      match: false,
-      matchedUserId: undefined,
-    });
-
-    expect(liker.liked).toContain(likedId);
-    expect(liker.save).toHaveBeenCalled();
-    expect(liked.save).not.toHaveBeenCalled();
-  });
-  it('should remove likedId from liker.disliked when present', async () => {
-    const liker = {
-      _id: likerId,
-      liked: [],
-      disliked: [likedId, 'user3'],
-      matched: [],
-      save: jest.fn(),
-    };
-
-    const liked = {
-      _id: likedId,
-      liked: [],
-      disliked: [],
-      matched: [],
-      save: jest.fn(),
-    };
-
-    mockFindById.mockImplementation((id: string) => {
-      if (id === likerId) return Promise.resolve(liker);
-      if (id === likedId) return Promise.resolve(liked);
-      return null;
-    });
-
-    const result = await like(undefined, { likerId, likedId });
-
-    expect(result).toEqual({
-      match: false,
-      matchedUserId: undefined,
-    });
-
-    expect(liker.disliked).toEqual(['user3']);
-    expect(liker.liked).toContain(likedId);
-    expect(liker.save).toHaveBeenCalled();
+    await expect(like(null, { fromUserId: 'user1', toUserId: 'user2' })).rejects.toThrow('One or both profiles not found');
   });
 });

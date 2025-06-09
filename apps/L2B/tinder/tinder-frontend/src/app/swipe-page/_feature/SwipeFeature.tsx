@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { useFetchAllProfileQuery } from '@/generated';
 import Loading from '@/app/_components/Loading';
-import ProfileCard from './ProfileCard';
+// import ProfileCard from './ProfileCard';
 import SwipeButtons from './SwipeButtons';
 
 const SwipeFeature = () => {
@@ -17,7 +17,8 @@ const SwipeFeature = () => {
   const [swipeAction, setSwipeAction] = useState<'like' | 'dislike' | null>(null);
 
   const currentProfile = profiles?.[currentIndex];
-
+  console.log(swipeAction);
+  console.log(currentImageIndex);
   if (!profiles) return <Loading />;
 
   const handleSwipe = (action: 'like' | 'dislike') => {
@@ -30,17 +31,17 @@ const SwipeFeature = () => {
     }, 350);
   };
 
-  const handleNextImage = () => {
-    if (currentProfile && currentImageIndex < currentProfile.images.length - 1) {
-      setCurrentImageIndex((prev) => prev + 1);
-    }
-  };
+  // const handleNextImage = () => {
+  //   if (currentProfile && currentImageIndex < currentProfile.images.length - 1) {
+  //     setCurrentImageIndex((prev) => prev + 1);
+  //   }
+  // };
 
-  const handlePrevImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex((prev) => prev - 1);
-    }
-  };
+  // const handlePrevImage = () => {
+  //   if (currentImageIndex > 0) {
+  //     setCurrentImageIndex((prev) => prev - 1);
+  //   }
+  // };
 
   if (currentIndex >= profiles.length) {
     return <div className="w-full h-[85%] flex items-center justify-center text-xl text-gray-500">🎉 No more profiles</div>;
@@ -69,7 +70,7 @@ const SwipeFeature = () => {
         exit="exit"
         className="w-full h-[85%] flex flex-col justify-start items-center px-4 pt-12 sm:px-12 overflow-hidden"
       >
-        {currentProfile && <ProfileCard profile={currentProfile} currentImageIndex={currentImageIndex} swipeAction={swipeAction} onNextImage={handleNextImage} onPrevImage={handlePrevImage} />}
+        {/* {currentProfile && <ProfileCard profile={currentProfile} currentImageIndex={currentImageIndex} swipeAction={swipeAction} onNextImage={handleNextImage} onPrevImage={handlePrevImage} />} */}
         <SwipeButtons onLike={() => handleSwipe('like')} onDislike={() => handleSwipe('dislike')} />
       </motion.div>
     </AnimatePresence>
