@@ -38,14 +38,37 @@ query FetchProfile($id: ID!) {
 mutation UpdateProfile($updateProfileId: ID!, $input: UpdateProfileInput!) {
   updateProfile(id: $updateProfileId, input: $input) {
     _id
-    interestedIn
     age
+    images
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
     profileInfo {
       name
       bio
       interest
       profession
       school
+    }
+    matched {
+      _id
+      interestedIn
+      age
+      images
+      profileInfo {
+        bio
+        interest
+        name
+        profession
+        school
+      }
     }
   }
 }
