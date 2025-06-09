@@ -55,7 +55,7 @@ query GetCurrentUser($jwt: String!) {
   }
 }
 
-mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: String!, $birth: Date!) {
+mutation UpdatePersonalInformation($id: ID!, $firstName: String, $lastName: String, $birth: Date) {
   updatePersonalInformation(_id: $id, firstName: $firstName, lastName: $lastName, birth: $birth) {
     _id
     email
@@ -70,7 +70,7 @@ mutation UpdatePersonalInformation($id: ID!, $firstName: String!, $lastName: Str
   }
 }
 
-mutation UpdateContact($id: ID!, $input: ContactInput!) {
+mutation UpdateContact($id: ID!, $input: ContactInput) {
   updateContact(_id: $id, input: $input) {
     _id
     email

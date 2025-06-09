@@ -42,3 +42,27 @@ export type RoomFormData = {
   isAvailable: boolean;
   information: string[];
 };
+export interface GuestDetails {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+}
+
+export interface ContactInfo {
+  email: string;
+  phone: string;
+}
+
+export interface CardDetails {
+  nameOnCard: string;
+  cardNumber: string;
+  expirationDate: string;
+  securityCode: string;
+  country: string;
+}
+
+export interface BookingFormData {
+  guestDetails: GuestDetails;
+  contactInfo: ContactInfo;
+  cardDetails: CardDetails;
+}
