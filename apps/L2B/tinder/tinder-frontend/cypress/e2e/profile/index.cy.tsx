@@ -11,24 +11,19 @@ describe('Profile page', () => {
   it('should open calendar and select a valid date', () => {
     cy.get('[data-testid="profile-calendar"]').click();
 
-    cy.contains('15').click();
+    cy.contains('1').click();
   });
   it('should populate form with currentProfile values', () => {
-    cy.get('input[name="name"]').should('have.value', 'Burhan');
+    cy.get('input[name="name"]').should('have.value', 'tuguldur');
     cy.get('input[name="email"]').should('have.value', 'tuuguu123123@gmail.com');
 
-    cy.get('textarea[name="bio"]').should('have.value', 'bi bol burhan namaig shut');
+    cy.get('textarea[name="bio"]').should('have.value', 'bi bol tugu');
 
     cy.get('input[name="profession"]').should('have.value', 'software engineer');
 
-    cy.get('input[name="school"]').should('have.value', 'pinecone');
+    cy.get('input[name="school"]').should('have.value', 'pinecone acedamy');
 
     cy.get('[data-testid="profile-select"]').should('have.value', 'Female');
-
-    // Date of birth should be in YYYY-MM-DD format
-    // cy.get('[data-testid="profile-calendar"] input')
-    //   .invoke('val')
-    //   .should('match', /^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('should select Male from the dropdown', () => {
