@@ -1,7 +1,7 @@
 import { profileModel } from '../../../models';
 
 export const dislike = async (_: unknown, { fromUserId, toUserId }: { fromUserId: string; toUserId: string }) => {
-  const dislikedProfile = await profileModel.findOne({ user: fromUserId });
+  const dislikedProfile = await profileModel.findById(fromUserId);
   if (!dislikedProfile) {
     throw new Error('profile not found');
   }
