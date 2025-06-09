@@ -68,7 +68,7 @@ export const UpdatePassword = () => {
           </div>
           <ChevronRight size={15} />
         </DialogTrigger>
-        <DialogContent data-cy="Password-Dialog">
+        <DialogContent data-cy="Password-Dialog" className="min-w-[400px]">
           <DialogHeader>
             <DialogTitle>Are you sure you want to update your password?</DialogTitle>
             <DialogDescription>This action will update your password. Make sure to remember the new password.</DialogDescription>
@@ -82,7 +82,7 @@ export const UpdatePassword = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input data-cy="Security-Password-Input" className="focus-visible:ring-0" placeholder="Placeholder" {...field} />
+                      <Input type="password" data-cy="Security-Password-Input" className="focus-visible:ring-0" placeholder="Placeholder" {...field} />
                     </FormControl>
                     <FormMessage data-cy="Security-Password-Input-Error-Message" />
                   </FormItem>
@@ -95,7 +95,7 @@ export const UpdatePassword = () => {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input data-cy="Security-Confirm-Input" className="focus-visible:ring-0" placeholder="Placeholder" {...field} />
+                      <Input type="password" data-cy="Security-Confirm-Input" className="focus-visible:ring-0" placeholder="Placeholder" {...field} />
                     </FormControl>
                     <FormMessage data-cy="Security-Confirm-Input-Error-Message" />
                   </FormItem>
