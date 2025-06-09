@@ -1,5 +1,5 @@
 import { HotelInput } from '../../generated';
-import { hotelModel } from '../../models';
+import { hotelModel, roomModel } from '../../models';
 
 export const createHotel = async (_: unknown, { input }: { input: HotelInput }) => {
   try {
@@ -34,13 +34,17 @@ export const updateHotel = async (_: unknown, { id, input }: { id: string; input
 
 export const deleteHotel = async (_: unknown, { id }: { id: string }) => {
   try {
-    const deleteHotel = await hotelModel.findByIdAndDelete(id);
+    const hotel = await hotelModel.findById(id);
 
-    if (!deleteHotel) {
+    if (!hotel) {
       throw new Error('Hotel not found');
     }
 
-    return { success: true, message: 'Hotel deleted successfully' };
+    await roomModel.deleteMany({ hotelId: id });
+
+    await hotelModel.findByIdAndDelete(id);
+
+    return { success: true, message: 'Hotel and its rooms deleted successfully' };
   } catch (error) {
     throw new Error('Failed to delete hotel: ' + error);
   }

@@ -1,10 +1,11 @@
-import { hotelModel } from '../../../src/models';
+import { hotelModel, roomModel } from '../../../src/models';
 import { createHotel, deleteHotel, updateHotel } from '../../../src/resolvers/mutations';
 
 jest.mock('../../../src/models', () => ({
   hotelModel: {
     create: jest.fn(),
     findByIdAndUpdate: jest.fn(),
+    findById: jest.fn(),
     findByIdAndDelete: jest.fn(),
     toObject: jest.fn().mockReturnValue({
       id: '123',
@@ -12,6 +13,9 @@ jest.mock('../../../src/models', () => ({
       location: 'Mock City',
       price: 100,
     }),
+  },
+  roomModel: {
+    deleteMany: jest.fn(),
   },
 }));
 
@@ -77,22 +81,41 @@ describe('Hotel mutations', () => {
   });
 
   describe('deleteHotel', () => {
-    it('should delete hotel successfully', async () => {
+    it('should delete hotel and its rooms successfully', async () => {
+      (hotelModel.findById as jest.Mock).mockResolvedValueOnce(mockHotel);
+      (roomModel.deleteMany as jest.Mock).mockResolvedValueOnce({ deletedCount: 3 });
       (hotelModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce(mockHotel);
 
       const result = await deleteHotel(null, { id: 'hotel123' });
 
+      expect(hotelModel.findById).toHaveBeenCalledWith('hotel123');
+      expect(roomModel.deleteMany).toHaveBeenCalledWith({ hotelId: 'hotel123' });
       expect(hotelModel.findByIdAndDelete).toHaveBeenCalledWith('hotel123');
       expect(result).toEqual({
         success: true,
-        message: 'Hotel deleted successfully',
+        message: 'Hotel and its rooms deleted successfully',
       });
     });
 
     it('should throw error if hotel not found', async () => {
-      (hotelModel.findByIdAndDelete as jest.Mock).mockResolvedValueOnce(null);
+      (hotelModel.findById as jest.Mock).mockResolvedValueOnce(null);
 
-      await expect(deleteHotel(null, { id: 'nonexistent' })).rejects.toThrow('Hotel not found');
+      await expect(deleteHotel(null, { id: 'invalid-id' })).rejects.toThrow('Hotel not found');
+    });
+
+    it('should throw error if delete operation fails', async () => {
+      (hotelModel.findById as jest.Mock).mockResolvedValueOnce(mockHotel);
+      (roomModel.deleteMany as jest.Mock).mockRejectedValueOnce(new Error('Delete rooms failed'));
+
+      await expect(deleteHotel(null, { id: 'hotel123' })).rejects.toThrow('Failed to delete hotel: Error: Delete rooms failed');
+    });
+
+    it('should throw error if hotel deletion fails', async () => {
+      (hotelModel.findById as jest.Mock).mockResolvedValueOnce(mockHotel);
+      (roomModel.deleteMany as jest.Mock).mockResolvedValueOnce({ deletedCount: 3 });
+      (hotelModel.findByIdAndDelete as jest.Mock).mockRejectedValueOnce(new Error('Hotel delete failed'));
+
+      await expect(deleteHotel(null, { id: 'hotel123' })).rejects.toThrow('Failed to delete hotel: Error: Hotel delete failed');
     });
   });
 });
