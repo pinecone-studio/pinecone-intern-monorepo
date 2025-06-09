@@ -15,10 +15,12 @@ type UserType = {
   __typename: string;
   isVerified: boolean;
 };
+
 type valuesType = {
   email: string;
   password: string;
 };
+
 type AuthContextType = {
   logout: () => void;
   user: UserType | null;
@@ -61,7 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     skip: !user?._id,
   });
 
-  const currentProfile: Profile | undefined = profileData?.fetchProfile;
+  const currentProfile: any | undefined = profileData?.fetchProfile;
 
   const handleSignIn = async (values: valuesType) => {
     const { data } = await signInMutation({ variables: values });

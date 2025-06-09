@@ -1,6 +1,8 @@
 query FetchProfile($id: ID!) {
   fetchProfile(_id: $id) {
     _id
+    age
+    images
     user {
       _id
       email
@@ -11,7 +13,6 @@ query FetchProfile($id: ID!) {
       updatedAt
     }
     interestedIn
-    age
     profileInfo {
       name
       bio
@@ -19,10 +20,21 @@ query FetchProfile($id: ID!) {
       profession
       school
     }
-    images
+    matched {
+      _id
+      interestedIn
+      age
+      images
+      profileInfo {
+        bio
+        interest
+        name
+        profession
+        school
+      }
+    }
   }
 }
-
 mutation UpdateProfile($updateProfileId: ID!, $input: UpdateProfileInput!) {
   updateProfile(id: $updateProfileId, input: $input) {
     _id

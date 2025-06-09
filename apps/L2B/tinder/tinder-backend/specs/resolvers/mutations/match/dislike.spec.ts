@@ -1,54 +1,58 @@
-import { profileModel } from 'apps/L2B/tinder/tinder-backend/src/models/profile.model';
+import { profileModel } from 'apps/L2B/tinder/tinder-backend/src/models';
 import { dislike } from 'apps/L2B/tinder/tinder-backend/src/resolvers/mutations';
 
-jest.mock('apps/L2B/tinder/tinder-backend/src/models/profile.model');
+jest.mock('apps/L2B/tinder/tinder-backend/src/models', () => ({
+  profileModel: {
+    findOne: jest.fn(),
+  },
+}));
 
 describe('dislike mutation', () => {
-  const likerId = 'user1';
-  const likedId = 'user2';
-
-  let liker: any;
-  let liked: any;
+  const mockSave = jest.fn();
+  const mockProfile = {
+    disliked: [],
+    save: mockSave,
+  };
 
   beforeEach(() => {
-    liker = {
-      liked: [likedId],
-      disliked: [],
-      matched: [likedId],
-      save: jest.fn(),
-    };
-
-    liked = {
-      matched: [likerId],
-      save: jest.fn(),
-    };
-
-    profileModel.findById = jest.fn((id) => {
-      if (id === likerId) return Promise.resolve(liker);
-      if (id === likedId) return Promise.resolve(liked);
-      return Promise.resolve(null);
-    });
+    jest.clearAllMocks();
   });
 
-  it('should move likedId from liked to disliked, remove match, and save both users', async () => {
-    const result = await dislike(undefined, { likerId, likedId });
+  it('should dislike a user and save the profile', async () => {
+    (profileModel.findOne as jest.Mock).mockResolvedValue(mockProfile);
 
-    expect(liker.liked).not.toContain(likedId);
-    expect(liker.disliked).toContain(likedId);
-    expect(liker.matched).not.toContain(likedId);
-    expect(liked.matched).not.toContain(likerId);
-
-    expect(liker.save).toHaveBeenCalled();
-    expect(liked.save).toHaveBeenCalled();
-
-    expect(result).toEqual({
-      disliked: true,
+    const result = await dislike(null, {
+      fromUserId: 'userA',
+      toUserId: 'userB',
     });
+
+    expect(profileModel.findOne).toHaveBeenCalledWith({ user: 'userA' });
+    expect(mockProfile.disliked).toContain('userB');
+    expect(mockSave).toHaveBeenCalled();
+    expect(result).toBe('User disliked successfully');
+  });
+  it('should handle when disliked is initially undefined', async () => {
+    const mockSave = jest.fn();
+    const mockProfile = {
+      disliked: undefined,
+      save: mockSave,
+    };
+
+    (profileModel.findOne as jest.Mock).mockResolvedValue(mockProfile);
+
+    const result = await dislike(null, {
+      fromUserId: 'userA',
+      toUserId: 'userB',
+    });
+
+    expect(mockProfile.disliked).toEqual(['userB']);
+    expect(mockSave).toHaveBeenCalled();
+    expect(result).toBe('User disliked successfully');
   });
 
-  it('should throw if a profile is not found', async () => {
-    profileModel.findById = jest.fn(() => Promise.resolve(null));
+  it('should throw an error if profile is not found', async () => {
+    (profileModel.findOne as jest.Mock).mockResolvedValue(null);
 
-    await expect(dislike(null, { likerId, likedId })).rejects.toThrow('Profile not found');
+    await expect(dislike(null, { fromUserId: 'userA', toUserId: 'userB' })).rejects.toThrow('profile not found');
   });
 });

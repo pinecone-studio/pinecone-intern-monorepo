@@ -1,21 +1,13 @@
-import { MutationResolvers } from '../../../generated';
-import { profileModel } from '../../../models/profile.model';
+import { profileModel } from '../../../models';
 
-export const dislike: MutationResolvers['dislike'] = async (_: unknown, { likerId, likedId }) => {
-  const liker = await profileModel.findById(likerId);
-  const liked = await profileModel.findById(likedId);
-
-  if (!liker || !liked) throw new Error('Profile not found');
-  liker.liked = liker.liked.filter((id: string) => id !== likedId);
-  liker.matched = liker.matched.filter((id: string) => id !== likedId);
-  liked.matched = liked.matched.filter((id: string) => id !== likerId);
-  if (!liker.disliked.includes(likedId)) {
-    liker.disliked.push(likedId);
+export const dislike = async (_: unknown, { fromUserId, toUserId }: { fromUserId: string; toUserId: string }) => {
+  const dislikedProfile = await profileModel.findOne({ user: fromUserId });
+  if (!dislikedProfile) {
+    throw new Error('profile not found');
   }
-  await liker.save();
-  await liked.save();
 
-  return {
-    disliked: true,
-  };
+  dislikedProfile.disliked = [...(dislikedProfile.disliked || []), toUserId];
+  await dislikedProfile.save();
+
+  return 'User disliked successfully';
 };

@@ -19,9 +19,15 @@ export const profileTypeDefs = gql`
     age: Int!
     profileInfo: ProfileInfo!
     images: [String!]!
-    liked: [ID]
-    disliked: [ID]
-    matched: [Profile!]!
+    matched: [Match]
+  }
+  type Match {
+    _id: ID
+    user: User
+    interestedIn: String
+    age: Int
+    profileInfo: ProfileInfo
+    images: [String]
   }
   input ProfileInput {
     name: String!
@@ -50,13 +56,6 @@ export const profileTypeDefs = gql`
     interestedIn: String
     profileInfo: ProfileChangeInput
   }
-  type MatchResponse {
-    match: Boolean!
-    matchedUserId: ID
-  }
-  type Disliked {
-    disliked: Boolean!
-  }
 
   type Query {
     fetchProfile(_id: ID!): Profile!
@@ -67,7 +66,7 @@ export const profileTypeDefs = gql`
     createProfile(input: CreateProfileInput!): Profile!
     updateProfile(id: ID!, input: UpdateProfileInput!): Profile!
     updateProfileImage(userId: ID!, images: [String!]!): Profile
-    like(likerId: ID!, likedId: ID!): MatchResponse
-    dislike(likerId: ID!, likedId: ID!): Disliked
+    dislike(fromUserId: ID!, toUserId: ID!): String!
+    like(fromUserId: ID!, toUserId: ID!): String!
   }
 `;

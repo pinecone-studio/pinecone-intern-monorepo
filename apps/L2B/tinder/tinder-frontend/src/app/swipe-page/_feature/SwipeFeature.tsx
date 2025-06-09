@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
-import { useFetchAllProfileQuery } from '@/generated';
+import { Profile, useFetchAllProfileQuery } from '@/generated';
 import Loading from '@/app/_components/Loading';
 import ProfileCard from './ProfileCard';
 import SwipeButtons from './SwipeButtons';
@@ -16,7 +16,7 @@ const SwipeFeature = () => {
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [swipeAction, setSwipeAction] = useState<'like' | 'dislike' | null>(null);
 
-  const currentProfile = profiles?.[currentIndex];
+  const currentProfile = profiles?.[currentIndex] as Profile;
 
   if (!profiles) return <Loading />;
 
