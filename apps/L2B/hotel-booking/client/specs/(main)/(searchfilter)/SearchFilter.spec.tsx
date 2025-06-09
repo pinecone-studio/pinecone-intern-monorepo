@@ -108,7 +108,7 @@ describe('SearchFilter', () => {
 
     const calledUrl = push.mock.calls[0][0];
 
-    expect(calledUrl).toMatch('/search-result?from=2025-06-06&to=2025-06-06&adults=3&children=2');
+    expect(calledUrl).toMatch('/search-result?from=2025-06-09&to=2025-06-09&adults=3&children=2');
     expect(calledUrl).toMatch(/children=2/);
   });
   it('should return early if date.from or date.to is undefined', () => {

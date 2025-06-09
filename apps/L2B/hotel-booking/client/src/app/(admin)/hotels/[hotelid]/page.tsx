@@ -10,7 +10,7 @@ import { HotelLocation } from './_features/HotelLocation';
 import { useRouter } from 'next/navigation';
 import { UpcomingBookings } from './_features/UpcomingBookings';
 import Loading from '@/app/(main)/_components/Loading';
-
+import { DeleteHotel } from './_features/DeleteHotel';
 
 const HotelPage = ({ params }: { params: { hotelid: string } }) => {
   const { data, error, refetch } = useHotelQuery({
@@ -45,6 +45,7 @@ const HotelPage = ({ params }: { params: { hotelid: string } }) => {
           <RoomsByHotel hotelId={params.hotelid} refetchHotel={refetch} />
           <HotelAmenities hotel={{ _id: hotel._id!, amenities: hotel.amenities || [] }} refetch={refetch} />
           <HotelGeneralInfo hotel={hotel} />
+          <DeleteHotel hotelId={params.hotelid} refetch={refetch} />
         </div>
         <div className="flex flex-col gap-4">
           <HotelLocation hotel={{ _id: hotel._id!, location: hotel.location || '' }} refetch={refetch} />
