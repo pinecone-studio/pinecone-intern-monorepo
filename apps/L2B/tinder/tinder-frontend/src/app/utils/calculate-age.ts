@@ -1,8 +1,8 @@
 export function calculateAge(dob: Date | undefined): number | null {
-  if (!dob) return null;
+  // if (!dob) return null;
 
   const today = new Date();
-  const age = today.getFullYear() - dob.getFullYear();
+  const age = today.getFullYear() - dob!.getFullYear();
   return age;
 }
 

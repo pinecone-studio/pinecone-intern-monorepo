@@ -39,9 +39,9 @@ const CreateAccountSteps = () => {
 
 };
 
-  const handleSubmit = async (imagesOverride?: string[]) => {
+  const handleSubmit = async (imagesOverride: string[]) => {
 
-  const finalImages = imagesOverride ?? formData.images;
+  // const finalImages = imagesOverride ?? formData.images;
 
   await createProfile({
     variables: {
@@ -56,7 +56,7 @@ const CreateAccountSteps = () => {
           profession: formData.profession,
           school: formData.schoolOrWork,
         },
-        images: finalImages,
+        images: imagesOverride,
       },
     },
   });

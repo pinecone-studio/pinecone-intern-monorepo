@@ -17,7 +17,7 @@ describe('Profile page', () => {
     cy.get('input[name="name"]').should('have.value', 'tuguldur');
     cy.get('input[name="email"]').should('have.value', 'tuuguu123123@gmail.com');
 
-    cy.get('textarea[name="bio"]').should('have.value', 'bi bol tuguldur baina aaaaaa');
+    cy.get('textarea[name="bio"]').should('have.value', 'bi bol tuguldur');
 
     cy.get('input[name="profession"]').should('have.value', 'software engineer');
 

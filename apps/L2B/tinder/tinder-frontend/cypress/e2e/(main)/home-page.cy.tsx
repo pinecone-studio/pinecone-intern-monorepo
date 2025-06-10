@@ -3,7 +3,7 @@ describe('Main page access', () => {
     cy.clearLocalStorage();
     cy.visit('/');
 
-    cy.get('[data-testid="main-page"]').should('exist');
+    cy.get('[data-testid="container"]').should('exist');
     cy.get('[data-testid="guest-header"]').should('be.visible');
     cy.get('[data-testid="main"]').should('be.visible');
     cy.get('[data-testid="footer"]').should('be.visible');
