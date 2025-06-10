@@ -51,6 +51,23 @@ mutation ForgotPassword($email: String!, $password: String!) {
 mutation SignIn($email: String!, $password: String!) {
   signIn(email: $email, password: $password)
 }
+
+mutation CreateProfile($input: CreateProfileInput!) {
+  createProfile(input: $input) {
+    _id
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
+
 query FetchAllProfile {
   fetchAllProfile {
     _id

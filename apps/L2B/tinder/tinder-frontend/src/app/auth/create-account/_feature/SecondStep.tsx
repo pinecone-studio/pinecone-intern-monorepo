@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import React from 'react';
+import calculateAge from '@/app/utils/calculate-age';
 
-const SecondStep = ({ setStep }: { setStep: (_step: number) => void }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SecondStep = ({ setStep, updateFormData }: { setStep: (_step: number) => void, updateFormData: (_data: any) => void }) => {
   const [date, setDate] = React.useState<Date>();
   const [error, setError] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -15,7 +17,10 @@ const SecondStep = ({ setStep }: { setStep: (_step: number) => void }) => {
   const handleNext = () => {
     if (date) {
       setError(false);
-      console.log('Selected date:', date);
+      const age = calculateAge(date);
+
+      console.log(age)
+      updateFormData({ age: age });
       setStep(2);
     } else {
       setError(true);
@@ -79,3 +84,4 @@ const SecondStep = ({ setStep }: { setStep: (_step: number) => void }) => {
 };
 
 export default SecondStep;
+

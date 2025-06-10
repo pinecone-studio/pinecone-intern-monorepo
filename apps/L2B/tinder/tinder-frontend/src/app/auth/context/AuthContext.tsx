@@ -5,6 +5,7 @@ import { Profile, useFetchProfileQuery, useGetCurrentUserQuery, useSignInMutatio
 import { toast } from 'sonner';
 import Loading from '@/app/_components/Loading';
 
+
 type UserType = {
   email: string;
   password?: string | null;
@@ -33,6 +34,8 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+
+  
   const router = useRouter();
 
   const [user, setUser] = useState<UserType | null>(null);
@@ -47,10 +50,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    const storedJWT = localStorage.getItem('token');
-    if (storedJWT) {
-      setJWT(storedJWT);
-    }
+
+
+  const storedJWT = localStorage.getItem('token');
+  if (storedJWT) {
+    setJWT(storedJWT);
+  }
   }, []);
 
   const { data } = useGetCurrentUserQuery({
@@ -107,3 +112,5 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   return context;
 };
+
+export { AuthContext };
