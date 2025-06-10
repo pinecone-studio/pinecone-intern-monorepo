@@ -110,7 +110,7 @@ const BookingConfirmationContent = () => {
 };
 
 const BookingConfirmation = () => (
-  <Suspense fallback={<Loading data-cy="loading" />}>
+  <Suspense>
     <BookingConfirmationContent />
   </Suspense>
 );
