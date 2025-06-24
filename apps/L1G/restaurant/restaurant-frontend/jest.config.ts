@@ -1,13 +1,12 @@
 /* eslint-disable */
 export default {
-  displayName: 'restaurant-backend',
+  displayName: 'restaurant-frontend',
   preset: '../../../../jest.preset.js',
-  testEnvironment: 'node',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
     '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'], babelrc: false }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/apps/L1G/tinder/tinder-backend',
-  collectCoverageFrom: ['src/resolvers/**/*.ts', '!src/**/*.schema.ts', '!src/utils/**', '!src/**/index.ts', '!src/handler.ts', '!src/schemas/**'],
+  coverageDirectory: '../../../../coverage/apps/L1G/restaurant/restaurant-frontend',
+  collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/generated/**/*.ts', '!src/app/**/*.tsx', '!src/components/providers/ApolloWrapper.tsx'],
 };
