@@ -1,1 +1,2 @@
-export * from './example';
+export * from './user/get-user';
+export * from './user/get-users';
