@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-cloud-functions';
 
 export const userTypeDefs = gql`
   type User {
-    _id: ID!
+    userId: ID!
     username: String!
     email: String!
     profile: String
@@ -13,14 +13,36 @@ export const userTypeDefs = gql`
     updatedAt: String
   }
 
+  input GetUserInput {
+    userId: ID!
+  }
+
   type Query {
-    getUser(_id: ID!): User!
+    getUser(input: GetUserInput!): User!
     getUsers: [User!]!
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User!
-    updateUser(_id: ID!, username: String, email: String, password: String, profile: String): User!
-    deleteUser(_id: ID!): User!
+    createUser(input: CreateUserInput!): User!
+    updateUser(input: UpdateUserInput!): User!
+    deleteUser(input: DeleteUserInput!): User!
+  }
+
+  input CreateUserInput {
+    username: String!
+    email: String!
+    password: String!
+  }
+
+  input UpdateUserInput {
+    userId: ID!
+    username: String
+    email: String
+    password: String
+    profile: String
+  }
+
+  input DeleteUserInput {
+    userId: ID!
   }
 `;

@@ -5,7 +5,7 @@ export const getUsers: QueryResolvers['getUsers'] = async () => {
   const users = await UserModel.find();
 
   if (!users) {
-    throw new Error('Users not found');
+    throw new Error(`Users not found`);
   }
 
   return users;

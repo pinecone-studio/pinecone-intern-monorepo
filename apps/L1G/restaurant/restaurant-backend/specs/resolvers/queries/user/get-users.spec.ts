@@ -6,13 +6,13 @@ jest.mock('src/models/user.model', () => ({
   UserModel: {
     find: jest.fn().mockReturnValue([
       {
-        _id: '1',
+        userId: '1',
         username: 'Test',
         email: 'test@example.com',
         password: 'test1234',
       },
       {
-        _id: '2',
+        userId: '2',
         username: 'Test2',
         email: 'test2@example.com',
         password: 'test1234',
@@ -26,13 +26,13 @@ describe('get Users', () => {
     const result = await getUsers?.({}, {}, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual([
       {
-        _id: '1',
+        userId: '1',
         username: 'Test',
         email: 'test@example.com',
         password: 'test1234',
       },
       {
-        _id: '2',
+        userId: '2',
         username: 'Test2',
         email: 'test2@example.com',
         password: 'test1234',
