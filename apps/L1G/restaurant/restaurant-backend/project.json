@@ -109,13 +109,15 @@
         "buildTarget": "restaurant-backend:build:production"
       }
     },
+
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L1G/restaurant/restaurant-backend/.env | xargs)"],
+        "commands": ["node -e \"require('dotenv').config({ path: 'apps/L1G/restaurant/restaurant-backend/.env' })\""],
         "parallel": false
       }
     },
+
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
