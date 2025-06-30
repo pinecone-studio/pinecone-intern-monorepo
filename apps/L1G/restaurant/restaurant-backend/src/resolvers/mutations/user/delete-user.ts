@@ -1,8 +1,8 @@
 import { MutationResolvers } from 'src/generated';
 import { UserModel } from 'src/models/user.model';
 
-export const deleteUser: MutationResolvers['deleteUser'] = async (_, { _id }) => {
-  const author = await UserModel.findOneAndDelete({ _id });
+export const deleteUser: MutationResolvers['deleteUser'] = async (_, { input: { userId } }) => {
+  const deletedUser = await UserModel.findOneAndDelete({ userId }, { new: true });
 
-  return author;
+  return deletedUser;
 };

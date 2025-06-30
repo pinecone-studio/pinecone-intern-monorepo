@@ -1,11 +1,11 @@
 import { QueryResolvers } from '../../../generated';
 import { UserModel } from 'src/models/user.model';
 
-export const getUser: QueryResolvers['getUser'] = async (_, { _id }) => {
-  const user = await UserModel.findById(_id);
+export const getUser: QueryResolvers['getUser'] = async (_, { input: { userId } }) => {
+  const user = await UserModel.findById(userId);
 
   if (!user) {
-    throw new Error('User not found');
+    throw new Error(`User with ${userId} Id is not found`);
   }
 
   return user;
