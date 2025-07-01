@@ -5,7 +5,7 @@ const Signup = () => {
     <div>
       Sign up page ju
       <TinderLogo />
-      <TinderLogo size={48} />
+      <TinderLogo size={40} />
     </div>
   );
 };
