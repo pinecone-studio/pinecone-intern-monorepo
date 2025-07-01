@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
+import { Navbar } from './components/Navbar';
 
 const Home = () => {
   return (
     <div>
-      <Button className="bg-red-100">Click</Button>
+      <Navbar />
     </div>
   );
 };
