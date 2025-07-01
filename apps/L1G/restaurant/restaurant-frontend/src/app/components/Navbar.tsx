@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import { Menu } from 'lucide-react';
 import { ShoppingCart } from 'lucide-react';
 import { Bell } from 'lucide-react';
+import { SheetMenu } from './Sheetmenu';
+
 export const Navbar = () => {
   return (
     <div className="w-full  px-4 h-[56px] border-b flex ">
@@ -11,7 +12,7 @@ export const Navbar = () => {
       <div className="w-1/3 py-4 flex items-center justify-between">
         <ShoppingCart size={15} />
         <Bell size={15} />
-        <Menu size={15} />
+        <SheetMenu />
       </div>
     </div>
   );
