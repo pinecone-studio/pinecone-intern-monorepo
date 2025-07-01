@@ -104,8 +104,12 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-between items-center">
+          <Button className="border-[#E4E4E7] border text-black bg-white w-16 h-9 rounded-full py-2 px-4">Back</Button>
+          <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4" type="submit">
+            Next
+          </Button>
+        </div>
       </form>
     </Form>
   );

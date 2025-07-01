@@ -1,4 +1,3 @@
-import TinderLogo from '@/components/TinderLogo';
 import YourDetailsPage from '@/components/YourDetails';
 
 const Signup = () => {
