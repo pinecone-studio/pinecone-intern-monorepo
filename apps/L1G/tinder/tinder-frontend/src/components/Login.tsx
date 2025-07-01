@@ -26,17 +26,17 @@ export const LoginForm = () => {
   }
 
   return (
-    <div className="w-[350px] h-fit flex flex-col gap-4">
-      <div className="w-full flex flex-col gap-2">
-        <div className="flex flex-col gap-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+            <div className="flex flex-col gap-6">
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="flex">Email</FormLabel>
                     <FormControl>
                       <Input placeholder="name@example.com" {...field} />
                     </FormControl>
@@ -59,12 +59,12 @@ export const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 inter hover:bg-[#E11D48E5] hover:bg-opacity-100">
-                Continue
-              </Button>
-            </form>
-          </Form>
-        </div>
+            </div>
+            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 inter hover:bg-[#E11D48E5] hover:bg-opacity-100">
+              Continue
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
