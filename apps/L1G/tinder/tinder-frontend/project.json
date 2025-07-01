@@ -16,11 +16,11 @@
           "outputPath": "apps/L1G/tinder/tinder-frontend"
         }
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      ,"dependsOn": [
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -40,12 +40,12 @@
           "dev": false
         }
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+     , "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -68,12 +68,12 @@
         "passWithNoTests": true,
         "codeCoverage": true
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      ,"dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",
@@ -170,12 +170,12 @@
         {
           "target": "cypress-generate-all-page-json"
         }
-        // {
-        //   "target": "get-secrets"
-        // },
-        // {
-        //   "target": "export-env"
-        // }
+        ,{
+          "target": "get-secrets"
+        },
+        {
+          "target": "export-env"
+        }
       ]
     },
     "cypress-generate-all-page-json": {
@@ -196,18 +196,18 @@
         "parallel": false
       },
       "dependsOn": [
-        // {
-        //   "target": "clean"
-        // },
+        {
+          "target": "clean"
+        },
         {
           "target": "get-secrets:testing"
         }
-        // {
-        //   "target": "export-env"
-        // },
-        // {
-        //   "target": "codegen"
-        // }
+        ,{
+          "target": "export-env"
+        },
+        {
+          "target": "codegen"
+        }
       ]
     },
     "deploy-dev": {
@@ -220,21 +220,21 @@
         ],
         "parallel": false
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:dev"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      ,"dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:dev"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -245,22 +245,22 @@
           "npx dotenv -v VERCEL_ORG_ID=team_oraL3po4TUAVQnMTJlCQVTak -v VERCEL_PROJECT_ID=prj_b2msUkzlbxCV0QbPfy6mAa3QJGIw -- vercel --prebuilt --prod --token=RkzRvsWpfXnhiyioQ5r9pInL"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:prod"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:prod"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     }
   },
 
