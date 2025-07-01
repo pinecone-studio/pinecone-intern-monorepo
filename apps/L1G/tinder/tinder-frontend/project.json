@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["example-frontend"],
+          "groups": ["2G-TINDER-FE"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["example-frontend"],
+          "groups": ["2G-TINDER-FE"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["example-frontend"],
+          "groups": ["2G-TINDER-FE"],
           "env": "prod"
         }
       }
@@ -148,7 +148,12 @@
     "cypress:clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf apps/L1G/tinder/tinder-frontend/cypress/results", "rm -rf apps/L1G/tinder/tinder-frontend/.nyc_output", "rm -rf apps/L1G/tinder/tinder-frontend/.cy", "rm -rf apps/L1G/tinder/tinder-frontend/coverage"],
+        "commands": [
+          "rm -rf apps/L1G/tinder/tinder-frontend/cypress/results",
+          "rm -rf apps/L1G/tinder/tinder-frontend/.nyc_output",
+          "rm -rf apps/L1G/tinder/tinder-frontend/.cy",
+          "rm -rf apps/L1G/tinder/tinder-frontend/coverage"
+        ],
         "parallel": false
       }
     },

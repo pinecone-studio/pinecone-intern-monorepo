@@ -1,7 +1,15 @@
-import * as Query from './queries';
-import * as Mutation from './mutations';
+import { like } from './mutations/like';
+import { login } from './mutations/login';
+import { signup } from './mutations/signup';
+import { getusers } from './queries/getusers';
 
 export const resolvers = {
-  Query,
-  Mutation,
+  Query: {
+    getusers,
+  },
+  Mutation: {
+    login,
+    signup,
+    like,
+  },
 };
