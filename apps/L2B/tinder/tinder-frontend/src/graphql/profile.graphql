@@ -1,0 +1,39 @@
+query FetchProfile($id: ID!) {
+  fetchProfile(_id: $id) {
+    _id
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
+
+mutation UpdateProfile($updateProfileId: ID!, $input: UpdateProfileInput!) {
+  updateProfile(id: $updateProfileId, input: $input) {
+    _id
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+  }
+}
