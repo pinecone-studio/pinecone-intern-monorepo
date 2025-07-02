@@ -1,9 +1,10 @@
+import 'dotenv/config';
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.BACKEND_URI,
-  documents: ['apps/L1G/tinder/tinder-frontend/src/**/*.graphql'],
+  documents: ['apps/L1G/tinder/tinder-frontend/src/**/*.{graphql,ts,tsx}'],
   generates: {
     'apps/L1G/tinder/tinder-frontend/src/generated/index.ts': {
       config: {

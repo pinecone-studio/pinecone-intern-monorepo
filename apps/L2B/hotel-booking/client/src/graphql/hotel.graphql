@@ -1,0 +1,70 @@
+mutation UpdateHotel($updateHotelId: ID!, $input: HotelInput) {
+  updateHotel(id: $updateHotelId, input: $input) {
+    _id
+    name
+    location
+    starRating
+    rating
+    description
+    amenities
+    phone
+    images
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CreateHotel($input: HotelInput!) {
+  createHotel(input: $input) {
+    _id
+    name
+    location
+    starRating
+    rating
+    description
+    amenities
+    phone
+    images
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteHotel($deleteHotelId: ID!) {
+  deleteHotel(id: $deleteHotelId) {
+    success
+    message
+  }
+}
+
+query Hotel($hotelId: ID!) {
+  hotel(id: $hotelId) {
+    _id
+    name
+    location
+    starRating
+    rating
+    description
+    amenities
+    phone
+    images
+    createdAt
+    updatedAt
+  }
+}
+
+query Hotels {
+  hotels {
+    _id
+    name
+    location
+    starRating
+    rating
+    description
+    amenities
+    phone
+    images
+    createdAt
+    updatedAt
+  }
+}

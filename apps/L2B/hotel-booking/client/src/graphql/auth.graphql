@@ -1,0 +1,35 @@
+mutation ResetPassword($email: String!, $password: String!) {
+  resetPassword(email: $email, password: $password) {
+    success
+    message
+  }
+}
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      _id
+      email
+      password
+      firstName
+      lastName
+      birth
+      emergencyPhone
+      relation
+      isAdmin
+      phone
+    }
+  }
+}
+mutation RequestPasswordReset($email: String!) {
+  requestPasswordReset(email: $email) {
+    success
+    message
+  }
+}
+mutation VerifyPasswordResetOTP($email: String!, $otp: String!) {
+  verifyPasswordResetOTP(email: $email, otp: $otp) {
+    success
+    message
+  }
+}
