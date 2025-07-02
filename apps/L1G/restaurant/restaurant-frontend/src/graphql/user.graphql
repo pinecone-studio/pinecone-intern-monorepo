@@ -1,0 +1,13 @@
+query GetUser($input: GetUserInput!) {
+  getUser(input: $input) {
+    userId
+    username
+    email
+    profile
+    password
+    bonusPoints
+    role
+    createdAt
+    updatedAt
+  }
+}
