@@ -21,8 +21,8 @@ export const LoginForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function onSubmit(_values: z.infer<typeof formSchema>) {
+    console.log('working');
   }
 
   return (
@@ -53,7 +53,7 @@ export const LoginForm = () => {
                       Password <button className="text-[#2563EB] inter text-[14px] font-[500]">Forgot Password?</button>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="name@example.com" {...field} />
+                      <Input placeholder="Please enter your password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
