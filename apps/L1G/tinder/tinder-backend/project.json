@@ -72,7 +72,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["2g-tinder-be"],
+          "groups": ["2G-TINDER-BE"],
           "env": "dev"
         }
       }
@@ -82,7 +82,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["2g-tinder-be"],
+          "groups": ["2G-TINDER-BE"],
           "env": "test"
         }
       }
@@ -92,7 +92,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["2g-tinder-be"],
+          "groups": ["2G-TINDER-BE"],
           "env": "prod"
         }
       }
