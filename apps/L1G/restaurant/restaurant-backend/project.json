@@ -72,7 +72,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["restaurant-backend"],
+          "groups": ["Intern-2G-Restaurant-BE"],
           "env": "dev"
         }
       }
@@ -82,7 +82,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["restaurant-backend"],
+          "groups": ["Intern-2G-Restaurant-BE"],
           "env": "test"
         }
       }
@@ -92,7 +92,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["restaurant-backend"],
+          "groups": ["Intern-2G-Restaurant-BE"],
           "env": "prod"
         }
       }

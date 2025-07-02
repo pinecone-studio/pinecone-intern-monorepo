@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-restaurant-FE"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-restaurant-FE"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-restaurant-FE"],
           "env": "prod"
         }
       }
@@ -148,7 +148,8 @@
     "cypress:clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf apps/L1G/restaurant/restaurant-frontend/cypress/results", "rm -rf apps/L1G/restaurant/restaurant-frontend/.nyc_output", "rm -rf apps/L1G/restaurant/restaurant-frontend/.cy", "rm -rf apps/L1G/restaurant/restaurant-frontend/coverage"],
+        "commands": ["node -e \"const fs = require('fs-extra'); ['cypress/results', '.nyc_output', '.cy', 'coverage'].forEach(dir => fs.removeSync(dir))\""],
+        "cwd": "apps/L1G/restaurant/restaurant-frontend",
         "parallel": false
       }
     },
