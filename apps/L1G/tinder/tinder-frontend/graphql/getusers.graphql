@@ -1,6 +1,0 @@
-query getusers {
-  profiles {
-    id
-    name
-  }
-}
