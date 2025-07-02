@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["Intern-2G-restaurant-FE"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["Intern-2G-restaurant-FE"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["Intern-2G-restaurant-FE"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "prod"
         }
       }

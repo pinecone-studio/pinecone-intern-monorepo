@@ -4,11 +4,13 @@ mutation SignIn($input: SignInInput!) {
     user {
       userId
       email
+      profile
+      password
+      bonusPoints
+      role
+      phoneNumber
+      createdAt
+      updatedAt
     }
   }
-}
-
-input SignInInput {
-  email: String!
-  password: String!
 }
