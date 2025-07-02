@@ -1,54 +1,59 @@
+// apps/L1G/restaurant/restaurant-frontend/specs/common/makeApolloClient.spec.ts
+// Impossible to write it by myself copied from https://www.apollographql.com/docs/react/development-testing/testing/#testing-apollo-client
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client';
-import { makeApolloClient } from '@/common/apollo/index'; // Adjust path as needed
+import { makeApolloClient } from '@/common/apollo/index';
 
-// Mock Apollo Client modules
+// ─── Mock Apollo Client pieces ────────────────────────────────────────────────
 jest.mock('@apollo/client', () => ({
   ApolloClient: jest.fn(),
   InMemoryCache: jest.fn(),
   HttpLink: jest.fn(),
-  ApolloLink: {
-    from: jest.fn(),
-  },
+  ApolloLink: { from: jest.fn() },
 }));
 
 describe('makeApolloClient', () => {
   const mockApolloClient = {};
-  const mockInMemoryCache = {};
+  const mockCache = {};
   const mockHttpLink = {};
-  const mockApolloLinkFrom = {};
+  const mockLinkFrom = {};
+
+  const originalEnv = process.env;
+  const originalWindow = global.window;
 
   beforeEach(() => {
+    // fresh env for every test
+    process.env = { ...originalEnv };
     jest.clearAllMocks();
 
-    // Setup mocks
+    // mock returns
     (ApolloClient as jest.Mock).mockReturnValue(mockApolloClient);
-    (InMemoryCache as jest.Mock).mockReturnValue(mockInMemoryCache);
+    (InMemoryCache as jest.Mock).mockReturnValue(mockCache);
     (HttpLink as jest.Mock).mockReturnValue(mockHttpLink);
-    (ApolloLink.from as jest.Mock).mockReturnValue(mockApolloLinkFrom);
+    (ApolloLink.from as jest.Mock).mockReturnValue(mockLinkFrom);
   });
 
   afterEach(() => {
-    delete process.env.API_URL;
-
+    // restore globals
+    process.env = originalEnv;
     Object.defineProperty(global, 'window', {
-      value: window,
+      value: originalWindow,
       writable: true,
     });
   });
 
-  describe('HttpLink configuration', () => {
-    it('should use API_URL from environment variable when available', () => {
-      process.env.API_URL = 'http://localhost:4200/api/graphql';
+  describe('HttpLink URI', () => {
+    it('uses BACKEND_URI when it is set', () => {
+      process.env.BACKEND_URI = 'https://api.example.com/graphql';
 
       makeApolloClient();
 
       expect(HttpLink).toHaveBeenCalledWith({
-        uri: 'http://localhost:4200/api/graphql',
+        uri: 'https://api.example.com/graphql',
       });
     });
 
-    it('should use default localhost URL when API_URL is not set', () => {
-      delete process.env.API_URL;
+    it('falls back to localhost URI when BACKEND_URI is not set', () => {
+      delete process.env.BACKEND_URI;
 
       makeApolloClient();
 
@@ -58,41 +63,21 @@ describe('makeApolloClient', () => {
     });
   });
 
-  describe('ApolloClient configuration', () => {
-    it('should create ApolloClient with InMemoryCache', () => {
-      makeApolloClient();
-
-      expect(InMemoryCache).toHaveBeenCalledWith();
-      expect(ApolloClient).toHaveBeenCalledWith({
-        cache: mockInMemoryCache,
-        link: expect.any(Object),
-      });
-    });
-
-    it('should return the created ApolloClient instance', () => {
-      const result = makeApolloClient();
-
-      expect(result).toBe(mockApolloClient);
-    });
-  });
-
-  describe('Link configuration based on environment', () => {
-    it('should use ApolloLink.from with httpLink when window is undefined (server-side)', () => {
-      Object.defineProperty(global, 'window', {
-        value: undefined,
-        writable: true,
-      });
+  describe('link selection (SSR vs CSR)', () => {
+    it('wraps httpLink in ApolloLink.from on the server (no window)', () => {
+      // simulate server
+      Object.defineProperty(global, 'window', { value: undefined });
 
       makeApolloClient();
 
       expect(ApolloLink.from).toHaveBeenCalledWith([mockHttpLink]);
       expect(ApolloClient).toHaveBeenCalledWith({
-        cache: mockInMemoryCache,
-        link: mockApolloLinkFrom,
+        cache: mockCache,
+        link: mockLinkFrom,
       });
     });
 
-    it('should use httpLink directly when window is defined (client-side)', () => {
+    it('uses httpLink directly in the browser (window defined)', () => {
       Object.defineProperty(global, 'window', {
         value: { document: {} },
         writable: true,
@@ -102,27 +87,14 @@ describe('makeApolloClient', () => {
 
       expect(ApolloLink.from).not.toHaveBeenCalled();
       expect(ApolloClient).toHaveBeenCalledWith({
-        cache: mockInMemoryCache,
+        cache: mockCache,
         link: mockHttpLink,
       });
     });
   });
 
-  describe('Integration test', () => {
-    it('should create a complete Apollo client configuration', () => {
-      process.env.API_URL = 'http://localhost:4200/api/graphql';
-
-      const client = makeApolloClient();
-
-      expect(HttpLink).toHaveBeenCalledWith({
-        uri: 'http://localhost:4200/api/graphql',
-      });
-      expect(InMemoryCache).toHaveBeenCalledWith();
-      expect(ApolloClient).toHaveBeenCalledWith({
-        cache: mockInMemoryCache,
-        link: expect.any(Object),
-      });
-      expect(client).toBe(mockApolloClient);
-    });
+  it('returns the created ApolloClient instance', () => {
+    const client = makeApolloClient();
+    expect(client).toBe(mockApolloClient);
   });
 });
