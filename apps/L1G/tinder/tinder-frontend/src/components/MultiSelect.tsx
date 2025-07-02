@@ -27,14 +27,7 @@ const multiSelectVariants = cva('m-1 transition ease-in-out delay-150 hover:-tra
   },
 });
 
-/**
- * Props for MultiSelect component
- */
 interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof multiSelectVariants> {
-  /**
-   * An array of option objects to be displayed in the multi-select component.
-   * Each option object has a label, value, and an optional icon.
-   */
   options: {
     /** The text to display for the option. */
     label: string;
