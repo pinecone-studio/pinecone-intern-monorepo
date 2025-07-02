@@ -7,11 +7,12 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { MultiSelect } from './MultiSelect';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   bio: z.string().optional(),
-  interest: z.string().optional(),
+  interest: z.array(z.string()).optional(),
   profession: z.string().optional(),
   work: z.string().optional(),
 });
@@ -22,7 +23,7 @@ export function ProfileForm() {
     defaultValues: {
       name: '',
       bio: '',
-      interest: '',
+      interest: [],
       profession: '',
       work: '',
     },
@@ -70,7 +71,22 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Interest</FormLabel>
               <FormControl>
-                <Input placeholder="What are your interests?" {...field} />
+                <MultiSelect
+                  options={[
+                    { value: 'music', label: 'Music' },
+                    { value: 'sports', label: 'Sports' },
+                    { value: 'reading', label: 'Reading' },
+                    { value: 'coding', label: 'Coding' },
+                    { value: 'travel', label: 'Travel' },
+                    // хүссэн хэмжээгээр нэмээрэй
+                  ]}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  placeholder="Select your interests"
+                  variant="default"
+                  animation={2}
+                  maxCount={5}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,8 +121,8 @@ export function ProfileForm() {
           )}
         />
         <div className="flex justify-between items-center">
-          <Button className="border-[#E4E4E7] border text-black bg-white w-16 h-9 rounded-full py-2 px-4">Back</Button>
-          <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4" type="submit">
+          <Button className="border-[#E4E4E7] border text-black bg-white hover:bg-[#E4E4E7] w-16 h-9 rounded-full py-2 px-4">Back</Button>
+          <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4 hover:bg-[#eb5e7de5]" type="submit">
             Next
           </Button>
         </div>
