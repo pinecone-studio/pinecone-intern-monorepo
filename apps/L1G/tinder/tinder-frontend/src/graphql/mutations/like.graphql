@@ -1,0 +1,3 @@
+mutation Like($likedByUser: ID!, $likeReceiver: ID!) {
+  like(likedByUser: $likedByUser, likeReceiver: $likeReceiver)
+}
