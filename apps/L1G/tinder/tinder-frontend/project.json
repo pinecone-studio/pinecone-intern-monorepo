@@ -71,7 +71,7 @@
       ,"dependsOn": [
         {
           "target": "codegen",
-          "params": "forward"
+          "params": "forward" 
         }
       ]
     },
