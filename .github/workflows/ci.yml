@@ -102,7 +102,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '23.6.1'
+          node-version: '20.0.0'
       - name: Install dependencies
         run: yarn install
         if: "${{ steps.cache-nodemodules.outputs.cache-hit != 'true' }}"
