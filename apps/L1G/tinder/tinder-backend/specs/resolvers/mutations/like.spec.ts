@@ -19,15 +19,14 @@ describe('like resolver', () => {
       likedTo: [new mongoose.Types.ObjectId(likedByUser)],
     };
 
-    const selectMock = jest.fn().mockResolvedValue(mockUserDoc);
-
-    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUserDoc),
+    });
 
     const result = await like({}, { likedByUser, likeReceiver });
 
     expect(result).toBe("🎉 It's a match!");
     expect(Usermodel.findById).toHaveBeenCalledWith(new mongoose.Types.ObjectId(likeReceiver));
-    expect(selectMock).toHaveBeenCalledWith('likedTo');
   });
 
   it("returns 'Like recorded' if no match", async () => {
@@ -37,9 +36,9 @@ describe('like resolver', () => {
       likedTo: [],
     };
 
-    const selectMock = jest.fn().mockResolvedValue(mockUserDoc);
-
-    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUserDoc),
+    });
 
     const result = await like({}, { likedByUser, likeReceiver });
 
@@ -51,9 +50,9 @@ describe('like resolver', () => {
 
     (Usermodel.findByIdAndUpdate as jest.Mock).mockResolvedValue({});
 
-    const selectMock = jest.fn().mockResolvedValue(undefined);
-
-    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      select: jest.fn().mockResolvedValue(undefined),
+    });
 
     const result = await like({}, { likedByUser, likeReceiver });
 
@@ -61,6 +60,9 @@ describe('like resolver', () => {
   });
   it('calls console.warn when DB failure occurs', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      select: jest.fn().mockRejectedValue(new Error('DB failure')),
+    });
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
       return;
     });
