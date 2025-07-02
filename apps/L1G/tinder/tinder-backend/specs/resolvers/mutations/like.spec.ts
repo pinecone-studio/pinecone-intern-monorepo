@@ -61,7 +61,9 @@ describe('like resolver', () => {
   });
   it('calls console.warn when DB failure occurs', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      return;
+    });
     await expect(like({}, { likedByUser, likeReceiver })).rejects.toThrow('Failed to like user');
     expect(warnSpy).toHaveBeenCalledWith('⚠️ Like mutation failed:', 'DB failure');
     warnSpy.mockRestore();
