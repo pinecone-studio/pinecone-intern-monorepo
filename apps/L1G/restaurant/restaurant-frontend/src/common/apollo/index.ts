@@ -3,9 +3,9 @@
 import { ApolloLink, HttpLink } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-const uri = process.env.BACKEND_URI || 'http://localhost:4200/api/graphql';
-
 export const makeApolloClient = () => {
+  const uri = process.env.BACKEND_URI || 'http://localhost:4200/api/graphql';
+
   const httpLink = new HttpLink({
     uri,
   });
