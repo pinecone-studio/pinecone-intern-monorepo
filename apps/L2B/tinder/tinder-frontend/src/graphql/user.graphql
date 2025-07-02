@@ -1,0 +1,101 @@
+query Query {
+  sampleQuery
+}
+
+mutation AddUser($email: String!, $password: String!) {
+  addUser(email: $email, password: $password) {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
+
+mutation SendOTP($email: String!) {
+  sendOTP(email: $email) {
+    _id
+    email
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
+
+mutation isVerified($email: String!, $otp: String!) {
+  isVerified(email: $email, otp: $otp)
+}
+
+mutation SendForgotOtp($email: String!) {
+  sendForgotOtp(email: $email)
+}
+
+mutation ForgotMatchOtp($email: String!, $otp: String!) {
+  forgotMatchOtp(email: $email, otp: $otp)
+}
+
+mutation ForgotPassword($email: String!, $password: String!) {
+  forgotPassword(email: $email, password: $password) {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
+mutation SignIn($email: String!, $password: String!) {
+  signIn(email: $email, password: $password)
+}
+query FetchAllProfile {
+  fetchAllProfile {
+    _id
+    user {
+      _id
+      email
+      password
+      isVerified
+      verficationCode
+      createdAt
+      updatedAt
+    }
+    interestedIn
+    age
+    profileInfo {
+      name
+      bio
+      interest
+      profession
+      school
+    }
+    images
+  }
+}
+
+query GetCurrentUser($jwt: String!) {
+  getCurrentUser(JWT: $jwt) {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
+
+query GetUsers {
+  getUsers {
+    _id
+    email
+    password
+    isVerified
+    verficationCode
+    createdAt
+    updatedAt
+  }
+}
