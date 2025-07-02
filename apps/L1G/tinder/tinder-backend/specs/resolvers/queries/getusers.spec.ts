@@ -3,11 +3,6 @@ import { Usermodel } from 'src/models/user';
 
 jest.mock('src/models/user');
 
-type PopulateChain = {
-  populate: (arg: unknown) => PopulateChain | { lean: jest.Mock };
-  lean?: jest.Mock;
-};
-
 describe('getusers resolver', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,7 +28,6 @@ describe('getusers resolver', () => {
     const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
-    type FindMock = { populate: (arg: PopulateChain) => { populate: (arg: PopulateChain) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await getusers();
@@ -72,8 +66,6 @@ describe('getusers resolver', () => {
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
 
-    // Instead of 'as any', define a type for the mock chain
-    type FindMock = { populate: (arg: PopulateChain) => { populate: (arg: PopulateChain) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await getusers();
@@ -94,8 +86,6 @@ describe('getusers resolver', () => {
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
 
-    // Instead of 'as any', define a type for the mock chain
-    type FindMock = { populate: (arg: PopulateChain) => { populate: (arg: PopulateChain) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await getusers();
@@ -116,8 +106,6 @@ describe('getusers resolver', () => {
     const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
-    // Instead of 'as any', define a type for the mock chain
-    type FindMock = { populate: (arg: PopulateChain) => { populate: (arg: PopulateChain) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await getusers();

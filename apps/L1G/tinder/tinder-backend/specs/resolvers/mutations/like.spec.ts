@@ -21,9 +21,7 @@ describe('like resolver', () => {
 
     const selectMock = jest.fn().mockResolvedValue(mockUserDoc);
 
-    (Usermodel.findById as jest.Mock).mockReturnValue({
-      select: selectMock,
-    });
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await like({}, { likedByUser, likeReceiver });
 
@@ -41,9 +39,7 @@ describe('like resolver', () => {
 
     const selectMock = jest.fn().mockResolvedValue(mockUserDoc);
 
-    (Usermodel.findById as jest.Mock).mockReturnValue({
-      select: selectMock,
-    });
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await like({}, { likedByUser, likeReceiver });
 
@@ -57,9 +53,7 @@ describe('like resolver', () => {
 
     const selectMock = jest.fn().mockResolvedValue(undefined);
 
-    (Usermodel.findById as jest.Mock).mockReturnValue({
-      select: selectMock,
-    });
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: selectMock } as unknown as ReturnType<typeof Usermodel.find>);
 
     const result = await like({}, { likedByUser, likeReceiver });
 

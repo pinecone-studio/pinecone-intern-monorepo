@@ -3,11 +3,6 @@ import { Usermodel } from 'src/models/user';
 
 jest.mock('src/models/user');
 
-type PopulateChain = {
-  populate: (arg: unknown) => PopulateChain | { lean: jest.Mock };
-  lean?: jest.Mock;
-};
-
 describe('getusers resolver (error/edge cases)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
