@@ -10,6 +10,7 @@ export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
     const likeReceiverId = new mongoose.Types.ObjectId(likeReceiver);
 
     await Usermodel.findByIdAndUpdate(likeReceiverId, { $addToSet: { likedBy: likedByUserId } }, { new: true });
+
     await Usermodel.findByIdAndUpdate(likedByUserId, { $addToSet: { likedTo: likeReceiverId } }, { new: true });
 
     const receiverUser = await Usermodel.findById(likeReceiverId).select('likedTo');
@@ -18,9 +19,17 @@ export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
 
     const isMatch = likedToArray?.some((id) => id.equals(likedByUserId)) ?? false;
 
-    return isMatch ? "🎉 It's a match!" : '👍 Like recorded successfully';
+    if (isMatch) {
+      await Usermodel.findByIdAndUpdate(likeReceiverId, { $addToSet: { matched: likedByUserId } }, { new: true });
+
+      await Usermodel.findByIdAndUpdate(likedByUserId, { $addToSet: { matched: likeReceiverId } }, { new: true });
+
+      return "🎉 It's a match!";
+    }
+
+    return '👍 Like recorded successfully';
   } catch (error) {
-    console.error('❌ Error in like mutation:', error);
+    console.warn('⚠️ Like mutation failed:', (error as Error).message);
     throw new Error('Failed to like user');
   }
 };

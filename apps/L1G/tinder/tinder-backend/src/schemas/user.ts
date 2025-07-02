@@ -5,8 +5,10 @@ export const UsertypeDefs = gql`
     id: ID!
     email: String!
     name: String!
+    images: [String]
     likedBy: [User]
     likedTo: [User]
+    matched: [User]
   }
 
   type Query {

@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Types } from 'mongoose';
 import { Usermodel } from 'src/models/user';
 import { SignUpArgs } from 'src/types';
+
 const checkEmailExists = async (email: string) => {
   const existing = await Usermodel.findOne({ email });
   if (existing) {
@@ -39,7 +40,9 @@ export const signup = async (
     id: savedUser._id.toString(),
     email: savedUser.email,
     name: savedUser.name,
-    likedBy: savedUser.likedBy.map((id: Types.ObjectId) => id.toString()),
-    likedTo: savedUser.likedTo.map((id: Types.ObjectId) => id.toString()),
+    likedBy: (savedUser.likedBy || []).map((id: Types.ObjectId) => id.toString()),
+    likedTo: (savedUser.likedTo || []).map((id: Types.ObjectId) => id.toString()),
   };
 };
+
+export { checkEmailExists };

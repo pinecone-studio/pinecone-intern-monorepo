@@ -1,10 +1,14 @@
-import { Usermodel } from 'src/models/user';
 import { getusers } from 'src/resolvers/queries/getusers';
+import { Usermodel } from 'src/models/user';
 
 jest.mock('src/models/user');
 
 describe('getusers resolver', () => {
-  it('should return transformed users with likedBy and likedTo', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return transformed users with likedBy and likedTo arrays', async () => {
     const mockUsers = [
       {
         _id: '60f1a5e9c9d8e72e5c9b1234',
@@ -21,10 +25,11 @@ describe('getusers resolver', () => {
       },
     ];
 
-    const leanMock = jest.fn().mockResolvedValue(mockUsers);
-    const populate2Mock = jest.fn().mockReturnValue({ lean: leanMock });
-    const populate1Mock = jest.fn().mockReturnValue({ populate: populate2Mock });
-    (Usermodel.find as jest.Mock).mockReturnValue({ populate: populate1Mock });
+    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
 
@@ -45,18 +50,160 @@ describe('getusers resolver', () => {
         likedTo: [],
       },
     ]);
+  });
+  it('should call find().lean() even if populate is not chained', async () => {
+    const mockUsers = [
+      {
+        _id: '123',
+        email: 'user@example.com',
+        name: 'User',
+        likedBy: [],
+        likedTo: [],
+      },
+    ];
 
-    expect(Usermodel.find).toHaveBeenCalled();
-    expect(populate1Mock).toHaveBeenCalledWith('likedBy', '_id email name');
-    expect(populate2Mock).toHaveBeenCalledWith('likedTo', '_id email name');
-    expect(leanMock).toHaveBeenCalled();
+    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
+
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
+
+    const result = await getusers();
+
+    expect(result).toEqual([
+      {
+        id: '123',
+        email: 'user@example.com',
+        name: 'User',
+        likedBy: [],
+        likedTo: [],
+      },
+    ]);
   });
 
-  it('should throw a readable error on failure', async () => {
-    (Usermodel.find as jest.Mock).mockImplementation(() => {
-      throw new Error('DB query failed');
+  it('should handle users with undefined likedBy and likedTo', async () => {
+    const mockUsers = [
+      {
+        _id: '60f1a5e9c9d8e72e5c9b1234',
+        email: 'test@example.com',
+        name: 'Test User',
+        likedBy: undefined,
+        likedTo: undefined,
+      },
+    ];
+
+    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
+
+    const result = await getusers();
+
+    expect(result).toEqual([
+      {
+        id: '60f1a5e9c9d8e72e5c9b1234',
+        email: 'test@example.com',
+        name: 'Test User',
+        likedBy: [],
+        likedTo: [],
+      },
+    ]);
+  });
+
+  it('should return empty array when no users found', async () => {
+    const leanMock = jest.fn().mockResolvedValueOnce([]);
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
+
+    const result = await getusers();
+
+    expect(result).toEqual([]);
+  });
+
+  it('should throw an error and warn when database query fails', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
+      throw new Error('DB failure');
     });
 
-    await expect(getusers()).rejects.toThrow('DB query failed');
+    await expect(getusers()).rejects.toThrow('DB failure');
+    expect(warnSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', 'DB failure');
+
+    warnSpy.mockRestore();
+  });
+
+  it('calls console.warn when DB failure occurs', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => { throw new Error('DB failure'); });
+    await expect(getusers()).rejects.toThrow('DB failure');
+    expect(warnSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', 'DB failure');
+    warnSpy.mockRestore();
+  });
+
+  it('handles user with undefined likedBy and likedTo', async () => {
+    const mockUsers = [
+      {
+        _id: '123',
+        email: 'user@example.com',
+        name: 'User',
+        likedBy: undefined,
+        likedTo: undefined,
+      },
+    ];
+    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
+    const result = await getusers();
+    expect(result).toEqual([
+      {
+        id: '123',
+        email: 'user@example.com',
+        name: 'User',
+        likedBy: [],
+        likedTo: [],
+      },
+    ]);
+  });
+
+  it('maps likedBy and likedTo when they have values', async () => {
+    const mockUsers = [
+      {
+        _id: '1',
+        email: 'main@example.com',
+        name: 'Main',
+        likedBy: [
+          { _id: '2', email: 'by@example.com', name: 'By' }
+        ],
+        likedTo: [
+          { _id: '3', email: 'to@example.com', name: 'To' }
+        ],
+      },
+    ];
+    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
+    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
+
+    const result = await getusers();
+
+    expect(result).toEqual([
+      {
+        id: '1',
+        email: 'main@example.com',
+        name: 'Main',
+        likedBy: [
+          { id: '2', email: 'by@example.com', name: 'By', likedBy: [], likedTo: [] }
+        ],
+        likedTo: [
+          { id: '3', email: 'to@example.com', name: 'To', likedBy: [], likedTo: [] }
+        ],
+      },
+    ]);
   });
 });

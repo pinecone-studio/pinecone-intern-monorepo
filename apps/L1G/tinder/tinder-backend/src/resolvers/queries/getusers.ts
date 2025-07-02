@@ -1,35 +1,37 @@
+import mongoose from 'mongoose';
 import { Usermodel } from 'src/models/user';
-import { UserType } from 'src/types';
-
-export const getusers = async (): Promise<UserType[]> => {
+interface IUserLean {
+  _id: string | mongoose.Types.ObjectId;
+  email: string;
+  name: string;
+  likedBy?: IUserLean[];
+  likedTo?: IUserLean[];
+}
+export const getusers = async () => {
   try {
-    const users = await Usermodel.find().populate('likedBy', '_id email name').populate('likedTo', '_id email name').lean();
+    const users = await Usermodel.find().populate('likedBy').populate('likedTo').lean<IUserLean[]>();
 
-    const transformUser = (user: any): UserType => ({
+    return users.map((user) => ({
       id: user._id.toString(),
       email: user.email,
       name: user.name,
-      likedBy: (user.likedBy || []).map((u: any) => ({
-        id: u._id.toString(),
-        email: u.email,
-        name: u.name,
+      likedBy: (user.likedBy || []).map((likedUser) => ({
+        id: likedUser._id.toString(),
+        email: likedUser.email,
+        name: likedUser.name,
         likedBy: [],
         likedTo: [],
       })),
-      likedTo: (user.likedTo || []).map((u: any) => ({
-        id: u._id.toString(),
-        email: u.email,
-        name: u.name,
+      likedTo: (user.likedTo || []).map((likedUser) => ({
+        id: likedUser._id.toString(),
+        email: likedUser.email,
+        name: likedUser.name,
         likedBy: [],
         likedTo: [],
       })),
-    });
-
-    return users.map(transformUser);
-  } catch (err) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
-    }
-    throw new Error('Unknown error occurred while fetching users');
+    }));
+  } catch (error) {
+    console.warn('⚠️ Failed to fetch users:', (error as Error).message);
+    throw new Error((error as Error).message);
   }
 };
