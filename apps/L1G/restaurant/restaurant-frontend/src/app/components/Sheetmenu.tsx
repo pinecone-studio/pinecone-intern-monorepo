@@ -14,6 +14,7 @@ export const SheetMenu = () => {
         <Menu size={15} />
       </SheetTrigger>
       <SheetContent>
+        <Menu className="absolute top-4" size={15} />
         <SheetHeader>
           <SheetTitle className="border-b pt-5"></SheetTitle>
           <SheetDescription className="flex-col">
