@@ -15,6 +15,7 @@ describe('Login form ', () => {
 
     expect(email.value).toBe('test@example.com');
     expect(password.value).toBe('password123');
+
     fireEvent.click(submitBtn);
   });
 });
