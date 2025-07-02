@@ -1,21 +1,17 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, Types } from 'mongoose';
 
 export type User = {
-  _id: string;
-  username: string;
+  _id: Types.ObjectId;
   email: string;
   password: string;
   profile: string;
+  phoneNumber: string;
   bonusPoints: number;
   role: 'admin' | 'user';
 };
 
 const UserSchema = new Schema<User>(
   {
-    username: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -26,6 +22,9 @@ const UserSchema = new Schema<User>(
       required: true,
     },
     profile: {
+      type: String,
+    },
+    phoneNumber: {
       type: String,
     },
     bonusPoints: {
