@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
+import { CreatePassword } from './(auth)/signup/components/CreatePasswordComponent';
 
 const Home = () => {
   return (
-    <div>
-      <Button className="bg-red-100">Click</Button>
+    <div className="flex justify-center items-center h-screen">
+      <CreatePassword />
     </div>
   );
 };
