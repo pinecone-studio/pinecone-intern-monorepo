@@ -1,11 +1,9 @@
-import TinderLogo from '@/components/TinderLogo';
+import HowOldAreYou from '@/components/HowOldAreYou';
 
 const Signup = () => {
   return (
     <div>
-      Sign up page ju
-      <TinderLogo />
-      <TinderLogo size={40} />
+      <HowOldAreYou />
     </div>
   );
 };
