@@ -28,7 +28,7 @@ describe('getusers resolver', () => {
     const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
-
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
@@ -67,6 +67,8 @@ describe('getusers resolver', () => {
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
 
+    // Instead of 'as any', define a type for the mock chain
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
@@ -97,6 +99,8 @@ describe('getusers resolver', () => {
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
 
+    // Instead of 'as any', define a type for the mock chain
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
@@ -117,6 +121,8 @@ describe('getusers resolver', () => {
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
 
+    // Instead of 'as any', define a type for the mock chain
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
@@ -139,7 +145,9 @@ describe('getusers resolver', () => {
 
   it('calls console.warn when DB failure occurs', async () => {
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => { throw new Error('DB failure'); });
+    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
+      throw new Error('DB failure');
+    });
     await expect(getusers()).rejects.toThrow('DB failure');
     expect(warnSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', 'DB failure');
     warnSpy.mockRestore();
@@ -158,6 +166,8 @@ describe('getusers resolver', () => {
     const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+    // Instead of 'as any', define a type for the mock chain
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
     const result = await getusers();
     expect(result).toEqual([
@@ -177,17 +187,15 @@ describe('getusers resolver', () => {
         _id: '1',
         email: 'main@example.com',
         name: 'Main',
-        likedBy: [
-          { _id: '2', email: 'by@example.com', name: 'By' }
-        ],
-        likedTo: [
-          { _id: '3', email: 'to@example.com', name: 'To' }
-        ],
+        likedBy: [{ _id: '2', email: 'by@example.com', name: 'By' }],
+        likedTo: [{ _id: '3', email: 'to@example.com', name: 'To' }],
       },
     ];
     const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
     const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
     const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
+    // Instead of 'as any', define a type for the mock chain
+    type FindMock = { populate: (arg: any) => { populate: (arg: any) => { lean: jest.Mock } } };
     jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as any);
 
     const result = await getusers();
@@ -197,12 +205,8 @@ describe('getusers resolver', () => {
         id: '1',
         email: 'main@example.com',
         name: 'Main',
-        likedBy: [
-          { id: '2', email: 'by@example.com', name: 'By', likedBy: [], likedTo: [] }
-        ],
-        likedTo: [
-          { id: '3', email: 'to@example.com', name: 'To', likedBy: [], likedTo: [] }
-        ],
+        likedBy: [{ id: '2', email: 'by@example.com', name: 'By', likedBy: [], likedTo: [] }],
+        likedTo: [{ id: '3', email: 'to@example.com', name: 'To', likedBy: [], likedTo: [] }],
       },
     ]);
   });
