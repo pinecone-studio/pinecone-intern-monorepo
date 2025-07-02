@@ -112,7 +112,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L1G/tinder/tinder-backend/.env | xargs)"],
+        "commands": ["node -e \"require('dotenv').config({ path: 'apps/L1G/restaurant/restaurant-backend/.env' })\""],
         "parallel": false
       }
     },
