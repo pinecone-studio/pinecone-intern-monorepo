@@ -83,6 +83,7 @@
       "configurations": {
         "testing": {
           "groups": ["2G-TINDER-BE"],
+
           "env": "test"
         }
       }
