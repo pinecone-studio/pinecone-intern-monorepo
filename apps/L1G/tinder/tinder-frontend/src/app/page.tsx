@@ -1,7 +1,7 @@
 'use client';
 
 import TinderCard from '@/components/Tinder-card';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 
 export interface UserProfile {
@@ -33,18 +33,58 @@ const GET_USERS = gql`
   }
 `;
 
+const LIKE_MUTATION = gql`
+  mutation Like($likedByUser: ID!, $likeReceiver: ID!) {
+    like(likedByUser: $likedByUser, likeReceiver: $likeReceiver)
+  }
+`;
+
+const DISLIKE_MUTATION = gql`
+  mutation Dislike($dislikedByUser: ID!, $dislikeReceiver: ID!) {
+    dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver)
+  }
+`;
+
 export default function Home() {
   const { data, loading, error } = useQuery(GET_USERS);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleLike = (profileId: string) => {
-    console.log('Liked:', profileId);
-    goToNextProfile();
+  const loggedInUserId = '68639484a94a2ebfd7cccae5';
+
+  const [likeMutation] = useMutation(LIKE_MUTATION);
+  const [dislikeMutation] = useMutation(DISLIKE_MUTATION);
+
+  const handleLike = async (profileId: string) => {
+    try {
+      const { data } = await likeMutation({
+        variables: {
+          likedByUser: loggedInUserId,
+          likeReceiver: profileId,
+        },
+      });
+      if (data?.like === "🎉 It's a match!") {
+        alert("It's a match!");
+      }
+      goToNextProfile();
+    } catch (err) {
+      alert('Error liking user');
+      goToNextProfile();
+    }
   };
 
-  const handleDislike = (profileId: string) => {
-    console.log('Disliked:', profileId);
-    goToNextProfile();
+  const handleDislike = async (profileId: string) => {
+    try {
+      await dislikeMutation({
+        variables: {
+          likedByUser: loggedInUserId,
+          likeReceiver: profileId,
+        },
+      });
+      goToNextProfile();
+    } catch (err) {
+      alert('Error disliking user');
+      goToNextProfile();
+    }
   };
 
   const goToNextProfile = () => {
@@ -55,7 +95,7 @@ export default function Home() {
   if (error) return <div>Error loading profiles.</div>;
   console.log(data, 'data');
 
-  const profiles: UserProfile[] = data?.getusers ?? [];
+  const profiles: UserProfile[] = (data?.getusers ?? []).filter((profile: UserProfile) => profile.id !== loggedInUserId);
   const currentProfile = profiles[currentIndex];
 
   return (

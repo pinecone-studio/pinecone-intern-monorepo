@@ -1,0 +1,3 @@
+mutation DislikeFromFile($dislikedByUser: ID!, $dislikeReceiver: ID!) {
+  dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver)
+}

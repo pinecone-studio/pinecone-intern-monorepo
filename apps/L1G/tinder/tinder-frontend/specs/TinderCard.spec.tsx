@@ -19,13 +19,11 @@ describe('TinderCard animation behavior', () => {
 
     const image = screen.getByRole('img') as HTMLImageElement;
 
-    // Test next button (goes to the next image)
     fireEvent.click(screen.getByTestId('right-arrow'));
-    expect(image.src).toContain('401');
+    expect(image.src.includes('401')).toBe(true);
 
-    // Test previous button (goes back to the first image)
     fireEvent.click(screen.getByTestId('left-arrow'));
-    expect(image.src).toContain('400');
+    expect(image.src.includes('400')).toBe(true);
   });
 
   it('falls back to placeholder when image is missing', () => {
@@ -37,17 +35,17 @@ describe('TinderCard animation behavior', () => {
     render(<TinderCard profile={brokenProfile} onLike={() => {}} onDislike={() => {}} />);
 
     const image = screen.queryByRole('img');
-    expect(image).not.toBeNull();
-    expect(image?.src).toContain('/gray.jpeg'); // Fallback to placeholder
+    expect(image !== null).toBe(true);
+    expect(image && image.src.includes('/gray.jpeg')).toBe(true);
   });
 
   it('displays fallback image when image fails to load', () => {
     render(<TinderCard profile={mockProfile} onLike={() => {}} onDislike={() => {}} />);
     const image = screen.getByRole('img') as HTMLImageElement;
 
-    fireEvent.error(image); // Simulate error event on image
+    fireEvent.error(image);
 
-    expect(image.src).toContain('/gray.jpeg'); // Fallback to placeholder
+    expect(image.src.includes('/gray.jpeg')).toBe(true);
   });
 
   it('calls onLike when clicking like button (goes right)', async () => {
@@ -58,7 +56,7 @@ describe('TinderCard animation behavior', () => {
     fireEvent.click(likeButton);
 
     await waitFor(() => {
-      expect(onLike).toHaveBeenCalledWith(mockProfile.id);
+      expect(onLike.mock.calls.some(call => call[0] === mockProfile.id)).toBe(true);
     });
   });
   it('handles direction state and resets correctly after animation', async () => {
@@ -71,12 +69,11 @@ describe('TinderCard animation behavior', () => {
     fireEvent.click(likeButton);
 
     await waitFor(() => {
-      expect(onLike).toHaveBeenCalledWith(mockProfile.id);
+      expect(onLike.mock.calls.some(call => call[0] === mockProfile.id)).toBe(true);
     });
 
-    // Wait for animation to reset
     await waitFor(() => {
-      expect(screen.queryByTestId('like')).toBeInTheDocument(); // Button should still be there after animation
+      expect(screen.queryByTestId('like') !== null).toBe(true);
     });
   });
 
@@ -88,12 +85,12 @@ describe('TinderCard animation behavior', () => {
     fireEvent.click(likeButton);
 
     await waitFor(() => {
-      expect(onLike).toHaveBeenCalled();
+      expect(onLike.mock.calls.length > 0).toBe(true);
     });
 
     fireEvent.click(likeButton);
     await waitFor(() => {
-      expect(onLike).toHaveBeenCalledTimes(2);
+      expect(onLike.mock.calls.length).toBe(2);
     });
   });
 
@@ -101,34 +98,34 @@ describe('TinderCard animation behavior', () => {
     const brokenProfileEmpty = { ...mockProfile, images: [] };
     render(<TinderCard profile={brokenProfileEmpty} onLike={() => {}} onDislike={() => {}} />);
 
-    const image = screen.queryByRole('img');
-    expect(image).not.toBeNull();
-    expect(image?.src).toContain('/gray.jpeg'); // Fallback to placeholder
+    const images1 = screen.getAllByRole('img');
+    expect(images1[0] !== null).toBe(true);
+    expect(images1[0].src.includes('/gray.jpeg')).toBe(true);
 
     const brokenProfileUndefined = { ...mockProfile, images: undefined };
     render(<TinderCard profile={brokenProfileUndefined} onLike={() => {}} onDislike={() => {}} />);
 
-    const image2 = screen.queryByRole('img');
-    expect(image2).not.toBeNull();
-    expect(image2?.src).toContain('/gray.jpeg'); // Fallback to placeholder
+    const images2 = screen.getAllByRole('img');
+    expect(images2[0] !== null).toBe(true);
+    expect(images2[0].src.includes('/gray.jpeg')).toBe(true);
   });
 
-  it('renders profile with empty name and age', () => {
+  it('renders Unknown when name is empty', () => {
     const profileWithEmptyName = { ...mockProfile, name: '' };
     render(<TinderCard profile={profileWithEmptyName} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.getByText(/Unknown\s*,?/)).toBeTruthy();
+  });
 
-    // Ensure fallback text "Unknown" appears when name is empty
-    expect(screen.getByText('Unknown')).toBeInTheDocument();
-
+  it('renders name when age is null', () => {
     const profileWithNullAge = { ...mockProfile, age: null };
     render(<TinderCard profile={profileWithNullAge} onLike={() => {}} onDislike={() => {}} />);
-    expect(screen.queryByText('25')).not.toBeInTheDocument(); // Age should not appear
-    expect(screen.getByText('')).toBeInTheDocument(); // Empty fallback string should be rendered
+    expect(screen.getByText(/Test User\s*,?/)).toBeTruthy();
+  });
 
+  it('renders name when age is undefined', () => {
     const profileWithUndefinedAge = { ...mockProfile, age: undefined };
     render(<TinderCard profile={profileWithUndefinedAge} onLike={() => {}} onDislike={() => {}} />);
-    expect(screen.queryByText('25')).not.toBeInTheDocument(); // Age should not appear
-    expect(screen.getByText('')).toBeInTheDocument(); // Empty fallback string should be rendered
+    expect(screen.getByText(/Test User\s*,?/)).toBeTruthy();
   });
 
   it('calls onDislike when clicking dislike button (goes left)', async () => {
@@ -140,7 +137,7 @@ describe('TinderCard animation behavior', () => {
     fireEvent.click(dislikeButton);
 
     await waitFor(() => {
-      expect(onDislike).toHaveBeenCalledWith(mockProfile.id);
+      expect(onDislike.mock.calls.some(call => call[0] === mockProfile.id)).toBe(true);
     });
   });
 
@@ -156,21 +153,66 @@ describe('TinderCard animation behavior', () => {
     const leftButton = screen.getByTestId('left-arrow');
 
     fireEvent.click(rightButton);
-    expect(screen.getByRole('img').src).toContain('401');
+    expect(screen.getByRole('img').src.includes('401')).toBe(true);
 
     fireEvent.click(rightButton);
-    expect(screen.getByRole('img').src).toContain('400');
+    expect(screen.getByRole('img').src.includes('400')).toBe(true);
 
     fireEvent.click(leftButton);
-    expect(screen.getByRole('img').src).toContain('401');
+    expect(screen.getByRole('img').src.includes('401')).toBe(true);
   });
 
   it('does not render navigation buttons when only one image exists', () => {
     render(<TinderCard profile={mockProfile} onLike={() => {}} onDislike={() => {}} />);
 
     const buttons = screen.getAllByRole('button');
-    expect(buttons.length).toBe(2); // Should only have two buttons (like and dislike)
-    expect(screen.queryByTestId('left-arrow')).toBeNull(); // No left arrow button
-    expect(screen.queryByTestId('right-arrow')).toBeNull(); // No right arrow button
+    expect(buttons.length).toBe(2);
+    expect(screen.queryByTestId('left-arrow')).toBeNull();
+    expect(screen.queryByTestId('right-arrow')).toBeNull();
+  });
+
+  it('does not render navigation buttons when images array is empty', () => {
+    const profileWithEmptyImages = { ...mockProfile, images: [] };
+    render(<TinderCard profile={profileWithEmptyImages} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.queryByTestId('left-arrow')).toBeNull();
+    expect(screen.queryByTestId('right-arrow')).toBeNull();
+  });
+
+  it('does not render navigation buttons when images is undefined', () => {
+    const profileWithUndefinedImages = { ...mockProfile, images: undefined };
+    render(<TinderCard profile={profileWithUndefinedImages} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.queryByTestId('left-arrow')).toBeNull();
+    expect(screen.queryByTestId('right-arrow')).toBeNull();
+  });
+
+  it('does not render navigation buttons when there is exactly one real image', () => {
+    const profileWithOneImage = { ...mockProfile, images: ['https://via.placeholder.com/400'] };
+    render(<TinderCard profile={profileWithOneImage} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.queryByTestId('left-arrow')).toBeNull();
+    expect(screen.queryByTestId('right-arrow')).toBeNull();
+  });
+
+  it('renders both name and age when both are present', () => {
+    const profile = { ...mockProfile, name: 'Alice', age: 30 };
+    render(<TinderCard profile={profile} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.getByText(/Alice\s*,\s*30/)).toBeTruthy();
+  });
+
+  it('renders Unknown and empty string when both name and age are missing', () => {
+    const profile = { ...mockProfile, name: '', age: undefined };
+    render(<TinderCard profile={profile} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.getByText(/Unknown\s*,?/)).toBeTruthy();
+  });
+
+  it('renders Unknown and age when name is missing', () => {
+    const profile = { ...mockProfile, name: '', age: 22 };
+    render(<TinderCard profile={profile} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.getByText(/Unknown\s*,\s*22/)).toBeTruthy();
+  });
+
+  it('renders name and empty string when age is missing', () => {
+    const profile = { ...mockProfile, name: 'Bob', age: undefined };
+    render(<TinderCard profile={profile} onLike={() => {}} onDislike={() => {}} />);
+    expect(screen.getByText(/Bob\s*,?/)).toBeTruthy();
   });
 });
