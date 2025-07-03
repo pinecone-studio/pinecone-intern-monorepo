@@ -14,7 +14,9 @@ interface TinderCardProps {
   onDislike: (profileId: string) => void;
 }
 
-export const TinderCard: React.FC<TinderCardProps> = ({ profile, onLike, onDislike }) => {
+export default function TinderCard({ profile, onLike, onDislike }: TinderCardProps) {
+  if (!profile) return null;
+
   const images = profile.images && profile.images.length > 0 ? profile.images : ['/gray.jpeg'];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -141,4 +143,4 @@ export const TinderCard: React.FC<TinderCardProps> = ({ profile, onLike, onDisli
       </motion.div>
     </AnimatePresence>
   );
-};
+}

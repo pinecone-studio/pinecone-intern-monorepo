@@ -5,9 +5,8 @@ import { Usermodel } from 'src/models/user';
 jest.mock('src/models/user');
 
 describe('dislike resolver', () => {
-  // Use fixed ObjectId values for consistency in test expectations
-  const likedByUser = '686635c86dd3b66e6f34e1ca';
-  const likeReceiver = '686635c86dd3b66e6f34e1cb';
+  const dislikedByUser = '686635c86dd3b66e6f34e1ca';
+  const dislikeReceiver = '686635c86dd3b66e6f34e1cb';
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -16,10 +15,12 @@ describe('dislike resolver', () => {
   it('removes user from likedTo, likedBy, and matched arrays', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockResolvedValue({});
 
-    const result = await dislike({}, { likedByUser, likeReceiver });
+    const result = await dislike({}, { dislikedByUser, dislikeReceiver });
+
     expect(result).toBe('👎 Dislike processed and removed from like/match lists');
 
     const calls = (Usermodel.findByIdAndUpdate as jest.Mock).mock.calls;
+
     expect(calls[0][0]).toBeInstanceOf(mongoose.Types.ObjectId);
     expect(calls[0][1]).toMatchObject({
       $pull: {
@@ -27,6 +28,7 @@ describe('dislike resolver', () => {
         matched: expect.any(mongoose.Types.ObjectId),
       },
     });
+
     expect(calls[1][0]).toBeInstanceOf(mongoose.Types.ObjectId);
     expect(calls[1][1]).toMatchObject({
       $pull: {
@@ -38,9 +40,16 @@ describe('dislike resolver', () => {
 
   it('calls console.warn and throws on DB failure', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
+
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    await expect(dislike({}, { likedByUser, likeReceiver })).rejects.toThrow('Failed to dislike user');
+
+    await expect(dislike({}, { dislikedByUser, dislikeReceiver })).rejects.toThrow('Failed to dislike user');
     expect(warnSpy).toHaveBeenCalledWith('⚠️ Dislike mutation failed:', 'DB failure');
+
     warnSpy.mockRestore();
   });
-}); 
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+});

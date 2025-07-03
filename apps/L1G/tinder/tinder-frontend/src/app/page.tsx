@@ -55,7 +55,7 @@ const Home: React.FC = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   }, []);
 
-  const handleLike = useCallback(
+  const executeLike = useCallback(
     async (profileId: string) => {
       try {
         const { data } = await likeMutation({
@@ -70,22 +70,23 @@ const Home: React.FC = () => {
         }
       } catch (err) {
         alert('Error liking user');
-      } finally {
-        goToNextProfile();
       }
     },
-    [likeMutation, goToNextProfile]
+    [likeMutation]
+  );
+
+  const handleLike = useCallback(
+    (profileId: string) => {
+      executeLike(profileId);
+      goToNextProfile();
+    },
+    [executeLike, goToNextProfile]
   );
 
   const handleDislike = useCallback(
-    async (profileId: string) => {
-      try {
-        console.log(profileId);
-      } catch (err) {
-        alert('Error disliking user');
-      } finally {
-        goToNextProfile();
-      }
+    (_profileId: string) => {
+      console.log('User disliked:', _profileId);
+      goToNextProfile();
     },
     [goToNextProfile]
   );
