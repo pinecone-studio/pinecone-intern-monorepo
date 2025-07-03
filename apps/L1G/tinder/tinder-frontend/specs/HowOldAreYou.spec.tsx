@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
 
+/// <reference types="jest" />
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import HowOldAreYou from '@/components/HowOldAreYou';
@@ -58,6 +59,7 @@ jest.mock('@/components/ui/calendar', () => ({
             </span>
           );
         })}
+
       {selected && <div>Selected: {selected.toISOString()}</div>}
     </div>
   ),
@@ -70,6 +72,7 @@ describe('HowOldAreYou Component', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
+
 
   it('renders correctly', () => {
     render(<HowOldAreYou />);
@@ -135,6 +138,7 @@ describe('HowOldAreYou Component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('date-picker-button'));
     });
+
     await act(async () => {
       const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
       fireEvent.click(validDateButton);

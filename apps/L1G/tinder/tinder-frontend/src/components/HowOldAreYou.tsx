@@ -61,6 +61,7 @@ const HowOldAreYou = () => {
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar mode="single" selected={field.value ?? undefined} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date('1900-01-01')} captionLayout="dropdown" />
+
                   </PopoverContent>
                 </Popover>
                 <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
