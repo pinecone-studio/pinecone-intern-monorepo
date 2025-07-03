@@ -40,7 +40,7 @@ const LIKE_MUTATION = gql`
 `;
 
 const DISLIKE_MUTATION = gql`
-  mutation Dislike($dislikedByUser: ID!, $dislikeReceiver: ID!) {
+  mutation DislikeFromFile($dislikedByUser: ID!, $dislikeReceiver: ID!) {
     dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver)
   }
 `;
@@ -76,8 +76,8 @@ export default function Home() {
     try {
       await dislikeMutation({
         variables: {
-          likedByUser: loggedInUserId,
-          likeReceiver: profileId,
+          dislikedByUser: loggedInUserId,
+          dislikeReceiver: profileId,
         },
       });
       goToNextProfile();
