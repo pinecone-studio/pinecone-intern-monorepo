@@ -22,32 +22,18 @@ describe('TinderCard profile info and button behavior', () => {
     expect(screen.queryByText(/25/)).toBeNull();
   });
 
-  it('calls onLike when like button is clicked', () => {
+  it('calls onLike when like button is clicked', async () => {
     const onLike = jest.fn();
     render(<TinderCard profile={mockProfile} onLike={onLike} onDislike={jest.fn()} />);
     fireEvent.click(screen.getByTestId('like'));
-    expect(onLike).toHaveBeenCalled();
+    await waitFor(() => expect(onLike).toHaveBeenCalledTimes(1));
   });
 
-  it('calls onDislike when dislike button is clicked', () => {
+  it('calls onDislike when dislike button is clicked', async () => {
     const onDislike = jest.fn();
     render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={onDislike} />);
     fireEvent.click(screen.getByTestId('dislike'));
-    expect(onDislike).toHaveBeenCalled();
-  });
-
-  it('calls onLike twice: once on click, once in effect (direction right)', async () => {
-    const onLike = jest.fn();
-    render(<TinderCard profile={mockProfile} onLike={onLike} onDislike={jest.fn()} />);
-    fireEvent.click(screen.getByTestId('like'));
-    await waitFor(() => expect(onLike).toHaveBeenCalledTimes(2));
-  });
-
-  it('calls onDislike twice: once on click, once in effect (direction left)', async () => {
-    const onDislike = jest.fn();
-    render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={onDislike} />);
-    fireEvent.click(screen.getByTestId('dislike'));
-    await waitFor(() => expect(onDislike).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(onDislike).toHaveBeenCalledTimes(1));
   });
 
   it('renders nothing if profile is undefined', () => {

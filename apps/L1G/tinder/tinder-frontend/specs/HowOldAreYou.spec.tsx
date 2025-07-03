@@ -6,7 +6,9 @@ import '@testing-library/jest-dom';
 
 // Mock Date.now to control current date
 const mockToday = new Date('2024-01-01T00:00:00Z');
-jest.useFakeTimers().setSystemTime(mockToday);
+// Remove jest.useFakeTimers().setSystemTime(mockToday);
+// If you need to mock Date, use jest.setSystemTime only, but keep real timers.
+jest.setSystemTime(mockToday);
 
 // Mock for Calendar component to simplify date selection
 jest.mock('@/components/ui/calendar', () => ({
@@ -26,6 +28,9 @@ jest.mock('@/components/ui/calendar', () => ({
 describe('HowOldAreYou Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it('renders correctly', () => {
