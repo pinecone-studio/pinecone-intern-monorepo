@@ -10,6 +10,8 @@ import { UserProfile } from '@/app/page';
 
 interface TinderCardProps {
   profile: UserProfile;
+  onLike: (_profileId: string) => void;
+  onDislike: (_profileId: string) => void;
 }
 
 const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPrev: () => void; onNext: () => void; images: string[]; currentIndex: number }) => (
@@ -34,7 +36,7 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   const [imageError, setImageError] = useState(false);
 
-  const images = profile?.images?.length > 0 ? profile.images : ['/gray.jpeg'];
+  const images = Array.isArray(profile?.images) && profile.images.length > 0 ? profile.images : ['/gray.jpeg'];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));

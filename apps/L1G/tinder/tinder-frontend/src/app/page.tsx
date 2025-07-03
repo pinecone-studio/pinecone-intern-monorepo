@@ -1,8 +1,8 @@
 'use client';
 
 import TinderCard from '@/components/TinderCard';
-import { useQuery, gql, useMutation } from '@apollo/client';
-import { useState, useCallback } from 'react';
+import { useQuery, gql } from '@apollo/client';
+import { useState } from 'react';
 
 export interface UserProfile {
   id: string;
