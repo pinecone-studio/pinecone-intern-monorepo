@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -18,7 +19,7 @@ export const GenderSelect = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-white">
-      <img src="/Tinder.png" alt="Tinder Logo" className="h-24 mb-2" />
+      <Image src="/Tinder.png" alt="Logo" width={200} height={200} />
 
       <h1 data-cy="Interest-Title" className="text-2xl font-semibold text-center">
         Who are you interested in?
