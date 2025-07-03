@@ -1,8 +1,14 @@
 'use client';
 
+<<<<<<< HEAD
 import TinderCard from '@/components/TinderCard';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useState, useCallback } from 'react';
+=======
+import TinderCard from '@/components/Tinder-card';
+import { useQuery, gql } from '@apollo/client';
+import { useState } from 'react';
+>>>>>>> f64f174a8 (push)
 
 export interface UserProfile {
   id: string;
@@ -11,7 +17,11 @@ export interface UserProfile {
   images: string[] | null;
 }
 
+<<<<<<< HEAD
 export const GET_USERS = gql`
+=======
+const GET_USERS = gql`
+>>>>>>> f64f174a8 (push)
   query GetUsers {
     getusers {
       id
@@ -33,6 +43,7 @@ export const GET_USERS = gql`
   }
 `;
 
+<<<<<<< HEAD
 export const LIKE_MUTATION = gql`
   mutation Like($likedByUser: ID!, $likeReceiver: ID!) {
     like(likedByUser: $likedByUser, likeReceiver: $likeReceiver)
@@ -103,8 +114,36 @@ const Home: React.FC = () => {
           No more profiles
         </div>
       )}
+=======
+export default function Home() {
+  const { data, loading, error } = useQuery(GET_USERS);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleLike = (profileId: string) => {
+    console.log('Liked:', profileId);
+    goToNextProfile();
+  };
+
+  const handleDislike = (profileId: string) => {
+    console.log('Disliked:', profileId);
+    goToNextProfile();
+  };
+
+  const goToNextProfile = () => {
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading profiles.</div>;
+  console.log(data, 'data');
+
+  const profiles: UserProfile[] = data?.getusers ?? [];
+  const currentProfile = profiles[currentIndex];
+
+  return (
+    <div className="relative w-full h-screen flex justify-center items-center bg-gray-100">
+      {currentProfile ? <TinderCard profile={currentProfile} onLike={handleLike} onDislike={handleDislike} /> : <div className="text-2xl font-bold text-gray-500">No more profiles</div>}
+>>>>>>> f64f174a8 (push)
     </div>
   );
-};
-
-export default Home;
+}
