@@ -1,6 +1,6 @@
 'use client';
 
-import { TinderCard } from '@/components/TinderCard';
+import TinderCard from '@/components/TinderCard';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useState, useCallback } from 'react';
 

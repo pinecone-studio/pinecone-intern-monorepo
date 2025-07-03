@@ -41,10 +41,10 @@ describe('dislike resolver', () => {
   it('calls console.warn and throws on DB failure', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
 
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { /* mock warn */ });
 
     await expect(dislike({}, { dislikedByUser, dislikeReceiver })).rejects.toThrow('Failed to dislike user');
-    expect(warnSpy).toHaveBeenCalledWith('⚠️ Dislike mutation failed:', 'DB failure');
+    expect(warnSpy).toHaveBeenCalledWith('\u26a0\ufe0f Dislike mutation failed:', 'DB failure');
 
     warnSpy.mockRestore();
   });

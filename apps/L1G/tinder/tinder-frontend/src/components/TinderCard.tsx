@@ -10,18 +10,31 @@ import { UserProfile } from '@/app/page';
 
 interface TinderCardProps {
   profile: UserProfile;
-  onLike: (profileId: string) => void;
-  onDislike: (profileId: string) => void;
 }
 
-export default function TinderCard({ profile, onLike, onDislike }: TinderCardProps) {
-  if (!profile) return null;
+const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPrev: () => void; onNext: () => void; images: string[]; currentIndex: number }) => (
+  <>
+    <Button data-testid="left-arrow" variant="ghost" size="icon" className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full w-10 h-10" onClick={onPrev}>
+      <ChevronLeft className="w-5 h-5" />
+    </Button>
+    <Button data-testid="right-arrow" variant="ghost" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full w-10 h-10" onClick={onNext}>
+      <ChevronRight className="w-5 h-5" />
+    </Button>
+    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-1">
+      {images.map((_, index) => (
+        <div key={index} className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`} />
+      ))}
+    </div>
+  </>
+);
 
-  const images = profile.images && profile.images.length > 0 ? profile.images : ['/gray.jpeg'];
-
+// eslint-disable-next-line complexity
+const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   const [imageError, setImageError] = useState(false);
+
+  const images = profile?.images?.length > 0 ? profile.images : ['/gray.jpeg'];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -32,12 +45,10 @@ export default function TinderCard({ profile, onLike, onDislike }: TinderCardPro
   };
 
   const handleLike = () => {
-    onLike(profile.id);
     setDirection('right');
   };
 
   const handleDislike = () => {
-    onDislike(profile.id);
     setDirection('left');
   };
 
@@ -46,16 +57,22 @@ export default function TinderCard({ profile, onLike, onDislike }: TinderCardPro
   };
 
   useEffect(() => {
-    if (!direction) return;
+    if (!direction || !profile) return;
 
     const timeout = setTimeout(() => {
-      direction === 'right' ? onLike(profile.id) : onDislike(profile.id);
+      if (direction === 'right') {
+        onLike(profile.id);
+      } else {
+        onDislike(profile.id);
+      }
       setDirection(null);
       setCurrentImageIndex(0);
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [direction, onLike, onDislike, profile.id]);
+  }, [direction, onLike, onDislike, profile]);
+
+  if (!profile) return null;
 
   return (
     <AnimatePresence>
@@ -83,34 +100,7 @@ export default function TinderCard({ profile, onLike, onDislike }: TinderCardPro
               onError={handleImageError}
             />
 
-            {images.length > 1 && (
-              <>
-                <Button
-                  data-testid="left-arrow"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full w-10 h-10"
-                  onClick={prevImage}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </Button>
-                <Button
-                  data-testid="right-arrow"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full w-10 h-10"
-                  onClick={nextImage}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </Button>
-              </>
-            )}
-
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-1">
-              {images.map((_, index) => (
-                <div key={index} className={`w-2 h-2 rounded-full transition-all ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`} />
-              ))}
-            </div>
+            {images.length > 1 && <ImageNavigation onPrev={prevImage} onNext={nextImage} images={images} currentIndex={currentImageIndex} />}
 
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
               <h2 className="text-2xl font-bold mb-1">
@@ -143,4 +133,6 @@ export default function TinderCard({ profile, onLike, onDislike }: TinderCardPro
       </motion.div>
     </AnimatePresence>
   );
-}
+};
+
+export default TinderCard;
