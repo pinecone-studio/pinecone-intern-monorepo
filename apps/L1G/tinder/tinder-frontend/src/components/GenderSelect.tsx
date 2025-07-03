@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
-export const CreateAccount2 = () => {
+export const GenderSelect = () => {
   const [selectedInterest, setSelectedInterest] = useState('');
   const router = useRouter();
 
