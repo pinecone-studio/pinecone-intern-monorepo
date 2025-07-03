@@ -23,7 +23,11 @@ export const BadgeList = ({ selectedValues, options, maxCount, clearExtraOptions
           const option = options.find((o) => o.value === value);
           const IconComponent = option?.icon;
           return (
-            <Badge key={value} className="m-1 border-foreground/10 bg-card hover:bg-card/80">
+            <Badge
+              key={value}
+              className="m-1 border-foreground/10 bg-card hover:bg-card/80"
+              data-testid={`badge-${value}`} // Add test ID for testing
+            >
               {IconComponent && <IconComponent className="h-4 w-4 mr-2 text-foreground/10" />}
               <span className="text-foreground font-normal">{option?.label}</span>
             </Badge>
@@ -43,13 +47,16 @@ export const BadgeList = ({ selectedValues, options, maxCount, clearExtraOptions
         )}
       </div>
       <div className="flex items-center justify-between">
-        <XIcon
-          className="h-4 mx-2 cursor-pointer text-foreground"
+        <button
           onClick={(event) => {
             event.stopPropagation();
             handleClear();
           }}
-        />
+          aria-label="Clear all"
+          data-testid="clear-button"
+        >
+          <XIcon className="lucide lucide-x h-4 mx-2 cursor-pointer text-foreground" />
+        </button>
         <Separator orientation="vertical" className="flex min-h-6 h-full" />
         <ChevronDown className="h-4 mx-2 cursor-pointer text-foreground" />
       </div>

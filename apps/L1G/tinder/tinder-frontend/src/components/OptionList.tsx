@@ -9,7 +9,7 @@ import { CommandGroup, CommandItem } from '@/components/ui/command';
 interface OptionListProps {
   options: { label: string; value: string; icon?: React.ComponentType<{ className?: string }> }[];
   selectedValues: string[];
-  toggleOption: (value: string) => void;
+  toggleOption: (_value: string) => void;
   toggleAll: () => void;
 }
 

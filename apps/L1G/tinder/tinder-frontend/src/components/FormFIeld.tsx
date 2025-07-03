@@ -32,7 +32,7 @@ const ProfileForm = () => {
   };
 
   return (
-    <Form {...form}>
+    <Form {...form} data-testid="profile-form">
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-[400px] mx-auto">
         <FormField
           control={form.control}
@@ -84,7 +84,6 @@ const ProfileForm = () => {
                   ]}
                   value={field.value || []} // selectedValues-ын оронд value ашиглана
                   maxCount={10}
-                  onValueChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />

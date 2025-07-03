@@ -29,7 +29,6 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
     value: string;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
-  onValueChange: (value: string[]) => void;
   defaultValue?: string[];
   placeholder?: string;
   maxCount?: number;
@@ -42,7 +41,6 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
     value: string;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
-  onValueChange: (value: string[]) => void;
   defaultValue?: string[];
   placeholder?: string;
   maxCount?: number;
@@ -52,7 +50,7 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
-  ({ options, onValueChange, variant = 'default', defaultValue = [], placeholder = 'Select options', maxCount = 3, modalPopover = false, className, ...props }, ref) => {
+  ({ options, variant: _variant = 'default', defaultValue = [], placeholder = 'Select options', maxCount = 3, modalPopover = false, className, ...props }, ref) => {
     const [selectedValues, setSelectedValues] = React.useState<string[]>(defaultValue);
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
     const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -62,19 +60,16 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
         const newSelectedValues = [...selectedValues];
         newSelectedValues.pop();
         setSelectedValues(newSelectedValues);
-        onValueChange(newSelectedValues);
       }
     };
 
     const toggleOption = (option: string) => {
       const newSelectedValues = selectedValues.includes(option) ? selectedValues.filter((_value) => _value !== option) : [...selectedValues, option];
       setSelectedValues(newSelectedValues);
-      onValueChange(newSelectedValues);
     };
 
     const handleClear = () => {
       setSelectedValues([]);
-      onValueChange([]);
     };
 
     const handleTogglePopover = () => {
@@ -84,7 +79,6 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
     const clearExtraOptions = () => {
       const newSelectedValues = selectedValues.slice(0, maxCount);
       setSelectedValues(newSelectedValues);
-      onValueChange(newSelectedValues);
     };
 
     const toggleAll = () => {
@@ -93,7 +87,6 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       } else {
         const allValues = options.map((option) => option.value);
         setSelectedValues(allValues);
-        onValueChange(allValues);
       }
     };
 
