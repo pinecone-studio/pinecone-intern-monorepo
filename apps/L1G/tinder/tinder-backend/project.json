@@ -72,7 +72,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["tinder-backend"],
+          "groups": ["2G-TINDER-BE"],
           "env": "dev"
         }
       }
@@ -82,7 +82,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["tinder-backend"],
+          "groups": ["2G-TINDER-BE"],
           "env": "test"
         }
       }
@@ -92,7 +92,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["tinder-backend"],
+          "groups": ["2G-TINDER-BE"],
           "env": "prod"
         }
       }
@@ -112,7 +112,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L1G/tinder/tinder-backend/.env | xargs)"],
+        "commands": ["node -e \"require('dotenv').config({ path: 'apps/L1G/restaurant/restaurant-backend/.env' })\""],
         "parallel": false
       }
     },

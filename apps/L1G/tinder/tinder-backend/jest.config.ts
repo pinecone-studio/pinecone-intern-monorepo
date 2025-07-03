@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'restaurant-backend',
+  displayName: 'tinder-backend',
   preset: '../../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
@@ -8,6 +8,7 @@ export default {
     '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'], babelrc: false }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  roots: ['<rootDir>/src', '<rootDir>/specs'],
   coverageDirectory: '../../../../coverage/apps/L1G/tinder/tinder-backend',
   collectCoverageFrom: ['src/resolvers/**/*.ts', '!src/**/*.schema.ts', '!src/utils/**', '!src/**/index.ts', '!src/handler.ts', '!src/schemas/**'],
 };
