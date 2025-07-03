@@ -1,6 +1,6 @@
 'use client';
 
-import TinderCard from '@/components/Tinder-card';
+import { TinderCard } from '@/components/TinderCard';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useState, useCallback } from 'react';
 
@@ -39,20 +39,13 @@ export const LIKE_MUTATION = gql`
   }
 `;
 
-export const DISLIKE_MUTATION = gql`
-  mutation DislikeFromFile($dislikedByUser: ID!, $dislikeReceiver: ID!) {
-    dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver)
-  }
-`;
-
 const loggedInUserId = '68639484a94a2ebfd7cccae5';
 
-export default function Home() {
+const Home: React.FC = () => {
   const { data, loading, error } = useQuery(GET_USERS);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [likeMutation] = useMutation(LIKE_MUTATION);
-  const [dislikeMutation] = useMutation(DISLIKE_MUTATION);
 
   const profiles: UserProfile[] = (data?.getusers ?? []).filter((profile: UserProfile) => profile.id !== loggedInUserId);
 
@@ -87,19 +80,14 @@ export default function Home() {
   const handleDislike = useCallback(
     async (profileId: string) => {
       try {
-        await dislikeMutation({
-          variables: {
-            dislikedByUser: loggedInUserId,
-            dislikeReceiver: profileId,
-          },
-        });
+        console.log(profileId);
       } catch (err) {
         alert('Error disliking user');
       } finally {
         goToNextProfile();
       }
     },
-    [dislikeMutation, goToNextProfile]
+    [goToNextProfile]
   );
 
   if (loading) return <div>Loading...</div>;
@@ -116,4 +104,6 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
+
+export default Home;

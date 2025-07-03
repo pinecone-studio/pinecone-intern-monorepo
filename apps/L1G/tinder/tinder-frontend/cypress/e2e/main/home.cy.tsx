@@ -4,7 +4,6 @@ describe('Home Page GraphQL E2E Interactions', () => {
   beforeEach(() => {
     cy.intercept('POST', '**/graphql', (req) => {
       const op = req.body.operationName;
-
       if (op === 'GetUsers') {
         req.reply({
           data: {
@@ -47,7 +46,6 @@ describe('Home Page GraphQL E2E Interactions', () => {
 
     cy.visit('/');
   });
-
   it('loads profiles and displays the first user', () => {
     cy.contains('Loading...').should('be.visible');
     cy.wait('@graphqlReq');
@@ -70,7 +68,6 @@ describe('Home Page GraphQL E2E Interactions', () => {
     cy.wait('@graphqlReq');
     cy.contains('No more profiles').should('be.visible');
   });
-
   it('handles like mutation error gracefully', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'GetUsers') {
@@ -104,18 +101,14 @@ describe('Home Page GraphQL E2E Interactions', () => {
         req.reply({ data: { dislike: true } });
       }
     });
-
     cy.visit('/');
     cy.wait('@graphqlReq');
-
     cy.on('window:alert', (msg) => {
       expect(msg).to.eq('Error liking user');
     });
-
     cy.get('[data-testid="like"]').click();
     cy.wait('@graphqlReq');
   });
-
   it('handles dislike mutation error gracefully', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'GetUsers') {
@@ -149,14 +142,11 @@ describe('Home Page GraphQL E2E Interactions', () => {
         req.reply({ statusCode: 500, body: { errors: [{ message: 'Server error' }] } });
       }
     });
-
     cy.visit('/');
     cy.wait('@graphqlReq');
-
     cy.on('window:alert', (msg) => {
       expect(msg).to.eq('Error disliking user');
     });
-
     cy.get('[data-testid="dislike"]').click();
     cy.wait('@graphqlReq');
   });
