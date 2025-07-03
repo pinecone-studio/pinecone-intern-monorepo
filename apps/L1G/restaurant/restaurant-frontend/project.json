@@ -190,21 +190,21 @@
           "npx dotenv -v VERCEL_ORG_ID=team_q1oLLcb0nkTtgdQRK5qk8fCc -v VERCEL_PROJECT_ID=prj_Ino4Pe5hokb4xftIZ5TpZYzVgbGw -- vercel --archive=tgz --prebuilt --token=xj5qgHzKDGw64IhMVGaY1mDc"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:testing"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "deploy-dev": {
       "executor": "nx:run-commands",
