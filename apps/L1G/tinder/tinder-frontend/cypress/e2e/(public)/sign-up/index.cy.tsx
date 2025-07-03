@@ -1,4 +1,4 @@
-describe('Sign-up page', () => {
+describe('Sign-up page - GenderSelect flow', () => {
   const interests = ['Male', 'Female', 'Both'];
 
   beforeEach(() => {
@@ -10,26 +10,16 @@ describe('Sign-up page', () => {
   });
 
   interests.forEach((option, index) => {
-    it(`Test ${index + 1}: Should render correctly and navigate to "/" after selecting "${option}"`, () => {
-      // Гарчиг байгаа эсэхийг шалгах
+    it(`Test ${index + 1}: Should select "${option}" and navigate to "/"`, () => {
       cy.get('[data-cy=Interest-Title]').should('be.visible').and('contain', 'Who are you interested in?');
+      cy.get('[data-cy=Interest-Subtitle]').should('be.visible').and('contain', 'Pick the one that feels right for you!');
 
-      cy.get('[Interest-Subtitle]').should('be.visible').and('contain', 'Pick the one that feels right for you!');
+      cy.get('[data-cy=Interest-Select]').should('be.visible').click();
 
-      // Dropdown харагдаж байгааг шалгах
-      cy.get('[data-cy=Interest-Select]').should('be.visible');
+      cy.get('[role="option"]').contains(option).click();
 
-      // Next товч харагдаж байгааг шалгах
-      cy.get('[data-cy=Next-Button]').should('be.visible');
+      cy.get('[data-cy=Next-Button]').should('not.be.disabled').click();
 
-      // Dropdown дээр дарж option сонгох
-      cy.get('[data-cy=Interest-Select]').click();
-      cy.get('[role=option]').contains(option).click();
-
-      // Next товч дарах
-      cy.get('[data-cy=Next-Button]').click();
-
-      // Redirect "/"-руу болсон эсэхийг шалгах
       cy.url().should('eq', `${Cypress.config().baseUrl}/`);
     });
   });

@@ -30,7 +30,7 @@ export const GenderSelect = () => {
 
       <div>
         <Select value={selectedInterest} onValueChange={setSelectedInterest}>
-          <SelectTrigger className="w-[400px] sm:w-[350px] h-10" data-cy="Interest-Select">
+          <SelectTrigger className="w-[400px] sm:w-[350px] h-10" data-cy="Interest-Select" data-testid="select-trigger">
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
@@ -43,7 +43,13 @@ export const GenderSelect = () => {
         </Select>
 
         <div className="mt-4 flex justify-end">
-          <Button className="px-6 py-2 bg-[#E53958] hover:bg-[#d7334f] text-white rounded-full shadow-md" onClick={handleNext} disabled={!selectedInterest} data-cy="Next-Button">
+          <Button
+            className="px-6 py-2 bg-[#E53958] hover:bg-[#d7334f] text-white rounded-full shadow-md"
+            onClick={handleNext}
+            disabled={!selectedInterest}
+            data-cy="Next-Button"
+            data-testid="Next-Button"
+          >
             Next
           </Button>
         </div>
