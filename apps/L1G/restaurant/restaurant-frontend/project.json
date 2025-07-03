@@ -15,12 +15,12 @@
         "development": {
           "outputPath": "apps/L1G/restaurant/restaurant-frontend"
         }
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -67,13 +67,13 @@
         "jestConfig": "{projectRoot}/jest.config.ts",
         "passWithNoTests": true,
         "codeCoverage": true
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",
@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["example-frontend"],
+          "groups": ["Intern-2G-Restaurant-FE"],
           "env": "prod"
         }
       }
@@ -148,7 +148,8 @@
     "cypress:clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf apps/L1G/restaurant/restaurant-frontend/cypress/results", "rm -rf apps/L1G/restaurant/restaurant-frontend/.nyc_output", "rm -rf apps/L1G/restaurant/restaurant-frontend/.cy", "rm -rf apps/L1G/restaurant/restaurant-frontend/coverage"],
+        "commands": ["node -e \"const fs = require('fs-extra'); ['cypress/results', '.nyc_output', '.cy', 'coverage'].forEach(dir => fs.removeSync(dir))\""],
+        "cwd": "apps/L1G/restaurant/restaurant-frontend",
         "parallel": false
       }
     },
@@ -164,13 +165,13 @@
       "dependsOn": [
         {
           "target": "cypress-generate-all-page-json"
+        },
+        {
+          "target": "get-secrets"
+        },
+        {
+          "target": "export-env"
         }
-        // {
-        //   "target": "get-secrets"
-        // },
-        // {
-        //   "target": "export-env"
-        // }
       ]
     },
     "cypress-generate-all-page-json": {
@@ -189,21 +190,21 @@
           "npx dotenv -v VERCEL_ORG_ID=team_q1oLLcb0nkTtgdQRK5qk8fCc -v VERCEL_PROJECT_ID=prj_Ino4Pe5hokb4xftIZ5TpZYzVgbGw -- vercel --archive=tgz --prebuilt --token=xj5qgHzKDGw64IhMVGaY1mDc"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:testing"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "deploy-dev": {
       "executor": "nx:run-commands",
@@ -214,22 +215,22 @@
           "npx dotenv -v VERCEL_PROJECT_ID=prj_z3CkGTFQQgjsyeQUoA455wyKDex9 -v VERCEL_ORG_ID=team_q1oLLcb0nkTtgdQRK5qk8fCc -- vercel --prebuilt --prod --token=xj5qgHzKDGw64IhMVGaY1mDc"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:dev"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:dev"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -240,22 +241,22 @@
           "npx dotenv -v VERCEL_ORG_ID=team_q1oLLcb0nkTtgdQRK5qk8fCc -v VERCEL_PROJECT_ID=prj_xyX6CgrZhrGJIBubeSl0DzqQM4lv -- vercel --prebuilt --prod --token=xj5qgHzKDGw64IhMVGaY1mDc"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:prod"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:prod"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     }
   },
 

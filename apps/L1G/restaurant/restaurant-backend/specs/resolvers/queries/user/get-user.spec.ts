@@ -7,9 +7,14 @@ jest.mock('src/models/user.model', () => ({
       .fn()
       .mockReturnValueOnce({
         userId: '1',
-        username: 'Test',
         email: 'test@example.com',
         password: 'test1234',
+        profile: null,
+        bonusPoints: 0,
+        role: 'user',
+        phoneNumber: null,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       })
       .mockReturnValueOnce(null),
   },
@@ -20,9 +25,15 @@ describe('get User', () => {
     const result = await getUser?.({}, { input: { userId: '1' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       userId: '1',
-      username: 'Test',
+      phoneNumber: null,
       email: 'test@example.com',
       password: 'test1234',
+      profile: null,
+      bonusPoints: 0,
+      role: 'user',
+      phoneNumber: null,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
     });
   });
 
