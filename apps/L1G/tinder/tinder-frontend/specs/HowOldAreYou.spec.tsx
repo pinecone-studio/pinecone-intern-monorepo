@@ -4,9 +4,6 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import HowOldAreYou from '@/components/HowOldAreYou';
 import '@testing-library/jest-dom';
 
-// Mock for TinderLogo
-jest.mock('@/components/TinderLogo', () => () => <div>TinderLogo</div>);
-
 // Mock Date.now to control current date
 const mockToday = new Date('2024-01-01T00:00:00Z');
 jest.useFakeTimers().setSystemTime(mockToday);
@@ -47,26 +44,26 @@ describe('HowOldAreYou Component', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument(); // Popover opens
   });
 
-  it('submits form with valid date', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  it('submits form with valid date', () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
     render(<HowOldAreYou />);
 
     // Open the calendar
-    await act(async () => {
+    act(() => {
       fireEvent.click(screen.getByTestId('date-picker-button'));
     });
 
-    await act(async () => {
+    act(() => {
       const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
       fireEvent.click(validDateButton);
     });
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(screen.getByTestId('next-button'));
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('working');
     });
 
