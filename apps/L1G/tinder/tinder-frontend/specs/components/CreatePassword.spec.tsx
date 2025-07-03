@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CreatePassword } from '@/app/(auth)/signup/components/CreatePasswordComponent';
+import { CreatePassword } from '@/components/CreatePasswordComponent';
 import { vi } from 'zod/dist/types/v4/locales';
 
 

@@ -1,7 +1,7 @@
 import DarkModeTinderLogo from '@/components/DarkModeTinderLogo';
 import TinderLogo from '@/components/TinderLogo';
 import { Button } from '@/components/ui/button';
-import { CreatePassword } from './(auth)/signup/components/CreatePasswordComponent';
+import { CreatePassword } from '../components/CreatePasswordComponent';
 
 const Home = () => {
   return (
