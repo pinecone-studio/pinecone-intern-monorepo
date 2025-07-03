@@ -4,6 +4,7 @@ export const userTypeDefs = gql`
   type User {
     userId: ID!
     email: String!
+    username: String!
     profile: String
     password: String!
     bonusPoints: Int
@@ -31,6 +32,7 @@ export const userTypeDefs = gql`
   input CreateUserInput {
     email: String!
     password: String!
+    username: String!
   }
 
   input UpdateUserInput {

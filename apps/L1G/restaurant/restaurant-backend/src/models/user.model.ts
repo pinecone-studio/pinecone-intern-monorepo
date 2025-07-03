@@ -6,12 +6,18 @@ export type User = {
   password: string;
   profile: string;
   phoneNumber: string;
+  username: string;
   bonusPoints: number;
   role: 'admin' | 'user';
 };
 
 const UserSchema = new Schema<User>(
   {
+    username : {
+      type: String,
+      required: true,
+      unique: true
+    },
     email: {
       type: String,
       required: true,
