@@ -119,7 +119,7 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L1G/tinder/tinder-frontend/.env | xargs)"],
+        "commands": ["npx env-cmd -f apps/L1G/tinder/tinder-frontend/.env"],
         "parallel": false
       }
     },
