@@ -1,9 +1,12 @@
 import 'dotenv/config';
 import type { CodegenConfig } from '@graphql-codegen/cli';
+import { existsSync } from 'fs';
+
+const schemaPath = existsSync('apps/L1G/tinder/tinder-frontend/schema.json') ? 'apps/L1G/tinder/tinder-frontend/schema.json' : process.env.BACKEND_URI;
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: process.env.BACKEND_URI,
+  schema: schemaPath,
   documents: ['apps/L1G/tinder/tinder-frontend/src/**/*.{graphql,ts,tsx}'],
   generates: {
     'apps/L1G/tinder/tinder-frontend/src/generated/index.ts': {
@@ -25,4 +28,5 @@ const config: CodegenConfig = {
     },
   },
 };
+
 export default config;
