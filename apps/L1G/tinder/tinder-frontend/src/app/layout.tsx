@@ -1,6 +1,7 @@
 import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import Apollo from './providers/Appollo';
 
 export const metadata = {
   title: 'Welcome to tinder-frontend',
@@ -10,7 +11,9 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Apollo>{children}</Apollo>
+      </body>
     </html>
   );
 };

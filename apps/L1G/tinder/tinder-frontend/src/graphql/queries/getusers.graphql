@@ -1,4 +1,4 @@
-query GetUsers {
+query Query {
   getusers {
     id
     email

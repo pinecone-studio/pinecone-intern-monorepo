@@ -14,8 +14,8 @@ const DarkModeTinderLogo = ({ size = 24 }) => (
     />
     <defs>
       <linearGradient id="paint0_linear_3613_948" x1="2028.91" y1="-0.00860596" x2="-339.005" y2="1999.42" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#FF7854" />
-        <stop offset="1" stop-color="#FD267D" />
+        <stop stopColor="#FF7854" />
+        <stop offset="1" stopColor="#FD267D" />
       </linearGradient>
     </defs>
   </svg>

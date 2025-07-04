@@ -19,5 +19,6 @@ export const UsertypeDefs = gql`
     signup(email: String!, password: String!, name: String!): User
     login(email: String!, password: String!): String
     like(likedByUser: ID!, likeReceiver: ID!): String
+    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
   }
 `;
