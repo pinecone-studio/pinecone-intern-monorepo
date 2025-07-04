@@ -1,1 +1,1 @@
-["/","","","\\chat","\\profile"]
+["/","/(auth)\\login","/(auth)\\signup","/(main)\\chat","/(main)\\profile"]

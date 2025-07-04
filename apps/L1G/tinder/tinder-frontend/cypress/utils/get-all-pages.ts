@@ -21,16 +21,18 @@ const searchDepth = (folderPath: string) => {
 };
 
 export const getAllPages = () => {
-  let pages: string[] = searchDepth('/');
+  let pages: string[] = searchDepth('');
 
-  pages = pages.map((page) =>
-    page
-      .split('/')
-      .filter((pagePath) => !pagePath.includes('(') && !pagePath.includes('nps'))
-      .join('/')
+  pages = pages.map((page) => {
+    // Remove empty segments, join with '/', and ensure leading slash
+    const route = '/' + page.split('/').filter(Boolean).join('/');
+    return route === '/' ? '/' : route.replace(/\/$/, '');
+  });
+
+  fs.writeFileSync(
+    path.join('apps', 'L1G', 'tinder', 'tinder-frontend', 'cypress', 'utils', 'all-pages.json'),
+    JSON.stringify(pages)
   );
-
-  fs.writeFileSync(path.join('apps', 'L1G', "tinder", 'tinder-frontend', 'cypress', 'utils', 'all-pages.json'), JSON.stringify(pages));
 
   return;
 };
