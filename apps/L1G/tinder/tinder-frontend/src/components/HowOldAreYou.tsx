@@ -27,9 +27,7 @@ const HowOldAreYou = () => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
-  }
+  function onSubmit(_values: z.infer<typeof formSchema>) {}
 
   return (
     <div className="flex flex-col items-center pt-20 min-h-screen bg-background px-4 gap-6">
