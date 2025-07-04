@@ -23,8 +23,12 @@ export const userTypeDefs = gql`
     getUsers: [User!]!
   }
 
+  type CreateUserPayload {
+  user: User!
+  }
+
   type Mutation {
-    createUser(input: CreateUserInput!): User!
+    createUser(input: CreateUserInput!): CreateUserPayload!
     updateUser(userId: ID!, input: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
   }
