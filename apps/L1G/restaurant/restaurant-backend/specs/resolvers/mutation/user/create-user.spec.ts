@@ -5,7 +5,6 @@ jest.mock('src/models/user.model', () => ({
   UserModel: {
     create: jest.fn().mockReturnValue({
       userId: '1',
-      username: 'Test',
       email: 'test@example.com',
       password: 'test1234',
     }),
@@ -17,7 +16,6 @@ describe('createUser', () => {
     const result = await createUser?.({}, { input: { email: 'test@example.com', password: 'test1234' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       userId: '1',
-      username: 'Test',
       email: 'test@example.com',
       password: 'test1234',
     });
