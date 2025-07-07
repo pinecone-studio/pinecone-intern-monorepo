@@ -1,7 +1,4 @@
-
-
-
-describe('CreateUser Page', () => {
+describe('CreateUserCard', () => {
   it('1. should render CreateUser page', () => {
     cy.visit('/sign-up');
     cy.get('[data-cy=create-user]').should('be.visible');
@@ -18,7 +15,6 @@ describe('CreateUser Page', () => {
     cy.get('[data-cy=createUser-submit-btn]').click();
     cy.get('[data-cy=createUser-email-error]').should('be.visible');
     cy.get('[data-cy=createUser-email-error]').should('have.text', 'Please enter a valid email');
-
   });
   it('4. an error message should be displayed when the user did not enter password', () => {
     cy.visit('/sign-up');
@@ -49,5 +45,3 @@ describe('CreateUser Page', () => {
     cy.url().should('include', 'sign-in');
   });
 });
-
-

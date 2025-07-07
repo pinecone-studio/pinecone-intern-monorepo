@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { LoginButton } from './LoginButton';
 import { useCreateUserMutation } from '@/generated';
-import { formSchema } from '@/utils/CreateUserComponentUtils';
+import { formSchema, initialValues } from '@/utils/SignUpUtils';
 
-export const CreateUserComponent = () => {
+export const CreateUserCard = () => {
   const router = useRouter();
   const [register] = useCreateUserMutation();
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -25,25 +25,23 @@ export const CreateUserComponent = () => {
           },
         },
       });
+      router.push('/sign-in');
     } catch (error) {
-      console.error('Create user mutation failed', error);
+      form.setError('email', {
+        type: 'manual',
+        message: 'User already exists',
+      });
     }
-    router.push('/sign-in');
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
+    defaultValues: initialValues,
   });
 
   return (
     <div data-cy="create-user" className="flex flex-col w-screen h-screen px-2 py-4 justify-center items-center">
-      <Card className="flex flex-col border-none outline-none shadow-none w-full rounded-lg w-[327px] gap-[32px]">
+      <Card className="flex flex-col border-none outline-none shadow-none rounded-lg w-[327px] gap-[32px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-5 w-full">
             <CardHeader>
@@ -87,7 +85,7 @@ export const CreateUserComponent = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage data-cy="createUser-email-error" />
+                      <FormMessage data-cy="createUser-email-error" data-testid="createUser-email-error" />
                     </FormItem>
                   )}
                 />
@@ -148,10 +146,8 @@ export const CreateUserComponent = () => {
           <h1 className="text-[12px] text-[#71717A] font-normal">Эсвэл</h1>
           <div className="w-full h-[1px] bg-[#E4E4E7]" />
         </div>
-      <LoginButton/>
+        <LoginButton />
       </Card>
     </div>
   );
 };
-
-

@@ -1,4 +1,3 @@
-
 import { z } from 'zod';
 
 const formSchema = z
@@ -17,6 +16,10 @@ const formSchema = z
     path: ['confirmPassword'],
   });
 
-export { formSchema };
-
-
+const initialValues = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+export { formSchema, initialValues };

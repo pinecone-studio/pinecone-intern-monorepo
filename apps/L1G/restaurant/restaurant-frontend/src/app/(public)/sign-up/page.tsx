@@ -1,9 +1,9 @@
-import { CreateUserComponent } from "@/components/auth/sign-up/CreateUserComponent";
+import { CreateUserCard } from '@/components/auth/sign-up/CreateUserCard';
+
 const SignUpPage = () => (
   <div>
-    <CreateUserComponent/>
+    <CreateUserCard />
   </div>
 );
 
 export default SignUpPage;
-

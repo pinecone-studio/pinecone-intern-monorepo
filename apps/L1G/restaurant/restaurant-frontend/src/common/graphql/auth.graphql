@@ -3,6 +3,7 @@ mutation SignIn($input: SignInInput!) {
     token
     user {
       userId
+      username
       email
       profile
       password
