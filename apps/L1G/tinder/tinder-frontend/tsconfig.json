@@ -18,11 +18,17 @@
       }
     ],
     "paths": {
-      "@/components/ui/*": ["../../../../libs/shadcn/src/lib/ui/*"],
-      "@/*": ["src/*"]
+      "@/components/ui/*": [
+        "../../../../libs/shadcn/src/lib/ui/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
     },
-
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -32,6 +38,11 @@
     "../../../../apps/L1G/tinder/tinder-frontend/.next/types/**/*.ts",
     "../../../../dist/apps/L1G/tinder/tinder-frontend/.next/types/**/*.ts",
     "next-env.d.ts"
-, "src/graphql/hello-query.graphql"  ],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
