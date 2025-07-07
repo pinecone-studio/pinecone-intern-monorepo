@@ -95,18 +95,25 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v3
         with:
           node-version: '20.11.1'
+
       - name: Install dependencies
         run: yarn install
+
       - name: Install Vercel CLI
         run: yarn global add vercel
+
       - name: Install Cypress (binary only)
         run: npx cypress install
+
       - name: Setup Canvas
         run: npm rebuild canvas
+
       - uses: nrwl/nx-set-shas@v4
+
       - name: Export NX BASE AND HEAD
         run: |
           export NX_BASE=${{ env.NX_BASE }}
@@ -114,22 +121,28 @@ jobs:
           export VERCEL_TOKEN=${{ env.VERCEL_TOKEN }}
           export GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
           bash ./tools/scripts/export-action-env.sh
+
       - name: Ensure backend is reachable
         run: |
           for i in {1..10}; do
-            if curl -sSf https://tinder-backend-dev.vercel.app/api/graphql > /dev/null; then
-              echo "Backend is up!"
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://tinder-backend-dev.vercel.app/api/graphql)
+            echo "Response code: $STATUS"
+            if [[ "$STATUS" =~ ^2|^4 ]]; then
+              echo "Backend is up (HTTP $STATUS)"
               exit 0
             fi
-            echo "Waiting for backend..."
+            echo "Waiting for backend (got $STATUS)..."
             sleep 10
           done
           echo "Backend not reachable!" && exit 1
+
       - name: Create .env for tinder-frontend
         run: |
           echo "BACKEND_URI=https://tinder-backend-dev.vercel.app/api/graphql" > apps/L1G/tinder/tinder-frontend/.env
           echo "VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}" >> apps/L1G/tinder/tinder-frontend/.env
+
       - name: Generate Preview Links
         run: yarn nx preview-action scripts
+
       - name: Run Cypress Tests
         run: yarn cypress run
