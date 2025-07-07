@@ -1,8 +1,8 @@
 'use client';
 
 import TinderCard from '@/components/TinderCard';
-import { useGetUsersQuery } from '@/generated';
 import { useState } from 'react';
+import { useGetUsersQuery } from '../generated';
 
 export interface UserProfile {
   id: string;
