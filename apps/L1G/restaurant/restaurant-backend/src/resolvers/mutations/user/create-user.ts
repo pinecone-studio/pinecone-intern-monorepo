@@ -8,7 +8,7 @@ export const createUser: MutationResolvers['createUser'] = async (_, { input: { 
   if (user) throw new Error('User already exists');
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = await UserModel.create({ email, password: hashedPassword , username});
+  const newUser = await UserModel.create({ email, password: hashedPassword, username });
 
   return newUser;
 };

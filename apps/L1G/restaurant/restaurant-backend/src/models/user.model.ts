@@ -9,14 +9,16 @@ export type User = {
   username: string;
   bonusPoints: number;
   role: 'admin' | 'user';
+  resetCode?: string;
+  resetCodeExpiresAt?: Date;
 };
 
 const UserSchema = new Schema<User>(
   {
-    username : {
+    username: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
@@ -43,6 +45,8 @@ const UserSchema = new Schema<User>(
       default: 'user',
       required: true,
     },
+    resetCode: String,
+    resetCodeExpiresAt: Date,
   },
   {
     timestamps: true,

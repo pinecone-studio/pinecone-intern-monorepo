@@ -4,12 +4,12 @@ import { createUser } from 'src/resolvers/mutations';
 jest.mock('src/models/user.model', () => ({
   UserModel: {
     create: jest.fn().mockReturnValue({
-      userId: '1',
       username: 'Test',
+      userId: '1',
       email: 'test@example.com',
       password: 'test1234',
     }),
-    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({email: 'test@example.com'})
+    findOne: jest.fn().mockResolvedValueOnce(null).mockResolvedValueOnce({ email: 'test@example.com' }),
   },
 }));
 
@@ -26,7 +26,7 @@ describe('createUser', () => {
 
   it('should throw an error, if user is already registered', async () => {
     try {
-      await createUser?.({}, { input: { email: 'test@example.com', password: 'test1234', username:'Test'} }, { email: 'test@example.com' }, {} as GraphQLResolveInfo);
+      await createUser?.({}, { input: { email: 'test@example.com', password: 'test1234', username: 'Test' } }, { email: 'test@example.com' }, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('User already exists'));
     }
