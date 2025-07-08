@@ -49,6 +49,7 @@ export const userTypeDefs = gql`
   input CreateUserInput {
     email: String!
     password: String!
+    username: String!
   }
 
   input UpdateUserInput {

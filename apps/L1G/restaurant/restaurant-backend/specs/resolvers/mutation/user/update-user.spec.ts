@@ -8,6 +8,9 @@ jest.mock('src/models/user.model', () => ({
       userId: '1',
       email: 'test@example.com',
       password: 'test1234',
+      username: 'Test',
+      phoneNumber: '1234567890',
+      profile: 'profile.jpg',
     }),
   },
 }));
@@ -21,7 +24,9 @@ describe('updateUser', () => {
         input: {
           email: 'test@example.com',
           password: 'test1234',
+          username: 'Test',
           phoneNumber: '1234567890',
+          profile: 'profile.jpg',
         },
       },
       {},
@@ -31,6 +36,9 @@ describe('updateUser', () => {
       userId: '1',
       email: 'test@example.com',
       password: 'test1234',
+      username: 'Test',
+      phoneNumber: '1234567890',
+      profile: 'profile.jpg',
     });
   });
 
