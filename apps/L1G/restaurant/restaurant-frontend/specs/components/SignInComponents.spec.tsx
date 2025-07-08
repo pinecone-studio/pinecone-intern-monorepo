@@ -4,7 +4,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { SignInDocument } from '@/generated';
 import { useRouter } from 'next/navigation';
-import { SignInComponent } from '@/components/SignInComponent';
+import { SignInComponent } from '@/components/auth/SignInComponent';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
