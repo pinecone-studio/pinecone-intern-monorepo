@@ -1,11 +1,16 @@
-import TinderLogo from '@/components/TinderLogo';
+import { CreateAccount } from "@/components/CreateAccount";
 
 const Signup = () => {
   return (
-    <div>
-      Sign up page ju
-      <TinderLogo />
-      <TinderLogo size={40} />
+    <div className="w-screen h-screen flex flex-col justify-between items-center">
+      <div className="flex-grow flex justify-center items-center">
+        <CreateAccount />
+      </div>
+      <div className="mb-4">
+        <p className="font-[400] text-[14px] text-[#71717A] text-center">
+          ©2024 Tinder
+        </p>
+      </div>
     </div>
   );
 };
