@@ -36,3 +36,7 @@ export type LikeArgs = {
   likedByUser: string;
   likeReceiver: string;
 };
+export type disLikeArgs = {
+  dislikedByUser: string;
+  dislikeReceiver: string;
+};

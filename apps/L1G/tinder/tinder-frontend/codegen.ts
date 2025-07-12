@@ -3,7 +3,15 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: process.env.BACKEND_URI,
+  schema: [
+    {
+      [process.env.BACKEND_URI as string]: {
+        headers: {
+          'x-apollo-operation-name': 'IntrospectionQuery',
+        },
+      },
+    },
+  ],
   documents: ['apps/L1G/tinder/tinder-frontend/src/**/*.{graphql,ts,tsx}'],
   generates: {
     'apps/L1G/tinder/tinder-frontend/src/generated/index.ts': {
@@ -25,4 +33,5 @@ const config: CodegenConfig = {
     },
   },
 };
+
 export default config;

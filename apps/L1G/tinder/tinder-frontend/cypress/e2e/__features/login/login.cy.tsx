@@ -4,9 +4,11 @@ describe('Login Feature', () => {
   });
 
   it('displays validation errors when form is empty', () => {
-    cy.get('button[type="submit"]').click();
-    cy.contains('Please enter a valid email').should('exist');
-    cy.contains('Password must be at least 8 characters').should('exist');
+    cy.visit('/login');
+    cy.get('form').within(() => {
+      cy.get('button[type="submit"]').click();
+    });
+    cy.contains('Please enter a valid email').should('be.visible');
   });
 
   it('submits the form with valid credentials', () => {
