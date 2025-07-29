@@ -20,7 +20,10 @@ const mockUser = {
   password: 'hashedPassword',
   resetCode: null,
   resetCodeExpiresAt: null,
-  save: jest.fn().mockResolvedValue(true),
+  save: jest.fn().mockResolvedValue({
+    input: true,
+    output: true,
+  }),
 };
 
 describe('sendResetCode', () => {

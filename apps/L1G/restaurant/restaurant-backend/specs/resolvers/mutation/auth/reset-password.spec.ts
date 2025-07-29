@@ -15,7 +15,10 @@ const mockUser = {
   password: 'hashedPassword',
   resetCode: null,
   resetCodeExpiresAt: null,
-  save: jest.fn().mockResolvedValue(true),
+  save: jest.fn().mockResolvedValue({
+    input: true,
+    output: true,
+  }),
 };
 
 describe('resetPassword', () => {
@@ -26,10 +29,7 @@ describe('resetPassword', () => {
 
   it("should reset a user's password", async () => {
     const result = await resetPassword?.({}, { input: { email: 'test@example.com', newPassword: 'test1234' } }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      input: true,
-      output: true,
-    });
+    expect(result).toEqual({ input: true, output: true });
   });
 
   it('should throw an error if the user doesnt exist', async () => {

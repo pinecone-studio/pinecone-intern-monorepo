@@ -27,9 +27,9 @@ export const userTypeDefs = gql`
     createUser(input: CreateUserInput!): User!
     updateUser(userId: ID!, input: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
-    sendResetCode(input: sendResetCodeInput!): Boolean
-    verifyResetCode(input: verifyResetCodeInput!): Boolean
-    resetPassword(input: resetPasswordInput!): Boolean
+    sendResetCode(input: sendResetCodeInput!): Boolean!
+    verifyResetCode(input: verifyResetCodeInput!): Boolean!
+    resetPassword(input: resetPasswordInput!): Boolean!
   }
 
   input sendResetCodeInput {

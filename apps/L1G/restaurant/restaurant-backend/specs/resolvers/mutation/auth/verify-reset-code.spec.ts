@@ -17,8 +17,11 @@ const mockUser = {
   email: 'test@example.com',
   password: 'hashedPassword',
   resetCode: 'test1234',
-  resetCodeExpiresAt: new Date(Date.now() + 3600000), // 1 hour from now
-  save: jest.fn().mockResolvedValue(true),
+  resetCodeExpiresAt: new Date(Date.now() + 3600000),
+  save: jest.fn().mockResolvedValue({
+    input: true,
+    output: true,
+  }),
 };
 
 describe('verifyResetCode', () => {
@@ -31,10 +34,7 @@ describe('verifyResetCode', () => {
     const result = await verifyResetCode?.({}, { input: { email: 'test@example.com', code: 'test1234' } }, mockContext, mockInfo);
 
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
-    expect(result).toEqual({
-      input: true,
-      output: true,
-    });
+    expect(result).toEqual({ input: true, output: true });
   });
 
   it('should throw an error if the user does not exist', async () => {

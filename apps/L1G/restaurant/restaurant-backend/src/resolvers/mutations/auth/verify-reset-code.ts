@@ -25,5 +25,8 @@ export const verifyResetCode: MutationResolvers['verifyResetCode'] = async (_, {
   const user = await UserModel.findOne({ email });
   validateResetCode(user, code);
   validateResetCodeExpiration(user);
-  return { input: true, output: true };
+  return {
+    input: true,
+    output: true,
+  };
 };
