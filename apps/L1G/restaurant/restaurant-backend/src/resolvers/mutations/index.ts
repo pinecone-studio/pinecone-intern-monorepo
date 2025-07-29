@@ -5,3 +5,6 @@ export * from './auth/sign-in';
 export * from './auth/reset-password';
 export * from './auth/send-reset-code';
 export * from './auth/verify-reset-code';
+export * from './food/create-food';
+export * from './food/delete-food';
+export * from './food/update-food';

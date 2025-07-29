@@ -46,7 +46,7 @@ describe('get User', () => {
     } catch (error: unknown) {
       expect(error).toBeInstanceOf(Error);
       if (error instanceof Error) {
-        expect(error.message).toContain(`User with ${testUserId} Id is not found`);
+        expect(error.message).toEqual(`User with ${testUserId} Id is not found`);
       }
     }
   });
