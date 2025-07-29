@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -13,6 +13,8 @@ const formSchema = z.object({
 });
 
 export const LoginForm = () => {
+  const [user, setUser] = useState({ email: '', password: '' });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,8 +23,10 @@ export const LoginForm = () => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    setUser(values);
+
+    console.log(user, ' user');
   }
 
   return (
