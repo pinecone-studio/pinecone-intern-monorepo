@@ -38,7 +38,7 @@ const ForgetPassword = () => {
         <div className="flex flex-col items-center gap-6 max-w-[350px] w-full">
           <TinderLogo />
           <div className="flex flex-col items-center gap-1">
-            <p className="text-2xl font-semibold">Forget password</p>
+            <p className="text-2xl font-semibold">Forget password </p>
             <p className="text-sm text-[#71717A]">Enter your email account to reset password</p>
           </div>
           <FormField
