@@ -23,11 +23,7 @@ export const BadgeList = ({ selectedValues, options, maxCount, clearExtraOptions
           const option = options.find((o) => o.value === value);
           const IconComponent = option?.icon;
           return (
-            <Badge
-              key={value}
-              className="m-1 border-foreground/10 bg-card hover:bg-card/80"
-              data-testid={`badge-${value}`} // Add test ID for testing
-            >
+            <Badge key={value} className="m-1 border-foreground/10 bg-card hover:bg-card/80" data-testid={`badge-${value}`}>
               {IconComponent && <IconComponent className="h-4 w-4 mr-2 text-foreground/10" />}
               <span className="text-foreground font-normal">{option?.label}</span>
             </Badge>

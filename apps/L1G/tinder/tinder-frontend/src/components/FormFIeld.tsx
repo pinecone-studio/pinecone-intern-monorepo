@@ -82,7 +82,7 @@ const ProfileForm = () => {
                     { value: 'photography', label: 'Photography' },
                     { value: 'fitness', label: 'Fitness' },
                   ]}
-                  value={field.value || []} // selectedValues-ын оронд value ашиглана
+                  value={field.value || []}
                   maxCount={10}
                 />
               </FormControl>

@@ -20,14 +20,13 @@ const OptionList = ({ options, selectedValues, toggleOption, toggleAll }: Option
         key="all"
         onSelect={() => {
           toggleAll();
-          return '';
         }}
         className="cursor-pointer"
       >
         <div
           className={cn(
             'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-            selectedValues.length === options.length ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible'
+            selectedValues.length === options.length ? 'bg-primary text-primaxry-foreground' : 'opacity-50 [&_svg]:invisible'
           )}
         >
           <CheckIcon className="h-4 w-4" />
@@ -41,7 +40,6 @@ const OptionList = ({ options, selectedValues, toggleOption, toggleAll }: Option
             key={option.value}
             onSelect={() => {
               toggleOption(option.value);
-              return '';
             }}
             className="cursor-pointer"
           >
