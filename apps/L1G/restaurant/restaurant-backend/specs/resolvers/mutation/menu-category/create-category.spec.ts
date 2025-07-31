@@ -1,4 +1,3 @@
-
 import { GraphQLResolveInfo } from 'graphql';
 import { createCategory } from 'src/resolvers/mutations';
 
@@ -18,4 +17,3 @@ describe('createCategory', () => {
     });
   });
 });
-

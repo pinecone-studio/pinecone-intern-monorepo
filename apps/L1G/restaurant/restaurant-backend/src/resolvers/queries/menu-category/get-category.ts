@@ -1,4 +1,3 @@
-
 import { MenuCategoryModel } from 'src/models/menu-category.model';
 import { QueryResolvers } from '../../../generated';
 
@@ -11,4 +10,3 @@ export const getCategoryById: QueryResolvers['getCategoryById'] = async (_, { ca
 
   return category;
 };
-

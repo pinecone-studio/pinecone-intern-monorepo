@@ -1,7 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getCategories } from 'src/resolvers/queries';
 
-
 jest.mock('src/models/menu-category.model', () => ({
   MenuCategoryModel: {
     find: jest.fn().mockReturnValue({
@@ -20,4 +19,3 @@ describe('getCategories', () => {
     });
   });
 });
-

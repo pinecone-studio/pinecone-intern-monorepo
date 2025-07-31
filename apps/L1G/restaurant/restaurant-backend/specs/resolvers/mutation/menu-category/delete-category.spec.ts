@@ -1,4 +1,3 @@
-
 import { GraphQLResolveInfo } from 'graphql';
 import { MenuCategoryModel } from 'src/models/menu-category.model';
 import { deleteCategory } from 'src/resolvers/mutations';
@@ -29,4 +28,3 @@ describe('deleteCategory', () => {
     expect(MenuCategoryModel.findByIdAndDelete).toHaveBeenCalledWith('3');
   });
 });
-

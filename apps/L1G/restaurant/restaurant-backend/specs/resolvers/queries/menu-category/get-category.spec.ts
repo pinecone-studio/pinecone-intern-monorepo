@@ -1,4 +1,3 @@
-
 import { GraphQLResolveInfo } from 'graphql';
 import { getCategoryById } from 'src/resolvers/queries';
 
@@ -32,4 +31,3 @@ describe('getCategory', () => {
     }
   });
 });
-

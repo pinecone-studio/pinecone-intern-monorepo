@@ -1,4 +1,3 @@
-
 import { MutationResolvers } from 'src/generated';
 import { MenuCategoryModel } from 'src/models/menu-category.model';
 
@@ -11,4 +10,3 @@ export const deleteCategory: MutationResolvers['deleteCategory'] = async (_, { c
 
   return deletedCategory;
 };
-

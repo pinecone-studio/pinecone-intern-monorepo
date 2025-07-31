@@ -1,4 +1,3 @@
-
 import { GraphQLResolveInfo } from 'graphql';
 import { MenuCategoryModel } from 'src/models/menu-category.model';
 import { updateCategory } from 'src/resolvers/mutations';
@@ -33,11 +32,8 @@ describe('updateCategory', () => {
   it("should throw an error if the category doesn't exist", async () => {
     (MenuCategoryModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
 
-    await expect(updateCategory?.({}, { categoryId: '3', input: { categoryName: 'Test' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
-      'Category with ID 3 is not found'
-    );
+    await expect(updateCategory?.({}, { categoryId: '3', input: { categoryName: 'Test' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Category with ID 3 is not found');
 
     expect(MenuCategoryModel.findByIdAndUpdate).toHaveBeenCalledWith('3', { $set: { categoryName: 'Test' } }, { new: true, runValidators: true });
   });
 });
-
