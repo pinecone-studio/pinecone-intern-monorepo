@@ -32,4 +32,4 @@ describe('getCategory', () => {
   });
 });
 
-// testing
+// test
