@@ -7,7 +7,7 @@ jest.mock('src/models/table.model', () => ({
       .fn()
       .mockReturnValueOnce({
         tableName: 'test',
-        tableQr: 'testQr',
+        tableQR: 'testQr',
         tableId: '1',
       })
       .mockReturnValueOnce(null),
@@ -20,7 +20,7 @@ describe('delete table', () => {
 
     expect(result).toEqual({
       tableName: 'test',
-      tableQr: 'testQr',
+      tableQR: 'testQr',
       tableId: '1',
     });
   });
