@@ -37,5 +37,3 @@ describe('updateCategory', () => {
     expect(MenuCategoryModel.findByIdAndUpdate).toHaveBeenCalledWith('3', { $set: { categoryName: 'Test' } }, { new: true, runValidators: true });
   });
 });
-
-//test
