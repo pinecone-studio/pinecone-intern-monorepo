@@ -31,5 +31,3 @@ describe('getCategory', () => {
     }
   });
 });
-
-// test
