@@ -3,6 +3,8 @@ import mongoose, { models, Types } from 'mongoose';
 export type Category = {
   _id: Types.ObjectId;
   categoryName: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const CategorySchema = new mongoose.Schema<Category>(

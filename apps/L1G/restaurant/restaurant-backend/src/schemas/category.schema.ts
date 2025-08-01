@@ -10,7 +10,7 @@ export const categoryTypeDefs = gql`
 
   type Query {
     getCategoryById(categoryId: ID!): Category!
-    getCategories: [Category!]!
+    getCategories: [Category]!
   }
 
   type Mutation {
