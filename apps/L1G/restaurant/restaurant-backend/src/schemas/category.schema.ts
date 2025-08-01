@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-cloud-functions';
 
-export const menuCategoryTypeDefs = gql`
+export const categoryTypeDefs = gql`
   type Category {
     categoryId: ID!
     categoryName: String!
@@ -10,7 +10,7 @@ export const menuCategoryTypeDefs = gql`
 
   type Query {
     getCategoryById(categoryId: ID!): Category!
-    getCategories: [Category!]
+    getCategories: [Category!]!
   }
 
   type Mutation {

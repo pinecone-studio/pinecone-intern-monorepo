@@ -1,11 +1,11 @@
 import mongoose, { models, Types } from 'mongoose';
 
-export type MenuCategory = {
+export type Category = {
   _id: Types.ObjectId;
   categoryName: string;
 };
 
-const MenuCategorySchema = new mongoose.Schema<MenuCategory>(
+const CategorySchema = new mongoose.Schema<Category>(
   {
     categoryName: {
       type: String,
@@ -17,4 +17,4 @@ const MenuCategorySchema = new mongoose.Schema<MenuCategory>(
   }
 );
 
-export const MenuCategoryModel = models.MenuCategory || mongoose.model('Category', MenuCategorySchema);
+export const CategoryModel = models.Category || mongoose.model('Category', CategorySchema);

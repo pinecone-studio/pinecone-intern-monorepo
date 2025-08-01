@@ -1,8 +1,8 @@
 import { MutationResolvers } from 'src/generated';
-import { MenuCategoryModel } from 'src/models/menu-category.model';
+import { CategoryModel } from 'src/models/category.model';
 
 export const createCategory: MutationResolvers['createCategory'] = async (_, { input: { categoryName } }) => {
-  const newCategory = await MenuCategoryModel.create({ categoryName });
+  const newCategory = await CategoryModel.create({ categoryName });
 
   return newCategory;
 };

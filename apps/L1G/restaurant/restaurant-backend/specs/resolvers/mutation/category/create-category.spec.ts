@@ -1,8 +1,8 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { createCategory } from 'src/resolvers/mutations';
 
-jest.mock('src/models/menu-category.model', () => ({
-  MenuCategoryModel: {
+jest.mock('src/models/category.model', () => ({
+  CategoryModel: {
     create: jest.fn().mockReturnValue({
       categoryName: 'Test',
     }),
