@@ -19,12 +19,12 @@ jest.mock('qrcode', () => ({
 }));
 
 describe('updateTable', () => {
-  +it('should throw error if table does not exist', async () => {
-    await expect(updateTable!({}, { tableId: '1', input: { tableName: 'test', tableQR: 'testQr' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Table with ID 1 not found');
+  it('should throw error if table does not exist', async () => {
+    await expect(updateTable?.({}, { tableId: '1', input: { tableName: 'test', tableQR: 'testQr' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Table with ID 1 not found');
   });
 
   it('should update table', async () => {
-    const result = await updateTable!({}, { tableId: '1', input: { tableName: 'test', tableQR: 'testQr' } }, {}, {} as GraphQLResolveInfo);
+    const result = await updateTable?.({}, { tableId: '1', input: { tableName: 'test', tableQR: 'testQr' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       tableName: 'test',
       tableQR: 'testQr',

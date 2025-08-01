@@ -16,7 +16,7 @@ jest.mock('src/models/table.model', () => ({
 
 describe('delete table', () => {
   it('should delete table by id', async () => {
-    const result = await deleteTable!({}, { tableId: '1' }, {}, {} as GraphQLResolveInfo);
+    const result = await deleteTable?.({}, { tableId: '1' }, {}, {} as GraphQLResolveInfo);
 
     expect(result).toEqual({
       tableName: 'test',
@@ -27,7 +27,7 @@ describe('delete table', () => {
 
   it('should throw error if table by does not exist', async () => {
     try {
-      await deleteTable!({}, { tableId: '1' }, {}, {} as GraphQLResolveInfo);
+      await deleteTable?.({}, { tableId: '1' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('Table with ID 1 not found'));
     }

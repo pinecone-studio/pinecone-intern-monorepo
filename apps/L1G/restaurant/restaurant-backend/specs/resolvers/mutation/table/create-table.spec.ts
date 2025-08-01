@@ -15,14 +15,14 @@ jest.mock('src/models/table.model', () => ({
 describe('createTable', () => {
   it('should throw an error, if table is already exist', async () => {
     try {
-      await createTable!({}, { input: { tableName: '2b' } }, {}, {} as GraphQLResolveInfo);
+      await createTable?.({}, { input: { tableName: '2b' } }, {}, {} as GraphQLResolveInfo);
     } catch (error) {
       expect(error).toEqual(new Error('table already exists'));
     }
   });
 
   it('should create a new table', async () => {
-    const result = await createTable!({}, { input: { tableName: '2b' } }, {}, {} as GraphQLResolveInfo);
+    const result = await createTable?.({}, { input: { tableName: '2b' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
       tableId: '1',
       tableName: '2b',
