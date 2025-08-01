@@ -2,8 +2,8 @@ import { Schema, model, models, Types } from 'mongoose';
 
 export type Table = {
   _id: Types.ObjectId;
-  tableName: String;
-  tableQr: String;
+  tableName: string;
+  tableQr: string;
 };
 
 const TableSchema = new Schema<Table>(
