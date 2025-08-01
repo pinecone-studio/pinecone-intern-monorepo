@@ -114,7 +114,7 @@ describe('CreateBookModal', () => {
       fireEvent.click(modalBtn);
     });
 
-    await waitFor(() => expect(getByTestId('error')).());
+    await waitFor(() => expect(getByTestId('error')).toBeDefined());
   });
 
   it('should refetch authors', async () => {
