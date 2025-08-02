@@ -9,4 +9,6 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../../coverage/apps/L1G/tinder/tinder-frontend',
   collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/generated/**/*.ts', '!src/app/**/*.tsx', '!src/components/providers/ApolloWrapper.tsx'],
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/setuptests.ts'],
 };

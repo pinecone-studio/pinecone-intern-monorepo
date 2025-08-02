@@ -2,6 +2,7 @@
   "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["jest", "@testing-library/jest-dom"],
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
@@ -31,7 +32,8 @@
     "**/*.jsx",
     "../../../../apps/L1G/tinder/tinder-frontend/.next/types/**/*.ts",
     "../../../../dist/apps/L1G/tinder/tinder-frontend/.next/types/**/*.ts",
-    "next-env.d.ts"
-, "src/graphql/hello-query.graphql"  ],
+    "next-env.d.ts",
+    "src/graphql/hello-query.graphql"
+  ],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }
