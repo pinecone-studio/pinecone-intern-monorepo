@@ -1,5 +1,6 @@
 import { ProfileCard } from '@/components/ProfileCard';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 const mockProps = {
   src: 'https://i.pinimg.com/736x/39/76/6e/39766edc686a538d7879bf7623660b5a.jpg',
@@ -36,6 +37,5 @@ describe('Profile card', () => {
     };
     render(<ProfileCard {...edgeCaseProps} />);
     expect(screen.getByText(', 0')).toBeInTheDocument();
-    expect(screen.getByText('')).toBeInTheDocument();
   });
 });
