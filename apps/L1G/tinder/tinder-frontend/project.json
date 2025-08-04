@@ -84,6 +84,14 @@
         }
       ]
     },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run tinder-frontend:codegen:dev"
+        ]
+      }
+    },
     "codegen:dev": {
       "executor": "nx:run-commands",
       "options": {
@@ -128,9 +136,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": [
-            "2G-TINDER-FE"
-          ],
+          "groups": ["2G-TINDER-FE"],
           "env": "dev"
         }
       }
@@ -140,9 +146,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": [
-            "2G-TINDER-FE"
-          ],
+          "groups": ["2G-TINDER-FE"],
           "env": "test"
         }
       }
@@ -152,9 +156,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": [
-            "2G-TINDER-FE"
-          ],
+          "groups": ["2G-TINDER-FE"],
           "env": "prod"
         }
       }
@@ -163,7 +165,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export $(cat apps/L1G/tinder/tinder-frontend/.env | xargs)"
+          "npx env-cmd -f apps/L1G/tinder/tinder-frontend/.env echo 'env loaded'"
         ],
         "parallel": false
       }
