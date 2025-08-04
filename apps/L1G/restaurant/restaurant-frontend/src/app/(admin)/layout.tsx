@@ -11,10 +11,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <ApolloWrapper>
             <div className="w-full flex flex-col py-4 px-6 gap-3 border border-[#E4E4E7] border-solid">
               <div className="flex w-full justify-between items-center">
-                <Image className="w-8 h-8 rounded-full" src="./mainLogo.png" alt="logo" />
-                <Image className="w-9 h-9 rounded-full" src="./userLogo.jpg" alt="logo" />
+                <Image width={32} height={32} className="w-8 h-8 rounded-full" src="/mainLogo.png" alt="Mainlogo" />
+                <Image width={36} height={36} className="w-9 h-9 rounded-full" src="/userLogo.jpg" alt="Userlogo" />
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <a className="text-sm" href="/order">
                   Захиалга
                 </a>
