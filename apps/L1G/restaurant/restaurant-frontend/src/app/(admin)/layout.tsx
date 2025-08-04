@@ -1,6 +1,7 @@
 import { ApolloWrapper } from '@/components/providers/ApolloWrapper';
 import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import Image from 'next/image';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,8 +11,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <ApolloWrapper>
             <div className="w-full flex flex-col py-4 px-6 gap-3 border border-[#E4E4E7] border-solid">
               <div className="flex w-full justify-between items-center">
-                <img className="w-8 h-8 rounded-full" src="./mainLogo.png" alt="logo" />
-                <img className="w-9 h-9 rounded-full" src="./userLogo.jpg" alt="logo" />
+                <Image className="w-8 h-8 rounded-full" src="./mainLogo.png" alt="logo" />
+                <Image className="w-9 h-9 rounded-full" src="./userLogo.jpg" alt="logo" />
               </div>
               <div className="flex gap-2">
                 <a className="text-sm" href="/order">
