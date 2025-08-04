@@ -195,7 +195,7 @@
           "target": "codegen:testing"
         },
         {
-          "target": "get-secrets:dev"
+          "target": "get-secrets:testing"
         }
       ]
     },
