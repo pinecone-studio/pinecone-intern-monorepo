@@ -20,7 +20,7 @@
     "@apollo/experimental-nextjs-app-support": "0.11.2",
     "@apollo/federation-internals": "2.5.7",
     "@apollo/gateway": "2.5.7",
-    "@apollo/rover": "0.10.0",
+    "@apollo/rover": "^0.35.0",
     "@apollo/server": "4.3.0",
     "@apollo/subgraph": "2.2.2",
     "@as-integrations/next": "3.0.0",
