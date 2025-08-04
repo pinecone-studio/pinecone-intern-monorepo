@@ -11,7 +11,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { CalendarIcon } from 'lucide-react';
-import { cn } from '@shadcn';
+import { cn } from '../../../../../../libs/shadcn/src/lib/utils';
 
 const HowOldAreYou = () => {
   const formSchema = z.object({
