@@ -16,7 +16,7 @@ afterAll(() => {
 
 // Mock for Calendar component to simplify date selection
 jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ onSelect, selected, disabled }: any) => (
+  Calendar: ({ onSelect, selected, disabled }: { onSelect: (_date: Date) => void; selected: Date | null; disabled?: (_date: Date) => boolean }) => (
     <div>
       <button onClick={() => onSelect(new Date('2000-01-01'))} disabled={disabled?.(new Date('2000-01-01'))}>
         Select 2000-01-01
