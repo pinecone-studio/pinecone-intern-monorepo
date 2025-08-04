@@ -20,7 +20,8 @@
       },
       "dependsOn": [
         {
-          "target": "codegen"
+          "target": "codegen:dev",
+          "params": "forward"
         }
       ]
     },
@@ -44,7 +45,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -78,12 +79,12 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
     },
-    "codegen": {
+    "codegen:dev": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
@@ -93,6 +94,32 @@
       "dependsOn": [
         {
           "target": "get-secrets:dev"
+        }
+      ]
+    },
+    "codegen:testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"
+        ]
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
+    },
+    "codegen:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"
+        ]
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:prod"
         }
       ]
     },
@@ -136,7 +163,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx env-cmd -f apps/L1G/tinder/tinder-frontend/.env echo env loaded"
+          "export $(cat apps/L1G/tinder/tinder-frontend/.env | xargs)"
         ],
         "parallel": false
       }
@@ -154,7 +181,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx nx cypress tinder-frontend"
+          "npx nx execute-cypress scripts tinder-frontend"
         ],
         "parallel": false
       },
@@ -162,8 +189,11 @@
         {
           "target": "cypress:clean"
         },
-        { 
-          "target": "get-secrets:dev"
+        {
+          "target": "codegen:testing"
+        },
+        {
+          "target": "get-secrets:testing"
         }
       ]
     },
@@ -244,7 +274,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen"
+          "target": "codegen:testing"
         }
       ]
     },
@@ -269,7 +299,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -295,7 +325,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:prod",
           "params": "forward"
         }
       ]
