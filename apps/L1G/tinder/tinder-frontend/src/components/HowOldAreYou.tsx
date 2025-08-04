@@ -10,8 +10,8 @@ import { useForm } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-import { cn } from '../../../../../../libs/shadcn/src/lib/utils';
 import { CalendarIcon } from 'lucide-react';
+import { cn } from '@shadcn';
 
 const HowOldAreYou = () => {
   const formSchema = z.object({
