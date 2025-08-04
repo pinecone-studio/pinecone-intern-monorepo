@@ -6,11 +6,17 @@ import '@testing-library/jest-dom';
 
 // Mock Date.now to control current date
 const mockToday = new Date('2024-01-01T00:00:00Z');
-jest.useFakeTimers().setSystemTime(mockToday);
+beforeAll(() => {
+  jest.spyOn(global.Date, 'now').mockImplementation(() => mockToday.valueOf());
+});
+
+afterAll(() => {
+  jest.restoreAllMocks();
+});
 
 // Mock for Calendar component to simplify date selection
 jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ onSelect, selected, disabled }: any) => (
+  Calendar: ({ onSelect, selected, disabled }: { onSelect: (date: Date) => void; selected: Date | null; disabled?: (date: Date) => boolean }) => (
     <div>
       <button onClick={() => onSelect(new Date('2000-01-01'))} disabled={disabled?.(new Date('2000-01-01'))}>
         Select 2000-01-01
@@ -44,7 +50,7 @@ describe('HowOldAreYou Component', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument(); // Popover opens
   });
 
-  it('submits form with valid date', () => {
+  it('submits form with valid date', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
     render(<HowOldAreYou />);
@@ -63,7 +69,7 @@ describe('HowOldAreYou Component', () => {
       fireEvent.click(screen.getByTestId('next-button'));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('working');
     });
 
@@ -109,8 +115,6 @@ describe('HowOldAreYou Component', () => {
       const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
       fireEvent.click(validDateButton);
     });
-
-    screen.debug();
   });
 
   it('disables invalid dates', async () => {
