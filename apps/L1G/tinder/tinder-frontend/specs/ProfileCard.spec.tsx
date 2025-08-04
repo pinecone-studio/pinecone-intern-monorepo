@@ -16,7 +16,7 @@ describe('Profile card', () => {
   });
   it('renders with custom className', () => {
     const customClass = 'custom-profile-card';
-    render(<ProfileCard {...mockProps} className={customClass} />);
+    render(<ProfileCard {...mockProps} classname={customClass} />);
     const container = screen.getByRole('img').parentElement;
     expect(container).toHaveClass(customClass);
   });
