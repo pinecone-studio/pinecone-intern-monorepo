@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function ChatPage() {
+const Chat = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -11,4 +11,6 @@ export default function ChatPage() {
 
   if (!mounted) return null;
   return <div>chat page</div>;
-}
+};
+
+export default Chat;
