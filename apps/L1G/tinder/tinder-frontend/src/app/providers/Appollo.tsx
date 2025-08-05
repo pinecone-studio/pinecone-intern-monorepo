@@ -8,7 +8,7 @@ interface ApolloProps {
 
 const Apollo = ({ children }: ApolloProps) => {
   const client = new ApolloClient({
-    uri: process.env.BACKEND_URI,
+    uri: 'https://tinder-backend-testing-gamma.vercel.app/api/graphql',
     cache: new InMemoryCache(),
   });
 
