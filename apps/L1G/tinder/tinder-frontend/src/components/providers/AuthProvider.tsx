@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from '@/generated';
+import { useLoginMutation, User, useSignupMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
@@ -43,23 +43,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
-  const [getMe] = useGetMeLazyQuery({
-    onCompleted: (data) => {
-      setUser(data.getMe);
-    },
-  });
-
   const [signinMutation] = useLoginMutation({
     onCompleted: (data) => {
-      localStorage.setItem('token', data.login.token);
-      setUser(data.login.user);
+      localStorage.setItem('token', data.login); 
       router.push('/');
-    },
+    }
     onError: (error) => {
       toast.error(error.message);
     },
   });
-  const [signupMutation] = useRegisterMutation({
+  const [signupMutation] = useSignupMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.register.token);
       setUser(data.register.user);
@@ -69,24 +62,24 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       toast.error(error.message);
     },
   });
-  const [requestChangePasswordMutation] = useRequestChangePasswordMutation({
-    onCompleted: (data) => {
-      toast.success('Амжилттай илгээлээ');
-      router.push(`/change-password?email=${data.requestChangePassword.email}`);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-  const [changePasswordMutation] = useChangePasswordMutation({
-    onCompleted: () => {
-      toast.success('Амжилттай солигдлоо');
-      router.push('/signin');
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  // const [requestChangePasswordMutation] = requestChangePasswordMutation({
+  //   onCompleted: (data) => {
+  //     toast.success('Амжилттай илгээлээ');
+  //     router.push(`/change-password?email=${data.requestChangePassword.email}`);
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  // });
+  // const [changePasswordMutation] = useChangePasswordMutation({
+  //   onCompleted: () => {
+  //     toast.success('Амжилттай солигдлоо');
+  //     router.push('/signin');
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  // });
 
   const signin = async ({ email, password }: SignInParams) => {
     await signinMutation({
