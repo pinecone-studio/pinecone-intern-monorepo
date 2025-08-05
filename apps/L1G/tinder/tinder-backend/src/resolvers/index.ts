@@ -1,3 +1,4 @@
+import { dislike } from './mutations/dislike';
 import { like } from './mutations/like';
 import { login } from './mutations/login';
 import { signup } from './mutations/signup';
@@ -11,5 +12,6 @@ export const resolvers = {
     login,
     signup,
     like,
+    dislike,
   },
 };

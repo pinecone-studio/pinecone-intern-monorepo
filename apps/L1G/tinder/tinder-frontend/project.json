@@ -6,7 +6,9 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/L1G/tinder/tinder-frontend"
@@ -18,7 +20,8 @@
       },
       "dependsOn": [
         {
-          "target": "codegen"
+          "target": "codegen:dev",
+          "params": "forward"
         }
       ]
     },
@@ -42,7 +45,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -55,14 +58,20 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/L1G/tinder/tinder-frontend/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "apps/L1G/tinder/tinder-frontend/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "{projectRoot}/jest.config.ts",
         "passWithNoTests": true,
@@ -70,7 +79,7 @@
       },
       "dependsOn": [
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -78,11 +87,47 @@
     "codegen": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"]
+        "commands": [
+          "nx run tinder-frontend:codegen:dev"
+        ]
+      }
+    },
+    "codegen:dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"
+        ]
       },
       "dependsOn": [
         {
           "target": "get-secrets:dev"
+        }
+      ]
+    },
+    "codegen:testing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"
+        ]
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
+    },
+    "codegen:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./apps/L1G/tinder/tinder-frontend/codegen.ts"
+        ]
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:prod"
         }
       ]
     },
@@ -119,31 +164,54 @@
     "export-env": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["export $(cat apps/L1G/tinder/tinder-frontend/.env | xargs)"],
+        "commands": [
+          "npx env-cmd -f apps/L1G/tinder/tinder-frontend/.env echo 'env loaded'"
+        ],
         "parallel": false
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rm -rf dist/apps/L1G/tinder/tinder-frontend", "rm -rf .vercel"]
+        "commands": [
+          "rm -rf dist/apps/L1G/tinder/tinder-frontend",
+          "rm -rf .vercel"
+        ]
       }
     },
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress tinder-frontend"],
+        "commands": [
+          "npx nx execute-cypress scripts tinder-frontend"
+        ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "cypress:clean" }]
+      "dependsOn": [
+        {
+          "target": "cypress:clean"
+        },
+        {
+          "target": "codegen:testing"
+        },
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
     },
     "e2e:open": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx nx cypress tinder-frontend --watch"],
+        "commands": [
+          "npx nx cypress tinder-frontend --watch"
+        ],
         "parallel": false
       },
-      "dependsOn": [{ "target": "cypress:clean" }]
+      "dependsOn": [
+        {
+          "target": "cypress:clean"
+        }
+      ]
     },
     "cypress:clean": {
       "executor": "nx:run-commands",
@@ -171,7 +239,7 @@
           "target": "cypress-generate-all-page-json"
         },
         {
-          "target": "get-secrets"
+          "target": "get-secrets:testing"
         },
         {
           "target": "export-env"
@@ -181,7 +249,9 @@
     "cypress-generate-all-page-json": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["npx ts-node apps/L1G/tinder/tinder-frontend/cypress/utils/get-all-pages.ts"],
+        "commands": [
+          "npx ts-node apps/L1G/tinder/tinder-frontend/cypress/utils/get-all-pages.ts"
+        ],
         "parallel": false
       }
     },
@@ -206,7 +276,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen"
+          "target": "codegen:testing"
         }
       ]
     },
@@ -231,7 +301,7 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:dev",
           "params": "forward"
         }
       ]
@@ -257,12 +327,11 @@
           "target": "export-env"
         },
         {
-          "target": "codegen",
+          "target": "codegen:prod",
           "params": "forward"
         }
       ]
     }
   },
-
   "tags": []
-}
+} 
