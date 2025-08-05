@@ -28,8 +28,8 @@ export const userTypeDefs = gql`
     updateUser(userId: ID!, input: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
     sendResetCode(input: sendResetCodeInput!): sendResetCodeResponse!
-    verifyResetCode(input: verifyResetCodeInput!): verifyResetCodeInputResponse!
-    resetPassword(input: resetPasswordInput!): resetPasswordInputResponse!
+    verifyResetCode(input: verifyResetCodeInput!): verifyResetCodeResponse!
+    resetPassword(input: resetPasswordInput!): resetPasswordResponse!
   }
 
   type sendResetCodeResponse {
@@ -37,12 +37,12 @@ export const userTypeDefs = gql`
     output: Boolean
   }
 
-  type verifyResetCodeInputResponse {
+  type verifyResetCodeResponse {
     input: Boolean
     output: Boolean
   }
 
-  type resetPasswordInputResponse {
+  type resetPasswordResponse {
     input: Boolean
     output: Boolean
   }
