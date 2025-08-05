@@ -21,7 +21,8 @@
       "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"],
       "@pinecone-intern-monorepo/shad": ["libs/shad/src/index.ts"],
       "@pinecone-intern-monorepo/shad/server": ["libs/shad/src/server.ts"],
-      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"]
+      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"],
+      "@shadcn": ["libs/shadcn/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
