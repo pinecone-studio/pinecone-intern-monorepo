@@ -1,13 +1,30 @@
-import { Schema, model, models } from 'mongoose';
+import mongoose, { Mongoose, ObjectId, Schema, model, models } from 'mongoose';
 
 export type UserType = {
-    _id: string;
-    name: string;
+    _id: Object | string;
+    email: string;
+    password: string;
+    fullName: string;
     userName: string;
+    isPrivate?: Boolean;
+    profileImage?: string;
+    bio?: string;
+    followers?: ObjectId[];
+    following?: ObjectId[];
+    posts?: ObjectId[];
+    receivedRequests: ObjectId[]
 };
 
-const userSchema = new Schema<UserType>({
-    name: {
+const UserSchema = new Schema<UserType>({
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    fullName: {
         type: String,
         required: true,
     },
@@ -15,6 +32,38 @@ const userSchema = new Schema<UserType>({
         type: String,
         required: true,
     },
+    isPrivate: {
+        type: Boolean,
+        default: false,
+    },
+    profileImage: {
+        type: String,
+        required: false,
+    },
+    bio: {
+        type: String,
+        required: false,
+    },
+    followers: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        default: [],
+        ref: "User"
+    },
+    following: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        default: [],
+        ref: "User"
+    },
+    posts: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        default: [],
+        ref: "Post"
+    },
+    receivedRequests: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        default: [],
+        ref: "ReceivedRequest"
+    }
 });
 
-export const userModel = models['user'] || model('user', userSchema);
+export const User = models['user'] || model('user', UserSchema);
