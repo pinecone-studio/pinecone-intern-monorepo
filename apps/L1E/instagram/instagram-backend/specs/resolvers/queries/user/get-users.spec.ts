@@ -7,8 +7,8 @@ jest.mock('../../../../src/models', () => ({
   },
 }));
 
-describe('getCategories', () => {
-  it('should get categories', async () => {
+describe('getUsers', () => {
+  it('should get users', async () => {
     const response = await getUsers!();
 
     expect(response).toEqual([]);

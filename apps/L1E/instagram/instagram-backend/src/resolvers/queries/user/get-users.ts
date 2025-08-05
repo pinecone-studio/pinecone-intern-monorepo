@@ -1,6 +1,6 @@
 import { userModel } from "src/models"
 
 export const getUsers = async () => {
-    const users = userModel.find();
+    const users = await userModel.find();
     return users;
 }
