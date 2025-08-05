@@ -1,26 +1,22 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { FoodModel } from 'src/models/food.model';
 import { createFood } from 'src/resolvers/mutations';
 
 jest.mock('src/models/food.model', () => ({
   FoodModel: {
-    create: jest
-      .fn()
-      .mockReturnValueOnce({
-        populate: jest.fn().mockResolvedValue({
-          _id: '2',
-          foodName: 'Test',
-          price: '20',
-          image: 'image.jpg',
-          status: 'Идэвхитэй',
-          category: {
-            _id: '1',
-            categoryName: 'Test1',
-          },
-        }),
-      })
-      .mockReturnValueOnce({
-        populate: jest.fn().mockRejectedValue(new Error('Failed to create food')),
+    create: jest.fn().mockReturnValue({
+      populate: jest.fn().mockResolvedValue({
+        _id: '2',
+        foodName: 'Test',
+        price: '20',
+        image: 'image.jpg',
+        status: 'Идэвхитэй',
+        category: {
+          _id: '1',
+          categoryName: 'Test1',
+        },
       }),
+    }),
   },
 }));
 
@@ -39,6 +35,9 @@ describe('createFood', () => {
   });
 
   it('should handle database errors', async () => {
+    (FoodModel.create as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockRejectedValue(new Error('Failed to create food')),
+    });
     await expect(createFood?.({}, { input: { foodName: 'Test', price: '20', image: 'image.jpg', status: 'Идэвхитэй', categoryId: '1' } }, {}, {} as GraphQLResolveInfo)).rejects.toThrow(
       'Failed to create food'
     );

@@ -21,11 +21,11 @@ export const foodTypeDefs = gql`
   }
 
   input UpdateFoodInput {
-    foodName: String!
-    price: String!
-    image: String!
-    status: String!
-    categoryId: ID!
+    foodName: String
+    price: String
+    image: String
+    status: String
+    categoryId: ID
   }
 
   type Query {
