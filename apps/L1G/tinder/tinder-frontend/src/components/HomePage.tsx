@@ -16,19 +16,19 @@ const mockUsers = [
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://i.insider.com/681cc2f3a466d2b74ab56231?width=700',
+    src: 'https://i.pinimg.com/1200x/54/35/f1/5435f149b7200e72bbc0dfa1fcd721dd.jpg',
   },
   {
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://images.unsplash.com/photo-1507019403270-cca502add9f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2lybCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
+    src: 'https://i.pinimg.com/736x/35/47/07/35470774f4c232e8bddbdd3e94c4a79d.jpg',
   },
   {
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg=',
+    src: 'https://i.pinimg.com/736x/63/0d/6a/630d6ad73a8b465a717863df09795648.jpg',
   },
 ];
 

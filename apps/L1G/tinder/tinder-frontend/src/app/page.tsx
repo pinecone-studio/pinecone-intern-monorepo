@@ -9,7 +9,7 @@ const Home = () => {
 
       <div className="flex justify-center items-center rotate-[30deg] gap-4 relative z-0 opacity-30">
         {Array.from({ length: 7 }).map((_, idx) => {
-          return <HomePageBackground />;
+          return <HomePageBackground key={idx} />;
         })}
       </div>
 
@@ -17,7 +17,7 @@ const Home = () => {
         <HomeMain />
       </div>
 
-      <div className="w-full flex justify-center items-center fixed bottom-0 left-0 z-30">
+      <div className="w-full flex justify-center items-center fixed bottom-0 l-0 z-30">
         <HomeFooter />
       </div>
     </div>

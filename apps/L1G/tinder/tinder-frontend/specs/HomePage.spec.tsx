@@ -1,4 +1,4 @@
-import { HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
+import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -39,5 +39,10 @@ describe('Home page component', () => {
     const createBtn = screen.getByRole('button', { name: /Create Account/i });
     fireEvent.click(createBtn);
     expect(mockPush).toHaveBeenCalledWith('/signup');
+  });
+
+  it('renders footer section ', () => {
+    render(<HomeFooter />);
+    expect(screen.getByText('© Copyright 2024')).toBeInTheDocument();
   });
 });
