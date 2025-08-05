@@ -40,7 +40,7 @@ export const StepOne = () => {
         },
       });
       localStorage.setItem('emailAddress', values.email);
-      router.push('/verify-password');
+      router.push('/reset-password/verify-password');
     } catch (error) {
       if (error instanceof Error && error.message.includes('User not found')) {
         form.setError('email', {

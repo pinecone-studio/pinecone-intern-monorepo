@@ -123,7 +123,7 @@ export const StepTwo = () => {
           </Form>
         </div>
         <div className="flex justify-between w-[221px]">
-          <ArrowLeft onClick={() => router.push('/reset-password')} className="w-[14px] text-black cursor-pointer" />
+          <ArrowLeft onClick={() => router.push('/reset-password/verify-password/reset-password')} className="w-[14px] text-black cursor-pointer" />
           <RefreshCcw onClick={ResendResetCode} className="w-[16px] text-black cursor-pointer" />
         </div>
       </div>
