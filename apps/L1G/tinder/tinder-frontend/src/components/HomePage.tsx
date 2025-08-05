@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import { ProfileCard } from './ProfileCard';
 import TinderLogo from './TinderLogo';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const mockUsers = [
   {
@@ -41,23 +43,32 @@ export const HomePageBackground = () => {
 };
 
 export const HomeHeader = () => {
+  const router = useRouter();
+
   return (
     <div className="max-w-[1280px] w-[1280px] h-[64px] flex justify-between items-center px-4  gap-4 ">
       <TinderLogo />
 
       <div className="flex gap-4">
-        <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] inter font-[500] text-[14px]">Create Account</Button>
-        <Button className="py-2 px-4 bg-white text-[#18181B] font-[500] inter text-[14px] rounded-full">Log in</Button>
+        <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] inter font-[500] text-[14px]" onClick={() => router.push('/signup')}>
+          Create Account
+        </Button>
+        <Button className="py-2 px-4 bg-white text-[#18181B] font-[500] inter text-[14px] rounded-full" onClick={() => router.push('/login')}>
+          Log in
+        </Button>
       </div>
     </div>
   );
 };
 
 export const HomeMain = () => {
+  const router = useRouter();
   return (
     <div className="flex flex-col justify-between items-center px-4 gap-4">
       <p className="font-[700] text-[64px] py-2 px-4 text-[#FAFAFA] inter rounded-full">Swipe Right®</p>
-      <Button className="bg-[#E11D48] font-[700] text-[14px] py-2 px-4 text-[#FAFAFA] inter rounded-full">Create Account</Button>
+      <Button className="flex h-[40px] justify-center items-center bg-[#E11D48] font-[700] text-[14px] py-2 px-4 text-[#FAFAFA] inter rounded-full" onClick={() => router.push('/signup')}>
+        Create Account
+      </Button>
     </div>
   );
 };
