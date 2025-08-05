@@ -10,6 +10,10 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
+beforeEach(() => {
+  mockPush.mockClear();
+});
+
 describe('Home page component', () => {
   it('renders header without crashing', () => {
     render(<HomeHeader />);
@@ -23,8 +27,8 @@ describe('Home page component', () => {
     fireEvent.click(loginBtn);
     fireEvent.click(createBtn);
 
-    expect(mockPush).toHaveBeenCalledWith('/signup');
     expect(mockPush).toHaveBeenCalledWith('/login');
+    expect(mockPush).toHaveBeenCalledWith('/signup');
   });
 
   it('renders bg without crashing with mock users', () => {
