@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["example-frontend"],
+          "groups": ["2E-TicketBooking-Frontend"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["example-frontend"],
+          "groups": ["2E-TicketBooking-Frontend"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["example-frontend"],
+          "groups": ["2E-TicketBooking-Frontend"],
           "env": "prod"
         }
       }
