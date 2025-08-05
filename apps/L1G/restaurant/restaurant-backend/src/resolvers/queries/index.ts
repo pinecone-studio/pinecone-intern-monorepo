@@ -3,3 +3,5 @@ export * from './user/get-users';
 export * from './category/get-categories';
 export * from './category/get-category';
 export * from './table/get-tables';
+export * from './food/get-foods';
+export * from './food/get-food-by-id';

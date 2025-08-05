@@ -15,12 +15,12 @@
         "development": {
           "outputPath": "apps/L1E/instagram/instagram-frontend"
         }
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -39,13 +39,13 @@
           "buildTarget": "instagram-frontend:build:production",
           "dev": false
         }
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -67,13 +67,13 @@
         "jestConfig": "{projectRoot}/jest.config.ts",
         "passWithNoTests": true,
         "codeCoverage": true
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "codegen": {
       "executor": "nx:run-commands",
@@ -91,7 +91,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["2e-instagram-frontend"],
+          "groups": ["Instagram-2E-2025-FE"],
           "env": "dev"
         }
       }
@@ -101,7 +101,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["2e-instagram-frontend"],
+          "groups": ["Instagram-2E-2025-FE"],
           "env": "test"
         }
       }
@@ -111,7 +111,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["2e-instagram-frontend"],
+          "groups": ["Instagram-2E-2025-FE"],
           "env": "prod"
         }
       }
@@ -169,13 +169,13 @@
       "dependsOn": [
         {
           "target": "cypress-generate-all-page-json"
+        },
+        {
+          "target": "get-secrets"
+        },
+        {
+          "target": "export-env"
         }
-        // {
-        //   "target": "get-secrets"
-        // },
-        // {
-        //   "target": "export-env"
-        // }
       ]
     },
     "cypress-generate-all-page-json": {
@@ -194,21 +194,21 @@
           "npx dotenv -v VERCEL_ORG_ID=team_5sZdbFEpyaxLzaSM1mBHpZmZ -v VERCEL_PROJECT_ID=prj_hwBKhmooXMCjyY3BXkZrSFPw8RWJ -- vercel --archive=tgz --prebuilt --token=9iuEHjyGIAyN9780eGafxG7z"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:testing"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:testing"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen"
+        }
+      ]
     },
     "deploy-dev": {
       "executor": "nx:run-commands",
@@ -219,22 +219,22 @@
           "npx dotenv -v VERCEL_PROJECT_ID=prj_LlGR2EBT9cdOXuLiOwgKS0HDou5J -v VERCEL_ORG_ID=team_5sZdbFEpyaxLzaSM1mBHpZmZ -- vercel --prebuilt --prod --token=9iuEHjyGIAyN9780eGafxG7z"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:dev"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:dev"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -245,22 +245,22 @@
           "npx dotenv -v VERCEL_ORG_ID=team_5sZdbFEpyaxLzaSM1mBHpZmZ -v VERCEL_PROJECT_ID=prj_BVDf0ZJr6JA40UnmYI5W6lfkE8lm -- vercel --prebuilt --prod --token=9iuEHjyGIAyN9780eGafxG7z"
         ],
         "parallel": false
-      }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:prod"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+      },
+      "dependsOn": [
+        {
+          "target": "clean"
+        },
+        {
+          "target": "get-secrets:prod"
+        },
+        {
+          "target": "export-env"
+        },
+        {
+          "target": "codegen",
+          "params": "forward"
+        }
+      ]
     }
   },
 
