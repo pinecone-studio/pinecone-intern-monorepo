@@ -17,7 +17,7 @@ describe('dislike resolver', () => {
 
     const result = await dislike({}, { dislikedByUser, dislikeReceiver });
 
-    expect(result).toBe('👎 Dislike processed and removed from like/match lists');
+    expect(result).toBe('Dislike processed and removed from like/match lists');
 
     const calls = (Usermodel.findByIdAndUpdate as jest.Mock).mock.calls;
 
@@ -46,7 +46,7 @@ describe('dislike resolver', () => {
     });
 
     await expect(dislike({}, { dislikedByUser, dislikeReceiver })).rejects.toThrow('Failed to dislike user');
-    expect(warnSpy).toHaveBeenCalledWith('\u26a0\ufe0f Dislike mutation failed:', 'DB failure');
+    expect(warnSpy).toHaveBeenCalledWith('Dislike mutation failed:', 'DB failure');
 
     warnSpy.mockRestore();
   });
