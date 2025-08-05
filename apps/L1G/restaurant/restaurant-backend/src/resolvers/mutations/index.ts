@@ -11,4 +11,6 @@ export * from './category/update-category';
 export * from './table/create-table';
 export * from './table/delete-table';
 export * from './table/update-table';
-
+export * from './food/create-food';
+export * from './food/update-food';
+export * from './food/delete-food';
