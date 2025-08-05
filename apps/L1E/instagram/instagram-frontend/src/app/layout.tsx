@@ -1,3 +1,4 @@
+import { ApolloWrapper } from '@/components/providers';
 import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,9 +11,13 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* <ApolloWrapper>{children}</ApolloWrapper> */}
+        {children}
+      </body>
     </html>
   );
 };
 
 export default RootLayout;
+
