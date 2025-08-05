@@ -6,3 +6,4 @@ import { tableTypeDefs } from './table.schema';
 import { foodTypeDefs } from './food.schema';
 
 export const typeDefs = mergeTypeDefs([userTypeDefs, authTypeDefs, tableTypeDefs, categoryTypeDefs, foodTypeDefs]);
+
