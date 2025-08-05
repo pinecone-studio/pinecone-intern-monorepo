@@ -1,4 +1,10 @@
+import { ProfileImages } from '@/components/ProfileImages';
+
 const Profile = () => {
-  return <div>Profile page</div>;
+  return (
+    <div className="w-full h-full justify-center items-center">
+      <ProfileImages />
+    </div>
+  );
 };
 export default Profile;
