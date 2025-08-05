@@ -22,7 +22,10 @@ export const handler = startServerAndCreateNextHandler<NextRequest, Context>(ser
     let userId = null;
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not defined');
+      }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
       userId = decoded.userId;
     } catch {
       userId = null;
