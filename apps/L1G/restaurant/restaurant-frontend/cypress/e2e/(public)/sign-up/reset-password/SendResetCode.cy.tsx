@@ -24,7 +24,8 @@ describe('Reset Password Page', () => {
         req.reply({
           data: {
             sendResetCode: {
-              email: 't.smunkhbold1@gmail.com',
+              success: true,
+              message: 'Reset code sent successfully',
             },
           },
         });
