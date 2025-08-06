@@ -1,11 +1,22 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-const Profile = ({ isMine, isPrivate, userName, bio, postsNumber, followersNumber, followingNumber }: { isMine: boolean, isPrivate: boolean, userName: string, bio: string, postsNumber: number, followersNumber: number, followingNumber: number }) => {
+
+interface ProfileProps {
+    isMine: boolean,
+    isPrivate: boolean,
+    userName: string,
+    bio: string,
+    postsNumber: number,
+    followersNumber: number,
+    followingNumber: number
+}
+
+const Profile = ({ isMine, isPrivate, userName, bio, postsNumber, followersNumber, followingNumber }: ProfileProps) => {
     return (
         <div className="flex flex-col gap-[65px]">
             <div className="flex gap-25">
-                <div><Image src="/" alt='profileImage' width={200} height={200} style={{ borderRadius: "100%", border: "black" }} /></div>
+                <div><Image src="/placeholder-post.jpg" alt='profileImage' width={200} height={200} style={{ borderRadius: "100%", border: "black" }} /></div>
                 <div>
                     <div>
                         <p>{userName}</p>
@@ -19,11 +30,11 @@ const Profile = ({ isMine, isPrivate, userName, bio, postsNumber, followersNumbe
                             </div>
                         }
                         {!isMine && !isPrivate &&
-                            <div  className="flex gap-4">
-                               <div  className="flex gap-2">
-                                 <Button>Follow</Button>
-                                <Button>Message</Button>
-                               </div>
+                            <div className="flex gap-4">
+                                <div className="flex gap-2">
+                                    <Button>Follow</Button>
+                                    <Button>Message</Button>
+                                </div>
                                 <Button>...</Button>
                             </div>
                         }
@@ -50,7 +61,7 @@ const Profile = ({ isMine, isPrivate, userName, bio, postsNumber, followersNumbe
                     <p>Post</p>
                 </div>
                 <div className="grid grid-cols-3 gap-1">
-                    <Image src="/" alt="postImage" width={500} height={500} />
+                    <Image src="/placeholder-post.jpg" alt="postImage" width={500} height={500} />
                 </div>
             </div>
         </div>

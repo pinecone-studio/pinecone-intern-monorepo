@@ -2,13 +2,13 @@ import mongoose, { model, models, ObjectId, Schema } from "mongoose"
 
 export type ReceivedRequestType = {
     _id: string | ObjectId,
-    recieverId: ObjectId,
+    receiverId: ObjectId,
     senderId: ObjectId,
     createdAt: Date
 }
 
 const ReceivedRequestSchema = new Schema<ReceivedRequestType>({
-    recieverId: {
+    receiverId: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "User",

@@ -1,12 +1,12 @@
-import mongoose, { Mongoose, ObjectId, Schema, model, models } from 'mongoose';
+import mongoose, { ObjectId, Schema, model, models } from 'mongoose';
 
 export type UserType = {
-    _id: Object | string;
+    _id: ObjectId | string;
     email: string;
     password: string;
     fullName: string;
     userName: string;
-    isPrivate?: Boolean;
+    isPrivate?: boolean;
     profileImage?: string;
     bio?: string;
     followers?: ObjectId[];

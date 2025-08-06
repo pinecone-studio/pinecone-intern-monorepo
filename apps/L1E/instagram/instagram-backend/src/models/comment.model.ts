@@ -4,6 +4,7 @@ export type CommentType = {
     _id: string | ObjectId,
     text: string,
     userId: ObjectId,
+    postId: ObjectId,
     createdAt: Date
 }
 
@@ -16,6 +17,11 @@ const CommentSchema = new Schema<CommentType>({
         type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "User"
+    },
+    postId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
+        ref: "Post"
     },
     createdAt: {
         type: Date,

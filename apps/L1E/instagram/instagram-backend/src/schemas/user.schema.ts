@@ -1,11 +1,9 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
-
 type User {
 _id: ID!
 email: String!
-password: String!
 fullName: String!
 userName: String!
 isPrivate: Boolean
