@@ -1,5 +1,5 @@
 import { model, models, Schema, Types } from 'mongoose';
-import { Category } from './category.model';
+import { CategoryType } from './category.model';
 
 export type FoodType = {
   _id: Types.ObjectId;
@@ -44,7 +44,7 @@ export const FoodSchema = new Schema<FoodType>(
 );
 
 export type FoodPopulatedType = Omit<FoodType, 'category'> & {
-  category: Category;
+  category: CategoryType;
 };
 
 export const FoodModel = models.Food || model<FoodType>('food', FoodSchema);

@@ -1,6 +1,6 @@
-import { Category } from 'src/models/category.model';
+import { CategoryType } from 'src/models/category.model';
 
-export function mapCategory(category: Category) {
+export function mapCategory(category: CategoryType) {
   return {
     categoryId: category._id.toString(),
     categoryName: category.categoryName,

@@ -10,4 +10,4 @@ const userSchema = new mongoose.Schema({
   matched: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
 });
 
-export const Usermodel = mongoose.model('User', userSchema);
+export const Usermodel = mongoose.models.User || mongoose.model('User', userSchema);
