@@ -39,7 +39,7 @@ export const SheetMenu = () => {
             </div>
             <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Info size={12} />
-              <a href="/Aboutus" className="font-[30px]">
+              <a href="/about-us" className="font-[30px]">
                 Бидний тухай
               </a>
             </div>
