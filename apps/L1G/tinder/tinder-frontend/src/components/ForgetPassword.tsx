@@ -1,12 +1,12 @@
 'use client';
 
-import TinderLogo from '@/components/TinderLogo';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { TinderLogo } from './TinderLogo';
 
 const formSchema = z.object({
   email: z.string().min(2, {
