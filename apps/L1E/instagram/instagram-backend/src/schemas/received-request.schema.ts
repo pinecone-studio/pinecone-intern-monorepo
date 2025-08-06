@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 
-export const ReceivedRequestTypeDefs = gql`
+export const typeDefs = gql`
 scalar Date
 
 type ReceivedRequest {
-_id: ID!,
-receiverId: User!,
-senderId: User!,
+_id: ID!
+receiverId: User!
+senderId: User!
 createdAt: Date!
 }
 `

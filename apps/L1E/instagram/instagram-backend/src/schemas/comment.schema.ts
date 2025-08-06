@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 
-export const CommentTypeDefs = gql`
+export const typeDefs = gql`
 scalar Date
 
 type Comment {
-_id: ID!,
-text: String!,
-userId: User!,
+_id: ID!
+text: String!
+userId: User!
 createdAt: Date!
 }
 `
