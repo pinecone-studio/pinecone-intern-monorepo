@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Usermodel } from 'src/models/user';
+import { Usermodel } from 'src/models/user.model';
 import { LoginArgs } from 'src/types';
 
 const validateUser = async (email: string, password: string) => {

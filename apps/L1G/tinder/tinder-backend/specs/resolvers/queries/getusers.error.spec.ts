@@ -1,5 +1,5 @@
 import { getusers } from 'src/resolvers/queries/getusers';
-import { Usermodel } from 'src/models/user';
+import { Usermodel } from 'src/models/user.model';
 
 jest.mock('src/models/user');
 
@@ -35,7 +35,9 @@ describe('getusers resolver (error/edge cases)', () => {
   });
 
   it('should throw an error and warn when database query fails', async () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { /* noop */ });
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      /* noop */
+    });
     jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
       throw new Error('DB failure');
     });
@@ -45,7 +47,9 @@ describe('getusers resolver (error/edge cases)', () => {
   });
 
   it('calls console.warn when DB failure occurs', async () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { /* noop */ });
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      /* noop */
+    });
     jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
       throw new Error('DB failure');
     });
@@ -79,4 +83,4 @@ describe('getusers resolver (error/edge cases)', () => {
       },
     ]);
   });
-}); 
+});

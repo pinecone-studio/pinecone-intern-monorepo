@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Usermodel } from 'src/models/user';
+import { Usermodel } from 'src/models/user.model';
 interface IUserLean {
   _id: string | mongoose.Types.ObjectId;
   email: string;

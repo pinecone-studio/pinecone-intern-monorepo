@@ -1,6 +1,7 @@
-import { Usermodel } from 'src/models/user';
+import { Usermodel } from 'src/models/user.model';
 import mongoose from 'mongoose';
 import { LikeArgs } from 'src/types';
+import { GraphQLError } from 'graphql';
 
 export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
   const { likedByUser, likeReceiver } = args;
@@ -24,12 +25,16 @@ export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
 
       await Usermodel.findByIdAndUpdate(likedByUserId, { $addToSet: { matched: likeReceiverId } }, { new: true });
 
-      return "🎉 It's a match!";
+      return "It's a match! You can now chat!";
     }
 
-    return '👍 Like recorded successfully';
+    return 'Like successful, waiting for a match.';
   } catch (error) {
-    console.warn('⚠️ Like mutation failed:', (error as Error).message);
-    throw new Error('Failed to like user');
+    throw new GraphQLError('Failed to like user', {
+      extensions: {
+        code: 'LIKE_FAILED',
+        http: { status: 500 },
+      },
+    });
   }
 };

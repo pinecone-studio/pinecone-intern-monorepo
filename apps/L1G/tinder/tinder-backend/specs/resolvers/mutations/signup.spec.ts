@@ -1,5 +1,5 @@
-import { signup, checkEmailExists } from 'src/resolvers/mutations/signup';
-import { Usermodel } from 'src/models/user';
+import { signup, checkEmailExists } from 'src/resolvers/mutations/auth/signup';
+import { Usermodel } from 'src/models/user.model';
 import bcrypt from 'bcryptjs';
 
 jest.mock('bcryptjs');

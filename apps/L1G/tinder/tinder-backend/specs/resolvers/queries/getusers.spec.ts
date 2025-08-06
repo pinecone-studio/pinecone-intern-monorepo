@@ -1,5 +1,5 @@
 import { getusers } from 'src/resolvers/queries/getusers';
-import { Usermodel } from 'src/models/user';
+import { Usermodel } from 'src/models/user.model';
 
 jest.mock('src/models/user');
 

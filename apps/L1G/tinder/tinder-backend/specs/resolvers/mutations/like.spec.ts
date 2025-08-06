@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { like } from 'src/resolvers/mutations/like';
-import { Usermodel } from 'src/models/user';
+import { like } from 'src/resolvers/mutations/auth/like';
+import { Usermodel } from 'src/models/user.model';
 
 jest.mock('src/models/user');
 
