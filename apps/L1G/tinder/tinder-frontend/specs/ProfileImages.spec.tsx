@@ -4,10 +4,15 @@ import { ProfileImages } from '@/components/ProfileImages';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 
-jest.mock('next/image', () => (props: any) => {
-  const { fill, ...rest } = props;
-  return <img {...rest} alt={props.alt || 'mocked image'} />;
+jest.mock('next/image', () => {
+  const MockedImage = (props: any) => {
+    const { fill, ...rest } = props;
+    return <img {...rest} alt={props.alt || 'mocked image'} />;
+  };
+  MockedImage.displayName = 'NextImageMock';
+  return MockedImage;
 });
+
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -25,7 +30,7 @@ describe('ProfileImages Component', () => {
 
   test('handles missing secure_url in upload response', async () => {
     mockedAxios.post.mockResolvedValueOnce({
-      data: { public_id: '123' },
+      data: { publicId: '123' },
     });
 
     render(<ProfileImages />);
@@ -42,6 +47,7 @@ describe('ProfileImages Component', () => {
   test('uploads image and updates slot', async () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
     mockedAxios.post.mockResolvedValueOnce({
+      // eslint-disable-next-line camelcase
       data: { secure_url: mockUrl },
     });
 
@@ -74,6 +80,7 @@ describe('ProfileImages Component', () => {
   test('removes an uploaded image', async () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
     mockedAxios.post.mockResolvedValueOnce({
+      // eslint-disable-next-line camelcase
       data: { secure_url: mockUrl },
     });
     render(<ProfileImages />);
@@ -117,6 +124,7 @@ describe('ProfileImages Component', () => {
   test('does not upload if no empty image slot found', async () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
     mockedAxios.post.mockResolvedValue({
+      // eslint-disable-next-line camelcase
       data: { secure_url: mockUrl },
     });
     render(<ProfileImages />);
