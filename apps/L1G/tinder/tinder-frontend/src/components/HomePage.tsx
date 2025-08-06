@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { ProfileCard } from './ProfileCard';
-import TinderLogo from './TinderLogo';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { WhiteTinderLogo } from './TinderLogo';
 
 const mockUsers = [
   {
@@ -47,7 +47,7 @@ export const HomeHeader = () => {
 
   return (
     <div className="max-w-[1280px] w-[1280px] h-[64px] flex justify-between items-center px-4  gap-4 ">
-      <TinderLogo />
+      <WhiteTinderLogo />
 
       <div className="flex gap-4">
         <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] inter font-[500] text-[14px]" onClick={() => router.push('/signup')}>
@@ -76,7 +76,7 @@ export const HomeMain = () => {
 export const HomeFooter = () => {
   return (
     <div className="max-w-[1552px] w-[1552px] h-[64px] flex justify-between items-center px-4 py-8 gap-4 opacity-50">
-      <TinderLogo />
+      <WhiteTinderLogo />
 
       <p className="text-[#FAFAFA] font-sans text-sm ">© Copyright 2024</p>
     </div>
