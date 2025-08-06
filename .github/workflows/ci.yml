@@ -123,6 +123,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
+
           node-version: '18.19.1'
       - uses: oven-sh/setup-bun@v1
         with:
