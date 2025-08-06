@@ -12,6 +12,7 @@ jest.mock('src/models/user.model', () => ({
         profile: null,
         bonusPoints: 0,
         role: 'user',
+        userName: null,
         phoneNumber: null,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
@@ -31,7 +32,7 @@ describe('get User', () => {
       profile: null,
       bonusPoints: 0,
       role: 'user',
-      phoneNumber: null,
+      userName: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     });

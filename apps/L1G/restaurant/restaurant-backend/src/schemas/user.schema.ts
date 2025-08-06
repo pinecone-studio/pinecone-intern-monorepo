@@ -27,6 +27,23 @@ export const userTypeDefs = gql`
     createUser(input: CreateUserInput!): User!
     updateUser(userId: ID!, input: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
+    sendResetCode(input: sendResetCodeInput!): Boolean
+    verifyResetCode(input: verifyResetCodeInput!): Boolean
+    resetPassword(input: resetPasswordInput!): Boolean
+  }
+
+  input sendResetCodeInput {
+    email: String!
+  }
+
+  input verifyResetCodeInput {
+    email: String!
+    code: String!
+  }
+
+  input resetPasswordInput {
+    email: String!
+    newPassword: String!
   }
 
   input CreateUserInput {
@@ -40,5 +57,6 @@ export const userTypeDefs = gql`
     password: String
     profile: String
     phoneNumber: String
+    username: String
   }
 `;

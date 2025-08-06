@@ -1,6 +1,5 @@
 'use client';
 
-import TinderLogo from './TinderLogo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
@@ -9,9 +8,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
-import { cn } from '../../../../../../libs/shadcn/src/lib/utils';
 import { CalendarIcon } from 'lucide-react';
+import { TinderLogo } from './TinderLogo';
 
 const HowOldAreYou = () => {
   const formSchema = z.object({
@@ -53,7 +51,7 @@ const HowOldAreYou = () => {
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
-                      <Button data-testid="date-picker-button" variant="outline" className={cn('border w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                      <Button data-testid="date-picker-button" variant="outline" className={`border w-full pl-3 text-left font-normal ${!field.value ? 'text-muted-foreground' : ''}`}>
                         {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>

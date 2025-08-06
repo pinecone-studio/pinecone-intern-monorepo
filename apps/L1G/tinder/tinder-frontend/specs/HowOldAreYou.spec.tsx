@@ -7,11 +7,18 @@ import HowOldAreYou from '@/components/HowOldAreYou';
 import '@testing-library/jest-dom';
 
 const mockToday = new Date('2024-01-01T00:00:00Z');
+beforeAll(() => {
+  jest.spyOn(global.Date, 'now').mockImplementation(() => mockToday.valueOf());
+});
+
+afterAll(() => {
+  jest.restoreAllMocks();
+});
 
 jest.setSystemTime(mockToday);
 
 jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ onSelect, selected, disabled }: { onSelect: (date: Date) => void; selected: Date | null; disabled?: (date: Date) => boolean }) => (
+  Calendar: ({ onSelect, selected, disabled }: { onSelect: (_date: Date) => void; selected: Date | null; disabled?: (_date: Date) => boolean }) => (
     <div>
       <button
         onClick={() => {
@@ -89,7 +96,7 @@ describe('HowOldAreYou Component', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument(); // Popover opens
   });
 
-  it('submits form with valid date', () => {
+  it('submits form with valid date', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
     render(<HowOldAreYou />);
@@ -106,7 +113,7 @@ describe('HowOldAreYou Component', () => {
       fireEvent.click(screen.getByTestId('next-button'));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('working');
     });
 
@@ -142,8 +149,6 @@ describe('HowOldAreYou Component', () => {
       const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
       fireEvent.click(validDateButton);
     });
-
-    screen.debug();
   });
 
   it('disables invalid dates', async () => {
