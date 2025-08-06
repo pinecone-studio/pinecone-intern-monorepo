@@ -7,7 +7,11 @@ import { useGetTablesQuery } from '@/generated';
 export const TableGrid = () => {
   const { loading, error, data } = useGetTablesQuery();
   if (loading) return 'loading...';
-  if (error) return `error : ${error}`;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   const tableData = data?.getTables;
   return (
     <div className="flex w-fit h-fit flex-col gap-4">

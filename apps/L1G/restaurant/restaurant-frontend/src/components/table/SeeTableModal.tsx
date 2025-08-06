@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { DialogContainer } from './DialogContainer';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import Image from 'next/image';
-import { ImageDownloader } from '@/utils/ImageDownloader';
+import { ImageDownloader } from '@/utils/image-downloader';
 
 type dataType = {
   __typename?: 'Table' | undefined;
@@ -13,11 +13,7 @@ type dataType = {
 
 export const SeeTableModal = ({ data }: { data: dataType }) => {
   const handleImage = (url: string) => {
-    try {
-      ImageDownloader(url, `${data.tableName}_QRcode.png`);
-    } catch (error) {
-      console.log(error);
-    }
+    ImageDownloader(url, `${data.tableName}_QRcode.png`);
   };
   return (
     <Dialog>

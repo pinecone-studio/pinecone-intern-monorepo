@@ -1,5 +1,5 @@
 import { SeeTableModal } from '@/components/table/SeeTableModal';
-import { ImageDownloader } from '@/utils/ImageDownloader';
+import { ImageDownloader } from '@/utils/image-downloader';
 import '@testing-library/jest-dom';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
