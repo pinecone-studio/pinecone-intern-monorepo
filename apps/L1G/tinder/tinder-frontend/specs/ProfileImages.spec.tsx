@@ -24,7 +24,7 @@ describe('ProfileImages Component', () => {
 
   test('handles missing secure_url in upload response', async () => {
     jest.spyOn(axios, 'post').mockResolvedValueOnce({
-      data: { public_id: '123' },
+      data: { publicId: '123' },
     });
 
     render(<ProfileImages />);
@@ -42,7 +42,7 @@ describe('ProfileImages Component', () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
 
     (axios.post as jest.Mock).mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
+      data: { secureUrl: mockUrl },
     });
 
     render(<ProfileImages />);
@@ -73,7 +73,7 @@ describe('ProfileImages Component', () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
 
     (axios.post as jest.Mock).mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
+      data: { secureUrl: mockUrl },
     });
 
     render(<ProfileImages />);
@@ -96,14 +96,13 @@ describe('ProfileImages Component', () => {
   test('clears file input after upload', async () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
     (axios.post as jest.Mock).mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
+      data: { secureUrl: mockUrl },
     });
 
     render(<ProfileImages />);
     const fileInput = screen.getByRole('button', { name: /upload image/i }).querySelector('input[type="file"]') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
-    // Set fake value to ensure it gets cleared
     Object.defineProperty(fileInput, 'value', {
       writable: true,
       value: 'C:\\fakepath\\photo.jpg',
@@ -147,20 +146,18 @@ describe('ProfileImages Component', () => {
     const mockUrl = 'https://cloudinary.com/test-image.jpg';
 
     (axios.post as jest.Mock).mockResolvedValue({
-      data: { secure_url: mockUrl },
+      data: { secureUrl: mockUrl },
     });
 
     render(<ProfileImages />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
-    // Fill all 6 slots
     for (let i = 0; i < 6; i++) {
       fireEvent.change(fileInput, { target: { files: [file] } });
       await screen.findByTestId(`uploaded-image-${i}`);
     }
 
-    // Try uploading a 7th image
     fireEvent.change(fileInput, { target: { files: [file] } });
 
     expect(axios.post).toHaveBeenCalledTimes(6);
