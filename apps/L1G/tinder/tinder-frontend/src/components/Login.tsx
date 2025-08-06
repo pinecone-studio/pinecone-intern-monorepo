@@ -1,11 +1,12 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAuth } from './providers/AuthProvider';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -13,7 +14,7 @@ const formSchema = z.object({
 });
 
 export const LoginForm = () => {
-  const [user, setUser] = useState({ email: '', password: '' });
+  const { login } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -23,10 +24,13 @@ export const LoginForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setUser(values);
-
-    console.log(user, ' user');
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await login(values);
+      console.log('login');
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   }
 
   return (

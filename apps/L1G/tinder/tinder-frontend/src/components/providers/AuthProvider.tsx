@@ -2,7 +2,8 @@
 
 import { useLoginMutation, User, useSignupMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 type SignUpParams = {
   email: string;
@@ -13,7 +14,7 @@ type SignUpParams = {
   phone: string;
 };
 
-type SignInParams = {
+type LogInParams = {
   email: string;
   password: string;
 };
@@ -29,7 +30,7 @@ type RequestChangePasswordParams = {
 };
 
 type AuthContextType = {
-  signin: (_params: SignInParams) => void;
+  login: (_params: LogInParams) => void;
   signup: (_params: SignUpParams) => void;
   signout: () => void;
   requestChangePassword: (_params: RequestChangePasswordParams) => void;
@@ -43,15 +44,20 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
-  const [signinMutation] = useLoginMutation({
+  const [loginMutation] = useLoginMutation({
     onCompleted: (data) => {
-      localStorage.setItem('token', data.login); 
+      console.log('Login mutation completed:', data);
+      localStorage.setItem('token', data.login.token || data.login);
+      setUser(data.login.user || null);
       router.push('/');
-    }
+    },
     onError: (error) => {
-      toast.error(error.message);
+      console.error('Login mutation error:', error.message);
+      const errorMessage = error.message.includes('JWT_SECRET') ? 'Server configuration error. Please try again later.' : error.message;
+      toast.error(errorMessage);
     },
   });
+
   const [signupMutation] = useSignupMutation({
     onCompleted: (data) => {
       localStorage.setItem('token', data.register.token);
@@ -74,20 +80,19 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   // const [changePasswordMutation] = useChangePasswordMutation({
   //   onCompleted: () => {
   //     toast.success('Амжилттай солигдлоо');
-  //     router.push('/signin');
+  //     router.push('/login');
   //   },
   //   onError: (error) => {
   //     toast.error(error.message);
   //   },
   // });
 
-  const signin = async ({ email, password }: SignInParams) => {
-    await signinMutation({
+  const login = async ({ email, password }: LogInParams) => {
+    console.log('Login called with:', { email, password });
+    await loginMutation({
       variables: {
-        input: {
-          email,
-          password,
-        },
+        email,
+        password,
       },
     });
   };
@@ -95,14 +100,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signup = async ({ email, password, address, firstName, lastName, phone }: SignUpParams) => {
     await signupMutation({
       variables: {
-        input: {
-          email,
-          password,
-          address,
-          firstName,
-          lastName,
-          phone,
-        },
+        email,
+        password,
+        address,
+        firstName,
+        lastName,
+        phone,
       },
     });
   };
@@ -134,11 +137,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  useEffect(() => {
-    getMe();
-  }, [getMe]);
-
-  return <AuthContext.Provider value={{ signin, signup, user, signout, requestChangePassword, changePassword }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ login, signup, user, signout, requestChangePassword, changePassword }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

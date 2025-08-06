@@ -1,4 +1,3 @@
-import { ApolloWrapper } from '@/components/providers/ApolloWrapper';
 import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,14 +9,10 @@ export const metadata = {
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html>
+    <html lang="en">
       <body>
-        <ApolloWrapper>
-          <div className="flex flex-col min-h-screen">
-            <div className="flex-1">{children}</div>
-          </div>
-        </ApolloWrapper>
-      </body>{' '}
+        <div className="flex flex-col min-h-screen">{children}</div>
+      </body>
     </html>
   );
 };
