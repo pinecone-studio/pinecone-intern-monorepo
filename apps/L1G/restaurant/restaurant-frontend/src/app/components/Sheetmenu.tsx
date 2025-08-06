@@ -9,12 +9,6 @@ import { Wallet } from 'lucide-react';
 import { Home } from 'lucide-react';
 import { List } from 'lucide-react';
 export const SheetMenu = () => {
-  const handleOnClick = () => {
-    window.location.href = '/Aboutus';
-  };
-  const handleHomePage = () => {
-    window.location.href = '/';
-  };
   return (
     <Sheet>
       <SheetTrigger>
@@ -25,9 +19,11 @@ export const SheetMenu = () => {
         <SheetHeader>
           <SheetTitle className="border-b pt-5"></SheetTitle>
           <SheetDescription className="flex-col">
-            <div onClick={handleHomePage} className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
+            <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Home size={12} />
-              <p className="font-[30px]">Нүүр хуудас</p>
+              <a href="/" className="font-[30px]">
+                Нүүр хуудас
+              </a>
             </div>
             <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Wallet size={12} />
@@ -41,9 +37,11 @@ export const SheetMenu = () => {
               <List size={12} />
               <p className="font-[30px]">Захиалгын түүх</p>
             </div>
-            <div onClick={handleOnClick} className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
+            <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Info size={12} />
-              <p className="font-[30px]">Бидний тухай</p>
+              <a href="/Aboutus" className="font-[30px]">
+                Бидний тухай
+              </a>
             </div>
           </SheetDescription>
         </SheetHeader>
