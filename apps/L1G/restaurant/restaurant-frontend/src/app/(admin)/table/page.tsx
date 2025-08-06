@@ -1,5 +1,5 @@
-import React from 'react';
+import { TableGrid } from '../../../components/table/TableGrid';
 
 export default function page() {
-  return <div>table</div>;
+  return <TableGrid />;
 }
