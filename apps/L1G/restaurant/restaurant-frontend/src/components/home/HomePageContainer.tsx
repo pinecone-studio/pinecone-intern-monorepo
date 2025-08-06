@@ -37,23 +37,25 @@ const menuItems = [
     id: 5,
     name: 'Салат',
     price: '15.6к',
-    image: '/placeholder.svg?height=200&width=300',
+    image:
+      'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2016/6/12/3/FNM070116_Penne-with-Vodka-Sauce-and-Mini-Meatballs-recipe_s4x3.jpg.rend.hgtvcom.616.462.85.suffix/1465939620872.webp',
     category: 'main',
   },
   {
     id: 6,
     name: 'Taco',
     price: '15.6к',
-    image: '/placeholder.svg?height=200&width=300',
+    image:
+      'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2016/6/12/3/FNM070116_Penne-with-Vodka-Sauce-and-Mini-Meatballs-recipe_s4x3.jpg.rend.hgtvcom.616.462.85.suffix/1465939620872.webp',
     category: 'main',
   },
 ];
 
 const categories = [
-  { id: 'main', name: 'Үндсэн', active: true },
-  { id: 'coffee', name: 'Кофе, цай', active: false },
-  { id: 'drinks', name: 'Үндаа, ус', active: false },
-  { id: 'desserts', name: 'Амттан', active: false },
+  { id: 'main', name: 'Үндсэн' },
+  { id: 'coffee', name: 'Кофе, цай' },
+  { id: 'drinks', name: 'Үндаа, ус' },
+  { id: 'desserts', name: 'Амттан' },
 ];
 const HomePageContainer = () => {
   const [activeCategory, setActiveCategory] = useState('main');
@@ -83,7 +85,7 @@ const HomePageContainer = () => {
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
           {filteredItems.map((value) => (
-            <MenuCard image={value.image} foodName={value.name} price={value.price} id={value.id} category={value.category} />
+            <MenuCard key={value.id} image={value.image} foodName={value.name} price={value.price} id={value.id} category={value.category} />
           ))}
         </div>
       </div>
