@@ -9,7 +9,7 @@ const mockData = {
   tableQr: 'https://test.png',
 };
 
-jest.mock('@/utils/ImageDownloader', () => ({
+jest.mock('@/utils/image-downloader', () => ({
   ImageDownloader: jest.fn(),
 }));
 
