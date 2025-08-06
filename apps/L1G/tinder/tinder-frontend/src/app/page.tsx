@@ -3,7 +3,6 @@ import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/componen
 
 import { useState } from 'react';
 import { useGetUsersQuery } from '../generated';
-import TinderCard from '@/components/TinderCard';
 
 export interface UserProfile {
   id: string;
@@ -63,9 +62,11 @@ const Home: React.FC = () => {
       <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <HomeMain />
       </div>
-<div className="relative w-full h-screen flex justify-center items-center bg-gray-100">
+
+      {/* <div className="relative w-full h-screen flex justify-center items-center bg-gray-100">
         {currentProfile ? <TinderCard profile={currentProfile} onLike={handleLike} onDislike={handleDislike} /> : <div className="text-2xl font-bold text-gray-500">No more profiles</div>}
-      </div>
+      </div> */}
+
       <div className="w-full flex justify-center items-center fixed bottom-0 l-0 z-30">
         <HomeFooter />
       </div>
