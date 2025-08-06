@@ -7,7 +7,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { TinderLogo } from './TinderLogo';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),

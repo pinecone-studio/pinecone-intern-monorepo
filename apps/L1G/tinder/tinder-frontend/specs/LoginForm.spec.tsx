@@ -38,8 +38,6 @@ describe('Login form ', () => {
   it('shows validation errors for null input', async () => {
     render(<LoginForm />);
 
-    const email = screen.getByPlaceholderText('name@example.com') as HTMLInputElement;
-    const password = screen.getByPlaceholderText('Please enter your password') as HTMLInputElement;
     const submitBtn = screen.getByRole('button', { name: /Continue/i });
 
     await act(async () => {
