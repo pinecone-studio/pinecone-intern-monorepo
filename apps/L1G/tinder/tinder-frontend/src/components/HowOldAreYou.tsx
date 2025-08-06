@@ -1,6 +1,5 @@
 'use client';
 
-import TinderLogo from './TinderLogo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
@@ -9,8 +8,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
 import { CalendarIcon } from 'lucide-react';
+import { TinderLogo } from './TinderLogo';
 
 const HowOldAreYou = () => {
   const formSchema = z.object({
