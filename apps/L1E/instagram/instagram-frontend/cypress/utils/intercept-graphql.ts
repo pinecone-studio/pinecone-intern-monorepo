@@ -16,7 +16,7 @@ const generateResponse = (state: string) => {
 };
 
 export const interceptGraphql = (props: InterceptGraphqlType) => {
-  const { state, operationName, data } = props;
+  const { state, operationName, data } = props; 
   const response = generateResponse(state);
 
   cy.intercept('POST', '**/graphql', (req) => {

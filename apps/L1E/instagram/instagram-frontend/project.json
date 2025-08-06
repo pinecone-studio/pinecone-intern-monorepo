@@ -16,11 +16,7 @@
           "outputPath": "apps/L1E/instagram/instagram-frontend"
         }
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+
     },
     "serve": {
       "executor": "@nx/next:server",
@@ -40,12 +36,7 @@
           "dev": false
         }
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+
     },
     "export": {
       "executor": "@nx/next:export",
@@ -68,12 +59,7 @@
         "passWithNoTests": true,
         "codeCoverage": true
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+
     },
     "codegen": {
       "executor": "nx:run-commands",
@@ -170,12 +156,7 @@
         {
           "target": "cypress-generate-all-page-json"
         }
-        // {
-        //   "target": "get-secrets"
-        // },
-        // {
-        //   "target": "export-env"
-        // }
+
       ]
     },
     "cypress-generate-all-page-json": {
@@ -195,20 +176,7 @@
         ],
         "parallel": false
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:testing"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen"
-      //   }
-      // ]
+ 
     },
     "deploy-dev": {
       "executor": "nx:run-commands",
@@ -220,21 +188,7 @@
         ],
         "parallel": false
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:dev"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+
     },
     "deploy-prod": {
       "executor": "nx:run-commands",
@@ -246,21 +200,7 @@
         ],
         "parallel": false
       }
-      // "dependsOn": [
-      //   {
-      //     "target": "clean"
-      //   },
-      //   {
-      //     "target": "get-secrets:prod"
-      //   },
-      //   {
-      //     "target": "export-env"
-      //   },
-      //   {
-      //     "target": "codegen",
-      //     "params": "forward"
-      //   }
-      // ]
+ 
     }
   },
 
