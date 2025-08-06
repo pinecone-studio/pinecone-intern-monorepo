@@ -1,0 +1,9 @@
+query GetUsers {
+  getUsers {
+    _id
+    userName
+    isPrivate
+    profileImage
+    bio
+  }
+}
