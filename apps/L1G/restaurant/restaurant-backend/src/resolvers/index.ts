@@ -2,7 +2,6 @@ import * as Query from './queries';
 import * as Mutation from './mutations';
 import { User } from 'src/models/user.model';
 import { Table } from 'src/models/table.model';
-import { Category } from 'src/models/category.model';
 
 export const resolvers = {
   User: {
@@ -10,9 +9,6 @@ export const resolvers = {
   },
   Table: {
     tableId: (parent: Table) => parent._id.toString(),
-  },
-  Category: {
-    categoryId: (parent: Category) => parent._id.toString(),
   },
   Query,
   Mutation,

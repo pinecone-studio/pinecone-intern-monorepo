@@ -1,13 +1,13 @@
 import mongoose, { models, Types } from 'mongoose';
 
-export type Category = {
+export type CategoryType = {
   _id: Types.ObjectId;
   categoryName: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
-const CategorySchema = new mongoose.Schema<Category>(
+const CategorySchema = new mongoose.Schema<CategoryType>(
   {
     categoryName: {
       type: String,
@@ -19,4 +19,4 @@ const CategorySchema = new mongoose.Schema<Category>(
   }
 );
 
-export const CategoryModel = models.Category || mongoose.model('Category', CategorySchema);
+export const CategoryModel = models.Category || mongoose.model<CategoryType>('Category', CategorySchema);
