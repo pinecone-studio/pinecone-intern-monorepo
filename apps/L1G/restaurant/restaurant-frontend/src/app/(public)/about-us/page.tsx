@@ -7,14 +7,7 @@ const Aboutus = () => {
         <p className="text-[#521c0d] text-[20px] font-[100px]">Бидний тухай</p>
       </div>
       <div className="w-[360px] h-[180px]">
-        <Image
-          className="rounded-md w-[360px] h-[200px] object-cover
-        "
-          alt=""
-          height={180}
-          width={360}
-          src={'/restaurant.png'}
-        />
+        <Image className="rounded-md w-[360px] h-[200px] object-cover" alt="" height={180} width={360} src={'/restaurant.png'} />
       </div>
       <div>
         <p className="font-light text-[14px] px-4 pt-10">
