@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -13,6 +14,8 @@ const formSchema = z.object({
 });
 
 export const LoginForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +53,10 @@ export const LoginForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex justify-between">
-                      Password <button className="text-[#2563EB] inter text-[14px] font-[500]">Forgot Password?</button>
+                      Password{' '}
+                      <button className="text-[#2563EB] inter text-[14px] font-[500]" onClick={() => router.push('/login/forgot-password')}>
+                        Forgot Password?
+                      </button>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Please enter your password" {...field} />

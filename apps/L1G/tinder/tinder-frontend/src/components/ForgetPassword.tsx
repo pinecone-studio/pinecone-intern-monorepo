@@ -7,7 +7,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { TinderLogo } from './TinderLogo';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -27,12 +26,11 @@ export const ForgetPassword = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-center items-center min-h-screen px-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-fit flex flex-col justify-center items-center px-4 gap-2">
         <div className="flex flex-col items-center gap-6 max-w-[350px] w-full">
-          <TinderLogo />
           <div className="flex flex-col items-center gap-1">
-            <p className="text-2xl font-semibold">Forget password </p>
-            <p className="text-sm text-[#71717A]">Enter your email account to reset password</p>
+            <p className="text-2xl font-semibold inter">Forget password </p>
+            <p className="text-sm text-[#71717A] inter">Enter your email account to reset password</p>
           </div>
           <FormField
             control={form.control}
@@ -47,10 +45,10 @@ export const ForgetPassword = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full rounded-full bg-[#E11D48E5]">
-            Continue
-          </Button>
         </div>
+        <Button type="submit" className="inter w-full rounded-full bg-[#E11D48E5]">
+          Continue
+        </Button>
       </form>
     </Form>
   );
