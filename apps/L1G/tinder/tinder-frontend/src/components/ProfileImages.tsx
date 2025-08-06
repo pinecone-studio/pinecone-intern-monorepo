@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
@@ -50,13 +50,13 @@ export const ProfileImages = () => {
 
       const data = res.data;
 
-      if (!data.secureUrl) {
+      if (!data.secure_url) {
         return;
       }
 
       setUploadedImages((prev) => {
         const newImages = [...prev];
-        newImages[firstEmptyIndex] = data.secureUrl;
+        newImages[firstEmptyIndex] = data.secure_url;
         return newImages;
       });
     } catch (err) {
