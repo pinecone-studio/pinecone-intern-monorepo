@@ -10,25 +10,25 @@ const mockUsers = [
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://i.pinimg.com/736x/c5/db/05/c5db056c6f75668bbf4bfe16d6481036.jpg',
+    src: 'https://res.cloudinary.com/dx4imbbcs/image/upload/v1754461980/1_zhvyfo.jpg',
   },
   {
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://i.pinimg.com/1200x/54/35/f1/5435f149b7200e72bbc0dfa1fcd721dd.jpg',
+    src: 'https://res.cloudinary.com/dx4imbbcs/image/upload/v1754462051/3_xgk8e5.jpg',
   },
   {
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://i.pinimg.com/736x/35/47/07/35470774f4c232e8bddbdd3e94c4a79d.jpg',
+    src: 'https://res.cloudinary.com/dx4imbbcs/image/upload/v1754462051/4_voo5zu.jpg',
   },
   {
     name: 'Mark Zuckerberg',
     age: 40,
     bio: 'Software Engineer Facebook',
-    src: 'https://i.pinimg.com/736x/63/0d/6a/630d6ad73a8b465a717863df09795648.jpg',
+    src: 'https://res.cloudinary.com/dx4imbbcs/image/upload/v1754462054/2_fbcumd.jpg',
   },
 ];
 
