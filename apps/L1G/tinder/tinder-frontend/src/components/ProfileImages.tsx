@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
@@ -27,44 +27,32 @@ export const ProfileImages = () => {
     });
   };
 
-  const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !cloudName) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'my_unsigned_preset');
-
-    const firstEmptyIndex = uploadedImages.findIndex((img) => !img);
-
-    if (firstEmptyIndex === -1) return;
-
+  const uploadImage = async (
+    file: File,
+    cloudName: string,
+    index: number,
+    setIsUploading: React.Dispatch<React.SetStateAction<boolean[]>>,
+    setUploadedImages: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
     setIsUploading((prev) => {
       const newUploading = [...prev];
-      newUploading[firstEmptyIndex] = true;
+      newUploading[index] = true;
       return newUploading;
     });
 
     try {
-      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData, {
-        onUploadProgress: (progressEvent) => {
-          if (progressEvent.total !== undefined) {
-            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            console.log(`Progress: ${percent}%`);
-          }
-        },
-      });
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'my_unsigned_preset');
+
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
 
       const data = res.data;
-
-      if (!data.secure_url) {
-        console.error('Upload failed:', data);
-        return;
-      }
+      if (!data.secure_url) return;
 
       setUploadedImages((prev) => {
         const newImages = [...prev];
-        newImages[firstEmptyIndex] = data.secure_url;
+        newImages[index] = data.secure_url;
         return newImages;
       });
     } catch (err) {
@@ -72,19 +60,21 @@ export const ProfileImages = () => {
     } finally {
       setIsUploading((prev) => {
         const newUploading = [...prev];
-        newUploading[firstEmptyIndex] = false;
+        newUploading[index] = false;
         return newUploading;
       });
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
     }
   };
 
-  useEffect(() => {
-    console.log('uploadedImages changed:', uploadedImages);
-  }, [uploadedImages]);
+  const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !cloudName) return;
+
+    const firstEmptyIndex = uploadedImages.findIndex((img) => !img);
+    if (firstEmptyIndex === -1) return;
+
+    await uploadImage(file, cloudName, firstEmptyIndex, setIsUploading, setUploadedImages);
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
@@ -96,15 +86,17 @@ export const ProfileImages = () => {
 
         <div className="grid grid-cols-3 gap-6 mb-12">
           {uploadedImages.map((image, index) => (
-            <div key={index} className="relative w-[197px] h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+            <div key={index} data-testid={`image-slot-${index}`} className="relative w-[197px] h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
               {isUploading[index] ? (
-                <Loader2 className="animate-spin w-8 h-8 text-gray-500" />
+                <Loader2 className="animate-spin w-8 h-8 text-gray-500" aria-label="Uploading" data-testid={`loader-${index}`} />
               ) : image ? (
                 <>
-                  <Image src={image} alt={`Uploaded image ${index + 1}`} fill className="object-cover" />
+                  <Image src={image} alt={`Uploaded image ${index + 1}`} fill className="object-cover" data-testid={`uploaded-image-${index}`} />
                   <button
                     onClick={() => handleRemoveImage(index)}
                     className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
+                    aria-label={`Remove image ${index + 1}`}
+                    data-testid={`remove-button-${index}`}
                   >
                     <X className="w-4 h-4 text-gray-600" />
                   </button>
@@ -117,10 +109,14 @@ export const ProfileImages = () => {
         </div>
 
         <div className="mb-12">
-          <Button variant="outline" className="relative w-full h-14 text-lg font-medium border-2 border-red-400 text-red-400 hover:bg-red-50 rounded-full bg-transparent overflow-hidden">
+          <Button
+            variant="outline"
+            className="relative w-full h-14 text-lg font-medium border-2 border-red-400 text-red-400 hover:bg-red-50 rounded-full bg-transparent overflow-hidden"
+            aria-label="Upload image"
+          >
             <Plus className="w-5 h-5 mr-2" />
             Upload image
-            <input ref={fileInputRef} type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleUploadImage} />
+            <input ref={fileInputRef} type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleUploadImage} data-testid="upload-input" />
           </Button>
         </div>
 

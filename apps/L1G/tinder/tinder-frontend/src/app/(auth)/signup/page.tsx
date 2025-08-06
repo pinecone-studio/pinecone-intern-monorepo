@@ -1,4 +1,4 @@
-import { ForgetPassword } from '@/components/ForgetPassword';
+
 import { TinderLogo } from '@/components/TinderLogo';
 
 const Signup = () => {
