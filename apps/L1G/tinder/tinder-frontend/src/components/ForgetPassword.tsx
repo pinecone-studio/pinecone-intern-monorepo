@@ -10,9 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { TinderLogo } from './TinderLogo';
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: 'Please enter a valid email address.',
-  }),
+  email: z.string().email({ message: 'Please enter a valid email' }),
 });
 
 export const ForgetPassword = () => {
@@ -43,7 +41,7 @@ export const ForgetPassword = () => {
               <FormItem className="w-full">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="name@example.com" type="email" {...field} />
+                  <Input placeholder="name@example.com" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

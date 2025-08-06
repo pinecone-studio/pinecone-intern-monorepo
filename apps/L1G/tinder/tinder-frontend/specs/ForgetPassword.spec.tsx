@@ -8,9 +8,9 @@ describe('Forgetpassword Page', () => {
     render(<ForgetPassword />);
 
     expect(screen.getByText('Forget password')).toBeInTheDocument();
-    expect(screen.getByText('Enter your email account to reset password'));
-    expect(screen.getByLabelText(/Email/i));
-    expect(screen.getByRole('button', { name: /Continue/i }));
+    expect(screen.getByText('Enter your email account to reset password')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue/i })).toBeInTheDocument();
   });
 
   it('shows validation error for invalid email', async () => {
@@ -20,10 +20,11 @@ describe('Forgetpassword Page', () => {
     const submitButton = screen.getByRole('button', { name: /Continue/i });
 
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+    fireEvent.blur(emailInput);
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Please enter a valid email address.')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid email')).toBeInTheDocument();
     });
   });
 
@@ -39,7 +40,7 @@ describe('Forgetpassword Page', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.queryByText('Please enter a valid email address.')).not.toBeInTheDocument();
+      expect(screen.queryByText('Please enter a valid email')).not.toBeInTheDocument();
     });
   });
 });
