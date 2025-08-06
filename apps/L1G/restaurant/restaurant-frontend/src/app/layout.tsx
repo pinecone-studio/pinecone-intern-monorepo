@@ -1,6 +1,7 @@
 import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navbar } from './components/Navbar';
 
 export const metadata = {
   title: 'Welcome to restaurant-frontend',
@@ -9,8 +10,14 @@ export const metadata = {
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body>
+        <div>
+          <Navbar />
+        </div>
+
+        {children}
+      </body>
     </html>
   );
 };

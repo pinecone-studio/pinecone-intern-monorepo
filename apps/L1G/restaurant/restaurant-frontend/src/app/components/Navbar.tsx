@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { SheetMenu } from './SheetMenu';
+import { SheetMenu } from './Sheetmenu';
 import { SheetMenuNotif } from './SheetMenuNotif';
 import { SheetMenuShop } from './SheetMenuShop';
 
