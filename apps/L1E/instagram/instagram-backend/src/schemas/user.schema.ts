@@ -15,6 +15,24 @@ posts: [Post!]!
 receivedRequests: [ReceivedRequest!]!
 }
 
+input UpdateProfileInput {
+fullName: String
+userName: String
+isPrivate: Boolean
+profileImage: String
+bio: String
+}
+
+type UpdateProfileResponse {
+message: String
+}
+
+
 type Query {
-getUsers: [User!]}
+getUsers: [User!]!
+}
+
+type Mutation {
+updateProfile(input: UpdateProfileInput!): UpdateProfileResponse!
+}
 `
