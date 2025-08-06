@@ -3,6 +3,7 @@ mutation SignIn($input: SignInInput!) {
     token
     user {
       userId
+      username
       email
       profile
       password
@@ -12,5 +13,20 @@ mutation SignIn($input: SignInInput!) {
       createdAt
       updatedAt
     }
+  }
+}
+
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+      userId
+      username
+      email
+      profile
+      password
+      bonusPoints
+      role
+      phoneNumber
+      createdAt
+      updatedAt
   }
 }

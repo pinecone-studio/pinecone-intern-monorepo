@@ -1,3 +1,4 @@
+import { dislike } from './mutations/dislike';
 import { getusers } from './queries/getusers';
 import { getAllInterests, getInterest } from './queries';
 import { createInterest, deleteInterest, like, login, signup, updateInterest } from './mutations';
@@ -15,5 +16,6 @@ export const resolvers = {
     createInterest,
     updateInterest,
     deleteInterest,
+    dislike,
   },
 };
