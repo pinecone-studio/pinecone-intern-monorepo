@@ -27,8 +27,8 @@ describe('resetPassword', () => {
   it("should reset a user's password", async () => {
     const result = await resetPassword?.({}, { input: { email: 'test@example.com', newPassword: 'test1234' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual({
-      input: true,
-      output: true,
+      success: true,
+      message: 'Password reset successfully',
     });
   });
 

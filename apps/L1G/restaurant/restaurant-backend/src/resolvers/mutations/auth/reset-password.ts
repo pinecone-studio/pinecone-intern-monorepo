@@ -12,5 +12,8 @@ export const resetPassword: MutationResolvers['resetPassword'] = async (_, { inp
   user.resetCodeExpiresAt = undefined;
   await user.save();
 
-  return { input: true, output: true };
+  return {
+    success: true,
+    message: 'Password reset successfully',
+  };
 };

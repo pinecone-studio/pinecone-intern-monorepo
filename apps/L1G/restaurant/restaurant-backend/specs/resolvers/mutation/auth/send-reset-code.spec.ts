@@ -35,7 +35,7 @@ describe('sendResetCode', () => {
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(mockUser.save).toHaveBeenCalled();
     expect(sendResetEmail).toHaveBeenCalledWith('test@example.com', expect.any(String));
-    expect(result).toEqual({ input: true, output: true });
+    expect(result).toEqual({ success: true, message: 'Reset code sent successfully' });
   });
 
   it('should throw an error if the user doesnt exist', async () => {

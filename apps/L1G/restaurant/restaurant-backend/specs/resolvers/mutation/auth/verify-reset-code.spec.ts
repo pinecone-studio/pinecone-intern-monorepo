@@ -32,8 +32,8 @@ describe('verifyResetCode', () => {
 
     expect(UserModel.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(result).toEqual({
-      input: true,
-      output: true,
+      message: 'Code verified successfully',
+      success: true,
     });
   });
 

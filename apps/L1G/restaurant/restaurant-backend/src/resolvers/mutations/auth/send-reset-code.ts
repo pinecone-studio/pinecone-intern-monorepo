@@ -12,5 +12,8 @@ export const sendResetCode: MutationResolvers['sendResetCode'] = async (_, { inp
   await user.save();
 
   await sendResetEmail(email, code);
-  return { input: true, output: true };
+  return {
+    success: true,
+    message: 'Reset code sent successfully',
+  };
 };

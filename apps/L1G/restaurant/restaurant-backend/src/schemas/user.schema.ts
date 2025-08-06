@@ -33,21 +33,19 @@ export const userTypeDefs = gql`
   }
 
   type sendResetCodeResponse {
-    input: Boolean
-    output: Boolean
+    message: String
+    success: Boolean
   }
 
   type verifyResetCodeResponse {
-    input: Boolean
-    output: Boolean
+    message: String
+    success: Boolean
   }
 
   type resetPasswordResponse {
-    input: Boolean
-    output: Boolean
+    message: String
+    success: Boolean
   }
-
-
 
   input sendResetCodeInput {
     email: String!
