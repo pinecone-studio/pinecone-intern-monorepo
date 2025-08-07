@@ -8,7 +8,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 jest.mock('@/components/ui/select', () => ({
-  Select: ({ children, value, onValueChange }: any) => (
+  Select: ({ _, value, onValueChange }: any) => (
     <div>
       <button data-testid="select-trigger">{value || 'Select'}</button>
       <div data-testid="select-options">
@@ -62,7 +62,7 @@ describe('GenderSelect', () => {
     ['male', 'Male'],
     ['female', 'Female'],
     ['both', 'Both'],
-  ])('enables Next button when %s is selected', (testId, label) => {
+  ])('enables Next button when %s is selected', (testId: string) => {
     render(<GenderSelect />);
     fireEvent.click(screen.getByTestId(`option-${testId}`));
     expect(screen.getByTestId('Next-Button')).not.toBeDisabled();
@@ -72,7 +72,7 @@ describe('GenderSelect', () => {
     ['male', 'Male'],
     ['female', 'Female'],
     ['both', 'Both'],
-  ])('navigates to "/" when %s is selected and Next is clicked', (testId, label) => {
+  ])('navigates to "/" when %s is selected and Next is clicked', (testId: string) => {
     render(<GenderSelect />);
     fireEvent.click(screen.getByTestId(`option-${testId}`));
     fireEvent.click(screen.getByTestId('Next-Button'));
