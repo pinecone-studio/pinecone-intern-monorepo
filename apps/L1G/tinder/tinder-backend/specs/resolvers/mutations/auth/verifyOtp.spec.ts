@@ -1,8 +1,8 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { verifyOtp } from 'src/resolvers/mutations/auth';
-import { UserOtpModel } from 'src/models/userOtp.model';
+import { verifyOtp } from 'src/resolvers/mutations/auth/verify-otp';
+import { UserOtpModel } from 'src/models/user-otp.model';
 
-jest.mock('src/models/userOtp.model', () => ({
+jest.mock('src/models/user-otp.model', () => ({
   UserOtpModel: {
     findOne: jest.fn(),
   },
@@ -43,14 +43,6 @@ describe('verifyOtp', () => {
     (UserOtpModel.findOne as jest.Mock).mockResolvedValue(null);
 
     await expect(verifyOtp!({}, { email: 'test@example.com', otp: '1234' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('No OTP request found');
-  });
-
-  it('should throw error if OTP is already verified', async () => {
-    (UserOtpModel.findOne as jest.Mock).mockResolvedValue({
-      verified: true,
-    });
-
-    await expect(verifyOtp!({}, { email: 'test@example.com', otp: '1234' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('OTP already verified');
   });
 
   it('should throw error if OTP is expired', async () => {

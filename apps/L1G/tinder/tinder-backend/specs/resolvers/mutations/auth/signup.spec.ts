@@ -1,26 +1,19 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { signup } from 'src/resolvers/mutations';
+import { signup } from 'src/resolvers/mutations/auth/signup';
 import bcrypt from 'bcryptjs';
-import { UserOtpModel } from 'src/models/userOtp.model';
+import { UserOtpModel } from 'src/models/user-otp.model';
 import { Usermodel } from 'src/models/user';
 
-jest.mock('bcryptjs', () => ({
-  hash: jest.fn(),
+jest.mock('bcryptjs', () => ({ hash: jest.fn() }));
+jest.mock('src/models/user-otp.model', () => ({
+  UserOtpModel: { findOne: jest.fn() },
 }));
-
-jest.mock('src/models/userOtp.model', () => ({
-  UserOtpModel: {
-    findOne: jest.fn(),
-  },
-}));
-
 jest.mock('src/models/user', () => {
   const mockSave = jest.fn();
   const mockConstructor = jest.fn().mockImplementation(function (this: any, data: any) {
     Object.assign(this, data);
     this.save = mockSave;
   });
-
   return {
     Usermodel: Object.assign(mockConstructor, {
       findOne: jest.fn(),
@@ -29,39 +22,39 @@ jest.mock('src/models/user', () => {
 });
 
 describe('signup', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  const baseArgs = {
+    password: 'password123',
+    genderPreferences: 'male',
+    dateOfBirth: '2003/12/25',
+    name: 'testAccount',
+    images: ['image1'],
+    bio: 'hud2',
+    interests: ['bhgu'],
+    profession: 'student',
+    schoolWork: 'pinecone',
+  };
 
-  it('should sign up a user successfully', async () => {
-    const testEmail = 'test@example.com';
+  const mockOtp = {
+    email: 'test@example.com',
+    verified: true,
+    registered: false,
+    save: jest.fn(),
+  };
 
-    const mockOtpRecord = {
-      email: testEmail,
-      verified: true,
-      registered: false,
-      save: jest.fn(),
-    };
+  beforeEach(() => jest.clearAllMocks());
 
-    const mockUserId = 'mocked_user_id';
-
-    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtpRecord);
+  it('signs up successfully', async () => {
+    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtp);
     (Usermodel.findOne as jest.Mock).mockResolvedValue(null);
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password');
 
     const mockSaveUser = jest.fn().mockResolvedValue({
-      _id: mockUserId,
-      email: testEmail,
-      name: 'testAccount',
-      genderPreferences: 'male',
-      dateOfBirth: '2003/12/25',
-      bio: 'hud2',
-      interests: ['bhgu'],
-      profession: 'student',
-      schoolWork: 'pinecone',
-      images: ['image1', 'image2'],
+      _id: 'mocked_user_id',
+      email: mockOtp.email,
+      ...baseArgs,
       likedBy: [],
       likedTo: [],
+      images: ['image1', 'image2'],
     });
 
     (Usermodel as any).mockImplementation(function (this: any, data: any) {
@@ -69,134 +62,40 @@ describe('signup', () => {
       this.save = mockSaveUser;
     });
 
-    const result = await signup!(
-      {},
-      {
-        password: 'password123',
-        genderPreferences: 'male',
-        dateOfBirth: '2003/12/25',
-        name: 'testAccount',
-        images: ['image1', 'image2'],
-        bio: 'hud2',
-        interests: ['bhgu'],
-        profession: 'student',
-        schoolWork: 'pinecone',
-      },
-      {},
-      {} as GraphQLResolveInfo
-    );
+    const result = await signup!({}, { ...baseArgs, images: ['image1', 'image2'] }, {}, {} as GraphQLResolveInfo);
 
     expect(UserOtpModel.findOne).toHaveBeenCalledWith({ verified: true, registered: false });
-    expect(Usermodel.findOne).toHaveBeenCalledWith({ email: testEmail });
+    expect(Usermodel.findOne).toHaveBeenCalledWith({ email: mockOtp.email });
     expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
     expect(mockSaveUser).toHaveBeenCalled();
-    expect(mockOtpRecord.save).toHaveBeenCalled();
+    expect(mockOtp.save).toHaveBeenCalled();
+
+    const { password, ...expectedFields } = baseArgs;
 
     expect(result).toEqual({
-      id: mockUserId,
-      email: testEmail,
-      name: 'testAccount',
-      genderPreferences: 'male',
-      dateOfBirth: '2003/12/25',
-      bio: 'hud2',
-      interests: ['bhgu'],
-      profession: 'student',
-      schoolWork: 'pinecone',
+      id: 'mocked_user_id',
+      email: mockOtp.email,
+      ...expectedFields,
       images: ['image1', 'image2'],
       likedBy: [],
       likedTo: [],
     });
   });
 
-  // ❌ OTP баталгаажаагүй буюу олдсонгүй
-  it('should throw error if OTP is not verified or already used', async () => {
+  it('throws if OTP not verified or already used', async () => {
     (UserOtpModel.findOne as jest.Mock).mockResolvedValue(null);
-
-    await expect(
-      signup!(
-        {},
-        {
-          password: 'password123',
-          genderPreferences: 'male',
-          dateOfBirth: '2003/12/25',
-          name: 'testAccount',
-          images: ['image1'],
-          bio: 'hud2',
-          interests: ['bhgu'],
-          profession: 'student',
-          schoolWork: 'pinecone',
-        },
-        {},
-        {} as GraphQLResolveInfo
-      )
-    ).rejects.toThrow('OTP not verified or already used for signup');
+    await expect(signup!({}, baseArgs, {}, {} as GraphQLResolveInfo)).rejects.toThrow('OTP not verified or already used for signup');
   });
 
-  // ❌ Email бүртгэлтэй байгаа үед
-  it('should throw error if email is already registered', async () => {
-    const testEmail = 'test@example.com';
-
-    const mockOtpRecord = {
-      email: testEmail,
-      verified: true,
-      registered: false,
-      save: jest.fn(),
-    };
-
-    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtpRecord);
-    (Usermodel.findOne as jest.Mock).mockResolvedValue({ email: testEmail });
-
-    await expect(
-      signup!(
-        {},
-        {
-          password: 'password123',
-          genderPreferences: 'male',
-          dateOfBirth: '2003/12/25',
-          name: 'testAccount',
-          images: ['image1'],
-          bio: 'hud2',
-          interests: ['bhgu'],
-          profession: 'student',
-          schoolWork: 'pinecone',
-        },
-        {},
-        {} as GraphQLResolveInfo
-      )
-    ).rejects.toThrow('Email already registered');
+  it('throws if email is already registered', async () => {
+    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtp);
+    (Usermodel.findOne as jest.Mock).mockResolvedValue({ email: mockOtp.email });
+    await expect(signup!({}, baseArgs, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Email already registered');
   });
 
-  // ❌ Password байхгүй буюу string биш
-  it('should throw error if password is not a string', async () => {
-    const testEmail = 'test@example.com';
-
-    const mockOtpRecord = {
-      email: testEmail,
-      verified: true,
-      registered: false,
-      save: jest.fn(),
-    };
-
-    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtpRecord);
+  it('throws if password is not a string', async () => {
+    (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtp);
     (Usermodel.findOne as jest.Mock).mockResolvedValue(null);
-
-    await expect(
-      signup!(
-        {},
-        {
-          password: null as any, // simulate invalid password
-          genderPreferences: 'male',
-          dateOfBirth: '2003/12/25',
-          name: 'testAccount',
-          images: ['image1'],
-          bio: 'hud2',
-          interests: ['bhgu'],
-          profession: 'student',
-          schoolWork: 'pinecone',
-        },
-        {},
-        {} as GraphQLResolveInfo
-      )
-    ).rejects.toThrow('Password is required and must be a string');
+    await expect(signup!({}, { ...baseArgs, password: null as any }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Password is required and must be a string');
   });
 });

@@ -1,8 +1,8 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { Usermodel } from 'src/models/user';
-import { UserOtpModel } from 'src/models/userOtp.model';
-import { requestSignup } from 'src/resolvers/mutations/auth';
-import { sendOtpEmail } from 'src/utils/sendOtpEmail';
+import { UserOtpModel } from 'src/models/user-otp.model';
+import { requestSignup } from 'src/resolvers/mutations/auth/generate-otp';
+import { sendOtpEmail } from 'src/utils/send-otp-email';
 
 jest.mock('src/models/user', () => ({
   Usermodel: {
@@ -10,13 +10,13 @@ jest.mock('src/models/user', () => ({
   },
 }));
 
-jest.mock('src/models/userOtp.model', () => ({
+jest.mock('src/models/user-otp.model', () => ({
   UserOtpModel: {
     findOneAndUpdate: jest.fn(),
   },
 }));
 
-jest.mock('src/utils/sendOtpEmail', () => ({
+jest.mock('src/utils/send-otp-email', () => ({
   sendOtpEmail: jest.fn(),
 }));
 
