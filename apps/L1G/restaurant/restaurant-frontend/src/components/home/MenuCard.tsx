@@ -1,24 +1,21 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 export type CardProps = {
-  id: string;
   image: string;
   foodName: string;
   price: string;
-  category: string;
 };
-const MenuCard = ({ image, foodName, price, category }: CardProps) => {
+const MenuCard = ({ image, foodName, price }: CardProps) => {
   const [isSelected, setIsSelected] = useState(false);
   const [selectCount, setSelectCount] = useState(0);
-  const handleSelect = (id: string) => {
+  const handleSelect = () => {
     setIsSelected(true);
     setSelectCount(selectCount + 1);
   };
   return (
     <div
       onClick={() => {
-        handleSelect(category);
+        handleSelect();
       }}
       className="w-[165px] h-[204px] flex flex-col"
     >

@@ -2,11 +2,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import MenuCard, { CardProps } from '@/components/home/MenuCard';
 
 const mockFood: CardProps = {
-  id: '1',
   image: 'https://via.placeholder.com/150',
   foodName: 'Taco',
   price: '15.6',
-  category: 'main',
 };
 
 describe('MenuCard', () => {
