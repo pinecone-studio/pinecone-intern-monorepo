@@ -1,4 +1,4 @@
-import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike } from './mutations';
+import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp } from './mutations';
 import { getAllInterests, getInterest, getusers } from './queries';
 
 export const resolvers = {
@@ -9,6 +9,8 @@ export const resolvers = {
   },
   Mutation: {
     login,
+    requestSignup,
+    verifyOtp,
     signup,
     like,
     createInterest,

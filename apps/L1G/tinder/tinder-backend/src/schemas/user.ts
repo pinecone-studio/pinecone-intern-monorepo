@@ -4,8 +4,14 @@ export const UsertypeDefs = gql`
   type User {
     id: ID!
     email: String!
-    name: String!
-    images: [String]
+    genderPreferences: String
+    dateOfBirth: String
+    name: String
+    bio: String
+    interests: [Interest]
+    profession: String
+    schoolWork: String
+    images: [String!]
     likedBy: [User]
     likedTo: [User]
     matched: [User]
@@ -16,7 +22,22 @@ export const UsertypeDefs = gql`
   }
 
   type Mutation {
-    signup(email: String!, password: String!, name: String!): User
+    requestSignup(email: String!): String
+    verifyOtp(email: String!, otp: String!): String
+    signup(password: String!, genderPreferences: String, dateOfBirth: String, name: String, images: [String!], bio: String, interests: [String], profession: String, schoolWork: String): User
+    updateProfile(
+      id: ID!
+      name: String
+      email: String
+      dateOfBirth: String
+      genderPreferences: String
+      bio: String
+      interests: [String]
+      profession: String
+      schoolWork: String
+      images: [String!]
+    ): User
+
     login(email: String!, password: String!): String
     like(likedByUser: ID!, likeReceiver: ID!): String
     dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
