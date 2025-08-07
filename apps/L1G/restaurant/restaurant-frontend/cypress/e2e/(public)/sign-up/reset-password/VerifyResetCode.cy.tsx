@@ -58,7 +58,7 @@ describe('Verify Reset Code Page', () => {
           statusCode: 200,
           body: {
             data: {
-              verifyResetCode: {
+              sendResetCode: {
                 success: true,
                 message: 'Reset code sent successfully',
               },
@@ -66,7 +66,7 @@ describe('Verify Reset Code Page', () => {
           },
         });
       }
-    }).as('mockVerifyResetCode');
+    }).as('mockSendResetCode');
 
     cy.window().then((win) => {
       win.localStorage.setItem('emailAddress', 'user@example.com');
@@ -75,7 +75,7 @@ describe('Verify Reset Code Page', () => {
     cy.visit('/reset-password/verify-password');
     cy.get(`[data-cy="Resend-Button"]`).click();
     cy.get(`[ data-cy="opt-input-test"]`).should('have.value', '');
-    cy.wait('@mockVerifyResetCode');
+    cy.wait('@mockSendResetCode');
   });
 
   it(`should throw error when user resent code but failed`, () => {
