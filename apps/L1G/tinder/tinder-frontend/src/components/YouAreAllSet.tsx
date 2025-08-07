@@ -6,10 +6,10 @@ export const YouAreAllSet = () => {
   return (
     <div className="w-[320px] max-w-[320px] font-sans h-fit flex flex-col justify-center items-center gap-6">
       <div className="w-full flex flex-col items-center gap-4 py-2">
-        <CircleCheck size={48} color="#18BA51" strokeWidth={1} />
+        <CircleCheck size={48} color="#18BA51" strokeWidth={1} role="img" aria-label="check icon" />
         <div className="flex flex-col items-center justify-center gap-1">
-          <p className="text-[24px] font-sans font-semibold text-[#09090B] text-center">You're all set!</p>
-          <p className="text-[14px] font-sans font-normal text-[#71717A] text-center">Your account is all set. You're ready to explore and connect!</p>
+          <p className="text-[24px] font-sans font-semibold text-[#09090B] text-center">You&#39;re all set!</p>
+          <p className="text-[14px] font-sans font-normal text-[#71717A] text-center">Your account is all set. You&#39;re ready to explore and connect!</p>
         </div>
       </div>
 
