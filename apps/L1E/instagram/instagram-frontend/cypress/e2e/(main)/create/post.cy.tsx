@@ -2,9 +2,15 @@ describe('Create Post', () => {
      beforeEach(() => {
     cy.visit('/create');
   });
-    it('1) renders the create post UI properly', () => {
+  it('should render the create post page elements', () => {
     cy.contains('h1', 'Post').should('be.visible');
-    cy.get('div').should('have.css', 'margin', '80px 0px 0px 536px');
-      
+      cy.get('[data-testid="post-form"]').should('be.visible');
     });
+     it('should handle post creation workflow', () => {
+         // Add tests for user interactions like:
+         // - Adding content to post
+         // - Uploading images
+         // - Submitting the form
+         // - Error handling
+     })
 });

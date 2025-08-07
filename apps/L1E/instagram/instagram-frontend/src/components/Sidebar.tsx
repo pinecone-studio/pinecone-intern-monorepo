@@ -16,31 +16,32 @@ export function Sidebar() {
             <Image src={'/logo.svg'} alt="Logo" width={103} height={29}/>
 
         <nav className="flex flex-col items-start bg-green-200 gap-2 self-stretch">
-          <Link href="/" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
+         <Link href="/" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
             <Home className="h-[24px] w-[24px]" />
             <span className='text-[16px] font-normal'>Home</span>
           </Link>
           
-          <Link href="/explore" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
+          <Link href="/explore" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
             <Search className="h-[24px] w-[24px]" />
             <span className='text-[16px] font-normal'>Explore</span>
           </Link>
           
           
-          <Link href="/notifications" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
+          <Link href="/notifications" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
             <Heart className="h-[24px] w-[24px]" />
             <span className='text-[16px] font-normal'>Notifications</span>
           </Link>
-          
-          <Link href="/create" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
+
+          <Link href="/create" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
             <PlusSquare className="h-[24px] w-[24px]" />
             <span className='text-[16px] font-normal'>Create</span>
           </Link>
-          
-          <Link href="/profile" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
-         
-      <Avatar className='w-[24px] h-[24px]'>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" width={24} height={24} />
+
+          <Link href="/profile" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
+            <Avatar className='w-[24px] h-[24px]'>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" width={24} height={24} />
+               {/* <AvatarImage src={user?.avatar || '/default-avatar.png'} alt={user?.username || 'User'} width={24} height={24} /> */}
+               {/* <AvatarFallback>{user?.username?.charAt(0).toUpperCase() || 'U'}</AvatarFallback> */}
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
             <span className='text-[16px] font-normal'>Profile</span>
